@@ -7,14 +7,14 @@
     "node": "14.x"
   },
   "scripts": {
-    "dev": "npx babel-node -r dotenv/config server-next.js",
+    "dev": "node -r dotenv/config server-next.js",
     "start": "NODE_ENV=production node -r dotenv/config server-next.js",
     "lint": "eslint .",
     "format": "prettier --write './**/*.{js,jsx,md,json}' --config .prettierrc.json",
     "build": "next build",
     "uikit-install": "cd ./node_modules/uikit && npm i",
     "uikit-update": "cd ./node_modules/uikit/ && git pull && npm i",
-    "uikit-compile": "cp -r frontend/assets/custom/ ./node_modules/uikit/custom/ && cd ./node_modules/uikit && npm run compile && cd ../../ && cp -r ./node_modules/uikit/dist/ ./public/static/dist"
+    "uikit-compile": "cp -r ./assets/custom/ ./node_modules/uikit/custom/ && cd ./node_modules/uikit && npm run compile && cd ../../ && cp -r ./node_modules/uikit/dist/ ./public/static/dist"
   },
   "repository": {
     "type": "git",
@@ -43,13 +43,13 @@
     "@sentry/react": "^5.29.0",
     "@sentry/tracing": "^5.27.3",
     "@sentry/webpack-plugin": "^1.15.0",
-    "express": "^4.17.1",
-    "express-sslify": "^1.2.0",
-    "cors": "^2.8.5",
     "array-move": "^2.2.2",
     "axios": "^0.24.0",
     "circular-dependency-plugin": "^5.2.2",
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-sslify": "^1.2.0",
     "google-maps-react": "^2.0.6",
     "less": "^4.1.2",
     "less-loader": "^10.2.0",
