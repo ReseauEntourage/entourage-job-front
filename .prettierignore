@@ -1,0 +1,6 @@
+node_modules/
+public/
+.next/
+package.lock
+assets/
+

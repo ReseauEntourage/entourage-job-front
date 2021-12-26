@@ -1,0 +1,11 @@
+.env*
+frontend/.next
+frontend/node_modules
+backend/node_modules
+backend/uploads
+.idea
+.vscode
+frontend/assets/uikit
+.DS_Store
+backend/coverage
+backend/build
