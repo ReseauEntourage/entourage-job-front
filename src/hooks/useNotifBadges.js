@@ -49,10 +49,8 @@ export function useNotifBadges(user, path) {
         )
           .then((data) => {
             if (data) {
-              const {
-                pendingCVs,
-                pendingOpportunities,
-              } = reducePromisesResults(data);
+              const { pendingCVs, pendingOpportunities } =
+                reducePromisesResults(data);
 
               setBadges((prevBadges) => {
                 return {
@@ -75,12 +73,8 @@ export function useNotifBadges(user, path) {
         }
         if (candidateId) {
           Promise.all([
-            Api.get(
-              `/opportunity/user/count/${candidateId}`
-            ),
-            Api.get(
-              `/user/candidat/checkUpdate`
-            ),
+            Api.get(`/opportunity/user/count/${candidateId}`),
+            Api.get(`/user/candidat/checkUpdate`),
             Api.get(`/cv/checkUpdate`),
           ])
             .then((data) => {

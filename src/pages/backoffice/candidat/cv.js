@@ -23,6 +23,7 @@ const Edit = () => {
         });
     }
   }, [user]);
+
   return (
     <LayoutBackOffice title="Edition du CV">
       <Section>
@@ -63,4 +64,5 @@ const Edit = () => {
     </LayoutBackOffice>
   );
 };
+
 export default Edit;

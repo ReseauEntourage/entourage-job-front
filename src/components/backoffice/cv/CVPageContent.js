@@ -27,7 +27,7 @@ const ModalPreview = ({ imageUrl, cv }) => {
   const { onClose } = useModalContext();
 
   return (
-    <ModalGeneric title="Prévisualisation du CV">
+    <ModalGeneric title="Prévisualisation du CV" fullWidth>
       {cv.urlImg && (
         <CVBackground
           url={cv.profileImageObjectUrl ? cv.profileImageObjectUrl : imageUrl}

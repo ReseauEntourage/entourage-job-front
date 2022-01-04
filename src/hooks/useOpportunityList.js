@@ -18,15 +18,12 @@ export function useOpportunityList(
           case 'candidateAsAdmin': {
             const {
               data: { offers },
-            } = await Api.get(
-              `/opportunity/user/private/${candidatId}`,
-              {
-                params: {
-                  search,
-                  ...filtersToQueryParams(filters),
-                },
-              }
-            );
+            } = await Api.get(`/opportunity/user/private/${candidatId}`, {
+              params: {
+                search,
+                ...filtersToQueryParams(filters),
+              },
+            });
             const sortedOffers = offers.sort((a, b) => {
               return new Date(b.date) - new Date(a.date);
             });
@@ -40,16 +37,13 @@ export function useOpportunityList(
           case 'admin': {
             const {
               data: { offers },
-            } = await Api.get(
-              `/opportunity/admin`,
-              {
-                params: {
-                  search,
-                  type: tabFilter,
-                  ...filtersToQueryParams(filters),
-                },
-              }
-            );
+            } = await Api.get(`/opportunity/admin`, {
+              params: {
+                search,
+                type: tabFilter,
+                ...filtersToQueryParams(filters),
+              },
+            });
             /* console.log(
               offers.map((offer) => {
                 return offer.isValidated;
@@ -69,16 +63,13 @@ export function useOpportunityList(
           default: {
             const {
               data: { offers, otherOffers },
-            } = await Api.get(
-              `/opportunity/user/all/${candidatId}`,
-              {
-                params: {
-                  search,
-                  type: tabFilter,
-                  ...filtersToQueryParams(filters),
-                },
-              }
-            );
+            } = await Api.get(`/opportunity/user/all/${candidatId}`, {
+              params: {
+                search,
+                type: tabFilter,
+                ...filtersToQueryParams(filters),
+              },
+            });
 
             setOffers(offers);
             setOtherOffers(otherOffers);

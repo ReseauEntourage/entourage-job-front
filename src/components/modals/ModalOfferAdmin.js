@@ -20,7 +20,7 @@ import {
 import { OFFER_STATUS } from 'src/constants';
 import ModalOfferInfo from 'src/components/modals/ModalOfferInfo';
 import ModalGeneric from 'src/components/modals/ModalGeneric';
-import { useModalContext } from './Modal';
+import { useModalContext } from 'src/components/modals/Modal';
 
 const ModalOfferAdmin = ({
   currentOffer,
@@ -78,10 +78,7 @@ const ModalOfferAdmin = ({
   };
 
   const updateOpportunityUser = async (opportunityUser) => {
-    await Api.put(
-      `/opportunity/join`,
-      opportunityUser
-    );
+    await Api.put(`/opportunity/join`, opportunityUser);
     await onOfferUpdated();
   };
 

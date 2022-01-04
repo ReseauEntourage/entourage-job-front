@@ -22,14 +22,11 @@ const ButtonDownload = ({
       icon={pdfGenerating ? null : 'download'}
       action={() => {
         if (tag) event(tag);
-        return Api.get(
-          `/cv/pdf/${candidatId}`,
-          {
-            params: {
-              fileName: `${firstName}_${lastName}`,
-            },
-          }
-        )
+        return Api.get(`/cv/pdf/${candidatId}`, {
+          params: {
+            fileName: `${firstName}_${lastName}`,
+          },
+        })
           .then(({ data }) => {
             const pdfLink = document.createElement('a');
             pdfLink.href = data.pdfUrl;

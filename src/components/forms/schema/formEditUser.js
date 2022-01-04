@@ -111,7 +111,7 @@ export default {
             getValue('role') === USER_ROLES.COACH
               ? USER_ROLES.CANDIDAT
               : USER_ROLES.COACH;
-          Api.get('api/v1/user/search', {
+          Api.get('/user/search', {
             params: {
               query: inputValue,
               role, // un certain role

@@ -28,7 +28,7 @@ export default {
         return getValue('isPublic') === true;
       },
       loadOptions: (inputValue, callback) => {
-        Api.get('api/v1/user/search/candidates', {
+        Api.get('/user/search/candidates', {
           params: {
             query: inputValue,
           },
@@ -404,7 +404,7 @@ export const adminMutation = {
     {
       propName: 'loadOptions',
       value: (inputValue, callback) => {
-        Api.get('api/v1/user/search', {
+        Api.get('/user/search', {
           params: {
             query: inputValue,
             role: USER_ROLES.CANDIDAT,

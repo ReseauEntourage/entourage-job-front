@@ -139,7 +139,7 @@ const EditUserModal = ({ user, setUser }) => {
       onSubmit={async (fields, closeModal) => {
         const updateUser = async (onError) => {
           try {
-            const { data } = await Api.put(`api/v1/user/${user.id}`, {
+            const { data } = await Api.put(`/user/${user.id}`, {
               ...fields,
               email: fields.email.toLowerCase(),
               firstName: fields.firstName.trim().replace(/\s\s+/g, ' '),
@@ -203,7 +203,7 @@ EditUserModal.propTypes = {
   setUser: PropTypes.func.isRequired,
 };
 
-const CVPage = () => {
+const User = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -567,4 +567,4 @@ const CVPage = () => {
   );
 };
 
-export default CVPage;
+export default User;

@@ -157,6 +157,7 @@ CVPage.propTypes = {
   router: PropTypes.shape(),
   exists: PropTypes.bool,
 };
+
 CVPage.defaultProps = {
   cv: null,
   exists: true,

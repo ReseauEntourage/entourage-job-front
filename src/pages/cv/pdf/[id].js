@@ -65,11 +65,13 @@ CVPDFPage.getInitialProps = async ({ query }) => {
   console.log('No token provided');
   return { cv: null };
 };
+
 CVPDFPage.propTypes = {
   cv: PropTypes.shape(),
   page: PropTypes.number,
   router: PropTypes.shape(),
 };
+
 CVPDFPage.defaultProps = {
   cv: null,
   page: null,

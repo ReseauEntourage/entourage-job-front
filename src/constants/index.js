@@ -385,24 +385,6 @@ const STORAGE_KEYS = {
   ACCESS_TOKEN: 'access-token',
 };
 
-const JOBS = {
-  JOB_TYPES: {
-    GENERATE_CV_PDF: 'generate_cv_pdf',
-    GENERATE_CV_PREVIEW: 'generate_cv_preview',
-    CREATE_CV_SEARCH_STRING: 'create_cv_search_string',
-    CACHE_CV: 'cache_cv',
-    CACHE_ALL_CVS: 'cache_all_cvs',
-    SEND_MAIL: 'send_mail',
-    INSERT_AIRTABLE: 'insert_airtable',
-    UPDATE_AIRTABLE: 'update_airtable',
-    REMINDER_OFFER: 'reminder_offer',
-  },
-  QUEUES: {
-    WORK: 'work',
-    IMAGE: 'image',
-  },
-};
-
 const SOCKETS = {
   CHANNEL_NAMES: {
     CV_PREVIEW: 'cv-preview-channel',
@@ -423,21 +405,6 @@ const CONTACT_INFO = {
 };
 
 const INITIAL_NB_OF_CV_TO_DISPLAY = 9;
-
-const MAILJET_TEMPLATES = {
-  ACCOUNT_CREATED: 3267718,
-  CV_SUBMITTED: 3271289,
-  PASSWORD_RESET: 3271976,
-  CONTACT_FORM: 3272334,
-  STATUS_CHANGED: 3275058,
-  OFFER_TO_VALIDATE: 3275461,
-  OFFER_RECEIVED: 3275876,
-  OFFER_SENT: 3276147,
-  OFFER_VALIDATED: 3277863,
-  OFFER_VALIDATED_ADMIN: 3320744,
-  OFFER_REMINDER: 3279365,
-  OFFERS_RECAP: 3279701,
-};
 
 const HEARD_ABOUT = [
   {
@@ -480,13 +447,11 @@ export {
   MEMBER_FILTERS_DATA,
   NEWSLETTER_TAGS,
   REDIS_KEYS,
-  JOBS,
   CONTACT_INFO,
   INITIAL_NB_OF_CV_TO_DISPLAY,
   SOCKETS,
   STORAGE_KEYS,
   ADMIN_ROLES,
   CONTRACTS,
-  MAILJET_TEMPLATES,
   HEARD_ABOUT,
 };

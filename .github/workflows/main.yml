@@ -1,0 +1,23 @@
+name: LinkedOut Frontend Test
+
+on:
+  push:
+  pull_request:
+    branches: [ master, develop ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    environment: entourage-job-front-test
+
+    env:
+      CI: true
+      NODE_ENV: test
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - run: echo No tests

@@ -82,10 +82,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
   const [noteBuffer, setNoteBuffer] = useState(note);
 
   const updateOpportunityUser = async (opportunityUser) => {
-    const { data } = await Api.put(
-      `/opportunity/join`,
-      opportunityUser
-    );
+    const { data } = await Api.put(`/opportunity/join`, opportunityUser);
     setOffer((prevOffer) => {
       return {
         ...prevOffer,

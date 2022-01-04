@@ -17,7 +17,7 @@ const SharesCountProvider = ({ children }) => {
   }, []);
 
   useMount(() => {
-    Api.get('api/v1/cv/shares')
+    Api.get('/cv/shares')
       .then(({ data }) => {
         setTotalShares(data.total);
       })

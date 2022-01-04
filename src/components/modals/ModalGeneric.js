@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, useModalContext } from 'src/components/modals/Modal';
 import { CloseButton } from 'src/components/utils';
-import HeaderModal from './HeaderModal';
+import HeaderModal from 'src/components/modals/HeaderModal';
 
 const ModalGeneric = ({
   title,
@@ -10,11 +10,16 @@ const ModalGeneric = ({
   children,
   onClose: customOnClose,
   className,
+  fullWidth,
 }) => {
   const { onClose } = useModalContext();
   return (
     <Modal className={className}>
-      <div className="uk-margin-auto-vertical uk-width-2xlarge@m">
+      <div
+        className={`uk-margin-auto-vertical ${
+          !fullWidth ? 'uk-width-2xlarge@m' : ''
+        }`}
+      >
         <div className="uk-modal-body uk-padding">
           <CloseButton
             className="uk-modal-close-default"
@@ -44,6 +49,7 @@ ModalGeneric.propTypes = {
   description: PropTypes.string,
   onClose: PropTypes.func,
   className: PropTypes.string,
+  fullWidth: PropTypes.bool,
 };
 
 ModalGeneric.defaultProps = {
@@ -51,6 +57,7 @@ ModalGeneric.defaultProps = {
   title: undefined,
   onClose: undefined,
   className: '',
+  fullWidth: false,
 };
 
 export default ModalGeneric;

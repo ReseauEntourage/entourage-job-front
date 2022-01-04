@@ -6,7 +6,6 @@ import { withRouter } from 'next/router';
 import Footer from 'src/components/Footer';
 import Header from 'src/components/headers/Header';
 import HeaderConnected from 'src/components/headers/HeaderConnected';
-import { UserContext } from 'src/components/store/UserProvider';
 import { addPrefix } from 'src/utils';
 import Script from 'next/script';
 
@@ -22,14 +21,6 @@ const Layout = ({
   noIndex,
   isBackoffice,
 }) => {
-  const shouldShowAuthHeader =
-    router.asPath.includes('/aider') &&
-    router.asPath.includes('/travailler') &&
-    router.asPath.includes('/recruter') &&
-    router.asPath.includes('/candidats') &&
-    router.asPath.includes('/partenaires') &&
-    router.asPath.includes('/contact');
-
   const isPDF = router.asPath.includes('/pdf/');
 
   return (
@@ -71,16 +62,14 @@ const Layout = ({
           content={process.env.FB_DOMAIN_VERIFICATION}
         />
       </Head>
-      {!isPDF && !isBackoffice && (
-        <UserContext.Consumer>
-          {({ isAuthentificated }) => {
-            return isAuthentificated && shouldShowAuthHeader ? (
-              <HeaderConnected />
-            ) : (
-              router.asPath !== '/' && <Header isHome={false} />
-            );
-          }}
-        </UserContext.Consumer>
+      {!isPDF && (
+        <>
+          {isBackoffice ? (
+            <HeaderConnected />
+          ) : (
+            router.asPath !== '/' && <Header isHome={false} />
+          )}
+        </>
       )}
       {children}
       {!isPDF && !isBackoffice && <Footer />}

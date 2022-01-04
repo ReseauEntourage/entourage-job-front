@@ -314,7 +314,7 @@ const MemberList = ({
                 submitText="Créer le membre"
                 onSubmit={async (fields, closeModal) => {
                   try {
-                    const { data } = await Api.post('api/v1/user', {
+                    const { data } = await Api.post('/user', {
                       ...fields,
                       adminRole:
                         fields.role === USER_ROLES.ADMIN

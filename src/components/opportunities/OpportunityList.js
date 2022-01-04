@@ -195,14 +195,11 @@ const OpportunityList = forwardRef(
         const opportunity = { ...offer };
         // si jamais ouvert
         if (!opportunity.userOpportunity || !opportunity.userOpportunity.seen) {
-          const { data } = await Api.post(
-            `/opportunity/join`,
-            {
-              opportunityId: offer.id,
-              userId: candidatId,
-              seen: true,
-            }
-          );
+          const { data } = await Api.post(`/opportunity/join`, {
+            opportunityId: offer.id,
+            userId: candidatId,
+            seen: true,
+          });
           opportunity.userOpportunity = data;
         }
         openModal(
@@ -302,9 +299,7 @@ const OpportunityList = forwardRef(
 
     const getOpportunity = useCallback(async (oppId) => {
       try {
-        const { data: offer } = await Api.get(
-          `/opportunity/${oppId}`
-        );
+        const { data: offer } = await Api.get(`/opportunity/${oppId}`);
         return offer;
       } catch (err) {
         console.error(err);

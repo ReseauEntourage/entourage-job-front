@@ -1,7 +1,6 @@
 /* global UIkit */
 
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
 import Api from 'src/Axios';
 import { Button, Grid, Section } from 'src/components/utils';
@@ -9,23 +8,6 @@ import { UserContext } from 'src/components/store/UserProvider';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
 import { USER_ROLES } from 'src/constants';
 import { IconNoSSR } from 'src/components/utils/Icon';
-
-const Wrapper = ({ title, description, children }) => {
-  return (
-    <LayoutBackOffice title={title}>
-      <Section>
-        <HeaderBackoffice title={title} description={description} />
-        {children}
-      </Section>
-    </LayoutBackOffice>
-  );
-};
-
-Wrapper.propTypes = {
-  children: PropTypes.element.isRequired,
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-};
 
 const Suivi = () => {
   const { user } = useContext(UserContext);
@@ -102,21 +84,14 @@ const Suivi = () => {
     }
   }, [setNoteHasBeenRead, user]);
 
-  if (!user) return null;
-
-  if (loading) {
-    return (
-      <Wrapper title={title} description={description}>
-        <div
-          className="uk-width-1-1 uk-flex uk-flex-center"
-          data-uk-spinner=""
-        />
-      </Wrapper>
+  let content;
+  if (loading || !user) {
+    content = (
+      <div className="uk-width-1-1 uk-flex uk-flex-center" data-uk-spinner="" />
     );
-  }
-  if (userCandidat === null) {
-    return (
-      <Wrapper title={title} description={description}>
+  } else if (userCandidat === null) {
+    content = (
+      <>
         <h2 className="uk-text-bold">
           <span className="uk-text-primary">
             {user.role === USER_ROLES.COACH
@@ -129,52 +104,63 @@ const Suivi = () => {
           Il peut y avoir plusieurs raisons à ce sujet. Contacte l&apos;équipe
           LinkedOut pour en savoir plus.
         </p>
-      </Wrapper>
+      </>
+    );
+  } else {
+    content = (
+      <>
+        <div className="uk-form-controls uk-padding-small uk-padding-remove-left uk-padding-remove-right">
+          <label
+            className={`uk-form-label ${labelClass}`}
+            htmlFor="textarea-suivi"
+          >
+            {title}
+          </label>
+          <textarea
+            id="textarea-suivi"
+            name="text"
+            rows={10}
+            placeholder="Tapez votre texte"
+            // maxLength={maxLength}
+            value={value}
+            onChange={(event) => {
+              return updateValue(event.target.value);
+            }}
+            className="uk-textarea uk-form-large"
+          />
+        </div>
+        <Grid match className="uk-flex-right">
+          <Button
+            style="default"
+            onClick={() => {
+              return updateValue(userCandidat.note);
+            }}
+            disabled={value === userCandidat.note}
+          >
+            <IconNoSSR name="history" />
+          </Button>
+          <Button
+            style="default"
+            onClick={() => {
+              return updateSuivi(value);
+            }}
+            disabled={value === userCandidat.note}
+          >
+            Sauvegarder
+          </Button>
+        </Grid>
+      </>
     );
   }
+
   return (
-    <Wrapper title={title} description={description}>
-      <div className="uk-form-controls uk-padding-small uk-padding-remove-left uk-padding-remove-right">
-        <label
-          className={`uk-form-label ${labelClass}`}
-          htmlFor="textarea-suivi"
-        >
-          {title}
-        </label>
-        <textarea
-          id="textarea-suivi"
-          name="text"
-          rows={10}
-          placeholder="Tapez votre texte"
-          // maxLength={maxLength}
-          value={value}
-          onChange={(event) => {
-            return updateValue(event.target.value);
-          }}
-          className="uk-textarea uk-form-large"
-        />
-      </div>
-      <Grid match className="uk-flex-right">
-        <Button
-          style="default"
-          onClick={() => {
-            return updateValue(userCandidat.note);
-          }}
-          disabled={value === userCandidat.note}
-        >
-          <IconNoSSR name="history" />
-        </Button>
-        <Button
-          style="default"
-          onClick={() => {
-            return updateSuivi(value);
-          }}
-          disabled={value === userCandidat.note}
-        >
-          Sauvegarder
-        </Button>
-      </Grid>
-    </Wrapper>
+    <LayoutBackOffice title={title}>
+      <Section>
+        <HeaderBackoffice title={title} description={description} />
+        {content}
+      </Section>
+    </LayoutBackOffice>
   );
 };
+
 export default Suivi;

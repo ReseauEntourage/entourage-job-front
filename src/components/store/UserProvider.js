@@ -1,17 +1,9 @@
-/* eslint-disable max-classes-per-file */
-/* eslint-disable react/no-unused-state */
-
-// store/UserProvider.js
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import Api from 'src/Axios';
 import { STORAGE_KEYS, USER_ROLES } from 'src/constants';
 import { usePrevious } from 'src/hooks/utils';
-
-/**
- * On ajoute la propriété `setName` à notre contexte
- */
 
 export const UserContext = createContext();
 

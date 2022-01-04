@@ -1,8 +1,3 @@
-import {
-  OFFER_ADMIN_FILTERS_DATA,
-  OPPORTUNITY_FILTERS_DATA,
-  USER_ROLES,
-} from 'src/constants';
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from 'src/components/store/UserProvider';
 import { useFilters, useTabFilters } from 'src/hooks';
@@ -11,6 +6,11 @@ import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
 import { Section } from 'src/components/utils';
 import AdminOpportunityList from 'src/components/backoffice/admin/AdminOpportunityList';
 import { useRouter } from 'next/router';
+import {
+  OFFER_ADMIN_FILTERS_DATA,
+  OPPORTUNITY_FILTERS_DATA,
+  USER_ROLES,
+} from 'src/constants';
 
 const LesOpportunites = () => {
   const {

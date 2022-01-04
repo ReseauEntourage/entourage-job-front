@@ -27,7 +27,7 @@ export default {
       loadOptions: (inputValue, callback, getValue) => {
         if (inputValue.length > 0) {
           const role = getValue('role');
-          Api.get('api/v1/user/search', {
+          Api.get('/user/search', {
             params: {
               query: inputValue,
               role, // un certain role

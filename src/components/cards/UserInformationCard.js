@@ -243,7 +243,7 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
                         let promise = null;
                         if (user.role === USER_ROLES.CANDIDAT) {
                           // on lui assigne ou eleve un coach
-                          promise = Api.put(`api/v1/user/candidat/${user.id}`, {
+                          promise = Api.put(`/user/candidat/${user.id}`, {
                             coachId: linkedUserId || null,
                           });
                         }
@@ -251,7 +251,7 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
                           // on l'assigne à un candidat
                           if (linkedUserId) {
                             promise = Api.put(
-                              `api/v1/user/candidat/${linkedUserId}`,
+                              `/user/candidat/${linkedUserId}`,
                               {
                                 coachId: user.id,
                               }
@@ -259,7 +259,7 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
                           } else {
                             // on lui enleve son candidat
                             promise = Api.put(
-                              `api/v1/user/candidat/${linkedUser.id}`,
+                              `/user/candidat/${linkedUser.id}`,
                               {
                                 coachId: null,
                               }

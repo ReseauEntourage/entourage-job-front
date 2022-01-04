@@ -379,12 +379,14 @@ GenericField.propTypes = {
       label: PropTypes.string,
       value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     }),
-  ]).isRequired,
+  ]),
   onChange: PropTypes.func.isRequired,
   getValid: PropTypes.func.isRequired,
   getValue: PropTypes.func.isRequired,
 };
 
-GenericField.defaultProps = {};
+GenericField.defaultProps = {
+  value: undefined,
+};
 
 export default GenericField;

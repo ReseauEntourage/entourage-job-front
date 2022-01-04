@@ -188,7 +188,9 @@ CVFicheEdition.propTypes = {
 };
 
 CVFicheEdition.defaultProps = {
-  onChange: console.log('Aucune fonction de modification associé'),
+  onChange: () => {
+    console.log('Aucune fonction de modification associé');
+  },
   disablePicture: false,
   phone: undefined,
   address: undefined,

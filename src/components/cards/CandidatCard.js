@@ -57,7 +57,7 @@ const CandidatCard = ({
   };
 
   const updateShareCount = (candidatId, type) => {
-    Api.post('api/v1/cv/count', {
+    Api.post('/cv/count', {
       candidatId,
       type,
     })
