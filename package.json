@@ -9,12 +9,13 @@
   "scripts": {
     "dev": "node -r dotenv/config server-next.js",
     "start": "NODE_ENV=production node -r dotenv/config server-next.js",
-    "lint": "eslint .",
+    "lint": "npx eslint src --ext js,jsx,ts,tsx --max-warnings=0",
     "format": "prettier --write './**/*.{js,jsx,md,json}' --config .prettierrc.json",
     "build": "next build",
     "uikit-install": "cd ./node_modules/uikit && npm i",
     "uikit-update": "cd ./node_modules/uikit/ && git pull && npm i",
-    "uikit-compile": "cp -r ./assets/custom/ ./node_modules/uikit/custom/ && cd ./node_modules/uikit && npm run compile && cd ../../ && cp -r ./node_modules/uikit/dist/ ./public/static/dist"
+    "uikit-compile": "cp -r ./assets/custom/ ./node_modules/uikit/custom/ && cd ./node_modules/uikit && npm run compile && cd ../../ && cp -r ./node_modules/uikit/dist/ ./public/static/dist",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -23,20 +24,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "precommit": "NODE_ENV=production lint-staged",
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm run lint"
     }
-  },
-  "lint-staged": {
-    "*.{js,jsx,md,json,html}": [
-      "prettier --write",
-      "git add"
-    ],
-    "yarn.lock": [
-      "git rm --cached"
-    ]
   },
   "cacheDirectories": [
     ".next/cache"
@@ -78,15 +69,10 @@
     "webpack": "^4.41.6"
   },
   "devDependencies": {
-    "@babel/cli": "^7.14.8",
     "@babel/core": "^7.15.0",
     "@babel/eslint-parser": "^7.16.5",
-    "@babel/node": "^7.14.9",
-    "@babel/preset-env": "^7.15.0",
     "@babel/preset-react": "^7.14.5",
-    "@babel/register": "^7.15.3",
     "@next/eslint-plugin-next": "^12.0.7",
-    "babel-jest": "^26.6.3",
     "babel-plugin-module-resolver": "^4.1.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.0.1",
@@ -98,8 +84,7 @@
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^4.2.0",
     "expose-loader": "^2.0.0",
-    "husky": "^4.3.8",
-    "lint-staged": "^11.2.3",
+    "husky": "^7.0.0",
     "postcss": "^8.4.5",
     "prettier": "^2.1.2"
   }
