@@ -40,7 +40,7 @@ module.exports = withLess({
       config.plugins.push(
         new SentryWebpackPlugin({
           authToken: process.env.SENTRY_AUTH_TOKEN,
-          org: process.env.HEROKU_APP_NAME + '-sentry',
+          org: `${process.env.HEROKU_APP_NAME}-sentry`,
           project: process.env.HEROKU_APP_NAME,
           include: '.',
           ignore: ['node_modules', 'next.config.js', 'assets', 'public'],

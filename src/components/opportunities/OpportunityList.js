@@ -251,7 +251,7 @@ const OpportunityList = forwardRef(
                   isValidated: false,
                 });
                 closeModal();
-                UIkit.notification("L'offre a bien été dupliqué", 'success');
+                UIkit.notification("L'offre a bien été dupliquée", 'success');
                 push(
                   {
                     pathname: `${currentPath.href}/[offerId]`,
