@@ -156,12 +156,18 @@ const FormWithValidation = forwardRef(
           <fieldset className="uk-fieldset">
             {fields.map((value, i) => {
               if (value.component === 'fieldgroup') {
-                const { fields: childrenFields, title, id: childrenId } = value;
+                const {
+                  fields: childrenFields,
+                  title,
+                  id: childrenId,
+                  childWidths,
+                } = value;
                 return (
                   <li key={i} hidden={!!value.hidden}>
                     <FieldGroup
                       id={childrenId}
                       title={title}
+                      childWidths={childWidths}
                       fields={childrenFields.map((field) => {
                         return (
                           <GenericField

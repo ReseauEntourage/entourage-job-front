@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'src/components/utils';
 
-const FieldGroup = ({ title, fields }) => {
+const FieldGroup = ({ title, fields, childWidths }) => {
   return (
     <div className="uk-form-controls">
       {title ? (
@@ -20,7 +20,13 @@ const FieldGroup = ({ title, fields }) => {
           {title}
         </p>
       ) : null}
-      <Grid childWidths={[`1-${fields.length}`]} items={fields} />
+      <Grid
+        eachWidths={childWidths}
+        childWidths={!childWidths ? [`1-${fields.length}`] : undefined}
+        middle
+        gap="small"
+        items={fields}
+      />
     </div>
   );
 };
@@ -28,10 +34,12 @@ const FieldGroup = ({ title, fields }) => {
 FieldGroup.propTypes = {
   title: PropTypes.string,
   fields: PropTypes.arrayOf(PropTypes.element).isRequired,
+  childWidths: PropTypes.arrayOf(PropTypes.string),
 };
 
 FieldGroup.defaultProps = {
   title: undefined,
+  childWidths: undefined,
 };
 
 export default FieldGroup;

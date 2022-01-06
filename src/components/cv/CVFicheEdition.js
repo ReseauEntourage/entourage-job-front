@@ -15,11 +15,10 @@ import CVEditPicture from 'src/components/cv/CVEditPicture';
 import CVEditBusinessLines from 'src/components/cv/CVEditBusinessLines';
 import CVEditCareerPath from 'src/components/cv/CVEditCareerPath';
 
-import { CV_STATUS } from 'src/constants';
+import { AMBITIONS_PREFIXES, CV_STATUS } from 'src/constants';
 
 const CVFicheEdition = ({
   cv,
-  gender,
   onChange,
   disablePicture,
   previewGenerating,
@@ -60,12 +59,7 @@ const CVFicheEdition = ({
             onChange={onChange}
           />
           <CVEditCatchphrase catchphrase={cv.catchphrase} onChange={onChange} />
-          <CVEditCareerPath
-            ambitions={cv.ambitions}
-            careerPathOpen={cv.careerPathOpen}
-            gender={gender}
-            onChange={onChange}
-          />
+          <CVEditCareerPath ambitions={cv.ambitions} onChange={onChange} />
         </Grid>
         <Grid childWidths={['1-1']} match>
           <CVEditPicture
@@ -164,9 +158,18 @@ CVFicheEdition.propTypes = {
     locations: PropTypes.arrayOf(PropTypes.string),
     availability: PropTypes.string,
     urlImg: PropTypes.string,
-    careerPathOpen: PropTypes.bool,
     contracts: PropTypes.arrayOf(PropTypes.string),
-    ambitions: PropTypes.arrayOf(PropTypes.string),
+    ambitions: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        order: PropTypes.number.isRequired,
+        prefix: PropTypes.oneOf(
+          AMBITIONS_PREFIXES.map(({ value }) => {
+            return value;
+          })
+        ),
+      })
+    ),
     languages: PropTypes.arrayOf(PropTypes.string),
     transport: PropTypes.string,
     skills: PropTypes.arrayOf(PropTypes.string),
@@ -179,7 +182,6 @@ CVFicheEdition.propTypes = {
   }).isRequired,
   onChange: PropTypes.func,
   disablePicture: PropTypes.bool,
-  gender: PropTypes.number.isRequired,
   email: PropTypes.string.isRequired,
   phone: PropTypes.string,
   address: PropTypes.string,

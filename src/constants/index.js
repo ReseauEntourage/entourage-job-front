@@ -146,6 +146,17 @@ const CV_STATUS = {
   },
 };
 
+const AMBITIONS_PREFIXES = [
+  {
+    label: 'dans',
+    value: 'dans',
+  },
+  {
+    label: 'comme',
+    value: 'comme',
+  },
+];
+
 const OFFER_CANDIDATE_FILTERS_DATA = [
   { tag: 'all', title: 'Toutes les offres' },
   { tag: 'private', title: 'Offres personnelles', active: true },
@@ -373,14 +384,6 @@ const NEWSLETTER_TAGS = {
   ],
 };
 
-const REDIS_KEYS = {
-  CV_PREFIX: 'cv-',
-  CV_LIST: 'cvList',
-  CVS_TOTAL_SHARES: 'cvsTotalShares',
-  RL_AUTH: 'rl-auth:',
-  RL_GENERAL: 'rl-general:',
-};
-
 const STORAGE_KEYS = {
   ACCESS_TOKEN: 'access-token',
 };
@@ -446,7 +449,6 @@ export {
   OFFER_ADMIN_FILTERS_DATA,
   MEMBER_FILTERS_DATA,
   NEWSLETTER_TAGS,
-  REDIS_KEYS,
   CONTACT_INFO,
   INITIAL_NB_OF_CV_TO_DISPLAY,
   SOCKETS,
@@ -454,4 +456,5 @@ export {
   ADMIN_ROLES,
   CONTRACTS,
   HEARD_ABOUT,
+  AMBITIONS_PREFIXES,
 };

@@ -10,12 +10,20 @@ import {
   sortExperiences,
   sortReviews,
 } from 'src/utils';
+import { AMBITIONS_PREFIXES } from 'src/constants';
 
 const CVPDF = ({ cv, page }) => {
   const experiences =
     cv.experiences && cv.experiences.length > 0
       ? sortExperiences(cv.experiences)
       : [];
+
+  const ambitions =
+    cv.ambitions && cv.ambitions.length > 0
+      ? cv.ambitions.sort((a, b) => {
+          return a.order - b.order;
+        })
+      : null;
 
   // Function to estimate where to divide the experiences between both pages
   const averageCharsPerLine = 59;
@@ -104,9 +112,10 @@ const CVPDF = ({ cv, page }) => {
                 </div>
               )}
               {/* uk-text-emphasis uk-text-bold */}
-              {cv.ambitions && cv.ambitions.length > 0 && (
+              {ambitions && (
                 <p className="uk-text-bold uk-width-xxlarge uk-text-center uk-margin-small-bottom uk-margin-remove-top">
-                  J&apos;aimerais beaucoup travailler dans{' '}
+                  J&apos;aimerais travailler{' '}
+                  {ambitions[0].prefix || AMBITIONS_PREFIXES[0].label}{' '}
                   <span
                     className="uk-label uk-text-lowercase"
                     style={{
@@ -115,12 +124,14 @@ const CVPDF = ({ cv, page }) => {
                       fontSize: 'inherit',
                     }}
                   >
-                    {cv.ambitions[0]}
+                    {ambitions[0].name || ambitions[0]}
                   </span>
-                  {cv.ambitions.length > 1 ? (
+                  {ambitions.length > 1 ? (
                     <>
                       {' '}
-                      ou{' '}
+                      {ambitions[0].prefix === ambitions[1].prefix
+                        ? 'ou'
+                        : `${ambitions[1].prefix || ambitions[1].prefix}`}{' '}
                       <span
                         className="uk-label uk-text-lowercase"
                         style={{
@@ -129,20 +140,11 @@ const CVPDF = ({ cv, page }) => {
                           fontSize: 'inherit',
                         }}
                       >
-                        {cv.ambitions[1]}
+                        {ambitions[1].name || ambitions[1]}
                       </span>
                     </>
                   ) : (
                     ''
-                  )}
-                  {cv.careerPathOpen ? (
-                    <>
-                      {` mais reste ${
-                        cv.user.candidat.gender === 1 ? 'ouverte' : 'ouvert'
-                      } à toutes autres propositions.`}
-                    </>
-                  ) : (
-                    '.'
                   )}
                 </p>
               )}

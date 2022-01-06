@@ -1,49 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ModalEdit from 'src/components/modals/ModalEdit';
-import schemaCareerPath from 'src/components/forms/schema/formEditCareerPath.json';
+import schemaCareerPath from 'src/components/forms/schema/formEditCareerPath';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
 import { Grid } from 'src/components/utils';
 import { openModal } from 'src/components/modals/Modal';
+import { AMBITIONS_PREFIXES } from 'src/constants';
 
-const CVEditCareerPath = ({ ambitions, careerPathOpen, onChange, gender }) => {
-  const ContentByGender = () => {
-    if (!ambitions || ambitions.length === 0) {
-      if (!careerPathOpen) {
-        return (
-          <p className="uk-text-italic">
-            Aucun projet professionnel n&apos;a pas encore été créé.
-          </p>
-        );
-      }
-      if (careerPathOpen) {
-        return (
-          <p>
-            Je reste {gender === 1 ? 'ouverte' : 'ouvert'} à toutes
-            propositions.
-          </p>
-        );
-      }
-    }
-    return (
-      <p>
-        J&apos;aimerais beaucoup travailler dans{' '}
-        <span className="uk-text-primary">{ambitions[0]}</span>
-        {ambitions && ambitions.length > 1 ? (
-          <>
-            {' '}
-            ou dans <span className="uk-text-primary">{ambitions[1]}</span>
-          </>
-        ) : (
-          ''
-        )}
-        {careerPathOpen
-          ? ` mais reste ${gender === 1 ? 'ouverte' : 'ouvert'} à toutes autres
-            propositions.`
-          : '.'}
-      </p>
-    );
-  };
+const CVEditCareerPath = ({ ambitions, onChange }) => {
+  const sortedAmbitions =
+    ambitions && ambitions.length > 0
+      ? ambitions.sort((a, b) => {
+          return a.order - b.order;
+        })
+      : null;
+
+  const defaultValues = sortedAmbitions?.reduce((acc, curr, index) => {
+    return {
+      ...acc,
+      [`careerPath${index}`]: curr.name,
+      [`prefix${index}`]: curr.prefix,
+    };
+  }, {});
+
   return (
     <div className="uk-card uk-card-default uk-card-body">
       <Grid gap="small" between eachWidths={['expand', 'auto']}>
@@ -57,24 +36,31 @@ const CVEditCareerPath = ({ ambitions, careerPathOpen, onChange, gender }) => {
               openModal(
                 <ModalEdit
                   title="Édition - Projet professionnel"
+                  description="J'aimerais travailler ..."
                   formSchema={schemaCareerPath}
-                  defaultValues={{
-                    careerPath0:
-                      ambitions && ambitions.length > 0 ? ambitions[0] : null,
-                    careerPath1:
-                      ambitions && ambitions.length > 1 ? ambitions[1] : null,
-                    careerPathOpen,
-                  }}
+                  defaultValues={defaultValues}
                   onSubmit={(
-                    { careerPathOpen: isOpen, careerPath0, careerPath1 },
+                    { prefix0, careerPath0, /* prefix1, */ careerPath1 },
                     closeModal
                   ) => {
                     closeModal();
+                    const newAmbitions = [
+                      { prefix: prefix0, name: careerPath0, order: 0 },
+                    ];
+
                     onChange({
-                      ambitions: [careerPath0, careerPath1].filter((a) => {
-                        return a || null;
-                      }),
-                      careerPathOpen: isOpen,
+                      ambitions: careerPath1
+                        ? [
+                            ...newAmbitions,
+                            {
+                              prefix:
+                                /* prefix1 */ prefix0 ??
+                                AMBITIONS_PREFIXES[0].label,
+                              name: careerPath1,
+                              order: 1,
+                            },
+                          ]
+                        : newAmbitions,
                     });
                   }}
                 />
@@ -83,18 +69,44 @@ const CVEditCareerPath = ({ ambitions, careerPathOpen, onChange, gender }) => {
           />
         )}
       </Grid>
-      <ContentByGender />
+      {!sortedAmbitions ? (
+        <p className="uk-text-italic">
+          Aucun projet professionnel n&apos;a pas encore été créé.
+        </p>
+      ) : (
+        <p>
+          J&apos;aimerais travailler {sortedAmbitions[0].prefix}{' '}
+          <span className="uk-text-primary">{sortedAmbitions[0].name}</span>
+          {sortedAmbitions && sortedAmbitions.length > 1 && (
+            <>
+              {' '}
+              {sortedAmbitions[0].prefix === sortedAmbitions[1].prefix
+                ? 'ou'
+                : `${sortedAmbitions[1].prefix}`}{' '}
+              <span className="uk-text-primary">{sortedAmbitions[1].name}</span>
+            </>
+          )}
+        </p>
+      )}
     </div>
   );
 };
+
 CVEditCareerPath.propTypes = {
-  ambitions: PropTypes.arrayOf(PropTypes.string).isRequired,
+  ambitions: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      order: PropTypes.number.isRequired,
+      prefix: PropTypes.oneOf(
+        AMBITIONS_PREFIXES.map(({ value }) => {
+          return value;
+        })
+      ),
+    })
+  ).isRequired,
   onChange: PropTypes.func,
-  careerPathOpen: PropTypes.bool,
-  gender: PropTypes.number.isRequired,
 };
 CVEditCareerPath.defaultProps = {
   onChange: null,
-  careerPathOpen: true,
 };
 export default CVEditCareerPath;

@@ -17,6 +17,7 @@ import TAGS from 'src/constants/tags';
 import moment from 'moment';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
+import { AMBITIONS_PREFIXES } from 'src/constants';
 
 const CandidatCard = ({
   url,
@@ -49,6 +50,13 @@ const CandidatCard = ({
   const hashtags = ['LinkedOut'];
   const sharedDescription = `La précarité n'exclut pas les compétences\xa0! Avec LinkedOut, aidons ${firstName} à retrouver un emploi en lui proposant un job ou en diffusant son CV\xa0!`;
   const title = `LinkedOut\xa0: Aidez ${firstName} à retrouver un emploi`;
+
+  const sortedAmbitions =
+    ambitions && ambitions.length > 0
+      ? ambitions.sort((a, b) => {
+          return a.order - b.order;
+        })
+      : null;
 
   const { incrementSharesCount } = useContext(SharesCountContext);
 
@@ -176,7 +184,7 @@ const CandidatCard = ({
                   })}
                 />
               )}
-              {ambitions && ambitions.length > 0 && (
+              {sortedAmbitions && (
                 <div
                   style={{
                     marginTop: 5,
@@ -189,16 +197,17 @@ const CandidatCard = ({
                   >
                     Je souhaite
                     <br />
-                    travailler dans&nbsp;:
+                    travailler{' '}
+                    {ambitions[0].prefix || AMBITIONS_PREFIXES[0].label}&nbsp;:
                   </p>
                   <Grid column gap="collapse" childWidths={['1-1']}>
-                    {ambitions.slice(0, 2).map((text, index) => {
+                    {ambitions.slice(0, 2).map(({ name }, index) => {
                       return (
                         <span
                           key={index}
                           className="uk-label uk-text-lowercase ent-card-ambition"
                         >
-                          {text}
+                          {name}
                         </span>
                       );
                     })}
@@ -372,7 +381,17 @@ const CandidatCard = ({
 CandidatCard.propTypes = {
   url: PropTypes.string.isRequired,
   firstName: PropTypes.string.isRequired,
-  ambitions: PropTypes.arrayOf(PropTypes.string).isRequired,
+  ambitions: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      order: PropTypes.number.isRequired,
+      prefix: PropTypes.oneOf(
+        AMBITIONS_PREFIXES.map(({ value }) => {
+          return value;
+        })
+      ),
+    })
+  ).isRequired,
   locations: PropTypes.arrayOf(PropTypes.string).isRequired,
   imgSrc: PropTypes.string,
   imgAlt: PropTypes.string.isRequired,

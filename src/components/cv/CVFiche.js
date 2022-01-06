@@ -18,6 +18,7 @@ import TAGS from 'src/constants/tags';
 import { usePostOpportunity, useUpdateSharesCount } from 'src/hooks';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
+import { AMBITIONS_PREFIXES } from 'src/constants';
 
 /**
  * Le cv en public et en preview
@@ -57,6 +58,13 @@ const CVFiche = ({ cv, actionDisabled }) => {
   };
 
   const experiences = sortExperiences(cv.experiences);
+
+  const ambitions =
+    cv.ambitions && cv.ambitions.length > 0
+      ? cv.ambitions.sort((a, b) => {
+          return a.order - b.order;
+        })
+      : null;
 
   const shareSection = (
     <div className="uk-flex uk-flex-column uk-flex-middle">
@@ -198,12 +206,13 @@ const CVFiche = ({ cv, actionDisabled }) => {
               </div>
             )}
             {/* uk-text-emphasis uk-text-bold */}
-            {cv.ambitions && cv.ambitions.length > 0 && (
+            {ambitions && (
               <h4
                 className="uk-width-xxlarge uk-margin-auto"
                 style={{ fontWeight: 500 }}
               >
-                J&apos;aimerais beaucoup travailler dans{' '}
+                J&apos;aimerais travailler{' '}
+                {ambitions[0].prefix || AMBITIONS_PREFIXES[0].label}{' '}
                 <span
                   className="uk-label uk-text-lowercase"
                   style={{
@@ -212,12 +221,14 @@ const CVFiche = ({ cv, actionDisabled }) => {
                     fontSize: 'inherit',
                   }}
                 >
-                  {cv.ambitions[0]}
+                  {ambitions[0].name || ambitions[0]}
                 </span>
-                {cv.ambitions.length > 1 ? (
+                {ambitions.length > 1 ? (
                   <>
                     {' '}
-                    ou{' '}
+                    {ambitions[0].prefix === ambitions[1].prefix
+                      ? 'ou'
+                      : `${ambitions[1].prefix || ambitions[1].prefix}`}{' '}
                     <span
                       className="uk-label uk-text-lowercase"
                       style={{
@@ -226,20 +237,11 @@ const CVFiche = ({ cv, actionDisabled }) => {
                         fontSize: 'inherit',
                       }}
                     >
-                      {cv.ambitions[1]}
+                      {ambitions[1].name || ambitions[1]}
                     </span>
                   </>
                 ) : (
                   ''
-                )}
-                {cv.careerPathOpen ? (
-                  <>
-                    {` mais reste ${
-                      cv.user.candidat.gender === 1 ? 'ouverte' : 'ouvert'
-                    } à toutes autres propositions.`}
-                  </>
-                ) : (
-                  '.'
                 )}
               </h4>
             )}
