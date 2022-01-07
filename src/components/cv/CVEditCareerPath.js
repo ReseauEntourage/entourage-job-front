@@ -6,14 +6,11 @@ import ButtonIcon from 'src/components/utils/ButtonIcon';
 import { Grid } from 'src/components/utils';
 import { openModal } from 'src/components/modals/Modal';
 import { AMBITIONS_PREFIXES } from 'src/constants';
+import { getAmbitionsLinkingSentence, sortByOrder } from 'src/utils';
 
 const CVEditCareerPath = ({ ambitions, onChange }) => {
   const sortedAmbitions =
-    ambitions && ambitions.length > 0
-      ? ambitions.sort((a, b) => {
-          return a.order - b.order;
-        })
-      : null;
+    ambitions && ambitions.length > 0 ? sortByOrder(ambitions) : null;
 
   const defaultValues = sortedAmbitions?.reduce((acc, curr, index) => {
     return {
@@ -79,10 +76,7 @@ const CVEditCareerPath = ({ ambitions, onChange }) => {
           <span className="uk-text-primary">{sortedAmbitions[0].name}</span>
           {sortedAmbitions && sortedAmbitions.length > 1 && (
             <>
-              {' '}
-              {sortedAmbitions[0].prefix === sortedAmbitions[1].prefix
-                ? 'ou'
-                : `${sortedAmbitions[1].prefix}`}{' '}
+              {getAmbitionsLinkingSentence(sortedAmbitions)}
               <span className="uk-text-primary">{sortedAmbitions[1].name}</span>
             </>
           )}

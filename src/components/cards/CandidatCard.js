@@ -18,6 +18,7 @@ import moment from 'moment';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
 import { AMBITIONS_PREFIXES } from 'src/constants';
+import { sortByOrder } from 'src/utils';
 
 const CandidatCard = ({
   url,
@@ -52,11 +53,7 @@ const CandidatCard = ({
   const title = `LinkedOut\xa0: Aidez ${firstName} à retrouver un emploi`;
 
   const sortedAmbitions =
-    ambitions && ambitions.length > 0
-      ? ambitions.sort((a, b) => {
-          return a.order - b.order;
-        })
-      : null;
+    ambitions && ambitions.length > 0 ? sortByOrder(ambitions) : null;
 
   const { incrementSharesCount } = useContext(SharesCountContext);
 

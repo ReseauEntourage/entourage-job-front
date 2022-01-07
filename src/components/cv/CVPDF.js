@@ -7,23 +7,20 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 import {
   addPrefix,
   formatParagraph,
-  sortExperiences,
-  sortReviews,
+  sortByOrder,
+  sortByName,
+  getAmbitionsLinkingSentence,
 } from 'src/utils';
 import { AMBITIONS_PREFIXES } from 'src/constants';
 
 const CVPDF = ({ cv, page }) => {
   const experiences =
     cv.experiences && cv.experiences.length > 0
-      ? sortExperiences(cv.experiences)
+      ? sortByOrder(cv.experiences)
       : [];
 
   const ambitions =
-    cv.ambitions && cv.ambitions.length > 0
-      ? cv.ambitions.sort((a, b) => {
-          return a.order - b.order;
-        })
-      : null;
+    cv.ambitions && cv.ambitions.length > 0 ? sortByOrder(cv.ambitions) : null;
 
   // Function to estimate where to divide the experiences between both pages
   const averageCharsPerLine = 59;
@@ -126,12 +123,9 @@ const CVPDF = ({ cv, page }) => {
                   >
                     {ambitions[0].name || ambitions[0]}
                   </span>
-                  {ambitions.length > 1 ? (
+                  {ambitions.length > 1 && (
                     <>
-                      {' '}
-                      {ambitions[0].prefix === ambitions[1].prefix
-                        ? 'ou'
-                        : `${ambitions[1].prefix || ambitions[1].prefix}`}{' '}
+                      {getAmbitionsLinkingSentence(ambitions)}
                       <span
                         className="uk-label uk-text-lowercase"
                         style={{
@@ -143,8 +137,6 @@ const CVPDF = ({ cv, page }) => {
                         {ambitions[1].name || ambitions[1]}
                       </span>
                     </>
-                  ) : (
-                    ''
                   )}
                 </p>
               )}
@@ -376,7 +368,7 @@ const CVPDF = ({ cv, page }) => {
                     </h5>
                     <hr className="uk-divider-small uk-margin-remove-top" />
                     <ul className="uk-list uk-margin-remove-bottom">
-                      {sortReviews(cv.reviews).map((review, i) => {
+                      {sortByName(cv.reviews).map((review, i) => {
                         return (
                           <li key={i}>
                             <IconNoSSR

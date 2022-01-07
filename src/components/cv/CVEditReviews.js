@@ -5,14 +5,14 @@ import ModalEdit from 'src/components/modals/ModalEdit';
 import schemaTestimonial from 'src/components/forms/schema/formEditTestimonial.json';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
 import ModalConfirm from 'src/components/modals/ModalConfirm';
-import { formatParagraph, sortReviews } from 'src/utils';
+import { formatParagraph, sortByName } from 'src/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
 
 const CVEditReviews = ({ reviews, onChange }) => {
   const MAX_REVIEWS = 3;
 
-  const sortedReviews = sortReviews(reviews);
+  const sortedReviews = sortByName(reviews);
 
   return (
     <div className="uk-card uk-card-default uk-card-body">

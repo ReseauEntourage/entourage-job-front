@@ -8,7 +8,7 @@ import schemaformEditExperience from 'src/components/forms/schema/formEditExperi
 import { Grid } from 'src/components/utils';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
 import ModalConfirm from 'src/components/modals/ModalConfirm';
-import { formatParagraph, sortExperiences } from 'src/utils';
+import { formatParagraph, sortByOrder } from 'src/utils';
 import { openModal } from 'src/components/modals/Modal';
 
 const Experience = SortableElement(
@@ -114,7 +114,7 @@ const ExperienceList = SortableContainer(({ items, onChange, updateOrder }) => {
 });
 
 const ExperiencesProfileCard = ({ experiences, onChange }) => {
-  const sortedExperiences = sortExperiences(experiences);
+  const sortedExperiences = sortByOrder(experiences);
 
   const updateExperiencesOrder = (reorderedExperiences) => {
     const newExperiencesList = [];

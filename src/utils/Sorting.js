@@ -1,4 +1,4 @@
-const sortExperiences = (list) => {
+const sortByOrder = (list) => {
   const listToSort = JSON.parse(JSON.stringify(list));
   listToSort.sort((a, b) => {
     return a.order < b.order ? -1 : 1;
@@ -6,7 +6,7 @@ const sortExperiences = (list) => {
   return listToSort;
 };
 
-const sortReviews = (list) => {
+const sortByName = (list) => {
   const listToSort = JSON.parse(JSON.stringify(list));
   listToSort.sort((a, b) => {
     return a.name.localeCompare(b.name) < 0 ? -1 : 1;
@@ -14,4 +14,4 @@ const sortReviews = (list) => {
   return listToSort;
 };
 
-export { sortExperiences, sortReviews };
+export { sortByOrder, sortByName };
