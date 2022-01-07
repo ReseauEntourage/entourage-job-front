@@ -38,6 +38,8 @@ const NewsletterPartial = ({ style, padding, tag }) => {
           'success'
         );
         setEmail('');
+        setZone();
+        setStatus();
       } catch {
         UIkit.notification('Une erreur est survenue', 'danger');
       }
