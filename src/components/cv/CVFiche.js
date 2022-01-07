@@ -43,8 +43,6 @@ const CVFiche = ({ cv, actionDisabled }) => {
     },
   });
 
-  console.log(cv);
-
   const router = useRouter();
   const hostname = process.env.SERVER_URL;
   const path = router.asPath.includes('?')

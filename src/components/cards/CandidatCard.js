@@ -195,10 +195,11 @@ const CandidatCard = ({
                     Je souhaite
                     <br />
                     travailler{' '}
-                    {ambitions[0].prefix || AMBITIONS_PREFIXES[0].label}&nbsp;:
+                    {sortedAmbitions[0].prefix || AMBITIONS_PREFIXES[0].label}
+                    &nbsp;:
                   </p>
                   <Grid column gap="collapse" childWidths={['1-1']}>
-                    {ambitions.slice(0, 2).map(({ name }, index) => {
+                    {sortedAmbitions.slice(0, 2).map(({ name }, index) => {
                       return (
                         <span
                           key={index}
