@@ -12,12 +12,18 @@ import { Grid, Img, SimpleLink } from 'src/components/utils';
 
 import ModalShareCV from 'src/components/modals/ModalShareCV';
 import Button from 'src/components/utils/Button';
-import { formatParagraph, sortExperiences, sortReviews } from 'src/utils';
+import {
+  formatParagraph,
+  sortByOrder,
+  sortByName,
+  getAmbitionsLinkingSentence,
+} from 'src/utils';
 import { event } from 'src/lib/gtag';
 import TAGS from 'src/constants/tags';
 import { usePostOpportunity, useUpdateSharesCount } from 'src/hooks';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
+import { AMBITIONS_PREFIXES } from 'src/constants';
 
 /**
  * Le cv en public et en preview
@@ -36,6 +42,8 @@ const CVFiche = ({ cv, actionDisabled }) => {
       isPublic: false,
     },
   });
+
+  console.log(cv);
 
   const router = useRouter();
   const hostname = process.env.SERVER_URL;
@@ -56,7 +64,10 @@ const CVFiche = ({ cv, actionDisabled }) => {
     openModal(<ModalShareCV firstName={cv.user.candidat.firstName} />);
   };
 
-  const experiences = sortExperiences(cv.experiences);
+  const experiences = sortByOrder(cv.experiences);
+
+  const ambitions =
+    cv.ambitions && cv.ambitions.length > 0 ? sortByOrder(cv.ambitions) : null;
 
   const shareSection = (
     <div className="uk-flex uk-flex-column uk-flex-middle">
@@ -198,12 +209,13 @@ const CVFiche = ({ cv, actionDisabled }) => {
               </div>
             )}
             {/* uk-text-emphasis uk-text-bold */}
-            {cv.ambitions && cv.ambitions.length > 0 && (
+            {ambitions && (
               <h4
                 className="uk-width-xxlarge uk-margin-auto"
                 style={{ fontWeight: 500 }}
               >
-                J&apos;aimerais beaucoup travailler dans{' '}
+                J&apos;aimerais travailler{' '}
+                {ambitions[0].prefix || AMBITIONS_PREFIXES[0].label}{' '}
                 <span
                   className="uk-label uk-text-lowercase"
                   style={{
@@ -212,12 +224,11 @@ const CVFiche = ({ cv, actionDisabled }) => {
                     fontSize: 'inherit',
                   }}
                 >
-                  {cv.ambitions[0]}
+                  {ambitions[0].name || ambitions[0]}
                 </span>
-                {cv.ambitions.length > 1 ? (
+                {ambitions.length > 1 && (
                   <>
-                    {' '}
-                    ou{' '}
+                    {getAmbitionsLinkingSentence(ambitions)}
                     <span
                       className="uk-label uk-text-lowercase"
                       style={{
@@ -226,20 +237,9 @@ const CVFiche = ({ cv, actionDisabled }) => {
                         fontSize: 'inherit',
                       }}
                     >
-                      {cv.ambitions[1]}
+                      {ambitions[1].name || ambitions[1]}
                     </span>
                   </>
-                ) : (
-                  ''
-                )}
-                {cv.careerPathOpen ? (
-                  <>
-                    {` mais reste ${
-                      cv.user.candidat.gender === 1 ? 'ouverte' : 'ouvert'
-                    } à toutes autres propositions.`}
-                  </>
-                ) : (
-                  '.'
                 )}
               </h4>
             )}
@@ -315,7 +315,7 @@ const CVFiche = ({ cv, actionDisabled }) => {
                   </h3>
                   <hr className="uk-divider-small uk-margin-remove-top" />
                   <Grid gap="small" column>
-                    {sortReviews(cv.reviews).map((review, i) => {
+                    {sortByName(cv.reviews).map((review, i) => {
                       return (
                         <div key={i}>
                           <Grid gap="small" column>

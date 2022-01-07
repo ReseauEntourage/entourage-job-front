@@ -12,7 +12,12 @@ import ButtonPost from 'src/components/backoffice/cv/ButtonPost';
 import ErrorMessage from 'src/components/backoffice/cv/ErrorMessage';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 
-import { CV_STATUS, SOCKETS, USER_ROLES } from 'src/constants';
+import {
+  AMBITIONS_PREFIXES,
+  CV_STATUS,
+  SOCKETS,
+  USER_ROLES,
+} from 'src/constants';
 import NoCV from 'src/components/backoffice/cv/NoCV';
 import ButtonDownload from 'src/components/backoffice/cv/ButtonDownload';
 import { openModal, useModalContext } from 'src/components/modals/Modal';
@@ -50,9 +55,18 @@ ModalPreview.propTypes = {
     locations: PropTypes.arrayOf(PropTypes.string),
     availability: PropTypes.string,
     urlImg: PropTypes.string,
-    careerPathOpen: PropTypes.bool,
     contracts: PropTypes.arrayOf(PropTypes.string),
-    ambitions: PropTypes.arrayOf(PropTypes.string),
+    ambitions: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        order: PropTypes.number.isRequired,
+        prefix: PropTypes.oneOf(
+          AMBITIONS_PREFIXES.map(({ value }) => {
+            return value;
+          })
+        ),
+      })
+    ),
     languages: PropTypes.arrayOf(PropTypes.string),
     transport: PropTypes.string,
     skills: PropTypes.arrayOf(PropTypes.string),
@@ -373,7 +387,6 @@ const CVPageContent = ({ candidatId }) => {
         </Grid>
       </Grid>
       <CVFicheEdition
-        gender={cv.user.candidat.gender}
         email={cv.email || cv.user.candidat.email}
         phone={cv.phone || cv.user.candidat.phone}
         address={cv.address || cv.user.candidat.address}

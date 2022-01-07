@@ -14,4 +14,15 @@ const formatParagraph = (text, condense) => {
   return text;
 };
 
-export { formatParagraph };
+const getAmbitionsLinkingSentence = (ambitions) => {
+  return (
+    <>
+      {' '}
+      {ambitions[0].prefix === ambitions[1].prefix
+        ? 'ou'
+        : `${ambitions[1].prefix || ambitions[1].prefix}`}{' '}
+    </>
+  );
+};
+
+export { formatParagraph, getAmbitionsLinkingSentence };

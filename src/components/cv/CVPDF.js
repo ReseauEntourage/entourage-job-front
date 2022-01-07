@@ -7,15 +7,20 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 import {
   addPrefix,
   formatParagraph,
-  sortExperiences,
-  sortReviews,
+  sortByOrder,
+  sortByName,
+  getAmbitionsLinkingSentence,
 } from 'src/utils';
+import { AMBITIONS_PREFIXES } from 'src/constants';
 
 const CVPDF = ({ cv, page }) => {
   const experiences =
     cv.experiences && cv.experiences.length > 0
-      ? sortExperiences(cv.experiences)
+      ? sortByOrder(cv.experiences)
       : [];
+
+  const ambitions =
+    cv.ambitions && cv.ambitions.length > 0 ? sortByOrder(cv.ambitions) : null;
 
   // Function to estimate where to divide the experiences between both pages
   const averageCharsPerLine = 59;
@@ -104,9 +109,10 @@ const CVPDF = ({ cv, page }) => {
                 </div>
               )}
               {/* uk-text-emphasis uk-text-bold */}
-              {cv.ambitions && cv.ambitions.length > 0 && (
+              {ambitions && (
                 <p className="uk-text-bold uk-width-xxlarge uk-text-center uk-margin-small-bottom uk-margin-remove-top">
-                  J&apos;aimerais beaucoup travailler dans{' '}
+                  J&apos;aimerais travailler{' '}
+                  {ambitions[0].prefix || AMBITIONS_PREFIXES[0].label}{' '}
                   <span
                     className="uk-label uk-text-lowercase"
                     style={{
@@ -115,12 +121,11 @@ const CVPDF = ({ cv, page }) => {
                       fontSize: 'inherit',
                     }}
                   >
-                    {cv.ambitions[0]}
+                    {ambitions[0].name || ambitions[0]}
                   </span>
-                  {cv.ambitions.length > 1 ? (
+                  {ambitions.length > 1 && (
                     <>
-                      {' '}
-                      ou{' '}
+                      {getAmbitionsLinkingSentence(ambitions)}
                       <span
                         className="uk-label uk-text-lowercase"
                         style={{
@@ -129,20 +134,9 @@ const CVPDF = ({ cv, page }) => {
                           fontSize: 'inherit',
                         }}
                       >
-                        {cv.ambitions[1]}
+                        {ambitions[1].name || ambitions[1]}
                       </span>
                     </>
-                  ) : (
-                    ''
-                  )}
-                  {cv.careerPathOpen ? (
-                    <>
-                      {` mais reste ${
-                        cv.user.candidat.gender === 1 ? 'ouverte' : 'ouvert'
-                      } à toutes autres propositions.`}
-                    </>
-                  ) : (
-                    '.'
                   )}
                 </p>
               )}
@@ -374,7 +368,7 @@ const CVPDF = ({ cv, page }) => {
                     </h5>
                     <hr className="uk-divider-small uk-margin-remove-top" />
                     <ul className="uk-list uk-margin-remove-bottom">
-                      {sortReviews(cv.reviews).map((review, i) => {
+                      {sortByName(cv.reviews).map((review, i) => {
                         return (
                           <li key={i}>
                             <IconNoSSR
