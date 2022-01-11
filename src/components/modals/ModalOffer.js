@@ -7,8 +7,7 @@ import ButtonIcon from 'src/components/utils/ButtonIcon';
 import { IconNoSSR } from 'src/components/utils/Icon';
 
 import Api from 'src/Axios';
-import { OFFER_STATUS } from 'src/constants';
-import { formatParagraph } from 'src/utils';
+import { formatParagraph, mutateDefaultOfferStatus } from 'src/utils';
 import ModalOfferInfo from 'src/components/modals/ModalOfferInfo';
 import ModalGeneric from 'src/components/modals/ModalGeneric';
 
@@ -78,7 +77,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
   const [loading, setLoading] = useState(false);
 
   const [offer, setOffer] = useState(currentOffer);
-  const { status, bookmarked, note, archived } = offer?.userOpportunity ?? {};
+  const { status, bookmarked, note, archived } = offer?.userOpportunity || {};
   const [noteBuffer, setNoteBuffer] = useState(note);
 
   const updateOpportunityUser = async (opportunityUser) => {
@@ -102,13 +101,10 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
     return null;
   }
 
-  const mutatedOfferStatus = [
-    {
-      ...OFFER_STATUS[0],
-      label: offer.isPublic ? OFFER_STATUS[0].alt : OFFER_STATUS[0].label,
-    },
-    ...OFFER_STATUS.slice(1),
-  ];
+  const mutatedOfferStatus = mutateDefaultOfferStatus(
+    offer,
+    offer.userOpportunity
+  );
 
   return (
     <ModalGeneric
@@ -123,6 +119,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
           <ModalOfferInfo
             startOfContract={offer.startOfContract}
             isPublic={offer.isPublic}
+            isRecommended={offer.userOpportunity.recommended}
             numberOfPositions={offer.numberOfPositions}
             contract={offer.contract}
             date={offer.date}
@@ -328,6 +325,7 @@ ModalOffer.propTypes = {
     userOpportunity: PropTypes.shape({
       status: PropTypes.number,
       bookmarked: PropTypes.bool,
+      recommended: PropTypes.bool,
       note: PropTypes.string,
       archived: PropTypes.bool,
     }),

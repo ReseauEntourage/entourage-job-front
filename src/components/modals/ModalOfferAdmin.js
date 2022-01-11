@@ -14,7 +14,7 @@ import { List, OfferInfoContainer } from 'src/components/modals/ModalOffer';
 import {
   findOfferStatus,
   formatParagraph,
-  getUserOpportunityFromOffer,
+  mutateDefaultOfferStatus,
   mutateFormSchema,
 } from 'src/utils';
 import { OFFER_STATUS } from 'src/constants';
@@ -22,12 +22,35 @@ import ModalOfferInfo from 'src/components/modals/ModalOfferInfo';
 import ModalGeneric from 'src/components/modals/ModalGeneric';
 import { useModalContext } from 'src/components/modals/Modal';
 
+const getCandidatesToShowInInput = (offer) => {
+  if (offer.userOpportunity && offer.userOpportunity.length > 0) {
+    if (offer.isPublic) {
+      return offer.userOpportunity
+        .filter((userOpp) => {
+          return userOpp.recommended;
+        })
+        .map((userOpp) => {
+          return {
+            value: userOpp.User.id,
+            label: `${userOpp.User.firstName} ${userOpp.User.lastName}`,
+          };
+        });
+    }
+    return offer.userOpportunity.map((userOpp) => {
+      return {
+        value: userOpp.User.id,
+        label: `${userOpp.User.firstName} ${userOpp.User.lastName}`,
+      };
+    });
+  }
+  return undefined;
+};
+
 const ModalOfferAdmin = ({
   currentOffer,
   onOfferUpdated,
   duplicateOffer,
   navigateBackToList,
-  selectedCandidateId,
 }) => {
   const { onClose } = useModalContext();
   const [error, setError] = useState(false);
@@ -68,7 +91,7 @@ const ModalOfferAdmin = ({
     setLoading(true);
     try {
       const { data } = await Api.put(`/opportunity/`, opportunity);
-      await setOffer(data);
+      setOffer(data);
       await onOfferUpdated();
     } catch (err) {
       setError(true);
@@ -78,8 +101,31 @@ const ModalOfferAdmin = ({
   };
 
   const updateOpportunityUser = async (opportunityUser) => {
-    await Api.put(`/opportunity/join`, opportunityUser);
-    await onOfferUpdated();
+    setError(false);
+    try {
+      const { data } = await Api.put(`/opportunity/join`, opportunityUser);
+      setOffer((prevOffer) => {
+        return {
+          ...prevOffer,
+          userOpportunity: Array.isArray(offer.userOpportunity)
+            ? [
+                ...offer.userOpportunity.filter((userOpp) => {
+                  return userOpp.UserId !== data.UserId;
+                }),
+                {
+                  ...offer.userOpportunity.find((userOpp) => {
+                    return userOpp.UserId === data.UserId;
+                  }),
+                  ...data,
+                },
+              ]
+            : data,
+        };
+      });
+      await onOfferUpdated();
+    } catch (err) {
+      setError(true);
+    }
   };
 
   useEffect(() => {
@@ -115,38 +161,25 @@ const ModalOfferAdmin = ({
             formSchema={mutatedSchema}
             defaultValues={{
               ...offer,
-              candidatesId:
-                !offer.isPublic &&
-                offer.userOpportunity &&
-                offer.userOpportunity.length > 0
-                  ? offer.userOpportunity.map((userOpp) => {
-                      return {
-                        value: userOpp.User.id,
-                        label: `${userOpp.User.firstName} ${userOpp.User.lastName}`,
-                      };
-                    })
-                  : undefined,
+              candidatesId: getCandidatesToShowInInput(offer),
             }}
             onCancel={() => {
               return setIsEditing(false);
             }}
-            onSubmit={(fields) => {
+            onSubmit={async (fields) => {
               const tmpOpportunity = {
                 ...offer,
                 ...fields,
                 message: fields.isPublic ? null : fields.message,
                 startOfContract: fields.startOfContract || null,
                 endOfContract: fields.endOfContract || null,
-                candidatesId:
-                  !fields.isPublic && fields.candidatesId
-                    ? fields.candidatesId.map((candidateId) => {
-                        return typeof candidateId === 'object'
-                          ? candidateId.value
-                          : candidateId;
-                      })
-                    : null,
+                candidatesId: fields.candidatesId?.map((candidateId) => {
+                  return typeof candidateId === 'object'
+                    ? candidateId.value
+                    : candidateId;
+                }),
               };
-              updateOpportunity(tmpOpportunity);
+              await updateOpportunity(tmpOpportunity);
               setIsEditing(false);
             }}
             submitText="Mettre à jour"
@@ -157,26 +190,17 @@ const ModalOfferAdmin = ({
 
     const getUsersToShow = () => {
       if (Array.isArray(offer.userOpportunity)) {
-        if (selectedCandidateId) {
-          return [getUserOpportunityFromOffer(offer, selectedCandidateId)];
-        }
         if (offer.isPublic) {
           return offer.userOpportunity.filter((userOpp) => {
-            return userOpp.status !== OFFER_STATUS[0].value;
+            return (
+              userOpp.status !== OFFER_STATUS[0].value || userOpp.recommended
+            );
           });
         }
         return offer.userOpportunity;
       }
       return [offer.userOpportunity];
     };
-
-    const mutatedOfferStatus = [
-      {
-        ...OFFER_STATUS[0],
-        label: offer.isPublic ? OFFER_STATUS[0].alt : OFFER_STATUS[0].label,
-      },
-      ...OFFER_STATUS.slice(1),
-    ];
 
     // view
     return (
@@ -278,78 +302,109 @@ const ModalOfferAdmin = ({
             {offer.userOpportunity && (
               <OfferInfoContainer
                 icon="users"
-                title={`${
-                  offer.isPublic ? 'Statut pour' : 'Candidat(s) lié(s)'
-                }`}
+                title={offer.isPublic ? 'Statut pour' : 'Candidat(s) lié(s)'}
               >
                 <div className="uk-height-max-medium uk-overflow-auto">
-                  {getUsersToShow().map((userOpp) => {
-                    if (userOpp.User) {
-                      const offerStatus = findOfferStatus(userOpp.status);
+                  {getUsersToShow()
+                    .sort((a, b) => {
+                      return a.User.firstName.localeCompare(b.User.firstName);
+                    })
+                    .map((userOpp) => {
+                      if (userOpp.User) {
+                        const offerStatus = findOfferStatus(userOpp.status);
 
-                      return (
-                        <div
-                          key={userOpp.OpportunityId + userOpp.User.id}
-                          className="uk-flex uk-flex-column"
-                          style={{ marginTop: 5 }}
-                        >
-                          <SimpleLink
-                            as={`/backoffice/admin/membres/${userOpp.User.id}`}
-                            href="/backoffice/admin/membres/[id]"
-                            className="uk-link-muted"
-                            target="_blank"
+                        return (
+                          <div
+                            key={userOpp.OpportunityId + userOpp.User.id}
+                            className="uk-flex uk-flex-column"
+                            style={{ marginTop: 5 }}
                           >
-                            <span>
-                              {`${userOpp.User.firstName} ${userOpp.User.lastName}`}
-                              &nbsp;
-                            </span>
-                            <IconNoSSR name="link" ratio={0.8} />
-                          </SimpleLink>
-                          <div uk-form-custom="target: true">
-                            <select
-                              className="uk-select"
-                              onChange={(event) => {
-                                setLoading(true);
-                                const userOpportunity = userOpp;
-                                userOpportunity.status = Number(
-                                  event.target.value
-                                );
-                                updateOpportunityUser(userOpportunity);
-                                setLoading(false);
-                              }}
-                              value={userOpp.status}
-                              style={{
-                                height: 'auto',
-                              }}
+                            <SimpleLink
+                              as={`/backoffice/admin/membres/${userOpp.User.id}`}
+                              href="/backoffice/admin/membres/[id]"
+                              className="uk-link-muted uk-flex uk-flex-middle"
+                              target="_blank"
                             >
-                              {mutatedOfferStatus.map((item, i) => {
-                                return (
-                                  <option value={item.value} key={i}>
-                                    {item.label}
-                                  </option>
-                                );
-                              })}
-                            </select>
-                            <div className="uk-flex uk-flex-middle">
-                              <span
-                                className={`uk-text-meta uk-text-${offerStatus.color}`}
-                              >
-                                {offer.isPublic && offerStatus.alt
-                                  ? offerStatus.alt
-                                  : offerStatus.label}
+                              <span className="uk-flex-1">
+                                {`${userOpp.User.firstName} ${userOpp.User.lastName}`}
+                                &nbsp;
                               </span>
-                              <IconNoSSR
-                                ratio={0.8}
-                                className="uk-margin-small-left uk-text-muted"
-                                name="triangle-down"
-                              />
+                              <div className="uk-flex-right">
+                                {userOpp.bookmarked && (
+                                  <IconNoSSR
+                                    name="star"
+                                    ratio={0.8}
+                                    className="ent-color-amber"
+                                  />
+                                )}
+                                {userOpp.archived && (
+                                  <IconNoSSR
+                                    name="archive"
+                                    ratio={0.8}
+                                    className="ent-color-amber"
+                                  />
+                                )}
+                                {offer.isPublic && userOpp.recommended && (
+                                  <IconNoSSR
+                                    name="bolt"
+                                    ratio={0.8}
+                                    className="ent-color-amber"
+                                  />
+                                )}
+                              </div>
+                            </SimpleLink>
+                            <div uk-form-custom="target: true">
+                              <select
+                                className="uk-select"
+                                onChange={async (event) => {
+                                  await updateOpportunityUser({
+                                    ...userOpp,
+                                    status: Number(event.target.value),
+                                  });
+                                }}
+                                value={userOpp.status}
+                                style={{
+                                  height: 'auto',
+                                }}
+                              >
+                                {mutateDefaultOfferStatus(offer, userOpp).map(
+                                  (item, i) => {
+                                    return (
+                                      <option value={item.value} key={i}>
+                                        {item.label}
+                                      </option>
+                                    );
+                                  }
+                                )}
+                              </select>
+                              <div className="uk-flex uk-flex-middle">
+                                <span
+                                  className={`uk-text-meta uk-text-${offerStatus.color}`}
+                                >
+                                  {offer.isPublic &&
+                                  offerStatus.recommended &&
+                                  offerStatus.public ? (
+                                    <>
+                                      {userOpp.recommended
+                                        ? offerStatus.recommended
+                                        : offerStatus.public}
+                                    </>
+                                  ) : (
+                                    offerStatus.label
+                                  )}
+                                </span>
+                                <IconNoSSR
+                                  ratio={0.8}
+                                  className="uk-margin-small-left uk-text-muted"
+                                  name="triangle-down"
+                                />
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      );
-                    }
-                    return undefined;
-                  })}
+                        );
+                      }
+                      return undefined;
+                    })}
                 </div>
               </OfferInfoContainer>
             )}
@@ -391,8 +446,8 @@ const ModalOfferAdmin = ({
           {!offer.isArchived ? (
             <Button
               style="default"
-              onClick={() => {
-                return updateOpportunity({
+              onClick={async () => {
+                await updateOpportunity({
                   ...offer,
                   isValidated: false,
                   isArchived: true,
@@ -404,8 +459,8 @@ const ModalOfferAdmin = ({
           ) : (
             <Button
               style="default"
-              onClick={() => {
-                return updateOpportunity({
+              onClick={async () => {
+                await updateOpportunity({
                   ...offer,
                   isValidated: false,
                   isArchived: false,
@@ -418,8 +473,8 @@ const ModalOfferAdmin = ({
           {!offer.isValidated && (
             <Button
               style="primary"
-              onClick={() => {
-                return updateOpportunity({
+              onClick={async () => {
+                await updateOpportunity({
                   ...offer,
                   isValidated: true,
                   isArchived: false,
@@ -473,6 +528,7 @@ ModalOfferAdmin.propTypes = {
       PropTypes.shape({
         status: PropTypes.number,
         bookmarked: PropTypes.bool,
+        recommended: PropTypes.bool,
         note: PropTypes.string,
         archived: PropTypes.bool,
         User: PropTypes.shape(),
@@ -492,10 +548,9 @@ ModalOfferAdmin.propTypes = {
   onOfferUpdated: PropTypes.func.isRequired,
   duplicateOffer: PropTypes.func.isRequired,
   navigateBackToList: PropTypes.func.isRequired,
-  selectedCandidateId: PropTypes.string,
 };
+
 ModalOfferAdmin.defaultProps = {
-  selectedCandidateId: undefined,
   currentOffer: { userOpportunity: {}, businessLines: [] },
 };
 

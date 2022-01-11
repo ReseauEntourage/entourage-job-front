@@ -1,3 +1,5 @@
+import { OFFER_STATUS } from 'src/constants';
+
 const mutateFormSchema = (schema, fields, id) => {
   const newSchema = {
     id: id ? schema.id + id : schema.id,
@@ -36,4 +38,23 @@ const mutateFormSchema = (schema, fields, id) => {
   return newSchema;
 };
 
-export { mutateFormSchema };
+const getAlternateDefaultOfferStatus = (offer = {}, userOpportunity = {}) => {
+  if (offer.isPublic && OFFER_STATUS[0].recommended && OFFER_STATUS[0].public) {
+    return userOpportunity.recommended
+      ? OFFER_STATUS[0].recommended
+      : OFFER_STATUS[0].public;
+  }
+  return OFFER_STATUS[0].label;
+};
+
+const mutateDefaultOfferStatus = (offer, userOpportunity) => {
+  return [
+    {
+      ...OFFER_STATUS[0],
+      label: getAlternateDefaultOfferStatus(offer, userOpportunity),
+    },
+    ...OFFER_STATUS.slice(1),
+  ];
+};
+
+export { mutateFormSchema, mutateDefaultOfferStatus };

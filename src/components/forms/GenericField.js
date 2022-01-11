@@ -77,7 +77,7 @@ const GenericField = ({
         id={`${formId}-${data.id}`}
         placeholder={data.placeholder}
         name={data.name}
-        title={data.title}
+        title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
         value={value}
         type={data.type}
         valid={getValid(data.name)}
@@ -95,7 +95,7 @@ const GenericField = ({
       <DatePicker
         id={`${formId}-${data.id}`}
         name={data.name}
-        title={data.title}
+        title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
         value={value}
         valid={getValid(data.name)}
         onChange={onChangeCustom}
@@ -136,7 +136,7 @@ const GenericField = ({
         id={`${formId}-${data.id}`}
         placeholder={data.placeholder}
         name={data.name}
-        title={data.title}
+        title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
         value={valueToUse}
         options={options}
         valid={getValid(data.name)}
@@ -152,7 +152,7 @@ const GenericField = ({
         id={`${formId}-${data.id}`}
         name={data.name}
         row={data.row}
-        title={data.title}
+        title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
         type={data.type}
         value={value}
         placeholder={data.placeholder}
@@ -169,7 +169,7 @@ const GenericField = ({
       <Checkbox
         id={`${formId}-${data.id}`}
         name={data.name}
-        title={data.title}
+        title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
         value={value}
         valid={getValid(data.name)}
         onChange={onChangeCustom}
@@ -225,9 +225,9 @@ const GenericField = ({
           shouldHide ? ' uk-hidden' : ''
         }`}
       >
-        {data.title && (
+        {(data.title || data.dynamicTitle) && (
           <label className="uk-form-label" htmlFor={data.id}>
-            {data.title}
+            {data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
           </label>
         )}
         <AsyncSelect
@@ -270,9 +270,9 @@ const GenericField = ({
           shouldHide ? ' uk-hidden' : ''
         }`}
       >
-        {data.title && (
+        {(data.title || data.dynamicTitle) && (
           <label className="uk-form-label" htmlFor={data.id}>
-            {data.title}
+            {data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
           </label>
         )}
         <ReactSelect
@@ -316,9 +316,9 @@ const GenericField = ({
           shouldHide ? ' uk-hidden' : ''
         }`}
       >
-        {data.title && (
+        {(data.title || data.dynamicTitle) && (
           <label className="uk-form-label" htmlFor={data.id}>
-            {data.title}
+            {data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
           </label>
         )}
         <CreatableSelect

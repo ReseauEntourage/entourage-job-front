@@ -55,8 +55,8 @@ export function useNotifBadges(user, path) {
               setBadges((prevBadges) => {
                 return {
                   ...prevBadges,
-                  members: pendingCVs ?? 0,
-                  offers: pendingOpportunities ?? 0,
+                  members: pendingCVs || 0,
+                  offers: pendingOpportunities || 0,
                 };
               });
             }
@@ -88,7 +88,7 @@ export function useNotifBadges(user, path) {
                 setBadges((prevBadges) => {
                   return {
                     ...prevBadges,
-                    offers: unseenOpportunities ?? 0,
+                    offers: unseenOpportunities || 0,
                     note: noteHasBeenModified ? 1 : 0,
                     cv: cvHasBeenModified ? 1 : 0,
                   };

@@ -77,12 +77,15 @@ const OfferList = ({
                   isValidated={offer.isValidated}
                   isPublic={offer.isPublic}
                   userOpportunity={offer.userOpportunity}
+                  isNew={!offer.userOpportunity || !offer.userOpportunity.seen}
                   archived={
                     offer.userOpportunity && offer.userOpportunity.archived
                   }
-                  isNew={!offer.userOpportunity || !offer.userOpportunity.seen}
-                  isStared={
+                  bookmarked={
                     offer.userOpportunity && offer.userOpportunity.bookmarked
+                  }
+                  recommended={
+                    offer.userOpportunity && offer.userOpportunity.recommended
                   }
                   department={offer.department}
                 />
@@ -238,9 +241,6 @@ const OpportunityList = forwardRef(
                   candidatId
                 );
               }}
-              selectedCandidateId={
-                role === 'candidateAsAdmin' ? candidatId : undefined
-              }
               navigateBackToList={navigateBackToList}
               duplicateOffer={async (closeModal) => {
                 const { id, userOpportunity, ...restOpportunity } = offer;

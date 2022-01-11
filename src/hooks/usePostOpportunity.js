@@ -45,7 +45,7 @@ export function usePostOpportunity({
           ...opportunity,
           startOfContract: opportunity.startOfContract || null,
           endOfContract: opportunity.endOfContract || null,
-          candidatesId: opportunity.isPublic ? null : candidatesId,
+          candidatesId,
           message: opportunity.isPublic ? null : opportunity.message,
           date: Date.now(),
         });
@@ -71,16 +71,15 @@ export function usePostOpportunity({
 
   const modal = useMemo(() => {
     const mutatedDefaultValue = { ...defaultValues };
-    if (!mutatedDefaultValue.isPublic) {
-      mutatedDefaultValue.candidatesId = _.isEmpty(lastFilledForm)
-        ? [
-            {
-              label: `${mutatedDefaultValue.firstName} ${mutatedDefaultValue.lastName}`,
-              value: candidateId,
-            },
-          ]
-        : lastFilledForm.candidatesId;
-    }
+    mutatedDefaultValue.candidatesId = _.isEmpty(lastFilledForm)
+      ? [
+          {
+            label: `${mutatedDefaultValue.firstName} ${mutatedDefaultValue.lastName}`,
+            value: candidateId,
+          },
+        ]
+      : lastFilledForm.candidatesId;
+
     return (
       <ModalEdit
         title={modalTitle}
