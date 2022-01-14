@@ -92,7 +92,7 @@ const OfferCard = ({
                 ratio={0.8}
               />
             )}
-            {(specificUserOpportunity?.archived || archived) && (
+            {(specificUserOpportunity?.archived || (!isAdmin && archived)) && (
               <IconNoSSR
                 name="archive"
                 className="ent-color-amber uk-margin-small-left"

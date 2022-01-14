@@ -23,6 +23,7 @@ import FiltersTabs from 'src/components/utils/FiltersTabs';
 import SearchBar from 'src/components/filters/SearchBar';
 import { openModal } from 'src/components/modals/Modal';
 import { usePrevious } from 'src/hooks/utils';
+import { IconNoSSR } from 'src/components/utils/Icon';
 
 const OfferList = ({
   candidatId,
@@ -66,6 +67,11 @@ const OfferList = ({
                   isValidated={offer.isValidated}
                   department={offer.department}
                   userOpportunity={userOpportunity}
+                  isNew={
+                    role === 'candidateAsAdmin' &&
+                    userOpportunity &&
+                    !userOpportunity.seen
+                  }
                   isAdmin
                 />
               ) : (
@@ -136,6 +142,7 @@ const OpportunityList = forwardRef(
 
     const [numberOfResults, setNumberOfResults] = useState(0);
 
+    const [bookmarkedOffers, setBookmarkedOffers] = useState(undefined);
     const [offers, setOffers] = useState(undefined);
     const [otherOffers, setOtherOffers] = useState(undefined);
     const [hasError, setHasError] = useState(false);
@@ -176,6 +183,7 @@ const OpportunityList = forwardRef(
     const fetchData = useOpportunityList(
       setOffers,
       setOtherOffers,
+      setBookmarkedOffers,
       setNumberOfResults,
       setLoading,
       setHasError
@@ -249,6 +257,7 @@ const OpportunityList = forwardRef(
                   title: `${restOpportunity.title} (copie)`,
                   isAdmin: true,
                   isValidated: false,
+                  date: Date.now(),
                 });
                 closeModal();
                 UIkit.notification("L'offre a bien été dupliquée", 'success');
@@ -334,6 +343,27 @@ const OpportunityList = forwardRef(
         {!loading && hasError && <OpportunityError />}
         {!loading && !hasError && (
           <div>
+            {bookmarkedOffers && bookmarkedOffers.length > 0 && (
+              <>
+                <p className="uk-text-center uk-text-italic uk-padding-small uk-flex uk-flex-middle uk-flex-center">
+                  Opportunités favorites&nbsp;
+                  <IconNoSSR
+                    name="star"
+                    className="ent-color-amber uk-margin-small-left"
+                    ratio={0.8}
+                  />
+                </p>
+                <OfferList
+                  candidatId={candidatId}
+                  query={restQuery}
+                  role={role}
+                  isAdmin={isAdmin}
+                  offers={bookmarkedOffers}
+                  currentPath={currentPath}
+                />
+                <hr />
+              </>
+            )}
             {offers && offers.length > 0 ? (
               <OfferList
                 candidatId={candidatId}

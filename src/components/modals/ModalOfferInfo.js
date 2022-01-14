@@ -95,7 +95,7 @@ ModalOfferInfo.propTypes = {
   offerId: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   isPublic: PropTypes.bool.isRequired,
-  isRecommended: PropTypes.bool.isRequired,
+  isRecommended: PropTypes.bool,
   date: PropTypes.string.isRequired,
   contract: PropTypes.string,
   endOfContract: PropTypes.string,
@@ -106,6 +106,7 @@ ModalOfferInfo.propTypes = {
 
 ModalOfferInfo.defaultProps = {
   contract: undefined,
+  isRecommended: false,
   endOfContract: undefined,
   startOfContract: undefined,
 };
