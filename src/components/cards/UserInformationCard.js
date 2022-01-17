@@ -173,6 +173,7 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
               candidatId={linkedUser.id}
             />
             <ToggleWithConfirmationModal
+              id="hiddenToggle"
               title="Masquer le CV"
               modalTitle="Changer la visibilité du CV en ligne ?"
               modalConfirmation="Oui, masquer le CV"

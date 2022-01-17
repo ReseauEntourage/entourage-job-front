@@ -29,19 +29,6 @@ const Parametres = () => {
   const [loadingPassword, setLoadingPassword] = useState(false);
   const [form, resetForm] = useResetForm();
 
-  useEffect(() => {
-    if (user) {
-      setLoadingPersonal(true);
-      Api.get(`/user/${user.id}`)
-        .then(({ data }) => {
-          setUserData(data);
-        })
-        .finally(() => {
-          return setLoadingPersonal(false);
-        });
-    }
-  }, [user]);
-
   let mutatedSchema = schemaPersonalData;
 
   if (userData) {
@@ -179,6 +166,55 @@ const Parametres = () => {
     }
   }
 
+  useEffect(() => {
+    if (user) {
+      setLoadingPersonal(true);
+      Api.get(`/user/${user.id}`)
+        .then(({ data }) => {
+          setUserData(data);
+        })
+        .finally(() => {
+          return setLoadingPersonal(false);
+        });
+    }
+  }, [user]);
+
+  const updateUser = (newUserData, closeModal) => {
+    if (!_.isEmpty(newUserData)) {
+      setLoadingPersonal(true);
+      Api.put(`/user/${userData.id}`, newUserData)
+        .then(() => {
+          closeModal();
+          setUserData((prevUserData) => {
+            return {
+              ...prevUserData,
+              ...newUserData,
+            };
+          });
+          setUser((prevUser) => {
+            return {
+              ...prevUser,
+              ...newUserData,
+            };
+          });
+          UIkit.notification(
+            'Vos informations personnelles ont bien été mises à jour',
+            'success'
+          );
+        })
+        .catch((err) => {
+          console.error(err);
+          UIkit.notification(
+            "Une erreur c'est produite lors de la mise à jour de vos informations personnelles",
+            'danger'
+          );
+        })
+        .finally(() => {
+          setLoadingPersonal(false);
+        });
+    }
+  };
+
   return (
     <LayoutBackOffice title="Mes Paramètres">
       <Section>
@@ -301,40 +337,6 @@ const Parametres = () => {
                               closeModal,
                               setError
                             ) => {
-                              const updateUser = (newUserData) => {
-                                setLoadingPersonal(true);
-                                Api.put(`/user/${userData.id}`, newUserData)
-                                  .then(() => {
-                                    closeModal();
-                                    setUserData((prevUserData) => {
-                                      return {
-                                        ...prevUserData,
-                                        ...newUserData,
-                                      };
-                                    });
-                                    setUser((prevUser) => {
-                                      return {
-                                        ...prevUser,
-                                        ...newUserData,
-                                      };
-                                    });
-                                    UIkit.notification(
-                                      'Vos informations personnelles ont bien été mises à jour',
-                                      'success'
-                                    );
-                                  })
-                                  .catch((err) => {
-                                    console.error(err);
-                                    UIkit.notification(
-                                      "Une erreur c'est produite lors de la mise à jour de vos informations personnelles",
-                                      'danger'
-                                    );
-                                  })
-                                  .finally(() => {
-                                    return setLoadingPersonal(false);
-                                  });
-                              };
-
                               let newUserData = {};
                               if (userData.role === USER_ROLES.ADMIN) {
                                 newUserData = {
@@ -356,7 +358,7 @@ const Parametres = () => {
                                 ) {
                                   newUserData.email = newEmail0.toLowerCase();
                                 }
-                                updateUser(newUserData);
+                                updateUser(newUserData, closeModal);
                               } else {
                                 if (phone !== userData.phone) {
                                   newUserData.phone = phone;
@@ -380,11 +382,11 @@ const Parametres = () => {
                                     );
                                   } else {
                                     newUserData.email = newEmail0.toLowerCase();
-                                    updateUser(newUserData);
+                                    updateUser(newUserData, closeModal);
                                     setError('');
                                   }
                                 } else {
-                                  updateUser(newUserData);
+                                  updateUser(newUserData, closeModal);
                                 }
                               }
                             }}

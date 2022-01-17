@@ -394,7 +394,7 @@ const OpportunityList = forwardRef(
               <>
                 <hr />
                 <p className="uk-text-center uk-text-italic uk-padding-small">
-                  Voici d&apos;autres offres qui vous ont été adressé hors des
+                  Voici d&apos;autres offres qui vous ont été adressées hors des
                   départements sélectionnés&nbsp;:
                 </p>
                 <OfferList

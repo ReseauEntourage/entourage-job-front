@@ -52,7 +52,7 @@ export default {
         { value: 1, label: 'Femme' },
       ],
     },
-    { title: "Modifier l'adresse mail", component: 'text' },
+    { id: 'mailLabel', title: "Modifier l'adresse mail", component: 'heading' },
     {
       id: 'oldEmail',
       name: 'oldEmail',
