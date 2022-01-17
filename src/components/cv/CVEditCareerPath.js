@@ -51,7 +51,7 @@ const CVEditCareerPath = ({ ambitions, onChange }) => {
                             ...newAmbitions,
                             {
                               prefix:
-                                /* prefix1 */ prefix0 ??
+                                /* prefix1 */ prefix0 ||
                                 AMBITIONS_PREFIXES[0].label,
                               name: careerPath1,
                               order: 1,

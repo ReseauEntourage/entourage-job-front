@@ -1,7 +1,3 @@
-/* eslint-disable camelcase */
-/* eslint-disable default-case */
-/* eslint-disable max-classes-per-file */
-
 import React, {
   forwardRef,
   useCallback,

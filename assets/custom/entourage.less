@@ -286,16 +286,33 @@
   border-radius: 2px;
 }
 
-.ent-offer-badge {
+.hook-ent-offer-badge() {
   position: absolute;
   top: 15px;
   right: -35px;
 
   width: 110px;
-  height: 10px;
+  height: 13px;
 
   background-color: #f55f24;
   transform: rotate(45deg);
+  text-align: center;
+  text-transform: uppercase;
+  color: white;
+  font-weight: bold;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ent-offer-badge{
+  .hook-ent-offer-badge();
+}
+
+.ent-offer-badge-recommandation {
+  .hook-ent-offer-badge();
+  background-color: rgba(72, 72, 72, 0.7)
 }
 
 .ent-employed-container {
@@ -451,6 +468,10 @@
 .uk-offcanvas-bar .uk-button-primary:active {
   background-color: @button-primary-active-background;
   color: @button-primary-active-color;
+}
+
+.uk-offcanvas-bar hr {
+  border-top-color: #e5e5e5;
 }
 
 .hook-icon-button() {

@@ -1,4 +1,4 @@
-/*! UIkit 3.5.4 | https://www.getuikit.com | (c) 2014 - 2021 YOOtheme | MIT License */
+/*! UIkit 3.5.4 | https://www.getuikit.com | (c) 2014 - 2022 YOOtheme | MIT License */
 /* ========================================================================
    Component: Base
  ========================================================================== */
@@ -12633,9 +12633,35 @@ iframe.uk-cover {
   top: 15px;
   right: -35px;
   width: 110px;
-  height: 10px;
+  height: 13px;
   background-color: #f55f24;
   transform: rotate(45deg);
+  text-align: center;
+  text-transform: uppercase;
+  color: white;
+  font-weight: bold;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ent-offer-badge-recommandation {
+  position: absolute;
+  top: 15px;
+  right: -35px;
+  width: 110px;
+  height: 13px;
+  background-color: #f55f24;
+  transform: rotate(45deg);
+  text-align: center;
+  text-transform: uppercase;
+  color: white;
+  font-weight: bold;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(72, 72, 72, 0.7);
 }
 .ent-employed-container {
   position: absolute;
@@ -12752,6 +12778,9 @@ iframe.uk-cover {
 .uk-offcanvas-bar .uk-button-primary:active {
   background-color: #dc450a;
   color: #fff;
+}
+.uk-offcanvas-bar hr {
+  border-top-color: #e5e5e5;
 }
 .light-icon-button {
   color: #f55f24;

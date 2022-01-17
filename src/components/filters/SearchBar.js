@@ -21,10 +21,10 @@ const SearchBar = ({
   placeholder,
   startSearchEvent,
 }) => {
-  const [searchBuffer, setSearchBuffer] = useState(search ?? '');
+  const [searchBuffer, setSearchBuffer] = useState(search || '');
 
   useEffect(() => {
-    setSearchBuffer(search ?? '');
+    setSearchBuffer(search || '');
   }, [search]);
 
   const startSearch = useCallback(() => {
