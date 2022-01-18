@@ -18,11 +18,13 @@ const ResetPasswordPage = () => {
       Api.get(`/auth/reset/${router.query.id}/${router.query.token}`)
         .then(() => {
           setValide(true);
-          setLoading(false);
         })
         .catch(() => {
+          setValide(false);
           console.log('Lien non valide');
-          /* router.push('/login'); */
+        })
+        .finally(() => {
+          setLoading(false);
         });
     }
   });
@@ -30,7 +32,7 @@ const ResetPasswordPage = () => {
   return (
     <Layout title="Réinitialisation de mot de passe - LinkedOut">
       <Section size="large" style="muted">
-        <div className="uk-flex uk-flex-center">
+        <div className="uk-flex uk-flex-center uk-flex-middle">
           {loading && (
             <div className="uk-text-center">
               <div data-uk-spinner />
