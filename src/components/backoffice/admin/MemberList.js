@@ -1,12 +1,9 @@
 /* global UIkit */
 
-import { CV_STATUS, USER_ROLES } from 'src/constants';
-import { Grid, Section, SimpleLink } from 'src/components/utils';
-import ImgProfile from 'src/components/headers/ImgProfile';
-import _ from 'lodash';
+import React, { useCallback, useEffect, useState } from 'react';
 import moment from 'moment';
-import { IconNoSSR } from 'src/components/utils/Icon';
-import React, { useCallback, useState } from 'react';
+import _ from 'lodash';
+
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import useDeepCompareEffect from 'use-deep-compare-effect';
@@ -18,6 +15,12 @@ import SearchBar from 'src/components/filters/SearchBar';
 import { filtersToQueryParams, mutateFormSchema } from 'src/utils';
 import schemaCreateUser from 'src/components/forms/schema/formEditUser';
 import { openModal } from 'src/components/modals/Modal';
+import { usePrevious } from 'src/hooks/utils';
+
+import { CV_STATUS, MEMBER_FILTERS_DATA, USER_ROLES } from 'src/constants';
+import { Grid, Section, SimpleLink } from 'src/components/utils';
+import ImgProfile from 'src/components/headers/ImgProfile';
+import { IconNoSSR } from 'src/components/utils/Icon';
 
 const translateStatusCV = (status) => {
   const cvStatus = CV_STATUS[status] ? CV_STATUS[status] : CV_STATUS.Unknown;
@@ -212,13 +215,19 @@ Member.defaultProps = {
 };
 
 const MemberList = ({
-  filtersConst,
   search,
   filters,
   setFilters,
   setSearch,
   resetFilters,
 }) => {
+  const {
+    query: { role, ...restParams },
+  } = useRouter();
+
+  const prevRole = usePrevious(role);
+  const [filtersConst, setFiltersConst] = useState(MEMBER_FILTERS_DATA);
+
   const [numberOfResults, setNumberOfResults] = useState(0);
 
   const [members, setMembers] = useState([]);
@@ -226,10 +235,6 @@ const MemberList = ({
   const [loading, setLoading] = useState(true);
   const [allLoaded, setAllLoaded] = useState(false);
   const [offset, setOffset] = useState(0);
-
-  const {
-    query: { role, ...restParams },
-  } = useRouter();
 
   const mutatedSchema = mutateFormSchema(schemaCreateUser, [
     {
@@ -296,6 +301,17 @@ const MemberList = ({
   useDeepCompareEffect(() => {
     fetchData(search, filters, role, offset, true);
   }, [search, filters, role]);
+
+  useEffect(() => {
+    if (role !== prevRole) {
+      const initialFiltersConst =
+        role === USER_ROLES.COACH
+          ? MEMBER_FILTERS_DATA.slice(0, 2)
+          : MEMBER_FILTERS_DATA;
+
+      setFiltersConst(initialFiltersConst);
+    }
+  }, [prevRole, role]);
 
   return (
     <>
@@ -507,7 +523,6 @@ const MemberList = ({
 MemberList.propTypes = {
   search: PropTypes.string,
   filters: PropTypes.shape(),
-  filtersConst: PropTypes.arrayOf(PropTypes.shape()),
   setFilters: PropTypes.func,
   setSearch: PropTypes.func,
   resetFilters: PropTypes.func,
@@ -516,7 +531,6 @@ MemberList.propTypes = {
 MemberList.defaultProps = {
   search: undefined,
   filters: {},
-  filtersConst: {},
   setFilters: () => {},
   setSearch: () => {},
   resetFilters: () => {},

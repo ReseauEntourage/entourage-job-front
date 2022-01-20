@@ -169,6 +169,7 @@ export default {
     {
       id: 'startEndContract',
       component: 'fieldgroup',
+      childWidths: ['expand', 'expand', '1-4@m'],
       fields: [
         {
           id: 'startOfContract',

@@ -21,6 +21,7 @@ import { OFFER_STATUS } from 'src/constants';
 import ModalOfferInfo from 'src/components/modals/ModalOfferInfo';
 import ModalGeneric from 'src/components/modals/ModalGeneric';
 import { useModalContext } from 'src/components/modals/Modal';
+import formEditExternalOpportunity from 'src/components/forms/schema/formEditExternalOpportunity';
 
 const getCandidatesToShowInInput = (offer) => {
   if (offer.userOpportunity && offer.userOpportunity.length > 0) {
@@ -86,12 +87,21 @@ const ModalOfferAdmin = ({
     adminMutation,
   ]);
 
-  const updateOpportunity = async (opportunity) => {
+  const updateOpportunity = async (opportunity, isExternal) => {
     setError(false);
     setLoading(true);
     try {
-      const { data } = await Api.put(`/opportunity/`, opportunity);
-      setOffer(data);
+      const { data } = await Api.put(
+        `/opportunity/${isExternal ? 'external' : ''}`,
+        opportunity
+      );
+      console.log(data);
+      setOffer({
+        ...data,
+        userOpportunity: isExternal
+          ? [data.userOpportunity]
+          : data.userOpportunity,
+      });
       await onOfferUpdated();
     } catch (err) {
       setError(true);
@@ -157,33 +167,57 @@ const ModalOfferAdmin = ({
       return (
         <div>
           <h3>Modification de l&apos;offre d&apos;emploi</h3>
-          <FormWithValidation
-            formSchema={mutatedSchema}
-            defaultValues={{
-              ...offer,
-              candidatesId: getCandidatesToShowInInput(offer),
-            }}
-            onCancel={() => {
-              return setIsEditing(false);
-            }}
-            onSubmit={async (fields) => {
-              const tmpOpportunity = {
+          {offer.isExternal ? (
+            <FormWithValidation
+              formSchema={formEditExternalOpportunity}
+              defaultValues={{
                 ...offer,
-                ...fields,
-                message: fields.isPublic ? null : fields.message,
-                startOfContract: fields.startOfContract || null,
-                endOfContract: fields.endOfContract || null,
-                candidatesId: fields.candidatesId?.map((candidateId) => {
-                  return typeof candidateId === 'object'
-                    ? candidateId.value
-                    : candidateId;
-                }),
-              };
-              await updateOpportunity(tmpOpportunity);
-              setIsEditing(false);
-            }}
-            submitText="Mettre à jour"
-          />
+              }}
+              onCancel={() => {
+                setIsEditing(false);
+              }}
+              onSubmit={async (fields) => {
+                const tmpOpportunity = {
+                  ...fields,
+                  startOfContract: fields.startOfContract || null,
+                  endOfContract: fields.endOfContract || null,
+                  candidateId: offer.userOpportunity[0].UserId,
+                  id: offer.id,
+                };
+                await updateOpportunity(tmpOpportunity, true);
+                setIsEditing(false);
+              }}
+              submitText="Mettre à jour"
+            />
+          ) : (
+            <FormWithValidation
+              formSchema={mutatedSchema}
+              defaultValues={{
+                ...offer,
+                candidatesId: getCandidatesToShowInInput(offer),
+              }}
+              onCancel={() => {
+                setIsEditing(false);
+              }}
+              onSubmit={async (fields) => {
+                const tmpOpportunity = {
+                  ...offer,
+                  ...fields,
+                  message: fields.isPublic ? null : fields.message,
+                  startOfContract: fields.startOfContract || null,
+                  endOfContract: fields.endOfContract || null,
+                  candidatesId: fields.candidatesId?.map((candidateId) => {
+                    return typeof candidateId === 'object'
+                      ? candidateId.value
+                      : candidateId;
+                  }),
+                };
+                await updateOpportunity(tmpOpportunity);
+                setIsEditing(false);
+              }}
+              submitText="Mettre à jour"
+            />
+          )}
         </div>
       );
     }

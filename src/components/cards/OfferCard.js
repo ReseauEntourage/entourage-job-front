@@ -13,6 +13,7 @@ const OfferCard = ({
   shortDescription,
   bookmarked,
   isNew,
+  isExternal,
   archived,
   recommended,
   isPublic,
@@ -54,11 +55,13 @@ const OfferCard = ({
   const shouldShowRecommandationBadge =
     isPublic && (specificUserOpportunity?.recommended || recommended);
 
+  const background = archived ? 'secondary' : 'default';
+
   return (
     <div
-      className={`ent-offer uk-card uk-card-hover uk-card-body uk-card-${
-        archived ? 'secondary' : 'default'
-      }`}
+      className={`ent-offer uk-card uk-card-hover uk-card-body ${
+        isExternal && !archived ? 'ent-external-offer' : ''
+      } uk-card-${background}`}
     >
       {(isNew || shouldShowRecommandationBadge) && (
         <div
@@ -102,8 +105,8 @@ const OfferCard = ({
           </div>
         </div>
         <Grid gap="small" middle eachWidths={['auto', 'expand']}>
-          <IconNoSSR name="user" />
-          <p>{from}</p>
+          <IconNoSSR name="world" />
+          <p>{shortDescription}</p>
         </Grid>
         {department && (
           <Grid gap="small" middle eachWidths={['auto', 'expand']}>
@@ -111,10 +114,13 @@ const OfferCard = ({
             <p>{department}</p>
           </Grid>
         )}
-        <Grid gap="small" middle eachWidths={['auto', 'expand']}>
-          <IconNoSSR name="world" />
-          <p>{shortDescription}</p>
-        </Grid>
+        {isAdmin && from && (
+          <Grid gap="small" middle eachWidths={['auto', 'expand']}>
+            <IconNoSSR name="user" />
+            <p>{from}</p>
+          </Grid>
+        )}
+
         <Grid gap="small" middle eachWidths={['auto', 'expand']}>
           <IconNoSSR name="info" />
           <div>
@@ -138,7 +144,9 @@ const OfferCard = ({
               </div>
             ) : (
               <div>
-                <p className="uk-margin-remove-bottom">Offre privée</p>
+                <p className="uk-margin-remove-bottom">
+                  {isExternal ? 'Offre externe' : 'Offre privée'}
+                </p>
                 {userOpportunity &&
                   (Array.isArray(userOpportunity)
                     ? userOpportunity.length > 0 &&
@@ -201,6 +209,7 @@ OfferCard.propTypes = {
   recommended: PropTypes.bool,
   isNew: PropTypes.bool,
   isPublic: PropTypes.bool,
+  isExternal: PropTypes.bool,
   date: PropTypes.string,
   userOpportunity: PropTypes.oneOfType([
     PropTypes.shape(),
@@ -217,6 +226,7 @@ OfferCard.defaultProps = {
   recommended: undefined,
   isNew: undefined,
   isPublic: undefined,
+  isExternal: undefined,
   isValidated: undefined,
   date: undefined,
   userOpportunity: undefined,
