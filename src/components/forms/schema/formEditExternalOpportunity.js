@@ -80,7 +80,7 @@ export default {
       name: 'description',
       component: 'textarea',
       type: 'text',
-      title: "Commentaire sur l'offre",
+      title: "Description de l'offre",
     },
     {
       id: 'externalOrigin',

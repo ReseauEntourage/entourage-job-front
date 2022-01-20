@@ -17,7 +17,7 @@ import {
   mutateDefaultOfferStatus,
   mutateFormSchema,
 } from 'src/utils';
-import { OFFER_STATUS } from 'src/constants';
+import { EXTERNAL_OFFERS_ORIGINS, OFFER_STATUS } from 'src/constants';
 import ModalOfferInfo from 'src/components/modals/ModalOfferInfo';
 import ModalGeneric from 'src/components/modals/ModalGeneric';
 import { useModalContext } from 'src/components/modals/Modal';
@@ -243,6 +243,7 @@ const ModalOfferAdmin = ({
           <ModalOfferInfo
             startOfContract={offer.startOfContract}
             isPublic={offer.isPublic}
+            isExternal={offer.isExternal}
             numberOfPositions={offer.numberOfPositions}
             contract={offer.contract}
             date={offer.date}
@@ -301,38 +302,51 @@ const ModalOfferAdmin = ({
             <OfferInfoContainer icon="home" title="Entreprise">
               {offer.company}
             </OfferInfoContainer>
-            <OfferInfoContainer icon="user" title="Recruteur">
-              <span>
-                {offer.recruiterFirstName} {offer.recruiterName}
-              </span>
-              <span className="uk-text-muted">{offer.recruiterPosition}</span>
-              <SimpleLink
-                href={`mailto:${offer.recruiterMail}`}
-                className="uk-link-muted"
-                isExternal
-                newTab
-              >
+            {offer.recruiterFirstName && offer.recruiterName && (
+              <OfferInfoContainer icon="user" title="Recruteur">
                 <span>
-                  {offer.recruiterMail}
-                  &nbsp;
+                  {offer.recruiterFirstName} {offer.recruiterName}
                 </span>
-                <IconNoSSR name="mail" ratio={0.8} />
-              </SimpleLink>
-              <SimpleLink
-                href={`tel:${offer.recruiterPhone}`}
-                className="uk-link-muted"
-                isExternal
-                newTab
-              >
-                <span>
-                  {offer.recruiterPhone}
-                  &nbsp;
-                </span>
-                <IconNoSSR name="phone" ratio={0.8} />
-              </SimpleLink>
-              {offer.beContacted && <span>Souhaite être recontacté</span>}
-            </OfferInfoContainer>
+                <span className="uk-text-muted">{offer.recruiterPosition}</span>
+                <SimpleLink
+                  href={`mailto:${offer.recruiterMail}`}
+                  className="uk-link-muted"
+                  isExternal
+                  newTab
+                >
+                  <span>
+                    {offer.recruiterMail}
+                    &nbsp;
+                  </span>
+                  <IconNoSSR name="mail" ratio={0.8} />
+                </SimpleLink>
+                <SimpleLink
+                  href={`tel:${offer.recruiterPhone}`}
+                  className="uk-link-muted"
+                  isExternal
+                  newTab
+                >
+                  <span>
+                    {offer.recruiterPhone}
+                    &nbsp;
+                  </span>
+                  <IconNoSSR name="phone" ratio={0.8} />
+                </SimpleLink>
+                {offer.beContacted && <span>Souhaite être recontacté</span>}
+              </OfferInfoContainer>
+            )}
             <OfferInfoContainer icon="location" title={offer.department} />
+            {offer.externalOrigin && (
+              <OfferInfoContainer icon="search" title="Origine de l'offre">
+                <div>
+                  {
+                    EXTERNAL_OFFERS_ORIGINS.find((origin) => {
+                      return offer.externalOrigin === origin.value;
+                    })?.label
+                  }
+                </div>
+              </OfferInfoContainer>
+            )}
             {offer.userOpportunity && (
               <OfferInfoContainer
                 icon="users"
@@ -455,12 +469,19 @@ const ModalOfferAdmin = ({
             <OfferInfoContainer icon="comment" title="Description de l'offre">
               <div>{formatParagraph(offer.description)}</div>
             </OfferInfoContainer>
-            <OfferInfoContainer icon="check" title="Compétences importantes">
-              <div>{formatParagraph(offer.skills)}</div>
-            </OfferInfoContainer>
+            {offer.prerequisites && (
+              <OfferInfoContainer icon="check" title="Compétences importantes">
+                <div>{formatParagraph(offer.skills)}</div>
+              </OfferInfoContainer>
+            )}
             {offer.prerequisites && (
               <OfferInfoContainer icon="check" title="Pré-requis">
                 <div>{formatParagraph(offer.prerequisites)}</div>
+              </OfferInfoContainer>
+            )}
+            {offer.link && (
+              <OfferInfoContainer icon="link" title="Lien">
+                <div>{offer.link.trim()}</div>
               </OfferInfoContainer>
             )}
             {offer.businessLines && (
@@ -523,10 +544,16 @@ const ModalOfferAdmin = ({
     );
   };
 
+  let className = '';
+  if (offer.isArchived) {
+    className = 'uk-light uk-background-secondary';
+  } else if (offer.isExternal) {
+    className = 'uk-background-muted';
+  }
   // Modal
   return (
     <ModalGeneric
-      className={offer.isArchived ? 'uk-light uk-background-secondary' : ''}
+      className={className}
       onClose={(closeModal) => {
         if (isEditing) {
           setIsEditing(false);
@@ -578,6 +605,9 @@ ModalOfferAdmin.propTypes = {
     recruiterPosition: PropTypes.string,
     numberOfPositions: PropTypes.number,
     beContacted: PropTypes.bool,
+    link: PropTypes.string,
+    externalOrigin: PropTypes.string,
+    isExternal: PropTypes.bool,
   }),
   onOfferUpdated: PropTypes.func.isRequired,
   duplicateOffer: PropTypes.func.isRequired,

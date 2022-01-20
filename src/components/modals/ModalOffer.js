@@ -13,6 +13,7 @@ import ModalGeneric from 'src/components/modals/ModalGeneric';
 import formEditExternalOpportunity from 'src/components/forms/schema/formEditExternalOpportunity';
 import FormWithValidation from 'src/components/forms/FormWithValidation';
 import { UserContext } from 'src/components/store/UserProvider';
+import { EXTERNAL_OFFERS_ORIGINS } from 'src/constants';
 
 export const List = ({ className, children }) => {
   return (
@@ -291,8 +292,18 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                   </SimpleLink>
                 </OfferInfoContainer>
               )}
-
               <OfferInfoContainer icon="location" title={offer.department} />
+              {offer.externalOrigin && (
+                <OfferInfoContainer icon="search" title="Origine de l'offre">
+                  <div>
+                    {
+                      EXTERNAL_OFFERS_ORIGINS.find((origin) => {
+                        return offer.externalOrigin === origin.value;
+                      })?.label
+                    }
+                  </div>
+                </OfferInfoContainer>
+              )}
             </Grid>,
             <Grid gap="medium" childWidths={['1-1']}>
               {offer.companyDescription && (
@@ -317,6 +328,11 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
               {offer.prerequisites && (
                 <OfferInfoContainer icon="check" title="Pré-requis">
                   <div>{formatParagraph(offer.prerequisites)}</div>
+                </OfferInfoContainer>
+              )}
+              {offer.link && (
+                <OfferInfoContainer icon="link" title="Lien">
+                  <div>{offer.link.trim()}</div>
                 </OfferInfoContainer>
               )}
               {offer.businessLines && (
@@ -376,7 +392,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
     );
   };
   let className = '';
-  if (offer.isArchived) {
+  if (archived) {
     className = 'uk-light uk-background-secondary';
   } else if (offer.isExternal) {
     className = 'uk-background-muted';
@@ -430,6 +446,9 @@ ModalOffer.propTypes = {
       note: PropTypes.string,
       archived: PropTypes.bool,
     }),
+    link: PropTypes.string,
+    externalOrigin: PropTypes.string,
+    isExternal: PropTypes.bool,
   }),
   onOfferUpdated: PropTypes.func.isRequired,
   navigateBackToList: PropTypes.func.isRequired,
