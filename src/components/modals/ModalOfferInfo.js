@@ -6,8 +6,13 @@ import ContractLabel from 'src/components/backoffice/candidate/ContractLabel';
 import { useCopyToClipboard } from 'src/hooks';
 import { IconNoSSR } from 'src/components/utils/Icon';
 
-function translateCategory(isPublic, isRecommended) {
-  if (!isPublic) return 'Offre privée';
+function translateCategory(isPublic, isRecommended, isExternal) {
+  if (!isPublic) {
+    if (isExternal) {
+      return 'Offre externe';
+    }
+    return 'Offre privée';
+  }
   if (isPublic) {
     return (
       <>
@@ -32,6 +37,7 @@ const ModalOfferInfo = ({
   title,
   isPublic,
   isRecommended,
+  isExternal,
   contract,
   startOfContract,
   endOfContract,
@@ -72,7 +78,7 @@ const ModalOfferInfo = ({
         )}
       </div>
       <div className="uk-flex uk-flex-middle">
-        {translateCategory(isPublic, isRecommended)}
+        {translateCategory(isPublic, isRecommended, isExternal)}
       </div>
       <ContractLabel
         contract={contract}
@@ -96,6 +102,7 @@ ModalOfferInfo.propTypes = {
   title: PropTypes.string.isRequired,
   isPublic: PropTypes.bool.isRequired,
   isRecommended: PropTypes.bool,
+  isExternal: PropTypes.bool,
   date: PropTypes.string.isRequired,
   contract: PropTypes.string,
   endOfContract: PropTypes.string,
@@ -107,6 +114,7 @@ ModalOfferInfo.propTypes = {
 ModalOfferInfo.defaultProps = {
   contract: undefined,
   isRecommended: false,
+  isExternal: false,
   endOfContract: undefined,
   startOfContract: undefined,
 };

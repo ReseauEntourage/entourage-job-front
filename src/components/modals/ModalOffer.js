@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Grid, SimpleLink } from 'src/components/utils';
 import Textarea from 'src/components/forms/fields/Textarea';
@@ -10,6 +10,10 @@ import Api from 'src/Axios';
 import { formatParagraph, mutateDefaultOfferStatus } from 'src/utils';
 import ModalOfferInfo from 'src/components/modals/ModalOfferInfo';
 import ModalGeneric from 'src/components/modals/ModalGeneric';
+import formEditExternalOpportunity from 'src/components/forms/schema/formEditExternalOpportunity';
+import FormWithValidation from 'src/components/forms/FormWithValidation';
+import { UserContext } from 'src/components/store/UserProvider';
+import { EXTERNAL_OFFERS_ORIGINS } from 'src/constants';
 
 export const List = ({ className, children }) => {
   return (
@@ -22,6 +26,7 @@ export const List = ({ className, children }) => {
     </ul>
   );
 };
+
 List.propTypes = {
   className: PropTypes.string,
   children: PropTypes.oneOfType([
@@ -29,6 +34,7 @@ List.propTypes = {
     PropTypes.arrayOf(PropTypes.element),
   ]).isRequired,
 };
+
 List.defaultProps = {
   className: undefined,
 };
@@ -72,9 +78,12 @@ OfferInfoContainer.defaultProps = {
 };
 
 const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
+  const { user } = useContext(UserContext);
   const [loadingIcon, setLoadingIcon] = useState(false);
   const [loadingStatus, setLoadingStatus] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const [offer, setOffer] = useState(currentOffer);
   const { status, bookmarked, note, archived } = offer?.userOpportunity || {};
@@ -106,20 +115,72 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
     offer.userOpportunity
   );
 
-  return (
-    <ModalGeneric
-      className={archived ? 'uk-light uk-background-secondary' : ''}
-      onClose={(onClose) => {
-        onClose();
-        navigateBackToList();
-      }}
-    >
+  const updateOpportunity = async (opportunity) => {
+    setError(false);
+    setLoading(true);
+    try {
+      const { data } = await Api.put(`/opportunity/external`, opportunity);
+      setOffer(data);
+      await onOfferUpdated();
+    } catch (err) {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const contentBuilder = () => {
+    // error
+    if (error) {
+      return <div>Une erreur c&lsquo;est produite</div>;
+    }
+
+    // loading
+    if (loading) {
+      return (
+        <div className="uk-height-medium uk-flex uk-flex-middle uk-flex-center">
+          <div data-uk-spinner="" />
+        </div>
+      );
+    }
+
+    // edit
+    if (isEditing) {
+      return (
+        <div>
+          <h3>Modification de l&apos;offre d&apos;emploi</h3>
+          <FormWithValidation
+            formSchema={formEditExternalOpportunity}
+            defaultValues={{
+              ...offer,
+            }}
+            onCancel={() => {
+              setIsEditing(false);
+            }}
+            onSubmit={async (fields) => {
+              const tmpOpportunity = {
+                ...fields,
+                startOfContract: fields.startOfContract || null,
+                endOfContract: fields.endOfContract || null,
+                candidateId: user.id,
+                id: offer.id,
+              };
+              await updateOpportunity(tmpOpportunity);
+              setIsEditing(false);
+            }}
+            submitText="Mettre à jour"
+          />
+        </div>
+      );
+    }
+    return (
       <div>
         <Grid gap="small" between middle eachWidths={['expand', 'auto']}>
           <ModalOfferInfo
             startOfContract={offer.startOfContract}
             isPublic={offer.isPublic}
             isRecommended={offer.userOpportunity.recommended}
+            isExternal={offer.isExternal}
             numberOfPositions={offer.numberOfPositions}
             contract={offer.contract}
             date={offer.date}
@@ -154,6 +215,15 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                 <div className="uk-flex uk-flex-center uk-flex-middle">
                   <div data-uk-spinner="" />
                 </div>
+              )}
+              {offer.isExternal && (
+                <ButtonIcon
+                  name="pencil"
+                  tooltip="Modifier l'offre"
+                  onClick={() => {
+                    setIsEditing(true);
+                  }}
+                />
               )}
               <ButtonIcon
                 name="archive"
@@ -203,22 +273,37 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
               <OfferInfoContainer icon="home" title="Entreprise">
                 {offer.company}
               </OfferInfoContainer>
-              <OfferInfoContainer icon="user" title="Recruteur">
-                <span>
-                  {offer.recruiterFirstName} {offer.recruiterName}
-                </span>
-                <span className="uk-text-muted">{offer.recruiterPosition}</span>
-                <SimpleLink
-                  href={`mailto:${offer.recruiterMail}`}
-                  className="uk-link-muted"
-                  isExternal
-                  newTab
-                >
-                  <span>{offer.recruiterMail}&nbsp;</span>
-                  <IconNoSSR name="mail" ratio={0.8} />
-                </SimpleLink>
-              </OfferInfoContainer>
+              {offer.recruiterFirstName && offer.recruiterName && (
+                <OfferInfoContainer icon="user" title="Recruteur">
+                  <span>
+                    {offer.recruiterFirstName} {offer.recruiterName}
+                  </span>
+                  <span className="uk-text-muted">
+                    {offer.recruiterPosition}
+                  </span>
+                  <SimpleLink
+                    href={`mailto:${offer.recruiterMail}`}
+                    className="uk-link-muted"
+                    isExternal
+                    newTab
+                  >
+                    <span>{offer.recruiterMail}&nbsp;</span>
+                    <IconNoSSR name="mail" ratio={0.8} />
+                  </SimpleLink>
+                </OfferInfoContainer>
+              )}
               <OfferInfoContainer icon="location" title={offer.department} />
+              {offer.externalOrigin && (
+                <OfferInfoContainer icon="search" title="Origine de l'offre">
+                  <div>
+                    {
+                      EXTERNAL_OFFERS_ORIGINS.find((origin) => {
+                        return offer.externalOrigin === origin.value;
+                      })?.label
+                    }
+                  </div>
+                </OfferInfoContainer>
+              )}
             </Grid>,
             <Grid gap="medium" childWidths={['1-1']}>
               {offer.companyDescription && (
@@ -232,12 +317,22 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
               <OfferInfoContainer icon="comment" title="Description de l'offre">
                 <div>{formatParagraph(offer.description)}</div>
               </OfferInfoContainer>
-              <OfferInfoContainer icon="check" title="Compétences importantes">
-                <div>{formatParagraph(offer.skills)}</div>
-              </OfferInfoContainer>
+              {offer.prerequisites && (
+                <OfferInfoContainer
+                  icon="check"
+                  title="Compétences importantes"
+                >
+                  <div>{formatParagraph(offer.skills)}</div>
+                </OfferInfoContainer>
+              )}
               {offer.prerequisites && (
                 <OfferInfoContainer icon="check" title="Pré-requis">
                   <div>{formatParagraph(offer.prerequisites)}</div>
+                </OfferInfoContainer>
+              )}
+              {offer.link && (
+                <OfferInfoContainer icon="link" title="Lien">
+                  <div>{offer.link.trim()}</div>
                 </OfferInfoContainer>
               )}
               {offer.businessLines && (
@@ -294,6 +389,28 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
           )}
         </div>
       </div>
+    );
+  };
+  let className = '';
+  if (archived) {
+    className = 'uk-light uk-background-secondary';
+  } else if (offer.isExternal) {
+    className = 'uk-background-muted';
+  }
+  // Modal
+  return (
+    <ModalGeneric
+      className={className}
+      onClose={(closeModal) => {
+        if (isEditing) {
+          setIsEditing(false);
+        } else {
+          closeModal();
+          navigateBackToList();
+        }
+      }}
+    >
+      {contentBuilder()}
     </ModalGeneric>
   );
 };
@@ -329,10 +446,14 @@ ModalOffer.propTypes = {
       note: PropTypes.string,
       archived: PropTypes.bool,
     }),
+    link: PropTypes.string,
+    externalOrigin: PropTypes.string,
+    isExternal: PropTypes.bool,
   }),
   onOfferUpdated: PropTypes.func.isRequired,
   navigateBackToList: PropTypes.func.isRequired,
 };
+
 ModalOffer.defaultProps = {
   currentOffer: { userOpportunity: {}, businessLines: [] },
 };

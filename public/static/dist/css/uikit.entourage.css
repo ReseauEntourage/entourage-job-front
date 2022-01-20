@@ -5283,6 +5283,7 @@ ul.uk-nav-sub {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  background-color: transparent!important;
 }
 /*
  * Remove margin from the last-child
@@ -12844,4 +12845,10 @@ iframe.uk-cover {
 }
 .uk-checkbox {
   background-color: white;
+}
+.ent-external-offer {
+  background-color: #FFF8F5;
+}
+.uk-card-default.uk-card-hover:hover.ent-external-offer {
+  background-color: #FFF8F5 !important;
 }

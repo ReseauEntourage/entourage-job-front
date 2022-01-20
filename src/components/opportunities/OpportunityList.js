@@ -18,7 +18,10 @@ import ModalOfferAdmin from 'src/components/modals/ModalOfferAdmin';
 import OpportunityError from 'src/components/opportunities/OpportunityError';
 import { useOpportunityList } from 'src/hooks/useOpportunityList';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
+import {
+  OFFER_ADMIN_FILTERS_DATA,
+  OPPORTUNITY_FILTERS_DATA,
+} from 'src/constants';
 import FiltersTabs from 'src/components/utils/FiltersTabs';
 import SearchBar from 'src/components/filters/SearchBar';
 import { openModal } from 'src/components/modals/Modal';
@@ -67,6 +70,7 @@ const OfferList = ({
                   isValidated={offer.isValidated}
                   department={offer.department}
                   userOpportunity={userOpportunity}
+                  isExternal={offer.isExternal}
                   isNew={
                     role === 'candidateAsAdmin' &&
                     userOpportunity &&
@@ -84,6 +88,7 @@ const OfferList = ({
                   isPublic={offer.isPublic}
                   userOpportunity={offer.userOpportunity}
                   isNew={!offer.userOpportunity || !offer.userOpportunity.seen}
+                  isExternal={offer.isExternal}
                   archived={
                     offer.userOpportunity && offer.userOpportunity.archived
                   }
@@ -140,6 +145,9 @@ const OpportunityList = forwardRef(
       query: { offerId: opportunityId, memberId, tab, ...restQuery },
     } = useRouter();
 
+    const prevTag = usePrevious(restQuery.tag);
+
+    const [filtersConst, setFiltersConst] = useState(OPPORTUNITY_FILTERS_DATA);
     const [numberOfResults, setNumberOfResults] = useState(0);
 
     const [bookmarkedOffers, setBookmarkedOffers] = useState(undefined);
@@ -333,6 +341,17 @@ const OpportunityList = forwardRef(
       fetchData(role, search, tabFilterTag, filters, candidatId);
     }, [role, search, tabFilters, filters, candidatId]);
 
+    useEffect(() => {
+      if (restQuery.tag !== prevTag) {
+        const initialFiltersConst =
+          restQuery.tag === OFFER_ADMIN_FILTERS_DATA[3].tag
+            ? OPPORTUNITY_FILTERS_DATA.slice(1, 3)
+            : OPPORTUNITY_FILTERS_DATA;
+
+        setFiltersConst(initialFiltersConst);
+      }
+    }, [prevTag, restQuery.tag]);
+
     const content = (
       <div>
         {loading && (
@@ -422,7 +441,7 @@ const OpportunityList = forwardRef(
             otherPathParams={['offerId']}
             otherFilterComponent={
               <SearchBar
-                filtersConstants={OPPORTUNITY_FILTERS_DATA}
+                filtersConstants={filtersConst}
                 filters={filters}
                 numberOfResults={numberOfResults}
                 resetFilters={resetFilters}
@@ -438,7 +457,7 @@ const OpportunityList = forwardRef(
         ) : (
           <>
             <SearchBar
-              filtersConstants={OPPORTUNITY_FILTERS_DATA}
+              filtersConstants={filtersConst}
               filters={filters}
               numberOfResults={numberOfResults}
               resetFilters={resetFilters}
