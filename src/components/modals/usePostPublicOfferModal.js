@@ -51,7 +51,7 @@ function usePostPublicOfferModal() {
 
   const { modal } = usePostOpportunity({
     defaultValues: {
-      isPublic: false,
+      isPublic: true,
     },
     modalTitle: 'Proposer une opportunité',
     modalDesc:

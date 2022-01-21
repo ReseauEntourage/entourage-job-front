@@ -27,9 +27,9 @@ const CVEditReviews = ({ reviews, onChange }) => {
                 <ModalEdit
                   title="Ajout - Ils me recommandent"
                   formSchema={schemaTestimonial}
-                  onSubmit={(fields, closeModal) => {
+                  onSubmit={async (fields, closeModal) => {
                     closeModal();
-                    onChange({
+                    await onChange({
                       reviews: [...reviews, fields],
                     });
                   }}
@@ -69,10 +69,10 @@ const CVEditReviews = ({ reviews, onChange }) => {
                               title="Édition - Ils me recommandent"
                               formSchema={schemaTestimonial}
                               defaultValues={review}
-                              onSubmit={(fields, closeModal) => {
+                              onSubmit={async (fields, closeModal) => {
                                 closeModal();
                                 sortedReviews[i] = fields;
-                                onChange({ reviews: sortedReviews });
+                                await onChange({ reviews: sortedReviews });
                               }}
                             />
                           );

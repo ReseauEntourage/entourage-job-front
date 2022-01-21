@@ -268,7 +268,7 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
                           }
                         }
                         if (promise) {
-                          promise
+                          return promise
                             .then(() => {
                               return Api.get(`/user/${user.id}`);
                             })

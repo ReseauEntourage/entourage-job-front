@@ -37,8 +37,10 @@ const CVFiche = ({ cv, actionDisabled }) => {
       'Cet espace est dédié aux potentiels recruteurs qui souhaitent proposer une opportunité à un candidat spécifique.',
     candidateId: cv.UserId,
     defaultValues: {
-      firstName: cv.user.candidat.firstName,
-      lastName: cv.user.candidat.lastName,
+      candidat: {
+        firstName: cv.user.candidat.firstName,
+        lastName: cv.user.candidat.lastName,
+      },
       isPublic: false,
     },
   });

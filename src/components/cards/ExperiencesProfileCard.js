@@ -48,13 +48,13 @@ const Experience = SortableElement(
                       title="Édition - Mes expériences et compétences"
                       formSchema={schemaformEditExperience}
                       defaultValues={value}
-                      onSubmit={(fields, closeModal) => {
+                      onSubmit={async (fields, closeModal) => {
                         closeModal();
                         items[sortIndex] = {
                           ...items[sortIndex],
                           ...fields,
                         };
-                        onChange({ experiences: items });
+                        await onChange({ experiences: items });
                       }}
                     />
                   );
@@ -153,9 +153,9 @@ const ExperiencesProfileCard = ({ experiences, onChange }) => {
                 <ModalEdit
                   title="Ajout - Mes expériences et compétences"
                   formSchema={schemaformEditExperience}
-                  onSubmit={(fields, closeModal) => {
+                  onSubmit={async (fields, closeModal) => {
                     closeModal();
-                    onChange({
+                    await onChange({
                       experiences: [
                         ...sortedExperiences,
                         {

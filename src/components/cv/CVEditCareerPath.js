@@ -36,7 +36,7 @@ const CVEditCareerPath = ({ ambitions, onChange }) => {
                   description="J'aimerais travailler ..."
                   formSchema={schemaCareerPath}
                   defaultValues={defaultValues}
-                  onSubmit={(
+                  onSubmit={async (
                     { prefix0, careerPath0, /* prefix1, */ careerPath1 },
                     closeModal
                   ) => {
@@ -45,7 +45,7 @@ const CVEditCareerPath = ({ ambitions, onChange }) => {
                       { prefix: prefix0, name: careerPath0, order: 0 },
                     ];
 
-                    onChange({
+                    await onChange({
                       ambitions: careerPath1
                         ? [
                             ...newAmbitions,

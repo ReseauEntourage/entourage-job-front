@@ -41,7 +41,7 @@ const Login = () => {
               submitText="Se connecter"
               enterToSubmit
               onSubmit={({ email, password }, setError) => {
-                login(email, password).catch((err) => {
+                return login(email, password).catch((err) => {
                   const errorMessage =
                     err && err.response && err.response.status === 429
                       ? rateLimitErrorMessage
@@ -65,7 +65,7 @@ const Login = () => {
                             formSchema={schemaLostPwd}
                             onCancel={closeModal}
                             onSubmit={({ email }, setError) => {
-                              Api.post('/auth/forgot', {
+                              return Api.post('/auth/forgot', {
                                 email: email.toLowerCase(),
                               })
                                 .then(() => {

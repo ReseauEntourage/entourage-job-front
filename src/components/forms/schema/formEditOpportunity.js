@@ -19,7 +19,6 @@ export default {
       isMulti: true,
       type: 'text',
       dynamicTitle: (getValue) => {
-        console.log('DYNAMIC TITLE');
         return getValue('isPublic') === true
           ? "Souhaitez-vous suggérer l'offre à certains candidats ?"
           : "Renseignez le(s) candidat(s) à qui adresser l'offre";

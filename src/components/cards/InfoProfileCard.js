@@ -73,9 +73,9 @@ const InfoProfileCard = ({
                     phone,
                     address,
                   }}
-                  onSubmit={(fields, closeModal) => {
+                  onSubmit={async (fields, closeModal) => {
                     closeModal();
-                    onChange({
+                    await onChange({
                       ...fields,
                     });
                   }}
