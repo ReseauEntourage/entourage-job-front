@@ -64,7 +64,6 @@ export default {
       name: 'department',
       title: 'Département*',
       placeholder: 'Sélectionnez le département',
-      type: 'text',
       component: 'select',
       options: FORMATTED_DEPARTMENTS,
     },

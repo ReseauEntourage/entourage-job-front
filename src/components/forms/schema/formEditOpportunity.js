@@ -1,8 +1,6 @@
 import { BUSINESS_LINES, CONTRACTS, USER_ROLES } from 'src/constants';
 import { FORMATTED_DEPARTMENTS } from 'src/constants/departements';
 import Api from 'src/Axios';
-import moment from 'moment';
-import { findContractType } from 'src/utils';
 
 export default {
   id: 'form-offer',
@@ -49,6 +47,13 @@ export default {
       },
     },
     {
+      id: 'title',
+      name: 'title',
+      component: 'input',
+      type: 'text',
+      title: 'Intitulé du poste proposé*',
+    },
+    /* {
       id: 'message',
       name: 'message',
       component: 'textarea',
@@ -60,7 +65,7 @@ export default {
       hide: (getValue) => {
         return getValue('isPublic') === true;
       },
-    },
+    }, */
     {
       id: 'company',
       name: 'company',
@@ -101,14 +106,7 @@ export default {
       name: 'recruiterPhone',
       component: 'input',
       type: 'tel',
-      title: 'Votre numéro de téléphone*',
-    },
-    {
-      id: 'title',
-      name: 'title',
-      component: 'input',
-      type: 'text',
-      title: 'Titre du poste proposé*',
+      title: 'Votre téléphone',
     },
     {
       id: 'businessLines',
@@ -119,43 +117,75 @@ export default {
       component: 'select-request',
       isMulti: true,
       options: BUSINESS_LINES,
+      hidden: true,
+      disabled: true,
     },
     {
       id: 'department',
       name: 'department',
-      title: 'Département*',
+      title: 'Département du lieu de travail*',
       placeholder: 'Sélectionnez le département',
-      type: 'text',
       component: 'select',
       options: FORMATTED_DEPARTMENTS,
+    },
+    {
+      id: 'address',
+      name: 'address',
+      title: 'Adresse du lieu de travail*',
+      component: 'input',
+      type: 'text',
     },
     {
       id: 'companyDescription',
       name: 'companyDescription',
       component: 'textarea',
       type: 'text',
-      title: "Présentez l'entreprise en quelques mots",
+      title: "Si vous le souhaitez, présentez l'entreprise en quelques mots",
     },
     {
       id: 'description',
       name: 'description',
       component: 'textarea',
       type: 'text',
-      title: "Présentez l'opportunité en quelques mots*",
+      title: 'Descriptif des missions proposées*',
     },
     {
-      id: 'skills',
-      name: 'skills',
-      component: 'textarea',
-      type: 'text',
-      title: 'Écrivez 3 compétences importantes pour ce poste*',
+      id: 'otherInfoLabel',
+      title: 'Informations complémentaires importantes',
+      component: 'heading',
     },
     {
-      id: 'prerequisites',
-      name: 'prerequisites',
+      id: 'driversLicense',
+      name: 'driversLicense',
+      component: 'checkbox',
+      title: 'Permis de conduire',
+    },
+    {
+      id: 'isPartTime',
+      name: 'isPartTime',
+      component: 'checkbox',
+      title: 'Temps partiel',
+    },
+    {
+      id: 'workingHours',
+      name: 'workingHours',
+      component: 'input',
+      type: 'text',
+      title: 'Jours et horaires de travail',
+    },
+    {
+      id: 'salary',
+      name: 'salary',
+      component: 'input',
+      type: 'text',
+      title: 'Salaire et compléments',
+    },
+    {
+      id: 'otherInfo',
+      name: 'otherInfo',
       component: 'textarea',
       type: 'text',
-      title: "Est-ce qu'il y a des pré-requis pour exercer cet emploi\xa0?",
+      title: 'Autres précisions sur votre besoin',
     },
     {
       id: 'contract',
@@ -165,7 +195,7 @@ export default {
       title: 'Type de contrat*',
       fieldsToReset: ['endOfContract'],
     },
-    {
+    /*    {
       id: 'startEndContract',
       component: 'fieldgroup',
       childWidths: ['expand', 'expand', '1-4@m'],
@@ -191,12 +221,6 @@ export default {
       ],
     },
     {
-      id: 'isPartTime',
-      name: 'isPartTime',
-      component: 'checkbox',
-      title: 'Temps partiel',
-    },
-    {
       id: 'numberOfPositions',
       name: 'numberOfPositions',
       component: 'input',
@@ -210,7 +234,7 @@ export default {
       component: 'checkbox',
       title:
         "Souhaitez-vous qu'un référent LinkedOut échange avec vous sur votre projet de recrutement inclusif\xa0?",
-    },
+    }, */
     {
       id: 'disclaimer',
       name: 'disclaimer',
@@ -222,10 +246,31 @@ export default {
       id: 'openNewForm',
       name: 'openNewForm',
       component: 'checkbox',
-      title: 'Créer une offre similaire après validation de cette offre',
+      title:
+        'Vous avez un autre poste à proposer ? Dupliquez cette offre pour la publier plus rapidement',
     },
   ],
   rules: [
+    {
+      field: 'candidatesId',
+      args: [],
+      method: (fieldValue, state) => {
+        return !fieldValue && state.isPublic === false;
+      },
+      validWhen: false,
+      message: 'Obligatoire si offre privée',
+    },
+    {
+      field: 'title',
+      method: 'isEmpty',
+      args: [
+        {
+          ignore_whitespace: true,
+        },
+      ],
+      validWhen: false,
+      message: 'Obligatoire',
+    },
     {
       field: 'company',
       method: 'isEmpty',
@@ -287,7 +332,7 @@ export default {
       validWhen: true,
       message: 'Invalide',
     },
-    {
+    /*  {
       field: 'recruiterPhone',
       method: 'isEmpty',
       args: [
@@ -297,7 +342,7 @@ export default {
       ],
       validWhen: false,
       message: 'Obligatoire',
-    },
+    }, */
     {
       field: 'recruiterPhone',
       method: 'isLength',
@@ -310,18 +355,7 @@ export default {
       validWhen: true,
       message: 'Invalide',
     },
-    {
-      field: 'title',
-      method: 'isEmpty',
-      args: [
-        {
-          ignore_whitespace: true,
-        },
-      ],
-      validWhen: false,
-      message: 'Obligatoire',
-    },
-    {
+    /*  {
       field: 'businessLines',
       method: 'isEmpty',
       args: [
@@ -331,9 +365,20 @@ export default {
       ],
       validWhen: false,
       message: 'Obligatoire',
-    },
+    }, */
     {
       field: 'department',
+      method: 'isEmpty',
+      args: [
+        {
+          ignore_whitespace: true,
+        },
+      ],
+      validWhen: false,
+      message: 'Obligatoire',
+    },
+    {
+      field: 'address',
       method: 'isEmpty',
       args: [
         {
@@ -355,17 +400,6 @@ export default {
       message: 'Obligatoire',
     },
     {
-      field: 'skills',
-      method: 'isEmpty',
-      args: [
-        {
-          ignore_whitespace: true,
-        },
-      ],
-      validWhen: false,
-      message: 'Obligatoire',
-    },
-    {
       field: 'contract',
       method: 'isEmpty',
       args: [
@@ -376,7 +410,7 @@ export default {
       validWhen: false,
       message: 'Obligatoire',
     },
-    {
+    /* {
       field: 'endOfContract',
       method: (fieldValue, state) => {
         return (
@@ -390,53 +424,59 @@ export default {
       args: [],
       validWhen: false,
       message: 'Date antérieure à la date de début',
-    },
-    {
-      field: 'candidatesId',
-      args: [],
-      method: (fieldValue, state) => {
-        return !fieldValue && state.isPublic === false;
-      },
-      validWhen: false,
-      message: 'Obligatoire si offre privée',
-    },
+    }, */
   ],
 };
 
-export const adminMutation = {
-  fieldId: 'candidatesId',
-  props: [
-    {
-      propName: 'loadOptions',
-      value: (inputValue, callback) => {
-        Api.get('/user/search', {
-          params: {
-            query: inputValue,
-            role: USER_ROLES.CANDIDAT,
-          },
-        })
-          .then(({ data }) => {
-            return data.map((u) => {
-              return {
-                value: u.id,
-                label: `${u.firstName} ${u.lastName}`,
-              };
-            });
+export const adminMutations = [
+  {
+    fieldId: 'candidatesId',
+    props: [
+      {
+        propName: 'loadOptions',
+        value: (inputValue, callback) => {
+          Api.get('/user/search', {
+            params: {
+              query: inputValue,
+              role: USER_ROLES.CANDIDAT,
+            },
           })
-          .then(callback);
+            .then(({ data }) => {
+              return data.map((u) => {
+                return {
+                  value: u.id,
+                  label: `${u.firstName} ${u.lastName}`,
+                };
+              });
+            })
+            .then(callback);
+        },
       },
-    },
-    {
-      propName: 'disable',
-      value: () => {
-        return false;
+      {
+        propName: 'disable',
+        value: () => {
+          return false;
+        },
       },
-    },
-    {
-      propName: 'hide',
-      value: () => {
-        return false;
+      {
+        propName: 'hide',
+        value: () => {
+          return false;
+        },
       },
-    },
-  ],
-};
+    ],
+  },
+  {
+    fieldId: 'businessLines',
+    props: [
+      {
+        propName: 'hidden',
+        value: false,
+      },
+      {
+        propName: 'disabled',
+        value: false,
+      },
+    ],
+  },
+];
