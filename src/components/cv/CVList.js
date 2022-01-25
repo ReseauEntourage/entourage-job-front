@@ -53,6 +53,7 @@ const CVList = ({
   const [error, setError] = useState(undefined);
   const defaultNbOfCVs = nb || INITIAL_NB_OF_CV_TO_DISPLAY;
   const [nbOfCVToDisplay, setNbOfCVToDisplay] = useState(defaultNbOfCVs);
+  const prevNbOfCVToDisplay = usePrevious(nbOfCVToDisplay);
 
   const cvsLength = cvs?.length;
   const prevCVsLength = usePrevious(cvsLength);
@@ -75,18 +76,19 @@ const CVList = ({
       })
         .then(({ data }) => {
           setHasSuggestions(data.suggestions);
-          setCVs((prevCVs = []) => {
-            if (isPagination) {
+          if (isPagination) {
+            setCVs((prevCVs = []) => {
               return [
                 ...prevCVs,
                 ..._.differenceWith(data.cvs, prevCVs, (cv1, cv2) => {
                   return cv1.id === cv2.id;
                 }),
               ];
-            }
-
-            return data.cvs;
-          });
+            });
+          } else {
+            setNbOfCVToDisplay(defaultNbOfCVs);
+            setCVs(data.cvs);
+          }
         })
         .catch((err) => {
           console.error(err);
@@ -97,11 +99,14 @@ const CVList = ({
           setLoadingMore(false);
         });
     },
-    []
+    [defaultNbOfCVs]
   );
 
   useDeepCompareEffect(() => {
-    if (nbOfCVToDisplay > defaultNbOfCVs) {
+    if (
+      nbOfCVToDisplay !== prevNbOfCVToDisplay &&
+      nbOfCVToDisplay > defaultNbOfCVs
+    ) {
       fetchData(search, filters, nbOfCVToDisplay, true);
     } else {
       fetchData(search, filters, nbOfCVToDisplay);
