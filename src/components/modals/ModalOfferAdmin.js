@@ -206,11 +206,12 @@ const ModalOfferAdmin = ({
                   message: fields.isPublic ? null : fields.message,
                   startOfContract: fields.startOfContract || null,
                   endOfContract: fields.endOfContract || null,
-                  candidatesId: fields.candidatesId?.map((candidateId) => {
-                    return typeof candidateId === 'object'
-                      ? candidateId.value
-                      : candidateId;
-                  }),
+                  candidatesId:
+                    fields.candidatesId?.map((candidateId) => {
+                      return typeof candidateId === 'object'
+                        ? candidateId.value
+                        : candidateId;
+                    }) || [],
                 };
                 await updateOpportunity(tmpOpportunity);
                 setIsEditing(false);
