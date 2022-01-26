@@ -3,7 +3,6 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import {
-  Hamburger,
   Navbar,
   NavbarLogo,
   Offcanvas,
@@ -16,6 +15,7 @@ import Dropdown from 'src/components/utils/Dropdown';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { useNotifBadges } from 'src/hooks';
 import { IconNoSSR } from 'src/components/utils/Icon';
+import { HamburgerNoSSR } from 'src/components/utils/Hamburger';
 
 const HeaderConnected = ({ isHome }) => {
   const { user, logout } = useContext(UserContext);
@@ -230,7 +230,7 @@ const HeaderConnected = ({ isHome }) => {
                 </span>
               </a>
             </li> */}
-            <Hamburger targetId="offcanvas-logged" hidden="m" />
+            <HamburgerNoSSR targetId="offcanvas-logged" hidden="m" />
           </ul>
         }
       />

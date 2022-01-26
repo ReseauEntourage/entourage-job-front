@@ -360,7 +360,11 @@ const ModalOfferAdmin = ({
                     })
                     .map((userOpp) => {
                       if (userOpp.User) {
-                        const offerStatus = findOfferStatus(userOpp.status);
+                        const offerStatus = findOfferStatus(
+                          userOpp.status,
+                          offer.isPublic,
+                          userOpp.recommended
+                        );
 
                         return (
                           <div
@@ -430,17 +434,7 @@ const ModalOfferAdmin = ({
                                 <span
                                   className={`uk-text-meta uk-text-${offerStatus.color}`}
                                 >
-                                  {offer.isPublic &&
-                                  offerStatus.recommended &&
-                                  offerStatus.public ? (
-                                    <>
-                                      {userOpp.recommended
-                                        ? offerStatus.recommended
-                                        : offerStatus.public}
-                                    </>
-                                  ) : (
-                                    offerStatus.label
-                                  )}
+                                  {offerStatus.label}
                                 </span>
                                 <IconNoSSR
                                   ratio={0.8}
