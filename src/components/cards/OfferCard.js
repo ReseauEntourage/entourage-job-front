@@ -25,18 +25,14 @@ const OfferCard = ({
 }) => {
   const renderStatus = (userOpp, isOppPublic) => {
     if (userOpp.status !== undefined) {
-      const offerStatus = findOfferStatus(userOpp.status);
+      const offerStatus = findOfferStatus(
+        userOpp.status,
+        isOppPublic,
+        userOpp.recommended
+      );
       return (
         <span className={`uk-text-meta uk-text-${offerStatus.color}`}>
-          {isOppPublic && offerStatus.recommended && offerStatus.public ? (
-            <>
-              {userOpp.recommended
-                ? offerStatus.recommended
-                : offerStatus.public}
-            </>
-          ) : (
-            offerStatus.label
-          )}
+          {offerStatus.label}
         </span>
       );
     }

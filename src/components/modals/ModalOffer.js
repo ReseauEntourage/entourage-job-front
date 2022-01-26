@@ -13,7 +13,7 @@ import ModalGeneric from 'src/components/modals/ModalGeneric';
 import formEditExternalOpportunity from 'src/components/forms/schema/formEditExternalOpportunity';
 import FormWithValidation from 'src/components/forms/FormWithValidation';
 import { UserContext } from 'src/components/store/UserProvider';
-import { EXTERNAL_OFFERS_ORIGINS } from 'src/constants';
+import { EXTERNAL_OFFERS_ORIGINS, USER_ROLES } from 'src/constants';
 
 export const List = ({ className, children }) => {
   return (
@@ -162,7 +162,8 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                 ...fields,
                 startOfContract: fields.startOfContract || null,
                 endOfContract: fields.endOfContract || null,
-                candidateId: user.id,
+                candidateId:
+                  user.role === USER_ROLES.COACH ? user.candidat.id : user.id,
                 id: offer.id,
               };
               await updateOpportunity(tmpOpportunity);

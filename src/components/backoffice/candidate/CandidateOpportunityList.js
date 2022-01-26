@@ -2,7 +2,7 @@
 
 import React, { useContext, useRef } from 'react';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
-import { USER_ROLES } from 'src//constants';
+import { USER_ROLES } from 'src/constants';
 import OpportunityList from 'src/components/opportunities/OpportunityList';
 import PropTypes from 'prop-types';
 
@@ -56,7 +56,10 @@ const CandidateOpportunityList = ({
                       ...fields,
                       startOfContract: fields.startOfContract || null,
                       endOfContract: fields.endOfContract || null,
-                      candidateId: user.id,
+                      candidateId:
+                        user.role === USER_ROLES.COACH
+                          ? user.candidat.id
+                          : user.id,
                       date: Date.now(),
                     });
                     closeModal();

@@ -1,4 +1,5 @@
 import { OFFER_STATUS } from 'src/constants';
+import { findOfferStatus } from 'src/utils/Finding';
 
 const mutateFormSchema = (schema, fields, id) => {
   const newSchema = {
@@ -39,12 +40,11 @@ const mutateFormSchema = (schema, fields, id) => {
 };
 
 const getAlternateDefaultOfferStatus = (offer = {}, userOpportunity = {}) => {
-  if (offer.isPublic && OFFER_STATUS[0].recommended && OFFER_STATUS[0].public) {
-    return userOpportunity.recommended
-      ? OFFER_STATUS[0].recommended
-      : OFFER_STATUS[0].public;
-  }
-  return OFFER_STATUS[0].label;
+  return findOfferStatus(
+    OFFER_STATUS[0].value,
+    offer.isPublic,
+    userOpportunity.recommended
+  ).label;
 };
 
 const mutateDefaultOfferStatus = (offer, userOpportunity) => {
