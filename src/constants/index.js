@@ -12,7 +12,8 @@ const OFFER_STATUS = [
   {
     value: -1,
     label: 'Offre à traiter',
-    alt: 'Offre consultée',
+    public: 'Offre consultée',
+    recommended: 'Offre recommandée',
     color: 'muted',
   },
   { value: 0, label: 'Contacté', color: 'muted' },
@@ -168,6 +169,7 @@ const OFFER_ADMIN_FILTERS_DATA = [
   { tag: 'all', title: 'Toutes les offres' },
   { tag: 'pending', title: 'Offres à valider', active: true },
   { tag: 'validated', title: 'Offres publiées' },
+  { tag: 'external', title: 'Offres externes' },
   { tag: 'archived', title: 'Offres archivées' },
 ];
 
@@ -323,6 +325,17 @@ const CONTRACTS = [
   },
 ];
 
+const EXTERNAL_OFFERS_ORIGINS = [
+  {
+    label: 'Mon réseau',
+    value: 'network',
+  },
+  {
+    label: 'Recherches Internet',
+    value: 'internet',
+  },
+];
+
 const EXTERNAL_LINKS = {
   DONATION: 'https://entourage.iraiser.eu/linkedout/~mon-don',
   LKO_VG: 'https://www.linkedout-vendeeglobe.com',
@@ -457,4 +470,5 @@ export {
   CONTRACTS,
   HEARD_ABOUT,
   AMBITIONS_PREFIXES,
+  EXTERNAL_OFFERS_ORIGINS,
 };

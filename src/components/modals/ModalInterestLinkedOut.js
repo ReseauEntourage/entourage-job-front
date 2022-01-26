@@ -17,12 +17,12 @@ const ModalInterestLinkedOut = () => {
               formSchema={interestLinkedOutSchema}
               onCancel={closeModal}
               onSubmit={(fields, setError) => {
-                Api.post('/mail/contact-us', fields)
+                return Api.post('/mail/contact-us', fields)
                   .then(() => {
                     return nextStep();
                   })
                   .catch(() => {
-                    return setError("Une erreur s'est produite");
+                    setError("Une erreur s'est produite");
                   });
               }}
             />

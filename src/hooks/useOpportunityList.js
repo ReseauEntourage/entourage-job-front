@@ -1,10 +1,11 @@
 import { useCallback } from 'react';
 import Api from 'src/Axios';
-import { filtersToQueryParams } from 'src/utils';
+import { filtersToQueryParams, getUserOpportunityFromOffer } from 'src/utils';
 
 export function useOpportunityList(
   setOffers,
   setOtherOffers,
+  setBookmarkedOffers,
   setNumberOfResults,
   setLoading,
   setHasError
@@ -24,14 +25,20 @@ export function useOpportunityList(
                 ...filtersToQueryParams(filters),
               },
             });
-            const sortedOffers = offers.sort((a, b) => {
-              return new Date(b.date) - new Date(a.date);
+
+            const bookmarkedOffers = offers.filter((offer) => {
+              const userOpp = getUserOpportunityFromOffer(offer, candidatId);
+              return offer && userOpp && userOpp.bookmarked;
             });
+            const restOffers = offers.filter((offer) => {
+              const userOpp = getUserOpportunityFromOffer(offer, candidatId);
 
-            setOffers(sortedOffers);
+              return !offer || !userOpp || !userOpp.bookmarked;
+            });
+            setOffers(restOffers);
             setOtherOffers(undefined);
-            setNumberOfResults(sortedOffers.length);
-
+            setBookmarkedOffers(bookmarkedOffers);
+            setNumberOfResults(offers.length);
             break;
           }
           case 'admin': {
@@ -44,11 +51,6 @@ export function useOpportunityList(
                 ...filtersToQueryParams(filters),
               },
             });
-            /* console.log(
-              offers.map((offer) => {
-                return offer.isValidated;
-              })
-            ); */
 
             const sortedOffers = offers.sort((a, b) => {
               return new Date(b.date) - new Date(a.date);
@@ -56,6 +58,7 @@ export function useOpportunityList(
 
             setOffers(sortedOffers);
             setOtherOffers(undefined);
+            setBookmarkedOffers(undefined);
             setNumberOfResults(sortedOffers.length);
 
             break;
@@ -71,8 +74,23 @@ export function useOpportunityList(
               },
             });
 
-            setOffers(offers);
+            const bookmarkedOffers = offers.filter((offer) => {
+              return (
+                offer &&
+                offer.userOpportunity &&
+                offer.userOpportunity.bookmarked
+              );
+            });
+            const restOffers = offers.filter((offer) => {
+              return (
+                !offer ||
+                !offer.userOpportunity ||
+                !offer.userOpportunity.bookmarked
+              );
+            });
+            setOffers(restOffers);
             setOtherOffers(otherOffers);
+            setBookmarkedOffers(bookmarkedOffers);
             setNumberOfResults(offers.length);
 
             break;
@@ -85,6 +103,13 @@ export function useOpportunityList(
         setHasError(true);
       }
     },
-    [setHasError, setLoading, setNumberOfResults, setOffers, setOtherOffers]
+    [
+      setBookmarkedOffers,
+      setHasError,
+      setLoading,
+      setNumberOfResults,
+      setOffers,
+      setOtherOffers,
+    ]
   );
 }

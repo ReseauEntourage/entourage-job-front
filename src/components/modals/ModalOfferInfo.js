@@ -4,10 +4,31 @@ import PropTypes from 'prop-types';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
 import ContractLabel from 'src/components/backoffice/candidate/ContractLabel';
 import { useCopyToClipboard } from 'src/hooks';
+import { IconNoSSR } from 'src/components/utils/Icon';
 
-function translateCategory(isPublic) {
-  if (!isPublic) return 'Offre privée';
-  if (isPublic) return 'Offre générale';
+function translateCategory(isPublic, isRecommended, isExternal) {
+  if (!isPublic) {
+    if (isExternal) {
+      return 'Offre externe';
+    }
+    return 'Offre privée';
+  }
+  if (isPublic) {
+    return (
+      <>
+        Offre générale
+        {isRecommended ? (
+          <>
+            {' '}
+            recommandée&nbsp;
+            <IconNoSSR name="bolt" ratio={0.8} className="ent-color-amber" />
+          </>
+        ) : (
+          ''
+        )}
+      </>
+    );
+  }
   return 'Offre inconnue';
 }
 
@@ -15,6 +36,8 @@ const ModalOfferInfo = ({
   offerId,
   title,
   isPublic,
+  isRecommended,
+  isExternal,
   contract,
   startOfContract,
   endOfContract,
@@ -29,22 +52,21 @@ const ModalOfferInfo = ({
     <div className="uk-flex uk-flex-column">
       <div className="uk-flex uk-flex-middle">
         <h3 className="uk-text-bold uk-margin-remove-bottom">{title}</h3>
-        <div style={{ width: 30 }}>
-          <ButtonIcon
-            className="uk-margin-small-left"
-            ratio={0.8}
-            tooltip="Copier le lien"
-            name="link"
-            onMouseLeave={() => {
-              return setHasBeenCopied(false);
-            }}
-            onClick={() => {
-              copyToClipboard(
-                `${process.env.SERVER_URL}/backoffice/candidat/offres/${offerId}`
-              );
-            }}
-          />
-        </div>
+        <ButtonIcon
+          style={{ width: 30 }}
+          ratio={0.8}
+          className="uk-margin-small-left"
+          tooltip="Copier le lien"
+          name="link"
+          onMouseLeave={() => {
+            return setHasBeenCopied(false);
+          }}
+          onClick={() => {
+            copyToClipboard(
+              `${process.env.SERVER_URL}/backoffice/candidat/offres/${offerId}`
+            );
+          }}
+        />
         {hasBeenCopied && (
           <span
             className={`uk-text-meta uk-text-italic uk-margin-small-left ${
@@ -55,20 +77,22 @@ const ModalOfferInfo = ({
           </span>
         )}
       </div>
-      <span>{translateCategory(isPublic)}</span>
+      <div className="uk-flex uk-flex-middle">
+        {translateCategory(isPublic, isRecommended, isExternal)}
+      </div>
       <ContractLabel
         contract={contract}
         endOfContract={endOfContract}
         startOfContract={startOfContract}
       />
-      <span className="uk-text-small">
+      <div className="uk-text-small">
         {numberOfPositions} poste
         {numberOfPositions > 1 ? 's' : ''} -{' '}
         {isPartTime ? 'Temps partiel' : 'Temps plein'}
-      </span>
-      <span className="uk-text-italic uk-text-small">
+      </div>
+      <div className="uk-text-italic uk-text-small">
         offre soumise le {moment(date).format('DD/MM/YYYY')}
-      </span>
+      </div>
     </div>
   );
 };
@@ -77,6 +101,8 @@ ModalOfferInfo.propTypes = {
   offerId: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   isPublic: PropTypes.bool.isRequired,
+  isRecommended: PropTypes.bool,
+  isExternal: PropTypes.bool,
   date: PropTypes.string.isRequired,
   contract: PropTypes.string,
   endOfContract: PropTypes.string,
@@ -87,6 +113,8 @@ ModalOfferInfo.propTypes = {
 
 ModalOfferInfo.defaultProps = {
   contract: undefined,
+  isRecommended: false,
+  isExternal: false,
   endOfContract: undefined,
   startOfContract: undefined,
 };

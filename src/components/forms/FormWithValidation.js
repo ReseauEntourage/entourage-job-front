@@ -1,7 +1,3 @@
-/* eslint-disable camelcase */
-/* eslint-disable default-case */
-/* eslint-disable max-classes-per-file */
-
 import React, {
   forwardRef,
   useCallback,
@@ -77,14 +73,14 @@ const FormWithValidation = forwardRef(
       setError('');
     };
 
-    const submitForm = (event) => {
-      event.preventDefault();
+    const submitForm = async (event) => {
+      if (event) event.preventDefault();
       // Vérifie les champs avant soumission
       /* Validators control before submit */
       const validation = validator.validate(fieldValues);
       if (validation.isValid) {
         // Si les validators sont OK.
-        onSubmit(fieldValues, (msg) => {
+        await onSubmit(fieldValues, (msg) => {
           return setError(msg);
         }); // c'est le props onsubmit de FormWithValidation
       } else {

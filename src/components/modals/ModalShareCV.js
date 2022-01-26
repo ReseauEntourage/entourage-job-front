@@ -33,7 +33,7 @@ const ModalShareCV = ({ firstName }) => {
                 onCancel={close}
                 onSubmit={({ email }) => {
                   event(TAGS.POPUP_PARTAGE_ENVOYER_MAIL_SUCCES);
-                  Api.post('/mail/newsletter', { email })
+                  return Api.post('/mail/newsletter', { email })
                     .then(next)
                     .catch(() => {
                       return UIkit.notification(

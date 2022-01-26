@@ -23,7 +23,7 @@ const ModalEdit = ({
         defaultValues={defaultValues}
         onCancel={onClose}
         onSubmit={(fields, setError) => {
-          onSubmit(fields, onClose, setError);
+          return onSubmit(fields, onClose, setError);
         }}
       />
     </ModalGeneric>

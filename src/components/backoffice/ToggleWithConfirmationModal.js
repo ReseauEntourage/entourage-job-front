@@ -87,10 +87,9 @@ const ToggleWithConfirmationModal = ({
                         description={modalDescription}
                         formSchema={formSchema}
                         submitText={modalConfirmation}
-                        onSubmit={(fields, closeModal) => {
-                          onToggle(true, fields).then(() => {
-                            return setToggle(true);
-                          });
+                        onSubmit={async (fields, closeModal) => {
+                          await onToggle(true, fields);
+                          setToggle(true);
                           closeModal();
                         }}
                       />

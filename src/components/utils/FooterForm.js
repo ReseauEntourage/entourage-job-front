@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'src/components/utils/Button';
+import ButtonPost from 'src/components/backoffice/cv/ButtonPost';
 
 const FooterForm = ({ error, onSubmit, onCancel, submitText }) => {
   return (
@@ -21,9 +22,11 @@ const FooterForm = ({ error, onSubmit, onCancel, submitText }) => {
               Annuler
             </Button>
           )}
-          <Button style="primary" onClick={onSubmit}>
-            {submitText || 'Envoyer'}
-          </Button>
+          <ButtonPost
+            text={submitText || 'Envoyer'}
+            style="primary"
+            action={onSubmit}
+          />
         </div>
       </div>
     </div>

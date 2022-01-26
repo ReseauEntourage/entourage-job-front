@@ -42,7 +42,6 @@ export default {
               });
             })
             .then((m) => {
-              console.log(m);
               return m;
             })
             .then(callback);

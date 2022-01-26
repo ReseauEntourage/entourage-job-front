@@ -40,6 +40,7 @@ const AdminOpportunityList = ({
     defaultValues: {
       isPublic: true,
     },
+    isAdmin: true,
     callback: opportunityListRef?.current?.fetchData,
     modalTitle: 'Ajouter une opportunité',
     schema: mutatedSchema,

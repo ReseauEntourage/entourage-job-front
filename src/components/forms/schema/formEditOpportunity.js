@@ -18,7 +18,11 @@ export default {
       name: 'candidatesId',
       isMulti: true,
       type: 'text',
-      title: "Renseignez le(s) candidat(s) à qui adresser l'offre",
+      dynamicTitle: (getValue) => {
+        return getValue('isPublic') === true
+          ? "Souhaitez-vous suggérer l'offre à certains candidats ?"
+          : "Renseignez le(s) candidat(s) à qui adresser l'offre";
+      },
       placeholder: 'Tapez un candidat',
       component: 'select-request-async',
       disable: (getValue) => {
@@ -164,6 +168,7 @@ export default {
     {
       id: 'startEndContract',
       component: 'fieldgroup',
+      childWidths: ['expand', 'expand', '1-4@m'],
       fields: [
         {
           id: 'startOfContract',
@@ -419,6 +424,18 @@ export const adminMutation = {
             });
           })
           .then(callback);
+      },
+    },
+    {
+      propName: 'disable',
+      value: () => {
+        return false;
+      },
+    },
+    {
+      propName: 'hide',
+      value: () => {
+        return false;
       },
     },
   ],

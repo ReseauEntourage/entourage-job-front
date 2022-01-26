@@ -32,14 +32,14 @@ const PassionsCard = ({ list, onChange }) => {
                     acc[`passion${i + 1}`] = value;
                     return acc;
                   }, {})}
-                  onSubmit={(fields, closeModal) => {
+                  onSubmit={async (fields, closeModal) => {
                     closeModal();
                     const fieldsTransform = {
                       passions: Object.values(fields).filter((val) => {
                         return typeof val === 'string' && val !== '';
                       }),
                     };
-                    onChange(fieldsTransform);
+                    await onChange(fieldsTransform);
                   }}
                 />
               );

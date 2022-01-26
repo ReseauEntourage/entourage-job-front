@@ -173,6 +173,7 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
               candidatId={linkedUser.id}
             />
             <ToggleWithConfirmationModal
+              id="hiddenToggle"
               title="Masquer le CV"
               modalTitle="Changer la visibilité du CV en ligne ?"
               modalConfirmation="Oui, masquer le CV"
@@ -267,7 +268,7 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
                           }
                         }
                         if (promise) {
-                          promise
+                          return promise
                             .then(() => {
                               return Api.get(`/user/${user.id}`);
                             })

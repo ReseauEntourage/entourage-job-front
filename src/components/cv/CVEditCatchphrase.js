@@ -22,9 +22,9 @@ const CVEditCatchphrase = ({ catchphrase, onChange }) => {
                   title="Édition - Ma phrase d'accroche"
                   formSchema={schemaCatchphrase}
                   defaultValues={{ catchphrase }}
-                  onSubmit={(fields, closeModal) => {
+                  onSubmit={async (fields, closeModal) => {
                     closeModal();
-                    onChange({
+                    await onChange({
                       ...fields,
                     });
                   }}

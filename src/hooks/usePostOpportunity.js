@@ -45,7 +45,7 @@ export function usePostOpportunity({
           ...opportunity,
           startOfContract: opportunity.startOfContract || null,
           endOfContract: opportunity.endOfContract || null,
-          candidatesId: opportunity.isPublic ? null : candidatesId,
+          candidatesId: opportunity.isPublic && !isAdmin ? null : candidatesId,
           message: opportunity.isPublic ? null : opportunity.message,
           date: Date.now(),
         });
@@ -66,21 +66,20 @@ export function usePostOpportunity({
         UIkit.notification(`Une erreur est survenue.`, 'danger');
       }
     },
-    []
+    [isAdmin]
   );
 
   const modal = useMemo(() => {
     const mutatedDefaultValue = { ...defaultValues };
-    if (!mutatedDefaultValue.isPublic) {
-      mutatedDefaultValue.candidatesId = _.isEmpty(lastFilledForm)
-        ? [
-            {
-              label: `${mutatedDefaultValue.firstName} ${mutatedDefaultValue.lastName}`,
-              value: candidateId,
-            },
-          ]
-        : lastFilledForm.candidatesId;
-    }
+    mutatedDefaultValue.candidatesId = mutatedDefaultValue.candidat
+      ? [
+          {
+            label: `${mutatedDefaultValue.candidat.firstName} ${mutatedDefaultValue.candidat.lastName}`,
+            value: candidateId,
+          },
+        ]
+      : [];
+
     return (
       <ModalEdit
         title={modalTitle}
@@ -89,6 +88,7 @@ export function usePostOpportunity({
         defaultValues={{
           ...mutatedDefaultValue,
           ...lastFilledForm,
+          candidatesId: mutatedDefaultValue.candidatesId,
         }}
         formSchema={schema}
         onSubmit={async (fields, closeModal) => {

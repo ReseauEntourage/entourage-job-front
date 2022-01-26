@@ -11,9 +11,11 @@ const OfferCard = ({
   title,
   from,
   shortDescription,
-  isStared,
+  bookmarked,
   isNew,
+  isExternal,
   archived,
+  recommended,
   isPublic,
   date,
   userOpportunity,
@@ -26,7 +28,15 @@ const OfferCard = ({
       const offerStatus = findOfferStatus(userOpp.status);
       return (
         <span className={`uk-text-meta uk-text-${offerStatus.color}`}>
-          {isOppPublic && offerStatus.alt ? offerStatus.alt : offerStatus.label}
+          {isOppPublic && offerStatus.recommended && offerStatus.public ? (
+            <>
+              {userOpp.recommended
+                ? offerStatus.recommended
+                : offerStatus.public}
+            </>
+          ) : (
+            offerStatus.label
+          )}
         </span>
       );
     }
@@ -35,36 +45,68 @@ const OfferCard = ({
 
   const userOpportunitiesWithoutDefaultStatus = Array.isArray(userOpportunity)
     ? userOpportunity.filter((userOpp) => {
-        return userOpp.status !== OFFER_STATUS[0].value;
+        return userOpp.status !== OFFER_STATUS[0].value || userOpp.recommended;
       })
     : null;
 
+  const specificUserOpportunity =
+    userOpportunity && !Array.isArray(userOpportunity) ? userOpportunity : null;
+
+  const shouldShowRecommandationBadge =
+    isPublic && (specificUserOpportunity?.recommended || recommended);
+
+  const background = archived ? 'secondary' : 'default';
+
   return (
     <div
-      className={`ent-offer uk-card uk-card-hover uk-card-body uk-card-${
-        archived ? 'secondary' : 'default'
-      }`}
+      className={`ent-offer uk-card uk-card-hover uk-card-body ${
+        isExternal && !archived ? 'ent-external-offer' : ''
+      } uk-card-${background}`}
     >
-      {isNew && <div className="ent-offer-badge" />}
+      {(isNew || shouldShowRecommandationBadge) && (
+        <div
+          className={
+            isNew ? 'ent-offer-badge' : 'ent-offer-badge-recommandation'
+          }
+        >
+          {shouldShowRecommandationBadge ? (
+            <>
+              R e c o&nbsp;
+              <IconNoSSR name="bolt" ratio={0.5} className="ent-color-amber" />
+            </>
+          ) : (
+            ''
+          )}
+        </div>
+      )}
       <Grid
         gap="medium"
         childWidths={['1-1']}
         className="uk-height-max-large uk-overflow-auto"
       >
-        <Grid eachWidths={['expand', 'auto']}>
-          <h5 className="uk-text-bold">{title}</h5>
-          {isStared === undefined ? (
-            <></>
-          ) : (
-            <IconNoSSR
-              name="star"
-              className={`${isStared ? 'ent-color-amber' : undefined}`}
-            />
-          )}
-        </Grid>
+        <div className="uk-flex">
+          <h5 className="uk-flex-1 uk-text-bold">{title}</h5>
+          <div className="uk-flex uk-flex-right uk-flex-top">
+            {' '}
+            {(specificUserOpportunity?.bookmarked || bookmarked) && (
+              <IconNoSSR
+                name="star"
+                className="ent-color-amber uk-margin-small-left"
+                ratio={0.8}
+              />
+            )}
+            {(specificUserOpportunity?.archived || (!isAdmin && archived)) && (
+              <IconNoSSR
+                name="archive"
+                className="ent-color-amber uk-margin-small-left"
+                ratio={0.8}
+              />
+            )}
+          </div>
+        </div>
         <Grid gap="small" middle eachWidths={['auto', 'expand']}>
-          <IconNoSSR name="user" />
-          <p>{from}</p>
+          <IconNoSSR name="world" />
+          <p>{shortDescription}</p>
         </Grid>
         {department && (
           <Grid gap="small" middle eachWidths={['auto', 'expand']}>
@@ -72,10 +114,13 @@ const OfferCard = ({
             <p>{department}</p>
           </Grid>
         )}
-        <Grid gap="small" middle eachWidths={['auto', 'expand']}>
-          <IconNoSSR name="world" />
-          <p>{shortDescription}</p>
-        </Grid>
+        {isAdmin && from && (
+          <Grid gap="small" middle eachWidths={['auto', 'expand']}>
+            <IconNoSSR name="user" />
+            <p>{from}</p>
+          </Grid>
+        )}
+
         <Grid gap="small" middle eachWidths={['auto', 'expand']}>
           <IconNoSSR name="info" />
           <div>
@@ -99,7 +144,9 @@ const OfferCard = ({
               </div>
             ) : (
               <div>
-                <p className="uk-margin-remove-bottom">Offre privée</p>
+                <p className="uk-margin-remove-bottom">
+                  {isExternal ? 'Offre externe' : 'Offre privée'}
+                </p>
                 {userOpportunity &&
                   (Array.isArray(userOpportunity)
                     ? userOpportunity.length > 0 &&
@@ -157,10 +204,12 @@ OfferCard.propTypes = {
   title: PropTypes.string.isRequired,
   from: PropTypes.string.isRequired,
   shortDescription: PropTypes.string.isRequired,
-  isStared: PropTypes.bool,
-  isNew: PropTypes.bool,
+  bookmarked: PropTypes.bool,
   archived: PropTypes.bool,
+  recommended: PropTypes.bool,
+  isNew: PropTypes.bool,
   isPublic: PropTypes.bool,
+  isExternal: PropTypes.bool,
   date: PropTypes.string,
   userOpportunity: PropTypes.oneOfType([
     PropTypes.shape(),
@@ -172,10 +221,12 @@ OfferCard.propTypes = {
 };
 
 OfferCard.defaultProps = {
-  isStared: undefined,
-  isNew: undefined,
+  bookmarked: undefined,
   archived: undefined,
+  recommended: undefined,
+  isNew: undefined,
   isPublic: undefined,
+  isExternal: undefined,
   isValidated: undefined,
   date: undefined,
   userOpportunity: undefined,

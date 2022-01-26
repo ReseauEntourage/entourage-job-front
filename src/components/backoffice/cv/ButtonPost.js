@@ -12,7 +12,7 @@ const ButtonPost = ({ text, icon, action, style, disabled }) => {
       onClick={() => {
         if (!loading) {
           setLoading(true);
-          action().finally(() => {
+          action()?.finally(() => {
             return setLoading(false);
           });
         }

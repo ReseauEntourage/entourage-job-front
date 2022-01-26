@@ -8,29 +8,34 @@ import Api from 'src/Axios';
 import { IconNoSSR } from 'src/components/utils/Icon';
 
 const ResetPasswordPage = () => {
-  const router = useRouter();
+  const {
+    isReady,
+    query: { id, token, push },
+  } = useRouter();
 
   const [valide, setValide] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (router.query.id && router.query.token) {
-      Api.get(`/auth/reset/${router.query.id}/${router.query.token}`)
+    if (isReady && id && token) {
+      Api.get(`/auth/reset/${id}/${token}`)
         .then(() => {
           setValide(true);
-          setLoading(false);
         })
         .catch(() => {
+          setValide(false);
           console.log('Lien non valide');
-          /* router.push('/login'); */
+        })
+        .finally(() => {
+          setLoading(false);
         });
     }
-  });
+  }, [id, isReady, token]);
 
   return (
     <Layout title="Réinitialisation de mot de passe - LinkedOut">
       <Section size="large" style="muted">
-        <div className="uk-flex uk-flex-center">
+        <div className="uk-flex uk-flex-center uk-flex-middle">
           {loading && (
             <div className="uk-text-center">
               <div data-uk-spinner />
@@ -42,12 +47,12 @@ const ResetPasswordPage = () => {
               <FormWithValidation
                 formSchema={schema}
                 onSubmit={({ newPassword, confirmPassword }, setError) => {
-                  Api.post(
-                    `/auth/reset/${router.query.id}/${router.query.token}`,
-                    { newPassword, confirmPassword }
-                  )
+                  return Api.post(`/auth/reset/${id}/${token}`, {
+                    newPassword,
+                    confirmPassword,
+                  })
                     .then(() => {
-                      router.push('/reset/success');
+                      push('/reset/success');
                     })
                     .catch((err) => {
                       setError(err.response.data.error);
@@ -66,7 +71,7 @@ const ResetPasswordPage = () => {
                 <Button
                   style="primary"
                   onClick={() => {
-                    return router.push('/');
+                    return push('/');
                   }}
                 >
                   Retourner à l&apos;accueil

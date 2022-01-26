@@ -18,11 +18,15 @@ import ModalOfferAdmin from 'src/components/modals/ModalOfferAdmin';
 import OpportunityError from 'src/components/opportunities/OpportunityError';
 import { useOpportunityList } from 'src/hooks/useOpportunityList';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
+import {
+  OFFER_ADMIN_FILTERS_DATA,
+  OPPORTUNITY_FILTERS_DATA,
+} from 'src/constants';
 import FiltersTabs from 'src/components/utils/FiltersTabs';
 import SearchBar from 'src/components/filters/SearchBar';
 import { openModal } from 'src/components/modals/Modal';
 import { usePrevious } from 'src/hooks/utils';
+import { IconNoSSR } from 'src/components/utils/Icon';
 
 const OfferList = ({
   candidatId,
@@ -66,6 +70,12 @@ const OfferList = ({
                   isValidated={offer.isValidated}
                   department={offer.department}
                   userOpportunity={userOpportunity}
+                  isExternal={offer.isExternal}
+                  isNew={
+                    role === 'candidateAsAdmin' &&
+                    userOpportunity &&
+                    !userOpportunity.seen
+                  }
                   isAdmin
                 />
               ) : (
@@ -77,12 +87,16 @@ const OfferList = ({
                   isValidated={offer.isValidated}
                   isPublic={offer.isPublic}
                   userOpportunity={offer.userOpportunity}
+                  isNew={!offer.userOpportunity || !offer.userOpportunity.seen}
+                  isExternal={offer.isExternal}
                   archived={
                     offer.userOpportunity && offer.userOpportunity.archived
                   }
-                  isNew={!offer.userOpportunity || !offer.userOpportunity.seen}
-                  isStared={
+                  bookmarked={
                     offer.userOpportunity && offer.userOpportunity.bookmarked
+                  }
+                  recommended={
+                    offer.userOpportunity && offer.userOpportunity.recommended
                   }
                   department={offer.department}
                 />
@@ -131,8 +145,12 @@ const OpportunityList = forwardRef(
       query: { offerId: opportunityId, memberId, tab, ...restQuery },
     } = useRouter();
 
+    const prevTag = usePrevious(restQuery.tag);
+
+    const [filtersConst, setFiltersConst] = useState(OPPORTUNITY_FILTERS_DATA);
     const [numberOfResults, setNumberOfResults] = useState(0);
 
+    const [bookmarkedOffers, setBookmarkedOffers] = useState(undefined);
     const [offers, setOffers] = useState(undefined);
     const [otherOffers, setOtherOffers] = useState(undefined);
     const [hasError, setHasError] = useState(false);
@@ -173,6 +191,7 @@ const OpportunityList = forwardRef(
     const fetchData = useOpportunityList(
       setOffers,
       setOtherOffers,
+      setBookmarkedOffers,
       setNumberOfResults,
       setLoading,
       setHasError
@@ -238,9 +257,6 @@ const OpportunityList = forwardRef(
                   candidatId
                 );
               }}
-              selectedCandidateId={
-                role === 'candidateAsAdmin' ? candidatId : undefined
-              }
               navigateBackToList={navigateBackToList}
               duplicateOffer={async (closeModal) => {
                 const { id, userOpportunity, ...restOpportunity } = offer;
@@ -249,6 +265,7 @@ const OpportunityList = forwardRef(
                   title: `${restOpportunity.title} (copie)`,
                   isAdmin: true,
                   isValidated: false,
+                  date: Date.now(),
                 });
                 closeModal();
                 UIkit.notification("L'offre a bien été dupliquée", 'success');
@@ -324,6 +341,17 @@ const OpportunityList = forwardRef(
       fetchData(role, search, tabFilterTag, filters, candidatId);
     }, [role, search, tabFilters, filters, candidatId]);
 
+    useEffect(() => {
+      if (restQuery.tag !== prevTag) {
+        const initialFiltersConst =
+          restQuery.tag === OFFER_ADMIN_FILTERS_DATA[3].tag
+            ? OPPORTUNITY_FILTERS_DATA.slice(1, 3)
+            : OPPORTUNITY_FILTERS_DATA;
+
+        setFiltersConst(initialFiltersConst);
+      }
+    }, [prevTag, restQuery.tag]);
+
     const content = (
       <div>
         {loading && (
@@ -334,6 +362,27 @@ const OpportunityList = forwardRef(
         {!loading && hasError && <OpportunityError />}
         {!loading && !hasError && (
           <div>
+            {bookmarkedOffers && bookmarkedOffers.length > 0 && (
+              <>
+                <p className="uk-text-center uk-text-italic uk-padding-small uk-flex uk-flex-middle uk-flex-center">
+                  Opportunités favorites&nbsp;
+                  <IconNoSSR
+                    name="star"
+                    className="ent-color-amber uk-margin-small-left"
+                    ratio={0.8}
+                  />
+                </p>
+                <OfferList
+                  candidatId={candidatId}
+                  query={restQuery}
+                  role={role}
+                  isAdmin={isAdmin}
+                  offers={bookmarkedOffers}
+                  currentPath={currentPath}
+                />
+                <hr />
+              </>
+            )}
             {offers && offers.length > 0 ? (
               <OfferList
                 candidatId={candidatId}
@@ -364,7 +413,7 @@ const OpportunityList = forwardRef(
               <>
                 <hr />
                 <p className="uk-text-center uk-text-italic uk-padding-small">
-                  Voici d&apos;autres offres qui vous ont été adressé hors des
+                  Voici d&apos;autres offres qui vous ont été adressées hors des
                   départements sélectionnés&nbsp;:
                 </p>
                 <OfferList
@@ -392,7 +441,7 @@ const OpportunityList = forwardRef(
             otherPathParams={['offerId']}
             otherFilterComponent={
               <SearchBar
-                filtersConstants={OPPORTUNITY_FILTERS_DATA}
+                filtersConstants={filtersConst}
                 filters={filters}
                 numberOfResults={numberOfResults}
                 resetFilters={resetFilters}
@@ -408,7 +457,7 @@ const OpportunityList = forwardRef(
         ) : (
           <>
             <SearchBar
-              filtersConstants={OPPORTUNITY_FILTERS_DATA}
+              filtersConstants={filtersConst}
               filters={filters}
               numberOfResults={numberOfResults}
               resetFilters={resetFilters}

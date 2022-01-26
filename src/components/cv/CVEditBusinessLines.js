@@ -32,9 +32,9 @@ const CVEditBusinessLines = ({ businessLines, onChange }) => {
                     businessLines,
                   }}
                   description="Ces valeurs ne seront pas affichées sur le CV mais serviront aux recruteurs à filtrer les candidats."
-                  onSubmit={(fields, closeModal) => {
+                  onSubmit={async (fields, closeModal) => {
                     closeModal();
-                    onChange({
+                    await onChange({
                       ...fields,
                     });
                   }}

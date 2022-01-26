@@ -2,8 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
 import { Section } from 'src/components/utils';
-import { MEMBER_FILTERS_DATA, USER_ROLES } from 'src/constants';
-import { usePrevious } from 'src/hooks/utils';
+import { MEMBER_FILTERS_DATA } from 'src/constants';
 import { useFilters } from 'src/hooks';
 import { UserContext } from 'src/components/store/UserProvider';
 import MemberList from 'src/components/backoffice/admin/MemberList';
@@ -15,12 +14,8 @@ const MembersAdmin = () => {
     query: { role, ...restParams },
   } = useRouter();
 
-  const [filtersConst, setFiltersConst] = useState(MEMBER_FILTERS_DATA);
   const [loadingDefaultFilters, setLoadingDefaultFilters] = useState(true);
   const { user } = useContext(UserContext);
-
-  const prevRole = usePrevious(role);
-  const prevUser = usePrevious(user);
 
   useEffect(() => {
     if (isReady) {
@@ -47,22 +42,11 @@ const MembersAdmin = () => {
   }, [isReady, replace, restParams, role, user]);
 
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
-    filtersConst,
+    MEMBER_FILTERS_DATA,
     {
       href: '/backoffice/admin/membres',
     }
   );
-
-  useEffect(() => {
-    if (role !== prevRole) {
-      const initialFiltersConst =
-        role === USER_ROLES.COACH
-          ? MEMBER_FILTERS_DATA.slice(0, 2)
-          : MEMBER_FILTERS_DATA;
-
-      setFiltersConst(initialFiltersConst);
-    }
-  }, [loadingDefaultFilters, prevRole, prevUser, role, setFilters, user]);
 
   return (
     <LayoutBackOffice title="Gestion des membres">
@@ -73,7 +57,6 @@ const MembersAdmin = () => {
           </div>
         ) : (
           <MemberList
-            filtersConst={filtersConst}
             search={search}
             filters={filters}
             resetFilters={resetFilters}
