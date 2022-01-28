@@ -1,29 +1,70 @@
-/* global UIkit */
+import UIkit from 'uikit';
 import React from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import {
-  Hamburger,
-  Nav,
-  Navbar,
-  NavbarLogo,
-  Offcanvas,
-} from 'src/components/utils';
+import { Hamburger, Nav, Navbar, NavbarLogo } from 'src/components/utils';
 
 import Button from 'src/components/utils/Button';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { event } from 'src/lib/gtag';
 import TAGS from 'src/constants/tags';
 import { IconNoSSR } from 'src/components/utils/Icon';
+import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas';
 
 const LINKS = [
   { href: '/aider', name: 'Particuliers, agissez' },
   { href: '/entreprises', name: 'Entreprises, engagez-vous' },
 ];
 
+const offcanvasId = 'offcanvas-guest';
+
 const Header = ({ isHome }) => {
   const router = useRouter();
+
+  const rightItems = [
+    ...LINKS.map((link, i) => {
+      if (router.asPath.includes(link.href)) {
+        return (
+          <div className="uk-navbar-item uk-padding-remove-horizontal uk-visible@m">
+            <Button
+              href={link.href}
+              style="default"
+              className="uk-padding-small uk-padding-remove-vertical"
+            >
+              {link.name}
+            </Button>
+          </div>
+        );
+      }
+      return (
+        <Link href={link.href} key={i}>
+          {/* Hack so that the links don't move when changing current page */}
+          <a
+            style={{ border: '1px solid transparent' }}
+            className={`uk-visible@m ${
+              router.asPath === link.href && 'uk-text-bold uk-text-primary'
+            }`}
+          >
+            {link.name}
+          </a>
+        </Link>
+      );
+    }),
+    // separateurs en css .ent-nav
+    <div className="uk-navbar-item uk-visible@m">
+      <Button
+        href={{
+          pathname: '/candidats',
+          query: { employed: false },
+        }}
+        style="primary"
+      >
+        Découvrir les CV&nbsp;
+        <IconNoSSR name="chevron-right" />
+      </Button>
+    </div>,
+  ];
   return (
     <header id="header">
       <Navbar
@@ -58,64 +99,24 @@ const Header = ({ isHome }) => {
           </div>
         }
         right={
-          <Nav
-            navbar
-            items={[
-              ...LINKS.map((link, i) => {
-                if (router.asPath.includes(link.href)) {
-                  return (
-                    <div className="uk-navbar-item uk-padding-remove-horizontal uk-visible@m">
-                      <Button
-                        href={link.href}
-                        style="default"
-                        className="uk-padding-small uk-padding-remove-vertical"
-                      >
-                        {link.name}
-                      </Button>
-                    </div>
-                  );
-                }
-                return (
-                  <Link href={link.href} key={i}>
-                    {/* Hack so that the links don't move when changing current page */}
-                    <a
-                      style={{ border: '1px solid transparent' }}
-                      className={`uk-visible@m ${
-                        router.asPath === link.href &&
-                        'uk-text-bold uk-text-primary'
-                      }`}
-                    >
-                      {link.name}
-                    </a>
-                  </Link>
-                );
-              }),
-              // separateurs en css .ent-nav
-              <div className="uk-navbar-item uk-visible@m">
-                <Button
-                  href={{
-                    pathname: '/candidats',
-                    query: { employed: false },
-                  }}
-                  style="primary"
-                >
-                  Découvrir les CV&nbsp;
-                  <IconNoSSR name="chevron-right" />
-                </Button>
-              </div>,
-              <Hamburger targetId="offcanvas-guest" hidden="m" />,
-            ]}
-          />
+          <>
+            <div className="uk-visible@m">
+              <Nav navbar items={rightItems} />
+            </div>
+            <div className="uk-hidden@m uk-padding-small uk-flex uk-flex-middle">
+              <Hamburger targetId={offcanvasId} hidden="m" />,
+            </div>
+          </>
         }
       />
-      <Offcanvas id="offcanvas-guest">
+      <OffcanvasNoSSR id={offcanvasId}>
         <ul className="uk-nav uk-nav-default uk-margin-medium-top">
           <li>
             <a
               aria-hidden="true"
               onClick={() => {
                 router.push('/');
-                UIkit.offcanvas('#offcanvas-guest').hide();
+                UIkit.offcanvas(`#${offcanvasId}`).hide();
               }}
             >
               Accueil
@@ -131,7 +132,7 @@ const Header = ({ isHome }) => {
                     aria-hidden="true"
                     onClick={() => {
                       router.push(href);
-                      UIkit.offcanvas('#offcanvas-guest').hide();
+                      UIkit.offcanvas(`#${offcanvasId}`).hide();
                     }}
                   >
                     {name}
@@ -144,7 +145,7 @@ const Header = ({ isHome }) => {
             <Button
               href={{ pathname: '/candidats', query: { employed: false } }}
               onClick={() => {
-                return UIkit.offcanvas('#offcanvas-guest').hide();
+                UIkit.offcanvas(`#${offcanvasId}`).hide();
               }}
               style="primary"
             >
@@ -158,7 +159,7 @@ const Header = ({ isHome }) => {
               isExternal
               newTab
               onClick={() => {
-                UIkit.offcanvas('#offcanvas-guest').hide();
+                UIkit.offcanvas(`#${offcanvasId}`).hide();
                 event(TAGS.FOOTER_DON_CLIC);
               }}
               style="default"
@@ -168,14 +169,17 @@ const Header = ({ isHome }) => {
             </Button>
           </li>
         </ul>
-      </Offcanvas>
+      </OffcanvasNoSSR>
     </header>
   );
 };
+
 Header.propTypes = {
   isHome: PropTypes.bool,
 };
+
 Header.defaultProps = {
   isHome: false,
 };
+
 export default Header;

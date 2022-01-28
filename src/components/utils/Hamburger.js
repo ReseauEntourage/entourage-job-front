@@ -2,27 +2,43 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
 import { UIKIT_SCREENS } from 'src/components/variables';
+import ButtonIcon from 'src/components/utils/ButtonIcon';
+import UIkit from 'uikit';
 
-const Hamburger = ({ hidden, targetId, visible }) => {
+const Hamburger = ({ hidden, targetId, visible, light }) => {
   let classBuffer = '';
   if (hidden) classBuffer += `uk-hidden@${hidden}`;
   if (visible) classBuffer += `uk-visible@${visible}`;
   return (
-    <button
-      type="button"
-      aria-label="hamburger"
-      className={`uk-navbar-toggle ${classBuffer}`}
-      data-uk-toggle={`target: #${targetId}`}
-      data-uk-navbar-toggle-icon
+    <ButtonIcon
+      style={
+        light
+          ? {
+              color: 'inherit !important',
+            }
+          : { color: 'white' }
+      }
+      className={classBuffer}
+      onClick={() => {
+        UIkit.offcanvas(`#${targetId}`).show();
+      }}
+      name="menu"
     />
   );
 };
+
 Hamburger.propTypes = {
   hidden: PropTypes.oneOf(UIKIT_SCREENS),
   visible: PropTypes.oneOf(UIKIT_SCREENS),
+  light: PropTypes.bool,
   targetId: PropTypes.string.isRequired,
 };
-Hamburger.defaultProps = { hidden: undefined, visible: undefined };
+
+Hamburger.defaultProps = {
+  hidden: undefined,
+  visible: undefined,
+  light: false,
+};
 
 export const HamburgerNoSSR = dynamic(
   () => {

@@ -48,10 +48,6 @@ module.exports = withLess({
       );
     }
 
-    config.module.rules.push({
-      test: require.resolve('uikit'),
-      use: ['expose-loader?UIkit'],
-    });
     return config;
   },
   assetPrefix: !dev ? process.env.CDN_URL || '' : '',

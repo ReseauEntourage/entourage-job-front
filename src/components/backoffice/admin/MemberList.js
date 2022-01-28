@@ -1,4 +1,4 @@
-/* global UIkit */
+import UIkit from 'uikit';
 
 import React, { useCallback, useEffect, useState } from 'react';
 import moment from 'moment';

@@ -1,4 +1,4 @@
-/* global UIkit */
+import UIkit from 'uikit';
 import React, { useContext, useEffect, useState } from 'react';
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
 import Api from 'src/Axios';

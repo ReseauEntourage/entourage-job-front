@@ -147,15 +147,6 @@ const Layout = ({
           alt=""
         />
       </noscript>
-      {/* do not use the minified versions because of fix in full versions */}
-      <Script
-        strategy="beforeInteractive"
-        src="/static/dist/js/uikit-fixed.js"
-      />
-      <Script
-        strategy="beforeInteractive"
-        src="/static/dist/js/uikit-icons.js"
-      />
       {/* Google Tag Manager (noscript) */}
       <noscript>
         <iframe

@@ -1,4 +1,4 @@
-/* global UIkit */
+import UIkit from 'uikit';
 
 import React, { useContext, useRef } from 'react';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';

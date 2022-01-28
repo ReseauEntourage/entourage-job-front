@@ -1,4 +1,7 @@
 /* eslint-disable react/prop-types */
+import UIkit from 'uikit';
+import Icons from 'public/static/dist/js/uikit-icons';
+
 import 'public/static/dist/css/uikit.entourage.min.css';
 import 'public/static/css/styles.less';
 import 'public/static/css/Forms.less';
@@ -19,6 +22,8 @@ import * as gtag from 'src/lib/gtag';
 import SplashScreen from 'src/components/SplashScreen';
 import { useMount } from 'src/hooks/utils';
 import { ModalsListener } from 'src/components/modals/Modal';
+
+UIkit.use(Icons);
 
 Sentry.init({
   enabled: process.env.NODE_ENV === 'production',

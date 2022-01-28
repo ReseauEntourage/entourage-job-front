@@ -1,4 +1,4 @@
-/* global UIkit */
+import UIkit from 'uikit';
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Api from 'src/Axios';
