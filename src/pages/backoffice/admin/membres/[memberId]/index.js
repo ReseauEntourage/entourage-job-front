@@ -324,7 +324,9 @@ const User = () => {
       <Section>
         <Grid column gap="medium">
           <SimpleLink
-            href={`/backoffice/admin/membres?role=${user.role}&zone=${user.zone}`}
+            href={`/backoffice/admin/membres?role=${user.role}${
+              user.zone ? `&zone=${user.zone}` : ''
+            }`}
             className="uk-link-reset uk-flex uk-flex-middle"
           >
             <IconNoSSR name="chevron-left" />

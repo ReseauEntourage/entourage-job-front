@@ -16,7 +16,6 @@ const Contact = () => {
     Paris: '07 82 44 97 39',
     Lille: '07 83 85 48 95',
     Lyon: '07 67 35 05 86',
-    'Autres demandes': '07 67 69 67 61',
   };
 
   return (
