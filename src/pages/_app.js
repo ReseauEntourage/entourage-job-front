@@ -19,7 +19,7 @@ import DataProvider from 'src/components/store/DataProvider';
 import SharesCountProvider from 'src/components/store/SharesCountProvider';
 
 import * as gtag from 'src/lib/gtag';
-import SplashScreen from 'src/components/SplashScreen';
+import { SplashScreenNoSSR } from 'src/components/SplashScreen';
 import { useMount } from 'src/hooks/utils';
 import { ModalsListener } from 'src/components/modals/Modal';
 
@@ -40,7 +40,7 @@ const SplashScreenContainer = ({ loading, fading }) => {
         fading ? 'uk-animation-fade uk-animation-reverse' : ''
       } uk-position-cover uk-background-default`}
     >
-      <SplashScreen />
+      <SplashScreenNoSSR />
     </div>
   ) : null;
 };
