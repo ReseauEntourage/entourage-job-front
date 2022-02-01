@@ -29,6 +29,9 @@
       "pre-commit": "npm run lint"
     }
   },
+  "cacheDirectories": [
+    ".next/cache"
+  ],
   "dependencies": {
     "@sentry/node": "^5.27.3",
     "@sentry/react": "^5.29.0",
