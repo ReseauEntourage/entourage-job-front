@@ -5,7 +5,7 @@ import { Button, Section } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
 
 const ResetSuccessPage = () => {
-  const router = useRouter();
+  const { push } = useRouter();
 
   return (
     <Layout title="Réinitialisation de mot de passe - LinkedOut">
@@ -20,7 +20,7 @@ const ResetSuccessPage = () => {
               <Button
                 style="primary"
                 onClick={() => {
-                  return router.push('/login');
+                  return push('/login');
                 }}
               >
                 Se connecter
