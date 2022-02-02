@@ -27,6 +27,7 @@ const ButtonIcon = ({
     </a>
   );
 };
+
 ButtonIcon.propTypes = {
   name: PropTypes.string.isRequired,
   tooltip: PropTypes.string,
@@ -36,6 +37,7 @@ ButtonIcon.propTypes = {
   ratio: PropTypes.number,
   style: PropTypes.shape(),
 };
+
 ButtonIcon.defaultProps = {
   href: undefined,
   tooltip: undefined,

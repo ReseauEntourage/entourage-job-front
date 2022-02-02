@@ -277,13 +277,15 @@ const ModalOfferAdmin = ({
                   setIsEditing(true);
                 }}
               />
-              <ButtonIcon
-                name="copy"
-                tooltip="Dupliquer l'offre"
-                onClick={() => {
-                  duplicateOffer(onClose);
-                }}
-              />
+              {!offer.isExternal && (
+                <ButtonIcon
+                  name="copy"
+                  tooltip="Dupliquer l'offre"
+                  onClick={() => {
+                    duplicateOffer(onClose);
+                  }}
+                />
+              )}
             </List>
           </div>
         </Grid>

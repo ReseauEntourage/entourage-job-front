@@ -1,13 +1,8 @@
-/* global UIkit */
+import UIkit from 'uikit';
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
-import {
-  Navbar,
-  NavbarLogo,
-  Offcanvas,
-  SimpleLink,
-} from 'src/components/utils';
+import { Navbar, Nav, NavbarLogo, SimpleLink } from 'src/components/utils';
 
 import { UserContext } from 'src/components/store/UserProvider';
 import ImgProfile from 'src/components/headers/ImgProfile';
@@ -15,7 +10,10 @@ import Dropdown from 'src/components/utils/Dropdown';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { useNotifBadges } from 'src/hooks';
 import { IconNoSSR } from 'src/components/utils/Icon';
-import { HamburgerNoSSR } from 'src/components/utils/Hamburger';
+import Hamburger from 'src/components/utils/Hamburger';
+import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas';
+
+const offcanvasId = 'offcanvas-logged';
 
 const HeaderConnected = ({ isHome }) => {
   const { user, logout } = useContext(UserContext);
@@ -100,6 +98,56 @@ const HeaderConnected = ({ isHome }) => {
 
   if (!user) return null;
 
+  const rightItems = [
+    <li
+      className="uk-visible@m uk-flex uk-flex-middle"
+      style={{ borderLeft: '1px solid lightgray' }}
+    >
+      <a
+        id="nav-profile"
+        className="uk-padding-small uk-padding-remove-vertical"
+        style={{
+          height: 80,
+          fontWeight: 500,
+          fontSize: '1rem',
+          color: 'black',
+          textTransform: 'none',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <ImgProfile />
+        <span className="uk-margin-small-left">Salut {user.firstName}</span>
+        <IconNoSSR name="triangle-down" />
+      </a>
+      <Dropdown
+        dividers={[2]}
+        id="dropdown-nav-profile"
+        boundaryId="nav-profile"
+      >
+        {LINKS_CONNECTED.dropdown.map(({ href, name, onClick }, index) => {
+          return (
+            <a
+              key={index}
+              aria-hidden="true"
+              onClick={() => {
+                if (href) {
+                  router.push(href);
+                }
+                if (onClick) {
+                  onClick();
+                }
+              }}
+            >
+              {name}
+            </a>
+          );
+        })}
+      </Dropdown>
+    </li>,
+  ];
+
   return (
     <header id="header">
       <Navbar
@@ -168,74 +216,18 @@ const HeaderConnected = ({ isHome }) => {
           </>
         }
         right={
-          <ul className="uk-navbar-nav">
-            <li
-              className="uk-visible@m"
-              style={{ borderLeft: '1px solid lightgray' }}
-            >
-              <a
-                id="nav-profile"
-                style={{
-                  fontWeight: 500,
-                  fontSize: '1rem',
-                  color: 'black',
-                  textTransform: 'none',
-                }}
-              >
-                <ImgProfile />
-                <span className="uk-margin-small-left">
-                  Salut {user.firstName}
-                </span>
-                <IconNoSSR name="triangle-down" />
-              </a>
-              <Dropdown
-                dividers={[2]}
-                id="dropdown-nav-profile"
-                boundaryId="nav-profile"
-              >
-                {LINKS_CONNECTED.dropdown.map(
-                  ({ href, name, onClick }, index) => {
-                    return (
-                      <a
-                        key={index}
-                        aria-hidden="true"
-                        onClick={() => {
-                          if (href) {
-                            router.push(href);
-                          }
-                          if (onClick) {
-                            onClick();
-                          }
-                        }}
-                      >
-                        {name}
-                      </a>
-                    );
-                  }
-                )}
-              </Dropdown>
-            </li>
-            {/* <li style={{ borderLeft: '1px solid lightgray' }}>
-              <a
-                className="uk-visible@m"
-                style={{
-                  fontWeight: 500,
-                  fontSize: '1rem',
-                  color: 'black',
-                  textTransform: 'none',
-                }}
-              >
-                <span className="uk-margin-small-left uk-margin-small-right">
-                  <IconNoSSR name="bell" />
-                </span>
-              </a>
-            </li> */}
-            <HamburgerNoSSR targetId="offcanvas-logged" hidden="m" />
-          </ul>
+          <>
+            <div className="uk-visible@m">
+              <Nav navbar items={rightItems} />
+            </div>
+            <div className="uk-hidden@m uk-padding-small uk-flex uk-flex-middle">
+              <Hamburger targetId={offcanvasId} hidden="m" light />
+            </div>
+          </>
         }
       />
-      <Offcanvas id="offcanvas-logged">
-        <ul className="uk-nav uk-nav-default">
+      <OffcanvasNoSSR id={offcanvasId}>
+        <ul className="uk-nav uk-nav-default uk-margin-medium-top">
           <li>
             <SimpleLink href="/">
               <IconNoSSR name="home" className="uk-margin-small-right" />
@@ -253,7 +245,7 @@ const HeaderConnected = ({ isHome }) => {
                     aria-hidden="true"
                     onClick={() => {
                       router.push(href);
-                      UIkit.offcanvas('#offcanvas-logged').hide();
+                      UIkit.offcanvas(`#${offcanvasId}`).hide();
                     }}
                   >
                     <IconNoSSR name={icon} className="uk-margin-small-right" />
@@ -285,7 +277,7 @@ const HeaderConnected = ({ isHome }) => {
                       if (onClick) {
                         onClick();
                       }
-                      UIkit.offcanvas('#offcanvas-logged').hide();
+                      UIkit.offcanvas(`#${offcanvasId}`).hide();
                     }}
                   >
                     <IconNoSSR name={icon} className="uk-margin-small-right" />
@@ -296,14 +288,17 @@ const HeaderConnected = ({ isHome }) => {
             }
           )}
         </ul>
-      </Offcanvas>
+      </OffcanvasNoSSR>
     </header>
   );
 };
+
 HeaderConnected.propTypes = {
   isHome: PropTypes.bool,
 };
+
 HeaderConnected.defaultProps = {
   isHome: false,
 };
+
 export default HeaderConnected;
