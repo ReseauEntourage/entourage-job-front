@@ -38,7 +38,7 @@ const Layout = ({
           <link
             rel="stylesheet"
             type="text/css"
-            href="/static/dist/css/uikit.entourage.print.min.css"
+            href="/static/css/uikit.entourage.print.min.css"
             media="print"
           />
         )}

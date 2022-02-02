@@ -1,17 +1,17 @@
 /* eslint-disable react/prop-types */
 import UIkit from 'uikit';
-import Icons from 'public/static/dist/js/uikit-icons';
+import Icons from 'src/styles/dist/js/uikit-icons';
 
-import 'public/static/dist/css/uikit.entourage.min.css';
-import 'public/static/css/styles.less';
-import 'public/static/css/Forms.less';
-import 'public/static/css/Toggle.less';
+import 'src/styles/dist/css/uikit.entourage.min.css';
+import 'src/styles/styles.less';
+import 'src/components/forms/Forms.less';
+import 'src/components/backoffice/Toggle.less';
 import 'src/components/headers/Header.less';
 import 'src/components/partials/HireCTA.less';
 import 'src/components/modals/Modal/Modal.less';
 
 import React, { useEffect, useState } from 'react';
-import Router, { useRouter } from 'next/router';
+import Router from 'next/router';
 import * as Sentry from '@sentry/react';
 import UserProvider from 'src/components/store/UserProvider';
 import DataProvider from 'src/components/store/DataProvider';
@@ -19,7 +19,7 @@ import DataProvider from 'src/components/store/DataProvider';
 import SharesCountProvider from 'src/components/store/SharesCountProvider';
 
 import * as gtag from 'src/lib/gtag';
-import { SplashScreenNoSSR } from 'src/components/SplashScreen';
+import SplashScreen from 'src/components/SplashScreen';
 import { useMount } from 'src/hooks/utils';
 import { ModalsListener } from 'src/components/modals/Modal';
 
@@ -29,21 +29,6 @@ Sentry.init({
   enabled: process.env.NODE_ENV === 'production',
   dsn: process.env.SENTRY_DSN,
 });
-
-const SplashScreenContainer = ({ loading, fading }) => {
-  const router = useRouter();
-
-  return !router.asPath.includes('/pdf/') ? (
-    <div
-      style={{ height: '100vh', zIndex: 9999 }}
-      className={`${loading ? 'uk-visible' : 'uk-hidden'} ${
-        fading ? 'uk-animation-fade uk-animation-reverse' : ''
-      } uk-position-cover uk-background-default`}
-    >
-      <SplashScreenNoSSR />
-    </div>
-  ) : null;
-};
 
 const Container = ({ Component, pageProps, err }) => {
   const [loading, setLoading] = useState(true);
@@ -71,9 +56,9 @@ const Container = ({ Component, pageProps, err }) => {
       style={{ height: loading ? '100vh' : 'inherit' }}
       className="uk-inline uk-width-expand uk-overflow-hidden"
     >
+      <SplashScreen loading={loading} fading={fading} />
       <Component {...pageProps} err={err} />
       <ModalsListener />
-      <SplashScreenContainer loading={loading} fading={fading} />
     </div>
   );
 };
