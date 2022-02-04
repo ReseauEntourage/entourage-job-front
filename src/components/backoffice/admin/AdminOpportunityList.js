@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { usePostOpportunity } from 'src/hooks';
 import { mutateFormSchema } from 'src/utils';
 import schema, {
-  adminMutation,
+  adminMutations,
 } from 'src/components/forms/schema/formEditOpportunity';
 import { Button } from 'src/components/utils';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
@@ -31,7 +31,7 @@ const AdminOpportunityList = ({
         },
       ],
     },
-    adminMutation,
+    ...adminMutations,
   ]);
 
   const opportunityListRef = useRef();

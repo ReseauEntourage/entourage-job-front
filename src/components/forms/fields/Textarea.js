@@ -47,7 +47,9 @@ const Textarea = ({
 
   return (
     <div
-      className={`uk-form-controls uk-padding-small uk-padding-remove-left uk-padding-remove-right ${
+      className={`uk-form-controls ${
+        valid !== undefined ? 'uk-padding-remove-bottom' : ''
+      } uk-padding-small uk-padding-remove-left uk-padding-remove-right ${
         hidden ? ' uk-hidden' : ''
       }`}
     >

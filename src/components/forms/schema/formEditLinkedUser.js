@@ -21,7 +21,6 @@ export default {
     {
       id: 'linkedUser',
       name: 'linkedUser',
-      type: 'text',
       component: 'select-request-async',
       cacheOptions: false,
       loadOptions: (inputValue, callback, getValue) => {

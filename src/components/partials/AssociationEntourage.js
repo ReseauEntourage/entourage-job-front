@@ -52,7 +52,7 @@ const AssociationEntourage = () => {
               <Img
                 className="uk-cover uk-position-center"
                 src="/static/img/association_pic.jpg"
-                alt="association entourage"
+                alt="Association Entourage"
               />
             </div>
           </Grid>

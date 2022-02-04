@@ -6,7 +6,6 @@ export default {
     {
       id: 'businessLines',
       name: 'businessLines',
-      type: 'text',
       title: "Secteurs d'activité",
       component: 'select-request',
       options: BUSINESS_LINES,

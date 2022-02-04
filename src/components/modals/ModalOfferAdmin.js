@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Api from 'src/Axios';
 import schema, {
-  adminMutation,
+  adminMutations,
 } from 'src/components/forms/schema/formEditOpportunity';
 import FormWithValidation from 'src/components/forms/FormWithValidation';
 import { Button, Grid, SimpleLink } from 'src/components/utils';
@@ -84,7 +84,16 @@ const ModalOfferAdmin = ({
         },
       ],
     },
-    adminMutation,
+    {
+      fieldId: 'locations',
+      props: [
+        {
+          propName: 'component',
+          value: 'fieldgroup',
+        },
+      ],
+    },
+    ...adminMutations,
   ]);
 
   const updateOpportunity = async (opportunity, isExternal) => {

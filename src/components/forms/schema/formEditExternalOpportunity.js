@@ -63,9 +63,7 @@ export default {
       id: 'department',
       name: 'department',
       title: 'Département*',
-      placeholder: 'Sélectionnez le département',
-      type: 'text',
-      component: 'select',
+      component: 'select-request',
       options: FORMATTED_DEPARTMENTS,
     },
     {
