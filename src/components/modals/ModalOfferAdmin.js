@@ -84,6 +84,15 @@ const ModalOfferAdmin = ({
         },
       ],
     },
+    {
+      fieldId: 'locations',
+      props: [
+        {
+          propName: 'component',
+          value: 'fieldgroup',
+        },
+      ],
+    },
     ...adminMutations,
   ]);
 

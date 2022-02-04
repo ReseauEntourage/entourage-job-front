@@ -39,14 +39,12 @@ export default {
       id: 'contracts',
       name: 'contracts',
       title: 'Type de contrat recherché',
-      type: 'text',
       component: 'select-request-creatable',
       isMulti: true,
     },
     {
       id: 'locations',
       name: 'locations',
-      type: 'text',
       title: 'Lieu de travail souhaité',
       component: 'select-request',
       options: getAllFilters(DEPARTMENTS_FILTERS),
@@ -62,7 +60,6 @@ export default {
     {
       id: 'languages',
       name: 'languages',
-      type: 'text',
       title: 'Langues parlées',
       component: 'select-request-creatable',
       isMulti: true,

@@ -17,7 +17,7 @@ const LandingPagePartial = () => {
           <Grid middle column gap="medium">
             <Img
               src="/static/img/linkedout_logo_white.png"
-              alt="LinkedOut by entourage"
+              alt="LinkedOut by Entourage"
               className="uk-width-medium"
               // width="300"
             />

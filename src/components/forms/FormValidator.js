@@ -15,9 +15,7 @@ export default class FormValidator {
       if (!validation[rule.field].isInvalid) {
         // determine the field value, the method to invoke and
         // optional args from the rule definition
-        const fieldValue = state[rule.field]
-          ? state[rule.field].toString()
-          : '';
+        const fieldValue = state[rule.field] ? state[rule.field] : '';
         const args = rule.args || [];
         const validationMethod =
           typeof rule.method === 'string'

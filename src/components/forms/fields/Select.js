@@ -15,10 +15,9 @@ const Select = ({
 }) => {
   return (
     <div
-      style={{
-        padding: '15px 0',
-      }}
-      className={`${hidden ? 'uk-hidden' : ''}`}
+      className={`${hidden ? 'uk-hidden' : ''} ${
+        valid !== undefined ? 'uk-padding-remove-bottom' : ''
+      } uk-padding-small uk-padding-remove-left uk-padding-remove-right`}
     >
       <div
         className="uk-form-controls ent-select"

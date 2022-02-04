@@ -18,7 +18,9 @@ const Checkbox = ({
       className={`uk-form-controls ${
         removePadding
           ? ''
-          : 'uk-padding-small uk-padding-remove-left uk-padding-remove-right'
+          : `${
+              valid !== undefined ? 'uk-padding-remove-bottom' : ''
+            } uk-padding-small uk-padding-remove-left uk-padding-remove-right`
       } ${hidden ? ' uk-hidden' : ''}`}
     >
       <label htmlFor={id} className="uk-flex uk-flex-middle">

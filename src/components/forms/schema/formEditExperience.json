@@ -12,7 +12,6 @@
       "id": "skills",
       "name": "skills",
       "title": "Compétences",
-      "type": "text",
       "component": "select-request-creatable",
       "isMulti": true
     }

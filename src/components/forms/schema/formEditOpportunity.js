@@ -113,7 +113,6 @@ export default {
       name: 'businessLines',
       title: "Secteur d'activité*",
       placeholder: "Sélectionnez les secteurs d'activité",
-      type: 'text',
       component: 'select-request',
       isMulti: true,
       options: BUSINESS_LINES,
@@ -121,19 +120,27 @@ export default {
       disabled: true,
     },
     {
-      id: 'department',
-      name: 'department',
-      title: 'Département du lieu de travail*',
-      placeholder: 'Sélectionnez le département',
-      component: 'select',
-      options: FORMATTED_DEPARTMENTS,
-    },
-    {
-      id: 'address',
-      name: 'address',
-      title: 'Adresse du lieu de travail*',
-      component: 'input',
-      type: 'text',
+      id: 'locations',
+      name: 'locations',
+      action: 'Ajouter une adresse',
+      component: 'multiple-fields',
+      childWidths: ['1-3@m', 'expand'],
+      fields: [
+        {
+          id: 'department',
+          name: 'department',
+          title: 'Département du lieu de travail*',
+          component: 'select-request',
+          options: FORMATTED_DEPARTMENTS,
+        },
+        {
+          id: 'address',
+          name: 'address',
+          title: 'Adresse du lieu de travail*',
+          component: 'input',
+          type: 'text',
+        },
+      ],
     },
     {
       id: 'companyDescription',
@@ -155,30 +162,44 @@ export default {
       component: 'heading',
     },
     {
-      id: 'driversLicense',
-      name: 'driversLicense',
-      component: 'checkbox',
-      title: 'Permis de conduire',
+      id: 'info1',
+      component: 'fieldgroup',
+      childWidths: ['expand', '1-3'],
+      fields: [
+        {
+          id: 'workingHours',
+          name: 'workingHours',
+          component: 'input',
+          type: 'text',
+          title: 'Jours et horaires de travail',
+        },
+        {
+          id: 'driversLicense',
+          name: 'driversLicense',
+          component: 'checkbox',
+          title: 'Permis de conduire',
+        },
+      ],
     },
     {
-      id: 'isPartTime',
-      name: 'isPartTime',
-      component: 'checkbox',
-      title: 'Temps partiel',
-    },
-    {
-      id: 'workingHours',
-      name: 'workingHours',
-      component: 'input',
-      type: 'text',
-      title: 'Jours et horaires de travail',
-    },
-    {
-      id: 'salary',
-      name: 'salary',
-      component: 'input',
-      type: 'text',
-      title: 'Salaire et compléments',
+      id: 'info2',
+      component: 'fieldgroup',
+      childWidths: ['expand', '1-3'],
+      fields: [
+        {
+          id: 'salary',
+          name: 'salary',
+          component: 'input',
+          type: 'text',
+          title: 'Salaire et compléments',
+        },
+        {
+          id: 'isPartTime',
+          name: 'isPartTime',
+          component: 'checkbox',
+          title: 'Temps partiel',
+        },
+      ],
     },
     {
       id: 'otherInfo',
@@ -367,24 +388,45 @@ export default {
       message: 'Obligatoire',
     }, */
     {
+      field: 'locations',
+      method: (fieldValue, state) => {
+        const keys = ['department', 'address'];
+        return (
+          !keys.every((key) => {
+            return state[key];
+          }) &&
+          (fieldValue.length === 0 ||
+            fieldValue.some((fields) => {
+              return (
+                !keys.every((key) => {
+                  return Object.keys(fields).includes(key);
+                }) ||
+                Object.keys(fields).some((key) => {
+                  return !fields[key]?.trim();
+                })
+              );
+            }))
+        );
+      },
+      args: [],
+      validWhen: false,
+      message: 'Obligatoire',
+    },
+    {
       field: 'department',
-      method: 'isEmpty',
-      args: [
-        {
-          ignore_whitespace: true,
-        },
-      ],
+      method: (fieldValue, state) => {
+        return !state.locations && !fieldValue?.trim();
+      },
+      args: [],
       validWhen: false,
       message: 'Obligatoire',
     },
     {
       field: 'address',
-      method: 'isEmpty',
-      args: [
-        {
-          ignore_whitespace: true,
-        },
-      ],
+      method: (fieldValue, state) => {
+        return !state.locations && !fieldValue?.trim();
+      },
+      args: [],
       validWhen: false,
       message: 'Obligatoire',
     },

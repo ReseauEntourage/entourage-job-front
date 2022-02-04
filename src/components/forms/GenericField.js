@@ -38,18 +38,24 @@ const GenericField = ({
   };
 
   const parseValueToUseSelect = () => {
-    let valueToUse = null;
     if (data.isMulti && Array.isArray(value) && value.length > 0) {
-      valueToUse = value.map((item) => {
+      return value.map((item) => {
         return {
           value: item,
           label: item,
         };
       });
-    } else if (value) {
-      valueToUse = value;
     }
-    return valueToUse;
+    if (typeof value === 'string') {
+      return {
+        value,
+        label: value,
+      };
+    }
+    if (value) {
+      return value;
+    }
+    return null;
   };
 
   const parseValueToReturnSelect = (event) => {
@@ -221,12 +227,14 @@ const GenericField = ({
 
     return (
       <div
-        className={`uk-padding-small uk-padding-remove-left uk-padding-remove-right ${
+        className={`uk-padding-small ${
+          getValid(data.name) !== undefined ? 'uk-padding-remove-bottom' : ''
+        } uk-padding-remove-left uk-padding-remove-right ${
           shouldHide ? ' uk-hidden' : ''
         }`}
       >
         {(data.title || data.dynamicTitle) && (
-          <label className="uk-form-label" htmlFor={data.id}>
+          <label className="uk-form-label" htmlFor={`${formId}-${data.id}`}>
             {data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
           </label>
         )}
@@ -263,15 +271,17 @@ const GenericField = ({
   }
   if (data.component === 'select-request') {
     const shouldHide = data.hide ? data.hide(getValue) : data.hidden;
-
     return (
       <div
-        className={`uk-padding-small uk-padding-remove-left uk-padding-remove-right ${
+        className={`uk-padding-small ${
+          getValid(data.name) !== undefined ? 'uk-padding-remove-bottom' : ''
+        } uk-padding-remove-left uk-padding-remove-right ${
           shouldHide ? ' uk-hidden' : ''
         }`}
+        style={{ marginBottom: 8 }}
       >
         {(data.title || data.dynamicTitle) && (
-          <label className="uk-form-label" htmlFor={data.id}>
+          <label className="uk-form-label" htmlFor={`${formId}-${data.id}`}>
             {data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
           </label>
         )}
@@ -312,12 +322,14 @@ const GenericField = ({
 
     return (
       <div
-        className={`uk-padding-small uk-padding-remove-left uk-padding-remove-right ${
+        className={`uk-padding-small ${
+          getValid(data.name) !== undefined ? 'uk-padding-remove-bottom' : ''
+        } uk-padding-remove-left uk-padding-remove-right ${
           shouldHide ? ' uk-hidden' : ''
         }`}
       >
         {(data.title || data.dynamicTitle) && (
-          <label className="uk-form-label" htmlFor={data.id}>
+          <label className="uk-form-label" htmlFor={`${formId}-${data.id}`}>
             {data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
           </label>
         )}
