@@ -501,49 +501,54 @@ const ModalOfferAdmin = ({
                 })}
               </Grid>
             )}
+            a
           </Grid>
         </Grid>
         <div className="uk-modal-footer uk-padding-remove-horizontal uk-padding-remove-bottom">
-          {!offer.isArchived ? (
-            <Button
-              style="default"
-              onClick={async () => {
-                await updateOpportunity({
-                  ...offer,
-                  isValidated: false,
-                  isArchived: true,
-                });
-              }}
-            >
-              Refuser l&apos;offre
-            </Button>
-          ) : (
-            <Button
-              style="default"
-              onClick={async () => {
-                await updateOpportunity({
-                  ...offer,
-                  isValidated: false,
-                  isArchived: false,
-                });
-              }}
-            >
-              Retirer l&apos;offre des archives
-            </Button>
-          )}
-          {!offer.isValidated && (
-            <Button
-              style="primary"
-              onClick={async () => {
-                await updateOpportunity({
-                  ...offer,
-                  isValidated: true,
-                  isArchived: false,
-                });
-              }}
-            >
-              Valider l&apos;offre
-            </Button>
+          {!offer.isExternal && (
+            <>
+              {!offer.isArchived ? (
+                <Button
+                  style="default"
+                  onClick={async () => {
+                    await updateOpportunity({
+                      ...offer,
+                      isValidated: false,
+                      isArchived: true,
+                    });
+                  }}
+                >
+                  Refuser l&apos;offre
+                </Button>
+              ) : (
+                <Button
+                  style="default"
+                  onClick={async () => {
+                    await updateOpportunity({
+                      ...offer,
+                      isValidated: false,
+                      isArchived: false,
+                    });
+                  }}
+                >
+                  Retirer l&apos;offre des archives
+                </Button>
+              )}
+              {!offer.isValidated && (
+                <Button
+                  style="primary"
+                  onClick={async () => {
+                    await updateOpportunity({
+                      ...offer,
+                      isValidated: true,
+                      isArchived: false,
+                    });
+                  }}
+                >
+                  Valider l&apos;offre
+                </Button>
+              )}
+            </>
           )}
         </div>
       </div>
