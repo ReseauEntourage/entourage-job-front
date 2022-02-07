@@ -32,12 +32,14 @@ export function usePostOpportunity({
           })
         : [];
 
-      if (opportunity.isPublic) {
-        event(TAGS.POPUP_OFFRE_ENVOYER_OFFRE_GENERALE_CLIC);
-      } else if (candidatesId.length > 1) {
-        event(TAGS.POPUP_OFFRE_ENVOYER_OFFRE_MULTIPLE_CLIC);
-      } else {
-        event(TAGS.POPUP_OFFRE_ENVOYER_OFFRE_UNIQUE_CLIC);
+      if (!isAdmin) {
+        if (opportunity.isPublic) {
+          event(TAGS.POPUP_OFFRE_ENVOYER_OFFRE_GENERALE_CLIC);
+        } else if (candidatesId.length > 1) {
+          event(TAGS.POPUP_OFFRE_ENVOYER_OFFRE_MULTIPLE_CLIC);
+        } else {
+          event(TAGS.POPUP_OFFRE_ENVOYER_OFFRE_UNIQUE_CLIC);
+        }
       }
 
       try {
@@ -91,6 +93,17 @@ export function usePostOpportunity({
           candidatesId: mutatedDefaultValue.candidatesId,
         }}
         formSchema={schema}
+        onError={async (fields) => {
+          if (!isAdmin) {
+            if (fields.isPublic) {
+              event(TAGS.POPUP_OFFRE_ENVOYER_OFFRE_GENERALE_INVALIDE);
+            } else if (fields.candidatesId.length > 1) {
+              event(TAGS.POPUP_OFFRE_ENVOYER_OFFRE_MULTIPLE_INVALIDE);
+            } else {
+              event(TAGS.POPUP_OFFRE_ENVOYER_OFFRE_UNIQUE_INVALIDE);
+            }
+          }
+        }}
         onSubmit={async (fields, closeModal) => {
           await postOpportunity(
             isAdmin

@@ -249,7 +249,7 @@ const ModalOfferAdmin = ({
     // view
     return (
       <div>
-        <Grid gap="small" between middle eachWidths={['expand', 'auto']}>
+        <Grid gap="small" between middle eachWidths={['expand@m', 'auto@m']}>
           <ModalOfferInfo
             startOfContract={offer.startOfContract}
             isPublic={offer.isPublic}
@@ -262,7 +262,7 @@ const ModalOfferAdmin = ({
             endOfContract={offer.endOfContract}
             offerId={offer.id}
           />
-          <div>
+          <div className="uk-flex uk-flex-column uk-flex-bottom">
             <div className="uk-margin-small-top uk-margin-small-bottom">
               {(() => {
                 let className = ' uk-label-warning';
@@ -315,14 +315,14 @@ const ModalOfferAdmin = ({
               {offer.company}
             </OfferInfoContainer>
             {offer.recruiterFirstName && offer.recruiterName && (
-              <OfferInfoContainer icon="user" title="Recruteur">
+              <OfferInfoContainer icon="user" title="Personne à contacter">
                 <span>
                   {offer.recruiterFirstName} {offer.recruiterName}
                 </span>
-                <span className="uk-text-muted">{offer.recruiterPosition}</span>
+                <span className="uk-text-meta">{offer.recruiterPosition}</span>
                 <SimpleLink
                   href={`mailto:${offer.recruiterMail}`}
-                  className="uk-link-muted"
+                  className="uk-text-meta uk-text-muted uk-flex uk-flex-middle"
                   isExternal
                   newTab
                 >
@@ -334,7 +334,7 @@ const ModalOfferAdmin = ({
                 </SimpleLink>
                 <SimpleLink
                   href={`tel:${offer.recruiterPhone}`}
-                  className="uk-link-muted"
+                  className="uk-text-meta uk-text-muted uk-flex uk-flex-middle"
                   isExternal
                   newTab
                 >

@@ -12,6 +12,7 @@ const ModalEdit = ({
   defaultValues,
   onSubmit,
   submitText,
+  onError,
 }) => {
   const { onClose } = useModalContext();
 
@@ -22,6 +23,7 @@ const ModalEdit = ({
         formSchema={formSchema}
         defaultValues={defaultValues}
         onCancel={onClose}
+        onError={onError}
         onSubmit={(fields, setError) => {
           return onSubmit(fields, onClose, setError);
         }}
@@ -38,6 +40,7 @@ ModalEdit.propTypes = {
     rules: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
   onSubmit: PropTypes.func.isRequired,
+  onError: PropTypes.func,
   defaultValues: PropTypes.objectOf(PropTypes.any),
   description: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   submitText: PropTypes.string,
@@ -46,6 +49,7 @@ ModalEdit.defaultProps = {
   defaultValues: {},
   description: undefined,
   submitText: 'Sauvegarder',
+  onError: () => {},
 };
 
 export default ModalEdit;
