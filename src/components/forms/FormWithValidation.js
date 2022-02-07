@@ -26,6 +26,7 @@ const FormWithValidation = forwardRef(
       onSubmit,
       onCancel,
       enterToSubmit,
+      onError,
     },
     ref
   ) => {
@@ -95,6 +96,7 @@ const FormWithValidation = forwardRef(
         });
         setFieldValidations(tmpFieldValidations);
         setError('Un ou plusieurs champs sont invalides');
+        await onError(fieldValues);
         console.error(validation);
       }
     };
@@ -258,6 +260,7 @@ FormWithValidation.propTypes = {
   defaultValues: PropTypes.objectOf(PropTypes.any),
   onCancel: PropTypes.func,
   onSubmit: PropTypes.func.isRequired,
+  onError: PropTypes.func,
   formSchema: PropTypes.shape({
     id: PropTypes.string,
     fields: PropTypes.arrayOf(PropTypes.shape()),
@@ -272,6 +275,7 @@ FormWithValidation.defaultProps = {
   defaultValues: {},
   onCancel: undefined,
   enterToSubmit: false,
+  onError: () => {},
 };
 
 export default FormWithValidation;
