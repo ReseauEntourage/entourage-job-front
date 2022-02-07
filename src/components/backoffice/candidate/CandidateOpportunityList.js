@@ -46,8 +46,8 @@ const CandidateOpportunityList = ({
           onClick={() => {
             openModal(
               <ModalEdit
-                title={"Ajouter une offre d'emploi"}
-                description="Afin de mieux suivre vos processus de recrutement, vous pouvez ajouter les offres auxquelles vous candidatez en plus des offres déjà présentes sur LinkedOut"
+                title={"Ajouter une offre d'emploi externe à LinkedOut"}
+                description="J'ai décroché un entretien à l'extérieur : j'informe Linkedout de mes avancées !"
                 submitText="Envoyer"
                 formSchema={formEditExternalOpportunity}
                 onSubmit={async (fields, closeModal) => {
@@ -81,7 +81,7 @@ const CandidateOpportunityList = ({
             ratio="0.8"
             className="uk-margin-small-right"
           />
-          Nouvelle offre d&apos;emploi
+          Ajouter une offre externe à LinkedOut
         </Button>
       </HeaderBackoffice>
       <OpportunityList

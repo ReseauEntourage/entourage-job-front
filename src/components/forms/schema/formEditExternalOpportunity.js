@@ -1,7 +1,6 @@
 import { CONTRACTS, EXTERNAL_OFFERS_ORIGINS } from 'src/constants';
 import { FORMATTED_DEPARTMENTS } from 'src/constants/departements';
 import moment from 'moment';
-import { findContractType } from 'src/utils';
 
 export default {
   id: 'form-offer-external',
@@ -28,7 +27,7 @@ export default {
       title: 'Type de contrat*',
       fieldsToReset: ['endOfContract'],
     },
-    {
+    /* {
       id: 'startEndContract',
       component: 'fieldgroup',
       childWidths: ['expand', 'expand', '1-4@m'],
@@ -58,7 +57,7 @@ export default {
           title: 'Temps partiel',
         },
       ],
-    },
+    }, */
     {
       id: 'department',
       name: 'department',
