@@ -164,7 +164,7 @@ export default {
     {
       id: 'info1',
       component: 'fieldgroup',
-      childWidths: ['expand', '1-3'],
+      childWidths: ['expand', '1-3@m'],
       fields: [
         {
           id: 'workingHours',
@@ -174,17 +174,17 @@ export default {
           title: 'Jours et horaires de travail',
         },
         {
-          id: 'driversLicense',
-          name: 'driversLicense',
+          id: 'isPartTime',
+          name: 'isPartTime',
           component: 'checkbox',
-          title: 'Permis de conduire',
+          title: 'Temps partiel',
         },
       ],
     },
     {
       id: 'info2',
       component: 'fieldgroup',
-      childWidths: ['expand', '1-3'],
+      childWidths: ['expand', '1-3@m'],
       fields: [
         {
           id: 'salary',
@@ -194,10 +194,10 @@ export default {
           title: 'Salaire et compléments',
         },
         {
-          id: 'isPartTime',
-          name: 'isPartTime',
+          id: 'driversLicense',
+          name: 'driversLicense',
           component: 'checkbox',
-          title: 'Temps partiel',
+          title: 'Permis de conduire',
         },
       ],
     },

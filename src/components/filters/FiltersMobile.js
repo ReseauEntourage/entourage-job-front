@@ -54,7 +54,9 @@ const FiltersMobile = ({ filters }) => {
             name={`filter${filterMenuOpened ? '' : '-empty'}`}
           />
           {numberOfFilters > 0 && (
-            <div className="ent-filter-badge-search">{numberOfFilters}</div>
+            <div className="ent-filter-badge-search uk-text-nowrap">
+              {numberOfFilters}
+            </div>
           )}
         </div>
       </Button>
