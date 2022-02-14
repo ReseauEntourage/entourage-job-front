@@ -12557,11 +12557,13 @@ iframe.uk-cover {
 @font-face {
   font-family: 'Roboto';
   src: url('/static/fonts/Roboto-Regular.ttf') format('truetype');
+  font-display: swap;
 }
 @font-face {
   font-family: 'Roboto';
   font-weight: bold;
   src: url('/static/fonts/Roboto-Bold.ttf') format('truetype');
+  font-display: swap;
 }
 @media print {
   * {
