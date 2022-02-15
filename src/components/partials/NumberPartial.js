@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid, Section } from 'src/components/utils';
 import { NumberCard } from 'src/components/cards';
+import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 
 const staticNumbers = [
   { value: '45', description: 'Candidats recrutés' },
@@ -58,17 +59,14 @@ const NumberPartial = () => {
         </span>
       </div>
 
-      <iframe
-        src="https://www.youtube.com/embed/1cfmgC2IqWs"
-        width="1280"
-        height="720"
-        frameBorder="0"
-        allowFullScreen
-        data-uk-responsive
-        data-uk-video="automute: true; autoplay: inview"
-        title="linkedout"
-        className="uk-margin-medium-top"
-      />
+      <div className="uk-margin-medium-top">
+        <LiteYouTubeEmbed
+          id="1cfmgC2IqWs"
+          title="Présentation LinkedOut"
+          aspectWidth={1280}
+          aspectHeight={720}
+        />
+      </div>
     </Section>
   );
 };

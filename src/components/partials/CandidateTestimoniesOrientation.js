@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Img, Section } from 'src/components/utils';
 import Carousel from 'src/components/utils/Carousel';
 import CarouselItem from 'src/components/partials/CarouselItem';
+import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 
 const testimonies = [
   {
@@ -80,17 +81,14 @@ const CandidateTestimoniesOrientation = ({ style }) => {
           })}
         </Carousel>
       </div>
-      <iframe
-        src="https://www.youtube.com/embed/ztZB4BIBi44"
-        width="1280"
-        height="720"
-        frameBorder="0"
-        allowFullScreen
-        data-uk-responsive
-        data-uk-video="automute: false; autoplay: false"
-        title="linkedout"
-        className="uk-margin-medium-top"
-      />
+      <div className="uk-margin-medium-top">
+        <LiteYouTubeEmbed
+          id="ztZB4BIBi44"
+          title="Témoignages LinkedOut"
+          aspectWidth={1280}
+          aspectHeight={720}
+        />
+      </div>
     </Section>
   );
 };

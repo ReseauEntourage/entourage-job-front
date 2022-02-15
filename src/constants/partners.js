@@ -156,6 +156,11 @@ export default {
       title: 'TR Racing',
       link: 'https://www.thomasruyant.com/',
     },
+    {
+      key: 'ca',
+      title: 'Crédit Agricole',
+      link: 'https://www.credit-agricole.com/',
+    },
   ],
   associations: [
     {
