@@ -501,7 +501,6 @@ const ModalOfferAdmin = ({
                 })}
               </Grid>
             )}
-            a
           </Grid>
         </Grid>
         <div className="uk-modal-footer uk-padding-remove-horizontal uk-padding-remove-bottom">

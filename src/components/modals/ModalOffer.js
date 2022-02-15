@@ -361,7 +361,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
           <Textarea
             id="modal-offer-comment"
             name="modal-offer-comment"
-            title="Ecrivez un commentaire à propos de cette opportunité..."
+            title="Ecrivez vos commentaires à propos de cette offre. Ceux-ci ne sont pas envoyés au recruteur."
             type="text"
             value={noteBuffer}
             onChange={(e) => {
