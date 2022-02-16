@@ -13,6 +13,7 @@ import { Button } from 'src/components/utils';
 import ModalEdit from 'src/components/modals/ModalEdit';
 import formEditExternalOpportunity from 'src/components/forms/schema/formEditExternalOpportunity';
 import Api from 'src/Axios';
+import { mutateFormSchema } from 'src/utils';
 
 const CandidateOpportunityList = ({
   search,
@@ -26,6 +27,22 @@ const CandidateOpportunityList = ({
 }) => {
   const { user } = useContext(UserContext);
   const opportunityListRef = useRef();
+
+  const mutatedSchema = mutateFormSchema(formEditExternalOpportunity, [
+    {
+      fieldId: 'startEndContract',
+      props: [
+        {
+          propName: 'hidden',
+          value: true,
+        },
+        {
+          propName: 'disabled',
+          value: true,
+        },
+      ],
+    },
+  ]);
 
   return (
     <>
@@ -49,7 +66,11 @@ const CandidateOpportunityList = ({
                 title={"Ajouter une offre d'emploi externe à LinkedOut"}
                 description="J'ai décroché un entretien à l'extérieur : j'informe Linkedout de mes avancées !"
                 submitText="Envoyer"
-                formSchema={formEditExternalOpportunity}
+                formSchema={mutatedSchema}
+                defaultValues={{
+                  candidateId:
+                    user.role === USER_ROLES.COACH ? user.candidat.id : user.id,
+                }}
                 onSubmit={async (fields, closeModal) => {
                   try {
                     await Api.post(`/opportunity/external`, {

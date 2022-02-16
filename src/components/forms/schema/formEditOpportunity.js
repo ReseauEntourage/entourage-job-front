@@ -1,6 +1,8 @@
 import { BUSINESS_LINES, CONTRACTS, USER_ROLES } from 'src/constants';
 import { FORMATTED_DEPARTMENTS } from 'src/constants/departements';
 import Api from 'src/Axios';
+import moment from 'moment';
+import { findContractType } from 'src/utils';
 
 export default {
   id: 'form-offer',
@@ -47,13 +49,6 @@ export default {
       },
     },
     {
-      id: 'title',
-      name: 'title',
-      component: 'input',
-      type: 'text',
-      title: 'Intitulé du poste proposé*',
-    },
-    /* {
       id: 'message',
       name: 'message',
       component: 'textarea',
@@ -65,7 +60,14 @@ export default {
       hide: (getValue) => {
         return getValue('isPublic') === true;
       },
-    }, */
+    },
+    {
+      id: 'title',
+      name: 'title',
+      component: 'input',
+      type: 'text',
+      title: 'Intitulé du poste proposé*',
+    },
     {
       id: 'company',
       name: 'company',
@@ -162,6 +164,41 @@ export default {
       component: 'heading',
     },
     {
+      id: 'contract',
+      name: 'contract',
+      component: 'select',
+      options: [{ value: -1, label: 'Choisissez un contrat' }, ...CONTRACTS],
+      title: 'Type de contrat*',
+      fieldsToReset: ['endOfContract'],
+    },
+    {
+      id: 'startEndContract',
+      component: 'fieldgroup',
+      childWidths: ['expand', 'expand', '1-4@m'],
+      hidden: true,
+      disabled: true,
+      fields: [
+        {
+          id: 'startOfContract',
+          name: 'startOfContract',
+          title: 'Date de début de contrat',
+          component: 'datepicker',
+          min: moment().format('YYYY-MM-DD'),
+        },
+        {
+          id: 'endOfContract',
+          name: 'endOfContract',
+          title: 'Date de fin de contrat',
+          component: 'datepicker',
+          min: moment().format('YYYY-MM-DD'),
+          disable: (getValue) => {
+            const contract = findContractType(getValue('contract'));
+            return !contract || !contract.end;
+          },
+        },
+      ],
+    },
+    {
       id: 'info1',
       component: 'fieldgroup',
       childWidths: ['expand', '1-3@m'],
@@ -208,54 +245,23 @@ export default {
       type: 'text',
       title: 'Autres précisions sur votre besoin',
     },
-    {
-      id: 'contract',
-      name: 'contract',
-      component: 'select',
-      options: [{ value: -1, label: 'Choisissez un contrat' }, ...CONTRACTS],
-      title: 'Type de contrat*',
-      fieldsToReset: ['endOfContract'],
-    },
-    /*    {
-      id: 'startEndContract',
-      component: 'fieldgroup',
-      childWidths: ['expand', 'expand', '1-4@m'],
-      fields: [
-        {
-          id: 'startOfContract',
-          name: 'startOfContract',
-          title: 'Date de début de contrat',
-          component: 'datepicker',
-          min: moment().format('YYYY-MM-DD'),
-        },
-        {
-          id: 'endOfContract',
-          name: 'endOfContract',
-          title: 'Date de fin de contrat',
-          component: 'datepicker',
-          min: moment().format('YYYY-MM-DD'),
-          disable: (getValue) => {
-            const contract = findContractType(getValue('contract'));
-            return !contract || !contract.end;
-          },
-        },
-      ],
-    },
-    {
-      id: 'numberOfPositions',
-      name: 'numberOfPositions',
-      component: 'input',
-      type: 'number',
-      min: 1,
-      title: 'Nombre de postes disponibles sur cette offre',
-    },
-    {
-      id: 'beContacted',
-      name: 'beContacted',
-      component: 'checkbox',
-      title:
-        "Souhaitez-vous qu'un référent LinkedOut échange avec vous sur votre projet de recrutement inclusif\xa0?",
-    }, */
+    /*
+      {
+        id: 'numberOfPositions',
+        name: 'numberOfPositions',
+        component: 'input',
+        type: 'number',
+        min: 1,
+        title: 'Nombre de postes disponibles sur cette offre',
+      },
+      {
+        id: 'beContacted',
+        name: 'beContacted',
+        component: 'checkbox',
+        title:
+          "Souhaitez-vous qu'un référent LinkedOut échange avec vous sur votre projet de recrutement inclusif\xa0?",
+      },
+    */
     {
       id: 'disclaimer',
       name: 'disclaimer',
@@ -452,7 +458,7 @@ export default {
       validWhen: false,
       message: 'Obligatoire',
     },
-    /* {
+    {
       field: 'endOfContract',
       method: (fieldValue, state) => {
         return (
@@ -466,7 +472,7 @@ export default {
       args: [],
       validWhen: false,
       message: 'Date antérieure à la date de début',
-    }, */
+    },
   ],
 };
 
@@ -510,6 +516,19 @@ export const adminMutations = [
   },
   {
     fieldId: 'businessLines',
+    props: [
+      {
+        propName: 'hidden',
+        value: false,
+      },
+      {
+        propName: 'disabled',
+        value: false,
+      },
+    ],
+  },
+  {
+    fieldId: 'startEndContract',
     props: [
       {
         propName: 'hidden',
