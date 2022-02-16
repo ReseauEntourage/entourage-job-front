@@ -401,7 +401,7 @@ CandidatCard.propTypes = {
 };
 
 CandidatCard.defaultProps = {
-  imgSrc: 'static/img/arthur.png',
+  imgSrc: 'static/img/arthur.jpg',
   employed: false,
   endOfContract: undefined,
   catchphrase: "cherche un job pour s'en sortir",
