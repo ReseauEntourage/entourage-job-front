@@ -4,3 +4,4 @@ node_modules
 .idea
 .vscode
 .DS_Store
+public/static/img/compress.sh

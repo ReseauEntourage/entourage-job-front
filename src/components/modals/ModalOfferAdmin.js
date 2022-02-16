@@ -104,7 +104,6 @@ const ModalOfferAdmin = ({
         `/opportunity/${isExternal ? 'external' : ''}`,
         opportunity
       );
-      console.log(data);
       setOffer({
         ...data,
         userOpportunity: isExternal
@@ -181,6 +180,7 @@ const ModalOfferAdmin = ({
               formSchema={formEditExternalOpportunity}
               defaultValues={{
                 ...offer,
+                candidateId: offer.userOpportunity[0].UserId,
               }}
               onCancel={() => {
                 setIsEditing(false);

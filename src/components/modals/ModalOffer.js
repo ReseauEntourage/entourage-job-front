@@ -153,6 +153,8 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
             formSchema={formEditExternalOpportunity}
             defaultValues={{
               ...offer,
+              candidateId:
+                user.role === USER_ROLES.COACH ? user.candidat.id : user.id,
             }}
             onCancel={() => {
               setIsEditing(false);
