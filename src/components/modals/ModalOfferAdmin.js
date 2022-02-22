@@ -475,7 +475,7 @@ const ModalOfferAdmin = ({
             <OfferInfoContainer icon="comment" title="Description de l'offre">
               <div>{formatParagraph(offer.description)}</div>
             </OfferInfoContainer>
-            {offer.prerequisites && (
+            {offer.skills && (
               <OfferInfoContainer icon="check" title="Compétences importantes">
                 <div>{formatParagraph(offer.skills)}</div>
               </OfferInfoContainer>

@@ -327,7 +327,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
               <OfferInfoContainer icon="comment" title="Description de l'offre">
                 <div>{formatParagraph(offer.description)}</div>
               </OfferInfoContainer>
-              {offer.prerequisites && (
+              {offer.skills && (
                 <OfferInfoContainer
                   icon="check"
                   title="Compétences importantes"
