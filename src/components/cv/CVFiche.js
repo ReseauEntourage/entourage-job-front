@@ -12,18 +12,13 @@ import { Grid, Img, SimpleLink } from 'src/components/utils';
 
 import ModalShareCV from 'src/components/modals/ModalShareCV';
 import Button from 'src/components/utils/Button';
-import {
-  formatParagraph,
-  sortByOrder,
-  sortByName,
-  getAmbitionsLinkingSentence,
-} from 'src/utils';
+import { formatParagraph, sortByOrder, sortByName } from 'src/utils';
 import { event } from 'src/lib/gtag';
 import TAGS from 'src/constants/tags';
 import { usePostOpportunity, useUpdateSharesCount } from 'src/hooks';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
-import { AMBITIONS_PREFIXES } from 'src/constants';
+import CVCareerPathSentence from 'src/components/cv/CVCareerPathSentence';
 
 /**
  * Le cv en public et en preview
@@ -81,8 +76,9 @@ const CVFiche = ({ cv, actionDisabled }) => {
 
   const experiences = sortByOrder(cv.experiences);
 
-  const ambitions =
-    cv.ambitions && cv.ambitions.length > 0 ? sortByOrder(cv.ambitions) : null;
+  const showCareerPathSentence =
+    (cv.ambitions && cv.ambitions.length > 0) ||
+    (cv.businessLines && cv.businessLines.length > 0);
 
   const shareSection = (
     <div className="uk-flex uk-flex-column uk-flex-middle">
@@ -224,38 +220,15 @@ const CVFiche = ({ cv, actionDisabled }) => {
               </div>
             )}
             {/* uk-text-emphasis uk-text-bold */}
-            {ambitions && (
+            {showCareerPathSentence && (
               <h4
                 className="uk-width-xxlarge uk-margin-auto"
                 style={{ fontWeight: 500 }}
               >
-                J&apos;aimerais travailler{' '}
-                {ambitions[0].prefix || AMBITIONS_PREFIXES[0].label}{' '}
-                <span
-                  className="uk-label uk-text-lowercase"
-                  style={{
-                    lineHeight: 'unset',
-                    verticalAlign: 'bottom',
-                    fontSize: 'inherit',
-                  }}
-                >
-                  {ambitions[0].name || ambitions[0]}
-                </span>
-                {ambitions.length > 1 && (
-                  <>
-                    {getAmbitionsLinkingSentence(ambitions)}
-                    <span
-                      className="uk-label uk-text-lowercase"
-                      style={{
-                        lineHeight: 'unset',
-                        verticalAlign: 'bottom',
-                        fontSize: 'inherit',
-                      }}
-                    >
-                      {ambitions[1].name || ambitions[1]}
-                    </span>
-                  </>
-                )}
+                <CVCareerPathSentence
+                  ambitions={cv.ambitions}
+                  businessLines={cv.businessLines}
+                />
               </h4>
             )}
             <div className="uk-position-relative">

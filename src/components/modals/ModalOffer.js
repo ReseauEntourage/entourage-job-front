@@ -7,13 +7,22 @@ import ButtonIcon from 'src/components/utils/ButtonIcon';
 import { IconNoSSR } from 'src/components/utils/Icon';
 
 import Api from 'src/Axios';
-import { formatParagraph, mutateDefaultOfferStatus } from 'src/utils';
+import {
+  findConstantFromValue,
+  formatParagraph,
+  mutateDefaultOfferStatus,
+} from 'src/utils';
 import ModalOfferInfo from 'src/components/modals/ModalOfferInfo';
 import ModalGeneric from 'src/components/modals/ModalGeneric';
 import formEditExternalOpportunity from 'src/components/forms/schema/formEditExternalOpportunity';
 import FormWithValidation from 'src/components/forms/FormWithValidation';
 import { UserContext } from 'src/components/store/UserProvider';
-import { EXTERNAL_OFFERS_ORIGINS, USER_ROLES } from 'src/constants';
+import {
+  BUSINESS_LINES,
+  EXTERNAL_OFFERS_ORIGINS,
+  USER_ROLES,
+} from 'src/constants';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 
 export const List = ({ className, children }) => {
   return (
@@ -155,6 +164,10 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
               ...offer,
               candidateId:
                 user.role === USER_ROLES.COACH ? user.candidat.id : user.id,
+              department: findConstantFromValue(
+                offer.department,
+                DEPARTMENTS_FILTERS
+              ),
             }}
             onCancel={() => {
               setIsEditing(false);
@@ -167,6 +180,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                 candidateId:
                   user.role === USER_ROLES.COACH ? user.candidat.id : user.id,
                 id: offer.id,
+                businessLines: undefined,
               };
               await updateOpportunity(tmpOpportunity);
               setIsEditing(false);
@@ -347,10 +361,12 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
               )}
               {offer.businessLines && (
                 <Grid gap="small">
-                  {offer.businessLines.map((businessLine, index) => {
+                  {offer.businessLines.map(({ name }, index) => {
                     return (
                       <Button key={index} disabled>
-                        <span style={{ color: '#666' }}>{businessLine}</span>
+                        <span style={{ color: '#666' }}>
+                          {findConstantFromValue(name, BUSINESS_LINES).label}
+                        </span>
                       </Button>
                     );
                   })}
@@ -379,7 +395,6 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
               style="default"
               onClick={async () => {
                 setLoading(true);
-                console.log('update offer note', noteBuffer);
                 const { userOpportunity } = offer;
                 await updateOpportunityUser({
                   ...userOpportunity,
@@ -403,13 +418,14 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
   };
   let className = '';
   if (archived) {
-    className = 'uk-light uk-background-secondary';
+    className += 'uk-light uk-background-secondary';
   } else if (offer.isExternal) {
-    className = 'uk-background-muted';
+    className += 'uk-background-muted';
   }
   // Modal
   return (
     <ModalGeneric
+      fullWidth
       className={className}
       onClose={(closeModal) => {
         if (isEditing) {

@@ -25,4 +25,29 @@ const getAmbitionsLinkingSentence = (ambitions) => {
   );
 };
 
-export { formatParagraph, getAmbitionsLinkingSentence };
+const addSpaceToPrefixIfNeeded = (prefix) => {
+  if (!prefix) return '';
+  return prefix.includes("'") ? prefix : `${prefix} `;
+};
+
+const buildBusinessLineForSentence = ({ label, prefix }) => {
+  const separator = 'et ';
+  if (Array.isArray(prefix)) {
+    let mutatedLabel = '';
+    const splittedLabel = label.split(separator);
+    for (let i = 1; i < splittedLabel.length; i += 1) {
+      mutatedLabel +=
+        separator + addSpaceToPrefixIfNeeded(prefix[i]) + splittedLabel[i];
+    }
+    return (
+      addSpaceToPrefixIfNeeded(prefix[0]) + splittedLabel[0] + mutatedLabel
+    );
+  }
+  return addSpaceToPrefixIfNeeded(prefix) + label;
+};
+
+export {
+  formatParagraph,
+  getAmbitionsLinkingSentence,
+  buildBusinessLineForSentence,
+};

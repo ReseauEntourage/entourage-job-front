@@ -82,6 +82,7 @@ const CandidateOpportunityList = ({
                           ? user.candidat.id
                           : user.id,
                       date: Date.now(),
+                      businessLines: undefined,
                     });
                     closeModal();
                     opportunityListRef.current.fetchData();

@@ -1,4 +1,5 @@
 import validator from 'validator';
+import { getValueFromFormField } from 'src/utils';
 
 export default class FormValidator {
   constructor(validations) {
@@ -15,7 +16,10 @@ export default class FormValidator {
       if (!validation[rule.field].isInvalid) {
         // determine the field value, the method to invoke and
         // optional args from the rule definition
-        const fieldValue = state[rule.field] ? state[rule.field] : '';
+        const fieldValue = getValueFromFormField(
+          state[rule.field] ? state[rule.field] : ''
+        );
+
         const args = rule.args || [];
         const validationMethod =
           typeof rule.method === 'string'
@@ -23,11 +27,22 @@ export default class FormValidator {
             : rule.method;
         // call the validationMethod with the current field value
         // as the first argument, any additional arguments, and the
-        // whole state as a final argument.  If the result doesn't
+        // whole state as a final argument. If the result doesn't
         // match the rule.validWhen property, then modify the
         // validation object for the field and set the isValid
         // field to false
-        if (validationMethod(fieldValue, ...args, state) !== rule.validWhen) {
+
+        let isValid;
+        try {
+          isValid =
+            validationMethod(fieldValue, ...args, state) !== rule.validWhen;
+        } catch (e) {
+          console.log(`Stringify validation fallback, reason: '${e.message}'`);
+          isValid =
+            validationMethod(fieldValue.toString(), ...args, state) !==
+            rule.validWhen;
+        }
+        if (isValid) {
           validation[rule.field] = {
             isInvalid: true,
             message: rule.message,

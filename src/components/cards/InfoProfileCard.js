@@ -6,7 +6,7 @@ import schemaUsefulInformation from 'src/components/forms/schema/formEditUsefulI
 import ButtonIcon from 'src/components/utils/ButtonIcon';
 import { IconNoSSR } from 'src/components/utils/Icon';
 
-import { getAllFilters, mutateFormSchema } from 'src/utils';
+import { findConstantFromValue, mutateFormSchema } from 'src/utils';
 
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { openModal } from 'src/components/modals/Modal';
@@ -38,7 +38,9 @@ const InfoProfileCard = ({
       props: [
         {
           propName: 'options',
-          value: getAllFilters(DEPARTMENTS_FILTERS, userZone),
+          value: DEPARTMENTS_FILTERS.filter((filter) => {
+            return !filter.zone || filter.zone === userZone;
+          }),
         },
       ],
     },
@@ -64,7 +66,6 @@ const InfoProfileCard = ({
                   title="Édition - Informations utiles"
                   formSchema={mutatedSchema}
                   defaultValues={{
-                    locations,
                     availability,
                     transport,
                     contracts,
@@ -72,6 +73,12 @@ const InfoProfileCard = ({
                     email,
                     phone,
                     address,
+                    locations: locations.map((location) => {
+                      return findConstantFromValue(
+                        location,
+                        DEPARTMENTS_FILTERS
+                      );
+                    }),
                   }}
                   onSubmit={async (fields, closeModal) => {
                     closeModal();

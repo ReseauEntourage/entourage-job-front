@@ -1,4 +1,3 @@
-import { getAllFilters } from 'src/utils';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 
 export default {
@@ -47,7 +46,7 @@ export default {
       name: 'locations',
       title: 'Lieu de travail souhaité',
       component: 'select-request',
-      options: getAllFilters(DEPARTMENTS_FILTERS),
+      options: DEPARTMENTS_FILTERS,
       isMulti: true,
     },
     {
@@ -83,17 +82,6 @@ export default {
       ],
       validWhen: true,
       message: '120 caractères maximum',
-    },
-    {
-      field: 'location',
-      method: 'isLength',
-      args: [
-        {
-          max: 100,
-        },
-      ],
-      validWhen: true,
-      message: '100 caractères maximum',
     },
     {
       field: 'availability',

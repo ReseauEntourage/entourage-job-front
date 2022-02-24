@@ -93,6 +93,14 @@ const AdminOpportunityList = ({
                         startOfContract: fields.startOfContract || null,
                         endOfContract: fields.endOfContract || null,
                         date: Date.now(),
+                        businessLines: fields.businessLines
+                          ? fields.businessLines.map((businessLine, index) => {
+                              return {
+                                name: businessLine,
+                                order: index,
+                              };
+                            })
+                          : [],
                       });
                       closeModal();
                       await opportunityListRef?.current?.fetchData();

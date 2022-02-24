@@ -9,6 +9,8 @@ import TAGS from 'src/constants/tags';
 import { openModal } from 'src/components/modals/Modal';
 import defaultSchema from 'src/components/forms/schema/formEditOpportunity';
 import ModalEdit from 'src/components/modals/ModalEdit';
+import { findConstantFromValue, getValueFromFormField } from 'src/utils';
+import { BUSINESS_LINES } from 'src/constants';
 
 export function usePostOpportunity({
   modalTitle,
@@ -49,6 +51,20 @@ export function usePostOpportunity({
           endOfContract: opportunity.endOfContract || null,
           candidatesId: opportunity.isPublic && !isAdmin ? null : candidatesId,
           message: opportunity.isPublic ? null : opportunity.message,
+          businessLines: opportunity.businessLines
+            ? opportunity.businessLines.map((businessLine, index) => {
+                return {
+                  name: businessLine,
+                  order: index,
+                };
+              })
+            : undefined,
+          locations: opportunity.locations.map(({ department, address }) => {
+            return {
+              department: getValueFromFormField(department),
+              address,
+            };
+          }),
           date: Date.now(),
         });
         closeModal();
@@ -60,7 +76,15 @@ export function usePostOpportunity({
         );
         if (adminCallback) await adminCallback();
         if (openNewForm) {
-          setLastFilledForm(fields);
+          setLastFilledForm({
+            ...fields,
+            candidatesId: [],
+            businessLines: fields.businessLines
+              ? fields.businessLines.map((businessLine) => {
+                  return findConstantFromValue(businessLine, BUSINESS_LINES);
+                })
+              : [],
+          });
         } else {
           setLastFilledForm({});
         }
@@ -72,15 +96,22 @@ export function usePostOpportunity({
   );
 
   const modal = useMemo(() => {
-    const mutatedDefaultValue = { ...defaultValues };
-    mutatedDefaultValue.candidatesId = mutatedDefaultValue.candidat
-      ? [
-          {
-            label: `${mutatedDefaultValue.candidat.firstName} ${mutatedDefaultValue.candidat.lastName}`,
-            value: candidateId,
-          },
-        ]
-      : [];
+    const mutatedDefaultValue = {
+      ...defaultValues,
+      candidatesId: defaultValues.candidat
+        ? [
+            {
+              label: `${defaultValues.candidat.firstName} ${defaultValues.candidat.lastName}`,
+              value: candidateId,
+            },
+          ]
+        : [],
+      businessLines: defaultValues.businessLines
+        ? defaultValues.businessLines.map((businessLine) => {
+            return findConstantFromValue(businessLine, BUSINESS_LINES);
+          })
+        : [],
+    };
 
     return (
       <ModalEdit

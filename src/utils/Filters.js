@@ -16,66 +16,6 @@ const getUserOpportunityFromOffer = (offer, candidatId) => {
   return userOpportunity;
 };
 
-const getChildrenFilters = (filters) => {
-  return filters.reduce((acc, curr) => {
-    const { children, ...restProps } = curr;
-    const accToReturn = [...acc];
-    if (children && children.length > 0) {
-      return [...accToReturn, ...getChildrenFilters(curr.children)];
-    }
-    return [...accToReturn, restProps];
-  }, []);
-};
-
-const getAllFilters = (filters, zone) => {
-  const filtersToShow = filters.reduce((acc, curr) => {
-    const { children, ...restProps } = curr;
-    const accToReturn = [...acc, restProps];
-    if (children && children.length > 0) {
-      return [...accToReturn, ...getAllFilters(curr.children)];
-    }
-    return accToReturn;
-  }, []);
-
-  if (zone) {
-    return filtersToShow.filter((filter) => {
-      return !filter.zone || filter.zone === zone;
-    });
-  }
-
-  return filtersToShow;
-};
-
-const findFilter = (filters, value) => {
-  return filters.reduce((acc, curr) => {
-    if (!acc || acc.value !== value) {
-      if (curr.value !== value) {
-        if (curr.children && curr.children.length > 0) {
-          return findFilter(curr.children, value);
-        }
-        return null;
-      }
-      return curr;
-    }
-    return acc;
-  }, null);
-};
-
-const initializeFilters = (filtersConst, defaults) => {
-  let hasDefaults = false;
-  if (defaults && Object.keys(defaults).length > 0) {
-    hasDefaults = true;
-  }
-  return filtersConst.reduce((acc, curr) => {
-    if (hasDefaults && defaults[curr.key]) {
-      acc[curr.key] = defaults[curr.key];
-    } else {
-      acc[curr.key] = [];
-    }
-    return acc;
-  }, {});
-};
-
 const filtersToQueryParams = (filters) => {
   const params = {};
   _.forEach(Object.keys(filters), (filter) => {
@@ -133,10 +73,6 @@ const getFiltersTagsFromQueryParamsFront = (tag, filters) => {
 
 export {
   getUserOpportunityFromOffer,
-  getChildrenFilters,
-  getAllFilters,
-  findFilter,
-  initializeFilters,
   filtersToQueryParams,
   getFiltersObjectsFromQueryParamsFront,
   getFiltersTagsFromQueryParamsFront,

@@ -5,7 +5,8 @@ import schemaEditEmployed from 'src/components/forms/schema/formEditEmployed';
 import Api from 'src/Axios';
 import PropTypes from 'prop-types';
 import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
-import { findContractType } from 'src/utils';
+import { findConstantFromValue } from 'src/utils';
+import { CONTRACTS } from 'src/constants';
 
 const CandidateEmployedToggle = ({
   candidatId,
@@ -27,7 +28,7 @@ const CandidateEmployedToggle = ({
       formSchema={schemaEditEmployed}
       subtitle={subtitle}
       onToggle={(employed, fields = {}) => {
-        const contract = findContractType(fields.contract);
+        const contract = findConstantFromValue(fields.contract, CONTRACTS);
         const hasEnd = contract && contract.end;
 
         const mutatedFields = {
