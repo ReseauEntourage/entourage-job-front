@@ -4,8 +4,16 @@ import PropTypes from 'prop-types';
 import { Grid, SimpleLink } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
 
-import { addPrefix, formatParagraph, sortByOrder, sortByName } from 'src/utils';
+import {
+  addPrefix,
+  formatParagraph,
+  sortByOrder,
+  sortByName,
+  findConstantFromValue,
+} from 'src/utils';
 import CVCareerPathSentence from 'src/components/cv/CVCareerPathSentence';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { CONTRACTS } from 'src/constants';
 
 const CVPDF = ({ cv, page }) => {
   const experiences =
@@ -208,7 +216,14 @@ const CVPDF = ({ cv, page }) => {
                             style={{ width: 20 }}
                           />{' '}
                           <span className="uk-flex-1">
-                            {cv.contracts.join(' / ')}
+                            {cv.contracts
+                              .map((contract) => {
+                                return findConstantFromValue(
+                                  contract,
+                                  CONTRACTS
+                                ).label;
+                              })
+                              .join(' / ')}
                           </span>
                         </li>
                       )}
@@ -220,7 +235,14 @@ const CVPDF = ({ cv, page }) => {
                             style={{ width: 20 }}
                           />{' '}
                           <span className="uk-flex-1">
-                            {cv.locations.join(' / ')}
+                            {cv.locations
+                              .map((location) => {
+                                return findConstantFromValue(
+                                  location,
+                                  DEPARTMENTS_FILTERS
+                                ).label;
+                              })
+                              .join(' / ')}
                           </span>
                         </li>
                       )}

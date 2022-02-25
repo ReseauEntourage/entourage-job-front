@@ -119,23 +119,29 @@ const CVEditCareerPath = ({ ambitions, businessLines, onChange }) => {
 };
 
 CVEditCareerPath.propTypes = {
-  ambitions: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      order: PropTypes.number.isRequired,
-      prefix: PropTypes.oneOf(
-        AMBITIONS_PREFIXES.map(({ value }) => {
-          return value;
-        })
-      ),
-    })
-  ).isRequired,
-  businessLines: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      order: PropTypes.number.isRequired,
-    })
-  ).isRequired,
+  ambitions: PropTypes.oneOf([
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        order: PropTypes.number.isRequired,
+        prefix: PropTypes.oneOf(
+          AMBITIONS_PREFIXES.map(({ value }) => {
+            return value;
+          })
+        ),
+      })
+    ),
+    PropTypes.string,
+  ]).isRequired,
+  businessLines: PropTypes.oneOf([
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        order: PropTypes.number.isRequired,
+      })
+    ),
+    PropTypes.string,
+  ]).isRequired,
   onChange: PropTypes.func,
 };
 CVEditCareerPath.defaultProps = {

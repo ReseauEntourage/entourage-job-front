@@ -1,4 +1,5 @@
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { CONTRACTS } from 'src/constants';
 
 export default {
   id: 'form-usefullinformation',
@@ -38,7 +39,8 @@ export default {
       id: 'contracts',
       name: 'contracts',
       title: 'Type de contrat recherché',
-      component: 'select-request-creatable',
+      component: 'select-request',
+      options: CONTRACTS,
       isMulti: true,
     },
     {

@@ -128,7 +128,7 @@ export function usePostOpportunity({
           if (!isAdmin) {
             if (fields.isPublic) {
               event(TAGS.POPUP_OFFRE_ENVOYER_OFFRE_GENERALE_INVALIDE);
-            } else if (fields.candidatesId.length > 1) {
+            } else if (fields.candidatesId?.length > 1) {
               event(TAGS.POPUP_OFFRE_ENVOYER_OFFRE_MULTIPLE_INVALIDE);
             } else {
               event(TAGS.POPUP_OFFRE_ENVOYER_OFFRE_UNIQUE_INVALIDE);

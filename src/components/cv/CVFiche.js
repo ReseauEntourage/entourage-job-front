@@ -12,13 +12,20 @@ import { Grid, Img, SimpleLink } from 'src/components/utils';
 
 import ModalShareCV from 'src/components/modals/ModalShareCV';
 import Button from 'src/components/utils/Button';
-import { formatParagraph, sortByOrder, sortByName } from 'src/utils';
+import {
+  formatParagraph,
+  sortByOrder,
+  sortByName,
+  findConstantFromValue,
+} from 'src/utils';
 import { event } from 'src/lib/gtag';
 import TAGS from 'src/constants/tags';
 import { usePostOpportunity, useUpdateSharesCount } from 'src/hooks';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
 import CVCareerPathSentence from 'src/components/cv/CVCareerPathSentence';
+import { CONTRACTS } from 'src/constants';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 
 /**
  * Le cv en public et en preview
@@ -345,68 +352,88 @@ const CVFiche = ({ cv, actionDisabled }) => {
               )}
             </Grid>
             <Grid column gap="medium">
-              <div className="">
-                <h3 className="uk-margin-small-bottom">Mes infos pratiques</h3>
-                <hr className="uk-divider-small uk-margin-remove-top" />
-                <ul className="uk-list">
-                  {cv.contracts && cv.contracts.length > 0 && (
-                    <li className="uk-flex uk-flex-middle">
-                      <IconNoSSR
-                        className="uk-text-primary uk-margin-small-right"
-                        name="file-text"
-                        style={{ width: 20 }}
-                      />{' '}
-                      <span className="uk-flex-1">
-                        {cv.contracts.join(' / ')}
-                      </span>
-                    </li>
-                  )}
-                  {cv.locations && cv.locations.length > 0 && (
-                    <li className="uk-flex uk-flex-middle">
-                      <IconNoSSR
-                        className="uk-text-primary uk-margin-small-right"
-                        name="location"
-                        style={{ width: 20 }}
-                      />{' '}
-                      <span className="uk-flex-1">
-                        {cv.locations.join(' / ')}
-                      </span>
-                    </li>
-                  )}
-                  {cv.availability && cv.availability.length > 0 && (
-                    <li className="uk-flex uk-flex-middle">
-                      <IconNoSSR
-                        className="uk-text-primary uk-margin-small-right"
-                        name="calendar"
-                        style={{ width: 20 }}
-                      />{' '}
-                      <span className="uk-flex-1">{cv.availability}</span>
-                    </li>
-                  )}
-                  {cv.languages && cv.languages.length > 0 && (
-                    <li className="uk-flex uk-flex-middle">
-                      <IconNoSSR
-                        className="uk-text-primary uk-margin-small-right"
-                        name="users"
-                        style={{ width: 20 }}
-                      />{' '}
-                      <span className="uk-flex-1">
-                        {cv.languages.join(' / ')}
-                      </span>
-                    </li>
-                  )}
-                  {cv.transport && cv.transport.length > 0 && (
-                    <li className="uk-flex uk-flex-middle">
-                      <IconNoSSR
-                        className="uk-text-primary uk-margin-small-right"
-                        name="car"
-                        style={{ width: 20 }}
-                      />{' '}
-                      <span className="uk-flex-1">{cv.transport}</span>
-                    </li>
-                  )}
-                </ul>
-              </div>
+              {(cv.contracts ||
+                cv.locations ||
+                cv.availability ||
+                cv.languages ||
+                cv.transport) && (
+                <div className="">
+                  <h3 className="uk-margin-small-bottom">
+                    Mes infos pratiques
+                  </h3>
+                  <hr className="uk-divider-small uk-margin-remove-top" />
+                  <ul className="uk-list">
+                    {cv.contracts && cv.contracts.length > 0 && (
+                      <li className="uk-flex uk-flex-middle">
+                        <IconNoSSR
+                          className="uk-text-primary uk-margin-small-right"
+                          name="file-text"
+                          style={{ width: 20 }}
+                        />{' '}
+                        <span className="uk-flex-1">
+                          {cv.contracts
+                            .map((contract) => {
+                              return findConstantFromValue(contract, CONTRACTS)
+                                .label;
+                            })
+                            .join(' / ')}{' '}
+                        </span>
+                      </li>
+                    )}
+                    {cv.locations && cv.locations.length > 0 && (
+                      <li className="uk-flex uk-flex-middle">
+                        <IconNoSSR
+                          className="uk-text-primary uk-margin-small-right"
+                          name="location"
+                          style={{ width: 20 }}
+                        />{' '}
+                        <span className="uk-flex-1">
+                          {cv.locations
+                            .map((location) => {
+                              return findConstantFromValue(
+                                location,
+                                DEPARTMENTS_FILTERS
+                              ).label;
+                            })
+                            .join(' / ')}
+                        </span>
+                      </li>
+                    )}
+                    {cv.availability && cv.availability.length > 0 && (
+                      <li className="uk-flex uk-flex-middle">
+                        <IconNoSSR
+                          className="uk-text-primary uk-margin-small-right"
+                          name="calendar"
+                          style={{ width: 20 }}
+                        />{' '}
+                        <span className="uk-flex-1">{cv.availability}</span>
+                      </li>
+                    )}
+                    {cv.languages && cv.languages.length > 0 && (
+                      <li className="uk-flex uk-flex-middle">
+                        <IconNoSSR
+                          className="uk-text-primary uk-margin-small-right"
+                          name="users"
+                          style={{ width: 20 }}
+                        />{' '}
+                        <span className="uk-flex-1">
+                          {cv.languages.join(' / ')}
+                        </span>
+                      </li>
+                    )}
+                    {cv.transport && cv.transport.length > 0 && (
+                      <li className="uk-flex uk-flex-middle">
+                        <IconNoSSR
+                          className="uk-text-primary uk-margin-small-right"
+                          name="car"
+                          style={{ width: 20 }}
+                        />{' '}
+                        <span className="uk-flex-1">{cv.transport}</span>
+                      </li>
+                    )}
+                  </ul>
+                </div>
+              )}
               {cv.skills && cv.skills.length > 0 && (
                 <div className="">
                   <h3 className="uk-margin-small-bottom">Mes atouts</h3>

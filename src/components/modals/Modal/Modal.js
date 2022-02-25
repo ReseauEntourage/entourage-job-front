@@ -5,7 +5,7 @@ import { useModalContext } from 'src/components/modals/Modal/ModalContext';
 
 Modal.setAppElement('#__next');
 
-const CustomModal = ({ children, closeOnNextRender, className }) => {
+const CustomModal = ({ children, closeOnNextRender, className, fullWidth }) => {
   const { onClose } = useModalContext();
 
   useEffect(() => {
@@ -37,6 +37,7 @@ const CustomModal = ({ children, closeOnNextRender, className }) => {
           justifyContent: 'center',
           padding: 0,
           backgroundColor: 'transparent',
+          width: fullWidth ? '100%' : 'inherit',
         },
       }}
       shouldCloseOnOverlayClick={false}
@@ -49,7 +50,9 @@ const CustomModal = ({ children, closeOnNextRender, className }) => {
       }}
     >
       <div
-        className={`uk-background-default ${className}`}
+        className={`uk-background-default ${className} ${
+          fullWidth ? 'uk-width-expand' : ''
+        }`}
         style={{ margin: 15, position: 'relative' }}
       >
         {children}
@@ -62,11 +65,13 @@ CustomModal.propTypes = {
   children: PropTypes.element.isRequired,
   closeOnNextRender: PropTypes.bool,
   className: PropTypes.string,
+  fullWidth: PropTypes.bool,
 };
 
 CustomModal.defaultProps = {
   closeOnNextRender: false,
   className: '',
+  fullWidth: false,
 };
 
 export { CustomModal as Modal };

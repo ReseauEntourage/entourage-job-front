@@ -14,10 +14,10 @@ const ModalGeneric = ({
 }) => {
   const { onClose } = useModalContext();
   return (
-    <Modal className={className}>
+    <Modal className={className} fullWidth={fullWidth}>
       <div
         className={`uk-margin-auto-vertical ${
-          !fullWidth ? 'uk-width-2xlarge@m' : ''
+          fullWidth ? 'uk-width-expand' : 'uk-width-2xlarge@m'
         }`}
       >
         <div className="uk-modal-body uk-padding">

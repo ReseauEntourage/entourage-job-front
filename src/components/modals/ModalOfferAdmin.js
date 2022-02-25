@@ -138,17 +138,7 @@ const ModalOfferAdmin = ({
     try {
       const { data } = await Api.put(
         `/opportunity/${isExternal ? 'external' : ''}`,
-        {
-          ...opportunity,
-          businessLines: opportunity.businessLines
-            ? opportunity.businessLines.map((businessLine, index) => {
-                return {
-                  name: businessLine,
-                  order: index,
-                };
-              })
-            : [],
-        }
+        opportunity
       );
       setOffer({
         ...data,
@@ -243,6 +233,14 @@ const ModalOfferAdmin = ({
                   endOfContract: fields.endOfContract || null,
                   candidateId: offer.userOpportunity[0].UserId,
                   id: offer.id,
+                  businessLines: fields.businessLines
+                    ? fields.businessLines.map((businessLine, index) => {
+                        return {
+                          name: businessLine,
+                          order: index,
+                        };
+                      })
+                    : [],
                 };
                 await updateOpportunity(tmpOpportunity, true);
                 setIsEditing(false);
@@ -277,6 +275,14 @@ const ModalOfferAdmin = ({
                         ? candidateId.value
                         : candidateId;
                     }) || [],
+                  businessLines: fields.businessLines
+                    ? fields.businessLines.map((businessLine, index) => {
+                        return {
+                          name: businessLine,
+                          order: index,
+                        };
+                      })
+                    : [],
                 };
                 await updateOpportunity(tmpOpportunity);
                 setIsEditing(false);

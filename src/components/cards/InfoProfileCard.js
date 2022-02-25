@@ -10,6 +10,7 @@ import { findConstantFromValue, mutateFormSchema } from 'src/utils';
 
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { openModal } from 'src/components/modals/Modal';
+import { CONTRACTS } from 'src/constants';
 
 const InfoProfileCard = ({
   contracts,
@@ -68,7 +69,9 @@ const InfoProfileCard = ({
                   defaultValues={{
                     availability,
                     transport,
-                    contracts,
+                    contracts: contracts.map((contract) => {
+                      return findConstantFromValue(contract, CONTRACTS);
+                    }),
                     languages,
                     email,
                     phone,
@@ -82,6 +85,7 @@ const InfoProfileCard = ({
                   }}
                   onSubmit={async (fields, closeModal) => {
                     closeModal();
+                    console.log(fields);
                     await onChange({
                       ...fields,
                     });
@@ -108,13 +112,22 @@ const InfoProfileCard = ({
         <Grid row gap="small" middle>
           <IconNoSSR name="file-text" style={{ width: 20 }} />
           {contracts && contracts.length > 0
-            ? contracts.join(' / ')
+            ? contracts
+                .map((contract) => {
+                  return findConstantFromValue(contract, CONTRACTS).label;
+                })
+                .join(' / ')
             : 'Type de contrat recherché non renseigné'}
         </Grid>
         <Grid row gap="small" middle>
           <IconNoSSR name="location" style={{ width: 20 }} />
           {locations && locations.length > 0
-            ? locations.join(' / ')
+            ? locations
+                .map((location) => {
+                  return findConstantFromValue(location, DEPARTMENTS_FILTERS)
+                    .label;
+                })
+                .join(' / ')
             : 'Localisations non renseignées'}
         </Grid>
         <Grid row gap="small" middle>
