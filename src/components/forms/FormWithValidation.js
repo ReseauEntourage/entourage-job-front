@@ -10,6 +10,7 @@ import FooterForm from 'src/components/utils/FooterForm';
 import FormValidator from 'src/components/forms/FormValidator';
 import GenericField from 'src/components/forms/GenericField';
 import FieldGroup from 'src/components/forms/fields/FieldGroup';
+import MultipleFields from 'src/components/forms/fields/MultipleFields';
 
 /**
  * Permet de creer un formulaire avec la generation de ses champs et validations de champs
@@ -25,6 +26,7 @@ const FormWithValidation = forwardRef(
       onSubmit,
       onCancel,
       enterToSubmit,
+      onError,
     },
     ref
   ) => {
@@ -51,6 +53,7 @@ const FormWithValidation = forwardRef(
         let fieldValue;
         if (type === 'checkbox') {
           fieldValue = checked;
+          // TODO replace type select-one
         } else if (type === 'select-one' && selectedIndex === 0) {
           fieldValue = null; // si on est sur le placeholder ( option sans valeur )
         } else fieldValue = value;
@@ -93,6 +96,7 @@ const FormWithValidation = forwardRef(
         });
         setFieldValidations(tmpFieldValidations);
         setError('Un ou plusieurs champs sont invalides');
+        await onError(fieldValues);
         console.error(validation);
       }
     };
@@ -184,6 +188,38 @@ const FormWithValidation = forwardRef(
                   </li>
                 );
               }
+              if (value.component === 'multiple-fields') {
+                const {
+                  fields: childrenFields,
+                  title,
+                  action,
+                  id: childrenId,
+                  name: childrenName,
+                  childWidths,
+                } = value;
+                return (
+                  <li key={i} hidden={!!value.hidden}>
+                    <MultipleFields
+                      action={action}
+                      id={childrenId}
+                      name={childrenName}
+                      title={title}
+                      childWidths={childWidths}
+                      formId={id}
+                      values={fieldValues[childrenName] || [{}]}
+                      getValid={(name) => {
+                        return fieldValidations[`valid_${name}`];
+                      }}
+                      getValue={(name) => {
+                        return fieldValues[name];
+                      }}
+                      onChange={updateForm}
+                      fields={childrenFields}
+                    />
+                  </li>
+                );
+              }
+
               return (
                 <li key={i} hidden={!!value.hidden}>
                   <GenericField
@@ -224,10 +260,11 @@ FormWithValidation.propTypes = {
   defaultValues: PropTypes.objectOf(PropTypes.any),
   onCancel: PropTypes.func,
   onSubmit: PropTypes.func.isRequired,
+  onError: PropTypes.func,
   formSchema: PropTypes.shape({
     id: PropTypes.string,
-    fields: PropTypes.arrayOf(PropTypes.object),
-    rules: PropTypes.arrayOf(PropTypes.object),
+    fields: PropTypes.arrayOf(PropTypes.shape()),
+    rules: PropTypes.arrayOf(PropTypes.shape()),
   }).isRequired,
   submitText: PropTypes.string,
   enterToSubmit: PropTypes.bool,
@@ -238,6 +275,7 @@ FormWithValidation.defaultProps = {
   defaultValues: {},
   onCancel: undefined,
   enterToSubmit: false,
+  onError: () => {},
 };
 
 export default FormWithValidation;

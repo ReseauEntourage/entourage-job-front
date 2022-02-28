@@ -5,7 +5,7 @@ import CarouselItem from 'src/components/partials/CarouselItem';
 
 const testimonies = [
   {
-    image: '/static/img/temoignage-candidat-miah.png',
+    image: '/static/img/temoignage-candidat-miah.jpg',
     author: 'Miah',
     quote: 'Trouver du travail a changé ma vie.',
   },

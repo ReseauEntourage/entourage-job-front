@@ -62,11 +62,7 @@ const Partenaires = () => {
     const firstDirection = reverse ? 'left' : 'right';
     const secondDirection = reverse ? 'right' : 'left';
     return (
-      <Section
-        container="large"
-        style={index % 2 === 0 ? 'muted' : 'default'}
-        key={index}
-      >
+      <Section style={index % 2 === 0 ? 'muted' : 'default'} key={index}>
         <div
           className="uk-flex uk-flex-center uk-flex-middle"
           uk-scrollspy="target: .animate; cls: uk-animation-fade; delay: 200;"
@@ -89,21 +85,23 @@ const Partenaires = () => {
               gap="large"
               reverse={reverse}
             >
-              <div className="uk-flex uk-flex-column uk-flex-middle uk-flex-center">
-                <Img
-                  src={`/static/img/partners/${key}/logo.png`}
-                  width=""
-                  height=""
-                  alt=""
-                />
-                {bis && (
+              <div className="uk-flex uk-flex-middle uk-flex-center">
+                <div className="uk-width-medium uk-flex uk-flex-column uk-flex-middle uk-flex-center">
                   <Img
-                    src={`/static/img/partners/${key}/logo_bis.png`}
+                    src={`/static/img/partners/${key}/logo.png`}
                     width=""
                     height=""
                     alt=""
                   />
-                )}
+                  {bis && (
+                    <Img
+                      src={`/static/img/partners/${key}/logo_bis.png`}
+                      width=""
+                      height=""
+                      alt=""
+                    />
+                  )}
+                </div>
               </div>
               <div className="uk-flex uk-flex-column uk-flex-middle">
                 <div
@@ -242,7 +240,7 @@ const Partenaires = () => {
                             key={index}
                             className="uk-flex uk-flex-column uk-flex-middle uk-flex-center uk-padding-large"
                           >
-                            <div className="uk-width-large uk-flex uk-flex-center uk-flex-middle">
+                            <div className="uk-width-medium uk-flex uk-flex-center uk-flex-middle">
                               <Img
                                 src={`/static/img/partners/${key}/logo.png`}
                                 width=""

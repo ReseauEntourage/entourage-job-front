@@ -96,7 +96,6 @@ export default {
     {
       id: 'userToCoach',
       name: 'userToCoach',
-      type: 'text',
       component: 'select-request-async',
       cacheOptions: false,
       disable: (getValue) => {

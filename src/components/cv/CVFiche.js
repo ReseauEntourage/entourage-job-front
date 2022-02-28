@@ -33,8 +33,23 @@ const CVFiche = ({ cv, actionDisabled }) => {
 
   const { modal } = usePostOpportunity({
     modalTitle: 'Proposer une opportunité à un candidat',
-    modalDescription:
-      'Cet espace est dédié aux potentiels recruteurs qui souhaitent proposer une opportunité à un candidat spécifique.',
+    modalDesc: (
+      <div className="uk-text-normal">
+        Contactez ici le candidat et son coach LinkedOut afin de solliciter un
+        échange.
+        <br />
+        <br />
+        Si vous souhaitez échanger avec le coach bénévole qui accompagne le
+        candidat dans sa recherche d&apos;emploi, précisez-le dans votre
+        message.
+        <br />
+        <br />
+        <span className="uk-text-meta uk-text-italic">
+          LinkedOut est susceptible de transmettre cette opportunité à
+          d&apos;autres candidats dont le profil correspond à votre besoin.
+        </span>
+      </div>
+    ),
     candidateId: cv.UserId,
     defaultValues: {
       candidat: {

@@ -6,7 +6,7 @@ export default {
     {
       id: 'ambitions0',
       component: 'fieldgroup',
-      childWidths: ['1-4', 'expand'],
+      childWidths: ['1-4@m', 'expand'],
       fields: [
         {
           id: 'prefix0',
@@ -29,7 +29,7 @@ export default {
     {
       id: 'ambitions1',
       component: 'fieldgroup',
-      childWidths: ['1-4', 'expand'],
+      childWidths: ['1-4@m', 'expand'],
       fields: [
         {
           id: 'prefix0',

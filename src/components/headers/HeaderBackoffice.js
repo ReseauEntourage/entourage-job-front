@@ -8,7 +8,7 @@ const HeaderBackoffice = ({ title, description, children, childrenBottom }) => {
       <Grid
         gap="small"
         column={childrenBottom}
-        eachWidths={['expand@s', 'auto']}
+        eachWidths={['expand@m', 'auto@m']}
       >
         <div>
           <h2 className="uk-text-bold">{title}</h2>

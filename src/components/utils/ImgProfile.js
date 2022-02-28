@@ -13,7 +13,7 @@ const ImgProfile = ({ src, alt, width, height, border }) => {
   );
 };
 ImgProfile.defaultProps = {
-  src: '/static/img/arthur.png',
+  src: '/static/img/arthur.jpg',
   alt: '',
   width: '80px',
   height: '80px',

@@ -566,10 +566,10 @@ const DEPARTMENTS_FILTERS = [
 ];
 
 const FORMATTED_DEPARTMENTS = [
-  {
+  /* {
     value: -1,
     label: 'Choisissez un département',
-  },
+  }, */
   ...DEPARTMENTS.map(({ name }) => {
     return {
       value: name,

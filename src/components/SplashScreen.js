@@ -1,8 +1,8 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
-import { Img } from 'src/components/utils';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
+import { ImgNoSSR } from 'src/components/utils/Img';
 
 const SplashScreen = () => {
   return (
@@ -13,10 +13,13 @@ const SplashScreen = () => {
       }}
       className="uk-position-cover uk-background-default uk-flex uk-flex-column uk-flex-center uk-flex-middle"
     >
-      <div style={{ opacity: 0 }} className="uk-animation-fade">
-        <Img
+      <div
+        style={{ opacity: 0 }}
+        className="uk-animation-fade uk-animation-fast"
+      >
+        <ImgNoSSR
           src="/static/img/linkedout_logo_orange_small.png"
-          alt="LinkedOut by entourage"
+          alt="LinkedOut by Entourage"
           className="uk-width-medium uk-margin-medium-bottom"
         />
       </div>

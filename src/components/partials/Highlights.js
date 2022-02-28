@@ -2,6 +2,7 @@ import React from 'react';
 import Carousel from 'src/components/utils/Carousel';
 import CarouselItem from 'src/components/partials/CarouselItem';
 import { Section, SimpleLink } from 'src/components/utils';
+import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 
 const Highlights = () => {
   const highlights = [
@@ -72,17 +73,15 @@ const Highlights = () => {
           </Carousel>
         </div>
       </div>
-      <iframe
-        src="https://www.youtube.com/embed/9TK4wOfF-HU?start=61"
-        width="1280"
-        height="720"
-        frameBorder="0"
-        allowFullScreen
-        data-uk-responsive
-        data-uk-video="automute: false; autoplay: false"
-        title="linkedout"
-        className="uk-margin-medium-top"
-      />
+      <div className="uk-margin-medium-top">
+        <LiteYouTubeEmbed
+          id="9TK4wOfF-HU"
+          title="Témoignage candidats LinkedOut"
+          aspectWidth={1280}
+          aspectHeight={720}
+          params="start=61"
+        />
+      </div>
     </Section>
   );
 };

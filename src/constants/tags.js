@@ -14,6 +14,9 @@ const TAGS = {
   PAGE_ENTREPRISES_GALERIE_CV_CLIC: {
     action: 'Page_Entreprises_Galerie_CV_Clic',
   },
+  PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC: {
+    action: 'Page_Entreprises_Contacter_Referent_Clic',
+  },
   PAGE_GALERIE_CV_CLIC: {
     action: 'Page_Galerie_CV_Clic',
   },
@@ -70,6 +73,15 @@ const TAGS = {
   },
   POPUP_OFFRE_ENVOYER_OFFRE_GENERALE_CLIC: {
     action: 'Popup_Offre_Envoyer_Offre_Generale_Clic',
+  },
+  POPUP_OFFRE_ENVOYER_OFFRE_UNIQUE_INVALIDE: {
+    action: 'Popup_Offre_Envoyer_Offre_Unique_Invalide',
+  },
+  POPUP_OFFRE_ENVOYER_OFFRE_MULTIPLE_INVALIDE: {
+    action: 'Popup_Offre_Envoyer_Offre_Multiple_Invalide',
+  },
+  POPUP_OFFRE_ENVOYER_OFFRE_GENERALE_INVALIDE: {
+    action: 'Popup_Offre_Envoyer_Offre_Generale_Invalide',
   },
   PAGE_GALERIE_RECHERCHE: {
     action: 'Page_Galerie_Recherche',

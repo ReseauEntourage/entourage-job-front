@@ -114,7 +114,7 @@ const CVPage = ({ cv, exists, router, hideShareOptions }) => {
       metaDescription={sharedDescription}
       metaImage={
         cv.urlImg
-          ? `${process.env.AWSS3_URL}${cv.urlImg.replace(
+          ? `${process.env.AWSS3_CDN_URL}${cv.urlImg.replace(
               '.jpg',
               '.preview.jpg'
             )}`
@@ -127,7 +127,7 @@ const CVPage = ({ cv, exists, router, hideShareOptions }) => {
           <CVBackground
             endOfContract={cv?.user?.endOfContract}
             employed={cv.user ? cv.user.employed : false}
-            url={process.env.AWSS3_URL + cv.urlImg || undefined}
+            url={process.env.AWSS3_CDN_URL + cv.urlImg || undefined}
           />
         )}
         <CVFiche cv={cv} hideShareOptions={hideShareOptions} />

@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 const FormValidatorErrorMessage = ({ validObj }) => {
   if (validObj !== undefined) {
     return (
-      <div className="uk-text-meta uk-text-danger">{validObj.message}</div>
+      <div className="uk-text-meta uk-text-danger" style={{ height: 15 }}>
+        {validObj.message}
+      </div>
     );
   }
   return null;

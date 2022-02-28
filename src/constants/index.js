@@ -334,6 +334,10 @@ const EXTERNAL_OFFERS_ORIGINS = [
     label: 'Recherches Internet',
     value: 'internet',
   },
+  {
+    label: 'Mon conseiller emploi (Pôle Emploi, mission locale...)',
+    value: 'counselor',
+  },
 ];
 
 const EXTERNAL_LINKS = {

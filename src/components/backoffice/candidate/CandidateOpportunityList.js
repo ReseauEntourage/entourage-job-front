@@ -13,6 +13,7 @@ import { Button } from 'src/components/utils';
 import ModalEdit from 'src/components/modals/ModalEdit';
 import formEditExternalOpportunity from 'src/components/forms/schema/formEditExternalOpportunity';
 import Api from 'src/Axios';
+import { mutateFormSchema } from 'src/utils';
 
 const CandidateOpportunityList = ({
   search,
@@ -26,6 +27,22 @@ const CandidateOpportunityList = ({
 }) => {
   const { user } = useContext(UserContext);
   const opportunityListRef = useRef();
+
+  const mutatedSchema = mutateFormSchema(formEditExternalOpportunity, [
+    {
+      fieldId: 'startEndContract',
+      props: [
+        {
+          propName: 'hidden',
+          value: true,
+        },
+        {
+          propName: 'disabled',
+          value: true,
+        },
+      ],
+    },
+  ]);
 
   return (
     <>
@@ -46,10 +63,14 @@ const CandidateOpportunityList = ({
           onClick={() => {
             openModal(
               <ModalEdit
-                title={"Ajouter une offre d'emploi"}
-                description="Afin de mieux suivre vos processus de recrutement, vous pouvez ajouter les offres auxquelles vous candidatez en plus des offres déjà présentes sur LinkedOut"
+                title={"Ajouter une offre d'emploi externe à LinkedOut"}
+                description="J'ai décroché un entretien à l'extérieur : j'informe Linkedout de mes avancées !"
                 submitText="Envoyer"
-                formSchema={formEditExternalOpportunity}
+                formSchema={mutatedSchema}
+                defaultValues={{
+                  candidateId:
+                    user.role === USER_ROLES.COACH ? user.candidat.id : user.id,
+                }}
                 onSubmit={async (fields, closeModal) => {
                   try {
                     await Api.post(`/opportunity/external`, {
@@ -81,7 +102,7 @@ const CandidateOpportunityList = ({
             ratio="0.8"
             className="uk-margin-small-right"
           />
-          Nouvelle offre d&apos;emploi
+          Ajouter une offre externe à LinkedOut
         </Button>
       </HeaderBackoffice>
       <OpportunityList

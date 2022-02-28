@@ -118,7 +118,7 @@ const HeaderConnected = ({ isHome }) => {
         }}
       >
         <ImgProfile />
-        <span className="uk-margin-small-left">Salut {user.firstName}</span>
+        <span className="uk-margin-small-left">Bonjour {user.firstName}</span>
         <IconNoSSR name="triangle-down" />
       </a>
       <Dropdown
@@ -262,7 +262,9 @@ const HeaderConnected = ({ isHome }) => {
             })}
           <li className="uk-nav-header uk-flex uk-flex-middle">
             <ImgProfile />
-            <span className="uk-margin-small-left">Salut {user.firstName}</span>
+            <span className="uk-margin-small-left">
+              Bonjour {user.firstName}
+            </span>
           </li>
           {LINKS_CONNECTED.dropdown.map(
             ({ href, icon, name, onClick }, index) => {

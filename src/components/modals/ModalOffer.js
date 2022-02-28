@@ -153,6 +153,8 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
             formSchema={formEditExternalOpportunity}
             defaultValues={{
               ...offer,
+              candidateId:
+                user.role === USER_ROLES.COACH ? user.candidat.id : user.id,
             }}
             onCancel={() => {
               setIsEditing(false);
@@ -176,7 +178,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
     }
     return (
       <div>
-        <Grid gap="small" between middle eachWidths={['expand', 'auto']}>
+        <Grid gap="small" between middle eachWidths={['expand@m', 'auto@m']}>
           <ModalOfferInfo
             startOfContract={offer.startOfContract}
             isPublic={offer.isPublic}
@@ -190,26 +192,33 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
             endOfContract={offer.endOfContract}
             offerId={offer.id}
           />
-          <div>
-            <Grid eachWidths={['expand', 'auto']} row middle>
-              {loadingStatus && <div data-uk-spinner="" />}
-              <Select
-                id="modal-offer-status"
-                title="Statut"
-                name="status"
-                placeholder="statut"
-                options={mutatedOfferStatus}
-                value={status}
-                onChange={async (event) => {
-                  setLoadingStatus(true);
-                  const { userOpportunity } = offer;
-                  await updateOpportunityUser({
-                    ...userOpportunity,
-                    status: Number(event.target.value),
-                  });
-                  setLoadingStatus(false);
-                }}
-              />
+          <div className="uk-flex uk-flex-column uk-flex-bottom">
+            <Grid
+              className="uk-flex-right uk-flex-row"
+              eachWidths={['auto', 'auto']}
+              row
+              middle
+            >
+              <>
+                {loadingStatus && <div data-uk-spinner="" />}
+                <Select
+                  id="modal-offer-status"
+                  title="Statut"
+                  name="status"
+                  placeholder="statut"
+                  options={mutatedOfferStatus}
+                  value={status}
+                  onChange={async (event) => {
+                    setLoadingStatus(true);
+                    const { userOpportunity } = offer;
+                    await updateOpportunityUser({
+                      ...userOpportunity,
+                      status: Number(event.target.value),
+                    });
+                    setLoadingStatus(false);
+                  }}
+                />
+              </>
             </Grid>
             <List className="uk-iconnav uk-flex uk-flex-right uk-flex-middle">
               {loadingIcon && (
@@ -275,16 +284,16 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                 {offer.company}
               </OfferInfoContainer>
               {offer.recruiterFirstName && offer.recruiterName && (
-                <OfferInfoContainer icon="user" title="Recruteur">
+                <OfferInfoContainer icon="user" title="Personne à contacter">
                   <span>
                     {offer.recruiterFirstName} {offer.recruiterName}
                   </span>
-                  <span className="uk-text-muted">
+                  <span className="uk-text-meta">
                     {offer.recruiterPosition}
                   </span>
                   <SimpleLink
                     href={`mailto:${offer.recruiterMail}`}
-                    className="uk-link-muted"
+                    className="uk-text-meta uk-text-muted uk-flex uk-flex-middle"
                     isExternal
                     newTab
                   >
@@ -354,7 +363,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
           <Textarea
             id="modal-offer-comment"
             name="modal-offer-comment"
-            title="Ecrivez un commentaire à propos de cette opportunité..."
+            title="Ecrivez vos commentaires à propos de cette offre. Ceux-ci ne sont pas envoyés au recruteur."
             type="text"
             value={noteBuffer}
             onChange={(e) => {

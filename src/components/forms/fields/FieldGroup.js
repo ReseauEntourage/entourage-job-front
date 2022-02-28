@@ -4,7 +4,7 @@ import { Grid } from 'src/components/utils';
 
 const FieldGroup = ({ title, fields, childWidths }) => {
   return (
-    <div className="uk-form-controls">
+    <div>
       {title ? (
         <p
           className="uk-form-label"
@@ -21,10 +21,19 @@ const FieldGroup = ({ title, fields, childWidths }) => {
         </p>
       ) : null}
       <Grid
+        className="uk-visible@m"
         eachWidths={childWidths}
         childWidths={!childWidths ? [`1-${fields.length}`] : undefined}
         middle
         gap="small"
+        items={fields}
+      />
+      <Grid
+        className="uk-hidden@m"
+        eachWidths={childWidths}
+        childWidths={!childWidths ? [`1-${fields.length}`] : undefined}
+        middle
+        gap="collapse"
         items={fields}
       />
     </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Api from 'src/Axios';
 import schema, {
-  adminMutation,
+  adminMutations,
 } from 'src/components/forms/schema/formEditOpportunity';
 import FormWithValidation from 'src/components/forms/FormWithValidation';
 import { Button, Grid, SimpleLink } from 'src/components/utils';
@@ -84,7 +84,16 @@ const ModalOfferAdmin = ({
         },
       ],
     },
-    adminMutation,
+    {
+      fieldId: 'locations',
+      props: [
+        {
+          propName: 'component',
+          value: 'fieldgroup',
+        },
+      ],
+    },
+    ...adminMutations,
   ]);
 
   const updateOpportunity = async (opportunity, isExternal) => {
@@ -95,7 +104,6 @@ const ModalOfferAdmin = ({
         `/opportunity/${isExternal ? 'external' : ''}`,
         opportunity
       );
-      console.log(data);
       setOffer({
         ...data,
         userOpportunity: isExternal
@@ -172,6 +180,7 @@ const ModalOfferAdmin = ({
               formSchema={formEditExternalOpportunity}
               defaultValues={{
                 ...offer,
+                candidateId: offer.userOpportunity[0].UserId,
               }}
               onCancel={() => {
                 setIsEditing(false);
@@ -240,7 +249,7 @@ const ModalOfferAdmin = ({
     // view
     return (
       <div>
-        <Grid gap="small" between middle eachWidths={['expand', 'auto']}>
+        <Grid gap="small" between middle eachWidths={['expand@m', 'auto@m']}>
           <ModalOfferInfo
             startOfContract={offer.startOfContract}
             isPublic={offer.isPublic}
@@ -253,7 +262,7 @@ const ModalOfferAdmin = ({
             endOfContract={offer.endOfContract}
             offerId={offer.id}
           />
-          <div>
+          <div className="uk-flex uk-flex-column uk-flex-bottom">
             <div className="uk-margin-small-top uk-margin-small-bottom">
               {(() => {
                 let className = ' uk-label-warning';
@@ -306,14 +315,14 @@ const ModalOfferAdmin = ({
               {offer.company}
             </OfferInfoContainer>
             {offer.recruiterFirstName && offer.recruiterName && (
-              <OfferInfoContainer icon="user" title="Recruteur">
+              <OfferInfoContainer icon="user" title="Personne à contacter">
                 <span>
                   {offer.recruiterFirstName} {offer.recruiterName}
                 </span>
-                <span className="uk-text-muted">{offer.recruiterPosition}</span>
+                <span className="uk-text-meta">{offer.recruiterPosition}</span>
                 <SimpleLink
                   href={`mailto:${offer.recruiterMail}`}
-                  className="uk-link-muted"
+                  className="uk-text-meta uk-text-muted uk-flex uk-flex-middle"
                   isExternal
                   newTab
                 >
@@ -325,7 +334,7 @@ const ModalOfferAdmin = ({
                 </SimpleLink>
                 <SimpleLink
                   href={`tel:${offer.recruiterPhone}`}
-                  className="uk-link-muted"
+                  className="uk-text-meta uk-text-muted uk-flex uk-flex-middle"
                   isExternal
                   newTab
                 >
@@ -495,46 +504,50 @@ const ModalOfferAdmin = ({
           </Grid>
         </Grid>
         <div className="uk-modal-footer uk-padding-remove-horizontal uk-padding-remove-bottom">
-          {!offer.isArchived ? (
-            <Button
-              style="default"
-              onClick={async () => {
-                await updateOpportunity({
-                  ...offer,
-                  isValidated: false,
-                  isArchived: true,
-                });
-              }}
-            >
-              Refuser l&apos;offre
-            </Button>
-          ) : (
-            <Button
-              style="default"
-              onClick={async () => {
-                await updateOpportunity({
-                  ...offer,
-                  isValidated: false,
-                  isArchived: false,
-                });
-              }}
-            >
-              Retirer l&apos;offre des archives
-            </Button>
-          )}
-          {!offer.isValidated && (
-            <Button
-              style="primary"
-              onClick={async () => {
-                await updateOpportunity({
-                  ...offer,
-                  isValidated: true,
-                  isArchived: false,
-                });
-              }}
-            >
-              Valider l&apos;offre
-            </Button>
+          {!offer.isExternal && (
+            <>
+              {!offer.isArchived ? (
+                <Button
+                  style="default"
+                  onClick={async () => {
+                    await updateOpportunity({
+                      ...offer,
+                      isValidated: false,
+                      isArchived: true,
+                    });
+                  }}
+                >
+                  Refuser l&apos;offre
+                </Button>
+              ) : (
+                <Button
+                  style="default"
+                  onClick={async () => {
+                    await updateOpportunity({
+                      ...offer,
+                      isValidated: false,
+                      isArchived: false,
+                    });
+                  }}
+                >
+                  Retirer l&apos;offre des archives
+                </Button>
+              )}
+              {!offer.isValidated && (
+                <Button
+                  style="primary"
+                  onClick={async () => {
+                    await updateOpportunity({
+                      ...offer,
+                      isValidated: true,
+                      isArchived: false,
+                    });
+                  }}
+                >
+                  Valider l&apos;offre
+                </Button>
+              )}
+            </>
           )}
         </div>
       </div>
