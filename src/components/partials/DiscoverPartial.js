@@ -31,6 +31,7 @@ const DiscoverPartial = ({ style }) => {
         items={cvs.map((cv) => {
           return (
             <CandidatCard
+              businessLines={cv.businessLines}
               url={cv.user && cv.user.url}
               imgSrc={
                 (cv.urlImg && process.env.AWSS3_CDN_URL + cv.urlImg) ||

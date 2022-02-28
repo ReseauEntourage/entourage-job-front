@@ -17,8 +17,12 @@ import TAGS from 'src/constants/tags';
 import moment from 'moment';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
-import { AMBITIONS_PREFIXES } from 'src/constants';
-import { sortByOrder } from 'src/utils';
+import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants';
+import {
+  buildBusinessLineForSentence,
+  findConstantFromValue,
+  sortByOrder,
+} from 'src/utils';
 
 const CandidatCard = ({
   url,
@@ -26,6 +30,7 @@ const CandidatCard = ({
   imgAlt,
   firstName,
   ambitions,
+  businessLines,
   locations,
   skills,
   catchphrase,
@@ -52,9 +57,6 @@ const CandidatCard = ({
   const sharedDescription = `La précarité n'exclut pas les compétences\xa0! Avec LinkedOut, aidons ${firstName} à retrouver un emploi en lui proposant un job ou en diffusant son CV\xa0!`;
   const title = `LinkedOut\xa0: Aidez ${firstName} à retrouver un emploi`;
 
-  const sortedAmbitions =
-    ambitions && ambitions.length > 0 ? sortByOrder(ambitions) : null;
-
   const { incrementSharesCount } = useContext(SharesCountContext);
 
   const openNewsletterModal = () => {
@@ -78,6 +80,18 @@ const CandidatCard = ({
     as: `/cv/${url}?hideShareOptions=${!showShareOptions}`,
     href: `/cv/[url]?hideShareOptions=${!showShareOptions}`,
   };
+
+  const sortedAmbitions =
+    ambitions && ambitions.length > 0 ? sortByOrder(ambitions) : null;
+
+  const sortedBusinessLines =
+    businessLines && businessLines.length > 0
+      ? sortByOrder(businessLines)
+      : null;
+
+  const isNewCareerPath = sortedBusinessLines?.every(({ order }) => {
+    return order > -1;
+  });
 
   return (
     <div className="uk-card uk-card-small uk-card-body uk-card-default uk-card-hover uk-text-small uk-text-left">
@@ -195,46 +209,40 @@ const CandidatCard = ({
                     Je souhaite
                     <br />
                     travailler{' '}
-                    {sortedAmbitions[0].prefix || AMBITIONS_PREFIXES[0].label}
+                    {!isNewCareerPath && sortedAmbitions[0].prefix
+                      ? sortedAmbitions[0].prefix
+                      : AMBITIONS_PREFIXES[0].label}
                     &nbsp;:
                   </p>
                   <Grid column gap="collapse" childWidths={['1-1']}>
-                    {sortedAmbitions.slice(0, 2).map(({ name }, index) => {
-                      return (
-                        <span
-                          key={index}
-                          className="uk-label uk-text-lowercase ent-card-ambition"
-                        >
-                          {name}
-                        </span>
-                      );
-                    })}
+                    {isNewCareerPath
+                      ? sortedBusinessLines
+                          .slice(0, 2)
+                          .map(({ name }, index) => {
+                            return (
+                              <span
+                                key={index}
+                                className="uk-label uk-text-lowercase ent-card-ambition"
+                              >
+                                {buildBusinessLineForSentence(
+                                  findConstantFromValue(name, BUSINESS_LINES)
+                                )}
+                              </span>
+                            );
+                          })
+                      : sortedAmbitions.slice(0, 2).map(({ name }, index) => {
+                          return (
+                            <span
+                              key={index}
+                              className="uk-label uk-text-lowercase ent-card-ambition"
+                            >
+                              {name}
+                            </span>
+                          );
+                        })}
                   </Grid>
                 </div>
               )}
-              {/* {businessLines && businessLines.length > 0 && (
-                <div style={{
-                  marginTop: 5,
-                  marginBottom: 5
-                }}>
-                  <p
-                    style={{ fontSize: '0.775rem' }}
-                    className="uk-margin-remove uk-margin-small-top"
-                  >
-                    Secteurs d&apos;activité&nbsp;:
-                  </p>
-                  <Grid column gap="collapse" childWidths={['1-1']}>
-                    {businessLines.slice(0, 2).map((text, index) => (
-                      <span
-                        key={index}
-                        className="uk-label uk-text-lowercase ent-card-ambition"
-                      >
-                        {text}
-                      </span>
-                    ))}
-                  </Grid>
-                </div>
-              )} */}
               {locations && locations.length > 0 && (
                 <Grid
                   column
@@ -388,6 +396,12 @@ CandidatCard.propTypes = {
           return value;
         })
       ),
+    })
+  ).isRequired,
+  businessLines: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      order: PropTypes.number.isRequired,
     })
   ).isRequired,
   locations: PropTypes.arrayOf(PropTypes.string).isRequired,

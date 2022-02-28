@@ -1,4 +1,5 @@
-import { CONTRACTS, OFFER_STATUS } from 'src/constants';
+import { OFFER_STATUS } from 'src/constants';
+import _ from 'lodash';
 
 const findOfferStatus = (status, isPublic, isRecommended) => {
   const currentStatus = OFFER_STATUS.find((oStatus) => {
@@ -30,10 +31,32 @@ const findOfferStatus = (status, isPublic, isRecommended) => {
   return { label: 'Non défini', color: 'muted' };
 };
 
-const findContractType = (type) => {
-  return CONTRACTS.find((contract) => {
-    return contract.value === type;
-  });
+const findConstantFromValue = (valToFind, constantsToFindFrom) => {
+  return (
+    constantsToFindFrom.find(({ value }) => {
+      return value === valToFind;
+    }) || {
+      label: valToFind,
+      value: valToFind,
+    }
+  );
 };
 
-export { findOfferStatus, findContractType };
+const getValueFromFormField = (fieldValue) => {
+  if (
+    _.isArray(fieldValue) &&
+    _.every(fieldValue, (fieldVal) => {
+      return _.isObject(fieldVal) && _.has(fieldVal, 'value');
+    })
+  ) {
+    return fieldValue.map(({ value }) => {
+      return value;
+    });
+  }
+  if (_.isObject(fieldValue) && _.has(fieldValue, 'value')) {
+    return fieldValue.value;
+  }
+  return fieldValue;
+};
+
+export { findOfferStatus, findConstantFromValue, getValueFromFormField };

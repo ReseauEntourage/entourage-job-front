@@ -6,10 +6,11 @@ import schemaUsefulInformation from 'src/components/forms/schema/formEditUsefulI
 import ButtonIcon from 'src/components/utils/ButtonIcon';
 import { IconNoSSR } from 'src/components/utils/Icon';
 
-import { getAllFilters, mutateFormSchema } from 'src/utils';
+import { findConstantFromValue, mutateFormSchema } from 'src/utils';
 
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { openModal } from 'src/components/modals/Modal';
+import { CONTRACTS } from 'src/constants';
 
 const InfoProfileCard = ({
   contracts,
@@ -38,7 +39,9 @@ const InfoProfileCard = ({
       props: [
         {
           propName: 'options',
-          value: getAllFilters(DEPARTMENTS_FILTERS, userZone),
+          value: DEPARTMENTS_FILTERS.filter((filter) => {
+            return !filter.zone || filter.zone === userZone;
+          }),
         },
       ],
     },
@@ -64,17 +67,25 @@ const InfoProfileCard = ({
                   title="Édition - Informations utiles"
                   formSchema={mutatedSchema}
                   defaultValues={{
-                    locations,
                     availability,
                     transport,
-                    contracts,
+                    contracts: contracts.map((contract) => {
+                      return findConstantFromValue(contract, CONTRACTS);
+                    }),
                     languages,
                     email,
                     phone,
                     address,
+                    locations: locations.map((location) => {
+                      return findConstantFromValue(
+                        location,
+                        DEPARTMENTS_FILTERS
+                      );
+                    }),
                   }}
                   onSubmit={async (fields, closeModal) => {
                     closeModal();
+                    console.log(fields);
                     await onChange({
                       ...fields,
                     });
@@ -101,13 +112,22 @@ const InfoProfileCard = ({
         <Grid row gap="small" middle>
           <IconNoSSR name="file-text" style={{ width: 20 }} />
           {contracts && contracts.length > 0
-            ? contracts.join(' / ')
+            ? contracts
+                .map((contract) => {
+                  return findConstantFromValue(contract, CONTRACTS).label;
+                })
+                .join(' / ')
             : 'Type de contrat recherché non renseigné'}
         </Grid>
         <Grid row gap="small" middle>
           <IconNoSSR name="location" style={{ width: 20 }} />
           {locations && locations.length > 0
-            ? locations.join(' / ')
+            ? locations
+                .map((location) => {
+                  return findConstantFromValue(location, DEPARTMENTS_FILTERS)
+                    .label;
+                })
+                .join(' / ')
             : 'Localisations non renseignées'}
         </Grid>
         <Grid row gap="small" middle>

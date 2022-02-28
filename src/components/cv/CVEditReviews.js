@@ -68,7 +68,7 @@ const CVEditReviews = ({ reviews, onChange }) => {
                             <ModalEdit
                               title="Édition - Ils me recommandent"
                               formSchema={schemaTestimonial}
-                              defaultValues={review}
+                              defaultValues={{ ...review }}
                               onSubmit={async (fields, closeModal) => {
                                 closeModal();
                                 sortedReviews[i] = fields;

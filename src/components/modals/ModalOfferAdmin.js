@@ -12,16 +12,23 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 import { List, OfferInfoContainer } from 'src/components/modals/ModalOffer';
 
 import {
+  findConstantFromValue,
   findOfferStatus,
   formatParagraph,
   mutateDefaultOfferStatus,
   mutateFormSchema,
+  sortByOrder,
 } from 'src/utils';
-import { EXTERNAL_OFFERS_ORIGINS, OFFER_STATUS } from 'src/constants';
+import {
+  BUSINESS_LINES,
+  EXTERNAL_OFFERS_ORIGINS,
+  OFFER_STATUS,
+} from 'src/constants';
 import ModalOfferInfo from 'src/components/modals/ModalOfferInfo';
 import ModalGeneric from 'src/components/modals/ModalGeneric';
 import { useModalContext } from 'src/components/modals/Modal';
-import formEditExternalOpportunity from 'src/components/forms/schema/formEditExternalOpportunity';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import formEditExternalOpportunitySchema from 'src/components/forms/schema/formEditExternalOpportunity';
 
 const getCandidatesToShowInInput = (offer) => {
   if (offer.userOpportunity && offer.userOpportunity.length > 0) {
@@ -95,6 +102,35 @@ const ModalOfferAdmin = ({
     },
     ...adminMutations,
   ]);
+
+  const mutatedExternalOfferSchema = mutateFormSchema(
+    formEditExternalOpportunitySchema,
+    [
+      {
+        fieldId: 'businessLines',
+        props: [
+          {
+            propName: 'hidden',
+            value: false,
+          },
+          {
+            propName: 'disabled',
+            value: false,
+          },
+        ],
+      },
+    ]
+  );
+
+  const sortedBusinessLines =
+    offer.businessLines && offer.businessLines.length > 0
+      ? sortByOrder(offer.businessLines)
+      : null;
+
+  const defaultBusinessLines =
+    sortedBusinessLines?.map((businessLineObject) => {
+      return findConstantFromValue(businessLineObject.name, BUSINESS_LINES);
+    }) || undefined;
 
   const updateOpportunity = async (opportunity, isExternal) => {
     setError(false);
@@ -177,10 +213,15 @@ const ModalOfferAdmin = ({
           <h3>Modification de l&apos;offre d&apos;emploi</h3>
           {offer.isExternal ? (
             <FormWithValidation
-              formSchema={formEditExternalOpportunity}
+              formSchema={mutatedExternalOfferSchema}
               defaultValues={{
                 ...offer,
                 candidateId: offer.userOpportunity[0].UserId,
+                businessLines: defaultBusinessLines,
+                department: findConstantFromValue(
+                  offer.department,
+                  DEPARTMENTS_FILTERS
+                ),
               }}
               onCancel={() => {
                 setIsEditing(false);
@@ -192,6 +233,14 @@ const ModalOfferAdmin = ({
                   endOfContract: fields.endOfContract || null,
                   candidateId: offer.userOpportunity[0].UserId,
                   id: offer.id,
+                  businessLines: fields.businessLines
+                    ? fields.businessLines.map((businessLine, index) => {
+                        return {
+                          name: businessLine,
+                          order: index,
+                        };
+                      })
+                    : [],
                 };
                 await updateOpportunity(tmpOpportunity, true);
                 setIsEditing(false);
@@ -204,6 +253,11 @@ const ModalOfferAdmin = ({
               defaultValues={{
                 ...offer,
                 candidatesId: getCandidatesToShowInInput(offer),
+                businessLines: defaultBusinessLines,
+                department: findConstantFromValue(
+                  offer.department,
+                  DEPARTMENTS_FILTERS
+                ),
               }}
               onCancel={() => {
                 setIsEditing(false);
@@ -221,6 +275,14 @@ const ModalOfferAdmin = ({
                         ? candidateId.value
                         : candidateId;
                     }) || [],
+                  businessLines: fields.businessLines
+                    ? fields.businessLines.map((businessLine, index) => {
+                        return {
+                          name: businessLine,
+                          order: index,
+                        };
+                      })
+                    : [],
                 };
                 await updateOpportunity(tmpOpportunity);
                 setIsEditing(false);
@@ -492,10 +554,12 @@ const ModalOfferAdmin = ({
             )}
             {offer.businessLines && (
               <Grid gap="small">
-                {offer.businessLines.map((businessLine, index) => {
+                {offer.businessLines.map(({ name }, index) => {
                   return (
                     <Button key={index} disabled>
-                      <span style={{ color: '#666' }}>{businessLine}</span>
+                      <span style={{ color: '#666' }}>
+                        {findConstantFromValue(name, BUSINESS_LINES).label}
+                      </span>
                     </Button>
                   );
                 })}
@@ -563,6 +627,7 @@ const ModalOfferAdmin = ({
   // Modal
   return (
     <ModalGeneric
+      fullWidth
       className={className}
       onClose={(closeModal) => {
         if (isEditing) {

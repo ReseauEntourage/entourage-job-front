@@ -1,7 +1,8 @@
 import moment from 'moment';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { findContractType } from 'src/utils';
+import { findConstantFromValue } from 'src/utils';
+import { CONTRACTS } from 'src/constants';
 
 const ContractLabel = ({ contract, endOfContract, startOfContract }) => {
   if (contract) {
@@ -27,7 +28,7 @@ const ContractLabel = ({ contract, endOfContract, startOfContract }) => {
 
     return (
       <div className="uk-text-muted">
-        {findContractType(contract)?.label}
+        {findConstantFromValue(contract, CONTRACTS)?.label}
         {dates}
       </div>
     );

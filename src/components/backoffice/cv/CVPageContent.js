@@ -67,11 +67,17 @@ ModalPreview.propTypes = {
         ),
       })
     ),
+    businessLines: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        order: PropTypes.number.isRequired,
+      })
+    ).isRequired,
     languages: PropTypes.arrayOf(PropTypes.string),
     transport: PropTypes.string,
     skills: PropTypes.arrayOf(PropTypes.string),
     passions: PropTypes.arrayOf(PropTypes.string),
-    businessLines: PropTypes.arrayOf(PropTypes.string),
+
     reviews: PropTypes.arrayOf(PropTypes.string),
     experiences: PropTypes.arrayOf(PropTypes.string),
     status: PropTypes.string,
@@ -182,7 +188,13 @@ const CVPageContent = ({ candidatId }) => {
       // Use hash to reload image if an update is done
       const previewHash = Date.now();
       setImageUrl(
-        `${process.env.AWSS3_URL}${process.env.AWSS3_IMAGE_DIRECTORY}${cv.UserId}.${cv.status}.jpg?${previewHash}`
+        `${process.env.AWSS3_URL}${process.env.AWSS3_IMAGE_DIRECTORY}${
+          cv.UserId
+        }.${
+          cv.status === CV_STATUS.Draft.value
+            ? CV_STATUS.Progress.value
+            : cv.status
+        }.jpg?${previewHash}`
       );
     }
   }, [cv, previewGenerating]);

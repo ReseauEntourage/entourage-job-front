@@ -1,8 +1,8 @@
 import { BUSINESS_LINES, CONTRACTS, USER_ROLES } from 'src/constants';
-import { FORMATTED_DEPARTMENTS } from 'src/constants/departements';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import Api from 'src/Axios';
 import moment from 'moment';
-import { findContractType } from 'src/utils';
+import { findConstantFromValue, getValueFromFormField } from 'src/utils';
 
 export default {
   id: 'form-offer',
@@ -21,7 +21,7 @@ export default {
       dynamicTitle: (getValue) => {
         return getValue('isPublic') === true
           ? "Souhaitez-vous suggérer l'offre à certains candidats ?"
-          : "Renseignez le(s) candidat(s) à qui adresser l'offre";
+          : "Renseignez le(s) candidat(s) à qui adresser l'offre*";
       },
       placeholder: 'Tapez un candidat',
       component: 'select-request-async',
@@ -113,11 +113,13 @@ export default {
     {
       id: 'businessLines',
       name: 'businessLines',
-      title: "Secteur d'activité*",
+      title: "Secteur d'activité",
       placeholder: "Sélectionnez les secteurs d'activité",
       component: 'select-request',
       isMulti: true,
-      options: BUSINESS_LINES,
+      options: BUSINESS_LINES.sort(({ label: labelA }, { label: labelB }) => {
+        return labelA.localeCompare(labelB);
+      }),
       hidden: true,
       disabled: true,
     },
@@ -133,7 +135,7 @@ export default {
           name: 'department',
           title: 'Département du lieu de travail*',
           component: 'select-request',
-          options: FORMATTED_DEPARTMENTS,
+          options: DEPARTMENTS_FILTERS,
         },
         {
           id: 'address',
@@ -192,7 +194,10 @@ export default {
           component: 'datepicker',
           min: moment().format('YYYY-MM-DD'),
           disable: (getValue) => {
-            const contract = findContractType(getValue('contract'));
+            const contract = findConstantFromValue(
+              getValue('contract'),
+              CONTRACTS
+            );
             return !contract || !contract.end;
           },
         },
@@ -282,7 +287,9 @@ export default {
       field: 'candidatesId',
       args: [],
       method: (fieldValue, state) => {
-        return !fieldValue && state.isPublic === false;
+        return (
+          (!fieldValue || fieldValue.length === 0) && state.isPublic === false
+        );
       },
       validWhen: false,
       message: 'Obligatoire si offre privée',
@@ -369,7 +376,7 @@ export default {
       ],
       validWhen: false,
       message: 'Obligatoire',
-    }, */
+    },
     {
       field: 'recruiterPhone',
       method: 'isLength',
@@ -382,7 +389,7 @@ export default {
       validWhen: true,
       message: 'Invalide',
     },
-    /*  {
+    {
       field: 'businessLines',
       method: 'isEmpty',
       args: [
@@ -408,7 +415,8 @@ export default {
                   return Object.keys(fields).includes(key);
                 }) ||
                 Object.keys(fields).some((key) => {
-                  return !fields[key]?.trim();
+                  const value = getValueFromFormField(fields[key]);
+                  return !value?.trim();
                 })
               );
             }))

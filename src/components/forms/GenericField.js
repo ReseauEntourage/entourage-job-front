@@ -37,41 +37,11 @@ const GenericField = ({
     onChange(events);
   };
 
-  const parseValueToUseSelect = () => {
-    if (data.isMulti && Array.isArray(value) && value.length > 0) {
-      return value.map((item) => {
-        return {
-          value: item,
-          label: item,
-        };
-      });
-    }
-    if (typeof value === 'string') {
-      return {
-        value,
-        label: value,
-      };
-    }
-    if (value) {
-      return value;
-    }
-    return null;
-  };
-
   const parseValueToReturnSelect = (event) => {
-    let valueToReturn = null;
-    if (data.isMulti && Array.isArray(event) && event.length > 0) {
-      valueToReturn = event.map((item) => {
-        return item.value;
-      });
-    } else if (event && event.value) {
-      valueToReturn = event.value;
-    }
-
     onChangeCustom({
       target: {
         name: data.name,
-        value: valueToReturn,
+        value: event,
         type: data.type,
       },
     });
@@ -289,9 +259,10 @@ const GenericField = ({
           id={`${formId}-${data.id}`}
           isMulti={data.isMulti}
           name={data.name}
-          value={parseValueToUseSelect()}
+          value={value}
           options={data.options}
           className="basic-multi-select"
+          isClearable
           classNamePrefix="select"
           placeholder={data.placeholder || 'Sélectionnez...'}
           noOptionsMessage={
@@ -339,9 +310,10 @@ const GenericField = ({
           formatCreateLabel={(userInput) => {
             return `Créer "${userInput}"`;
           }}
+          isClearable
           isMulti={data.isMulti}
           name={data.name}
-          value={parseValueToUseSelect()}
+          value={value}
           options={data.options}
           className="basic-multi-select"
           classNamePrefix="select"
