@@ -27,7 +27,18 @@ export default class FormValidator {
         // match the rule.validWhen property, then modify the
         // validation object for the field and set the isValid
         // field to false
-        if (validationMethod(fieldValue, ...args, state) !== rule.validWhen) {
+
+        let isValid;
+        try {
+          isValid =
+            validationMethod(fieldValue, ...args, state) !== rule.validWhen;
+        } catch (e) {
+          console.log(`Stringify validation fallback, reason: '${e.message}'`);
+          isValid =
+            validationMethod(fieldValue.toString(), ...args, state) !==
+            rule.validWhen;
+        }
+        if (isValid) {
           validation[rule.field] = {
             isInvalid: true,
             message: rule.message,

@@ -282,7 +282,9 @@ export default {
       field: 'candidatesId',
       args: [],
       method: (fieldValue, state) => {
-        return !fieldValue && state.isPublic === false;
+        return (
+          (!fieldValue || fieldValue.length === 0) && state.isPublic === false
+        );
       },
       validWhen: false,
       message: 'Obligatoire si offre privée',
