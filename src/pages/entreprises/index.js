@@ -343,6 +343,16 @@ const Entreprises = ({ nbPublishedCVs }) => {
           </Button>
         </div>
       </Section>
+      <HireCTA />
+      <WhatItBringsToCompanies />
+      <Section style="muted">
+        <h2 className="uk-text-center uk-text-bold">
+          Ils ont <span className="uk-text-primary">déjà recruté</span>
+        </h2>
+        <LogoList logos={PARTNERS.HIRED} />
+      </Section>
+      <Reviews />
+      <HowToCommitDifferently />
       <NewsletterPartial style="default" />
     </Layout>
   );

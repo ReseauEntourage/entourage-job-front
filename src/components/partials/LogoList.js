@@ -54,6 +54,8 @@ Logo.defaultProps = {
 };
 
 const LogoList = ({ logos, carousel }) => {
+  const logosPerLine = Math.floor(logos.length / 3 + 1);
+
   if (carousel) {
     return (
       <Carousel containerClasses="uk-child-width-auto" pagination={false}>
@@ -72,7 +74,7 @@ const LogoList = ({ logos, carousel }) => {
   }
   return (
     <Grid
-      childWidths={[`1-${Math.floor(logos.length / 3 + 1)}@m`, 'auto']}
+      childWidths={[`1-${logosPerLine <= 3 ? 3 : logosPerLine}@m`, 'auto']}
       match
       middle
       center
