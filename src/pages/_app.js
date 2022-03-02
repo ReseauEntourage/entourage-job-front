@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
-import UIkit from 'uikit';
+
+// use modified version of UIkit because of bug where we can't touch scroll on Offcanvas
+import UIkit from 'src/styles/dist/js/uikit-fixed';
 import Icons from 'src/styles/dist/js/uikit-icons';
 
 import 'src/styles/dist/css/uikit.entourage.min.css';
@@ -54,8 +56,10 @@ const Container = ({ Component, pageProps, err }) => {
 
   return (
     <div
-      style={{ height: loading ? '100vh' : 'inherit' }}
-      className="uk-inline uk-width-expand uk-overflow-hidden"
+      style={{ height: '100vh' }}
+      className={`uk-inline uk-width-expand ${
+        loading ? 'uk-overflow-hidden' : 'uk-overflow-auto'
+      }`}
     >
       <SplashScreen loading={loading} fading={fading} />
       <Component {...pageProps} err={err} />

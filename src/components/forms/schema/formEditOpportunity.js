@@ -117,9 +117,7 @@ export default {
       placeholder: "Sélectionnez les secteurs d'activité",
       component: 'select-request',
       isMulti: true,
-      options: BUSINESS_LINES.sort(({ label: labelA }, { label: labelB }) => {
-        return labelA.localeCompare(labelB);
-      }),
+      options: BUSINESS_LINES,
       hidden: true,
       disabled: true,
     },

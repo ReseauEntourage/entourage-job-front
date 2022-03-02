@@ -23,99 +23,6 @@ const OFFER_STATUS = [
   { value: 4, label: 'Refus après entretien', color: 'danger' },
 ];
 
-/*
-const OLD_BUSINESS_LINES = [
-  {
-    label: 'Accueil / Administratif / Gestion / Comptabilité',
-    value: 'Accueil / Administratif / Gestion / Comptabilité',
-  },
-  {
-    label: 'Artisanat / Art',
-    value: 'Artisanat / Art',
-  },
-  {
-    label: 'Associatif',
-    value: 'Associatif',
-  },
-  {
-    label: 'Bâtiment',
-    value: 'Bâtiment',
-  },
-  {
-    label: 'Communication / Marketing / Information',
-    value: 'Communication / Marketing / Information',
-  },
-  {
-    label: 'Électronique',
-    value: 'Électronique',
-  },
-  {
-    label: 'Entretien',
-    value: 'Entretien',
-  },
-  {
-    label: 'Espaces Verts / Agriculture / Maraîchage',
-    value: 'Espaces Verts / Agriculture / Maraîchage',
-  },
-  {
-    label: 'Grande distribution',
-    value: 'Grande distribution',
-  },
-  {
-    label: 'Hôtellerie / Tourisme',
-    value: 'Hôtellerie / Tourisme',
-  },
-  {
-    label: 'Informatique',
-    value: 'Informatique',
-  },
-  {
-    label: 'Logistique / Préparation de commande / Magasinier',
-    value: 'Logistique / Préparation de commande / Magasinier',
-  },
-  {
-    label: 'Maintenance / Manutention',
-    value: 'Maintenance / Manutention',
-  },
-  {
-    label: 'Mécanique / Métallurgie',
-    value: 'Mécanique / Métallurgie',
-  },
-  {
-    label: 'Production',
-    value: 'Production',
-  },
-  {
-    label: 'Restauration',
-    value: 'Restauration',
-  },
-  {
-    label: 'Santé / Aide à la personne / Action sociale',
-    value: 'Santé / Aide à la personne / Action sociale',
-  },
-  {
-    label: 'Sécurité',
-    value: 'Sécurité',
-  },
-  {
-    label: 'Services aux particuliers / Garde d’enfants',
-    value: 'Services aux particuliers / Garde d’enfants',
-  },
-  {
-    label: 'Traitement des déchets / Eau',
-    value: 'Traitement des déchets / Eau',
-  },
-  {
-    label: 'Transports / Livraisons',
-    value: 'Transports / Livraisons',
-  },
-  {
-    label: 'Vente (conseil client, caisse …)',
-    value: 'Vente (conseil client, caisse …)',
-  },
-];
-*/
-
 const BUSINESS_LINES = [
   {
     label: 'Logistique et approvisionnement',
@@ -207,7 +114,9 @@ const BUSINESS_LINES = [
     value: 'cad',
     prefix: 'le ',
   }, */
-];
+].sort(({ label: labelA }, { label: labelB }) => {
+  return labelA.localeCompare(labelB);
+});
 
 const CV_STATUS = {
   Published: {
@@ -294,9 +203,7 @@ const CV_FILTERS_DATA = [
   },
   {
     key: 'businessLines',
-    constants: BUSINESS_LINES.sort(({ label: labelA }, { label: labelB }) => {
-      return labelA.localeCompare(labelB);
-    }),
+    constants: BUSINESS_LINES,
     title: 'Métiers',
     tag: TAGS.PAGE_GALERIE_FILTRE_SECTEURS_CLIC,
   },
@@ -323,6 +230,12 @@ const OPPORTUNITY_FILTERS_DATA = [
       return dept.zone !== ADMIN_ZONES.HZ;
     }),
     title: 'Département',
+  },
+  {
+    key: 'businessLines',
+    constants: BUSINESS_LINES,
+    title: 'Métiers',
+    tag: TAGS.PAGE_GALERIE_FILTRE_SECTEURS_CLIC,
   },
 ];
 

@@ -19,7 +19,7 @@ const CustomModal = ({ children, closeOnNextRender, className, fullWidth }) => {
       closeTimeoutMS={200}
       style={{
         overlay: {
-          zIndex: 1000,
+          zIndex: 1050,
           backgroundColor: 'rgba(0,0,0,.6)',
           display: 'flex',
           justifyContent: 'center',

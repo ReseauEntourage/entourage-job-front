@@ -345,7 +345,7 @@ const OpportunityList = forwardRef(
       if (restQuery.tag !== prevTag) {
         const initialFiltersConst =
           restQuery.tag === OFFER_ADMIN_FILTERS_DATA[3].tag
-            ? OPPORTUNITY_FILTERS_DATA.slice(1, 3)
+            ? OPPORTUNITY_FILTERS_DATA.slice(1)
             : OPPORTUNITY_FILTERS_DATA;
 
         setFiltersConst(initialFiltersConst);

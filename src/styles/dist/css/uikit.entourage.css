@@ -5639,7 +5639,7 @@ ul.uk-nav-sub {
  * 1. Resolve frame rate issues on devices with lower frame rates by forcing hardware acceleration
  */
 .uk-sticky-fixed {
-  z-index: 980;
+  z-index: 1030;
   box-sizing: border-box;
   margin: 0 !important;
   /* 1 */
@@ -5670,7 +5670,7 @@ ul.uk-nav-sub {
   top: 0;
   bottom: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 1040;
 }
 /*
  * Flip modifier
@@ -5788,7 +5788,7 @@ ul.uk-nav-sub {
  ========================================================================== */
 .uk-offcanvas-close {
   position: absolute;
-  z-index: 1000;
+  z-index: 1040;
   top: 20px;
   right: 20px;
   padding: 5px;
