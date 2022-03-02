@@ -13,11 +13,7 @@ export default {
           name: 'businessLine0',
           title: 'Famille de métier 1*',
           component: 'select-request',
-          options: BUSINESS_LINES.sort(
-            ({ label: labelA }, { label: labelB }) => {
-              return labelA.localeCompare(labelB);
-            }
-          ),
+          options: BUSINESS_LINES,
           isMulti: false,
         },
         {
@@ -45,11 +41,7 @@ export default {
           name: 'businessLine1',
           title: 'Famille de métier 2',
           component: 'select-request',
-          options: BUSINESS_LINES.sort(
-            ({ label: labelA }, { label: labelB }) => {
-              return labelA.localeCompare(labelB);
-            }
-          ),
+          options: BUSINESS_LINES,
           isMulti: false,
         },
         {
