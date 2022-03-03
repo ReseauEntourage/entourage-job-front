@@ -14,7 +14,7 @@ import 'src/components/modals/Modal/Modal.less';
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 
 import React, { useEffect, useState } from 'react';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import * as Sentry from '@sentry/react';
 import UserProvider from 'src/components/store/UserProvider';
 import DataProvider from 'src/components/store/DataProvider';
@@ -58,8 +58,9 @@ const Container = ({ Component, pageProps, err }) => {
     <div
       style={{ height: '100vh' }}
       className={`uk-inline uk-width-expand ${
-        loading ? 'uk-overflow-hidden' : 'uk-overflow-auto'
+        loading ? 'uk-overflow-hidden' : ''
       }`}
+      id="main-container"
     >
       <SplashScreen loading={loading} fading={fading} />
       <Component {...pageProps} err={err} />
@@ -69,6 +70,20 @@ const Container = ({ Component, pageProps, err }) => {
 };
 
 const EntourageApp = ({ Component, pageProps, err }) => {
+  const { events } = useRouter();
+
+  useEffect(() => {
+    const scrollToTop = (url, { shallow }) => {
+      if (!shallow) {
+        document.getElementById('main-container').scrollTo(0, 0);
+      }
+    };
+    events.on('routeChangeComplete', scrollToTop);
+    return () => {
+      events.off('routeChangeComplete', scrollToTop);
+    };
+  }, [events]);
+
   return (
     <Sentry.ErrorBoundary fallback="An error has occurred">
       <SharesCountProvider>
