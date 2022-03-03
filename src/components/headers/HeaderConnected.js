@@ -204,7 +204,9 @@ const HeaderConnected = ({ isHome }) => {
                         {badges[badge] > 0 && (
                           <div>
                             &nbsp;
-                            <div className="uk-badge">{badges[badge]}</div>
+                            <div className="uk-badge uk-margin-small-left">
+                              {badges[badge]}
+                            </div>
                           </div>
                         )}
                       </SimpleLink>

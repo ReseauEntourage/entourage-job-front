@@ -12,7 +12,7 @@ import CandidatHeader from 'src/components/backoffice/cv/CandidatHeader';
 import UserInformationCard from 'src/components/cards/UserInformationCard';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
 import ModalEdit from 'src/components/modals/ModalEdit';
-import { USER_ROLES } from 'src/constants';
+import { OFFER_ADMIN_FILTERS_DATA, USER_ROLES } from 'src/constants';
 import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
 import { mutateFormSchema } from 'src/utils';
 import AdminCandidateOpportunities from 'src/components/opportunities/AdminCandidateOpportunities';
@@ -22,6 +22,8 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 import PropTypes from 'prop-types';
 import { openModal } from 'src/components/modals/Modal';
 import ModalConfirm from 'src/components/modals/ModalConfirm';
+import ErrorMessage from 'src/components/backoffice/cv/ErrorMessage';
+import { useFetchCV } from 'src/hooks/useFetchCV';
 
 const EditUserModal = ({ user, setUser }) => {
   let mutatedSchema = mutateFormSchema(schemaEditUser, [
@@ -205,6 +207,7 @@ EditUserModal.propTypes = {
 
 const User = () => {
   const [user, setUser] = useState(null);
+
   const [loading, setLoading] = useState(true);
 
   const {
@@ -247,12 +250,13 @@ const User = () => {
 
   useEffect(() => {
     if (memberId !== prevId) {
-      setLoading(true);
       getUser();
     } else if (tab === 'parametres') {
       getUser();
     }
   }, [tab, getUser, memberId, prevId]);
+
+  const { cv, setCV, error, loading: cvLoading } = useFetchCV(user);
 
   const deleteUser = async (fields, closeModal) => {
     try {
@@ -271,7 +275,7 @@ const User = () => {
 
   const isCandidat = user && user.candidat && user.role === USER_ROLES.CANDIDAT;
 
-  if (loading || !tab) {
+  if (loading || cvLoading || !tab) {
     return (
       <LayoutBackOffice title="Chargement - Gestion des membres">
         <Section>
@@ -319,19 +323,48 @@ const User = () => {
     );
   }
 
+  // erreur pendant la requete
+  if (error) {
+    return <ErrorMessage error={error} />;
+  }
+
   return (
     <LayoutBackOffice title={`${user.firstName} - Gestion des membres`}>
       <Section>
         <Grid column gap="medium">
-          <SimpleLink
-            href={`/backoffice/admin/membres?role=${user.role}${
-              user.zone ? `&zone=${user.zone}` : ''
-            }`}
-            className="uk-link-reset uk-flex uk-flex-middle"
-          >
-            <IconNoSSR name="chevron-left" />
-            Retour à la liste
-          </SimpleLink>
+          <Grid between eachWidths={['expand@m', 'auto@m']}>
+            <SimpleLink
+              href={`/backoffice/admin/membres?role=${user.role}${
+                user.zone ? `&zone=${user.zone}` : ''
+              }`}
+              className="uk-link-reset uk-flex uk-flex-middle"
+            >
+              <IconNoSSR name="chevron-left" />
+              Retour à la liste
+            </SimpleLink>
+            {cv && (
+              <Button
+                style="muted"
+                href={{
+                  pathname: '/backoffice/admin/offres',
+                  query: {
+                    tag: OFFER_ADMIN_FILTERS_DATA[2].tag,
+                    department: cv.locations,
+                    businessLines: cv.businessLines.map(({ name }) => {
+                      return name;
+                    }),
+                  },
+                }}
+              >
+                Voir les offres qui pourraient intéresser le candidat
+                <IconNoSSR
+                  name="chevron-right"
+                  ratio="0.8"
+                  className="uk-margin-small-left"
+                />
+              </Button>
+            )}
+          </Grid>
           <div>
             <CandidatHeader user={user} showZone />
             <hr className="ent-divier-backoffice uk-margin-medium-top" />
@@ -367,7 +400,11 @@ const User = () => {
             (user.coach ? (
               <div>
                 {tab === 'cv' && (
-                  <CVPageContent candidatId={user.coach.candidat.id} />
+                  <CVPageContent
+                    candidatId={user.coach.candidat.id}
+                    cv={cv}
+                    setCV={setCV}
+                  />
                 )}
                 {tab === 'offres' && (
                   <AdminCandidateOpportunities
@@ -389,7 +426,9 @@ const User = () => {
             ))}
           {tab !== 'parametres' && user.role === USER_ROLES.CANDIDAT && (
             <div>
-              {tab === 'cv' && <CVPageContent candidatId={user.id} />}
+              {tab === 'cv' && (
+                <CVPageContent candidatId={user.id} cv={cv} setCV={setCV} />
+              )}
               {tab === 'offres' && (
                 <AdminCandidateOpportunities candidatId={user.id} />
               )}

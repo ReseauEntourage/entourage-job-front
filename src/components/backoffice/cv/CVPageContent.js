@@ -9,8 +9,6 @@ import { Button, Grid } from 'src/components/utils';
 import { CVBackground, CVFiche, CVFicheEdition } from 'src/components/cv';
 import { UserContext } from 'src/components/store/UserProvider';
 import ButtonPost from 'src/components/backoffice/cv/ButtonPost';
-import ErrorMessage from 'src/components/backoffice/cv/ErrorMessage';
-import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 
 import {
   AMBITIONS_PREFIXES,
@@ -22,6 +20,7 @@ import NoCV from 'src/components/backoffice/cv/NoCV';
 import ButtonDownload from 'src/components/backoffice/cv/ButtonDownload';
 import { openModal, useModalContext } from 'src/components/modals/Modal';
 import ModalGeneric from 'src/components/modals/ModalGeneric';
+import { usePrevious } from 'src/hooks/utils';
 
 const pusher = new Pusher(process.env.PUSHER_API_KEY, {
   cluster: 'eu',
@@ -87,16 +86,15 @@ ModalPreview.propTypes = {
   imageUrl: PropTypes.string.isRequired,
 };
 
-const CVPageContent = ({ candidatId }) => {
-  const [cv, setCV] = useState(undefined);
+const CVPageContent = ({ candidatId, cv, setCV }) => {
   const [cvVersion, setCvVersion] = useState(undefined);
   const [imageUrl, setImageUrl] = useState(undefined);
   const [previewGenerating, setPreviewGenerating] = useState(false);
   const [pdfGenerating, setPdfGenerating] = useState(false);
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
   const { user } = useContext(UserContext);
+
+  const prevCV = usePrevious(cv);
 
   const setCVHasBeenRead = useCallback(() => {
     if (user && user.role !== USER_ROLES.ADMIN && candidatId) {
@@ -118,37 +116,12 @@ const CVPageContent = ({ candidatId }) => {
   }, []);
 
   useEffect(() => {
-    // fetch CV
-    if (candidatId) {
-      setLoading(true);
-      Api.get(`/cv/`, {
-        params: {
-          userId: candidatId,
-        },
-      })
-        .then(({ data }) => {
-          if (data) {
-            setCV(data);
-            setCvVersion(data.version);
-            setImageUrl(`${process.env.AWSS3_URL}${data.urlImg}`);
-            setCVHasBeenRead();
-          } else {
-            setCV(null);
-            console.log('pas de cv');
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-          setError('Une erreur est survenue durant le chargement du CV.');
-        })
-        .finally(() => {
-          return setLoading(false);
-        });
-    } else {
-      setCV(null);
-      setLoading(false);
+    if (cv && cv !== prevCV) {
+      setCvVersion(cv.version);
+      setImageUrl(`${process.env.AWSS3_URL}${cv.urlImg}`);
+      setCVHasBeenRead();
     }
-  }, [candidatId, setCVHasBeenRead]);
+  }, [candidatId, cv, prevCV, setCVHasBeenRead]);
 
   useEffect(() => {
     const unsavedChanges = cv && cv.status === CV_STATUS.Draft.value;
@@ -311,14 +284,6 @@ const CVPageContent = ({ candidatId }) => {
 
   if (user === null) return null;
 
-  // chargement
-  if (loading) {
-    return <LoadingScreen />;
-  }
-  // erreur pendant la requete
-  if (error) {
-    return <ErrorMessage error={error} />;
-  }
   // aucun CV
   if (cv === null) {
     return (
@@ -419,6 +384,12 @@ const CVPageContent = ({ candidatId }) => {
 
 CVPageContent.propTypes = {
   candidatId: PropTypes.string.isRequired,
+  cv: PropTypes.shape(),
+  setCV: PropTypes.func.isRequired,
+};
+
+CVPageContent.defaultProps = {
+  cv: undefined,
 };
 
 export default CVPageContent;

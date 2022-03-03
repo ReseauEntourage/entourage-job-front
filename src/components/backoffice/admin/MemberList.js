@@ -306,7 +306,7 @@ const MemberList = ({
     if (role !== prevRole) {
       const initialFiltersConst =
         role === USER_ROLES.COACH
-          ? MEMBER_FILTERS_DATA.slice(0, 2)
+          ? [MEMBER_FILTERS_DATA[0], MEMBER_FILTERS_DATA[2]]
           : MEMBER_FILTERS_DATA;
 
       setFiltersConst(initialFiltersConst);
@@ -455,6 +455,7 @@ const MemberList = ({
             setSearch={setSearch}
             setFilters={setFilters}
             placeholder="Rechercher..."
+            smallSelectors
           />
           {loading ? (
             <div className="uk-height-small uk-flex uk-flex-center uk-flex-middle">
