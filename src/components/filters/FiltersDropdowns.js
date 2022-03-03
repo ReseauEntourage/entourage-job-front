@@ -13,6 +13,7 @@ const FiltersDropdowns = ({
   hideOnMobile,
   fullWidth,
   showSeparator,
+  smallSelectors,
 }) => {
   const renderFilters = (filterConstants, key, tag) => {
     const reducedFilters = Object.values(filterConstants);
@@ -78,7 +79,7 @@ const FiltersDropdowns = ({
               return (
                 <div
                   key={key}
-                  style={{ minWidth: 150 }}
+                  style={{ minWidth: smallSelectors ? 100 : 150 }}
                   className={`uk-inline ${
                     fullWidth ? 'uk-width-expand uk-margin-small-bottom' : ''
                   }`}
@@ -103,7 +104,7 @@ const FiltersDropdowns = ({
                     className="uk-margin-small-right"
                   />
                 )} */}
-                      <span className="uk-width-expand uk-text-left uk-flex uk-flex-middle">
+                      <span className="uk-width-expand uk-text-left uk-flex uk-flex-middle uk-margin-small-right">
                         {title}
                       </span>
                       {filters[key].length > 0 && (
@@ -112,10 +113,7 @@ const FiltersDropdowns = ({
                           <div className="uk-badge">{filters[key].length}</div>
                         </div>
                       )}
-                      <IconNoSSR
-                        name="triangle-down"
-                        className="uk-margin-small-left"
-                      />
+                      <IconNoSSR name="triangle-down" />
                     </Button>
                     <div
                       data-uk-dropdown="mode: click;"
@@ -159,6 +157,7 @@ FiltersDropdowns.propTypes = {
   filterData: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   hideOnMobile: PropTypes.bool,
   fullWidth: PropTypes.bool,
+  smallSelectors: PropTypes.bool,
   showSeparator: PropTypes.bool,
 };
 
@@ -166,6 +165,7 @@ FiltersDropdowns.defaultProps = {
   hideOnMobile: false,
   fullWidth: false,
   showSeparator: false,
+  smallSelectors: false,
 };
 
 export default FiltersDropdowns;

@@ -20,6 +20,7 @@ const SearchBar = ({
   resetFilters,
   placeholder,
   startSearchEvent,
+  smallSelectors,
 }) => {
   const [searchBuffer, setSearchBuffer] = useState(search || '');
 
@@ -65,6 +66,7 @@ const SearchBar = ({
           filterData={filtersConstants}
           filters={filters}
           setFilters={setFilters}
+          smallSelectors={smallSelectors}
         />
         <a
           className="ent-search-icon uk-background-primary uk-light"
@@ -110,6 +112,7 @@ SearchBar.propTypes = {
   setSearch: PropTypes.func.isRequired,
   numberOfResults: PropTypes.number.isRequired,
   resetFilters: PropTypes.func.isRequired,
+  smallSelectors: PropTypes.bool,
   placeholder: PropTypes.string,
   startSearchEvent: PropTypes.shape({
     action: PropTypes.string.isRequired,
@@ -120,6 +123,7 @@ SearchBar.defaultProps = {
   placeholder: 'Rechercher...',
   startSearchEvent: undefined,
   search: undefined,
+  smallSelectors: false,
 };
 
 export default SearchBar;
