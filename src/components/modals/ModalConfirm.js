@@ -5,10 +5,11 @@ import ModalGeneric from 'src/components/modals/ModalGeneric';
 import { Button } from 'src/components/utils';
 import { useModalContext } from 'src/components/modals/Modal';
 
-const ModalConfirm = ({ onConfirm, text, buttonText }) => {
+const ModalConfirm = ({ onConfirm, text, title, buttonText, children }) => {
   const { onClose } = useModalContext();
   return (
-    <ModalGeneric description={text}>
+    <ModalGeneric description={text} title={title}>
+      {children && <div className="uk-margin-medium-bottom">{children}</div>}
       <div className="uk-modal-footer uk-padding-remove-horizontal uk-padding-remove-bottom">
         <Button style="default" onClick={onClose}>
           Annuler
@@ -29,7 +30,17 @@ const ModalConfirm = ({ onConfirm, text, buttonText }) => {
 ModalConfirm.propTypes = {
   onConfirm: PropTypes.func.isRequired,
   text: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element),
+  ]),
   buttonText: PropTypes.string.isRequired,
+};
+
+ModalConfirm.defaultProps = {
+  title: undefined,
+  children: undefined,
 };
 
 export default ModalConfirm;

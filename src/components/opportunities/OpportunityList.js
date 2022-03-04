@@ -11,10 +11,10 @@ import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { getUserOpportunityFromOffer } from 'src/utils';
 import Api from 'src/Axios';
-import ModalOffer from 'src/components/modals/ModalOffer';
+import ModalOffer from 'src/components/modals/OfferModals/ModalOffer';
 import { Grid, SimpleLink } from 'src/components/utils';
 import OfferCard from 'src/components/cards/OfferCard';
-import ModalOfferAdmin from 'src/components/modals/ModalOfferAdmin';
+import ModalOfferAdmin from 'src/components/modals/OfferModals/ModalOfferAdmin';
 import OpportunityError from 'src/components/opportunities/OpportunityError';
 import { useOpportunityList } from 'src/hooks/useOpportunityList';
 import useDeepCompareEffect from 'use-deep-compare-effect';
@@ -242,60 +242,44 @@ const OpportunityList = forwardRef(
       ]
     );
 
-    const openOffer = useCallback(
+    const onClickOpportunityCardAsAdmin = useCallback(
       (offer) => {
-        if (isAdmin) {
-          openModal(
-            <ModalOfferAdmin
-              currentOffer={offer}
-              onOfferUpdated={async () => {
-                await fetchData(
-                  role,
-                  search,
-                  tabFilterTag,
-                  filters,
-                  candidatId
-                );
-              }}
-              navigateBackToList={navigateBackToList}
-              duplicateOffer={async (closeModal) => {
-                const { id, userOpportunity, ...restOpportunity } = offer;
-                const { data } = await Api.post(`/opportunity/`, {
-                  ...restOpportunity,
-                  title: `${restOpportunity.title} (copie)`,
-                  isAdmin: true,
-                  isValidated: false,
-                  date: Date.now(),
-                });
-                closeModal();
-                UIkit.notification("L'offre a bien été dupliquée", 'success');
-                push(
-                  {
-                    pathname: `${currentPath.href}/[offerId]`,
-                    query: restQuery,
-                  },
-                  {
-                    pathname: `${currentPath.as}/${data.id}`,
-                    query: restQuery,
-                  },
-                  {
-                    shallow: true,
-                    scroll: false,
-                  }
-                );
-                await fetchData(
-                  role,
-                  search,
-                  tabFilterTag,
-                  filters,
-                  candidatId
-                );
-              }}
-            />
-          );
-        } else {
-          onClickOpportunityCardAsUser(offer);
-        }
+        openModal(
+          <ModalOfferAdmin
+            currentOffer={offer}
+            onOfferUpdated={async () => {
+              await fetchData(role, search, tabFilterTag, filters, candidatId);
+            }}
+            navigateBackToList={navigateBackToList}
+            duplicateOffer={async (closeModal) => {
+              const { id, userOpportunity, ...restOpportunity } = offer;
+              const { data } = await Api.post(`/opportunity/`, {
+                ...restOpportunity,
+                title: `${restOpportunity.title} (copie)`,
+                isAdmin: true,
+                isValidated: false,
+                date: Date.now(),
+              });
+              closeModal();
+              UIkit.notification("L'offre a bien été dupliquée", 'success');
+              push(
+                {
+                  pathname: `${currentPath.href}/[offerId]`,
+                  query: restQuery,
+                },
+                {
+                  pathname: `${currentPath.as}/${data.id}`,
+                  query: restQuery,
+                },
+                {
+                  shallow: true,
+                  scroll: false,
+                }
+              );
+              await fetchData(role, search, tabFilterTag, filters, candidatId);
+            }}
+          />
+        );
       },
       [
         candidatId,
@@ -303,15 +287,26 @@ const OpportunityList = forwardRef(
         currentPath.href,
         fetchData,
         filters,
-        isAdmin,
         navigateBackToList,
-        onClickOpportunityCardAsUser,
         push,
         restQuery,
         role,
         search,
         tabFilterTag,
       ]
+    );
+
+    const openOffer = useCallback(
+      (offer) => {
+        if (offer) {
+          if (isAdmin) {
+            onClickOpportunityCardAsAdmin(offer);
+          } else {
+            onClickOpportunityCardAsUser(offer);
+          }
+        }
+      },
+      [isAdmin, onClickOpportunityCardAsAdmin, onClickOpportunityCardAsUser]
     );
 
     const getOpportunity = useCallback(async (oppId) => {
