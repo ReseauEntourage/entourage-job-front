@@ -70,11 +70,20 @@ const Container = ({ Component, pageProps, err }) => {
 };
 
 const EntourageApp = ({ Component, pageProps, err }) => {
-  const { events } = useRouter();
+  const [shouldScrollToTop, setShouldScrollToTop] = useState(true);
+  const { events, beforePopState } = useRouter();
+
+  useEffect(() => {
+    beforePopState(() => {
+      setShouldScrollToTop(false);
+      return true;
+    });
+  }, [beforePopState]);
 
   useEffect(() => {
     const scrollToTop = (url, { shallow }) => {
-      if (!shallow) {
+      if (!shallow && shouldScrollToTop) {
+        setShouldScrollToTop(true);
         document.getElementById('main-container').scrollTo(0, 0);
       }
     };
@@ -82,7 +91,7 @@ const EntourageApp = ({ Component, pageProps, err }) => {
     return () => {
       events.off('routeChangeComplete', scrollToTop);
     };
-  }, [events]);
+  }, [events, shouldScrollToTop]);
 
   return (
     <Sentry.ErrorBoundary fallback="An error has occurred">

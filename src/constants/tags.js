@@ -143,11 +143,41 @@ const TAGS = {
   FOOTER_PARTENAIRE_CLIC: {
     action: 'Footer_Partenaire_Clic',
   },
+  FOOTER_VOIR_PARTENAIRES_CLIC: {
+    action: 'Footer_Voir_Partenaire_Clic',
+  },
+  FOOTER_DEVENIR_PARTENAIRE_CLIC: {
+    action: 'Footer_Devenir_Partenaire_Clic',
+  },
+  FOOTER_POURQUOI_LINKEDOUT_CLIC: {
+    action: 'Footer_Pourquoi_LinkedOut_Clic',
+  },
+  FOOTER_ENTREPRISES_CLIC: {
+    action: 'Footer_Entreprises_Clic',
+  },
+  FOOTER_ENTREPRISES_ENGAGER_CLIC: {
+    action: 'Footer_Entreprises_Engager_Clic',
+  },
+  FOOTER_ENTREPRISES_RECRUTER_CLIC: {
+    action: 'Footer_Entreprises_Recruter_Clic',
+  },
+  FOOTER_AIDER_CLIC: {
+    action: 'Footer_Aider_Clic',
+  },
+  FOOTER_ORIENTER_CLIC: {
+    action: 'Footer_Orienter_Clic',
+  },
+  FOOTER_TRAVAILLER_CLIC: {
+    action: 'Footer_Travailler_Clic',
+  },
   FOOTER_SITE_ENTOURAGE_CLIC: {
     action: 'Footer_Site_Entourage_Clic',
   },
   FOOTER_BLOG_LINKEDOUT_CLIC: {
     action: 'Footer_Blog_LinkedOut_Clic',
+  },
+  FOOTER_CONTACT_CLIC: {
+    action: 'Footer_Contact_Clic',
   },
   FOOTER_DON_CLIC: {
     action: 'Footer_Don_Clic',
