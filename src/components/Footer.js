@@ -19,10 +19,20 @@ const pages = [
       {
         title: 'Pourquoi LinkedOut ?',
         path: '/linkedout',
+        props: {
+          onClick: () => {
+            event(TAGS.FOOTER_POURQUOI_LINKEDOUT_CLIC);
+          },
+        },
       },
       {
         title: 'Nos partenaires',
         path: '/partenaires',
+        props: {
+          onClick: () => {
+            event(TAGS.FOOTER_VOIR_PARTENAIRES_CLIC);
+          },
+        },
       },
       /*
         {
@@ -32,11 +42,12 @@ const pages = [
       */
       {
         title: 'Devenir partenaire',
-        onClick: () => {
-          openModal(<ModalInterestLinkedOut />);
-        },
         props: {
           isExternal: true,
+          onClick: () => {
+            event(TAGS.FOOTER_DEVENIR_PARTENAIRE_CLIC);
+            openModal(<ModalInterestLinkedOut />);
+          },
         },
       },
       /*
@@ -53,29 +64,59 @@ const pages = [
       {
         title: 'Entreprises',
         path: '/entreprises',
+        props: {
+          onClick: () => {
+            event(TAGS.FOOTER_ENTREPRISES_CLIC);
+          },
+        },
         children: [
           {
             title: 'Engager mon entreprise',
             path: '/entreprises/sinformer',
+            props: {
+              onClick: () => {
+                event(TAGS.FOOTER_ENTREPRISES_ENGAGER_CLIC);
+              },
+            },
           },
           {
             title: 'Recruter',
             path: '/entreprises/cvs',
+            props: {
+              onClick: () => {
+                event(TAGS.FOOTER_ENTREPRISES_RECRUTER_CLIC);
+              },
+            },
           },
         ],
       },
       {
         title: 'Particuliers',
         path: '/aider',
+        props: {
+          onClick: () => {
+            event(TAGS.FOOTER_AIDER_CLIC);
+          },
+        },
       },
 
       {
         title: 'Travailleurs sociaux',
         path: '/orienter',
+        props: {
+          onClick: () => {
+            event(TAGS.FOOTER_ORIENTER_CLIC);
+          },
+        },
       },
       {
         title: 'Candidats',
         path: '/travailler',
+        props: {
+          onClick: () => {
+            event(TAGS.FOOTER_TRAVAILLER_CLIC);
+          },
+        },
       },
     ],
   },
@@ -101,6 +142,11 @@ const pages = [
       {
         title: 'Contact',
         path: '/contact',
+        props: {
+          onClick: () => {
+            event(TAGS.FOOTER_CONTACT_CLIC);
+          },
+        },
       },
       {
         title: 'Nous soutenir',
@@ -109,7 +155,7 @@ const pages = [
           isExternal: true,
           newTab: true,
           onClick: () => {
-            return event(TAGS.FOOTER_DON_CLIC);
+            event(TAGS.FOOTER_DON_CLIC);
           },
           target: '_blank',
         },
@@ -125,7 +171,7 @@ const pages = [
           isExternal: true,
           newTab: true,
           onClick: () => {
-            return event(TAGS.FOOTER_RECRUITMENTS_CLIC);
+            event(TAGS.FOOTER_RECRUITMENTS_CLIC);
           },
           target: '_blank',
         },
@@ -137,7 +183,7 @@ const pages = [
           isExternal: true,
           newTab: true,
           onClick: () => {
-            return event(TAGS.FOOTER_BLOG_LINKEDOUT_CLIC);
+            event(TAGS.FOOTER_BLOG_LINKEDOUT_CLIC);
           },
           target: '_blank',
         },
@@ -149,7 +195,7 @@ const pages = [
           isExternal: true,
           newTab: true,
           onClick: () => {
-            return event(TAGS.FOOTER_SITE_ENTOURAGE_CLIC);
+            event(TAGS.FOOTER_SITE_ENTOURAGE_CLIC);
           },
           target: '_blank',
         },
@@ -199,7 +245,6 @@ const SiteMap = ({ isMobile }) => {
                       component: childrenComponent,
                       title: childrenTitle,
                       path: childrenPath,
-                      onClick: childrenOnClick,
                       children: childrenChildren,
                       props: childrenProps = {},
                     },
@@ -218,7 +263,6 @@ const SiteMap = ({ isMobile }) => {
                     return (
                       <React.Fragment key={childrenPath + index}>
                         <SimpleLink
-                          onClick={childrenOnClick}
                           href={childrenPath}
                           className={
                             title
@@ -229,7 +273,6 @@ const SiteMap = ({ isMobile }) => {
                         >
                           {childrenTitle}
                         </SimpleLink>
-
                         {childrenChildren &&
                           childrenChildren.map(
                             (
