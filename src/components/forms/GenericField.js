@@ -217,7 +217,6 @@ const GenericField = ({
           defaultOptions
           value={valueToUse}
           isMulti={data.isMulti}
-          openMenuOnClick={false}
           placeholder={data.placeholder || 'Sélectionnez...'}
           noOptionsMessage={
             data.noOptionsMessage ||
@@ -234,6 +233,7 @@ const GenericField = ({
           isDisabled={data.disable ? data.disable(getValue) : false}
           isHidden={data.hide ? data.hide(getValue) : false}
           onChange={parseValueToReturnSelect}
+          openMenuOnClick={data.openMenuOnClick ?? true}
         />
         <FormValidatorErrorMessage validObj={getValid(data.name)} />
       </div>
@@ -274,6 +274,7 @@ const GenericField = ({
           onChange={parseValueToReturnSelect}
           isDisabled={data.disable ? data.disable(getValue) : false}
           isHidden={data.hide ? data.hide(getValue) : false}
+          openMenuOnClick={data.openMenuOnClick ?? true}
         />
         <FormValidatorErrorMessage validObj={getValid(data.name)} />
       </div>
@@ -330,6 +331,7 @@ const GenericField = ({
           onChange={parseValueToReturnSelect}
           isDisabled={data.disable ? data.disable(getValue) : false}
           isHidden={data.hide ? data.hide(getValue) : false}
+          openMenuOnClick={data.openMenuOnClick ?? true}
         />
         <FormValidatorErrorMessage validObj={getValid(data.name)} />
       </div>

@@ -26,6 +26,11 @@ const OfferContent = ({ offer }) => {
           <div>{formatParagraph(offer.prerequisites)}</div>
         </OfferInfoContainer>
       )}
+      {offer.otherInfo && (
+        <OfferInfoContainer icon="more" title="Autres précisions">
+          <div>{formatParagraph(offer.otherInfo)}</div>
+        </OfferInfoContainer>
+      )}
       {offer.link && (
         <OfferInfoContainer icon="link" title="Lien">
           <div>{offer.link.trim()}</div>
@@ -53,6 +58,7 @@ OfferContent.propTypes = {
     companyDescription: PropTypes.string,
     description: PropTypes.string,
     prerequisites: PropTypes.string,
+    otherInfo: PropTypes.string,
     skills: PropTypes.string,
     businessLines: PropTypes.arrayOf(PropTypes.string),
     link: PropTypes.string,

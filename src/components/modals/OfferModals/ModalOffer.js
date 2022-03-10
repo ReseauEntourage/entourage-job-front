@@ -345,7 +345,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                       );
                     }}
                   >
-                    Je ne suis pas intéressé par l&apos;offre
+                    Je ne suis pas intéressé⸱e par l&apos;offre
                   </Button>
                 )}
                 {status === OFFER_STATUS[1].value && (
@@ -452,6 +452,7 @@ ModalOffer.propTypes = {
     companyDescription: PropTypes.string,
     numberOfPositions: PropTypes.number,
     prerequisites: PropTypes.string,
+    otherInfo: PropTypes.string,
     skills: PropTypes.string,
     contract: PropTypes.string,
     endOfContract: PropTypes.string,

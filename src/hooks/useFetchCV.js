@@ -43,5 +43,5 @@ export function useFetchCV(user) {
     }
   }, [user]);
 
-  return { cv, error, loading };
+  return { cv, setCV, error, loading };
 }

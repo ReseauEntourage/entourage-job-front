@@ -46,8 +46,9 @@ export default {
     {
       id: 'locations',
       name: 'locations',
-      title: 'Lieu de travail souhaité',
+      title: 'Départements de travail souhaités',
       component: 'select-request',
+      openMenuOnClick: false,
       options: DEPARTMENTS_FILTERS,
       isMulti: true,
     },

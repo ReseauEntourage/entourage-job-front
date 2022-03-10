@@ -23,6 +23,7 @@ export default {
       name: 'linkedUser',
       component: 'select-request-async',
       cacheOptions: false,
+      openMenuOnClick: false,
       loadOptions: (inputValue, callback, getValue) => {
         if (inputValue.length > 0) {
           const role = getValue('role');

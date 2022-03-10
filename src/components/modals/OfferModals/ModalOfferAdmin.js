@@ -574,6 +574,7 @@ ModalOfferAdmin.propTypes = {
     company: PropTypes.string,
     description: PropTypes.string,
     prerequisites: PropTypes.string,
+    otherInfo: PropTypes.string,
     recruiterName: PropTypes.string,
     isPublic: PropTypes.bool,
     isArchived: PropTypes.bool,

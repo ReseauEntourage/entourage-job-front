@@ -25,6 +25,7 @@ export default {
       },
       placeholder: 'Tapez un candidat',
       component: 'select-request-async',
+      openMenuOnClick: false,
       disable: (getValue) => {
         return getValue('isPublic') === true;
       },
@@ -113,8 +114,8 @@ export default {
     {
       id: 'businessLines',
       name: 'businessLines',
-      title: "Secteur d'activité",
-      placeholder: "Sélectionnez les secteurs d'activité",
+      title: 'Familles de métiers',
+      placeholder: 'Sélectionnez les familles de métiers',
       component: 'select-request',
       isMulti: true,
       options: BUSINESS_LINES,
@@ -132,6 +133,8 @@ export default {
           id: 'department',
           name: 'department',
           title: 'Département du lieu de travail*',
+          placeholder: 'Tapez le département',
+          openMenuOnClick: false,
           component: 'select-request',
           options: DEPARTMENTS_FILTERS,
         },
@@ -183,14 +186,12 @@ export default {
           name: 'startOfContract',
           title: 'Date de début de contrat',
           component: 'datepicker',
-          min: moment().format('YYYY-MM-DD'),
         },
         {
           id: 'endOfContract',
           name: 'endOfContract',
           title: 'Date de fin de contrat',
           component: 'datepicker',
-          min: moment().format('YYYY-MM-DD'),
           disable: (getValue) => {
             const contract = findConstantFromValue(
               getValue('contract'),
