@@ -22,7 +22,7 @@ const NoCVInThisArea = () => {
       Contactez-nous à{' '}
       <SimpleLink
         isExternal
-        newTab
+        target="_blank"
         className="uk-link-text uk-text-primary"
         href={`mailto:${process.env.MAILJET_CONTACT_EMAIL}`}
       >

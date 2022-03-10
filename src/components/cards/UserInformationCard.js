@@ -64,6 +64,7 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
             href={`mailto:${linkedUser.email}`}
             className="uk-link-muted"
             isExternal
+            target="_blank"
           >
             <Grid row gap="small">
               <IconNoSSR name="mail" />

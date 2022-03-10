@@ -30,6 +30,64 @@ import ModalOfferBase from 'src/components/modals/OfferModals/ModalOfferBase';
 import useModalOffer from 'src/components/modals/OfferModals/useModalOffer';
 import OfferContent from 'src/components/modals/OfferModals/OfferContent';
 
+const RecrutorContactInfo = ({
+  firstName,
+  lastName,
+  position,
+  company,
+  mail,
+}) => {
+  return (
+    <Grid gap="small" column>
+      <div className="uk-flex uk-flex-middle">
+        <IconNoSSR
+          style={{ width: 20 }}
+          name="user"
+          ratio={1}
+          className="uk-margin-small-right"
+        />
+        <div className="uk-flex uk-flex-column">
+          <h4 className="uk-text-bold uk-flex-middle uk-flex uk-margin-remove">
+            {firstName} {lastName}
+          </h4>
+          <span className="uk-text-meta">{position}</span>
+        </div>
+      </div>
+      <div className="uk-flex uk-flex-middle">
+        <IconNoSSR
+          name="home"
+          ratio={0.8}
+          style={{ width: 20 }}
+          className="uk-margin-small-right"
+        />
+        <span>{company}</span>
+      </div>
+      <SimpleLink
+        href={`mailto:${mail}`}
+        isExternal
+        target="_blank"
+        className="uk-flex uk-flex-middle"
+      >
+        <IconNoSSR
+          name="mail"
+          ratio={0.8}
+          style={{ width: 20 }}
+          className="uk-margin-small-right"
+        />
+        {mail}
+      </SimpleLink>
+    </Grid>
+  );
+};
+
+RecrutorContactInfo.propTypes = {
+  firstName: PropTypes.string.isRequired,
+  lastName: PropTypes.string.isRequired,
+  position: PropTypes.string.isRequired,
+  company: PropTypes.string.isRequired,
+  mail: PropTypes.string.isRequired,
+};
+
 const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
   const { user } = useContext(UserContext);
   const [loadingIcon, setLoadingIcon] = useState(false);
@@ -84,6 +142,8 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
       setLoading(false);
     }
   };
+
+  const shouldShowCTAs = !offer.isExternal && !offer.userOpportunity.archived;
 
   // Modal
   return (
@@ -150,30 +210,146 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
               className="uk-flex-right uk-flex-row"
               eachWidths={['auto', 'auto']}
               row
-              middle
+              bottom
             >
-              <div className="uk-flex uk-flex-middle">
-                {loadingStatus && (
-                  <div className="uk-margin-small-right" data-uk-spinner="" />
-                )}
-                <Select
-                  id="modal-offer-status"
-                  title="Statut"
-                  name="status"
-                  placeholder="statut"
-                  options={mutatedOfferStatus}
-                  value={status}
-                  onChange={async (event) => {
-                    setLoadingStatus(true);
-                    const { userOpportunity } = offer;
-                    await updateOpportunityUser({
-                      ...userOpportunity,
-                      status: Number(event.target.value),
-                    });
-                    setLoadingStatus(false);
-                  }}
-                />
-              </div>
+              {shouldShowCTAs && status < OFFER_STATUS[1].value ? (
+                <div className="uk-flex uk-flex-middle uk-flex-right uk-flex-wrap-reverse">
+                  <Button
+                    style="default"
+                    className="uk-margin-small-top uk-margin-small-bottom"
+                    onClick={() => {
+                      openModal(
+                        <ModalConfirm
+                          onConfirm={async () => {
+                            const { userOpportunity } = offer;
+                            await updateOpportunityUser({
+                              ...userOpportunity,
+                              archived: true,
+                              status: OFFER_STATUS[4].value,
+                            });
+                          }}
+                          title="Pas intéressé⸱e ?"
+                          text={
+                            <>
+                              <span>
+                                L&apos;offre va être archivée et son statut sera
+                                déclaré comme{' '}
+                                <span className="uk-text-italic">
+                                  Refusé avant entretien
+                                </span>
+                                . Vous pourrez toujours la retrouver dans vos
+                                offres archivées et la restaurer&nbsp;!
+                              </span>
+                              {!offer.isPublic && (
+                                <>
+                                  <br />
+                                  <br />
+                                  <span className="uk-text-bold">
+                                    N&apos;oubliez pas de remerciez le recruteur
+                                    et de l&apos;informer que cette offre ne
+                                    correspond pas à votre projet professionnel.
+                                  </span>
+                                </>
+                              )}
+                            </>
+                          }
+                          buttonText="Confirmer"
+                        >
+                          <div className="uk-margin-medium-top">
+                            <RecrutorContactInfo
+                              firstName={offer.recruiterFirstName}
+                              lastName={offer.recruiterName}
+                              mail={offer.recruiterMail}
+                              company={offer.company}
+                              position={offer.position}
+                            />
+                          </div>
+                        </ModalConfirm>
+                      );
+                    }}
+                  >
+                    Je ne suis pas intéressé⸱e par l&apos;offre
+                  </Button>
+                  <Button
+                    className="uk-margin-small-left uk-margin-small-top uk-margin-small-bottom"
+                    style="primary"
+                    onClick={() => {
+                      openModal(
+                        <ModalConfirm
+                          title={
+                            isInternalContact
+                              ? 'Personne à contacter'
+                              : 'Coordonnées du recruteur'
+                          }
+                          text=""
+                          buttonText="J'ai contacté le recruteur"
+                          onConfirm={async () => {
+                            if (status < OFFER_STATUS[1].value) {
+                              const { userOpportunity } = offer;
+                              await updateOpportunityUser({
+                                ...userOpportunity,
+                                status: OFFER_STATUS[1].value,
+                              });
+                            }
+                          }}
+                        >
+                          <RecrutorContactInfo
+                            firstName={offer.recruiterFirstName}
+                            lastName={offer.recruiterName}
+                            mail={offer.recruiterMail}
+                            company={offer.company}
+                            position={offer.position}
+                          />
+                        </ModalConfirm>
+                      );
+                    }}
+                  >
+                    Contacter le recruteur
+                  </Button>
+                </div>
+              ) : (
+                <div className="uk-flex uk-flex-middle uk-flex-right uk-flex-wrap-reverse">
+                  {status === OFFER_STATUS[1].value && (
+                    <Button
+                      style="default"
+                      onClick={async () => {
+                        const { userOpportunity } = offer;
+                        await updateOpportunityUser({
+                          ...userOpportunity,
+                          status: OFFER_STATUS[0].value,
+                        });
+                      }}
+                    >
+                      Je n&apos;ai pas encore contacté le recruteur
+                    </Button>
+                  )}
+                  <div className="uk-flex uk-flex-middle uk-margin-small-left">
+                    {loadingStatus && (
+                      <div
+                        className="uk-margin-small-right"
+                        data-uk-spinner=""
+                      />
+                    )}
+                    <Select
+                      id="modal-offer-status"
+                      title="Statut"
+                      name="status"
+                      placeholder="statut"
+                      options={mutatedOfferStatus}
+                      value={status}
+                      onChange={async (event) => {
+                        setLoadingStatus(true);
+                        const { userOpportunity } = offer;
+                        await updateOpportunityUser({
+                          ...userOpportunity,
+                          status: Number(event.target.value),
+                        });
+                        setLoadingStatus(false);
+                      }}
+                    />
+                  </div>
+                </div>
+              )}
             </Grid>
             <List className="uk-iconnav uk-flex uk-flex-right uk-flex-middle">
               {loadingIcon && (
@@ -257,7 +433,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                       href={`mailto:${offer.recruiterMail}`}
                       className="uk-text-meta uk-text-muted uk-flex uk-flex-middle"
                       isExternal
-                      newTab
+                      target="_blank"
                     >
                       <span>{offer.recruiterMail}&nbsp;</span>
                       <IconNoSSR name="mail" ratio={0.8} />
@@ -318,125 +494,6 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
             </Button>
           )}
         </div>
-        {!offer.isExternal &&
-          !offer.userOpportunity.archived &&
-          status <= OFFER_STATUS[1].value && (
-            <div className="uk-modal-footer uk-padding-remove-horizontal uk-padding-remove-bottom uk-margin-medium-top">
-              <>
-                {status < OFFER_STATUS[1].value && (
-                  <Button
-                    style="default"
-                    onClick={() => {
-                      openModal(
-                        <ModalConfirm
-                          onConfirm={async () => {
-                            const { userOpportunity } = offer;
-                            await updateOpportunityUser({
-                              ...userOpportunity,
-                              archived: true,
-                              status: OFFER_STATUS[4].value,
-                            });
-                          }}
-                          text={
-                            'L\'offre va être archivée et son statut sera déclaré comme "Refusé avant entretien". Vous pourrez toujours la retrouver dans vos offres archivées et la restaurer !'
-                          }
-                          buttonText="Confirmer"
-                        />
-                      );
-                    }}
-                  >
-                    Je ne suis pas intéressé⸱e par l&apos;offre
-                  </Button>
-                )}
-                {status === OFFER_STATUS[1].value && (
-                  <Button
-                    style="default"
-                    onClick={async () => {
-                      const { userOpportunity } = offer;
-                      await updateOpportunityUser({
-                        ...userOpportunity,
-                        status: OFFER_STATUS[0].value,
-                      });
-                    }}
-                  >
-                    Je n&apos;ai pas encore contacté le recruteur
-                  </Button>
-                )}
-                {status < OFFER_STATUS[1].value && (
-                  <Button
-                    style="primary"
-                    onClick={() => {
-                      openModal(
-                        <ModalConfirm
-                          title={
-                            isInternalContact
-                              ? 'Personne à contacter'
-                              : 'Coordonnées du recruteur'
-                          }
-                          text=""
-                          buttonText="J'ai contacté le recruteur"
-                          onConfirm={async () => {
-                            if (status < OFFER_STATUS[1].value) {
-                              const { userOpportunity } = offer;
-                              await updateOpportunityUser({
-                                ...userOpportunity,
-                                status: OFFER_STATUS[1].value,
-                              });
-                            }
-                          }}
-                        >
-                          <Grid gap="small" column>
-                            <div className="uk-flex uk-flex-middle">
-                              <IconNoSSR
-                                style={{ width: 20 }}
-                                name="user"
-                                ratio={1}
-                                className="uk-margin-small-right"
-                              />
-                              <div className="uk-flex uk-flex-column">
-                                <h4 className="uk-text-bold uk-flex-middle uk-flex uk-margin-remove">
-                                  {offer.recruiterFirstName}{' '}
-                                  {offer.recruiterName}
-                                </h4>
-                                <span className="uk-text-meta">
-                                  {offer.recruiterPosition}
-                                </span>
-                              </div>
-                            </div>
-                            <div className="uk-flex uk-flex-middle">
-                              <IconNoSSR
-                                name="home"
-                                ratio={0.8}
-                                style={{ width: 20 }}
-                                className="uk-margin-small-right"
-                              />
-                              <span>{offer.company}</span>
-                            </div>
-                            <SimpleLink
-                              href={`mailto:${offer.recruiterMail}`}
-                              isExternal
-                              newTab
-                              className="uk-flex uk-flex-middle"
-                            >
-                              <IconNoSSR
-                                name="mail"
-                                ratio={0.8}
-                                style={{ width: 20 }}
-                                className="uk-margin-small-right"
-                              />
-                              {offer.recruiterMail}
-                            </SimpleLink>
-                          </Grid>
-                        </ModalConfirm>
-                      );
-                    }}
-                  >
-                    Contacter le recruteur
-                  </Button>
-                )}
-              </>
-            </div>
-          )}
       </div>
     </ModalOfferBase>
   );

@@ -374,7 +374,7 @@ const ModalOfferAdmin = ({
                   href={`mailto:${offer.recruiterMail}`}
                   className="uk-text-meta uk-text-muted uk-flex uk-flex-middle"
                   isExternal
-                  newTab
+                  target="_blank"
                 >
                   <span>
                     {offer.recruiterMail}

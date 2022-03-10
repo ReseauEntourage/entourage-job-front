@@ -428,7 +428,7 @@ const CVPDF = ({ cv, page }) => {
                 <SimpleLink
                   className="uk-link-text uk-text-primary"
                   isExternal
-                  newTab
+                  target="_blank"
                   href={`mailto:${process.env.MAILJET_CONTACT_EMAIL}`}
                 >
                   {process.env.MAILJET_CONTACT_EMAIL}
