@@ -5,7 +5,7 @@ import CVList from 'src/components/cv/CVList';
 import { CV_FILTERS_DATA } from 'src/constants';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { NewsletterPartial } from 'src/components/partials';
-import TAGS from 'src/constants/tags';
+import { GA_TAGS } from 'src/constants/tags';
 
 const Custom404 = () => {
   return (
@@ -44,7 +44,7 @@ const Custom404 = () => {
       </Section>
       <NewsletterPartial
         style="default"
-        tag={TAGS.PAGE_CV_INSCRIPTION_NEWSLETTER_CLIC}
+        tag={GA_TAGS.PAGE_CV_INSCRIPTION_NEWSLETTER_CLIC}
       />
     </Layout>
   );

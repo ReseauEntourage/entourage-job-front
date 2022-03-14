@@ -3,11 +3,12 @@ import { Button, Grid, Section, Img } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
 
 import CVList from 'src/components/cv/CVList';
-import { event } from 'src/lib/gtag';
-import TAGS from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { CV_FILTERS_DATA } from 'src/constants';
 import { openModal } from 'src/components/modals/Modal';
 import usePostPublicOfferModal from 'src/components/modals/usePostPublicOfferModal';
+import { fbEvent } from 'src/lib/fb';
 
 const HireCTA = () => {
   const publicOfferModal = usePostPublicOfferModal();
@@ -83,7 +84,8 @@ const HireCTA = () => {
                 className="uk-margin-medium-top"
                 style="secondary"
                 onClick={() => {
-                  event(TAGS.PAGE_RECRUTER_DEPOSER_OFFRE_CLIC);
+                  gaEvent(GA_TAGS.PAGE_RECRUTER_DEPOSER_OFFRE_CLIC);
+                  fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER);
                   openModal(publicOfferModal);
                 }}
               >

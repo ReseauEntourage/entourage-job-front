@@ -10,8 +10,9 @@ import SimpleSection from 'src/components/partials/SimpleSection';
 import Button from 'src/components/utils/Button';
 import ImageTitle from 'src/components/partials/ImageTitle';
 import { IconNoSSR } from 'src/components/utils/Icon';
-import { event } from 'src/lib/gtag';
-import TAGS from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { fbEvent } from 'src/lib/fb';
 
 const steps = [
   {
@@ -21,7 +22,8 @@ const steps = [
       href: `${process.env.WEBINAR_URL}`,
       external: true,
       newTab: true,
-      tag: TAGS.PAGE_ORIENTER_WEBINAIRE_CLIC,
+      gaTag: GA_TAGS.PAGE_ORIENTER_WEBINAIRE_CLIC,
+      fbTag: FB_TAGS.SOCIAL_WORKER_REGISTRATION,
     },
   },
   {
@@ -31,7 +33,8 @@ const steps = [
       href: `${process.env.AIRTABLE_LINK_PROFESSIONAL_REINTEGRATION}`,
       external: true,
       newTab: true,
-      tag: TAGS.PAGE_ORIENTER_INSCRIPTION_CLIC,
+      gaTag: GA_TAGS.PAGE_ORIENTER_INSCRIPTION_CLIC,
+      fbTag: FB_TAGS.SOCIAL_WORKER_REGISTRATION,
     },
   },
 ];
@@ -87,7 +90,8 @@ const Orienter = () => {
           </h4>
           <Button
             onClick={() => {
-              event(TAGS.PAGE_ORIENTER_WEBINAIRE_CLIC);
+              gaEvent(GA_TAGS.PAGE_ORIENTER_WEBINAIRE_CLIC);
+              fbEvent(FB_TAGS.SOCIAL_WORKER_REGISTRATION);
             }}
             uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;"
             className="uk-margin-medium-top"
@@ -152,7 +156,8 @@ const Orienter = () => {
                     isExternal={step.button.external}
                     newTab={step.button.external}
                     onClick={() => {
-                      event(step.button.tag);
+                      gaEvent(step.button.gaTag);
+                      fbEvent(step.button.fbTag);
                     }}
                   >
                     {step.button.label}

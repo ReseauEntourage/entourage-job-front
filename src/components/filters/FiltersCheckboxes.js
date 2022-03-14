@@ -1,7 +1,7 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
-import { event } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag';
 
 const FiltersCheckboxes = ({
   filterData,
@@ -41,7 +41,7 @@ const FiltersCheckboxes = ({
                       updatedFilters[key] = e.target.checked
                         ? [constants[0]]
                         : [];
-                      if (tag) event(tag);
+                      if (tag) gaEvent(tag);
                       setFilters(updatedFilters);
                     }}
                   />

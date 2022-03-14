@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Grid from 'src/components/utils/Grid';
 import SimpleLink from 'src/components/utils/SimpleLink';
-import { event } from 'src/lib/gtag';
-import TAGS from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
+import { GA_TAGS } from 'src/constants/tags';
 import { addPrefix } from 'src/utils';
 
 const LogoList = ({ logos }) => {
@@ -21,7 +21,7 @@ const LogoList = ({ logos }) => {
             isExternal
             target="_blank"
             onClick={() => {
-              return event(TAGS.FOOTER_PARTENAIRE_CLIC);
+              gaEvent(GA_TAGS.FOOTER_PARTENAIRE_CLIC);
             }}
             href={link}
           >

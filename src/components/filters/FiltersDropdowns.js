@@ -2,7 +2,7 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 import { IconNoSSR } from 'src/components/utils/Icon';
-import { event } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag';
 import { Button } from 'src/components/utils';
 import uuid from 'uuid/v4';
 
@@ -33,7 +33,7 @@ const FiltersDropdowns = ({
         } else {
           // add filter
           updatedFilters[key].push(filterConst);
-          if (tag) event(tag);
+          if (tag) gaEvent(tag);
         }
 
         setFilters(updatedFilters);

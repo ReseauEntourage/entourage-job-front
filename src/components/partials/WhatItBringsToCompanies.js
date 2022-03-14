@@ -3,8 +3,8 @@ import Section from 'src/components/utils/Section';
 import Img from 'src/components/utils/Img';
 import { Button, Grid } from 'src/components/utils';
 
-import { event } from 'src/lib/gtag';
-import TAGS from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
+import { GA_TAGS } from 'src/constants/tags';
 import ModalInterestLinkedOut from 'src/components/modals/ModalInterestLinkedOut';
 import { addPrefix } from 'src/utils';
 import { openModal } from 'src/components/modals/Modal';
@@ -31,7 +31,7 @@ const WhatItBringsToCompanies = () => {
           style="secondary"
           onClick={() => {
             openModal(<ModalInterestLinkedOut />);
-            event(TAGS.PAGE_AIDER_CONTACT_RECRUTEUR_CLIC);
+            gaEvent(GA_TAGS.PAGE_AIDER_CONTACT_RECRUTEUR_CLIC);
           }}
         >
           Nous contacter

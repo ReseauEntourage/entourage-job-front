@@ -18,14 +18,15 @@ import {
   sortByName,
   findConstantFromValue,
 } from 'src/utils';
-import { event } from 'src/lib/gtag';
-import TAGS from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { usePostOpportunity, useUpdateSharesCount } from 'src/hooks';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
 import CVCareerPathSentence from 'src/components/cv/CVCareerPathSentence';
 import { CONTRACTS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { fbEvent } from 'src/lib/fb';
 
 /**
  * Le cv en public et en preview
@@ -96,7 +97,8 @@ const CVFiche = ({ cv, actionDisabled }) => {
         <LinkedinShareButton
           disabled={actionDisabled}
           onShareWindowClose={() => {
-            event(TAGS.PAGE_CV_PARTAGE_CV_LINKEDIN_CLIC);
+            gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_LINKEDIN_CLIC);
+            fbEvent(FB_TAGS.SHARE_CV);
             updateSharesCount(cv.UserId, 'linkedin');
             openNewsletterModal();
           }}
@@ -114,7 +116,8 @@ const CVFiche = ({ cv, actionDisabled }) => {
         <FacebookShareButton
           disabled={actionDisabled}
           onShareWindowClose={() => {
-            event(TAGS.PAGE_CV_PARTAGE_CV_FACEBOOK_CLIC);
+            gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_FACEBOOK_CLIC);
+            fbEvent(FB_TAGS.SHARE_CV);
             updateSharesCount(cv.UserId, 'facebook');
             openNewsletterModal();
           }}
@@ -132,7 +135,8 @@ const CVFiche = ({ cv, actionDisabled }) => {
         <TwitterShareButton
           disabled={actionDisabled}
           onShareWindowClose={() => {
-            event(TAGS.PAGE_CV_PARTAGE_CV_TWITTER_CLIC);
+            gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_TWITTER_CLIC);
+            fbEvent(FB_TAGS.SHARE_CV);
             updateSharesCount(cv.UserId, 'twitter');
             openNewsletterModal();
           }}
@@ -151,7 +155,8 @@ const CVFiche = ({ cv, actionDisabled }) => {
         <WhatsappShareButton
           disabled={actionDisabled}
           onShareWindowClose={() => {
-            event(TAGS.PAGE_CV_PARTAGE_CV_WHATSAPP_CLIC);
+            gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_WHATSAPP_CLIC);
+            fbEvent(FB_TAGS.SHARE_CV);
             updateSharesCount(cv.UserId, 'whatsapp');
             openNewsletterModal();
           }}
@@ -182,7 +187,8 @@ const CVFiche = ({ cv, actionDisabled }) => {
           disabled={actionDisabled}
           style="secondary"
           onClick={() => {
-            event(TAGS.PAGE_CV_CONTACTEZ_MOI_CLIC);
+            gaEvent(GA_TAGS.PAGE_CV_CONTACTEZ_MOI_CLIC);
+            fbEvent(FB_TAGS.COMPANY_CV_OFFER);
             openModal(modal);
           }}
         >

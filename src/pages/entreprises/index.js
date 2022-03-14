@@ -12,8 +12,9 @@ import PARTNERS from 'src/constants/partners';
 import ModalGeneric from 'src/components/modals/ModalGeneric';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
-import { event } from 'src/lib/gtag';
-import TAGS from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
+import { GA_TAGS, FB_TAGS } from 'src/constants/tags';
+import { fbEvent } from 'src/lib/fb';
 
 const Entreprises = () => {
   return (
@@ -60,7 +61,8 @@ const Entreprises = () => {
         <div className="uk-flex uk-flex-center">
           <Button
             onClick={() => {
-              event(TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
+              gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
+              fbEvent(FB_TAGS.COMPANY_CONTACT);
               openModal(
                 <ModalGeneric>
                   <iframe

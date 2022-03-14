@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
-import { event } from 'src/lib/gtag';
-import TAGS from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
+import { GA_TAGS } from 'src/constants/tags';
 import { IconNoSSR } from 'src/components/utils/Icon';
 
 const Carousel = ({ style, children, containerClasses }) => {
@@ -11,13 +11,13 @@ const Carousel = ({ style, children, containerClasses }) => {
   let tag;
 
   if (router.asPath.includes('/recruter')) {
-    tag = TAGS.PAGE_RECRUTER_CARROUSEL_CLIC;
+    tag = GA_TAGS.PAGE_RECRUTER_CARROUSEL_CLIC;
   }
   if (router.asPath.includes('/travailler')) {
-    tag = TAGS.PAGE_TRAVAILLER_CARROUSEL_CLIC;
+    tag = GA_TAGS.PAGE_TRAVAILLER_CARROUSEL_CLIC;
   }
   if (router.asPath.includes('/orienter')) {
-    tag = TAGS.PAGE_ORIENTER_CARROUSEL_CLIC;
+    tag = GA_TAGS.PAGE_ORIENTER_CARROUSEL_CLIC;
   }
 
   return (
@@ -37,7 +37,7 @@ const Carousel = ({ style, children, containerClasses }) => {
           uk-slider-item="previous"
           onClick={() => {
             if (tag) {
-              event(tag);
+              gaEvent(tag);
             }
           }}
         >
@@ -53,7 +53,7 @@ const Carousel = ({ style, children, containerClasses }) => {
           uk-slider-item="next"
           onClick={() => {
             if (tag) {
-              event(tag);
+              gaEvent(tag);
             }
           }}
         >
@@ -71,7 +71,7 @@ const Carousel = ({ style, children, containerClasses }) => {
           uk-slider-item="previous"
           onClick={() => {
             if (tag) {
-              event(tag);
+              gaEvent(tag);
             }
           }}
         >
@@ -87,7 +87,7 @@ const Carousel = ({ style, children, containerClasses }) => {
           uk-slider-item="next"
           onClick={() => {
             if (tag) {
-              event(tag);
+              gaEvent(tag);
             }
           }}
         >

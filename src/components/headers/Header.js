@@ -7,10 +7,11 @@ import { Hamburger, Nav, Navbar, NavbarLogo } from 'src/components/utils';
 
 import Button from 'src/components/utils/Button';
 import { EXTERNAL_LINKS } from 'src/constants';
-import { event } from 'src/lib/gtag';
-import TAGS from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas';
+import { fbEvent } from 'src/lib/fb';
 
 const LINKS = [
   { href: '/aider', name: 'Particuliers, agissez' },
@@ -88,7 +89,7 @@ const Header = ({ isHome }) => {
                 isExternal
                 newTab
                 onClick={() => {
-                  return event(TAGS.FOOTER_DON_CLIC);
+                  gaEvent(GA_TAGS.FOOTER_DON_CLIC);
                 }}
                 style="default"
               >
@@ -160,7 +161,8 @@ const Header = ({ isHome }) => {
               newTab
               onClick={() => {
                 UIkit.offcanvas(`#${offcanvasId}`).hide();
-                event(TAGS.FOOTER_DON_CLIC);
+                gaEvent(GA_TAGS.HEADER_DON_CLIC);
+                fbEvent(FB_TAGS.DONATION);
               }}
               style="default"
             >

@@ -6,8 +6,8 @@ export const pageview = (url) => {
 };
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/events
-export const event = ({ action, category, label, value }) => {
-  window.gtag('event', action, {
+export const gaEvent = ({ action, category, label, value }) => {
+  window.gtag('gaEvent', action, {
     event_category: category,
     event_label: label,
     value,
