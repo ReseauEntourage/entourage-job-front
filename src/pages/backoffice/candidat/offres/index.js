@@ -54,7 +54,7 @@ const Opportunities = () => {
     (candId, candidatZone) => {
       if (!tag) {
         const params = {
-          tag: OFFER_CANDIDATE_FILTERS_DATA[1].tag,
+          tag: OFFER_CANDIDATE_FILTERS_DATA[0].tag,
           ...restParams,
         };
 
