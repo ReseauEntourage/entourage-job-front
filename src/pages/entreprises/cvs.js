@@ -1,7 +1,7 @@
 import React from 'react';
-import { event } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag';
 import { Button, Grid, Img, Section } from 'src/components/utils';
-import TAGS from 'src/constants/tags';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import Layout from 'src/components/Layout';
 import ImageTitle from 'src/components/partials/ImageTitle';
 import SearchCandidates from 'src/components/partials/SearchCandidates';
@@ -10,6 +10,7 @@ import NewsletterPartial from 'src/components/partials/NewsletterPartial';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
 import usePostPublicOfferModal from 'src/components/modals/usePostPublicOfferModal';
+import { fbEvent } from 'src/lib/fb';
 
 const CVEntreprises = () => {
   const publicOfferModal = usePostPublicOfferModal();
@@ -45,7 +46,8 @@ const CVEntreprises = () => {
               className="uk-margin-medium-top"
               style="secondary"
               onClick={() => {
-                event(TAGS.PAGE_RECRUTER_DEPOSER_OFFRE_CLIC);
+                gaEvent(GA_TAGS.PAGE_RECRUTER_DEPOSER_OFFRE_CLIC);
+                fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER);
                 openModal(publicOfferModal);
               }}
             >

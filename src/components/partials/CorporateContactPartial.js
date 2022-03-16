@@ -1,7 +1,7 @@
 import React from 'react';
 import ModalInterestLinkedOut from 'src/components/modals/ModalInterestLinkedOut';
-import { event } from 'src/lib/gtag';
-import TAGS from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
+import { GA_TAGS } from 'src/constants/tags';
 import { Button, Grid, Section } from 'src/components/utils';
 import { openModal } from 'src/components/modals/Modal';
 
@@ -21,7 +21,7 @@ const CorporateContact = () => {
           className="uk-margin-small-top"
           onClick={() => {
             openModal(<ModalInterestLinkedOut />);
-            event(TAGS.PAGE_AIDER_CONTACT_RECRUTEUR_CLIC);
+            gaEvent(GA_TAGS.PAGE_AIDER_CONTACT_RECRUTEUR_CLIC);
           }}
         >
           Nous contacter

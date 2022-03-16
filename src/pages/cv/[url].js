@@ -10,7 +10,7 @@ import { CVBackground, CVFiche } from 'src/components/cv';
 import Layout from 'src/components/Layout';
 import Api from 'src/Axios';
 import { Grid, Section, SimpleLink } from 'src/components/utils';
-import TAGS from 'src/constants/tags';
+import { GA_TAGS } from 'src/constants/tags';
 import { useUpdateSharesCount } from 'src/hooks';
 import Button from 'src/components/utils/Button';
 import { CV_FILTERS_DATA } from 'src/constants';
@@ -83,7 +83,7 @@ const CVPage = ({ cv, exists, router, hideShareOptions }) => {
           </Section>
           <NewsletterPartial
             style="default"
-            tag={TAGS.PAGE_CV_INSCRIPTION_NEWSLETTER_CLIC}
+            tag={GA_TAGS.PAGE_CV_INSCRIPTION_NEWSLETTER_CLIC}
           />
         </Layout>
       );
@@ -99,7 +99,7 @@ const CVPage = ({ cv, exists, router, hideShareOptions }) => {
         </Section>
         <NewsletterPartial
           padding={false}
-          tag={TAGS.PAGE_CV_INSCRIPTION_NEWSLETTER_CLIC}
+          tag={GA_TAGS.PAGE_CV_INSCRIPTION_NEWSLETTER_CLIC}
         />
         <DiscoverPartial />
       </Layout>

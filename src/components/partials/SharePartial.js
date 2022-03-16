@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { Button, Grid } from 'src/components/utils';
-import TAGS from 'src/constants/tags';
-import { event } from 'src/lib/gtag';
+import { GA_TAGS } from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
 import { IconNoSSR } from 'src/components/utils/Icon';
 
 const SharePartial = ({ showTitle, padding }) => {
@@ -21,32 +21,32 @@ const SharePartial = ({ showTitle, padding }) => {
             title: 'Facebook',
             href: 'https://www.facebook.com/linkedout.byentouragee',
             tag: isCVPage
-              ? TAGS.PAGE_CV_SUIVRE_SUR_FACEBOOK_CLIC
-              : TAGS.HOME_SUIVRE_SUR_FACEBOOK_CLIC,
+              ? GA_TAGS.PAGE_CV_SUIVRE_SUR_FACEBOOK_CLIC
+              : GA_TAGS.HOME_SUIVRE_SUR_FACEBOOK_CLIC,
           },
           {
             name: 'twitter',
             title: 'Twitter',
             href: 'https://twitter.com/LinkedOut',
             tag: isCVPage
-              ? TAGS.PAGE_CV_SUIVRE_SUR_TWITTER_CLIC
-              : TAGS.HOME_SUIVRE_SUR_TWITTER_CLIC,
+              ? GA_TAGS.PAGE_CV_SUIVRE_SUR_TWITTER_CLIC
+              : GA_TAGS.HOME_SUIVRE_SUR_TWITTER_CLIC,
           },
           {
             name: 'linkedin',
             title: 'LinkedIn',
             href: 'https://www.linkedin.com/company/linkedout-byentourage',
             tag: isCVPage
-              ? TAGS.PAGE_CV_SUIVRE_SUR_LINKEDIN_CLIC
-              : TAGS.HOME_SUIVRE_SUR_LINKEDIN_CLIC,
+              ? GA_TAGS.PAGE_CV_SUIVRE_SUR_LINKEDIN_CLIC
+              : GA_TAGS.HOME_SUIVRE_SUR_LINKEDIN_CLIC,
           },
           {
             name: 'instagram',
             title: 'Instagram',
             href: 'https://www.instagram.com/linkedout_byentourage',
             tag: isCVPage
-              ? TAGS.PAGE_CV_SUIVRE_SUR_INSTAGRAM_CLIC
-              : TAGS.HOME_SUIVRE_SUR_INSTAGRAM_CLIC,
+              ? GA_TAGS.PAGE_CV_SUIVRE_SUR_INSTAGRAM_CLIC
+              : GA_TAGS.HOME_SUIVRE_SUR_INSTAGRAM_CLIC,
           },
         ].map(({ name, title, href, tag }, key) => {
           return (
@@ -56,7 +56,7 @@ const SharePartial = ({ showTitle, padding }) => {
               isExternal
               newTab
               onClick={() => {
-                return event(tag);
+                gaEvent(tag);
               }}
               key={key}
             >

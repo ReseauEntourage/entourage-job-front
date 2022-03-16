@@ -6,7 +6,7 @@ import validator from 'validator';
 import { Grid, Section } from 'src/components/utils';
 import Api from 'src/Axios';
 import Button from 'src/components/utils/Button';
-import { event } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag';
 import { NEWSLETTER_TAGS } from 'src/constants';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import Checkbox from 'src/components/forms/fields/Checkbox';
@@ -26,7 +26,7 @@ const NewsletterPartial = ({ style, padding, tag }) => {
       setIsMailValid(mailValid);
       // setIsTagsValid(tagsValid);
     } else {
-      event(tag);
+      gaEvent(tag);
       try {
         await Api.post('/mail/newsletter', {
           email,

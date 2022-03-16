@@ -4,7 +4,7 @@ import { Grid, Section } from 'src/components/utils';
 import SharePartial from 'src/components/partials/SharePartial';
 import NewsletterPartial from 'src/components/partials/NewsletterPartial';
 import MultipleCTA from 'src/components/partials/MultipleCTA';
-import TAGS from 'src/constants/tags';
+import { GA_TAGS } from 'src/constants/tags';
 
 const datas = [
   {
@@ -58,7 +58,7 @@ const ActionPartial = ({ style }) => {
         <NewsletterPartial
           padding={false}
           style={style}
-          tag={TAGS.HOME_INSCRIPTION_NEWSLETTER_CLIC}
+          tag={GA_TAGS.HOME_INSCRIPTION_NEWSLETTER_CLIC}
         />
         <SharePartial />
       </Grid>

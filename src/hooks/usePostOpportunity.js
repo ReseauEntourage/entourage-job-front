@@ -4,8 +4,8 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Api from 'src/Axios';
 import _ from 'lodash';
 import { usePrevious } from 'src/hooks/utils';
-import { event } from 'src/lib/gtag';
-import TAGS from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
+import { GA_TAGS } from 'src/constants/tags';
 import { openModal } from 'src/components/modals/Modal';
 import defaultSchema from 'src/components/forms/schema/formEditOpportunity';
 import ModalEdit from 'src/components/modals/ModalEdit';
@@ -36,11 +36,11 @@ export function usePostOpportunity({
 
       if (!isAdmin) {
         if (opportunity.isPublic) {
-          event(TAGS.POPUP_OFFRE_ENVOYER_OFFRE_GENERALE_CLIC);
+          gaEvent(GA_TAGS.POPUP_OFFRE_ENVOYER_OFFRE_GENERALE_CLIC);
         } else if (candidatesId.length > 1) {
-          event(TAGS.POPUP_OFFRE_ENVOYER_OFFRE_MULTIPLE_CLIC);
+          gaEvent(GA_TAGS.POPUP_OFFRE_ENVOYER_OFFRE_MULTIPLE_CLIC);
         } else {
-          event(TAGS.POPUP_OFFRE_ENVOYER_OFFRE_UNIQUE_CLIC);
+          gaEvent(GA_TAGS.POPUP_OFFRE_ENVOYER_OFFRE_UNIQUE_CLIC);
         }
       }
 
@@ -127,11 +127,11 @@ export function usePostOpportunity({
         onError={async (fields) => {
           if (!isAdmin) {
             if (fields.isPublic) {
-              event(TAGS.POPUP_OFFRE_ENVOYER_OFFRE_GENERALE_INVALIDE);
+              gaEvent(GA_TAGS.POPUP_OFFRE_ENVOYER_OFFRE_GENERALE_INVALIDE);
             } else if (fields.candidatesId?.length > 1) {
-              event(TAGS.POPUP_OFFRE_ENVOYER_OFFRE_MULTIPLE_INVALIDE);
+              gaEvent(GA_TAGS.POPUP_OFFRE_ENVOYER_OFFRE_MULTIPLE_INVALIDE);
             } else {
-              event(TAGS.POPUP_OFFRE_ENVOYER_OFFRE_UNIQUE_INVALIDE);
+              gaEvent(GA_TAGS.POPUP_OFFRE_ENVOYER_OFFRE_UNIQUE_INVALIDE);
             }
           }
         }}

@@ -1,4 +1,4 @@
-import TAGS from 'src/constants/tags';
+import { GA_TAGS } from 'src/constants/tags';
 
 import {
   ADMIN_ZONES,
@@ -198,14 +198,14 @@ const CV_FILTERS_DATA = [
       'desc'
     ),
     title: 'Où ?',
-    tag: TAGS.PAGE_GALERIE_FILTRE_GEOGRAPHIQUE_CLIC,
+    tag: GA_TAGS.PAGE_GALERIE_FILTRE_GEOGRAPHIQUE_CLIC,
     icon: 'location',
   },
   {
     key: 'businessLines',
     constants: BUSINESS_LINES,
     title: 'Métiers',
-    tag: TAGS.PAGE_GALERIE_FILTRE_SECTEURS_CLIC,
+    tag: GA_TAGS.PAGE_GALERIE_FILTRE_SECTEURS_CLIC,
   },
 ];
 
