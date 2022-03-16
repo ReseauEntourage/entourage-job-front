@@ -29,63 +29,60 @@ import { List } from 'src/components/modals/OfferModals/NavList';
 import ModalOfferBase from 'src/components/modals/OfferModals/ModalOfferBase';
 import useModalOffer from 'src/components/modals/OfferModals/useModalOffer';
 import OfferContent from 'src/components/modals/OfferModals/OfferContent';
+import UIkit from 'uikit';
 
-const RecrutorContactInfo = ({
-  firstName,
-  lastName,
-  position,
-  company,
-  mail,
-}) => {
+const ContactStepsInterested = ({ mail, isPublic }) => {
   return (
-    <Grid gap="small" column>
-      <div className="uk-flex uk-flex-middle">
-        <IconNoSSR
-          style={{ width: 20 }}
-          name="user"
-          ratio={1}
-          className="uk-margin-small-right"
-        />
-        <div className="uk-flex uk-flex-column">
-          <h4 className="uk-text-bold uk-flex-middle uk-flex uk-margin-remove">
-            {firstName} {lastName}
-          </h4>
-          <span className="uk-text-meta">{position}</span>
-        </div>
-      </div>
-      <div className="uk-flex uk-flex-middle">
-        <IconNoSSR
-          name="home"
-          ratio={0.8}
-          style={{ width: 20 }}
-          className="uk-margin-small-right"
-        />
-        <span>{company}</span>
-      </div>
-      <SimpleLink
-        href={`mailto:${mail}`}
-        isExternal
-        target="_blank"
-        className="uk-flex uk-flex-middle"
-      >
-        <IconNoSSR
-          name="mail"
-          ratio={0.8}
-          style={{ width: 20 }}
-          className="uk-margin-small-right"
-        />
-        {mail}
-      </SimpleLink>
-    </Grid>
+    <div>
+      <ol className="uk-list uk-list-decimal">
+        <li>
+          <span className="uk-text-bold uk-flex uk-flex-wrap">
+            Écrivez au recruteur à&nbsp;
+            <SimpleLink
+              href={`mailto:${mail}`}
+              isExternal
+              target="_blank"
+              className="uk-flex uk-flex-middle"
+            >
+              {mail}
+              &nbsp;
+            </SimpleLink>
+            pour lui proposer un temps d&apos;échange.
+          </span>
+        </li>
+        <li>
+          Une fois le mail envoyé, cliquez sur{' '}
+          <span className="uk-text-italic">
+            {isPublic
+              ? "J'ai contacté le recruteur"
+              : "J'ai répondu au recruteur"}
+          </span>
+          . Il est important d’informer LinkedOut de vos avancées.
+        </li>
+      </ol>
+    </div>
   );
 };
 
-RecrutorContactInfo.propTypes = {
+ContactStepsInterested.propTypes = {
+  mail: PropTypes.string.isRequired,
+  isPublic: PropTypes.bool.isRequired,
+};
+
+const PrivateOfferSentence = ({ firstName, lastName }) => {
+  return (
+    <>
+      <span className="uk-text-bold">
+        {firstName} {lastName}
+      </span>{' '}
+      a pris le temps de vous adresser cette offre personnellement.
+    </>
+  );
+};
+
+PrivateOfferSentence.propTypes = {
   firstName: PropTypes.string.isRequired,
   lastName: PropTypes.string.isRequired,
-  position: PropTypes.string.isRequired,
-  company: PropTypes.string.isRequired,
-  mail: PropTypes.string.isRequired,
 };
 
 const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
@@ -220,6 +217,16 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                     onClick={() => {
                       openModal(
                         <ModalConfirm
+                          text={
+                            !offer.isPublic ? (
+                              <PrivateOfferSentence
+                                lastName={offer.recruiterName}
+                                firstName={offer.recruiterFirstName}
+                              />
+                            ) : (
+                              ''
+                            )
+                          }
                           onConfirm={async () => {
                             const { userOpportunity } = offer;
                             await updateOpportunityUser({
@@ -227,43 +234,65 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                               archived: true,
                               status: OFFER_STATUS[4].value,
                             });
+                            UIkit.notification(
+                              "L'offre a été archivée",
+                              'success'
+                            );
                           }}
-                          title="Pas intéressé⸱e ?"
-                          text={
-                            <>
-                              <span>
-                                L&apos;offre va être archivée et son statut sera
-                                déclaré comme{' '}
-                                <span className="uk-text-italic">
-                                  Refusé avant entretien
-                                </span>
-                                . Vous pourrez toujours la retrouver dans vos
-                                offres archivées et la restaurer&nbsp;!
-                              </span>
-                              {!offer.isPublic && (
-                                <>
-                                  <br />
-                                  <br />
-                                  <span className="uk-text-bold">
-                                    N&apos;oubliez pas de remerciez le recruteur
-                                    et de l&apos;informer que cette offre ne
-                                    correspond pas à votre projet professionnel.
-                                  </span>
-                                </>
-                              )}
-                            </>
+                          title="L'offre ne vous intéresse pas"
+                          buttonText={
+                            offer.isPublic
+                              ? "J'archive l'offre"
+                              : "J'ai contacté le recruteur"
                           }
-                          buttonText="Confirmer"
                         >
-                          <div className="uk-margin-medium-top">
-                            <RecrutorContactInfo
-                              firstName={offer.recruiterFirstName}
-                              lastName={offer.recruiterName}
-                              mail={offer.recruiterMail}
-                              company={offer.company}
-                              position={offer.position}
-                            />
-                          </div>
+                          {offer.isPublic ? (
+                            <>
+                              Cette offre étant adressée à tous, vous
+                              n&apos;avez pas besoin de répondre au recruteur.
+                              <br />
+                              <br />
+                              Vous pourrez retrouver cette offre à tout moment
+                              dans vos{' '}
+                              <span className="uk-text-bold">
+                                Offres archivées
+                              </span>
+                              .
+                            </>
+                          ) : (
+                            <div className="uk-margin-medium-top">
+                              <ol className="uk-list uk-list-decimal">
+                                <li>
+                                  <div className="uk-flex uk-flex-wrap">
+                                    <span className="uk-text-bold uk-flex uk-flex-wrap">
+                                      Écrivez au recruteur à
+                                    </span>
+                                    &nbsp;
+                                    <SimpleLink
+                                      href={`mailto:${offer.recruiterMail}`}
+                                      isExternal
+                                      target="_blank"
+                                      className="uk-flex uk-flex-middle uk-text-bold"
+                                    >
+                                      {offer.recruiterMail}
+                                    </SimpleLink>
+                                    .&nbsp;
+                                    <span>
+                                      Il est indispensable de lui répondre, que
+                                      vous soyez intéressé⸱e ou non&nbsp;!
+                                    </span>
+                                  </div>
+                                </li>
+                                <li>
+                                  Une fois le mail envoyé, cliquez sur{' '}
+                                  <span className="uk-text-italic">
+                                    J&apos;ai contacté le recruteur
+                                  </span>
+                                  . Il est important d’en informer LinkedOut.
+                                </li>
+                              </ol>
+                            </div>
+                          )}
                         </ModalConfirm>
                       );
                     }}
@@ -276,13 +305,22 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                     onClick={() => {
                       openModal(
                         <ModalConfirm
-                          title={
-                            isInternalContact
-                              ? 'Personne à contacter'
-                              : 'Coordonnées du recruteur'
+                          title={"L'offre vous intéresse"}
+                          text={
+                            !offer.isPublic ? (
+                              <PrivateOfferSentence
+                                lastName={offer.recruiterName}
+                                firstName={offer.recruiterFirstName}
+                              />
+                            ) : (
+                              ''
+                            )
                           }
-                          text=""
-                          buttonText="J'ai contacté le recruteur"
+                          buttonText={
+                            offer.isPublic
+                              ? "J'ai contacté le recruteur"
+                              : "J'ai répondu au recruteur"
+                          }
                           onConfirm={async () => {
                             if (status < OFFER_STATUS[1].value) {
                               const { userOpportunity } = offer;
@@ -293,13 +331,12 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                             }
                           }}
                         >
-                          <RecrutorContactInfo
-                            firstName={offer.recruiterFirstName}
-                            lastName={offer.recruiterName}
-                            mail={offer.recruiterMail}
-                            company={offer.company}
-                            position={offer.position}
-                          />
+                          <div className="uk-margin-medium-top">
+                            <ContactStepsInterested
+                              mail={offer.recruiterMail}
+                              isPublic={offer.isPublic}
+                            />
+                          </div>
                         </ModalConfirm>
                       );
                     }}
