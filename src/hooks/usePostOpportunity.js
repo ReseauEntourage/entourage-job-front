@@ -34,6 +34,7 @@ export function usePostOpportunity({
           })
         : [];
 
+      let successMessage = 'Offre validée';
       if (!isAdmin) {
         if (opportunity.isPublic) {
           gaEvent(GA_TAGS.POPUP_OFFRE_ENVOYER_OFFRE_GENERALE_CLIC);
@@ -42,6 +43,9 @@ export function usePostOpportunity({
         } else {
           gaEvent(GA_TAGS.POPUP_OFFRE_ENVOYER_OFFRE_UNIQUE_CLIC);
         }
+        successMessage = opportunity.isPublic
+          ? 'Merci pour votre offre, nous reviendrons bientôt vers vous.'
+          : `Merci pour votre offre, le(s) candidat(s) et coach(s) associés reviendront bientôt vers vous.`;
       }
 
       try {
@@ -68,12 +72,7 @@ export function usePostOpportunity({
           date: Date.now(),
         });
         closeModal();
-        UIkit.notification(
-          opportunity.isPublic
-            ? 'Merci pour votre offre, nous reviendrons bientôt vers vous.'
-            : `Merci pour votre offre, le(s) candidat(s) et coach(s) associés reviendront bientôt vers vous.`,
-          'success'
-        );
+        UIkit.notification(successMessage, 'success');
         if (adminCallback) await adminCallback();
         if (openNewForm) {
           setLastFilledForm({
@@ -117,7 +116,7 @@ export function usePostOpportunity({
       <ModalEdit
         title={modalTitle}
         description={modalDesc}
-        submitText="Envoyer"
+        submitText={isAdmin ? 'Valider' : 'Envoyer'}
         defaultValues={{
           ...mutatedDefaultValue,
           ...lastFilledForm,

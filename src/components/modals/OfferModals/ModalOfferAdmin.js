@@ -107,6 +107,19 @@ const ModalOfferAdmin = ({
         },
       ],
     },
+    {
+      fieldId: 'startEndContract',
+      props: [
+        {
+          propName: 'hidden',
+          value: false,
+        },
+        {
+          propName: 'disabled',
+          value: false,
+        },
+      ],
+    },
     ...adminMutations,
   ]);
 
@@ -221,7 +234,7 @@ const ModalOfferAdmin = ({
               formSchema={mutatedExternalOfferSchema}
               defaultValues={{
                 ...offer,
-                candidateId: offer.userOpportunity[0].UserId,
+                candidateId: offer.userOpportunity[0]?.UserId,
                 businessLines: defaultBusinessLines,
                 department: findConstantFromValue(
                   offer.department,
@@ -236,7 +249,7 @@ const ModalOfferAdmin = ({
                   ...fields,
                   startOfContract: fields.startOfContract || null,
                   endOfContract: fields.endOfContract || null,
-                  candidateId: offer.userOpportunity[0].UserId,
+                  candidateId: offer.userOpportunity[0]?.UserId,
                   id: offer.id,
                   businessLines: fields.businessLines
                     ? fields.businessLines.map((businessLine, index) => {
