@@ -349,7 +349,7 @@ const User = () => {
                 href={{
                   pathname: '/backoffice/admin/offres',
                   query: {
-                    tag: OFFER_ADMIN_FILTERS_DATA[2].tag,
+                    tag: OFFER_ADMIN_FILTERS_DATA[1].tag,
                     department: cv.locations,
                     businessLines: _.uniq(
                       cv.businessLines.map(({ name }) => {

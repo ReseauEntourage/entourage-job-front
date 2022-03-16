@@ -339,7 +339,7 @@ const OpportunityList = forwardRef(
     useEffect(() => {
       if (restQuery.tag !== prevTag) {
         const initialFiltersConst =
-          restQuery.tag === OFFER_ADMIN_FILTERS_DATA[3].tag
+          restQuery.tag === OFFER_ADMIN_FILTERS_DATA[2].tag
             ? OPPORTUNITY_FILTERS_DATA.slice(1)
             : OPPORTUNITY_FILTERS_DATA;
 
