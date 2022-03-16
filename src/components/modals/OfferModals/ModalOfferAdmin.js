@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Api from 'src/Axios';
 import schema, {
@@ -9,19 +9,28 @@ import { Button, Grid, SimpleLink } from 'src/components/utils';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
 import { IconNoSSR } from 'src/components/utils/Icon';
 
-import { List, OfferInfoContainer } from 'src/components/modals/ModalOffer';
-
 import {
+  findConstantFromValue,
   findOfferStatus,
   formatParagraph,
   mutateDefaultOfferStatus,
   mutateFormSchema,
+  sortByOrder,
 } from 'src/utils';
-import { EXTERNAL_OFFERS_ORIGINS, OFFER_STATUS } from 'src/constants';
-import ModalOfferInfo from 'src/components/modals/ModalOfferInfo';
-import ModalGeneric from 'src/components/modals/ModalGeneric';
+import {
+  BUSINESS_LINES,
+  EXTERNAL_OFFERS_ORIGINS,
+  OFFER_STATUS,
+} from 'src/constants';
+import ModalOfferInfo from 'src/components/modals/OfferModals/ModalOfferInfo';
 import { useModalContext } from 'src/components/modals/Modal';
-import formEditExternalOpportunity from 'src/components/forms/schema/formEditExternalOpportunity';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import formEditExternalOpportunitySchema from 'src/components/forms/schema/formEditExternalOpportunity';
+import { List } from 'src/components/modals/OfferModals/NavList';
+import { OfferInfoContainer } from 'src/components/modals/OfferModals/OfferInfoContainer';
+import ModalOfferBase from 'src/components/modals/OfferModals/ModalOfferBase';
+import useModalOffer from 'src/components/modals/OfferModals/useModalOffer';
+import OfferContent from 'src/components/modals/OfferModals/OfferContent';
 
 const getCandidatesToShowInInput = (offer) => {
   if (offer.userOpportunity && offer.userOpportunity.length > 0) {
@@ -54,11 +63,16 @@ const ModalOfferAdmin = ({
   navigateBackToList,
 }) => {
   const { onClose } = useModalContext();
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-
-  const [offer, setOffer] = useState(currentOffer);
+  const {
+    loading,
+    error,
+    setLoading,
+    setError,
+    isEditing,
+    setIsEditing,
+    offer,
+    setOffer,
+  } = useModalOffer(currentOffer);
 
   // desactivation du champ de disclaimer
   const mutatedSchema = mutateFormSchema(schema, [
@@ -95,6 +109,35 @@ const ModalOfferAdmin = ({
     },
     ...adminMutations,
   ]);
+
+  const mutatedExternalOfferSchema = mutateFormSchema(
+    formEditExternalOpportunitySchema,
+    [
+      {
+        fieldId: 'businessLines',
+        props: [
+          {
+            propName: 'hidden',
+            value: false,
+          },
+          {
+            propName: 'disabled',
+            value: false,
+          },
+        ],
+      },
+    ]
+  );
+
+  const sortedBusinessLines =
+    offer.businessLines && offer.businessLines.length > 0
+      ? sortByOrder(offer.businessLines)
+      : null;
+
+  const defaultBusinessLines =
+    sortedBusinessLines?.map((businessLineObject) => {
+      return findConstantFromValue(businessLineObject.name, BUSINESS_LINES);
+    }) || undefined;
 
   const updateOpportunity = async (opportunity, isExternal) => {
     setError(false);
@@ -146,41 +189,44 @@ const ModalOfferAdmin = ({
     }
   };
 
-  useEffect(() => {
-    setError(false);
-    setIsEditing(false);
-  }, [offer]);
-
-  if (!offer) {
-    return null;
-  }
-
-  const contentBuilder = () => {
-    // error
-    if (error) {
-      return <div>Une erreur c&lsquo;est produite</div>;
+  const getUsersToShow = () => {
+    if (Array.isArray(offer.userOpportunity)) {
+      if (offer.isPublic) {
+        return offer.userOpportunity.filter((userOpp) => {
+          return (
+            userOpp.status !== OFFER_STATUS[0].value || userOpp.recommended
+          );
+        });
+      }
+      return offer.userOpportunity;
     }
+    return [offer.userOpportunity];
+  };
 
-    // loading
-    if (loading) {
-      return (
-        <div className="uk-height-medium uk-flex uk-flex-middle uk-flex-center">
-          <div data-uk-spinner="" />
-        </div>
-      );
-    }
-
-    // edit
-    if (isEditing) {
-      return (
+  // Modal
+  return (
+    <ModalOfferBase
+      isExternal={offer.isExternal}
+      isArchived={offer.isArchived}
+      navigateBackToList={navigateBackToList}
+      loading={loading}
+      error={error}
+      isEditing={isEditing}
+      setIsEditing={setIsEditing}
+      editingForm={
         <div>
           <h3>Modification de l&apos;offre d&apos;emploi</h3>
           {offer.isExternal ? (
             <FormWithValidation
-              formSchema={formEditExternalOpportunity}
+              formSchema={mutatedExternalOfferSchema}
               defaultValues={{
                 ...offer,
                 candidateId: offer.userOpportunity[0].UserId,
+                businessLines: defaultBusinessLines,
+                department: findConstantFromValue(
+                  offer.department,
+                  DEPARTMENTS_FILTERS
+                ),
               }}
               onCancel={() => {
                 setIsEditing(false);
@@ -192,6 +238,14 @@ const ModalOfferAdmin = ({
                   endOfContract: fields.endOfContract || null,
                   candidateId: offer.userOpportunity[0].UserId,
                   id: offer.id,
+                  businessLines: fields.businessLines
+                    ? fields.businessLines.map((businessLine, index) => {
+                        return {
+                          name: businessLine,
+                          order: index,
+                        };
+                      })
+                    : [],
                 };
                 await updateOpportunity(tmpOpportunity, true);
                 setIsEditing(false);
@@ -204,6 +258,11 @@ const ModalOfferAdmin = ({
               defaultValues={{
                 ...offer,
                 candidatesId: getCandidatesToShowInInput(offer),
+                businessLines: defaultBusinessLines,
+                department: findConstantFromValue(
+                  offer.department,
+                  DEPARTMENTS_FILTERS
+                ),
               }}
               onCancel={() => {
                 setIsEditing(false);
@@ -221,6 +280,14 @@ const ModalOfferAdmin = ({
                         ? candidateId.value
                         : candidateId;
                     }) || [],
+                  businessLines: fields.businessLines
+                    ? fields.businessLines.map((businessLine, index) => {
+                        return {
+                          name: businessLine,
+                          order: index,
+                        };
+                      })
+                    : [],
                 };
                 await updateOpportunity(tmpOpportunity);
                 setIsEditing(false);
@@ -229,25 +296,8 @@ const ModalOfferAdmin = ({
             />
           )}
         </div>
-      );
-    }
-
-    const getUsersToShow = () => {
-      if (Array.isArray(offer.userOpportunity)) {
-        if (offer.isPublic) {
-          return offer.userOpportunity.filter((userOpp) => {
-            return (
-              userOpp.status !== OFFER_STATUS[0].value || userOpp.recommended
-            );
-          });
-        }
-        return offer.userOpportunity;
       }
-      return [offer.userOpportunity];
-    };
-
-    // view
-    return (
+    >
       <div>
         <Grid gap="small" between middle eachWidths={['expand@m', 'auto@m']}>
           <ModalOfferInfo
@@ -324,7 +374,7 @@ const ModalOfferAdmin = ({
                   href={`mailto:${offer.recruiterMail}`}
                   className="uk-text-meta uk-text-muted uk-flex uk-flex-middle"
                   isExternal
-                  newTab
+                  target="_blank"
                 >
                   <span>
                     {offer.recruiterMail}
@@ -463,45 +513,7 @@ const ModalOfferAdmin = ({
               </OfferInfoContainer>
             )}
           </Grid>
-          <Grid gap="medium" childWidths={['1-1']}>
-            {offer.companyDescription && (
-              <OfferInfoContainer
-                icon="comment"
-                title="Description de l'entreprise"
-              >
-                <div>{formatParagraph(offer.companyDescription)}</div>
-              </OfferInfoContainer>
-            )}
-            <OfferInfoContainer icon="comment" title="Description de l'offre">
-              <div>{formatParagraph(offer.description)}</div>
-            </OfferInfoContainer>
-            {offer.skills && (
-              <OfferInfoContainer icon="check" title="Compétences importantes">
-                <div>{formatParagraph(offer.skills)}</div>
-              </OfferInfoContainer>
-            )}
-            {offer.prerequisites && (
-              <OfferInfoContainer icon="check" title="Pré-requis">
-                <div>{formatParagraph(offer.prerequisites)}</div>
-              </OfferInfoContainer>
-            )}
-            {offer.link && (
-              <OfferInfoContainer icon="link" title="Lien">
-                <div>{offer.link.trim()}</div>
-              </OfferInfoContainer>
-            )}
-            {offer.businessLines && (
-              <Grid gap="small">
-                {offer.businessLines.map((businessLine, index) => {
-                  return (
-                    <Button key={index} disabled>
-                      <span style={{ color: '#666' }}>{businessLine}</span>
-                    </Button>
-                  );
-                })}
-              </Grid>
-            )}
-          </Grid>
+          <OfferContent offer={offer} />
         </Grid>
         <div className="uk-modal-footer uk-padding-remove-horizontal uk-padding-remove-bottom">
           {!offer.isExternal && (
@@ -551,30 +563,7 @@ const ModalOfferAdmin = ({
           )}
         </div>
       </div>
-    );
-  };
-
-  let className = '';
-  if (offer.isArchived) {
-    className = 'uk-light uk-background-secondary';
-  } else if (offer.isExternal) {
-    className = 'uk-background-muted';
-  }
-  // Modal
-  return (
-    <ModalGeneric
-      className={className}
-      onClose={(closeModal) => {
-        if (isEditing) {
-          setIsEditing(false);
-        } else {
-          closeModal();
-          navigateBackToList();
-        }
-      }}
-    >
-      {contentBuilder()}
-    </ModalGeneric>
+    </ModalOfferBase>
   );
 };
 ModalOfferAdmin.propTypes = {
@@ -585,6 +574,7 @@ ModalOfferAdmin.propTypes = {
     company: PropTypes.string,
     description: PropTypes.string,
     prerequisites: PropTypes.string,
+    otherInfo: PropTypes.string,
     recruiterName: PropTypes.string,
     isPublic: PropTypes.bool,
     isArchived: PropTypes.bool,

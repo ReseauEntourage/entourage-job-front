@@ -56,7 +56,7 @@ const Contact = () => {
           <SimpleLink
             className="uk-link uk-margin-small-top uk-margin-small-bottom"
             href={`mailto:${process.env.MAILJET_CONTACT_EMAIL}`}
-            newTab
+            target="_blank"
             isExternal
           >
             {process.env.MAILJET_CONTACT_EMAIL}

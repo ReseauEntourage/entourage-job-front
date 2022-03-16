@@ -22,7 +22,7 @@ const NoCVInThisArea = () => {
       Contactez-nous à{' '}
       <SimpleLink
         isExternal
-        newTab
+        target="_blank"
         className="uk-link-text uk-text-primary"
         href={`mailto:${process.env.MAILJET_CONTACT_EMAIL}`}
       >
@@ -133,6 +133,7 @@ const CVList = ({
           items={items.slice(0, nbOfCVToDisplay).map((cv) => {
             return (
               <CandidatCard
+                businessLines={cv.businessLines}
                 url={cv.user.url}
                 imgSrc={
                   (cv.urlImg && process.env.AWSS3_CDN_URL + cv.urlImg) ||

@@ -37,41 +37,11 @@ const GenericField = ({
     onChange(events);
   };
 
-  const parseValueToUseSelect = () => {
-    if (data.isMulti && Array.isArray(value) && value.length > 0) {
-      return value.map((item) => {
-        return {
-          value: item,
-          label: item,
-        };
-      });
-    }
-    if (typeof value === 'string') {
-      return {
-        value,
-        label: value,
-      };
-    }
-    if (value) {
-      return value;
-    }
-    return null;
-  };
-
   const parseValueToReturnSelect = (event) => {
-    let valueToReturn = null;
-    if (data.isMulti && Array.isArray(event) && event.length > 0) {
-      valueToReturn = event.map((item) => {
-        return item.value;
-      });
-    } else if (event && event.value) {
-      valueToReturn = event.value;
-    }
-
     onChangeCustom({
       target: {
         name: data.name,
-        value: valueToReturn,
+        value: event,
         type: data.type,
       },
     });
@@ -247,7 +217,6 @@ const GenericField = ({
           defaultOptions
           value={valueToUse}
           isMulti={data.isMulti}
-          openMenuOnClick={false}
           placeholder={data.placeholder || 'Sélectionnez...'}
           noOptionsMessage={
             data.noOptionsMessage ||
@@ -264,6 +233,7 @@ const GenericField = ({
           isDisabled={data.disable ? data.disable(getValue) : false}
           isHidden={data.hide ? data.hide(getValue) : false}
           onChange={parseValueToReturnSelect}
+          openMenuOnClick={data.openMenuOnClick ?? true}
         />
         <FormValidatorErrorMessage validObj={getValid(data.name)} />
       </div>
@@ -289,9 +259,10 @@ const GenericField = ({
           id={`${formId}-${data.id}`}
           isMulti={data.isMulti}
           name={data.name}
-          value={parseValueToUseSelect()}
+          value={value}
           options={data.options}
           className="basic-multi-select"
+          isClearable
           classNamePrefix="select"
           placeholder={data.placeholder || 'Sélectionnez...'}
           noOptionsMessage={
@@ -303,6 +274,7 @@ const GenericField = ({
           onChange={parseValueToReturnSelect}
           isDisabled={data.disable ? data.disable(getValue) : false}
           isHidden={data.hide ? data.hide(getValue) : false}
+          openMenuOnClick={data.openMenuOnClick ?? true}
         />
         <FormValidatorErrorMessage validObj={getValid(data.name)} />
       </div>
@@ -339,9 +311,10 @@ const GenericField = ({
           formatCreateLabel={(userInput) => {
             return `Créer "${userInput}"`;
           }}
+          isClearable
           isMulti={data.isMulti}
           name={data.name}
-          value={parseValueToUseSelect()}
+          value={value}
           options={data.options}
           className="basic-multi-select"
           classNamePrefix="select"
@@ -358,6 +331,7 @@ const GenericField = ({
           onChange={parseValueToReturnSelect}
           isDisabled={data.disable ? data.disable(getValue) : false}
           isHidden={data.hide ? data.hide(getValue) : false}
+          openMenuOnClick={data.openMenuOnClick ?? true}
         />
         <FormValidatorErrorMessage validObj={getValid(data.name)} />
       </div>

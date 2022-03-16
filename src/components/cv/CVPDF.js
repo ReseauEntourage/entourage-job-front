@@ -9,9 +9,11 @@ import {
   formatParagraph,
   sortByOrder,
   sortByName,
-  getAmbitionsLinkingSentence,
+  findConstantFromValue,
 } from 'src/utils';
-import { AMBITIONS_PREFIXES } from 'src/constants';
+import CVCareerPathSentence from 'src/components/cv/CVCareerPathSentence';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { CONTRACTS } from 'src/constants';
 
 const CVPDF = ({ cv, page }) => {
   const experiences =
@@ -19,8 +21,9 @@ const CVPDF = ({ cv, page }) => {
       ? sortByOrder(cv.experiences)
       : [];
 
-  const ambitions =
-    cv.ambitions && cv.ambitions.length > 0 ? sortByOrder(cv.ambitions) : null;
+  const showCareerPathSentence =
+    (cv.ambitions && cv.ambitions.length > 0) ||
+    (cv.businessLines && cv.businessLines.length > 0);
 
   // Function to estimate where to divide the experiences between both pages
   const averageCharsPerLine = 59;
@@ -109,35 +112,12 @@ const CVPDF = ({ cv, page }) => {
                 </div>
               )}
               {/* uk-text-emphasis uk-text-bold */}
-              {ambitions && (
+              {showCareerPathSentence && (
                 <p className="uk-text-bold uk-width-xxlarge uk-text-center uk-margin-small-bottom uk-margin-remove-top">
-                  J&apos;aimerais travailler{' '}
-                  {ambitions[0].prefix || AMBITIONS_PREFIXES[0].label}{' '}
-                  <span
-                    className="uk-label uk-text-lowercase"
-                    style={{
-                      lineHeight: 'unset',
-                      verticalAlign: 'bottom',
-                      fontSize: 'inherit',
-                    }}
-                  >
-                    {ambitions[0].name || ambitions[0]}
-                  </span>
-                  {ambitions.length > 1 && (
-                    <>
-                      {getAmbitionsLinkingSentence(ambitions)}
-                      <span
-                        className="uk-label uk-text-lowercase"
-                        style={{
-                          lineHeight: 'unset',
-                          verticalAlign: 'bottom',
-                          fontSize: 'inherit',
-                        }}
-                      >
-                        {ambitions[1].name || ambitions[1]}
-                      </span>
-                    </>
-                  )}
+                  <CVCareerPathSentence
+                    ambitions={cv.ambitions}
+                    businessLines={cv.businessLines}
+                  />
                 </p>
               )}
             </div>
@@ -236,7 +216,14 @@ const CVPDF = ({ cv, page }) => {
                             style={{ width: 20 }}
                           />{' '}
                           <span className="uk-flex-1">
-                            {cv.contracts.join(' / ')}
+                            {cv.contracts
+                              .map((contract) => {
+                                return findConstantFromValue(
+                                  contract,
+                                  CONTRACTS
+                                ).label;
+                              })
+                              .join(' / ')}
                           </span>
                         </li>
                       )}
@@ -248,7 +235,14 @@ const CVPDF = ({ cv, page }) => {
                             style={{ width: 20 }}
                           />{' '}
                           <span className="uk-flex-1">
-                            {cv.locations.join(' / ')}
+                            {cv.locations
+                              .map((location) => {
+                                return findConstantFromValue(
+                                  location,
+                                  DEPARTMENTS_FILTERS
+                                ).label;
+                              })
+                              .join(' / ')}
                           </span>
                         </li>
                       )}
@@ -434,7 +428,7 @@ const CVPDF = ({ cv, page }) => {
                 <SimpleLink
                   className="uk-link-text uk-text-primary"
                   isExternal
-                  newTab
+                  target="_blank"
                   href={`mailto:${process.env.MAILJET_CONTACT_EMAIL}`}
                 >
                   {process.env.MAILJET_CONTACT_EMAIL}

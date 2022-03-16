@@ -7,6 +7,9 @@ import CVEditWelcome from 'src/components/cv/CVEditWelcome';
 import { UserContext } from 'src/components/store/UserProvider';
 import CVPageContent from 'src/components/backoffice/cv/CVPageContent';
 import { USER_ROLES } from 'src/constants';
+import ErrorMessage from 'src/components/backoffice/cv/ErrorMessage';
+import { useFetchCV } from 'src/hooks/useFetchCV';
+import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 
 const Edit = () => {
   const { user } = useContext(UserContext);
@@ -24,15 +27,25 @@ const Edit = () => {
     }
   }, [user]);
 
+  const { cv, setCV, error, loading } = useFetchCV(userCompleteData);
+
+  // erreur pendant la requete
+  if (error) {
+    return <ErrorMessage error={error} />;
+  }
+
   return (
     <LayoutBackOffice title="Edition du CV">
       <Section>
-        {userCompleteData && (
+        {userCompleteData && <CVEditWelcome user={userCompleteData} />}
+        {loading && <LoadingScreen />}
+        {userCompleteData && !loading && (
           <>
-            <CVEditWelcome user={userCompleteData} />
             {userCompleteData.role === USER_ROLES.COACH &&
               (userCompleteData.coach ? (
                 <CVPageContent
+                  cv={cv}
+                  setCV={setCV}
                   candidatId={
                     userCompleteData.role === USER_ROLES.COACH
                       ? userCompleteData.coach.candidat.id
@@ -42,11 +55,7 @@ const Edit = () => {
               ) : (
                 <>
                   <h2 className="uk-text-bold uk-text-center">
-                    <span className="uk-text-primary">
-                      {user.role === USER_ROLES.COACH
-                        ? 'Aucun candidat'
-                        : 'Aucun bénévole coach'}
-                    </span>{' '}
+                    <span className="uk-text-primary">Aucun candidat</span>{' '}
                     n&apos;est rattaché à ce compte.
                   </h2>
                   <p className="uk-text-center">
@@ -56,7 +65,11 @@ const Edit = () => {
                 </>
               ))}
             {userCompleteData.role === USER_ROLES.CANDIDAT && (
-              <CVPageContent candidatId={userCompleteData.id} />
+              <CVPageContent
+                cv={cv}
+                setCV={setCV}
+                candidatId={userCompleteData.id}
+              />
             )}
           </>
         )}

@@ -50,7 +50,7 @@ const Opportunities = () => {
     ['offerId']
   );
 
-  const setCandidatDepartments = useCallback(
+  const setCandidatDefaults = useCallback(
     (candId, candidatZone) => {
       if (!tag) {
         const params = {
@@ -77,6 +77,13 @@ const Opportunities = () => {
                 return dept.value;
               });
             }
+            /* if (data.businessLines && data.businessLines.length > 0) {
+              params.businessLines = _.uniq(
+                data.businessLines.map((businessLine) => {
+                  return businessLine.name;
+                })
+              );
+            } */
             replace(
               {
                 pathname: `/backoffice/candidat/offres${
@@ -155,7 +162,7 @@ const Opportunities = () => {
         } else if (user !== prevUser || !candidatId) {
           setLoading(true);
           if (user.role === USER_ROLES.CANDIDAT) {
-            setCandidatDepartments(user.id, user.zone);
+            setCandidatDefaults(user.id, user.zone);
             setLoading(false);
           } else if (user.role === USER_ROLES.COACH) {
             Api.get(`/user/candidat/`, {
@@ -165,7 +172,7 @@ const Opportunities = () => {
             })
               .then(({ data }) => {
                 if (data) {
-                  setCandidatDepartments(data.candidat.id, user.zone);
+                  setCandidatDefaults(data.candidat.id, user.zone);
                 } else {
                   setHasError(true);
                 }
@@ -178,7 +185,7 @@ const Opportunities = () => {
           }
         } else {
           setLoadingDefaultFilters(true);
-          setCandidatDepartments(candidatId, user.zone);
+          setCandidatDefaults(candidatId, user.zone);
         }
       }
     }
@@ -191,7 +198,7 @@ const Opportunities = () => {
     q,
     replace,
     restParams,
-    setCandidatDepartments,
+    setCandidatDefaults,
     tag,
     user,
   ]);

@@ -1,59 +1,68 @@
-import { AMBITIONS_PREFIXES } from 'src/constants';
+import { BUSINESS_LINES } from 'src/constants';
 
 export default {
   id: 'form-career-path',
   fields: [
     {
-      id: 'ambitions0',
+      id: 'carreerPath0',
       component: 'fieldgroup',
-      childWidths: ['1-4@m', 'expand'],
+      childWidths: ['1-2@m', 'auto', 'expand'],
       fields: [
         {
-          id: 'prefix0',
-          name: 'prefix0',
-          component: 'select',
-          options: [
-            { value: -1, label: 'Choissisez un préfixe' },
-            ...AMBITIONS_PREFIXES,
-          ],
+          id: 'businessLine0',
+          name: 'businessLine0',
+          title: 'Famille de métier 1*',
+          component: 'select-request',
+          options: BUSINESS_LINES,
+          isMulti: false,
         },
         {
-          id: 'careerPath0',
-          name: 'careerPath0',
+          id: 'linkWord0',
+          name: 'linkWord0',
+          component: 'text',
+          title: 'comme',
+        },
+        {
+          id: 'ambition0',
+          name: 'ambition0',
           component: 'input',
           type: 'text',
-          title: 'Domaine ou métier 1*',
+          title: 'Métier 1',
         },
       ],
     },
     {
-      id: 'ambitions1',
+      id: 'carreerPath1',
       component: 'fieldgroup',
-      childWidths: ['1-4@m', 'expand'],
+      childWidths: ['1-2@m', 'auto', 'expand'],
       fields: [
         {
-          id: 'prefix0',
-          name: 'prefix1',
-          component: 'select',
-          disabled: true,
-          options: [
-            { value: -1, label: 'Choissisez un préfixe' },
-            ...AMBITIONS_PREFIXES,
-          ],
+          id: 'businessLine1',
+          name: 'businessLine1',
+          title: 'Famille de métier 2',
+          component: 'select-request',
+          options: BUSINESS_LINES,
+          isMulti: false,
         },
         {
-          id: 'careerPath1',
-          name: 'careerPath1',
+          id: 'linkWord1',
+          name: 'linkWord1',
+          component: 'text',
+          title: 'comme',
+        },
+        {
+          id: 'ambition1',
+          name: 'ambition1',
           component: 'input',
           type: 'text',
-          title: 'Domaine ou métier 2',
+          title: 'Métier 2',
         },
       ],
     },
   ],
   rules: [
     {
-      field: 'prefix0',
+      field: 'businessLine0',
       method: 'isEmpty',
       args: [
         {
@@ -64,48 +73,13 @@ export default {
       message: 'Obligatoire',
     },
     {
-      field: 'careerPath0',
-      method: 'isLength',
-      args: [
-        {
-          max: 32,
-        },
-      ],
-      validWhen: true,
-      message: '32 caractères maximum',
-    },
-    {
-      field: 'careerPath0',
-      method: 'isEmpty',
-      args: [
-        {
-          ignore_whitespace: true,
-        },
-      ],
+      field: 'businessLine1',
+      method: (fieldValue, state) => {
+        return !fieldValue && !!state.ambition1;
+      },
+      args: [],
       validWhen: false,
       message: 'Obligatoire',
-    },
-    /* {
-      field: 'prefix1',
-      method: 'isEmpty',
-      args: [
-        {
-          ignore_whitespace: true,
-        },
-      ],
-      validWhen: false,
-      message: 'Obligatoire',
-    }, */
-    {
-      field: 'careerPath1',
-      method: 'isLength',
-      args: [
-        {
-          max: 32,
-        },
-      ],
-      validWhen: true,
-      message: '32 caractères maximum',
     },
   ],
 };

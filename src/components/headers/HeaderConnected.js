@@ -159,7 +159,7 @@ const HeaderConnected = ({ isHome }) => {
         left={
           <>
             <NavbarLogo
-              href="/"
+              href={LINKS_CONNECTED[user.role.toLowerCase()][0].href}
               src="/static/img/linkedout_logo_orange.png"
               alt="Linkedout"
             />
@@ -204,7 +204,9 @@ const HeaderConnected = ({ isHome }) => {
                         {badges[badge] > 0 && (
                           <div>
                             &nbsp;
-                            <div className="uk-badge">{badges[badge]}</div>
+                            <div className="uk-badge uk-margin-small-left">
+                              {badges[badge]}
+                            </div>
                           </div>
                         )}
                       </SimpleLink>

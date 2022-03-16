@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
-import UIkit from 'uikit';
+
+// use modified version of UIkit because of bug where we can't touch scroll on Offcanvas
+import UIkit from 'src/styles/dist/js/uikit-fixed';
 import Icons from 'src/styles/dist/js/uikit-icons';
 
 import 'src/styles/dist/css/uikit.entourage.min.css';
@@ -12,7 +14,7 @@ import 'src/components/modals/Modal/Modal.less';
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 
 import React, { useEffect, useState } from 'react';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import * as Sentry from '@sentry/react';
 import UserProvider from 'src/components/store/UserProvider';
 import DataProvider from 'src/components/store/DataProvider';
@@ -54,8 +56,11 @@ const Container = ({ Component, pageProps, err }) => {
 
   return (
     <div
-      style={{ height: loading ? '100vh' : 'inherit' }}
-      className="uk-inline uk-width-expand uk-overflow-hidden"
+      style={{ height: '100vh' }}
+      className={`uk-inline uk-width-expand ${
+        loading ? 'uk-overflow-hidden' : ''
+      }`}
+      id="main-container"
     >
       <SplashScreen loading={loading} fading={fading} />
       <Component {...pageProps} err={err} />
@@ -65,6 +70,29 @@ const Container = ({ Component, pageProps, err }) => {
 };
 
 const EntourageApp = ({ Component, pageProps, err }) => {
+  const [shouldScrollToTop, setShouldScrollToTop] = useState(true);
+  const { events, beforePopState } = useRouter();
+
+  useEffect(() => {
+    beforePopState(() => {
+      setShouldScrollToTop(false);
+      return true;
+    });
+  }, [beforePopState]);
+
+  useEffect(() => {
+    const scrollToTop = (url, { shallow }) => {
+      if (!shallow && shouldScrollToTop) {
+        setShouldScrollToTop(true);
+        document.getElementById('main-container').scrollTo(0, 0);
+      }
+    };
+    events.on('routeChangeComplete', scrollToTop);
+    return () => {
+      events.off('routeChangeComplete', scrollToTop);
+    };
+  }, [events, shouldScrollToTop]);
+
   return (
     <Sentry.ErrorBoundary fallback="An error has occurred">
       <SharesCountProvider>

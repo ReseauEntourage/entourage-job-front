@@ -16,7 +16,7 @@ const Partners = ({ showOrientationPartners }) => {
           {showOrientationPartners ? (
             <h2 className="uk-text-bold uk-align-center uk-text-center uk-margin-remove-top">
               Ils nous ont{' '}
-              <span className="uk-text-primary">orientés des candidats</span>
+              <span className="uk-text-primary">orienté des candidats</span>
             </h2>
           ) : (
             <h2

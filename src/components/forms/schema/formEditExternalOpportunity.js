@@ -1,9 +1,14 @@
 import moment from 'moment';
 
-import { CONTRACTS, EXTERNAL_OFFERS_ORIGINS, USER_ROLES } from 'src/constants';
-import { FORMATTED_DEPARTMENTS } from 'src/constants/departements';
+import {
+  BUSINESS_LINES,
+  CONTRACTS,
+  EXTERNAL_OFFERS_ORIGINS,
+  USER_ROLES,
+} from 'src/constants';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import Api from 'src/Axios';
-import { findContractType } from 'src/utils';
+import { findConstantFromValue } from 'src/utils';
 
 export default {
   id: 'form-offer-external',
@@ -15,6 +20,7 @@ export default {
       title: 'Renseignez le candidat concerné*',
       placeholder: 'Tapez un candidat',
       component: 'select-request-async',
+      openMenuOnClick: false,
       hidden: true,
       disabled: true,
       loadOptions: (inputValue, callback) => {
@@ -53,16 +59,17 @@ export default {
           name: 'startOfContract',
           title: 'Date de début de contrat',
           component: 'datepicker',
-          min: moment().format('YYYY-MM-DD'),
         },
         {
           id: 'endOfContract',
           name: 'endOfContract',
           title: 'Date de fin de contrat',
           component: 'datepicker',
-          min: moment().format('YYYY-MM-DD'),
           disable: (getValue) => {
-            const contract = findContractType(getValue('contract'));
+            const contract = findConstantFromValue(
+              getValue('contract'),
+              CONTRACTS
+            );
             return !contract || !contract.end;
           },
         },
@@ -75,11 +82,24 @@ export default {
       ],
     },
     {
+      id: 'businessLines',
+      name: 'businessLines',
+      title: 'Familles de métiers',
+      placeholder: 'Sélectionnez les familles de métiers',
+      component: 'select-request',
+      isMulti: true,
+      options: BUSINESS_LINES,
+      hidden: true,
+      disabled: true,
+    },
+    {
       id: 'department',
       name: 'department',
       title: 'Département*',
+      placeholder: 'Tapez le département',
+      openMenuOnClick: false,
       component: 'select-request',
-      options: FORMATTED_DEPARTMENTS,
+      options: DEPARTMENTS_FILTERS,
     },
     {
       id: 'link',
@@ -204,6 +224,19 @@ export const adminMutations = [
             .then(callback);
         },
       },
+      {
+        propName: 'disabled',
+        value: false,
+      },
+      {
+        propName: 'hidden',
+        value: false,
+      },
+    ],
+  },
+  {
+    fieldId: 'businessLines',
+    props: [
       {
         propName: 'disabled',
         value: false,

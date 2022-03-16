@@ -5,20 +5,36 @@ import schemaCareerPath from 'src/components/forms/schema/formEditCareerPath';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
 import { Grid } from 'src/components/utils';
 import { openModal } from 'src/components/modals/Modal';
-import { AMBITIONS_PREFIXES } from 'src/constants';
-import { getAmbitionsLinkingSentence, sortByOrder } from 'src/utils';
+import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants';
+import { findConstantFromValue, sortByOrder } from 'src/utils';
+import CVCareerPathSentence from 'src/components/cv/CVCareerPathSentence';
 
-const CVEditCareerPath = ({ ambitions, onChange }) => {
+const CVEditCareerPath = ({ ambitions, businessLines, onChange }) => {
   const sortedAmbitions =
     ambitions && ambitions.length > 0 ? sortByOrder(ambitions) : null;
 
-  const defaultValues = sortedAmbitions?.reduce((acc, curr, index) => {
-    return {
-      ...acc,
-      [`careerPath${index}`]: curr.name,
-      [`prefix${index}`]: curr.prefix,
-    };
-  }, {});
+  const sortedBusinessLines =
+    businessLines && businessLines.length > 0
+      ? sortByOrder(businessLines)
+      : null;
+
+  const defaultValues = {
+    ...sortedAmbitions?.reduce((acc, curr) => {
+      return {
+        ...acc,
+        [`ambition${curr.order}`]: curr.name,
+      };
+    }, {}),
+    ...sortedBusinessLines?.reduce((acc, curr) => {
+      return {
+        ...acc,
+        [`businessLine${curr.order}`]: findConstantFromValue(
+          curr.name,
+          BUSINESS_LINES
+        ),
+      };
+    }, {}),
+  };
 
   return (
     <div className="uk-card uk-card-default uk-card-body">
@@ -33,31 +49,51 @@ const CVEditCareerPath = ({ ambitions, onChange }) => {
               openModal(
                 <ModalEdit
                   title="Édition - Projet professionnel"
-                  description="J'aimerais travailler ..."
+                  description="J'aimerais travailler dans ..."
                   formSchema={schemaCareerPath}
                   defaultValues={defaultValues}
                   onSubmit={async (
-                    { prefix0, careerPath0, /* prefix1, */ careerPath1 },
+                    { ambition0, businessLine0, ambition1, businessLine1 },
                     closeModal
                   ) => {
                     closeModal();
-                    const newAmbitions = [
-                      { prefix: prefix0, name: careerPath0, order: 0 },
+                    let newAmbitions = [];
+                    if (ambition0) {
+                      newAmbitions = [
+                        ...newAmbitions,
+                        {
+                          prefix: AMBITIONS_PREFIXES[1].label,
+                          name: ambition0,
+                          order: 0,
+                        },
+                      ];
+                    }
+                    if (ambition1) {
+                      newAmbitions = [
+                        ...newAmbitions,
+
+                        {
+                          prefix: AMBITIONS_PREFIXES[1].label,
+                          name: ambition1,
+                          order: 1,
+                        },
+                      ];
+                    }
+                    const newBusinessLines = [
+                      { name: businessLine0, order: 0 },
                     ];
 
                     await onChange({
-                      ambitions: careerPath1
+                      businessLines: businessLine1
                         ? [
-                            ...newAmbitions,
+                            ...newBusinessLines,
                             {
-                              prefix:
-                                /* prefix1 */ prefix0 ||
-                                AMBITIONS_PREFIXES[0].label,
-                              name: careerPath1,
+                              name: businessLine1,
                               order: 1,
                             },
                           ]
-                        : newAmbitions,
+                        : newBusinessLines,
+                      ambitions: newAmbitions,
                     });
                   }}
                 />
@@ -66,20 +102,16 @@ const CVEditCareerPath = ({ ambitions, onChange }) => {
           />
         )}
       </Grid>
-      {!sortedAmbitions ? (
+      {!sortedAmbitions && !sortedBusinessLines ? (
         <p className="uk-text-italic">
           Aucun projet professionnel n&apos;a pas encore été créé.
         </p>
       ) : (
         <p>
-          J&apos;aimerais travailler {sortedAmbitions[0].prefix}{' '}
-          <span className="uk-text-primary">{sortedAmbitions[0].name}</span>
-          {sortedAmbitions && sortedAmbitions.length > 1 && (
-            <>
-              {getAmbitionsLinkingSentence(sortedAmbitions)}
-              <span className="uk-text-primary">{sortedAmbitions[1].name}</span>
-            </>
-          )}
+          <CVCareerPathSentence
+            ambitions={ambitions}
+            businessLines={businessLines}
+          />
         </p>
       )}
     </div>
@@ -87,17 +119,29 @@ const CVEditCareerPath = ({ ambitions, onChange }) => {
 };
 
 CVEditCareerPath.propTypes = {
-  ambitions: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      order: PropTypes.number.isRequired,
-      prefix: PropTypes.oneOf(
-        AMBITIONS_PREFIXES.map(({ value }) => {
-          return value;
-        })
-      ),
-    })
-  ).isRequired,
+  ambitions: PropTypes.oneOf([
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        order: PropTypes.number.isRequired,
+        prefix: PropTypes.oneOf(
+          AMBITIONS_PREFIXES.map(({ value }) => {
+            return value;
+          })
+        ),
+      })
+    ),
+    PropTypes.string,
+  ]).isRequired,
+  businessLines: PropTypes.oneOf([
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        order: PropTypes.number.isRequired,
+      })
+    ),
+    PropTypes.string,
+  ]).isRequired,
   onChange: PropTypes.func,
 };
 CVEditCareerPath.defaultProps = {

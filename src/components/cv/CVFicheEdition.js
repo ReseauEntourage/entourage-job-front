@@ -12,7 +12,6 @@ import {
 import CVEditCatchphrase from 'src/components/cv/CVEditCatchphrase';
 import CVEditReviews from 'src/components/cv/CVEditReviews';
 import CVEditPicture from 'src/components/cv/CVEditPicture';
-import CVEditBusinessLines from 'src/components/cv/CVEditBusinessLines';
 import CVEditCareerPath from 'src/components/cv/CVEditCareerPath';
 
 import { AMBITIONS_PREFIXES, CV_STATUS } from 'src/constants';
@@ -52,16 +51,8 @@ const CVFicheEdition = ({
 
   return (
     <Grid childWidths={['1-1']}>
-      <Grid childWidths={['1-2@s']} match>
-        <Grid childWidths={['1-1']} match>
-          <CVEditBusinessLines
-            businessLines={cv.businessLines}
-            onChange={onChange}
-          />
-          <CVEditCatchphrase catchphrase={cv.catchphrase} onChange={onChange} />
-          <CVEditCareerPath ambitions={cv.ambitions} onChange={onChange} />
-        </Grid>
-        <Grid childWidths={['1-1']} match>
+      <Grid childWidths={['1-1']} match>
+        <Grid childWidths={['1-2@s']} row match>
           <CVEditPicture
             imageUploading={previewGenerating}
             urlImg={imageUrl || '/static/img/arthur-background.jpg'}
@@ -115,6 +106,15 @@ const CVFicheEdition = ({
               </div>
             </div>
           )}
+        </Grid>
+
+        <Grid childWidths={['1-2@s']} row match>
+          <CVEditCareerPath
+            ambitions={cv.ambitions}
+            businessLines={cv.businessLines}
+            onChange={onChange}
+          />
+          <CVEditCatchphrase catchphrase={cv.catchphrase} onChange={onChange} />
         </Grid>
       </Grid>
       <Grid childWidths={['1-2@s']} match>
@@ -170,11 +170,16 @@ CVFicheEdition.propTypes = {
         ),
       })
     ),
+    businessLines: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        order: PropTypes.number.isRequired,
+      })
+    ).isRequired,
     languages: PropTypes.arrayOf(PropTypes.string),
     transport: PropTypes.string,
     skills: PropTypes.arrayOf(PropTypes.string),
     passions: PropTypes.arrayOf(PropTypes.string),
-    businessLines: PropTypes.arrayOf(PropTypes.string),
     reviews: PropTypes.arrayOf(PropTypes.string),
     experiences: PropTypes.arrayOf(PropTypes.string),
     status: PropTypes.string,

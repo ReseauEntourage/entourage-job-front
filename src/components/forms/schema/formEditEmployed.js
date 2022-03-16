@@ -1,6 +1,6 @@
 import { CONTRACTS } from 'src/constants';
 import moment from 'moment';
-import { findContractType } from 'src/utils';
+import { findConstantFromValue } from 'src/utils';
 
 export default {
   id: 'form-edit-employed',
@@ -20,7 +20,7 @@ export default {
       component: 'datepicker',
       min: moment().format('YYYY-MM-DD'),
       disable: (getValue) => {
-        const contract = findContractType(getValue('contract'));
+        const contract = findConstantFromValue(getValue('contract'), CONTRACTS);
         return !contract || !contract.end;
       },
     },

@@ -37,12 +37,40 @@ const AdminOpportunityList = ({
         },
       ],
     },
+    {
+      fieldId: 'startEndContract',
+      props: [
+        {
+          propName: 'hidden',
+          value: true,
+        },
+        {
+          propName: 'disabled',
+          value: true,
+        },
+      ],
+    },
     ...opportunityAdminMutations,
   ]);
 
   const mutatedExternalOfferSchema = mutateFormSchema(
     formEditExternalOpportunitySchema,
-    externalOpportunityAdminMutations
+    [
+      ...externalOpportunityAdminMutations,
+      {
+        fieldId: 'startEndContract',
+        props: [
+          {
+            propName: 'hidden',
+            value: true,
+          },
+          {
+            propName: 'disabled',
+            value: true,
+          },
+        ],
+      },
+    ]
   );
 
   const opportunityListRef = useRef();
@@ -93,6 +121,14 @@ const AdminOpportunityList = ({
                         startOfContract: fields.startOfContract || null,
                         endOfContract: fields.endOfContract || null,
                         date: Date.now(),
+                        businessLines: fields.businessLines
+                          ? fields.businessLines.map((businessLine, index) => {
+                              return {
+                                name: businessLine,
+                                order: index,
+                              };
+                            })
+                          : [],
                       });
                       closeModal();
                       await opportunityListRef?.current?.fetchData();

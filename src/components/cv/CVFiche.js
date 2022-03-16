@@ -16,14 +16,16 @@ import {
   formatParagraph,
   sortByOrder,
   sortByName,
-  getAmbitionsLinkingSentence,
+  findConstantFromValue,
 } from 'src/utils';
 import { event } from 'src/lib/gtag';
 import TAGS from 'src/constants/tags';
 import { usePostOpportunity, useUpdateSharesCount } from 'src/hooks';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
-import { AMBITIONS_PREFIXES } from 'src/constants';
+import CVCareerPathSentence from 'src/components/cv/CVCareerPathSentence';
+import { CONTRACTS } from 'src/constants';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 
 /**
  * Le cv en public et en preview
@@ -81,8 +83,9 @@ const CVFiche = ({ cv, actionDisabled }) => {
 
   const experiences = sortByOrder(cv.experiences);
 
-  const ambitions =
-    cv.ambitions && cv.ambitions.length > 0 ? sortByOrder(cv.ambitions) : null;
+  const showCareerPathSentence =
+    (cv.ambitions && cv.ambitions.length > 0) ||
+    (cv.businessLines && cv.businessLines.length > 0);
 
   const shareSection = (
     <div className="uk-flex uk-flex-column uk-flex-middle">
@@ -224,38 +227,15 @@ const CVFiche = ({ cv, actionDisabled }) => {
               </div>
             )}
             {/* uk-text-emphasis uk-text-bold */}
-            {ambitions && (
+            {showCareerPathSentence && (
               <h4
                 className="uk-width-xxlarge uk-margin-auto"
                 style={{ fontWeight: 500 }}
               >
-                J&apos;aimerais travailler{' '}
-                {ambitions[0].prefix || AMBITIONS_PREFIXES[0].label}{' '}
-                <span
-                  className="uk-label uk-text-lowercase"
-                  style={{
-                    lineHeight: 'unset',
-                    verticalAlign: 'bottom',
-                    fontSize: 'inherit',
-                  }}
-                >
-                  {ambitions[0].name || ambitions[0]}
-                </span>
-                {ambitions.length > 1 && (
-                  <>
-                    {getAmbitionsLinkingSentence(ambitions)}
-                    <span
-                      className="uk-label uk-text-lowercase"
-                      style={{
-                        lineHeight: 'unset',
-                        verticalAlign: 'bottom',
-                        fontSize: 'inherit',
-                      }}
-                    >
-                      {ambitions[1].name || ambitions[1]}
-                    </span>
-                  </>
-                )}
+                <CVCareerPathSentence
+                  ambitions={cv.ambitions}
+                  businessLines={cv.businessLines}
+                />
               </h4>
             )}
             <div className="uk-position-relative">
@@ -372,68 +352,88 @@ const CVFiche = ({ cv, actionDisabled }) => {
               )}
             </Grid>
             <Grid column gap="medium">
-              <div className="">
-                <h3 className="uk-margin-small-bottom">Mes infos pratiques</h3>
-                <hr className="uk-divider-small uk-margin-remove-top" />
-                <ul className="uk-list">
-                  {cv.contracts && cv.contracts.length > 0 && (
-                    <li className="uk-flex uk-flex-middle">
-                      <IconNoSSR
-                        className="uk-text-primary uk-margin-small-right"
-                        name="file-text"
-                        style={{ width: 20 }}
-                      />{' '}
-                      <span className="uk-flex-1">
-                        {cv.contracts.join(' / ')}
-                      </span>
-                    </li>
-                  )}
-                  {cv.locations && cv.locations.length > 0 && (
-                    <li className="uk-flex uk-flex-middle">
-                      <IconNoSSR
-                        className="uk-text-primary uk-margin-small-right"
-                        name="location"
-                        style={{ width: 20 }}
-                      />{' '}
-                      <span className="uk-flex-1">
-                        {cv.locations.join(' / ')}
-                      </span>
-                    </li>
-                  )}
-                  {cv.availability && cv.availability.length > 0 && (
-                    <li className="uk-flex uk-flex-middle">
-                      <IconNoSSR
-                        className="uk-text-primary uk-margin-small-right"
-                        name="calendar"
-                        style={{ width: 20 }}
-                      />{' '}
-                      <span className="uk-flex-1">{cv.availability}</span>
-                    </li>
-                  )}
-                  {cv.languages && cv.languages.length > 0 && (
-                    <li className="uk-flex uk-flex-middle">
-                      <IconNoSSR
-                        className="uk-text-primary uk-margin-small-right"
-                        name="users"
-                        style={{ width: 20 }}
-                      />{' '}
-                      <span className="uk-flex-1">
-                        {cv.languages.join(' / ')}
-                      </span>
-                    </li>
-                  )}
-                  {cv.transport && cv.transport.length > 0 && (
-                    <li className="uk-flex uk-flex-middle">
-                      <IconNoSSR
-                        className="uk-text-primary uk-margin-small-right"
-                        name="car"
-                        style={{ width: 20 }}
-                      />{' '}
-                      <span className="uk-flex-1">{cv.transport}</span>
-                    </li>
-                  )}
-                </ul>
-              </div>
+              {(cv.contracts ||
+                cv.locations ||
+                cv.availability ||
+                cv.languages ||
+                cv.transport) && (
+                <div className="">
+                  <h3 className="uk-margin-small-bottom">
+                    Mes infos pratiques
+                  </h3>
+                  <hr className="uk-divider-small uk-margin-remove-top" />
+                  <ul className="uk-list">
+                    {cv.contracts && cv.contracts.length > 0 && (
+                      <li className="uk-flex uk-flex-middle">
+                        <IconNoSSR
+                          className="uk-text-primary uk-margin-small-right"
+                          name="file-text"
+                          style={{ width: 20 }}
+                        />{' '}
+                        <span className="uk-flex-1">
+                          {cv.contracts
+                            .map((contract) => {
+                              return findConstantFromValue(contract, CONTRACTS)
+                                .label;
+                            })
+                            .join(' / ')}{' '}
+                        </span>
+                      </li>
+                    )}
+                    {cv.locations && cv.locations.length > 0 && (
+                      <li className="uk-flex uk-flex-middle">
+                        <IconNoSSR
+                          className="uk-text-primary uk-margin-small-right"
+                          name="location"
+                          style={{ width: 20 }}
+                        />{' '}
+                        <span className="uk-flex-1">
+                          {cv.locations
+                            .map((location) => {
+                              return findConstantFromValue(
+                                location,
+                                DEPARTMENTS_FILTERS
+                              ).label;
+                            })
+                            .join(' / ')}
+                        </span>
+                      </li>
+                    )}
+                    {cv.availability && cv.availability.length > 0 && (
+                      <li className="uk-flex uk-flex-middle">
+                        <IconNoSSR
+                          className="uk-text-primary uk-margin-small-right"
+                          name="calendar"
+                          style={{ width: 20 }}
+                        />{' '}
+                        <span className="uk-flex-1">{cv.availability}</span>
+                      </li>
+                    )}
+                    {cv.languages && cv.languages.length > 0 && (
+                      <li className="uk-flex uk-flex-middle">
+                        <IconNoSSR
+                          className="uk-text-primary uk-margin-small-right"
+                          name="users"
+                          style={{ width: 20 }}
+                        />{' '}
+                        <span className="uk-flex-1">
+                          {cv.languages.join(' / ')}
+                        </span>
+                      </li>
+                    )}
+                    {cv.transport && cv.transport.length > 0 && (
+                      <li className="uk-flex uk-flex-middle">
+                        <IconNoSSR
+                          className="uk-text-primary uk-margin-small-right"
+                          name="car"
+                          style={{ width: 20 }}
+                        />{' '}
+                        <span className="uk-flex-1">{cv.transport}</span>
+                      </li>
+                    )}
+                  </ul>
+                </div>
+              )}
               {cv.skills && cv.skills.length > 0 && (
                 <div className="">
                   <h3 className="uk-margin-small-bottom">Mes atouts</h3>
@@ -482,7 +482,7 @@ const CVFiche = ({ cv, actionDisabled }) => {
               actionDisabled ? ' uk-disabled' : ''
             }`}
             isExternal
-            newTab
+            target="_blank"
             href={`mailto:${process.env.MAILJET_CONTACT_EMAIL}`}
           >
             {process.env.MAILJET_CONTACT_EMAIL}

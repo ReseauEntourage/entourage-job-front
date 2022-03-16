@@ -11,6 +11,7 @@ import FormValidator from 'src/components/forms/FormValidator';
 import GenericField from 'src/components/forms/GenericField';
 import FieldGroup from 'src/components/forms/fields/FieldGroup';
 import MultipleFields from 'src/components/forms/fields/MultipleFields';
+import { getValueFromFormField } from 'src/utils';
 
 /**
  * Permet de creer un formulaire avec la generation de ses champs et validations de champs
@@ -43,6 +44,7 @@ const FormWithValidation = forwardRef(
       if (!Array.isArray(onChangeArgs)) {
         onChangeArgs = [onChangeArgs];
       }
+
       const tmpFieldValues = { ...fieldValues };
       const tmpFieldValidations = fieldValidations;
       for (let i = 0; i < onChangeArgs.length; i += 1) {
@@ -81,9 +83,20 @@ const FormWithValidation = forwardRef(
       // Vérifie les champs avant soumission
       /* Validators control before submit */
       const validation = validator.validate(fieldValues);
+
+      const formattedFieldValues = Object.keys(fieldValues).reduce(
+        (acc, curr) => {
+          return {
+            ...acc,
+            [curr]: getValueFromFormField(fieldValues[curr]),
+          };
+        },
+        {}
+      );
+
       if (validation.isValid) {
         // Si les validators sont OK.
-        await onSubmit(fieldValues, (msg) => {
+        await onSubmit(formattedFieldValues, (msg) => {
           return setError(msg);
         }); // c'est le props onsubmit de FormWithValidation
       } else {
@@ -116,14 +129,29 @@ const FormWithValidation = forwardRef(
       }, []);
 
       const validations = fieldsId.reduce((acc, value) => {
-        acc[`valid_${value}`] = undefined;
-        return acc;
+        return {
+          ...acc,
+          [`valid_${value}`]: undefined,
+        };
       }, {});
       const values = fieldsId.reduce((acc, value) => {
-        acc[value] = defaultValues[value];
-        return acc;
+        return {
+          ...acc,
+          [value]:
+            Array.isArray(defaultValues[value]) &&
+            defaultValues[value].length > 0
+              ? defaultValues[value].map((item) => {
+                  if (typeof item === 'string') {
+                    return {
+                      value: item,
+                      label: item,
+                    };
+                  }
+                  return item;
+                })
+              : defaultValues[value],
+        };
       }, {});
-
       setFieldValues(values);
       setFieldValidations(validations);
     }, [defaultValues, fields]);
