@@ -24,6 +24,7 @@ import { openModal } from 'src/components/modals/Modal';
 import ModalConfirm from 'src/components/modals/ModalConfirm';
 import ErrorMessage from 'src/components/backoffice/cv/ErrorMessage';
 import { useFetchCV } from 'src/hooks/useFetchCV';
+import _ from 'lodash';
 
 const EditUserModal = ({ user, setUser }) => {
   let mutatedSchema = mutateFormSchema(schemaEditUser, [
@@ -350,9 +351,11 @@ const User = () => {
                   query: {
                     tag: OFFER_ADMIN_FILTERS_DATA[2].tag,
                     department: cv.locations,
-                    businessLines: cv.businessLines.map(({ name }) => {
-                      return name;
-                    }),
+                    businessLines: _.uniq(
+                      cv.businessLines.map(({ name }) => {
+                        return name;
+                      })
+                    ),
                   },
                 }}
               >

@@ -159,7 +159,7 @@ const HeaderConnected = ({ isHome }) => {
         left={
           <>
             <NavbarLogo
-              href="/"
+              href={LINKS_CONNECTED[user.role.toLowerCase()][0].href}
               src="/static/img/linkedout_logo_orange.png"
               alt="Linkedout"
             />

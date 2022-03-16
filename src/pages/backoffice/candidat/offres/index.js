@@ -77,11 +77,13 @@ const Opportunities = () => {
                 return dept.value;
               });
             }
-            if (data.businessLines && data.businessLines.length > 0) {
-              params.businessLines = data.businessLines.map((businessLine) => {
-                return businessLine.name;
-              });
-            }
+            /* if (data.businessLines && data.businessLines.length > 0) {
+              params.businessLines = _.uniq(
+                data.businessLines.map((businessLine) => {
+                  return businessLine.name;
+                })
+              );
+            } */
             replace(
               {
                 pathname: `/backoffice/candidat/offres${
