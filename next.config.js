@@ -51,4 +51,28 @@ module.exports = withLess({
     return config;
   },
   assetPrefix: !dev ? process.env.CDN_URL || '' : '',
+  async redirects() {
+    return [
+      {
+        source: '/tutoriel-video',
+        destination: process.env.TUTORIAL_VIDEO,
+        permanent: false,
+      },
+      {
+        source: '/tutoriel-cv',
+        destination: process.env.TUTORIAL_CV,
+        permanent: false,
+      },
+      {
+        source: '/tutoriel-projet-pro',
+        destination: process.env.TUTORIAL_PP,
+        permanent: false,
+      },
+      {
+        source: '/boite-a-outil',
+        destination: process.env.TOOLBOX_URL,
+        permanent: false,
+      },
+    ];
+  },
 });

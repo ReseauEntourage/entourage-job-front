@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Api from 'src/Axios';
-import { USER_ROLES } from 'src/constants';
+import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
 
 export function useFetchCV(user) {
   const [error, setError] = useState(false);
@@ -9,12 +9,7 @@ export function useFetchCV(user) {
 
   useEffect(() => {
     if (user) {
-      let candidatId;
-      if (user.role === USER_ROLES.COACH && user.coach) {
-        candidatId = user.coach.candidat.id;
-      } else if (user.role === USER_ROLES.CANDIDAT) {
-        candidatId = user.id;
-      }
+      const candidatId = getCandidateIdFromCoachOrCandidate(user);
 
       if (candidatId) {
         Api.get(`/cv/`, {

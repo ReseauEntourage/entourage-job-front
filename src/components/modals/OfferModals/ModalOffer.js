@@ -31,6 +31,22 @@ import useModalOffer from 'src/components/modals/OfferModals/useModalOffer';
 import OfferContent from 'src/components/modals/OfferModals/OfferContent';
 import UIkit from 'uikit';
 
+const AfterContactItem = ({ isPublic }) => {
+  return (
+    <li>
+      Une fois le mail envoyé, cliquez sur{' '}
+      <span className="uk-text-italic">
+        {isPublic ? "J'ai contacté le recruteur" : "J'ai répondu au recruteur"}
+      </span>
+      . Vous informez ainsi LikedOut, merci&nbsp;!
+    </li>
+  );
+};
+
+AfterContactItem.propTypes = {
+  isPublic: PropTypes.bool.isRequired,
+};
+
 const ContactStepsInterested = ({ mail, isPublic }) => {
   return (
     <div>
@@ -47,18 +63,11 @@ const ContactStepsInterested = ({ mail, isPublic }) => {
               {mail}
               &nbsp;
             </SimpleLink>
-            pour lui proposer un temps d&apos;échange.
+            pour lui proposer un temps d&apos;échange.{' '}
           </span>
+          Relisez votre mail avec votre coach.
         </li>
-        <li>
-          Une fois le mail envoyé, cliquez sur{' '}
-          <span className="uk-text-italic">
-            {isPublic
-              ? "J'ai contacté le recruteur"
-              : "J'ai répondu au recruteur"}
-          </span>
-          . Il est important d’informer LinkedOut de vos avancées.
-        </li>
+        <AfterContactItem isPublic={isPublic} />
       </ol>
     </div>
   );
@@ -253,7 +262,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                               <br />
                               <br />
                               Vous pourrez retrouver cette offre à tout moment
-                              dans vos{' '}
+                              dans l&apos;onglet{' '}
                               <span className="uk-text-bold">
                                 Offres archivées
                               </span>
@@ -280,16 +289,11 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                                     <span>
                                       Il est indispensable de lui répondre, que
                                       vous soyez intéressé⸱e ou non&nbsp;!
+                                      Relisez votre mail avec votre coach.
                                     </span>
                                   </div>
                                 </li>
-                                <li>
-                                  Une fois le mail envoyé, cliquez sur{' '}
-                                  <span className="uk-text-italic">
-                                    J&apos;ai contacté le recruteur
-                                  </span>
-                                  . Il est important d’en informer LinkedOut.
-                                </li>
+                                <AfterContactItem isPublic={offer.isPublic} />
                               </ol>
                             </div>
                           )}

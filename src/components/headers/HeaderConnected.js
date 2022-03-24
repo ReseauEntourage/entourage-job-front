@@ -7,11 +7,11 @@ import { Navbar, Nav, NavbarLogo, SimpleLink } from 'src/components/utils';
 import { UserContext } from 'src/components/store/UserProvider';
 import ImgProfile from 'src/components/headers/ImgProfile';
 import Dropdown from 'src/components/utils/Dropdown';
-import { EXTERNAL_LINKS } from 'src/constants';
 import { useNotifBadges } from 'src/hooks';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import Hamburger from 'src/components/utils/Hamburger';
 import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas';
+import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
 
 const offcanvasId = 'offcanvas-logged';
 
@@ -88,7 +88,9 @@ const HeaderConnected = ({ isHome }) => {
         badge: 'cv',
       },
       {
-        href: EXTERNAL_LINKS.TOOLBOX,
+        href: `${
+          process.env.TOOLBOX_URL
+        }?id=${getCandidateIdFromCoachOrCandidate(user)}`,
         name: 'Boîte à outils',
         icon: 'question',
         external: true,
