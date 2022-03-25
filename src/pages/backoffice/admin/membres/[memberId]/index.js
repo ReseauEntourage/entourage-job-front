@@ -14,7 +14,10 @@ import ButtonIcon from 'src/components/utils/ButtonIcon';
 import ModalEdit from 'src/components/modals/ModalEdit';
 import { OFFER_ADMIN_FILTERS_DATA, USER_ROLES } from 'src/constants';
 import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
-import { mutateFormSchema } from 'src/utils';
+import {
+  getCandidateIdFromCoachOrCandidate,
+  mutateFormSchema,
+} from 'src/utils';
 import AdminCandidateOpportunities from 'src/components/opportunities/AdminCandidateOpportunities';
 import CandidateEmployedToggle from 'src/components/backoffice/candidate/CandidateEmployedToggle';
 import ContractLabel from 'src/components/backoffice/candidate/ContractLabel';
@@ -404,14 +407,14 @@ const User = () => {
               <div>
                 {tab === 'cv' && (
                   <CVPageContent
-                    candidatId={user.coach.candidat.id}
+                    candidatId={getCandidateIdFromCoachOrCandidate(user)}
                     cv={cv}
                     setCV={setCV}
                   />
                 )}
                 {tab === 'offres' && (
                   <AdminCandidateOpportunities
-                    candidatId={user.coach.candidat.id}
+                    candidatId={getCandidateIdFromCoachOrCandidate(user)}
                   />
                 )}
               </div>

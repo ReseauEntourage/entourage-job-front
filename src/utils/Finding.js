@@ -1,4 +1,4 @@
-import { OFFER_STATUS } from 'src/constants';
+import { OFFER_STATUS, USER_ROLES } from 'src/constants';
 import _ from 'lodash';
 
 const findOfferStatus = (status, isPublic, isRecommended) => {
@@ -59,4 +59,54 @@ const getValueFromFormField = (fieldValue) => {
   return fieldValue;
 };
 
-export { findOfferStatus, findConstantFromValue, getValueFromFormField };
+const getRelatedUser = (member) => {
+  if (member) {
+    if (member.candidat && member.candidat.coach) {
+      return member.candidat.coach;
+    }
+    if (member.coach && member.coach.candidat) {
+      return member.coach.candidat;
+    }
+  }
+
+  return null;
+};
+
+const getCandidateFromCoachOrCandidate = (member) => {
+  if (member) {
+    if (member.role === USER_ROLES.CANDIDAT) {
+      return member.candidat;
+    }
+
+    if (member.role === USER_ROLES.COACH) {
+      return member.coach;
+    }
+  }
+  return null;
+};
+
+const getCandidateIdFromCoachOrCandidate = (member) => {
+  if (member) {
+    if (member.role === USER_ROLES.CANDIDAT) {
+      return member.id;
+    }
+
+    if (
+      member.role === USER_ROLES.COACH &&
+      member.coach &&
+      member.coach.candidat
+    ) {
+      return member.coach.candidat;
+    }
+  }
+  return null;
+};
+
+export {
+  findOfferStatus,
+  findConstantFromValue,
+  getValueFromFormField,
+  getRelatedUser,
+  getCandidateIdFromCoachOrCandidate,
+  getCandidateFromCoachOrCandidate,
+};

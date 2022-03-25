@@ -10,6 +10,7 @@ import { USER_ROLES } from 'src/constants';
 import ErrorMessage from 'src/components/backoffice/cv/ErrorMessage';
 import { useFetchCV } from 'src/hooks/useFetchCV';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
+import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
 
 const Edit = () => {
   const { user } = useContext(UserContext);
@@ -46,11 +47,9 @@ const Edit = () => {
                 <CVPageContent
                   cv={cv}
                   setCV={setCV}
-                  candidatId={
-                    userCompleteData.role === USER_ROLES.COACH
-                      ? userCompleteData.coach.candidat.id
-                      : userCompleteData.id
-                  }
+                  candidatId={getCandidateIdFromCoachOrCandidate(
+                    userCompleteData
+                  )}
                 />
               ) : (
                 <>

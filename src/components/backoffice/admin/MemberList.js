@@ -12,7 +12,12 @@ import Button from 'src/components/utils/Button';
 import ModalEdit from 'src/components/modals/ModalEdit';
 import Api from 'src/Axios';
 import SearchBar from 'src/components/filters/SearchBar';
-import { filtersToQueryParams, mutateFormSchema } from 'src/utils';
+import {
+  filtersToQueryParams,
+  getCandidateFromCoachOrCandidate,
+  getRelatedUser,
+  mutateFormSchema,
+} from 'src/utils';
 import schemaCreateUser from 'src/components/forms/schema/formEditUser';
 import { openModal } from 'src/components/modals/Modal';
 import { usePrevious } from 'src/hooks/utils';
@@ -25,24 +30,6 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 const translateStatusCV = (status) => {
   const cvStatus = CV_STATUS[status] ? CV_STATUS[status] : CV_STATUS.Unknown;
   return <span className={`uk-text-${cvStatus.style}`}>{cvStatus.label}</span>;
-};
-
-const getRelatedUser = (member) => {
-  if (member.candidat && member.candidat.coach) {
-    return member.candidat.coach;
-  }
-  if (member.coach && member.coach.candidat) {
-    return member.coach.candidat;
-  }
-  return null;
-};
-
-const getCandidateFromCoachOrCandidate = (member) => {
-  if (member.role === USER_ROLES.CANDIDAT) {
-    return member.candidat;
-  }
-
-  return member.coach;
 };
 
 const LIMIT = 50;

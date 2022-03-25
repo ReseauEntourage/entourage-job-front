@@ -12,6 +12,7 @@ import CandidateEmployedToggle from 'src/components/backoffice/candidate/Candida
 import ContractLabel from 'src/components/backoffice/candidate/ContractLabel';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
+import { getCandidateFromCoachOrCandidate, getRelatedUser } from 'src/utils';
 
 // userId du candidat ou coach lié
 const UserInformationCard = ({ isAdmin, user, onChange }) => {
@@ -23,9 +24,11 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
 
   const assignUser = (userToAssign) => {
     if (userToAssign.role === USER_ROLES.COACH) {
-      if (userToAssign.coach) {
-        setLinkedUser(userToAssign.coach.candidat);
-        setUserCandidat(userToAssign.coach);
+      const candidat = getRelatedUser(userToAssign);
+      const candidateLink = getCandidateFromCoachOrCandidate(userToAssign);
+      if (candidat) {
+        setLinkedUser(candidat);
+        setUserCandidat(candidateLink);
       } else {
         setLinkedUser(null);
         setUserCandidat(null);
@@ -34,9 +37,11 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
       schema.fields[1].title = 'Candidat lié';
     }
     if (userToAssign.role === USER_ROLES.CANDIDAT) {
-      if (userToAssign.candidat) {
-        setLinkedUser(userToAssign.candidat.coach);
-        setUserCandidat(userToAssign.candidat);
+      const coach = getRelatedUser(userToAssign);
+      const coachLink = getCandidateFromCoachOrCandidate(userToAssign);
+      if (coach) {
+        setLinkedUser(coach);
+        setUserCandidat(coachLink);
       } else {
         setLinkedUser(null);
         setUserCandidat(null);
