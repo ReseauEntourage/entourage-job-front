@@ -69,7 +69,7 @@ module.exports = withLess({
         permanent: false,
       },
       {
-        source: '/boite-a-outil',
+        source: '/boite-a-outils',
         destination: process.env.TOOLBOX_URL,
         permanent: false,
       },
