@@ -1,6 +1,7 @@
 import ModalGeneric from 'src/components/modals/ModalGeneric';
 import React from 'react';
 import PropTypes from 'prop-types';
+import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 
 const ModalOfferBase = ({
   isArchived,
@@ -33,11 +34,7 @@ const ModalOfferBase = ({
         }
       }}
     >
-      {loading && (
-        <div className="uk-height-medium uk-flex uk-flex-middle uk-flex-center">
-          <div data-uk-spinner="" />
-        </div>
-      )}
+      {loading && <LoadingScreen />}
       {!loading && error && <div>Une erreur c&lsquo;est produite</div>}
       {!loading && !error && (isEditing ? editingForm : children)}
     </ModalGeneric>

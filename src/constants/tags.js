@@ -185,6 +185,15 @@ const GA_TAGS = {
   HEADER_DON_CLIC: {
     action: 'Header_Don_Clic',
   },
+  HEADER_AIDER_CLIC: {
+    action: 'Header_Aider_Clic',
+  },
+  HEADER_RECRUTER_CLIC: {
+    action: 'Header_Recruter_Clic',
+  },
+  HEADER_TRAVAILLER_CLIC: {
+    action: 'Header_Travailler_Clic',
+  },
   FOOTER_RECRUITMENTS_CLIC: {
     action: 'Footer_Recruitments_Clic',
   },

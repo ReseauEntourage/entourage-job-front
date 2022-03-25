@@ -13,6 +13,7 @@ import SearchBar from 'src/components/filters/SearchBar';
 import { openModal } from 'src/components/modals/Modal';
 import usePostPublicOfferModal from 'src/components/modals/usePostPublicOfferModal';
 import { IconNoSSR } from 'src/components/utils/Icon';
+import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 
 const NoCVInThisArea = () => {
   return (
@@ -184,11 +185,7 @@ const CVList = ({
 
   const getContent = () => {
     if (loading) {
-      return (
-        <div className="uk-text-center">
-          <div data-uk-spinner />
-        </div>
-      );
+      return <LoadingScreen />;
     }
 
     if (error) {

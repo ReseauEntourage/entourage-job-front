@@ -26,6 +26,7 @@ import { CV_STATUS, MEMBER_FILTERS_DATA, USER_ROLES } from 'src/constants';
 import { Grid, Section, SimpleLink } from 'src/components/utils';
 import ImgProfile from 'src/components/headers/ImgProfile';
 import { IconNoSSR } from 'src/components/utils/Icon';
+import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 
 const translateStatusCV = (status) => {
   const cvStatus = CV_STATUS[status] ? CV_STATUS[status] : CV_STATUS.Unknown;
@@ -445,9 +446,7 @@ const MemberList = ({
             smallSelectors
           />
           {loading ? (
-            <div className="uk-height-small uk-flex uk-flex-center uk-flex-middle">
-              <div data-uk-spinner="" />
-            </div>
+            <LoadingScreen />
           ) : (
             <div className="uk-overflow-auto uk-margin-top">
               <table className="uk-table uk-table-hover uk-table-middle uk-table-divider uk-table-responsive">

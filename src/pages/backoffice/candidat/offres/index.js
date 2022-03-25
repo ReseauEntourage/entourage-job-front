@@ -14,6 +14,7 @@ import OpportunityError from 'src/components/opportunities/OpportunityError';
 import { useRouter } from 'next/router';
 import CandidateOpportunityList from 'src/components/backoffice/candidate/CandidateOpportunityList';
 import { usePrevious } from 'src/hooks/utils';
+import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 
 const candidateFilters = OPPORTUNITY_FILTERS_DATA.slice(1);
 
@@ -29,6 +30,8 @@ const Opportunities = () => {
 
   const [hasError, setHasError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [hasRequestedLinkedCandidate, setHasRequestedLinkedCandidate] =
+    useState(false);
   const [loadingDefaultFilters, setLoadingDefaultFilters] = useState(true);
 
   const [candidatId, setCandidatId] = useState();
@@ -108,6 +111,7 @@ const Opportunities = () => {
       } else {
         setCandidatId(candId);
         setLoadingDefaultFilters(false);
+        setHasRequestedLinkedCandidate(true);
       }
     },
     [offerId, replace, restParams, tag]
@@ -159,7 +163,7 @@ const Opportunities = () => {
               shallow: true,
             }
           );
-        } else if (user !== prevUser || !candidatId) {
+        } else if (user !== prevUser || !hasRequestedLinkedCandidate) {
           setLoading(true);
           if (user.role === USER_ROLES.CANDIDAT) {
             setCandidatDefaults(user.id, user.zone);
@@ -174,7 +178,7 @@ const Opportunities = () => {
                 if (data) {
                   setCandidatDefaults(data.candidat.id, user.zone);
                 } else {
-                  setHasError(true);
+                  setHasRequestedLinkedCandidate(true);
                 }
                 setLoading(false);
               })
@@ -191,6 +195,7 @@ const Opportunities = () => {
     }
   }, [
     candidatId,
+    hasRequestedLinkedCandidate,
     isReady,
     offerId,
     prevCandidatId,
@@ -203,6 +208,44 @@ const Opportunities = () => {
     user,
   ]);
 
+  let content;
+  if (
+    loading ||
+    loadingDefaultFilters ||
+    !user ||
+    !hasRequestedLinkedCandidate
+  ) {
+    content = <LoadingScreen />;
+  } else if (hasError) {
+    content = <OpportunityError />;
+  } else if (!candidatId) {
+    content = (
+      <>
+        <h2 className="uk-text-bold uk-text-center">
+          <span className="uk-text-primary">Aucun candidat</span> n&apos;est
+          rattaché à ce compte.
+        </h2>
+        <p className="uk-text-center">
+          Il peut y avoir plusieurs raisons à ce sujet. Contacte l&apos;équipe
+          LinkedOut pour en savoir plus.
+        </p>
+      </>
+    );
+  } else {
+    content = (
+      <CandidateOpportunityList
+        search={search}
+        filters={filters}
+        resetFilters={resetFilters}
+        setSearch={setSearch}
+        setFilters={setFilters}
+        candidatId={candidatId}
+        tabFilters={tabFilters}
+        setTabFilters={setTabFilters}
+      />
+    );
+  }
+
   return (
     <LayoutBackOffice
       title={
@@ -211,27 +254,7 @@ const Opportunities = () => {
           : 'Opportunités du candidat'
       }
     >
-      <Section>
-        <>
-          {!loading && hasError && <OpportunityError />}
-          {!user || !candidatId || loadingDefaultFilters || loading ? (
-            <div className="uk-text-center">
-              <div data-uk-spinner />
-            </div>
-          ) : (
-            <CandidateOpportunityList
-              search={search}
-              filters={filters}
-              resetFilters={resetFilters}
-              setSearch={setSearch}
-              setFilters={setFilters}
-              candidatId={candidatId}
-              tabFilters={tabFilters}
-              setTabFilters={setTabFilters}
-            />
-          )}
-        </>
-      </Section>
+      <Section>{content}</Section>
     </LayoutBackOffice>
   );
 };

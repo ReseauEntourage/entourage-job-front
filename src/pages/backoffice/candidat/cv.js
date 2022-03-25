@@ -10,7 +10,7 @@ import { USER_ROLES } from 'src/constants';
 import ErrorMessage from 'src/components/backoffice/cv/ErrorMessage';
 import { useFetchCV } from 'src/hooks/useFetchCV';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
-import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
+import { getCandidateIdFromCoachOrCandidate, getRelatedUser } from 'src/utils';
 
 const Edit = () => {
   const { user } = useContext(UserContext);
@@ -30,49 +30,43 @@ const Edit = () => {
 
   const { cv, setCV, error, loading } = useFetchCV(userCompleteData);
 
-  // erreur pendant la requete
-  if (error) {
+  let content;
+  if (loading || !user || !userCompleteData) {
+    content = <LoadingScreen />;
+  } else if (error) {
     return <ErrorMessage error={error} />;
+  } else if (
+    userCompleteData.role === USER_ROLES.COACH &&
+    !getRelatedUser(userCompleteData)
+  ) {
+    content = (
+      <>
+        <h2 className="uk-text-bold uk-text-center">
+          <span className="uk-text-primary">Aucun candidat</span> n&apos;est
+          rattaché à ce compte.
+        </h2>
+        <p className="uk-text-center">
+          Il peut y avoir plusieurs raisons à ce sujet. Contacte l&apos;équipe
+          LinkedOut pour en savoir plus.
+        </p>
+      </>
+    );
+  } else {
+    content = (
+      <>
+        <CVEditWelcome user={userCompleteData} />
+        <CVPageContent
+          cv={cv}
+          setCV={setCV}
+          candidatId={getCandidateIdFromCoachOrCandidate(userCompleteData)}
+        />
+      </>
+    );
   }
 
   return (
     <LayoutBackOffice title="Edition du CV">
-      <Section>
-        {userCompleteData && <CVEditWelcome user={userCompleteData} />}
-        {loading && <LoadingScreen />}
-        {userCompleteData && !loading && (
-          <>
-            {userCompleteData.role === USER_ROLES.COACH &&
-              (userCompleteData.coach ? (
-                <CVPageContent
-                  cv={cv}
-                  setCV={setCV}
-                  candidatId={getCandidateIdFromCoachOrCandidate(
-                    userCompleteData
-                  )}
-                />
-              ) : (
-                <>
-                  <h2 className="uk-text-bold uk-text-center">
-                    <span className="uk-text-primary">Aucun candidat</span>{' '}
-                    n&apos;est rattaché à ce compte.
-                  </h2>
-                  <p className="uk-text-center">
-                    Il peut y avoir plusieurs raisons à ce sujet. Contacte
-                    l&apos;équipe LinkedOut pour en savoir plus.
-                  </p>
-                </>
-              ))}
-            {userCompleteData.role === USER_ROLES.CANDIDAT && (
-              <CVPageContent
-                cv={cv}
-                setCV={setCV}
-                candidatId={userCompleteData.id}
-              />
-            )}
-          </>
-        )}
-      </Section>
+      <Section>{content}</Section>
     </LayoutBackOffice>
   );
 };

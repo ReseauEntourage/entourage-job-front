@@ -27,6 +27,7 @@ import SearchBar from 'src/components/filters/SearchBar';
 import { openModal } from 'src/components/modals/Modal';
 import { usePrevious } from 'src/hooks/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
+import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 
 const OfferList = ({
   candidatId,
@@ -349,11 +350,7 @@ const OpportunityList = forwardRef(
 
     const content = (
       <div>
-        {loading && (
-          <div className="uk-text-center">
-            <div data-uk-spinner />
-          </div>
-        )}
+        {loading && <LoadingScreen />}
         {!loading && hasError && <OpportunityError />}
         {!loading && !hasError && (
           <div>

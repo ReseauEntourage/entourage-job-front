@@ -1,12 +1,16 @@
 import React from 'react';
 import { CONTACT_INFO } from 'src/constants';
-import { Section, SimpleLink } from 'src/components/utils';
+import { Section, SimpleLink, Button } from 'src/components/utils';
 import Layout from 'src/components/Layout';
 import ImageTitle from 'src/components/partials/ImageTitle';
 import HowToJoin from 'src/components/partials/HowToJoin';
 import StepsToJoin from 'src/components/partials/StepsToJoin';
 import Highlights from 'src/components/partials/Highlights';
 import CandidateTestimoniesOrientation from 'src/components/partials/CandidateTestimoniesOrientation';
+import { gaEvent } from 'src/lib/gtag';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { fbEvent } from 'src/lib/fb';
+import { IconNoSSR } from 'src/components/utils/Icon';
 
 const Travailler = () => {
   return (
@@ -60,6 +64,21 @@ const Travailler = () => {
               Lyon.
             </span>
           </h4>
+          <div className="uk-flex uk-flex-top uk-flex-center uk-padding-small">
+            <Button
+              style="secondary"
+              className="uk-margin-small-top"
+              isExternal
+              newTab
+              onClick={() => {
+                gaEvent(GA_TAGS.PAGE_TRAVAILLER_DEPOSER_CANDIDATURE_CLIC);
+                fbEvent(FB_TAGS.CANDIDATE_REGISTRATION);
+              }}
+              href={process.env.AIRTABLE_LINK_PROFESSIONAL_REINTEGRATION}
+            >
+              Je m&apos;inscris <IconNoSSR name="chevron-right" />
+            </Button>
+          </div>
         </div>
       </Section>
       <Highlights />

@@ -14,8 +14,17 @@ import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas';
 import { fbEvent } from 'src/lib/fb';
 
 const LINKS = [
-  { href: '/aider', name: 'Particuliers, agissez' },
-  { href: '/entreprises', name: 'Entreprises, engagez-vous' },
+  {
+    href: '/travailler',
+    name: 'Je cherche un emploi',
+    tag: GA_TAGS.HEADER_TRAVAILLER_CLIC,
+  },
+  {
+    href: '/entreprises',
+    name: 'Je recrute',
+    tag: GA_TAGS.HEADER_RECRUTER_CLIC,
+  },
+  { href: '/aider', name: 'Je veux aider', tag: GA_TAGS.HEADER_AIDER_CLIC },
 ];
 
 const offcanvasId = 'offcanvas-guest';
@@ -28,13 +37,21 @@ const Header = ({ isHome }) => {
       if (router.asPath.includes(link.href)) {
         return (
           <div className="uk-navbar-item uk-padding-remove-horizontal uk-visible@m">
-            <Button
+            <a
               href={link.href}
-              style="default"
-              className="uk-padding-small uk-padding-remove-vertical"
+              className="uk-text-center"
+              style={{
+                borderBottom: 'white solid 1px',
+                marginLeft: 15,
+                marginRight: 15,
+                color: 'white',
+              }}
+              onClick={() => {
+                gaEvent(link.tag);
+              }}
             >
               {link.name}
-            </Button>
+            </a>
           </div>
         );
       }
@@ -42,10 +59,10 @@ const Header = ({ isHome }) => {
         <Link href={link.href} key={i}>
           {/* Hack so that the links don't move when changing current page */}
           <a
-            style={{ border: '1px solid transparent' }}
+            style={{ borderBottom: '1px solid transparent' }}
             className={`uk-visible@m ${
               router.asPath === link.href && 'uk-text-bold uk-text-primary'
-            }`}
+            } uk-text-center`}
           >
             {link.name}
           </a>
@@ -89,7 +106,8 @@ const Header = ({ isHome }) => {
                 isExternal
                 newTab
                 onClick={() => {
-                  gaEvent(GA_TAGS.FOOTER_DON_CLIC);
+                  gaEvent(GA_TAGS.HEADER_DON_CLIC);
+                  fbEvent(FB_TAGS.DONATION);
                 }}
                 style="default"
               >
@@ -105,35 +123,69 @@ const Header = ({ isHome }) => {
               <Nav navbar items={rightItems} />
             </div>
             <div className="uk-hidden@m uk-padding-small uk-flex uk-flex-middle">
-              <Hamburger targetId={offcanvasId} hidden="m" />,
+              <Hamburger targetId={offcanvasId} hidden="m" />
             </div>
           </>
         }
       />
       <OffcanvasNoSSR id={offcanvasId}>
         <ul className="uk-nav uk-nav-default uk-margin-medium-top">
-          <li>
+          <li className="uk-flex uk-flex-center uk-flex-middle">
             <a
               aria-hidden="true"
+              className="uk-flex uk-flex-middle"
+              style={{ color: 'white' }}
               onClick={() => {
                 router.push('/');
                 UIkit.offcanvas(`#${offcanvasId}`).hide();
               }}
             >
-              Accueil
+              <div className="uk-flex">
+                <IconNoSSR name="home" ratio={1} />
+                <span>&nbsp;Accueil</span>
+              </div>
             </a>
           </li>
           {[
             LINKS.filter(({ href }) => {
               return href !== '#';
-            }).map(({ href, name }, index) => {
+            }).map(({ href, name, tag }, index) => {
+              if (router.asPath.includes(href)) {
+                return (
+                  <li key={index} className="uk-flex-center">
+                    <a
+                      style={{
+                        borderBottom: 'white solid 1px',
+                        color: 'white',
+                      }}
+                      aria-hidden="true"
+                      className="uk-text-center"
+                      onClick={() => {
+                        router.push(href);
+                        UIkit.offcanvas(`#${offcanvasId}`).hide();
+                        gaEvent(tag);
+                      }}
+                    >
+                      {name}
+                    </a>
+                  </li>
+                );
+              }
+
               return (
-                <li key={index}>
+                <li key={index} className="uk-flex-center">
+                  {/* Hack so that the links don't move when changing current page */}
                   <a
+                    style={{
+                      borderBottom: '1px solid transparent',
+                      color: 'white',
+                    }}
                     aria-hidden="true"
+                    className="uk-text-center"
                     onClick={() => {
                       router.push(href);
                       UIkit.offcanvas(`#${offcanvasId}`).hide();
+                      gaEvent(tag);
                     }}
                   >
                     {name}

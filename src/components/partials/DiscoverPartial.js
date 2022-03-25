@@ -5,6 +5,7 @@ import { CandidatCard } from 'src/components/cards';
 import Api from 'src/Axios';
 import Button from 'src/components/utils/Button';
 import { IconNoSSR } from 'src/components/utils/Icon';
+import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 
 const DiscoverPartial = ({ style }) => {
   const [cvs, setCVs] = useState(undefined);
@@ -23,7 +24,7 @@ const DiscoverPartial = ({ style }) => {
 
   const Content = () => {
     if (error) return <p className="uk-text-italic">{error}</p>;
-    if (cvs === undefined) return <div data-uk-spinner="" />;
+    if (cvs === undefined) return <LoadingScreen />;
     return (
       <Grid
         childWidths={['1-3@m']}
