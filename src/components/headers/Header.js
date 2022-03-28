@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Hamburger, Nav, Navbar, NavbarLogo } from 'src/components/utils';
 
 import Button from 'src/components/utils/Button';
-import { EXTERNAL_LINKS } from 'src/constants';
+import { EXTERNAL_LINKS, OFFCANVAS_GUEST } from 'src/constants';
 import { gaEvent } from 'src/lib/gtag';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { IconNoSSR } from 'src/components/utils/Icon';
@@ -26,8 +26,6 @@ const LINKS = [
   },
   { href: '/aider', name: 'Je veux aider', tag: GA_TAGS.HEADER_AIDER_CLIC },
 ];
-
-const offcanvasId = 'offcanvas-guest';
 
 const Header = ({ isHome }) => {
   const router = useRouter();
@@ -123,12 +121,12 @@ const Header = ({ isHome }) => {
               <Nav navbar items={rightItems} />
             </div>
             <div className="uk-hidden@m uk-padding-small uk-flex uk-flex-middle">
-              <Hamburger targetId={offcanvasId} hidden="m" />
+              <Hamburger targetId={OFFCANVAS_GUEST} hidden="m" />
             </div>
           </>
         }
       />
-      <OffcanvasNoSSR id={offcanvasId}>
+      <OffcanvasNoSSR id={OFFCANVAS_GUEST}>
         <ul className="uk-nav uk-nav-default uk-margin-medium-top">
           <li className="uk-flex uk-flex-center uk-flex-middle">
             <a
@@ -136,13 +134,17 @@ const Header = ({ isHome }) => {
               className="uk-flex uk-flex-middle"
               style={{ color: 'white' }}
               onClick={() => {
+                UIkit.offcanvas(`#${OFFCANVAS_GUEST}`).hide();
                 router.push('/');
-                UIkit.offcanvas(`#${offcanvasId}`).hide();
               }}
             >
               <div className="uk-flex">
-                <IconNoSSR name="home" ratio={1} />
-                <span>&nbsp;Accueil</span>
+                <IconNoSSR
+                  name="home"
+                  ratio={1}
+                  className="uk-margin-small-right"
+                />
+                <span>Accueil</span>
               </div>
             </a>
           </li>
@@ -161,9 +163,9 @@ const Header = ({ isHome }) => {
                       aria-hidden="true"
                       className="uk-text-center"
                       onClick={() => {
-                        router.push(href);
-                        UIkit.offcanvas(`#${offcanvasId}`).hide();
+                        UIkit.offcanvas(`#${OFFCANVAS_GUEST}`).hide();
                         gaEvent(tag);
+                        router.push(href);
                       }}
                     >
                       {name}
@@ -183,9 +185,9 @@ const Header = ({ isHome }) => {
                     aria-hidden="true"
                     className="uk-text-center"
                     onClick={() => {
-                      router.push(href);
-                      UIkit.offcanvas(`#${offcanvasId}`).hide();
+                      UIkit.offcanvas(`#${OFFCANVAS_GUEST}`).hide();
                       gaEvent(tag);
+                      router.push(href);
                     }}
                   >
                     {name}
@@ -198,7 +200,7 @@ const Header = ({ isHome }) => {
             <Button
               href={{ pathname: '/candidats', query: { employed: false } }}
               onClick={() => {
-                UIkit.offcanvas(`#${offcanvasId}`).hide();
+                UIkit.offcanvas(`#${OFFCANVAS_GUEST}`).hide();
               }}
               style="primary"
             >
@@ -212,7 +214,7 @@ const Header = ({ isHome }) => {
               isExternal
               newTab
               onClick={() => {
-                UIkit.offcanvas(`#${offcanvasId}`).hide();
+                UIkit.offcanvas(`#${OFFCANVAS_GUEST}`).hide();
                 gaEvent(GA_TAGS.HEADER_DON_CLIC);
                 fbEvent(FB_TAGS.DONATION);
               }}

@@ -8,6 +8,9 @@ import {
 } from 'src/constants/departements';
 import _ from 'lodash';
 
+const OFFCANVAS_GUEST = 'offcanvas-guest';
+const OFFCANVAS_LOGGED = 'offcanvas-logged';
+
 const OFFER_STATUS = [
   {
     value: -1,
@@ -485,4 +488,6 @@ export {
   HEARD_ABOUT,
   AMBITIONS_PREFIXES,
   EXTERNAL_OFFERS_ORIGINS,
+  OFFCANVAS_GUEST,
+  OFFCANVAS_LOGGED,
 };
