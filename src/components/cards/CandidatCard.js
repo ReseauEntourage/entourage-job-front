@@ -23,6 +23,7 @@ import {
   findConstantFromValue,
   sortByOrder,
 } from 'src/utils';
+import _ from 'lodash';
 
 const CandidatCard = ({
   url,
@@ -195,7 +196,7 @@ const CandidatCard = ({
                   })}
                 />
               )}
-              {sortedAmbitions && (
+              {(sortedAmbitions || sortedBusinessLines) && (
                 <div
                   style={{
                     marginTop: 5,
@@ -209,28 +210,30 @@ const CandidatCard = ({
                     Je souhaite
                     <br />
                     travailler{' '}
-                    {!isNewCareerPath && sortedAmbitions[0].prefix
+                    {!isNewCareerPath &&
+                    sortedAmbitions &&
+                    sortedAmbitions[0].prefix
                       ? sortedAmbitions[0].prefix
                       : AMBITIONS_PREFIXES[0].label}
                     &nbsp;:
                   </p>
                   <Grid column gap="collapse" childWidths={['1-1']}>
                     {isNewCareerPath
-                      ? sortedBusinessLines
-                          .slice(0, 2)
-                          .map(({ name }, index) => {
-                            return (
-                              <span
-                                key={index}
-                                className="uk-label uk-text-lowercase ent-card-ambition"
-                              >
-                                {buildBusinessLineForSentence(
-                                  findConstantFromValue(name, BUSINESS_LINES)
-                                )}
-                              </span>
-                            );
-                          })
-                      : sortedAmbitions.slice(0, 2).map(({ name }, index) => {
+                      ? _.uniqWith(sortedBusinessLines.slice(0, 2), (a, b) => {
+                          return a.name === b.name;
+                        }).map(({ name }, index) => {
+                          return (
+                            <span
+                              key={index}
+                              className="uk-label uk-text-lowercase ent-card-ambition"
+                            >
+                              {buildBusinessLineForSentence(
+                                findConstantFromValue(name, BUSINESS_LINES)
+                              )}
+                            </span>
+                          );
+                        })
+                      : sortedAmbitions?.slice(0, 2).map(({ name }, index) => {
                           return (
                             <span
                               key={index}
