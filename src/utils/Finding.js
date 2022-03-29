@@ -96,7 +96,7 @@ const getCandidateIdFromCoachOrCandidate = (member) => {
       member.coach &&
       member.coach.candidat
     ) {
-      return member.coach.candidat;
+      return member.coach.candidat.id;
     }
   }
   return null;

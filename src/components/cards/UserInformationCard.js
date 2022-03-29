@@ -290,7 +290,7 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
                             .catch((error) => {
                               console.error(error);
                               UIkit.notification(
-                                "Une erreur c'est produite lors du lien etre les membres",
+                                "Une erreur s'est produite lors du lien entre les membres",
                                 'danger'
                               );
                             })

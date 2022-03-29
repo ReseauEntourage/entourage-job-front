@@ -15,6 +15,7 @@ import ModalEdit from 'src/components/modals/ModalEdit';
 import { OFFER_ADMIN_FILTERS_DATA, USER_ROLES } from 'src/constants';
 import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
 import {
+  getCandidateFromCoachOrCandidate,
   getCandidateIdFromCoachOrCandidate,
   mutateFormSchema,
 } from 'src/utils';
@@ -329,7 +330,13 @@ const User = () => {
 
   // erreur pendant la requete
   if (error) {
-    return <ErrorMessage error={error} />;
+    return (
+      <LayoutBackOffice title="Erreur - Gestion des membres">
+        <Section className="uk-text-center" size="large">
+          <ErrorMessage error={error} />
+        </Section>
+      </LayoutBackOffice>
+    );
   }
 
   return (
@@ -401,35 +408,37 @@ const User = () => {
               </SimpleLink>
             </li>
           </ul>
-          {tab !== 'parametres' &&
-            user.role === USER_ROLES.COACH &&
-            (user.coach ? (
-              <div>
-                {tab === 'cv' && (
-                  <CVPageContent
-                    candidatId={getCandidateIdFromCoachOrCandidate(user)}
-                    cv={cv}
-                    setCV={setCV}
-                  />
-                )}
-                {tab === 'offres' && (
-                  <AdminCandidateOpportunities
-                    candidatId={getCandidateIdFromCoachOrCandidate(user)}
-                  />
-                )}
-              </div>
-            ) : (
-              <div>
-                <h2 className="uk-text-bold uk-text-center">
-                  <span className="uk-text-primary">Aucun candidat</span>{' '}
-                  n&apos;est rattaché à ce compte coach.
-                </h2>
-                <p className="uk-text-center">
-                  Il peut y avoir plusieurs raisons à ce sujet. Contacte
-                  l&apos;équipe LinkedOut pour en savoir plus.
-                </p>
-              </div>
-            ))}
+          {tab !== 'parametres' && user.role === USER_ROLES.COACH && (
+            <>
+              {getCandidateFromCoachOrCandidate(user) ? (
+                <div>
+                  {tab === 'cv' && (
+                    <CVPageContent
+                      candidatId={getCandidateIdFromCoachOrCandidate(user)}
+                      cv={cv}
+                      setCV={setCV}
+                    />
+                  )}
+                  {tab === 'offres' && (
+                    <AdminCandidateOpportunities
+                      candidatId={getCandidateIdFromCoachOrCandidate(user)}
+                    />
+                  )}
+                </div>
+              ) : (
+                <div>
+                  <h2 className="uk-text-bold uk-text-center">
+                    <span className="uk-text-primary">Aucun candidat</span>{' '}
+                    n&apos;est rattaché à ce compte coach.
+                  </h2>
+                  <p className="uk-text-center">
+                    Il peut y avoir plusieurs raisons à ce sujet. Contacte
+                    l&apos;équipe LinkedOut pour en savoir plus.
+                  </p>
+                </div>
+              )}
+            </>
+          )}
           {tab !== 'parametres' && user.role === USER_ROLES.CANDIDAT && (
             <div>
               {tab === 'cv' && (
