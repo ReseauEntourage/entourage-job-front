@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 import { getUserOpportunityFromOffer } from 'src/utils';
 import Api from 'src/Axios';
 import ModalOffer from 'src/components/modals/OfferModals/ModalOffer';
-import { Grid, SimpleLink } from 'src/components/utils';
+import { Grid, SimpleLink, Button } from 'src/components/utils';
 import OfferCard from 'src/components/cards/OfferCard';
 import ModalOfferAdmin from 'src/components/modals/OfferModals/ModalOfferAdmin';
 import OpportunityError from 'src/components/opportunities/OpportunityError';
@@ -28,8 +28,10 @@ import { openModal } from 'src/components/modals/Modal';
 import { usePrevious } from 'src/hooks/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
+import { useBulkActions } from 'src/hooks/useBulkActions';
 
 const OfferList = ({
+  refreshList,
   candidatId,
   role,
   offers,
@@ -37,76 +39,122 @@ const OfferList = ({
   currentPath,
   query,
 }) => {
-  return (
-    <Grid childWidths={['1-4@l', '1-3@m', '1-2@s']} left top>
-      {offers.map((offer, i) => {
-        const userOpportunity =
-          role === 'candidateAsAdmin'
-            ? getUserOpportunityFromOffer(offer, candidatId)
-            : offer.userOpportunity;
+  const {
+    selectElement,
+    executeAction,
+    isElementSelected,
+    selectionModeActivated,
+    SelectionModeButton,
+  } = useBulkActions('/opportunity', refreshList);
 
-        return (
-          <li key={i}>
-            <SimpleLink
-              shallow
-              scroll={false}
-              className="uk-link-reset"
-              href={{
-                pathname: `${currentPath.href}/[offerId]`,
-                query,
-              }}
-              as={{
-                pathname: `${currentPath.as}/${offer.id}`,
-                query,
+  return (
+    <>
+      {role !== 'candidat' && (
+        <div
+          className="uk-flex uk-flex-middle uk-flex-row-reverse uk-flex-between uk-flex-wrap uk-margin-small-bottom uk-padding-small uk-padding-remove-vertical uk-flex"
+          style={{ height: 40 }}
+        >
+          <SelectionModeButton />
+          {selectionModeActivated && (
+            <Button
+              onClick={() => {
+                executeAction({ isArchived: true }, 'put');
               }}
             >
-              {isAdmin ? (
-                <OfferCard
-                  title={offer.title}
-                  from={offer.recruiterName}
-                  shortDescription={offer.company}
-                  date={offer.date}
-                  archived={offer.isArchived}
-                  isPublic={offer.isPublic}
-                  isValidated={offer.isValidated}
-                  department={offer.department}
-                  userOpportunity={userOpportunity}
-                  isExternal={offer.isExternal}
-                  isNew={
-                    role === 'candidateAsAdmin' &&
-                    userOpportunity &&
-                    !userOpportunity.seen
-                  }
-                  isAdmin
-                />
-              ) : (
-                <OfferCard
-                  title={offer.title}
-                  from={offer.recruiterName}
-                  shortDescription={offer.company}
-                  date={offer.date}
-                  isValidated={offer.isValidated}
-                  isPublic={offer.isPublic}
-                  userOpportunity={offer.userOpportunity}
-                  isNew={!offer.userOpportunity || !offer.userOpportunity.seen}
-                  isExternal={offer.isExternal}
-                  archived={
-                    offer.userOpportunity && offer.userOpportunity.archived
-                  }
-                  bookmarked={
-                    offer.userOpportunity && offer.userOpportunity.bookmarked
-                  }
-                  recommended={
-                    offer.userOpportunity && offer.userOpportunity.recommended
-                  }
-                  department={offer.department}
-                />
-              )}
-            </SimpleLink>
-          </li>
-        );
-      })}
-    </Grid>
+              Archiver&nbsp;
+              <IconNoSSR name="archive" />
+            </Button>
+          )}
+        </div>
+      )}
+
+      <Grid childWidths={['1-4@l', '1-3@m', '1-2@s']} left top>
+        {offers.map((offer, i) => {
+          const userOpportunity =
+            role === 'candidateAsAdmin'
+              ? getUserOpportunityFromOffer(offer, candidatId)
+              : offer.userOpportunity;
+
+          const isSelected = isElementSelected(offer);
+
+          const linkPropsDependingOnMode = selectionModeActivated
+            ? {
+                isExternal: true,
+                onClick: () => {
+                  selectElement(offer);
+                },
+              }
+            : {
+                href: {
+                  pathname: `${currentPath.href}/[offerId]`,
+                  query,
+                },
+                as: {
+                  pathname: `${currentPath.as}/${offer.id}`,
+                  query,
+                },
+              };
+
+          return (
+            <li key={i}>
+              <SimpleLink
+                shallow
+                scroll={false}
+                className="uk-link-reset"
+                {...linkPropsDependingOnMode}
+              >
+                {isAdmin ? (
+                  <OfferCard
+                    title={offer.title}
+                    from={offer.recruiterName}
+                    shortDescription={offer.company}
+                    date={offer.date}
+                    archived={offer.isArchived}
+                    isPublic={offer.isPublic}
+                    isValidated={offer.isValidated}
+                    department={offer.department}
+                    userOpportunity={userOpportunity}
+                    isExternal={offer.isExternal}
+                    isNew={
+                      role === 'candidateAsAdmin' &&
+                      userOpportunity &&
+                      !userOpportunity.seen
+                    }
+                    isAdmin
+                    isSelected={isSelected}
+                  />
+                ) : (
+                  <OfferCard
+                    title={offer.title}
+                    from={offer.recruiterName}
+                    shortDescription={offer.company}
+                    date={offer.date}
+                    isValidated={offer.isValidated}
+                    isPublic={offer.isPublic}
+                    userOpportunity={offer.userOpportunity}
+                    isNew={
+                      !offer.userOpportunity || !offer.userOpportunity.seen
+                    }
+                    isExternal={offer.isExternal}
+                    archived={
+                      offer.userOpportunity && offer.userOpportunity.archived
+                    }
+                    bookmarked={
+                      offer.userOpportunity && offer.userOpportunity.bookmarked
+                    }
+                    recommended={
+                      offer.userOpportunity && offer.userOpportunity.recommended
+                    }
+                    department={offer.department}
+                    isSelected={isSelected}
+                  />
+                )}
+              </SimpleLink>
+            </li>
+          );
+        })}
+      </Grid>
+    </>
   );
 };
 
@@ -120,10 +168,12 @@ OfferList.propTypes = {
     as: PropTypes.string,
   }).isRequired,
   query: PropTypes.shape().isRequired,
+  refreshList: PropTypes.func,
 };
 
 OfferList.defaultProps = {
   candidatId: undefined,
+  refreshList: () => {},
 };
 
 const OpportunityList = forwardRef(
@@ -377,6 +427,15 @@ const OpportunityList = forwardRef(
             )}
             {offers && offers.length > 0 ? (
               <OfferList
+                refreshList={async () => {
+                  await fetchData(
+                    role,
+                    search,
+                    tabFilterTag,
+                    filters,
+                    candidatId
+                  );
+                }}
                 candidatId={candidatId}
                 query={restQuery}
                 role={role}

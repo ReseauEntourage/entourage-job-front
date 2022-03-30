@@ -1,6 +1,6 @@
 import UIkit from 'uikit';
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import Api from 'src/Axios';
 import _ from 'lodash';
 import { usePrevious } from 'src/hooks/utils';
@@ -94,7 +94,7 @@ export function usePostOpportunity({
     [isAdmin]
   );
 
-  const modal = useMemo(() => {
+  const PostOpportunityModal = memo(() => {
     const mutatedDefaultValue = {
       ...defaultValues,
       candidatesId: defaultValues.candidat
@@ -163,12 +163,12 @@ export function usePostOpportunity({
   useEffect(() => {
     if (!_.isEmpty(lastFilledForm) && lastFilledForm !== prevLastFilledForm) {
       setTimeout(() => {
-        openModal(modal);
+        openModal(<PostOpportunityModal />);
       }, 1000);
     }
-  }, [lastFilledForm, modal, prevLastFilledForm]);
+  }, [lastFilledForm, PostOpportunityModal, prevLastFilledForm]);
 
   return {
-    modal,
+    PostOpportunityModal,
   };
 }

@@ -49,7 +49,7 @@ function usePostPublicOfferModal() {
     'post-job-ad'
   );
 
-  const { modal } = usePostOpportunity({
+  const { PostOpportunityModal } = usePostOpportunity({
     defaultValues: {
       isPublic: true,
     },
@@ -59,7 +59,7 @@ function usePostPublicOfferModal() {
     schema: mutatedSchema,
   });
 
-  return modal;
+  return PostOpportunityModal;
 }
 
 export default usePostPublicOfferModal;
