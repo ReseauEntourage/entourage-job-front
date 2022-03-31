@@ -29,9 +29,12 @@ import { usePrevious } from 'src/hooks/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { useBulkActions } from 'src/hooks/useBulkActions';
+import { SEARCH_MAX_WIDTH } from 'src/constants/utils';
 
 const OfferList = ({
-  refreshList,
+  selectionModeActivated,
+  selectElement,
+  isElementSelected,
   candidatId,
   role,
   offers,
@@ -39,122 +42,91 @@ const OfferList = ({
   currentPath,
   query,
 }) => {
-  const {
-    selectElement,
-    executeAction,
-    isElementSelected,
-    selectionModeActivated,
-    SelectionModeButton,
-  } = useBulkActions('/opportunity', refreshList);
-
   return (
-    <>
-      {role !== 'candidat' && (
-        <div
-          className="uk-flex uk-flex-middle uk-flex-row-reverse uk-flex-between uk-flex-wrap uk-margin-small-bottom uk-padding-small uk-padding-remove-vertical uk-flex"
-          style={{ height: 40 }}
-        >
-          <SelectionModeButton />
-          {selectionModeActivated && (
-            <Button
-              onClick={() => {
-                executeAction({ isArchived: true }, 'put');
-              }}
+    <Grid childWidths={['1-4@l', '1-3@m', '1-2@s']} left top>
+      {offers.map((offer, i) => {
+        const userOpportunity =
+          role === 'candidateAsAdmin'
+            ? getUserOpportunityFromOffer(offer, candidatId)
+            : offer.userOpportunity;
+
+        const isSelected = isElementSelected(offer);
+
+        const linkPropsDependingOnMode = selectionModeActivated
+          ? {
+              isExternal: true,
+              onClick: () => {
+                selectElement(offer);
+              },
+            }
+          : {
+              href: {
+                pathname: `${currentPath.href}/[offerId]`,
+                query,
+              },
+              as: {
+                pathname: `${currentPath.as}/${offer.id}`,
+                query,
+              },
+            };
+
+        return (
+          <li key={i}>
+            <SimpleLink
+              shallow
+              scroll={false}
+              className="uk-link-reset"
+              {...linkPropsDependingOnMode}
             >
-              Archiver&nbsp;
-              <IconNoSSR name="archive" />
-            </Button>
-          )}
-        </div>
-      )}
-
-      <Grid childWidths={['1-4@l', '1-3@m', '1-2@s']} left top>
-        {offers.map((offer, i) => {
-          const userOpportunity =
-            role === 'candidateAsAdmin'
-              ? getUserOpportunityFromOffer(offer, candidatId)
-              : offer.userOpportunity;
-
-          const isSelected = isElementSelected(offer);
-
-          const linkPropsDependingOnMode = selectionModeActivated
-            ? {
-                isExternal: true,
-                onClick: () => {
-                  selectElement(offer);
-                },
-              }
-            : {
-                href: {
-                  pathname: `${currentPath.href}/[offerId]`,
-                  query,
-                },
-                as: {
-                  pathname: `${currentPath.as}/${offer.id}`,
-                  query,
-                },
-              };
-
-          return (
-            <li key={i}>
-              <SimpleLink
-                shallow
-                scroll={false}
-                className="uk-link-reset"
-                {...linkPropsDependingOnMode}
-              >
-                {isAdmin ? (
-                  <OfferCard
-                    title={offer.title}
-                    from={offer.recruiterName}
-                    shortDescription={offer.company}
-                    date={offer.date}
-                    archived={offer.isArchived}
-                    isPublic={offer.isPublic}
-                    isValidated={offer.isValidated}
-                    department={offer.department}
-                    userOpportunity={userOpportunity}
-                    isExternal={offer.isExternal}
-                    isNew={
-                      role === 'candidateAsAdmin' &&
-                      userOpportunity &&
-                      !userOpportunity.seen
-                    }
-                    isAdmin
-                    isSelected={isSelected}
-                  />
-                ) : (
-                  <OfferCard
-                    title={offer.title}
-                    from={offer.recruiterName}
-                    shortDescription={offer.company}
-                    date={offer.date}
-                    isValidated={offer.isValidated}
-                    isPublic={offer.isPublic}
-                    userOpportunity={offer.userOpportunity}
-                    isNew={
-                      !offer.userOpportunity || !offer.userOpportunity.seen
-                    }
-                    isExternal={offer.isExternal}
-                    archived={
-                      offer.userOpportunity && offer.userOpportunity.archived
-                    }
-                    bookmarked={
-                      offer.userOpportunity && offer.userOpportunity.bookmarked
-                    }
-                    recommended={
-                      offer.userOpportunity && offer.userOpportunity.recommended
-                    }
-                    department={offer.department}
-                    isSelected={isSelected}
-                  />
-                )}
-              </SimpleLink>
-            </li>
-          );
-        })}
-      </Grid>
-    </>
+              {isAdmin ? (
+                <OfferCard
+                  title={offer.title}
+                  from={offer.recruiterName}
+                  shortDescription={offer.company}
+                  date={offer.date}
+                  archived={offer.isArchived}
+                  isPublic={offer.isPublic}
+                  isValidated={offer.isValidated}
+                  department={offer.department}
+                  userOpportunity={userOpportunity}
+                  isExternal={offer.isExternal}
+                  isNew={
+                    role === 'candidateAsAdmin' &&
+                    userOpportunity &&
+                    !userOpportunity.seen
+                  }
+                  isAdmin
+                  isSelected={isSelected}
+                />
+              ) : (
+                <OfferCard
+                  title={offer.title}
+                  from={offer.recruiterName}
+                  shortDescription={offer.company}
+                  date={offer.date}
+                  isValidated={offer.isValidated}
+                  isPublic={offer.isPublic}
+                  userOpportunity={offer.userOpportunity}
+                  isNew={!offer.userOpportunity || !offer.userOpportunity.seen}
+                  isExternal={offer.isExternal}
+                  archived={
+                    offer.userOpportunity && offer.userOpportunity.archived
+                  }
+                  bookmarked={
+                    offer.userOpportunity && offer.userOpportunity.bookmarked
+                  }
+                  recommended={
+                    offer.userOpportunity && offer.userOpportunity.recommended
+                  }
+                  department={offer.department}
+                  isSelected={isSelected}
+                />
+              )}
+            </SimpleLink>
+          </li>
+        );
+      })}
+    </Grid>
   );
 };
 
@@ -168,12 +140,13 @@ OfferList.propTypes = {
     as: PropTypes.string,
   }).isRequired,
   query: PropTypes.shape().isRequired,
-  refreshList: PropTypes.func,
+  selectionModeActivated: PropTypes.bool.isRequired,
+  selectElement: PropTypes.func.isRequired,
+  isElementSelected: PropTypes.func.isRequired,
 };
 
 OfferList.defaultProps = {
   candidatId: undefined,
-  refreshList: () => {},
 };
 
 const OpportunityList = forwardRef(
@@ -398,8 +371,43 @@ const OpportunityList = forwardRef(
       }
     }, [prevTag, restQuery.tag]);
 
+    const {
+      selectElement,
+      executeAction,
+      isElementSelected,
+      selectionModeActivated,
+      SelectionModeButton,
+      hasSelection,
+    } = useBulkActions('/opportunity', async () => {
+      await fetchData(role, search, tabFilterTag, filters, candidatId);
+    });
+
     const content = (
       <div>
+        {role !== 'candidat' && (
+          <div className="uk-flex uk-flex-center">
+            <div
+              className="uk-flex uk-flex-1 uk-margin-small-bottom"
+              style={{ height: 40, maxWidth: SEARCH_MAX_WIDTH }}
+            >
+              <div className="uk-flex uk-padding-small uk-padding-remove-vertical uk-flex-1 uk-flex-middle uk-flex-row-reverse uk-flex-between uk-flex-wrap">
+                <SelectionModeButton />
+                {selectionModeActivated && (
+                  <Button
+                    disabled={!hasSelection}
+                    style="default"
+                    onClick={() => {
+                      executeAction({ isArchived: true }, 'put');
+                    }}
+                  >
+                    Archiver&nbsp;
+                    <IconNoSSR name="archive" />
+                  </Button>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
         {loading && <LoadingScreen />}
         {!loading && hasError && <OpportunityError />}
         {!loading && !hasError && (
@@ -415,6 +423,9 @@ const OpportunityList = forwardRef(
                   />
                 </p>
                 <OfferList
+                  isElementSelected={isElementSelected}
+                  selectElement={selectElement}
+                  selectionModeActivated={selectionModeActivated}
                   candidatId={candidatId}
                   query={restQuery}
                   role={role}
@@ -427,15 +438,9 @@ const OpportunityList = forwardRef(
             )}
             {offers && offers.length > 0 ? (
               <OfferList
-                refreshList={async () => {
-                  await fetchData(
-                    role,
-                    search,
-                    tabFilterTag,
-                    filters,
-                    candidatId
-                  );
-                }}
+                isElementSelected={isElementSelected}
+                selectElement={selectElement}
+                selectionModeActivated={selectionModeActivated}
                 candidatId={candidatId}
                 query={restQuery}
                 role={role}
@@ -468,6 +473,9 @@ const OpportunityList = forwardRef(
                   départements sélectionnés&nbsp;:
                 </p>
                 <OfferList
+                  isElementSelected={isElementSelected}
+                  selectElement={selectElement}
+                  selectionModeActivated={selectionModeActivated}
                   candidatId={candidatId}
                   query={restQuery}
                   role={role}
@@ -485,26 +493,25 @@ const OpportunityList = forwardRef(
     return (
       <div>
         {tabFilters ? (
-          <FiltersTabs
-            path={currentPath}
-            tabFilters={tabFilters}
-            setTabFilters={setTabFilters}
-            otherPathParams={['offerId']}
-            otherFilterComponent={
-              <SearchBar
-                filtersConstants={filtersConst}
-                filters={filters}
-                numberOfResults={numberOfResults}
-                resetFilters={resetFilters}
-                search={search}
-                setSearch={setSearch}
-                setFilters={setFilters}
-                placeholder="Rechercher..."
-              />
-            }
-          >
+          <>
+            <FiltersTabs
+              path={currentPath}
+              tabFilters={tabFilters}
+              setTabFilters={setTabFilters}
+              otherPathParams={['offerId']}
+            />
+            <SearchBar
+              filtersConstants={filtersConst}
+              filters={filters}
+              numberOfResults={numberOfResults}
+              resetFilters={resetFilters}
+              search={search}
+              setSearch={setSearch}
+              setFilters={setFilters}
+              placeholder="Rechercher..."
+            />
             {content}
-          </FiltersTabs>
+          </>
         ) : (
           <>
             <SearchBar
