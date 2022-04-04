@@ -11,6 +11,7 @@ import {
   OPPORTUNITY_FILTERS_DATA,
   USER_ROLES,
 } from 'src/constants';
+import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 
 const LesOpportunites = () => {
   const {
@@ -135,9 +136,7 @@ const LesOpportunites = () => {
     <LayoutBackOffice title="Modération des offres d'emploi">
       <Section>
         {!user || loadingDefaultFilters ? (
-          <div className="uk-text-center">
-            <div data-uk-spinner />
-          </div>
+          <LoadingScreen />
         ) : (
           <AdminOpportunityList
             search={search}

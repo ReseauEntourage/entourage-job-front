@@ -8,8 +8,8 @@ import schemaGetEmail from 'src/components/forms/schema/formGetEmail.json';
 import Api from 'src/Axios';
 import { Button, Img } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
-import { event } from 'src/lib/gtag';
-import TAGS from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
+import { GA_TAGS } from 'src/constants/tags';
 import { IconNoSSR } from 'src/components/utils/Icon';
 
 const ModalShareCV = ({ firstName }) => {
@@ -32,7 +32,7 @@ const ModalShareCV = ({ firstName }) => {
                 submitText="Envoyer"
                 onCancel={close}
                 onSubmit={({ email }) => {
-                  event(TAGS.POPUP_PARTAGE_ENVOYER_MAIL_SUCCES);
+                  gaEvent(GA_TAGS.POPUP_PARTAGE_ENVOYER_MAIL_SUCCES);
                   return Api.post('/mail/newsletter', { email })
                     .then(next)
                     .catch(() => {
@@ -65,7 +65,7 @@ const ModalShareCV = ({ firstName }) => {
                   isExternal
                   newTab
                   onClick={() => {
-                    event(TAGS.POPUP_PARTAGE_SITE_ENTOURAGE_CLIC);
+                    gaEvent(GA_TAGS.POPUP_PARTAGE_SITE_ENTOURAGE_CLIC);
                     close();
                   }}
                   href={EXTERNAL_LINKS.ENTOURAGE}

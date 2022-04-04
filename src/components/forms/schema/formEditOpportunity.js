@@ -534,17 +534,4 @@ export const adminMutations = [
       },
     ],
   },
-  {
-    fieldId: 'startEndContract',
-    props: [
-      {
-        propName: 'hidden',
-        value: false,
-      },
-      {
-        propName: 'disabled',
-        value: false,
-      },
-    ],
-  },
 ];

@@ -6,6 +6,7 @@ import schema from 'src/components/forms/schema/formResetPassword.json';
 import FormWithValidation from 'src/components/forms/FormWithValidation';
 import Api from 'src/Axios';
 import { IconNoSSR } from 'src/components/utils/Icon';
+import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 
 const ResetPasswordPage = () => {
   const {
@@ -38,9 +39,7 @@ const ResetPasswordPage = () => {
       <Section size="large" style="muted">
         <div className="uk-flex uk-flex-center uk-flex-middle">
           {loading ? (
-            <div className="uk-text-center">
-              <div data-uk-spinner />
-            </div>
+            <LoadingScreen />
           ) : (
             <>
               {valide ? (

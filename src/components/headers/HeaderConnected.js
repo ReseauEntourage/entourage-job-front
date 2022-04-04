@@ -7,13 +7,12 @@ import { Navbar, Nav, NavbarLogo, SimpleLink } from 'src/components/utils';
 import { UserContext } from 'src/components/store/UserProvider';
 import ImgProfile from 'src/components/headers/ImgProfile';
 import Dropdown from 'src/components/utils/Dropdown';
-import { EXTERNAL_LINKS } from 'src/constants';
 import { useNotifBadges } from 'src/hooks';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import Hamburger from 'src/components/utils/Hamburger';
 import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas';
-
-const offcanvasId = 'offcanvas-logged';
+import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
+import { OFFCANVAS_LOGGED } from 'src/constants';
 
 const HeaderConnected = ({ isHome }) => {
   const { user, logout } = useContext(UserContext);
@@ -88,7 +87,9 @@ const HeaderConnected = ({ isHome }) => {
         badge: 'cv',
       },
       {
-        href: EXTERNAL_LINKS.TOOLBOX,
+        href: `${
+          process.env.TOOLBOX_URL
+        }?id=${getCandidateIdFromCoachOrCandidate(user)}`,
         name: 'Boîte à outils',
         icon: 'question',
         external: true,
@@ -223,12 +224,12 @@ const HeaderConnected = ({ isHome }) => {
               <Nav navbar items={rightItems} />
             </div>
             <div className="uk-hidden@m uk-padding-small uk-flex uk-flex-middle">
-              <Hamburger targetId={offcanvasId} hidden="m" light />
+              <Hamburger targetId={OFFCANVAS_LOGGED} hidden="m" light />
             </div>
           </>
         }
       />
-      <OffcanvasNoSSR id={offcanvasId}>
+      <OffcanvasNoSSR id={OFFCANVAS_LOGGED}>
         <ul className="uk-nav uk-nav-default uk-margin-medium-top">
           <li>
             <SimpleLink href="/">
@@ -246,8 +247,8 @@ const HeaderConnected = ({ isHome }) => {
                   <a
                     aria-hidden="true"
                     onClick={() => {
+                      UIkit.offcanvas(`#${OFFCANVAS_LOGGED}`).hide();
                       router.push(href);
-                      UIkit.offcanvas(`#${offcanvasId}`).hide();
                     }}
                   >
                     <IconNoSSR name={icon} className="uk-margin-small-right" />
@@ -275,13 +276,13 @@ const HeaderConnected = ({ isHome }) => {
                   <a
                     aria-hidden="true"
                     onClick={() => {
+                      UIkit.offcanvas(`#${OFFCANVAS_LOGGED}`).hide();
                       if (href) {
                         router.push(href);
                       }
                       if (onClick) {
                         onClick();
                       }
-                      UIkit.offcanvas(`#${offcanvasId}`).hide();
                     }}
                   >
                     <IconNoSSR name={icon} className="uk-margin-small-right" />

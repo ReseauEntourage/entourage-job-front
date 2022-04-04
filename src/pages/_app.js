@@ -25,6 +25,7 @@ import * as gtag from 'src/lib/gtag';
 import SplashScreen from 'src/components/SplashScreen';
 import { useMount } from 'src/hooks/utils';
 import { ModalsListener } from 'src/components/modals/Modal';
+import { OFFCANVAS_GUEST, OFFCANVAS_LOGGED } from 'src/constants';
 
 UIkit.use(Icons);
 
@@ -56,7 +57,7 @@ const Container = ({ Component, pageProps, err }) => {
 
   return (
     <div
-      style={{ height: '100vh' }}
+      style={{ height: loading ? '100vh' : 'inherit' }}
       className={`uk-inline uk-width-expand ${
         loading ? 'uk-overflow-hidden' : ''
       }`}
@@ -82,6 +83,14 @@ const EntourageApp = ({ Component, pageProps, err }) => {
 
   useEffect(() => {
     const scrollToTop = (url, { shallow }) => {
+      // Fix because if offcanvas is open during route change, couldn't be opened anymore
+      if (UIkit.offcanvas(`#${OFFCANVAS_LOGGED}`)) {
+        UIkit.offcanvas(`#${OFFCANVAS_LOGGED}`).hide();
+      }
+      if (UIkit.offcanvas(`#${OFFCANVAS_GUEST}`)) {
+        UIkit.offcanvas(`#${OFFCANVAS_GUEST}`).hide();
+      }
+
       if (!shallow && shouldScrollToTop) {
         setShouldScrollToTop(true);
         document.getElementById('main-container').scrollTo(0, 0);

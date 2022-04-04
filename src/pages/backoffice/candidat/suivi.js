@@ -8,6 +8,7 @@ import { UserContext } from 'src/components/store/UserProvider';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
 import { USER_ROLES } from 'src/constants';
 import { IconNoSSR } from 'src/components/utils/Icon';
+import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 
 const Suivi = () => {
   const { user } = useContext(UserContext);
@@ -86,12 +87,10 @@ const Suivi = () => {
 
   let content;
   if (loading || !user) {
+    content = <LoadingScreen />;
+  } else if (!userCandidat) {
     content = (
-      <div className="uk-width-1-1 uk-flex uk-flex-center" data-uk-spinner="" />
-    );
-  } else if (userCandidat === null) {
-    content = (
-      <>
+      <div className="uk-flex uk-flex-column uk-flex-middle">
         <h2 className="uk-text-bold">
           <span className="uk-text-primary">
             {user.role === USER_ROLES.COACH
@@ -104,11 +103,12 @@ const Suivi = () => {
           Il peut y avoir plusieurs raisons à ce sujet. Contacte l&apos;équipe
           LinkedOut pour en savoir plus.
         </p>
-      </>
+      </div>
     );
   } else {
     content = (
       <>
+        <HeaderBackoffice title={title} description={description} />
         <div className="uk-form-controls uk-padding-small uk-padding-remove-left uk-padding-remove-right">
           <label
             className={`uk-form-label ${labelClass}`}
@@ -155,10 +155,7 @@ const Suivi = () => {
 
   return (
     <LayoutBackOffice title={title}>
-      <Section>
-        <HeaderBackoffice title={title} description={description} />
-        {content}
-      </Section>
+      <Section>{content}</Section>
     </LayoutBackOffice>
   );
 };

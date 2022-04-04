@@ -12,7 +12,12 @@ import Button from 'src/components/utils/Button';
 import ModalEdit from 'src/components/modals/ModalEdit';
 import Api from 'src/Axios';
 import SearchBar from 'src/components/filters/SearchBar';
-import { filtersToQueryParams, mutateFormSchema } from 'src/utils';
+import {
+  filtersToQueryParams,
+  getCandidateFromCoachOrCandidate,
+  getRelatedUser,
+  mutateFormSchema,
+} from 'src/utils';
 import schemaCreateUser from 'src/components/forms/schema/formEditUser';
 import { openModal } from 'src/components/modals/Modal';
 import { usePrevious } from 'src/hooks/utils';
@@ -21,28 +26,11 @@ import { CV_STATUS, MEMBER_FILTERS_DATA, USER_ROLES } from 'src/constants';
 import { Grid, Section, SimpleLink } from 'src/components/utils';
 import ImgProfile from 'src/components/headers/ImgProfile';
 import { IconNoSSR } from 'src/components/utils/Icon';
+import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 
 const translateStatusCV = (status) => {
   const cvStatus = CV_STATUS[status] ? CV_STATUS[status] : CV_STATUS.Unknown;
   return <span className={`uk-text-${cvStatus.style}`}>{cvStatus.label}</span>;
-};
-
-const getRelatedUser = (member) => {
-  if (member.candidat && member.candidat.coach) {
-    return member.candidat.coach;
-  }
-  if (member.coach && member.coach.candidat) {
-    return member.coach.candidat;
-  }
-  return null;
-};
-
-const getCandidateFromCoachOrCandidate = (member) => {
-  if (member.role === USER_ROLES.CANDIDAT) {
-    return member.candidat;
-  }
-
-  return member.coach;
 };
 
 const LIMIT = 50;
@@ -458,9 +446,7 @@ const MemberList = ({
             smallSelectors
           />
           {loading ? (
-            <div className="uk-height-small uk-flex uk-flex-center uk-flex-middle">
-              <div data-uk-spinner="" />
-            </div>
+            <LoadingScreen />
           ) : (
             <div className="uk-overflow-auto uk-margin-top">
               <table className="uk-table uk-table-hover uk-table-middle uk-table-divider uk-table-responsive">

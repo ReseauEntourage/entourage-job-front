@@ -1,6 +1,6 @@
 import React from 'react';
-import { event } from 'src/lib/gtag';
-import TAGS from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
+import { GA_TAGS } from 'src/constants/tags';
 import { openModal } from 'src/components/modals/Modal';
 import usePostPublicOfferModal from 'src/components/modals/usePostPublicOfferModal';
 
@@ -18,7 +18,7 @@ const GlobalOffer = () => {
         style={{ textDecoration: 'underline' }}
         onClick={() => {
           openModal(publicOfferModal);
-          event(TAGS.PAGE_RECRUTER_DEPOSER_OFFRE_CLIC);
+          gaEvent(GA_TAGS.PAGE_RECRUTER_DEPOSER_OFFRE_CLIC);
         }}
       >
         Laissez-nous votre contact ou votre besoin et nous revenons vers vous.

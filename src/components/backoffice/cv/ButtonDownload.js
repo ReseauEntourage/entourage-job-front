@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Api from 'src/Axios';
 import ButtonPost from 'src/components/backoffice/cv/ButtonPost';
-import { event } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag';
 
 const ButtonDownload = ({
   disabled,
@@ -21,7 +21,7 @@ const ButtonDownload = ({
       }
       icon={pdfGenerating ? null : 'download'}
       action={() => {
-        if (tag) event(tag);
+        if (tag) gaEvent(tag);
         return Api.get(`/cv/pdf/${candidatId}`, {
           params: {
             fileName: `${firstName}_${lastName}`,

@@ -4,9 +4,10 @@ import { NewsletterPartial, SharePartial } from 'src/components/partials';
 import { EXTERNAL_LINKS } from 'src/constants';
 import Layout from 'src/components/Layout';
 import ImageTitle from 'src/components/partials/ImageTitle';
-import { event } from 'src/lib/gtag';
-import TAGS from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { IconNoSSR } from 'src/components/utils/Icon';
+import { fbEvent } from 'src/lib/fb';
 
 const Aider = () => {
   return (
@@ -59,7 +60,8 @@ const Aider = () => {
               newTab
               style="secondary"
               onClick={() => {
-                return event(TAGS.PAGE_AIDER_DON_CLIC);
+                gaEvent(GA_TAGS.PAGE_AIDER_DON_CLIC);
+                fbEvent(FB_TAGS.DONATION);
               }}
             >
               Faire un don&nbsp;
@@ -87,7 +89,8 @@ const Aider = () => {
               newTab
               style="secondary"
               onClick={() => {
-                return event(TAGS.PAGE_AIDER_INSCRIPTION_COACH_CLIC);
+                gaEvent(GA_TAGS.PAGE_AIDER_INSCRIPTION_COACH_CLIC);
+                fbEvent(FB_TAGS.COACH_REGISTRATION);
               }}
             >
               Devenir coach LinkedOut&nbsp;

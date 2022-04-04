@@ -1,10 +1,11 @@
 import React from 'react';
 import { Section } from 'src/components/utils';
 import Button from 'src/components/utils/Button';
-import { event } from 'src/lib/gtag';
-import TAGS from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { SharePartial } from 'src/components/partials/index';
 import { IconNoSSR } from 'src/components/utils/Icon';
+import { fbEvent } from 'src/lib/fb';
 
 const StepsToJoin = () => {
   return (
@@ -23,7 +24,8 @@ const StepsToJoin = () => {
           isExternal
           newTab
           onClick={() => {
-            return event(TAGS.PAGE_TRAVAILLER_DEPOSER_CANDIDATURE_CLIC);
+            gaEvent(GA_TAGS.PAGE_TRAVAILLER_DEPOSER_CANDIDATURE_CLIC);
+            fbEvent(FB_TAGS.CANDIDATE_REGISTRATION);
           }}
           href={process.env.AIRTABLE_LINK_PROFESSIONAL_REINTEGRATION}
         >

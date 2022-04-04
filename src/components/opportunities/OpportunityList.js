@@ -27,6 +27,7 @@ import SearchBar from 'src/components/filters/SearchBar';
 import { openModal } from 'src/components/modals/Modal';
 import { usePrevious } from 'src/hooks/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
+import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 
 const OfferList = ({
   candidatId,
@@ -339,7 +340,7 @@ const OpportunityList = forwardRef(
     useEffect(() => {
       if (restQuery.tag !== prevTag) {
         const initialFiltersConst =
-          restQuery.tag === OFFER_ADMIN_FILTERS_DATA[3].tag
+          restQuery.tag === OFFER_ADMIN_FILTERS_DATA[2].tag
             ? OPPORTUNITY_FILTERS_DATA.slice(1)
             : OPPORTUNITY_FILTERS_DATA;
 
@@ -349,11 +350,7 @@ const OpportunityList = forwardRef(
 
     const content = (
       <div>
-        {loading && (
-          <div className="uk-text-center">
-            <div data-uk-spinner />
-          </div>
-        )}
+        {loading && <LoadingScreen />}
         {!loading && hasError && <OpportunityError />}
         {!loading && !hasError && (
           <div>

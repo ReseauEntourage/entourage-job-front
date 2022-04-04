@@ -5,7 +5,7 @@ import FiltersSideBar from 'src/components/filters/FiltersSideBar';
 import FiltersCheckboxes from 'src/components/filters/FiltersCheckboxes';
 import FiltersOptions from 'src/components/filters/FiltersOptions';
 import { IconNoSSR } from 'src/components/utils/Icon';
-import { event } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag';
 import FiltersDropdowns from 'src/components/filters/FiltersDropdowns';
 
 const MAX_WIDTH = 1100;
@@ -30,7 +30,7 @@ const SearchBar = ({
 
   const startSearch = useCallback(() => {
     if (searchBuffer) {
-      if (startSearchEvent) event(startSearchEvent);
+      if (startSearchEvent) gaEvent(startSearchEvent);
       setSearch(searchBuffer);
     } else {
       setSearch();

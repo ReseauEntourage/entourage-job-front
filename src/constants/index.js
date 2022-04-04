@@ -1,4 +1,4 @@
-import TAGS from 'src/constants/tags';
+import { GA_TAGS } from 'src/constants/tags';
 
 import {
   ADMIN_ZONES,
@@ -7,6 +7,9 @@ import {
   REGIONS_FILTERS,
 } from 'src/constants/departements';
 import _ from 'lodash';
+
+const OFFCANVAS_GUEST = 'offcanvas-guest';
+const OFFCANVAS_LOGGED = 'offcanvas-logged';
 
 const OFFER_STATUS = [
   {
@@ -163,16 +166,14 @@ const AMBITIONS_PREFIXES = [
 ];
 
 const OFFER_CANDIDATE_FILTERS_DATA = [
-  { tag: 'all', title: 'Toutes les offres' },
   { tag: 'private', title: 'Offres personnelles', active: true },
   { tag: 'public', title: 'Offres générales' },
   { tag: 'archived', title: 'Offres archivées' },
 ];
 
 const OFFER_ADMIN_FILTERS_DATA = [
-  { tag: 'all', title: 'Toutes les offres' },
-  { tag: 'pending', title: 'Offres à valider', active: true },
-  { tag: 'validated', title: 'Offres publiées' },
+  { tag: 'pending', title: 'Offres à valider' },
+  { tag: 'validated', title: 'Offres publiées', active: true },
   { tag: 'external', title: 'Offres externes' },
   { tag: 'archived', title: 'Offres archivées' },
 ];
@@ -198,14 +199,14 @@ const CV_FILTERS_DATA = [
       'desc'
     ),
     title: 'Où ?',
-    tag: TAGS.PAGE_GALERIE_FILTRE_GEOGRAPHIQUE_CLIC,
+    tag: GA_TAGS.PAGE_GALERIE_FILTRE_GEOGRAPHIQUE_CLIC,
     icon: 'location',
   },
   {
     key: 'businessLines',
     constants: BUSINESS_LINES,
     title: 'Métiers',
-    tag: TAGS.PAGE_GALERIE_FILTRE_SECTEURS_CLIC,
+    tag: GA_TAGS.PAGE_GALERIE_FILTRE_SECTEURS_CLIC,
   },
 ];
 
@@ -371,8 +372,6 @@ const EXTERNAL_LINKS = {
   REPAIRS_75: 'https://www.repairs75.org/',
   REDSTAR:
     'https://blog.linkedout.fr/2021/07/21/apres-la-voile-le-foot-linkedout-nouveau-partenaire-maillot-du-red-star-fc-avec-le-soutien-de-randstad/',
-  TOOLBOX:
-    'https://drive.google.com/drive/folders/1fUhZtsdaAElpjWsC6Rz4Jw5ZJ94vBnSd?usp=sharing',
   RECRUITMENTS: 'https://www.welcometothejungle.com/fr/companies/entourage',
 };
 
@@ -489,4 +488,6 @@ export {
   HEARD_ABOUT,
   AMBITIONS_PREFIXES,
   EXTERNAL_OFFERS_ORIGINS,
+  OFFCANVAS_GUEST,
+  OFFCANVAS_LOGGED,
 };

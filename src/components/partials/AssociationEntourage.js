@@ -2,8 +2,8 @@ import React from 'react';
 import { Background, Grid, Img, Section } from 'src/components/utils';
 import Button from 'src/components/utils/Button';
 import { EXTERNAL_LINKS } from 'src/constants';
-import { event } from 'src/lib/gtag';
-import TAGS from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
+import { GA_TAGS } from 'src/constants/tags';
 import { IconNoSSR } from 'src/components/utils/Icon';
 
 const AssociationEntourage = () => {
@@ -39,7 +39,7 @@ const AssociationEntourage = () => {
                     style="default"
                     isExternal
                     onClick={() => {
-                      return event(TAGS.FOOTER_SITE_ENTOURAGE_CLIC);
+                      gaEvent(GA_TAGS.FOOTER_SITE_ENTOURAGE_CLIC);
                     }}
                     newTab
                   >

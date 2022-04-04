@@ -8,8 +8,8 @@ import Carousel from 'src/components/utils/Carousel';
 import ModalInterestLinkedOut from 'src/components/modals/ModalInterestLinkedOut';
 import SimpleSection from 'src/components/partials/SimpleSection';
 import SimpleLink from 'src/components/utils/SimpleLink';
-import { event } from 'src/lib/gtag';
-import TAGS from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
+import { GA_TAGS } from 'src/constants/tags';
 import { openModal } from 'src/components/modals/Modal';
 
 const Partenaires = () => {
@@ -294,7 +294,7 @@ const Partenaires = () => {
           label: 'Nous écrire',
           onClick: () => {
             openModal(<ModalInterestLinkedOut />);
-            event(TAGS.PAGE_PARTENAIRES_NOUS_ECRIRE_CLIC);
+            gaEvent(GA_TAGS.PAGE_PARTENAIRES_NOUS_ECRIRE_CLIC);
           },
         }}
       />

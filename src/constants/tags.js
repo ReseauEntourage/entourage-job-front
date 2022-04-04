@@ -1,4 +1,4 @@
-const TAGS = {
+const GA_TAGS = {
   HOME_CV_CLIC: {
     action: 'Home_CV_Clic',
   },
@@ -182,6 +182,18 @@ const TAGS = {
   FOOTER_DON_CLIC: {
     action: 'Footer_Don_Clic',
   },
+  HEADER_DON_CLIC: {
+    action: 'Header_Don_Clic',
+  },
+  HEADER_AIDER_CLIC: {
+    action: 'Header_Aider_Clic',
+  },
+  HEADER_RECRUTER_CLIC: {
+    action: 'Header_Recruter_Clic',
+  },
+  HEADER_TRAVAILLER_CLIC: {
+    action: 'Header_Travailler_Clic',
+  },
   FOOTER_RECRUITMENTS_CLIC: {
     action: 'Footer_Recruitments_Clic',
   },
@@ -211,4 +223,46 @@ const TAGS = {
   },
 };
 
-export default TAGS;
+const FB_TAGS = {
+  CANDIDATE_REGISTRATION: {
+    type: 'track',
+    action: 'Prospect',
+    options: { content_category: '1' },
+  },
+  COMPANY_CONTACT: {
+    type: 'track',
+    action: 'Prospect',
+    options: { content_category: '2' },
+  },
+  COMPANY_GENERAL_OFFER: {
+    type: 'track',
+    action: 'Prospect',
+    options: { content_category: '2.2' },
+  },
+  COMPANY_CV_OFFER: {
+    type: 'track',
+    action: 'Prospect',
+    options: { content_category: '2.3' },
+  },
+  COACH_REGISTRATION: {
+    type: 'track',
+    action: 'Prospect',
+    options: { content_category: '3' },
+  },
+  SOCIAL_WORKER_REGISTRATION: {
+    type: 'track',
+    action: 'Prospect',
+    options: { content_category: '4' },
+  },
+  SHARE_CV: {
+    type: 'track',
+    action: 'Prospect',
+    options: { content_category: '5' },
+  },
+  DONATION: {
+    type: 'track',
+    action: 'Donate',
+  },
+};
+
+export { GA_TAGS, FB_TAGS };

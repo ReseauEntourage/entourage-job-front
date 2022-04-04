@@ -5,8 +5,8 @@ import AssociationEntourage from 'src/components/partials/AssociationEntourage';
 import Partners from 'src/components/partials/Partners';
 import Button from 'src/components/utils/Button';
 import { EXTERNAL_LINKS } from 'src/constants';
-import { event } from 'src/lib/gtag';
-import TAGS from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
+import { GA_TAGS } from 'src/constants/tags';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import PropTypes from 'prop-types';
 import ModalInterestLinkedOut from 'src/components/modals/ModalInterestLinkedOut';
@@ -21,7 +21,7 @@ const pages = [
         path: '/linkedout',
         props: {
           onClick: () => {
-            event(TAGS.FOOTER_POURQUOI_LINKEDOUT_CLIC);
+            gaEvent(GA_TAGS.FOOTER_POURQUOI_LINKEDOUT_CLIC);
           },
         },
       },
@@ -30,7 +30,7 @@ const pages = [
         path: '/partenaires',
         props: {
           onClick: () => {
-            event(TAGS.FOOTER_VOIR_PARTENAIRES_CLIC);
+            gaEvent(GA_TAGS.FOOTER_VOIR_PARTENAIRES_CLIC);
           },
         },
       },
@@ -45,7 +45,7 @@ const pages = [
         props: {
           isExternal: true,
           onClick: () => {
-            event(TAGS.FOOTER_DEVENIR_PARTENAIRE_CLIC);
+            gaEvent(GA_TAGS.FOOTER_DEVENIR_PARTENAIRE_CLIC);
             openModal(<ModalInterestLinkedOut />);
           },
         },
@@ -66,7 +66,7 @@ const pages = [
         path: '/entreprises',
         props: {
           onClick: () => {
-            event(TAGS.FOOTER_ENTREPRISES_CLIC);
+            gaEvent(GA_TAGS.FOOTER_ENTREPRISES_CLIC);
           },
         },
         children: [
@@ -75,7 +75,7 @@ const pages = [
             path: '/entreprises/sinformer',
             props: {
               onClick: () => {
-                event(TAGS.FOOTER_ENTREPRISES_ENGAGER_CLIC);
+                gaEvent(GA_TAGS.FOOTER_ENTREPRISES_ENGAGER_CLIC);
               },
             },
           },
@@ -84,7 +84,7 @@ const pages = [
             path: '/entreprises/cvs',
             props: {
               onClick: () => {
-                event(TAGS.FOOTER_ENTREPRISES_RECRUTER_CLIC);
+                gaEvent(GA_TAGS.FOOTER_ENTREPRISES_RECRUTER_CLIC);
               },
             },
           },
@@ -95,7 +95,7 @@ const pages = [
         path: '/aider',
         props: {
           onClick: () => {
-            event(TAGS.FOOTER_AIDER_CLIC);
+            gaEvent(GA_TAGS.FOOTER_AIDER_CLIC);
           },
         },
       },
@@ -105,7 +105,7 @@ const pages = [
         path: '/orienter',
         props: {
           onClick: () => {
-            event(TAGS.FOOTER_ORIENTER_CLIC);
+            gaEvent(GA_TAGS.FOOTER_ORIENTER_CLIC);
           },
         },
       },
@@ -114,7 +114,7 @@ const pages = [
         path: '/travailler',
         props: {
           onClick: () => {
-            event(TAGS.FOOTER_TRAVAILLER_CLIC);
+            gaEvent(GA_TAGS.FOOTER_TRAVAILLER_CLIC);
           },
         },
       },
@@ -144,7 +144,7 @@ const pages = [
         path: '/contact',
         props: {
           onClick: () => {
-            event(TAGS.FOOTER_CONTACT_CLIC);
+            gaEvent(GA_TAGS.FOOTER_CONTACT_CLIC);
           },
         },
       },
@@ -155,7 +155,7 @@ const pages = [
           isExternal: true,
           newTab: true,
           onClick: () => {
-            event(TAGS.FOOTER_DON_CLIC);
+            gaEvent(GA_TAGS.FOOTER_DON_CLIC);
           },
           target: '_blank',
         },
@@ -171,7 +171,7 @@ const pages = [
           isExternal: true,
           newTab: true,
           onClick: () => {
-            event(TAGS.FOOTER_RECRUITMENTS_CLIC);
+            gaEvent(GA_TAGS.FOOTER_RECRUITMENTS_CLIC);
           },
           target: '_blank',
         },
@@ -183,7 +183,7 @@ const pages = [
           isExternal: true,
           newTab: true,
           onClick: () => {
-            event(TAGS.FOOTER_BLOG_LINKEDOUT_CLIC);
+            gaEvent(GA_TAGS.FOOTER_BLOG_LINKEDOUT_CLIC);
           },
           target: '_blank',
         },
@@ -195,7 +195,7 @@ const pages = [
           isExternal: true,
           newTab: true,
           onClick: () => {
-            event(TAGS.FOOTER_SITE_ENTOURAGE_CLIC);
+            gaEvent(GA_TAGS.FOOTER_SITE_ENTOURAGE_CLIC);
           },
           target: '_blank',
         },

@@ -12,8 +12,8 @@ import { Grid, Img, SimpleLink } from 'src/components/utils';
 import ModalShareCV from 'src/components/modals/ModalShareCV';
 import Api from 'src/Axios';
 import { SharesCountContext } from 'src/components/store/SharesCountProvider';
-import { event } from 'src/lib/gtag';
-import TAGS from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import moment from 'moment';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
@@ -23,6 +23,7 @@ import {
   findConstantFromValue,
   sortByOrder,
 } from 'src/utils';
+import { fbEvent } from 'src/lib/fb';
 import _ from 'lodash';
 
 const CandidatCard = ({
@@ -44,11 +45,11 @@ const CandidatCard = ({
   const isCandidatsPage = router.asPath.includes('/candidats');
   const isCompaniesCvsPage = router.asPath.includes('/entreprises/cvs');
 
-  let onCvClickEvent = TAGS.HOME_CV_CLIC;
+  let onCvClickEvent = GA_TAGS.HOME_CV_CLIC;
   if (isCandidatsPage) {
-    onCvClickEvent = TAGS.PAGE_GALERIE_CV_CLIC;
+    onCvClickEvent = GA_TAGS.PAGE_GALERIE_CV_CLIC;
   } else if (isCompaniesCvsPage) {
-    onCvClickEvent = TAGS.PAGE_ENTREPRISES_GALERIE_CV_CLIC;
+    onCvClickEvent = GA_TAGS.PAGE_ENTREPRISES_GALERIE_CV_CLIC;
   }
 
   const showShareOptions = !router.asPath.includes('/entreprises');
@@ -102,7 +103,7 @@ const CandidatCard = ({
         href={linksToCV.href}
         className="uk-link-toggle"
         onClick={() => {
-          event(onCvClickEvent);
+          gaEvent(onCvClickEvent);
         }}
       >
         <div
@@ -286,7 +287,7 @@ const CandidatCard = ({
             href={linksToCV.href}
             className="uk-link-toggle"
             onClick={() => {
-              event(onCvClickEvent);
+              gaEvent(onCvClickEvent);
             }}
           >
             <u className="uk-text-link uk-text-primary">Voir le CV</u>
@@ -297,11 +298,12 @@ const CandidatCard = ({
               <li>
                 <LinkedinShareButton
                   onShareWindowClose={() => {
-                    event(
+                    gaEvent(
                       isCandidatsPage
-                        ? TAGS.PAGE_GALERIE_PARTAGE_CV_LINKEDIN_CLIC
-                        : TAGS.HOME_PARTAGE_CV_LINKEDIN_CLIC
+                        ? GA_TAGS.PAGE_GALERIE_PARTAGE_CV_LINKEDIN_CLIC
+                        : GA_TAGS.HOME_PARTAGE_CV_LINKEDIN_CLIC
                     );
+                    fbEvent(FB_TAGS.SHARE_CV);
                     updateShareCount(id, 'linkedin');
                     openNewsletterModal();
                   }}
@@ -321,11 +323,12 @@ const CandidatCard = ({
               <li>
                 <FacebookShareButton
                   onShareWindowClose={() => {
-                    event(
+                    gaEvent(
                       isCandidatsPage
-                        ? TAGS.PAGE_GALERIE_PARTAGE_CV_FACEBOOK_CLIC
-                        : TAGS.HOME_PARTAGE_CV_FACEBOOK_CLIC
+                        ? GA_TAGS.PAGE_GALERIE_PARTAGE_CV_FACEBOOK_CLIC
+                        : GA_TAGS.HOME_PARTAGE_CV_FACEBOOK_CLIC
                     );
+                    fbEvent(FB_TAGS.SHARE_CV);
                     updateShareCount(id, 'facebook');
                     openNewsletterModal();
                   }}
@@ -345,11 +348,13 @@ const CandidatCard = ({
               <li>
                 <TwitterShareButton
                   onShareWindowClose={() => {
-                    event(
+                    gaEvent(
                       isCandidatsPage
-                        ? TAGS.PAGE_GALERIE_PARTAGE_CV_TWITTER_CLIC
-                        : TAGS.HOME_PARTAGE_CV_TWITTER_CLIC
+                        ? GA_TAGS.PAGE_GALERIE_PARTAGE_CV_TWITTER_CLIC
+                        : GA_TAGS.HOME_PARTAGE_CV_TWITTER_CLIC
                     );
+                    fbEvent(FB_TAGS.SHARE_CV);
+
                     updateShareCount(id, 'twitter');
                     openNewsletterModal();
                   }}
@@ -377,7 +382,7 @@ const CandidatCard = ({
             href={linksToCV.href}
             className="uk-link-toggle uk-text-center"
             onClick={() => {
-              event(onCvClickEvent);
+              gaEvent(onCvClickEvent);
             }}
           >
             <u className="uk-text-link uk-text-primary">Voir le CV</u>

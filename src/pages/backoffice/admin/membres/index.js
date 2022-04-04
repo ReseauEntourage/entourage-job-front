@@ -6,6 +6,7 @@ import { MEMBER_FILTERS_DATA } from 'src/constants';
 import { useFilters } from 'src/hooks';
 import { UserContext } from 'src/components/store/UserProvider';
 import MemberList from 'src/components/backoffice/admin/MemberList';
+import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 
 const MembersAdmin = () => {
   const {
@@ -52,9 +53,7 @@ const MembersAdmin = () => {
     <LayoutBackOffice title="Gestion des membres">
       <Section>
         {loadingDefaultFilters ? (
-          <div className="uk-text-center">
-            <div data-uk-spinner />
-          </div>
+          <LoadingScreen />
         ) : (
           <MemberList
             search={search}

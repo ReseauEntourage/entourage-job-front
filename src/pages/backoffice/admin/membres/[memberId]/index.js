@@ -14,7 +14,11 @@ import ButtonIcon from 'src/components/utils/ButtonIcon';
 import ModalEdit from 'src/components/modals/ModalEdit';
 import { OFFER_ADMIN_FILTERS_DATA, USER_ROLES } from 'src/constants';
 import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
-import { mutateFormSchema } from 'src/utils';
+import {
+  getCandidateFromCoachOrCandidate,
+  getCandidateIdFromCoachOrCandidate,
+  mutateFormSchema,
+} from 'src/utils';
 import AdminCandidateOpportunities from 'src/components/opportunities/AdminCandidateOpportunities';
 import CandidateEmployedToggle from 'src/components/backoffice/candidate/CandidateEmployedToggle';
 import ContractLabel from 'src/components/backoffice/candidate/ContractLabel';
@@ -326,7 +330,13 @@ const User = () => {
 
   // erreur pendant la requete
   if (error) {
-    return <ErrorMessage error={error} />;
+    return (
+      <LayoutBackOffice title="Erreur - Gestion des membres">
+        <Section className="uk-text-center" size="large">
+          <ErrorMessage error={error} />
+        </Section>
+      </LayoutBackOffice>
+    );
   }
 
   return (
@@ -349,7 +359,7 @@ const User = () => {
                 href={{
                   pathname: '/backoffice/admin/offres',
                   query: {
-                    tag: OFFER_ADMIN_FILTERS_DATA[2].tag,
+                    tag: OFFER_ADMIN_FILTERS_DATA[1].tag,
                     department: cv.locations,
                     businessLines: _.uniq(
                       cv.businessLines.map(({ name }) => {
@@ -398,35 +408,37 @@ const User = () => {
               </SimpleLink>
             </li>
           </ul>
-          {tab !== 'parametres' &&
-            user.role === USER_ROLES.COACH &&
-            (user.coach ? (
-              <div>
-                {tab === 'cv' && (
-                  <CVPageContent
-                    candidatId={user.coach.candidat.id}
-                    cv={cv}
-                    setCV={setCV}
-                  />
-                )}
-                {tab === 'offres' && (
-                  <AdminCandidateOpportunities
-                    candidatId={user.coach.candidat.id}
-                  />
-                )}
-              </div>
-            ) : (
-              <div>
-                <h2 className="uk-text-bold uk-text-center">
-                  <span className="uk-text-primary">Aucun candidat</span>{' '}
-                  n&apos;est rattaché à ce compte coach.
-                </h2>
-                <p className="uk-text-center">
-                  Il peut y avoir plusieurs raisons à ce sujet. Contacte
-                  l&apos;équipe LinkedOut pour en savoir plus.
-                </p>
-              </div>
-            ))}
+          {tab !== 'parametres' && user.role === USER_ROLES.COACH && (
+            <>
+              {getCandidateFromCoachOrCandidate(user) ? (
+                <div>
+                  {tab === 'cv' && (
+                    <CVPageContent
+                      candidatId={getCandidateIdFromCoachOrCandidate(user)}
+                      cv={cv}
+                      setCV={setCV}
+                    />
+                  )}
+                  {tab === 'offres' && (
+                    <AdminCandidateOpportunities
+                      candidatId={getCandidateIdFromCoachOrCandidate(user)}
+                    />
+                  )}
+                </div>
+              ) : (
+                <div>
+                  <h2 className="uk-text-bold uk-text-center">
+                    <span className="uk-text-primary">Aucun candidat</span>{' '}
+                    n&apos;est rattaché à ce compte coach.
+                  </h2>
+                  <p className="uk-text-center">
+                    Il peut y avoir plusieurs raisons à ce sujet. Contacte
+                    l&apos;équipe LinkedOut pour en savoir plus.
+                  </p>
+                </div>
+              )}
+            </>
+          )}
           {tab !== 'parametres' && user.role === USER_ROLES.CANDIDAT && (
             <div>
               {tab === 'cv' && (
