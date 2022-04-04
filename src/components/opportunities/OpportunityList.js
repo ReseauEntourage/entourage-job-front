@@ -61,11 +61,7 @@ const OfferList = ({
             }
           : {
               href: {
-                pathname: `${currentPath.href}/[offerId]`,
-                query,
-              },
-              as: {
-                pathname: `${currentPath.as}/${offer.id}`,
+                pathname: `${currentPath}/${offer.id}`,
                 query,
               },
             };
@@ -135,10 +131,7 @@ OfferList.propTypes = {
   candidatId: PropTypes.string,
   role: PropTypes.oneOf(['admin', 'candidateAsAdmin', 'candidat']).isRequired,
   isAdmin: PropTypes.bool.isRequired,
-  currentPath: PropTypes.shape({
-    href: PropTypes.string,
-    as: PropTypes.string,
-  }).isRequired,
+  currentPath: PropTypes.string.isRequired,
   query: PropTypes.shape().isRequired,
   selectionModeActivated: PropTypes.bool.isRequired,
   selectElement: PropTypes.func.isRequired,
@@ -182,35 +175,24 @@ const OpportunityList = forwardRef(
 
     const isAdmin = role === 'admin' || role === 'candidateAsAdmin';
 
-    const currentPath = {
-      href: `/backoffice/${
-        role === 'candidateAsAdmin'
-          ? 'admin/membres/[memberId]/[tab]'
-          : `${role}/offres`
-      }`,
-      as: `/backoffice/${
-        role === 'candidateAsAdmin'
-          ? `admin/membres/${candidatId}/offres`
-          : `${role}/offres`
-      }`,
-    };
-
+    const currentPath = `/backoffice/${
+      role === 'candidateAsAdmin'
+        ? `admin/membres/${candidatId}/offres`
+        : `${role}/offres`
+    }`;
     const navigateBackToList = useCallback(() => {
       push(
         {
-          pathname: currentPath.href,
+          pathname: currentPath,
           query: restQuery,
         },
-        {
-          pathname: currentPath.as,
-          query: restQuery,
-        },
+        undefined,
         {
           shallow: true,
           scroll: false,
         }
       );
-    }, [currentPath.as, currentPath.href, push, restQuery]);
+    }, [currentPath, push, restQuery]);
 
     const fetchData = useOpportunityList(
       setOffers,
@@ -284,17 +266,15 @@ const OpportunityList = forwardRef(
                 isValidated: false,
                 date: Date.now(),
               });
+
               closeModal();
               UIkit.notification("L'offre a bien été dupliquée", 'success');
               push(
                 {
-                  pathname: `${currentPath.href}/[offerId]`,
+                  pathname: `${currentPath}/${data.id}`,
                   query: restQuery,
                 },
-                {
-                  pathname: `${currentPath.as}/${data.id}`,
-                  query: restQuery,
-                },
+                undefined,
                 {
                   shallow: true,
                   scroll: false,
@@ -307,8 +287,7 @@ const OpportunityList = forwardRef(
       },
       [
         candidatId,
-        currentPath.as,
-        currentPath.href,
+        currentPath,
         fetchData,
         filters,
         navigateBackToList,

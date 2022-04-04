@@ -224,17 +224,13 @@ const User = () => {
   useEffect(() => {
     if (isReady) {
       if (memberId && !tab) {
-        replace(
-          '/backoffice/admin/membres/[memberId]/[tab]',
-          `/backoffice/admin/membres/${memberId}/cv`,
-          { shallow: true }
-        );
+        replace(`/backoffice/admin/membres/${memberId}/cv`, undefined, {
+          shallow: true,
+        });
       } else if (offerId && tab !== 'offres') {
-        replace(
-          '/backoffice/admin/membres/[memberId]/[tab]',
-          `/backoffice/admin/membres/${memberId}/${tab}`,
-          { shallow: true }
-        );
+        replace(`/backoffice/admin/membres/${memberId}/${tab}`, undefined, {
+          shallow: true,
+        });
       }
     }
   }, [isReady, memberId, offerId, replace, tab]);
@@ -384,25 +380,18 @@ const User = () => {
           </div>
           <ul className="uk-subnav">
             <li className={tab === 'cv' ? 'uk-active' : ''}>
-              <SimpleLink
-                href="/backoffice/admin/membres/[memberId]/[tab]"
-                as={`/backoffice/admin/membres/${memberId}/cv`}
-              >
+              <SimpleLink href={`/backoffice/admin/membres/${memberId}/cv`}>
                 CV
               </SimpleLink>
             </li>
             <li className={tab === 'offres' ? 'uk-active' : ''}>
-              <SimpleLink
-                href="/backoffice/admin/membres/[memberId]/[tab]"
-                as={`/backoffice/admin/membres/${memberId}/offres`}
-              >
+              <SimpleLink href={`/backoffice/admin/membres/${memberId}/offres`}>
                 Opportunités
               </SimpleLink>
             </li>
             <li className={tab === 'parametres' ? 'uk-active' : ''}>
               <SimpleLink
-                href="/backoffice/admin/membres/[memberId]/[tab]"
-                as={`/backoffice/admin/membres/${memberId}/parametres`}
+                href={`/backoffice/admin/membres/${memberId}/parametres`}
               >
                 Paramètres
               </SimpleLink>

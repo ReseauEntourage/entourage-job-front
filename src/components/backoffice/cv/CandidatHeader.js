@@ -40,11 +40,10 @@ const CandidatHeader = ({ user, showZone }) => {
             <SimpleLink
               className="uk-link-text uk-margin-small-top"
               target="_blank"
-              as={`/cv/${
+              href={`/cv/${
                 user[user.role === USER_ROLES.CANDIDAT ? 'candidat' : 'coach']
                   .url
               }`}
-              href="/cv/[url]"
             >
               <span>
                 {process.env.SERVER_URL}/cv/

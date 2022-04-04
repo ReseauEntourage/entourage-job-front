@@ -20,22 +20,17 @@ export function useTabFilters(filtersData, path, otherPathParams) {
       };
       push(
         {
-          pathname: path.href,
+          pathname: path,
           query,
         },
-        path.as
-          ? {
-              pathname: path.as,
-              query,
-            }
-          : undefined,
+        undefined,
         {
           shallow: true,
           scroll: false,
         }
       );
     },
-    [otherParams, path.as, path.href, push]
+    [otherParams, path, push]
   );
 
   return {

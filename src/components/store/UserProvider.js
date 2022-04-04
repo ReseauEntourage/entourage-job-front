@@ -3,100 +3,88 @@ import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import Api from 'src/Axios';
 import { STORAGE_KEYS, USER_ROLES } from 'src/constants';
-import { usePrevious } from 'src/hooks/utils';
 
 export const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-  const { push, replace, pathname } = useRouter();
+  const { isReady, replace, push, pathname, asPath } = useRouter();
 
   const [user, setUser] = useState(null);
-  const [isAuthentificated, setIsAuthentificated] = useState(false);
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
 
-  const previousUser = usePrevious(user);
-  const previousPathname = usePrevious(pathname);
+  const resetAndRedirect = useCallback(
+    async (requestedPath) => {
+      setIsFirstLoad(false);
+      localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
+      setUser(null);
+      if (!requestedPath || requestedPath.includes('/backoffice')) {
+        await push(
+          requestedPath
+            ? {
+                pathname: '/login',
+                query: {
+                  requestedPath,
+                },
+              }
+            : '/login'
+        );
+      }
+    },
+    [push]
+  );
 
-  const resetAndRedirect = useCallback(() => {
-    localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
-    setIsAuthentificated(false);
-    setUser(null);
-    replace('/login');
-  }, [replace]);
-
-  // la restriction devrait etre faite des le serveur !
   const restrictAccessByRole = useCallback(
-    (role) => {
+    async (role) => {
       if (
         (pathname.includes('/backoffice/admin') &&
           !pathname.includes('/backoffice/admin/offres') &&
           role !== USER_ROLES.ADMIN) ||
         (pathname.includes('/backoffice/candidat') &&
           !pathname.includes('/backoffice/candidat/offres') &&
-          role !== USER_ROLES.CANDIDAT &&
-          role !== USER_ROLES.COACH)
+          role === USER_ROLES.ADMIN)
       ) {
-        push('/login');
+        await replace('/login');
       }
     },
-    [pathname, push]
+    [pathname, replace]
   );
 
   const logout = useCallback(async () => {
-    try {
-      await Api.post('/auth/logout');
-    } finally {
-      resetAndRedirect();
-    }
+    await resetAndRedirect();
   }, [resetAndRedirect]);
 
   const login = useCallback(async (email, password) => {
-    console.log('Start login');
     const { data } = await Api.post('/auth/login', {
       email: email.toLowerCase(),
       password,
     });
     localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, data.user.token);
-    console.log('login successful', data.user);
-
-    setIsAuthentificated(true);
     setUser(data.user);
   }, []);
 
   useEffect(() => {
-    if (pathname !== previousPathname) {
+    if (isReady && isFirstLoad) {
       const accessToken = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
       if (accessToken) {
         Api.get('/auth/current')
           .then(({ data }) => {
             localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, data.user.token);
-            setIsAuthentificated(true);
-            if (user !== previousUser) setUser(data.user);
+            setUser(data.user);
+            setIsFirstLoad(false);
             restrictAccessByRole(data.user.role);
           })
-          .catch((err) => {
-            console.log(err);
-            resetAndRedirect();
+          .catch(async (err) => {
+            console.error(err);
+            resetAndRedirect(asPath);
           });
       } else {
-        console.log('no token');
-        if (pathname.includes('/backoffice')) {
-          resetAndRedirect();
-        }
+        resetAndRedirect(asPath);
       }
     }
-  }, [
-    pathname,
-    previousPathname,
-    previousUser,
-    resetAndRedirect,
-    restrictAccessByRole,
-    user,
-  ]);
+  }, [asPath, isFirstLoad, isReady, resetAndRedirect, restrictAccessByRole]);
 
   return (
-    <UserContext.Provider
-      value={{ user, setUser, isAuthentificated, login, logout }}
-    >
+    <UserContext.Provider value={{ user, setUser, login, logout }}>
       {children}
     </UserContext.Provider>
   );

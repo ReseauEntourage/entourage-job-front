@@ -7,7 +7,6 @@ import { UIKIT_SCREENS } from 'src/components/variables';
 const SimpleLink = ({
   visible,
   href,
-  as,
   children,
   className,
   target,
@@ -39,7 +38,7 @@ const SimpleLink = ({
       {children}
     </a>
   ) : (
-    <Link scroll={scroll} href={href} as={as} shallow={shallow}>
+    <Link scroll={scroll} href={href} shallow={shallow}>
       <a
         onClick={onClick}
         target={target}
@@ -53,10 +52,6 @@ const SimpleLink = ({
 };
 SimpleLink.propTypes = {
   href: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.shape({ pathname: PropTypes.string, query: PropTypes.shape() }),
-  ]),
-  as: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.shape({ pathname: PropTypes.string, query: PropTypes.shape() }),
   ]),
@@ -75,7 +70,6 @@ SimpleLink.propTypes = {
 };
 SimpleLink.defaultProps = {
   href: undefined,
-  as: undefined,
   className: '',
   visible: undefined,
   target: undefined,

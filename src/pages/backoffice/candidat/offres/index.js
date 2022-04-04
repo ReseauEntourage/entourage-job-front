@@ -35,17 +35,13 @@ const Opportunities = () => {
 
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
     candidateFilters,
-    {
-      href: '/backoffice/candidat/offres',
-    },
+    '/backoffice/candidat/offres',
     ['offerId']
   );
 
   const { tabFilters, setTabFilters } = useTabFilters(
     OFFER_CANDIDATE_FILTERS_DATA,
-    {
-      href: '/backoffice/candidat/offres',
-    },
+    '/backoffice/candidat/offres',
     ['offerId']
   );
 
@@ -91,16 +87,11 @@ const Opportunities = () => {
           await replace(
             {
               pathname: `/backoffice/candidat/offres${
-                offerId ? '/[offerId]' : ''
-              }`,
-              query: params,
-            },
-            {
-              pathname: `/backoffice/candidat/offres${
                 offerId ? `/${offerId}` : ''
               }`,
               query: params,
             },
+            undefined,
             {
               shallow: true,
             }
@@ -153,13 +144,10 @@ const Opportunities = () => {
       if (q) {
         replace(
           {
-            pathname: '/backoffice/candidat/offres/[offerId]',
-            query: redirectParams,
-          },
-          {
             pathname: `/backoffice/candidat/offres/${q}`,
             query: redirectParams,
           },
+          undefined,
           {
             shallow: true,
           }
@@ -167,18 +155,8 @@ const Opportunities = () => {
       } else if (user) {
         if (user.role === USER_ROLES.ADMIN) {
           replace(
-            {
-              pathname: `/backoffice/admin/offres${
-                offerId ? '/[offerId]' : ''
-              }`,
-              query: redirectParams,
-            },
-            {
-              pathname: `/backoffice/admin/offres${
-                offerId ? `/${offerId}` : ''
-              }`,
-              query: redirectParams,
-            },
+            `/backoffice/admin/offres${offerId ? `/${offerId}` : ''}`,
+            undefined,
             {
               shallow: true,
             }
