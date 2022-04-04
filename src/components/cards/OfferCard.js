@@ -22,6 +22,7 @@ const OfferCard = ({
   isValidated,
   isAdmin,
   department,
+  isSelected,
 }) => {
   const renderStatus = (userOpp, isOppPublic) => {
     if (userOpp.status !== undefined) {
@@ -55,7 +56,9 @@ const OfferCard = ({
 
   return (
     <div
-      className={`ent-offer uk-card uk-card-hover uk-card-body ${
+      className={`ent-offer${
+        isSelected ? '-selected' : ''
+      } uk-card uk-card-hover uk-card-body ${
         isExternal && !archived ? 'ent-external-offer' : ''
       } uk-card-${background}`}
     >
@@ -214,6 +217,7 @@ OfferCard.propTypes = {
   isValidated: PropTypes.bool,
   isAdmin: PropTypes.bool,
   department: PropTypes.string,
+  isSelected: PropTypes.bool,
 };
 
 OfferCard.defaultProps = {
@@ -228,5 +232,6 @@ OfferCard.defaultProps = {
   userOpportunity: undefined,
   isAdmin: false,
   department: undefined,
+  isSelected: false,
 };
 export default OfferCard;

@@ -62,7 +62,7 @@ const AdminOpportunityList = ({
 
   const opportunityListRef = useRef();
 
-  const { modal } = usePostOpportunity({
+  const { PostOpportunityModal } = usePostOpportunity({
     defaultValues: {
       isPublic: true,
     },
@@ -83,7 +83,7 @@ const AdminOpportunityList = ({
             style="primary"
             className="uk-margin-small-bottom"
             onClick={() => {
-              openModal(modal);
+              openModal(<PostOpportunityModal />);
             }}
           >
             <IconNoSSR

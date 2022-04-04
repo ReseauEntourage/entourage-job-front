@@ -7,8 +7,7 @@ import FiltersOptions from 'src/components/filters/FiltersOptions';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { gaEvent } from 'src/lib/gtag';
 import FiltersDropdowns from 'src/components/filters/FiltersDropdowns';
-
-const MAX_WIDTH = 1100;
+import { SEARCH_MAX_WIDTH } from 'src/constants/utils';
 
 const SearchBar = ({
   filtersConstants,
@@ -37,10 +36,22 @@ const SearchBar = ({
     }
   }, [searchBuffer, setSearch, startSearchEvent]);
 
+  const [numberOfFilters, setNumberOfFilters] = useState(0);
+
+  useEffect(() => {
+    setNumberOfFilters(
+      Object.values(filters).reduce((acc, curr) => {
+        return acc + curr.length;
+      }, 0)
+    );
+  }, [filters]);
+
+  const hasFilters = numberOfFilters > 0 || search;
+
   return (
     <div className="uk-flex uk-flex-column uk-flex-middle uk-margin-small-bottom">
       <div
-        style={{ maxWidth: MAX_WIDTH }}
+        style={{ maxWidth: SEARCH_MAX_WIDTH }}
         className="uk-width-expand ent-search-bar"
       >
         <form className="uk-search uk-search-navbar uk-width-expand">
@@ -60,7 +71,7 @@ const SearchBar = ({
             }}
           />
         </form>
-        <FiltersMobile filters={filters} />
+        <FiltersMobile filters={filters} numberOfFilters={numberOfFilters} />
         <FiltersDropdowns
           hideOnMobile
           filterData={filtersConstants}
@@ -80,26 +91,28 @@ const SearchBar = ({
         filters={filters}
         setFilters={setFilters}
       />
-      <div
-        style={{ maxWidth: MAX_WIDTH }}
-        className="uk-width-expand uk-padding-small uk-padding-remove-vertical uk-flex uk-flex-between@m uk-margin-top"
-      >
-        <FiltersCheckboxes
-          filterData={filtersConstants}
-          filters={filters}
-          setFilters={setFilters}
-          hideOnMobile
-        />
-        <FiltersOptions
-          numberOfResults={numberOfResults}
-          filters={filters}
-          search={search}
-          resetFilters={() => {
-            resetFilters();
-            setSearchBuffer('');
-          }}
-        />
-      </div>
+      {hasFilters && (
+        <div
+          style={{ maxWidth: SEARCH_MAX_WIDTH }}
+          className="uk-width-expand uk-padding-small uk-padding-remove-vertical uk-flex uk-flex-between@m uk-margin-top"
+        >
+          <FiltersCheckboxes
+            filterData={filtersConstants}
+            filters={filters}
+            setFilters={setFilters}
+            hideOnMobile
+          />
+          <FiltersOptions
+            numberOfResults={numberOfResults}
+            filters={filters}
+            search={search}
+            resetFilters={() => {
+              resetFilters();
+              setSearchBuffer('');
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 };
