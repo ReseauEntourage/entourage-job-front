@@ -159,7 +159,13 @@ const OpportunityList = forwardRef(
   ) => {
     const {
       push,
-      query: { offerId: opportunityId, memberId, tab, ...restQuery },
+      query: {
+        offerId: opportunityId,
+        memberId,
+        tab,
+        updateStatus,
+        ...restQuery
+      },
     } = useRouter();
 
     const prevTag = usePrevious(restQuery.tag);
@@ -180,6 +186,7 @@ const OpportunityList = forwardRef(
         ? `admin/membres/${candidatId}/offres`
         : `${role}/offres`
     }`;
+
     const navigateBackToList = useCallback(() => {
       push(
         {

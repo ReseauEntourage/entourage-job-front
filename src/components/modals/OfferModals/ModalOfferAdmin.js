@@ -485,7 +485,7 @@ const ModalOfferAdmin = ({
                                 onChange={async (event) => {
                                   await updateOpportunityUser({
                                     ...userOpp,
-                                    status: Number(event.target.value),
+                                    status: parseInt(event.target.value, 10),
                                   });
                                 }}
                                 value={userOpp.status}

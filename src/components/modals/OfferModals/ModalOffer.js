@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Grid, SimpleLink } from 'src/components/utils';
 import Textarea from 'src/components/forms/fields/Textarea';
@@ -30,6 +30,8 @@ import ModalOfferBase from 'src/components/modals/OfferModals/ModalOfferBase';
 import useModalOffer from 'src/components/modals/OfferModals/useModalOffer';
 import OfferContent from 'src/components/modals/OfferModals/OfferContent';
 import UIkit from 'uikit';
+import { useRouter } from 'next/router';
+import { usePrevious } from 'src/hooks/utils';
 
 const AfterContactItem = ({ isPublic }) => {
   return (
@@ -95,6 +97,13 @@ PrivateOfferSentence.propTypes = {
 };
 
 const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
+  const {
+    replace,
+    pathname,
+    query: { updateStatus, ...restQuery },
+  } = useRouter();
+  const prevUpdateStatus = usePrevious(updateStatus);
+
   const { user } = useContext(UserContext);
   const [loadingIcon, setLoadingIcon] = useState(false);
   const [loadingStatus, setLoadingStatus] = useState(false);
@@ -115,20 +124,66 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
 
   const isInternalContact = offer?.recruiterMail?.includes('entourage.social');
 
-  const updateOpportunityUser = async (opportunityUser) => {
-    const { data } = await Api.put(`/opportunity/join`, opportunityUser);
-    setOffer((prevOffer) => {
-      return {
-        ...prevOffer,
-        userOpportunity: data,
-      };
-    });
-    await onOfferUpdated();
-  };
+  const updateOpportunityUser = useCallback(
+    async (opportunityUser) => {
+      const { data } = await Api.put(`/opportunity/join`, opportunityUser);
+      setOffer((prevOffer) => {
+        return {
+          ...prevOffer,
+          userOpportunity: data,
+        };
+      });
+      await onOfferUpdated();
+    },
+    [onOfferUpdated, setOffer]
+  );
 
   useEffect(() => {
     setNoteBuffer(note);
   }, [offer, note]);
+
+  useEffect(() => {
+    const archiveOffer = async () => {
+      const { userOpportunity } = offer;
+
+      await updateOpportunityUser({
+        ...userOpportunity,
+        archived: true,
+        status: OFFER_STATUS[4].value,
+      });
+      UIkit.notification("L'offre a été archivée", 'success');
+    };
+
+    const updateStatusOffer = async (newStatus) => {
+      const { userOpportunity } = offer;
+      await updateOpportunityUser({
+        ...userOpportunity,
+        status: newStatus,
+      });
+      UIkit.notification("Le statut de l'offre a été mis à jour", 'success');
+    };
+
+    if (updateStatus && prevUpdateStatus !== updateStatus) {
+      const statusAsNumber = parseInt(updateStatus, 10);
+      if (statusAsNumber === OFFER_STATUS[4].value) {
+        archiveOffer();
+      } else {
+        updateStatusOffer(statusAsNumber);
+      }
+      replace({
+        pathname,
+        query: restQuery,
+      });
+    }
+  }, [
+    pathname,
+    offer,
+    prevUpdateStatus,
+    replace,
+    restQuery,
+    updateOpportunityUser,
+    updateStatus,
+  ]);
 
   const mutatedOfferStatus = mutateDefaultOfferStatus(
     offer,
@@ -383,7 +438,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                         const { userOpportunity } = offer;
                         await updateOpportunityUser({
                           ...userOpportunity,
-                          status: Number(event.target.value),
+                          status: parseInt(event.target.value, 10),
                         });
                         setLoadingStatus(false);
                       }}
