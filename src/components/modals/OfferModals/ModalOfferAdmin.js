@@ -447,8 +447,7 @@ const ModalOfferAdmin = ({
                             style={{ marginTop: 5 }}
                           >
                             <SimpleLink
-                              as={`/backoffice/admin/membres/${userOpp.User.id}`}
-                              href="/backoffice/admin/membres/[id]"
+                              href={`/backoffice/admin/membres/${userOpp.User.id}`}
                               className="uk-link-muted uk-flex uk-flex-middle"
                               target="_blank"
                             >
@@ -486,7 +485,7 @@ const ModalOfferAdmin = ({
                                 onChange={async (event) => {
                                   await updateOpportunityUser({
                                     ...userOpp,
-                                    status: Number(event.target.value),
+                                    status: parseInt(event.target.value, 10),
                                   });
                                 }}
                                 value={userOpp.status}

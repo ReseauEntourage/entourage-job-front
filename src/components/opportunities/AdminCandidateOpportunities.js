@@ -7,10 +7,7 @@ import { useFilters } from 'src/hooks';
 const AdminCandidateOpportunities = ({ candidatId }) => {
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
     OPPORTUNITY_FILTERS_DATA,
-    {
-      href: '/backoffice/admin/membres/[memberId]/[tab]',
-      as: `/backoffice/admin/membres/${candidatId}/offres`,
-    },
+    `/backoffice/admin/membres/${candidatId}/offres`,
     ['memberId', 'tab', 'offerId']
   );
 

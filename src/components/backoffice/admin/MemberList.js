@@ -52,10 +52,7 @@ const Member = ({ member, role }) => {
       className="uk-link-reset"
       style={{ cursor: 'pointer' }}
       onClick={() => {
-        return push(
-          '/backoffice/admin/membres/[memberId]',
-          `/backoffice/admin/membres/${member.id}`
-        );
+        return push(`/backoffice/admin/membres/${member.id}`);
       }}
     >
       <td>

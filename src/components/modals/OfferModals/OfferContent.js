@@ -1,6 +1,6 @@
 import { OfferInfoContainer } from 'src/components/modals/OfferModals/OfferInfoContainer';
 import { findConstantFromValue, formatParagraph } from 'src/utils';
-import { Button, Grid } from 'src/components/utils';
+import { Button, Grid, SimpleLink } from 'src/components/utils';
 import { BUSINESS_LINES } from 'src/constants';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -33,7 +33,16 @@ const OfferContent = ({ offer }) => {
       )}
       {offer.link && (
         <OfferInfoContainer icon="link" title="Lien">
-          <div>{offer.link.trim()}</div>
+          <div>
+            <SimpleLink
+              isExternal
+              target="_blank"
+              href={offer.link.trim()}
+              className="uk-link-muted"
+            >
+              {offer.link.trim()}
+            </SimpleLink>
+          </div>
         </OfferInfoContainer>
       )}
       {offer.businessLines && (

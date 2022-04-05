@@ -28,16 +28,6 @@ const FiltersTabs = ({ tabFilters, setTabFilters }) => {
 FiltersTabs.propTypes = {
   setTabFilters: PropTypes.func.isRequired,
   tabFilters: PropTypes.arrayOf(PropTypes.shape()),
-  path: PropTypes.shape({
-    href: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.shape({ pathname: PropTypes.string, query: PropTypes.shape() }),
-    ]),
-    as: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.shape({ pathname: PropTypes.string, query: PropTypes.shape() }),
-    ]),
-  }).isRequired,
 };
 
 FiltersTabs.defaultProps = {

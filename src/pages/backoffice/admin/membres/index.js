@@ -44,9 +44,7 @@ const MembersAdmin = () => {
 
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
     MEMBER_FILTERS_DATA,
-    {
-      href: '/backoffice/admin/membres',
-    }
+    '/backoffice/admin/membres'
   );
 
   return (
