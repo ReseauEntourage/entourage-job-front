@@ -225,38 +225,31 @@ const GA_TAGS = {
 
 const FB_TAGS = {
   CANDIDATE_REGISTRATION: {
-    type: 'track',
-    action: 'Prospect',
+    action: 'Prospect 1',
     options: { content_category: '1' },
   },
   COMPANY_CONTACT: {
-    type: 'track',
-    action: 'Prospect',
-    options: { content_category: '2' },
+    action: 'Prospect 2',
+    options: { content_category: '2.1' },
   },
   COMPANY_GENERAL_OFFER: {
-    type: 'track',
-    action: 'Prospect',
+    action: 'Prospect 2',
     options: { content_category: '2.2' },
   },
   COMPANY_CV_OFFER: {
-    type: 'track',
-    action: 'Prospect',
+    action: 'Prospect 2',
     options: { content_category: '2.3' },
   },
   COACH_REGISTRATION: {
-    type: 'track',
-    action: 'Prospect',
+    action: 'Prospect 3',
     options: { content_category: '3' },
   },
   SOCIAL_WORKER_REGISTRATION: {
-    type: 'track',
-    action: 'Prospect',
+    action: 'Prospect 4',
     options: { content_category: '4' },
   },
   SHARE_CV: {
-    type: 'track',
-    action: 'Prospect',
+    action: 'Prospect 5',
     options: { content_category: '5' },
   },
   DONATION: {
