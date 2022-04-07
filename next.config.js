@@ -54,8 +54,13 @@ module.exports = withLess({
   async redirects() {
     return [
       {
-        source: '/tutoriel-video',
-        destination: process.env.TUTORIAL_VIDEO,
+        source: '/tutoriel-video-cv',
+        destination: process.env.TUTORIAL_VIDEO_CV,
+        permanent: false,
+      },
+      {
+        source: '/tutoriel-video-offres',
+        destination: process.env.TUTORIAL_VIDEO_OFFERS,
         permanent: false,
       },
       {
