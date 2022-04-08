@@ -158,6 +158,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
       const { userOpportunity } = offer;
       await updateOpportunityUser({
         ...userOpportunity,
+        archived: false,
         status: newStatus,
       });
       UIkit.notification("Le statut de l'offre a été mis à jour", 'success');
