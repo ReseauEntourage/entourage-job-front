@@ -1,7 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Grid, SimpleLink } from 'src/components/utils';
-import Textarea from 'src/components/forms/fields/Textarea';
 import Select from 'src/components/forms/fields/Select';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
 import { IconNoSSR } from 'src/components/utils/Icon';
@@ -120,7 +119,6 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
   } = useModalOffer(currentOffer);
 
   const { status, bookmarked, note, archived } = offer?.userOpportunity || {};
-  const [noteBuffer, setNoteBuffer] = useState(note);
 
   const isInternalContact = offer?.recruiterMail?.includes('entourage.social');
 
@@ -137,10 +135,6 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
     },
     [onOfferUpdated, setOffer]
   );
-
-  useEffect(() => {
-    setNoteBuffer(note);
-  }, [offer, note]);
 
   useEffect(() => {
     const archiveOffer = async () => {
@@ -555,44 +549,14 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
             <OfferContent offer={offer} />,
           ]}
         />
-        <div>
-          <Textarea
-            id="modal-offer-comment"
-            name="modal-offer-comment"
-            title="Ecrivez vos commentaires à propos de cette offre. Ceux-ci ne sont pas envoyés au recruteur."
-            type="text"
-            value={noteBuffer}
-            onChange={(e) => {
-              return setNoteBuffer(e.target.value);
-            }}
-          />
-          {noteBuffer === note || (note === null && noteBuffer === '') ? (
-            <Button style="default" disabled>
-              Enregistré
-            </Button>
-          ) : (
-            <Button
-              style="default"
-              onClick={async () => {
-                setLoading(true);
-                const { userOpportunity } = offer;
-                await updateOpportunityUser({
-                  ...userOpportunity,
-                  note: noteBuffer,
-                });
-                setLoading(false);
-              }}
-            >
-              Enregistrer
-              {loading ? (
-                <div
-                  data-uk-spinner="ratio: 0.5"
-                  className="uk-margin-small-left"
-                />
-              ) : null}
-            </Button>
-          )}
-        </div>
+        {note && (
+          <div>
+            <div className="uk-text-muted uk-text-bold">
+              Anciens commentaires à propos de l&apos;offre
+            </div>
+            <div className="uk-text-muted">{formatParagraph(note)}</div>
+          </div>
+        )}
       </div>
     </ModalOfferBase>
   );
