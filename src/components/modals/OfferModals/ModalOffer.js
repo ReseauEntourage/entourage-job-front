@@ -259,7 +259,9 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
             isPublic={offer.isPublic}
             isRecommended={offer.userOpportunity.recommended}
             isExternal={offer.isExternal}
-            numberOfPositions={offer.numberOfPositions}
+            salary={offer.salary}
+            driversLicense={offer.driversLicense}
+            workingHours={offer.workingHours}
             contract={offer.contract}
             date={offer.date}
             title={offer.title}
@@ -631,6 +633,9 @@ ModalOffer.propTypes = {
     link: PropTypes.string,
     externalOrigin: PropTypes.string,
     isExternal: PropTypes.bool,
+    salary: PropTypes.string,
+    driversLicense: PropTypes.string,
+    workingHours: PropTypes.string,
   }),
   onOfferUpdated: PropTypes.func.isRequired,
   navigateBackToList: PropTypes.func.isRequired,

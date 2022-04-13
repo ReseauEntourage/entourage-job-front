@@ -277,7 +277,10 @@ const CVFiche = ({ cv, actionDisabled }) => {
                   <dl className="uk-description-list">
                     {experiences.map((exp, i) => {
                       return (
-                        <div key={i}>
+                        <div
+                          key={i}
+                          className={i > 0 ? 'uk-margin-small-top' : ''}
+                        >
                           {exp.skills && (
                             <dt style={{ display: 'block' }}>
                               {exp.skills.map((name, key) => {

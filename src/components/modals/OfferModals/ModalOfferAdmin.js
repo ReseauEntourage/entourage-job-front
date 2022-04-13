@@ -317,7 +317,9 @@ const ModalOfferAdmin = ({
             startOfContract={offer.startOfContract}
             isPublic={offer.isPublic}
             isExternal={offer.isExternal}
-            numberOfPositions={offer.numberOfPositions}
+            salary={offer.salary}
+            driversLicense={offer.driversLicense}
+            workingHours={offer.workingHours}
             contract={offer.contract}
             date={offer.date}
             title={offer.title}
@@ -620,6 +622,9 @@ ModalOfferAdmin.propTypes = {
     link: PropTypes.string,
     externalOrigin: PropTypes.string,
     isExternal: PropTypes.bool,
+    salary: PropTypes.string,
+    driversLicense: PropTypes.string,
+    workingHours: PropTypes.string,
   }),
   onOfferUpdated: PropTypes.func.isRequired,
   duplicateOffer: PropTypes.func.isRequired,
