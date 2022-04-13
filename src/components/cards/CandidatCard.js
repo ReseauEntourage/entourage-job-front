@@ -78,10 +78,7 @@ const CandidatCard = ({
       });
   };
 
-  const linksToCV = {
-    as: `/cv/${url}?hideShareOptions=${!showShareOptions}`,
-    href: `/cv/[url]?hideShareOptions=${!showShareOptions}`,
-  };
+  const linkToCV = `/cv/${url}?hideShareOptions=${!showShareOptions}`;
 
   const sortedAmbitions =
     ambitions && ambitions.length > 0 ? sortByOrder(ambitions) : null;
@@ -99,8 +96,7 @@ const CandidatCard = ({
     <div className="uk-card uk-card-small uk-card-body uk-card-default uk-card-hover uk-text-small uk-text-left">
       {/* Contenue de la carte */}
       <SimpleLink
-        as={linksToCV.as}
-        href={linksToCV.href}
+        href={linkToCV}
         className="uk-link-toggle"
         onClick={() => {
           gaEvent(onCvClickEvent);
@@ -283,8 +279,7 @@ const CandidatCard = ({
       {showShareOptions ? (
         <Grid gap="small" between middle eachWidths={['expand', 'auto']}>
           <SimpleLink
-            as={linksToCV.as}
-            href={linksToCV.href}
+            href={linkToCV}
             className="uk-link-toggle"
             onClick={() => {
               gaEvent(onCvClickEvent);
@@ -378,8 +373,7 @@ const CandidatCard = ({
       ) : (
         <div className="uk-text-center">
           <SimpleLink
-            as={linksToCV.as}
-            href={linksToCV.href}
+            href={linkToCV}
             className="uk-link-toggle uk-text-center"
             onClick={() => {
               gaEvent(onCvClickEvent);

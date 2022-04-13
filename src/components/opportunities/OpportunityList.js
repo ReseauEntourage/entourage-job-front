@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 import { getUserOpportunityFromOffer } from 'src/utils';
 import Api from 'src/Axios';
 import ModalOffer from 'src/components/modals/OfferModals/ModalOffer';
-import { Grid, SimpleLink } from 'src/components/utils';
+import { Grid, SimpleLink, Button } from 'src/components/utils';
 import OfferCard from 'src/components/cards/OfferCard';
 import ModalOfferAdmin from 'src/components/modals/OfferModals/ModalOfferAdmin';
 import OpportunityError from 'src/components/opportunities/OpportunityError';
@@ -28,8 +28,13 @@ import { openModal } from 'src/components/modals/Modal';
 import { usePrevious } from 'src/hooks/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
+import { useBulkActions } from 'src/hooks/useBulkActions';
+import { SEARCH_MAX_WIDTH } from 'src/constants/utils';
 
 const OfferList = ({
+  selectionModeActivated,
+  selectElement,
+  isElementSelected,
   candidatId,
   role,
   offers,
@@ -45,20 +50,29 @@ const OfferList = ({
             ? getUserOpportunityFromOffer(offer, candidatId)
             : offer.userOpportunity;
 
+        const isSelected = isElementSelected(offer);
+
+        const linkPropsDependingOnMode = selectionModeActivated
+          ? {
+              isExternal: true,
+              onClick: () => {
+                selectElement(offer);
+              },
+            }
+          : {
+              href: {
+                pathname: `${currentPath}/${offer.id}`,
+                query,
+              },
+            };
+
         return (
           <li key={i}>
             <SimpleLink
               shallow
               scroll={false}
               className="uk-link-reset"
-              href={{
-                pathname: `${currentPath.href}/[offerId]`,
-                query,
-              }}
-              as={{
-                pathname: `${currentPath.as}/${offer.id}`,
-                query,
-              }}
+              {...linkPropsDependingOnMode}
             >
               {isAdmin ? (
                 <OfferCard
@@ -78,6 +92,7 @@ const OfferList = ({
                     !userOpportunity.seen
                   }
                   isAdmin
+                  isSelected={isSelected}
                 />
               ) : (
                 <OfferCard
@@ -100,6 +115,7 @@ const OfferList = ({
                     offer.userOpportunity && offer.userOpportunity.recommended
                   }
                   department={offer.department}
+                  isSelected={isSelected}
                 />
               )}
             </SimpleLink>
@@ -115,11 +131,11 @@ OfferList.propTypes = {
   candidatId: PropTypes.string,
   role: PropTypes.oneOf(['admin', 'candidateAsAdmin', 'candidat']).isRequired,
   isAdmin: PropTypes.bool.isRequired,
-  currentPath: PropTypes.shape({
-    href: PropTypes.string,
-    as: PropTypes.string,
-  }).isRequired,
+  currentPath: PropTypes.string.isRequired,
   query: PropTypes.shape().isRequired,
+  selectionModeActivated: PropTypes.bool.isRequired,
+  selectElement: PropTypes.func.isRequired,
+  isElementSelected: PropTypes.func.isRequired,
 };
 
 OfferList.defaultProps = {
@@ -143,7 +159,13 @@ const OpportunityList = forwardRef(
   ) => {
     const {
       push,
-      query: { offerId: opportunityId, memberId, tab, ...restQuery },
+      query: {
+        offerId: opportunityId,
+        memberId,
+        tab,
+        updateStatus,
+        ...restQuery
+      },
     } = useRouter();
 
     const prevTag = usePrevious(restQuery.tag);
@@ -159,35 +181,25 @@ const OpportunityList = forwardRef(
 
     const isAdmin = role === 'admin' || role === 'candidateAsAdmin';
 
-    const currentPath = {
-      href: `/backoffice/${
-        role === 'candidateAsAdmin'
-          ? 'admin/membres/[memberId]/[tab]'
-          : `${role}/offres`
-      }`,
-      as: `/backoffice/${
-        role === 'candidateAsAdmin'
-          ? `admin/membres/${candidatId}/offres`
-          : `${role}/offres`
-      }`,
-    };
+    const currentPath = `/backoffice/${
+      role === 'candidateAsAdmin'
+        ? `admin/membres/${candidatId}/offres`
+        : `${role}/offres`
+    }`;
 
     const navigateBackToList = useCallback(() => {
       push(
         {
-          pathname: currentPath.href,
+          pathname: currentPath,
           query: restQuery,
         },
-        {
-          pathname: currentPath.as,
-          query: restQuery,
-        },
+        undefined,
         {
           shallow: true,
           scroll: false,
         }
       );
-    }, [currentPath.as, currentPath.href, push, restQuery]);
+    }, [currentPath, push, restQuery]);
 
     const fetchData = useOpportunityList(
       setOffers,
@@ -261,17 +273,15 @@ const OpportunityList = forwardRef(
                 isValidated: false,
                 date: Date.now(),
               });
+
               closeModal();
               UIkit.notification("L'offre a bien été dupliquée", 'success');
               push(
                 {
-                  pathname: `${currentPath.href}/[offerId]`,
+                  pathname: `${currentPath}/${data.id}`,
                   query: restQuery,
                 },
-                {
-                  pathname: `${currentPath.as}/${data.id}`,
-                  query: restQuery,
-                },
+                undefined,
                 {
                   shallow: true,
                   scroll: false,
@@ -284,8 +294,7 @@ const OpportunityList = forwardRef(
       },
       [
         candidatId,
-        currentPath.as,
-        currentPath.href,
+        currentPath,
         fetchData,
         filters,
         navigateBackToList,
@@ -348,8 +357,43 @@ const OpportunityList = forwardRef(
       }
     }, [prevTag, restQuery.tag]);
 
+    const {
+      selectElement,
+      executeAction,
+      isElementSelected,
+      selectionModeActivated,
+      SelectionModeButton,
+      hasSelection,
+    } = useBulkActions('/opportunity', async () => {
+      await fetchData(role, search, tabFilterTag, filters, candidatId);
+    });
+
     const content = (
       <div>
+        {role !== 'candidat' && (
+          <div className="uk-flex uk-flex-center">
+            <div
+              className="uk-flex uk-flex-1 uk-margin-small-bottom"
+              style={{ height: 40, maxWidth: SEARCH_MAX_WIDTH }}
+            >
+              <div className="uk-flex uk-padding-small uk-padding-remove-vertical uk-flex-1 uk-flex-middle uk-flex-row-reverse uk-flex-between uk-flex-wrap">
+                <SelectionModeButton />
+                {selectionModeActivated && (
+                  <Button
+                    disabled={!hasSelection}
+                    style="default"
+                    onClick={() => {
+                      executeAction({ isArchived: true }, 'put');
+                    }}
+                  >
+                    Archiver&nbsp;
+                    <IconNoSSR name="archive" />
+                  </Button>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
         {loading && <LoadingScreen />}
         {!loading && hasError && <OpportunityError />}
         {!loading && !hasError && (
@@ -365,6 +409,9 @@ const OpportunityList = forwardRef(
                   />
                 </p>
                 <OfferList
+                  isElementSelected={isElementSelected}
+                  selectElement={selectElement}
+                  selectionModeActivated={selectionModeActivated}
                   candidatId={candidatId}
                   query={restQuery}
                   role={role}
@@ -377,6 +424,9 @@ const OpportunityList = forwardRef(
             )}
             {offers && offers.length > 0 ? (
               <OfferList
+                isElementSelected={isElementSelected}
+                selectElement={selectElement}
+                selectionModeActivated={selectionModeActivated}
                 candidatId={candidatId}
                 query={restQuery}
                 role={role}
@@ -409,6 +459,9 @@ const OpportunityList = forwardRef(
                   départements sélectionnés&nbsp;:
                 </p>
                 <OfferList
+                  isElementSelected={isElementSelected}
+                  selectElement={selectElement}
+                  selectionModeActivated={selectionModeActivated}
                   candidatId={candidatId}
                   query={restQuery}
                   role={role}
@@ -426,26 +479,25 @@ const OpportunityList = forwardRef(
     return (
       <div>
         {tabFilters ? (
-          <FiltersTabs
-            path={currentPath}
-            tabFilters={tabFilters}
-            setTabFilters={setTabFilters}
-            otherPathParams={['offerId']}
-            otherFilterComponent={
-              <SearchBar
-                filtersConstants={filtersConst}
-                filters={filters}
-                numberOfResults={numberOfResults}
-                resetFilters={resetFilters}
-                search={search}
-                setSearch={setSearch}
-                setFilters={setFilters}
-                placeholder="Rechercher..."
-              />
-            }
-          >
+          <>
+            <FiltersTabs
+              path={currentPath}
+              tabFilters={tabFilters}
+              setTabFilters={setTabFilters}
+              otherPathParams={['offerId']}
+            />
+            <SearchBar
+              filtersConstants={filtersConst}
+              filters={filters}
+              numberOfResults={numberOfResults}
+              resetFilters={resetFilters}
+              search={search}
+              setSearch={setSearch}
+              setFilters={setFilters}
+              placeholder="Rechercher..."
+            />
             {content}
-          </FiltersTabs>
+          </>
         ) : (
           <>
             <SearchBar

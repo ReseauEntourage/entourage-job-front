@@ -8,7 +8,7 @@ import { useFilters } from 'src/hooks';
 const SearchCandidates = ({ style }) => {
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
     CV_FILTERS_DATA,
-    { href: '/candidats' }
+    '/candidats'
   );
 
   return (

@@ -317,7 +317,9 @@ const ModalOfferAdmin = ({
             startOfContract={offer.startOfContract}
             isPublic={offer.isPublic}
             isExternal={offer.isExternal}
-            numberOfPositions={offer.numberOfPositions}
+            salary={offer.salary}
+            driversLicense={offer.driversLicense}
+            workingHours={offer.workingHours}
             contract={offer.contract}
             date={offer.date}
             title={offer.title}
@@ -447,8 +449,7 @@ const ModalOfferAdmin = ({
                             style={{ marginTop: 5 }}
                           >
                             <SimpleLink
-                              as={`/backoffice/admin/membres/${userOpp.User.id}`}
-                              href="/backoffice/admin/membres/[id]"
+                              href={`/backoffice/admin/membres/${userOpp.User.id}`}
                               className="uk-link-muted uk-flex uk-flex-middle"
                               target="_blank"
                             >
@@ -486,7 +487,7 @@ const ModalOfferAdmin = ({
                                 onChange={async (event) => {
                                   await updateOpportunityUser({
                                     ...userOpp,
-                                    status: Number(event.target.value),
+                                    status: parseInt(event.target.value, 10),
                                   });
                                 }}
                                 value={userOpp.status}
@@ -621,6 +622,9 @@ ModalOfferAdmin.propTypes = {
     link: PropTypes.string,
     externalOrigin: PropTypes.string,
     isExternal: PropTypes.bool,
+    salary: PropTypes.string,
+    driversLicense: PropTypes.string,
+    workingHours: PropTypes.string,
   }),
   onOfferUpdated: PropTypes.func.isRequired,
   duplicateOffer: PropTypes.func.isRequired,

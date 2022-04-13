@@ -41,9 +41,11 @@ const ModalOfferInfo = ({
   contract,
   startOfContract,
   endOfContract,
-  numberOfPositions,
   isPartTime,
   date,
+  salary,
+  driversLicense,
+  workingHours,
 }) => {
   const { copyToClipboard, hasBeenCopied, setHasBeenCopied, fade } =
     useCopyToClipboard();
@@ -77,20 +79,51 @@ const ModalOfferInfo = ({
           </span>
         )}
       </div>
-      <div className="uk-flex uk-flex-middle">
-        {translateCategory(isPublic, isRecommended, isExternal)}
+      <div className="uk-flex uk-flex-wrap uk-flex-middle uk-margin-small-top">
+        <div className="uk-flex uk-flex-column uk-flex-center">
+          <div className="uk-flex uk-flex-middle">
+            {translateCategory(isPublic, isRecommended, isExternal)}
+          </div>
+          <ContractLabel
+            contract={contract}
+            endOfContract={endOfContract}
+            startOfContract={startOfContract}
+          />
+          <div className="uk-text-small">
+            {isPartTime ? 'Temps partiel' : 'Temps plein'}
+          </div>
+          {workingHours && <div className="uk-text-small">{workingHours}</div>}
+        </div>
+        {(salary || driversLicense) && (
+          <div className="uk-flex">
+            <hr className="uk-divider-vertical uk-visible@s uk-margin-small-right uk-margin-small-left uk-margin-remove-bottom" />
+            <div className="uk-flex uk-flex-column uk-flex-center">
+              {salary && (
+                <div className="uk-flex uk-flex-middle">
+                  <IconNoSSR
+                    name="credit-card"
+                    ratio={0.8}
+                    className="uk-margin-small-right"
+                  />
+                  {salary}
+                </div>
+              )}
+
+              {driversLicense && (
+                <div className="uk-flex uk-flex-middle">
+                  <IconNoSSR
+                    style={{ width: 20 }}
+                    name="car"
+                    className="uk-margin-small-right"
+                  />
+                  Permis requis
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
-      <ContractLabel
-        contract={contract}
-        endOfContract={endOfContract}
-        startOfContract={startOfContract}
-      />
-      <div className="uk-text-small">
-        {numberOfPositions} poste
-        {numberOfPositions > 1 ? 's' : ''} -{' '}
-        {isPartTime ? 'Temps partiel' : 'Temps plein'}
-      </div>
-      <div className="uk-text-italic uk-text-small">
+      <div className="uk-text-italic uk-text-small uk-margin-small-top">
         offre soumise le {moment(date).format('DD/MM/YYYY')}
       </div>
     </div>
@@ -108,7 +141,9 @@ ModalOfferInfo.propTypes = {
   endOfContract: PropTypes.string,
   startOfContract: PropTypes.string,
   isPartTime: PropTypes.bool.isRequired,
-  numberOfPositions: PropTypes.number.isRequired,
+  salary: PropTypes.string,
+  driversLicense: PropTypes.string,
+  workingHours: PropTypes.string,
 };
 
 ModalOfferInfo.defaultProps = {
@@ -117,6 +152,9 @@ ModalOfferInfo.defaultProps = {
   isExternal: false,
   endOfContract: undefined,
   startOfContract: undefined,
+  salary: undefined,
+  driversLicense: undefined,
+  workingHours: undefined,
 };
 
 export default ModalOfferInfo;

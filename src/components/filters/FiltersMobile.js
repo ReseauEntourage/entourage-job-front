@@ -7,9 +7,8 @@ import { gaEvent } from 'src/lib/gtag';
 import { GA_TAGS } from 'src/constants/tags';
 import { IconNoSSR } from 'src/components/utils/Icon';
 
-const FiltersMobile = ({ filters }) => {
+const FiltersMobile = ({ numberOfFilters }) => {
   const [filterMenuOpened, setFilterMenuOpened] = useState(false);
-  const [numberOfFilters, setNumberOfFilters] = useState(0);
 
   const onFilterMenuToggle = (opened) => {
     if (opened) gaEvent(GA_TAGS.PAGE_GALERIE_AFFICHER_FILTRES_CLIC);
@@ -34,14 +33,6 @@ const FiltersMobile = ({ filters }) => {
     };
   }, []);
 
-  useEffect(() => {
-    setNumberOfFilters(
-      Object.values(filters).reduce((acc, curr) => {
-        return acc + curr.length;
-      }, 0)
-    );
-  }, [filters]);
-
   return (
     <div className="uk-flex uk-flex-middle uk-flex-center uk-hidden@m">
       <Button
@@ -65,7 +56,11 @@ const FiltersMobile = ({ filters }) => {
 };
 
 FiltersMobile.propTypes = {
-  filters: PropTypes.shape().isRequired,
+  numberOfFilters: PropTypes.number,
+};
+
+FiltersMobile.defaultProps = {
+  numberOfFilters: 0,
 };
 
 export default FiltersMobile;

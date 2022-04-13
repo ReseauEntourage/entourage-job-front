@@ -34,7 +34,7 @@ import { fbEvent } from 'src/lib/fb';
 const CVFiche = ({ cv, actionDisabled }) => {
   const updateSharesCount = useUpdateSharesCount();
 
-  const { modal } = usePostOpportunity({
+  const { PostOpportunityModal } = usePostOpportunity({
     modalTitle: 'Proposer une opportunité à un candidat',
     modalDesc: (
       <div className="uk-text-normal">
@@ -189,7 +189,7 @@ const CVFiche = ({ cv, actionDisabled }) => {
           onClick={() => {
             gaEvent(GA_TAGS.PAGE_CV_CONTACTEZ_MOI_CLIC);
             fbEvent(FB_TAGS.COMPANY_CV_OFFER);
-            openModal(modal);
+            openModal(<PostOpportunityModal />);
           }}
         >
           Contactez-moi <IconNoSSR name="chevron-right" />
@@ -277,7 +277,10 @@ const CVFiche = ({ cv, actionDisabled }) => {
                   <dl className="uk-description-list">
                     {experiences.map((exp, i) => {
                       return (
-                        <div key={i}>
+                        <div
+                          key={i}
+                          className={i > 0 ? 'uk-margin-small-top' : ''}
+                        >
                           {exp.skills && (
                             <dt style={{ display: 'block' }}>
                               {exp.skills.map((name, key) => {

@@ -12,7 +12,7 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 import Hamburger from 'src/components/utils/Hamburger';
 import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
-import { OFFCANVAS_LOGGED } from 'src/constants';
+import { OFFCANVAS_LOGGED } from 'src/constants/utils';
 
 const HeaderConnected = ({ isHome }) => {
   const { user, logout } = useContext(UserContext);

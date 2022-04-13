@@ -12631,6 +12631,13 @@ iframe.uk-cover {
   border: 1px solid #e5e5e5;
   border-radius: 2px;
 }
+.ent-offer-selected {
+  border: 1px solid #f55f24;
+  box-shadow: 0 5px 15px #f55f05 !important;
+}
+.ent-offer-selected:hover {
+  box-shadow: 0 14px 25px #f55f02 !important;
+}
 .ent-offer-badge {
   position: absolute;
   top: 15px;

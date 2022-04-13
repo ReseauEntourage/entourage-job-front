@@ -13,7 +13,6 @@ const Button = ({
   style,
   size,
   href,
-  as,
   disabled,
   widths,
   children,
@@ -55,7 +54,7 @@ const Button = ({
         {buttonComponent}
       </a>
     ) : (
-      <Link href={href} as={as} shallow={shallow} scroll={scroll}>
+      <Link href={href} shallow={shallow} scroll={scroll}>
         {buttonComponent}
       </Link>
     );
@@ -68,10 +67,6 @@ Button.propTypes = {
     PropTypes.node,
   ]).isRequired,
   href: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.shape({ pathname: PropTypes.string, query: PropTypes.shape() }),
-  ]),
-  as: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.shape({ pathname: PropTypes.string, query: PropTypes.shape() }),
   ]),
@@ -95,7 +90,6 @@ Button.defaultProps = {
   style: undefined,
   size: undefined,
   href: undefined,
-  as: undefined,
   widths: [],
   isExternal: false,
   newTab: false,

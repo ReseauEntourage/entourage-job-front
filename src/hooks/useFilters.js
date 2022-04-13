@@ -29,21 +29,16 @@ export function useFilters(filtersData, path, otherPathParams) {
 
     push(
       {
-        pathname: path.href,
+        pathname: path,
         query,
       },
-      path.as
-        ? {
-            pathname: path.as,
-            query,
-          }
-        : undefined,
+      undefined,
       {
         shallow: true,
         scroll: false,
       }
     );
-  }, [otherParams, path.as, path.href, push]);
+  }, [otherParams, path, push]);
 
   const setFilters = useCallback(
     (updatedFilters) => {
@@ -57,22 +52,17 @@ export function useFilters(filtersData, path, otherPathParams) {
 
       push(
         {
-          pathname: path.href,
+          pathname: path,
           query,
         },
-        path.as
-          ? {
-              pathname: path.as,
-              query,
-            }
-          : undefined,
+        undefined,
         {
           shallow: true,
           scroll: false,
         }
       );
     },
-    [otherParams, path.as, path.href, push, search]
+    [otherParams, path, push, search]
   );
 
   const setSearch = useCallback(
@@ -84,22 +74,17 @@ export function useFilters(filtersData, path, otherPathParams) {
       };
       push(
         {
-          pathname: path.href,
+          pathname: path,
           query,
         },
-        path.as
-          ? {
-              pathname: path.as,
-              query,
-            }
-          : undefined,
+        undefined,
         {
           shallow: true,
           scroll: false,
         }
       );
     },
-    [params, path.as, path.href, push]
+    [params, path, push]
   );
 
   return {

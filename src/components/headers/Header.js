@@ -6,12 +6,13 @@ import Link from 'next/link';
 import { Hamburger, Nav, Navbar, NavbarLogo } from 'src/components/utils';
 
 import Button from 'src/components/utils/Button';
-import { EXTERNAL_LINKS, OFFCANVAS_GUEST } from 'src/constants';
+import { EXTERNAL_LINKS } from 'src/constants';
 import { gaEvent } from 'src/lib/gtag';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas';
 import { fbEvent } from 'src/lib/fb';
+import { OFFCANVAS_GUEST } from 'src/constants/utils';
 
 const LINKS = [
   {

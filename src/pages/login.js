@@ -14,18 +14,21 @@ import { openModal } from 'src/components/modals/Modal';
 
 const Login = () => {
   const { login, user } = useContext(UserContext);
-  const router = useRouter();
+  const {
+    replace,
+    query: { requestedPath },
+  } = useRouter();
 
   useEffect(() => {
     if (user) {
       if (user.role === USER_ROLES.ADMIN) {
-        router.replace('/backoffice/admin/offres');
+        replace(requestedPath || '/backoffice/admin/offres');
       }
       if (user.role === USER_ROLES.CANDIDAT || user.role === USER_ROLES.COACH) {
-        router.replace('/backoffice/candidat/offres');
+        replace(requestedPath || '/backoffice/candidat/offres');
       }
     }
-  }, [router, user]);
+  }, [replace, requestedPath, user]);
 
   const rateLimitErrorMessage =
     'Trop de tentatives infructueuses.\nVeuillez ressayer dans 1 minute.';
