@@ -4,6 +4,8 @@ import Script from 'next/script';
 import React from 'react';
 import { EXTERNAL_LINKS } from 'src/constants';
 
+export const TAC_CDN_URL = 'https://cdn.jsdelivr.net/npm/tarteaucitronjs@1.9.6';
+
 const tarteaucitronOptions = {
   privacyUrl: EXTERNAL_LINKS.LEGAL_MENTIONS /* Privacy policy url */,
   bodyPosition:
@@ -47,7 +49,7 @@ const tarteaucitronCustomText = {
   alertBigPrivacy:
     'Entourage et ses partenaires utilisent des cookies afin de recueillir certaines informations stockées sur votre terminal.\n\n' +
     'Ces cookies permettent d’assurer le fonctionnement du site, de réaliser des statistiques d’audience et de fréquentation afin d’améliorer nos services et de vous proposer de la publicité personnalisée.\n\n' +
-    'Entourage conserve votre choix pendant 1 an. Vous pouvez changer d’avis à tout moment en cliquant sur l’icône « Gérer les cookies » en bas de chaque page de notre site.',
+    'Entourage conserve votre choix pendant 6 mois. Vous pouvez changer d’avis à tout moment en cliquant sur le lien « Gestion des cookies » en bas de chaque page de notre site.',
   disclaimer:
     'Vous pouvez paramétrer vos choix ici concernant les cookies déposés par Entourage ou ses partenaires sur le site www.linkedout.fr.',
   mandatoryText:
@@ -65,12 +67,20 @@ const tarteaucitronCustomText = {
   },
 };
 
+const tarteaucitronForceLanguage = 'fr';
+const tarteaucitronExpireInDay = true;
+const tarteaucitronForceExpire = 182.5;
+
 const CookieManager = () => {
   return (
     <>
       <Script id="tarteaucitron-script" strategy="afterInteractive">
         {`
-          tarteaucitronCustomText = ${JSON.stringify(tarteaucitronCustomText)}
+          tarteaucitronForceCDN = '${TAC_CDN_URL}';
+          tarteaucitronCustomText = ${JSON.stringify(tarteaucitronCustomText)};
+          tarteaucitronExpireInDay = ${tarteaucitronExpireInDay};
+          tarteaucitronForceExpire = ${tarteaucitronForceExpire};
+          tarteaucitronForceLanguage = '${tarteaucitronForceLanguage}';
           tarteaucitron.init(${JSON.stringify(tarteaucitronOptions)});
         `}
       </Script>

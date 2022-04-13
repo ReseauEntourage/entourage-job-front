@@ -7,7 +7,7 @@ import Header from 'src/components/headers/Header';
 import HeaderConnected from 'src/components/headers/HeaderConnected';
 import { addPrefix } from 'src/utils';
 import Script from 'next/script';
-import CookieManager from 'src/components/CookieManager';
+import CookieManager, { TAC_CDN_URL } from 'src/components/CookieManager';
 
 const Layout = ({
   children,
@@ -75,7 +75,7 @@ const Layout = ({
       {children}
       {!isPDF && !isBackoffice && <Footer />}
       <Script
-        src="https://unpkg.com/tarteaucitronjs@1.9.5/tarteaucitron.js"
+        src={`${TAC_CDN_URL}/tarteaucitron.min.js`}
         strategy="afterInteractive"
         onLoad={() => {
           setCookieManagerReady(true);
