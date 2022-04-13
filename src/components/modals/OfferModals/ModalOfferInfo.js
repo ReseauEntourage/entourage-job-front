@@ -102,7 +102,6 @@ const ModalOfferInfo = ({
                 <div className="uk-flex uk-flex-middle">
                   <IconNoSSR
                     name="credit-card"
-                    ratio={0.8}
                     className="uk-margin-small-right"
                   />
                   {salary}
