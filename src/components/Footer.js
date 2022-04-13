@@ -341,7 +341,7 @@ const Footer = () => {
           )}
           <SiteMap isMobile />
           <SiteMap isMobile={false} />
-          <Grid row center middle gap="collapse">
+          <Grid row center middle gap="medium">
             <SimpleLink
               isExternal
               target="_blank"
@@ -349,6 +349,13 @@ const Footer = () => {
               href={EXTERNAL_LINKS.LEGAL_MENTIONS}
             >
               Mentions légales
+            </SimpleLink>
+            <SimpleLink
+              isExternal
+              className="uk-text-small uk-text-muted"
+              href="#cookies"
+            >
+              Gestion des cookies
             </SimpleLink>
           </Grid>
         </Grid>
