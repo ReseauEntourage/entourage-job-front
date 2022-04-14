@@ -151,7 +151,7 @@ const CVCareerPathSentence = ({ businessLines, ambitions }) => {
 };
 
 CVCareerPathSentence.propTypes = {
-  ambitions: PropTypes.oneOf([
+  ambitions: PropTypes.oneOfType([
     PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string.isRequired,
@@ -165,7 +165,7 @@ CVCareerPathSentence.propTypes = {
     ),
     PropTypes.string,
   ]).isRequired,
-  businessLines: PropTypes.oneOf([
+  businessLines: PropTypes.oneOfType([
     PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string.isRequired,

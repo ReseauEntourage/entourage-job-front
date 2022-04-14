@@ -4,11 +4,10 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 
 import CVList from 'src/components/cv/CVList';
 import { gaEvent } from 'src/lib/gtag';
-import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { GA_TAGS } from 'src/constants/tags';
 import { CV_FILTERS_DATA } from 'src/constants';
 import { openModal } from 'src/components/modals/Modal';
 import usePostPublicOfferModal from 'src/components/modals/usePostPublicOfferModal';
-import { fbEvent } from 'src/lib/fb';
 
 const HireCTA = () => {
   const publicOfferModal = usePostPublicOfferModal();
@@ -85,7 +84,6 @@ const HireCTA = () => {
                 style="secondary"
                 onClick={() => {
                   gaEvent(GA_TAGS.PAGE_RECRUTER_DEPOSER_OFFRE_CLIC);
-                  fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER);
                   openModal(publicOfferModal);
                 }}
               >

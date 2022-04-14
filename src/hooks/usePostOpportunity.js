@@ -5,12 +5,13 @@ import Api from 'src/Axios';
 import _ from 'lodash';
 import { usePrevious } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
-import { GA_TAGS } from 'src/constants/tags';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { openModal } from 'src/components/modals/Modal';
 import defaultSchema from 'src/components/forms/schema/formEditOpportunity';
 import ModalEdit from 'src/components/modals/ModalEdit';
 import { findConstantFromValue, getValueFromFormField } from 'src/utils';
 import { BUSINESS_LINES } from 'src/constants';
+import { fbEvent } from 'src/lib/fb';
 
 export function usePostOpportunity({
   modalTitle,
@@ -38,10 +39,13 @@ export function usePostOpportunity({
       if (!isAdmin) {
         if (opportunity.isPublic) {
           gaEvent(GA_TAGS.POPUP_OFFRE_ENVOYER_OFFRE_GENERALE_CLIC);
+          fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER);
         } else if (candidatesId.length > 1) {
           gaEvent(GA_TAGS.POPUP_OFFRE_ENVOYER_OFFRE_MULTIPLE_CLIC);
+          fbEvent(FB_TAGS.COMPANY_CV_OFFER);
         } else {
           gaEvent(GA_TAGS.POPUP_OFFRE_ENVOYER_OFFRE_UNIQUE_CLIC);
+          fbEvent(FB_TAGS.COMPANY_CV_OFFER);
         }
         successMessage = opportunity.isPublic
           ? 'Merci pour votre offre, nous reviendrons bientôt vers vous.'
