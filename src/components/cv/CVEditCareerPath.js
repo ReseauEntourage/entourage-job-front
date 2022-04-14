@@ -119,7 +119,7 @@ const CVEditCareerPath = ({ ambitions, businessLines, onChange }) => {
 };
 
 CVEditCareerPath.propTypes = {
-  ambitions: PropTypes.oneOf([
+  ambitions: PropTypes.oneOfType([
     PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string.isRequired,
@@ -133,7 +133,7 @@ CVEditCareerPath.propTypes = {
     ),
     PropTypes.string,
   ]).isRequired,
-  businessLines: PropTypes.oneOf([
+  businessLines: PropTypes.oneOfType([
     PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string.isRequired,
