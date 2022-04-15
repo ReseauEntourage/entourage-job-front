@@ -7,7 +7,6 @@ import Header from 'src/components/headers/Header';
 import HeaderConnected from 'src/components/headers/HeaderConnected';
 import { addPrefix } from 'src/utils';
 import Script from 'next/script';
-import CookieManager from 'src/components/CookieManager';
 
 const Layout = ({
   children,
@@ -21,7 +20,6 @@ const Layout = ({
   noIndex,
   isBackoffice,
 }) => {
-  const [cookieManagerReady, setCookieManagerReady] = useState(false);
   const isPDF = router.asPath.includes('/pdf/');
   const domain = process.env.SERVER_URL.replace(/https:\/\/|http:\/\//g, '');
 
@@ -75,18 +73,10 @@ const Layout = ({
       )}
       {children}
       {!isPDF && !isBackoffice && <Footer />}
-
       <Script
         src={`https://tarteaucitron.io/load.js?domain=${domain}&uuid=0e7dccd2edb0f870afc26ab86d989e93ef6da0a9`}
         strategy="afterInteractive"
-        onLoad={() => {
-          setCookieManagerReady(true);
-        }}
-        onError={(err) => {
-          console.error(err);
-        }}
       />
-      {cookieManagerReady && <CookieManager />}
     </>
   );
 };
