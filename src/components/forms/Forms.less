@@ -46,10 +46,7 @@
 
 .PhoneInput {
   .mixin-default-entry;
-  font-family: Roboto, sans-serif !important;
-  &::placeholder {
-    font-family: Roboto, sans-serif !important;
-  }
+
 }
 
 .PhoneInput--focus {
@@ -62,10 +59,13 @@
   font-size: 1rem;
   outline: none;
 
+  font-family: Roboto, sans-serif !important;
+  color: @black !important;
   &::placeholder {
     opacity: 1;
+    font-family: Roboto, sans-serif !important;
+    color:  #999 !important;
   }
-
 }
 
 .uk-textarea {

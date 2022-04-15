@@ -249,6 +249,7 @@ const ModalOfferAdmin = ({
                   ...fields,
                   startOfContract: fields.startOfContract || null,
                   endOfContract: fields.endOfContract || null,
+                  recruiterPhone: fields.recruiterPhone || null,
                   candidateId: offer.userOpportunity[0]?.UserId,
                   id: offer.id,
                   businessLines: fields.businessLines
@@ -287,6 +288,7 @@ const ModalOfferAdmin = ({
                   message: fields.isPublic ? null : fields.message,
                   startOfContract: fields.startOfContract || null,
                   endOfContract: fields.endOfContract || null,
+                  recruiterPhone: fields.recruiterPhone || null,
                   candidatesId:
                     fields.candidatesId?.map((candidateId) => {
                       return typeof candidateId === 'object'
@@ -397,18 +399,20 @@ const ModalOfferAdmin = ({
                   </span>
                   <IconNoSSR name="mail" ratio={0.8} />
                 </SimpleLink>
-                <SimpleLink
-                  href={`tel:${offer.recruiterPhone}`}
-                  className="uk-text-meta uk-text-muted uk-flex uk-flex-middle"
-                  isExternal
-                  newTab
-                >
-                  <span>
-                    {offer.recruiterPhone}
-                    &nbsp;
-                  </span>
-                  <IconNoSSR name="phone" ratio={0.8} />
-                </SimpleLink>
+                {offer.recruiterPhone && (
+                  <SimpleLink
+                    href={`tel:${offer.recruiterPhone}`}
+                    className="uk-text-meta uk-text-muted uk-flex uk-flex-middle"
+                    isExternal
+                    newTab
+                  >
+                    <span>
+                      {offer.recruiterPhone}
+                      &nbsp;
+                    </span>
+                    <IconNoSSR name="phone" ratio={0.8} />
+                  </SimpleLink>
+                )}
                 {offer.beContacted && <span>Souhaite être recontacté</span>}
               </OfferInfoContainer>
             )}

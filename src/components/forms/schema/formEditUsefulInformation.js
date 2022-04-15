@@ -1,6 +1,6 @@
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { CONTRACTS } from 'src/constants';
-import { isPossiblePhoneNumber } from 'react-phone-number-input';
+import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 
 export default {
   id: 'form-usefullinformation',
@@ -128,7 +128,7 @@ export default {
     {
       field: 'phone',
       method: (fieldValue) => {
-        return fieldValue && isPossiblePhoneNumber(fieldValue);
+        return fieldValue && isValidPhoneNumber(fieldValue, 'FR');
       },
       args: [],
       validWhen: true,

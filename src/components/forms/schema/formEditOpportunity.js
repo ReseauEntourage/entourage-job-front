@@ -3,7 +3,7 @@ import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import Api from 'src/Axios';
 import moment from 'moment';
 import { findConstantFromValue, getValueFromFormField } from 'src/utils';
-import { isPossiblePhoneNumber } from 'react-phone-number-input';
+import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 
 export default {
   id: 'form-offer',
@@ -372,7 +372,7 @@ export default {
         return (
           !fieldValue ||
           fieldValue.length === 0 ||
-          isPossiblePhoneNumber(fieldValue)
+          isValidPhoneNumber(fieldValue, 'FR')
         );
       },
       args: [],

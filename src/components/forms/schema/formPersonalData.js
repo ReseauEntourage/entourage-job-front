@@ -1,6 +1,6 @@
 import { ADMIN_ZONES_FILTERS } from 'src/constants/departements';
 import { ADMIN_ROLES } from 'src/constants';
-import { isPossiblePhoneNumber } from 'react-phone-number-input';
+import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 
 export default {
   id: 'form-personal-data',
@@ -87,8 +87,8 @@ export default {
       id: 'phone',
       name: 'phone',
       component: 'tel',
-      title: 'Tapez votre numéro de telephone',
-      placeholder: 'Numéro de telephone*',
+      placeholder: 'Tapez votre numéro de telephone',
+      title: 'Numéro de telephone*',
     },
     {
       id: 'addressLabel',
@@ -140,7 +140,7 @@ export default {
     {
       field: 'phone',
       method: (fieldValue) => {
-        return fieldValue && isPossiblePhoneNumber(fieldValue);
+        return fieldValue && isValidPhoneNumber(fieldValue, 'FR');
       },
       args: [],
       validWhen: true,

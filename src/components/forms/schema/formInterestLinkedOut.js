@@ -1,5 +1,5 @@
 import { HEARD_ABOUT } from 'src/constants';
-import { isPossiblePhoneNumber } from 'react-phone-number-input';
+import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 
 export default {
   id: 'form-interest',
@@ -170,7 +170,7 @@ export default {
         return (
           !fieldValue ||
           fieldValue.length === 0 ||
-          isPossiblePhoneNumber(fieldValue)
+          isValidPhoneNumber(fieldValue, 'FR')
         );
       },
       args: [],
