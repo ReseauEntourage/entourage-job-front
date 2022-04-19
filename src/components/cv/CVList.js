@@ -42,7 +42,7 @@ const CVList = ({
   setSearch,
   resetFilters,
 }) => {
-  const publicOfferModal = usePostPublicOfferModal();
+  const PublicOfferModal = usePostPublicOfferModal();
 
   const [numberOfResults, setNumberOfResults] = useState(0);
 
@@ -209,7 +209,7 @@ const CVList = ({
                 }}
                 className="uk-link-text"
                 onClick={() => {
-                  openModal(publicOfferModal);
+                  openModal(<PublicOfferModal />);
                 }}
               >
                 Publier une offre d’emploi

@@ -12,7 +12,7 @@ import { openModal } from 'src/components/modals/Modal';
 import usePostPublicOfferModal from 'src/components/modals/usePostPublicOfferModal';
 
 const CVEntreprises = () => {
-  const publicOfferModal = usePostPublicOfferModal();
+  const PublicOfferModal = usePostPublicOfferModal();
 
   return (
     <Layout title="CVs Entreprises - LinkedOut">
@@ -46,7 +46,7 @@ const CVEntreprises = () => {
               style="secondary"
               onClick={() => {
                 gaEvent(GA_TAGS.PAGE_RECRUTER_DEPOSER_OFFRE_CLIC);
-                openModal(publicOfferModal);
+                openModal(<PublicOfferModal />);
               }}
             >
               Déposez votre offre <IconNoSSR name="chevron-right" />

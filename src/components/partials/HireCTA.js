@@ -10,7 +10,7 @@ import { openModal } from 'src/components/modals/Modal';
 import usePostPublicOfferModal from 'src/components/modals/usePostPublicOfferModal';
 
 const HireCTA = () => {
-  const publicOfferModal = usePostPublicOfferModal();
+  const PublicOfferModal = usePostPublicOfferModal();
 
   return (
     <Section style="muted">
@@ -84,7 +84,7 @@ const HireCTA = () => {
                 style="secondary"
                 onClick={() => {
                   gaEvent(GA_TAGS.PAGE_RECRUTER_DEPOSER_OFFRE_CLIC);
-                  openModal(publicOfferModal);
+                  openModal(<PublicOfferModal />);
                 }}
               >
                 Déposez votre offre&nbsp;
