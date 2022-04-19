@@ -5,7 +5,7 @@ import { openModal } from 'src/components/modals/Modal';
 import usePostPublicOfferModal from 'src/components/modals/usePostPublicOfferModal';
 
 const GlobalOffer = () => {
-  const publicOfferModal = usePostPublicOfferModal();
+  const PublicOfferModal = usePostPublicOfferModal();
   return (
     <h4 className="uk-text-bold uk-margin-large-top uk-text-center">
       Vous n&apos;avez pas trouvé de profils qui correspondent à vos besoins de
@@ -17,8 +17,8 @@ const GlobalOffer = () => {
       <a
         style={{ textDecoration: 'underline' }}
         onClick={() => {
-          openModal(publicOfferModal);
           gaEvent(GA_TAGS.PAGE_RECRUTER_DEPOSER_OFFRE_CLIC);
+          openModal(<PublicOfferModal />);
         }}
       >
         Laissez-nous votre contact ou votre besoin et nous revenons vers vous.
