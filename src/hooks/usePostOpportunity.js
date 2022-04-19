@@ -59,6 +59,7 @@ export function usePostOpportunity({
           endOfContract: opportunity.endOfContract || null,
           candidatesId: opportunity.isPublic && !isAdmin ? null : candidatesId,
           message: opportunity.isPublic ? null : opportunity.message,
+          recruiterPhone: opportunity.recruiterPhone || null,
           businessLines: opportunity.businessLines
             ? opportunity.businessLines.map((businessLine, index) => {
                 return {

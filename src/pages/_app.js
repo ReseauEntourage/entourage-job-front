@@ -12,6 +12,7 @@ import 'src/components/headers/Header.less';
 import 'src/components/partials/HireCTA.less';
 import 'src/components/modals/Modal/Modal.less';
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
+import 'react-phone-number-input/style.css';
 
 import React, { useEffect, useState } from 'react';
 import Router, { useRouter } from 'next/router';

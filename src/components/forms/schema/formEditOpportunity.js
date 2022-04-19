@@ -3,6 +3,7 @@ import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import Api from 'src/Axios';
 import moment from 'moment';
 import { findConstantFromValue, getValueFromFormField } from 'src/utils';
+import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 
 export default {
   id: 'form-offer',
@@ -107,9 +108,9 @@ export default {
     {
       id: 'recruiterPhone',
       name: 'recruiterPhone',
-      component: 'input',
-      type: 'tel',
+      component: 'tel',
       title: 'Votre téléphone',
+      placeholder: 'Tapez votre numéro',
     },
     {
       id: 'businessLines',
@@ -365,29 +366,20 @@ export default {
       validWhen: true,
       message: 'Invalide',
     },
-    /*  {
-      field: 'recruiterPhone',
-      method: 'isEmpty',
-      args: [
-        {
-          ignore_whitespace: true,
-        },
-      ],
-      validWhen: false,
-      message: 'Obligatoire',
-    },
     {
       field: 'recruiterPhone',
-      method: 'isLength',
-      args: [
-        {
-          min: 10,
-          max: 13,
-        },
-      ],
+      method: (fieldValue) => {
+        return (
+          !fieldValue ||
+          fieldValue.length === 0 ||
+          isValidPhoneNumber(fieldValue, 'FR')
+        );
+      },
+      args: [],
       validWhen: true,
-      message: 'Invalide',
+      message: 'Numéro de téléphone invalide',
     },
+    /*
     {
       field: 'businessLines',
       method: 'isEmpty',

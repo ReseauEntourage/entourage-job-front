@@ -1,6 +1,7 @@
 import Api from 'src/Axios';
 import { ADMIN_ROLES, USER_ROLES } from 'src/constants';
 import { ADMIN_ZONES_FILTERS } from 'src/constants/departements';
+import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 
 export default {
   id: 'form-edit-user',
@@ -43,10 +44,9 @@ export default {
     {
       id: 'phone',
       name: 'phone',
-      component: 'input',
-      type: 'phone',
+      component: 'tel',
       placeholder: 'Tapez le numéro de téléphone',
-      title: 'Numéro de téléphone',
+      title: 'Numéro de téléphone*',
     },
     {
       id: 'address',
@@ -189,14 +189,12 @@ export default {
     },
     {
       field: 'phone',
-      method: 'isLength',
-      args: [
-        {
-          max: 30,
-        },
-      ],
+      method: (fieldValue) => {
+        return fieldValue && isValidPhoneNumber(fieldValue, 'FR');
+      },
+      args: [],
       validWhen: true,
-      message: '30 caractères maximum',
+      message: 'Numéro de téléphone invalide',
     },
     {
       field: 'zone',
