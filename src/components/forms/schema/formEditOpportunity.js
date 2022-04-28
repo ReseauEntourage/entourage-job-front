@@ -9,6 +9,12 @@ export default {
   id: 'form-offer',
   fields: [
     {
+      id: 'disableMail',
+      name: 'disableMail',
+      component: 'checkbox',
+      title: "Désactiver l'envoi de mail au recruteur",
+    },
+    {
       id: 'isPublic',
       name: 'isPublic',
       component: 'checkbox',
