@@ -9,16 +9,16 @@ const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 
 const dev = process.env.NODE_ENV !== 'production';
 
-/* const ContentSecurityPolicy = `
+const ContentSecurityPolicy = `
   default-src 'self';
   script-src 'unsafe-inline';
-  child-src 'self';
+  child-src 'self' youtube.com www.youtube.com airtable.com www.airtable.com;
   style-src 'self';
   font-src 'self';
-  img-src 'self' ${process.env.AWSS3_CDN_URL.replace('https://', '')} ${
-  process.env.CDN_URL ? process.env.CDN_URL.replace('https://', '') : ''
+  img-src 'self' ${process.env.AWSS3_CDN_URL} ${
+  process.env.CDN_URL ? process.env.CDN_URL : ''
 };
-`; */
+`;
 
 const securityHeaders = [
   {
@@ -35,7 +35,7 @@ const securityHeaders = [
   },
   {
     key: 'Permissions-Policy',
-    value: '',
+    value: 'camera=(), microphone=(), geolocation=(self), interest-cohort=()',
   },
   {
     key: 'X-Frame-Options',
@@ -47,12 +47,12 @@ const securityHeaders = [
   },
   {
     key: 'Referrer-Policy',
-    value: 'origin-when-cross-origin',
+    value: 'strict-origin',
   },
-  /* {
+  {
     key: 'Content-Security-Policy',
     value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
-  }, */
+  },
 ];
 
 module.exports = withLess({
