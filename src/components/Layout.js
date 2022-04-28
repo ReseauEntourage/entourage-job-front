@@ -20,7 +20,7 @@ const Layout = ({
   noIndex,
   isBackoffice,
 }) => {
-  const isPDF = router.asPath.includes('/pdf/');
+  const isPDF = router.pathname.includes('/pdf/');
   const domain = process.env.SERVER_URL.replace(/https:\/\/|http:\/\//g, '');
 
   return (
@@ -67,7 +67,7 @@ const Layout = ({
           {isBackoffice ? (
             <HeaderConnected />
           ) : (
-            router.asPath !== '/' && <Header isHome={false} />
+            router.pathname !== '/' && <Header isHome={false} />
           )}
         </>
       )}
@@ -93,7 +93,7 @@ Layout.propTypes = {
   metaUrl: PropTypes.string,
   metaType: PropTypes.string,
   router: PropTypes.shape({
-    asPath: PropTypes.string,
+    pathname: PropTypes.string,
   }).isRequired,
   noIndex: PropTypes.bool,
   isBackoffice: PropTypes.bool,

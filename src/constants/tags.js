@@ -122,6 +122,9 @@ const GA_TAGS = {
   HOME_SUIVRE_SUR_INSTAGRAM_CLIC: {
     action: 'Home_Suivre_sur_Instagram_Clic',
   },
+  HOME_SUIVRE_SUR_YOUTUBE_CLIC: {
+    action: 'Home_Suivre_sur_Youtube_Clic',
+  },
   HOME_INSCRIPTION_NEWSLETTER_CLIC: {
     action: 'Home_Inscription_Newsletter_Clic',
   },
@@ -136,6 +139,9 @@ const GA_TAGS = {
   },
   PAGE_CV_SUIVRE_SUR_INSTAGRAM_CLIC: {
     action: 'Page_CV_Suivre_sur_Instagram_Clic',
+  },
+  PAGE_CV_SUIVRE_SUR_YOUTUBE_CLIC: {
+    action: 'Page_CV_Suivre_sur_Youtube_Clic',
   },
   PAGE_CV_INSCRIPTION_NEWSLETTER_CLIC: {
     action: 'Page_CV_Inscription_Newsletter_Clic',

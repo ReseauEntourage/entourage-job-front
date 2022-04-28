@@ -1,6 +1,8 @@
 import React from 'react';
 import LogoList from 'src/components/partials/LogoList';
-import WhatItBringsToCompanies from 'src/components/partials/WhatItBringsToCompanies';
+import WhatItBringsToCompanies, {
+  openContactModal,
+} from 'src/components/partials/WhatItBringsToCompanies';
 import Layout from 'src/components/Layout';
 import { Button, Section } from 'src/components/utils';
 import ImageTitle from 'src/components/partials/ImageTitle';
@@ -9,12 +11,7 @@ import Reviews from 'src/components/partials/Reviews';
 import HowToCommitDifferently from 'src/components/partials/HowToCommitDifferently';
 import NewsletterPartial from 'src/components/partials/NewsletterPartial';
 import PARTNERS from 'src/constants/partners';
-import ModalGeneric from 'src/components/modals/ModalGeneric';
 import { IconNoSSR } from 'src/components/utils/Icon';
-import { openModal } from 'src/components/modals/Modal';
-import { gaEvent } from 'src/lib/gtag';
-import { GA_TAGS, FB_TAGS } from 'src/constants/tags';
-import { fbEvent } from 'src/lib/fb';
 
 const Entreprises = () => {
   return (
@@ -60,26 +57,7 @@ const Entreprises = () => {
         </h4>
         <div className="uk-flex uk-flex-center">
           <Button
-            onClick={() => {
-              gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
-              fbEvent(FB_TAGS.COMPANY_CONTACT);
-              openModal(
-                <ModalGeneric>
-                  <iframe
-                    className="airtable-embed"
-                    src={`${process.env.AIRTABLE_LINK_COMPANY_HELP}?backgroundColor=blue`}
-                    frameBorder="0"
-                    title="modal-company-help"
-                    width="100%"
-                    height="533"
-                    style={{
-                      background: 'transparent',
-                      border: '1px solid #ccc;',
-                    }}
-                  />
-                </ModalGeneric>
-              );
-            }}
+            onClick={openContactModal}
             style="secondary"
             className="uk-margin-small-top"
           >

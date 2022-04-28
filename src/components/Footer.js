@@ -316,17 +316,17 @@ SiteMap.propTypes = {
 };
 
 const Footer = () => {
-  const { asPath } = useRouter();
+  const { pathname } = useRouter();
 
-  const showAssociationEntourage = !asPath.includes('/entreprises');
+  const showAssociationEntourage = !pathname.includes('/entreprises');
 
   return (
     <footer id="footer">
-      {asPath === '/' && <Partners />}
+      {pathname === '/' && <Partners />}
       {showAssociationEntourage && <AssociationEntourage />}
       <Section style="secondary" size="small" container="large" preserveColor>
         <Grid middle center column childWidths={['1-1']} gap="medium">
-          {asPath === '/' && (
+          {pathname === '/' && (
             <div className="uk-text-center uk-light">
               <p>
                 LinkedOut est un est un projet porté par l&apos;association

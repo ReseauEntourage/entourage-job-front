@@ -9,16 +9,40 @@ const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 
 const dev = process.env.NODE_ENV !== 'production';
 
+/*
 const ContentSecurityPolicy = `
-  default-src 'self';
-  script-src 'unsafe-inline';
-  child-src 'self' youtube.com www.youtube.com airtable.com www.airtable.com;
-  style-src 'self';
-  font-src 'self';
-  img-src 'self' ${process.env.AWSS3_CDN_URL} ${
-  process.env.CDN_URL ? process.env.CDN_URL : ''
-};
+  default-src
+  'self'
+  'unsafe-inline'
+  'unsafe-eval'
+  ${process.env.API_URL.replace(/\/api\/v1/g, '')}
+  ${process.env.AWSS3_CDN_URL}
+  ${process.env.CDN_URL ? process.env.CDN_URL : ''}
+  ${process.env.AWSS3_URL}
+  *.ytimg.com ytimg.com
+  youtube.com *.youtube.com
+  *.youtube-nocookie.com youtube-nocookie.com
+  airtable.com *.airtable.com
+  *.google-analytics.com google-analytics.com
+  *.googletagmanager.com googletagmanager.com
+  *.google.com google.com
+  *.google.fr google.fr
+  *.gstatic.com gstatic.com
+  *.googleapis.com googleapis.com
+  stats.g.doubleclick.net
+  *.facebook.net facebook.net
+  *.facebook.com facebook.com
+  purecatamphetamine.github.io
+  data:
+  sentry.io *.sentry.io
+  sentry-cdn.com *.sentry-cdn.com
+  licdn.com *.licdn.com
+  linkedin.com *.linkedin.com
+  *.pusher.com pusher.com
+  adsymptotic.com *.adsymptotic.com
+  tarteaucitron.io
 `;
+*/
 
 const securityHeaders = [
   {
@@ -49,10 +73,10 @@ const securityHeaders = [
     key: 'Referrer-Policy',
     value: 'strict-origin',
   },
-  {
+  /*  {
     key: 'Content-Security-Policy',
     value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
-  },
+  }, */
 ];
 
 module.exports = withLess({
