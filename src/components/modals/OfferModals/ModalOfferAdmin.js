@@ -77,6 +77,19 @@ const ModalOfferAdmin = ({
   // desactivation du champ de disclaimer
   const mutatedSchema = mutateFormSchema(schema, [
     {
+      fieldId: 'shouldSendNotifications',
+      props: [
+        {
+          propName: 'hidden',
+          value: !offer.isValidated,
+        },
+        {
+          propName: 'disabled',
+          value: !offer.isValidated,
+        },
+      ],
+    },
+    {
       fieldId: 'disclaimer',
       props: [
         {
@@ -277,6 +290,7 @@ const ModalOfferAdmin = ({
                   offer.department,
                   DEPARTMENTS_FILTERS
                 ),
+                shouldSendNotifications: true,
               }}
               onCancel={() => {
                 setIsEditing(false);
@@ -571,6 +585,7 @@ const ModalOfferAdmin = ({
                       ...offer,
                       isValidated: true,
                       isArchived: false,
+                      shouldSendNotifications: true,
                     });
                   }}
                 >

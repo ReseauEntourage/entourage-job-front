@@ -51,6 +51,14 @@ export default {
       },
     },
     {
+      id: 'shouldSendNotifications',
+      name: 'shouldSendNotifications',
+      component: 'checkbox',
+      hidden: true,
+      disabled: true,
+      title: 'Envoyer une notification au(x) binôme(s)',
+    },
+    {
       id: 'message',
       name: 'message',
       component: 'textarea',

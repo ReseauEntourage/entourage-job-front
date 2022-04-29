@@ -37,6 +37,19 @@ const AdminOpportunityList = ({
         },
       ],
     },
+    {
+      fieldId: 'shouldSendNotifications',
+      props: [
+        {
+          propName: 'hidden',
+          value: false,
+        },
+        {
+          propName: 'disabled',
+          value: false,
+        },
+      ],
+    },
     ...opportunityAdminMutations,
   ]);
 
