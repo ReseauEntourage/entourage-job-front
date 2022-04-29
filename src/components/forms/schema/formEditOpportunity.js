@@ -9,12 +9,6 @@ export default {
   id: 'form-offer',
   fields: [
     {
-      id: 'disableMail',
-      name: 'disableMail',
-      component: 'checkbox',
-      title: "Désactiver l'envoi de mail au recruteur",
-    },
-    {
       id: 'isPublic',
       name: 'isPublic',
       component: 'checkbox',
@@ -55,6 +49,14 @@ export default {
           })
           .then(callback);
       },
+    },
+    {
+      id: 'shouldSendNotifications',
+      name: 'shouldSendNotifications',
+      component: 'checkbox',
+      hidden: true,
+      disabled: true,
+      title: 'Envoyer une notification au(x) binôme(s)',
     },
     {
       id: 'message',

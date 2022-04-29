@@ -126,6 +126,7 @@ export function usePostOpportunity({
           ...mutatedDefaultValue,
           ...lastFilledForm,
           candidatesId: mutatedDefaultValue.candidatesId,
+          shouldSendNotifications: true,
         }}
         formSchema={schema}
         onError={async (fields) => {
