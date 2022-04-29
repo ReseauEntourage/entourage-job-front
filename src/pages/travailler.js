@@ -74,7 +74,7 @@ const Travailler = () => {
                 gaEvent(GA_TAGS.PAGE_TRAVAILLER_DEPOSER_CANDIDATURE_CLIC);
                 fbEvent(FB_TAGS.CANDIDATE_REGISTRATION);
               }}
-              href={process.env.AIRTABLE_LINK_PROFESSIONAL_REINTEGRATION}
+              href={process.env.AIRTABLE_LINK_JOIN_LINKEDOUT}
             >
               Je m&apos;inscris <IconNoSSR name="chevron-right" />
             </Button>
