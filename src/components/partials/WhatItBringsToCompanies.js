@@ -4,17 +4,39 @@ import Img from 'src/components/utils/Img';
 import { Button, Grid } from 'src/components/utils';
 
 import { gaEvent } from 'src/lib/gtag';
-import { GA_TAGS } from 'src/constants/tags';
-import ModalInterestLinkedOut from 'src/components/modals/ModalInterestLinkedOut';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { addPrefix } from 'src/utils';
 import { openModal } from 'src/components/modals/Modal';
+import { fbEvent } from 'src/lib/fb';
+import ModalGeneric from 'src/components/modals/ModalGeneric';
+
+export const openContactModal = () => {
+  gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
+  fbEvent(FB_TAGS.COMPANY_CONTACT);
+  openModal(
+    <ModalGeneric>
+      <iframe
+        className="airtable-embed"
+        src={`${process.env.AIRTABLE_LINK_COMPANY_HELP}?backgroundColor=blue`}
+        frameBorder="0"
+        title="modal-company-help"
+        width="100%"
+        height="533"
+        style={{
+          background: 'transparent',
+          border: '1px solid #ccc;',
+        }}
+      />
+    </ModalGeneric>
+  );
+};
 
 const WhatItBringsToCompanies = () => {
   const content = (
     <div className="uk-flex uk-flex-column uk-flex-middle uk-flex-center">
       <div className="uk-light uk-flex uk-flex-column uk-flex-middle">
         <h2 className="uk-text-bold uk-text-center uk-margin-bottom uk-margin-remove-top">
-          Une nouvelle promotion arrive à l&apos;automne 2021&nbsp;!
+          Une nouvelle promotion arrive&nbsp;!
         </h2>
         <h3
           className="uk-text-center uk-margin-remove-top"
@@ -27,13 +49,7 @@ const WhatItBringsToCompanies = () => {
         </h3>
       </div>
       <Grid middle column gap="collapse">
-        <Button
-          style="secondary"
-          onClick={() => {
-            openModal(<ModalInterestLinkedOut />);
-            gaEvent(GA_TAGS.PAGE_AIDER_CONTACT_RECRUTEUR_CLIC);
-          }}
-        >
+        <Button style="secondary" onClick={openContactModal}>
           Nous contacter
         </Button>
       </Grid>

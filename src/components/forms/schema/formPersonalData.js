@@ -1,5 +1,6 @@
 import { ADMIN_ZONES_FILTERS } from 'src/constants/departements';
 import { ADMIN_ROLES } from 'src/constants';
+import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 
 export default {
   id: 'form-personal-data',
@@ -85,10 +86,9 @@ export default {
     {
       id: 'phone',
       name: 'phone',
-      component: 'input',
-      type: 'phone',
-      title: 'Tapez votre numéro de telephone',
-      placeholder: 'Numéro de telephone',
+      component: 'tel',
+      placeholder: 'Tapez votre numéro de telephone',
+      title: 'Numéro de telephone*',
     },
     {
       id: 'addressLabel',
@@ -139,14 +139,12 @@ export default {
     },
     {
       field: 'phone',
-      method: 'isLength',
-      args: [
-        {
-          max: 30,
-        },
-      ],
+      method: (fieldValue) => {
+        return fieldValue && isValidPhoneNumber(fieldValue, 'FR');
+      },
+      args: [],
       validWhen: true,
-      message: '30 caractères maximum',
+      message: 'Numéro de téléphone invalide',
     },
     {
       field: 'zone',

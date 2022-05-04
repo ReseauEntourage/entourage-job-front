@@ -1,4 +1,5 @@
 import { HEARD_ABOUT } from 'src/constants';
+import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 
 export default {
   id: 'form-interest',
@@ -30,8 +31,7 @@ export default {
     {
       id: 'phone',
       name: 'phone',
-      type: 'text',
-      component: 'input',
+      component: 'tel',
       placeholder: 'Tapez votre numéro de téléphone',
       title: 'Téléphone',
     },
@@ -163,6 +163,19 @@ export default {
       ],
       validWhen: true,
       message: '4000 caractères maximum',
+    },
+    {
+      field: 'phone',
+      method: (fieldValue) => {
+        return (
+          !fieldValue ||
+          fieldValue.length === 0 ||
+          isValidPhoneNumber(fieldValue, 'FR')
+        );
+      },
+      args: [],
+      validWhen: true,
+      message: 'Numéro de téléphone invalide',
     },
     {
       field: 'cgu',

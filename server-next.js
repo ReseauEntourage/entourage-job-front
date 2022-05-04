@@ -17,7 +17,7 @@ app
     // enable ssl redirect
     if (!dev) server.use(enforce.HTTPS({ trustProtoHeader: true }));
 
-    server.use(cors());
+    server.use(cors({ origin: process.env.API_URL }));
 
     server.get('*', (req, res) => {
       return handle(req, res);

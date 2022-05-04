@@ -48,6 +48,14 @@ const SharePartial = ({ showTitle, padding }) => {
               ? GA_TAGS.PAGE_CV_SUIVRE_SUR_INSTAGRAM_CLIC
               : GA_TAGS.HOME_SUIVRE_SUR_INSTAGRAM_CLIC,
           },
+          {
+            name: 'youtube',
+            title: 'Youtube',
+            href: 'https://www.youtube.com/channel/UCrr8eUOmw6bAr8ycC3Zua7g',
+            tag: isCVPage
+              ? GA_TAGS.PAGE_CV_SUIVRE_SUR_YOUTUBE_CLIC
+              : GA_TAGS.HOME_SUIVRE_SUR_YOUTUBE_CLIC,
+          },
         ].map(({ name, title, href, tag }, key) => {
           return (
             <Button

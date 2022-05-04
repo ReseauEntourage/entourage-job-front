@@ -316,17 +316,17 @@ SiteMap.propTypes = {
 };
 
 const Footer = () => {
-  const { asPath } = useRouter();
+  const { pathname } = useRouter();
 
-  const showAssociationEntourage = !asPath.includes('/entreprises');
+  const showAssociationEntourage = !pathname.includes('/entreprises');
 
   return (
     <footer id="footer">
-      {asPath === '/' && <Partners />}
+      {pathname === '/' && <Partners />}
       {showAssociationEntourage && <AssociationEntourage />}
       <Section style="secondary" size="small" container="large" preserveColor>
         <Grid middle center column childWidths={['1-1']} gap="medium">
-          {asPath === '/' && (
+          {pathname === '/' && (
             <div className="uk-text-center uk-light">
               <p>
                 LinkedOut est un est un projet porté par l&apos;association
@@ -341,7 +341,7 @@ const Footer = () => {
           )}
           <SiteMap isMobile />
           <SiteMap isMobile={false} />
-          <Grid row center middle gap="collapse">
+          <Grid row center middle gap="medium">
             <SimpleLink
               isExternal
               target="_blank"
@@ -349,6 +349,13 @@ const Footer = () => {
               href={EXTERNAL_LINKS.LEGAL_MENTIONS}
             >
               Mentions légales
+            </SimpleLink>
+            <SimpleLink
+              isExternal
+              className="uk-text-small uk-text-muted"
+              href="#cookies"
+            >
+              Gestion des cookies
             </SimpleLink>
           </Grid>
         </Grid>

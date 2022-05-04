@@ -44,6 +44,30 @@
   .mixin-default-entry;
 }
 
+.PhoneInput {
+  .mixin-default-entry;
+
+}
+
+.PhoneInput--focus {
+  outline: none;
+}
+
+.PhoneInputInput {
+  background-color: #e5e5e5;
+  border: none;
+  font-size: 1rem;
+  outline: none;
+
+  font-family: Roboto, sans-serif !important;
+  color: @black !important;
+  &::placeholder {
+    opacity: 1;
+    font-family: Roboto, sans-serif !important;
+    color:  #999 !important;
+  }
+}
+
 .uk-textarea {
   .mixin-default-entry;
   /* height: 55px; */

@@ -346,6 +346,18 @@ const OpportunityList = forwardRef(
       fetchData(role, search, tabFilterTag, filters, candidatId);
     }, [role, search, tabFilters, filters, candidatId]);
 
+    const {
+      selectElement,
+      executeAction,
+      isElementSelected,
+      selectionModeActivated,
+      SelectionModeButton,
+      hasSelection,
+      toggleSelectionMode,
+    } = useBulkActions('/opportunity', async () => {
+      await fetchData(role, search, tabFilterTag, filters, candidatId);
+    });
+
     useEffect(() => {
       if (restQuery.tag !== prevTag) {
         const initialFiltersConst =
@@ -354,19 +366,11 @@ const OpportunityList = forwardRef(
             : OPPORTUNITY_FILTERS_DATA;
 
         setFiltersConst(initialFiltersConst);
+        if (selectionModeActivated) {
+          toggleSelectionMode();
+        }
       }
-    }, [prevTag, restQuery.tag]);
-
-    const {
-      selectElement,
-      executeAction,
-      isElementSelected,
-      selectionModeActivated,
-      SelectionModeButton,
-      hasSelection,
-    } = useBulkActions('/opportunity', async () => {
-      await fetchData(role, search, tabFilterTag, filters, candidatId);
-    });
+    }, [prevTag, restQuery.tag, selectionModeActivated, toggleSelectionMode]);
 
     const content = (
       <div>

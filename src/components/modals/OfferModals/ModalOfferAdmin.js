@@ -77,6 +77,19 @@ const ModalOfferAdmin = ({
   // desactivation du champ de disclaimer
   const mutatedSchema = mutateFormSchema(schema, [
     {
+      fieldId: 'shouldSendNotifications',
+      props: [
+        {
+          propName: 'hidden',
+          value: !offer.isValidated,
+        },
+        {
+          propName: 'disabled',
+          value: !offer.isValidated,
+        },
+      ],
+    },
+    {
       fieldId: 'disclaimer',
       props: [
         {
@@ -249,6 +262,7 @@ const ModalOfferAdmin = ({
                   ...fields,
                   startOfContract: fields.startOfContract || null,
                   endOfContract: fields.endOfContract || null,
+                  recruiterPhone: fields.recruiterPhone || null,
                   candidateId: offer.userOpportunity[0]?.UserId,
                   id: offer.id,
                   businessLines: fields.businessLines
@@ -276,6 +290,7 @@ const ModalOfferAdmin = ({
                   offer.department,
                   DEPARTMENTS_FILTERS
                 ),
+                shouldSendNotifications: true,
               }}
               onCancel={() => {
                 setIsEditing(false);
@@ -287,6 +302,7 @@ const ModalOfferAdmin = ({
                   message: fields.isPublic ? null : fields.message,
                   startOfContract: fields.startOfContract || null,
                   endOfContract: fields.endOfContract || null,
+                  recruiterPhone: fields.recruiterPhone || null,
                   candidatesId:
                     fields.candidatesId?.map((candidateId) => {
                       return typeof candidateId === 'object'
@@ -397,18 +413,20 @@ const ModalOfferAdmin = ({
                   </span>
                   <IconNoSSR name="mail" ratio={0.8} />
                 </SimpleLink>
-                <SimpleLink
-                  href={`tel:${offer.recruiterPhone}`}
-                  className="uk-text-meta uk-text-muted uk-flex uk-flex-middle"
-                  isExternal
-                  newTab
-                >
-                  <span>
-                    {offer.recruiterPhone}
-                    &nbsp;
-                  </span>
-                  <IconNoSSR name="phone" ratio={0.8} />
-                </SimpleLink>
+                {offer.recruiterPhone && (
+                  <SimpleLink
+                    href={`tel:${offer.recruiterPhone}`}
+                    className="uk-text-meta uk-text-muted uk-flex uk-flex-middle"
+                    isExternal
+                    newTab
+                  >
+                    <span>
+                      {offer.recruiterPhone}
+                      &nbsp;
+                    </span>
+                    <IconNoSSR name="phone" ratio={0.8} />
+                  </SimpleLink>
+                )}
                 {offer.beContacted && <span>Souhaite être recontacté</span>}
               </OfferInfoContainer>
             )}
@@ -567,6 +585,7 @@ const ModalOfferAdmin = ({
                       ...offer,
                       isValidated: true,
                       isArchived: false,
+                      shouldSendNotifications: true,
                     });
                   }}
                 >

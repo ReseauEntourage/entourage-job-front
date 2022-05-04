@@ -34,7 +34,9 @@ export function useBulkActions(apiRoute, refreshElementsCallback) {
     async (attributesToUpdate = {}, method = 'put') => {
       openModal(
         <ModalConfirm
-          text={`Êtes-vous sûr(e) de vouloir effectuer cette action sur ${selectedIds.length} éléments ?`}
+          text={`Êtes-vous sûr(e) de vouloir effectuer cette action sur ${
+            selectedIds.length
+          } élément${selectedIds.length > 1 ? 's' : ''} ?`}
           buttonText="Valider"
           onConfirm={async () => {
             try {
@@ -44,12 +46,16 @@ export function useBulkActions(apiRoute, refreshElementsCallback) {
                 attributes: attributesToUpdate,
                 ids: selectedIds,
               });
+
+              setSelectedIds([]);
+              if (refreshElementsCallback) await refreshElementsCallback();
+
               UIkit.notification(
-                `${nbUpdated} éléments ont été mis à jour`,
+                `${nbUpdated} élément${
+                  nbUpdated > 1 ? 's ont' : ' a'
+                } été mis à jour`,
                 'success'
               );
-
-              if (refreshElementsCallback) await refreshElementsCallback();
             } catch (err) {
               console.error(err);
               UIkit.notification(`Une erreur est survenue.`, 'danger');

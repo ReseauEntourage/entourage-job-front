@@ -9,6 +9,76 @@ const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 
 const dev = process.env.NODE_ENV !== 'production';
 
+/*
+const ContentSecurityPolicy = `
+  default-src
+  'self'
+  'unsafe-inline'
+  'unsafe-eval'
+  ${process.env.API_URL.replace(/\/api\/v1/g, '')}
+  ${process.env.AWSS3_CDN_URL}
+  ${process.env.CDN_URL ? process.env.CDN_URL : ''}
+  ${process.env.AWSS3_URL}
+  *.ytimg.com ytimg.com
+  youtube.com *.youtube.com
+  *.youtube-nocookie.com youtube-nocookie.com
+  airtable.com *.airtable.com
+  *.google-analytics.com google-analytics.com
+  *.googletagmanager.com googletagmanager.com
+  *.google.com google.com
+  *.google.fr google.fr
+  *.gstatic.com gstatic.com
+  *.googleapis.com googleapis.com
+  stats.g.doubleclick.net
+  *.facebook.net facebook.net
+  *.facebook.com facebook.com
+  purecatamphetamine.github.io
+  data:
+  sentry.io *.sentry.io
+  sentry-cdn.com *.sentry-cdn.com
+  licdn.com *.licdn.com
+  linkedin.com *.linkedin.com
+  *.pusher.com pusher.com
+  adsymptotic.com *.adsymptotic.com
+  tarteaucitron.io
+`;
+*/
+
+const securityHeaders = [
+  {
+    key: 'X-DNS-Prefetch-Control',
+    value: 'on',
+  },
+  {
+    key: 'Strict-Transport-Security',
+    value: 'max-age=63072000; includeSubDomains; preload',
+  },
+  {
+    key: 'X-XSS-Protection',
+    value: '1; mode=block',
+  },
+  {
+    key: 'Permissions-Policy',
+    value: 'camera=(), microphone=(), geolocation=(self), interest-cohort=()',
+  },
+  {
+    key: 'X-Frame-Options',
+    value: 'SAMEORIGIN',
+  },
+  {
+    key: 'X-Content-Type-Options',
+    value: 'nosniff',
+  },
+  {
+    key: 'Referrer-Policy',
+    value: 'strict-origin',
+  },
+  /*  {
+    key: 'Content-Security-Policy',
+    value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
+  }, */
+];
+
 module.exports = withLess({
   lessOptions: {
     javascriptEnabled: true,
@@ -77,6 +147,14 @@ module.exports = withLess({
         source: '/boite-a-outils',
         destination: process.env.TOOLBOX_URL,
         permanent: false,
+      },
+    ];
+  },
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: securityHeaders,
       },
     ];
   },

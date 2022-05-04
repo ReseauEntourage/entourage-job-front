@@ -12,9 +12,10 @@ import 'src/components/headers/Header.less';
 import 'src/components/partials/HireCTA.less';
 import 'src/components/modals/Modal/Modal.less';
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
+import 'react-phone-number-input/style.css';
 
 import React, { useEffect, useState } from 'react';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import * as Sentry from '@sentry/react';
 import UserProvider from 'src/components/store/UserProvider';
 import DataProvider from 'src/components/store/DataProvider';
@@ -38,8 +39,9 @@ const Container = ({ Component, pageProps, err }) => {
   const [loading, setLoading] = useState(true);
   const [fading, setFading] = useState(false);
 
+  const { events } = useRouter();
   useMount(() => {
-    Router.events.on('routeChangeComplete', (url) => {
+    events.on('routeChangeComplete', (url) => {
       gtag.pageview(url);
     });
     setTimeout(() => {
