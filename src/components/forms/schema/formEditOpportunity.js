@@ -4,6 +4,7 @@ import Api from 'src/Axios';
 import moment from 'moment';
 import { findConstantFromValue, getValueFromFormField } from 'src/utils';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
+import { isEmail } from 'validator';
 
 export default {
   id: 'form-offer',
@@ -119,6 +120,13 @@ export default {
       component: 'tel',
       title: 'Votre téléphone',
       placeholder: 'Tapez votre numéro',
+    },
+    {
+      id: 'contactMail',
+      name: 'contactMail',
+      component: 'input',
+      type: 'email',
+      title: 'Adresse mail du recruteur si intermédiaire',
     },
     {
       id: 'businessLines',
@@ -375,6 +383,15 @@ export default {
       message: 'Invalide',
     },
     {
+      field: 'contactMail',
+      method: (fieldValue) => {
+        return !fieldValue.trim() || isEmail(fieldValue);
+      },
+      validWhen: true,
+      args: [],
+      message: 'Invalide',
+    },
+    {
       field: 'recruiterPhone',
       method: (fieldValue) => {
         return (
@@ -523,6 +540,19 @@ export const adminMutations = [
   },
   {
     fieldId: 'businessLines',
+    props: [
+      {
+        propName: 'hidden',
+        value: false,
+      },
+      {
+        propName: 'disabled',
+        value: false,
+      },
+    ],
+  },
+  {
+    fieldId: 'contactMail',
     props: [
       {
         propName: 'hidden',
