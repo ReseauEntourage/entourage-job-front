@@ -118,8 +118,8 @@ export default {
       id: 'recruiterPhone',
       name: 'recruiterPhone',
       component: 'tel',
-      title: 'Votre téléphone',
-      placeholder: 'Tapez votre numéro',
+      title: 'Votre téléphone portable',
+      placeholder: 'Tapez votre numéro de téléphone portable',
     },
     {
       id: 'contactMail',

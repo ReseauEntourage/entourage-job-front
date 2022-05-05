@@ -87,8 +87,8 @@ export default {
       id: 'phone',
       name: 'phone',
       component: 'tel',
-      placeholder: 'Tapez votre numéro de telephone',
-      title: 'Numéro de telephone*',
+      placeholder: 'Tapez votre numéro de telephone portable',
+      title: 'Numéro de telephone portable*',
     },
     {
       id: 'addressLabel',

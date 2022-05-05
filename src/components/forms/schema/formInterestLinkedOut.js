@@ -32,8 +32,8 @@ export default {
       id: 'phone',
       name: 'phone',
       component: 'tel',
-      placeholder: 'Tapez votre numéro de téléphone',
-      title: 'Téléphone',
+      placeholder: 'Tapez votre numéro de téléphone portable',
+      title: 'Téléphone portable',
     },
     {
       id: 'structure',
