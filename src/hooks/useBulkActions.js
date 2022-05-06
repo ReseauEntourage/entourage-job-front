@@ -6,8 +6,9 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 import { usePrevious } from 'src/hooks/utils';
 import { openModal } from 'src/components/modals/Modal';
 import ModalConfirm from 'src/components/modals/ModalConfirm';
+import { gaEvent } from 'src/lib/gtag';
 
-export function useBulkActions(apiRoute, refreshElementsCallback) {
+export function useBulkActions(apiRoute, refreshElementsCallback, tag) {
   const [selectedIds, setSelectedIds] = useState([]);
   const [selectionModeActivated, setSelectionModeActivated] = useState(false);
 
@@ -39,6 +40,9 @@ export function useBulkActions(apiRoute, refreshElementsCallback) {
           } élément${selectedIds.length > 1 ? 's' : ''} ?`}
           buttonText="Valider"
           onConfirm={async () => {
+            if (tag) {
+              gaEvent(tag);
+            }
             try {
               const {
                 data: { nbUpdated },
@@ -64,7 +68,7 @@ export function useBulkActions(apiRoute, refreshElementsCallback) {
         />
       );
     },
-    [apiRoute, refreshElementsCallback, selectedIds]
+    [apiRoute, refreshElementsCallback, selectedIds, tag]
   );
 
   const isElementSelected = useCallback(

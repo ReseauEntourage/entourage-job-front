@@ -12,6 +12,7 @@ import {
   USER_ROLES,
 } from 'src/constants';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
+import { GA_TAGS } from 'src/constants/tags';
 
 const LesOpportunites = () => {
   const {
@@ -26,7 +27,8 @@ const LesOpportunites = () => {
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
     OPPORTUNITY_FILTERS_DATA,
     '/backoffice/admin/offres',
-    ['offerId']
+    ['offerId'],
+    GA_TAGS.BACKOFFICE_ADMIN_SUPPRIMER_FILTRES_CLIC
   );
 
   const { tabFilters, setTabFilters } = useTabFilters(

@@ -13,6 +13,7 @@ import Hamburger from 'src/components/utils/Hamburger';
 import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
 import { OFFCANVAS_LOGGED } from 'src/constants/utils';
+import { GA_TAGS } from 'src/constants/tags';
 
 const HeaderConnected = ({ isHome }) => {
   const { user, logout } = useContext(UserContext);
@@ -53,18 +54,21 @@ const HeaderConnected = ({ isHome }) => {
         name: 'Mes offres',
         icon: 'list',
         badge: 'offers',
+        tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_OFFRES_CLIC,
       },
       {
         href: '/backoffice/candidat/suivi',
         name: 'Mon suivi',
         icon: 'file-text',
         badge: 'note',
+        tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_SUIVI_CLIC,
       },
       {
         href: '/backoffice/candidat/cv',
         name: 'Mon CV',
         icon: 'user',
         badge: 'cv',
+        tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_CV_CLIC,
       },
     ],
     coach: [
@@ -73,18 +77,21 @@ const HeaderConnected = ({ isHome }) => {
         name: 'Offres',
         icon: 'list',
         badge: 'offers',
+        tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_OFFRES_CLIC,
       },
       {
         href: '/backoffice/candidat/suivi',
         name: 'Suivi',
         icon: 'file-text',
         badge: 'note',
+        tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_SUIVI_CLIC,
       },
       {
         href: '/backoffice/candidat/cv',
         name: 'CV',
         icon: 'user',
         badge: 'cv',
+        tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_CV_CLIC,
       },
       {
         href: `${

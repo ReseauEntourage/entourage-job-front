@@ -29,6 +29,8 @@ import ModalConfirm from 'src/components/modals/ModalConfirm';
 import ErrorMessage from 'src/components/backoffice/cv/ErrorMessage';
 import { useFetchCV } from 'src/hooks/useFetchCV';
 import _ from 'lodash';
+import { gaEvent } from 'src/lib/gtag';
+import { GA_TAGS } from 'src/constants/tags';
 
 const EditUserModal = ({ user, setUser }) => {
   let mutatedSchema = mutateFormSchema(schemaEditUser, [
@@ -363,6 +365,9 @@ const User = () => {
                       })
                     ),
                   },
+                }}
+                onClick={() => {
+                  gaEvent(GA_TAGS.BACKOFFICE_ADMIN_OFFRES_INTERESSER_CLIC);
                 }}
               >
                 Voir les offres qui pourraient intéresser le candidat
