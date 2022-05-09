@@ -10,7 +10,7 @@ import ButtonIcon from 'src/components/utils/ButtonIcon';
 import Api from 'src/Axios';
 import FormWithValidation from 'src/components/forms/FormWithValidation';
 import schemaPersonalData from 'src/components/forms/schema/formPersonalData';
-import schemaChangePassword from 'src/components/forms/schema/formChangePassword.json';
+import schemaChangePassword from 'src/components/forms/schema/formChangePassword';
 import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
 import { USER_ROLES } from 'src/constants';
 import { useResetForm } from 'src/hooks/utils';
@@ -21,6 +21,7 @@ import CandidateEmployedToggle from 'src/components/backoffice/candidate/Candida
 import ContractLabel from 'src/components/backoffice/candidate/ContractLabel';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
+import PasswordCriterias from 'src/components/PasswordCriterias';
 
 const Parametres = () => {
   const { user, setUser } = useContext(UserContext);
@@ -468,6 +469,7 @@ const Parametres = () => {
                 <h3 className="uk-card-title">Changer de mot de passe</h3>
                 {loadingPassword ? <div data-uk-spinner="ratio: .8" /> : <></>}
               </Grid>
+              <PasswordCriterias />
               <FormWithValidation
                 ref={form}
                 submitText="Modifier"
