@@ -94,7 +94,11 @@ ResetPasswordPage.propTypes = {
   valid: PropTypes.bool.isRequired,
   id: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
-  isCreation: PropTypes.string.isRequired,
+  isCreation: PropTypes.string,
+};
+
+ResetPasswordPage.defaultProps = {
+  isCreation: false,
 };
 
 export default ResetPasswordPage;

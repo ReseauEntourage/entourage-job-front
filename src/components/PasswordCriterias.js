@@ -22,6 +22,10 @@ const PasswordCriterias = () => {
           </li>
           <li>
             Contenir des{' '}
+            <span className="uk-text-primary uk-text-bold">chiffres</span>
+          </li>
+          <li>
+            Contenir des{' '}
             <span className="uk-text-primary uk-text-bold">
               caractères spéciaux
             </span>
