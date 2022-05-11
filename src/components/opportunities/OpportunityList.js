@@ -273,6 +273,7 @@ const OpportunityList = forwardRef(
                 isAdmin: true,
                 isValidated: false,
                 date: Date.now(),
+                isCopy: true,
               });
 
               closeModal();
