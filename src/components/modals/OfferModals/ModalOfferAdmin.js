@@ -31,6 +31,7 @@ import { OfferInfoContainer } from 'src/components/modals/OfferModals/OfferInfoC
 import ModalOfferBase from 'src/components/modals/OfferModals/ModalOfferBase';
 import useModalOffer from 'src/components/modals/OfferModals/useModalOffer';
 import OfferContent from 'src/components/modals/OfferModals/OfferContent';
+import UIkit from 'uikit';
 
 const getCandidatesToShowInInput = (offer) => {
   if (offer.userOpportunity && offer.userOpportunity.length > 0) {
@@ -41,15 +42,15 @@ const getCandidatesToShowInInput = (offer) => {
         })
         .map((userOpp) => {
           return {
-            value: userOpp.User.id,
-            label: `${userOpp.User.firstName} ${userOpp.User.lastName}`,
+            value: userOpp.User?.id,
+            label: `${userOpp.User?.firstName} ${userOpp.User?.lastName}`,
           };
         });
     }
     return offer.userOpportunity.map((userOpp) => {
       return {
-        value: userOpp.User.id,
-        label: `${userOpp.User.firstName} ${userOpp.User.lastName}`,
+        value: userOpp.User?.id,
+        label: `${userOpp.User?.firstName} ${userOpp.User?.lastName}`,
       };
     });
   }
@@ -63,16 +64,8 @@ const ModalOfferAdmin = ({
   navigateBackToList,
 }) => {
   const { onClose } = useModalContext();
-  const {
-    loading,
-    error,
-    setLoading,
-    setError,
-    isEditing,
-    setIsEditing,
-    offer,
-    setOffer,
-  } = useModalOffer(currentOffer);
+  const { loading, setLoading, isEditing, setIsEditing, offer, setOffer } =
+    useModalOffer(currentOffer);
 
   // desactivation du champ de disclaimer
   const mutatedSchema = mutateFormSchema(schema, [
@@ -166,7 +159,6 @@ const ModalOfferAdmin = ({
     }) || undefined;
 
   const updateOpportunity = async (opportunity, isExternal) => {
-    setError(false);
     setLoading(true);
     try {
       const { data } = await Api.put(
@@ -180,15 +172,15 @@ const ModalOfferAdmin = ({
           : data.userOpportunity,
       });
       await onOfferUpdated();
+      setIsEditing(false);
     } catch (err) {
-      setError(true);
+      UIkit.notification(`Une erreur est survenue.`, 'danger');
     } finally {
       setLoading(false);
     }
   };
 
   const updateOpportunityUser = async (opportunityUser) => {
-    setError(false);
     try {
       const { data } = await Api.put(`/opportunity/join`, opportunityUser);
       setOffer((prevOffer) => {
@@ -211,7 +203,7 @@ const ModalOfferAdmin = ({
       });
       await onOfferUpdated();
     } catch (err) {
-      setError(true);
+      UIkit.notification(`Une erreur est survenue.`, 'danger');
     }
   };
 
@@ -229,6 +221,8 @@ const ModalOfferAdmin = ({
     return [offer.userOpportunity];
   };
 
+  const isInternalContact = offer?.recruiterMail?.includes('entourage.social');
+
   // Modal
   return (
     <ModalOfferBase
@@ -236,7 +230,6 @@ const ModalOfferAdmin = ({
       isArchived={offer.isArchived}
       navigateBackToList={navigateBackToList}
       loading={loading}
-      error={error}
       isEditing={isEditing}
       setIsEditing={setIsEditing}
       editingForm={
@@ -275,7 +268,6 @@ const ModalOfferAdmin = ({
                     : [],
                 };
                 await updateOpportunity(tmpOpportunity, true);
-                setIsEditing(false);
               }}
               submitText="Mettre à jour"
             />
@@ -319,7 +311,6 @@ const ModalOfferAdmin = ({
                     : [],
                 };
                 await updateOpportunity(tmpOpportunity);
-                setIsEditing(false);
               }}
               submitText="Mettre à jour"
             />
@@ -355,18 +346,7 @@ const ModalOfferAdmin = ({
                 return <div className={`uk-label${className}`}>{content}</div>;
               })()}
             </div>
-            <List className="uk-iconnav uk-flex-right">
-              <ButtonIcon
-                name="archive"
-                className={offer.isArchived ? 'ent-color-amber' : undefined}
-                tooltip="Archiver l'offre"
-                onClick={async () => {
-                  await updateOpportunity({
-                    ...offer,
-                    isArchived: !offer.isArchived,
-                  });
-                }}
-              />
+            <List className="uk-iconnav uk-flex-right uk-flex uk-flex-middle">
               <ButtonIcon
                 name="pencil"
                 tooltip="Modifier l'offre"
@@ -380,6 +360,19 @@ const ModalOfferAdmin = ({
                   tooltip="Dupliquer l'offre"
                   onClick={() => {
                     duplicateOffer(onClose);
+                  }}
+                />
+              )}
+              {(offer.isValidated || offer.isArchived) && (
+                <ButtonIcon
+                  name="archive"
+                  className={offer.isArchived ? 'ent-color-amber' : undefined}
+                  tooltip="Archiver l'offre"
+                  onClick={async () => {
+                    await updateOpportunity({
+                      ...offer,
+                      isArchived: !offer.isArchived,
+                    });
                   }}
                 />
               )}
@@ -402,15 +395,25 @@ const ModalOfferAdmin = ({
             <OfferInfoContainer icon="home" title="Entreprise">
               {offer.company}
             </OfferInfoContainer>
-            {offer.recruiterFirstName && offer.recruiterName && (
-              <>
-                <OfferInfoContainer icon="user" title="Personne à contacter">
+            <>
+              <OfferInfoContainer
+                icon="user"
+                title={isInternalContact ? 'Personne à contacter' : 'Recruteur'}
+              >
+                {(offer.recruiterFirstName || offer.recruiterName) && (
                   <span>
-                    {offer.recruiterFirstName} {offer.recruiterName}
+                    {offer.recruiterFirstName
+                      ? `${offer.recruiterFirstName} `
+                      : ''}
+                    {offer.recruiterName ? offer.recruiterName : ''}
                   </span>
+                )}
+                {offer.recruiterPosition && (
                   <span className="uk-text-meta">
                     {offer.recruiterPosition}
                   </span>
+                )}
+                {offer.recruiterMail && (
                   <SimpleLink
                     href={`mailto:${offer.recruiterMail}`}
                     className="uk-text-meta uk-text-muted uk-flex uk-flex-middle"
@@ -423,35 +426,35 @@ const ModalOfferAdmin = ({
                     </span>
                     <IconNoSSR name="mail" ratio={0.8} />
                   </SimpleLink>
-                  {offer.recruiterPhone && (
-                    <SimpleLink
-                      href={`tel:${offer.recruiterPhone}`}
-                      className="uk-text-meta uk-text-muted uk-flex uk-flex-middle"
-                      isExternal
-                      newTab
-                    >
-                      <span>
-                        {offer.recruiterPhone}
-                        &nbsp;
-                      </span>
-                      <IconNoSSR name="phone" ratio={0.8} />
-                    </SimpleLink>
-                  )}
-                </OfferInfoContainer>
-                {offer.contactMail && (
-                  <OfferInfoContainer icon="mail" title="Mail de contact">
-                    <SimpleLink
-                      href={`mailto:${offer.contactMail}`}
-                      className="uk-text-muted uk-flex uk-flex-middle"
-                      isExternal
-                      target="_blank"
-                    >
-                      <span>{offer.contactMail}</span>
-                    </SimpleLink>
-                  </OfferInfoContainer>
                 )}
-              </>
-            )}
+                {offer.recruiterPhone && (
+                  <SimpleLink
+                    href={`tel:${offer.recruiterPhone}`}
+                    className="uk-text-meta uk-text-muted uk-flex uk-flex-middle"
+                    isExternal
+                    newTab
+                  >
+                    <span>
+                      {offer.recruiterPhone}
+                      &nbsp;
+                    </span>
+                    <IconNoSSR name="phone" ratio={0.8} />
+                  </SimpleLink>
+                )}
+              </OfferInfoContainer>
+              {offer.contactMail && (
+                <OfferInfoContainer icon="mail" title="Mail de contact">
+                  <SimpleLink
+                    href={`mailto:${offer.contactMail}`}
+                    className="uk-text-muted uk-flex uk-flex-middle"
+                    isExternal
+                    target="_blank"
+                  >
+                    <span>{offer.contactMail}</span>
+                  </SimpleLink>
+                </OfferInfoContainer>
+              )}
+            </>
             <OfferInfoContainer icon="location" title={offer.department}>
               {offer.address && <span>{offer.address}</span>}
             </OfferInfoContainer>
@@ -537,15 +540,15 @@ const ModalOfferAdmin = ({
                                   height: 'auto',
                                 }}
                               >
-                                {mutateDefaultOfferStatus(offer, userOpp).map(
-                                  (item, i) => {
+                                {mutateDefaultOfferStatus(offer, userOpp)
+                                  .slice(offer.isExternal ? 1 : 0)
+                                  .map((item, i) => {
                                     return (
                                       <option value={item.value} key={i}>
                                         {item.label}
                                       </option>
                                     );
-                                  }
-                                )}
+                                  })}
                               </select>
                               <div className="uk-flex uk-flex-middle">
                                 <span
@@ -571,39 +574,38 @@ const ModalOfferAdmin = ({
           </Grid>
           <OfferContent offer={offer} />
         </Grid>
-        <div className="uk-modal-footer uk-padding-remove-horizontal uk-padding-remove-bottom">
-          {!offer.isExternal && (
-            <>
-              {offer.isValidated ? (
-                <Button
-                  style="default"
-                  onClick={async () => {
-                    await updateOpportunity({
-                      ...offer,
-                      isValidated: false,
-                      isArchived: true,
-                    });
-                  }}
-                >
-                  Refuser l&apos;offre
-                </Button>
-              ) : (
-                <Button
-                  style="primary"
-                  onClick={async () => {
-                    await updateOpportunity({
-                      ...offer,
-                      isValidated: true,
-                      shouldSendNotifications: true,
-                    });
-                  }}
-                >
-                  Valider l&apos;offre
-                </Button>
-              )}
-            </>
-          )}
-        </div>
+        {!offer.isExternal && (
+          <div className="uk-modal-footer uk-padding-remove-horizontal uk-padding-remove-bottom">
+            {(!offer.isArchived || offer.isValidated) && (
+              <Button
+                style="default"
+                onClick={async () => {
+                  await updateOpportunity({
+                    ...offer,
+                    isValidated: false,
+                    isArchived: true,
+                  });
+                }}
+              >
+                Refuser l&apos;offre
+              </Button>
+            )}
+            {!offer.isValidated && (
+              <Button
+                style="primary"
+                onClick={async () => {
+                  await updateOpportunity({
+                    ...offer,
+                    isValidated: true,
+                    shouldSendNotifications: true,
+                  });
+                }}
+              >
+                Valider l&apos;offre
+              </Button>
+            )}
+          </div>
+        )}
       </div>
     </ModalOfferBase>
   );

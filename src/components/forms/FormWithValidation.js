@@ -197,7 +197,7 @@ const FormWithValidation = forwardRef(
                       title={title}
                       childWidths={childWidths}
                       fields={childrenFields.map((field) => {
-                        return (
+                        return !field.hidden ? (
                           <GenericField
                             data={field}
                             formId={id}
@@ -210,7 +210,7 @@ const FormWithValidation = forwardRef(
                               return fieldValues[name];
                             }}
                           />
-                        );
+                        ) : null;
                       })}
                     />
                   </li>
