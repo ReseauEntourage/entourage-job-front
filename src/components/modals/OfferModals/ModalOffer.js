@@ -31,6 +31,8 @@ import OfferContent from 'src/components/modals/OfferModals/OfferContent';
 import UIkit from 'uikit';
 import { useRouter } from 'next/router';
 import { usePrevious } from 'src/hooks/utils';
+import { gaEvent } from 'src/lib/gtag';
+import { GA_TAGS } from 'src/constants/tags';
 
 const AfterContactItem = ({ isPublic }) => {
   return (
@@ -359,6 +361,9 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                     className="uk-margin-small-left uk-margin-small-top uk-margin-small-bottom"
                     style="primary"
                     onClick={() => {
+                      gaEvent(
+                        GA_TAGS.BACKOFFICE_CANDIDAT_CONTACTER_RECRUTEUR_CLIC
+                      );
                       openModal(
                         <ModalConfirm
                           title={"L'offre vous intéresse"}
@@ -378,6 +383,9 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                               : "J'ai répondu au recruteur"
                           }
                           onConfirm={async () => {
+                            gaEvent(
+                              GA_TAGS.BACKOFFICE_CANDIDAT_VALIDER_CONTACTER_RECRUTEUR_CLIC
+                            );
                             if (status < OFFER_STATUS[1].value) {
                               const { userOpportunity } = offer;
                               await updateOpportunityUser({
@@ -406,6 +414,9 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                     <Button
                       style="default"
                       onClick={async () => {
+                        gaEvent(
+                          GA_TAGS.BACKOFFICE_CANDIDAT_PAS_CONTACTER_RECRUTEUR_CLIC
+                        );
                         const { userOpportunity } = offer;
                         await updateOpportunityUser({
                           ...userOpportunity,
@@ -431,6 +442,9 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                       options={mutatedOfferStatus}
                       value={status}
                       onChange={async (event) => {
+                        gaEvent(
+                          GA_TAGS.BACKOFFICE_CANDIDAT_STATUT_SELECTEUR_CLIC
+                        );
                         setLoadingStatus(true);
                         const { userOpportunity } = offer;
                         await updateOpportunityUser({

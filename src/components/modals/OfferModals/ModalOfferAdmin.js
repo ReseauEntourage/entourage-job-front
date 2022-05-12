@@ -352,14 +352,21 @@ const ModalOfferAdmin = ({
                   content = 'Publiée';
                   className = ' uk-label-success';
                 }
-                if (offer.isArchived) {
-                  content = 'Archivée';
-                  className = ' uk-label-danger';
-                }
                 return <div className={`uk-label${className}`}>{content}</div>;
               })()}
             </div>
             <List className="uk-iconnav uk-flex-right">
+              <ButtonIcon
+                name="archive"
+                className={offer.isArchived ? 'ent-color-amber' : undefined}
+                tooltip="Archiver l'offre"
+                onClick={async () => {
+                  await updateOpportunity({
+                    ...offer,
+                    isArchived: !offer.isArchived,
+                  });
+                }}
+              />
               <ButtonIcon
                 name="pencil"
                 tooltip="Modifier l'offre"
@@ -396,39 +403,54 @@ const ModalOfferAdmin = ({
               {offer.company}
             </OfferInfoContainer>
             {offer.recruiterFirstName && offer.recruiterName && (
-              <OfferInfoContainer icon="user" title="Personne à contacter">
-                <span>
-                  {offer.recruiterFirstName} {offer.recruiterName}
-                </span>
-                <span className="uk-text-meta">{offer.recruiterPosition}</span>
-                <SimpleLink
-                  href={`mailto:${offer.recruiterMail}`}
-                  className="uk-text-meta uk-text-muted uk-flex uk-flex-middle"
-                  isExternal
-                  target="_blank"
-                >
+              <>
+                <OfferInfoContainer icon="user" title="Personne à contacter">
                   <span>
-                    {offer.recruiterMail}
-                    &nbsp;
+                    {offer.recruiterFirstName} {offer.recruiterName}
                   </span>
-                  <IconNoSSR name="mail" ratio={0.8} />
-                </SimpleLink>
-                {offer.recruiterPhone && (
+                  <span className="uk-text-meta">
+                    {offer.recruiterPosition}
+                  </span>
                   <SimpleLink
-                    href={`tel:${offer.recruiterPhone}`}
+                    href={`mailto:${offer.recruiterMail}`}
                     className="uk-text-meta uk-text-muted uk-flex uk-flex-middle"
                     isExternal
-                    newTab
+                    target="_blank"
                   >
                     <span>
-                      {offer.recruiterPhone}
+                      {offer.recruiterMail}
                       &nbsp;
                     </span>
-                    <IconNoSSR name="phone" ratio={0.8} />
+                    <IconNoSSR name="mail" ratio={0.8} />
                   </SimpleLink>
+                  {offer.recruiterPhone && (
+                    <SimpleLink
+                      href={`tel:${offer.recruiterPhone}`}
+                      className="uk-text-meta uk-text-muted uk-flex uk-flex-middle"
+                      isExternal
+                      newTab
+                    >
+                      <span>
+                        {offer.recruiterPhone}
+                        &nbsp;
+                      </span>
+                      <IconNoSSR name="phone" ratio={0.8} />
+                    </SimpleLink>
+                  )}
+                </OfferInfoContainer>
+                {offer.contactMail && (
+                  <OfferInfoContainer icon="mail" title="Mail de contact">
+                    <SimpleLink
+                      href={`mailto:${offer.contactMail}`}
+                      className="uk-text-muted uk-flex uk-flex-middle"
+                      isExternal
+                      target="_blank"
+                    >
+                      <span>{offer.contactMail}</span>
+                    </SimpleLink>
+                  </OfferInfoContainer>
                 )}
-                {offer.beContacted && <span>Souhaite être recontacté</span>}
-              </OfferInfoContainer>
+              </>
             )}
             <OfferInfoContainer icon="location" title={offer.department} />
             {offer.externalOrigin && (
@@ -550,7 +572,7 @@ const ModalOfferAdmin = ({
         <div className="uk-modal-footer uk-padding-remove-horizontal uk-padding-remove-bottom">
           {!offer.isExternal && (
             <>
-              {!offer.isArchived ? (
+              {offer.isValidated ? (
                 <Button
                   style="default"
                   onClick={async () => {
@@ -565,26 +587,11 @@ const ModalOfferAdmin = ({
                 </Button>
               ) : (
                 <Button
-                  style="default"
-                  onClick={async () => {
-                    await updateOpportunity({
-                      ...offer,
-                      isValidated: false,
-                      isArchived: false,
-                    });
-                  }}
-                >
-                  Retirer l&apos;offre des archives
-                </Button>
-              )}
-              {!offer.isValidated && (
-                <Button
                   style="primary"
                   onClick={async () => {
                     await updateOpportunity({
                       ...offer,
                       isValidated: true,
-                      isArchived: false,
                       shouldSendNotifications: true,
                     });
                   }}
@@ -613,6 +620,7 @@ ModalOfferAdmin.propTypes = {
     isArchived: PropTypes.bool,
     isValidated: PropTypes.bool,
     recruiterMail: PropTypes.string,
+    contactMail: PropTypes.string,
     recruiterPhone: PropTypes.string,
     businessLines: PropTypes.arrayOf(PropTypes.string),
     date: PropTypes.string,

@@ -14,6 +14,7 @@ import OpportunityError from 'src/components/opportunities/OpportunityError';
 import { useRouter } from 'next/router';
 import CandidateOpportunityList from 'src/components/backoffice/candidate/CandidateOpportunityList';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
+import { GA_TAGS } from 'src/constants/tags';
 
 const candidateFilters = OPPORTUNITY_FILTERS_DATA.slice(1);
 
@@ -36,7 +37,8 @@ const Opportunities = () => {
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
     candidateFilters,
     '/backoffice/candidat/offres',
-    ['offerId']
+    ['offerId'],
+    GA_TAGS.BACKOFFICE_CANDIDAT_SUPPRIMER_FILTRES_CLIC
   );
 
   const { tabFilters, setTabFilters } = useTabFilters(

@@ -227,6 +227,69 @@ const GA_TAGS = {
   PAGE_PARTENAIRES_NOUS_ECRIRE_CLIC: {
     action: 'Page_Partenaires_Nous_ecrire_Clic',
   },
+  BACKOFFICE_ADMIN_ARCHIVER_MASSE_CLIC: {
+    action: 'Backoffice_Admin_Archiver_Masse_Clic',
+  },
+  BACKOFFICE_ADMIN_OFFRES_INTERESSER_CLIC: {
+    action: 'Backoffice_Admin_Offres_Interesser_Clic',
+  },
+  BACKOFFICE_ADMIN_SUPPRIMER_FILTRES_CLIC: {
+    action: 'Backoffice_Admin_Supprimer_Filtres_Clic',
+  },
+  BACKOFFICE_CANDIDAT_SUPPRIMER_FILTRES_CLIC: {
+    action: 'Backoffice_Candidat_Supprimer_Filtres_Clic',
+  },
+  BACKOFFICE_OFFRES_FILTRE_PUBLIQUE_CLIC: {
+    action: 'Backoffice_Offres_Filtre_Publique_Clic',
+  },
+  BACKOFFICE_OFFRES_FILTRE_STATUT_CLIC: {
+    action: 'Backoffice_Offres_Filtre_Statut_Clic',
+  },
+  BACKOFFICE_OFFRES_FILTRE_GEOGRAPHIQUE_CLIC: {
+    action: 'Backoffice_Offres_Filtre_Geographique_Clic',
+  },
+  BACKOFFICE_OFFRES_FILTRE_SECTEUR_CLIC: {
+    action: 'Backoffice_Offres_Filtre_Secteur_Clic',
+  },
+  BACKOFFICE_MEMBERS_FILTRE_ZONE_CLIC: {
+    action: 'Backoffice_Members_Filtre_Zone_Clic',
+  },
+  BACKOFFICE_MEMBERS_FILTRE_SECTEUR_CLIC: {
+    action: 'Backoffice_Members_Filtre_Secteur_Clic',
+  },
+  BACKOFFICE_MEMBERS_FILTRE_MASQUE_CLIC: {
+    action: 'Backoffice_Members_Filtre_Masque_Clic',
+  },
+  BACKOFFICE_MEMBERS_FILTRE_EMPLOYE_CLIC: {
+    action: 'Backoffice_Members_Filtre_Employe_Clic',
+  },
+  BACKOFFICE_MEMBERS_FILTRE_BINOME_CLIC: {
+    action: 'Backoffice_Members_Filtre_Binome_Clic',
+  },
+  BACKOFFICE_MEMBERS_FILTRE_STATUT_CV_CLIC: {
+    action: 'Backoffice_Members_Filtre_Statut_Cv_Clic',
+  },
+  BACKOFFICE_CANDIDAT_HEADER_OFFRES_CLIC: {
+    action: 'Backoffice_Candidat_Header_Offres_Clic',
+  },
+  BACKOFFICE_CANDIDAT_HEADER_SUIVI_CLIC: {
+    action: 'Backoffice_Candidat_Header_Suivi_Clic',
+  },
+  BACKOFFICE_CANDIDAT_HEADER_CV_CLIC: {
+    action: 'Backoffice_Candidat_Header_Cv_Clic',
+  },
+  BACKOFFICE_CANDIDAT_CONTACTER_RECRUTEUR_CLIC: {
+    action: 'Backoffice_Candidat_Contacter_Recruteur_Clic',
+  },
+  BACKOFFICE_CANDIDAT_VALIDER_CONTACTER_RECRUTEUR_CLIC: {
+    action: 'Backoffice_Candidat_Valider_Contacter_Recruteur_Clic',
+  },
+  BACKOFFICE_CANDIDAT_PAS_CONTACTER_RECRUTEUR_CLIC: {
+    action: 'Backoffice_Candidat_Pas_Contacter_Recruteur_Clic',
+  },
+  BACKOFFICE_CANDIDAT_STATUT_SELECTEUR_CLIC: {
+    action: 'Backoffice_Candidat_Statut_Selecteur_Clic',
+  },
 };
 
 const FB_TAGS = {

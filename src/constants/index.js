@@ -215,11 +215,13 @@ const OPPORTUNITY_FILTERS_DATA = [
       { label: 'Offres générales', value: true },
     ],
     title: 'Privée/générale',
+    tag: GA_TAGS.BACKOFFICE_OFFRES_FILTRE_PUBLIQUE_CLIC,
   },
   {
     key: 'status',
     constants: OFFER_STATUS,
     title: 'Statut',
+    tag: GA_TAGS.BACKOFFICE_OFFRES_FILTRE_STATUT_CLIC,
   },
   {
     key: 'department',
@@ -228,11 +230,13 @@ const OPPORTUNITY_FILTERS_DATA = [
       return dept.zone !== ADMIN_ZONES.HZ;
     }),
     title: 'Département',
+    tag: GA_TAGS.BACKOFFICE_OFFRES_FILTRE_GEOGRAPHIQUE_CLIC,
   },
   {
     key: 'businessLines',
     constants: BUSINESS_LINES,
     title: 'Métiers',
+    tag: GA_TAGS.BACKOFFICE_OFFRES_FILTRE_SECTEUR_CLIC,
   },
 ];
 
@@ -241,11 +245,13 @@ const MEMBER_FILTERS_DATA = [
     key: 'zone',
     constants: ADMIN_ZONES_FILTERS,
     title: 'Zone',
+    tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_ZONE_CLIC,
   },
   {
     key: 'businessLines',
     constants: BUSINESS_LINES,
     title: 'Métiers',
+    tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_SECTEUR_CLIC,
   },
   {
     key: 'associatedUser',
@@ -254,6 +260,7 @@ const MEMBER_FILTERS_DATA = [
       { label: 'Sans binôme', value: false },
     ],
     title: 'Membre associé',
+    tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_BINOME_CLIC,
   },
   {
     key: 'hidden',
@@ -262,6 +269,7 @@ const MEMBER_FILTERS_DATA = [
       { label: 'CV visibles', value: false },
     ],
     title: 'CV masqué',
+    tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_MASQUE_CLIC,
   },
   {
     key: 'employed',
@@ -270,6 +278,7 @@ const MEMBER_FILTERS_DATA = [
       { label: "Recherche d'emploi", value: false },
     ],
     title: 'En emploi',
+    tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_EMPLOYE_CLIC,
   },
   {
     key: 'cvStatus',
@@ -280,6 +289,7 @@ const MEMBER_FILTERS_DATA = [
       CV_STATUS.New,
     ],
     title: 'Statut du CV',
+    tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_STATUT_CV_CLIC,
   },
 ];
 

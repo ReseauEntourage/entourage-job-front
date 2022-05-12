@@ -144,6 +144,11 @@ module.exports = withLess({
         permanent: false,
       },
       {
+        source: '/tutoriel-entretien',
+        destination: process.env.TUTORIAL_INTERVIEW_TRAINING,
+        permanent: false,
+      },
+      {
         source: '/boite-a-outils',
         destination: process.env.TOOLBOX_URL,
         permanent: false,

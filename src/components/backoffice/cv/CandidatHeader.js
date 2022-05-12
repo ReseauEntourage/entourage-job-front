@@ -5,6 +5,7 @@ import { Grid, SimpleLink } from 'src/components/utils';
 import ImgProfile from 'src/components/headers/ImgProfile';
 import { USER_ROLES } from 'src/constants';
 import { IconNoSSR } from 'src/components/utils/Icon';
+import { getRelatedUser } from 'src/utils';
 
 const CandidatHeader = ({ user, showZone }) => {
   if (!user) return null;
@@ -17,20 +18,16 @@ const CandidatHeader = ({ user, showZone }) => {
         </h3>
         <Grid row gap="small" middle className="uk-margin-small-top">
           <IconNoSSR name="user" style={{ width: 20 }} />
-          {user.role === USER_ROLES.COACH ? (
-            <span>
-              Coach de{' '}
-              {user.coach && user.coach.candidat ? (
-                <span className="uk-text-italic">
-                  {user.coach.candidat.firstName} {user.coach.candidat.lastName}
-                </span>
-              ) : (
-                'personne'
-              )}
-            </span>
-          ) : (
-            <span>{user.role}</span>
-          )}
+          <span>
+            {_.capitalize(user.role)} de{' '}
+            {getRelatedUser(user) ? (
+              <span className="uk-text-italic">
+                {getRelatedUser(user).firstName} {getRelatedUser(user).lastName}
+              </span>
+            ) : (
+              'personne'
+            )}
+          </span>
         </Grid>
 
         {(user.role === USER_ROLES.CANDIDAT ||

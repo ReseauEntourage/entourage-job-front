@@ -30,6 +30,7 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { useBulkActions } from 'src/hooks/useBulkActions';
 import { SEARCH_MAX_WIDTH } from 'src/constants/utils';
+import { GA_TAGS } from 'src/constants/tags';
 
 const OfferList = ({
   selectionModeActivated,
@@ -355,9 +356,13 @@ const OpportunityList = forwardRef(
       SelectionModeButton,
       hasSelection,
       toggleSelectionMode,
-    } = useBulkActions('/opportunity', async () => {
-      await fetchData(role, search, tabFilterTag, filters, candidatId);
-    });
+    } = useBulkActions(
+      '/opportunity',
+      async () => {
+        await fetchData(role, search, tabFilterTag, filters, candidatId);
+      },
+      GA_TAGS.BACKOFFICE_ADMIN_ARCHIVER_MASSE_CLIC
+    );
 
     useEffect(() => {
       if (restQuery.tag !== prevTag) {

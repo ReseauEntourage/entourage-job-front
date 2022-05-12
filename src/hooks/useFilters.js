@@ -5,8 +5,9 @@ import {
 } from 'src/utils';
 import { useRouter } from 'next/router';
 import _ from 'lodash';
+import { gaEvent } from 'src/lib/gtag';
 
-export function useFilters(filtersData, path, otherPathParams) {
+export function useFilters(filtersData, path, otherPathParams, resetTag) {
   const { push, query: originalQuery } = useRouter();
 
   const { search, ...params } = otherPathParams
@@ -26,6 +27,9 @@ export function useFilters(filtersData, path, otherPathParams) {
     const query = {
       ...otherParams,
     };
+    if (resetTag) {
+      gaEvent(resetTag);
+    }
 
     push(
       {
@@ -38,7 +42,7 @@ export function useFilters(filtersData, path, otherPathParams) {
         scroll: false,
       }
     );
-  }, [otherParams, path, push]);
+  }, [otherParams, path, push, resetTag]);
 
   const setFilters = useCallback(
     (updatedFilters) => {

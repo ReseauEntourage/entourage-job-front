@@ -20,7 +20,7 @@ const CVEditWelcome = ({ user }) => {
           : `Bienvenue dans l'espace personnel de votre candidat, depuis lequel vous pouvez modifier avec lui/elle les informations qui s'affichent sur son CV sur LinkedOut.`
       }
     >
-      {user.role === USER_ROLES.COACH && <CandidatHeader user={user} />}
+      <CandidatHeader user={user} />
     </HeaderBackoffice>
   );
 };
