@@ -452,7 +452,9 @@ const ModalOfferAdmin = ({
                 )}
               </>
             )}
-            <OfferInfoContainer icon="location" title={offer.department} />
+            <OfferInfoContainer icon="location" title={offer.department}>
+              {offer.address && <span>{offer.address}</span>}
+            </OfferInfoContainer>
             {offer.externalOrigin && (
               <OfferInfoContainer icon="search" title="Origine de l'offre">
                 <div>
