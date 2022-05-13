@@ -188,6 +188,9 @@ const GA_TAGS = {
   FOOTER_DON_CLIC: {
     action: 'Footer_Don_Clic',
   },
+  FOOTER_RECRUITMENTS_CLIC: {
+    action: 'Footer_Recruitments_Clic',
+  },
   HEADER_DON_CLIC: {
     action: 'Header_Don_Clic',
   },
@@ -200,8 +203,8 @@ const GA_TAGS = {
   HEADER_TRAVAILLER_CLIC: {
     action: 'Header_Travailler_Clic',
   },
-  FOOTER_RECRUITMENTS_CLIC: {
-    action: 'Footer_Recruitments_Clic',
+  HEADER_ORIENTER_CLIC: {
+    action: 'Header_Orienter_Clic',
   },
   PAGE_RECRUTER_CARROUSEL_CLIC: {
     action: 'Page_Recruter_Carrousel_Clic',
