@@ -3,61 +3,7 @@ import PropTypes from 'prop-types';
 import Layout from 'src/components/Layout';
 import { Section, SimpleLink } from 'src/components/utils';
 import Grid from 'src/components/utils/Grid';
-import Img from 'src/components/utils/Img';
-
-const Chapter = ({ title, content, imgSrc, style, animate, direction }) => {
-  return (
-    <Section
-      container={direction !== 'column' ? 'large' : 'small'}
-      style={style}
-    >
-      <div className="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-        <h2 className="uk-text-bold uk-align-center uk-text-center uk-margin-large-bottom uk-margin-remove-top uk-width-1-2@m">
-          {title}
-        </h2>
-        <Grid
-          childWidths={[`1-${direction !== 'column' ? '2' : '1'}@m`]}
-          center
-          middle
-          gap="large"
-          className={direction === 'left' ? 'uk-flex-row-reverse' : ''}
-        >
-          <h4 className="uk-margin-remove-top">{content}</h4>
-          <div className="uk-overflow-hidden uk-flex uk-flex-center uk-flex-middle">
-            {animate ? (
-              <div uk-scrollspy="cls: uk-animation-kenburns; delay: 200; target: > img;">
-                <Img
-                  src={imgSrc}
-                  width=""
-                  height="600px"
-                  alt=""
-                  className="uk-animation-reverse uk-height-max-large"
-                />
-              </div>
-            ) : (
-              <Img
-                src={imgSrc}
-                width=""
-                height="600px"
-                alt=""
-                className="uk-height-max-large"
-              />
-            )}
-          </div>
-        </Grid>
-      </div>
-    </Section>
-  );
-};
-
-Chapter.propTypes = {
-  title: PropTypes.element.isRequired,
-  content: PropTypes.element.isRequired,
-  imgSrc: PropTypes.string.isRequired,
-  style: PropTypes.oneOf(['muted', 'default']).isRequired,
-  direction: PropTypes.oneOf(['left', 'right', 'column']).isRequired,
-  animate: PropTypes.bool.isRequired,
-};
+import { Chapter } from 'src/components/partials/Chapter';
 
 const Card = ({ text, number }) => {
   return (

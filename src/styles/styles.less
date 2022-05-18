@@ -143,7 +143,95 @@ hr.uk-divider-small::after {
   margin-top: 10px;
 }
 
+
+.ent-timeline-number {
+
+}
+
+.ent-timeline {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden; /* forces this div to 'contain' it's floated children */
+  padding: 6px 0;
+  position: relative;
+}
+
+
+/* Arrows - i.e. the box and the wedge */
+.ent-timeline-arrow {
+  float: left;
+  width: 100%;
+  padding: 0 10px 0 27px;
+  position: relative;
+  text-align: center;
+  background-color: #e5e5e5;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ent-timeline-arrow:after {
+  border-top: 34px solid transparent;
+  border-bottom: 34px solid transparent;
+  border-left: 17px solid #e5e5e5;
+  content: "";
+  height: 0;
+  position: absolute;
+  right: -17px;
+  top: 0;
+  width: 0;
+  z-index: 2;
+}
+
+.ent-timeline-arrow:before {
+  border-top: 34px solid transparent;
+  border-bottom: 34px solid transparent;
+  border-left: 17px solid white;
+  content: "";
+  height: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  z-index: 2;
+}
+
+.ent-timeline-arrow-mobile {
+  float: none;
+  padding: 25px 30px;
+  text-align: left;
+  width: 100%;
+}
+
+.ent-timeline-arrow-mobile:after {
+  top: auto;
+  bottom: -23px;
+  left: 30px;
+  background-color: transparent;
+  border-top: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 17px solid transparent;
+  border-top-color: #e5e5e5;
+}
+
+.ent-timeline-arrow-mobile:before {
+  top: 0;
+  bottom: -23px;
+  left: 30px;
+  background-color: transparent;
+  border-top: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 17px solid transparent;
+  border-top-color: white;
+}
+
+
 // overwrite YT lite player start button
 .yt-lite > .lty-playbtn {
   border: none;
 }
+
