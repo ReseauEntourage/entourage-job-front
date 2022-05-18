@@ -4,6 +4,7 @@ import {
   BUSINESS_LINES,
   CONTRACTS,
   EXTERNAL_OFFERS_ORIGINS,
+  OFFER_STATUS,
   USER_ROLES,
 } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
@@ -14,18 +15,32 @@ export default {
   id: 'form-offer-external',
   fields: [
     {
-      id: 'candidateId',
-      name: 'candidateId',
-      isMulti: false,
-      title: 'Renseignez le candidat concerné*',
-      placeholder: 'Tapez un candidat',
-      component: 'select-request-async',
-      openMenuOnClick: false,
-      hidden: true,
-      disabled: true,
-      loadOptions: (inputValue, callback) => {
-        callback([]);
-      },
+      id: 'candidateStatus',
+      component: 'fieldgroup',
+      childWidths: ['expand', 'expand'],
+      fields: [
+        {
+          id: 'candidateId',
+          name: 'candidateId',
+          isMulti: false,
+          title: 'Renseignez le candidat concerné*',
+          placeholder: 'Tapez un candidat',
+          component: 'select-request-async',
+          openMenuOnClick: false,
+          hidden: true,
+          disabled: true,
+          loadOptions: (inputValue, callback) => {
+            callback([]);
+          },
+        },
+        {
+          id: 'status',
+          name: 'status',
+          title: 'Statut',
+          component: 'select',
+          options: OFFER_STATUS.slice(1),
+        },
+      ],
     },
     {
       id: 'title',
