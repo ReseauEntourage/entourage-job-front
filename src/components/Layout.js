@@ -73,10 +73,12 @@ const Layout = ({
       )}
       {children}
       {!isPDF && !isBackoffice && <Footer />}
-      <Script
-        src={`https://tarteaucitron.io/load.js?domain=${domain}&uuid=0e7dccd2edb0f870afc26ab86d989e93ef6da0a9`}
-        strategy="afterInteractive"
-      />
+      {!isPDF && (
+        <Script
+          src={`https://tarteaucitron.io/load.js?domain=${domain}&uuid=0e7dccd2edb0f870afc26ab86d989e93ef6da0a9`}
+          strategy="afterInteractive"
+        />
+      )}
     </>
   );
 };
