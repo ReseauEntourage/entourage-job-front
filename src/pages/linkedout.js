@@ -4,6 +4,7 @@ import Layout from 'src/components/Layout';
 import { Section, SimpleLink } from 'src/components/utils';
 import Grid from 'src/components/utils/Grid';
 import { Chapter } from 'src/components/partials/Chapter';
+import AnimatedList from 'src/components/utils/AnimatedList';
 
 const Card = ({ text, number }) => {
   return (
@@ -152,12 +153,9 @@ const Linkedout = () => {
             <br />
             Le modèle Linkedout repose sur&nbsp;:
             <br />
-            <ul
-              uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;"
-              className="uk-list uk-list-disc"
-            >
-              <li className="uk-text-primary">
-                <span className="uk-text-secondary">
+            <AnimatedList
+              items={[
+                <>
                   <span className="uk-text-bold">
                     la plateforme{' '}
                     <SimpleLink href="/">www.linkedout.fr</SimpleLink>
@@ -165,30 +163,24 @@ const Linkedout = () => {
                   sur laquelle les citoyens peuvent viraliser les CV de
                   candidats sur leurs réseaux, en un clic pour générer des
                   opportunités d&apos;emploi
-                </span>
-              </li>
-              <li className="uk-text-primary">
-                <span className="uk-text-secondary">
+                </>,
+                <>
                   <span className="uk-text-bold">un soutien de proximité</span>{' '}
                   par des bénévoles-coachs sur la durée
-                </span>
-              </li>
-              <li className="uk-text-primary">
-                <span className="uk-text-secondary">
+                </>,
+                <>
                   <span className="uk-text-bold">des formations courtes</span>{' '}
                   «&nbsp;à la carte&nbsp;» pour acquérir les compétences
                   manquantes et reprendre confiance
-                </span>
-              </li>
-              <li className="uk-text-primary">
-                <span className="uk-text-secondary">
+                </>,
+                <>
                   <span className="uk-text-bold">
                     une communauté d’entraide et d&apos;amitié Entourage
                   </span>{' '}
                   pour faire de nouvelles rencontres et s’intégrer socialement.
-                </span>
-              </li>
-            </ul>
+                </>,
+              ]}
+            />
           </>
         }
         imgSrc="/static/img/why_2.jpg"
@@ -212,12 +204,9 @@ const Linkedout = () => {
             d’insertion, en situation de handicap,… Le modèle Linkedout repose
             sur&nbsp;:
             <br />
-            <ul
-              uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;"
-              className="uk-list uk-list-disc uk-list-primary"
-            >
-              <li className="uk-text-primary">
-                <span className="uk-text-secondary">
+            <AnimatedList
+              items={[
+                <>
                   Ils sont en{' '}
                   <span className="uk-text-bold uk-text-primary">
                     situation d’exclusion
@@ -226,24 +215,19 @@ const Linkedout = () => {
                   <span className="uk-text-bold uk-text-primary">
                     précarité
                   </span>
-                  &nbsp;;
-                </span>
-              </li>
-              <li className="uk-text-primary">
-                <span className="uk-text-secondary">
+                </>,
+                <>
                   Sont en{' '}
                   <span className="uk-text-bold uk-text-primary">capacité</span>{' '}
-                  de travailler&nbsp;;
-                </span>
-              </li>
-              <li className="uk-text-primary">
-                <span className="uk-text-secondary">
+                  de travailler
+                </>,
+                <>
                   Et{' '}
                   <span className="uk-text-bold uk-text-primary">motivés</span>{' '}
                   pour retrouver un emploi.
-                </span>
-              </li>
-            </ul>
+                </>,
+              ]}
+            />
           </>
         }
         imgSrc="/static/img/why_3.jpg"

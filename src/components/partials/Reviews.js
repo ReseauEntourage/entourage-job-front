@@ -11,7 +11,7 @@ const reviews = [
     industry: 'livraison de repas',
     companyInfo: '20 salariés',
     review:
-      'Kenny est un vrai bonhomme, pas un jeune diplômé fraîchement moulu qui nous parle de choses qu’il n’a pas vécues. Par son expérience, il apporte quelque chose de radicalement différent. Si je pouvais embaucher 2 Kenny, je le ferais !',
+      'Par son expérience, il apporte quelque chose de radicalement différent. Si je pouvais embaucher 2 Kenny, je le ferais !',
   },
   {
     image: '/static/img/temoignage-entreprise-francois-miah.jpg',
@@ -25,29 +25,27 @@ const reviews = [
   {
     image: '/static/img/temoignage-entreprise-advens.jpg',
     author: 'Sylvie Lepoutre',
+    authorStatus: 'Raison d’être & Projet d’entreprise',
     company: 'Advens',
-    industry: 'cybersécurité',
-    companyInfo: '200 salariés',
+    companyInfo: 'partenaire LinkedOut',
     review:
       'Nous étions à mille lieux des problématiques des personnes en précarité. Maintenant, chez Advens, on entend des mots comme “résilience”, “deuxième chance”, “rebond”, “inclusion”. Les collaborateurs sont très fiers !',
   },
   {
-    image: '/static/img/temoignage-entreprise-mcdo.jpg',
-    author: 'Arnaud Héry',
-    company: "Ex-directeur de la formation chez McDonald's",
-    industry: 'restauration',
-    companyInfo: '70 000 salariés en France',
+    image: '/static/img/temoignage-candidat-amelie.jpg',
+    author: 'Amélie',
+    authorStatus: 'Ancienne candidate LinkedOut',
     review:
-      'Ce qu’il y a de plus important pour un employeur, c’est de voir la lumière qui brille dans les yeux de la personne en face, qui traduit l’envie d’apprendre et de s’en sortir.',
+      "C'est vraiment un bon dispositif. Avec mon coach, on ne parle pas simplement du travail, il me donne des conseils. Ce sont des choses dont j'avais besoin, surtout que je n'ai pas de famille ici. J'ai parcouru beaucoup d'autres dispositifs et là c'est différent, LinkedOut est très présent.",
   },
 ];
 
 const Reviews = () => {
   return (
     <Section id="reviews" style="default">
-      <h2 className="uk-text-bold uk-align-center uk-text-center uk-margin-large-bottom uk-margin-remove-top">
-        <span className="uk-text-primary">Les recruteurs</span> témoignent
-      </h2>
+      <h3 className="uk-text-bold uk-text-left uk-margin-medium-bottom uk-margin-remove-top">
+        Ce que LinkedOut <span className="uk-text-primary">leur a apporté</span>
+      </h3>
       <div className="uk-flex uk-flex-center">
         <Carousel
           style="default"
@@ -55,7 +53,15 @@ const Reviews = () => {
         >
           {reviews.map(
             (
-              { author, company, industry, companyInfo, review, image },
+              {
+                author,
+                authorStatus,
+                company,
+                industry,
+                companyInfo,
+                review,
+                image,
+              },
               index
             ) => {
               return (
@@ -88,6 +94,11 @@ const Reviews = () => {
                       <p className="uk-text-bold uk-margin-small uk-margin-remove-bottom">
                         {author}
                       </p>
+                      {authorStatus && (
+                        <p className="uk-margin-small uk-margin-remove-bottom">
+                          {authorStatus}
+                        </p>
+                      )}
                       <p className="uk-text-meta uk-margin-remove">
                         <span className="uk-text-bold">{company}</span>,&nbsp;
                         <span>{industry}</span>

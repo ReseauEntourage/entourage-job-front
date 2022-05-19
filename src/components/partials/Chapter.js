@@ -11,16 +11,16 @@ export const Chapter = ({
   animate,
   direction,
   cta,
+  smallTitle,
 }) => {
   return (
-    <Section
-      container={direction !== 'column' ? 'large' : 'small'}
-      style={style}
-    >
+    <Section style={style}>
       <div className="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-        <h2 className="uk-text-bold uk-align-center uk-text-center uk-margin-medium-bottom uk-margin-remove-top uk-width-1-2@m">
-          {title}
-        </h2>
+        {!smallTitle && (
+          <h2 className="uk-text-bold uk-align-center uk-text-center uk-margin-medium-bottom uk-margin-remove-top uk-width-1-2@m">
+            {title}
+          </h2>
+        )}
         <Grid
           childWidths={[`1-${direction !== 'column' ? '2' : '1'}@m`]}
           center
@@ -30,28 +30,42 @@ export const Chapter = ({
             direction === 'left' ? 'uk-flex-row-reverse' : 'uk-flex-row'
           }`}
         >
-          <h4 className="uk-margin-remove-top">{content}</h4>
+          <div
+            uk-scrollspy={
+              animate
+                ? `cls:uk-animation-slide-${
+                    direction === 'left' ? 'right' : 'left'
+                  }; delay: 200;`
+                : ''
+            }
+          >
+            {smallTitle && (
+              <h3 className="uk-text-bold uk-text-left uk-margin-medium-bottom uk-margin-remove-top">
+                {title}
+              </h3>
+            )}
+            <p className="uk-margin-remove-top uk-margin-remove-bottom">
+              {content}
+            </p>
+          </div>
           {imgSrc && (
-            <div className="uk-overflow-hidden uk-flex uk-flex-center uk-flex-middle">
-              {animate ? (
-                <div uk-scrollspy="cls: uk-animation-kenburns; delay: 200; target: > img;">
-                  <Img
-                    src={imgSrc}
-                    width=""
-                    height="600px"
-                    alt=""
-                    className="uk-animation-reverse uk-height-max-large"
-                  />
-                </div>
-              ) : (
-                <Img
-                  src={imgSrc}
-                  width=""
-                  height="600px"
-                  alt=""
-                  className="uk-height-max-large"
-                />
-              )}
+            <div
+              className="uk-overflow-hidden uk-flex uk-flex-center uk-flex-middle"
+              uk-scrollspy={
+                animate
+                  ? `cls:uk-animation-slide-${
+                      direction === 'left' ? 'left' : 'right'
+                    }; delay: 200;`
+                  : ''
+              }
+            >
+              <Img
+                src={imgSrc}
+                width=""
+                height="600px"
+                alt=""
+                className="uk-height-max-large"
+              />
             </div>
           )}
         </Grid>
@@ -71,9 +85,11 @@ Chapter.propTypes = {
   direction: PropTypes.oneOf(['left', 'right', 'column']).isRequired,
   animate: PropTypes.bool.isRequired,
   cta: PropTypes.element,
+  smallTitle: PropTypes.bool,
 };
 
 Chapter.defaultProps = {
   cta: undefined,
   imgSrc: undefined,
+  smallTitle: false,
 };

@@ -1,19 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'src/components/utils';
+import CountUp from 'react-countup';
+import VisibilitySensor from 'react-visibility-sensor';
 
-// todo: les cartes sont un petit peu decallés à cause du jeu expand auto
-// recentrer les cartes
-const NumberCard = ({ value, description, subDescription }) => {
+const AnimatedNumber = ({ value }) => {
+  return (
+    <VisibilitySensor partialVisibility>
+      {({ isVisible }) => {
+        return (
+          <div style={{ minHeight: 1 }}>
+            {isVisible ? <CountUp duration={5} end={value} preserveValue /> : 0}
+          </div>
+        );
+      }}
+    </VisibilitySensor>
+  );
+};
+
+AnimatedNumber.propTypes = {
+  value: PropTypes.number.isRequired,
+};
+
+const NumberCard = ({ value, description, subDescription, animate }) => {
   return (
     <div className="uk-card uk-width-1-1 uk-card-body uk-card-small uk-flex uk-flex-center uk-flex-middle">
-      <Grid middle center gap="collapse" eachWidths={['1-3', '1-6', '1-2']}>
+      <Grid middle center gap="collapse" eachWidths={['auto', '1-6', '1-2']}>
         <div className="uk-text-right uk-text-primary">
           {value.toString().length > 6 ? (
-            <span className="uk-text-primary uk-text-right">{value}</span>
+            <span className="uk-text-primary uk-text-right">
+              {animate ? <AnimatedNumber value={value} /> : value}
+            </span>
           ) : (
             <span className="uk-h1 uk-text-primary uk-text-nowrap">
-              {value}
+              {animate ? <AnimatedNumber value={value} /> : value}
             </span>
           )}
         </div>
@@ -43,9 +63,11 @@ NumberCard.propTypes = {
   ]).isRequired,
   description: PropTypes.string.isRequired,
   subDescription: PropTypes.string,
+  animate: PropTypes.bool,
 };
 
 NumberCard.defaultProps = {
   subDescription: undefined,
+  animate: false,
 };
 export default NumberCard;

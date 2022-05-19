@@ -145,7 +145,24 @@ hr.uk-divider-small::after {
 
 
 .ent-timeline-number {
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 18px;
+  background-color: #f55f24;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 40px;
+  width: 40px;
+  color: white;
+  top: 5px;
+  z-index: 3;
+}
 
+.ent-timeline-number-mobile {
+  top: 0;
+  right: 5px;
 }
 
 .ent-timeline {
@@ -156,7 +173,6 @@ hr.uk-divider-small::after {
   padding: 6px 0;
   position: relative;
 }
-
 
 /* Arrows - i.e. the box and the wedge */
 .ent-timeline-arrow {
@@ -198,11 +214,15 @@ hr.uk-divider-small::after {
   z-index: 2;
 }
 
+.ent-timeline-arrow > span{
+  flex: 1
+}
+
 .ent-timeline-arrow-mobile {
   float: none;
   padding: 25px 30px;
   text-align: left;
-  width: 100%;
+  width: inherit;
 }
 
 .ent-timeline-arrow-mobile:after {

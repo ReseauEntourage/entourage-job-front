@@ -1,12 +1,8 @@
 import React from 'react';
 import LogoList from 'src/components/partials/LogoList';
-import WhatItBringsToCompanies, {
-  openContactModal,
-} from 'src/components/partials/WhatItBringsToCompanies';
 import Layout from 'src/components/Layout';
-import { Button, Grid, Section } from 'src/components/utils';
+import { Button, Section } from 'src/components/utils';
 import ImageTitle from 'src/components/partials/ImageTitle';
-import HireCTA from 'src/components/partials/HireCTA';
 import Reviews from 'src/components/partials/Reviews';
 import HowToCommitDifferently from 'src/components/partials/HowToCommitDifferently';
 import NewsletterPartial from 'src/components/partials/NewsletterPartial';
@@ -15,7 +11,14 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 import { Chapter } from 'src/components/partials/Chapter';
 import CVList from 'src/components/cv/CVList';
 import { CV_FILTERS_DATA } from 'src/constants';
-import PropTypes from 'prop-types';
+import Timeline from 'src/components/partials/Timeline';
+import NumberGrid from 'src/components/partials/NumberGrid';
+import AnimatedList from 'src/components/utils/AnimatedList';
+import { gaEvent } from 'src/lib/gtag';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { fbEvent } from 'src/lib/fb';
+import { openModal } from 'src/components/modals/Modal';
+import ModalGeneric from 'src/components/modals/ModalGeneric';
 
 const timeline = [
   {
@@ -28,43 +31,44 @@ const timeline = [
   { text: "Suivez l'intégration" },
 ];
 
-const Timeline = ({ items }) => {
-  return (
-    <Grid
-      middle
-      gap="small"
-      center
-      childWidths={['1-3@m']}
-      className="uk-background-default"
-    >
-      {items.map(({ text }, index) => {
-        return (
-          <>
-            <div className="uk-margin-medium-right uk-visible@m">
-              <div className="ent-timeline-number">{index + 1}</div>
-              <div className="ent-timeline-arrow">
-                <span>{text}</span>
-              </div>
-            </div>
-            <div className="uk-hidden@m">
-              <div className="ent-timeline-number">{index + 1}</div>
-              <div className="ent-timeline-arrow ent-timeline-arrow-mobile">
-                <span>{text}</span>
-              </div>
-            </div>
-          </>
-        );
-      })}
-    </Grid>
-  );
-};
+const numbers = [
+  {
+    value: 230,
+    description: 'Candidats accompagnés depuis le lancement',
+    animate: true,
+  },
+  {
+    value: '61%',
+    description:
+      'Des candidats parvenus au bout du parcours ont retrouvé un travail',
+  },
+  { value: 73, description: 'Entreprises ayant recruté', animate: true },
+  {
+    value: '93%',
+    description:
+      'Des candidats ont repris confiance en eux et en leurs capacités',
+  },
+];
 
-Timeline.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      text: PropTypes.string,
-    })
-  ).isRequired,
+const openContactModal = () => {
+  gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
+  fbEvent(FB_TAGS.COMPANY_CONTACT);
+  openModal(
+    <ModalGeneric>
+      <iframe
+        className="airtable-embed"
+        src={`${process.env.AIRTABLE_LINK_COMPANY_HELP}?backgroundColor=blue`}
+        frameBorder="0"
+        title="modal-company-help"
+        width="100%"
+        height="533"
+        style={{
+          background: 'transparent',
+          border: '1px solid #ccc;',
+        }}
+      />
+    </ModalGeneric>
+  );
 };
 
 const Entreprises = () => {
@@ -86,13 +90,14 @@ const Entreprises = () => {
             style="secondary"
             className="uk-margin-small-top"
           >
-            Contacter nous&nbsp;
+            Contactez-nous&nbsp;
             <IconNoSSR name="chevron-right" />
           </Button>
         }
       />
       <Chapter
-        style="muted"
+        smallTitle
+        style="default"
         title={
           <>
             <span className="uk-text-primary">Pourquoi recruter</span> avec
@@ -101,32 +106,25 @@ const Entreprises = () => {
         }
         content={
           <>
-            <ul
-              uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;"
-              className="uk-list uk-list-disc uk-margin-remove-bottom"
-            >
-              <li className="uk-text-primary">
-                <span className="uk-text-secondary">
+            <AnimatedList
+              items={[
+                <>
                   <span className="uk-text-bold">
                     Agir concrètement en faveur de l’inclusion
                   </span>
                   <br />
                   Le recrutement est l’expérience la plus impactante et
                   transformante pour votre entreprise
-                </span>
-              </li>
-              <li className="uk-text-primary">
-                <span className="uk-text-secondary">
+                </>,
+                <>
                   <span className="uk-text-bold">
                     Soutenir la transformation de votre entreprise
                   </span>
                   <br />
                   Vous investissez dans la performance à long terme de votre
                   équipe
-                </span>
-              </li>
-              <li className="uk-text-primary">
-                <span className="uk-text-secondary">
+                </>,
+                <>
                   <span className="uk-text-bold">
                     Engager vos collaborateurs
                   </span>{' '}
@@ -134,36 +132,35 @@ const Entreprises = () => {
                   <br />
                   Vous embarquez dans un projet collectif tout en renforçant
                   votre marque employeur
-                </span>
-              </li>
-              <li className="uk-text-primary">
-                <span className="uk-text-secondary">
+                </>,
+                <>
                   <span className="uk-text-bold">
                     Répondre à vos besoins en recrutement
                   </span>
                   <br />
                   Vous identifiez et rencontrez de nouveaux profils, sur tous
                   types de métiers
-                </span>
-              </li>
-            </ul>
+                </>,
+              ]}
+            />
           </>
         }
         imgSrc="/static/img/company_why.jpg"
         animate={false}
-        direction="left"
+        direction="right"
         cta={
           <Button
             onClick={openContactModal}
             style="secondary"
-            className="uk-margin-small-top"
+            className="uk-margin-medium-top"
           >
-            Contacter nous&nbsp;
+            Contactez-nous&nbsp;
             <IconNoSSR name="chevron-right" />
           </Button>
         }
       />
       <Chapter
+        smallTitle
         title={
           <>
             En quoi consiste le{' '}
@@ -186,6 +183,7 @@ const Entreprises = () => {
         style="default"
       />
       <Chapter
+        smallTitle
         style="default"
         title={
           <>
@@ -201,43 +199,36 @@ const Entreprises = () => {
             très variés en termes de parcours, d&apos;âge, d&apos;expérience,
             mais ont tous en commun&nbsp;:
             <br />
-            <ul
-              uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;"
-              className="uk-list uk-list-disc uk-margin-remove-bottom"
-            >
-              <li className="uk-text-primary">
-                <span className="uk-text-secondary">
+            <AnimatedList
+              items={[
+                <>
                   <span className="uk-text-bold">L&apos;absence de réseau</span>{' '}
                   et le fait d&apos;avoir vécu la précarité et/ou
                   l&apos;exclusion
-                </span>
-              </li>
-              <li className="uk-text-primary">
-                <span className="uk-text-secondary">
+                </>,
+                <>
                   <span className="uk-text-bold">
                     Une grande motivation pour trouver un emploi stable
                   </span>{' '}
                   et construire un avenir
-                </span>
-              </li>
-              <li className="uk-text-primary">
-                <span className="uk-text-secondary">
+                </>,
+                <>
                   <span className="uk-text-bold">
                     La capacité à travailler :
                   </span>{' '}
                   les freins à l’emploi ont été levés
-                </span>
-              </li>
-            </ul>
+                </>,
+              ]}
+            />
           </>
         }
         animate={false}
         direction="column"
       />
       <Section container="large" style="muted">
-        <h2 className="uk-text-bold uk-align-center uk-text-center uk-margin-medium-bottom uk-margin-remove-top uk-width-1-2@m">
+        <h3 className="uk-text-bold uk-align-center uk-text-center uk-margin-medium-bottom uk-margin-remove-top uk-width-1-2@m">
           XX candidats cherchent actuellement un emploi
-        </h2>
+        </h3>
         <CVList
           hideSearchBar
           nb={3}
@@ -255,21 +246,43 @@ const Entreprises = () => {
         </div>
       </Section>
       <Section style="default">
-        <h2 className="uk-text-bold uk-align-center uk-text-center uk-margin-medium-bottom uk-margin-remove-top uk-width-1-2@m">
-          L&apos;accompagnement LinkedOut à chaque étape
-        </h2>
+        <h3 className="uk-text-bold uk-text-left uk-margin-medium-bottom uk-margin-remove-top">
+          <span className="uk-text-primary">L&apos;accompagnement</span>{' '}
+          LinkedOut à chaque étape
+        </h3>
         <Timeline items={timeline} />
       </Section>
-      <HireCTA />
-      <WhatItBringsToCompanies />
-      <Section style="muted">
-        <h2 className="uk-text-center uk-text-bold">
-          Ils ont <span className="uk-text-primary">déjà recruté</span>
-        </h2>
-        <LogoList logos={PARTNERS.hired} />
+      <Section style="default">
+        <h3 className="uk-text-bold uk-text-left uk-margin-medium-bottom uk-margin-remove-top">
+          Notre impact <span className="uk-text-primary">en chiffres</span>
+        </h3>
+        <NumberGrid numbers={numbers} />
       </Section>
       <Reviews />
+      <Section style="default">
+        <h3 className="uk-text-center uk-text-bold">
+          <span className="uk-text-primary">Ils ont recruté</span> avec
+          LinkedOut
+        </h3>
+        <LogoList logos={PARTNERS.hired} />
+      </Section>
       <HowToCommitDifferently />
+      <Section style="primary">
+        <h3 className="uk-text-center uk-text-bold">
+          Envie d&apos;en savoir plus sur le recrutement inclusif avec
+          LinkedOut&nbsp;?
+        </h3>
+        <div className="uk-flex uk-flex-center">
+          <Button
+            onClick={openContactModal}
+            style="secondary"
+            className="uk-margin-small-top"
+          >
+            Contactez-nous&nbsp;
+            <IconNoSSR name="chevron-right" />
+          </Button>
+        </div>
+      </Section>
       <NewsletterPartial style="default" />
     </Layout>
   );
