@@ -13,12 +13,14 @@ const MultipleCTA = ({
   spacing,
   className,
   animate,
-  numberLines,
 }) => {
   return (
-    <div uk-height-match="target : h3" className={className}>
+    <div
+      uk-height-match={showHorizontalDividers ? 'target : h4, .text' : ''}
+      className={className}
+    >
       <Grid
-        childWidths={[`1-${data.length / numberLines}@m`]}
+        childWidths={[`1-${data.length}@m`]}
         match
         gap={spacing}
         divider={showVerticalDividers}
@@ -57,22 +59,22 @@ const MultipleCTA = ({
                 )}
                 <div className="uk-flex uk-flex-column uk-flex-1">
                   {item.title && (
-                    <h3
+                    <h4
                       className={`${
                         showHorizontalDividers
-                          ? ' uk-flex-middle'
-                          : 'uk-padding-small uk-text-center uk-flex-center uk-flex-middle uk-flex-1'
-                      } uk-text-bold uk-flex`}
+                          ? 'uk-text-left uk-flex-left'
+                          : 'uk-text-center uk-flex-center'
+                      } uk-flex-bottom uk-flex-1 uk-text-bold uk-flex`}
                     >
                       {item.title}
-                    </h3>
+                    </h4>
                   )}
                   {showHorizontalDividers && (
                     <hr className="uk-divider-small uk-margin-remove-vertical" />
                   )}
                   {item.text && (
                     <div
-                      className={`${
+                      className={`text ${
                         item.button ? '' : 'uk-margin-remove-bottom'
                       } ${
                         showHorizontalDividers ? 'uk-margin-medium-top' : ''
@@ -80,7 +82,7 @@ const MultipleCTA = ({
                         !showHorizontalDividers && item.title
                           ? 'uk-text-center'
                           : ''
-                      } uk-flex-1 uk-margin-medium-bottom`}
+                      } uk-flex-1 uk-margin-small-bottom`}
                     >
                       {item.text}
                     </div>
@@ -91,7 +93,7 @@ const MultipleCTA = ({
                         showHorizontalDividers
                           ? 'uk-flex-start'
                           : 'uk-flex-center'
-                      } uk-flex uk-flex-middle`}
+                      } uk-flex uk-flex-middle uk-margin-small-top`}
                     >
                       <Button
                         href={item.button.href}
@@ -139,7 +141,6 @@ MultipleCTA.propTypes = {
     })
   ).isRequired,
   animate: PropTypes.bool,
-  numberLines: PropTypes.number,
 };
 
 MultipleCTA.defaultProps = {
@@ -149,7 +150,6 @@ MultipleCTA.defaultProps = {
   spacing: 'large',
   className: '',
   animate: false,
-  numberLines: 1,
 };
 
 export default MultipleCTA;

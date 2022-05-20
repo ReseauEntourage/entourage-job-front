@@ -3,61 +3,8 @@ import PropTypes from 'prop-types';
 import Layout from 'src/components/Layout';
 import { Section, SimpleLink } from 'src/components/utils';
 import Grid from 'src/components/utils/Grid';
-import Img from 'src/components/utils/Img';
-
-const Chapter = ({ title, content, imgSrc, style, animate, direction }) => {
-  return (
-    <Section
-      container={direction !== 'column' ? 'large' : 'small'}
-      style={style}
-    >
-      <div className="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-        <h2 className="uk-text-bold uk-align-center uk-text-center uk-margin-large-bottom uk-margin-remove-top uk-width-1-2@m">
-          {title}
-        </h2>
-        <Grid
-          childWidths={[`1-${direction !== 'column' ? '2' : '1'}@m`]}
-          center
-          middle
-          gap="large"
-          className={direction === 'left' ? 'uk-flex-row-reverse' : ''}
-        >
-          <h4 className="uk-margin-remove-top">{content}</h4>
-          <div className="uk-overflow-hidden uk-flex uk-flex-center uk-flex-middle">
-            {animate ? (
-              <div uk-scrollspy="cls: uk-animation-kenburns; delay: 200; target: > img;">
-                <Img
-                  src={imgSrc}
-                  width=""
-                  height="600px"
-                  alt=""
-                  className="uk-animation-reverse uk-height-max-large"
-                />
-              </div>
-            ) : (
-              <Img
-                src={imgSrc}
-                width=""
-                height="600px"
-                alt=""
-                className="uk-height-max-large"
-              />
-            )}
-          </div>
-        </Grid>
-      </div>
-    </Section>
-  );
-};
-
-Chapter.propTypes = {
-  title: PropTypes.element.isRequired,
-  content: PropTypes.element.isRequired,
-  imgSrc: PropTypes.string.isRequired,
-  style: PropTypes.oneOf(['muted', 'default']).isRequired,
-  direction: PropTypes.oneOf(['left', 'right', 'column']).isRequired,
-  animate: PropTypes.bool.isRequired,
-};
+import { Chapter } from 'src/components/partials/Chapter';
+import AnimatedList from 'src/components/utils/AnimatedList';
 
 const Card = ({ text, number }) => {
   return (
@@ -206,12 +153,9 @@ const Linkedout = () => {
             <br />
             Le modèle Linkedout repose sur&nbsp;:
             <br />
-            <ul
-              uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;"
-              className="uk-list uk-list-disc"
-            >
-              <li className="uk-text-primary">
-                <span className="uk-text-secondary">
+            <AnimatedList
+              items={[
+                <>
                   <span className="uk-text-bold">
                     la plateforme{' '}
                     <SimpleLink href="/">www.linkedout.fr</SimpleLink>
@@ -219,30 +163,24 @@ const Linkedout = () => {
                   sur laquelle les citoyens peuvent viraliser les CV de
                   candidats sur leurs réseaux, en un clic pour générer des
                   opportunités d&apos;emploi
-                </span>
-              </li>
-              <li className="uk-text-primary">
-                <span className="uk-text-secondary">
+                </>,
+                <>
                   <span className="uk-text-bold">un soutien de proximité</span>{' '}
                   par des bénévoles-coachs sur la durée
-                </span>
-              </li>
-              <li className="uk-text-primary">
-                <span className="uk-text-secondary">
+                </>,
+                <>
                   <span className="uk-text-bold">des formations courtes</span>{' '}
                   «&nbsp;à la carte&nbsp;» pour acquérir les compétences
                   manquantes et reprendre confiance
-                </span>
-              </li>
-              <li className="uk-text-primary">
-                <span className="uk-text-secondary">
+                </>,
+                <>
                   <span className="uk-text-bold">
                     une communauté d’entraide et d&apos;amitié Entourage
                   </span>{' '}
                   pour faire de nouvelles rencontres et s’intégrer socialement.
-                </span>
-              </li>
-            </ul>
+                </>,
+              ]}
+            />
           </>
         }
         imgSrc="/static/img/why_2.jpg"
@@ -266,12 +204,9 @@ const Linkedout = () => {
             d’insertion, en situation de handicap,… Le modèle Linkedout repose
             sur&nbsp;:
             <br />
-            <ul
-              uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;"
-              className="uk-list uk-list-disc uk-list-primary"
-            >
-              <li className="uk-text-primary">
-                <span className="uk-text-secondary">
+            <AnimatedList
+              items={[
+                <>
                   Ils sont en{' '}
                   <span className="uk-text-bold uk-text-primary">
                     situation d’exclusion
@@ -280,24 +215,19 @@ const Linkedout = () => {
                   <span className="uk-text-bold uk-text-primary">
                     précarité
                   </span>
-                  &nbsp;;
-                </span>
-              </li>
-              <li className="uk-text-primary">
-                <span className="uk-text-secondary">
+                </>,
+                <>
                   Sont en{' '}
                   <span className="uk-text-bold uk-text-primary">capacité</span>{' '}
-                  de travailler&nbsp;;
-                </span>
-              </li>
-              <li className="uk-text-primary">
-                <span className="uk-text-secondary">
+                  de travailler
+                </>,
+                <>
                   Et{' '}
                   <span className="uk-text-bold uk-text-primary">motivés</span>{' '}
                   pour retrouver un emploi.
-                </span>
-              </li>
-            </ul>
+                </>,
+              ]}
+            />
           </>
         }
         imgSrc="/static/img/why_3.jpg"

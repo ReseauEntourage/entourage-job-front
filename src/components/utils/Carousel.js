@@ -5,7 +5,7 @@ import { gaEvent } from 'src/lib/gtag';
 import { GA_TAGS } from 'src/constants/tags';
 import { IconNoSSR } from 'src/components/utils/Icon';
 
-const Carousel = ({ style, children, containerClasses }) => {
+const Carousel = ({ style, children, containerClasses, pagination }) => {
   const router = useRouter();
 
   let tag;
@@ -19,17 +19,22 @@ const Carousel = ({ style, children, containerClasses }) => {
   if (router.asPath.includes('/orienter')) {
     tag = GA_TAGS.PAGE_ORIENTER_CARROUSEL_CLIC;
   }
+  if (router.asPath.includes('/entreprises')) {
+    tag = GA_TAGS.PAGE_ENTREPRISES_CARROUSEL_CLIC;
+  }
 
   return (
     <div
       className="uk-position-relative"
-      data-uk-slider="autoplay: true; autoplay-interval: 5000; pause-on-hover: true;"
+      data-uk-slider="autoplay: true; autoplay-interval: 5000; pause-on-hover: true; center: true;"
       style={{ maxWidth: '100%' }}
     >
       <div className={`uk-slider-container uk-background-${style}`}>
         <ul className={`uk-slider-items ${containerClasses}`}>{children}</ul>
       </div>
-      <ul className="uk-slider-nav uk-dotnav uk-flex-center uk-margin" />
+      {pagination && (
+        <ul className="uk-slider-nav uk-dotnav uk-flex-center uk-margin" />
+      )}
       <div className="uk-hidden uk-light">
         <a
           href="#"
@@ -106,9 +111,11 @@ Carousel.propTypes = {
   style: PropTypes.string,
   children: PropTypes.arrayOf(PropTypes.element).isRequired,
   containerClasses: PropTypes.string.isRequired,
+  pagination: PropTypes.bool,
 };
 Carousel.defaultProps = {
   style: 'default',
+  pagination: true,
 };
 
 export default Carousel;

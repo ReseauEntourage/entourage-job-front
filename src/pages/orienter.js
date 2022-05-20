@@ -47,7 +47,7 @@ const Orienter = () => {
         id="guide-title"
         title={
           <>
-            Orientez-nous <br />
+            Orientez-nous{' '}
             <span className="uk-text-primary">des candidats&nbsp;!</span>
           </>
         }
