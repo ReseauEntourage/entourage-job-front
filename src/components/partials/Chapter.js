@@ -50,7 +50,7 @@ export const Chapter = ({
           </div>
           {imgSrc && (
             <div
-              className="uk-overflow-hidden uk-flex uk-flex-center uk-flex-middle"
+              className="uk-flex uk-flex-center uk-flex-middle"
               uk-scrollspy={
                 animate
                   ? `cls:uk-animation-slide-${
@@ -61,10 +61,8 @@ export const Chapter = ({
             >
               <Img
                 src={imgSrc}
-                width=""
-                height="600px"
                 alt=""
-                className="uk-height-max-large"
+                className="uk-height-max-large uk-box-shadow-medium"
               />
             </div>
           )}

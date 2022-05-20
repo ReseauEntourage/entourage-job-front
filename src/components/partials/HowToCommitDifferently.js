@@ -2,9 +2,9 @@ import React from 'react';
 import { Section } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
 import MultipleCTA from 'src/components/partials/MultipleCTA';
+import { GA_TAGS } from 'src/constants/tags';
 
 const HowToCommitDifferently = () => {
-  // TODO TAGS
   return (
     <Section container="large" id="sengager" style="muted">
       <h2 className="uk-text-center uk-text-bold">
@@ -22,6 +22,7 @@ const HowToCommitDifferently = () => {
               href: EXTERNAL_LINKS.DONATION,
               external: true,
             },
+            tag: GA_TAGS.PAGE_ENTREPRISES_DONS_CLIC,
           },
           {
             title:
@@ -31,6 +32,7 @@ const HowToCommitDifferently = () => {
               label: 'Sensibiliser mon équipe',
               href: '/entreprises/sinformer',
             },
+            tag: GA_TAGS.PAGE_ENTREPRISES_SENSIBILISER_CLIC,
           },
           {
             title: 'Partager votre expertise',
@@ -39,6 +41,7 @@ const HowToCommitDifferently = () => {
               label: 'Proposer du mécénat',
               href: '/entreprises/sinformer',
             },
+            tag: GA_TAGS.PAGE_ENTREPRISES_MECENAT_CLIC,
           },
         ]}
       />

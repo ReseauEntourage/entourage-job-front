@@ -24,8 +24,14 @@ AnimatedNumber.propTypes = {
 
 const NumberCard = ({ value, description, subDescription, animate }) => {
   return (
-    <div className="uk-card uk-width-1-1 uk-card-body uk-card-small uk-flex uk-flex-center uk-flex-middle">
-      <Grid middle center gap="collapse" eachWidths={['auto', '1-6', '1-2']}>
+    <div className="uk-card uk-width-1-1 uk-card-body uk-card-small uk-flex uk-flex-middle">
+      <Grid
+        middle
+        center
+        gap="collapse"
+        eachWidths={['1-3', '1-6', '1-2']}
+        className="uk-width-expand"
+      >
         <div className="uk-text-right uk-text-primary">
           {value.toString().length > 6 ? (
             <span className="uk-text-primary uk-text-right">

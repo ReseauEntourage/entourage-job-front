@@ -19,6 +19,8 @@ import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
 import { openModal } from 'src/components/modals/Modal';
 import ModalGeneric from 'src/components/modals/ModalGeneric';
+import Api from 'src/Axios';
+import PropTypes from 'prop-types';
 
 const timeline = [
   {
@@ -71,7 +73,7 @@ const openContactModal = () => {
   );
 };
 
-const Entreprises = () => {
+const Entreprises = ({ nbPublishedCVs }) => {
   return (
     <Layout title="Entreprises - LinkedOut">
       <ImageTitle
@@ -227,7 +229,8 @@ const Entreprises = () => {
       />
       <Section container="large" style="muted">
         <h3 className="uk-text-bold uk-align-center uk-text-center uk-margin-medium-bottom uk-margin-remove-top uk-width-1-2@m">
-          XX candidats cherchent actuellement un emploi
+          {nbPublishedCVs || 'De nombreux'} candidats cherchent actuellement un
+          emploi
         </h3>
         <CVList
           hideSearchBar
@@ -264,7 +267,7 @@ const Entreprises = () => {
           <span className="uk-text-primary">Ils ont recruté</span> avec
           LinkedOut
         </h3>
-        <LogoList logos={PARTNERS.hired} />
+        <LogoList logos={PARTNERS.hired} carousel />
       </Section>
       <HowToCommitDifferently />
       <Section style="primary">
@@ -288,4 +291,24 @@ const Entreprises = () => {
   );
 };
 
+Entreprises.getInitialProps = async () => {
+  return Api.get(`/cv/published`)
+    .then(({ data: { nbPublishedCVs } }) => {
+      return {
+        nbPublishedCVs,
+      };
+    })
+    .catch((err) => {
+      console.log(err);
+      return { nbPublishedCVs: null };
+    });
+};
+
+Entreprises.propTypes = {
+  nbPublishedCVs: PropTypes.number,
+};
+
+Entreprises.defaultProps = {
+  nbPublishedCVs: undefined,
+};
 export default Entreprises;

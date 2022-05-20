@@ -17,6 +17,18 @@ const GA_TAGS = {
   PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC: {
     action: 'Page_Entreprises_Contacter_Referent_Clic',
   },
+  PAGE_ENTREPRISES_CARROUSEL_CLIC: {
+    action: 'Page_Entreprises_Carrousel_Clic',
+  },
+  PAGE_ENTREPRISES_DON_CLIC: {
+    action: 'Page_Entreprises_Don_Clic',
+  },
+  PAGE_ENTREPRISES_SENSIBILISER_CLIC: {
+    action: 'Page_Entreprises_Sensibiliser_Clic',
+  },
+  PAGE_ENTREPRISES_MECENAT_CLIC: {
+    action: 'Page_Entreprises_Mecenat_Clic',
+  },
   PAGE_GALERIE_CV_CLIC: {
     action: 'Page_Galerie_CV_Clic',
   },

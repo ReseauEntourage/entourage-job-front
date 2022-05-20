@@ -6,14 +6,14 @@ const ImageTitle = ({ id, title, text, img, cta }) => {
   return (
     <div
       id={id}
-      className="uk-background-muted uk-margin-remove uk-padding-remove"
+      className="uk-background-muted uk-margin-remove uk-padding-remove "
     >
       <div
         style={{
           position: 'relative',
           height: '75vh',
         }}
-        className="uk-flex uk-flex-column uk-flex-center"
+        className="uk-flex uk-flex-column uk-flex-center uk-box-shadow-medium"
       >
         <div
           className="uk-background-cover uk-background-center"
@@ -35,6 +35,7 @@ const ImageTitle = ({ id, title, text, img, cta }) => {
             className="uk-text-left uk-text-bold"
             style={{
               color: 'black',
+              textShadow: '0px 0px 18px white',
             }}
           >
             {title}
@@ -44,6 +45,7 @@ const ImageTitle = ({ id, title, text, img, cta }) => {
               className="uk-text-left uk-margin-remove-vertical"
               style={{
                 color: 'black',
+                textShadow: '0px 0px 18px white',
               }}
             >
               {text}

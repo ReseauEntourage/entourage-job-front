@@ -1,7 +1,5 @@
 import React from 'react';
-import { Img, Section } from 'src/components/utils';
-import Carousel from 'src/components/utils/Carousel';
-import CarouselItem from 'src/components/partials/CarouselItem';
+import { Img, Section, Grid } from 'src/components/utils';
 
 const reviews = [
   {
@@ -46,11 +44,8 @@ const Reviews = () => {
       <h3 className="uk-text-bold uk-text-left uk-margin-medium-bottom uk-margin-remove-top">
         Ce que LinkedOut <span className="uk-text-primary">leur a apporté</span>
       </h3>
-      <div className="uk-flex uk-flex-center">
-        <Carousel
-          style="default"
-          containerClasses="uk-child-width-1-1 uk-container-small"
-        >
+      <div className="uk-flex uk-flex-center" uk-height-match=".review-card">
+        <Grid center middle match gap="medium" childWidths={['1-2@m']}>
           {reviews.map(
             (
               {
@@ -65,52 +60,52 @@ const Reviews = () => {
               index
             ) => {
               return (
-                <CarouselItem
+                <div
                   key={index}
-                  index={index}
-                  img={image}
-                  description={
-                    <div>
+                  uk-scrollspy={`cls:uk-animation-slide-bottom-small; delay: ${
+                    100 * index
+                  };`}
+                  className="review-card uk-flex uk-flex-column uk-card uk-card-large uk-card-default uk-card-body uk-box-shadow-medium uk-background-muted"
+                >
+                  <Img src={image} alt={author} />
+                  <div className="uk-margin-medium-top">
+                    <Img
+                      alt="guillemets"
+                      width="27"
+                      height="21"
+                      src="/static/img/guillemets.png"
+                    />
+                    <p className="uk-text-small uk-margin-small uk-text-italic">
+                      {review}
+                    </p>
+                    <div
+                      className="uk-text-bottom"
+                      style={{ display: 'flex', justifyContent: 'flex-end' }}
+                    >
                       <Img
-                        alt="guillemets"
-                        width="27"
-                        height="21"
-                        src="/static/img/guillemets.png"
+                        alt="guillemets-petits"
+                        width="15"
+                        height="12"
+                        src="/static/img/guillemetsPetits.png"
                       />
-                      <p className="uk-text-small uk-margin-small uk-text-italic">
-                        {review}
-                      </p>
-                      <div
-                        className="uk-text-bottom"
-                        style={{ display: 'flex', justifyContent: 'flex-end' }}
-                      >
-                        <Img
-                          alt="guillemets-petits"
-                          width="15"
-                          height="12"
-                          src="/static/img/guillemetsPetits.png"
-                        />
-                      </div>
-                      <p className="uk-text-bold uk-margin-small uk-margin-remove-bottom">
-                        {author}
-                      </p>
-                      {authorStatus && (
-                        <p className="uk-margin-small uk-margin-remove-bottom">
-                          {authorStatus}
-                        </p>
-                      )}
-                      <p className="uk-text-meta uk-margin-remove">
-                        <span className="uk-text-bold">{company}</span>,&nbsp;
-                        <span>{industry}</span>
-                        {companyInfo && <span>,&nbsp;{companyInfo}</span>}
-                      </p>
                     </div>
-                  }
-                />
+                    <p className="uk-text-bold uk-margin-small uk-margin-remove-bottom">
+                      {author}
+                    </p>
+                    {authorStatus && (
+                      <p className="uk-margin-remove">{authorStatus}</p>
+                    )}
+                    <p className="uk-text-meta uk-margin-remove">
+                      <span className="uk-text-bold">{company}</span>
+                      {industry && <span>,&nbsp;{industry}</span>}
+                      {companyInfo && <span>,&nbsp;{companyInfo}</span>}
+                    </p>
+                  </div>
+                </div>
               );
             }
           )}
-        </Carousel>
+        </Grid>
       </div>
     </Section>
   );
