@@ -1,3 +1,9 @@
+@orange: #F55F24;
+@black: #363636;
+@light-grey: #e5e5e5;
+@white: #FFF;
+@disabled: #999;
+
 // permet de créer un ellipsis sur un text à plusieurs lignes
 body {
   overflow-wrap: anywhere
@@ -58,7 +64,7 @@ body {
 }
 
 hr.uk-divider-small::after {
-  border-top: 1px solid #f55f24;
+  border-top: 1px solid @orange;
 }
 
 .ent-text-white {
@@ -110,7 +116,7 @@ hr.uk-divider-small::after {
   align-items: center;
   margin: 0 20px;
   font-size: 14px;
-  color: #999;
+  color: @disabled;
   display: flex;
 }
 
@@ -126,7 +132,7 @@ hr.uk-divider-small::after {
 }
 
 .ent-nav-item>a {
-  color: white !important;
+  color: @white !important;
   text-transform: none !important;
 }
 
@@ -135,7 +141,7 @@ hr.uk-divider-small::after {
 }
 
 .ent-site-map {
-  color: white !important;
+  color: @white !important;
   margin-bottom: 10px;
 }
 
@@ -148,14 +154,14 @@ hr.uk-divider-small::after {
   border-radius: 5px;
   font-weight: bold;
   font-size: 18px;
-  background-color: #f55f24;
+  background-color: @orange;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   height: 40px;
   width: 40px;
-  color: white;
+  color: @white;
   top: 5px;
   z-index: 3;
 }
@@ -181,7 +187,7 @@ hr.uk-divider-small::after {
   padding: 0 10px 0 27px;
   position: relative;
   text-align: center;
-  background-color: #e5e5e5;
+  background-color: @light-grey;
   height: 68px;
   display: flex;
   align-items: center;
@@ -191,7 +197,7 @@ hr.uk-divider-small::after {
 .ent-timeline-arrow:after {
   border-top: 34px solid transparent;
   border-bottom: 34px solid transparent;
-  border-left: 17px solid #e5e5e5;
+  border-left: 17px solid @light-grey;
   content: "";
   height: 0;
   position: absolute;
@@ -204,7 +210,7 @@ hr.uk-divider-small::after {
 .ent-timeline-arrow:before {
   border-top: 34px solid transparent;
   border-bottom: 34px solid transparent;
-  border-left: 17px solid white;
+  border-left: 17px solid @white;
   content: "";
   height: 0;
   position: absolute;
@@ -234,7 +240,7 @@ hr.uk-divider-small::after {
   border-right: 15px solid transparent;
   border-bottom: 10px solid transparent;
   border-left: 17px solid transparent;
-  border-top-color: #e5e5e5;
+  border-top-color: @light-grey;
 }
 
 .ent-timeline-arrow-mobile:before {
@@ -246,7 +252,7 @@ hr.uk-divider-small::after {
   border-right: 15px solid transparent;
   border-bottom: 10px solid transparent;
   border-left: 17px solid transparent;
-  border-top-color: white;
+  border-top-color: @white;
 }
 
 

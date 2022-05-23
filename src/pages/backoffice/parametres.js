@@ -501,7 +501,6 @@ const Parametres = () => {
                       );
                       setLoadingPassword(false);
                     }
-                    setError('');
                   } else {
                     setError('Nouveau mot de passe erroné');
                   }

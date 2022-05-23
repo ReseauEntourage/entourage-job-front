@@ -8,9 +8,9 @@ const AnimatedList = ({ items }) => {
       uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;"
       className="uk-list uk-list-disc uk-margin-remove-bottom"
     >
-      {items.map((item) => {
+      {items.map((item, index) => {
         return (
-          <li className="uk-text-primary">
+          <li className="uk-text-primary" key={index}>
             <span className="uk-text-secondary">{item}</span>
           </li>
         );
@@ -21,9 +21,7 @@ const AnimatedList = ({ items }) => {
 
 AnimatedList.propTypes = {
   items: PropTypes.arrayOf(
-    PropTypes.shape({
-      text: PropTypes.string.isRequired,
-    })
+    PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired
   ).isRequired,
 };
 

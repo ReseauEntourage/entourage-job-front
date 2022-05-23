@@ -129,7 +129,7 @@ MultipleCTA.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string,
-      text: PropTypes.element,
+      text: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
       img: PropTypes.string,
       button: PropTypes.shape({
         label: PropTypes.string,

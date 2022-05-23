@@ -305,6 +305,9 @@ const GA_TAGS = {
   BACKOFFICE_CANDIDAT_STATUT_SELECTEUR_CLIC: {
     action: 'Backoffice_Candidat_Statut_Selecteur_Clic',
   },
+  SHOW_PASSWORD_CLIC: {
+    action: 'Show_Password_Clic',
+  },
 };
 
 const FB_TAGS = {

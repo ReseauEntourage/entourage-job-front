@@ -47,7 +47,7 @@ const NumberCard = ({ value, description, subDescription, animate }) => {
           className="uk-divider-vertical"
           style={{ borderLeftColor: '#F55F24', height: '80px' }}
         />
-        <div className="">
+        <div>
           <p className="uk-text-uppercase uk-text-bold uk-margin-remove">
             {description}
           </p>

@@ -3,12 +3,13 @@ import React from 'react';
 const PasswordCriterias = () => {
   return (
     <>
-      <p>Le mot de passe doit :</p>
+      <p className="uk-text-small">Le mot de passe doit&nbsp;:</p>
       <p>
-        <ul className="uk-list uk-list-bullet">
+        <ul className="uk-list uk-list-bullet uk-text-small">
           <li>
             Faire au moins{' '}
-            <span className="uk-text-primary uk-text-bold">8 caractères</span>
+            <span className="uk-text-primary uk-text-bold">8 caractères</span>{' '}
+            de longueur
           </li>
           <li>
             Contenir des{' '}
@@ -28,6 +29,13 @@ const PasswordCriterias = () => {
             Contenir des{' '}
             <span className="uk-text-primary uk-text-bold">
               caractères spéciaux
+            </span>{' '}
+            parmi les suivants&nbsp;:
+            <br />
+            <span className="uk-text-muted">
+              {
+                '! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _ ` { | } ~'
+              }
             </span>
           </li>
         </ul>
