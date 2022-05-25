@@ -12861,3 +12861,7 @@ iframe.uk-cover {
 .uk-card-default.uk-card-hover:hover.ent-external-offer {
   background-color: #FFF8F5 !important;
 }
+.uk-list-disc > li:nth-child(n+2),
+.uk-list-disc > li > ul {
+  margin-top: 20px;
+}

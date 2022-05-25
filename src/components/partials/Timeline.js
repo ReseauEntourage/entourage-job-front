@@ -16,7 +16,7 @@ const Timeline = ({ items }) => {
           <div key={index}>
             <div
               uk-scrollspy={`cls:uk-animation-slide-right; delay: ${
-                200 + index * 100
+                200 + index * 200
               };`}
               className="uk-margin-medium-right uk-visible@m uk-flex uk-flex-column uk-flex-middle"
             >

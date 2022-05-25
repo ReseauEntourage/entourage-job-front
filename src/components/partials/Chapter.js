@@ -47,30 +47,22 @@ export const Chapter = ({
             <p className="uk-margin-remove-top uk-margin-remove-bottom">
               {content}
             </p>
+            {cta && <div className="uk-flex uk-flex-center">{cta}</div>}
           </div>
           {imgSrc && (
             <div
               className="uk-flex uk-flex-center uk-flex-middle"
-              uk-scrollspy={
-                animate
-                  ? `cls:uk-animation-slide-${
-                      direction === 'left' ? 'left' : 'right'
-                    }; delay: 200;`
-                  : ''
-              }
+              uk-scrollspy="cls:uk-animation-fade; delay: 200;"
             >
               <Img
                 src={imgSrc}
                 alt=""
-                className="uk-height-max-large uk-box-shadow-medium"
+                className="uk-height-max-large uk-box-shadow-medium uk-border-rounded"
               />
             </div>
           )}
         </Grid>
       </div>
-      {cta && (
-        <div className="uk-flex uk-flex-center uk-margin-small-top">{cta}</div>
-      )}
     </Section>
   );
 };

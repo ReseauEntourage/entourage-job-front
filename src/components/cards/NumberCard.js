@@ -34,11 +34,21 @@ const NumberCard = ({ value, description, subDescription, animate }) => {
       >
         <div className="uk-text-right uk-text-primary">
           {value.toString().length > 6 ? (
-            <span className="uk-text-primary uk-text-right">
+            <span
+              className="uk-text-primary uk-text-right"
+              style={{
+                fontSize: '4rem',
+              }}
+            >
               {animate ? <AnimatedNumber value={value} /> : value}
             </span>
           ) : (
-            <span className="uk-h1 uk-text-primary uk-text-nowrap">
+            <span
+              className="uk-h1 uk-text-primary uk-text-nowrap"
+              style={{
+                fontSize: '4rem',
+              }}
+            >
               {animate ? <AnimatedNumber value={value} /> : value}
             </span>
           )}

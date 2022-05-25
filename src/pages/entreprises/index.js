@@ -115,33 +115,40 @@ const Entreprises = ({ nbPublishedCVs }) => {
                     Agir concrètement en faveur de l’inclusion
                   </span>
                   <br />
-                  Le recrutement est l’expérience la plus impactante et
-                  transformante pour votre entreprise
+                  <span className="uk-text-small">
+                    Le recrutement est l’expérience la plus impactante et
+                    transformante pour votre entreprise
+                  </span>
                 </>,
                 <>
                   <span className="uk-text-bold">
                     Soutenir la transformation de votre entreprise
                   </span>
                   <br />
-                  Vous investissez dans la performance à long terme de votre
-                  équipe
+                  <span className="uk-text-small">
+                    Vous investissez dans la performance à long terme de votre
+                    équipe
+                  </span>
                 </>,
                 <>
                   <span className="uk-text-bold">
-                    Engager vos collaborateurs
-                  </span>{' '}
-                  dans une démarche d’inclusion
+                    Engager vos collaborateurs dans une démarche d’inclusion
+                  </span>
                   <br />
-                  Vous embarquez dans un projet collectif tout en renforçant
-                  votre marque employeur
+                  <span className="uk-text-small">
+                    Vous embarquez dans un projet collectif tout en renforçant
+                    votre marque employeur
+                  </span>
                 </>,
                 <>
                   <span className="uk-text-bold">
                     Répondre à vos besoins en recrutement
                   </span>
                   <br />
-                  Vous identifiez et rencontrez de nouveaux profils, sur tous
-                  types de métiers
+                  <span className="uk-text-small">
+                    Vous identifiez et rencontrez de nouveaux profils, sur tous
+                    types de métiers
+                  </span>
                 </>,
               ]}
             />
@@ -173,60 +180,50 @@ const Entreprises = ({ nbPublishedCVs }) => {
           <>
             Recruter inclusif, c’est donner la chance à une personne en dehors
             des canaux traditionnels d’intégrer votre entreprise et créer les
-            conditions pour l’intégrer durablement. Concrètement, vous adaptez
-            votre processus de recrutement et l’intégration de la personne.
-            LinkedOut vous accompagne tout au long pour faire de ce recrutement
-            un succès.
+            conditions pour l’intégrer durablement.
+            <br />
+            <br />
+            Concrètement, vous adaptez votre processus de recrutement et
+            l’intégration de la personne. LinkedOut vous accompagne tout au long
+            pour faire de ce recrutement un succès.
           </>
         }
         imgSrc="/static/img/company_what.jpg"
         animate
-        direction="right"
+        direction="left"
         style="default"
       />
-      <Chapter
-        smallTitle
-        style="default"
-        title={
-          <>
-            Qui sont{' '}
-            <span className="uk-text-primary">nos candidats&nbsp;?</span>
-          </>
-        }
-        content={
-          <>
-            L’équipe LinkedOut s&apos;appuie sur des partenaires locaux et des
-            associations pour identifier et sélectionner des personnes absentes
-            de vos canaux habituels. Les candidats LinkedOut ont des profils
-            très variés en termes de parcours, d&apos;âge, d&apos;expérience,
-            mais ont tous en commun&nbsp;:
-            <br />
-            <AnimatedList
-              items={[
-                <>
-                  <span className="uk-text-bold">L&apos;absence de réseau</span>{' '}
-                  et le fait d&apos;avoir vécu la précarité et/ou
-                  l&apos;exclusion
-                </>,
-                <>
-                  <span className="uk-text-bold">
-                    Une grande motivation pour trouver un emploi stable
-                  </span>{' '}
-                  et construire un avenir
-                </>,
-                <>
-                  <span className="uk-text-bold">
-                    La capacité à travailler :
-                  </span>{' '}
-                  les freins à l’emploi ont été levés
-                </>,
-              ]}
-            />
-          </>
-        }
-        animate={false}
-        direction="column"
-      />
+      <Section container="small" style="default">
+        <h3 className="uk-text-center uk-text-bold uk-margin-medium-bottom">
+          Qui sont <span className="uk-text-primary">nos candidats&nbsp;?</span>
+        </h3>
+        <p>
+          L’équipe LinkedOut s&apos;appuie sur des partenaires locaux et des
+          associations pour identifier et sélectionner des personnes absentes de
+          vos canaux habituels. Les candidats LinkedOut ont des profils très
+          variés en termes de parcours, d&apos;âge, d&apos;expérience, mais ont
+          tous en commun&nbsp;:
+          <br />
+          <AnimatedList
+            items={[
+              <>
+                <span className="uk-text-bold">L&apos;absence de réseau</span>{' '}
+                et le fait d&apos;avoir vécu la précarité et/ou l&apos;exclusion
+              </>,
+              <>
+                <span className="uk-text-bold">
+                  Une grande motivation pour trouver un emploi stable
+                </span>{' '}
+                et construire un avenir
+              </>,
+              <>
+                <span className="uk-text-bold">La capacité à travailler :</span>{' '}
+                les freins à l’emploi ont été levés
+              </>,
+            ]}
+          />
+        </p>
+      </Section>
       <Section container="large" style="muted">
         <h3 className="uk-text-bold uk-align-center uk-text-center uk-margin-medium-bottom uk-margin-remove-top uk-width-1-2@m">
           {nbPublishedCVs || 'De nombreux'} candidats cherchent actuellement un
@@ -249,14 +246,14 @@ const Entreprises = ({ nbPublishedCVs }) => {
         </div>
       </Section>
       <Section style="default">
-        <h3 className="uk-text-bold uk-text-left uk-margin-medium-bottom uk-margin-remove-top">
+        <h3 className="uk-text-bold uk-text-center uk-margin-medium-bottom uk-margin-remove-top">
           <span className="uk-text-primary">L&apos;accompagnement</span>{' '}
           LinkedOut à chaque étape
         </h3>
         <Timeline items={timeline} />
       </Section>
       <Section style="default">
-        <h3 className="uk-text-bold uk-text-left uk-margin-medium-bottom uk-margin-remove-top">
+        <h3 className="uk-text-bold uk-text-center uk-margin-medium-bottom uk-margin-remove-top">
           Notre impact <span className="uk-text-primary">en chiffres</span>
         </h3>
         <NumberGrid numbers={numbers} />

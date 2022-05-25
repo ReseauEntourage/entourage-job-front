@@ -26,7 +26,7 @@ const Carousel = ({ style, children, containerClasses, pagination }) => {
   return (
     <div
       className="uk-position-relative"
-      data-uk-slider="autoplay: true; autoplay-interval: 5000; pause-on-hover: true; center: true;"
+      data-uk-slider="autoplay: true; autoplay-interval: 2000; pause-on-hover: true; center: true;"
       style={{ maxWidth: '100%' }}
     >
       <div className={`uk-slider-container uk-background-${style}`}>

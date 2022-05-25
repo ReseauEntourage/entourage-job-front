@@ -7,7 +7,7 @@ const NumberGrid = ({ numbers }) => {
   return (
     <Grid
       center
-      gap="collapse"
+      gap="large"
       childWidths={[`1-3@m`]}
       items={numbers.map(({ value, description, subDescription, animate }) => {
         return (

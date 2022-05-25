@@ -41,7 +41,7 @@ const reviews = [
 const Reviews = () => {
   return (
     <Section id="reviews" style="default">
-      <h3 className="uk-text-bold uk-text-left uk-margin-medium-bottom uk-margin-remove-top">
+      <h3 className="uk-text-bold uk-text-center uk-margin-medium-bottom uk-margin-remove-top">
         Ce que LinkedOut <span className="uk-text-primary">leur a apporté</span>
       </h3>
       <div className="uk-flex uk-flex-center" uk-height-match=".review-card">
@@ -63,11 +63,13 @@ const Reviews = () => {
                 <div
                   key={index}
                   uk-scrollspy={`cls:uk-animation-slide-bottom-small; delay: ${
-                    100 * index
+                    200 + index * 200
                   };`}
-                  className="review-card uk-flex uk-flex-column uk-card uk-card-large uk-card-default uk-card-body uk-box-shadow-medium uk-background-muted"
+                  className="review-card uk-flex uk-flex-column uk-card uk-card-medium uk-card-default uk-card-body uk-box-shadow-medium uk-background-muted"
                 >
-                  <Img src={image} alt={author} />
+                  <div className="uk-cover-container uk-height-medium">
+                    <Img src={image} alt={author} cover />
+                  </div>
                   <div className="uk-margin-medium-top">
                     <Img
                       alt="guillemets"
