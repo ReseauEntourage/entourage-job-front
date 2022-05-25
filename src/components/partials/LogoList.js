@@ -46,7 +46,7 @@ const Logo = ({ logoKey, link, bis }) => {
 Logo.propTypes = {
   logoKey: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
-  bis: PropTypes.string,
+  bis: PropTypes.bool,
 };
 
 Logo.defaultProps = {
@@ -59,8 +59,11 @@ const LogoList = ({ logos, carousel }) => {
       <Carousel containerClasses="uk-child-width-auto" pagination={false}>
         {logos.map(({ key, link, bis }) => {
           return (
-            <div className="uk-margin-medium-left uk-margin-medium-right">
-              <Logo key={key} logoKey={key} link={link} bis={bis} />
+            <div
+              key={key}
+              className="uk-margin-medium-left uk-margin-medium-right"
+            >
+              <Logo logoKey={key} link={link} bis={bis} />
             </div>
           );
         })}
@@ -82,7 +85,13 @@ const LogoList = ({ logos, carousel }) => {
 };
 
 LogoList.propTypes = {
-  logos: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  logos: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      link: PropTypes.string.isRequired,
+      bis: PropTypes.bool,
+    })
+  ).isRequired,
   carousel: PropTypes.bool,
 };
 

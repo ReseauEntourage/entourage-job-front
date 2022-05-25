@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
+import ButtonIcon from 'src/components/utils/ButtonIcon';
+import { gaEvent } from 'src/lib/gtag';
+import { GA_TAGS } from 'src/constants/tags';
+
+const showPasswordButtonStyle = {
+  position: 'absolute',
+  right: 12,
+  top: 32.5,
+};
 
 const Input = ({
   id,
@@ -18,6 +27,8 @@ const Input = ({
   max,
 }) => {
   const [labelClass, setLabelClass] = useState('');
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const update = (event) => {
     setLabelClass(event.target.value.length > 0 && ' stay-small');
@@ -41,7 +52,7 @@ const Input = ({
       </label>
       <input
         name={name}
-        type={type}
+        type={showPassword ? 'text' : type}
         id={id}
         value={value || ''}
         placeholder={placeholder || 'Tapez votre texte'}
@@ -56,6 +67,30 @@ const Input = ({
         min={min}
         max={max}
       />
+      {type === 'password' && (
+        <>
+          {showPassword ? (
+            <ButtonIcon
+              name="eye-opened"
+              ratio={1}
+              style={showPasswordButtonStyle}
+              onClick={() => {
+                setShowPassword(false);
+              }}
+            />
+          ) : (
+            <ButtonIcon
+              name="eye-closed"
+              style={showPasswordButtonStyle}
+              ratio={1}
+              onClick={() => {
+                gaEvent(GA_TAGS.SHOW_PASSWORD_CLIC);
+                setShowPassword(true);
+              }}
+            />
+          )}
+        </>
+      )}
       <FormValidatorErrorMessage validObj={valid} />
     </div>
   );
