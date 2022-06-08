@@ -38,13 +38,13 @@ const MultipleCTA = ({
               className="uk-flex uk-flex-column uk-flex-middle"
             >
               {item.img && (
-                <div className="uk-height-small uk-flex uk-flex-bottom uk-flex-center uk-margin-medium-bottom">
+                <div className="uk-flex uk-flex-bottom uk-flex-center uk-margin-small-bottom">
                   <Img
                     src={item.img}
                     width=""
                     height=""
                     alt=""
-                    className="uk-height-max-small"
+                    className="uk-height-max-small uk-padding-small"
                   />
                 </div>
               )}
@@ -64,7 +64,9 @@ const MultipleCTA = ({
                         showHorizontalDividers
                           ? 'uk-text-left uk-flex-left'
                           : 'uk-text-center uk-flex-center'
-                      } uk-flex-bottom uk-flex-1 uk-text-bold uk-flex`}
+                      } ${
+                        item.img ? 'uk-flex-middle' : 'uk-flex-top'
+                      } uk-flex-1 uk-text-bold uk-flex`}
                     >
                       {item.title}
                     </h4>

@@ -13,6 +13,8 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 import { gaEvent } from 'src/lib/gtag';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
+import { openModal } from 'src/components/modals/Modal';
+import ModalInterestLinkedOut from 'src/components/modals/ModalInterestLinkedOut';
 
 const steps = [
   {
@@ -46,11 +48,36 @@ const Orienter = () => {
         img="static/img/header_pic_guide.jpg"
         id="guide-title"
         title={
+          <mark>
+            <span className="uk-text-primary">Travaillons ensemble</span> pour
+            l’accès à l’emploi
+          </mark>
+        }
+        text={
           <>
-            Orientez-nous{' '}
-            <span className="uk-text-primary">des candidats&nbsp;!</span>
+            Vous accompagnez des personnes en situation d&apos;exclusion&nbsp;?
+            Avec LinkedOut, accélérez leur retour à l’emploi&nbsp;! Notre
+            tremplin vers l’emploi en 6 mois s’inscrit dans la continuité de
+            votre accompagnement.
           </>
         }
+        cta={{
+          label: 'Inscrire un candidat',
+          href: `${process.env.AIRTABLE_LINK_PROFESSIONAL_REINTEGRATION}`,
+          isExternal: true,
+          newTab: true,
+          onClick: () => {
+            gaEvent(GA_TAGS.PAGE_ORIENTER_INSCRIPTION_CLIC);
+            fbEvent(FB_TAGS.SOCIAL_WORKER_REGISTRATION);
+          },
+        }}
+        secondCta={{
+          label: 'Nous contacter',
+          onClick: () => {
+            gaEvent(GA_TAGS.PAGE_ORIENTER_CONTACT_CLIC);
+            openModal(<ModalInterestLinkedOut />);
+          },
+        }}
       />
       <Section id="introLinkedout" container="small" style="muted">
         <div className="uk-flex uk-flex-column uk-flex-center uk-flex-middle">

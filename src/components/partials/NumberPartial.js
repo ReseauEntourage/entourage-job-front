@@ -14,14 +14,10 @@ const staticNumbers = [
   { value: '263', description: "Offres d'emploi reçues" },
   {
     value: (
-      <div>
-        Administration
+      <div className="uk-margin-small-bottom">
+        Administration / Logistique
         <br />
-        Logistique
-        <br />
-        Distribution
-        <br />
-        BTP
+        Distribution / BTP
       </div>
     ),
     description: 'Sont les secteurs qui ont le plus recruté',

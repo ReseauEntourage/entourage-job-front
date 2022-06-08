@@ -15,7 +15,7 @@ export const Chapter = ({
 }) => {
   return (
     <Section style={style}>
-      <div className="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
+      <div className="uk-flex uk-flex-column uk-flex-center uk-flex-middle uk-overflow-hidden">
         {!smallTitle && (
           <h2 className="uk-text-bold uk-align-center uk-text-center uk-margin-medium-bottom uk-margin-remove-top uk-width-1-2@m">
             {title}
@@ -40,9 +40,9 @@ export const Chapter = ({
             }
           >
             {smallTitle && (
-              <h3 className="uk-text-bold uk-text-left uk-margin-medium-bottom uk-margin-remove-top">
+              <h2 className="uk-text-bold uk-text-left uk-margin-medium-bottom uk-margin-remove-top">
                 {title}
-              </h3>
+              </h2>
             )}
             <p className="uk-margin-remove-top uk-margin-remove-bottom">
               {content}

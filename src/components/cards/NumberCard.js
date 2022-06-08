@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'src/components/utils';
 import CountUp from 'react-countup';
 import VisibilitySensor from 'react-visibility-sensor';
 
@@ -24,22 +23,11 @@ AnimatedNumber.propTypes = {
 
 const NumberCard = ({ value, description, subDescription, animate }) => {
   return (
-    <div className="uk-card uk-width-1-1 uk-card-body uk-card-small uk-flex uk-flex-middle">
-      <Grid
-        middle
-        center
-        gap="collapse"
-        eachWidths={['1-3', '1-6', '1-2']}
-        className="uk-width-expand"
-      >
-        <div className="uk-text-right uk-text-primary">
+    <div className="uk-card uk-card-body uk-card-small uk-flex uk-flex-middle uk-flex-center uk-width-medium">
+      <div className="uk-flex uk-flex-column uk-flex-middle">
+        <div className="ent-number uk-text-primary uk-text-bold uk-text-center">
           {value.toString().length > 6 ? (
-            <span
-              className="uk-text-primary uk-text-right"
-              style={{
-                fontSize: '4rem',
-              }}
-            >
+            <span className="uk-text-primary uk-text-large">
               {animate ? <AnimatedNumber value={value} /> : value}
             </span>
           ) : (
@@ -53,21 +41,15 @@ const NumberCard = ({ value, description, subDescription, animate }) => {
             </span>
           )}
         </div>
-        <hr
-          className="uk-divider-vertical"
-          style={{ borderLeftColor: '#F55F24', height: '80px' }}
-        />
-        <div>
-          <p className="uk-text-uppercase uk-text-bold uk-margin-remove">
-            {description}
-          </p>
+        <div className="ent-number-description uk-text-center">
+          <h4 className="uk-text-bold uk-margin-remove">{description}</h4>
           {subDescription && (
-            <p className="uk-text-meta uk-text-small uk-text-italic uk-text-right uk-margin-remove">
+            <p className="uk-text-meta uk-text-small uk-text-italic uk-margin-remove">
               {subDescription}
             </p>
           )}
         </div>
-      </Grid>
+      </div>
     </div>
   );
 };

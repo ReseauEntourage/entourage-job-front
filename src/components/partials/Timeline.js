@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from 'src/components/utils';
+import { Grid, Img } from 'src/components/utils';
 import PropTypes from 'prop-types';
 
 const Timeline = ({ items }) => {
@@ -11,7 +11,7 @@ const Timeline = ({ items }) => {
       childWidths={['1-3@m']}
       className="uk-background-default"
     >
-      {items.map(({ text }, index) => {
+      {items.map(({ text, icon }, index) => {
         return (
           <div key={index}>
             <div
@@ -22,7 +22,16 @@ const Timeline = ({ items }) => {
             >
               <div className="ent-timeline-number">{index + 1}</div>
               <div className="ent-timeline-arrow">
-                <span className="uk-text-center uk-text-bold">{text}</span>
+                <div className="uk-flex uk-flex-middle">
+                  <Img
+                    src={icon}
+                    width="25x"
+                    height="25px"
+                    alt={text}
+                    className="uk-margin-small-right"
+                  />
+                  <span className="uk-text-center uk-text-bold">{text}</span>
+                </div>
               </div>
             </div>
             <div
@@ -33,7 +42,16 @@ const Timeline = ({ items }) => {
                 <div className="ent-timeline-number ent-timeline-number-mobile">
                   {index + 1}
                 </div>
-                <span className="uk-text-center uk-text-bold">{text}</span>
+                <span className="uk-text-center uk-text-bold uk-padding-small uk-flex uk-flex-middle uk-flex-center">
+                  <Img
+                    src={icon}
+                    width="25x"
+                    height="25px"
+                    alt={text}
+                    className="uk-margin-small-right"
+                  />
+                  {text}
+                </span>
               </div>
             </div>
           </div>

@@ -14,64 +14,60 @@ import { CV_FILTERS_DATA } from 'src/constants';
 import Timeline from 'src/components/partials/Timeline';
 import NumberGrid from 'src/components/partials/NumberGrid';
 import AnimatedList from 'src/components/utils/AnimatedList';
-import { gaEvent } from 'src/lib/gtag';
-import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { fbEvent } from 'src/lib/fb';
-import { openModal } from 'src/components/modals/Modal';
-import ModalGeneric from 'src/components/modals/ModalGeneric';
 import Api from 'src/Axios';
 import PropTypes from 'prop-types';
+import TextLoop from 'react-text-loop';
+
+import { openContactModal } from 'src/components/modals/openContactModal';
 
 const timeline = [
   {
     text: 'Identifier un besoin en recrutement',
+    icon: 'static/img/illustrations/loupe.png',
   },
-  { text: 'Identifiez un candidat et déposez une offre' },
-  { text: 'Préparez la rencontre avec le candidat' },
-  { text: 'Rencontrez le candidat' },
-  { text: "Préparez l'intégration" },
-  { text: "Suivez l'intégration" },
+  {
+    text: 'Identifiez un candidat et déposez une offre',
+    icon: 'static/img/illustrations/approved.png',
+  },
+  {
+    text: 'Préparez la rencontre avec le candidat',
+    icon: 'static/img/illustrations/preparation.png',
+  },
+  {
+    text: 'Rencontrez le candidat',
+    icon: 'static/img/illustrations/interview.png',
+  },
+  {
+    text: "Préparez l'intégration",
+    icon: 'static/img/illustrations/content-de-te-revoir.png',
+  },
+  { text: "Suivez l'intégration", icon: 'static/img/illustrations/suivi.png' },
 ];
 
 const numbers = [
   {
     value: 230,
-    description: 'Candidats accompagnés depuis le lancement',
+    description: 'candidats accompagnés depuis le lancement',
     animate: true,
   },
   {
     value: '61%',
     description:
-      'Des candidats parvenus au bout du parcours ont retrouvé un travail',
+      'des candidats parvenus au bout du parcours ont retrouvé un travail',
   },
-  { value: 73, description: 'Entreprises ayant recruté', animate: true },
+  { value: 73, description: 'entreprises ayant recruté', animate: true },
   {
     value: '93%',
     description:
-      'Des candidats ont repris confiance en eux et en leurs capacités',
+      'des candidats ont repris confiance en eux et en leurs capacités',
   },
 ];
 
-const openContactModal = () => {
-  gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
-  fbEvent(FB_TAGS.COMPANY_CONTACT);
-  openModal(
-    <ModalGeneric>
-      <iframe
-        className="airtable-embed"
-        src={`${process.env.AIRTABLE_LINK_COMPANY_HELP}?backgroundColor=blue`}
-        frameBorder="0"
-        title="modal-company-help"
-        width="100%"
-        height="533"
-        style={{
-          background: 'transparent',
-          border: '1px solid #ccc;',
-        }}
-      />
-    </ModalGeneric>
-  );
-};
+const titles = [
+  'recruter inclusif',
+  'sensibiliser vos équipes',
+  "changer de regard sur l'inclusion",
+];
 
 const Entreprises = ({ nbPublishedCVs }) => {
   return (
@@ -81,21 +77,36 @@ const Entreprises = ({ nbPublishedCVs }) => {
         id="hire-title"
         title={
           <>
-            LinkedOut, le programme qui vous accompagne pour{' '}
-            <span className="uk-text-primary">recruter inclusif</span>
+            <mark>LinkedOut, le&nbsp;programme qui vous accompagne pour</mark>
+            <br />
+            <span className="mark-animated">
+              <TextLoop interval={2000} className="uk-visible@m">
+                {titles.map((title) => {
+                  return <span className="uk-text-primary">{title}</span>;
+                })}
+              </TextLoop>
+              <TextLoop interval={2000} className="uk-hidden@m" noWrap={false}>
+                {titles.map((title) => {
+                  return <span className="uk-text-primary">{title}</span>;
+                })}
+              </TextLoop>
+            </span>
           </>
         }
-        text="LinkedOut est à vos côtés tout au long du processus de recrutement pour diversifier les profils de votre entreprise."
-        cta={
-          <Button
-            onClick={openContactModal}
-            style="secondary"
-            className="uk-margin-small-top"
-          >
-            Contactez-nous&nbsp;
-            <IconNoSSR name="chevron-right" />
-          </Button>
+        text={
+          <mark className="mark-small">
+            Notre objectif ? Vous permettre de créer les conditions d’un
+            recrutement inclusif réussi, au service de la transformation de
+            votre entreprise. Pour cela, LinkedOut vous accompagne à chaque
+            étape.
+          </mark>
         }
+        cta={{
+          onClick: () => {
+            openContactModal();
+          },
+          label: 'Nous contacter',
+        }}
       />
       <Chapter
         smallTitle
@@ -112,22 +123,26 @@ const Entreprises = ({ nbPublishedCVs }) => {
               items={[
                 <>
                   <span className="uk-text-bold">
-                    Agir concrètement en faveur de l’inclusion
+                    Répondre à vos besoins en recrutement
                   </span>
                   <br />
                   <span className="uk-text-small">
-                    Le recrutement est l’expérience la plus impactante et
-                    transformante pour votre entreprise
+                    Vous identifiez et rencontrez de nouveaux profils, sur tous
+                    types de métiers
                   </span>
                 </>,
                 <>
                   <span className="uk-text-bold">
-                    Soutenir la transformation de votre entreprise
+                    Agir concrètement en faveur de l’inclusion
                   </span>
                   <br />
                   <span className="uk-text-small">
-                    Vous investissez dans la performance à long terme de votre
-                    équipe
+                    Il existe plusieurs façons pour une entreprise de s’engager
+                    en faveur de l’inclusion. Nous pensons que le recrutement
+                    est l&apos;expérience la plus impactante pour votre
+                    entreprise en vous faisant vivre une rencontre unique, et en
+                    vous offrant la possibilité de renouveler votre approche du
+                    recrutement et de l&apos;intégration.
                   </span>
                 </>,
                 <>
@@ -142,12 +157,14 @@ const Entreprises = ({ nbPublishedCVs }) => {
                 </>,
                 <>
                   <span className="uk-text-bold">
-                    Répondre à vos besoins en recrutement
+                    Soutenir la transformation de votre entreprise
                   </span>
                   <br />
                   <span className="uk-text-small">
-                    Vous identifiez et rencontrez de nouveaux profils, sur tous
-                    types de métiers
+                    En donnant sa chance à une personne qui en a besoin et en
+                    créant les conditions pour l&apos;accueillir, c&apos;est
+                    vous-même qui allez vivre une transformation, enrichir votre
+                    collectif et votre projet d’entreprise&nbsp;!
                   </span>
                 </>,
               ]}
@@ -172,8 +189,8 @@ const Entreprises = ({ nbPublishedCVs }) => {
         smallTitle
         title={
           <>
-            En quoi consiste le{' '}
-            <span className="uk-text-primary">recrutement inclusif</span>&nbsp;?
+            Le <span className="uk-text-primary">recrutement inclusif</span>,
+            c&apos;est quoi&nbsp;?
           </>
         }
         content={
@@ -184,8 +201,8 @@ const Entreprises = ({ nbPublishedCVs }) => {
             <br />
             <br />
             Concrètement, vous adaptez votre processus de recrutement et
-            l’intégration de la personne. LinkedOut vous accompagne tout au long
-            pour faire de ce recrutement un succès.
+            l’intégration de la personne. LinkedOut vous guide et vous
+            accompagne pour faire de ce recrutement un succès.
           </>
         }
         imgSrc="/static/img/company_what.jpg"
@@ -193,42 +210,55 @@ const Entreprises = ({ nbPublishedCVs }) => {
         direction="left"
         style="default"
       />
-      <Section container="small" style="default">
-        <h3 className="uk-text-center uk-text-bold uk-margin-medium-bottom">
-          Qui sont <span className="uk-text-primary">nos candidats&nbsp;?</span>
-        </h3>
-        <p>
-          L’équipe LinkedOut s&apos;appuie sur des partenaires locaux et des
-          associations pour identifier et sélectionner des personnes absentes de
-          vos canaux habituels. Les candidats LinkedOut ont des profils très
-          variés en termes de parcours, d&apos;âge, d&apos;expérience, mais ont
-          tous en commun&nbsp;:
-          <br />
-          <AnimatedList
-            items={[
-              <>
-                <span className="uk-text-bold">L&apos;absence de réseau</span>{' '}
-                et le fait d&apos;avoir vécu la précarité et/ou l&apos;exclusion
-              </>,
-              <>
-                <span className="uk-text-bold">
-                  Une grande motivation pour trouver un emploi stable
-                </span>{' '}
-                et construire un avenir
-              </>,
-              <>
-                <span className="uk-text-bold">La capacité à travailler :</span>{' '}
-                les freins à l’emploi ont été levés
-              </>,
-            ]}
-          />
-        </p>
-      </Section>
+      <Chapter
+        smallTitle
+        title={
+          <>
+            Qui sont{' '}
+            <span className="uk-text-primary">nos candidats&nbsp;?</span>
+          </>
+        }
+        content={
+          <>
+            L’équipe LinkedOut s&apos;appuie sur des partenaires locaux et des
+            associations pour identifier et sélectionner des personnes absentes
+            de vos canaux habituels. Les candidats LinkedOut ont des profils
+            très variés en termes de parcours, d&apos;âge, d&apos;expérience,
+            mais ont tous en commun&nbsp;:
+            <br />
+            <AnimatedList
+              items={[
+                <>
+                  <span className="uk-text-bold">L&apos;absence de réseau</span>{' '}
+                  et le fait d&apos;avoir vécu la précarité et/ou
+                  l&apos;exclusion
+                </>,
+                <>
+                  <span className="uk-text-bold">
+                    Une grande motivation pour trouver un emploi stable
+                  </span>{' '}
+                  et construire un avenir
+                </>,
+                <>
+                  <span className="uk-text-bold">
+                    La capacité à travailler&nbsp;:
+                  </span>{' '}
+                  les freins à l’emploi ont été levés
+                </>,
+              ]}
+            />
+          </>
+        }
+        imgSrc="/static/img/company_who.jpg"
+        animate
+        direction="right"
+        style="default"
+      />
       <Section container="large" style="muted">
-        <h3 className="uk-text-bold uk-align-center uk-text-center uk-margin-medium-bottom uk-margin-remove-top uk-width-1-2@m">
+        <h2 className="uk-text-bold uk-align-center uk-text-center uk-margin-medium-bottom uk-margin-remove-top uk-width-1-2@m">
           {nbPublishedCVs || 'De nombreux'} candidats cherchent actuellement un
           emploi
-        </h3>
+        </h2>
         <CVList
           hideSearchBar
           nb={3}
@@ -246,32 +276,37 @@ const Entreprises = ({ nbPublishedCVs }) => {
         </div>
       </Section>
       <Section style="default">
-        <h3 className="uk-text-bold uk-text-center uk-margin-medium-bottom uk-margin-remove-top">
+        <h2 className="uk-text-bold uk-text-center uk-margin-medium-bottom uk-margin-remove-top">
           <span className="uk-text-primary">L&apos;accompagnement</span>{' '}
           LinkedOut à chaque étape
-        </h3>
+        </h2>
         <Timeline items={timeline} />
+        <p className="uk-text-center uk-text-italic uk-margin-medium-top">
+          Votre conseiller LinkedOut est présent pour vous accompagner à chaque
+          étape et co-construire avec vous les conditions d’un recrutement
+          réussi.
+        </p>
       </Section>
       <Section style="default">
-        <h3 className="uk-text-bold uk-text-center uk-margin-medium-bottom uk-margin-remove-top">
+        <h2 className="uk-text-bold uk-text-center uk-margin-medium-bottom uk-margin-remove-top">
           Notre impact <span className="uk-text-primary">en chiffres</span>
-        </h3>
-        <NumberGrid numbers={numbers} />
+        </h2>
+        <NumberGrid numbers={numbers} numbersPerRow={4} />
       </Section>
       <Reviews />
       <Section style="default">
-        <h3 className="uk-text-center uk-text-bold">
+        <h2 className="uk-text-center uk-text-bold">
           <span className="uk-text-primary">Ils ont recruté</span> avec
           LinkedOut
-        </h3>
+        </h2>
         <LogoList logos={PARTNERS.hired} carousel />
       </Section>
       <HowToCommitDifferently />
       <Section style="primary">
-        <h3 className="uk-text-center uk-text-bold">
+        <h2 className="uk-text-center uk-text-bold">
           Envie d&apos;en savoir plus sur le recrutement inclusif avec
           LinkedOut&nbsp;?
-        </h3>
+        </h2>
         <div className="uk-flex uk-flex-center">
           <Button
             onClick={openContactModal}

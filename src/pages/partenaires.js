@@ -64,7 +64,7 @@ const Partenaires = () => {
     return (
       <Section style={index % 2 === 0 ? 'muted' : 'default'} key={index}>
         <div
-          className="uk-flex uk-flex-center uk-flex-middle"
+          className="uk-flex uk-flex-center uk-flex-middle uk-overflow-hidden"
           uk-scrollspy="target: .animate; cls: uk-animation-fade; delay: 200;"
           style={{ minHeight: viewportHeightWithoutHeaderAndPadding }}
         >

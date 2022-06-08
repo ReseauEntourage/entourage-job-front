@@ -107,17 +107,14 @@ const GA_TAGS = {
   PAGE_GALERIE_FILTRE_GEOGRAPHIQUE_CLIC: {
     action: 'Page_Galerie_Filtre_Géographique_Clic',
   },
+  PAGE_AIDER_PARTAGER_CV_CLIC: {
+    action: 'Page_Aider_Partager_Cv_Clic',
+  },
   PAGE_AIDER_INSCRIPTION_COACH_CLIC: {
     action: 'Page_Aider_Inscription_Coach_Clic',
   },
-  PAGE_AIDER_ORIENTER_CANDIDAT_CLIC: {
-    action: 'Page_Aider_Orienter_Candidat_Clic',
-  },
-  PAGE_AIDER_CONTACT_TS_CLIC: {
-    action: 'Page_Aider_Contact_TS_Clic',
-  },
-  PAGE_AIDER_CONTACT_RECRUTEUR_CLIC: {
-    action: 'Page_Aider_Contact_Recruteur_Clic',
+  PAGE_ENTREPRISE_CVS_CONTACT_RECRUTEUR_CLIC: {
+    action: 'Page_Entreprise_Cvs_Contact_Recruteur_Clic',
   },
   PAGE_AIDER_DON_CLIC: {
     action: 'Page_Aider_Don_Clic',
@@ -238,6 +235,9 @@ const GA_TAGS = {
   },
   PAGE_ORIENTER_INSCRIPTION_CLIC: {
     action: 'Page_Orienter_Inscription_Clic',
+  },
+  PAGE_ORIENTER_CONTACT_CLIC: {
+    action: 'Page_Orienter_Contact_Clic',
   },
   PAGE_PARTENAIRES_NOUS_ECRIRE_CLIC: {
     action: 'Page_Partenaires_Nous_ecrire_Clic',

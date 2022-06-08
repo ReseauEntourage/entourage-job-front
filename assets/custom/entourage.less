@@ -17,6 +17,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Roboto';
+  font-weight: 300;
+  src: url('/static/fonts/Roboto-Light.ttf') format('truetype');
+  font-display: swap;
+}
+
+
 @media print {
   * {
     -webkit-print-color-adjust: exact !important;
@@ -79,6 +87,18 @@
 @sticky-z-index: 1030;
 @offcanvas-z-index: 1040;
 @notification-z-index: 1060;
+
+
+mark, .mark-animated > * > * > * > * {
+  background: white;
+  box-shadow: 15px 0 0 white, -15px 0 0 white;
+  line-height: 1.4;
+  display: inline;
+}
+
+.mark-small {
+  box-shadow: 10px 0 0 white, -10px 0 0 white;
+}
 
 //Button
 .hook-button() {
@@ -287,6 +307,7 @@
     fill: #ffc107;
   }
 }
+
 
 .ent-offer {
   overflow: hidden;

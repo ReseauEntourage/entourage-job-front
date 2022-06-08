@@ -9,6 +9,7 @@ import CandidateTestimonies from 'src/components/partials/CandidateTestimonies';
 import CompanyTestimonies from 'src/components/partials/CompanyTestimonies';
 import { NewsletterPartial } from 'src/components/partials';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
+import { openContactModal } from 'src/components/modals/openContactModal';
 
 const Sinformer = () => {
   return (
@@ -17,12 +18,25 @@ const Sinformer = () => {
         img="/static/img/header_pic_sinformer.jpg"
         id="sinformer-title"
         title={
+          <mark>
+            Pourquoi et comment devenir une&nbsp;
+            <span className="uk-text-primary">entreprise inclusive</span>
+          </mark>
+        }
+        text={
           <>
-            Pourquoi et comment
-            <div>devenir une</div>{' '}
-            <div className="uk-text-primary">entreprise inclusive</div>
+            En tant qu&apos;entreprise, comment agir concrètement en faveur de
+            l&apos;inclusion&nbsp;? LinkedOut propose plusieurs solutions selon
+            vos besoins&nbsp;: sensibilisation de vos équipes, mécénat ou bien
+            recrutement.
           </>
         }
+        cta={{
+          onClick: () => {
+            openContactModal();
+          },
+          label: 'Nous contacter',
+        }}
       />
       <Section style="muted" container="small">
         <h2 className="uk-text-bold uk-text-center">
