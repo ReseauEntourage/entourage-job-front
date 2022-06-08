@@ -33,7 +33,7 @@ const Sinformer = () => {
         }
         cta={{
           onClick: () => {
-            openContactModal();
+            openContactModal(process.env.AIRTABLE_LINK_COMPANY_HELP);
           },
           label: 'Nous contacter',
         }}

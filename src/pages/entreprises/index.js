@@ -81,13 +81,21 @@ const Entreprises = ({ nbPublishedCVs }) => {
             <br />
             <span className="mark-animated">
               <TextLoop interval={2000} className="uk-visible@m">
-                {titles.map((title) => {
-                  return <span className="uk-text-primary">{title}</span>;
+                {titles.map((title, index) => {
+                  return (
+                    <span key={index} className="uk-text-primary">
+                      {title}
+                    </span>
+                  );
                 })}
               </TextLoop>
               <TextLoop interval={2000} className="uk-hidden@m" noWrap={false}>
-                {titles.map((title) => {
-                  return <span className="uk-text-primary">{title}</span>;
+                {titles.map((title, index) => {
+                  return (
+                    <span key={index} className="uk-text-primary">
+                      {title}
+                    </span>
+                  );
                 })}
               </TextLoop>
             </span>
@@ -103,7 +111,7 @@ const Entreprises = ({ nbPublishedCVs }) => {
         }
         cta={{
           onClick: () => {
-            openContactModal();
+            openContactModal(process.env.AIRTABLE_LINK_COMPANY_HELP);
           },
           label: 'Nous contacter',
         }}
@@ -176,7 +184,9 @@ const Entreprises = ({ nbPublishedCVs }) => {
         direction="right"
         cta={
           <Button
-            onClick={openContactModal}
+            onClick={() => {
+              openContactModal(process.env.AIRTABLE_LINK_COMPANY_HELP);
+            }}
             style="secondary"
             className="uk-margin-medium-top"
           >
@@ -309,7 +319,9 @@ const Entreprises = ({ nbPublishedCVs }) => {
         </h2>
         <div className="uk-flex uk-flex-center">
           <Button
-            onClick={openContactModal}
+            onClick={() => {
+              openContactModal(process.env.AIRTABLE_LINK_COMPANY_HELP);
+            }}
             style="secondary"
             className="uk-margin-small-top"
           >
