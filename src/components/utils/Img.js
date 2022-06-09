@@ -14,7 +14,7 @@ const Img = ({ src, alt, width, height, className, cover }) => {
         height={height}
         data-uk-img=""
         className={className}
-        data-uk-cover
+        data-uk-cover=""
       />
     );
   }

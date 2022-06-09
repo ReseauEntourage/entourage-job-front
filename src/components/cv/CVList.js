@@ -124,7 +124,7 @@ const CVList = ({
     return (
       <div
         className="cv-list"
-        uk-scrollspy="cls:uk-animation-slide-bottom-small; target: .uk-card; delay: 50"
+        uk-scrollspy="cls:uk-animation-slide-bottom-small; target: .uk-card; delay: 200"
       >
         <Grid
           childWidths={['1-1', '1-2@s', '1-3@m']}

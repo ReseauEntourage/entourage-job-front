@@ -17,10 +17,38 @@ const Aider = () => {
         alt="vous souhaitez aider"
         id="help-title"
         title={
-          <>
+          <mark>
             Vous souhaitez <span className="uk-text-primary">aider&nbsp;?</span>
+          </mark>
+        }
+        text={
+          <>
+            Disponible pour vous engager&nbsp;? Coachez un candidat pour vivre
+            une rencontre transformante, et contribuer à son retour à
+            l&apos;emploi.
+            <br />
+            Volontaire mais pressé⸱e&nbsp;? Partagez le CV d&apos;un candidat et
+            augmentez ses chances de trouver un emploi.
           </>
         }
+        cta={{
+          onClick: () => {
+            gaEvent(GA_TAGS.PAGE_AIDER_INSCRIPTION_COACH_CLIC);
+            fbEvent(FB_TAGS.COACH_REGISTRATION);
+          },
+          href: EXTERNAL_LINKS.ARTICLE_BC,
+          label: 'Devenir coach LinkedOut',
+          isExternal: true,
+          newTab: true,
+        }}
+        secondCta={{
+          onClick: () => {
+            gaEvent(GA_TAGS.PAGE_AIDER_PARTAGER_CV_CLIC);
+            fbEvent(FB_TAGS.SHARE_CV);
+          },
+          href: '/candidats',
+          label: 'Partager un CV',
+        }}
       />
       <Section style="muted">
         <div className="uk-flex uk-flex-column uk-flex-middle uk-width-1-2@m uk-margin-auto">
@@ -35,6 +63,10 @@ const Aider = () => {
           </p>
           <div className="uk-flex-center uk-flex uk-flex-middle">
             <Button
+              onClick={() => {
+                gaEvent(GA_TAGS.PAGE_AIDER_PARTAGER_CV_CLIC);
+                fbEvent(FB_TAGS.SHARE_CV);
+              }}
               href={{ pathname: '/candidats', query: { employed: false } }}
               style="secondary"
             >

@@ -1,3 +1,10 @@
+@orange: #F55F24;
+@black: #363636;
+@light-grey: #e5e5e5;
+@lighter-grey: #f3f3f3;
+@white: #FFF;
+@disabled: #999;
+
 // permet de créer un ellipsis sur un text à plusieurs lignes
 body {
   overflow-wrap: anywhere
@@ -58,7 +65,7 @@ body {
 }
 
 hr.uk-divider-small::after {
-  border-top: 1px solid #f55f24;
+  border-top: 1px solid @orange;
 }
 
 .ent-text-white {
@@ -110,7 +117,7 @@ hr.uk-divider-small::after {
   align-items: center;
   margin: 0 20px;
   font-size: 14px;
-  color: #999;
+  color: @disabled;
   display: flex;
 }
 
@@ -126,7 +133,7 @@ hr.uk-divider-small::after {
 }
 
 .ent-nav-item>a {
-  color: white !important;
+  color: @white !important;
   text-transform: none !important;
 }
 
@@ -135,7 +142,7 @@ hr.uk-divider-small::after {
 }
 
 .ent-site-map {
-  color: white !important;
+  color: @white !important;
   margin-bottom: 10px;
 }
 
@@ -143,7 +150,121 @@ hr.uk-divider-small::after {
   margin-top: 10px;
 }
 
+
+.ent-timeline-number {
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 18px;
+  background-color: @orange;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 40px;
+  width: 40px;
+  color: @white;
+  top: 5px;
+  z-index: 3;
+}
+
+.ent-timeline-number-mobile {
+  top: 0;
+  right: 5px;
+}
+
+.ent-timeline {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden; /* forces this div to 'contain' it's floated children */
+  padding: 6px 0;
+  position: relative;
+}
+
+/* Arrows - i.e. the box and the wedge */
+.ent-timeline-arrow {
+  float: left;
+  width: 100%;
+  padding: 0 10px 0 27px;
+  position: relative;
+  text-align: center;
+  background-color: @light-grey;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ent-timeline-arrow:after {
+  border-top: 34px solid transparent;
+  border-bottom: 34px solid transparent;
+  border-left: 17px solid @light-grey;
+  content: "";
+  height: 0;
+  position: absolute;
+  right: -17px;
+  top: 0;
+  width: 0;
+  z-index: 2;
+}
+
+.ent-timeline-arrow:before {
+  border-top: 34px solid transparent;
+  border-bottom: 34px solid transparent;
+  border-left: 17px solid @white;
+  content: "";
+  height: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  z-index: 2;
+}
+
+.ent-timeline-arrow > span{
+  flex: 1
+}
+
+.ent-timeline-arrow-mobile {
+  float: none;
+  padding: 25px 30px;
+  text-align: left;
+  width: inherit;
+}
+
+.ent-timeline-arrow-mobile:after {
+  top: auto;
+  bottom: -23px;
+  left: 30px;
+  background-color: transparent;
+  border-top: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 17px solid transparent;
+  border-top-color: @light-grey;
+}
+
+.ent-timeline-arrow-mobile:before {
+  top: 0;
+  bottom: -23px;
+  left: 30px;
+  background-color: transparent;
+  border-top: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 17px solid transparent;
+  border-top-color: @white;
+}
+
+
+.ent-review-card {
+  background-color: @lighter-grey;
+}
+
+
 // overwrite YT lite player start button
 .yt-lite > .lty-playbtn {
   border: none;
 }
+
+

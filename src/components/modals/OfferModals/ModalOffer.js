@@ -109,16 +109,8 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
   const [loadingIcon, setLoadingIcon] = useState(false);
   const [loadingStatus, setLoadingStatus] = useState(false);
 
-  const {
-    loading,
-    error,
-    setLoading,
-    setError,
-    isEditing,
-    setIsEditing,
-    offer,
-    setOffer,
-  } = useModalOffer(currentOffer);
+  const { loading, setLoading, isEditing, setIsEditing, offer, setOffer } =
+    useModalOffer(currentOffer);
 
   const { status, bookmarked, note, archived } = offer?.userOpportunity || {};
 
@@ -188,14 +180,14 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
   );
 
   const updateOpportunity = async (opportunity) => {
-    setError(false);
     setLoading(true);
     try {
       const { data } = await Api.put(`/opportunity/external`, opportunity);
       setOffer(data);
       await onOfferUpdated();
+      setIsEditing(false);
     } catch (err) {
-      setError(true);
+      UIkit.notification(`Une erreur est survenue.`, 'danger');
     } finally {
       setLoading(false);
     }
@@ -210,7 +202,6 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
       isArchived={archived}
       navigateBackToList={navigateBackToList}
       loading={loading}
-      error={error}
       isEditing={isEditing}
       setIsEditing={setIsEditing}
       editingForm={
@@ -241,7 +232,6 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                 businessLines: undefined,
               };
               await updateOpportunity(tmpOpportunity);
-              setIsEditing(false);
             }}
             submitText="Mettre à jour"
           />
@@ -410,7 +400,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                 </div>
               ) : (
                 <div className="uk-flex uk-flex-middle uk-flex-right uk-flex-wrap-reverse">
-                  {status === OFFER_STATUS[1].value && (
+                  {!offer.isExternal && status === OFFER_STATUS[1].value && (
                     <Button
                       style="default"
                       onClick={async () => {
@@ -439,7 +429,11 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                       title="Statut"
                       name="status"
                       placeholder="statut"
-                      options={mutatedOfferStatus}
+                      options={
+                        offer.isExternal
+                          ? mutatedOfferStatus.slice(1)
+                          : mutatedOfferStatus
+                      }
                       value={status}
                       onChange={async (event) => {
                         gaEvent(
@@ -474,19 +468,6 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                 />
               )}
               <ButtonIcon
-                name="archive"
-                className={archived ? 'ent-color-amber' : undefined}
-                onClick={async () => {
-                  setLoadingIcon(true);
-                  const { userOpportunity } = offer;
-                  await updateOpportunityUser({
-                    ...userOpportunity,
-                    archived: !archived,
-                  });
-                  setLoadingIcon(false);
-                }}
-              />
-              <ButtonIcon
                 name="star"
                 className={bookmarked ? 'ent-color-amber' : undefined}
                 onClick={async () => {
@@ -495,6 +476,19 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                   await updateOpportunityUser({
                     ...userOpportunity,
                     bookmarked: !bookmarked,
+                  });
+                  setLoadingIcon(false);
+                }}
+              />
+              <ButtonIcon
+                name="archive"
+                className={archived ? 'ent-color-amber' : undefined}
+                onClick={async () => {
+                  setLoadingIcon(true);
+                  const { userOpportunity } = offer;
+                  await updateOpportunityUser({
+                    ...userOpportunity,
+                    archived: !archived,
                   });
                   setLoadingIcon(false);
                 }}
@@ -521,33 +515,45 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
               <OfferInfoContainer icon="home" title="Entreprise">
                 {offer.company}
               </OfferInfoContainer>
-              {offer.recruiterFirstName &&
-                offer.recruiterName &&
-                status > OFFER_STATUS[0].value && (
-                  <OfferInfoContainer
-                    icon="user"
-                    title={
-                      isInternalContact ? 'Personne à contacter' : 'Recruteur'
-                    }
-                  >
+              {!offer.isExternal && status > OFFER_STATUS[0].value && (
+                <OfferInfoContainer
+                  icon="user"
+                  title={
+                    isInternalContact ? 'Personne à contacter' : 'Recruteur'
+                  }
+                >
+                  {(offer.recruiterFirstName || offer.recruiterName) && (
                     <span>
-                      {offer.recruiterFirstName} {offer.recruiterName}
+                      {offer.recruiterFirstName
+                        ? `${offer.recruiterFirstName} `
+                        : ''}
+                      {offer.recruiterName ? offer.recruiterName : ''}
                     </span>
+                  )}
+                  {offer.recruiterPosition && (
                     <span className="uk-text-meta">
                       {offer.recruiterPosition}
                     </span>
+                  )}
+                  {offer.recruiterMail && (
                     <SimpleLink
                       href={`mailto:${offer.recruiterMail}`}
                       className="uk-text-meta uk-text-muted uk-flex uk-flex-middle"
                       isExternal
                       target="_blank"
                     >
-                      <span>{offer.recruiterMail}&nbsp;</span>
+                      <span>
+                        {offer.recruiterMail}
+                        &nbsp;
+                      </span>
                       <IconNoSSR name="mail" ratio={0.8} />
                     </SimpleLink>
-                  </OfferInfoContainer>
-                )}
-              <OfferInfoContainer icon="location" title={offer.department} />
+                  )}
+                </OfferInfoContainer>
+              )}
+              <OfferInfoContainer icon="location" title={offer.department}>
+                {offer.address && <span>{offer.address}</span>}
+              </OfferInfoContainer>
               {offer.externalOrigin && (
                 <OfferInfoContainer icon="search" title="Origine de l'offre">
                   <div>

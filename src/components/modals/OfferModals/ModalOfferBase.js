@@ -9,7 +9,6 @@ const ModalOfferBase = ({
   children,
   navigateBackToList,
   editingForm,
-  error,
   loading,
   isEditing,
   setIsEditing,
@@ -35,8 +34,7 @@ const ModalOfferBase = ({
       }}
     >
       {loading && <LoadingScreen />}
-      {!loading && error && <div>Une erreur c&lsquo;est produite</div>}
-      {!loading && !error && (isEditing ? editingForm : children)}
+      {!loading && (isEditing ? editingForm : children)}
     </ModalGeneric>
   );
 };
@@ -53,7 +51,6 @@ ModalOfferBase.propTypes = {
   ]).isRequired,
   navigateBackToList: PropTypes.func.isRequired,
   editingForm: PropTypes.element.isRequired,
-  error: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   isEditing: PropTypes.bool.isRequired,
   setIsEditing: PropTypes.func.isRequired,

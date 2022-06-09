@@ -124,6 +124,8 @@ export default {
     {
       id: 'contactMail',
       name: 'contactMail',
+      hidden: true,
+      disabled: true,
       component: 'input',
       type: 'email',
       title: 'Adresse mail du recruteur si intermédiaire',

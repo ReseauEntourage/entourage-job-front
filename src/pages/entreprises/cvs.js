@@ -1,7 +1,7 @@
 import React from 'react';
 import { gaEvent } from 'src/lib/gtag';
 import { Button, Grid, Img, Section } from 'src/components/utils';
-import { GA_TAGS } from 'src/constants/tags';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import Layout from 'src/components/Layout';
 import ImageTitle from 'src/components/partials/ImageTitle';
 import SearchCandidates from 'src/components/partials/SearchCandidates';
@@ -10,6 +10,8 @@ import NewsletterPartial from 'src/components/partials/NewsletterPartial';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
 import usePostPublicOfferModal from 'src/components/modals/usePostPublicOfferModal';
+import { isSSR } from 'src/utils/isSSR';
+import { fbEvent } from 'src/lib/fb';
 
 const CVEntreprises = () => {
   const PublicOfferModal = usePostPublicOfferModal();
@@ -20,26 +22,55 @@ const CVEntreprises = () => {
         img="/static/img/header_pic_cvs.jpg"
         id="companies-title"
         title={
-          <span>
-            <span className="uk-text-primary">Ils sont prêts</span>{' '}
-            <span> à travailler&nbsp;!</span>
-          </span>
+          <mark>
+            <span className="uk-text-primary">Ils sont prêts</span> à
+            travailler&nbsp;!
+          </mark>
         }
+        text={
+          <>
+            Pour une entreprise, il existe différentes manières de
+            s&apos;engager pour l&apos;inclusion, mais le recrutement est sans
+            doute l’expérience la plus transformante et impactante. <br />
+            Vous avez un poste à pourvoir&nbsp;? Parcourez les CV de nos
+            candidats et contactez-les&nbsp;!
+          </>
+        }
+        cta={{
+          onClick: () => {
+            if (!isSSR) {
+              document
+                .getElementById('searchCandidates')
+                .scrollIntoView({ behavior: 'smooth' });
+            }
+          },
+          label: 'Découvrez les candidats',
+        }}
+        secondCta={{
+          href: process.env.AIRTABLE_LINK_COMPANY_HELP,
+          isExternal: true,
+          newTab: true,
+          onClick: () => {
+            gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
+            fbEvent(FB_TAGS.COMPANY_CONTACT);
+          },
+          label: 'Nous contacter',
+        }}
       />
-      <SearchCandidates style="muted" />
+      <div id="searchCandidates">
+        <SearchCandidates style="muted" />
+      </div>
       <Section style="default">
         <div className="uk-flex uk-flex-middle uk-flex-center uk-flex-column">
           <h3 className="uk-text-bold uk-margin-medium-bottom">
             Votre offre peut correspondre{' '}
             <span className="uk-text-primary">à plusieurs profils&nbsp;?</span>
           </h3>
-          <div className="uk-height-medium">
-            <Img
-              style={{ height: '100%' }}
-              src="/static/img/new_candidates.jpg"
-              alt="Visages LinkedOut"
-            />
-          </div>
+          <Img
+            className="uk-background-cover uk-background-center"
+            src="/static/img/new_candidates.jpg"
+            alt="Visages LinkedOut"
+          />
           <Grid middle column gap="collapse">
             <Button
               className="uk-margin-medium-top"

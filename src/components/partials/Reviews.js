@@ -1,7 +1,5 @@
 import React from 'react';
-import { Img, Section } from 'src/components/utils';
-import Carousel from 'src/components/utils/Carousel';
-import CarouselItem from 'src/components/partials/CarouselItem';
+import { Img, Section, Grid } from 'src/components/utils';
 
 const reviews = [
   {
@@ -10,8 +8,15 @@ const reviews = [
     company: 'Vélissime',
     industry: 'livraison de repas',
     companyInfo: '20 salariés',
-    review:
-      'Kenny est un vrai bonhomme, pas un jeune diplômé fraîchement moulu qui nous parle de choses qu’il n’a pas vécues. Par son expérience, il apporte quelque chose de radicalement différent. Si je pouvais embaucher 2 Kenny, je le ferais !',
+    review: (
+      <>
+        Par son expérience,{' '}
+        <span className="uk-text-primary">
+          il apporte quelque chose de radicalement différent.
+        </span>{' '}
+        Si je pouvais embaucher 2 Kenny, je le ferais&nbsp;!
+      </>
+    ),
   },
   {
     image: '/static/img/temoignage-entreprise-francois-miah.jpg',
@@ -19,87 +24,128 @@ const reviews = [
     company: 'Green Factory',
     industry: 'créations végétales',
     companyInfo: '31 salariés',
-    review:
-      'Avec Miah c’est une réussite. Là où notre compétence s’arrête, on est rassurés par le fait que LinkedOut est là pour nous accompagner. Si on peut s’inscrire dans des actions comme celles-ci tout en gardant notre efficacité, en y ajoutant le sourire de quelqu’un qui a envie, on le fait !',
+    review: (
+      <>
+        Avec Miah c’est une réussite. Là où notre compétence s’arrête, on est
+        rassurés par le fait que{' '}
+        <span className="uk-text-primary">
+          LinkedOut est là pour nous accompagner.{' '}
+        </span>
+        Si on peut s’inscrire dans des actions comme celles-ci tout en gardant
+        notre efficacité, en y ajoutant le sourire de quelqu’un qui a envie, on
+        le fait&nbsp;!
+      </>
+    ),
   },
   {
     image: '/static/img/temoignage-entreprise-advens.jpg',
     author: 'Sylvie Lepoutre',
+    authorStatus: 'Raison d’être & Projet d’entreprise',
     company: 'Advens',
-    industry: 'cybersécurité',
-    companyInfo: '200 salariés',
-    review:
-      'Nous étions à mille lieux des problématiques des personnes en précarité. Maintenant, chez Advens, on entend des mots comme “résilience”, “deuxième chance”, “rebond”, “inclusion”. Les collaborateurs sont très fiers !',
+    industry: 'partenaire LinkedOut',
+    review: (
+      <>
+        Nous étions à mille lieux des problématiques des personnes en précarité.{' '}
+        <span className="uk-text-primary">
+          Maintenant, chez Advens, on entend des mots comme “résilience”,
+          “deuxième chance”, “rebond”, “inclusion”.
+        </span>{' '}
+        Les collaborateurs sont très fiers !
+      </>
+    ),
   },
   {
-    image: '/static/img/temoignage-entreprise-mcdo.jpg',
-    author: 'Arnaud Héry',
-    company: "Ex-directeur de la formation chez McDonald's",
-    industry: 'restauration',
-    companyInfo: '70 000 salariés en France',
-    review:
-      'Ce qu’il y a de plus important pour un employeur, c’est de voir la lumière qui brille dans les yeux de la personne en face, qui traduit l’envie d’apprendre et de s’en sortir.',
+    image: '/static/img/temoignage-candidat-amelie.jpg',
+    author: 'Amélie',
+    authorStatus: 'Ancienne candidate LinkedOut',
+    review: (
+      <>
+        C&apos;est vraiment un bon dispositif. Avec mon coach, on ne parle pas
+        simplement du travail, il me donne des conseils. Ce sont des choses dont
+        j&apos;avais besoin, surtout que je n&apos;ai pas de famille ici.{' '}
+        <span className="uk-text-primary">
+          J&apos;ai parcouru beaucoup d&apos;autres dispositifs et là c&apos;est
+          différent, LinkedOut est très présent.
+        </span>
+      </>
+    ),
   },
 ];
 
 const Reviews = () => {
   return (
-    <Section id="reviews" style="default">
-      <h2 className="uk-text-bold uk-align-center uk-text-center uk-margin-large-bottom uk-margin-remove-top">
-        <span className="uk-text-primary">Les recruteurs</span> témoignent
+    <Section id="reviews" style="default" container="small">
+      <h2 className="uk-text-bold uk-text-center uk-margin-medium-bottom uk-margin-remove-top">
+        Ce que LinkedOut <span className="uk-text-primary">leur a apporté</span>
       </h2>
-      <div className="uk-flex uk-flex-center">
-        <Carousel
-          style="default"
-          containerClasses="uk-child-width-1-1 uk-container-small"
-        >
+      <div
+        className="uk-flex uk-flex-center"
+        uk-height-match=".ent-review-card"
+      >
+        <Grid center middle match gap="medium" childWidths={['1-2@m']}>
           {reviews.map(
             (
-              { author, company, industry, companyInfo, review, image },
+              {
+                author,
+                authorStatus,
+                company,
+                industry,
+                companyInfo,
+                review,
+                image,
+              },
               index
             ) => {
               return (
-                <CarouselItem
+                <div
                   key={index}
-                  index={index}
-                  img={image}
-                  description={
-                    <div>
-                      <Img
-                        alt="guillemets"
-                        width="27"
-                        height="21"
-                        src="/static/img/guillemets.png"
-                      />
-                      <p className="uk-text-small uk-margin-small uk-text-italic">
-                        {review}
-                      </p>
+                  uk-scrollspy={`cls:uk-animation-slide-bottom-small; delay: ${
+                    200 + index * 200
+                  };`}
+                  className="ent-review-card uk-flex uk-flex-row uk-card uk-card-medium uk-card-default uk-card-body uk-box-shadow-medium uk-border-rounded"
+                >
+                  <div className="uk-flex uk-flex-column">
+                    <div className="uk-flex uk-flex-middle uk-margin-small-bottom">
                       <div
-                        className="uk-text-bottom"
-                        style={{ display: 'flex', justifyContent: 'flex-end' }}
+                        className="uk-cover-container uk-margin-small-right uk-border-rounded"
+                        style={{ width: 75, height: 75 }}
                       >
-                        <Img
-                          alt="guillemets-petits"
-                          width="15"
-                          height="12"
-                          src="/static/img/guillemetsPetits.png"
-                        />
+                        <Img src={image} alt={author} cover />
                       </div>
-                      <p className="uk-text-bold uk-margin-small uk-margin-remove-bottom">
-                        {author}
-                      </p>
-                      <p className="uk-text-meta uk-margin-remove">
-                        <span className="uk-text-bold">{company}</span>,&nbsp;
-                        <span>{industry}</span>
-                        {companyInfo && <span>,&nbsp;{companyInfo}</span>}
+                      <div className="uk-flex-1 uk-margin-small-left uk-text-small">
+                        <p className="uk-text-bold uk-margin-small uk-margin-remove-bottom">
+                          {author}
+                        </p>
+                        {authorStatus && (
+                          <p className="uk-margin-remove uk-text-italic">
+                            {authorStatus}
+                          </p>
+                        )}
+                        <p className="uk-text-meta uk-margin-remove uk-text-italic">
+                          <span className="uk-text-bold">{company}</span>
+                          {industry && <span>,&nbsp;{industry}</span>}
+                          {companyInfo && (
+                            <>
+                              <br />
+                              <span className="uk-text-lighter">
+                                {companyInfo}
+                              </span>
+                            </>
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="uk-flex uk-flex-column uk-flex-center uk-margin-small-top">
+                      <p className="uk-margin-remove uk-text-bold">
+                        &laquo;&nbsp;{review}&nbsp;&raquo;
                       </p>
                     </div>
-                  }
-                />
+                  </div>
+                </div>
               );
             }
           )}
-        </Carousel>
+        </Grid>
       </div>
     </Section>
   );

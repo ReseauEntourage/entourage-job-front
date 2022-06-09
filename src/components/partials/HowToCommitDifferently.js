@@ -2,55 +2,62 @@ import React from 'react';
 import { Section } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
 import MultipleCTA from 'src/components/partials/MultipleCTA';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
+import { fbEvent } from 'src/lib/fb';
 
 const HowToCommitDifferently = () => {
   return (
-    <Section container="small" id="sengager" style="muted">
+    <Section container="large" id="sengager" style="muted">
       <h2 className="uk-text-center uk-text-bold">
-        <span className="uk-text-primary"> S&apos;engager</span>&nbsp;autrement
-        avec LinkedOut
+        <span className="uk-text-primary">Nous soutenir</span> autrement
       </h2>
-      <h4 className="uk-text-center uk-margin-medium-top">
-        Vous n&apos;avez pas la possibilité de recruter ?
-        <br />
-        Il existe d&apos;autres manières de rendre votre entreprise plus
-        inclusive avec LinkedOut.
-      </h4>
       <MultipleCTA
-        showHorizontalDividers
+        animate
         spacing="large"
-        className="uk-margin-large-top"
+        className="uk-margin-medium-top"
         data={[
           {
-            title: (
-              <h4 className="uk-text-bold">
-                Comment et pourquoi devenir une entreprise inclusive ?
-              </h4>
-            ),
-            text: (
-              <p>
-                Découvrez du contenu pour démarrer et des ressources pour vous
-                lancer.
-              </p>
-            ),
+            img: '/static/img/illustrations/donation.png',
+            title: 'Faire un don',
+            text: "Aidez-nous à développer le programme LinkedOut et à accompagner les candidats via un don déductible de vos impôts ou un dispositif d'arrondi solidaire.",
             button: {
-              label: 'En savoir plus',
-              href: '/entreprises/sinformer',
-            },
-          },
-          {
-            title: <h4 className="uk-text-bold">Faire un don</h4>,
-            text: (
-              <p>
-                Soutenez le déploiement de LinkedOut et permettez
-                <br />à des centaines de personnes d’accéder à l’emploi.
-              </p>
-            ),
-            button: {
-              label: 'Nous soutenir',
+              label: 'Faire un don',
               href: EXTERNAL_LINKS.DONATION,
               external: true,
             },
+            tag: GA_TAGS.PAGE_ENTREPRISES_DON_CLIC,
+          },
+          {
+            img: '/static/img/illustrations/scale.png',
+            title:
+              "Sensibiliser mes collaborateurs à l'inclusion professionnelle",
+            text: 'Défi solidaire ou atelier de sensibilisation, engagez vos collaborateurs, RH et managers grâce à des formats modulables.',
+            button: {
+              label: 'Sensibiliser mon équipe',
+              href: process.env.AIRTABLE_LINK_COMPANY_SENSITIZATION,
+              external: true,
+              onClick: () => {
+                gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
+                fbEvent(FB_TAGS.COMPANY_CONTACT);
+              },
+            },
+            tag: GA_TAGS.PAGE_ENTREPRISES_SENSIBILISER_CLIC,
+          },
+          {
+            img: '/static/img/illustrations/network.png',
+            title: 'Partager votre expertise',
+            text: 'Vous pouvez nous accompagner via du mécénat de compétences ou des dons en nature (équipement informatique, etc.)',
+            button: {
+              label: 'Proposer du mécénat',
+              href: process.env.AIRTABLE_LINK_COMPANY_SPONSOR,
+              external: true,
+              onClick: () => {
+                gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
+                fbEvent(FB_TAGS.COMPANY_CONTACT);
+              },
+            },
+            tag: GA_TAGS.PAGE_ENTREPRISES_MECENAT_CLIC,
           },
         ]}
       />

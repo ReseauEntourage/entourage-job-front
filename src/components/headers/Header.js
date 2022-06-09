@@ -26,6 +26,11 @@ const LINKS = [
     tag: GA_TAGS.HEADER_RECRUTER_CLIC,
   },
   { href: '/aider', name: 'Je veux aider', tag: GA_TAGS.HEADER_AIDER_CLIC },
+  {
+    href: '/orienter',
+    name: "J'oriente un candidat",
+    tag: GA_TAGS.HEADER_ORIENTER_CLIC,
+  },
 ];
 
 const Header = ({ isHome }) => {
@@ -83,7 +88,7 @@ const Header = ({ isHome }) => {
     </div>,
   ];
   return (
-    <header id="header">
+    <header id="header" style={{ height: 80 }}>
       <Navbar
         sticky=""
         className="uk-background-secondary uk-navbar-transparent ent-home"

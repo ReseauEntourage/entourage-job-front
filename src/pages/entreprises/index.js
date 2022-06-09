@@ -1,19 +1,77 @@
 import React from 'react';
 import LogoList from 'src/components/partials/LogoList';
-import WhatItBringsToCompanies, {
-  openContactModal,
-} from 'src/components/partials/WhatItBringsToCompanies';
 import Layout from 'src/components/Layout';
 import { Button, Section } from 'src/components/utils';
 import ImageTitle from 'src/components/partials/ImageTitle';
-import HireCTA from 'src/components/partials/HireCTA';
 import Reviews from 'src/components/partials/Reviews';
 import HowToCommitDifferently from 'src/components/partials/HowToCommitDifferently';
 import NewsletterPartial from 'src/components/partials/NewsletterPartial';
 import PARTNERS from 'src/constants/partners';
 import { IconNoSSR } from 'src/components/utils/Icon';
+import { Chapter } from 'src/components/partials/Chapter';
+import CVList from 'src/components/cv/CVList';
+import { CV_FILTERS_DATA } from 'src/constants';
+import Timeline from 'src/components/partials/Timeline';
+import NumberGrid from 'src/components/partials/NumberGrid';
+import AnimatedList from 'src/components/utils/AnimatedList';
+import Api from 'src/Axios';
+import PropTypes from 'prop-types';
+import TextLoop from 'react-text-loop';
 
-const Entreprises = () => {
+import { gaEvent } from 'src/lib/gtag';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { fbEvent } from 'src/lib/fb';
+
+const timeline = [
+  {
+    text: 'Identifier un besoin en recrutement',
+    icon: 'static/img/illustrations/loupe.png',
+  },
+  {
+    text: 'Identifiez un candidat et déposez une offre',
+    icon: 'static/img/illustrations/approved.png',
+  },
+  {
+    text: 'Préparez la rencontre avec le candidat',
+    icon: 'static/img/illustrations/preparation.png',
+  },
+  {
+    text: 'Rencontrez le candidat',
+    icon: 'static/img/illustrations/interview.png',
+  },
+  {
+    text: "Préparez l'intégration",
+    icon: 'static/img/illustrations/content-de-te-revoir.png',
+  },
+  { text: "Suivez l'intégration", icon: 'static/img/illustrations/suivi.png' },
+];
+
+const numbers = [
+  {
+    value: 230,
+    description: 'candidats accompagnés depuis le lancement',
+    animate: true,
+  },
+  {
+    value: '61%',
+    description:
+      'des candidats parvenus au bout du parcours ont retrouvé un travail',
+  },
+  { value: 73, description: 'entreprises ayant recruté', animate: true },
+  {
+    value: '93%',
+    description:
+      'des candidats ont repris confiance en eux et en leurs capacités',
+  },
+];
+
+const titles = [
+  'recruter inclusif',
+  'sensibiliser vos équipes',
+  "changer de regard sur l'inclusion",
+];
+
+const Entreprises = ({ nbPublishedCVs }) => {
   return (
     <Layout title="Entreprises - LinkedOut">
       <ImageTitle
@@ -21,64 +79,293 @@ const Entreprises = () => {
         id="hire-title"
         title={
           <>
-            Entreprises,
+            <mark>LinkedOut, le&nbsp;programme qui vous accompagne pour</mark>
             <br />
-            <span className="uk-text-primary">recrutez avec LinkedOut</span>
+            <span className="mark-animated">
+              <TextLoop interval={2000} className="uk-visible@m">
+                {titles.map((title, index) => {
+                  return (
+                    <span key={index} className="uk-text-primary">
+                      {title}
+                    </span>
+                  );
+                })}
+              </TextLoop>
+              <TextLoop interval={2000} className="uk-hidden@m" noWrap={false}>
+                {titles.map((title, index) => {
+                  return (
+                    <span key={index} className="uk-text-primary">
+                      {title}
+                    </span>
+                  );
+                })}
+              </TextLoop>
+            </span>
           </>
         }
+        text={
+          <mark className="mark-small">
+            Notre objectif ? Vous permettre de créer les conditions d’un
+            recrutement inclusif réussi, au service de la transformation de
+            votre entreprise.
+          </mark>
+        }
+        cta={{
+          href: process.env.AIRTABLE_LINK_COMPANY_HELP,
+          isExternal: true,
+          newTab: true,
+          onClick: () => {
+            gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
+            fbEvent(FB_TAGS.COMPANY_CONTACT);
+          },
+          label: 'Nous contacter',
+        }}
       />
-      <Section id="makeADifference" style="muted" container="small">
-        <h4 className="uk-align-center uk-text-center">
-          Bienvenue chez LinkedOut. Ici, vous pouvez concilier vos besoins de
-          recrutement et{' '}
-          <span className="uk-text-bold">
-            votre engagement pour l’inclusion
-          </span>
-          &nbsp;! Les candidats LinkedOut ont des histoires de vie difficiles.
-          Ils ont tous un point commun&nbsp;:{' '}
-          <span className="uk-text-bold">la capacité à travailler</span> et{' '}
-          <span className="uk-text-bold">l’envie de s’en sortir</span>.<br />
-          Vous pouvez <span className="uk-text-bold">changer leur vie</span> en
-          les recrutant&nbsp;: alors qu’attendez-vous&nbsp;? L&apos;équipe
-          LinkedOut{' '}
-          <span className="uk-text-bold">
-            vous accompagne à toutes les étapes.
-          </span>
-        </h4>
-      </Section>
-      <Section container="small">
-        <h2 className="uk-text-center uk-text-bold">
-          Vous souhaitez vous engager vers un recrutement{' '}
-          <span className="uk-text-primary">plus inclusif&nbsp;?</span>
+      <Chapter
+        smallTitle
+        style="default"
+        title={
+          <>
+            <span className="uk-text-primary">Pourquoi recruter</span> avec
+            LinkedOut&nbsp;?
+          </>
+        }
+        content={
+          <>
+            <AnimatedList
+              items={[
+                <>
+                  <span className="uk-text-bold">
+                    Répondre à vos besoins en recrutement
+                  </span>
+                  <br />
+                  <span className="uk-text-small">
+                    Vous identifiez et rencontrez de nouveaux profils, sur tous
+                    types de métiers
+                  </span>
+                </>,
+                <>
+                  <span className="uk-text-bold">
+                    Agir concrètement en faveur de l’inclusion
+                  </span>
+                  <br />
+                  <span className="uk-text-small">
+                    Il existe plusieurs façons pour une entreprise de s’engager
+                    en faveur de l’inclusion. Nous pensons que le recrutement
+                    est l&apos;expérience la plus impactante pour votre
+                    entreprise en vous faisant vivre une rencontre unique, et en
+                    vous offrant la possibilité de renouveler votre approche du
+                    recrutement et de l&apos;intégration.
+                  </span>
+                </>,
+                <>
+                  <span className="uk-text-bold">
+                    Engager vos collaborateurs dans une démarche d’inclusion
+                  </span>
+                  <br />
+                  <span className="uk-text-small">
+                    Vous embarquez dans un projet collectif tout en renforçant
+                    votre marque employeur
+                  </span>
+                </>,
+                <>
+                  <span className="uk-text-bold">
+                    Soutenir la transformation de votre entreprise
+                  </span>
+                  <br />
+                  <span className="uk-text-small">
+                    En donnant sa chance à une personne qui en a besoin et en
+                    créant les conditions pour l&apos;accueillir, c&apos;est
+                    vous-même qui allez vivre une transformation, enrichir votre
+                    collectif et votre projet d’entreprise&nbsp;!
+                  </span>
+                </>,
+              ]}
+            />
+          </>
+        }
+        imgSrc="/static/img/company_why.jpg"
+        animate={false}
+        direction="right"
+        cta={
+          <Button
+            href={process.env.AIRTABLE_LINK_COMPANY_HELP}
+            isExternal
+            newTab
+            onClick={() => {
+              gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
+              fbEvent(FB_TAGS.COMPANY_CONTACT);
+            }}
+            style="secondary"
+            className="uk-margin-medium-top"
+          >
+            Contactez-nous&nbsp;
+            <IconNoSSR name="chevron-right" />
+          </Button>
+        }
+      />
+      <Chapter
+        smallTitle
+        title={
+          <>
+            Le <span className="uk-text-primary">recrutement inclusif</span>,
+            c&apos;est quoi&nbsp;?
+          </>
+        }
+        content={
+          <>
+            Recruter inclusif, c’est donner la chance à une personne en dehors
+            des canaux traditionnels d’intégrer votre entreprise et créer les
+            conditions pour l’intégrer durablement.
+            <br />
+            <br />
+            Concrètement, vous adaptez votre processus de recrutement et
+            l’intégration de la personne. LinkedOut vous guide et vous
+            accompagne pour faire de ce recrutement un succès.
+          </>
+        }
+        imgSrc="/static/img/company_what.jpg"
+        animate
+        direction="left"
+        style="default"
+      />
+      <Chapter
+        smallTitle
+        title={
+          <>
+            Qui sont{' '}
+            <span className="uk-text-primary">nos candidats&nbsp;?</span>
+          </>
+        }
+        content={
+          <>
+            L’équipe LinkedOut s&apos;appuie sur des partenaires locaux et des
+            associations pour identifier et sélectionner des personnes absentes
+            de vos canaux habituels. Les candidats LinkedOut ont des profils
+            très variés en termes de parcours, d&apos;âge, d&apos;expérience,
+            mais ont tous en commun&nbsp;:
+            <br />
+            <AnimatedList
+              items={[
+                <>
+                  <span className="uk-text-bold">L&apos;absence de réseau</span>{' '}
+                  et le fait d&apos;avoir vécu la précarité et/ou
+                  l&apos;exclusion
+                </>,
+                <>
+                  <span className="uk-text-bold">
+                    Une grande motivation pour trouver un emploi stable
+                  </span>{' '}
+                  et construire un avenir
+                </>,
+                <>
+                  <span className="uk-text-bold">
+                    La capacité à travailler&nbsp;:
+                  </span>{' '}
+                  les freins à l’emploi ont été levés
+                </>,
+              ]}
+            />
+          </>
+        }
+        imgSrc="/static/img/company_who.jpg"
+        animate
+        direction="right"
+        style="default"
+      />
+      <Section container="large" style="muted">
+        <h2 className="uk-text-bold uk-align-center uk-text-center uk-margin-medium-bottom uk-margin-remove-top uk-width-1-2@m">
+          {nbPublishedCVs || 'De nombreux'} candidats cherchent actuellement un
+          emploi
         </h2>
-        <h4 className="uk-text-center uk-margin-remove-top">
-          Contactez le référent LinkedOut de votre région pour échanger sur
-          votre projet avant de vous lancer&nbsp;!
-        </h4>
+        <CVList
+          hideSearchBar
+          nb={3}
+          filters={{
+            [CV_FILTERS_DATA[0].key]: CV_FILTERS_DATA[0].constants,
+          }}
+        />
+        <div className="uk-flex uk-flex-center uk-margin-medium-top">
+          <Button
+            href={{ pathname: '/candidats', query: { employed: false } }}
+            style="secondary"
+          >
+            Découvrir nos candidats <IconNoSSR name="chevron-right" />
+          </Button>
+        </div>
+      </Section>
+      <Section style="default">
+        <h2 className="uk-text-bold uk-text-center uk-margin-medium-bottom uk-margin-remove-top">
+          <span className="uk-text-primary">L&apos;accompagnement</span>{' '}
+          LinkedOut à chaque étape
+        </h2>
+        <Timeline items={timeline} />
+        <p className="uk-text-center uk-text-italic uk-margin-medium-top">
+          Votre conseiller LinkedOut est présent pour vous accompagner à chaque
+          étape et co-construire avec vous les conditions d’un recrutement
+          réussi.
+        </p>
+      </Section>
+      <Section style="default">
+        <h2 className="uk-text-bold uk-text-center uk-margin-medium-bottom uk-margin-remove-top">
+          Notre impact <span className="uk-text-primary">en chiffres</span>
+        </h2>
+        <NumberGrid numbers={numbers} numbersPerRow={4} />
+      </Section>
+      <Reviews />
+      <Section style="default">
+        <h2 className="uk-text-center uk-text-bold">
+          <span className="uk-text-primary">Ils ont recruté</span> avec
+          LinkedOut
+        </h2>
+        <LogoList logos={PARTNERS.hired} carousel />
+      </Section>
+      <HowToCommitDifferently />
+      <Section style="primary">
+        <h2 className="uk-text-center uk-text-bold">
+          Envie d&apos;en savoir plus sur le recrutement inclusif avec
+          LinkedOut&nbsp;?
+        </h2>
         <div className="uk-flex uk-flex-center">
           <Button
-            onClick={openContactModal}
+            href={process.env.AIRTABLE_LINK_COMPANY_HELP}
+            isExternal
+            newTab
+            onClick={() => {
+              gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
+              fbEvent(FB_TAGS.COMPANY_CONTACT);
+            }}
             style="secondary"
             className="uk-margin-small-top"
           >
-            Contacter un référent&nbsp;
+            Contactez-nous&nbsp;
             <IconNoSSR name="chevron-right" />
           </Button>
         </div>
       </Section>
-      <HireCTA />
-      <WhatItBringsToCompanies />
-      <Section style="muted">
-        <h2 className="uk-text-center uk-text-bold">
-          Ils ont <span className="uk-text-primary">déjà recruté</span>
-        </h2>
-        <LogoList logos={PARTNERS.hired} />
-      </Section>
-      <Reviews />
-      <HowToCommitDifferently />
       <NewsletterPartial style="default" />
     </Layout>
   );
 };
 
+Entreprises.getInitialProps = async () => {
+  return Api.get(`/cv/published`)
+    .then(({ data: { nbPublishedCVs } }) => {
+      return {
+        nbPublishedCVs,
+      };
+    })
+    .catch((err) => {
+      console.log(err);
+      return { nbPublishedCVs: null };
+    });
+};
+
+Entreprises.propTypes = {
+  nbPublishedCVs: PropTypes.number,
+};
+
+Entreprises.defaultProps = {
+  nbPublishedCVs: undefined,
+};
 export default Entreprises;

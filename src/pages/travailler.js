@@ -19,30 +19,27 @@ const Travailler = () => {
         img="static/img/header_pic_work.jpg"
         id="work-title"
         title={
-          <>
-            Vous cherchez{' '}
-            <span className="uk-text-primary">du travail&nbsp;?</span>
-          </>
+          <mark>
+            LinkedOut, un tremplin vers{' '}
+            <span className="uk-text-primary">l’emploi</span>
+          </mark>
         }
         text={
           <>
-            <span>
-              Vous êtes dans une situation de précarité ou d’exclusion&nbsp;?
-            </span>
-            <br />
-            <span>
-              Vous avez un projet professionnel mais vous n’avez pas de
-              réseau&nbsp;?
-            </span>
-            <br />
-            <span>
-              Vous êtes motivé pour travailler mais il vous manque des
-              opportunités&nbsp;?
-            </span>
-            <br />
-            <span>Rejoignez le programme LinkedOut.</span>
+            Vous êtes dans une situation de précarité ou d’exclusion ? Vous avez
+            un projet professionnel mais vous n’avez pas de réseau ?
           </>
         }
+        cta={{
+          onClick: () => {
+            gaEvent(GA_TAGS.PAGE_TRAVAILLER_DEPOSER_CANDIDATURE_CLIC);
+            fbEvent(FB_TAGS.CANDIDATE_REGISTRATION);
+          },
+          href: process.env.AIRTABLE_LINK_JOIN_LINKEDOUT,
+          label: 'Rejoindre LinkedOut',
+          isExternal: true,
+          newTab: true,
+        }}
       />
       <Section id="introWork" container="small" style="muted">
         <div className="uk-flex uk-flex-column uk-flex-center uk-flex-middle">

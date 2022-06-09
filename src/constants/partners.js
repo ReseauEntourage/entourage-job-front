@@ -229,16 +229,8 @@ export default {
   ],
   hired: [
     {
-      key: 'franprix',
-      link: 'https://www.franprix.fr/',
-    },
-    {
       key: 'webgeo',
       link: 'https://www.webgeoservices.com/fr/',
-    },
-    {
-      key: 'leroymerlin',
-      link: 'https://www.leroymerlin.fr/',
     },
     {
       key: 'greenfactory',
@@ -257,20 +249,8 @@ export default {
       link: 'https://www.saveur-biere.com/fr/',
     },
     {
-      key: 'randstad',
-      link: 'https://www.grouperandstad.fr',
-    },
-    {
       key: 'lescopains',
       link: 'https://www.lescopainsdebastien.fr/',
-    },
-    {
-      key: 'laruche',
-      link: 'https://laruchequiditoui.fr/fr/',
-    },
-    {
-      key: 'iledefrance',
-      link: 'https://www.iledefrance.fr/',
     },
     {
       key: 'clinitex',
@@ -281,8 +261,94 @@ export default {
       link: 'https://www.sep-renovation.fr/',
     },
     {
+      key: 'seni',
+      link: 'https://www.seni.fr/',
+    },
+    {
+      key: 'laruche',
+      link: 'https://laruchequiditoui.fr/fr/',
+    },
+    {
+      key: 'iledefrance',
+      link: 'https://www.iledefrance.fr/',
+    },
+    {
+      key: 'randstad',
+      link: 'https://www.grouperandstad.fr',
+    },
+    {
+      key: 'quintesens',
+      link: 'https://groupe-quintesens.fr/',
+    },
+    {
+      key: 'nokia',
+      link: 'https://www.nokia.com/fr_int/',
+    },
+    {
+      key: 'murfy',
+      link: 'https://murfy.fr/',
+    },
+    {
+      key: 'micheletaugustin',
+      link: 'https://www.micheletaugustin.com/',
+    },
+    {
+      key: 'manomano',
+      link: 'https://www.manomano.fr/',
+    },
+    {
+      key: 'mbe',
+      link: 'https://www.mbefrance.fr/fr',
+    },
+    {
+      key: 'ybrush',
+      link: 'https://y-brush.com/',
+    },
+    {
+      key: 'lidl',
+      link: 'https://www.lidl.fr/',
+    },
+    {
+      key: 'franprix',
+      link: 'https://www.franprix.fr/',
+    },
+    {
+      key: 'foodcheri',
+      link: 'https://www.foodcheri.com/',
+    },
+    {
+      key: 'cybervadis',
+      link: 'https://cybervadis.com/',
+    },
+    {
+      key: 'carrefour',
+      link: 'https://www.carrefour.fr/',
+    },
+    {
       key: 'anr',
       link: 'https://anr.fr/',
     },
-  ],
+    {
+      key: 'leroymerlin',
+      link: 'https://www.leroymerlin.fr/',
+    },
+    {
+      key: 'reavie',
+      link: 'http://asso-reavie.fr/',
+    },
+    {
+      key: 'babou',
+      link: 'https://www.bmstores.fr/',
+    },
+    {
+      key: 'danialu',
+      link: 'https://www.danialu.fr/',
+    },
+    {
+      key: 'casaveg',
+      link: 'https://casa-veg.com/',
+    },
+  ].sort((a, b) => {
+    return a.key.localeCompare(b.key);
+  }),
 };

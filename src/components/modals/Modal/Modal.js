@@ -52,7 +52,7 @@ const CustomModal = ({ children, closeOnNextRender, className, fullWidth }) => {
       <div
         className={`uk-background-default ${className} ${
           fullWidth ? 'uk-width-expand' : ''
-        }`}
+        } uk-border-rounded`}
         style={{ margin: 15, position: 'relative' }}
       >
         {children}

@@ -70,7 +70,7 @@ const CVFicheEdition = ({
                 <div className="uk-inline uk-width-expand">
                   {previewUrl ? (
                     <Img
-                      className="uk-height-medium"
+                      className="uk-height-medium uk-width-expand"
                       src={previewUrl}
                       alt="Preview"
                     />

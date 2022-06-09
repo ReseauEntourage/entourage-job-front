@@ -1,7 +1,7 @@
 import React from 'react';
-import { Grid, Section } from 'src/components/utils';
-import { NumberCard } from 'src/components/cards';
+import { Section } from 'src/components/utils';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
+import NumberGrid from 'src/components/partials/NumberGrid';
 
 const staticNumbers = [
   { value: '45', description: 'Candidats recrutés' },
@@ -14,14 +14,10 @@ const staticNumbers = [
   { value: '263', description: "Offres d'emploi reçues" },
   {
     value: (
-      <div>
-        Administration
+      <div className="uk-margin-small-bottom">
+        Administration / Logistique
         <br />
-        Logistique
-        <br />
-        Distribution
-        <br />
-        BTP
+        Distribution / BTP
       </div>
     ),
     description: 'Sont les secteurs qui ont le plus recruté',
@@ -38,21 +34,7 @@ const NumberPartial = () => {
       <p className="uk-text-center uk-margin-medium-bottom">
         Miah, Abdul, Laith... ont retrouvé un emploi grâce à LinkedOut
       </p>
-      <Grid
-        center
-        childWidths={['1-1', '1-2@s', '1-3@l']}
-        items={staticNumbers.map((content) => {
-          return (
-            <div className="uk-flex uk-flex-center">
-              <NumberCard
-                value={content.value}
-                description={content.description}
-                subDescription={content.subDescription}
-              />
-            </div>
-          );
-        })}
-      />
+      <NumberGrid numbers={staticNumbers} />
       <div className="uk-flex uk-flex-center uk-margin-small-top">
         <span className="uk-text-meta uk-text-center">
           * chiffres de la promo #2

@@ -3,9 +3,28 @@
 
 // Your custom code goes here, e.g. mixins, variables.
 // See "how to create a theme" below for more info.
+@font-face {
+  font-family: 'Poppins';
+  src: url('/static/fonts/Poppins-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-weight: bold;
+  src: url('/static/fonts/Poppins-Bold.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-weight: 300;
+  src: url('/static/fonts/Poppins-Light.ttf') format('truetype');
+  font-display: swap;
+}
 
 //Font families
-@global-font-family: Roboto, sans-serif;
+@global-font-family: Poppins, sans-serif;
 @global-font-weight: normal;
 @global-font-size: 15px;
 @global-line-height: 20px;
@@ -32,11 +51,11 @@
 @inverse-icon-button-active-background: darken(@inverse-icon-button-background, 10%);
 @inverse-icon-button-active-color: @inverse-icon-button-color;
 
-@base-body-font-family: Roboto, sans-serif;
+@base-body-font-family: Poppins, sans-serif;
 @base-body-font-weight: normal;
 @base-body-color: #363636;
 
-@base-heading-font-family: Roboto, sans-serif;
+@base-heading-font-family: Poppins, sans-serif;
 @base-heading-color: #363636;
 
 // overlay

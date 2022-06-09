@@ -35,7 +35,7 @@ const ResetPasswordPage = ({ valid, id, token, isCreation }) => {
                       confirmPassword,
                     })
                       .then(() => {
-                        push('/reset/success');
+                        push(`/reset/success?isCreation=${isCreation}`);
                       })
                       .catch((err) => {
                         setError(

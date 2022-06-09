@@ -5,17 +5,25 @@
 // See "how to create a theme" below for more info.
 
 @font-face {
-  font-family: 'Roboto';
-  src: url('/static/fonts/Roboto-Regular.ttf') format('truetype');
+  font-family: 'Poppins';
+  src: url('/static/fonts/Poppins-Regular.ttf') format('truetype');
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Roboto';
+  font-family: 'Poppins';
   font-weight: bold;
-  src: url('/static/fonts/Roboto-Bold.ttf') format('truetype');
+  src: url('/static/fonts/Poppins-Bold.ttf') format('truetype');
   font-display: swap;
 }
+
+@font-face {
+  font-family: 'Poppins';
+  font-weight: 300;
+  src: url('/static/fonts/Poppins-Light.ttf') format('truetype');
+  font-display: swap;
+}
+
 
 @media print {
   * {
@@ -30,7 +38,7 @@
 }
 
 //Font families
-@global-font-family: Roboto, sans-serif;
+@global-font-family: Poppins, sans-serif;
 @global-font-weight: normal;
 @global-font-size: 15px;
 @global-line-height: 20px;
@@ -57,13 +65,14 @@
 @inverse-icon-button-active-background: darken(@inverse-icon-button-background, 10%);
 @inverse-icon-button-active-color: @inverse-icon-button-color;
 
-@base-body-font-family: Roboto, sans-serif;
+@base-body-font-family: Poppins, sans-serif;
 @base-body-font-weight: normal;
 @base-body-color: #363636;
 
-@base-heading-font-family: Roboto, sans-serif;
+@base-heading-font-family: Poppins, sans-serif;
 @base-heading-color: #363636;
 @text-secondary-color: #363636;
+
 // overlay
 @global-primary-background: #f55f24;
 
@@ -80,6 +89,17 @@
 @offcanvas-z-index: 1040;
 @notification-z-index: 1060;
 
+mark, .mark-animated > * > * > * > * {
+  background: white;
+  box-shadow: 15px 0 0 white, -15px 0 0 white;
+  line-height: 1.5;
+  display: inline;
+}
+
+.mark-small {
+  box-shadow: 10px 0 0 white, -10px 0 0 white;
+}
+
 //Button
 .hook-button() {
   color: black;
@@ -88,7 +108,7 @@
   text-transform: none;
   border: solid 1px #e5e5e5;
   padding: 0px 20px;
-  border-radius: 4px;
+  border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -146,7 +166,7 @@
   color: white;
   border: none;
   padding: 0 24px;
-  border-radius: 3px;
+  border-radius: 5px;
   min-height: 44px;
   font-size: @global-font-size;
 }
@@ -226,6 +246,11 @@
   text-decoration: underline;
 }
 
+.hook-card() {
+  border-radius: 5px;
+  overflow: hidden;
+}
+
 .ent-link-muted {
   color: white;
 }
@@ -255,7 +280,7 @@
 
 .ent-list > li::after {
   position: absolute;
-  top: 5px;
+  top: 13px;
   left: -30px;
   height: 10px;
   width: 10px;
@@ -287,10 +312,10 @@
   }
 }
 
+
 .ent-offer {
   overflow: hidden;
   border: 1px solid #e5e5e5;
-  border-radius: 2px;
   &-selected {
     border: 1px solid #f55f24;
     box-shadow: 0 5px 15px rgb(245, 95, 36 / 8%) !important;
@@ -589,4 +614,8 @@
 
 .uk-card-default.uk-card-hover:hover.ent-external-offer {
   background-color: @global-muted-background !important;
+}
+
+.uk-list-disc>li:nth-child(n+2), .uk-list-disc>li>ul {
+  margin-top: 20px;
 }

@@ -21,7 +21,7 @@ const CorporateContact = () => {
           className="uk-margin-small-top"
           onClick={() => {
             openModal(<ModalInterestLinkedOut />);
-            gaEvent(GA_TAGS.PAGE_AIDER_CONTACT_RECRUTEUR_CLIC);
+            gaEvent(GA_TAGS.PAGE_ENTREPRISE_CVS_CONTACT_RECRUTEUR_CLIC);
           }}
         >
           Nous contacter

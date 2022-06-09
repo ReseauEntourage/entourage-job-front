@@ -1,6 +1,6 @@
 {
   "name": "linkedout-front",
-  "version": "1.23.1",
+  "version": "1.24.0",
   "description": "",
   "main": "index.js",
   "engines": {
@@ -64,6 +64,8 @@
     "react-select": "^3.0.8",
     "react-share": "^3.0.1",
     "react-sortable-hoc": "^1.11.0",
+    "react-text-loop": "^2.3.0",
+    "react-visibility-sensor": "^5.1.1",
     "rxjs": "^7.4.0",
     "sharp": "^0.30.1",
     "uikit": "^3.5.4",
