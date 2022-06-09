@@ -29,7 +29,7 @@ const reviews = [
         Avec Miah c’est une réussite. Là où notre compétence s’arrête, on est
         rassurés par le fait que{' '}
         <span className="uk-text-primary">
-          LinkedOut est là pour nous accompagner .
+          LinkedOut est là pour nous accompagner.{' '}
         </span>
         Si on peut s’inscrire dans des actions comme celles-ci tout en gardant
         notre efficacité, en y ajoutant le sourire de quelqu’un qui a envie, on
@@ -65,9 +65,8 @@ const reviews = [
         j&apos;avais besoin, surtout que je n&apos;ai pas de famille ici.{' '}
         <span className="uk-text-primary">
           J&apos;ai parcouru beaucoup d&apos;autres dispositifs et là c&apos;est
-          différent, LinkedOut est très présent
+          différent, LinkedOut est très présent.
         </span>
-        .
       </>
     ),
   },

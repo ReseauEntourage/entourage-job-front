@@ -21,7 +21,7 @@ const ImageTitleContent = ({ title, text, img, cta, secondCta }) => {
       />
       <div
         uk-scrollspy="cls: uk-animation-slide-left uk-animation-fade; delay: 200;"
-        className="uk-flex uk-flex-column uk-flex-left uk-position-relative uk-width-1-2@m uk-padding-large uk-padding-remove-vertical"
+        className="uk-flex uk-flex-column uk-flex-left uk-position-relative uk-width-2-3@m uk-width-1-2@xl uk-padding-large uk-padding-remove-vertical"
       >
         <h1 className="uk-text-left uk-text-bold">{title}</h1>
         {text && (

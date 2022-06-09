@@ -11,6 +11,7 @@ const ModalGeneric = ({
   onClose: customOnClose,
   className,
   fullWidth,
+  removePadding,
 }) => {
   const { onClose } = useModalContext();
   return (
@@ -20,7 +21,11 @@ const ModalGeneric = ({
           fullWidth ? 'uk-width-expand' : 'uk-width-2xlarge@m'
         }`}
       >
-        <div className="uk-modal-body uk-padding">
+        <div
+          className={`uk-modal-body ${
+            removePadding ? 'uk-padding-remove' : 'uk-padding'
+          }`}
+        >
           <CloseButton
             className="uk-modal-close-default"
             onClick={() => {
@@ -52,6 +57,7 @@ ModalGeneric.propTypes = {
   onClose: PropTypes.func,
   className: PropTypes.string,
   fullWidth: PropTypes.bool,
+  removePadding: PropTypes.bool,
 };
 
 ModalGeneric.defaultProps = {
@@ -60,6 +66,7 @@ ModalGeneric.defaultProps = {
   onClose: undefined,
   className: '',
   fullWidth: false,
+  removePadding: false,
 };
 
 export default ModalGeneric;

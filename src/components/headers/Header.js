@@ -88,7 +88,7 @@ const Header = ({ isHome }) => {
     </div>,
   ];
   return (
-    <header id="header">
+    <header id="header" style={{ height: 80 }}>
       <Navbar
         sticky=""
         className="uk-background-secondary uk-navbar-transparent ent-home"

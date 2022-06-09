@@ -10,7 +10,7 @@
  */
 html {
   /* 1 */
-  font-family: Roboto, sans-serif;
+  font-family: Poppins, sans-serif;
   font-size: 15px;
   font-weight: normal;
   line-height: 20px;
@@ -244,7 +244,7 @@ h6,
 .uk-heading-xlarge,
 .uk-heading-2xlarge {
   margin: 0 0 20px 0;
-  font-family: Roboto, sans-serif;
+  font-family: Poppins, sans-serif;
   font-weight: normal;
   color: #363636;
   text-transform: none;
@@ -4072,7 +4072,7 @@ ul.uk-nav-sub {
   padding: 0 15px;
   /* 3 */
   font-size: 0.875rem;
-  font-family: Roboto, sans-serif;
+  font-family: Poppins, sans-serif;
   /* 4 */
   text-decoration: none;
 }
@@ -8114,7 +8114,7 @@ iframe.uk-cover {
  */
 .uk-logo {
   font-size: 1.5rem;
-  font-family: Roboto, sans-serif;
+  font-family: Poppins, sans-serif;
   color: #363636;
   /* 1 */
   text-decoration: none;
@@ -12414,6 +12414,23 @@ iframe.uk-cover {
   h3 {
     page-break-after: avoid;
   }
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('/static/fonts/Poppins-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-weight: bold;
+  src: url('/static/fonts/Poppins-Bold.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-weight: 300;
+  src: url('/static/fonts/Poppins-Light.ttf') format('truetype');
+  font-display: swap;
 }
 * {
   -webkit-print-color-adjust: exact !important;

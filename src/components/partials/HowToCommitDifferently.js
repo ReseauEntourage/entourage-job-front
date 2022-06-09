@@ -2,8 +2,9 @@ import React from 'react';
 import { Section } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
 import MultipleCTA from 'src/components/partials/MultipleCTA';
-import { GA_TAGS } from 'src/constants/tags';
-import { openContactModal } from 'src/components/modals/openContactModal';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
+import { fbEvent } from 'src/lib/fb';
 
 const HowToCommitDifferently = () => {
   return (
@@ -34,10 +35,11 @@ const HowToCommitDifferently = () => {
             text: 'Défi solidaire ou atelier de sensibilisation, engagez vos collaborateurs, RH et managers grâce à des formats modulables.',
             button: {
               label: 'Sensibiliser mon équipe',
+              href: process.env.AIRTABLE_LINK_COMPANY_SENSITIZATION,
+              external: true,
               onClick: () => {
-                openContactModal(
-                  process.env.AIRTABLE_LINK_COMPANY_SENSITIZATION
-                );
+                gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
+                fbEvent(FB_TAGS.COMPANY_CONTACT);
               },
             },
             tag: GA_TAGS.PAGE_ENTREPRISES_SENSIBILISER_CLIC,
@@ -48,8 +50,11 @@ const HowToCommitDifferently = () => {
             text: 'Vous pouvez nous accompagner via du mécénat de compétences ou des dons en nature (équipement informatique, etc.)',
             button: {
               label: 'Proposer du mécénat',
+              href: process.env.AIRTABLE_LINK_COMPANY_SPONSOR,
+              external: true,
               onClick: () => {
-                openContactModal(process.env.AIRTABLE_LINK_COMPANY_SPONSOR);
+                gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
+                fbEvent(FB_TAGS.COMPANY_CONTACT);
               },
             },
             tag: GA_TAGS.PAGE_ENTREPRISES_MECENAT_CLIC,

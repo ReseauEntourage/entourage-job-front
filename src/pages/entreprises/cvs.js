@@ -1,7 +1,7 @@
 import React from 'react';
 import { gaEvent } from 'src/lib/gtag';
 import { Button, Grid, Img, Section } from 'src/components/utils';
-import { GA_TAGS } from 'src/constants/tags';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import Layout from 'src/components/Layout';
 import ImageTitle from 'src/components/partials/ImageTitle';
 import SearchCandidates from 'src/components/partials/SearchCandidates';
@@ -10,8 +10,8 @@ import NewsletterPartial from 'src/components/partials/NewsletterPartial';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
 import usePostPublicOfferModal from 'src/components/modals/usePostPublicOfferModal';
-import { openContactModal } from 'src/components/modals/openContactModal';
 import { isSSR } from 'src/utils/isSSR';
+import { fbEvent } from 'src/lib/fb';
 
 const CVEntreprises = () => {
   const PublicOfferModal = usePostPublicOfferModal();
@@ -47,8 +47,12 @@ const CVEntreprises = () => {
           label: 'Découvrez les candidats',
         }}
         secondCta={{
+          href: process.env.AIRTABLE_LINK_COMPANY_HELP,
+          isExternal: true,
+          newTab: true,
           onClick: () => {
-            openContactModal(process.env.AIRTABLE_LINK_COMPANY_HELP);
+            gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
+            fbEvent(FB_TAGS.COMPANY_CONTACT);
           },
           label: 'Nous contacter',
         }}

@@ -422,7 +422,7 @@ const CVPDF = ({ cv, page }) => {
             <hr className="uk-margin-small-bottom" />
             <Grid column middle gap="small">
               <p className="uk-text-small uk-text-center uk-text-meta uk-width-xlarge@m uk-margin-remove">
-                Je suis accompagné(e) dans ma recherche d&apos;emploi et mon
+                Je suis accompagné⸱e dans ma recherche d&apos;emploi et mon
                 intégration en entreprise par le projet LinkedOut. Pour plus
                 d&apos;information, contactez&nbsp;:{' '}
                 <SimpleLink

@@ -18,7 +18,9 @@ import Api from 'src/Axios';
 import PropTypes from 'prop-types';
 import TextLoop from 'react-text-loop';
 
-import { openContactModal } from 'src/components/modals/openContactModal';
+import { gaEvent } from 'src/lib/gtag';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { fbEvent } from 'src/lib/fb';
 
 const timeline = [
   {
@@ -105,13 +107,16 @@ const Entreprises = ({ nbPublishedCVs }) => {
           <mark className="mark-small">
             Notre objectif ? Vous permettre de créer les conditions d’un
             recrutement inclusif réussi, au service de la transformation de
-            votre entreprise. Pour cela, LinkedOut vous accompagne à chaque
-            étape.
+            votre entreprise.
           </mark>
         }
         cta={{
+          href: process.env.AIRTABLE_LINK_COMPANY_HELP,
+          isExternal: true,
+          newTab: true,
           onClick: () => {
-            openContactModal(process.env.AIRTABLE_LINK_COMPANY_HELP);
+            gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
+            fbEvent(FB_TAGS.COMPANY_CONTACT);
           },
           label: 'Nous contacter',
         }}
@@ -184,8 +189,12 @@ const Entreprises = ({ nbPublishedCVs }) => {
         direction="right"
         cta={
           <Button
+            href={process.env.AIRTABLE_LINK_COMPANY_HELP}
+            isExternal
+            newTab
             onClick={() => {
-              openContactModal(process.env.AIRTABLE_LINK_COMPANY_HELP);
+              gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
+              fbEvent(FB_TAGS.COMPANY_CONTACT);
             }}
             style="secondary"
             className="uk-margin-medium-top"
@@ -319,8 +328,12 @@ const Entreprises = ({ nbPublishedCVs }) => {
         </h2>
         <div className="uk-flex uk-flex-center">
           <Button
+            href={process.env.AIRTABLE_LINK_COMPANY_HELP}
+            isExternal
+            newTab
             onClick={() => {
-              openContactModal(process.env.AIRTABLE_LINK_COMPANY_HELP);
+              gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
+              fbEvent(FB_TAGS.COMPANY_CONTACT);
             }}
             style="secondary"
             className="uk-margin-small-top"

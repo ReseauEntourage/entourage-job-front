@@ -481,7 +481,7 @@ const CVFiche = ({ cv, actionDisabled }) => {
       </div>
       <Grid column middle>
         <p className="uk-text-center uk-width-xlarge@m">
-          Je suis accompagné(e) dans ma recherche d&apos;emploi et mon
+          Je suis accompagné⸱e dans ma recherche d&apos;emploi et mon
           intégration en entreprise par le projet LinkedOut. Pour plus
           d&apos;information, contactez:
           <br />

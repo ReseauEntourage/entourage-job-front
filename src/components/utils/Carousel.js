@@ -25,7 +25,7 @@ const Carousel = ({ style, children, containerClasses, pagination }) => {
 
   return (
     <div
-      className="uk-position-relative"
+      className="uk-position-relative uk-margin-medium-left uk-margin-medium-right"
       data-uk-slider="autoplay: true; autoplay-interval: 2000; pause-on-hover: true; center: true;"
       style={{ maxWidth: '100%' }}
     >

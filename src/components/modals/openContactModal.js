@@ -6,11 +6,10 @@ import { openModal } from 'src/components/modals/Modal';
 import ModalGeneric from 'src/components/modals/ModalGeneric';
 
 export const openContactModal = (formLink) => {
-  console.log(formLink);
   gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
   fbEvent(FB_TAGS.COMPANY_CONTACT);
   openModal(
-    <ModalGeneric>
+    <ModalGeneric removePadding>
       <iframe
         className="airtable-embed"
         src={`${
