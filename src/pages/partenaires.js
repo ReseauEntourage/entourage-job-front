@@ -4,7 +4,6 @@ import PARTNERS from 'src/constants/partners';
 import Grid from 'src/components/utils/Grid';
 import { Img, Section } from 'src/components/utils';
 import { addPrefix, formatParagraph } from 'src/utils';
-import Carousel from 'src/components/utils/Carousel';
 import ModalInterestLinkedOut from 'src/components/modals/ModalInterestLinkedOut';
 import SimpleSection from 'src/components/partials/SimpleSection';
 import SimpleLink from 'src/components/utils/SimpleLink';
@@ -12,11 +11,12 @@ import { gaEvent } from 'src/lib/gtag';
 import { GA_TAGS } from 'src/constants/tags';
 import { openModal } from 'src/components/modals/Modal';
 import PropTypes from 'prop-types';
+import LogoList from 'src/components/partials/LogoList';
 
 const viewportHeightWithoutHeader = 'calc(100vh - 80px)';
 const viewportHeightWithoutHeaderAndPadding = 'calc(100vh - 220px)';
 
-const CarouselSection = ({ children, partners, img }) => {
+const CarouselSection = ({ children, partners, img, forwardAnimation }) => {
   return (
     <div
       className="uk-inline uk-cover-container uk-flex uk-flex-center uk-flex-middle"
@@ -27,54 +27,28 @@ const CarouselSection = ({ children, partners, img }) => {
         style={{
           backgroundImage: `url(${addPrefix(img)})`,
         }}
-        uk-scrollspy="cls: uk-animation-kenburns uk-animation-reverse; delay: 200;"
+        uk-scrollspy={`cls: uk-animation-kenburns ${
+          forwardAnimation ? '' : 'uk-animation-reverse'
+        }; delay: 200;`}
       />
       <div
         className="uk-overlay-primary uk-position-cover"
-        style={{ backgroundColor: 'rgba(0,0,0,0.7)' }}
+        style={{
+          backgroundColor: 'rgba(0,0,0,0.7)',
+        }}
       />
       <div className="uk-overlay uk-position-center">
-        <Section
-          size="large"
-          style="muted"
-          preserveColor
-          className="uk-box-shadow-medium uk-padding-large uk-width-2xlarge@m"
-        >
-          <div uk-scrollspy="cls: uk-animation-fade; delay: 200;">
-            <h2 className="uk-text-bold uk-align-center uk-text-center">
-              {children}
-            </h2>
-            <div className="uk-width-expand">
-              <div className="uk-container-small uk-flex uk-flex-center">
-                <div className="uk-width-large">
-                  <Carousel containerClasses="uk-child-width-1-1">
-                    {partners.map(({ key, link }, index) => {
-                      return (
-                        <SimpleLink
-                          isExternal
-                          target="_blank"
-                          href={link}
-                          key={index}
-                          className="uk-flex uk-flex-column uk-flex-middle uk-flex-center uk-padding-large"
-                        >
-                          <div className="uk-width-medium uk-flex uk-flex-center uk-flex-middle">
-                            <Img
-                              src={`/static/img/partners/${key}/logo.png`}
-                              width=""
-                              height=""
-                              alt=""
-                              className="uk-height-max-small"
-                            />
-                          </div>
-                        </SimpleLink>
-                      );
-                    })}
-                  </Carousel>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Section>
+        <div uk-scrollspy="cls: uk-animation-fade; delay: 200;">
+          <h2 className="uk-text-bold uk-align-center uk-text-center">
+            <mark>{children}</mark>
+          </h2>
+          <LogoList
+            logos={partners}
+            carousel={partners.length > 5}
+            padding
+            background
+          />
+        </div>
       </div>
     </div>
   );
@@ -84,9 +58,14 @@ CarouselSection.propTypes = {
   children: PropTypes.element.isRequired,
   partners: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   img: PropTypes.string.isRequired,
+  forwardAnimation: PropTypes.bool,
 };
 
-const Title = ({ children, overlay, inverse = false, img }) => {
+CarouselSection.defaultProps = {
+  forwardAnimation: false,
+};
+
+const Title = ({ children, overlay = false, img }) => {
   return (
     <div
       className="uk-inline uk-cover-container uk-flex uk-flex-center uk-flex-middle"
@@ -101,17 +80,11 @@ const Title = ({ children, overlay, inverse = false, img }) => {
       />
       <div className={`uk-overlay-${overlay} uk-position-cover`} />
       <div className="uk-overlay uk-position-center">
-        <Section
-          style={inverse ? 'secondary' : 'default'}
-          preserveColor
-          className="uk-box-shadow-medium"
-        >
-          <div uk-scrollspy="cls: uk-animation-fade; delay: 200;">
-            <h1 className="uk-text-bold uk-align-center uk-text-center uk-margin-remove">
-              {children}
-            </h1>
-          </div>
-        </Section>
+        <div uk-scrollspy="cls: uk-animation-fade; delay: 200;">
+          <h1 className="uk-text-bold uk-align-center uk-text-center uk-margin-remove">
+            <mark>{children}</mark>
+          </h1>
+        </div>
       </div>
     </div>
   );
@@ -120,7 +93,6 @@ const Title = ({ children, overlay, inverse = false, img }) => {
 Title.propTypes = {
   children: PropTypes.element.isRequired,
   overlay: PropTypes.string.isRequired,
-  inverse: PropTypes.bool.isRequired,
   img: PropTypes.string.isRequired,
 };
 
@@ -254,24 +226,27 @@ const PartnerItem = ({
 PartnerItem.propTypes = {
   desc: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  bis: PropTypes.bool.isRequired,
+  bis: PropTypes.bool,
   question: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
+  author: PropTypes.string,
   answer: PropTypes.string.isRequired,
   logoKey: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
 };
 
+PartnerItem.defaultProps = {
+  bis: undefined,
+  author: undefined,
+};
+
 const Partenaires = () => {
   return (
     <Layout title="Les partenaires - LinkedOut">
-      <Title overlay="default" inverse img="/static/img/construct.jpg">
+      <Title overlay="primary" img="/static/img/construct.jpg">
         <>
-          <span className="uk-light">
-            <span className="uk-text-primary">Ils construisent le projet</span>
-          </span>{' '}
-          <span className="uk-text-primary">avec nous</span>
+          Ils construisent le projet{' '}
+          <span className="uk-text-primary">avec&nbsp;nous</span>
         </>
       </Title>
       {PARTNERS.STRATEGY.map(
@@ -293,7 +268,7 @@ const Partenaires = () => {
         }
       )}
       <CarouselSection
-        img="/static/img/partners.jpg"
+        img="/static/img/meeting.jpg"
         partners={PARTNERS.YOUNG_FINANCE}
       >
         <>
@@ -302,40 +277,45 @@ const Partenaires = () => {
         </>
       </CarouselSection>
       <CarouselSection
-        img="/static/img/partners.jpg"
+        img="/static/img/business.jpg"
         partners={PARTNERS.ALL_FINANCE}
+        forwardAnimation
       >
         <>
           Nos partenaires <span className="uk-text-primary">financiers</span>
         </>
       </CarouselSection>
-      <Title overlay="primary" inverse={false} img="/static/img/sports.jpg">
+      <CarouselSection img="/static/img/sports.jpg" partners={PARTNERS.SPORTS}>
         <>
           Nos partenaires{' '}
           <span className="uk-text-primary">sportifs et visibilité</span>
         </>
-      </Title>
-      {PARTNERS.SPORTS.map(
-        ({ title, desc, question, answer, author, key, bis, link }, index) => {
-          return (
-            <PartnerItem
-              key={key}
-              title={title}
-              desc={desc}
-              question={question}
-              answer={answer}
-              logoKey={key}
-              bis={bis}
-              link={link}
-              author={author}
-              index={index}
-            />
-          );
-        }
-      )}
+      </CarouselSection>
+      {/*
+        TODO to put back when we have the right texts
+        {PARTNERS.SPORTS.map(
+          ({ title, desc, question, answer, author, key, bis, link }, index) => {
+            return (
+              <PartnerItem
+                key={key}
+                title={title}
+                desc={desc}
+                question={question}
+                answer={answer}
+                logoKey={key}
+                bis={bis}
+                link={link}
+                author={author}
+                index={index}
+              />
+            );
+          }
+        )}
+      */}
       <CarouselSection
         img="/static/img/partners.jpg"
         partners={PARTNERS.ORIENTATION}
+        forwardAnimation
       >
         <>
           Nos partenaires <span className="uk-text-primary">opérationnels</span>

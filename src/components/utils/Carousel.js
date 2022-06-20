@@ -5,7 +5,13 @@ import { gaEvent } from 'src/lib/gtag';
 import { GA_TAGS } from 'src/constants/tags';
 import { IconNoSSR } from 'src/components/utils/Icon';
 
-const Carousel = ({ style, children, containerClasses, pagination }) => {
+const Carousel = ({
+  style,
+  children,
+  containerClasses,
+  pagination,
+  padding,
+}) => {
   const router = useRouter();
 
   let tag;
@@ -29,7 +35,11 @@ const Carousel = ({ style, children, containerClasses, pagination }) => {
       data-uk-slider="autoplay: true; autoplay-interval: 2000; pause-on-hover: true; center: true;"
       style={{ maxWidth: '100%' }}
     >
-      <div className={`uk-slider-container uk-background-${style}`}>
+      <div
+        className={`uk-slider-container uk-border-rounded ${
+          padding ? 'uk-padding-small' : ''
+        } uk-background-${style}`}
+      >
         <ul className={`uk-slider-items ${containerClasses}`}>{children}</ul>
       </div>
       {pagination && (
@@ -88,7 +98,7 @@ const Carousel = ({ style, children, containerClasses, pagination }) => {
         </a>
         <a
           href="#"
-          className="uk-position-center-right-out  uk-position-small"
+          className="uk-position-center-right-out uk-position-small"
           uk-slider-item="next"
           onClick={() => {
             if (tag) {
@@ -112,10 +122,12 @@ Carousel.propTypes = {
   children: PropTypes.arrayOf(PropTypes.element).isRequired,
   containerClasses: PropTypes.string.isRequired,
   pagination: PropTypes.bool,
+  padding: PropTypes.bool,
 };
 Carousel.defaultProps = {
   style: 'default',
   pagination: true,
+  padding: false,
 };
 
 export default Carousel;

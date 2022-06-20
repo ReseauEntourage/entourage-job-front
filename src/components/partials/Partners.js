@@ -11,7 +11,7 @@ const Partners = ({ showOrientationPartners }) => {
     <Background
       blend={{ colorHex: showOrientationPartners ? 'white' : '#484848' }}
     >
-      <Section container="large">
+      <Section container="large" className="uk-border-rounded">
         <div className="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
           {showOrientationPartners ? (
             <h2 className="uk-text-bold uk-align-center uk-text-center uk-margin-remove-top">
