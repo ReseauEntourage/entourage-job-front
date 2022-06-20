@@ -10,7 +10,7 @@ const ModalConfirm = ({ onConfirm, text, title, buttonText, children }) => {
   return (
     <ModalGeneric description={text} title={title}>
       {children && <div className="uk-margin-medium-bottom">{children}</div>}
-      <div className="uk-modal-footer uk-padding-remove-horizontal uk-padding-remove-bottom">
+      <div className="uk-modal-footer uk-padding-remove-bottom">
         <Button style="default" onClick={onClose}>
           Annuler
         </Button>

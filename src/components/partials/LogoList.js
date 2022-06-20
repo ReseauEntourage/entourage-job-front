@@ -53,10 +53,16 @@ Logo.defaultProps = {
   bis: undefined,
 };
 
-const LogoList = ({ logos, carousel }) => {
+const LogoList = ({ logos, carousel, padding, background }) => {
+  const logosPerLine = Math.floor(logos.length / 3 + 1);
+
   if (carousel) {
     return (
-      <Carousel containerClasses="uk-child-width-auto" pagination={false}>
+      <Carousel
+        containerClasses="uk-child-width-auto"
+        pagination={false}
+        padding={padding}
+      >
         {logos.map(({ key, link, bis }) => {
           return (
             <div
@@ -72,11 +78,14 @@ const LogoList = ({ logos, carousel }) => {
   }
   return (
     <Grid
-      childWidths={[`1-${Math.floor(logos.length / 3 + 1)}@m`, 'auto']}
+      childWidths={[`1-${logosPerLine <= 3 ? 3 : logosPerLine}@m`, 'auto']}
       match
       middle
       center
       gap="small"
+      className={`${
+        background ? 'uk-background-default' : ''
+      } uk-border-rounded ${padding ? 'uk-padding-small' : ''}`}
       items={logos.map(({ key, link, bis }) => {
         return <Logo key={key} logoKey={key} link={link} bis={bis} />;
       })}
@@ -93,10 +102,14 @@ LogoList.propTypes = {
     })
   ).isRequired,
   carousel: PropTypes.bool,
+  padding: PropTypes.bool,
+  background: PropTypes.bool,
 };
 
 LogoList.defaultProps = {
   carousel: false,
+  padding: false,
+  background: false,
 };
 
 export default LogoList;

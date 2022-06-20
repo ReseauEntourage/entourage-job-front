@@ -318,7 +318,7 @@ const Entreprises = ({ nbPublishedCVs }) => {
           <span className="uk-text-primary">Ils ont recruté</span> avec
           LinkedOut
         </h2>
-        <LogoList logos={PARTNERS.hired} carousel />
+        <LogoList logos={PARTNERS.HIRED} carousel />
       </Section>
       <HowToCommitDifferently />
       <Section style="primary">
