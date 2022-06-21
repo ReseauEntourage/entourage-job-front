@@ -14,6 +14,7 @@ import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
 import { OFFCANVAS_LOGGED } from 'src/constants/utils';
 import { GA_TAGS } from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
 
 const HeaderConnected = ({ isHome }) => {
   const { user, logout } = useContext(UserContext);
@@ -134,12 +135,13 @@ const HeaderConnected = ({ isHome }) => {
         id="dropdown-nav-profile"
         boundaryId="nav-profile"
       >
-        {LINKS_CONNECTED.dropdown.map(({ href, name, onClick }, index) => {
+        {LINKS_CONNECTED.dropdown.map(({ href, name, onClick, tag }, index) => {
           return (
             <a
               key={index}
               aria-hidden="true"
               onClick={() => {
+                if (tag) gaEvent(tag);
                 if (href) {
                   router.push(href);
                 }
@@ -176,7 +178,7 @@ const HeaderConnected = ({ isHome }) => {
               style={{ borderLeft: '1px solid lightgray' }}
             >
               {LINKS_CONNECTED[user.role.toLowerCase()].map(
-                ({ href, badge, icon, name, external }, index) => {
+                ({ href, badge, icon, name, external, tag }, index) => {
                   return (
                     <li
                       key={index}
@@ -184,6 +186,9 @@ const HeaderConnected = ({ isHome }) => {
                     >
                       <SimpleLink
                         href={href}
+                        onClick={() => {
+                          if (tag) gaEvent(tag);
+                        }}
                         isExternal={external}
                         target={external ? '_blank' : '_self'}
                         className="uk-visible@m uk-flex uk-flex-middle"
@@ -248,12 +253,13 @@ const HeaderConnected = ({ isHome }) => {
             .filter(({ href }) => {
               return href !== '#';
             })
-            .map(({ href, icon, name, badge }, index) => {
+            .map(({ href, icon, name, badge, tag }, index) => {
               return (
                 <li key={index}>
                   <a
                     aria-hidden="true"
                     onClick={() => {
+                      if (tag) gaEvent(tag);
                       UIkit.offcanvas(`#${OFFCANVAS_LOGGED}`).hide();
                       router.push(href);
                     }}
@@ -277,12 +283,13 @@ const HeaderConnected = ({ isHome }) => {
             </span>
           </li>
           {LINKS_CONNECTED.dropdown.map(
-            ({ href, icon, name, onClick }, index) => {
+            ({ href, icon, name, onClick, tag }, index) => {
               return (
                 <li key={index}>
                   <a
                     aria-hidden="true"
                     onClick={() => {
+                      if (tag) gaEvent(tag);
                       UIkit.offcanvas(`#${OFFCANVAS_LOGGED}`).hide();
                       if (href) {
                         router.push(href);

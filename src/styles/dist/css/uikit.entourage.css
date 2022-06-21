@@ -10838,6 +10838,7 @@ iframe.uk-cover {
   font-size: 15px;
   color: #F55F24;
   background-color: white;
+  border: 1px solid;
 }
 .uk-light .uk-button-secondary:hover,
 .uk-light .uk-button-secondary:focus,

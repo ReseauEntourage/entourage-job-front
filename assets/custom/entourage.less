@@ -171,12 +171,6 @@ mark, .mark-animated > * > * > * > * {
   font-size: @global-font-size;
 }
 
-.hook-inverse-button-secondary() {
-  .hook-button-secondary();
-  color: #F55F24;
-  background-color: white;
-}
-
 .hook-button-secondary-hover() {
   background-color: darken(#F55F24, 5%);
   color: white;
@@ -185,6 +179,13 @@ mark, .mark-animated > * > * > * > * {
 .hook-button-secondary-active() {
   background-color: darken(#F55F24, 10%);
   color: white;
+}
+
+.hook-inverse-button-secondary() {
+  .hook-button-secondary();
+  color: #F55F24;
+  background-color: white;
+  border: 1px solid;
 }
 
 .hook-inverse-button-secondary-hover() {
@@ -196,7 +197,6 @@ mark, .mark-animated > * > * > * > * {
   color: #F55F24;
   background-color: darken(white, 10%);
 }
-
 
 .hook-button-disabled() {
   color: #999;

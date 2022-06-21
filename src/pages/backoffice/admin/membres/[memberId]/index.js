@@ -353,7 +353,7 @@ const User = () => {
             </SimpleLink>
             {cv && (
               <Button
-                style="muted"
+                style="default"
                 href={{
                   pathname: '/backoffice/admin/offres',
                   query: {

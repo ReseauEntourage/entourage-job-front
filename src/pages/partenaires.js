@@ -42,12 +42,21 @@ const CarouselSection = ({ children, partners, img, forwardAnimation }) => {
           <h2 className="uk-text-bold uk-align-center uk-text-center">
             <mark>{children}</mark>
           </h2>
-          <LogoList
-            logos={partners}
-            carousel={partners.length > 5}
-            padding
-            background
-          />
+          {partners.length <= 5 ? (
+            <>
+              {partners.length < 5 ? (
+                <LogoList logos={partners} padding background />
+              ) : (
+                <div className="uk-flex uk-flex-column uk-flex-middle">
+                  <div className="uk-width-large@m">
+                    <LogoList logos={partners} carousel padding background />
+                  </div>
+                </div>
+              )}
+            </>
+          ) : (
+            <LogoList logos={partners} carousel padding background />
+          )}
         </div>
       </div>
     </div>
