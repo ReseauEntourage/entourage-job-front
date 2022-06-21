@@ -239,6 +239,12 @@ const GA_TAGS = {
   PAGE_ORIENTER_CONTACT_CLIC: {
     action: 'Page_Orienter_Contact_Clic',
   },
+  PAGE_ORIENTER_BROCHURE_CLIC: {
+    action: 'Page_Orienter_Brochure_Clic',
+  },
+  PAGE_ORIENTER_APPOINTMENT_CLIC: {
+    action: 'Page_Orienter_Appointment_Clic',
+  },
   PAGE_PARTENAIRES_NOUS_ECRIRE_CLIC: {
     action: 'Page_Partenaires_Nous_ecrire_Clic',
   },

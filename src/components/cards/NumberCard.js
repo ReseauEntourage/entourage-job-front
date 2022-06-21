@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import CountUp from 'react-countup';
 import VisibilitySensor from 'react-visibility-sensor';
 
 const AnimatedNumber = ({ value }) => {
+  const [isActive, setIsActive] = useState(true);
   return (
-    <VisibilitySensor partialVisibility>
+    <VisibilitySensor partialVisibility active={isActive}>
       {({ isVisible }) => {
+        if (isVisible) {
+          setIsActive(false);
+        }
         return (
           <div style={{ minHeight: 1 }}>
             {isVisible ? <CountUp duration={5} end={value} preserveValue /> : 0}

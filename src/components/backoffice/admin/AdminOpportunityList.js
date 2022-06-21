@@ -107,7 +107,7 @@ const AdminOpportunityList = ({
             Créer une nouvelle offre
           </Button>
           <Button
-            style="muted"
+            style="default"
             onClick={() => {
               openModal(
                 <ModalEdit

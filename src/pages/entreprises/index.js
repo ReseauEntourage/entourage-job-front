@@ -41,7 +41,7 @@ const timeline = [
   },
   {
     text: "Préparez l'intégration",
-    icon: 'static/img/illustrations/content-de-te-revoir.png',
+    icon: 'static/img/illustrations/welcome.png',
   },
   { text: "Suivez l'intégration", icon: 'static/img/illustrations/suivi.png' },
 ];
@@ -69,6 +69,77 @@ const titles = [
   'recruter inclusif',
   'sensibiliser vos équipes',
   "changer de regard sur l'inclusion",
+];
+
+const reviews = [
+  {
+    image: '/static/img/temoignage-entreprise-augustin-kenny.jpg',
+    author: 'Augustin Chavanne',
+    company: 'Vélissime',
+    industry: 'livraison de repas',
+    companyInfo: '20 salariés',
+    review: (
+      <>
+        Par son expérience,{' '}
+        <span className="uk-text-primary">
+          il apporte quelque chose de radicalement différent.
+        </span>{' '}
+        Si je pouvais embaucher 2 Kenny, je le ferais&nbsp;!
+      </>
+    ),
+  },
+  {
+    image: '/static/img/temoignage-entreprise-francois-miah.jpg',
+    author: 'François Biard',
+    company: 'Green Factory',
+    industry: 'créations végétales',
+    companyInfo: '31 salariés',
+    review: (
+      <>
+        Avec Miah c’est une réussite. Là où notre compétence s’arrête, on est
+        rassurés par le fait que{' '}
+        <span className="uk-text-primary">
+          LinkedOut est là pour nous accompagner.{' '}
+        </span>
+        Si on peut s’inscrire dans des actions comme celles-ci tout en gardant
+        notre efficacité, en y ajoutant le sourire de quelqu’un qui a envie, on
+        le fait&nbsp;!
+      </>
+    ),
+  },
+  {
+    image: '/static/img/temoignage-entreprise-advens.jpg',
+    author: 'Sylvie Lepoutre',
+    authorStatus: 'Raison d’être & Projet d’entreprise',
+    company: 'Advens',
+    industry: 'partenaire LinkedOut',
+    review: (
+      <>
+        Nous étions à mille lieux des problématiques des personnes en précarité.{' '}
+        <span className="uk-text-primary">
+          Maintenant, chez Advens, on entend des mots comme “résilience”,
+          “deuxième chance”, “rebond”, “inclusion”.
+        </span>{' '}
+        Les collaborateurs sont très fiers !
+      </>
+    ),
+  },
+  {
+    image: '/static/img/temoignage-candidat-amelie.jpg',
+    author: 'Amélie',
+    authorStatus: 'Ancienne candidate LinkedOut',
+    review: (
+      <>
+        C&apos;est vraiment un bon dispositif. Avec mon coach, on ne parle pas
+        simplement du travail, il me donne des conseils. Ce sont des choses dont
+        j&apos;avais besoin, surtout que je n&apos;ai pas de famille ici.{' '}
+        <span className="uk-text-primary">
+          J&apos;ai parcouru beaucoup d&apos;autres dispositifs et là c&apos;est
+          différent, LinkedOut est très présent.
+        </span>
+      </>
+    ),
+  },
 ];
 
 const Entreprises = ({ nbPublishedCVs }) => {
@@ -197,7 +268,6 @@ const Entreprises = ({ nbPublishedCVs }) => {
               fbEvent(FB_TAGS.COMPANY_CONTACT);
             }}
             style="secondary"
-            className="uk-margin-medium-top"
           >
             Contactez-nous&nbsp;
             <IconNoSSR name="chevron-right" />
@@ -275,8 +345,10 @@ const Entreprises = ({ nbPublishedCVs }) => {
       />
       <Section container="large" style="muted">
         <h2 className="uk-text-bold uk-align-center uk-text-center uk-margin-medium-bottom uk-margin-remove-top uk-width-1-2@m">
-          {nbPublishedCVs || 'De nombreux'} candidats cherchent actuellement un
-          emploi
+          <span className="uk-text-primary">
+            {nbPublishedCVs || 'De nombreux'} candidats
+          </span>{' '}
+          cherchent actuellement un emploi
         </h2>
         <CVList
           hideSearchBar
@@ -287,7 +359,7 @@ const Entreprises = ({ nbPublishedCVs }) => {
         />
         <div className="uk-flex uk-flex-center uk-margin-medium-top">
           <Button
-            href={{ pathname: '/candidats', query: { employed: false } }}
+            href={{ pathname: '/entreprises/cvs', query: { employed: false } }}
             style="secondary"
           >
             Découvrir nos candidats <IconNoSSR name="chevron-right" />
@@ -312,7 +384,15 @@ const Entreprises = ({ nbPublishedCVs }) => {
         </h2>
         <NumberGrid numbers={numbers} numbersPerRow={4} />
       </Section>
-      <Reviews />
+      <Reviews
+        reviews={reviews}
+        title={
+          <>
+            Ce que LinkedOut{' '}
+            <span className="uk-text-primary">leur a apporté</span>
+          </>
+        }
+      />
       <Section style="default">
         <h2 className="uk-text-center uk-text-bold">
           <span className="uk-text-primary">Ils ont recruté</span> avec

@@ -77,19 +77,22 @@ const LogoList = ({ logos, carousel, padding, background }) => {
     );
   }
   return (
-    <Grid
-      childWidths={[`1-${logosPerLine <= 3 ? 3 : logosPerLine}@m`, 'auto']}
-      match
-      middle
-      center
-      gap="small"
+    <div
       className={`${
         background ? 'uk-background-default' : ''
       } uk-border-rounded ${padding ? 'uk-padding-small' : ''}`}
-      items={logos.map(({ key, link, bis }) => {
-        return <Logo key={key} logoKey={key} link={link} bis={bis} />;
-      })}
-    />
+    >
+      <Grid
+        childWidths={[`1-${logosPerLine <= 3 ? 3 : logosPerLine}@m`, 'auto']}
+        match
+        middle
+        center
+        gap="small"
+        items={logos.map(({ key, link, bis }) => {
+          return <Logo key={key} logoKey={key} link={link} bis={bis} />;
+        })}
+      />
+    </div>
   );
 };
 
