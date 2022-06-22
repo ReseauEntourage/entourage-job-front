@@ -394,7 +394,7 @@ const Entreprises = ({ nbPublishedCVs }) => {
         }
       />
       <Section style="default">
-        <h2 className="uk-text-center uk-text-bold">
+        <h2 className="uk-text-center uk-text-bold uk-margin-medium-bottom">
           <span className="uk-text-primary">Ils ont recruté</span> avec
           LinkedOut
         </h2>
@@ -402,7 +402,7 @@ const Entreprises = ({ nbPublishedCVs }) => {
       </Section>
       <HowToCommitDifferently />
       <Section style="primary">
-        <h2 className="uk-text-center uk-text-bold">
+        <h2 className="uk-text-center uk-text-bold uk-margin-medium-bottom">
           Envie d&apos;en savoir plus sur le recrutement inclusif avec
           LinkedOut&nbsp;?
         </h2>

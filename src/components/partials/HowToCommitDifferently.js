@@ -9,7 +9,7 @@ import { fbEvent } from 'src/lib/fb';
 const HowToCommitDifferently = () => {
   return (
     <Section container="large" style="muted">
-      <h2 className="uk-text-center uk-text-bold">
+      <h2 className="uk-text-center uk-text-bold uk-margin-medium-bottom">
         <span className="uk-text-primary">Nous soutenir</span> autrement
       </h2>
       <MultipleCTA

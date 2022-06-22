@@ -57,7 +57,7 @@ const NewsletterPartial = ({ style, padding, tag }) => {
       <div className="uk-text-center">
         <h4 className="uk-align-center uk-text-bold uk-width-1-2@m">
           Inscrivez-vous à la newsletter pour avoir des nouvelles des candidats
-          et être informé·e de l&apos;évolution du projet&nbsp;!
+          et être informé(e) de l&apos;évolution du projet&nbsp;!
         </h4>
       </div>
       <div className="uk-flex uk-flex-center uk-flex-middle uk-flex-column">
