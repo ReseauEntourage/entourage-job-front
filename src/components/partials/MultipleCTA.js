@@ -15,10 +15,7 @@ const MultipleCTA = ({
   animate,
 }) => {
   return (
-    <div
-      uk-height-match={showHorizontalDividers ? 'target : h4, .text' : ''}
-      className={className}
-    >
+    <div uk-height-match="target : h4, .text" className={className}>
       <Grid
         childWidths={[`1-${data.length}@m`]}
         match

@@ -1,12 +1,6 @@
 import React from 'react';
-import Partners from 'src/components/partials/Partners';
-import CandidateTestimoniesOrientation from 'src/components/partials/CandidateTestimoniesOrientation';
-import { CONTACT_INFO } from 'src/constants';
-import WhoFor from 'src/components/partials/WhoFor';
-import WhatItBringsToCandidates from 'src/components/partials/WhatItBringsToCandidates';
 import Layout from 'src/components/Layout';
-import { Section, SimpleLink } from 'src/components/utils';
-import SimpleSection from 'src/components/partials/SimpleSection';
+import { Section } from 'src/components/utils';
 import Button from 'src/components/utils/Button';
 import ImageTitle from 'src/components/partials/ImageTitle';
 import { IconNoSSR } from 'src/components/utils/Icon';
@@ -15,29 +9,67 @@ import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
 import { openModal } from 'src/components/modals/Modal';
 import ModalInterestLinkedOut from 'src/components/modals/ModalInterestLinkedOut';
+import MultipleCTA from 'src/components/partials/MultipleCTA';
+import { Chapter } from 'src/components/partials/Chapter';
+import AnimatedList from 'src/components/utils/AnimatedList';
+import Reviews from 'src/components/partials/Reviews';
+import LogoList from 'src/components/partials/LogoList';
+import PARTNERS from 'src/constants/partners';
+import NumberGrid from 'src/components/partials/NumberGrid';
 
-const steps = [
+const reviews = [
   {
-    text: "Participez à un webinaire d'information LinkedOut pour confirmer la pertinence du dispositif LinkedOut pour la personne que vous souhaitez orienter",
-    button: {
-      label: 'Je participe au webinaire de présentation',
-      href: `${process.env.WEBINAR_URL}`,
-      external: true,
-      newTab: true,
-      gaTag: GA_TAGS.PAGE_ORIENTER_WEBINAIRE_CLIC,
-      fbTag: FB_TAGS.SOCIAL_WORKER_REGISTRATION,
-    },
+    image: '/static/img/temoignage-entreprise-stephane-danny.jpg',
+    author: 'Stéphane',
+    authorStatus: 'Recruteur de Danny',
+    company: 'Les copains de Bastien',
+    review: (
+      <>
+        Bien plus qu&apos;un candidat standard,{' '}
+        <span className="uk-text-primary">
+          on sent qu&apos;il y a un enjeu personnel et une dimension
+          impactante&nbsp;!
+        </span>
+      </>
+    ),
   },
   {
-    text: 'Pré-inscrivez votre candidat ci-dessous',
-    button: {
-      label: 'Pré-inscrire un candidat',
-      href: `${process.env.AIRTABLE_LINK_PROFESSIONAL_REINTEGRATION}`,
-      external: true,
-      newTab: true,
-      gaTag: GA_TAGS.PAGE_ORIENTER_INSCRIPTION_CLIC,
-      fbTag: FB_TAGS.SOCIAL_WORKER_REGISTRATION,
-    },
+    image: '/static/img/temoignage-entreprise-gregoire-mbemba.jpg',
+    author: 'Grégoire',
+    company: 'Dani Alu',
+    authorStatus: "Recruteur de M'Bemba",
+    review: (
+      <>
+        Le recrutement de M&apos;Bemba a ressoudé les équipes. Elles se sont
+        investies dans un projet. Elles peuvent être très fières d’avoir fait en
+        sorte que{' '}
+        <span className="uk-text-primary">
+          M&apos;Bemba soit épanoui et polyvalent dans l’atelier.
+        </span>
+      </>
+    ),
+  },
+];
+
+const numbers = [
+  {
+    value: '93%',
+    description:
+      "des candidats se déclarent remobilisés dans leur recherche d'emploi",
+  },
+  {
+    value: '61%',
+    description: 'des candidats retrouvent un emploi dans les 6 mois',
+  },
+  {
+    value: '92%',
+    description:
+      'des structures sociales partenaires sont satisfaites de leur expérience',
+  },
+  {
+    value: '100%',
+    description:
+      'des partenaires perçoivent LinkedOut comme un apport complémentaire',
   },
 ];
 
@@ -50,15 +82,16 @@ const Orienter = () => {
         title={
           <mark>
             <span className="uk-text-primary">Travaillons ensemble</span> pour
-            l’accès à l’emploi
+            l&apos;accès&nbsp;à&nbsp;l’emploi
           </mark>
         }
         text={
           <>
             Vous accompagnez des personnes en situation d&apos;exclusion&nbsp;?
-            Avec LinkedOut, accélérez leur retour à l’emploi&nbsp;! Notre
-            tremplin vers l’emploi en 6 mois s’inscrit dans la continuité de
-            votre accompagnement.
+            Avec LinkedOut, accélérez leur retour à l’emploi&nbsp;!
+            <br />
+            Notre tremplin vers l’emploi en 6 mois s’inscrit dans la continuité
+            de votre accompagnement.
           </>
         }
         cta={{
@@ -79,164 +112,226 @@ const Orienter = () => {
           },
         }}
       />
-      <Section id="introLinkedout" container="small" style="muted">
-        <div className="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-          <h4
-            className="uk-align-center uk-text-center"
-            uk-scrollspy="cls:uk-animation-slide-bottom; target: > span; delay: 200;"
-          >
-            <span>
-              LinkedOut est un dispositif de l’association Entourage qui vise à{' '}
-              <span className="uk-text-bold">
-                favoriser la réinsertion professionnelle
-              </span>{' '}
-              durable des personnes en situation de précarité,{' '}
-              <span className="uk-text-bold">via la force du réseau</span>.
-            </span>
-            <br />
-            <br />
-            <span>
-              Nous proposons un{' '}
-              <span className="uk-text-bold uk-text-primary">
-                tremplin vers l’emploi de 6 mois.
-              </span>{' '}
-              Ce parcours s’inscrit dans la continuité de l’accompagnement
-              socio-professionnel réalisé en amont par les associations et
-              structures d’insertion.
-            </span>
-            <br />
-            <br />
-            <span>
-              Nous mobilisons les entreprises pour qu’elles{' '}
-              <span className="uk-text-bold">
-                proposent directement des offres aux candidats
-              </span>{' '}
-              et les accompagnons dans leur démarche de recrutement plus
-              inclusif. Déjà 183 entreprises engagées&nbsp;!
-            </span>
-          </h4>
+      <Section container="small" style="default">
+        <h2 className="uk-text-bold uk-text-center uk-margin-medium-bottom">
+          <span className="uk-text-primary">Ce qu&apos;apporte</span> LinkedOut
+          à vos bénéficiaires
+        </h2>
+        <div className="uk-flex uk-flex-center uk-margin-small-bottom">
+          <h3 className="uk-text-center">
+            Des réseaux activés = plus d&apos;opportunités
+          </h3>
+        </div>
+        <MultipleCTA
+          animate
+          spacing="large"
+          data={[
+            {
+              img: '/static/img/illustrations/approved.png',
+              title: 'Un CV humain et convaincant',
+              text: "Un CV qui casse les codes et valorise le parcours du candidat quel qu'il soit et incite à la rencontre",
+            },
+            {
+              img: '/static/img/illustrations/network.png',
+              title: 'Une diffusion élargie du CV',
+              text: ' Grâce aux partages du grand public sur les réseaux sociaux via la plateforme',
+            },
+            {
+              img: '/static/img/illustrations/interview.png',
+              title: 'Des recruteurs engagés',
+              text: 'Un nouveau réseau d’entreprises mobilisées et accompagnées dans leur recrutement',
+            },
+          ]}
+        />
+        <div className="uk-flex uk-flex-center uk-margin-large-top uk-margin-small-bottom">
+          <h3 className="uk-text-center">
+            Un accompagnement innovant de 6 mois = des candidats plus confiants
+          </h3>
+        </div>
+        <MultipleCTA
+          animate
+          spacing="large"
+          data={[
+            {
+              img: '/static/img/illustrations/welcome.png',
+              title: 'Un coaching personnalisé hebdomadaire',
+              text: 'Avec un bénévole issu du milieu professionnel',
+            },
+            {
+              img: '/static/img/illustrations/handshake.png',
+              title: 'Des temps forts collectifs',
+              text: 'Des expériences humaines formatrices, fédératrices et positives',
+            },
+          ]}
+        />
+        <div className="uk-flex uk-flex uk-flex-center uk-flex-wrap uk-margin-medium-top">
           <Button
-            onClick={() => {
-              gaEvent(GA_TAGS.PAGE_ORIENTER_WEBINAIRE_CLIC);
-              fbEvent(FB_TAGS.SOCIAL_WORKER_REGISTRATION);
-            }}
-            uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;"
-            className="uk-margin-medium-top"
-            href={process.env.WEBINAR_URL}
             style="secondary"
+            href={process.env.AIRTABLE_LINK_PROFESSIONAL_REINTEGRATION}
             isExternal
             newTab
+            className="uk-margin-small-right uk-margin-small-left uk-margin-small-top"
+            onClick={() => {
+              gaEvent(GA_TAGS.PAGE_ORIENTER_INSCRIPTION_CLIC);
+              fbEvent(FB_TAGS.SOCIAL_WORKER_REGISTRATION);
+            }}
           >
-            Je souhaite orienter un candidat&nbsp;: je m&apos;inscris au
-            webinaire d&apos;info&nbsp;!
+            Inscrire un candidat&nbsp;
             <IconNoSSR name="chevron-right" />
           </Button>
+          <div className="uk-light">
+            <Button
+              style="secondary"
+              className="uk-margin-small-right uk-margin-small-left uk-margin-small-top"
+              onClick={() => {
+                gaEvent(GA_TAGS.PAGE_ORIENTER_CONTACT_CLIC);
+                openModal(<ModalInterestLinkedOut />);
+              }}
+            >
+              Nous contacter&nbsp;
+              <IconNoSSR name="chevron-right" />
+            </Button>
+          </div>
         </div>
       </Section>
-      <WhatItBringsToCandidates />
-      <WhoFor />
-      <SimpleSection
-        style="default"
-        container="small"
-        id="orientationCandidate"
+      <Chapter
+        smallTitle
         title={
           <>
-            Vous souhaitez orienter un candidat&nbsp;?{' '}
-            <span className="uk-text-primary">Comment faire&nbsp;?</span>
+            <span className="uk-text-primary">À qui</span> s&apos;adresse
+            LinkedOut&nbsp;?
           </>
         }
-        fontSize="small"
-        text={
+        content={
           <>
-            <div>
-              Nous accompagnons plusieurs promotions par an à Paris, dans le 92
-              et le 93, à Lille et Lyon.
-              <br />
-              <br />
-              <span className="uk-text-bold">
-                Vous accompagnez une personne qui répond aux critères ci-dessus,
-                motivée pour travailler et disponible pour participer au
-                programme&nbsp;?
-              </span>
-            </div>
+            LinkedOut s&apos;adresse à des personnes motivées et en capacité de
+            travailler, mais qui en raison d&apos;un parcours de vie difficile
+            et les situations d&apos;exclusion rencontrées, peinent à retrouver
+            un emploi par leurs propres moyens.
+            <br />
+            <br />
+            Nos candidats sont&nbsp;:
+            <br />
+            <AnimatedList
+              items={[
+                <>
+                  <span className="uk-text-bold">
+                    Domiciliés à Paris, dans le 92 et le 93, à Lille ou Lyon
+                  </span>
+                </>,
+                <>
+                  <span className="uk-text-bold">
+                    Disponibles pour travailler immédiatement
+                  </span>{' '}
+                  et consacrer du temps à la recherche d’emploi
+                </>,
+                <>
+                  <span className="uk-text-bold">
+                    Suffisamment à l&apos;aise en Français
+                  </span>{' '}
+                  pour passer un entretien d&apos;embauche
+                </>,
+              ]}
+            />
           </>
         }
-      >
-        <div>
-          {steps.map((step, index, array) => {
-            return (
-              <div key={index}>
-                <div className="uk-flex uk-flex-column uk-flex-center uk-flex-middle uk-padding">
-                  <div className="uk-flex uk-flex-middle uk-flex-center">
-                    <div
-                      className="uk-flex uk-flex-top uk-text-bold uk-text-primary uk-text-large uk-margin-small-right uk-text-nowrap"
-                      style={{ fontSize: 36, lineHeight: 1 }}
-                    >
-                      {index + 1}.
-                    </div>
-                    <p className="uk-text-bold uk-margin-remove">{step.text}</p>
-                  </div>
-                  <Button
-                    className="uk-margin-medium-top"
-                    href={step.button.href}
-                    style="secondary"
-                    isExternal={step.button.external}
-                    newTab={step.button.external}
-                    onClick={() => {
-                      gaEvent(step.button.gaTag);
-                      fbEvent(step.button.fbTag);
-                    }}
-                  >
-                    {step.button.label}
-                    &nbsp;
-                    <IconNoSSR name="chevron-right" />
-                  </Button>
-                </div>
-                {index < array.length - 1 && <hr />}
-              </div>
-            );
-          })}
-        </div>
-        <div className="uk-flex uk-flex-column uk-flex-center uk-flex-middle uk-margin-large-top">
-          <span className="uk-text-center">
-            Les candidats inscrits disposant des pré-requis nécessaires pour
-            intégrer LinkedOut seront conviés à une{' '}
-            <span className="uk-text-bold">
-              session d’information collective
-            </span>{' '}
-            en amont du lancement de la promotion puis à un{' '}
-            <span className="uk-text-bold">
-              entretien individuel obligatoire pour valider leur entrée dans le
-              dispositif.
-            </span>
-          </span>
-          <p className="uk-text-center">
-            Une question&nbsp;?
-            <br />
-            <SimpleLink
-              isExternal
-              className="uk-link-text uk-text-primary"
-              target="_blank"
-              rel="noopener"
-              href={`mailto:${process.env.MAILJET_CONTACT_EMAIL}`}
-            >
-              {process.env.MAILJET_CONTACT_EMAIL}
-            </SimpleLink>
-            <br />
-            <SimpleLink
-              isExternal
-              className="uk-link-text uk-text-primary"
-              target="_blank"
-              rel="noopener"
-              href={`tel:${CONTACT_INFO.MOBILE_PHONE_NUMBER}`}
-            >
-              {CONTACT_INFO.MOBILE_PHONE_NUMBER}
-            </SimpleLink>
+        imgSrc="/static/img/orientation_who.jpg"
+        animate
+        direction="left"
+        style="default"
+        cta={
+          <Button
+            style="secondary"
+            href={process.env.AIRTABLE_LINK_PROFESSIONAL_REINTEGRATION}
+            isExternal
+            newTab
+            onClick={() => {
+              gaEvent(GA_TAGS.PAGE_ORIENTER_INSCRIPTION_CLIC);
+              fbEvent(FB_TAGS.SOCIAL_WORKER_REGISTRATION);
+            }}
+          >
+            Inscrire un candidat&nbsp;
+            <IconNoSSR name="chevron-right" />
+          </Button>
+        }
+      />
+      <Reviews
+        reviews={reviews}
+        title={
+          <>
+            Plus de{' '}
+            <span className="uk-text-primary">60 entreprises partenaires</span>{' '}
+            ont fait confiance à LinkedOut
+          </>
+        }
+      />
+      <Section style="default">
+        <h2 className="uk-text-center uk-text-bold uk-margin-medium-bottom">
+          <span className="uk-text-primary">Ils travaillent</span> avec
+          LinkedOut
+        </h2>
+        <LogoList logos={PARTNERS.ORIENTATION} carousel />
+      </Section>
+      <Section style="default">
+        <h2 className="uk-text-bold uk-text-center uk-margin-medium-bottom uk-margin-remove-top">
+          Notre <span className="uk-text-primary">impact</span>
+        </h2>
+        <NumberGrid numbers={numbers} numbersPerRow={4} />
+        <div className="uk-flex uk-flex-center">
+          <p className="uk-text-muted uk-text-italic uk-margin-remove-bottom uk-margin-medium-top">
+            Source&nbsp;: Mesure d&apos;impact 2021 Archipel & Co
           </p>
         </div>
-      </SimpleSection>
-      <CandidateTestimoniesOrientation style="muted" />
-      <Partners showOrientationPartners />
+      </Section>
+      <Section container="large" style="muted">
+        <h2 className="uk-text-center uk-text-bold uk-margin-medium-bottom">
+          Vous souhaitez <span className="uk-text-primary">en savoir plus</span>{' '}
+          sur LinkedOut&nbsp;?
+        </h2>
+        <div className="uk-flex uk-flex uk-flex-center uk-flex-wrap uk-margin-medium-top">
+          <Button
+            style="secondary"
+            className="uk-margin-small-right uk-margin-small-left uk-margin-small-top"
+            onClick={() => {
+              gaEvent(GA_TAGS.PAGE_ORIENTER_CONTACT_CLIC);
+              openModal(<ModalInterestLinkedOut />);
+            }}
+          >
+            Nous contacter&nbsp;
+            <IconNoSSR name="chevron-right" />
+          </Button>
+          <div className="uk-light">
+            <Button
+              style="secondary"
+              href={process.env.ASSOCIATION_BROCHURE}
+              isExternal
+              newTab
+              className="uk-margin-small-right uk-margin-small-left uk-margin-small-top"
+              onClick={() => {
+                gaEvent(GA_TAGS.PAGE_ORIENTER_BROCHURE_CLIC);
+              }}
+            >
+              Télécharger la brochure&nbsp;
+              <IconNoSSR name="chevron-right" />
+            </Button>
+          </div>
+          {/*
+            <Button
+              style="secondary"
+              href={process.env.ASSOCIATION_APPOINTMENT}
+              isExternal
+              newTab
+              className="uk-margin-small-right uk-margin-small-left uk-margin-small-top"
+              onClick={() => {
+                gaEvent(GA_TAGS.PAGE_ORIENTER_APPOINTMENT_CLIC);
+              }}
+            >
+              Prendre rendez-vous&nbsp;
+              <IconNoSSR name="chevron-right" />
+            </Button>
+          */}
+        </div>
+      </Section>
     </Layout>
   );
 };

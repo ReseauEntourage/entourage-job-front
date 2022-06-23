@@ -1,82 +1,12 @@
 import React from 'react';
 import { Img, Section, Grid } from 'src/components/utils';
+import PropTypes from 'prop-types';
 
-const reviews = [
-  {
-    image: '/static/img/temoignage-entreprise-augustin-kenny.jpg',
-    author: 'Augustin Chavanne',
-    company: 'Vélissime',
-    industry: 'livraison de repas',
-    companyInfo: '20 salariés',
-    review: (
-      <>
-        Par son expérience,{' '}
-        <span className="uk-text-primary">
-          il apporte quelque chose de radicalement différent.
-        </span>{' '}
-        Si je pouvais embaucher 2 Kenny, je le ferais&nbsp;!
-      </>
-    ),
-  },
-  {
-    image: '/static/img/temoignage-entreprise-francois-miah.jpg',
-    author: 'François Biard',
-    company: 'Green Factory',
-    industry: 'créations végétales',
-    companyInfo: '31 salariés',
-    review: (
-      <>
-        Avec Miah c’est une réussite. Là où notre compétence s’arrête, on est
-        rassurés par le fait que{' '}
-        <span className="uk-text-primary">
-          LinkedOut est là pour nous accompagner.{' '}
-        </span>
-        Si on peut s’inscrire dans des actions comme celles-ci tout en gardant
-        notre efficacité, en y ajoutant le sourire de quelqu’un qui a envie, on
-        le fait&nbsp;!
-      </>
-    ),
-  },
-  {
-    image: '/static/img/temoignage-entreprise-advens.jpg',
-    author: 'Sylvie Lepoutre',
-    authorStatus: 'Raison d’être & Projet d’entreprise',
-    company: 'Advens',
-    industry: 'partenaire LinkedOut',
-    review: (
-      <>
-        Nous étions à mille lieux des problématiques des personnes en précarité.{' '}
-        <span className="uk-text-primary">
-          Maintenant, chez Advens, on entend des mots comme “résilience”,
-          “deuxième chance”, “rebond”, “inclusion”.
-        </span>{' '}
-        Les collaborateurs sont très fiers !
-      </>
-    ),
-  },
-  {
-    image: '/static/img/temoignage-candidat-amelie.jpg',
-    author: 'Amélie',
-    authorStatus: 'Ancienne candidate LinkedOut',
-    review: (
-      <>
-        C&apos;est vraiment un bon dispositif. Avec mon coach, on ne parle pas
-        simplement du travail, il me donne des conseils. Ce sont des choses dont
-        j&apos;avais besoin, surtout que je n&apos;ai pas de famille ici.{' '}
-        <span className="uk-text-primary">
-          J&apos;ai parcouru beaucoup d&apos;autres dispositifs et là c&apos;est
-          différent, LinkedOut est très présent.
-        </span>
-      </>
-    ),
-  },
-];
-
-const Reviews = () => {
+const Reviews = ({ reviews, title }) => {
   return (
     <Section id="reviews" style="default" container="small">
       <h2 className="uk-text-bold uk-text-center uk-margin-medium-bottom uk-margin-remove-top">
-        Ce que LinkedOut <span className="uk-text-primary">leur a apporté</span>
+        {title}
       </h2>
       <div
         className="uk-flex uk-flex-center"
@@ -149,6 +79,21 @@ const Reviews = () => {
       </div>
     </Section>
   );
+};
+
+Reviews.propTypes = {
+  reviews: PropTypes.arrayOf(
+    PropTypes.shape({
+      author: PropTypes.string.isRequired,
+      authorStatus: PropTypes.string.isRequired,
+      company: PropTypes.string.isRequired,
+      industry: PropTypes.string.isRequired,
+      companyInfo: PropTypes.string.isRequired,
+      review: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+    }).isRequired
+  ).isRequired,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
 };
 
 export default Reviews;

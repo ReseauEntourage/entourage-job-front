@@ -20,7 +20,7 @@ const SearchCandidates = ({ style }) => {
         center
         eachWidths={['2-3@s', '1-1', '1-1']}
       >
-        <div className="uk-text-center uk-margin-medium-bottom">
+        <div className="uk-text-center">
           <h2 className="uk-text-bold">
             Découvrez les <span className="uk-text-primary">candidats</span>
           </h2>

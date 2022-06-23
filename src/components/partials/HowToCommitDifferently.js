@@ -8,8 +8,8 @@ import { fbEvent } from 'src/lib/fb';
 
 const HowToCommitDifferently = () => {
   return (
-    <Section container="large" id="sengager" style="muted">
-      <h2 className="uk-text-center uk-text-bold">
+    <Section container="large" style="muted">
+      <h2 className="uk-text-center uk-text-bold uk-margin-medium-bottom">
         <span className="uk-text-primary">Nous soutenir</span> autrement
       </h2>
       <MultipleCTA
@@ -26,7 +26,9 @@ const HowToCommitDifferently = () => {
               href: EXTERNAL_LINKS.DONATION,
               external: true,
             },
-            tag: GA_TAGS.PAGE_ENTREPRISES_DON_CLIC,
+            onClick: () => {
+              gaEvent(GA_TAGS.PAGE_ENTREPRISES_DON_CLIC);
+            },
           },
           {
             img: '/static/img/illustrations/scale.png',
@@ -38,11 +40,10 @@ const HowToCommitDifferently = () => {
               href: process.env.AIRTABLE_LINK_COMPANY_SENSITIZATION,
               external: true,
               onClick: () => {
-                gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
+                gaEvent(GA_TAGS.PAGE_ENTREPRISES_SENSIBILISER_CLIC);
                 fbEvent(FB_TAGS.COMPANY_CONTACT);
               },
             },
-            tag: GA_TAGS.PAGE_ENTREPRISES_SENSIBILISER_CLIC,
           },
           {
             img: '/static/img/illustrations/network.png',
@@ -53,11 +54,10 @@ const HowToCommitDifferently = () => {
               href: process.env.AIRTABLE_LINK_COMPANY_SPONSOR,
               external: true,
               onClick: () => {
-                gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
+                gaEvent(GA_TAGS.PAGE_ENTREPRISES_MECENAT_CLIC);
                 fbEvent(FB_TAGS.COMPANY_CONTACT);
               },
             },
-            tag: GA_TAGS.PAGE_ENTREPRISES_MECENAT_CLIC,
           },
         ]}
       />

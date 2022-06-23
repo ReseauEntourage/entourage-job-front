@@ -11,7 +11,7 @@ const Partners = ({ showOrientationPartners }) => {
     <Background
       blend={{ colorHex: showOrientationPartners ? 'white' : '#484848' }}
     >
-      <Section container="large">
+      <Section container="large" className="uk-border-rounded">
         <div className="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
           {showOrientationPartners ? (
             <h2 className="uk-text-bold uk-align-center uk-text-center uk-margin-remove-top">
@@ -34,20 +34,21 @@ const Partners = ({ showOrientationPartners }) => {
                 : 'uk-background-muted'
             }`}
           >
-            {showOrientationPartners ? (
-              <LogoList logos={PARTNERS.orientation} />
-            ) : (
-              <>
-                <h4 className="uk-text-primary uk-text-bold">
-                  Partenaires majeurs
-                </h4>
-                <LogoList logos={PARTNERS.strategy} />
-              </>
+            {showOrientationPartners && (
+              <LogoList logos={PARTNERS.ORIENTATION} />
             )}
-            <h4 className="uk-text-primary uk-text-bold uk-margin-large-top">
-              Partenaires financiers et opérationnels
+            <h4 className="uk-text-primary uk-text-bold">
+              Partenaires majeurs
             </h4>
-            <LogoList logos={PARTNERS.finance} />
+            <LogoList logos={PARTNERS.STRATEGY} />
+            <h4 className="uk-text-primary uk-text-bold uk-margin-large-top">
+              Partenaires financiers
+            </h4>
+            <LogoList logos={PARTNERS.MAIN_FINANCE} />
+            <h4 className="uk-text-primary uk-text-bold uk-margin-large-top">
+              Partenaires sportifs et visibilité
+            </h4>
+            <LogoList logos={PARTNERS.SPORTS} />
             <div className="uk-flex uk-flex-center uk-flex-middle uk-margin-large-top">
               <Button style="primary" href="/partenaires">
                 En savoir plus&nbsp;
