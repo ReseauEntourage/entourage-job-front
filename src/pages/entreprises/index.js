@@ -24,7 +24,7 @@ import { fbEvent } from 'src/lib/fb';
 
 const timeline = [
   {
-    text: 'Identifier un besoin en recrutement',
+    text: 'Identifiez un besoin en recrutement',
     icon: 'static/img/illustrations/loupe.png',
   },
   {
