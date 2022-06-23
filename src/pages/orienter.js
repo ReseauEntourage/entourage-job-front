@@ -82,15 +82,16 @@ const Orienter = () => {
         title={
           <mark>
             <span className="uk-text-primary">Travaillons ensemble</span> pour
-            l’accès à l’emploi
+            l&apos;accès&nbsp;à&nbsp;l’emploi
           </mark>
         }
         text={
           <>
             Vous accompagnez des personnes en situation d&apos;exclusion&nbsp;?
-            Avec LinkedOut, accélérez leur retour à l’emploi&nbsp;! Notre
-            tremplin vers l’emploi en 6 mois s’inscrit dans la continuité de
-            votre accompagnement.
+            Avec LinkedOut, accélérez leur retour à l’emploi&nbsp;!
+            <br />
+            Notre tremplin vers l’emploi en 6 mois s’inscrit dans la continuité
+            de votre accompagnement.
           </>
         }
         cta={{
@@ -112,29 +113,40 @@ const Orienter = () => {
         }}
       />
       <Section container="small" style="default">
+        <h2 className="uk-text-bold uk-text-center uk-margin-medium-bottom">
+          <span className="uk-text-primary">Ce qu&apos;apporte</span> LinkedOut
+          à vos bénéficiaires
+        </h2>
+        <div className="uk-flex uk-flex-center uk-margin-small-bottom">
+          <h3 className="uk-text-center">
+            Des réseaux activés = plus d&apos;opportunités
+          </h3>
+        </div>
         <MultipleCTA
           animate
           spacing="large"
           data={[
             {
               img: '/static/img/illustrations/approved.png',
-              title: 'CV humain et convaincant',
+              title: 'Un CV humain et convaincant',
               text: "Un CV qui casse les codes et valorise le parcours du candidat quel qu'il soit et incite à la rencontre",
             },
             {
               img: '/static/img/illustrations/network.png',
-              title: 'Diffusion élargie du CV',
+              title: 'Une diffusion élargie du CV',
               text: ' Grâce aux partages du grand public sur les réseaux sociaux via la plateforme',
             },
             {
               img: '/static/img/illustrations/interview.png',
-              title: 'Recruteurs engagés',
+              title: 'Des recruteurs engagés',
               text: 'Un nouveau réseau d’entreprises mobilisées et accompagnées dans leur recrutement',
             },
           ]}
         />
         <div className="uk-flex uk-flex-center uk-margin-large-top uk-margin-small-bottom">
-          <h3>Un accompagnement innovant = des candidats plus confiants</h3>
+          <h3 className="uk-text-center">
+            Un accompagnement innovant de 6 mois = des candidats plus confiants
+          </h3>
         </div>
         <MultipleCTA
           animate
@@ -142,8 +154,8 @@ const Orienter = () => {
           data={[
             {
               img: '/static/img/illustrations/welcome.png',
-              title: 'Un accompagnement individuel',
-              text: 'Coaching personnalisé hebdomadaire avec un bénévole issu du milieu professionnel',
+              title: 'Un coaching personnalisé hebdomadaire',
+              text: 'Avec un bénévole issu du milieu professionnel',
             },
             {
               img: '/static/img/illustrations/handshake.png',
@@ -192,6 +204,12 @@ const Orienter = () => {
         }
         content={
           <>
+            LinkedOut s&apos;adresse à des personnes motivées et en capacité de
+            travailler, mais qui en raison d&apos;un parcours de vie difficile
+            et les situations d&apos;exclusion rencontrées, peinent à retrouver
+            un emploi par leurs propres moyens.
+            <br />
+            <br />
             Nos candidats sont&nbsp;:
             <br />
             <AnimatedList
@@ -248,7 +266,7 @@ const Orienter = () => {
         }
       />
       <Section style="default">
-        <h2 className="uk-text-center uk-text-bold">
+        <h2 className="uk-text-center uk-text-bold uk-margin-medium-bottom">
           <span className="uk-text-primary">Ils travaillent</span> avec
           LinkedOut
         </h2>
@@ -256,18 +274,17 @@ const Orienter = () => {
       </Section>
       <Section style="default">
         <h2 className="uk-text-bold uk-text-center uk-margin-medium-bottom uk-margin-remove-top">
-          <span className="uk-text-primary">Les chiffres</span> qui vous
-          intéressent
+          Notre <span className="uk-text-primary">impact</span>
         </h2>
         <NumberGrid numbers={numbers} numbersPerRow={4} />
         <div className="uk-flex uk-flex-center">
-          <p className="uk-text-muted uk-text-italic">
+          <p className="uk-text-muted uk-text-italic uk-margin-remove-bottom uk-margin-medium-top">
             Source&nbsp;: Mesure d&apos;impact 2021 Archipel & Co
           </p>
         </div>
       </Section>
       <Section container="large" style="muted">
-        <h2 className="uk-text-center uk-text-bold">
+        <h2 className="uk-text-center uk-text-bold uk-margin-medium-bottom">
           Vous souhaitez <span className="uk-text-primary">en savoir plus</span>{' '}
           sur LinkedOut&nbsp;?
         </h2>
@@ -298,19 +315,21 @@ const Orienter = () => {
               <IconNoSSR name="chevron-right" />
             </Button>
           </div>
-          <Button
-            style="secondary"
-            href={process.env.ASSOCIATION_APPOINTMENT}
-            isExternal
-            newTab
-            className="uk-margin-small-right uk-margin-small-left uk-margin-small-top"
-            onClick={() => {
-              gaEvent(GA_TAGS.PAGE_ORIENTER_APPOINTMENT_CLIC);
-            }}
-          >
-            Prendre rendez-vous&nbsp;
-            <IconNoSSR name="chevron-right" />
-          </Button>
+          {/*
+            <Button
+              style="secondary"
+              href={process.env.ASSOCIATION_APPOINTMENT}
+              isExternal
+              newTab
+              className="uk-margin-small-right uk-margin-small-left uk-margin-small-top"
+              onClick={() => {
+                gaEvent(GA_TAGS.PAGE_ORIENTER_APPOINTMENT_CLIC);
+              }}
+            >
+              Prendre rendez-vous&nbsp;
+              <IconNoSSR name="chevron-right" />
+            </Button>
+          */}
         </div>
       </Section>
     </Layout>

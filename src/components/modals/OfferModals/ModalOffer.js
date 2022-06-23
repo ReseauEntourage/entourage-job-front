@@ -332,7 +332,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                                     .&nbsp;
                                     <span>
                                       Il est indispensable de lui répondre, que
-                                      vous soyez intéressé⸱e ou non&nbsp;!
+                                      vous soyez intéressé(e) ou non&nbsp;!
                                       Relisez votre mail avec votre coach.
                                     </span>
                                   </div>
@@ -345,7 +345,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                       );
                     }}
                   >
-                    Je ne suis pas intéressé⸱e par l&apos;offre
+                    Je ne suis pas intéressé(e) par l&apos;offre
                   </Button>
                   <Button
                     className="uk-margin-small-left uk-margin-small-top uk-margin-small-bottom"

@@ -27,8 +27,8 @@ const Aider = () => {
             une rencontre transformante, et contribuer à son retour à
             l&apos;emploi.
             <br />
-            Volontaire mais pressé⸱e&nbsp;? Partagez le CV d&apos;un candidat et
-            augmentez ses chances de trouver un emploi.
+            Volontaire mais pressé(e)&nbsp;? Partagez le CV d&apos;un candidat
+            et augmentez ses chances de trouver un emploi.
           </>
         }
         cta={{
