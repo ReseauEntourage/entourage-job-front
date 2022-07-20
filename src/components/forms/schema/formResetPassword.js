@@ -24,7 +24,7 @@ export default {
     {
       field: 'newPassword',
       method: (fieldValue) => {
-        return passwordStrength(fieldValue).id > 2;
+        return passwordStrength(fieldValue).id >= 2;
       },
       args: [],
       validWhen: true,
@@ -33,7 +33,7 @@ export default {
     {
       field: 'confirmPassword',
       method: (fieldValue) => {
-        return passwordStrength(fieldValue).id > 2;
+        return passwordStrength(fieldValue).id >= 2;
       },
       args: [],
       validWhen: true,
