@@ -20,7 +20,7 @@ const FieldGroup = memo(
   }) => {
     const items = useMemo(() => {
       return fields.map((field) => {
-        const nbString = index !== 0 ? ` n°${index + 1}*` : '';
+        const nbString = index !== 0 ? ` n°${index + 1}*` : '*';
         const numberedField = {
           ...field,
           id: field.id + index,
