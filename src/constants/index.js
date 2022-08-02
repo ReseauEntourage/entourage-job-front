@@ -102,7 +102,7 @@ const BUSINESS_LINES = [
   {
     label: 'Social et associatif',
     value: 'sa',
-    prefix: ['le', 'la'],
+    prefix: ['le', "l'"],
   },
   {
     label: 'Direction financière, juridique et ressources humaines',
@@ -338,6 +338,16 @@ const CONTRACTS = [
   {
     label: 'Stage',
     value: 'stage',
+    end: true,
+  },
+  {
+    label: 'Formation certifiante',
+    value: 'form',
+    end: true,
+  },
+  {
+    label: "Période d'immersion (PMSMP)",
+    value: 'pmsmp',
     end: true,
   },
   {

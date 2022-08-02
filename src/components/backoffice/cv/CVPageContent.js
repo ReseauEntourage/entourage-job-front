@@ -21,6 +21,7 @@ import ButtonDownload from 'src/components/backoffice/cv/ButtonDownload';
 import { openModal, useModalContext } from 'src/components/modals/Modal';
 import ModalGeneric from 'src/components/modals/ModalGeneric';
 import { usePrevious } from 'src/hooks/utils';
+import ModalConfirm from 'src/components/modals/ModalConfirm';
 
 const pusher = new Pusher(process.env.PUSHER_API_KEY, {
   cluster: 'eu',
@@ -117,11 +118,11 @@ const CVPageContent = ({ candidatId, cv, setCV }) => {
 
   useEffect(() => {
     if (cv && cv !== prevCV) {
-      setCvVersion(cv.version);
+      if (!cvVersion) setCvVersion(cv.version);
       setImageUrl(`${process.env.AWSS3_URL}${cv.urlImg}`);
       setCVHasBeenRead();
     }
-  }, [candidatId, cv, prevCV, setCVHasBeenRead]);
+  }, [candidatId, cv, cvVersion, prevCV, setCVHasBeenRead]);
 
   useEffect(() => {
     const unsavedChanges = cv && cv.status === CV_STATUS.Draft.value;
@@ -199,87 +200,129 @@ const CVPageContent = ({ candidatId, cv, setCV }) => {
     });
   };
 
-  const postCV = (status) => {
-    const channelPreview = pusher.subscribe(SOCKETS.CHANNEL_NAMES.CV_PREVIEW);
-    const channelPDF = pusher.subscribe(SOCKETS.CHANNEL_NAMES.CV_PDF);
+  const checkIfLastVersion = useCallback(
+    async (callback, isAutoSave) => {
+      const {
+        data: { lastCvVersion },
+      } = await Api.get(`/cv/lastVersion/${candidatId}`);
 
-    setPreviewGenerating(true);
-    setPdfGenerating(true);
-
-    channelPreview.bind(SOCKETS.EVENTS.CV_PREVIEW_DONE, (data) => {
-      if (data.candidatId === candidatId) {
-        setPreviewGenerating(false);
-        pusher.unsubscribe(SOCKETS.CHANNEL_NAMES.CV_PREVIEW);
+      if (lastCvVersion > cvVersion) {
+        if (!isAutoSave) {
+          openModal(
+            <ModalConfirm
+              text={
+                <>
+                  Une version plus récente du CV a déjà été enregistré.
+                  <br />
+                  <br />
+                  Si vous sauvegardez vos modifications, vous écraserez cette
+                  version plus récente.
+                  <br />
+                  <br />
+                  Voulez-vous continuer&nbsp;? Si non, faites une copie de vos
+                  modifications et rafraîchissez la page.
+                </>
+              }
+              onConfirm={async () => {
+                await callback();
+              }}
+              title="Nouvelle version du CV disponible"
+              buttonText="Sauvegarder quand même"
+            />
+          );
+        }
+      } else {
+        await callback();
       }
-    });
+    },
+    [candidatId, cvVersion]
+  );
 
-    channelPDF.bind(SOCKETS.EVENTS.CV_PDF_DONE, (data) => {
-      if (data.candidatId === candidatId) {
-        setPdfGenerating(false);
-        pusher.unsubscribe(SOCKETS.CHANNEL_NAMES.CV_PDF);
-      }
-    });
+  const postCV = async (status) => {
+    await checkIfLastVersion(() => {
+      const channelPreview = pusher.subscribe(SOCKETS.CHANNEL_NAMES.CV_PREVIEW);
+      const channelPDF = pusher.subscribe(SOCKETS.CHANNEL_NAMES.CV_PDF);
 
-    // prepare data
-    const formData = new FormData();
-    const obj = {
-      ...cv,
-      status,
-      profileImage: undefined,
-    };
-    delete obj.id;
+      setPreviewGenerating(true);
+      setPdfGenerating(true);
 
-    formData.append('cv', JSON.stringify(obj));
-    formData.append('profileImage', cv.profileImage);
-    // post
-    return Api.post(`/cv`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-      .then(({ data }) => {
-        setCV(data);
-        setCvVersion(data.version);
-
-        UIkit.notification(
-          user.role === USER_ROLES.CANDIDAT
-            ? 'Votre CV a bien été sauvegardé'
-            : 'Le profil a été mis à jour',
-          'success'
-        );
-      })
-      .catch((err) => {
-        console.error(err);
-        UIkit.notification("Une erreur s'est produite", 'danger');
+      channelPreview.bind(SOCKETS.EVENTS.CV_PREVIEW_DONE, (data) => {
+        if (data.candidatId === candidatId) {
+          setPreviewGenerating(false);
+          pusher.unsubscribe(SOCKETS.CHANNEL_NAMES.CV_PREVIEW);
+        }
       });
+
+      channelPDF.bind(SOCKETS.EVENTS.CV_PDF_DONE, (data) => {
+        if (data.candidatId === candidatId) {
+          setPdfGenerating(false);
+          pusher.unsubscribe(SOCKETS.CHANNEL_NAMES.CV_PDF);
+        }
+      });
+
+      // prepare data
+      const formData = new FormData();
+      const obj = {
+        ...cv,
+        status,
+        profileImage: undefined,
+      };
+      delete obj.id;
+
+      formData.append('cv', JSON.stringify(obj));
+      formData.append('profileImage', cv.profileImage);
+      // post
+      return Api.post(`/cv`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+        .then(({ data }) => {
+          setCV(data);
+          setCvVersion(data.version);
+
+          UIkit.notification(
+            user.role === USER_ROLES.CANDIDAT
+              ? 'Votre CV a bien été sauvegardé'
+              : 'Le profil a été mis à jour',
+            'success'
+          );
+        })
+        .catch((err) => {
+          console.error(err);
+          UIkit.notification("Une erreur s'est produite", 'danger');
+        });
+    });
   };
 
-  const autoSaveCV = (tempCV) => {
-    const formData = new FormData();
-    const obj = {
-      ...tempCV,
-      status: CV_STATUS.Progress.value,
-      profileImage: undefined,
-    };
-    delete obj.id;
-    formData.append('cv', JSON.stringify(obj));
-    formData.append('autoSave', true);
-    // post
-    return saveUserData(obj)
-      .then(() => {
-        return Api.post(`/cv`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+  const autoSaveCV = async (tempCV) => {
+    await checkIfLastVersion(() => {
+      const formData = new FormData();
+      const obj = {
+        ...tempCV,
+        status: CV_STATUS.Progress.value,
+        profileImage: undefined,
+      };
+      delete obj.id;
+      formData.append('cv', JSON.stringify(obj));
+      formData.append('autoSave', true);
+      // post
+      return saveUserData(obj)
+        .then(() => {
+          return Api.post(`/cv`, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+        })
+        .then(({ data }) => {
+          console.log('Auto-save succeeded.');
+          setCvVersion(data.version);
+        })
+        .catch(() => {
+          console.log('Auto-save failed.');
         });
-      })
-      .then(({ data }) => {
-        console.log('Auto-save succeeded.');
-        setCvVersion(data.version);
-      })
-      .catch(() => {
-        console.log('Auto-save failed.');
-      });
+    }, true);
   };
 
   if (user === null) return null;
