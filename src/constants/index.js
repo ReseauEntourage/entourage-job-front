@@ -102,7 +102,7 @@ const BUSINESS_LINES = [
   {
     label: 'Social et associatif',
     value: 'sa',
-    prefix: ['le', 'la'],
+    prefix: ['le', "l'"],
   },
   {
     label: 'Direction financière, juridique et ressources humaines',
