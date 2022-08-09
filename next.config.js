@@ -124,7 +124,7 @@ module.exports = withLess({
   async redirects() {
     return [
       {
-        source: '/tutoriel-video-premier-pas',
+        source: '/tutoriel-video-premiers-pas',
         destination: process.env.TUTORIAL_VIDEO_FIRST_STEPS,
         permanent: false,
       },
