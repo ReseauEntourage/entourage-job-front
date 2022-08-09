@@ -124,6 +124,11 @@ module.exports = withLess({
   async redirects() {
     return [
       {
+        source: '/tutoriel-video-premier-pas',
+        destination: process.env.TUTORIAL_VIDEO_FIRST_STEPS,
+        permanent: false,
+      },
+      {
         source: '/tutoriel-video-cv',
         destination: process.env.TUTORIAL_VIDEO_CV,
         permanent: false,
@@ -131,6 +136,11 @@ module.exports = withLess({
       {
         source: '/tutoriel-video-offres',
         destination: process.env.TUTORIAL_VIDEO_OFFERS,
+        permanent: false,
+      },
+      {
+        source: '/tutoriel-video-offres-2',
+        destination: process.env.TUTORIAL_VIDEO_OFFERS_2,
         permanent: false,
       },
       {
