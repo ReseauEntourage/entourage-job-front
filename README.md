@@ -1,7 +1,5 @@
 # LinkedOut Frontend
 
-------
-
 ## Modules principaux & versions
 
 > Node 14.x.x
@@ -15,8 +13,6 @@
 > ESLint 7.32.0
 
 > Babel 7.16.5
-
-------
 
 ## Architecture
 
@@ -42,7 +38,6 @@
 - `.prettierrc.json` : configuration pour __*Prettier*__
 - `Procfile` : configuration des process __*Heroku*__ à lancer au déploiement
 - `server-next`: point d'entrée de lancement du serveur
----
 
 ## Configuration
 
@@ -105,8 +100,6 @@ TUTORIAL_VIDEO_OFFERS=
 TUTORIAL_VIDEO_OFFERS_2=
 ```
 
----
-
 ## Styles
 
 Les fichiers du thème globale, qui utilisent la librairie __*UIkit*__, se trouvent dans le dossier `/assets/custom` :
@@ -140,8 +133,8 @@ Les fichiers transformés se retrouvent dans le dossier `/src/styles/dist`.
 
 Le déploiement se fait automatiquement grâce à __*Github Actions*__ et __*Heroku*__.
 
-Si un commit est poussé sur `develop`, l'application sera déployé sur la pre-production : [https://entourage-job-front-preprod.herokuapp.com](https://entourage-job-front-preprod.herokuapp.com)
+Si un commit est poussé sur `develop`, l'application sera déployé sur la pre-production : **[https://entourage-job-front-preprod.herokuapp.com](https://entourage-job-front-preprod.herokuapp.com)**
 
-Si un commit est poussé sur `master`,  l'application sera déployé sur la production : [https://linkedout.fr]()
+Si un commit est poussé sur `master`,  l'application sera déployé sur la production : **[https://linkedout.fr](https://linkedout.fr)**
 
 Comme il n'y a pas de tests, __*Github Actions*__ n'est utilisé que pour déployer le projet sur __*Heroku*__
