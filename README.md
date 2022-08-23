@@ -19,7 +19,7 @@
 - `.github`: configuration de la CI avec __*Github Actions*__
 - `.husky` : scripts de hook de commit avec __*Husky*__
 - `/assets` : fichiers de styles globaux avec __*UIkit*__
-- `/public` : stockage des éléments non dynamique tels que les images, le CSS ou les fonts
+- `/public` : stockage des ressources non dynamique accessible publiquement tels que les images, le CSS ou les fonts
 - `/src`
   - `/components` : dossier contenant les composants __*React*__ écrit avec les particularités de __*Next.js*__
   - `/constants` : fichiers de constantes
@@ -36,35 +36,33 @@
 - `next.config.js` : fichier de configuration pour __*Next.js*__
 - `.prettierignore` : configuration pour __*Prettier*__
 - `.prettierrc.json` : configuration pour __*Prettier*__
-- `Procfile` : configuration des process __*Heroku*__ à lancer au déploiement
-- `server-next`: point d'entrée de lancement du serveur
+- `Procfile` : configuration des process __*Heroku*__ à lancer après déploiement
+- `server-next.js`: point d'entrée de lancement du serveur
 
 ## Configuration
 
-### Installation et scripts
-
-#### Installation des modules :
+### Installation des modules
 ```
 npm install
 ```
 
-#### Lancement en dev :
+### Lancement en en mode développement
 ```
 npm run dev
 ```
 
-#### Lancement en prod :
+### Lancement en mode production
 ```
 npm run build
 npm start
 ```
 
-#### Prettier + Linter :
+### Prettier + Linter
 ```
 npm run lint
 npm run format
 ```
-Ces deux commandes sont lancés par les hooks de commit
+Ces deux commandes sont lancées par les hooks de commit
 
 ### Fichier .env minimal
 ```dotenv
@@ -137,4 +135,8 @@ Si un commit est poussé sur `develop`, l'application sera déployé sur la pre-
 
 Si un commit est poussé sur `master`,  l'application sera déployé sur la production : **[https://linkedout.fr](https://linkedout.fr)**
 
-Comme il n'y a pas de tests, __*Github Actions*__ n'est utilisé que pour déployer le projet sur __*Heroku*__
+Comme il n'y a pas de tests, __*Github Actions*__ n'est utilisé que pour déployer le projet sur __*Heroku*__.
+
+## Stack technique
+
+![Stack technique LinkedOut](./stack.svg)
