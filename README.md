@@ -62,7 +62,7 @@ npm start
 npm run lint
 npm run format
 ```
-Ces deux commandes sont lancés par les hooks de commit
+Ces deux commandes sont lancées par les hooks de commit
 
 ### Fichier .env minimal
 ```dotenv
