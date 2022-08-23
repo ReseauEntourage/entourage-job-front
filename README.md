@@ -1,80 +1,147 @@
-# Entourage Job
+# LinkedOut Frontend
 
-## Architecture en place
+------
 
-- _.next_ : **Next.js**
-- _api_ : Contrôleurs côté serveur (routes API) **Express.js** et **Sequelize**
-  - _v1_ : Versionning de l'API
-- _assets_ : **@Johann a détailler**
-- _components_ : Dossier contenant les components **React** écrit avec les particularités de **Next.js**.
-- _custom_ : Thème less **uikit** customisé pour Entourage (Déposé ici seulement pour sauvegarde; non utilisé directement).
-- _db_ : Tout ce qui concerne la base de données (Partie **Sequelize**)
-  - _config_ : Configuration d'accès à la base de données.
-  - _migrations_ : Fichiers de migration de la structure de la base.
-  - _models_ : Fichiers modèles des objets en base.
-  - _seeders_ : Fichiers d'ajout de données dans la base.
-- _pages_ : Dossier contenant les components **React** de rendu de pages. -_app.js_ : Permet la customisation du component parent général. (Navbar présente sur tout le site par exemple).
-  - _document.js_ : Permet la customisation du document HTML. (Inclusion des scripts JS de UiKit par exemple).
-- _static_ : Stockage des éléments non dynamique tels que les images ou la partie CSS.
-- _test_ : Dédiés au tests. Utilisation de **Mocha**.
-- _.editorconfig_ : **@Johann a détailler**
-- _.env_ : A ajouter pour gérer les variables d'environnements (**dotenv**)
-- _.eslintignore_ : Configuration pour **ESLint**
-- _.eslintrc.json_ : Configuration pour **ESLint**
-- _.prettierignore_ : Configuration pour **Prettier**
-- _.prettierrc.json_ : Configuration pour **Prettier**
-- _.sequelizerc_ : Configuration pour **Sequelize**
-- _.travis.yml_ : Configuration de **Travis CI** (Changement de clé encrypt à effectuer pour Entourage. Voir [la documentation](https://docs.travis-ci.com/user/deployment/heroku/)
-- _app.json_ : Fichier de configuration d'**Heroku** (Permet d'indiquer des variables d'environnement)
-- _Axios.js_ : Configuration **Axios** pour communiquer facilement avec le serveur.
-- _next.config.js_ : Fichier de configuration pour **Next.js**
-- _serveur-express.js_ : Partie **Express.js**
+## Modules principaux & versions
 
-## Setup
+> Node 14.x.x
 
-### Initier et démarrer le projet en local
+> React 17.0.2
 
-## 1# Prérequis
+> Next.js 12.1.0
 
-Pour lancer le projet vous avez besoin de **Docker** ainsi que de **NodeJs**.
+> Webpack 4.46.0
 
-## 2# Initialisation de le BDD
+> ESLint 7.32.0
 
-- `docker run --name entourage-db -e POSTGRES_PASSWORD=entourage -e POSTGRES_USER=entourage -d -p 5432:5432 postgres`
+> Babel 7.16.5
 
-- Vous avez besoin des données du fichier **`.env`** et de renseigner le champs DATABASE_URL (`ex: postgresql://entourage:entourage@localhost:5432/entourage`) avec votre adresse.
+------
 
-- `npx sequelize db:create`
+## Architecture
 
-- `npx sequelize db:migrate`
+- `.github`: configuration de la CI avec __*Github Actions*__
+- `.husky` : scripts de hook de commit avec __*Husky*__
+- `/assets` : fichiers de styles globaux avec __*UIkit*__
+- `/public` : stockage des éléments non dynamique tels que les images, le CSS ou les fonts
+- `/src`
+  - `/components` : dossier contenant les composants __*React*__ écrit avec les particularités de __*Next.js*__
+  - `/constants` : fichiers de constantes
+  - `/hooks` : hooks communs à plusieurs composants
+  - `/lib` : librairies pure JS (analytics ...)
+  - `/pages` : dossier contenant les composants __*React*__ de rendu de pages
+  - `/styles` : feuilles CSS compilés à partir de __*UIkit*__ + certains styles customs
+  - `/utils` : fonctions utilitaires communes
+  - `Axios.js` : configuration __*Axios*__ pour communiquer facilement avec l'API
+- `.editorconfig` : configuration par défaut de la syntaxe du code de l'éditeur
+- `.env` : à ajouter pour gérer les variables d'environnements ([cf. exemple](#fichier-env-minimal))
+- `.eslintignore` : configuration pour __*ESLint*__
+- `.eslintrc.json` : configuration pour __*ESLint*__
+- `next.config.js` : fichier de configuration pour __*Next.js*__
+- `.prettierignore` : configuration pour __*Prettier*__
+- `.prettierrc.json` : configuration pour __*Prettier*__
+- `Procfile` : configuration des process __*Heroku*__ à lancer au déploiement
+- `server-next`: point d'entrée de lancement du serveur
+---
 
-- `npx sequelize db:seed:all`
+## Configuration
 
-- Pour debugger, vous pouvez utiliser les scripts `dev`/`dev-front`
+### Installation et scripts
 
-- `npm run dev`
+#### Installation des modules :
+```
+npm install
+```
 
-## 3# Insertion des données dans la BDD
+#### Lancement en dev :
+```
+npm run dev
+```
 
-Il vous faut installer l'interface PostgreSQL **`psql`** pour votre OS.
+#### Lancement en prod :
+```
+npm run build
+npm start
+```
 
-- Insérez les données présentes dans le fichier qui se trouve dans **/migrations** grâce à la commande suivante: `psql -h localhost -d entourage -U entourage -f ./migrations/local-2020_07_08_17_16_25-dump.sql`
+#### Prettier + Linter :
+```
+npm run lint
+npm run format
+```
+Ces deux commandes sont lancés par les hooks de commit
 
-## 4# Lancer le projet en mode développement
+### Fichier .env minimal
+```dotenv
+AIRTABLE_LINK_COMPANY_HELP=
+AIRTABLE_LINK_COMPANY_SENSITIZATION=
+AIRTABLE_LINK_COMPANY_SPONSOR=
+AIRTABLE_LINK_JOIN_LINKEDOUT=
+AIRTABLE_LINK_PROFESSIONAL_REINTEGRATION=
+API_URL=
+ASSOCIATION_APPOINTMENT=
+ASSOCIATION_BROCHURE=
+AWSS3_CDN_URL=
+AWSS3_IMAGE_DIRECTORY=
+AWSS3_URL=
+CDN_URL=
+FB_APP_ID=
+FB_DOMAIN_VERIFICATION=
+FB_PIXEL_ID=
+GA_TRACKING_ID=
+GTM_TRACKING_ID=
+LINKEDIN_PARTNER_ID=
+MAILJET_CONTACT_EMAIL=
+PORT=
+PUSHER_API_KEY=
+SERVER_URL=
+TOOLBOX_URL=
+TUTORIAL_CV=
+TUTORIAL_INTERVIEW_TRAINING=
+TUTORIAL_PP=
+TUTORIAL_VIDEO_CV=
+TUTORIAL_VIDEO_FIRST_STEPS=
+TUTORIAL_VIDEO_OFFERS=
+TUTORIAL_VIDEO_OFFERS_2=
+```
 
-- `npm run dev`
+---
 
-## 5# Initialisation de la BDD de test
+## Styles
 
-- `docker run --name entourage-db-test -e POSTGRES_PASSWORD=entourage -e POSTGRES_USER=entourage -d -p 54300:5432 entourage`
+Les fichiers du thème globale, qui utilisent la librairie __*UIkit*__, se trouvent dans le dossier `/assets/custom` :
 
-- Vous avez besoin des données du fichier **`.env.test`** pour les tests en local, et de renseigner le champs DATABASE_URL (`ex: postgresql://entourage:entourage@localhost:54300/entourage`) avec votre adresse.
+- `entourage.less` : style globale qui surcharge le thème par défaut de __*UIkit*__
 
-- `NODE_ENV=dev-test npx sequelize db:migrate`
+- `entourage.print.less` : style utilisé pour le CV en version PDF
 
-## 6# Lancer les tests
+- `/icons` : icônes en SVG rajoutés aux icônes __*UIkit*__
 
-- `npm run test` est utilisé pour l'intégration continue pour lancer les tests avec les valeurs du fichier `.env`
-- `npm run dev-test` pour lancer les tests en local, en utilisant le fichier `.env.test` avec un rapport de couverture
+Après avoir modifié les fichiers du thème, ou après avoir rajouté un icône, il faut recompiler les fichiers en CSS :
 
-### You are all set !
+- Installer d'abord __*UIkit*__ au sein de son propre module :
+```
+npm run uikit-install
+```
+
+- Si le module est déjà installé, le mettre à jour ;
+```
+npm run uikit-update
+```
+
+- Ensuite, compiler les fichiers SCSS en CSS :
+```
+npm run uikit-compile
+```
+
+Les fichiers transformés se retrouvent dans le dossier `/src/styles/dist`.
+
+## Déploiement
+
+Le déploiement se fait automatiquement grâce à __*Github Actions*__ et __*Heroku*__.
+
+Si un commit est poussé sur `develop`, l'application sera déployé sur la pre-production : [https://entourage-job-front-preprod.herokuapp.com](https://entourage-job-front-preprod.herokuapp.com)
+
+Si un commit est poussé sur `master`,  l'application sera déployé sur la production : [https://linkedout.fr]()
+
+Comme il n'y a pas de tests, __*Github Actions*__ n'est utilisé que pour déployer le projet sur __*Heroku*__
