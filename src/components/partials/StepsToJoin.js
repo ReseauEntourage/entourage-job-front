@@ -40,8 +40,8 @@ const StepsToJoin = () => {
       <p className="uk-text-center uk-margin-medium-top">
         <span className="uk-text-bold">
           <u>
-            Attention, hors de Paris, Lille, Lyon, Seine-Saint-Denis et
-            Haut-de-Seine, nous ne pourrons vous accompagner.
+            Attention, hors de Paris, Seine-Saint-Denis, Haut-de-Seine, Lille,
+            Lyon et Lorient, nous ne pourrons vous accompagner.
           </u>
         </span>
         <br />
