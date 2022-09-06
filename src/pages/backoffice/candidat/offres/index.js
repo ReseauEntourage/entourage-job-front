@@ -194,7 +194,7 @@ const Opportunities = () => {
     content = <OpportunityError />;
   } else if (!candidatId) {
     content = (
-      <>
+      <div className="uk-flex uk-flex-column uk-flex-middle">
         <h2 className="uk-text-bold uk-text-center">
           <span className="uk-text-primary">Aucun candidat</span> n&apos;est
           rattaché à ce compte.
@@ -203,7 +203,7 @@ const Opportunities = () => {
           Il peut y avoir plusieurs raisons à ce sujet. Contacte l&apos;équipe
           LinkedOut pour en savoir plus.
         </p>
-      </>
+      </div>
     );
   } else {
     content = (

@@ -57,8 +57,8 @@ const Travailler = () => {
             <br />
             <br />
             <span>
-              Candidatez au programme à Paris, dans le 92 et 93, à Lille et
-              Lyon.
+              Candidatez au programme à Paris, dans le 92 et 93, à Lille, Lyon
+              et Lorient.
             </span>
           </h4>
           <div className="uk-flex uk-flex-top uk-flex-center uk-padding-small">
