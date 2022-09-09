@@ -1,8 +1,8 @@
 import React from 'react';
 import Carousel from 'src/components/utils/Carousel';
-import CarouselItem from 'src/components/partials/CarouselItem';
 import { Section, SimpleLink } from 'src/components/utils';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
+import CarouselItem from './CarouselItem';
 
 const Highlights = () => {
   const highlights = [

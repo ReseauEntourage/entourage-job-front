@@ -12,3 +12,8 @@ services:
     ports:
       - 3001:3001
     command: npm run dev
+  #storybook:
+  #container_name: storybook
+  #ports:
+  #  - '8086:8086'
+  #build: .
