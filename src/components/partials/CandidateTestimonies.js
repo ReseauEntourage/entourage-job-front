@@ -1,7 +1,7 @@
 import React from 'react';
 import { Img, Section } from 'src/components/utils';
 import Carousel from 'src/components/utils/Carousel';
-import CarouselItem from 'src/components/partials/CarouselItem';
+import CarouselItem from './CarouselItem';
 
 const testimonies = [
   {

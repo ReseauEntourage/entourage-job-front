@@ -10,12 +10,16 @@
     "dev": "node -r dotenv/config server-next.js",
     "start": "NODE_ENV=production node -r dotenv/config server-next.js",
     "lint": "npx eslint src --ext js,jsx,ts,tsx --max-warnings=0",
+    "lint:fix": "npx eslint './src' --ext js,jsx,ts,tsx --fix",
     "format": "prettier --write './**/*.{js,jsx,md,json}' --config .prettierrc.json",
     "build": "next build",
     "uikit-install": "cd ./node_modules/uikit && npm i",
     "uikit-update": "cd ./node_modules/uikit/ && git pull && npm i",
-    "uikit-compile": "cp -r ./assets/custom/ ./node_modules/uikit/custom/ && cd ./node_modules/uikit && npm run compile && cd ../../ && cp -r ./node_modules/uikit/dist/ ./src/styles/dist && cp ./node_modules/uikit/dist/css/*.print.* ./public/static/css/",
-    "prepare": "husky install"
+    "uikit-compile": "cp -r ./assets/custom/ ./node_modules/uikit/custom/ && cd ./node_modules/uikit && npm run compile && cd ../../ && cp -r ./node_modules/uikit/dist/ ./\"src/**\"/styles/dist && cp ./node_modules/uikit/dist/css/*.print.* ./public/static/css/",
+    "prepare": "husky install",
+    "test": "jest --watch",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "repository": {
     "type": "git",
@@ -71,15 +75,26 @@
     "uikit": "^3.5.4",
     "use-deep-compare-effect": "^1.8.1",
     "uuid": "^3.4.0",
-    "validator": "^13.7.0",
-    "webpack": "^4.41.6"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",
     "@babel/eslint-parser": "^7.16.5",
     "@babel/preset-react": "^7.14.5",
     "@next/eslint-plugin-next": "^12.0.7",
+    "@storybook/addon-actions": "^6.5.10",
+    "@storybook/addon-essentials": "^6.5.10",
+    "@storybook/addon-interactions": "^6.5.10",
+    "@storybook/addon-links": "^6.5.10",
+    "@storybook/builder-webpack5": "^6.5.10",
+    "@storybook/manager-webpack5": "^6.5.10",
+    "@storybook/react": "^6.5.10",
+    "@storybook/testing-library": "^0.0.13",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^12.1.5",
+    "babel-loader": "^8.2.5",
     "babel-plugin-module-resolver": "^4.1.0",
+    "cypress": "^10.7.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-next": "^12.0.7",
@@ -89,8 +104,13 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-storybook": "^0.6.4",
     "husky": "^7.0.0",
+    "jest": "^29.0.2",
+    "jest-environment-jsdom": "^29.0.2",
+    "lint-staged": "^13.0.3",
     "postcss": "^8.4.5",
-    "prettier": "^2.1.2"
+    "prettier": "^2.1.2",
+    "webpack": "^5.74.0"
   }
 }
