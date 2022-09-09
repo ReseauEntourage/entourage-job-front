@@ -11,7 +11,7 @@ import {
   formatParagraph,
   mutateDefaultOfferStatus,
 } from 'src/utils';
-import ModalOfferInfo from 'src/components/modals/OfferModals/ModalOfferInfo';
+import ModalOfferInfo from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/ModalOfferInfo';
 import formEditExternalOpportunity from 'src/components/forms/schema/formEditExternalOpportunity';
 import FormWithValidation from 'src/components/forms/FormWithValidation';
 import { UserContext } from 'src/components/store/UserProvider';
@@ -22,12 +22,12 @@ import {
 } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { openModal } from 'src/components/modals/Modal';
-import ModalConfirm from 'src/components/modals/ModalConfirm';
-import { OfferInfoContainer } from 'src/components/modals/OfferModals/OfferInfoContainer';
-import { List } from 'src/components/modals/OfferModals/NavList';
-import ModalOfferBase from 'src/components/modals/OfferModals/ModalOfferBase';
-import useModalOffer from 'src/components/modals/OfferModals/useModalOffer';
-import OfferContent from 'src/components/modals/OfferModals/OfferContent';
+import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
+import { OfferInfoContainer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferInfoContainer';
+import { List } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/NavList';
+import ModalOfferBase from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOfferBase';
+import useModalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/useModalOffer';
+import OfferContent from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferContent';
 import UIkit from 'uikit';
 import { useRouter } from 'next/router';
 import { usePrevious } from 'src/hooks/utils';

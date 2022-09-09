@@ -10,7 +10,7 @@ import { UserContext } from 'src/components/store/UserProvider';
 import { openModal } from 'src/components/modals/Modal';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { Button } from 'src/components/utils';
-import ModalEdit from 'src/components/modals/ModalEdit';
+import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import formEditExternalOpportunity from 'src/components/forms/schema/formEditExternalOpportunity';
 import Api from 'src/Axios';
 import { mutateFormSchema } from 'src/utils';

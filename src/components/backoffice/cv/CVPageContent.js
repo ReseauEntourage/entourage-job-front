@@ -19,9 +19,9 @@ import {
 import NoCV from 'src/components/backoffice/cv/NoCV';
 import ButtonDownload from 'src/components/backoffice/cv/ButtonDownload';
 import { openModal, useModalContext } from 'src/components/modals/Modal';
-import ModalGeneric from 'src/components/modals/ModalGeneric';
+import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
 import { usePrevious } from 'src/hooks/utils';
-import ModalConfirm from 'src/components/modals/ModalConfirm';
+import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 
 const pusher = new Pusher(process.env.PUSHER_API_KEY, {
   cluster: 'eu',

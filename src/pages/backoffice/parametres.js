@@ -5,7 +5,7 @@ import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
 import { UserContext } from 'src/components/store/UserProvider';
 import { Card, Grid, Section } from 'src/components/utils';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
-import ModalEdit from 'src/components/modals/ModalEdit';
+import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
 import Api from 'src/Axios';
 import FormWithValidation from 'src/components/forms/FormWithValidation';

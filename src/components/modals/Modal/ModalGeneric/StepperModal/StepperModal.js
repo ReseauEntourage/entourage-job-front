@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useModalContext } from 'src/components/modals/Modal';
-import ModalGeneric from 'src/components/modals/ModalGeneric';
+import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
 
 /**
  * Ce composant fournit une modal à contenu variable selon l'index ou l'on s'y trouve

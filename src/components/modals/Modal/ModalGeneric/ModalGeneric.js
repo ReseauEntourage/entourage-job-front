@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, useModalContext } from 'src/components/modals/Modal';
 import { CloseButton } from 'src/components/utils';
-import HeaderModal from 'src/components/modals/HeaderModal';
+import HeaderModal from './HeaderModal';
 
 const ModalGeneric = ({
   title,

@@ -8,8 +8,9 @@
   },
   "scripts": {
     "dev": "node -r dotenv/config server-next.js",
+    "next": "next",
     "start": "NODE_ENV=production node -r dotenv/config server-next.js",
-    "lint": "npx eslint src --ext js,jsx,ts,tsx --max-warnings=0",
+    "lint": "npx eslint src --ext js,jsx,ts,tsx",
     "lint:fix": "npx eslint './src' --ext js,jsx,ts,tsx --fix",
     "format": "prettier --write './**/*.{js,jsx,md,json}' --config .prettierrc.json",
     "build": "next build",
@@ -17,9 +18,11 @@
     "uikit-update": "cd ./node_modules/uikit/ && git pull && npm i",
     "uikit-compile": "cp -r ./assets/custom/ ./node_modules/uikit/custom/ && cd ./node_modules/uikit && npm run compile && cd ../../ && cp -r ./node_modules/uikit/dist/ ./\"src/**\"/styles/dist && cp ./node_modules/uikit/dist/css/*.print.* ./public/static/css/",
     "prepare": "husky install",
-    "test": "jest --watch",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "cypress:io": "npx cypress run --record --key $(grep CYPRESS_IO_KEY .env | cut -d '=' -f2)"
   },
   "lint-staged": {
     "*.{js,jsx}": "npm run lint:fix"
@@ -33,7 +36,8 @@
   "license": "ISC",
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint"
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run test"
     }
   },
   "cacheDirectories": [

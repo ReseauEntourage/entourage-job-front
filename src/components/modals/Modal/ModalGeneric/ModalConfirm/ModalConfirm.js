@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ModalGeneric from 'src/components/modals/ModalGeneric';
+import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
 import { Button } from 'src/components/utils';
 import { useModalContext } from 'src/components/modals/Modal';
 

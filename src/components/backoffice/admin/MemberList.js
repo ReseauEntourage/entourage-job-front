@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
 import Button from 'src/components/utils/Button';
-import ModalEdit from 'src/components/modals/ModalEdit';
+import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import Api from 'src/Axios';
 import SearchBar from 'src/components/filters/SearchBar';
 import {

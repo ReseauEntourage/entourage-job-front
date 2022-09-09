@@ -1,4 +1,4 @@
-import ModalGeneric from 'src/components/modals/ModalGeneric';
+import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
 import React from 'react';
 import PropTypes from 'prop-types';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';

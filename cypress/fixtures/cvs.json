@@ -1,0 +1,55 @@
+{
+   "cvs" :
+    [
+    {
+        "id": "d9908633-370b-4dcd-9e61-bd70ecf9f4e5",
+        "catchphrase": "opkkopijodfsiodsjfiods ofsdpofkdspofsd fdsf",
+        "urlImg": "images/33e64d73-a66b-40ad-9e81-99060243aa37.Published.jpg",
+        "updatedAt": "2022-02-01T15:03:30.041Z",
+        "ambitions": [],
+        "skills": [],
+        "businessLines": [
+            {
+                "name": "Artisanat / Art",
+                "order": -1
+            },
+            {
+                "name": "Bâtiment",
+                "order": -1
+            },
+            {
+                "name": "Associatif",
+                "order": -1
+            }
+        ],
+        "locations": [
+            "Paris (75)",
+            "Val-de-Marne (94)",
+            "Seine-Saint-Denis (93)",
+            "Seine-et-Marne (77)",
+            "Essonne (91)",
+            "Yvelines (78)",
+            "Val-d'Oise (95)",
+            "Hauts-de-Seine (92)"
+        ],
+        "user": {
+            "employed": false,
+            "hidden": false,
+            "url": "vaitecandidat-33e64d73",
+            "endOfContract": null,
+            "coach": {
+                "id": "c2460adb-09d5-4c1e-8b7e-f9783a1d16e0",
+                "firstName": "Agathe",
+                "lastName": "Pigéon",
+                "gender": 1
+            },
+            "candidat": {
+                "id": "33e64d73-a66b-40ad-9e81-99060243aa37",
+                "firstName": "Vaitecandidat",
+                "lastName": "Leprince",
+                "gender": 1
+            }
+        },
+        "ranking": 0.05426356589147287
+    }
+]}

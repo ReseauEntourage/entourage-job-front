@@ -4,7 +4,7 @@ import PARTNERS from 'src/constants/partners';
 import Grid from 'src/components/utils/Grid';
 import { Img, Section } from 'src/components/utils';
 import { addPrefix, formatParagraph } from 'src/utils';
-import ModalInterestLinkedOut from 'src/components/modals/ModalInterestLinkedOut';
+import ModalInterestLinkedOut from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import SimpleSection from 'src/components/partials/SimpleSection';
 import SimpleLink from 'src/components/utils/SimpleLink';
 import { gaEvent } from 'src/lib/gtag';
