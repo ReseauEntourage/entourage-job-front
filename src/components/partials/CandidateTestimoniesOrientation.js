@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Img, Section } from 'src/components/utils';
 import Carousel from 'src/components/utils/Carousel';
-import CarouselItem from 'src/components/partials/CarouselItem';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
+import CarouselItem from './CarouselItem';
 
 const testimonies = [
   {
