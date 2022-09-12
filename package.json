@@ -21,6 +21,9 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
+  "lint-staged": {
+    "*.{js,jsx}": "npm run lint:fix"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/ReseauEntourage/entourage-job.git"

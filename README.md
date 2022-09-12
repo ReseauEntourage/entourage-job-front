@@ -16,55 +16,81 @@
 
 ## Architecture
 
-- `.github`: configuration de la CI avec __*Github Actions*__
-- `.husky` : scripts de hook de commit avec __*Husky*__
-- `/assets` : fichiers de styles globaux avec __*UIkit*__
+- `.github`: configuration de la CI avec **_Github Actions_**
+- `.husky` : scripts de hook de commit avec **_Husky_**
+- `/assets` : fichiers de styles globaux avec **_UIkit_**
 - `/public` : stockage des ressources non dynamique accessible publiquement tels que les images, le CSS ou les fonts
 - `/src`
-  - `/components` : dossier contenant les composants __*React*__ écrit avec les particularités de __*Next.js*__
+  - `/components` : dossier contenant les composants **_React_** écrit avec les particularités de **_Next.js_**
   - `/constants` : fichiers de constantes
   - `/hooks` : hooks communs à plusieurs composants
   - `/lib` : librairies pure JS (analytics ...)
-  - `/pages` : dossier contenant les composants __*React*__ de rendu de pages
-  - `/styles` : feuilles CSS compilés à partir de __*UIkit*__ + certains styles customs
+  - `/pages` : dossier contenant les composants **_React_** de rendu de pages
+  - `/styles` : feuilles CSS compilés à partir de **_UIkit_** + certains styles customs
   - `/utils` : fonctions utilitaires communes
-  - `Axios.js` : configuration __*Axios*__ pour communiquer facilement avec l'API
+  - `Axios.js` : configuration **_Axios_** pour communiquer facilement avec l'API
 - `.editorconfig` : configuration par défaut de la syntaxe du code de l'éditeur
 - `.env` : à ajouter pour gérer les variables d'environnements ([cf. exemple](#fichier-env-minimal))
-- `.eslintignore` : configuration pour __*ESLint*__
-- `.eslintrc.json` : configuration pour __*ESLint*__
-- `next.config.js` : fichier de configuration pour __*Next.js*__
-- `.prettierignore` : configuration pour __*Prettier*__
-- `.prettierrc.json` : configuration pour __*Prettier*__
-- `Procfile` : configuration des process __*Heroku*__ à lancer après déploiement
+- `.eslintignore` : configuration pour **_ESLint_**
+- `.eslintrc.json` : configuration pour **_ESLint_**
+- `next.config.js` : fichier de configuration pour **_Next.js_**
+- `.prettierignore` : configuration pour **_Prettier_**
+- `.prettierrc.json` : configuration pour **_Prettier_**
+- `Procfile` : configuration des process **_Heroku_** à lancer après déploiement
 - `server-next.js`: point d'entrée de lancement du serveur
 
 ## Configuration
 
-### Installation des modules
+### Avec Docker
+
+#### Build image et container
+
+```
+docker-compose build
+```
+
+#### Lancer le projet en mode dev
+
+```
+docker-compose up
+```
+
+### Sans Docker
+
+#### Installation des modules
+
 ```
 npm install
 ```
 
-### Lancement en en mode développement
+#### Lancement en en mode développement
+
 ```
 npm run dev
 ```
 
 ### Lancement en mode production
+
+(pour le moment sans Docker)
+
 ```
 npm run build
 npm start
 ```
 
 ### Prettier + Linter
+
 ```
 npm run lint
 npm run format
 ```
+
+avec docker, précéder chaque commande par "docker exec front ${cmd}"
+
 Ces deux commandes sont lancées par les hooks de commit
 
 ### Fichier .env minimal
+
 ```dotenv
 AIRTABLE_LINK_COMPANY_HELP=
 AIRTABLE_LINK_COMPANY_SENSITIZATION=
@@ -100,27 +126,30 @@ TUTORIAL_VIDEO_OFFERS_2=
 
 ## Styles
 
-Les fichiers du thème globale, qui utilisent la librairie __*UIkit*__, se trouvent dans le dossier `/assets/custom` :
+Les fichiers du thème globale, qui utilisent la librairie **_UIkit_**, se trouvent dans le dossier `/assets/custom` :
 
-- `entourage.less` : style globale qui surcharge le thème par défaut de __*UIkit*__
+- `entourage.less` : style globale qui surcharge le thème par défaut de **_UIkit_**
 
 - `entourage.print.less` : style utilisé pour le CV en version PDF
 
-- `/icons` : icônes en SVG rajoutés aux icônes __*UIkit*__
+- `/icons` : icônes en SVG rajoutés aux icônes **_UIkit_**
 
 Après avoir modifié les fichiers du thème, ou après avoir rajouté un icône, il faut recompiler les fichiers en CSS :
 
-- Installer d'abord __*UIkit*__ au sein de son propre module :
+- Installer d'abord **_UIkit_** au sein de son propre module :
+
 ```
 npm run uikit-install
 ```
 
 - Si le module est déjà installé, le mettre à jour ;
+
 ```
 npm run uikit-update
 ```
 
 - Ensuite, compiler les fichiers SCSS en CSS :
+
 ```
 npm run uikit-compile
 ```
@@ -129,13 +158,13 @@ Les fichiers transformés se retrouvent dans le dossier `/src/styles/dist`.
 
 ## Déploiement
 
-Le déploiement se fait automatiquement grâce à __*Github Actions*__ et __*Heroku*__.
+Le déploiement se fait automatiquement grâce à **_Github Actions_** et **_Heroku_**.
 
 Si un commit est poussé sur `develop`, l'application sera déployé sur la pre-production : **[https://entourage-job-front-preprod.herokuapp.com](https://entourage-job-front-preprod.herokuapp.com)**
 
-Si un commit est poussé sur `master`,  l'application sera déployé sur la production : **[https://linkedout.fr](https://linkedout.fr)**
+Si un commit est poussé sur `master`, l'application sera déployé sur la production : **[https://linkedout.fr](https://linkedout.fr)**
 
-Comme il n'y a pas de tests, __*Github Actions*__ n'est utilisé que pour déployer le projet sur __*Heroku*__.
+Comme il n'y a pas de tests, **_Github Actions_** n'est utilisé que pour déployer le projet sur **_Heroku_**.
 
 ## Stack technique
 
