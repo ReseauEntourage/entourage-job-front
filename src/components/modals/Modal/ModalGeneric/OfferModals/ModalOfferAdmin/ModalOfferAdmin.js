@@ -34,23 +34,23 @@ import OfferContent from 'src/components/modals/Modal/ModalGeneric/OfferModals/p
 import UIkit from 'uikit';
 
 const getCandidatesToShowInInput = (offer) => {
-  if (offer.userOpportunity && offer.userOpportunity.length > 0) {
+  if (offer.opportunityUsers && offer.opportunityUsers.length > 0) {
     if (offer.isPublic) {
-      return offer.userOpportunity
-        .filter((userOpp) => {
-          return userOpp.recommended;
+      return offer.opportunityUsers
+        .filter((oppUser) => {
+          return oppUser.recommended;
         })
-        .map((userOpp) => {
+        .map((oppUser) => {
           return {
-            value: userOpp.User?.id,
-            label: `${userOpp.User?.firstName} ${userOpp.User?.lastName}`,
+            value: oppUser.User?.id,
+            label: `${oppUser.User?.firstName} ${oppUser.User?.lastName}`,
           };
         });
     }
-    return offer.userOpportunity.map((userOpp) => {
+    return offer.opportunityUsers.map((oppUser) => {
       return {
-        value: userOpp.User?.id,
-        label: `${userOpp.User?.firstName} ${userOpp.User?.lastName}`,
+        value: oppUser.User?.id,
+        label: `${oppUser.User?.firstName} ${oppUser.User?.lastName}`,
       };
     });
   }
@@ -167,9 +167,9 @@ const ModalOfferAdmin = ({
       );
       setOffer({
         ...data,
-        userOpportunity: isExternal
-          ? [data.userOpportunity]
-          : data.userOpportunity,
+        opportunityUsers: isExternal
+          ? [data.opportunityUsers]
+          : data.opportunityUsers,
       });
       await onOfferUpdated();
       setIsEditing(false);
@@ -186,14 +186,14 @@ const ModalOfferAdmin = ({
       setOffer((prevOffer) => {
         return {
           ...prevOffer,
-          userOpportunity: Array.isArray(offer.userOpportunity)
+          opportunityUsers: Array.isArray(offer.opportunityUsers)
             ? [
-                ...offer.userOpportunity.filter((userOpp) => {
-                  return userOpp.UserId !== data.UserId;
+                ...offer.opportunityUsers.filter((oppUser) => {
+                  return oppUser.UserId !== data.UserId;
                 }),
                 {
-                  ...offer.userOpportunity.find((userOpp) => {
-                    return userOpp.UserId === data.UserId;
+                  ...offer.opportunityUsers.find((oppUser) => {
+                    return oppUser.UserId === data.UserId;
                   }),
                   ...data,
                 },
@@ -208,17 +208,17 @@ const ModalOfferAdmin = ({
   };
 
   const getUsersToShow = () => {
-    if (Array.isArray(offer.userOpportunity)) {
+    if (Array.isArray(offer.opportunityUsers)) {
       if (offer.isPublic) {
-        return offer.userOpportunity.filter((userOpp) => {
+        return offer.opportunityUsers.filter((oppUser) => {
           return (
-            userOpp.status !== OFFER_STATUS[0].value || userOpp.recommended
+            oppUser.status !== OFFER_STATUS[0].value || oppUser.recommended
           );
         });
       }
-      return offer.userOpportunity;
+      return offer.opportunityUsers;
     }
-    return [offer.userOpportunity];
+    return [offer.opportunityUsers];
   };
 
   const isInternalContact = offer?.recruiterMail?.includes('entourage.social');
@@ -240,7 +240,7 @@ const ModalOfferAdmin = ({
               formSchema={mutatedExternalOfferSchema}
               defaultValues={{
                 ...offer,
-                candidateId: offer.userOpportunity[0]?.UserId,
+                candidateId: offer.opportunityUsers[0]?.UserId,
                 businessLines: defaultBusinessLines,
                 department: findConstantFromValue(
                   offer.department,
@@ -256,7 +256,7 @@ const ModalOfferAdmin = ({
                   startOfContract: fields.startOfContract || null,
                   endOfContract: fields.endOfContract || null,
                   recruiterPhone: fields.recruiterPhone || null,
-                  candidateId: offer.userOpportunity[0]?.UserId,
+                  candidateId: offer.opportunityUsers[0]?.UserId,
                   id: offer.id,
                   businessLines: fields.businessLines
                     ? fields.businessLines.map((businessLine, index) => {
@@ -469,7 +469,7 @@ const ModalOfferAdmin = ({
                 </div>
               </OfferInfoContainer>
             )}
-            {offer.userOpportunity && (
+            {offer.opportunityUsers && (
               <OfferInfoContainer
                 icon="users"
                 title={offer.isPublic ? 'Statut pour' : 'Candidat(s) lié(s)'}
@@ -479,45 +479,45 @@ const ModalOfferAdmin = ({
                     .sort((a, b) => {
                       return a.User.firstName.localeCompare(b.User.firstName);
                     })
-                    .map((userOpp) => {
-                      if (userOpp.User) {
+                    .map((oppUser) => {
+                      if (oppUser.User) {
                         const offerStatus = findOfferStatus(
-                          userOpp.status,
+                          oppUser.status,
                           offer.isPublic,
-                          userOpp.recommended
+                          oppUser.recommended
                         );
 
                         return (
                           <div
-                            key={userOpp.OpportunityId + userOpp.User.id}
+                            key={oppUser.OpportunityId + oppUser.User.id}
                             className="uk-flex uk-flex-column"
                             style={{ marginTop: 5 }}
                           >
                             <SimpleLink
-                              href={`/backoffice/admin/membres/${userOpp.User.id}`}
+                              href={`/backoffice/admin/membres/${oppUser.User.id}`}
                               className="uk-link-muted uk-flex uk-flex-middle"
                               target="_blank"
                             >
                               <span className="uk-flex-1">
-                                {`${userOpp.User.firstName} ${userOpp.User.lastName}`}
+                                {`${oppUser.User.firstName} ${oppUser.User.lastName}`}
                                 &nbsp;
                               </span>
                               <div className="uk-flex-right">
-                                {userOpp.bookmarked && (
+                                {oppUser.bookmarked && (
                                   <IconNoSSR
                                     name="star"
                                     ratio={0.8}
                                     className="ent-color-amber"
                                   />
                                 )}
-                                {userOpp.archived && (
+                                {oppUser.archived && (
                                   <IconNoSSR
                                     name="archive"
                                     ratio={0.8}
                                     className="ent-color-amber"
                                   />
                                 )}
-                                {offer.isPublic && userOpp.recommended && (
+                                {offer.isPublic && oppUser.recommended && (
                                   <IconNoSSR
                                     name="bolt"
                                     ratio={0.8}
@@ -531,16 +531,16 @@ const ModalOfferAdmin = ({
                                 className="uk-select"
                                 onChange={async (event) => {
                                   await updateOpportunityUser({
-                                    ...userOpp,
+                                    ...oppUser,
                                     status: parseInt(event.target.value, 10),
                                   });
                                 }}
-                                value={userOpp.status}
+                                value={oppUser.status}
                                 style={{
                                   height: 'auto',
                                 }}
                               >
-                                {mutateDefaultOfferStatus(offer, userOpp)
+                                {mutateDefaultOfferStatus(offer, oppUser)
                                   .slice(offer.isExternal ? 1 : 0)
                                   .map((item, i) => {
                                     return (
@@ -630,7 +630,7 @@ ModalOfferAdmin.propTypes = {
     date: PropTypes.string,
     location: PropTypes.string,
     department: PropTypes.string,
-    userOpportunity: PropTypes.arrayOf(
+    opportunityUsers: PropTypes.arrayOf(
       PropTypes.shape({
         status: PropTypes.number,
         bookmarked: PropTypes.bool,
@@ -663,7 +663,7 @@ ModalOfferAdmin.propTypes = {
 };
 
 ModalOfferAdmin.defaultProps = {
-  currentOffer: { userOpportunity: {}, businessLines: [] },
+  currentOffer: { opportunityUsers: {}, businessLines: [] },
 };
 
 export default ModalOfferAdmin;

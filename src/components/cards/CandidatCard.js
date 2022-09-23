@@ -185,10 +185,10 @@ const CandidatCard = ({
                   gap="collapse"
                   childWidths={['1-1']}
                   className="uk-text-lowercase uk-text-bold uk-text-primary "
-                  items={skills.slice(0, 2).map((a, index) => {
+                  items={skills.slice(0, 2).map(({ name }, index) => {
                     return (
-                      <span key={index} className="ent-line-clamp-1">
-                        {a}
+                      <span key={name + index} className="ent-line-clamp-1">
+                        {name}
                       </span>
                     );
                   })}
@@ -251,10 +251,10 @@ const CandidatCard = ({
                   childWidths={['1-1']}
                   style={{ marginTop: 10 }}
                 >
-                  {locations.slice(0, 2).map((text, index) => {
+                  {locations.slice(0, 2).map(({ name }, index) => {
                     return (
                       <div
-                        key={text + index}
+                        key={name + index}
                         className="uk-flex uk-flex-middle"
                       >
                         <IconNoSSR name="location" ratio={0.6} />
@@ -265,7 +265,7 @@ const CandidatCard = ({
                             fontSize: '0.775rem',
                           }}
                         >
-                          {text}
+                          {name}
                         </span>
                       </div>
                     );
@@ -407,10 +407,18 @@ CandidatCard.propTypes = {
       order: PropTypes.number.isRequired,
     })
   ).isRequired,
-  locations: PropTypes.arrayOf(PropTypes.string).isRequired,
+  locations: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    })
+  ).isRequired,
   imgSrc: PropTypes.string,
   imgAlt: PropTypes.string.isRequired,
-  skills: PropTypes.arrayOf(PropTypes.string).isRequired,
+  skills: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    })
+  ).isRequired,
   catchphrase: PropTypes.string,
   employed: PropTypes.bool,
   endOfContract: PropTypes.string,

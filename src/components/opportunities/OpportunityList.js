@@ -9,7 +9,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
-import { getUserOpportunityFromOffer } from 'src/utils';
+import { getOpportunityUserFromOffer } from 'src/utils';
 import Api from 'src/Axios';
 import { Grid, SimpleLink, Button } from 'src/components/utils';
 import OfferCard from 'src/components/cards/OfferCard';
@@ -46,10 +46,10 @@ const OfferList = ({
   return (
     <Grid childWidths={['1-4@l', '1-3@m', '1-2@s']} left top>
       {offers.map((offer, i) => {
-        const userOpportunity =
+        const opportunityUsers =
           role === 'candidateAsAdmin'
-            ? getUserOpportunityFromOffer(offer, candidatId)
-            : offer.userOpportunity;
+            ? getOpportunityUserFromOffer(offer, candidatId)
+            : offer.opportunityUsers;
 
         const isSelected = isElementSelected(offer);
 
@@ -85,12 +85,12 @@ const OfferList = ({
                   isPublic={offer.isPublic}
                   isValidated={offer.isValidated}
                   department={offer.department}
-                  userOpportunity={userOpportunity}
+                  opportunityUsers={opportunityUsers}
                   isExternal={offer.isExternal}
                   isNew={
                     role === 'candidateAsAdmin' &&
-                    userOpportunity &&
-                    !userOpportunity.seen
+                    opportunityUsers &&
+                    !opportunityUsers.seen
                   }
                   isAdmin
                   isSelected={isSelected}
@@ -103,17 +103,19 @@ const OfferList = ({
                   date={offer.date}
                   isValidated={offer.isValidated}
                   isPublic={offer.isPublic}
-                  userOpportunity={offer.userOpportunity}
-                  isNew={!offer.userOpportunity || !offer.userOpportunity.seen}
+                  opportunityUsers={offer.opportunityUsers}
+                  isNew={
+                    !offer.opportunityUsers || !offer.opportunityUsers.seen
+                  }
                   isExternal={offer.isExternal}
                   archived={
-                    offer.userOpportunity && offer.userOpportunity.archived
+                    offer.opportunityUsers && offer.opportunityUsers.archived
                   }
                   bookmarked={
-                    offer.userOpportunity && offer.userOpportunity.bookmarked
+                    offer.opportunityUsers && offer.opportunityUsers.bookmarked
                   }
                   recommended={
-                    offer.userOpportunity && offer.userOpportunity.recommended
+                    offer.opportunityUsers && offer.opportunityUsers.recommended
                   }
                   department={offer.department}
                   isSelected={isSelected}
@@ -227,13 +229,16 @@ const OpportunityList = forwardRef(
       async (offer) => {
         const opportunity = { ...offer };
         // si jamais ouvert
-        if (!opportunity.userOpportunity || !opportunity.userOpportunity.seen) {
+        if (
+          !opportunity.opportunityUsers ||
+          !opportunity.opportunityUsers.seen
+        ) {
           const { data } = await Api.post(`/opportunity/join`, {
             opportunityId: offer.id,
             userId: candidatId,
             seen: true,
           });
-          opportunity.userOpportunity = data;
+          opportunity.opportunityUsers = data;
         }
         openModal(
           <ModalOffer
@@ -266,7 +271,7 @@ const OpportunityList = forwardRef(
             }}
             navigateBackToList={navigateBackToList}
             duplicateOffer={async (closeModal) => {
-              const { id, userOpportunity, ...restOpportunity } = offer;
+              const { id, opportunityUsers, ...restOpportunity } = offer;
               const { data } = await Api.post(`/opportunity/`, {
                 ...restOpportunity,
                 title: `${restOpportunity.title} (copie)`,

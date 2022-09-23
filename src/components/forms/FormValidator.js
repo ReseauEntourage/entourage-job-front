@@ -8,6 +8,7 @@ export default class FormValidator {
   }
 
   validate(state) {
+    const fieldValues = JSON.parse(JSON.stringify(state));
     // start out assuming valid
     const validation = this.valid();
     // for each validation rule
@@ -17,7 +18,7 @@ export default class FormValidator {
         // determine the field value, the method to invoke and
         // optional args from the rule definition
         const fieldValue = getValueFromFormField(
-          state[rule.field] ? state[rule.field] : ''
+          fieldValues[rule.field] ? fieldValues[rule.field] : ''
         );
 
         const args = rule.args || [];
@@ -35,11 +36,12 @@ export default class FormValidator {
         let isValid;
         try {
           isValid =
-            validationMethod(fieldValue, ...args, state) !== rule.validWhen;
+            validationMethod(fieldValue, ...args, fieldValues) !==
+            rule.validWhen;
         } catch (e) {
           console.log(`Stringify validation fallback, reason: '${e.message}'`);
           isValid =
-            validationMethod(fieldValue.toString(), ...args, state) !==
+            validationMethod(fieldValue.toString(), ...args, fieldValues) !==
             rule.validWhen;
         }
         if (isValid) {

@@ -151,7 +151,9 @@ const Sinformer = () => {
           showHorizontalDividers
         />
       </Section>
-      <NewsletterPartial />
+      <NewsletterPartial
+        tag={GA_TAGS.PAGE_ENTREPRISES_INSCRIPTION_NEWSLETTER_CLIC}
+      />
     </Layout>
   );
 };

@@ -112,7 +112,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
   const { loading, setLoading, isEditing, setIsEditing, offer, setOffer } =
     useModalOffer(currentOffer);
 
-  const { status, bookmarked, note, archived } = offer?.userOpportunity || {};
+  const { status, bookmarked, note, archived } = offer?.opportunityUsers || {};
 
   const isInternalContact = offer?.recruiterMail?.includes('entourage.social');
 
@@ -122,7 +122,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
       setOffer((prevOffer) => {
         return {
           ...prevOffer,
-          userOpportunity: data,
+          opportunityUsers: data,
         };
       });
       await onOfferUpdated();
@@ -132,10 +132,10 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
 
   useEffect(() => {
     const archiveOffer = async () => {
-      const { userOpportunity } = offer;
+      const { opportunityUsers } = offer;
 
       await updateOpportunityUser({
-        ...userOpportunity,
+        ...opportunityUsers,
         archived: true,
         status: OFFER_STATUS[4].value,
       });
@@ -143,9 +143,9 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
     };
 
     const updateStatusOffer = async (newStatus) => {
-      const { userOpportunity } = offer;
+      const { opportunityUsers } = offer;
       await updateOpportunityUser({
-        ...userOpportunity,
+        ...opportunityUsers,
         archived: false,
         status: newStatus,
       });
@@ -176,7 +176,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
 
   const mutatedOfferStatus = mutateDefaultOfferStatus(
     offer,
-    offer.userOpportunity
+    offer.opportunityUsers
   );
 
   const updateOpportunity = async (opportunity) => {
@@ -193,7 +193,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
     }
   };
 
-  const shouldShowCTAs = !offer.isExternal && !offer.userOpportunity.archived;
+  const shouldShowCTAs = !offer.isExternal && !offer.opportunityUsers.archived;
 
   // Modal
   return (
@@ -243,7 +243,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
           <ModalOfferInfo
             startOfContract={offer.startOfContract}
             isPublic={offer.isPublic}
-            isRecommended={offer.userOpportunity.recommended}
+            isRecommended={offer.opportunityUsers.recommended}
             isExternal={offer.isExternal}
             salary={offer.salary}
             driversLicense={offer.driversLicense}
@@ -281,9 +281,9 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                             )
                           }
                           onConfirm={async () => {
-                            const { userOpportunity } = offer;
+                            const { opportunityUsers } = offer;
                             await updateOpportunityUser({
-                              ...userOpportunity,
+                              ...opportunityUsers,
                               archived: true,
                               status: OFFER_STATUS[4].value,
                             });
@@ -377,9 +377,9 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                               GA_TAGS.BACKOFFICE_CANDIDAT_VALIDER_CONTACTER_RECRUTEUR_CLIC
                             );
                             if (status < OFFER_STATUS[1].value) {
-                              const { userOpportunity } = offer;
+                              const { opportunityUsers } = offer;
                               await updateOpportunityUser({
-                                ...userOpportunity,
+                                ...opportunityUsers,
                                 status: OFFER_STATUS[1].value,
                               });
                             }
@@ -407,9 +407,9 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                         gaEvent(
                           GA_TAGS.BACKOFFICE_CANDIDAT_PAS_CONTACTER_RECRUTEUR_CLIC
                         );
-                        const { userOpportunity } = offer;
+                        const { opportunityUsers } = offer;
                         await updateOpportunityUser({
-                          ...userOpportunity,
+                          ...opportunityUsers,
                           status: OFFER_STATUS[0].value,
                         });
                       }}
@@ -440,9 +440,9 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                           GA_TAGS.BACKOFFICE_CANDIDAT_STATUT_SELECTEUR_CLIC
                         );
                         setLoadingStatus(true);
-                        const { userOpportunity } = offer;
+                        const { opportunityUsers } = offer;
                         await updateOpportunityUser({
-                          ...userOpportunity,
+                          ...opportunityUsers,
                           status: parseInt(event.target.value, 10),
                         });
                         setLoadingStatus(false);
@@ -472,9 +472,9 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                 className={bookmarked ? 'ent-color-amber' : undefined}
                 onClick={async () => {
                   setLoadingIcon(true);
-                  const { userOpportunity } = offer;
+                  const { opportunityUsers } = offer;
                   await updateOpportunityUser({
-                    ...userOpportunity,
+                    ...opportunityUsers,
                     bookmarked: !bookmarked,
                   });
                   setLoadingIcon(false);
@@ -485,9 +485,9 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                 className={archived ? 'ent-color-amber' : undefined}
                 onClick={async () => {
                   setLoadingIcon(true);
-                  const { userOpportunity } = offer;
+                  const { opportunityUsers } = offer;
                   await updateOpportunityUser({
-                    ...userOpportunity,
+                    ...opportunityUsers,
                     archived: !archived,
                   });
                   setLoadingIcon(false);
@@ -607,7 +607,7 @@ ModalOffer.propTypes = {
     date: PropTypes.string,
     location: PropTypes.string,
     department: PropTypes.string,
-    userOpportunity: PropTypes.shape({
+    opportunityUsers: PropTypes.shape({
       status: PropTypes.number,
       bookmarked: PropTypes.bool,
       recommended: PropTypes.bool,
@@ -626,7 +626,7 @@ ModalOffer.propTypes = {
 };
 
 ModalOffer.defaultProps = {
-  currentOffer: { userOpportunity: {}, businessLines: [] },
+  currentOffer: { opportunityUsers: {}, businessLines: [] },
 };
 
 export default ModalOffer;

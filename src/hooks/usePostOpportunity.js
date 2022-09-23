@@ -12,6 +12,7 @@ import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { findConstantFromValue, getValueFromFormField } from 'src/utils';
 import { BUSINESS_LINES } from 'src/constants';
 import { fbEvent } from 'src/lib/fb';
+import moment from 'moment';
 
 export function usePostOpportunity({
   modalTitle,
@@ -74,7 +75,7 @@ export function usePostOpportunity({
               address,
             };
           }),
-          date: Date.now(),
+          date: moment().toISOString(),
         });
         closeModal();
         UIkit.notification(successMessage, 'success');

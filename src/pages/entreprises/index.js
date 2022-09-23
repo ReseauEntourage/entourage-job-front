@@ -423,7 +423,10 @@ const Entreprises = ({ nbPublishedCVs }) => {
           </Button>
         </div>
       </Section>
-      <NewsletterPartial style="default" />
+      <NewsletterPartial
+        style="default"
+        tag={GA_TAGS.PAGE_ENTREPRISES_INSCRIPTION_NEWSLETTER_CLIC}
+      />
     </Layout>
   );
 };

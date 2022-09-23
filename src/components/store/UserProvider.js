@@ -58,7 +58,7 @@ const UserProvider = ({ children }) => {
       email: email.toLowerCase(),
       password,
     });
-    localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, data.user.token);
+    localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, data.token);
     setUser(data.user);
   }, []);
 
@@ -68,7 +68,7 @@ const UserProvider = ({ children }) => {
       if (accessToken) {
         Api.get('/auth/current')
           .then(({ data }) => {
-            localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, data.user.token);
+            localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, data.token);
             setUser(data.user);
             setIsFirstLoad(false);
             restrictAccessByRole(data.user.role);

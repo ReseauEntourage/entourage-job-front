@@ -13,7 +13,7 @@ import {
 } from 'src/utils';
 import CVCareerPathSentence from 'src/components/cv/CVCareerPathSentence';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import { CONTRACTS } from 'src/constants';
+import { AMBITIONS_PREFIXES, CONTRACTS } from 'src/constants';
 
 const CVPDF = ({ cv, page }) => {
   const experiences =
@@ -217,11 +217,9 @@ const CVPDF = ({ cv, page }) => {
                           />{' '}
                           <span className="uk-flex-1">
                             {cv.contracts
-                              .map((contract) => {
-                                return findConstantFromValue(
-                                  contract,
-                                  CONTRACTS
-                                ).label;
+                              .map(({ name }) => {
+                                return findConstantFromValue(name, CONTRACTS)
+                                  .label;
                               })
                               .join(' / ')}
                           </span>
@@ -236,9 +234,9 @@ const CVPDF = ({ cv, page }) => {
                           />{' '}
                           <span className="uk-flex-1">
                             {cv.locations
-                              .map((location) => {
+                              .map(({ name }) => {
                                 return findConstantFromValue(
-                                  location,
+                                  name,
                                   DEPARTMENTS_FILTERS
                                 ).label;
                               })
@@ -264,7 +262,11 @@ const CVPDF = ({ cv, page }) => {
                             style={{ width: 20 }}
                           />{' '}
                           <span className="uk-flex-1">
-                            {cv.languages.join(' / ')}
+                            {cv.languages
+                              .map(({ name }) => {
+                                return name;
+                              })
+                              .join(' / ')}
                           </span>
                         </li>
                       )}
@@ -286,10 +288,10 @@ const CVPDF = ({ cv, page }) => {
                     <h5 className="uk-margin-small-bottom">Mes atouts</h5>
                     <hr className="uk-divider-small uk-margin-remove-top" />
                     <ul className="uk-list uk-margin-remove-bottom uk-text-small">
-                      {cv.skills.map((item, i) => {
+                      {cv.skills.map(({ name }, i) => {
                         return (
                           <li id={i} key={i}>
-                            {item}
+                            {name}
                           </li>
                         );
                       })}
@@ -324,7 +326,7 @@ const CVPDF = ({ cv, page }) => {
                           <>
                             {exp.skills && (
                               <dt key={i} style={{ display: 'block' }}>
-                                {exp.skills.map((name, key) => {
+                                {exp.skills.map(({ name }, key) => {
                                   return (
                                     <span
                                       key={key}
@@ -405,10 +407,10 @@ const CVPDF = ({ cv, page }) => {
                     <h5 className="uk-margin-small-bottom">Mes passions</h5>
                     <hr className="uk-divider-small uk-margin-remove-top" />
                     <ul className="uk-list uk-margin-remove-bottom uk-text-small">
-                      {cv.passions.map((item, i) => {
+                      {cv.passions.map(({ name }, i) => {
                         return (
                           <li id={i} key={i}>
-                            {item}
+                            {name}
                           </li>
                         );
                       })}
@@ -460,7 +462,84 @@ const CVPDF = ({ cv, page }) => {
 };
 
 CVPDF.propTypes = {
-  cv: PropTypes.shape().isRequired,
+  cv: PropTypes.shape({
+    user: PropTypes.shape({
+      candidat: PropTypes.shape({
+        firstName: PropTypes.string.isRequired,
+        lastName: PropTypes.string.isRequired,
+        email: PropTypes.string.isRequired,
+        phone: PropTypes.string.isRequired,
+        address: PropTypes.string.isRequired,
+        zone: PropTypes.string.isRequired,
+      }).isRequired,
+    }).isRequired,
+    catchphrase: PropTypes.string,
+    story: PropTypes.string,
+    locations: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    availability: PropTypes.string,
+    urlImg: PropTypes.string,
+    contracts: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    ambitions: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        order: PropTypes.number.isRequired,
+        prefix: PropTypes.oneOf(
+          AMBITIONS_PREFIXES.map(({ value }) => {
+            return value;
+          })
+        ),
+      })
+    ),
+    businessLines: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        order: PropTypes.number.isRequired,
+      })
+    ).isRequired,
+    languages: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    transport: PropTypes.string,
+    skills: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    passions: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    reviews: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        text: PropTypes.string.isRequired,
+        status: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    experiences: PropTypes.arrayOf(
+      PropTypes.shape({
+        description: PropTypes.string.isRequired,
+        skills: PropTypes.arrayOf(
+          PropTypes.shape({
+            name: PropTypes.string.isRequired,
+          })
+        ).isRequired,
+      })
+    ).isRequired,
+    status: PropTypes.string,
+    UserId: PropTypes.string,
+  }).isRequired,
   page: PropTypes.number,
 };
 

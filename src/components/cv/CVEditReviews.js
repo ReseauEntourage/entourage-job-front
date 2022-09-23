@@ -109,7 +109,13 @@ const CVEditReviews = ({ reviews, onChange }) => {
   );
 };
 CVEditReviews.propTypes = {
-  reviews: PropTypes.arrayOf(PropTypes.shape()),
+  reviews: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
+      status: PropTypes.string.isRequired,
+    })
+  ).isRequired,
   onChange: PropTypes.func,
 };
 CVEditReviews.defaultProps = {
