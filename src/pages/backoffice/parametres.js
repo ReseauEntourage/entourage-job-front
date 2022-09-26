@@ -135,36 +135,6 @@ const Parametres = () => {
         },
       ]);
     }
-    if (userData.role === USER_ROLES.ADMIN) {
-      mutatedSchema = mutateFormSchema(mutatedSchema, [
-        {
-          fieldId: 'phone',
-          props: [
-            {
-              propName: 'disabled',
-              value: true,
-            },
-            {
-              propName: 'hidden',
-              value: true,
-            },
-          ],
-        },
-        {
-          fieldId: 'phoneLabel',
-          props: [
-            {
-              propName: 'disabled',
-              value: true,
-            },
-            {
-              propName: 'hidden',
-              value: true,
-            },
-          ],
-        },
-      ]);
-    }
   }
 
   useEffect(() => {

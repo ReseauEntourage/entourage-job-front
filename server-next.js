@@ -4,7 +4,7 @@ const express = require('express');
 const enforce = require('express-sslify');
 
 const dev = process.env.NODE_ENV !== 'production';
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3002;
 
 const app = next({ dev });
 const handle = app.getRequestHandler();
