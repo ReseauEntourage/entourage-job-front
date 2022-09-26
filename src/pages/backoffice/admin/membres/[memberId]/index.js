@@ -88,38 +88,12 @@ const EditUserModal = ({ user, setUser }) => {
             },
           ],
         },
-        {
-          fieldId: 'addressLabel',
-          props: [
-            {
-              propName: 'disabled',
-              value: true,
-            },
-            {
-              propName: 'hidden',
-              value: true,
-            },
-          ],
-        },
       ]);
     }
     if (user.role === USER_ROLES.ADMIN) {
       mutatedSchema = mutateFormSchema(mutatedSchema, [
         {
           fieldId: 'phone',
-          props: [
-            {
-              propName: 'disabled',
-              value: true,
-            },
-            {
-              propName: 'hidden',
-              value: true,
-            },
-          ],
-        },
-        {
-          fieldId: 'phoneLabel',
           props: [
             {
               propName: 'disabled',
