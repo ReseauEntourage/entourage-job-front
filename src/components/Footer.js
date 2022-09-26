@@ -9,7 +9,7 @@ import { gaEvent } from 'src/lib/gtag';
 import { GA_TAGS } from 'src/constants/tags';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import PropTypes from 'prop-types';
-import ModalInterestLinkedOut from 'src/components/modals/ModalInterestLinkedOut';
+import ModalInterestLinkedOut from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import { openModal } from 'src/components/modals/Modal';
 
 const pages = [

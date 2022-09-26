@@ -1,6 +1,6 @@
 import React from 'react';
 import SuccessModalContent from 'src/components/modals/SuccessModalContent';
-import StepperModal from 'src/components/modals/StepperModal';
+import StepperModal from 'src/components/modals/Modal/ModalGeneric/StepperModal';
 import FormWithValidation from 'src/components/forms/FormWithValidation';
 import interestLinkedOutSchema from 'src/components/forms/schema/formInterestLinkedOut';
 import Api from 'src/Axios';

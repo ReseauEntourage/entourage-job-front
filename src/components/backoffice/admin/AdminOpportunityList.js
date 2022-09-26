@@ -13,7 +13,7 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 import OpportunityList from 'src/components/opportunities/OpportunityList';
 import PropTypes from 'prop-types';
 import { openModal } from 'src/components/modals/Modal';
-import ModalEdit from 'src/components/modals/ModalEdit';
+import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import Api from 'src/Axios';
 import UIkit from 'uikit';
 

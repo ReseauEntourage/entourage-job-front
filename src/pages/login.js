@@ -8,7 +8,7 @@ import FormWithValidation from 'src/components/forms/FormWithValidation';
 import { UserContext } from 'src/components/store/UserProvider';
 import Api from 'src/Axios';
 import { USER_ROLES } from 'src/constants';
-import StepperModal from 'src/components/modals/StepperModal';
+import StepperModal from 'src/components/modals/Modal/ModalGeneric/StepperModal';
 import SuccessModalContent from 'src/components/modals/SuccessModalContent';
 import { openModal } from 'src/components/modals/Modal';
 

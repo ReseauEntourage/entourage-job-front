@@ -1,4 +1,4 @@
-import { OfferInfoContainer } from 'src/components/modals/OfferModals/OfferInfoContainer';
+import { OfferInfoContainer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferInfoContainer';
 import { findConstantFromValue, formatParagraph } from 'src/utils';
 import { Button, Grid, SimpleLink } from 'src/components/utils';
 import { BUSINESS_LINES } from 'src/constants';

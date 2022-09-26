@@ -11,10 +11,9 @@ import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { getUserOpportunityFromOffer } from 'src/utils';
 import Api from 'src/Axios';
-import ModalOffer from 'src/components/modals/OfferModals/ModalOffer';
 import { Grid, SimpleLink, Button } from 'src/components/utils';
 import OfferCard from 'src/components/cards/OfferCard';
-import ModalOfferAdmin from 'src/components/modals/OfferModals/ModalOfferAdmin';
+import ModalOfferAdmin from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOfferAdmin';
 import OpportunityError from 'src/components/opportunities/OpportunityError';
 import { useOpportunityList } from 'src/hooks/useOpportunityList';
 import useDeepCompareEffect from 'use-deep-compare-effect';
@@ -31,6 +30,7 @@ import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { useBulkActions } from 'src/hooks/useBulkActions';
 import { SEARCH_MAX_WIDTH } from 'src/constants/utils';
 import { GA_TAGS } from 'src/constants/tags';
+import ModalOffer from '../modals/Modal/ModalGeneric/OfferModals/ModalOffer';
 
 const OfferList = ({
   selectionModeActivated,

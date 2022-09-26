@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ModalEdit from 'src/components/modals/ModalEdit';
+import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import schemaStory from 'src/components/forms/schema/formEditStory.json';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
 import { Grid } from 'src/components/utils';

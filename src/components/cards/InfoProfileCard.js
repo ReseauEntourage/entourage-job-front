@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'src/components/utils';
-import ModalEdit from 'src/components/modals/ModalEdit';
+import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import schemaUsefulInformation from 'src/components/forms/schema/formEditUsefulInformation';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
 import { IconNoSSR } from 'src/components/utils/Icon';

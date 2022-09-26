@@ -8,7 +8,7 @@ import { gaEvent } from 'src/lib/gtag';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
 import { openModal } from 'src/components/modals/Modal';
-import ModalInterestLinkedOut from 'src/components/modals/ModalInterestLinkedOut';
+import ModalInterestLinkedOut from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import MultipleCTA from 'src/components/partials/MultipleCTA';
 import { Chapter } from 'src/components/partials/Chapter';
 import AnimatedList from 'src/components/utils/AnimatedList';
@@ -106,6 +106,7 @@ const Orienter = () => {
         }}
         secondCta={{
           label: 'Nous contacter',
+          dataTest: 'button-contact',
           onClick: () => {
             gaEvent(GA_TAGS.PAGE_ORIENTER_CONTACT_CLIC);
             openModal(<ModalInterestLinkedOut />);
@@ -183,6 +184,7 @@ const Orienter = () => {
             <Button
               style="secondary"
               className="uk-margin-small-right uk-margin-small-left uk-margin-small-top"
+              dataTest="button-contact"
               onClick={() => {
                 gaEvent(GA_TAGS.PAGE_ORIENTER_CONTACT_CLIC);
                 openModal(<ModalInterestLinkedOut />);
@@ -293,6 +295,7 @@ const Orienter = () => {
           <Button
             style="secondary"
             className="uk-margin-small-right uk-margin-small-left uk-margin-small-top"
+            dataTest="button-contact"
             onClick={() => {
               gaEvent(GA_TAGS.PAGE_ORIENTER_CONTACT_CLIC);
               openModal(<ModalInterestLinkedOut />);
