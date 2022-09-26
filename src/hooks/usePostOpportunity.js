@@ -8,7 +8,7 @@ import { gaEvent } from 'src/lib/gtag';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { openModal } from 'src/components/modals/Modal';
 import defaultSchema from 'src/components/forms/schema/formEditOpportunity';
-import ModalEdit from 'src/components/modals/ModalEdit';
+import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { findConstantFromValue, getValueFromFormField } from 'src/utils';
 import { BUSINESS_LINES } from 'src/constants';
 import { fbEvent } from 'src/lib/fb';

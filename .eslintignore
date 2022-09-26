@@ -3,3 +3,6 @@ public/
 src/styles/dist/
 .next/
 assets/
+cypress.config.js
+cypress/
+next.config.js

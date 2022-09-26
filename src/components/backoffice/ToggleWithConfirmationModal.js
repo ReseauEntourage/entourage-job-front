@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Grid } from 'src/components/utils';
-import ModalGeneric from 'src/components/modals/ModalGeneric';
-import ModalEdit from 'src/components/modals/ModalEdit';
+import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
+import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { openModal, useModalContext } from 'src/components/modals/Modal';
 
 const ModalToggle = ({

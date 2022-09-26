@@ -4,7 +4,7 @@ import { EXTERNAL_LINKS } from 'src/constants';
 import { addPrefix } from 'src/utils';
 import Img from 'src/components/utils/Img';
 import { IconNoSSR } from 'src/components/utils/Icon';
-import ModalGeneric from 'src/components/modals/ModalGeneric';
+import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
 
 const SailInfoModal = () => {
   const modalContent = (

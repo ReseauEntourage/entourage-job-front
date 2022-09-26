@@ -2,7 +2,7 @@ import UIkit from 'uikit';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import StepperModal from 'src/components/modals/StepperModal';
+import StepperModal from 'src/components/modals/Modal/ModalGeneric/StepperModal';
 import FormWithValidation from 'src/components/forms/FormWithValidation';
 import schemaGetEmail from 'src/components/forms/schema/formGetEmail.json';
 import Api from 'src/Axios';

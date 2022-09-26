@@ -22,15 +22,15 @@ import {
   EXTERNAL_OFFERS_ORIGINS,
   OFFER_STATUS,
 } from 'src/constants';
-import ModalOfferInfo from 'src/components/modals/OfferModals/ModalOfferInfo';
+import ModalOfferInfo from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/ModalOfferInfo';
 import { useModalContext } from 'src/components/modals/Modal';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import formEditExternalOpportunitySchema from 'src/components/forms/schema/formEditExternalOpportunity';
-import { List } from 'src/components/modals/OfferModals/NavList';
-import { OfferInfoContainer } from 'src/components/modals/OfferModals/OfferInfoContainer';
-import ModalOfferBase from 'src/components/modals/OfferModals/ModalOfferBase';
-import useModalOffer from 'src/components/modals/OfferModals/useModalOffer';
-import OfferContent from 'src/components/modals/OfferModals/OfferContent';
+import { List } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/NavList';
+import { OfferInfoContainer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferInfoContainer';
+import ModalOfferBase from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOfferBase';
+import useModalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/useModalOffer';
+import OfferContent from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferContent';
 import UIkit from 'uikit';
 
 const getCandidatesToShowInInput = (offer) => {

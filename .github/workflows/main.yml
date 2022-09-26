@@ -1,23 +1,51 @@
 name: LinkedOut Frontend Test
 
 on:
-  push:
-  pull_request:
-    branches: [ master, develop ]
-  workflow_dispatch:
+  [push]
+  # pull_request:
+  # branches: [master, develop]
+  # workflow_dispatch:
+
+env:
+  WEBINAR_URL: https://google.com
+  TOOLBOX_URL: https://google.com
+  TUTORIAL_CV: https://google.com
+  TUTORIAL_PP: https://google.com
+  TUTORIAL_VIDEO_FIRST_STEPS: https://google.com
+  TUTORIAL_VIDEO_CV: https://google.com
+  TUTORIAL_VIDEO_OFFERS: https://google.com
+  TUTORIAL_VIDEO_OFFERS_2: https://google.com
+  TUTORIAL_INTERVIEW_TRAINING: https://google.com
+  SERVER_URL: http://localhost:3000
+  API_URL: http://localhost:3002/api/v1
+  PORT: 3000
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    environment: entourage-job-front-test
-
-    env:
-      CI: true
-      NODE_ENV: test
+    environment: 'entourage-job-front'
+    container: cypress/browsers:node12.18.3-chrome87-ff82
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: cypress
+        uses: cypress-io/github-action@v4
+        with:
+          start: npm run dev
+          config: e2e.baseUrl=http://localhost:3000
+          browser: chrome
+          command: npx cypress run --record --key ${{ secrets.CYPRESS_IO_KEY }}
+          wait-on: http://localhost:3000
+
+      - run: npm run lint
+
+      - name: set-up
+        uses: actions/setup-node@v1
         with:
           node-version: '14.x'
+      # - run: npm i --legacy-peer-deps
+      - run: npm run test
+
       - run: echo No tests

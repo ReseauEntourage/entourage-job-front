@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'src/components/utils';
-import ModalEdit from 'src/components/modals/ModalEdit';
+import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import schemaTestimonial from 'src/components/forms/schema/formEditTestimonial.json';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
-import ModalConfirm from 'src/components/modals/ModalConfirm';
+import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { formatParagraph, sortByName } from 'src/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';

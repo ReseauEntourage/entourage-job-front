@@ -9,7 +9,7 @@ import {
 import { useRouter } from 'next/router';
 
 import { Grid, Img, SimpleLink } from 'src/components/utils';
-import ModalShareCV from 'src/components/modals/ModalShareCV';
+import ModalShareCV from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
 import Api from 'src/Axios';
 import { SharesCountContext } from 'src/components/store/SharesCountProvider';
 import { gaEvent } from 'src/lib/gtag';
@@ -142,6 +142,7 @@ const CandidatCard = ({
               background: 'white', // 'linear-gradient(90deg, white 50%, transparent 200%)',
               padding: '10px 10px 10px 0px',
             }}
+            data-test={`card-${imgAlt}`}
             // ent-gradiant-default
             className="uk-width-1-2 uk-position-center-left"
           >

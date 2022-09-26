@@ -11,7 +11,7 @@ import CVPageContent from 'src/components/backoffice/cv/CVPageContent';
 import CandidatHeader from 'src/components/backoffice/cv/CandidatHeader';
 import UserInformationCard from 'src/components/cards/UserInformationCard';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
-import ModalEdit from 'src/components/modals/ModalEdit';
+import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { OFFER_ADMIN_FILTERS_DATA, USER_ROLES } from 'src/constants';
 import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
 import {
@@ -25,7 +25,7 @@ import ContractLabel from 'src/components/backoffice/candidate/ContractLabel';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import PropTypes from 'prop-types';
 import { openModal } from 'src/components/modals/Modal';
-import ModalConfirm from 'src/components/modals/ModalConfirm';
+import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import ErrorMessage from 'src/components/backoffice/cv/ErrorMessage';
 import { useFetchCV } from 'src/hooks/useFetchCV';
 import _ from 'lodash';

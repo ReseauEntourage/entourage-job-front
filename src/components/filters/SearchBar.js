@@ -58,6 +58,7 @@ const SearchBar = ({
           <input
             className="uk-search-input"
             type="search"
+            data-test="search-input"
             placeholder={placeholder}
             value={searchBuffer}
             onKeyDown={(ev) => {

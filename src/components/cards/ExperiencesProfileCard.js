@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import arrayMove from 'array-move';
 
-import ModalEdit from 'src/components/modals/ModalEdit';
+import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import schemaformEditExperience from 'src/components/forms/schema/formEditExperience.json';
 import { Grid } from 'src/components/utils';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
-import ModalConfirm from 'src/components/modals/ModalConfirm';
+import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { formatParagraph, sortByOrder } from 'src/utils';
 import { openModal } from 'src/components/modals/Modal';
 

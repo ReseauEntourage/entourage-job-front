@@ -5,7 +5,7 @@ import { Button } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { usePrevious } from 'src/hooks/utils';
 import { openModal } from 'src/components/modals/Modal';
-import ModalConfirm from 'src/components/modals/ModalConfirm';
+import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { gaEvent } from 'src/lib/gtag';
 
 export function useBulkActions(apiRoute, refreshElementsCallback, tag) {
