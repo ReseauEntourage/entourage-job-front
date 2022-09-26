@@ -101,14 +101,7 @@
     "@testing-library/react": "^12.1.5",
     "babel-loader": "^8.2.5",
     "babel-plugin-module-resolver": "^4.1.0",
-<<<<<<< HEAD
-<<<<<<< HEAD
     "chromatic": "^6.9.0",
-=======
->>>>>>> c0c6c61 (tests config - jest react-testing-library cypress storybooks)
-=======
-    "chromatic": "^6.9.0",
->>>>>>> 6308e90 (chromatic)
     "cypress": "^10.7.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.0.1",

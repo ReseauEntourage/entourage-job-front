@@ -18,6 +18,7 @@ env:
   TUTORIAL_INTERVIEW_TRAINING: https://google.com
   SERVER_URL: http://localhost:3000
   API_URL: http://localhost:3002/api/v1
+  PORT: 3000
 
 jobs:
   test:
