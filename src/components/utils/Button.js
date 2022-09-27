@@ -23,7 +23,7 @@ const Button = ({
   toggle,
   shallow,
   scroll,
-  dataTest,
+  dataTestId,
 }) => {
   let classBuffer = 'uk-button';
   if (visible) classBuffer += ` uk-visible@${visible}`;
@@ -41,7 +41,7 @@ const Button = ({
       type="button"
       onClick={onClick}
       data-uk-toggle={toggle}
-      data-test={dataTest}
+      data-testid={dataTestId}
     >
       {children}
     </button>
@@ -84,7 +84,7 @@ Button.propTypes = {
   toggle: PropTypes.string,
   shallow: PropTypes.bool,
   scroll: PropTypes.bool,
-  dataTest: PropTypes.string,
+  dataTestId: PropTypes.string,
 };
 Button.defaultProps = {
   disabled: false,
@@ -100,7 +100,7 @@ Button.defaultProps = {
   onClick: () => {},
   toggle: undefined,
   scroll: true,
-  dataTest: '',
+  dataTestId: '',
 };
 
 export default Button;

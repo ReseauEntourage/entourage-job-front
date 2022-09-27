@@ -106,7 +106,7 @@ const Orienter = () => {
         }}
         secondCta={{
           label: 'Nous contacter',
-          dataTest: 'button-contact',
+          dataTestId: 'button-contact',
           onClick: () => {
             gaEvent(GA_TAGS.PAGE_ORIENTER_CONTACT_CLIC);
             openModal(<ModalInterestLinkedOut />);
@@ -184,7 +184,7 @@ const Orienter = () => {
             <Button
               style="secondary"
               className="uk-margin-small-right uk-margin-small-left uk-margin-small-top"
-              dataTest="button-contact"
+              dataTestId="button-contact"
               onClick={() => {
                 gaEvent(GA_TAGS.PAGE_ORIENTER_CONTACT_CLIC);
                 openModal(<ModalInterestLinkedOut />);
@@ -295,7 +295,7 @@ const Orienter = () => {
           <Button
             style="secondary"
             className="uk-margin-small-right uk-margin-small-left uk-margin-small-top"
-            dataTest="button-contact"
+            dataTestId="button-contact"
             onClick={() => {
               gaEvent(GA_TAGS.PAGE_ORIENTER_CONTACT_CLIC);
               openModal(<ModalInterestLinkedOut />);
