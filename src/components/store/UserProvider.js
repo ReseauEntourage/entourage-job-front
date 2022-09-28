@@ -67,11 +67,10 @@ const UserProvider = ({ children }) => {
       const accessToken = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
       if (accessToken) {
         Api.get('/auth/current')
-          .then(({ data }) => {
-            localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, data.token);
-            setUser(data.user);
+          .then(({ data: currentUser }) => {
+            setUser(currentUser);
             setIsFirstLoad(false);
-            restrictAccessByRole(data.user.role);
+            restrictAccessByRole(currentUser.role);
           })
           .catch(async (err) => {
             console.error(err);

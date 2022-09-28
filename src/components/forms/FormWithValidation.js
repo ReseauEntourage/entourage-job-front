@@ -74,6 +74,8 @@ const FormWithValidation = forwardRef(
       setFieldValues(tmpFieldValues); // enregistre la valeur du champs
       setFieldValidations(tmpFieldValidations);
 
+      console.log('tmpFieldValues', tmpFieldValues);
+
       /* Validators end */
       setError('');
     };

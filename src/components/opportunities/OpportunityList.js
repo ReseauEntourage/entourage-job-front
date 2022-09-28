@@ -236,7 +236,6 @@ const OpportunityList = forwardRef(
           const { data } = await Api.post(`/opportunity/join`, {
             opportunityId: offer.id,
             userId: candidatId,
-            seen: true,
           });
           opportunity.opportunityUsers = data;
         }

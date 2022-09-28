@@ -52,10 +52,18 @@ ModalPreview.propTypes = {
   cv: PropTypes.shape({
     catchphrase: PropTypes.string,
     story: PropTypes.string,
-    locations: PropTypes.arrayOf(PropTypes.string),
+    locations: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
     availability: PropTypes.string,
     urlImg: PropTypes.string,
-    contracts: PropTypes.arrayOf(PropTypes.string),
+    contracts: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
     ambitions: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string.isRequired,
@@ -322,6 +330,7 @@ const CVPageContent = ({ candidatId, cv, setCV }) => {
   };
 
   const autoSaveCV = async (tempCV) => {
+    console.log('tempCV', tempCV);
     await checkIfLastVersion(() => {
       const formData = new FormData();
       const obj = {

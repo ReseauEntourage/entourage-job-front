@@ -9,17 +9,14 @@ import Api from 'src/Axios';
 import {
   findConstantFromValue,
   formatParagraph,
+  getCandidateIdFromCoachOrCandidate,
   mutateDefaultOfferStatus,
+  mutateFormSchema,
 } from 'src/utils';
 import ModalOfferInfo from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/ModalOfferInfo';
-import formEditExternalOpportunity from 'src/components/forms/schema/formEditExternalOpportunity';
 import FormWithValidation from 'src/components/forms/FormWithValidation';
 import { UserContext } from 'src/components/store/UserProvider';
-import {
-  EXTERNAL_OFFERS_ORIGINS,
-  OFFER_STATUS,
-  USER_ROLES,
-} from 'src/constants';
+import { EXTERNAL_OFFERS_ORIGINS, OFFER_STATUS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { openModal } from 'src/components/modals/Modal';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
@@ -33,6 +30,7 @@ import { useRouter } from 'next/router';
 import { usePrevious } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
 import { GA_TAGS } from 'src/constants/tags';
+import formEditExternalOpportunitySchema from 'src/components/forms/schema/formEditExternalOpportunity';
 
 const AfterContactItem = ({ isPublic }) => {
   return (
@@ -179,6 +177,25 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
     offer.opportunityUsers
   );
 
+  const mutatedExternalOfferSchema = mutateFormSchema(
+    formEditExternalOpportunitySchema,
+    [
+      {
+        fieldId: 'candidateStatus',
+        props: [
+          {
+            propName: 'hidden',
+            value: true,
+          },
+          {
+            propName: 'disabled',
+            value: true,
+          },
+        ],
+      },
+    ]
+  );
+
   const updateOpportunity = async (opportunity) => {
     setLoading(true);
     try {
@@ -208,11 +225,10 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
         <div>
           <h3>Modification de l&apos;offre d&apos;emploi</h3>
           <FormWithValidation
-            formSchema={formEditExternalOpportunity}
+            formSchema={mutatedExternalOfferSchema}
             defaultValues={{
               ...offer,
-              candidateId:
-                user.role === USER_ROLES.COACH ? user.candidat.id : user.id,
+              candidateId: getCandidateIdFromCoachOrCandidate(user),
               department: findConstantFromValue(
                 offer.department,
                 DEPARTMENTS_FILTERS
@@ -226,8 +242,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                 ...fields,
                 startOfContract: fields.startOfContract || null,
                 endOfContract: fields.endOfContract || null,
-                candidateId:
-                  user.role === USER_ROLES.COACH ? user.candidat.id : user.id,
+                candidateId: getCandidateIdFromCoachOrCandidate(user),
                 id: offer.id,
                 businessLines: undefined,
               };

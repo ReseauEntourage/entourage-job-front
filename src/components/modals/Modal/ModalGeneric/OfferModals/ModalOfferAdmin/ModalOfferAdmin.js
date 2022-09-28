@@ -42,15 +42,15 @@ const getCandidatesToShowInInput = (offer) => {
         })
         .map((oppUser) => {
           return {
-            value: oppUser.User?.id,
-            label: `${oppUser.User?.firstName} ${oppUser.User?.lastName}`,
+            value: oppUser.user?.id,
+            label: `${oppUser.user?.firstName} ${oppUser.user?.lastName}`,
           };
         });
     }
     return offer.opportunityUsers.map((oppUser) => {
       return {
-        value: oppUser.User?.id,
-        label: `${oppUser.User?.firstName} ${oppUser.User?.lastName}`,
+        value: oppUser.user?.id,
+        label: `${oppUser.user?.firstName} ${oppUser.user?.lastName}`,
       };
     });
   }
@@ -145,6 +145,19 @@ const ModalOfferAdmin = ({
           },
         ],
       },
+      {
+        fieldId: 'candidateStatus',
+        props: [
+          {
+            propName: 'hidden',
+            value: true,
+          },
+          {
+            propName: 'disabled',
+            value: true,
+          },
+        ],
+      },
     ]
   );
 
@@ -160,10 +173,17 @@ const ModalOfferAdmin = ({
 
   const updateOpportunity = async (opportunity, isExternal) => {
     setLoading(true);
+    const {
+      createdAt,
+      updatedAt,
+      createdBy,
+      opportunityUsers,
+      ...restOpportunity
+    } = opportunity;
     try {
       const { data } = await Api.put(
         `/opportunity/${isExternal ? 'external' : ''}`,
-        opportunity
+        restOpportunity
       );
       setOffer({
         ...data,
@@ -255,7 +275,6 @@ const ModalOfferAdmin = ({
                   ...fields,
                   startOfContract: fields.startOfContract || null,
                   endOfContract: fields.endOfContract || null,
-                  recruiterPhone: fields.recruiterPhone || null,
                   candidateId: offer.opportunityUsers[0]?.UserId,
                   id: offer.id,
                   businessLines: fields.businessLines
@@ -395,7 +414,7 @@ const ModalOfferAdmin = ({
             <OfferInfoContainer icon="home" title="Entreprise">
               {offer.company}
             </OfferInfoContainer>
-            <>
+            {!offer.isExternal && (
               <OfferInfoContainer
                 icon="user"
                 title={isInternalContact ? 'Personne à contacter' : 'Recruteur'}
@@ -442,19 +461,19 @@ const ModalOfferAdmin = ({
                   </SimpleLink>
                 )}
               </OfferInfoContainer>
-              {offer.contactMail && (
-                <OfferInfoContainer icon="mail" title="Mail de contact">
-                  <SimpleLink
-                    href={`mailto:${offer.contactMail}`}
-                    className="uk-text-muted uk-flex uk-flex-middle"
-                    isExternal
-                    target="_blank"
-                  >
-                    <span>{offer.contactMail}</span>
-                  </SimpleLink>
-                </OfferInfoContainer>
-              )}
-            </>
+            )}
+            {offer.contactMail && (
+              <OfferInfoContainer icon="mail" title="Mail de contact">
+                <SimpleLink
+                  href={`mailto:${offer.contactMail}`}
+                  className="uk-text-muted uk-flex uk-flex-middle"
+                  isExternal
+                  target="_blank"
+                >
+                  <span>{offer.contactMail}</span>
+                </SimpleLink>
+              </OfferInfoContainer>
+            )}
             <OfferInfoContainer icon="location" title={offer.department}>
               {offer.address && <span>{offer.address}</span>}
             </OfferInfoContainer>
@@ -477,10 +496,10 @@ const ModalOfferAdmin = ({
                 <div className="uk-height-max-medium uk-overflow-auto">
                   {getUsersToShow()
                     .sort((a, b) => {
-                      return a.User.firstName.localeCompare(b.User.firstName);
+                      return a.user.firstName.localeCompare(b.user.firstName);
                     })
                     .map((oppUser) => {
-                      if (oppUser.User) {
+                      if (oppUser.user) {
                         const offerStatus = findOfferStatus(
                           oppUser.status,
                           offer.isPublic,
@@ -489,17 +508,17 @@ const ModalOfferAdmin = ({
 
                         return (
                           <div
-                            key={oppUser.OpportunityId + oppUser.User.id}
+                            key={oppUser.OpportunityId + oppUser.user.id}
                             className="uk-flex uk-flex-column"
                             style={{ marginTop: 5 }}
                           >
                             <SimpleLink
-                              href={`/backoffice/admin/membres/${oppUser.User.id}`}
+                              href={`/backoffice/admin/membres/${oppUser.user.id}`}
                               className="uk-link-muted uk-flex uk-flex-middle"
                               target="_blank"
                             >
                               <span className="uk-flex-1">
-                                {`${oppUser.User.firstName} ${oppUser.User.lastName}`}
+                                {`${oppUser.user.firstName} ${oppUser.user.lastName}`}
                                 &nbsp;
                               </span>
                               <div className="uk-flex-right">

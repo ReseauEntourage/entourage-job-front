@@ -115,7 +115,7 @@ CVEditReviews.propTypes = {
       text: PropTypes.string.isRequired,
       status: PropTypes.string.isRequired,
     })
-  ).isRequired,
+  ),
   onChange: PropTypes.func,
 };
 CVEditReviews.defaultProps = {

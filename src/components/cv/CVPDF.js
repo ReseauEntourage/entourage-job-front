@@ -135,7 +135,7 @@ const CVPDF = ({ cv, page }) => {
                           <>
                             {exp.skills && (
                               <dt key={i} style={{ display: 'block' }}>
-                                {exp.skills.map((name, key) => {
+                                {exp.skills.map(({ name }, key) => {
                                   return (
                                     <span
                                       key={key}

@@ -63,7 +63,9 @@ const Opportunities = () => {
           });
 
           if (data.locations && data.locations.length > 0) {
-            params.department = data.locations;
+            params.department = data.locations.map(({ name }) => {
+              return name;
+            });
           } else if (candidatZone && candidatZone !== ADMIN_ZONES.HZ) {
             const defaultDepartmentsForCandidate = DEPARTMENTS_FILTERS.filter(
               (dept) => {

@@ -159,7 +159,7 @@ const OfferCard = ({
                             style={{ marginTop: 5 }}
                           >
                             <span className="uk-text-meta uk-text-secondary">
-                              {oppUser.User.firstName} {oppUser.User.lastName}
+                              {oppUser.user.firstName} {oppUser.user.lastName}
                             </span>
                             {renderStatus(oppUser, isPublic)}
                           </div>
