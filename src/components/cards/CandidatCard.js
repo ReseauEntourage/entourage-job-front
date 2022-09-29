@@ -142,7 +142,7 @@ const CandidatCard = ({
               background: 'white', // 'linear-gradient(90deg, white 50%, transparent 200%)',
               padding: '10px 10px 10px 0px',
             }}
-            data-test={`card-${imgAlt}`}
+            data-testid={`card-${imgAlt}`}
             // ent-gradiant-default
             className="uk-width-1-2 uk-position-center-left"
           >

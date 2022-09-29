@@ -11,11 +11,16 @@ const ModalConfirm = ({ onConfirm, text, title, buttonText, children }) => {
     <ModalGeneric description={text} title={title}>
       {children && <div className="uk-margin-medium-bottom">{children}</div>}
       <div className="uk-modal-footer uk-padding-remove-bottom">
-        <Button style="default" onClick={onClose}>
+        <Button
+          style="default"
+          onClick={onClose}
+          dataTestId="modal-confirm-cancel"
+        >
           Annuler
         </Button>
         <Button
           style="primary"
+          dataTestId="modal-confirm-confirm"
           onClick={() => {
             onClose();
             onConfirm();

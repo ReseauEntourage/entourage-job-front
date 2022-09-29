@@ -20,6 +20,7 @@ const ModalGeneric = ({
         className={`uk-margin-auto-vertical ${
           fullWidth ? 'uk-width-expand' : 'uk-width-2xlarge@m'
         }`}
+        data-testid="modal-generic"
       >
         <div
           className={`uk-modal-body ${
@@ -28,6 +29,7 @@ const ModalGeneric = ({
         >
           <CloseButton
             className="uk-modal-close-default"
+            dataTestId="generic-close-modal"
             onClick={() => {
               if (customOnClose) {
                 customOnClose(onClose);

@@ -22,6 +22,7 @@
     "test:watch": "jest --watch",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
+    "posttest:cov": "node commands/open-coverage.command.mjs",
     "cypress:io": "npx cypress run --record --key $(grep CYPRESS_IO_KEY .env | cut -d '=' -f2)"
   },
   "lint-staged": {

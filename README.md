@@ -89,6 +89,54 @@ avec docker, précéder chaque commande par "docker exec front ${cmd}"
 
 Ces deux commandes sont lancées par les hooks de commit
 
+### Storybook
+
+```
+npm run storybook
+```
+
+### Tests
+
+#### Tests Unitaires - Jest
+
+La commande pour lancer les tests une fois:
+
+```
+npm run test
+```
+
+La commande pour lancer les tests en mode watch:
+
+```
+npm run test:watch
+```
+
+Si vous souhaitez obtenir le code coverage:
+
+```
+npx jest --coverage
+```
+
+Un dossier coverage sera créé. Afin de pouvoir le consulter dans le navigateur:
+
+```
+npm run posttest:cov
+```
+
+#### tests End to End - Cypress
+
+La commande suivante permet de lancer les tests Cypress:
+
+```
+npx run cypress
+```
+
+Pour obtenir la vidéo des tests sur cypress.io, utilisez la commande suivante:
+
+```
+npm run cypress:io
+```
+
 ### Fichier .env minimal
 
 ```dotenv
@@ -122,6 +170,8 @@ TUTORIAL_VIDEO_CV=
 TUTORIAL_VIDEO_FIRST_STEPS=
 TUTORIAL_VIDEO_OFFERS=
 TUTORIAL_VIDEO_OFFERS_2=
+CYPRESS_IO_KEY=
+LOCAL_DIRNAME=
 ```
 
 ## Styles
