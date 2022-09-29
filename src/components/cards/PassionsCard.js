@@ -34,7 +34,6 @@ const PassionsCard = ({ list, onChange }) => {
                   }, {})}
                   onSubmit={async (fields, closeModal) => {
                     closeModal();
-                    console.log(fields);
                     const fieldsTransform = {
                       passions: Object.values(fields)
                         .filter((val) => {

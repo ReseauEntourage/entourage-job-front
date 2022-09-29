@@ -74,8 +74,6 @@ const FormWithValidation = forwardRef(
       setFieldValues(tmpFieldValues); // enregistre la valeur du champs
       setFieldValidations(tmpFieldValidations);
 
-      console.log('tmpFieldValues', tmpFieldValues);
-
       /* Validators end */
       setError('');
     };
@@ -112,7 +110,6 @@ const FormWithValidation = forwardRef(
         setFieldValidations(tmpFieldValidations);
         setError('Un ou plusieurs champs sont invalides');
         await onError(fieldValues);
-        console.error(validation);
       }
     };
 

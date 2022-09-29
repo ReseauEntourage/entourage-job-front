@@ -30,6 +30,7 @@ import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { useBulkActions } from 'src/hooks/useBulkActions';
 import { SEARCH_MAX_WIDTH } from 'src/constants/utils';
 import { GA_TAGS } from 'src/constants/tags';
+import moment from 'moment';
 import ModalOffer from '../modals/Modal/ModalGeneric/OfferModals/ModalOffer';
 
 const OfferList = ({
@@ -270,13 +271,20 @@ const OpportunityList = forwardRef(
             }}
             navigateBackToList={navigateBackToList}
             duplicateOffer={async (closeModal) => {
-              const { id, opportunityUsers, ...restOpportunity } = offer;
+              const {
+                id,
+                opportunityUsers,
+                createdBy,
+                createdAt,
+                updatedAt,
+                ...restOpportunity
+              } = offer;
               const { data } = await Api.post(`/opportunity/`, {
                 ...restOpportunity,
                 title: `${restOpportunity.title} (copie)`,
                 isAdmin: true,
                 isValidated: false,
-                date: Date.now(),
+                date: moment().toISOString(),
                 isCopy: true,
               });
 

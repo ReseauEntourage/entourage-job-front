@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Api from 'src/Axios';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
+import _ from 'lodash';
 
 export function useFetchCV(user) {
   const [error, setError] = useState(false);
@@ -18,7 +19,7 @@ export function useFetchCV(user) {
           },
         })
           .then(({ data }) => {
-            if (data) {
+            if (data && !_.isEmpty(data)) {
               setCV(data);
             } else {
               setCV(null);
