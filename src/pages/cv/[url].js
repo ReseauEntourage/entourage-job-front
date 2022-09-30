@@ -140,7 +140,6 @@ const CVPage = ({ cv, exists, router, hideShareOptions }) => {
 CVPage.getInitialProps = async ({ query }) => {
   return Api.get(`/cv/${query.url}`)
     .then(({ data: { cv, exists } }) => {
-      console.log(cv.experiences[0].skills, exists);
       return {
         cv,
         exists,

@@ -281,14 +281,14 @@ const CVPageContent = ({ candidatId, cv, setCV }) => {
       setPdfGenerating(true);
 
       channelPreview.bind(SOCKETS.EVENTS.CV_PREVIEW_DONE, (data) => {
-        if (data.candidatId === candidatId) {
+        if (data.candidateId === candidatId) {
           setPreviewGenerating(false);
           pusher.unsubscribe(SOCKETS.CHANNEL_NAMES.CV_PREVIEW);
         }
       });
 
       channelPDF.bind(SOCKETS.EVENTS.CV_PDF_DONE, (data) => {
-        if (data.candidatId === candidatId) {
+        if (data.candidateId === candidatId) {
           setPdfGenerating(false);
           pusher.unsubscribe(SOCKETS.CHANNEL_NAMES.CV_PDF);
         }
