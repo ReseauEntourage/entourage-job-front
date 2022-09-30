@@ -33,7 +33,7 @@ const ButtonDownload = ({
             pdfLink.click();
           })
           .catch((err) => {
-            console.log(err);
+            console.error(err);
           });
       }}
     />

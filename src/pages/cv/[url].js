@@ -147,7 +147,7 @@ CVPage.getInitialProps = async ({ query }) => {
       };
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       return { cv: null, exists: false };
     });
 };

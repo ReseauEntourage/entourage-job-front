@@ -6,7 +6,6 @@ import Api from 'src/Axios';
 import { getCandidateFromCoachOrCandidate } from 'src/utils';
 
 const NoCV = ({ candidatId, user, setCV }) => {
-  console.log(candidatId, user);
   const candidate = getCandidateFromCoachOrCandidate(user);
   return (
     <Grid column middle>

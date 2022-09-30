@@ -167,7 +167,6 @@ const ExperiencesProfileCard = ({ experiences, onChange }) => {
                   formSchema={schemaformEditExperience}
                   onSubmit={async (fields, closeModal) => {
                     closeModal();
-                    console.log('exp fields', fields);
                     await onChange({
                       experiences: [
                         ...sortedExperiences,

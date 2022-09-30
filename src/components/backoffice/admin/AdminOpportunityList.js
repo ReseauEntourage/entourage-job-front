@@ -139,7 +139,7 @@ const AdminOpportunityList = ({
                         'success'
                       );
                     } catch (err) {
-                      console.log(err);
+                      console.error(err);
                       UIkit.notification(`Une erreur est survenue.`, 'danger');
                     }
                   }}

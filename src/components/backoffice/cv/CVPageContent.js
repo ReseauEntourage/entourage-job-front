@@ -330,7 +330,6 @@ const CVPageContent = ({ candidatId, cv, setCV }) => {
   };
 
   const autoSaveCV = async (tempCV) => {
-    console.log('tempCV', tempCV);
     await checkIfLastVersion(() => {
       const formData = new FormData();
       const obj = {

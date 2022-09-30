@@ -73,8 +73,8 @@ const CandidatCard = ({
       .then(() => {
         incrementSharesCount();
       })
-      .catch((e) => {
-        console.log(e);
+      .catch((err) => {
+        console.error(err);
       });
   };
 
