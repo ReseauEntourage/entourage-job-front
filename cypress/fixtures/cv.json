@@ -1,48 +1,71 @@
 {
-  "cv": {
-    "id": "d9908633-370b-4dcd-9e61-bd70ecf9f4e5",
-    "UserId": "33e64d73-a66b-40ad-9e81-99060243aa37",
-    "urlImg": "images/33e64d73-a66b-40ad-9e81-99060243aa37.Published.jpg",
-    "intro": null,
-    "story": null,
-    "location": null,
-    "availability": "Tous les jours et weekends",
-    "transport": "permis b",
-    "catchphrase": "opkkopijodfsiodsjfiods ofsdpofkdspofsd fdsf",
-    "status": "Published",
-    "version": 30,
-    "lastModifiedBy": null,
-    "createdAt": "2021-06-28T13:08:53.974Z",
-    "updatedAt": "2022-02-01T15:03:30.041Z",
-    "deletedAt": null,
-    "contracts": [],
-    "languages": ["fr", "en"],
-    "passions": [],
-    "skills": [],
-    "ambitions": [],
-    "businessLines": [
-      {
-        "name": "Artisanat / Art",
-        "order": -1
-      },
-      {
-        "name": "Bâtiment",
-        "order": -1
-      },
-      {
-        "name": "Associatif",
-        "order": -1
-      }
-    ],
-    "locations": [
-      "Paris (75)",
-      "Val-de-Marne (94)",
-      "Seine-Saint-Denis (93)",
-      "Seine-et-Marne (77)",
-      "Essonne (91)",
-      "Yvelines (78)",
-      "Val-d'Oise (95)",
-      "Hauts-de-Seine (92)"
+    "cv": {
+        "id": "d9908633-370b-4dcd-9e61-bd70ecf9f4e5",
+        "UserId": "33e64d73-a66b-40ad-9e81-99060243aa37",
+        "urlImg": "images/33e64d73-a66b-40ad-9e81-99060243aa37.Published.jpg",
+        "intro": null,
+        "story": null,
+        "location": null,
+        "availability": "Tous les jours et weekends",
+        "transport": "permis b",
+        "catchphrase": "opkkopijodfsiodsjfiods ofsdpofkdspofsd fdsf",
+        "status": "Published",
+        "version": 30,
+        "lastModifiedBy": null,
+        "createdAt": "2021-06-28T13:08:53.974Z",
+        "updatedAt": "2022-02-01T15:03:30.041Z",
+        "deletedAt": null,
+        "contracts": [],
+        "languages": [
+          {
+            "name": "fr"
+          },
+          {
+            "name": "en"
+          }
+        ],
+        "passions": [],
+        "skills": [],
+        "ambitions": [],
+        "businessLines": [
+            {
+                "name": "Artisanat / Art",
+                "order": -1
+            },
+            {
+                "name": "Bâtiment",
+                "order": -1
+            },
+            {
+                "name": "Associatif",
+                "order": -1
+            }
+        ],
+        "locations": [
+          {
+            "name": "Paris (75)"
+          },
+          {
+            "name": "Val-de-Marne (94)"
+          },
+          {
+            "name": "Seine-Saint-Denis (93)"
+          },
+          {
+            "name": "Seine-et-Marne (77)"
+          },
+          {
+            "name": "Essonne (91)"
+          },
+          {
+            "name": "Yvelines (78)"
+          },
+          {
+            "name": "Val-d'Oise (95)"
+          },
+          {
+            "name": "Hauts-de-Seine (92)"
+          }
     ],
     "experiences": [],
     "reviews": [],
