@@ -109,7 +109,10 @@ const CVEntreprises = () => {
         </div>
       </Section>
       <CorporateContact />
-      <NewsletterPartial style="default" />
+      <NewsletterPartial
+        style="default"
+        tag={GA_TAGS.PAGE_CV_INSCRIPTION_NEWSLETTER_CLIC}
+      />
     </Layout>
   );
 };

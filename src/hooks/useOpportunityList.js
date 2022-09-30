@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import Api from 'src/Axios';
-import { filtersToQueryParams, getUserOpportunityFromOffer } from 'src/utils';
+import { filtersToQueryParams, getOpportunityUserFromOffer } from 'src/utils';
 
 export function useOpportunityList(
   setOffers,
@@ -27,13 +27,13 @@ export function useOpportunityList(
             });
 
             const bookmarkedOffers = offers.filter((offer) => {
-              const userOpp = getUserOpportunityFromOffer(offer, candidatId);
-              return offer && userOpp && userOpp.bookmarked;
+              const oppUser = getOpportunityUserFromOffer(offer, candidatId);
+              return offer && oppUser && oppUser.bookmarked;
             });
             const restOffers = offers.filter((offer) => {
-              const userOpp = getUserOpportunityFromOffer(offer, candidatId);
+              const oppUser = getOpportunityUserFromOffer(offer, candidatId);
 
-              return !offer || !userOpp || !userOpp.bookmarked;
+              return !offer || !oppUser || !oppUser.bookmarked;
             });
             setOffers(restOffers);
             setOtherOffers(undefined);
@@ -42,9 +42,7 @@ export function useOpportunityList(
             break;
           }
           case 'admin': {
-            const {
-              data: { offers },
-            } = await Api.get(`/opportunity/admin`, {
+            const { data: offers } = await Api.get(`/opportunity/admin`, {
               params: {
                 search,
                 type: tabFilter,
@@ -77,15 +75,15 @@ export function useOpportunityList(
             const bookmarkedOffers = offers.filter((offer) => {
               return (
                 offer &&
-                offer.userOpportunity &&
-                offer.userOpportunity.bookmarked
+                offer.opportunityUsers &&
+                offer.opportunityUsers.bookmarked
               );
             });
             const restOffers = offers.filter((offer) => {
               return (
                 !offer ||
-                !offer.userOpportunity ||
-                !offer.userOpportunity.bookmarked
+                !offer.opportunityUsers ||
+                !offer.opportunityUsers.bookmarked
               );
             });
             setOffers(restOffers);

@@ -147,8 +147,8 @@ CVPage.getInitialProps = async ({ query }) => {
       };
     })
     .catch((err) => {
-      console.log(err);
-      return { cv: null };
+      console.error(err);
+      return { cv: null, exists: false };
     });
 };
 CVPage.propTypes = {
@@ -160,7 +160,7 @@ CVPage.propTypes = {
 
 CVPage.defaultProps = {
   cv: null,
-  exists: true,
+  exists: false,
   hideShareOptions: false,
   router: {
     asPath: '',

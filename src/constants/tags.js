@@ -29,6 +29,9 @@ const GA_TAGS = {
   PAGE_ENTREPRISES_MECENAT_CLIC: {
     action: 'Page_Entreprises_Mecenat_Clic',
   },
+  PAGE_ENTREPRISES_INSCRIPTION_NEWSLETTER_CLIC: {
+    action: 'Page_Entreprises_Inscription_Newsletter_Clic',
+  },
   PAGE_GALERIE_CV_CLIC: {
     action: 'Page_Galerie_CV_Clic',
   },
@@ -112,6 +115,9 @@ const GA_TAGS = {
   },
   PAGE_AIDER_INSCRIPTION_COACH_CLIC: {
     action: 'Page_Aider_Inscription_Coach_Clic',
+  },
+  PAGE_AIDER_INSCRIPTION_NEWSLETTER_CLIC: {
+    action: 'Page_Aider_Inscription_Newsletter_Clic',
   },
   PAGE_ENTREPRISE_CVS_CONTACT_RECRUTEUR_CLIC: {
     action: 'Page_Entreprise_Cvs_Contact_Recruteur_Clic',

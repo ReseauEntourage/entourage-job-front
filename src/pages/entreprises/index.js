@@ -423,7 +423,10 @@ const Entreprises = ({ nbPublishedCVs }) => {
           </Button>
         </div>
       </Section>
-      <NewsletterPartial style="default" />
+      <NewsletterPartial
+        style="default"
+        tag={GA_TAGS.PAGE_ENTREPRISES_INSCRIPTION_NEWSLETTER_CLIC}
+      />
     </Layout>
   );
 };
@@ -436,7 +439,7 @@ Entreprises.getInitialProps = async () => {
       };
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
       return { nbPublishedCVs: null };
     });
 };

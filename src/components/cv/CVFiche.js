@@ -24,7 +24,7 @@ import { usePostOpportunity, useUpdateSharesCount } from 'src/hooks';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
 import CVCareerPathSentence from 'src/components/cv/CVCareerPathSentence';
-import { CONTRACTS } from 'src/constants';
+import { AMBITIONS_PREFIXES, CONTRACTS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { fbEvent } from 'src/lib/fb';
 
@@ -282,7 +282,7 @@ const CVFiche = ({ cv, actionDisabled }) => {
                         >
                           {exp.skills && (
                             <dt style={{ display: 'block' }}>
-                              {exp.skills.map((name, key) => {
+                              {exp.skills.map(({ name }, key) => {
                                 return (
                                   <span
                                     key={key}
@@ -380,8 +380,8 @@ const CVFiche = ({ cv, actionDisabled }) => {
                         />{' '}
                         <span className="uk-flex-1">
                           {cv.contracts
-                            .map((contract) => {
-                              return findConstantFromValue(contract, CONTRACTS)
+                            .map(({ name }) => {
+                              return findConstantFromValue(name, CONTRACTS)
                                 .label;
                             })
                             .join(' / ')}{' '}
@@ -397,9 +397,9 @@ const CVFiche = ({ cv, actionDisabled }) => {
                         />{' '}
                         <span className="uk-flex-1">
                           {cv.locations
-                            .map((location) => {
+                            .map(({ name }) => {
                               return findConstantFromValue(
-                                location,
+                                name,
                                 DEPARTMENTS_FILTERS
                               ).label;
                             })
@@ -425,7 +425,11 @@ const CVFiche = ({ cv, actionDisabled }) => {
                           style={{ width: 20 }}
                         />{' '}
                         <span className="uk-flex-1">
-                          {cv.languages.join(' / ')}
+                          {cv.languages
+                            .map(({ name }) => {
+                              return name;
+                            })
+                            .join(' / ')}
                         </span>
                       </li>
                     )}
@@ -447,10 +451,10 @@ const CVFiche = ({ cv, actionDisabled }) => {
                   <h3 className="uk-margin-small-bottom">Mes atouts</h3>
                   <hr className="uk-divider-small uk-margin-remove-top" />
                   <ul className="uk-list">
-                    {cv.skills.map((item, i) => {
+                    {cv.skills.map(({ name }, i) => {
                       return (
                         <li id={i} key={i}>
-                          {item}
+                          {name}
                         </li>
                       );
                     })}
@@ -462,10 +466,10 @@ const CVFiche = ({ cv, actionDisabled }) => {
                   <h3 className="uk-margin-small-bottom">Mes passions</h3>
                   <hr className="uk-divider-small uk-margin-remove-top" />
                   <ul className="uk-list">
-                    {cv.passions.map((item, i) => {
+                    {cv.passions.map(({ name }, i) => {
                       return (
                         <li id={i} key={i}>
-                          {item}
+                          {name}
                         </li>
                       );
                     })}
@@ -507,7 +511,80 @@ const CVFiche = ({ cv, actionDisabled }) => {
 };
 
 CVFiche.propTypes = {
-  cv: PropTypes.shape().isRequired,
+  cv: PropTypes.shape({
+    user: PropTypes.shape({
+      candidat: PropTypes.shape({
+        firstName: PropTypes.string.isRequired,
+        lastName: PropTypes.string.isRequired,
+      }).isRequired,
+    }).isRequired,
+    catchphrase: PropTypes.string,
+    story: PropTypes.string,
+    locations: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    availability: PropTypes.string,
+    urlImg: PropTypes.string,
+    contracts: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    ambitions: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        order: PropTypes.number.isRequired,
+        prefix: PropTypes.oneOf(
+          AMBITIONS_PREFIXES.map(({ value }) => {
+            return value;
+          })
+        ),
+      })
+    ),
+    businessLines: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        order: PropTypes.number.isRequired,
+      })
+    ).isRequired,
+    languages: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    transport: PropTypes.string,
+    skills: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    passions: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    reviews: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        text: PropTypes.string.isRequired,
+        status: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    experiences: PropTypes.arrayOf(
+      PropTypes.shape({
+        description: PropTypes.string.isRequired,
+        skills: PropTypes.arrayOf(
+          PropTypes.shape({
+            name: PropTypes.string.isRequired,
+          })
+        ).isRequired,
+      })
+    ).isRequired,
+    status: PropTypes.string,
+    UserId: PropTypes.string,
+  }).isRequired,
   actionDisabled: PropTypes.bool,
 };
 

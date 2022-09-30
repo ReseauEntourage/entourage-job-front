@@ -110,7 +110,6 @@ const FormWithValidation = forwardRef(
         setFieldValidations(tmpFieldValidations);
         setError('Un ou plusieurs champs sont invalides');
         await onError(fieldValues);
-        console.error(validation);
       }
     };
 

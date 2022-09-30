@@ -27,16 +27,22 @@ const SkillCard = ({ list, onChange }) => {
                 <ModalEdit
                   title="Édition - Mes atouts (6 maximum)"
                   formSchema={schemaformEditSkills}
-                  defaultValues={list.reduce((acc, value, i) => {
-                    acc[`skill${i + 1}`] = value;
+                  defaultValues={list.reduce((acc, { name }, i) => {
+                    acc[`skill${i + 1}`] = name;
                     return acc;
                   }, {})}
                   onSubmit={async (fields, closeModal) => {
                     closeModal();
                     const fieldsTransform = {
-                      skills: Object.values(fields).filter((val) => {
-                        return typeof val === 'string' && val !== '';
-                      }),
+                      skills: Object.values(fields)
+                        .filter((val) => {
+                          return !!val;
+                        })
+                        .map((val) => {
+                          return {
+                            name: val,
+                          };
+                        }),
                     };
                     await onChange(fieldsTransform);
                   }}
@@ -48,10 +54,10 @@ const SkillCard = ({ list, onChange }) => {
       </Grid>
       <ul className="uk-list">
         {list.length !== 0 ? (
-          list.map((item, i) => {
+          list.map(({ name }, i) => {
             return (
               <li id={i} key={i}>
-                {item}
+                {name}
               </li>
             );
           })
@@ -63,7 +69,11 @@ const SkillCard = ({ list, onChange }) => {
   );
 };
 SkillCard.propTypes = {
-  list: PropTypes.arrayOf(PropTypes.string),
+  list: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    })
+  ),
   onChange: PropTypes.func,
 };
 

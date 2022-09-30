@@ -1,19 +1,19 @@
 import _ from 'lodash';
 
-const getUserOpportunityFromOffer = (offer, candidatId) => {
-  let userOpportunity;
+const getOpportunityUserFromOffer = (offer, candidatId) => {
+  let opportunityUser;
   if (
-    offer.userOpportunity &&
-    Array.isArray(offer.userOpportunity) &&
-    offer.userOpportunity.length > 0
+    offer.opportunityUsers &&
+    Array.isArray(offer.opportunityUsers) &&
+    offer.opportunityUsers.length > 0
   ) {
-    userOpportunity = offer.userOpportunity.find((userOpp) => {
-      return userOpp.UserId === candidatId;
+    opportunityUser = offer.opportunityUsers.find((oppUser) => {
+      return oppUser.UserId === candidatId;
     });
   } else {
-    userOpportunity = offer.userOpportunity;
+    opportunityUser = offer.opportunityUsers;
   }
-  return userOpportunity;
+  return opportunityUser;
 };
 
 const filtersToQueryParams = (filters) => {
@@ -72,7 +72,7 @@ const getFiltersTagsFromQueryParamsFront = (tag, filters) => {
 };
 
 export {
-  getUserOpportunityFromOffer,
+  getOpportunityUserFromOffer,
   filtersToQueryParams,
   getFiltersObjectsFromQueryParamsFront,
   getFiltersTagsFromQueryParamsFront,

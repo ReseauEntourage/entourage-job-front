@@ -28,16 +28,22 @@ const PassionsCard = ({ list, onChange }) => {
                   id="modal-passions"
                   title="Édition - Mes passions (6 maximum)"
                   formSchema={schemaformEditPassions}
-                  defaultValues={list.reduce((acc, value, i) => {
-                    acc[`passion${i + 1}`] = value;
+                  defaultValues={list.reduce((acc, { name }, i) => {
+                    acc[`passion${i + 1}`] = name;
                     return acc;
                   }, {})}
                   onSubmit={async (fields, closeModal) => {
                     closeModal();
                     const fieldsTransform = {
-                      passions: Object.values(fields).filter((val) => {
-                        return typeof val === 'string' && val !== '';
-                      }),
+                      passions: Object.values(fields)
+                        .filter((val) => {
+                          return !!val;
+                        })
+                        .map((val) => {
+                          return {
+                            name: val,
+                          };
+                        }),
                     };
                     await onChange(fieldsTransform);
                   }}
@@ -49,10 +55,10 @@ const PassionsCard = ({ list, onChange }) => {
       </Grid>
       <ul className="uk-list">
         {list.length !== 0 ? (
-          list.map((item, i) => {
+          list.map(({ name }, i) => {
             return (
               <li id={i} key={i}>
-                {item}
+                {name}
               </li>
             );
           })
@@ -64,7 +70,11 @@ const PassionsCard = ({ list, onChange }) => {
   );
 };
 PassionsCard.propTypes = {
-  list: PropTypes.arrayOf(PropTypes.string),
+  list: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    })
+  ),
   onChange: PropTypes.func,
 };
 PassionsCard.defaultProps = {

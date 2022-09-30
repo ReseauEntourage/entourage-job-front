@@ -13,7 +13,11 @@ import { Button } from 'src/components/utils';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import formEditExternalOpportunity from 'src/components/forms/schema/formEditExternalOpportunity';
 import Api from 'src/Axios';
-import { mutateFormSchema } from 'src/utils';
+import {
+  getCandidateIdFromCoachOrCandidate,
+  mutateFormSchema,
+} from 'src/utils';
+import moment from 'moment';
 
 const CandidateOpportunityList = ({
   search,
@@ -68,21 +72,18 @@ const CandidateOpportunityList = ({
                 submitText="Envoyer"
                 formSchema={mutatedSchema}
                 defaultValues={{
-                  candidateId:
-                    user.role === USER_ROLES.COACH ? user.candidat.id : user.id,
+                  candidateId: getCandidateIdFromCoachOrCandidate(user),
                 }}
                 onSubmit={async (fields, closeModal) => {
+                  const { businessLines, ...restFields } = fields;
                   try {
                     await Api.post(`/opportunity/external`, {
-                      ...fields,
-                      startOfContract: fields.startOfContract || null,
-                      endOfContract: fields.endOfContract || null,
-                      candidateId:
-                        user.role === USER_ROLES.COACH
-                          ? user.candidat.id
-                          : user.id,
-                      date: Date.now(),
-                      businessLines: undefined,
+                      ...restFields,
+                      status: parseInt(fields.status, 10),
+                      startOfContract: restFields.startOfContract || null,
+                      endOfContract: restFields.endOfContract || null,
+                      candidateId: getCandidateIdFromCoachOrCandidate(user),
+                      date: moment().toISOString(),
                     });
                     closeModal();
                     opportunityListRef.current.fetchData();
@@ -91,6 +92,7 @@ const CandidateOpportunityList = ({
                       'success'
                     );
                   } catch (err) {
+                    console.error(err);
                     UIkit.notification(`Une erreur est survenue.`, 'danger');
                   }
                 }}

@@ -18,18 +18,18 @@ const OfferCard = ({
   recommended,
   isPublic,
   date,
-  userOpportunity,
+  opportunityUsers,
   isValidated,
   isAdmin,
   department,
   isSelected,
 }) => {
-  const renderStatus = (userOpp, isOppPublic) => {
-    if (userOpp.status !== undefined) {
+  const renderStatus = (oppUser, isOppPublic) => {
+    if (oppUser.status !== undefined) {
       const offerStatus = findOfferStatus(
-        userOpp.status,
+        oppUser.status,
         isOppPublic,
-        userOpp.recommended
+        oppUser.recommended
       );
       return (
         <span className={`uk-text-meta uk-text-${offerStatus.color}`}>
@@ -40,17 +40,19 @@ const OfferCard = ({
     return null;
   };
 
-  const userOpportunitiesWithoutDefaultStatus = Array.isArray(userOpportunity)
-    ? userOpportunity.filter((userOpp) => {
-        return userOpp.status !== OFFER_STATUS[0].value || userOpp.recommended;
+  const opportunityUsersWithoutDefaultStatus = Array.isArray(opportunityUsers)
+    ? opportunityUsers.filter((oppUser) => {
+        return oppUser.status !== OFFER_STATUS[0].value || oppUser.recommended;
       })
     : null;
 
-  const specificUserOpportunity =
-    userOpportunity && !Array.isArray(userOpportunity) ? userOpportunity : null;
+  const specificOpportunityUser =
+    opportunityUsers && !Array.isArray(opportunityUsers)
+      ? opportunityUsers
+      : null;
 
   const shouldShowRecommandationBadge =
-    isPublic && (specificUserOpportunity?.recommended || recommended);
+    isPublic && (specificOpportunityUser?.recommended || recommended);
 
   const background = archived ? 'secondary' : 'default';
 
@@ -87,14 +89,14 @@ const OfferCard = ({
           <h5 className="uk-flex-1 uk-text-bold">{title}</h5>
           <div className="uk-flex uk-flex-right uk-flex-top">
             {' '}
-            {(specificUserOpportunity?.bookmarked || bookmarked) && (
+            {(specificOpportunityUser?.bookmarked || bookmarked) && (
               <IconNoSSR
                 name="star"
                 className="ent-color-amber uk-margin-small-left"
                 ratio={0.8}
               />
             )}
-            {(specificUserOpportunity?.archived || (!isAdmin && archived)) && (
+            {(specificOpportunityUser?.archived || (!isAdmin && archived)) && (
               <IconNoSSR
                 name="archive"
                 className="ent-color-amber uk-margin-small-left"
@@ -126,44 +128,44 @@ const OfferCard = ({
             {isPublic ? (
               <div>
                 <p className="uk-margin-remove-bottom">Offre générale</p>
-                {userOpportunity &&
-                  (Array.isArray(userOpportunity)
-                    ? userOpportunitiesWithoutDefaultStatus.length > 0 &&
+                {opportunityUsers &&
+                  (Array.isArray(opportunityUsers)
+                    ? opportunityUsersWithoutDefaultStatus.length > 0 &&
                       isAdmin && (
                         <span className="uk-text-meta">
-                          {userOpportunitiesWithoutDefaultStatus.length}
+                          {opportunityUsersWithoutDefaultStatus.length}
                           &nbsp;candidat
-                          {userOpportunitiesWithoutDefaultStatus.length !== 1
+                          {opportunityUsersWithoutDefaultStatus.length !== 1
                             ? 's'
                             : ''}{' '}
                           sur l&apos;offre
                         </span>
                       )
-                    : renderStatus(userOpportunity, isPublic))}
+                    : renderStatus(opportunityUsers, isPublic))}
               </div>
             ) : (
               <div>
                 <p className="uk-margin-remove-bottom">
                   {isExternal ? 'Offre externe' : 'Offre privée'}
                 </p>
-                {userOpportunity &&
-                  (Array.isArray(userOpportunity)
-                    ? userOpportunity.length > 0 &&
-                      userOpportunity.map((userOpp) => {
+                {opportunityUsers &&
+                  (Array.isArray(opportunityUsers)
+                    ? opportunityUsers.length > 0 &&
+                      opportunityUsers.map((oppUser) => {
                         return (
                           <div
-                            key={userOpp.id + userOpp.UserId}
+                            key={oppUser.id + oppUser.UserId}
                             className="uk-flex uk-flex-column"
                             style={{ marginTop: 5 }}
                           >
                             <span className="uk-text-meta uk-text-secondary">
-                              {userOpp.User.firstName} {userOpp.User.lastName}
+                              {oppUser.user.firstName} {oppUser.user.lastName}
                             </span>
-                            {renderStatus(userOpp, isPublic)}
+                            {renderStatus(oppUser, isPublic)}
                           </div>
                         );
                       })
-                    : renderStatus(userOpportunity, isPublic))}
+                    : renderStatus(opportunityUsers, isPublic))}
               </div>
             )}
           </div>
@@ -210,7 +212,7 @@ OfferCard.propTypes = {
   isPublic: PropTypes.bool,
   isExternal: PropTypes.bool,
   date: PropTypes.string,
-  userOpportunity: PropTypes.oneOfType([
+  opportunityUsers: PropTypes.oneOfType([
     PropTypes.shape(),
     PropTypes.arrayOf(PropTypes.shape()),
   ]),
@@ -229,7 +231,7 @@ OfferCard.defaultProps = {
   isExternal: undefined,
   isValidated: undefined,
   date: undefined,
-  userOpportunity: undefined,
+  opportunityUsers: undefined,
   isAdmin: false,
   department: undefined,
   isSelected: false,

@@ -9,17 +9,14 @@ import Api from 'src/Axios';
 import {
   findConstantFromValue,
   formatParagraph,
+  getCandidateIdFromCoachOrCandidate,
   mutateDefaultOfferStatus,
+  mutateFormSchema,
 } from 'src/utils';
 import ModalOfferInfo from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/ModalOfferInfo';
-import formEditExternalOpportunity from 'src/components/forms/schema/formEditExternalOpportunity';
 import FormWithValidation from 'src/components/forms/FormWithValidation';
 import { UserContext } from 'src/components/store/UserProvider';
-import {
-  EXTERNAL_OFFERS_ORIGINS,
-  OFFER_STATUS,
-  USER_ROLES,
-} from 'src/constants';
+import { EXTERNAL_OFFERS_ORIGINS, OFFER_STATUS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { openModal } from 'src/components/modals/Modal';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
@@ -33,6 +30,7 @@ import { useRouter } from 'next/router';
 import { usePrevious } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
 import { GA_TAGS } from 'src/constants/tags';
+import formEditExternalOpportunitySchema from 'src/components/forms/schema/formEditExternalOpportunity';
 
 const AfterContactItem = ({ isPublic }) => {
   return (
@@ -112,7 +110,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
   const { loading, setLoading, isEditing, setIsEditing, offer, setOffer } =
     useModalOffer(currentOffer);
 
-  const { status, bookmarked, note, archived } = offer?.userOpportunity || {};
+  const { status, bookmarked, note, archived } = offer?.opportunityUsers || {};
 
   const isInternalContact = offer?.recruiterMail?.includes('entourage.social');
 
@@ -122,7 +120,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
       setOffer((prevOffer) => {
         return {
           ...prevOffer,
-          userOpportunity: data,
+          opportunityUsers: data,
         };
       });
       await onOfferUpdated();
@@ -132,10 +130,10 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
 
   useEffect(() => {
     const archiveOffer = async () => {
-      const { userOpportunity } = offer;
+      const { opportunityUsers } = offer;
 
       await updateOpportunityUser({
-        ...userOpportunity,
+        ...opportunityUsers,
         archived: true,
         status: OFFER_STATUS[4].value,
       });
@@ -143,9 +141,9 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
     };
 
     const updateStatusOffer = async (newStatus) => {
-      const { userOpportunity } = offer;
+      const { opportunityUsers } = offer;
       await updateOpportunityUser({
-        ...userOpportunity,
+        ...opportunityUsers,
         archived: false,
         status: newStatus,
       });
@@ -176,7 +174,26 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
 
   const mutatedOfferStatus = mutateDefaultOfferStatus(
     offer,
-    offer.userOpportunity
+    offer.opportunityUsers
+  );
+
+  const mutatedExternalOfferSchema = mutateFormSchema(
+    formEditExternalOpportunitySchema,
+    [
+      {
+        fieldId: 'candidateStatus',
+        props: [
+          {
+            propName: 'hidden',
+            value: true,
+          },
+          {
+            propName: 'disabled',
+            value: true,
+          },
+        ],
+      },
+    ]
   );
 
   const updateOpportunity = async (opportunity) => {
@@ -193,7 +210,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
     }
   };
 
-  const shouldShowCTAs = !offer.isExternal && !offer.userOpportunity.archived;
+  const shouldShowCTAs = !offer.isExternal && !offer.opportunityUsers.archived;
 
   // Modal
   return (
@@ -208,11 +225,10 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
         <div>
           <h3>Modification de l&apos;offre d&apos;emploi</h3>
           <FormWithValidation
-            formSchema={formEditExternalOpportunity}
+            formSchema={mutatedExternalOfferSchema}
             defaultValues={{
               ...offer,
-              candidateId:
-                user.role === USER_ROLES.COACH ? user.candidat.id : user.id,
+              candidateId: getCandidateIdFromCoachOrCandidate(user),
               department: findConstantFromValue(
                 offer.department,
                 DEPARTMENTS_FILTERS
@@ -226,8 +242,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                 ...fields,
                 startOfContract: fields.startOfContract || null,
                 endOfContract: fields.endOfContract || null,
-                candidateId:
-                  user.role === USER_ROLES.COACH ? user.candidat.id : user.id,
+                candidateId: getCandidateIdFromCoachOrCandidate(user),
                 id: offer.id,
                 businessLines: undefined,
               };
@@ -243,7 +258,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
           <ModalOfferInfo
             startOfContract={offer.startOfContract}
             isPublic={offer.isPublic}
-            isRecommended={offer.userOpportunity.recommended}
+            isRecommended={offer.opportunityUsers.recommended}
             isExternal={offer.isExternal}
             salary={offer.salary}
             driversLicense={offer.driversLicense}
@@ -281,9 +296,9 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                             )
                           }
                           onConfirm={async () => {
-                            const { userOpportunity } = offer;
+                            const { opportunityUsers } = offer;
                             await updateOpportunityUser({
-                              ...userOpportunity,
+                              ...opportunityUsers,
                               archived: true,
                               status: OFFER_STATUS[4].value,
                             });
@@ -377,9 +392,9 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                               GA_TAGS.BACKOFFICE_CANDIDAT_VALIDER_CONTACTER_RECRUTEUR_CLIC
                             );
                             if (status < OFFER_STATUS[1].value) {
-                              const { userOpportunity } = offer;
+                              const { opportunityUsers } = offer;
                               await updateOpportunityUser({
-                                ...userOpportunity,
+                                ...opportunityUsers,
                                 status: OFFER_STATUS[1].value,
                               });
                             }
@@ -407,9 +422,9 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                         gaEvent(
                           GA_TAGS.BACKOFFICE_CANDIDAT_PAS_CONTACTER_RECRUTEUR_CLIC
                         );
-                        const { userOpportunity } = offer;
+                        const { opportunityUsers } = offer;
                         await updateOpportunityUser({
-                          ...userOpportunity,
+                          ...opportunityUsers,
                           status: OFFER_STATUS[0].value,
                         });
                       }}
@@ -440,9 +455,9 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                           GA_TAGS.BACKOFFICE_CANDIDAT_STATUT_SELECTEUR_CLIC
                         );
                         setLoadingStatus(true);
-                        const { userOpportunity } = offer;
+                        const { opportunityUsers } = offer;
                         await updateOpportunityUser({
-                          ...userOpportunity,
+                          ...opportunityUsers,
                           status: parseInt(event.target.value, 10),
                         });
                         setLoadingStatus(false);
@@ -472,9 +487,9 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                 className={bookmarked ? 'ent-color-amber' : undefined}
                 onClick={async () => {
                   setLoadingIcon(true);
-                  const { userOpportunity } = offer;
+                  const { opportunityUsers } = offer;
                   await updateOpportunityUser({
-                    ...userOpportunity,
+                    ...opportunityUsers,
                     bookmarked: !bookmarked,
                   });
                   setLoadingIcon(false);
@@ -485,9 +500,9 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
                 className={archived ? 'ent-color-amber' : undefined}
                 onClick={async () => {
                   setLoadingIcon(true);
-                  const { userOpportunity } = offer;
+                  const { opportunityUsers } = offer;
                   await updateOpportunityUser({
-                    ...userOpportunity,
+                    ...opportunityUsers,
                     archived: !archived,
                   });
                   setLoadingIcon(false);
@@ -607,7 +622,7 @@ ModalOffer.propTypes = {
     date: PropTypes.string,
     location: PropTypes.string,
     department: PropTypes.string,
-    userOpportunity: PropTypes.shape({
+    opportunityUsers: PropTypes.shape({
       status: PropTypes.number,
       bookmarked: PropTypes.bool,
       recommended: PropTypes.bool,
@@ -626,7 +641,7 @@ ModalOffer.propTypes = {
 };
 
 ModalOffer.defaultProps = {
-  currentOffer: { userOpportunity: {}, businessLines: [] },
+  currentOffer: { opportunityUsers: {}, businessLines: [] },
 };
 
 export default ModalOffer;

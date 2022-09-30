@@ -69,7 +69,11 @@ OfferContent.propTypes = {
     prerequisites: PropTypes.string,
     otherInfo: PropTypes.string,
     skills: PropTypes.string,
-    businessLines: PropTypes.arrayOf(PropTypes.string),
+    businessLines: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
     link: PropTypes.string,
   }).isRequired,
 };

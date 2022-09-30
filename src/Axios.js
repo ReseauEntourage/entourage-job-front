@@ -28,7 +28,6 @@ Axios.interceptors.request.use(
         configModified.headers.authorization = `Token ${accessToken}`;
       }
     }
-    // console.log("Interceptor is called !");
     return configModified;
   },
   (error) => {
