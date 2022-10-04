@@ -92,17 +92,17 @@ const SearchBar = ({
         filters={filters}
         setFilters={setFilters}
       />
-      {hasFilters && (
-        <div
-          style={{ maxWidth: SEARCH_MAX_WIDTH }}
-          className="uk-width-expand uk-padding-small uk-padding-remove-vertical uk-flex uk-flex-between@m uk-margin-top"
-        >
-          <FiltersCheckboxes
-            filterData={filtersConstants}
-            filters={filters}
-            setFilters={setFilters}
-            hideOnMobile
-          />
+      <div
+        style={{ maxWidth: SEARCH_MAX_WIDTH }}
+        className="uk-width-expand uk-padding-small uk-padding-remove-vertical uk-flex uk-flex-between@m uk-margin-top"
+      >
+        <FiltersCheckboxes
+          filterData={filtersConstants}
+          filters={filters}
+          setFilters={setFilters}
+          hideOnMobile
+        />
+        {hasFilters && (
           <FiltersOptions
             numberOfResults={numberOfResults}
             filters={filters}
@@ -112,8 +112,8 @@ const SearchBar = ({
               setSearchBuffer('');
             }}
           />
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

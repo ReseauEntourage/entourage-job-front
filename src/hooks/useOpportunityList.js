@@ -17,14 +17,15 @@ export function useOpportunityList(
 
         switch (role) {
           case 'candidateAsAdmin': {
-            const {
-              data: { offers },
-            } = await Api.get(`/opportunity/user/private/${candidatId}`, {
-              params: {
-                search,
-                ...filtersToQueryParams(filters),
-              },
-            });
+            const { data: offers } = await Api.get(
+              `/opportunity/user/private/${candidatId}`,
+              {
+                params: {
+                  search,
+                  ...filtersToQueryParams(filters),
+                },
+              }
+            );
 
             const bookmarkedOffers = offers.filter((offer) => {
               const oppUser = getOpportunityUserFromOffer(offer, candidatId);
