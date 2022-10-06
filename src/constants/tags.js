@@ -317,6 +317,15 @@ const GA_TAGS = {
   BACKOFFICE_CANDIDAT_STATUT_SELECTEUR_CLIC: {
     action: 'Backoffice_Candidat_Statut_Selecteur_Clic',
   },
+  BACKOFFICE_ADMIN_HEADER_MEMBERS_CLIC: {
+    action: 'Backoffice_Admin_Header_Members_Clic',
+  },
+  BACKOFFICE_ADMIN_HEADER_CANDIDATS_CLIC: {
+    action: 'Backoffice_Admin_Header_Candidats_Clic',
+  },
+  BACKOFFICE_ADMIN_HEADER_COACH_CLIC: {
+    action: 'Backoffice_Admin_Header_Coachs_Clic',
+  },
   SHOW_PASSWORD_CLIC: {
     action: 'Show_Password_Clic',
   },

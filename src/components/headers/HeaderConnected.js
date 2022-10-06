@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { Navbar, Nav, NavbarLogo, SimpleLink } from 'src/components/utils';
+import uuid from 'uuid/v4';
 
 import { UserContext } from 'src/components/store/UserProvider';
 import ImgProfile from 'src/components/headers/ImgProfile';
@@ -15,6 +16,8 @@ import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
 import { OFFCANVAS_LOGGED } from 'src/constants/utils';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
+import { StyledConnectedItem, StyledConnectedItemMobile } from './styles';
+import SubMenu from './SubMenu';
 
 const HeaderConnected = ({ isHome }) => {
   const { user, logout } = useContext(UserContext);
@@ -28,7 +31,24 @@ const HeaderConnected = ({ isHome }) => {
         href: '/backoffice/admin/membres',
         name: 'Les membres',
         icon: 'users',
-        badge: 'members',
+        badge: '',
+        tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_MEMBERS_CLIC,
+        subMenu: [
+          {
+            href: '/backoffice/admin/membres?role=Candidat',
+            name: 'Les candidats',
+            icon: 'users',
+            badge: 'members',
+            tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_CANDIDATS_CLIC,
+          },
+          {
+            href: '/backoffice/admin/membres?role=Coach',
+            name: 'Les coachs',
+            icon: 'users',
+            badge: '',
+            tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_COACHS_CLIC,
+          },
+        ],
       },
       {
         href: '/backoffice/admin/offres',
@@ -138,7 +158,7 @@ const HeaderConnected = ({ isHome }) => {
         {LINKS_CONNECTED.dropdown.map(({ href, name, onClick, tag }, index) => {
           return (
             <a
-              key={index}
+              key={`${index}-${uuid}`}
               aria-hidden="true"
               onClick={() => {
                 if (tag) gaEvent(tag);
@@ -178,11 +198,16 @@ const HeaderConnected = ({ isHome }) => {
               style={{ borderLeft: '1px solid lightgray' }}
             >
               {LINKS_CONNECTED[user.role.toLowerCase()].map(
-                ({ href, badge, icon, name, external, tag }, index) => {
+                (
+                  { href, badge, icon, name, external, tag, subMenu },
+                  index
+                ) => {
                   return (
-                    <li
-                      key={index}
-                      style={{ borderRight: '1px solid lightgray' }}
+                    <StyledConnectedItem
+                      key={`${index}-${uuid}`}
+                      className={`${subMenu ? 'hasSubMenu ' : ''} ${
+                        router.asPath.includes(href) ? 'active' : ''
+                      }`}
                     >
                       <SimpleLink
                         href={href}
@@ -193,27 +218,10 @@ const HeaderConnected = ({ isHome }) => {
                         target={external ? '_blank' : '_self'}
                         className="uk-visible@m uk-flex uk-flex-middle"
                       >
-                        <span
-                          className="uk-margin-small-right"
-                          style={{
-                            ...(router.asPath.includes(href)
-                              ? { color: 'black' }
-                              : {}),
-                          }}
-                        >
+                        <span className="uk-margin-small-right icon-span">
                           <IconNoSSR name={icon} />
                         </span>
-                        <span
-                          style={{
-                            textTransform: 'none',
-                            fontSize: '1rem',
-                            ...(router.asPath.includes(href)
-                              ? { color: 'black', fontWeight: 500 }
-                              : {}),
-                          }}
-                        >
-                          {name}
-                        </span>
+                        <span className="name-span">{name}</span>
                         {badges[badge] > 0 && (
                           <div>
                             &nbsp;
@@ -223,7 +231,10 @@ const HeaderConnected = ({ isHome }) => {
                           </div>
                         )}
                       </SimpleLink>
-                    </li>
+                      {subMenu?.length > 0 && (
+                        <SubMenu items={subMenu} badges={badges} />
+                      )}
+                    </StyledConnectedItem>
                   );
                 }
               )}
@@ -253,39 +264,49 @@ const HeaderConnected = ({ isHome }) => {
             .filter(({ href }) => {
               return href !== '#';
             })
-            .map(({ href, icon, name, badge, tag }, index) => {
+            .map(({ href, icon, name, badge, tag, subMenu }, index) => {
               return (
-                <li key={index}>
-                  <a
-                    aria-hidden="true"
-                    onClick={() => {
-                      if (tag) gaEvent(tag);
-                      UIkit.offcanvas(`#${OFFCANVAS_LOGGED}`).hide();
-                      router.push(href);
-                    }}
+                <>
+                  <StyledConnectedItemMobile
+                    key={`${index}-${uuid}`}
+                    className={`${subMenu ? 'hasSubMenu ' : ''} ${
+                      router.asPath.includes(href) ? 'active' : ''
+                    }`}
                   >
-                    <IconNoSSR name={icon} className="uk-margin-small-right" />
-                    {name}
-                  </a>
-                  {badges[badge] > 0 && (
-                    <div>
-                      &nbsp;
-                      <div className="uk-badge">{badges[badge]}</div>
-                    </div>
-                  )}
-                </li>
+                    <a
+                      aria-hidden="true"
+                      onClick={() => {
+                        if (tag) gaEvent(tag);
+                        UIkit.offcanvas(`#${OFFCANVAS_LOGGED}`).hide();
+                        router.push(href);
+                      }}
+                    >
+                      <span>
+                        <IconNoSSR
+                          name={icon}
+                          className="uk-margin-small-right"
+                        />
+                        {name}
+                      </span>
+                    </a>
+                    {badges[badge] > 0 && (
+                      <div>
+                        &nbsp;
+                        <div className="uk-badge">{badges[badge]}</div>
+                      </div>
+                    )}
+                    {subMenu?.length > 0 && (
+                      <SubMenu items={subMenu} badges={badges} />
+                    )}
+                  </StyledConnectedItemMobile>
+                </>
               );
             })}
-          <li className="uk-nav-header uk-flex uk-flex-middle">
-            <ImgProfile />
-            <span className="uk-margin-small-left">
-              Bonjour {user.firstName}
-            </span>
-          </li>
+          <hr style={{ opacity: '.5' }} />
           {LINKS_CONNECTED.dropdown.map(
             ({ href, icon, name, onClick, tag }, index) => {
               return (
-                <li key={index}>
+                <StyledConnectedItemMobile key={`${index}-${uuid}`}>
                   <a
                     aria-hidden="true"
                     onClick={() => {
@@ -299,10 +320,15 @@ const HeaderConnected = ({ isHome }) => {
                       }
                     }}
                   >
-                    <IconNoSSR name={icon} className="uk-margin-small-right" />
-                    {name}
+                    <span>
+                      <IconNoSSR
+                        name={icon}
+                        className="uk-margin-small-right"
+                      />
+                      {name}
+                    </span>
                   </a>
-                </li>
+                </StyledConnectedItemMobile>
               );
             }
           )}

@@ -379,58 +379,6 @@ const MemberList = ({
         </Section>
       ) : (
         <>
-          <Grid eachWidths={['expand', 'auto']}>
-            <ul className="uk-subnav ent-subnav">
-              <li
-                className={
-                  role !== USER_ROLES.CANDIDAT && role !== USER_ROLES.COACH
-                    ? 'uk-active'
-                    : ''
-                }
-              >
-                <SimpleLink
-                  shallow
-                  href={{
-                    pathname: '/backoffice/admin/membres',
-                    query: {
-                      role: 'All',
-                      ...restParams,
-                    },
-                  }}
-                >
-                  Tous les membres
-                </SimpleLink>
-              </li>
-              <li className={role === USER_ROLES.CANDIDAT ? 'uk-active' : ''}>
-                <SimpleLink
-                  shallow
-                  href={{
-                    pathname: '/backoffice/admin/membres',
-                    query: {
-                      role: USER_ROLES.CANDIDAT,
-                      ...restParams,
-                    },
-                  }}
-                >
-                  Candidats
-                </SimpleLink>
-              </li>
-              <li className={role === USER_ROLES.COACH ? 'uk-active' : ''}>
-                <SimpleLink
-                  shallow
-                  href={{
-                    pathname: '/backoffice/admin/membres',
-                    query: {
-                      role: USER_ROLES.COACH,
-                      ...restParams,
-                    },
-                  }}
-                >
-                  Coachs
-                </SimpleLink>
-              </li>
-            </ul>
-          </Grid>
           <SearchBar
             filtersConstants={filtersConst}
             filters={filters}
