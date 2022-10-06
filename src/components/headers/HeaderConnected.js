@@ -216,7 +216,7 @@ const HeaderConnected = ({ isHome }) => {
                         }}
                         isExternal={external}
                         target={external ? '_blank' : '_self'}
-                        className="uk-visible@m uk-flex uk-flex-middle"
+                        className="uk-visible@m uk-flex uk-flex-middle menu-link"
                       >
                         <span className="uk-margin-small-right icon-span">
                           <IconNoSSR name={icon} />

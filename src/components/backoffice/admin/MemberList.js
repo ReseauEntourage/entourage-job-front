@@ -96,12 +96,6 @@ const Member = ({ member, role }) => {
         </div>
       </td>
       <td className="uk-text-center">
-        {role === 'All' && (
-          <span className="uk-text-bold">
-            {member.role} de
-            <br />
-          </span>
-        )}
         {getRelatedUser(member) ? (
           `${getRelatedUser(member).firstName} ${
             getRelatedUser(member).lastName
@@ -192,11 +186,11 @@ const Member = ({ member, role }) => {
 
 Member.propTypes = {
   member: MemberPropTypes.isRequired,
-  role: PropTypes.oneOf(['All', USER_ROLES.CANDIDAT, USER_ROLES.COACH]),
+  role: PropTypes.oneOf([USER_ROLES.CANDIDAT, USER_ROLES.COACH]),
 };
 
 Member.defaultProps = {
-  role: 'All',
+  role: USER_ROLES.CANDIDAT,
 };
 
 const MemberList = ({
@@ -399,9 +393,6 @@ const MemberList = ({
                   <tr>
                     <th className="uk-text-nowrap">Membre</th>
                     <th className="uk-text-center">Zone</th>
-                    {role === 'All' && (
-                      <th className="uk-text-center">Coach/candidat associé</th>
-                    )}
                     {role === USER_ROLES.CANDIDAT && (
                       <th className="uk-text-center">Coach associé</th>
                     )}

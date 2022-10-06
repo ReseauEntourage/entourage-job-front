@@ -23,14 +23,13 @@ export const StyledConnectedItem = styled.li`
     &.hasSubMenu {
       .subMenu-container {
         max-height: 0;
-        opacity: 0;
+        visibility: hidden;
         transition: 0.3s ease-in-out;
       }
-      &:hover {
-        .subMenu-container {
-          max-height: 1000px;
-          opacity: 1;
-        }
+      .menu-link:hover ~ .subMenu-container,
+      .subMenu-container:hover {
+        max-height: 1000px;
+        visibility: visible;
       }
     }
   }
