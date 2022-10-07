@@ -1,5 +1,5 @@
 import UIkit from 'uikit';
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { Navbar, Nav, NavbarLogo, SimpleLink } from 'src/components/utils';
@@ -12,118 +12,26 @@ import { useNotifBadges } from 'src/hooks';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import Hamburger from 'src/components/utils/Hamburger';
 import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas';
-import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
 import { OFFCANVAS_LOGGED } from 'src/constants/utils';
-import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
-import { StyledConnectedItem, StyledConnectedItemMobile } from './styles';
-import SubMenu from './SubMenu';
+import {
+  StyledConnectedItem,
+  StyledConnectedItemMobile,
+} from 'src/components/headers/styles';
+import SubMenu from 'src/components/headers/SubMenu';
+import { renderLinks } from 'src/components/headers/utils';
 
 const HeaderConnected = ({ isHome }) => {
   const { user, logout } = useContext(UserContext);
   const router = useRouter();
 
+  const [LINKS_CONNECTED, setLinks] = useState(renderLinks(user, logout));
+
   const badges = useNotifBadges(user, router.asPath);
 
-  const LINKS_CONNECTED = {
-    admin: [
-      {
-        href: '/backoffice/admin/membres',
-        name: 'Les membres',
-        icon: 'users',
-        badge: '',
-        tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_MEMBERS_CLIC,
-        subMenu: [
-          {
-            href: '/backoffice/admin/membres?role=Candidat',
-            name: 'Les candidats',
-            icon: 'users',
-            badge: 'members',
-            tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_CANDIDATS_CLIC,
-          },
-          {
-            href: '/backoffice/admin/membres?role=Coach',
-            name: 'Les coachs',
-            icon: 'users',
-            badge: '',
-            tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_COACHS_CLIC,
-          },
-        ],
-      },
-      {
-        href: '/backoffice/admin/offres',
-        name: 'Les opportunités',
-        icon: 'list',
-        badge: 'offers',
-      },
-    ],
-    dropdown: [
-      {
-        href: '/backoffice/parametres',
-        icon: 'settings',
-        name: 'Paramètres',
-      },
-      {
-        onClick: logout,
-        icon: 'sign-out',
-        name: 'Se déconnecter',
-      },
-    ],
-    candidat: [
-      {
-        href: '/backoffice/candidat/offres',
-        name: 'Mes offres',
-        icon: 'list',
-        badge: 'offers',
-        tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_OFFRES_CLIC,
-      },
-      {
-        href: '/backoffice/candidat/suivi',
-        name: 'Mon suivi',
-        icon: 'file-text',
-        badge: 'note',
-        tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_SUIVI_CLIC,
-      },
-      {
-        href: '/backoffice/candidat/cv',
-        name: 'Mon CV',
-        icon: 'user',
-        badge: 'cv',
-        tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_CV_CLIC,
-      },
-    ],
-    coach: [
-      {
-        href: '/backoffice/candidat/offres',
-        name: 'Offres',
-        icon: 'list',
-        badge: 'offers',
-        tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_OFFRES_CLIC,
-      },
-      {
-        href: '/backoffice/candidat/suivi',
-        name: 'Suivi',
-        icon: 'file-text',
-        badge: 'note',
-        tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_SUIVI_CLIC,
-      },
-      {
-        href: '/backoffice/candidat/cv',
-        name: 'CV',
-        icon: 'user',
-        badge: 'cv',
-        tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_CV_CLIC,
-      },
-      {
-        href: `${
-          process.env.TOOLBOX_URL
-        }?id=${getCandidateIdFromCoachOrCandidate(user)}`,
-        name: 'Boîte à outils',
-        icon: 'question',
-        external: true,
-      },
-    ],
-  };
+  useEffect(() => {
+    setLinks(renderLinks(user, logout));
+  }, [user, logout]);
 
   if (!user) return null;
 
@@ -199,7 +107,16 @@ const HeaderConnected = ({ isHome }) => {
             >
               {LINKS_CONNECTED[user.role.toLowerCase()].map(
                 (
-                  { href, badge, icon, name, external, tag, subMenu },
+                  {
+                    href,
+                    badge,
+                    icon,
+                    name,
+                    external,
+                    tag,
+                    subMenu,
+                    queryParams,
+                  },
                   index
                 ) => {
                   return (
@@ -210,7 +127,7 @@ const HeaderConnected = ({ isHome }) => {
                       }`}
                     >
                       <SimpleLink
-                        href={href}
+                        href={href + queryParams}
                         onClick={() => {
                           if (tag) gaEvent(tag);
                         }}

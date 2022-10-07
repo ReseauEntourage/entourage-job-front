@@ -6,6 +6,7 @@ export const HeaderSubItemShape = PropTypes.shape({
   icon: PropTypes.string,
   name: PropTypes.string.isRequired,
   external: PropTypes.bool,
+  queryParams: PropTypes.string,
   tag: PropTypes.shape({
     action: PropTypes.string,
   }),
@@ -16,6 +17,7 @@ export const HeaderSubItemDefaultProps = {
   icon: '',
   external: false,
   tag: null,
+  queryParams: '',
 };
 
 export const NotifBadgesShape = PropTypes.shape({

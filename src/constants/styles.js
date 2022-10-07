@@ -5,4 +5,5 @@ export const BREAKPOINTS = {
 export const COLORS = {
   lightgray: '#F5F5F5',
   hoverOrange: '#FFEADC',
+  primaryOrange: '#F55F24',
 };
