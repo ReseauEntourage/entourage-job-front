@@ -18,7 +18,7 @@ const SubMenu = ({ items, badges }) => {
         ({ href, badge, icon, name, tag, external, queryParams }, key) => {
           return (
             <SimpleLink
-              href={href + queryParams}
+              href={href + (queryParams || '')}
               className="subMenu-item"
               key={`${key}-${uuid}`}
               onClick={() => {
