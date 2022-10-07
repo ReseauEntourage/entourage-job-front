@@ -80,6 +80,7 @@
     "react-visibility-sensor": "^5.1.1",
     "rxjs": "^7.4.0",
     "sharp": "^0.30.5",
+    "styled-components": "^5.3.6",
     "uikit": "^3.5.4",
     "use-deep-compare-effect": "^1.8.1",
     "uuid": "^3.4.0",
