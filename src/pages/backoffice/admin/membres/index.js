@@ -49,7 +49,7 @@ const MembersAdmin = () => {
 
   return (
     <LayoutBackOffice title="Gestion des membres">
-      <Section>
+      <Section container="large">
         {loadingDefaultFilters ? (
           <LoadingScreen />
         ) : (
