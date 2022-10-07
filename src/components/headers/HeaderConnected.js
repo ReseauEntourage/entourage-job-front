@@ -127,7 +127,7 @@ const HeaderConnected = ({ isHome }) => {
                       }`}
                     >
                       <SimpleLink
-                        href={href + queryParams}
+                        href={href + (queryParams || '')}
                         onClick={() => {
                           if (tag) gaEvent(tag);
                         }}
