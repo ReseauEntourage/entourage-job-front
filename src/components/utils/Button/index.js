@@ -7,6 +7,7 @@ import {
   UIKIT_BUTTON_STYLES_SPEC,
   UIKIT_SCREENS,
 } from 'src/components/variables';
+import { StyledButton } from 'src/components/utils/Button/styles';
 
 const Button = ({
   visible,
@@ -27,7 +28,11 @@ const Button = ({
 }) => {
   let classBuffer = 'uk-button';
   if (visible) classBuffer += ` uk-visible@${visible}`;
-  if (style) classBuffer += ` uk-button-${style}`;
+  if (style && style.includes('custom')) {
+    classBuffer = style;
+  } else if (style) {
+    classBuffer += ` uk-button-${style}`;
+  }
   if (size) classBuffer += ` uk-button-${size}`;
   if (className) classBuffer += ` ${className}`;
   widths.forEach((width) => {
@@ -35,7 +40,7 @@ const Button = ({
   });
 
   const buttonComponent = (
-    <button
+    <StyledButton
       className={classBuffer}
       disabled={disabled}
       type="button"
@@ -44,7 +49,7 @@ const Button = ({
       data-testid={dataTestId}
     >
       {children}
-    </button>
+    </StyledButton>
   );
   if (href) {
     return isExternal ? (
@@ -74,7 +79,7 @@ Button.propTypes = {
   ]),
   disabled: PropTypes.bool,
   visible: PropTypes.oneOf(UIKIT_SCREENS),
-  style: PropTypes.oneOf(UIKIT_BUTTON_STYLES_SPEC),
+  style: PropTypes.oneOf(['custom-secondary', ...UIKIT_BUTTON_STYLES_SPEC]),
   size: PropTypes.oneOf(UIKIT_BUTTON_SIZES),
   widths: PropTypes.arrayOf(PropTypes.string), // UIKIT_WIDTH_SCREENS
   isExternal: PropTypes.bool,

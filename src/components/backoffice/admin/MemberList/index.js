@@ -1,8 +1,6 @@
 import UIkit from 'uikit';
 
 import React, { useCallback, useEffect, useState } from 'react';
-import moment from 'moment';
-import _ from 'lodash';
 
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
@@ -12,186 +10,19 @@ import Button from 'src/components/utils/Button';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import Api from 'src/Axios';
 import SearchBar from 'src/components/filters/SearchBar';
-import {
-  filtersToQueryParams,
-  getCandidateFromCoachOrCandidate,
-  getRelatedUser,
-  mutateFormSchema,
-} from 'src/utils';
+import { filtersToQueryParams, mutateFormSchema } from 'src/utils';
 import schemaCreateUser from 'src/components/forms/schema/formEditUser';
 import { openModal } from 'src/components/modals/Modal';
 import { usePrevious } from 'src/hooks/utils';
 
-import { CV_STATUS, MEMBER_FILTERS_DATA, USER_ROLES } from 'src/constants';
-import { Grid, Section, SimpleLink } from 'src/components/utils';
-import ImgProfile from 'src/components/headers/ImgProfile';
+import { MEMBER_FILTERS_DATA, USER_ROLES } from 'src/constants';
+import { Section } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
-
-const translateStatusCV = (status) => {
-  const cvStatus = CV_STATUS[status] ? CV_STATUS[status] : CV_STATUS.Unknown;
-  return <span className={`uk-text-${cvStatus.style}`}>{cvStatus.label}</span>;
-};
+import Member from 'src/components/backoffice/admin/MemberList/Member';
+import BackToTop from 'src/components/utils/BackToTop/index';
 
 const LIMIT = 50;
-
-const MemberPropTypes = PropTypes.shape({
-  id: PropTypes.string,
-  firstName: PropTypes.string,
-  lastName: PropTypes.string,
-  email: PropTypes.string,
-  lastConnection: PropTypes.string,
-  role: PropTypes.string,
-  zone: PropTypes.string,
-});
-
-const Member = ({ member, role }) => {
-  const { push } = useRouter();
-  return (
-    <tr
-      className="uk-link-reset"
-      style={{ cursor: 'pointer' }}
-      onClick={() => {
-        return push(`/backoffice/admin/membres/${member.id}`);
-      }}
-    >
-      <td>
-        <Grid row gap="small" middle className="uk-hidden@m" center>
-          <ImgProfile user={member} size={48} />
-          <Grid column gap="collapse">
-            <span className="uk-text-bold">
-              {member.firstName} {member.lastName}
-            </span>
-            <span>{member.email}</span>
-          </Grid>
-        </Grid>
-        <Grid
-          row
-          gap="small"
-          middle
-          className="uk-visible@m"
-          style={{ marginBottom: 15 }}
-        >
-          <ImgProfile user={member} size={48} />
-          <Grid column gap="collapse">
-            <span className="uk-text-bold">
-              {member.firstName} {member.lastName}
-            </span>
-            <span>{member.email}</span>
-          </Grid>
-        </Grid>
-      </td>
-      <td className="uk-text-center">
-        <span className="uk-label uk-text-nowrap uk-visible@m">
-          {member.zone && _.capitalize(member.zone)}
-        </span>
-        <div className="uk-hidden@m">
-          {member.zone ? (
-            <span className="uk-label uk-text-nowrap">
-              {_.capitalize(member.zone)}
-            </span>
-          ) : (
-            <span className="uk-text-italic">Zone non renseignée</span>
-          )}
-        </div>
-      </td>
-      <td className="uk-text-center">
-        {getRelatedUser(member) ? (
-          `${getRelatedUser(member).firstName} ${
-            getRelatedUser(member).lastName
-          }`
-        ) : (
-          <span className="uk-text-italic">Non lié</span>
-        )}
-      </td>
-      <td className="uk-text-center">
-        {member.lastConnection ? (
-          moment(member.lastConnection).format('DD/MM/YYYY')
-        ) : (
-          <span className="uk-text-italic">Aucune connexion</span>
-        )}
-      </td>
-      {role !== USER_ROLES.COACH && (
-        <>
-          <td className="uk-text-center">
-            {member.role === USER_ROLES.CANDIDAT ? (
-              <>
-                {getCandidateFromCoachOrCandidate(member) && (
-                  <>
-                    <span className="uk-hidden@m">
-                      {getCandidateFromCoachOrCandidate(member).employed
-                        ? 'A trouvé un emploi'
-                        : "En recherche d'emploi"}
-                    </span>
-                    {getCandidateFromCoachOrCandidate(member).employed && (
-                      <IconNoSSR
-                        name="check"
-                        ratio={1.2}
-                        className="uk-text-primary uk-visible@m"
-                      />
-                    )}
-                  </>
-                )}
-              </>
-            ) : (
-              <span>-</span>
-            )}
-          </td>
-          <td className="uk-text-center">
-            {member.role === USER_ROLES.CANDIDAT ? (
-              <>
-                {getCandidateFromCoachOrCandidate(member) &&
-                getCandidateFromCoachOrCandidate(member).cvs &&
-                getCandidateFromCoachOrCandidate(member).cvs.length > 0 ? (
-                  translateStatusCV(
-                    getCandidateFromCoachOrCandidate(member).cvs[0].status
-                  )
-                ) : (
-                  <span className="uk-text-italic uk-text-info">Aucun CV</span>
-                )}
-              </>
-            ) : (
-              <span>-</span>
-            )}
-          </td>
-          <td className="uk-text-center">
-            {member.role === USER_ROLES.CANDIDAT ? (
-              <>
-                {getCandidateFromCoachOrCandidate(member) && (
-                  <>
-                    <span className="uk-hidden@m">
-                      {getCandidateFromCoachOrCandidate(member).hidden
-                        ? 'Masqué'
-                        : 'Visible'}
-                    </span>
-                    {getCandidateFromCoachOrCandidate(member).hidden && (
-                      <IconNoSSR
-                        name="check"
-                        ratio={1.2}
-                        className="uk-text-primary uk-visible@m"
-                      />
-                    )}
-                  </>
-                )}
-              </>
-            ) : (
-              <span>-</span>
-            )}
-          </td>
-        </>
-      )}
-    </tr>
-  );
-};
-
-Member.propTypes = {
-  member: MemberPropTypes.isRequired,
-  role: PropTypes.oneOf([USER_ROLES.CANDIDAT, USER_ROLES.COACH]),
-};
-
-Member.defaultProps = {
-  role: USER_ROLES.CANDIDAT,
-};
 
 const MemberList = ({
   search,
@@ -201,7 +32,7 @@ const MemberList = ({
   resetFilters,
 }) => {
   const {
-    query: { role, ...restParams },
+    query: { role },
   } = useRouter();
 
   const prevRole = usePrevious(role);
@@ -292,11 +123,18 @@ const MemberList = ({
     }
   }, [prevRole, role]);
 
+  const roleToPage = {
+    Candidat: 'candidates',
+    Coach: 'coachs',
+  };
+
   return (
     <>
+      <BackToTop />
       <HeaderBackoffice
-        title="Gestion des membres"
-        description="Ici vous pouvez accéder à tous les profils des coachs et candidats afin d'effectuer un suivi individuel de leur avancée."
+        title={`Gestion des ${role.toLocaleLowerCase()}s`}
+        description={`Ici vous pouvez accéder à tous les profils des ${role.toLocaleLowerCase()}s afin d'effectuer un suivi individuel de leur avancée.`}
+        page={roleToPage[role]}
       >
         <Button
           style="primary"
@@ -423,12 +261,12 @@ const MemberList = ({
               className="uk-text-center uk-width-1-1 uk-padding"
             >
               <Button
-                style="text"
+                style="custom-secondary"
                 onClick={async () => {
                   await fetchData(search, filters, role, offset, false);
                 }}
               >
-                Voir plus...
+                Voir tous les {role.toLocaleLowerCase()}s
               </Button>
             </div>
           )}

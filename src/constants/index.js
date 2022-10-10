@@ -8,7 +8,7 @@ import {
 } from 'src/constants/departements';
 import _ from 'lodash';
 
-const OFFER_STATUS = [
+export const OFFER_STATUS = [
   {
     value: -1,
     label: 'Offre à traiter',
@@ -23,7 +23,7 @@ const OFFER_STATUS = [
   { value: 4, label: 'Refus après entretien', color: 'danger' },
 ];
 
-const BUSINESS_LINES = [
+export const BUSINESS_LINES = [
   {
     label: 'Logistique et approvisionnement',
     value: 'la',
@@ -118,7 +118,7 @@ const BUSINESS_LINES = [
   return labelA.localeCompare(labelB);
 });
 
-const CV_STATUS = {
+export const CV_STATUS = {
   Published: {
     label: 'Publié',
     value: 'Published',
@@ -151,7 +151,7 @@ const CV_STATUS = {
   },
 };
 
-const AMBITIONS_PREFIXES = [
+export const AMBITIONS_PREFIXES = [
   {
     label: 'dans',
     value: 'dans',
@@ -162,20 +162,20 @@ const AMBITIONS_PREFIXES = [
   },
 ];
 
-const OFFER_CANDIDATE_FILTERS_DATA = [
+export const OFFER_CANDIDATE_FILTERS_DATA = [
   { tag: 'private', title: 'Offres personnelles', active: true },
   { tag: 'public', title: 'Offres générales' },
   { tag: 'archived', title: 'Offres archivées' },
 ];
 
-const OFFER_ADMIN_FILTERS_DATA = [
+export const OFFER_ADMIN_FILTERS_DATA = [
   { tag: 'pending', title: 'Offres à valider' },
   { tag: 'validated', title: 'Offres publiées', active: true },
   { tag: 'external', title: 'Offres externes' },
   { tag: 'archived', title: 'Offres archivées' },
 ];
 
-const CV_FILTERS_DATA = [
+export const CV_FILTERS_DATA = [
   {
     key: 'employed',
     type: 'checkbox',
@@ -207,7 +207,7 @@ const CV_FILTERS_DATA = [
   },
 ];
 
-const OPPORTUNITY_FILTERS_DATA = [
+export const OPPORTUNITY_FILTERS_DATA = [
   {
     key: 'isPublic',
     constants: [
@@ -240,7 +240,7 @@ const OPPORTUNITY_FILTERS_DATA = [
   },
 ];
 
-const MEMBER_FILTERS_DATA = [
+export const MEMBER_FILTERS_DATA = [
   {
     key: 'zone',
     constants: ADMIN_ZONES_FILTERS,
@@ -293,18 +293,18 @@ const MEMBER_FILTERS_DATA = [
   },
 ];
 
-const USER_ROLES = {
+export const USER_ROLES = {
   COACH: 'Coach',
   CANDIDAT: 'Candidat',
   ADMIN: 'Admin',
 };
 
-const ADMIN_ROLES = {
+export const ADMIN_ROLES = {
   CANDIDATES: 'Candidats',
   COMPANIES: 'Entreprises',
 };
 
-const CONTRACTS = [
+export const CONTRACTS = [
   {
     label: 'CDI',
     value: 'cdi',
@@ -357,7 +357,7 @@ const CONTRACTS = [
   },
 ];
 
-const EXTERNAL_OFFERS_ORIGINS = [
+export const EXTERNAL_OFFERS_ORIGINS = [
   {
     label: 'Mon réseau',
     value: 'network',
@@ -372,7 +372,7 @@ const EXTERNAL_OFFERS_ORIGINS = [
   },
 ];
 
-const EXTERNAL_LINKS = {
+export const EXTERNAL_LINKS = {
   DONATION: 'https://entourage.iraiser.eu/linkedout/~mon-don',
   LKO_VG: 'https://www.linkedout-vendeeglobe.com',
   LKO_VG_CONTEST: 'https://www.linkedout-vendeeglobe.com/vendeearctique',
@@ -392,7 +392,7 @@ const EXTERNAL_LINKS = {
   RECRUITMENTS: 'https://www.welcometothejungle.com/fr/companies/entourage',
 };
 
-const NEWSLETTER_TAGS = {
+export const NEWSLETTER_TAGS = {
   ZONE: [
     {
       label: 'Région parisienne',
@@ -431,11 +431,11 @@ const NEWSLETTER_TAGS = {
   ],
 };
 
-const STORAGE_KEYS = {
+export const STORAGE_KEYS = {
   ACCESS_TOKEN: 'access-token',
 };
 
-const SOCKETS = {
+export const SOCKETS = {
   CHANNEL_NAMES: {
     CV_PREVIEW: 'cv-preview-channel',
     CV_PDF: 'cv-pdf-channel',
@@ -446,17 +446,17 @@ const SOCKETS = {
   },
 };
 
-const VALUES = { SHARES: 120000 + 64000 };
+export const VALUES = { SHARES: 120000 + 64000 };
 
-const CONTACT_INFO = {
+export const CONTACT_INFO = {
   CORPORATE_CONTACT: 'barnabe@entourage.social',
   MAIN_PHONE_NUMBER: '01 88 24 70 70',
   MOBILE_PHONE_NUMBER: '07 82 44 97 39',
 };
 
-const INITIAL_NB_OF_CV_TO_DISPLAY = 9;
+export const INITIAL_NB_OF_CV_TO_DISPLAY = 9;
 
-const HEARD_ABOUT = [
+export const HEARD_ABOUT = [
   {
     label: 'Par un de mes contacts',
     value: 'contact',
@@ -483,26 +483,4 @@ const HEARD_ABOUT = [
   },
 ];
 
-export {
-  OFFER_STATUS,
-  CV_STATUS,
-  USER_ROLES,
-  BUSINESS_LINES,
-  EXTERNAL_LINKS,
-  VALUES,
-  CV_FILTERS_DATA,
-  OPPORTUNITY_FILTERS_DATA,
-  OFFER_CANDIDATE_FILTERS_DATA,
-  OFFER_ADMIN_FILTERS_DATA,
-  MEMBER_FILTERS_DATA,
-  NEWSLETTER_TAGS,
-  CONTACT_INFO,
-  INITIAL_NB_OF_CV_TO_DISPLAY,
-  SOCKETS,
-  STORAGE_KEYS,
-  ADMIN_ROLES,
-  CONTRACTS,
-  HEARD_ABOUT,
-  AMBITIONS_PREFIXES,
-  EXTERNAL_OFFERS_ORIGINS,
-};
+export const BACKOFFICE_PAGES = ['candidates', 'coachs', 'oppotunities'];
