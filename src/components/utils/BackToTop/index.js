@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { StyledBackToTop } from 'src/components/utils/BackToTop/styles';
+import { isSSR } from 'src/utils/isSSR';
 
 const BackToTop = () => {
   const [iconClass, setIconClass] = useState('');
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (!isSSR) {
       const handleScroll = () => {
         if (window.scrollY > 300) {
           setIconClass('visible');
@@ -22,7 +23,7 @@ const BackToTop = () => {
   }, []);
 
   const handleClick = () => {
-    if (typeof window !== 'undefined') {
+    if (!isSSR) {
       window.scrollTo({
         top: 0,
         left: 0,
