@@ -20,6 +20,7 @@ import { Section } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import Member from 'src/components/backoffice/admin/MemberList/Member';
+import BackToTop from 'src/components/utils/BackToTop/index';
 
 const LIMIT = 50;
 
@@ -129,6 +130,7 @@ const MemberList = ({
 
   return (
     <>
+      <BackToTop />
       <HeaderBackoffice
         title={`Gestion des ${role.toLocaleLowerCase()}s`}
         description={`Ici vous pouvez accéder à tous les profils des ${role.toLocaleLowerCase()}s afin d'effectuer un suivi individuel de leur avancée.`}
