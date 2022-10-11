@@ -16,8 +16,8 @@ import LinkedInPartial from 'src/components/partials/LinkedInPartial';
 const Index = () => {
   return (
     <Layout>
+      <Header />
       <LandingPagePartial />
-      <Header isHome />
       <CandidatListPartial />
       <AnnouncementPartial />
       <HowItWorks style="default" />

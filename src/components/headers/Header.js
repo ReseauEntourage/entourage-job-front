@@ -1,7 +1,6 @@
 import UIkit from 'uikit';
 import React from 'react';
 import { useRouter } from 'next/router';
-import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { Hamburger, Nav, Navbar, NavbarLogo } from 'src/components/utils';
 
@@ -33,7 +32,7 @@ const LINKS = [
   },
 ];
 
-const Header = ({ isHome }) => {
+const Header = () => {
   const router = useRouter();
 
   const rightItems = [
@@ -98,13 +97,8 @@ const Header = ({ isHome }) => {
               href="/"
               src="/static/img/linkedout_logo_white.png"
               alt="Linkedout"
-              alwaysVisible={!isHome}
             />
-            <div
-              className={`uk-visible@m uk-margin-small-left uk-flex uk-flex-center uk-light ${
-                isHome && 'uk-logo uk-animation-fade'
-              }`}
-            >
+            <div className="uk-visible@m uk-margin-small-left uk-flex uk-flex-center uk-light">
               <Button
                 href={EXTERNAL_LINKS.DONATION}
                 isExternal
@@ -234,14 +228,6 @@ const Header = ({ isHome }) => {
       </OffcanvasNoSSR>
     </header>
   );
-};
-
-Header.propTypes = {
-  isHome: PropTypes.bool,
-};
-
-Header.defaultProps = {
-  isHome: false,
 };
 
 export default Header;
