@@ -27,8 +27,8 @@ const Index = () => {
 
   return (
     <Layout>
+      <Header />
       <LandingPagePartial />
-      <Header isHome />
       <CandidatListPartial />
       <AnnouncementPartial />
       <HowItWorks style="default" />
