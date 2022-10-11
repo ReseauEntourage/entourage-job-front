@@ -22,7 +22,7 @@ const MembersAdmin = () => {
     if (isReady) {
       if (user) {
         if (!role) {
-          const params = { role: 'All', ...restParams };
+          const params = { role: 'Candidat', ...restParams };
 
           if (user && user.zone) {
             params.zone = user.zone;
@@ -49,7 +49,7 @@ const MembersAdmin = () => {
 
   return (
     <LayoutBackOffice title="Gestion des membres">
-      <Section>
+      <Section container="large">
         {loadingDefaultFilters ? (
           <LoadingScreen />
         ) : (

@@ -31,7 +31,7 @@ import { useBulkActions } from 'src/hooks/useBulkActions';
 import { SEARCH_MAX_WIDTH } from 'src/constants/utils';
 import { GA_TAGS } from 'src/constants/tags';
 import moment from 'moment';
-import ModalOffer from '../modals/Modal/ModalGeneric/OfferModals/ModalOffer';
+import ModalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer';
 
 const OfferList = ({
   selectionModeActivated,
