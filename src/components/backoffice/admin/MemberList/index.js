@@ -19,8 +19,9 @@ import { MEMBER_FILTERS_DATA, USER_ROLES } from 'src/constants';
 import { Section } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
-import Member from 'src/components/backoffice/admin/MemberList/Member';
+import { Member } from 'src/components/backoffice/admin/MemberList/Member';
 import BackToTop from 'src/components/utils/BackToTop/index';
+import { StyledTable } from 'src/components/backoffice/admin/MemberList/styles';
 
 const LIMIT = 50;
 
@@ -128,6 +129,14 @@ const MemberList = ({
     Coach: 'coachs',
   };
 
+  // const [selectedMembers, setSelectedMembers] = useState([]);
+
+  // const handleSelectedMembers = (memberId) => {
+  //   setSelectedMembers((prevMembers) => {
+  //     return [...prevMembers, memberId];
+  //   });
+  // };
+
   return (
     <>
       <BackToTop />
@@ -225,34 +234,38 @@ const MemberList = ({
           {loading ? (
             <LoadingScreen />
           ) : (
-            <div className="uk-overflow-auto uk-margin-top">
-              <table className="uk-table uk-table-hover uk-table-middle uk-table-divider uk-table-responsive">
+            <div className="uk-overflow-auto uk-margin-top table-wrapper">
+              <StyledTable>
                 <thead>
                   <tr>
-                    <th className="uk-text-nowrap">Membre</th>
-                    <th className="uk-text-center">Zone</th>
-                    {role === USER_ROLES.CANDIDAT && (
-                      <th className="uk-text-center">Coach associé</th>
-                    )}
-                    {role === USER_ROLES.COACH && (
-                      <th className="uk-text-center">Candidat associé</th>
-                    )}
-                    <th className="uk-text-center">Dernière connexion</th>
+                    <th className="uk-text-nowrap">{role}</th>
+                    {role === USER_ROLES.CANDIDAT && <th>Coach</th>}
+                    {role === USER_ROLES.COACH && <th>Candidat</th>}
+                    <th>Zone</th>
+                    <th>Dernière connexion</th>
                     {role !== USER_ROLES.COACH && (
                       <>
-                        <th className="uk-text-center">A retrouvé un emploi</th>
-                        <th className="uk-text-center">Statut du CV</th>
-                        <th className="uk-text-center">CV masqué</th>
+                        <th>En emploi</th>
+                        <th>Statut CV</th>
+                        <th>CV masqué</th>
+                        <th>Sélection</th>
                       </>
                     )}
                   </tr>
                 </thead>
                 <tbody>
                   {members.map((member, key) => {
-                    return <Member role={role} member={member} key={key} />;
+                    return (
+                      <Member
+                        role={role}
+                        member={member}
+                        key={key}
+                        // callback={handleSelectedMembers}
+                      />
+                    );
                   })}
                 </tbody>
-              </table>
+              </StyledTable>
             </div>
           )}
           {!loading && !allLoaded && (

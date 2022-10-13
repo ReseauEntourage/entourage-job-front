@@ -3,6 +3,7 @@ import { COLORS } from 'src/constants/styles';
 
 export const StyledBackToTop = styled.button`
   height: 54px;
+  z-index: 1000;
   width: 54px;
   position: fixed;
   right: 18px;
