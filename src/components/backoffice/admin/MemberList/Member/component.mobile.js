@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 
 import { getCandidateFromCoachOrCandidate, getRelatedUser } from 'src/utils';
 import moment from 'moment';
@@ -11,18 +10,12 @@ import { USER_ROLES } from 'src/constants';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { StyledMobileMember } from 'src/components/backoffice/admin/MemberList/Member/styles';
 import Checkbox from 'src/components/utils/Inputs/Checkbox';
+import { useCheckbox } from 'src/components/utils/Inputs/Checkbox/useCheckbox';
+import { renderCVStatus } from 'src/components/backoffice/admin/MemberList/Member/utils';
 
 const Member = ({ member, role }) => {
-  let cvStatus;
-  if (getCandidateFromCoachOrCandidate(member)?.cvs?.[0]?.status) {
-    cvStatus = getCandidateFromCoachOrCandidate(member).cvs[0].status;
-  } else {
-    cvStatus = 'none';
-  }
-  const [checked, setChecked] = useState(false);
-  const handleCheckBox = () => {
-    setChecked(!checked);
-  };
+  const cvStatus = renderCVStatus(member);
+  const { checked, handleCheckBox } = useCheckbox();
   const relatedUser = getRelatedUser(member);
   return (
     <StyledMobileMember

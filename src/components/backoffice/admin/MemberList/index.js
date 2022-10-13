@@ -129,6 +129,14 @@ const MemberList = ({
     Coach: 'coachs',
   };
 
+  // const [selectedMembers, setSelectedMembers] = useState([]);
+
+  // const handleSelectedMembers = (memberId) => {
+  //   setSelectedMembers((prevMembers) => {
+  //     return [...prevMembers, memberId];
+  //   });
+  // };
+
   return (
     <>
       <BackToTop />
@@ -247,7 +255,14 @@ const MemberList = ({
                 </thead>
                 <tbody>
                   {members.map((member, key) => {
-                    return <Member role={role} member={member} key={key} />;
+                    return (
+                      <Member
+                        role={role}
+                        member={member}
+                        key={key}
+                        // callback={handleSelectedMembers}
+                      />
+                    );
                   })}
                 </tbody>
               </StyledTable>
