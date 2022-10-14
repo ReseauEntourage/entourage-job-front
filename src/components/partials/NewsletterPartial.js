@@ -10,6 +10,7 @@ import { gaEvent } from 'src/lib/gtag';
 import { NEWSLETTER_TAGS } from 'src/constants';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import Checkbox from 'src/components/forms/fields/Checkbox';
+import { useNewsletterTracking } from 'src/hooks';
 
 const NewsletterPartial = ({ style, padding, tag }) => {
   const [email, setEmail] = useState('');
@@ -17,6 +18,7 @@ const NewsletterPartial = ({ style, padding, tag }) => {
   const [status, setStatus] = useState();
   const [isMailValid, setIsMailValid] = useState(true);
   const [isTagsValid, setIsTagsValid] = useState(true);
+  const newsletterParams = useNewsletterTracking();
 
   const onSubmit = async () => {
     const mailValid = validator.isEmail(email);
@@ -27,11 +29,13 @@ const NewsletterPartial = ({ style, padding, tag }) => {
       // setIsTagsValid(tagsValid);
     } else {
       gaEvent(tag);
+
       try {
         await Api.post('/mail/newsletter', {
           email,
           zone,
           status,
+          ...newsletterParams,
         });
         UIkit.notification(
           'Votre inscription à la newsletter a bien été prise en compte !',
