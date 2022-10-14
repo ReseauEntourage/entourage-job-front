@@ -150,6 +150,7 @@ export const StyledMobileMember = styled.tr`
   .line:last-of-type {
     border-bottom: 1px solid ${COLORS.gray};
     border-radius: 0 0 5px 5px;
+    margin-bottom: 15px;
   }
   .work-cv {
     .status-cv {

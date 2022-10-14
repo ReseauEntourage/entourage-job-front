@@ -21,7 +21,12 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { Member } from 'src/components/backoffice/admin/MemberList/Member';
 import BackToTop from 'src/components/utils/BackToTop/index';
-import { StyledTable } from 'src/components/backoffice/admin/MemberList/styles';
+import {
+  StyledTable,
+  ActionsContainer,
+} from 'src/components/backoffice/admin/MemberList/styles';
+import { useBulkActions } from 'src/hooks/useBulkActions';
+import { GA_TAGS } from 'src/constants/tags';
 
 const LIMIT = 50;
 
@@ -109,6 +114,14 @@ const MemberList = ({
     []
   );
 
+  const { selectElement, executeAction, hasSelection } = useBulkActions(
+    '/user/candidat',
+    async () => {
+      await fetchData(search, filters, role, offset, true);
+    },
+    GA_TAGS.BACKOFFICE_ADMIN_MASQUER_MASSE_CLIC
+  );
+
   useDeepCompareEffect(() => {
     fetchData(search, filters, role, offset, true);
   }, [search, filters, role]);
@@ -129,13 +142,9 @@ const MemberList = ({
     Coach: 'coachs',
   };
 
-  // const [selectedMembers, setSelectedMembers] = useState([]);
-
-  // const handleSelectedMembers = (memberId) => {
-  //   setSelectedMembers((prevMembers) => {
-  //     return [...prevMembers, memberId];
-  //   });
-  // };
+  const handleSelectedMembers = (memberId) => {
+    selectElement({ id: memberId });
+  };
 
   return (
     <>
@@ -231,6 +240,20 @@ const MemberList = ({
             placeholder="Rechercher..."
             smallSelectors
           />
+          {role === USER_ROLES.CANDIDAT && (
+            <ActionsContainer>
+              <Button
+                style="custom-secondary"
+                disabled={!hasSelection}
+                color="primaryOrange"
+                onClick={() => {
+                  return executeAction({ hidden: true }, 'put');
+                }}
+              >
+                Masquer CV
+              </Button>
+            </ActionsContainer>
+          )}
           {loading ? (
             <LoadingScreen />
           ) : (
@@ -260,7 +283,7 @@ const MemberList = ({
                         role={role}
                         member={member}
                         key={key}
-                        // callback={handleSelectedMembers}
+                        callback={handleSelectedMembers}
                       />
                     );
                   })}
@@ -275,6 +298,7 @@ const MemberList = ({
             >
               <Button
                 style="custom-secondary"
+                color="primaryOrange"
                 onClick={async () => {
                   await fetchData(search, filters, role, offset, false);
                 }}

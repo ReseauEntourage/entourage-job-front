@@ -13,9 +13,9 @@ import Checkbox from 'src/components/utils/Inputs/Checkbox';
 import { useCheckbox } from 'src/components/utils/Inputs/Checkbox/useCheckbox';
 import { renderCVStatus } from 'src/components/backoffice/admin/MemberList/Member/utils';
 
-const Member = ({ member, role }) => {
+const Member = ({ member, role, callback }) => {
   const cvStatus = renderCVStatus(member);
-  const { checked, handleCheckBox } = useCheckbox();
+  const { checked, handleCheckBox } = useCheckbox(callback, member.id);
   const relatedUser = getRelatedUser(member);
   return (
     <StyledMobileMember
@@ -32,7 +32,11 @@ const Member = ({ member, role }) => {
         </a>
         {role !== USER_ROLES.COACH && (
           <div className="checkbox-container">
-            <Checkbox size={16} handleClick={handleCheckBox} />
+            <Checkbox
+              size={16}
+              handleClick={handleCheckBox}
+              disabled={getCandidateFromCoachOrCandidate(member).hidden}
+            />
           </div>
         )}
       </div>
@@ -80,7 +84,7 @@ const Member = ({ member, role }) => {
         </div>
       </div>
       {role !== USER_ROLES.COACH && (
-        <div className="work-cv">
+        <div className="line work-cv">
           <div className="cell">
             <span className="title">En emploi</span>
             <span>
@@ -120,6 +124,7 @@ const Member = ({ member, role }) => {
 Member.propTypes = {
   member: MemberPropTypes.isRequired,
   role: PropTypes.oneOf([USER_ROLES.CANDIDAT, USER_ROLES.COACH]),
+  callback: PropTypes.func.isRequired,
 };
 
 Member.defaultProps = {

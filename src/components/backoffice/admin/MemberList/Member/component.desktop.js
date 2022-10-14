@@ -14,9 +14,9 @@ import Checkbox from 'src/components/utils/Inputs/Checkbox';
 import { useCheckbox } from 'src/components/utils/Inputs/Checkbox/useCheckbox';
 import { translateStatusCV } from 'src/components/backoffice/admin/MemberList/utils';
 
-const Member = ({ member, role }) => {
+const Member = ({ member, role, callback }) => {
   const cvStatus = renderCVStatus(member);
-  const { checked, handleCheckBox } = useCheckbox();
+  const { checked, handleCheckBox } = useCheckbox(callback, member.id);
   const relatedUser = getRelatedUser(member);
   return (
     <StyledRow
@@ -121,7 +121,11 @@ const Member = ({ member, role }) => {
             )}
           </td>
           <td className="checkbox-cell">
-            <Checkbox size={16} handleClick={handleCheckBox} />
+            <Checkbox
+              size={16}
+              handleClick={handleCheckBox}
+              disabled={getCandidateFromCoachOrCandidate(member).hidden}
+            />
           </td>
         </>
       )}
@@ -132,6 +136,7 @@ const Member = ({ member, role }) => {
 Member.propTypes = {
   member: MemberPropTypes.isRequired,
   role: PropTypes.oneOf([USER_ROLES.CANDIDAT, USER_ROLES.COACH]),
+  callback: PropTypes.func.isRequired,
 };
 
 Member.defaultProps = {

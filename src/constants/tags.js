@@ -329,6 +329,9 @@ const GA_TAGS = {
   SHOW_PASSWORD_CLIC: {
     action: 'Show_Password_Clic',
   },
+  BACKOFFICE_ADMIN_MASQUER_MASSE_CLIC: {
+    action: 'Backoffice_Admin_Masquer_Masse_Clic',
+  },
 };
 
 const FB_TAGS = {

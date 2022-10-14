@@ -26,14 +26,25 @@ export const StyledCheckbox = styled.div`
       width: 0;
     }
 
+    &.disabled .checkmark {
+      border: 0.5px solid ${COLORS.gray};
+      cursor: default;
+      background-color: ${COLORS.gray};
+    }
+
+    &.disabled:hover input ~ .checkmark {
+      opacity: 1;
+    }
+
     .checkmark {
       position: absolute;
       top: 0;
       left: 0;
       height: 16px;
       width: 16px;
-      background-color: ${COLORS.gray};
       border-radius: 4px;
+      background-color: white;
+      border: 0.5px solid ${COLORS.darkgray};
     }
 
     &:hover input ~ .checkmark {
