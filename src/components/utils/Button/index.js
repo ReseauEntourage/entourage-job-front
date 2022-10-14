@@ -25,6 +25,7 @@ const Button = ({
   shallow,
   scroll,
   dataTestId,
+  color,
 }) => {
   let classBuffer = 'uk-button';
   if (visible) classBuffer += ` uk-visible@${visible}`;
@@ -38,6 +39,7 @@ const Button = ({
   widths.forEach((width) => {
     classBuffer += ` uk-width-${width}`;
   });
+  if (disabled) classBuffer += ' disabled';
 
   const buttonComponent = (
     <StyledButton
@@ -47,6 +49,7 @@ const Button = ({
       onClick={onClick}
       data-uk-toggle={toggle}
       data-testid={dataTestId}
+      color={color}
     >
       {children}
     </StyledButton>
@@ -90,6 +93,7 @@ Button.propTypes = {
   shallow: PropTypes.bool,
   scroll: PropTypes.bool,
   dataTestId: PropTypes.string,
+  color: PropTypes.string,
 };
 Button.defaultProps = {
   disabled: false,
@@ -106,6 +110,7 @@ Button.defaultProps = {
   toggle: undefined,
   scroll: true,
   dataTestId: '',
+  color: '',
 };
 
 export default Button;

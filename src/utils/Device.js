@@ -8,7 +8,6 @@ export function plateform(data) {
   let isDesktop = true;
   if (!isSSR) {
     const handleDevice = () => {
-      console.log('resize');
       isDesktop = window.innerWidth >= BREAKPOINTS.desktop;
     };
     handleDevice();
