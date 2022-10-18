@@ -6,7 +6,7 @@ export function useNewsletterTracking() {
     query: { utm, utm_medium, utm_source, gclid, referer },
   } = useRouter();
   const visit = getCookie('visit');
-  const visitor = getCookie('visitor')?.split('--')[0];
+  const visitor = getCookie('visitor')?.split('---')[0];
 
   return {
     visit,
