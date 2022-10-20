@@ -17,8 +17,12 @@
         "deletedAt": null,
         "contracts": [],
         "languages": [
-            "fr",
-            "en"
+          {
+            "name": "fr"
+          },
+          {
+            "name": "en"
+          }
         ],
         "passions": [],
         "skills": [],
@@ -38,35 +42,51 @@
             }
         ],
         "locations": [
-            "Paris (75)",
-            "Val-de-Marne (94)",
-            "Seine-Saint-Denis (93)",
-            "Seine-et-Marne (77)",
-            "Essonne (91)",
-            "Yvelines (78)",
-            "Val-d'Oise (95)",
-            "Hauts-de-Seine (92)"
-        ],
-        "experiences": [],
-        "reviews": [],
-        "user": {
-            "employed": false,
-            "hidden": false,
-            "url": "vaitecandidat-33e64d73",
-            "endOfContract": null,
-            "coach": {
-                "id": "c2460adb-09d5-4c1e-8b7e-f9783a1d16e0",
-                "firstName": "Agathe",
-                "lastName": "Pigéon",
-                "gender": 1
-            },
-            "candidat": {
-                "id": "33e64d73-a66b-40ad-9e81-99060243aa37",
-                "firstName": "Vaitecandidat",
-                "lastName": "Leprince",
-                "gender": 1
-            }
-        }
-    },
-    "exists": true
+          {
+            "name": "Paris (75)"
+          },
+          {
+            "name": "Val-de-Marne (94)"
+          },
+          {
+            "name": "Seine-Saint-Denis (93)"
+          },
+          {
+            "name": "Seine-et-Marne (77)"
+          },
+          {
+            "name": "Essonne (91)"
+          },
+          {
+            "name": "Yvelines (78)"
+          },
+          {
+            "name": "Val-d'Oise (95)"
+          },
+          {
+            "name": "Hauts-de-Seine (92)"
+          }
+    ],
+    "experiences": [],
+    "reviews": [],
+    "user": {
+      "employed": false,
+      "hidden": false,
+      "url": "vaitecandidat-33e64d73",
+      "endOfContract": null,
+      "coach": {
+        "id": "c2460adb-09d5-4c1e-8b7e-f9783a1d16e0",
+        "firstName": "Agathe",
+        "lastName": "Pigéon",
+        "gender": 1
+      },
+      "candidat": {
+        "id": "33e64d73-a66b-40ad-9e81-99060243aa37",
+        "firstName": "Vaitecandidat",
+        "lastName": "Leprince",
+        "gender": 1
+      }
+    }
+  },
+  "exists": true
 }

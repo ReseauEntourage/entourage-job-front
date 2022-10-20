@@ -29,6 +29,9 @@ const GA_TAGS = {
   PAGE_ENTREPRISES_MECENAT_CLIC: {
     action: 'Page_Entreprises_Mecenat_Clic',
   },
+  PAGE_ENTREPRISES_INSCRIPTION_NEWSLETTER_CLIC: {
+    action: 'Page_Entreprises_Inscription_Newsletter_Clic',
+  },
   PAGE_GALERIE_CV_CLIC: {
     action: 'Page_Galerie_CV_Clic',
   },
@@ -112,6 +115,9 @@ const GA_TAGS = {
   },
   PAGE_AIDER_INSCRIPTION_COACH_CLIC: {
     action: 'Page_Aider_Inscription_Coach_Clic',
+  },
+  PAGE_AIDER_INSCRIPTION_NEWSLETTER_CLIC: {
+    action: 'Page_Aider_Inscription_Newsletter_Clic',
   },
   PAGE_ENTREPRISE_CVS_CONTACT_RECRUTEUR_CLIC: {
     action: 'Page_Entreprise_Cvs_Contact_Recruteur_Clic',
@@ -311,8 +317,20 @@ const GA_TAGS = {
   BACKOFFICE_CANDIDAT_STATUT_SELECTEUR_CLIC: {
     action: 'Backoffice_Candidat_Statut_Selecteur_Clic',
   },
+  BACKOFFICE_ADMIN_HEADER_MEMBERS_CLIC: {
+    action: 'Backoffice_Admin_Header_Members_Clic',
+  },
+  BACKOFFICE_ADMIN_HEADER_CANDIDATS_CLIC: {
+    action: 'Backoffice_Admin_Header_Candidats_Clic',
+  },
+  BACKOFFICE_ADMIN_HEADER_COACHS_CLIC: {
+    action: 'Backoffice_Admin_Header_Coachs_Clic',
+  },
   SHOW_PASSWORD_CLIC: {
     action: 'Show_Password_Clic',
+  },
+  BACKOFFICE_ADMIN_MASQUER_MASSE_CLIC: {
+    action: 'Backoffice_Admin_Masquer_Masse_Clic',
   },
 };
 

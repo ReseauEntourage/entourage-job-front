@@ -1,6 +1,6 @@
 {
   "name": "linkedout-front",
-  "version": "1.28.0",
+  "version": "1.29.0",
   "description": "",
   "main": "index.js",
   "engines": {
@@ -14,14 +14,15 @@
     "lint:fix": "npx eslint './src' --ext js,jsx,ts,tsx --fix",
     "format": "prettier --write './**/*.{js,jsx,md,json}' --config .prettierrc.json",
     "build": "next build",
-    "uikit-install": "cd ./node_modules/uikit && npm i",
-    "uikit-update": "cd ./node_modules/uikit/ && git pull && npm i",
-    "uikit-compile": "cp -r ./assets/custom/ ./node_modules/uikit/custom/ && cd ./node_modules/uikit && npm run compile && cd ../../ && cp -r ./node_modules/uikit/dist/ ./\"src/**\"/styles/dist && cp ./node_modules/uikit/dist/css/*.print.* ./public/static/css/",
+    "uikit-install": "cd ./node_modules/uikit && yarn",
+    "uikit-update": "cd ./node_modules/uikit/ && git pull && yarn",
+    "uikit-compile": "cp -r ./assets/custom/ ./node_modules/uikit/custom/ && cd ./node_modules/uikit && yarn compile && cd ../../ && cp -r ./node_modules/uikit/dist ./src/styles/ && cp ./node_modules/uikit/dist/css/*.print.* ./public/static/css/",
     "prepare": "husky install",
     "test": "jest",
     "test:watch": "jest --watch",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
+    "posttest:cov": "node commands/open-coverage.command.mjs",
     "cypress:io": "npx cypress run --record --key $(grep CYPRESS_IO_KEY .env | cut -d '=' -f2)"
   },
   "lint-staged": {
@@ -79,6 +80,7 @@
     "react-visibility-sensor": "^5.1.1",
     "rxjs": "^7.4.0",
     "sharp": "^0.30.5",
+    "styled-components": "^5.3.6",
     "uikit": "^3.5.4",
     "use-deep-compare-effect": "^1.8.1",
     "uuid": "^3.4.0",

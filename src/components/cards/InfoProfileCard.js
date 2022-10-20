@@ -69,25 +69,38 @@ const InfoProfileCard = ({
                   defaultValues={{
                     availability,
                     transport,
-                    contracts: contracts.map((contract) => {
-                      return findConstantFromValue(contract, CONTRACTS);
-                    }),
-                    languages,
                     email,
                     phone,
                     address,
-                    locations: locations.map((location) => {
-                      return findConstantFromValue(
-                        location,
-                        DEPARTMENTS_FILTERS
-                      );
+                    contracts: contracts.map(({ name }) => {
+                      return findConstantFromValue(name, CONTRACTS);
+                    }),
+                    languages: languages.map(({ name }) => {
+                      return name;
+                    }),
+                    locations: locations.map(({ name }) => {
+                      return findConstantFromValue(name, DEPARTMENTS_FILTERS);
                     }),
                   }}
                   onSubmit={async (fields, closeModal) => {
                     closeModal();
-                    console.log(fields);
                     await onChange({
                       ...fields,
+                      contracts: fields.contracts.map((contract) => {
+                        return {
+                          name: contract,
+                        };
+                      }),
+                      languages: fields.languages.map((language) => {
+                        return {
+                          name: language,
+                        };
+                      }),
+                      locations: fields.locations.map((location) => {
+                        return {
+                          name: location,
+                        };
+                      }),
                     });
                   }}
                 />
@@ -113,8 +126,8 @@ const InfoProfileCard = ({
           <IconNoSSR name="file-text" style={{ width: 20 }} />
           {contracts && contracts.length > 0
             ? contracts
-                .map((contract) => {
-                  return findConstantFromValue(contract, CONTRACTS).label;
+                .map(({ name }) => {
+                  return findConstantFromValue(name, CONTRACTS).label;
                 })
                 .join(' / ')
             : 'Type de contrat recherché non renseigné'}
@@ -123,9 +136,8 @@ const InfoProfileCard = ({
           <IconNoSSR name="location" style={{ width: 20 }} />
           {locations && locations.length > 0
             ? locations
-                .map((location) => {
-                  return findConstantFromValue(location, DEPARTMENTS_FILTERS)
-                    .label;
+                .map(({ name }) => {
+                  return findConstantFromValue(name, DEPARTMENTS_FILTERS).label;
                 })
                 .join(' / ')
             : 'Localisations non renseignées'}
@@ -139,7 +151,11 @@ const InfoProfileCard = ({
         <Grid row gap="small" middle>
           <IconNoSSR name="users" style={{ width: 20 }} />
           {languages && languages.length > 0
-            ? languages.join(' / ')
+            ? languages
+                .map(({ name }) => {
+                  return name;
+                })
+                .join(' / ')
             : 'Langues apprises non renseignées'}
         </Grid>
         <Grid row gap="small" middle>
@@ -154,10 +170,22 @@ const InfoProfileCard = ({
 };
 
 InfoProfileCard.propTypes = {
-  contracts: PropTypes.arrayOf(PropTypes.string),
-  locations: PropTypes.arrayOf(PropTypes.string),
+  contracts: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    })
+  ),
+  locations: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    })
+  ),
   availability: PropTypes.string,
-  languages: PropTypes.arrayOf(PropTypes.string),
+  languages: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    })
+  ),
   transport: PropTypes.string,
   email: PropTypes.string.isRequired,
   phone: PropTypes.string,

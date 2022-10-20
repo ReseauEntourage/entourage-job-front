@@ -22,7 +22,7 @@ const SharesCountProvider = ({ children }) => {
         setTotalShares(data.total);
       })
       .catch((e) => {
-        console.log(e);
+        console.error(e);
         setTotalShares(VALUES.SHARES);
       });
   });

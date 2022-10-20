@@ -133,7 +133,10 @@ const Aider = () => {
       </Section>
       <Section style="default">
         <Grid gap="large" column>
-          <NewsletterPartial padding={false} />
+          <NewsletterPartial
+            padding={false}
+            tag={GA_TAGS.PAGE_AIDER_INSCRIPTION_NEWSLETTER_CLIC}
+          />
           <SharePartial />
         </Grid>
       </Section>

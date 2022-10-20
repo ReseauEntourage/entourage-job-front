@@ -66,19 +66,19 @@ const mutateFormSchema = (schema, fields, id) => {
   return newSchema;
 };
 
-const getAlternateDefaultOfferStatus = (offer = {}, userOpportunity = {}) => {
+const getAlternateDefaultOfferStatus = (offer = {}, opportunityUser = {}) => {
   return findOfferStatus(
     OFFER_STATUS[0].value,
     offer.isPublic,
-    userOpportunity.recommended
+    opportunityUser.recommended
   ).label;
 };
 
-const mutateDefaultOfferStatus = (offer, userOpportunity) => {
+const mutateDefaultOfferStatus = (offer, opportunityUser) => {
   return [
     {
       ...OFFER_STATUS[0],
-      label: getAlternateDefaultOfferStatus(offer, userOpportunity),
+      label: getAlternateDefaultOfferStatus(offer, opportunityUser),
     },
     ...OFFER_STATUS.slice(1),
   ];

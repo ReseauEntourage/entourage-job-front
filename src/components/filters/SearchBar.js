@@ -7,7 +7,6 @@ import FiltersOptions from 'src/components/filters/FiltersOptions';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { gaEvent } from 'src/lib/gtag';
 import FiltersDropdowns from 'src/components/filters/FiltersDropdowns';
-import { SEARCH_MAX_WIDTH } from 'src/constants/utils';
 
 const SearchBar = ({
   filtersConstants,
@@ -50,15 +49,12 @@ const SearchBar = ({
 
   return (
     <div className="uk-flex uk-flex-column uk-flex-middle uk-margin-small-bottom">
-      <div
-        style={{ maxWidth: SEARCH_MAX_WIDTH }}
-        className="uk-width-expand ent-search-bar"
-      >
+      <div className="uk-width-expand ent-search-bar">
         <form className="uk-search uk-search-navbar uk-width-expand">
           <input
             className="uk-search-input"
             type="search"
-            data-test="search-input"
+            data-testid="search-input"
             placeholder={placeholder}
             value={searchBuffer}
             onKeyDown={(ev) => {
@@ -92,17 +88,14 @@ const SearchBar = ({
         filters={filters}
         setFilters={setFilters}
       />
-      {hasFilters && (
-        <div
-          style={{ maxWidth: SEARCH_MAX_WIDTH }}
-          className="uk-width-expand uk-padding-small uk-padding-remove-vertical uk-flex uk-flex-between@m uk-margin-top"
-        >
-          <FiltersCheckboxes
-            filterData={filtersConstants}
-            filters={filters}
-            setFilters={setFilters}
-            hideOnMobile
-          />
+      <div className="uk-width-expand uk-padding-small uk-padding-remove-vertical uk-flex uk-flex-between@m uk-margin-top">
+        <FiltersCheckboxes
+          filterData={filtersConstants}
+          filters={filters}
+          setFilters={setFilters}
+          hideOnMobile
+        />
+        {hasFilters && (
           <FiltersOptions
             numberOfResults={numberOfResults}
             filters={filters}
@@ -112,8 +105,8 @@ const SearchBar = ({
               setSearchBuffer('');
             }}
           />
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

@@ -155,10 +155,18 @@ CVFicheEdition.propTypes = {
   cv: PropTypes.shape({
     catchphrase: PropTypes.string,
     story: PropTypes.string,
-    locations: PropTypes.arrayOf(PropTypes.string),
+    locations: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
     availability: PropTypes.string,
     urlImg: PropTypes.string,
-    contracts: PropTypes.arrayOf(PropTypes.string),
+    contracts: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
     ambitions: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string.isRequired,
@@ -176,12 +184,39 @@ CVFicheEdition.propTypes = {
         order: PropTypes.number.isRequired,
       })
     ).isRequired,
-    languages: PropTypes.arrayOf(PropTypes.string),
+    languages: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
     transport: PropTypes.string,
-    skills: PropTypes.arrayOf(PropTypes.string),
-    passions: PropTypes.arrayOf(PropTypes.string),
-    reviews: PropTypes.arrayOf(PropTypes.string),
-    experiences: PropTypes.arrayOf(PropTypes.string),
+    skills: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    passions: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    reviews: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        text: PropTypes.string.isRequired,
+        status: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    experiences: PropTypes.arrayOf(
+      PropTypes.shape({
+        description: PropTypes.string.isRequired,
+        skills: PropTypes.arrayOf(
+          PropTypes.shape({
+            name: PropTypes.string.isRequired,
+          })
+        ).isRequired,
+      })
+    ).isRequired,
     status: PropTypes.string,
     UserId: PropTypes.string,
   }).isRequired,

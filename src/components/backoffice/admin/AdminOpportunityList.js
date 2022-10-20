@@ -16,6 +16,7 @@ import { openModal } from 'src/components/modals/Modal';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import Api from 'src/Axios';
 import UIkit from 'uikit';
+import moment from 'moment';
 
 const AdminOpportunityList = ({
   search,
@@ -118,9 +119,10 @@ const AdminOpportunityList = ({
                     try {
                       await Api.post(`/opportunity/external`, {
                         ...fields,
+                        status: parseInt(fields.status, 10),
                         startOfContract: fields.startOfContract || null,
                         endOfContract: fields.endOfContract || null,
-                        date: Date.now(),
+                        date: moment().toISOString(),
                         businessLines: fields.businessLines
                           ? fields.businessLines.map((businessLine, index) => {
                               return {
@@ -137,7 +139,7 @@ const AdminOpportunityList = ({
                         'success'
                       );
                     } catch (err) {
-                      console.log(err);
+                      console.error(err);
                       UIkit.notification(`Une erreur est survenue.`, 'danger');
                     }
                   }}

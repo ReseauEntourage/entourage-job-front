@@ -7,6 +7,7 @@ import {
   UIKIT_BUTTON_STYLES_SPEC,
   UIKIT_SCREENS,
 } from 'src/components/variables';
+import { StyledButton } from 'src/components/utils/Button/styles';
 
 const Button = ({
   visible,
@@ -23,28 +24,35 @@ const Button = ({
   toggle,
   shallow,
   scroll,
-  dataTest,
+  dataTestId,
+  color,
 }) => {
   let classBuffer = 'uk-button';
   if (visible) classBuffer += ` uk-visible@${visible}`;
-  if (style) classBuffer += ` uk-button-${style}`;
+  if (style && style.includes('custom')) {
+    classBuffer = style;
+  } else if (style) {
+    classBuffer += ` uk-button-${style}`;
+  }
   if (size) classBuffer += ` uk-button-${size}`;
   if (className) classBuffer += ` ${className}`;
   widths.forEach((width) => {
     classBuffer += ` uk-width-${width}`;
   });
+  if (disabled) classBuffer += ' disabled';
 
   const buttonComponent = (
-    <button
+    <StyledButton
       className={classBuffer}
       disabled={disabled}
       type="button"
       onClick={onClick}
       data-uk-toggle={toggle}
-      data-test={dataTest}
+      data-testid={dataTestId}
+      color={color}
     >
       {children}
-    </button>
+    </StyledButton>
   );
   if (href) {
     return isExternal ? (
@@ -74,7 +82,7 @@ Button.propTypes = {
   ]),
   disabled: PropTypes.bool,
   visible: PropTypes.oneOf(UIKIT_SCREENS),
-  style: PropTypes.oneOf(UIKIT_BUTTON_STYLES_SPEC),
+  style: PropTypes.oneOf(['custom-secondary', ...UIKIT_BUTTON_STYLES_SPEC]),
   size: PropTypes.oneOf(UIKIT_BUTTON_SIZES),
   widths: PropTypes.arrayOf(PropTypes.string), // UIKIT_WIDTH_SCREENS
   isExternal: PropTypes.bool,
@@ -84,7 +92,8 @@ Button.propTypes = {
   toggle: PropTypes.string,
   shallow: PropTypes.bool,
   scroll: PropTypes.bool,
-  dataTest: PropTypes.string,
+  dataTestId: PropTypes.string,
+  color: PropTypes.string,
 };
 Button.defaultProps = {
   disabled: false,
@@ -100,7 +109,8 @@ Button.defaultProps = {
   onClick: () => {},
   toggle: undefined,
   scroll: true,
-  dataTest: '',
+  dataTestId: '',
+  color: '',
 };
 
 export default Button;

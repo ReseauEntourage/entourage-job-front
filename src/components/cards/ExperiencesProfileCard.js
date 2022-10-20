@@ -28,7 +28,7 @@ const Experience = SortableElement(
             </p>
             {value.skills && (
               <p className="uk-text-primary">
-                {value.skills.map((name, key) => {
+                {value.skills.map(({ name }, key) => {
                   return (
                     <span key={key} className="uk-label uk-margin-small-right">
                       {name}
@@ -47,14 +47,26 @@ const Experience = SortableElement(
                     <ModalEdit
                       title="Édition - Mes expériences et compétences"
                       formSchema={schemaformEditExperience}
-                      defaultValues={value}
+                      defaultValues={{
+                        ...value,
+                        skills: value.skills?.map(({ name }) => {
+                          return name;
+                        }),
+                      }}
                       onSubmit={async (fields, closeModal) => {
                         closeModal();
                         items[sortIndex] = {
                           ...items[sortIndex],
-                          ...fields,
+                          ...{
+                            ...fields,
+                            skills: fields.skills?.map((skill) => {
+                              return { name: skill };
+                            }),
+                          },
                         };
-                        await onChange({ experiences: items });
+                        await onChange({
+                          experiences: items,
+                        });
                       }}
                     />
                   );
@@ -166,6 +178,11 @@ const ExperiencesProfileCard = ({ experiences, onChange }) => {
                                 ? val.order
                                 : acc;
                             }, []) + 1,
+                          skills: fields.skills?.map((skill) => {
+                            return {
+                              name: skill,
+                            };
+                          }),
                         },
                       ],
                     });

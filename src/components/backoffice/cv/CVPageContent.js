@@ -52,10 +52,18 @@ ModalPreview.propTypes = {
   cv: PropTypes.shape({
     catchphrase: PropTypes.string,
     story: PropTypes.string,
-    locations: PropTypes.arrayOf(PropTypes.string),
+    locations: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
     availability: PropTypes.string,
     urlImg: PropTypes.string,
-    contracts: PropTypes.arrayOf(PropTypes.string),
+    contracts: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
     ambitions: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string.isRequired,
@@ -73,13 +81,39 @@ ModalPreview.propTypes = {
         order: PropTypes.number.isRequired,
       })
     ).isRequired,
-    languages: PropTypes.arrayOf(PropTypes.string),
+    languages: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
     transport: PropTypes.string,
-    skills: PropTypes.arrayOf(PropTypes.string),
-    passions: PropTypes.arrayOf(PropTypes.string),
-
-    reviews: PropTypes.arrayOf(PropTypes.string),
-    experiences: PropTypes.arrayOf(PropTypes.string),
+    skills: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    passions: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    reviews: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        text: PropTypes.string.isRequired,
+        status: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    experiences: PropTypes.arrayOf(
+      PropTypes.shape({
+        description: PropTypes.string.isRequired,
+        skills: PropTypes.arrayOf(
+          PropTypes.shape({
+            name: PropTypes.string.isRequired,
+          })
+        ).isRequired,
+      })
+    ).isRequired,
     status: PropTypes.string,
     UserId: PropTypes.string,
     profileImageObjectUrl: PropTypes.string,
@@ -247,14 +281,14 @@ const CVPageContent = ({ candidatId, cv, setCV }) => {
       setPdfGenerating(true);
 
       channelPreview.bind(SOCKETS.EVENTS.CV_PREVIEW_DONE, (data) => {
-        if (data.candidatId === candidatId) {
+        if (data.candidateId === candidatId) {
           setPreviewGenerating(false);
           pusher.unsubscribe(SOCKETS.CHANNEL_NAMES.CV_PREVIEW);
         }
       });
 
       channelPDF.bind(SOCKETS.EVENTS.CV_PDF_DONE, (data) => {
-        if (data.candidatId === candidatId) {
+        if (data.candidateId === candidatId) {
           setPdfGenerating(false);
           pusher.unsubscribe(SOCKETS.CHANNEL_NAMES.CV_PDF);
         }
@@ -272,7 +306,7 @@ const CVPageContent = ({ candidatId, cv, setCV }) => {
       formData.append('cv', JSON.stringify(obj));
       formData.append('profileImage', cv.profileImage);
       // post
-      return Api.post(`/cv`, formData, {
+      return Api.post(`/cv/${cv.UserId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -309,7 +343,7 @@ const CVPageContent = ({ candidatId, cv, setCV }) => {
       // post
       return saveUserData(obj)
         .then(() => {
-          return Api.post(`/cv`, formData, {
+          return Api.post(`/cv/${tempCV.UserId}`, formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
@@ -407,9 +441,9 @@ const CVPageContent = ({ candidatId, cv, setCV }) => {
         </Grid>
       </Grid>
       <CVFicheEdition
-        email={cv.email || cv.user.candidat.email}
-        phone={cv.phone || cv.user.candidat.phone}
-        address={cv.address || cv.user.candidat.address}
+        email={cv.user.candidat.email}
+        phone={cv.user.candidat.phone}
+        address={cv.user.candidat.address}
         cv={cv}
         previewGenerating={previewGenerating}
         disablePicture={
@@ -427,7 +461,86 @@ const CVPageContent = ({ candidatId, cv, setCV }) => {
 
 CVPageContent.propTypes = {
   candidatId: PropTypes.string.isRequired,
-  cv: PropTypes.shape(),
+  cv: PropTypes.shape({
+    user: PropTypes.shape({
+      candidat: PropTypes.shape({
+        firstName: PropTypes.string.isRequired,
+        lastName: PropTypes.string.isRequired,
+        email: PropTypes.string.isRequired,
+        phone: PropTypes.string.isRequired,
+        address: PropTypes.string.isRequired,
+        zone: PropTypes.string.isRequired,
+      }).isRequired,
+    }).isRequired,
+    catchphrase: PropTypes.string,
+    story: PropTypes.string,
+    locations: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    availability: PropTypes.string,
+    urlImg: PropTypes.string,
+    contracts: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    ambitions: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        order: PropTypes.number.isRequired,
+        prefix: PropTypes.oneOf(
+          AMBITIONS_PREFIXES.map(({ value }) => {
+            return value;
+          })
+        ),
+      })
+    ),
+    businessLines: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        order: PropTypes.number.isRequired,
+      })
+    ).isRequired,
+    languages: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    transport: PropTypes.string,
+    skills: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    passions: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    reviews: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        text: PropTypes.string.isRequired,
+        status: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    experiences: PropTypes.arrayOf(
+      PropTypes.shape({
+        description: PropTypes.string.isRequired,
+        skills: PropTypes.arrayOf(
+          PropTypes.shape({
+            name: PropTypes.string.isRequired,
+          })
+        ).isRequired,
+      })
+    ).isRequired,
+    status: PropTypes.string,
+    version: PropTypes.number,
+    UserId: PropTypes.string,
+    profileImage: PropTypes.string,
+  }),
   setCV: PropTypes.func.isRequired,
 };
 

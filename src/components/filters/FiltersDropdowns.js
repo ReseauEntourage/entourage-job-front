@@ -57,7 +57,7 @@ const FiltersDropdowns = ({
         >
           <input
             id={id}
-            data-test={
+            data-testid={
               filterConst.value ? `input-checkbox-${filterConst.value}` : ''
             }
             style={{ marginTop: 1 }}
@@ -82,7 +82,7 @@ const FiltersDropdowns = ({
               return (
                 <div
                   key={key}
-                  data-test={`input-container-${key}`}
+                  data-testid={`input-container-${key}`}
                   style={{ minWidth: smallSelectors ? 100 : 150 }}
                   className={`uk-inline ${
                     fullWidth ? 'uk-width-expand uk-margin-small-bottom' : ''

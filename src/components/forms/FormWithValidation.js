@@ -110,7 +110,6 @@ const FormWithValidation = forwardRef(
         setFieldValidations(tmpFieldValidations);
         setError('Un ou plusieurs champs sont invalides');
         await onError(fieldValues);
-        console.error(validation);
       }
     };
 
@@ -173,6 +172,7 @@ const FormWithValidation = forwardRef(
           className="uk-form-stacked uk-grid-small uk-width-1-1 uk-child-width-1-1"
           data-uk-grid
           onSubmit={submitForm}
+          data-testid="form-with-validation"
           onKeyDown={(ev) => {
             if (enterToSubmit) {
               if (ev.key === 'Enter') {

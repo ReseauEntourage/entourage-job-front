@@ -58,7 +58,7 @@ CVPDFPage.getInitialProps = async ({ query }) => {
         return { cv: data, page: query.page };
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         return { cv: null };
       });
   }

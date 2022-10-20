@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
 
-const CloseButton = ({ className, onClick }) => {
+const CloseButton = ({ className, onClick, dataTestId }) => {
   return (
     <button
       className={className || 'uk-offcanvas-close'}
@@ -10,6 +10,7 @@ const CloseButton = ({ className, onClick }) => {
       data-uk-close
       aria-label="close"
       onClick={onClick}
+      data-testid={dataTestId}
     />
   );
 };
@@ -17,10 +18,12 @@ const CloseButton = ({ className, onClick }) => {
 CloseButton.propTypes = {
   className: PropTypes.string,
   onClick: PropTypes.func,
+  dataTestId: PropTypes.string,
 };
 CloseButton.defaultProps = {
   className: undefined,
   onClick: () => {},
+  dataTestId: '',
 };
 export const CloseButtonNoSSR = dynamic(
   () => {

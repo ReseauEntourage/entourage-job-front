@@ -220,7 +220,7 @@ const User = () => {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         setLoading(false);
       });
   }, [memberId]);
@@ -332,7 +332,9 @@ const User = () => {
                   pathname: '/backoffice/admin/offres',
                   query: {
                     tag: OFFER_ADMIN_FILTERS_DATA[1].tag,
-                    department: cv.locations,
+                    department: cv.locations.map(({ name }) => {
+                      return name;
+                    }),
                     businessLines: _.uniq(
                       cv.businessLines.map(({ name }) => {
                         return name;
