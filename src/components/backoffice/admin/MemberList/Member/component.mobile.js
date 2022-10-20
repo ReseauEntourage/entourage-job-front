@@ -35,7 +35,7 @@ const Member = ({ member, role, callback }) => {
             <Checkbox
               size={16}
               handleClick={handleCheckBox}
-              disabled={getCandidateFromCoachOrCandidate(member).hidden}
+              disabled={getCandidateFromCoachOrCandidate(member)?.hidden}
             />
           </div>
         )}
