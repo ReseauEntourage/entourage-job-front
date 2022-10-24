@@ -1,0 +1,93 @@
+import React from 'react';
+import { StyledCoachContainer } from 'src/components/partials/Aider/CoachContainer/styles';
+import TitleSection from 'src/components/partials/Aider/H2';
+import AiderAccompagnerCoachImg from 'public/static/img/aider-accompagner-coach.jpg';
+import BackgroundImage from 'src/components/utils/BackgroundImage';
+import { COLORS } from 'src/constants/styles';
+import Button from 'src/components/utils/Button';
+import { IconNoSSR } from 'src/components/utils/Icon';
+import CoachTestimony from 'src/components/partials/Aider/CoachContainer/CoachTestimony';
+import WelcomeIcon from 'public/static/img/icons/aider-welcome.svg';
+import ReseauIcon from 'public/static/img/icons/aider-reseau.svg';
+import InterviewIcon from 'public/static/img/icons/aider-interview.svg';
+import BoiteOutilsIcon from 'public/static/img/icons/aider-boite-outils.svg';
+import { Container } from 'src/components/utils/containers';
+import uuid from 'uuid/v4';
+
+const pictoContent = [
+  {
+    picto: WelcomeIcon,
+    subtitle: 'Webinaire d’information',
+    text: 'sur la mission  et un parcours de formation.',
+  },
+  {
+    picto: ReseauIcon,
+    subtitle: 'Une communauté de coachs ',
+    text: 'pour partager son réseau, des bonnes pratiques et des temps conviviaux',
+  },
+  {
+    picto: InterviewIcon,
+    subtitle: 'Un suivi individualisé',
+    text: 'par l’equipe pour répondre à toutes vos questions ',
+  },
+  {
+    picto: BoiteOutilsIcon,
+    subtitle: 'Une boîte à outils',
+    text: 'pour favoriser l’accompagnement à chaque étape du parcours ',
+  },
+];
+
+const CoachContainer = () => {
+  return (
+    <StyledCoachContainer>
+      <BackgroundImage
+        img={AiderAccompagnerCoachImg}
+        alt="aider coach linkedout"
+      >
+        <Container>
+          <TitleSection
+            title="Toutes les informations sur la mission"
+            titleColor="white"
+            svgColor="white"
+            svgStroke={COLORS.gray}
+          />
+          <div className="picto-text-container">
+            {pictoContent.map((content, key) => {
+              return (
+                <div className="picto-text-content" key={`${key}-${uuid}`}>
+                  <content.picto />
+                  <p>
+                    <strong>{content.subtitle}</strong>
+                  </p>
+                  <p>{content.text}</p>
+                </div>
+              );
+            })}
+          </div>
+        </Container>
+      </BackgroundImage>
+      <Container>
+        <div className="coach-cta-container">
+          <h4>La mission de coach vous intéresse ?</h4>
+          <p>
+            Inscrivez-vous au prochain webinaire d’information pour valider
+            votre entrée dans le parcours
+          </p>
+          <Button
+            href="https://airtable.com/shrospLiHWS9OFCD6"
+            newTab
+            isExternal
+            style="primary"
+          >
+            Devenir Coach LinkedOut&nbsp;
+            <IconNoSSR name="chevron-right" />
+          </Button>
+        </div>
+      </Container>
+
+      <CoachTestimony />
+    </StyledCoachContainer>
+  );
+};
+
+export default CoachContainer;
