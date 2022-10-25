@@ -5,7 +5,14 @@ import { BREAKPOINTS } from 'src/constants/styles';
 import { isSSR } from 'src/utils/isSSR';
 import PropTypes from 'prop-types';
 
-const BackgroundImage = ({ img, alt, children, imgMobile }) => {
+const BackgroundImage = ({
+  img,
+  alt,
+  children,
+  imgMobile,
+  mobileHeight,
+  isHero,
+}) => {
   const [isDesktop, setIsDesktop] = useState(true);
   useEffect(() => {
     if (!isSSR) {
@@ -13,7 +20,10 @@ const BackgroundImage = ({ img, alt, children, imgMobile }) => {
     }
   }, [imgMobile]);
   return (
-    <StyledBackground>
+    <StyledBackground
+      mobileHeight={mobileHeight}
+      className={isHero ? 'top-banner' : ''}
+    >
       <div
         className={`banner-container ${
           imgMobile && !isDesktop ? 'mobile-banner-container' : ''
@@ -52,10 +62,14 @@ BackgroundImage.propTypes = {
     PropTypes.arrayOf(PropTypes.element),
   ]).isRequired,
   imgMobile: PropTypes.oneOf(PropTypes.string, undefined),
+  mobileHeight: PropTypes.oneOf(PropTypes.number, undefined),
+  isHero: PropTypes.bool,
 };
 
 BackgroundImage.defaultProps = {
   imgMobile: undefined,
+  mobileHeight: undefined,
+  isHero: false,
 };
 
 export default BackgroundImage;

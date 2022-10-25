@@ -14,12 +14,6 @@ export function plateform(data) {
     window.addEventListener('resize', handleDevice);
   }
 
-  if (isDesktop) {
-    console.log('desktop');
-  } else {
-    console.log('mobile');
-  }
-
   return (props) => {
     if (isDesktop) {
       return Desktop ? <Desktop {...props} /> : null;

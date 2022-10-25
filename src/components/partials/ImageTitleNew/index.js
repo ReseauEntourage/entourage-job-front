@@ -6,7 +6,12 @@ import { PropTypes } from 'prop-types';
 
 const ImageTitle = ({ title, description, img, imgMobile }) => {
   return (
-    <BackgroundImage img={img} imgMobile={imgMobile} alt="aider linkedout">
+    <BackgroundImage
+      img={img}
+      imgMobile={imgMobile}
+      alt="aider linkedout"
+      isHero
+    >
       <Container>
         <StyledImageTitle>
           <h1>{title}</h1>

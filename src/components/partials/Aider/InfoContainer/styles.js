@@ -18,22 +18,24 @@ export const StyledInfoContainer = styled.section`
   }
   .text-content {
     max-width: 1200px;
-    @media screen and (min-width: ${BREAKPOINTS.desktop}px) {
-      padding: 0 60px;
-    }
     margin: 0 auto 48px;
     text-align: center;
+    line-height: 24px;
+    font-size: 14px;
     .orange {
       color: ${COLORS.primaryOrange};
-      font-size: 16px;
-      line-height: 20px;
+      font-weight: 700;
     }
     .strong {
       font-weight: 700;
+    }
+    @media screen and (min-width: ${BREAKPOINTS.desktop}px) {
+      padding: 0 60px;
+      font-size: 16px;
       line-height: 32px;
-      @media screen and (min-width: ${BREAKPOINTS.desktop}px) {
+
+      .strong {
         font-size: 20px;
-        line-height: 24px;
       }
     }
   }
@@ -74,10 +76,12 @@ export const StyledInfoContainer = styled.section`
 
     .informer-card {
       font-size: 14px;
+      padding-right: 0;
+      box-sizing: border-box;
       .picto-h4 {
         display: flex;
-        flex-direction: row;
         align-items: center;
+        flex-direction: row;
         svg {
           min-width: 43px;
           height: 43px;
@@ -86,9 +90,16 @@ export const StyledInfoContainer = styled.section`
         h4 {
           font-weight: 700;
           margin: 16px 0;
+          font-size: 14px;
         }
-        li {
-          margin-bottom: 16px;
+      }
+      li {
+        margin-bottom: 16px;
+      }
+      @media screen and (min-width: ${BREAKPOINTS.desktop}px) {
+        padding-right: 24px;
+        .picto-h4 {
+          display: unset;
         }
       }
     }

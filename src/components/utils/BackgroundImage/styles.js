@@ -2,6 +2,16 @@ import styled from 'styled-components';
 import { BREAKPOINTS } from 'src/constants/styles';
 
 export const StyledBackground = styled.section`
+  &.top-banner {
+    .banner-container {
+      max-height: 300px;
+      height: 300px;
+      .banner {
+        height: 300px;
+        max-height: 300px;
+      }
+    }
+  }
   .banner-container {
     width: 100%;
     position: relative;
@@ -27,18 +37,27 @@ export const StyledBackground = styled.section`
       width: 100%;
     }
     &.mobile-banner-container {
-      height: 199px;
-      max-height: 199px;
+      height: ${(props) => {
+        return props.mobileHeight ? `${props.mobileHeight}px` : '199px';
+      }};
+      max-height: ${(props) => {
+        return props.mobileHeight ? `${props.mobileHeight}px` : '199px';
+      }};
+
       .banner {
-        height: 199px;
-        max-height: 199px;
+        height: ${(props) => {
+          return props.mobileHeight ? `${props.mobileHeight}px` : '199px';
+        }};
+        max-height: ${(props) => {
+          return props.mobileHeight ? `${props.mobileHeight}px` : '199px';
+        }};
       }
       @media screen and (min-width: ${BREAKPOINTS.desktop}px) {
         height: 360px;
         max-height: 360px;
         .banner {
-          height: 199px;
-          max-height: 199px;
+          height: 360px;
+          max-height: 360px;
         }
       }
     }

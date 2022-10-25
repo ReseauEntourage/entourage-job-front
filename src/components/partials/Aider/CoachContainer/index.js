@@ -2,6 +2,7 @@ import React from 'react';
 import { StyledCoachContainer } from 'src/components/partials/Aider/CoachContainer/styles';
 import TitleSection from 'src/components/partials/Aider/H2';
 import AiderAccompagnerCoachImg from 'public/static/img/aider-accompagner-coach.jpg';
+import AiderAccompagnerCoachImgMobile from 'public/static/img/aider-accompagner-coach-mobile.jpg';
 import BackgroundImage from 'src/components/utils/BackgroundImage';
 import { COLORS } from 'src/constants/styles';
 import Button from 'src/components/utils/Button';
@@ -43,10 +44,12 @@ const CoachContainer = () => {
       <BackgroundImage
         img={AiderAccompagnerCoachImg}
         alt="aider coach linkedout"
+        imgMobile={AiderAccompagnerCoachImgMobile}
+        mobileHeight={1200}
       >
         <Container>
           <TitleSection
-            title="Toutes les informations sur la mission"
+            title="LinkedOut accompagne les coachs à chaque étape"
             titleColor="white"
             svgColor="white"
             svgStroke={COLORS.gray}
