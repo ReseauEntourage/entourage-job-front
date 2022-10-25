@@ -21,9 +21,8 @@ const MembersAdmin = () => {
   useEffect(() => {
     if (isReady) {
       if (user) {
-        if (!role) {
+        if (!role || !['Candidat', 'Coach'].includes(role)) {
           const params = { role: 'Candidat', ...restParams };
-
           if (user && user.zone) {
             params.zone = user.zone;
           }

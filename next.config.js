@@ -93,6 +93,11 @@ module.exports = withLess({
   webpack: (config, options) => {
     config.resolve.modules.push(__dirname);
 
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ["@svgr/webpack"]
+    });
+
     if (!options.isServer) {
       config.resolve.alias['@sentry/node'] = '@sentry/react';
     }

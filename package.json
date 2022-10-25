@@ -1,6 +1,6 @@
 {
   "name": "linkedout-front",
-  "version": "1.29.0",
+  "version": "1.30.0",
   "description": "",
   "main": "index.js",
   "engines": {
@@ -49,6 +49,7 @@
     "@sentry/react": "^5.29.0",
     "@sentry/tracing": "^5.27.3",
     "@sentry/webpack-plugin": "^1.15.0",
+    "@svgr/webpack": "^6.5.0",
     "array-move": "^2.2.2",
     "axios": "^0.24.0",
     "check-password-strength": "^2.0.5",

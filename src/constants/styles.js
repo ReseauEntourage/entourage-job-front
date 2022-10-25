@@ -11,6 +11,8 @@ export const COLORS = {
   darkOrange: '#d53f00',
   yesGreen: '#79CC6B',
   noRed: '#FE2929',
+  wheat: '#FFF8F6',
+  darkGrayFont: '#6D6C6C',
   cvStatus: {
     none: {
       border: '#F5F5F5',

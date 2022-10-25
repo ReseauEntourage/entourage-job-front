@@ -123,8 +123,9 @@ const Member = ({ member, role, callback }) => {
           <td className="checkbox-cell">
             <Checkbox
               size={16}
+              checked={checked}
               handleClick={handleCheckBox}
-              disabled={getCandidateFromCoachOrCandidate(member).hidden}
+              disabled={getCandidateFromCoachOrCandidate(member)?.hidden}
             />
           </td>
         </>

@@ -52,7 +52,7 @@ const StepsToJoin = () => {
         Pour être tenu au courant des actualités sur projet, suivez l’aventure
         sur nos réseaux !
       </h4>
-      <SharePartial padding={false} showTitle={false} />
+      <SharePartial padding={false} />
     </Section>
   );
 };

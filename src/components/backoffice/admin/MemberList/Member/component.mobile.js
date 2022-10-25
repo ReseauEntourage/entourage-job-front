@@ -33,9 +33,10 @@ const Member = ({ member, role, callback }) => {
         {role !== USER_ROLES.COACH && (
           <div className="checkbox-container">
             <Checkbox
+              checked={checked}
               size={16}
               handleClick={handleCheckBox}
-              disabled={getCandidateFromCoachOrCandidate(member).hidden}
+              disabled={getCandidateFromCoachOrCandidate(member)?.hidden}
             />
           </div>
         )}
