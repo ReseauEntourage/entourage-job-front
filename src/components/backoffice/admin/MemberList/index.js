@@ -150,8 +150,10 @@ const MemberList = ({
     <>
       <BackToTop />
       <HeaderBackoffice
-        title={`Gestion des ${role.toLocaleLowerCase()}s`}
-        description={`Ici vous pouvez accéder à tous les profils des ${role.toLocaleLowerCase()}s afin d'effectuer un suivi individuel de leur avancée.`}
+        title={`Gestion des ${role?.toLocaleLowerCase()}s`}
+        description={`Ici vous pouvez accéder à tous les profils des ${
+          role?.toLocaleLowerCase() || 'membres'
+        }s afin d'effectuer un suivi individuel de leur avancée.`}
         page={roleToPage[role]}
       >
         <Button
@@ -305,7 +307,7 @@ const MemberList = ({
                   await fetchData(search, filters, role, offset, false);
                 }}
               >
-                Voir tous les {role.toLocaleLowerCase()}s
+                Voir tous les {role?.toLocaleLowerCase()}s
               </Button>
             </div>
           )}

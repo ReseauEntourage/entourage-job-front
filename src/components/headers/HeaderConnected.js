@@ -97,7 +97,7 @@ const HeaderConnected = ({ isHome }) => {
         left={
           <>
             <NavbarLogo
-              href={LINKS_CONNECTED[user.role.toLowerCase()][0].href}
+              href={LINKS_CONNECTED[user?.role?.toLowerCase()][0].href}
               src="/static/img/linkedout_logo_orange.png"
               alt="Linkedout"
             />
@@ -105,7 +105,7 @@ const HeaderConnected = ({ isHome }) => {
               className="uk-navbar-nav"
               style={{ borderLeft: '1px solid lightgray' }}
             >
-              {LINKS_CONNECTED[user.role.toLowerCase()].map(
+              {LINKS_CONNECTED[user?.role?.toLowerCase()].map(
                 (
                   {
                     href,
@@ -177,7 +177,7 @@ const HeaderConnected = ({ isHome }) => {
               Accueil
             </SimpleLink>
           </li>
-          {LINKS_CONNECTED[user.role.toLowerCase()]
+          {LINKS_CONNECTED[user?.role?.toLowerCase()]
             .filter(({ href }) => {
               return href !== '#';
             })
