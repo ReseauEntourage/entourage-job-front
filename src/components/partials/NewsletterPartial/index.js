@@ -75,12 +75,12 @@ const NewsletterPartial = ({ style, padding, tag }) => {
                 <div className="input-label" key={`${key}-${uuid}`}>
                   <div>
                     <Checkbox
-                      checked={tagConst === zone}
+                      checked={tagConst === status}
                       handleClick={() => {
-                        if (zone === tagConst) {
-                          setZone();
+                        if (status === tagConst) {
+                          setStatus();
                         } else {
-                          setZone(tagConst);
+                          setStatus(tagConst);
                         }
                       }}
                     />
@@ -99,12 +99,12 @@ const NewsletterPartial = ({ style, padding, tag }) => {
                 <div className="input-label">
                   <div>
                     <Checkbox
-                      checked={tagConst === status}
+                      checked={tagConst === zone}
                       handleClick={() => {
                         if (zone === tagConst) {
-                          setStatus();
+                          setZone();
                         } else {
-                          setStatus(tagConst);
+                          setZone(tagConst);
                         }
                       }}
                     />
