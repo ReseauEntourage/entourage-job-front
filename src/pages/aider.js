@@ -23,6 +23,7 @@ const Aider = () => {
         description="Engagez-vous et aidez les candidats LinkedOut à retrouver un réseau, que vous soyez disponibles quelques minutes ou quelques mois."
         img={MainImg}
         imgMobile={MainImgMobile}
+        alt="Un candidat LinkedOut et sa coach"
       />
       <HelpCards />
       <InfoContainer />

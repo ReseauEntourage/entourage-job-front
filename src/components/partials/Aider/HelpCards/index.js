@@ -45,7 +45,7 @@ const cardsContent = [
   {
     title: 'Soutenez financièrement le projet',
     img: HelpProject,
-    text: 'Pas de temps mais envie de soutenir notre projet ? Faites un don à en quelques clics pour participer à la création d’une société plus inclusive et permettre à nos candidats de vivre des expériences transformantes.',
+    text: 'Pas de temps mais envie de soutenir notre projet ? Faites un don en quelques clics pour participer à la création d’une société plus inclusive et permettre à nos candidats de vivre des expériences transformantes.',
     cta: 'Faire un don',
     href: 'https://entourage.iraiser.eu/linkedout/~mon-don',
     alt: '',

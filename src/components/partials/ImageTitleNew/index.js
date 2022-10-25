@@ -4,14 +4,9 @@ import BackgroundImage from 'src/components/utils/BackgroundImage';
 import { Container } from 'src/components/utils/containers';
 import { PropTypes } from 'prop-types';
 
-const ImageTitle = ({ title, description, img, imgMobile }) => {
+const ImageTitle = ({ title, description, img, imgMobile, alt }) => {
   return (
-    <BackgroundImage
-      img={img}
-      imgMobile={imgMobile}
-      alt="aider linkedout"
-      isHero
-    >
+    <BackgroundImage img={img} imgMobile={imgMobile} alt={alt} isHero>
       <Container>
         <StyledImageTitle>
           <h1>{title}</h1>
@@ -27,10 +22,12 @@ ImageTitle.propTypes = {
   description: PropTypes.string.isRequired,
   img: PropTypes.string.isRequired,
   imgMobile: PropTypes.oneOf(PropTypes.string, undefined),
+  alt: PropTypes.string,
 };
 
 ImageTitle.defaultProps = {
   imgMobile: undefined,
+  alt: '',
 };
 
 export default ImageTitle;
