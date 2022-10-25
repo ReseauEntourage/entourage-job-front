@@ -94,9 +94,9 @@ const NewsletterPartial = ({ style, padding, tag }) => {
         <div className="form-group">
           <div className="group-name">J&apos;habite :</div>
           <div className="checkbox-container">
-            {NEWSLETTER_TAGS.ZONE.map(({ tag: tagConst, label }) => {
+            {NEWSLETTER_TAGS.ZONE.map(({ tag: tagConst, label }, key) => {
               return (
-                <div className="input-label">
+                <div className="input-label" key={`${key}-${uuid}`}>
                   <div>
                     <Checkbox
                       checked={tagConst === zone}
