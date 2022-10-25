@@ -16,7 +16,7 @@ const infoContent = [
   {
     picto: PictoRechercheCV,
     alt: 'recherche emploi',
-    title: 'Préparation la recherche d’emploi',
+    title: 'Préparation à la recherche d’emploi',
     ul: [
       'Réalisation du CV façon LinkedOut',
       'Relecture du parcours du candidat et formalisation des envies professionnelles',
@@ -61,6 +61,7 @@ const InfoContainer = () => {
             layout="fill"
             objectFit="cover"
             objectPosition={imagePosition}
+            alt="Coaches qui accompagnent des candidats vers la réinsertion"
           />
         </div>
       </div>
@@ -80,8 +81,8 @@ const InfoContainer = () => {
             </span>
           </p>
           <p className="strong">
-            Vous etes motivés, disponible avec l&apos;envie de rencontrer une
-            nouvelle personne : Transmettez au candidat votre expérience de
+            Vous êtes motivé, disponible, et avez envie de rencontrer une
+            nouvelle personne : transmettez au candidat votre expérience de
             l&apos;entreprise, de la recherche d&apos;emploi et participez à lui
             redonner confiance !
           </p>
@@ -89,7 +90,10 @@ const InfoContainer = () => {
         <div className="informer-cards-container">
           <div className="informer-illustration">
             <div className="informer-illustration-container">
-              <Image src={AiderInformationsMissions} />
+              <Image
+                src={AiderInformationsMissions}
+                alt="Un coach et un candidat LinkedOut"
+              />
             </div>
           </div>
           {infoContent.map((content, key) => {

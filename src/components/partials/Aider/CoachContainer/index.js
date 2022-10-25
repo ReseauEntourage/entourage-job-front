@@ -43,7 +43,7 @@ const CoachContainer = () => {
     <StyledCoachContainer>
       <BackgroundImage
         img={AiderAccompagnerCoachImg}
-        alt="aider coach linkedout"
+        alt="Un coach et un candidat LinkedOut qui rient ensemble"
         imgMobile={AiderAccompagnerCoachImgMobile}
         mobileHeight={1200}
       >
@@ -58,7 +58,9 @@ const CoachContainer = () => {
             {pictoContent.map((content, key) => {
               return (
                 <div className="picto-text-content" key={`${key}-${uuid}`}>
-                  <content.picto />
+                  <div className="svg-container">
+                    <content.picto />
+                  </div>
                   <p>
                     <strong>{content.subtitle}</strong>
                   </p>
