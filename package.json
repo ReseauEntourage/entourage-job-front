@@ -49,6 +49,7 @@
     "@sentry/react": "^5.29.0",
     "@sentry/tracing": "^5.27.3",
     "@sentry/webpack-plugin": "^1.15.0",
+    "@svgr/webpack": "^6.5.0",
     "array-move": "^2.2.2",
     "axios": "^0.24.0",
     "check-password-strength": "^2.0.5",
