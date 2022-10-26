@@ -123,10 +123,13 @@ const NewsletterPartial = ({ style, padding, tag }) => {
               return setEmail(e.target.value);
             }}
             value={email}
+            data-testid="nl-email-input"
           />
         </div>
         {!isMailValid && (
-          <div className="uk-text-danger">Adresse mail invalide.</div>
+          <div data-testid="nl-error-msg" className="uk-text-danger">
+            Adresse mail invalide.
+          </div>
         )}
         {!isTagsValid && (
           <div className="uk-text-danger uk-text-center">
@@ -134,7 +137,7 @@ const NewsletterPartial = ({ style, padding, tag }) => {
           </div>
         )}
         <div className="uk-flex uk-flex-center uk-margin-small-top">
-          <Button style="primary" onClick={onSubmit}>
+          <Button style="primary" onClick={onSubmit} dataTestId="nl-submit-btn">
             S&apos;abonner&nbsp; à la newsletter !
           </Button>
         </div>

@@ -14,8 +14,8 @@ jest.mock('src/components/modals/Modal', () => {
   const modalModule = jest.requireActual('src/components/modals/Modal');
   return {
     ...modalModule,
-    Modal: (props) => {
-      return <div>{props.children}</div>;
+    Modal: ({ children }) => {
+      return <div>{children}</div>;
     },
   };
 });

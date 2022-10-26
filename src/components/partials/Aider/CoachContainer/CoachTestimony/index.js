@@ -35,7 +35,10 @@ const CoachTestimony = () => {
           titleColor="black"
           svgColor={COLORS.primaryOrange}
         />
-        <div className="testimony-container">
+        <div
+          className="testimony-container"
+          uk-scrollspy="cls:uk-animation-slide-bottom; target: > .testimony-content; delay: 200;"
+        >
           {testimonyContent.map(({ text, coach, candidat }, key) => {
             return (
               <div className="testimony-content" key={`${key}-${uuid}`}>

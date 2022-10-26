@@ -46,16 +46,6 @@ const CVEntreprises = () => {
           },
           label: 'Découvrez les candidats',
         }}
-        secondCta={{
-          href: process.env.AIRTABLE_LINK_COMPANY_HELP,
-          isExternal: true,
-          newTab: true,
-          onClick: () => {
-            gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
-            fbEvent(FB_TAGS.COMPANY_CONTACT);
-          },
-          label: 'Nous contacter',
-        }}
       />
       <div id="searchCandidates">
         <SearchCandidates style="muted" />

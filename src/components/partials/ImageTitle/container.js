@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ImageTitleContent from './component';
 
-const ImageTitle = ({ id, title, text, img, cta, secondCta }) => {
+const ImageTitle = ({ id, title, text, img, cta }) => {
   const viewportMobileHeightWithoutHeader = 'calc(100vh - 80px)';
   const viewportHeightWithoutHeader = 'calc(75vh - 80px)';
 
@@ -18,13 +18,7 @@ const ImageTitle = ({ id, title, text, img, cta, secondCta }) => {
         }}
         className="uk-flex uk-flex-column uk-flex-center uk-box-shadow-medium uk-visible@m"
       >
-        <ImageTitleContent
-          title={title}
-          text={text}
-          img={img}
-          cta={cta}
-          secondCta={secondCta}
-        />
+        <ImageTitleContent title={title} text={text} img={img} cta={cta} />
       </div>
       <div
         style={{
@@ -33,13 +27,7 @@ const ImageTitle = ({ id, title, text, img, cta, secondCta }) => {
         }}
         className="uk-flex uk-flex-column uk-flex-center uk-box-shadow-medium uk-hidden@m"
       >
-        <ImageTitleContent
-          title={title}
-          text={text}
-          img={img}
-          cta={cta}
-          secondCta={secondCta}
-        />
+        <ImageTitleContent title={title} text={text} img={img} cta={cta} />
       </div>
     </div>
   );
@@ -59,21 +47,11 @@ ImageTitle.propTypes = {
     newTab: PropTypes.bool,
     dataTest: PropTypes.string,
   }),
-  secondCta: PropTypes.shape({
-    onClick: PropTypes.func,
-    label: PropTypes.string,
-    href: PropTypes.string,
-    className: PropTypes.string,
-    isExternal: PropTypes.bool,
-    newTab: PropTypes.bool,
-    dataTest: PropTypes.string,
-  }),
 };
 
 ImageTitle.defaultProps = {
   text: undefined,
   cta: undefined,
-  secondCta: undefined,
 };
 
 export default ImageTitle;

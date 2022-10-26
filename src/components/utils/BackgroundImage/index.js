@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { StyledBackground } from 'src/components/utils/BackgroundImage/styles';
 import Image from 'next/image';
 import { BREAKPOINTS } from 'src/constants/styles';
-import { isSSR } from 'src/utils/isSSR';
 import PropTypes from 'prop-types';
+import useWindowSize from 'src/hooks/useWindowSize';
 
 const BackgroundImage = ({
   img,
@@ -13,12 +13,11 @@ const BackgroundImage = ({
   mobileHeight,
   isHero,
 }) => {
+  const { width } = useWindowSize();
   const [isDesktop, setIsDesktop] = useState(true);
   useEffect(() => {
-    if (!isSSR) {
-      setIsDesktop(window.innerWidth >= BREAKPOINTS.desktop);
-    }
-  }, [imgMobile]);
+    setIsDesktop(width >= BREAKPOINTS.desktop);
+  }, [imgMobile, width]);
   return (
     <StyledBackground
       mobileHeight={mobileHeight}
