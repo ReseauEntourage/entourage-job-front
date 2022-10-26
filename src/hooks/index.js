@@ -4,3 +4,4 @@ export * from 'src/hooks/useTabFilters';
 export * from 'src/hooks/useNotifBadges';
 export * from 'src/hooks/usePostOpportunity';
 export * from 'src/hooks/useCopyToClipboard';
+export * from 'src/hooks/useNewsletterTracking';

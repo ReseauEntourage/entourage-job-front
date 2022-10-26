@@ -11,8 +11,11 @@ import { EXTERNAL_LINKS } from 'src/constants';
 import { gaEvent } from 'src/lib/gtag';
 import { GA_TAGS } from 'src/constants/tags';
 import { IconNoSSR } from 'src/components/utils/Icon';
+import { useNewsletterTracking } from 'src/hooks';
 
 const ModalShareCV = ({ firstName }) => {
+  const newsletterParams = useNewsletterTracking();
+
   return (
     <StepperModal
       title="Merci pour votre partage."
@@ -33,7 +36,10 @@ const ModalShareCV = ({ firstName }) => {
                 onCancel={close}
                 onSubmit={({ email }) => {
                   gaEvent(GA_TAGS.POPUP_PARTAGE_ENVOYER_MAIL_SUCCES);
-                  return Api.post('/mail/newsletter', { email })
+                  return Api.post('/mail/newsletter', {
+                    email,
+                    ...newsletterParams,
+                  })
                     .then(next)
                     .catch(() => {
                       return UIkit.notification(

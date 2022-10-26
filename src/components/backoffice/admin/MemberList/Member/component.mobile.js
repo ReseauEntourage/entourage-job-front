@@ -12,6 +12,7 @@ import { StyledMobileMember } from 'src/components/backoffice/admin/MemberList/M
 import Checkbox from 'src/components/utils/Inputs/Checkbox';
 import { useCheckbox } from 'src/components/utils/Inputs/Checkbox/useCheckbox';
 import { renderCVStatus } from 'src/components/backoffice/admin/MemberList/Member/utils';
+import Link from 'next/link';
 
 const Member = ({ member, role, callback }) => {
   const cvStatus = renderCVStatus(member);
@@ -24,12 +25,14 @@ const Member = ({ member, role, callback }) => {
     >
       <div className="line member-head">
         <ImgProfile user={member} size={29} />
-        <a href={`/backoffice/admin/membres/${member.id}`}>
-          <span className="uk-text-bold">
-            {member.firstName} {member.lastName}
-          </span>
-          <span>{member.email}</span>
-        </a>
+        <Link href={`/backoffice/admin/membres/${member.id}`}>
+          <a>
+            <span className="uk-text-bold">
+              {member.firstName} {member.lastName}
+            </span>
+            <span>{member.email}</span>
+          </a>
+        </Link>
         {role !== USER_ROLES.COACH && (
           <div className="checkbox-container">
             <Checkbox
@@ -49,17 +52,19 @@ const Member = ({ member, role, callback }) => {
           </span>
 
           {getRelatedUser(member) ? (
-            <a href={`/backoffice/admin/membres/${relatedUser.id}`}>
-              <span>
-                <span className="uk-text-bold">
-                  {getRelatedUser(member).firstName}
-                  &nbsp;
-                  {getRelatedUser(member).lastName}
+            <Link href={`/backoffice/admin/membres/${relatedUser.id}`}>
+              <a>
+                <span>
+                  <span className="uk-text-bold">
+                    {getRelatedUser(member).firstName}
+                    &nbsp;
+                    {getRelatedUser(member).lastName}
+                  </span>
+                  &nbsp; &#8226; &nbsp;
+                  {getRelatedUser(member).email}
                 </span>
-                &nbsp; &#8226; &nbsp;
-                {getRelatedUser(member).email}
-              </span>
-            </a>
+              </a>
+            </Link>
           ) : (
             <span>Non lié</span>
           )}
