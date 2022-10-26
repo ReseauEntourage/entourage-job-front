@@ -1,8 +1,8 @@
 import React from 'react';
 import Layout from 'src/components/Layout';
-import { Grid, Section, SimpleLink } from 'src/components/utils';
+import { Grid, Section } from 'src/components/utils';
 import Button from 'src/components/utils/Button';
-import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { GA_TAGS } from 'src/constants/tags';
 import { NewsletterPartial } from 'src/components/partials';
 import { useRouter } from 'next/router';
 
@@ -37,9 +37,20 @@ const thankYouMessages = {
       <h3>Nous vous donnerons des nouvelles rapidement.</h3>
     </>
   ),
+  orientation: (
+    <>
+      <h2 className="uk-text-bold">
+        Merci beaucoup pour cette orientation&nbsp;!
+      </h2>
+      <h3>
+        Si elle entre dans les critères d’admission, nous prendrons rapidement
+        contact avec la personne orientée.
+      </h3>
+    </>
+  ),
 };
 
-const Orienter = () => {
+const Merci = () => {
   const {
     query: { type },
   } = useRouter();
@@ -74,4 +85,4 @@ const Orienter = () => {
   );
 };
 
-export default Orienter;
+export default Merci;
