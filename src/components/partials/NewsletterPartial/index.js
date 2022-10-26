@@ -12,6 +12,7 @@ import Checkbox from 'src/components/utils/Inputs/Checkbox';
 import { StyledPrimaryTextInput } from 'src/styles/components/inputs/styles';
 import uuid from 'uuid/v4';
 import { StyledNLForm } from 'src/components/partials/NewsletterPartial/styles';
+import { useNewsletterTracking } from 'src/hooks';
 
 const NewsletterPartial = ({ style, padding, tag }) => {
   const [email, setEmail] = useState('');
@@ -19,6 +20,7 @@ const NewsletterPartial = ({ style, padding, tag }) => {
   const [status, setStatus] = useState();
   const [isMailValid, setIsMailValid] = useState(true);
   const [isTagsValid, setIsTagsValid] = useState(true);
+  const newsletterParams = useNewsletterTracking();
 
   const onSubmit = async () => {
     const mailValid = validator.isEmail(email);
@@ -34,6 +36,7 @@ const NewsletterPartial = ({ style, padding, tag }) => {
           email,
           zone,
           status,
+          ...newsletterParams,
         });
         UIkit.notification(
           'Votre inscription à la newsletter a bien été prise en compte !',
@@ -72,12 +75,12 @@ const NewsletterPartial = ({ style, padding, tag }) => {
                 <div className="input-label" key={`${key}-${uuid}`}>
                   <div>
                     <Checkbox
-                      checked={tagConst === zone}
+                      checked={tagConst === status}
                       handleClick={() => {
-                        if (zone === tagConst) {
-                          setZone();
+                        if (status === tagConst) {
+                          setStatus();
                         } else {
-                          setZone(tagConst);
+                          setStatus(tagConst);
                         }
                       }}
                     />
@@ -96,12 +99,12 @@ const NewsletterPartial = ({ style, padding, tag }) => {
                 <div className="input-label">
                   <div>
                     <Checkbox
-                      checked={tagConst === status}
+                      checked={tagConst === zone}
                       handleClick={() => {
                         if (zone === tagConst) {
-                          setStatus();
+                          setZone();
                         } else {
-                          setStatus(tagConst);
+                          setZone(tagConst);
                         }
                       }}
                     />

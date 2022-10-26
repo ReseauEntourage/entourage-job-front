@@ -13,6 +13,7 @@ import { findConstantFromValue, getValueFromFormField } from 'src/utils';
 import { BUSINESS_LINES } from 'src/constants';
 import { fbEvent } from 'src/lib/fb';
 import moment from 'moment';
+import { useNewsletterTracking } from 'src/hooks/useNewsletterTracking';
 
 export function usePostOpportunity({
   modalTitle,
@@ -26,6 +27,8 @@ export function usePostOpportunity({
   const [lastFilledForm, setLastFilledForm] = useState({});
 
   const prevLastFilledForm = usePrevious(lastFilledForm);
+
+  const newsletterParams = useNewsletterTracking();
 
   const postOpportunity = useCallback(
     async (fields, closeModal, adminCallback) => {
@@ -76,6 +79,7 @@ export function usePostOpportunity({
             };
           }),
           date: moment().toISOString(),
+          ...newsletterParams,
         });
         closeModal();
         UIkit.notification(successMessage, 'success');
@@ -97,7 +101,7 @@ export function usePostOpportunity({
         UIkit.notification(`Une erreur est survenue.`, 'danger');
       }
     },
-    [isAdmin]
+    [isAdmin, newsletterParams]
   );
 
   const PostOpportunityModal = memo(() => {

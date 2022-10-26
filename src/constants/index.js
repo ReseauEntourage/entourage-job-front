@@ -399,12 +399,16 @@ export const NEWSLETTER_TAGS = {
       tag: ADMIN_ZONES.PARIS,
     },
     {
-      label: 'Lyon',
+      label: 'Région lyonnaise',
       tag: ADMIN_ZONES.LYON,
     },
     {
-      label: 'Lille',
+      label: 'Région lilloise',
       tag: ADMIN_ZONES.LILLE,
+    },
+    {
+      label: 'Bretagne',
+      tag: ADMIN_ZONES.LORIENT,
     },
     {
       label: 'Autre',

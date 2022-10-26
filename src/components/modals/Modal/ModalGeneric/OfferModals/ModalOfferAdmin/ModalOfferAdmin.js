@@ -382,7 +382,7 @@ const ModalOfferAdmin = ({
                   }}
                 />
               )}
-              {(offer.isValidated || offer.isArchived) && (
+              {(offer.isValidated || offer.isArchived || !offer.isExternal) && (
                 <ButtonIcon
                   name="archive"
                   className={offer.isArchived ? 'ent-color-amber' : undefined}

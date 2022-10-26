@@ -13,6 +13,7 @@ import { renderCVStatus } from 'src/components/backoffice/admin/MemberList/Membe
 import Checkbox from 'src/components/utils/Inputs/Checkbox';
 import { useCheckbox } from 'src/components/utils/Inputs/Checkbox/useCheckbox';
 import { translateStatusCV } from 'src/components/backoffice/admin/MemberList/utils';
+import Link from 'next/link';
 
 const Member = ({ member, role, callback }) => {
   const cvStatus = renderCVStatus(member);
@@ -24,28 +25,32 @@ const Member = ({ member, role, callback }) => {
       className={checked ? 'selected' : ''}
     >
       <td className="name-cell">
-        <a href={`/backoffice/admin/membres/${member.id}`}>
-          <Grid row gap="small" middle className="uk-visible@m">
-            <ImgProfile user={member} size={36} />
-            <Grid column gap="collapse">
-              <span className="bold">
-                {member.firstName} {member.lastName}
-              </span>
-              <span>{member.email}</span>
+        <Link href={`/backoffice/admin/membres/${member.id}`}>
+          <a>
+            <Grid row gap="small" middle className="uk-visible@m">
+              <ImgProfile user={member} size={36} />
+              <Grid column gap="collapse">
+                <span className="bold">
+                  {member.firstName} {member.lastName}
+                </span>
+                <span>{member.email}</span>
+              </Grid>
             </Grid>
-          </Grid>
-        </a>
+          </a>
+        </Link>
       </td>
       <td className="associated-user-cell">
         {relatedUser ? (
-          <a href={`/backoffice/admin/membres/${relatedUser.id}`}>
-            <div className="bold">
-              {relatedUser.firstName}
-              &nbsp;
-              {relatedUser.lastName}
-            </div>
-            <div>{relatedUser.email}</div>
-          </a>
+          <Link href={`/backoffice/admin/membres/${relatedUser.id}`}>
+            <a>
+              <div className="bold">
+                {relatedUser.firstName}
+                &nbsp;
+                {relatedUser.lastName}
+              </div>
+              <div>{relatedUser.email}</div>
+            </a>
+          </Link>
         ) : (
           <span>Non lié</span>
         )}
