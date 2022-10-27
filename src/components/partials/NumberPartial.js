@@ -4,24 +4,12 @@ import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import NumberGrid from 'src/components/partials/NumberGrid';
 
 const staticNumbers = [
-  { value: '45', description: 'Candidats recrutés' },
+  { value: 300, description: 'candidats accompagnés', animated: true },
   {
-    value: '71%',
-    description: 'De sorties positives',
-    subDescription: 'calculé sur les candidats étant allé au bout du parcours',
+    value: '61%',
+    description: 'de sorties positives',
   },
-  { value: '32', description: 'Entreprises ont recruté' },
-  { value: '263', description: "Offres d'emploi reçues" },
-  {
-    value: (
-      <div className="uk-margin-small-bottom">
-        Administration / Logistique
-        <br />
-        Distribution / BTP
-      </div>
-    ),
-    description: 'Sont les secteurs qui ont le plus recruté',
-  },
+  { value: 500, description: "entreprises mobilisées dans l'inclusion" },
 ];
 
 const NumberPartial = () => {
@@ -35,11 +23,6 @@ const NumberPartial = () => {
         Miah, Abdul, Laith... ont retrouvé un emploi grâce à LinkedOut
       </p>
       <NumberGrid numbers={staticNumbers} />
-      <div className="uk-flex uk-flex-center uk-margin-small-top">
-        <span className="uk-text-meta uk-text-center">
-          * chiffres de la promo #2
-        </span>
-      </div>
 
       <div className="uk-margin-medium-top">
         <LiteYouTubeEmbed
