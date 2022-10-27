@@ -37,7 +37,7 @@ const ImageTitleContent = ({ title, text, img, cta }) => {
                   onClick={cta.onClick}
                   href={cta.href}
                   style="secondary"
-                  className={`${cta.className} banner-btn`}
+                  className={`${cta.className || ''} banner-btn`}
                   newTab={cta.newTab}
                   isExternal={cta.isExternal}
                   dataTest={cta.dataTest}
