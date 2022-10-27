@@ -21,6 +21,9 @@ import TextLoop from 'react-text-loop';
 import { gaEvent } from 'src/lib/gtag';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
+import { openModal } from 'src/components/modals/Modal';
+import ModalGeneric from 'src/components/modals/Modal/ModalGeneric/ModalGeneric';
+import { CompanySFForm } from 'src/components/forms/salesforce/CompanySFForm';
 
 const timeline = [
   {
@@ -408,12 +411,14 @@ const Entreprises = ({ nbPublishedCVs }) => {
         </h2>
         <div className="uk-flex uk-flex-center">
           <Button
-            href={process.env.AIRTABLE_LINK_COMPANY_HELP}
-            isExternal
-            newTab
             onClick={() => {
               gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
               fbEvent(FB_TAGS.COMPANY_CONTACT);
+              openModal(
+                <ModalGeneric>
+                  <CompanySFForm />
+                </ModalGeneric>
+              );
             }}
             style="secondary"
             className="uk-margin-small-top"
