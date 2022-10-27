@@ -11,6 +11,29 @@ export const colorToHoverColor = {
 
 export const StyledButton = styled.button`
   font-size: 14px;
+  transition: 0.2s ease-in-out;
+  &.uk-button-primary,
+  &.uk-button-secondary {
+    border: 0.5px solid ${COLORS.primaryOrange};
+    &:hover {
+      background: none;
+      color: ${COLORS.primaryOrange};
+    }
+    &.banner-btn {
+      &:hover {
+        background-color: rgba(250, 250, 250, 0.8);
+        border-color: ${COLORS.primaryOrange};
+      }
+    }
+  }
+  &.uk-button-default {
+    &:hover {
+      /* background-color: ${COLORS.primaryOrange}; */
+      border-color: ${COLORS.primaryOrange};
+      /* color: white; */
+      color: ${COLORS.primaryOrange};
+    }
+  }
   &.custom-secondary {
     padding: 6px 15px;
     background-color: white;

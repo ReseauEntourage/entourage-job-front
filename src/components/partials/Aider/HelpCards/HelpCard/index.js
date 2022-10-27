@@ -4,12 +4,13 @@ import Button from 'src/components/utils/Button';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { gaEvent } from 'src/lib/gtag';
 import { PropTypes } from 'prop-types';
-import { StyledHelpCard } from './styles';
+import Link from 'next/link';
+import { StyledHelpCard, StyledLink } from './styles';
 
 const HelpCard = ({ cardContent, keyMap }) => {
   const { title, img, text, cta, href, alt, newTab, tag } = cardContent;
-  return (
-    <StyledHelpCard key={keyMap}>
+  const card = (
+    <div className="card-content">
       <div>
         <h4>{title}</h4>
         <Image src={img} objectFit="cover" objectPosition="center" alt={alt} />
@@ -27,6 +28,33 @@ const HelpCard = ({ cardContent, keyMap }) => {
         {cta}&nbsp;
         <IconNoSSR name="chevron-right" />
       </Button>
+    </div>
+  );
+
+  return (
+    <StyledHelpCard key={keyMap} className="aider-card">
+      {newTab ? (
+        <StyledLink
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => {
+            gaEvent(tag);
+          }}
+        >
+          {card}
+        </StyledLink>
+      ) : (
+        <Link href={href} passHref legacyBehavior>
+          <StyledLink
+            onClick={() => {
+              gaEvent(tag);
+            }}
+          >
+            {card}
+          </StyledLink>
+        </Link>
+      )}
     </StyledHelpCard>
   );
 };

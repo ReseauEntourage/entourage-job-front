@@ -104,14 +104,6 @@ const Orienter = () => {
             fbEvent(FB_TAGS.SOCIAL_WORKER_REGISTRATION);
           },
         }}
-        secondCta={{
-          label: 'Nous contacter',
-          dataTestId: 'button-contact',
-          onClick: () => {
-            gaEvent(GA_TAGS.PAGE_ORIENTER_CONTACT_CLIC);
-            openModal(<ModalInterestLinkedOut />);
-          },
-        }}
       />
       <Section container="small" style="default">
         <h2 className="uk-text-bold uk-text-center uk-margin-medium-bottom">

@@ -103,7 +103,7 @@ const InfoContainer = () => {
                   <content.picto />
                   <h4>{content.title}</h4>
                 </div>
-                <ul>
+                <ul uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;">
                   {content.ul.map((li, k) => {
                     return <li key={`${k}-${uuid}`}>{li}</li>;
                   })}

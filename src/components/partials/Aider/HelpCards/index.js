@@ -18,7 +18,7 @@ const cardsContent = [
     text: "Vous soutenez un candidat individuellement et dans la durée dans sa recherche d'emploi pour booster la rencontre avec les entreprises et son intégration durable dans un nouveau job.",
     cta: 'Devenir coach LinkedOut',
     href: 'https://airtable.com/shrospLiHWS9OFCD6',
-    alt: '',
+    alt: 'Des candidats LinkedOut et une coach',
     newTab: true,
     tag: GA_TAGS.PAGE_AIDER_INSCRIPTION_COACH_CLIC,
   },
@@ -28,7 +28,7 @@ const cardsContent = [
     text: 'Partager un CV dans vos réseaux donne une visibilité inédite à un candidat auprès de potentiels recruteurs et permet de générer des opportunités d’emploi. Votre partage peut tout changer !',
     cta: 'Partager un CV',
     href: '/candidats?employed=false',
-    alt: '',
+    alt: 'CV de Candidat LinkedOut',
     newTab: false,
     tag: GA_TAGS.PAGE_AIDER_PARTAGER_CV_CLIC,
   },
@@ -38,7 +38,7 @@ const cardsContent = [
     text: 'Une mission souple et ponctuelle pour apporter un coup de pouce et des mises en relation aux candidats et leurs coachs tout au long de leur parcours LinkedOut ! Mission disponible à Paris et Lyon pour le moment !',
     cta: 'Rejoindre les connecteurs',
     href: 'https://airtable.com/shravv7gRI4c64yzw',
-    alt: '',
+    alt: 'Des connecteurs LinkedOut',
     newTab: true,
     tag: GA_TAGS.PAGE_AIDER_CONNECTEUR_CLIC,
   },
@@ -48,7 +48,7 @@ const cardsContent = [
     text: 'Pas de temps mais envie de soutenir notre projet ? Faites un don en quelques clics pour participer à la création d’une société plus inclusive et permettre à nos candidats de vivre des expériences transformantes.',
     cta: 'Faire un don',
     href: 'https://entourage.iraiser.eu/linkedout/~mon-don',
-    alt: '',
+    alt: 'Des soutiens du projet LinkedOut rassemblés',
     newTab: true,
     tag: GA_TAGS.PAGE_AIDER_DON_CLIC,
   },
@@ -65,7 +65,10 @@ const HelpCards = () => {
             svgColor={COLORS.primaryOrange}
           />
         </div>
-        <div className="cards-container">
+        <div
+          className="cards-container"
+          uk-scrollspy="cls:uk-animation-slide-bottom-small; target: .aider-card; delay: 200"
+        >
           {cardsContent.map((cardContent, key) => {
             return (
               <HelpCard cardContent={cardContent} keyMap={`${key}-${uuid}`} />

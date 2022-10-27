@@ -9,8 +9,12 @@ const ImageTitle = ({ title, description, img, imgMobile, alt }) => {
     <BackgroundImage img={img} imgMobile={imgMobile} alt={alt} isHero>
       <Container>
         <StyledImageTitle>
-          <h1>{title}</h1>
-          <p>{description}</p>
+          <h1 uk-scrollspy="cls: uk-animation-slide-left uk-animation-fade; delay: 200;">
+            {title}
+          </h1>
+          <p uk-scrollspy="cls: uk-animation-slide-left uk-animation-fade; delay: 200;">
+            {description}
+          </p>
         </StyledImageTitle>
       </Container>
     </BackgroundImage>
