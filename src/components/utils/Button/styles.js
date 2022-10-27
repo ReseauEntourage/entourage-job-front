@@ -11,7 +11,9 @@ export const colorToHoverColor = {
 
 export const StyledButton = styled.button`
   font-size: 14px;
-  transition: 0.2s ease-in-out;
+  &:hover {
+    transition: 0.2s ease-in-out;
+  }
   &.uk-button-primary,
   &.uk-button-secondary {
     border: 0.5px solid ${COLORS.primaryOrange};

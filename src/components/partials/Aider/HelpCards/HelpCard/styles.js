@@ -9,8 +9,8 @@ export const StyledHelpCard = styled.div`
   box-shadow: 0px 4px 4px 0px #0000001a;
   min-width: 280px;
   margin-bottom: 24px;
-  transition: 0.2s ease-in-out;
   &:hover {
+    transition: 0.2s ease-in-out;
     cursor: pointer;
     box-shadow: 0px 4px 8px 4px #0000001a;
   }
