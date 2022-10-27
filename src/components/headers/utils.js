@@ -105,6 +105,7 @@ export const renderLinks = (user, logout) => {
         name: 'Boîte à outils',
         icon: 'question',
         external: true,
+        tag: GA_TAGS.BACKOFFICE_COACH_HEADER_BAO_CLIC,
       },
     ],
   };

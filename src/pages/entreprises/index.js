@@ -48,7 +48,7 @@ const timeline = [
 
 const numbers = [
   {
-    value: 230,
+    value: 300,
     description: 'candidats accompagnés depuis le lancement',
     animate: true,
   },
@@ -57,7 +57,7 @@ const numbers = [
     description:
       'des candidats parvenus au bout du parcours ont retrouvé un travail',
   },
-  { value: 73, description: 'entreprises ayant recruté', animate: true },
+  { value: 130, description: 'entreprises ont recruté', animate: true },
   {
     value: '93%',
     description:
