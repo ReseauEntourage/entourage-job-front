@@ -19,7 +19,7 @@ export const CompanySFForm = () => {
             `}
       </Script>
       <form
-        action="https://entourage2--dev2loko.sandbox.my.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8"
+        action={`${process.env.SALESFORCE_LOGIN_URL}/servlet/servlet.WebToLead?encoding=UTF-8`}
         method="POST"
       >
         <input
@@ -31,7 +31,25 @@ export const CompanySFForm = () => {
         <input
           type="hidden"
           name="retURL"
-          value="https://linkedout.fr/merci/company"
+          value="https://entourage-job-front-preprod.herokuapp.com/merci/company"
+        />
+        <input
+          type="hidden"
+          id="Status"
+          name="Status"
+          value="01J7Q000006SNNh"
+        />
+        <input
+          type="hidden"
+          id="00N7Q000001CyY3"
+          name="00N7Q000001CyY3"
+          value="Lead entrant - plateforme"
+        />
+        <input
+          type="hidden"
+          id="00N7Q000001CW7L"
+          name="00N7Q000001CW7L"
+          value="LinkedOut"
         />
         <label htmlFor="first_name">
           Prénom
@@ -44,7 +62,6 @@ export const CompanySFForm = () => {
           />
         </label>
         <br />
-
         <label htmlFor="last_name">
           Nom
           <input
@@ -56,13 +73,6 @@ export const CompanySFForm = () => {
           />
         </label>
         <br />
-
-        <label htmlFor="email">
-          Adresse e-mail
-          <input id="email" maxLength="80" name="email" size="20" type="text" />
-        </label>
-        <br />
-
         <label htmlFor="company">
           Société
           <input
@@ -74,19 +84,41 @@ export const CompanySFForm = () => {
           />
         </label>
         <br />
-
-        <label htmlFor="city">
-          Ville
-          <input id="city" maxLength="40" name="city" size="20" type="text" />
+        <label htmlFor="email">
+          Adresse e-mail
+          <input id="email" maxLength="80" name="email" size="20" type="text" />
         </label>
         <br />
-
-        <label htmlFor="state">
-          Région/Province
-          <input id="state" maxLength="20" name="state" size="20" type="text" />
+        <label htmlFor="mobile">
+          Téléphone mobile
+          <input
+            id="mobile"
+            maxLength="40"
+            name="mobile"
+            size="20"
+            type="text"
+          />
         </label>
         <br />
-
+        Antenne :
+        <select
+          id="00N7Q000001D1ic"
+          multiple="multiple"
+          name="00N7Q000001D1ic"
+          title="Antenne"
+        >
+          <option value="National">National</option>
+          <option value="Paris">Paris</option>
+          <option value="Lille">Lille</option>
+          <option value="Lyon">Lyon</option>
+          <option value="Rennes">Rennes</option>
+          <option value="Seine Saint Denis">Seine Saint Denis</option>
+          <option value="Hauts de Seine">Hauts de Seine</option>
+          <option value="Hors zone">Hors zone</option>
+          <option value="IDF">IDF</option>
+          <option value="Autre région">Autre région</option>
+        </select>
+        <br />
         <div
           className="g-recaptcha"
           data-sitekey="6LdDBrsiAAAAADurh4djKM_jVcYIWuacfP9gwI-G"
