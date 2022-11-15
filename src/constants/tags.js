@@ -17,6 +17,9 @@ const GA_TAGS = {
   PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC: {
     action: 'Page_Entreprises_Contacter_Referent_Clic',
   },
+  PAGE_ENTREPRISES_ENVOYER_CONTACT_REFERENT_CLIC: {
+    action: 'Page_Entreprises_Envoyer_Contact_Referent_Clic',
+  },
   PAGE_ENTREPRISES_CARROUSEL_CLIC: {
     action: 'Page_Entreprises_Carrousel_Clic',
   },

@@ -1,12 +1,8 @@
 import React from 'react';
-import { Button, Grid, Section } from 'src/components/utils';
+import { Grid, Section } from 'src/components/utils';
 import { NewsletterPartial, SharePartial } from 'src/components/partials';
-import { EXTERNAL_LINKS } from 'src/constants';
 import Layout from 'src/components/Layout';
-import { gaEvent } from 'src/lib/gtag';
-import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { IconNoSSR } from 'src/components/utils/Icon';
-import { fbEvent } from 'src/lib/fb';
+import { GA_TAGS } from 'src/constants/tags';
 
 import ImageTitle from 'src/components/partials/ImageTitleNew';
 import HelpCards from 'src/components/partials/Aider/HelpCards';
