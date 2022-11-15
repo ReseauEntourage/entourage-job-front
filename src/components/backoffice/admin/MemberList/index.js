@@ -8,7 +8,7 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
 import Button from 'src/components/utils/Button';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import SearchBar from 'src/components/filters/SearchBar';
 import { filtersToQueryParams, mutateFormSchema } from 'src/utils';
 import schemaCreateUser from 'src/components/forms/schema/formEditUser';
@@ -72,7 +72,7 @@ const MemberList = ({
         setLoading(true);
         setMembers([]);
       }
-      Api.get('/user/members', {
+      Api.getUsersMembers({
         params: {
           limit: LIMIT,
           offset: doReset ? 0 : offsetValue,
@@ -115,7 +115,7 @@ const MemberList = ({
   );
 
   const { selectElement, executeAction, hasSelection } = useBulkActions(
-    '/user/candidat',
+    '/user/candidate',
     async () => {
       await fetchData(search, filters, role, offset, true);
     },
@@ -167,7 +167,7 @@ const MemberList = ({
                 submitText="Créer le membre"
                 onSubmit={async (fields, closeModal) => {
                   try {
-                    const { data } = await Api.post('/user', {
+                    const { data } = await Api.postUser({
                       ...fields,
                       adminRole:
                         fields.role === USER_ROLES.ADMIN
@@ -278,7 +278,7 @@ const MemberList = ({
                     )}
                   </tr>
                 </thead>
-                <tbody>
+                <tbody data-testid="member-list">
                   {members.length > 0
                     ? members.map((member, key) => {
                         return (

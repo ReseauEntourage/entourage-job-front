@@ -4,7 +4,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
 import Pusher from 'pusher-js';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import { Button, Grid } from 'src/components/utils';
 import { CVBackground, CVFiche, CVFicheEdition } from 'src/components/cv';
 import { UserContext } from 'src/components/store/UserProvider';
@@ -121,7 +121,7 @@ ModalPreview.propTypes = {
   imageUrl: PropTypes.string.isRequired,
 };
 
-const CVPageContent = ({ candidatId, cv, setCV }) => {
+const CVPageContent = ({ candidateId, cv, setCV }) => {
   const [cvVersion, setCvVersion] = useState(undefined);
   const [imageUrl, setImageUrl] = useState(undefined);
   const [previewGenerating, setPreviewGenerating] = useState(false);
@@ -132,8 +132,8 @@ const CVPageContent = ({ candidatId, cv, setCV }) => {
   const prevCV = usePrevious(cv);
 
   const setCVHasBeenRead = useCallback(() => {
-    if (user && user.role !== USER_ROLES.ADMIN && candidatId) {
-      Api.put(`/cv/read/${candidatId}`)
+    if (user && user.role !== USER_ROLES.ADMIN && candidateId) {
+      Api.putCVRead(candidateId)
         .then(() => {
           console.log('Note has been read');
         })
@@ -141,7 +141,7 @@ const CVPageContent = ({ candidatId, cv, setCV }) => {
           console.error(err);
         });
     }
-  }, [candidatId, user]);
+  }, [candidateId, user]);
 
   useEffect(() => {
     return () => {
@@ -156,7 +156,7 @@ const CVPageContent = ({ candidatId, cv, setCV }) => {
       setImageUrl(`${process.env.AWSS3_URL}${cv.urlImg}`);
       setCVHasBeenRead();
     }
-  }, [candidatId, cv, cvVersion, prevCV, setCVHasBeenRead]);
+  }, [candidateId, cv, cvVersion, prevCV, setCVHasBeenRead]);
 
   useEffect(() => {
     const unsavedChanges = cv && cv.status === CV_STATUS.Draft.value;
@@ -221,7 +221,7 @@ const CVPageContent = ({ candidatId, cv, setCV }) => {
           phone: modifiedCv.phone,
         };
 
-        Api.put(`/user/${candidatId}`, userData)
+        Api.putUser(candidateId, userData)
           .then(({ newUserData }) => {
             res(newUserData);
           })
@@ -238,7 +238,7 @@ const CVPageContent = ({ candidatId, cv, setCV }) => {
     async (callback, isAutoSave) => {
       const {
         data: { lastCvVersion },
-      } = await Api.get(`/cv/lastVersion/${candidatId}`);
+      } = await Api.getCVLastVersion(candidateId);
 
       if (lastCvVersion > cvVersion) {
         if (!isAutoSave) {
@@ -269,7 +269,7 @@ const CVPageContent = ({ candidatId, cv, setCV }) => {
         await callback();
       }
     },
-    [candidatId, cvVersion]
+    [candidateId, cvVersion]
   );
 
   const postCV = async (status) => {
@@ -281,14 +281,14 @@ const CVPageContent = ({ candidatId, cv, setCV }) => {
       setPdfGenerating(true);
 
       channelPreview.bind(SOCKETS.EVENTS.CV_PREVIEW_DONE, (data) => {
-        if (data.candidateId === candidatId) {
+        if (data.candidateId === candidateId) {
           setPreviewGenerating(false);
           pusher.unsubscribe(SOCKETS.CHANNEL_NAMES.CV_PREVIEW);
         }
       });
 
       channelPDF.bind(SOCKETS.EVENTS.CV_PDF_DONE, (data) => {
-        if (data.candidateId === candidatId) {
+        if (data.candidateId === candidateId) {
           setPdfGenerating(false);
           pusher.unsubscribe(SOCKETS.CHANNEL_NAMES.CV_PDF);
         }
@@ -306,11 +306,7 @@ const CVPageContent = ({ candidatId, cv, setCV }) => {
       formData.append('cv', JSON.stringify(obj));
       formData.append('profileImage', cv.profileImage);
       // post
-      return Api.post(`/cv/${cv.UserId}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
+      return Api.postCV(cv.UserId, formData, true)
         .then(({ data }) => {
           setCV(data);
           setCvVersion(data.version);
@@ -343,11 +339,7 @@ const CVPageContent = ({ candidatId, cv, setCV }) => {
       // post
       return saveUserData(obj)
         .then(() => {
-          return Api.post(`/cv/${tempCV.UserId}`, formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
+          return Api.postCV(tempCV.UserId, formData, true);
         })
         .then(({ data }) => {
           console.log('Auto-save succeeded.');
@@ -365,7 +357,7 @@ const CVPageContent = ({ candidatId, cv, setCV }) => {
   if (cv === null) {
     return (
       <NoCV
-        candidatId={candidatId}
+        candidateId={candidateId}
         user={user}
         setCV={(cvData) => {
           setCV(cvData);
@@ -401,7 +393,7 @@ const CVPageContent = ({ candidatId, cv, setCV }) => {
         <Grid row gap="small">
           <ButtonDownload
             pdfGenerating={pdfGenerating}
-            candidatId={cv.UserId}
+            candidateId={cv.UserId}
             firstName={cv.user.candidat.firstName}
             lastName={cv.user.candidat.lastName}
           />
@@ -460,7 +452,7 @@ const CVPageContent = ({ candidatId, cv, setCV }) => {
 };
 
 CVPageContent.propTypes = {
-  candidatId: PropTypes.string.isRequired,
+  candidateId: PropTypes.string.isRequired,
   cv: PropTypes.shape({
     user: PropTypes.shape({
       candidat: PropTypes.shape({

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
 import _ from 'lodash';
 
@@ -10,14 +10,10 @@ export function useFetchCV(user) {
 
   useEffect(() => {
     if (user) {
-      const candidatId = getCandidateIdFromCoachOrCandidate(user);
+      const candidateId = getCandidateIdFromCoachOrCandidate(user);
 
-      if (candidatId) {
-        Api.get(`/cv/`, {
-          params: {
-            userId: candidatId,
-          },
-        })
+      if (candidateId) {
+        Api.getCVByCandidateId(candidateId)
           .then(({ data }) => {
             if (data && !_.isEmpty(data)) {
               setCV(data);

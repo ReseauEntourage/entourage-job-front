@@ -4,7 +4,7 @@ import Layout from 'src/components/Layout';
 import { Button, Section } from 'src/components/utils';
 import schema from 'src/components/forms/schema/formResetPassword';
 import FormWithValidation from 'src/components/forms/FormWithValidation';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import PasswordCriterias from 'src/components/PasswordCriterias';
 import PropTypes from 'prop-types';
@@ -30,7 +30,7 @@ const ResetPasswordPage = ({ valid, id, token, isCreation }) => {
                 <FormWithValidation
                   formSchema={schema}
                   onSubmit={({ newPassword, confirmPassword }, setError) => {
-                    return Api.post(`/auth/reset/${id}/${token}`, {
+                    return Api.postResetUserToken(id, token, {
                       newPassword,
                       confirmPassword,
                     })
@@ -74,7 +74,7 @@ const ResetPasswordPage = ({ valid, id, token, isCreation }) => {
 
 ResetPasswordPage.getInitialProps = async ({ query }) => {
   const { id, token, isCreation } = query;
-  const valid = await Api.get(`/auth/reset/${id}/${token}`)
+  const valid = await Api.getResetUserToken(id, token)
     .then(() => {
       return true;
     })

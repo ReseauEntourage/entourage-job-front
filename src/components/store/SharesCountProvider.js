@@ -1,7 +1,7 @@
 // store/SharesCount.js
 import React, { createContext, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import { VALUES } from 'src/constants';
 import { useMount } from 'src/hooks/utils';
 
@@ -17,7 +17,7 @@ const SharesCountProvider = ({ children }) => {
   }, []);
 
   useMount(() => {
-    Api.get('/cv/shares')
+    Api.getCVShares()
       .then(({ data }) => {
         setTotalShares(data.total);
       })

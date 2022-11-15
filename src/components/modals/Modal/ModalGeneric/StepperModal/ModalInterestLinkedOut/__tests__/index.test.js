@@ -5,11 +5,11 @@ import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { ModalsListener, openModal } from 'src/components/modals/Modal';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import ModalInterestLinkedOut from '../ModalInterestLinkedOut';
 
 jest.mock('react-modal');
-jest.mock('src/Axios');
+jest.mock('src/api/index.ts');
 jest.mock('src/components/modals/Modal', () => {
   const modalModule = jest.requireActual('src/components/modals/Modal');
   return {

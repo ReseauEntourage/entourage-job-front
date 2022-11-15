@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'next/router';
 import Layout from 'src/components/Layout';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import { Section } from 'src/components/utils';
 import CVPDF from 'src/components/cv/CVPDF';
 
@@ -46,10 +46,7 @@ const CVPDFPage = ({ cv, page, router }) => {
 
 CVPDFPage.getInitialProps = async ({ query }) => {
   if (query.token) {
-    return Api.get(`/cv/`, {
-      params: {
-        userId: query.id,
-      },
+    return Api.getCVByUrl(query.id, {
       headers: {
         authorization: `Token ${query.token}`,
       },

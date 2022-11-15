@@ -8,7 +8,7 @@ import {
   USER_ROLES,
 } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import { findConstantFromValue } from 'src/utils';
 
 export default {
@@ -222,7 +222,7 @@ export const adminMutations = [
       {
         propName: 'loadOptions',
         value: (inputValue, callback) => {
-          Api.get('/user/search', {
+          Api.getUsersSearch({
             params: {
               query: inputValue,
               role: USER_ROLES.CANDIDAT,

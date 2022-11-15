@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ADMIN_ROLES, USER_ROLES } from 'src/constants';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 
 const reducePromisesResults = (data) => {
   return data.reduce((acc, curr) => {
@@ -30,21 +30,25 @@ export function useNotifBadges(user, path) {
           offers: `/opportunity/admin/count`,
         };
         const queriesToExecute = [];
-        switch (user.adminRole) {
-          case ADMIN_ROLES.CANDIDATES:
-            queriesToExecute.push(queries.members);
-            break;
-          case ADMIN_ROLES.COMPANIES:
-            queriesToExecute.push(queries.offers);
-            break;
-          default:
-            queriesToExecute.push(queries.members);
-            queriesToExecute.push(queries.offers);
-            break;
+        if (user.adminRole === ADMIN_ROLES.CANDIDATES) {
+          queriesToExecute.push(() => {
+            return Api.getUsersMembersCount();
+          });
+        } else if (user.adminRole === ADMIN_ROLES.COMPANIES) {
+          queriesToExecute.push(() => {
+            return Api.getOpportunitiesAdminCount();
+          });
+        } else {
+          queriesToExecute.push(() => {
+            return Api.getUsersMembersCount();
+          });
+          queriesToExecute.push(() => {
+            return Api.getOpportunitiesAdminCount();
+          });
         }
         Promise.all(
           queriesToExecute.map((query) => {
-            return Api.get(query);
+            return query;
           })
         )
           .then((data) => {
@@ -73,9 +77,9 @@ export function useNotifBadges(user, path) {
         }
         if (candidateId) {
           Promise.all([
-            Api.get(`/opportunity/user/count/${candidateId}`),
-            Api.get(`/user/candidat/checkUpdate`),
-            Api.get(`/cv/checkUpdate`),
+            Api.getOpportunitiesUserCount(candidateId),
+            Api.getCandidateCheckUpdate(),
+            Api.getCheckUpdate(),
           ])
             .then((data) => {
               if (data) {

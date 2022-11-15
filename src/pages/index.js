@@ -1,6 +1,8 @@
 import React from 'react';
 import Layout from 'src/components/Layout';
 
+import API from 'src/api/index.ts';
+
 import {
   ActionPartial,
   CandidatListPartial,
@@ -24,6 +26,16 @@ const Index = () => {
       }, 1500);
     }
   });
+
+  const count = async () => {
+    const res = await API.getCVShares();
+    return res;
+  };
+  // console.log(
+  count().then((res) => {
+    return console.log(res);
+  });
+  // );
 
   return (
     <Layout>

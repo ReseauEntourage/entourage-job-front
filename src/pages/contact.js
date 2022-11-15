@@ -5,7 +5,7 @@ import Layout from 'src/components/Layout';
 import interestLinkedOutSchema from 'src/components/forms/schema/formInterestLinkedOut';
 import { Section } from 'src/components/utils';
 import FormWithValidation from 'src/components/forms/FormWithValidation';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import { useResetForm } from 'src/hooks/utils';
 import SimpleLink from 'src/components/utils/SimpleLink';
 
@@ -36,7 +36,7 @@ const Contact = () => {
           submitText="Envoyer"
           formSchema={interestLinkedOutSchema}
           onSubmit={(fields) => {
-            return Api.post('/contact/contact-us', fields)
+            return Api.postContactUs(fields)
               .then(() => {
                 UIkit.notification('Merci pour votre message.', 'success');
                 resetForm();

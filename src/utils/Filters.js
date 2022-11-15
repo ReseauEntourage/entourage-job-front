@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const getOpportunityUserFromOffer = (offer, candidatId) => {
+const getOpportunityUserFromOffer = (offer, candidateId) => {
   let opportunityUser;
   if (
     offer.opportunityUsers &&
@@ -8,7 +8,7 @@ const getOpportunityUserFromOffer = (offer, candidatId) => {
     offer.opportunityUsers.length > 0
   ) {
     opportunityUser = offer.opportunityUsers.find((oppUser) => {
-      return oppUser.UserId === candidatId;
+      return oppUser.UserId === candidateId;
     });
   } else {
     opportunityUser = offer.opportunityUsers;

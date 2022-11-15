@@ -38,6 +38,7 @@ const LesOpportunites = () => {
   );
 
   useEffect(() => {
+    console.log(user);
     if (isReady) {
       const redirectParams = tag
         ? {

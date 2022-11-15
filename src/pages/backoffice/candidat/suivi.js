@@ -2,7 +2,7 @@ import UIkit from 'uikit';
 
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import { Button, Grid, Section } from 'src/components/utils';
 import { UserContext } from 'src/components/store/UserProvider';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
@@ -32,7 +32,7 @@ const Suivi = () => {
   };
 
   const updateSuivi = (note) => {
-    Api.put(`/user/candidat/${userCandidat.candidat.id}`, {
+    Api.putCandidate(userCandidat.candidat.id, {
       note,
     })
       .then(() => {
@@ -46,7 +46,7 @@ const Suivi = () => {
 
   const setNoteHasBeenRead = useCallback(() => {
     if (user && user.role !== USER_ROLES.ADMIN && userCandidat?.candidat?.id) {
-      Api.put(`/user/candidat/read/${userCandidat.candidat.id}`)
+      Api.putCandidateRead(userCandidat.candidat.id)
         .then(() => {
           console.log('Note has been read');
         })
@@ -59,16 +59,7 @@ const Suivi = () => {
   useEffect(() => {
     if (user) {
       setLoading(true);
-      const params = {};
-      if (user.role === USER_ROLES.COACH) {
-        params.coachId = user.id;
-      }
-      if (user.role === USER_ROLES.CANDIDAT) {
-        params.candidatId = user.id;
-      }
-      Api.get(`/user/candidat/`, {
-        params,
-      })
+      Api.getCandidateById(`/user/candidate/${user.id}`)
         .then(({ data }) => {
           if (data) {
             setUserCandidat(data);

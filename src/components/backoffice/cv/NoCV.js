@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Grid } from 'src/components/utils';
 import { CV_STATUS, USER_ROLES } from 'src/constants';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import { getCandidateFromCoachOrCandidate } from 'src/utils';
 
-const NoCV = ({ candidatId, user, setCV }) => {
+const NoCV = ({ candidateId, user, setCV }) => {
   const candidate = getCandidateFromCoachOrCandidate(user);
   return (
     <Grid column middle>
@@ -31,7 +31,7 @@ const NoCV = ({ candidatId, user, setCV }) => {
             <Button
               style="primary"
               onClick={() => {
-                return Api.post(`/cv/${candidatId}`, {
+                return Api.postCV({
                   cv: { status: CV_STATUS.New.value },
                 }).then(({ data }) => {
                   return setCV(data);
@@ -48,7 +48,7 @@ const NoCV = ({ candidatId, user, setCV }) => {
 };
 
 NoCV.propTypes = {
-  candidatId: PropTypes.string.isRequired,
+  candidateId: PropTypes.string.isRequired,
   user: PropTypes.shape({
     role: PropTypes.string,
     candidat: PropTypes.shape(),

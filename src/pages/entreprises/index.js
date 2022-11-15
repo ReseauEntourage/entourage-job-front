@@ -14,7 +14,7 @@ import { CV_FILTERS_DATA } from 'src/constants';
 import Timeline from 'src/components/partials/Timeline';
 import NumberGrid from 'src/components/partials/NumberGrid';
 import AnimatedList from 'src/components/utils/AnimatedList';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import PropTypes from 'prop-types';
 import TextLoop from 'react-text-loop';
 import { GA_TAGS } from 'src/constants/tags';
@@ -426,7 +426,7 @@ const Entreprises = ({ nbPublishedCVs }) => {
 };
 
 Entreprises.getInitialProps = async () => {
-  return Api.get(`/cv/published`)
+  return Api.getNbCVPublished()
     .then(({ data: { nbPublishedCVs } }) => {
       return {
         nbPublishedCVs,

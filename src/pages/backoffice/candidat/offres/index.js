@@ -4,7 +4,7 @@ import { useFilters, useTabFilters } from 'src/hooks';
 import { UserContext } from 'src/components/store/UserProvider';
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
 import { Section } from 'src/components/utils';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import {
   OFFER_CANDIDATE_FILTERS_DATA,
   OPPORTUNITY_FILTERS_DATA,
@@ -32,7 +32,7 @@ const Opportunities = () => {
 
   const [hasLoadedDefaultFilters, setHasLoadedDefaultFilters] = useState(false);
 
-  const [candidatId, setCandidatId] = useState();
+  const [candidateId, setCandidateId] = useState();
 
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
     candidateFilters,
@@ -47,7 +47,7 @@ const Opportunities = () => {
     ['offerId']
   );
 
-  const setCandidatDefaultsIfNoTag = useCallback(
+  const setCandidateDefaultsIfNoTag = useCallback(
     async (candId, candidatZone) => {
       if (!tag) {
         const params = {
@@ -56,11 +56,7 @@ const Opportunities = () => {
         };
 
         try {
-          const { data } = await Api.get(`/cv/`, {
-            params: {
-              userId: candId,
-            },
-          });
+          const { data } = await Api.getCVByCandidateId(`/cv/${candId}`);
 
           if (data.locations && data.locations.length > 0) {
             params.department = data.locations.map(({ name }) => {
@@ -100,13 +96,13 @@ const Opportunities = () => {
               shallow: true,
             }
           );
-          setCandidatId(candId);
+          setCandidateId(candId);
           setHasLoadedDefaultFilters(true);
         } catch (e) {
           setHasError(true);
         }
       } else {
-        setCandidatId(candId);
+        setCandidateId(candId);
         setHasLoadedDefaultFilters(true);
       }
       setHasLoadedDefaultFilters(true);
@@ -117,13 +113,11 @@ const Opportunities = () => {
   const fetchAssociatedCandidate = useCallback(
     async (coachId) => {
       try {
-        const { data } = await Api.get(`/user/candidat/`, {
-          params: {
-            coachId,
-          },
-        });
+        const { data } = await Api.getCandidateById(
+          `/user/candidate/${coachId}`
+        );
         if (data) {
-          setCandidatDefaultsIfNoTag(data.candidat.id, data.candidat.zone);
+          setCandidateDefaultsIfNoTag(data.candidat.id, data.candidat.zone);
         } else {
           setHasLoadedDefaultFilters(true);
         }
@@ -132,7 +126,7 @@ const Opportunities = () => {
         setHasLoadedDefaultFilters(true);
       }
     },
-    [setCandidatDefaultsIfNoTag]
+    [setCandidateDefaultsIfNoTag]
   );
 
   useEffect(() => {
@@ -167,7 +161,7 @@ const Opportunities = () => {
           );
         } else if (!hasLoadedDefaultFilters) {
           if (user.role === USER_ROLES.CANDIDAT) {
-            setCandidatDefaultsIfNoTag(user.id, user.zone);
+            setCandidateDefaultsIfNoTag(user.id, user.zone);
           } else if (user.role === USER_ROLES.COACH) {
             fetchAssociatedCandidate(user.id, user.zone);
           }
@@ -184,7 +178,7 @@ const Opportunities = () => {
     q,
     replace,
     restParams,
-    setCandidatDefaultsIfNoTag,
+    setCandidateDefaultsIfNoTag,
     tag,
     user,
   ]);
@@ -194,7 +188,7 @@ const Opportunities = () => {
     content = <LoadingScreen />;
   } else if (hasError) {
     content = <OpportunityError />;
-  } else if (!candidatId) {
+  } else if (!candidateId) {
     content = (
       <div className="uk-flex uk-flex-column uk-flex-middle">
         <h2 className="uk-text-bold uk-text-center">
@@ -215,7 +209,7 @@ const Opportunities = () => {
         resetFilters={resetFilters}
         setSearch={setSearch}
         setFilters={setFilters}
-        candidatId={candidatId}
+        candidateId={candidateId}
         tabFilters={tabFilters}
         setTabFilters={setTabFilters}
       />

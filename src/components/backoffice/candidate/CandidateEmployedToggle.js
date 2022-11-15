@@ -2,14 +2,14 @@ import UIkit from 'uikit';
 
 import React from 'react';
 import schemaEditEmployed from 'src/components/forms/schema/formEditEmployed';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import PropTypes from 'prop-types';
 import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
 import { findConstantFromValue } from 'src/utils';
 import { CONTRACTS } from 'src/constants';
 
 const CandidateEmployedToggle = ({
-  candidatId,
+  candidateId,
   title,
   subtitle,
   modalTitle,
@@ -38,7 +38,7 @@ const CandidateEmployedToggle = ({
             fields.endOfContract && hasEnd ? fields.endOfContract : null,
         };
 
-        return Api.put(`/user/candidat/${candidatId}`, {
+        return Api.putCandidate({
           employed,
           ...mutatedFields,
         })
@@ -58,7 +58,7 @@ const CandidateEmployedToggle = ({
 };
 
 CandidateEmployedToggle.propTypes = {
-  candidatId: PropTypes.string.isRequired,
+  candidateId: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   modalTitle: PropTypes.string.isRequired,

@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import UIkit from 'uikit';
 import { Button } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
@@ -33,6 +33,16 @@ export function useBulkActions(apiRoute, refreshElementsCallback, tag) {
 
   const executeAction = useCallback(
     async (attributesToUpdate = {}, method = 'put') => {
+      const apiMethods = {
+        put: {
+          opportunity: (params) => {
+            return Api.putBulkOpportunities(params);
+          },
+          candidate: (params) => {
+            return Api.putBulkCandidates(params);
+          },
+        },
+      };
       openModal(
         <ModalConfirm
           text={`Êtes-vous sûr(e) de vouloir effectuer cette action sur ${
@@ -46,7 +56,7 @@ export function useBulkActions(apiRoute, refreshElementsCallback, tag) {
             try {
               const {
                 data: { nbUpdated },
-              } = await Api[method](`${apiRoute}/bulk`, {
+              } = await apiMethods[method][apiRoute]({
                 attributes: attributesToUpdate,
                 ids: selectedIds,
               });

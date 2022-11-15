@@ -6,7 +6,7 @@ import schemaLogin from 'src/components/forms/schema/formLogin.json';
 import schemaLostPwd from 'src/components/forms/schema/formLostPwd.json';
 import FormWithValidation from 'src/components/forms/FormWithValidation';
 import { UserContext } from 'src/components/store/UserProvider';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import { USER_ROLES } from 'src/constants';
 import StepperModal from 'src/components/modals/Modal/ModalGeneric/StepperModal';
 import SuccessModalContent from 'src/components/modals/SuccessModalContent';
@@ -68,7 +68,7 @@ const Login = () => {
                             formSchema={schemaLostPwd}
                             onCancel={closeModal}
                             onSubmit={({ email }, setError) => {
-                              return Api.post('/auth/forgot', {
+                              return Api.postAuthForgot({
                                 email: email.toLowerCase(),
                               })
                                 .then(() => {
