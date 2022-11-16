@@ -36,7 +36,7 @@ const ModalShareCV = ({ firstName }) => {
                 onCancel={close}
                 onSubmit={({ email }) => {
                   gaEvent(GA_TAGS.POPUP_PARTAGE_ENVOYER_MAIL_SUCCES);
-                  return Api.post('/mail/newsletter', {
+                  return Api.post('/contact/newsletter', {
                     email,
                     ...newsletterParams,
                   })

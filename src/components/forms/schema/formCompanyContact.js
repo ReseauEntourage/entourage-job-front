@@ -1,8 +1,12 @@
-import { HEARD_ABOUT_FILTERS } from 'src/constants';
+import {
+  COMPANY_APPROACHES_FILTERS,
+  COMPANY_CONTACT_ZONES_FILTERS,
+  HEARD_ABOUT_FILTERS,
+} from 'src/constants';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 
 export default {
-  id: 'form-interest',
+  id: 'form-company-contact',
   fields: [
     {
       id: 'lastName',
@@ -10,7 +14,7 @@ export default {
       type: 'text',
       component: 'input',
       placeholder: 'Tapez votre texte',
-      title: 'Nom*',
+      title: 'Votre nom*',
     },
     {
       id: 'firstName',
@@ -18,7 +22,17 @@ export default {
       type: 'text',
       component: 'input',
       placeholder: 'Tapez votre texte',
-      title: 'Prénom*',
+      title: 'Votre prénom*',
+    },
+    {
+      id: 'approach',
+      name: 'approach',
+      component: 'select',
+      options: [
+        { value: -1, label: 'Choisissez votre démarche' },
+        ...COMPANY_APPROACHES_FILTERS,
+      ],
+      title: 'Quelle est votre démarche ?*',
     },
     {
       id: 'email',
@@ -26,31 +40,31 @@ export default {
       type: 'email',
       component: 'input',
       placeholder: 'Tapez votre adresse mail',
-      title: 'Adresse mail*',
+      title: 'Votre adresse mail*',
+    },
+    {
+      id: 'company',
+      name: 'company',
+      type: 'text',
+      component: 'input',
+      placeholder: 'Tapez le nom de votre entreprise',
+      title: 'Nom de votre entreprise*',
+    },
+    {
+      id: 'zones',
+      name: 'zones',
+      component: 'select-request',
+      placeholder: 'Choisissez vos régions',
+      options: COMPANY_CONTACT_ZONES_FILTERS,
+      isMulti: true,
+      title: 'Dans quelle(s) région(s) êtes-vous présent ?*',
     },
     {
       id: 'phone',
       name: 'phone',
       component: 'tel',
       placeholder: 'Tapez votre numéro de téléphone portable',
-      title: 'Téléphone portable',
-    },
-    {
-      id: 'structure',
-      name: 'structure',
-      type: 'text',
-      component: 'input',
-      placeholder: 'Tapez votre texte',
-      title: 'Structure',
-    },
-    {
-      id: 'message',
-      name: 'message',
-      component: 'textarea',
-      type: 'text',
-      placeholder: 'Tapez votre texte',
-      title: 'Votre message*',
-      rows: 7,
+      title: 'Votre numéro de téléphone portable',
     },
     {
       id: 'heardAbout',
@@ -62,11 +76,6 @@ export default {
         ...HEARD_ABOUT_FILTERS,
       ],
       title: 'Comment avez-vous connu LinkedOut ?',
-    },
-    {
-      id: 'cgu',
-      name: 'cgu',
-      component: 'cgu',
     },
   ],
   rules: [
@@ -143,28 +152,6 @@ export default {
       message: 'Adresse e-mail invalide',
     },
     {
-      field: 'message',
-      method: 'isEmpty',
-      args: [
-        {
-          ignore_whitespace: true,
-        },
-      ],
-      validWhen: false,
-      message: 'Obligatoire',
-    },
-    {
-      field: 'message',
-      method: 'isLength',
-      args: [
-        {
-          max: 4000,
-        },
-      ],
-      validWhen: true,
-      message: '4000 caractères maximum',
-    },
-    {
       field: 'phone',
       method: (fieldValue) => {
         return (
@@ -178,10 +165,36 @@ export default {
       message: 'Numéro de téléphone invalide',
     },
     {
-      field: 'cgu',
-      method: 'equals',
-      args: ['true'],
-      validWhen: true,
+      field: 'company',
+      method: 'isEmpty',
+      args: [
+        {
+          ignore_whitespace: true,
+        },
+      ],
+      validWhen: false,
+      message: 'Obligatoire',
+    },
+    {
+      field: 'approach',
+      method: 'isEmpty',
+      args: [
+        {
+          ignore_whitespace: true,
+        },
+      ],
+      validWhen: false,
+      message: 'Obligatoire',
+    },
+    {
+      field: 'zones',
+      method: 'isEmpty',
+      args: [
+        {
+          ignore_whitespace: true,
+        },
+      ],
+      validWhen: false,
       message: 'Obligatoire',
     },
   ],

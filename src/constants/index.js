@@ -460,31 +460,91 @@ export const CONTACT_INFO = {
 
 export const INITIAL_NB_OF_CV_TO_DISPLAY = 9;
 
-export const HEARD_ABOUT = [
+export const HEARD_ABOUT = {
+  COMPANY: 'company',
+  ENTOURAGE: 'entourage',
+  PRESS: 'press',
+  LINKEDIN: 'linkedin',
+  SOCIAL: 'social',
+  SPORTS: 'sports',
+  VOLUNTEER: 'volunteer',
+  CONTACT: 'contact',
+  OTHER: 'other',
+};
+
+export const HEARD_ABOUT_FILTERS = [
   {
-    label: 'Par un de mes contacts',
-    value: 'contact',
+    label: 'Mon entreprise',
+    value: HEARD_ABOUT.COMPANY,
   },
   {
-    label: 'Recherche internet',
-    value: 'search',
+    label: 'Le réseau Entourage (newsletter, application...)',
+    value: HEARD_ABOUT.ENTOURAGE,
   },
   {
-    label: 'Publicité sur les réseaux sociaux',
-    value: 'socialAdd',
+    label: 'Un article dans la presse, une newsletter',
+    value: HEARD_ABOUT.PRESS,
   },
   {
-    label: 'Autre publicité',
-    value: 'otherAdd',
+    label: 'LinkedIn',
+    value: HEARD_ABOUT.LINKEDIN,
   },
   {
-    label: 'Press',
-    value: 'press',
+    label: 'Autres réseaux (Facebook, Twitter, Instagram...)',
+    value: HEARD_ABOUT.SOCIAL,
+  },
+  {
+    label: 'Un partenariat sportif (Bateau LinkedOut, Red Star)',
+    value: HEARD_ABOUT.SPORTS,
+  },
+  {
+    label: 'Un site de bénévolat',
+    value: HEARD_ABOUT.VOLUNTEER,
+  },
+  {
+    label: 'Le bouche à oreille',
+    value: HEARD_ABOUT.CONTACT,
   },
   {
     label: 'Autre',
-    value: 'other',
+    value: HEARD_ABOUT.OTHER,
   },
+];
+
+export const COMPANY_APPROACHES = {
+  RECRUITMENT: 'recruitment',
+  INFORMATION: 'information',
+  MOBILIZATION: 'mobilization',
+  DONATION: 'donation',
+};
+
+export const COMPANY_APPROACHES_FILTERS = [
+  {
+    label: 'Recruter inclusif',
+    value: COMPANY_APPROACHES.RECRUITMENT,
+  },
+  {
+    label: "Avoir plus d'informations sur LinkedOut",
+    value: COMPANY_APPROACHES.INFORMATION,
+  },
+  {
+    label: 'Mobiliser mes collaborateurs',
+    value: COMPANY_APPROACHES.MOBILIZATION,
+  },
+  {
+    label: 'Soutenir le projet (mécénat)',
+    value: COMPANY_APPROACHES.DONATION,
+  },
+];
+
+export const COMPANY_CONTACT_ZONES_FILTERS = [
+  { value: ADMIN_ZONES.PARIS, label: _.capitalize(ADMIN_ZONES.PARIS) },
+  { value: ADMIN_ZONES.LILLE, label: _.capitalize(ADMIN_ZONES.LILLE) },
+  { value: ADMIN_ZONES.LYON, label: _.capitalize(ADMIN_ZONES.LYON) },
+  { value: ADMIN_ZONES.LORIENT, label: _.capitalize(ADMIN_ZONES.LORIENT) },
+  { value: 'RENNES', label: 'Rennes' },
+  { value: 'NATIONAL', label: 'National' },
+  { value: ADMIN_ZONES.HZ, label: 'Autre région' },
 ];
 
 export const BACKOFFICE_PAGES = ['candidates', 'coachs', 'oppotunities'];
