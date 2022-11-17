@@ -1,22 +1,22 @@
 describe('Parcours CV', () => {
   beforeEach(() => {
-    cy.intercept('GET', '/api/v1/cv/cards/random*', { fixture: 'cvs.json' }).as(
+    cy.intercept('GET', '/cv/cards/random*', { fixture: 'cvs.json' }).as(
       'getAllCV'
     );
 
     cy.fixture('cv').then((cv) => {
       cy.intercept(
         'GET',
-        '/api/v1/cv/' + cv.cv.user.candidat.firstName.toLowerCase() + '*',
+        '/cv/url/' + cv.cv.user.candidat.firstName.toLowerCase() + '*',
         cv
       ).as('getCV');
     });
 
-    cy.intercept('POST', '/api/v1/opportunity', {
+    cy.intercept('POST', '/opportunity', {
       fixture: 'response-opportunity',
     }).as('postOpportunity');
 
-    cy.intercept('GET', '/api/v1/user/search/candidates*', {
+    cy.intercept('GET', '/user/search/candidates*', {
       fixture: 'candidats-query',
     }).as('getCandidats');
   });
@@ -48,6 +48,7 @@ describe('Parcours CV', () => {
 
     cy.wait('@getCandidats');
 
+    cy.get('#form-offer-isPublic').scrollIntoView().click()
     cy.get('#form-offer-title').scrollIntoView().type('Form test');
     cy.get('#form-offer-company').scrollIntoView().type('Random company');
     cy.get('#form-offer-recruiterFirstName').scrollIntoView().type('John');
