@@ -27,16 +27,6 @@ const Index = () => {
     }
   });
 
-  const count = async () => {
-    const res = await API.getCVShares();
-    return res;
-  };
-  // console.log(
-  count().then((res) => {
-    return console.log(res);
-  });
-  // );
-
   return (
     <Layout>
       <Header />

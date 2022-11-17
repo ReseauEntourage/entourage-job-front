@@ -285,16 +285,16 @@ class APIHandler {
     return this.post(`/auth/reset/${userId}/${token}`, params)
   }
 
-  /// //////
-  // mail //
-  /// //////
+  ///// //////
+  // contact /
+  ///// //////
 
   postContactUs(params: MailContactUs) :  Promise<AxiosResponse> {
-    return this.post('/mail/contact-us', params);
+    return this.post('/contact/contactUs', params);
   }
 
   postNewsletter(params: object) :  Promise<AxiosResponse> {
-    return this.post('/mail/newsletter', params);
+    return this.post('/contact/newsletter', params);
   }
 }
 
