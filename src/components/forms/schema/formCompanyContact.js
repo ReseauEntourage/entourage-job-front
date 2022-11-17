@@ -51,13 +51,12 @@ export default {
       title: 'Nom de votre entreprise*',
     },
     {
-      id: 'zones',
-      name: 'zones',
+      id: 'zone',
+      name: 'zone',
       component: 'select-request',
-      placeholder: 'Choisissez vos régions',
+      placeholder: 'Choisissez votre région',
       options: COMPANY_CONTACT_ZONES_FILTERS,
-      isMulti: true,
-      title: 'Dans quelle(s) région(s) êtes-vous présent ?*',
+      title: 'Dans quelle région êtes-vous présent ?*',
     },
     {
       id: 'phone',
@@ -187,7 +186,7 @@ export default {
       message: 'Obligatoire',
     },
     {
-      field: 'zones',
+      field: 'zone',
       method: 'isEmpty',
       args: [
         {
