@@ -407,7 +407,11 @@ export const NEWSLETTER_TAGS = {
       tag: ADMIN_ZONES.LILLE,
     },
     {
-      label: 'Bretagne',
+      label: 'Région rennaise',
+      tag: ADMIN_ZONES.RENNES,
+    },
+    {
+      label: 'Lorient',
       tag: ADMIN_ZONES.LORIENT,
     },
     {
@@ -542,7 +546,7 @@ export const COMPANY_CONTACT_ZONES_FILTERS = [
   { value: ADMIN_ZONES.LILLE, label: _.capitalize(ADMIN_ZONES.LILLE) },
   { value: ADMIN_ZONES.LYON, label: _.capitalize(ADMIN_ZONES.LYON) },
   { value: ADMIN_ZONES.LORIENT, label: _.capitalize(ADMIN_ZONES.LORIENT) },
-  { value: 'RENNES', label: 'Rennes' },
+  { value: ADMIN_ZONES.RENNES, label: _.capitalize(ADMIN_ZONES.RENNES) },
   { value: 'NATIONAL', label: 'National' },
   { value: ADMIN_ZONES.HZ, label: 'Autre région' },
 ];

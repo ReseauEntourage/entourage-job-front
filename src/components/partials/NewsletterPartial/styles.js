@@ -33,7 +33,7 @@ export const StyledNLForm = styled.div`
         flex-grow: 1;
         margin-bottom: 16px;
         .label {
-          padding-left: 20px;
+          padding-left: 10px;
         }
       }
     }
