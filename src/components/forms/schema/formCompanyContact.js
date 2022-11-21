@@ -9,20 +9,20 @@ export default {
   id: 'form-company-contact',
   fields: [
     {
-      id: 'lastName',
-      name: 'lastName',
-      type: 'text',
-      component: 'input',
-      placeholder: 'Tapez votre texte',
-      title: 'Votre nom*',
-    },
-    {
       id: 'firstName',
       name: 'firstName',
       type: 'text',
       component: 'input',
       placeholder: 'Tapez votre texte',
       title: 'Votre prénom*',
+    },
+    {
+      id: 'lastName',
+      name: 'lastName',
+      type: 'text',
+      component: 'input',
+      placeholder: 'Tapez votre texte',
+      title: 'Votre nom*',
     },
     {
       id: 'approach',
@@ -49,6 +49,14 @@ export default {
       component: 'input',
       placeholder: 'Tapez le nom de votre entreprise',
       title: 'Nom de votre entreprise*',
+    },
+    {
+      id: 'position',
+      name: 'position',
+      type: 'text',
+      component: 'input',
+      placeholder: 'Tapez le nom de votre poste',
+      title: 'Votre poste*',
     },
     {
       id: 'zone',
@@ -165,6 +173,17 @@ export default {
     },
     {
       field: 'company',
+      method: 'isEmpty',
+      args: [
+        {
+          ignore_whitespace: true,
+        },
+      ],
+      validWhen: false,
+      message: 'Obligatoire',
+    },
+    {
+      field: 'position',
       method: 'isEmpty',
       args: [
         {
