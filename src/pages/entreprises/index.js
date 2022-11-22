@@ -182,6 +182,7 @@ const Entreprises = ({ nbPublishedCVs }) => {
           </mark>
         }
         cta={{
+          dataTest: 'button-contact-company-header',
           onClick: () => {
             gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
             openModal(<CompanyContactModal />);
@@ -261,6 +262,7 @@ const Entreprises = ({ nbPublishedCVs }) => {
               gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
               openModal(<CompanyContactModal />);
             }}
+            dataTestId="button-contact-company-first-section"
             style="secondary"
           >
             Contactez-nous&nbsp;
@@ -402,6 +404,7 @@ const Entreprises = ({ nbPublishedCVs }) => {
         </h2>
         <div className="uk-flex uk-flex-center">
           <Button
+            dataTestId="button-contact-company-last-section"
             onClick={() => {
               gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
               openModal(<CompanyContactModal />);

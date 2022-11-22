@@ -6,3 +6,6 @@ node_modules
 .DS_Store
 public/static/img/compress.sh
 coverage/
+cypress/screenshots
+cypress/support
+cypress/videos

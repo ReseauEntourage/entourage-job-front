@@ -9,20 +9,20 @@ export default {
   id: 'form-company-contact',
   fields: [
     {
-      id: 'lastName',
-      name: 'lastName',
-      type: 'text',
-      component: 'input',
-      placeholder: 'Tapez votre texte',
-      title: 'Votre nom*',
-    },
-    {
       id: 'firstName',
       name: 'firstName',
       type: 'text',
       component: 'input',
       placeholder: 'Tapez votre texte',
       title: 'Votre prénom*',
+    },
+    {
+      id: 'lastName',
+      name: 'lastName',
+      type: 'text',
+      component: 'input',
+      placeholder: 'Tapez votre texte',
+      title: 'Votre nom*',
     },
     {
       id: 'approach',
@@ -43,6 +43,13 @@ export default {
       title: 'Votre adresse mail*',
     },
     {
+      id: 'phone',
+      name: 'phone',
+      component: 'tel',
+      placeholder: 'Tapez votre numéro de téléphone portable',
+      title: 'Votre numéro de téléphone portable',
+    },
+    {
       id: 'company',
       name: 'company',
       type: 'text',
@@ -51,19 +58,20 @@ export default {
       title: 'Nom de votre entreprise*',
     },
     {
+      id: 'position',
+      name: 'position',
+      type: 'text',
+      component: 'input',
+      placeholder: 'Tapez le nom de votre poste',
+      title: 'Votre poste*',
+    },
+    {
       id: 'zone',
       name: 'zone',
       component: 'select-request',
       placeholder: 'Choisissez votre région',
       options: COMPANY_CONTACT_ZONES_FILTERS,
       title: 'Dans quelle région êtes-vous présent ?*',
-    },
-    {
-      id: 'phone',
-      name: 'phone',
-      component: 'tel',
-      placeholder: 'Tapez votre numéro de téléphone portable',
-      title: 'Votre numéro de téléphone portable',
     },
     {
       id: 'heardAbout',
@@ -165,6 +173,17 @@ export default {
     },
     {
       field: 'company',
+      method: 'isEmpty',
+      args: [
+        {
+          ignore_whitespace: true,
+        },
+      ],
+      validWhen: false,
+      message: 'Obligatoire',
+    },
+    {
+      field: 'position',
       method: 'isEmpty',
       args: [
         {
