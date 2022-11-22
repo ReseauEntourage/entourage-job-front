@@ -1,8 +1,7 @@
 describe('Parcours Orienter', () => {
   beforeEach(() => {
     cy.intercept('POST', 'api/v1/contact/contact-us', {
-      statusCode: 200,
-      message: 'mail sent',
+      statusCode: 201,
     }).as('postContact');
   });
 

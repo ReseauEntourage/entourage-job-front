@@ -43,6 +43,13 @@ export default {
       title: 'Votre adresse mail*',
     },
     {
+      id: 'phone',
+      name: 'phone',
+      component: 'tel',
+      placeholder: 'Tapez votre numéro de téléphone portable',
+      title: 'Votre numéro de téléphone portable',
+    },
+    {
       id: 'company',
       name: 'company',
       type: 'text',
@@ -65,13 +72,6 @@ export default {
       placeholder: 'Choisissez votre région',
       options: COMPANY_CONTACT_ZONES_FILTERS,
       title: 'Dans quelle région êtes-vous présent ?*',
-    },
-    {
-      id: 'phone',
-      name: 'phone',
-      component: 'tel',
-      placeholder: 'Tapez votre numéro de téléphone portable',
-      title: 'Votre numéro de téléphone portable',
     },
     {
       id: 'heardAbout',
