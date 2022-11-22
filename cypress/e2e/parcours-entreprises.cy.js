@@ -56,6 +56,8 @@ describe('Parcours Entreprises', () => {
 
     cy.get('button').contains('Envoyer').click();
 
-    cy.wait('@postContactCompany');
+    cy.wait('@postContactCompany')
+
+    cy.get('.ReactModalPortal div').should('not.exist');
   });
 });
