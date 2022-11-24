@@ -5,6 +5,7 @@ const ADMIN_ZONES = {
   LYON: 'LYON',
   LILLE: 'LILLE',
   LORIENT: 'LORIENT',
+  RENNES: 'RENNES',
   HZ: 'HORS ZONE',
 };
 
@@ -13,6 +14,7 @@ const ADMIN_ZONES_FILTERS = [
   { value: ADMIN_ZONES.LILLE, label: _.capitalize(ADMIN_ZONES.LILLE) },
   { value: ADMIN_ZONES.LYON, label: _.capitalize(ADMIN_ZONES.LYON) },
   { value: ADMIN_ZONES.LORIENT, label: _.capitalize(ADMIN_ZONES.LORIENT) },
+  { value: ADMIN_ZONES.RENNES, label: _.capitalize(ADMIN_ZONES.RENNES) },
   { value: ADMIN_ZONES.HZ, label: _.capitalize(ADMIN_ZONES.HZ) },
 ];
 
@@ -119,7 +121,7 @@ const DEPARTMENTS = [
   },
   {
     name: "Côtes-d'Armor (22)",
-    zone: ADMIN_ZONES.HZ,
+    zone: ADMIN_ZONES.RENNES,
     region: 'Bretagne',
   },
   {
@@ -154,7 +156,7 @@ const DEPARTMENTS = [
   },
   {
     name: 'Finistère (29)',
-    zone: ADMIN_ZONES.HZ,
+    zone: ADMIN_ZONES.RENNES,
     region: 'Bretagne',
   },
   {
@@ -194,7 +196,7 @@ const DEPARTMENTS = [
   },
   {
     name: 'Ille-et-Vilaine (35)',
-    zone: ADMIN_ZONES.HZ,
+    zone: ADMIN_ZONES.RENNES,
     region: 'Bretagne',
   },
   {
@@ -300,6 +302,7 @@ const DEPARTMENTS = [
   {
     name: 'Morbihan (56)',
     zone: ADMIN_ZONES.LORIENT,
+    // todo change back to Bretagne
     region: 'Lorient',
   },
   {
@@ -529,6 +532,7 @@ const REGIONS_LABELS = {
   'Île-de-France': 'Paris et sa région',
   'Auvergne-Rhône-Alpes': 'Lyon et sa région',
   'Hauts-de-France': 'Lille et sa région',
+  Bretagne: 'Rennes et sa région',
   Lorient: 'Lorient',
 };
 

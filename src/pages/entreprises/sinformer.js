@@ -9,9 +9,10 @@ import CandidateTestimonies from 'src/components/partials/CandidateTestimonies';
 import CompanyTestimonies from 'src/components/partials/CompanyTestimonies';
 import { NewsletterPartial } from 'src/components/partials';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
+import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
-import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { fbEvent } from 'src/lib/fb';
+import CompanyContactModal from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
+import { openModal } from 'src/components/modals/Modal';
 
 const Sinformer = () => {
   return (
@@ -34,12 +35,9 @@ const Sinformer = () => {
           </>
         }
         cta={{
-          href: process.env.AIRTABLE_LINK_COMPANY_HELP,
-          isExternal: true,
-          newTab: true,
           onClick: () => {
             gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
-            fbEvent(FB_TAGS.COMPANY_CONTACT);
+            openModal(<CompanyContactModal />);
           },
           label: 'Nous contacter',
         }}

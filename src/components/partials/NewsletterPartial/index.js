@@ -32,7 +32,7 @@ const NewsletterPartial = ({ style, padding, tag }) => {
     } else {
       gaEvent(tag);
       try {
-        await Api.post('/mail/newsletter', {
+        await Api.post('/contact/newsletter', {
           email,
           zone,
           status,

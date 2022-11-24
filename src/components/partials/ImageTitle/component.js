@@ -40,7 +40,7 @@ const ImageTitleContent = ({ title, text, img, cta }) => {
                   className={`${cta.className || ''} banner-btn`}
                   newTab={cta.newTab}
                   isExternal={cta.isExternal}
-                  dataTest={cta.dataTest}
+                  dataTestId={cta.dataTest}
                 >
                   {cta.label}&nbsp;
                   <IconNoSSR name="chevron-right" />

@@ -1,24 +1,38 @@
-import { HEARD_ABOUT_FILTERS } from 'src/constants';
+import {
+  COMPANY_APPROACHES_FILTERS,
+  COMPANY_CONTACT_ZONES_FILTERS,
+  HEARD_ABOUT_FILTERS,
+} from 'src/constants';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 
 export default {
-  id: 'form-interest',
+  id: 'form-company-contact',
   fields: [
-    {
-      id: 'lastName',
-      name: 'lastName',
-      type: 'text',
-      component: 'input',
-      placeholder: 'Tapez votre texte',
-      title: 'Nom*',
-    },
     {
       id: 'firstName',
       name: 'firstName',
       type: 'text',
       component: 'input',
       placeholder: 'Tapez votre texte',
-      title: 'Prénom*',
+      title: 'Votre prénom*',
+    },
+    {
+      id: 'lastName',
+      name: 'lastName',
+      type: 'text',
+      component: 'input',
+      placeholder: 'Tapez votre texte',
+      title: 'Votre nom*',
+    },
+    {
+      id: 'approach',
+      name: 'approach',
+      component: 'select',
+      options: [
+        { value: -1, label: 'Choisissez votre démarche' },
+        ...COMPANY_APPROACHES_FILTERS,
+      ],
+      title: 'Quelle est votre démarche ?*',
     },
     {
       id: 'email',
@@ -26,31 +40,38 @@ export default {
       type: 'email',
       component: 'input',
       placeholder: 'Tapez votre adresse mail',
-      title: 'Adresse mail*',
+      title: 'Votre adresse mail*',
     },
     {
       id: 'phone',
       name: 'phone',
       component: 'tel',
       placeholder: 'Tapez votre numéro de téléphone portable',
-      title: 'Téléphone portable',
+      title: 'Votre numéro de téléphone portable',
     },
     {
-      id: 'structure',
-      name: 'structure',
+      id: 'company',
+      name: 'company',
       type: 'text',
       component: 'input',
-      placeholder: 'Tapez votre texte',
-      title: 'Structure',
+      placeholder: 'Tapez le nom de votre entreprise',
+      title: 'Nom de votre entreprise*',
     },
     {
-      id: 'message',
-      name: 'message',
-      component: 'textarea',
+      id: 'position',
+      name: 'position',
       type: 'text',
-      placeholder: 'Tapez votre texte',
-      title: 'Votre message*',
-      rows: 7,
+      component: 'input',
+      placeholder: 'Tapez le nom de votre poste',
+      title: 'Votre poste*',
+    },
+    {
+      id: 'zone',
+      name: 'zone',
+      component: 'select-request',
+      placeholder: 'Choisissez votre région',
+      options: COMPANY_CONTACT_ZONES_FILTERS,
+      title: 'Dans quelle région êtes-vous présent ?*',
     },
     {
       id: 'heardAbout',
@@ -62,11 +83,6 @@ export default {
         ...HEARD_ABOUT_FILTERS,
       ],
       title: 'Comment avez-vous connu LinkedOut ?',
-    },
-    {
-      id: 'cgu',
-      name: 'cgu',
-      component: 'cgu',
     },
   ],
   rules: [
@@ -143,28 +159,6 @@ export default {
       message: 'Adresse e-mail invalide',
     },
     {
-      field: 'message',
-      method: 'isEmpty',
-      args: [
-        {
-          ignore_whitespace: true,
-        },
-      ],
-      validWhen: false,
-      message: 'Obligatoire',
-    },
-    {
-      field: 'message',
-      method: 'isLength',
-      args: [
-        {
-          max: 4000,
-        },
-      ],
-      validWhen: true,
-      message: '4000 caractères maximum',
-    },
-    {
       field: 'phone',
       method: (fieldValue) => {
         return (
@@ -178,10 +172,47 @@ export default {
       message: 'Numéro de téléphone invalide',
     },
     {
-      field: 'cgu',
-      method: 'equals',
-      args: ['true'],
-      validWhen: true,
+      field: 'company',
+      method: 'isEmpty',
+      args: [
+        {
+          ignore_whitespace: true,
+        },
+      ],
+      validWhen: false,
+      message: 'Obligatoire',
+    },
+    {
+      field: 'position',
+      method: 'isEmpty',
+      args: [
+        {
+          ignore_whitespace: true,
+        },
+      ],
+      validWhen: false,
+      message: 'Obligatoire',
+    },
+    {
+      field: 'approach',
+      method: 'isEmpty',
+      args: [
+        {
+          ignore_whitespace: true,
+        },
+      ],
+      validWhen: false,
+      message: 'Obligatoire',
+    },
+    {
+      field: 'zone',
+      method: 'isEmpty',
+      args: [
+        {
+          ignore_whitespace: true,
+        },
+      ],
+      validWhen: false,
       message: 'Obligatoire',
     },
   ],
