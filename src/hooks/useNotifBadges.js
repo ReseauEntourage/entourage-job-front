@@ -25,10 +25,6 @@ export function useNotifBadges(user, path) {
   useEffect(() => {
     if (user) {
       if (user.role === USER_ROLES.ADMIN) {
-        const queries = {
-          members: `/user/members/count`,
-          offers: `/opportunity/admin/count`,
-        };
         const queriesToExecute = [];
         if (user.adminRole === ADMIN_ROLES.CANDIDATES) {
           queriesToExecute.push(() => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import formCompanyContact from 'src/components/forms/schema/formCompanyContact';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import { gaEvent } from 'src/lib/gtag';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import UIkit from 'uikit';
@@ -16,7 +16,7 @@ const CompanyContactModal = () => {
       formSchema={formCompanyContact}
       onSubmit={async (fields, closeModal) => {
         try {
-          await Api.post('/contact/company', fields);
+          await Api.postContactCompany('/contact/company', fields);
           gaEvent(GA_TAGS.PAGE_ENTREPRISES_ENVOYER_CONTACT_REFERENT_CLIC);
           fbEvent(FB_TAGS.COMPANY_CONTACT);
           closeModal();

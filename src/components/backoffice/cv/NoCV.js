@@ -31,9 +31,13 @@ const NoCV = ({ candidateId, user, setCV }) => {
             <Button
               style="primary"
               onClick={() => {
-                return Api.postCV({
-                  cv: { status: CV_STATUS.New.value },
-                }).then(({ data }) => {
+                return Api.postCV(
+                  candidateId,
+                  {
+                    cv: { status: CV_STATUS.New.value },
+                  },
+                  false
+                ).then(({ data }) => {
                   return setCV(data);
                 });
               }}

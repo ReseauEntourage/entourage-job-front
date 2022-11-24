@@ -34,7 +34,7 @@ jest.mock('src/components/forms/FormValidator', () => {
 });
 
 describe('Modal Interest Linkedout', () => {
-  Api.postContactUs.mockResolvedValue({});
+  Api.postContactContactUs.mockResolvedValue({});
   it('should render and next on submit, then close', async () => {
     const { container } = render(
       <div>
@@ -63,7 +63,7 @@ describe('Modal Interest Linkedout', () => {
     // submit and next
     fireEvent.submit(form);
     await waitFor(() => {
-      return expect(Api.postContactUs).toHaveBeenCalled();
+      return expect(Api.postContactContactUs).toHaveBeenCalled();
     });
     expect(screen.getByTestId('success-modal-content'));
 

@@ -38,7 +38,7 @@ const CandidateEmployedToggle = ({
             fields.endOfContract && hasEnd ? fields.endOfContract : null,
         };
 
-        return Api.putCandidate({
+        return Api.putCandidate(candidateId, {
           employed,
           ...mutatedFields,
         })

@@ -1,8 +1,6 @@
 import React from 'react';
 import Layout from 'src/components/Layout';
 
-import API from 'src/api/index.ts';
-
 import {
   ActionPartial,
   CandidatListPartial,

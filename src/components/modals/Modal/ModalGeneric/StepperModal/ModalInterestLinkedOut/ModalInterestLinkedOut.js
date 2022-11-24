@@ -17,7 +17,7 @@ const ModalInterestLinkedOut = () => {
               formSchema={interestLinkedOutSchema}
               onCancel={closeModal}
               onSubmit={(fields, setError) => {
-                return Api.postContactUs(fields)
+                return Api.postContactContactUs(fields)
                   .then(() => {
                     return nextStep();
                   })

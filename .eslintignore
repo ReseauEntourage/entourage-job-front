@@ -6,4 +6,3 @@ assets/
 cypress.config.js
 cypress/
 next.config.js
-src/api

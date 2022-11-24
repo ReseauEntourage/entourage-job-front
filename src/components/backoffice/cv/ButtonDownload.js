@@ -22,7 +22,7 @@ const ButtonDownload = ({
       icon={pdfGenerating ? null : 'download'}
       action={() => {
         if (tag) gaEvent(tag);
-        return Api.getCVPdf({
+        return Api.getCVPdf(candidateId, {
           params: {
             fileName: `${firstName}_${lastName}`,
           },

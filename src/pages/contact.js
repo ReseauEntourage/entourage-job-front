@@ -36,7 +36,7 @@ const Contact = () => {
           submitText="Envoyer"
           formSchema={interestLinkedOutSchema}
           onSubmit={(fields) => {
-            return Api.postContactUs(fields)
+            return Api.postContactContactUs(fields)
               .then(() => {
                 UIkit.notification('Merci pour votre message.', 'success');
                 resetForm();
