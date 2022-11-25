@@ -16,6 +16,7 @@ env:
   TUTORIAL_VIDEO_OFFERS: https://google.com
   TUTORIAL_VIDEO_OFFERS_2: https://google.com
   TUTORIAL_INTERVIEW_TRAINING: https://google.com
+  IRAISER_DONATION_LINK: https://google.com
   SERVER_URL: http://localhost:3000
   API_URL: http://localhost:3002
   PORT: 3000
