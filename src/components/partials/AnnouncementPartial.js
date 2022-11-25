@@ -11,7 +11,7 @@ const AnnouncementPartial = () => {
         <Img
           width="1440"
           height="420"
-          src="/static/img/home_banner.jpg"
+          src="/static/img/home_announcement_banner.jpg"
           alt="Victoire Transat Jacques Vabre"
         />
       </SimpleLink>
