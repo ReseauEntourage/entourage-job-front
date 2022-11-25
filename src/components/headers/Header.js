@@ -100,7 +100,7 @@ const Header = () => {
             />
             <div className="uk-visible@m uk-margin-small-left uk-flex uk-flex-center uk-light">
               <Button
-                href={EXTERNAL_LINKS.DONATION}
+                href={process.env.DONATION_LINK}
                 isExternal
                 newTab
                 onClick={() => {
@@ -210,7 +210,7 @@ const Header = () => {
           </li>
           <li className="uk-flex uk-flex-center uk-padding-small">
             <Button
-              href={EXTERNAL_LINKS.DONATION}
+              href={process.env.DONATION_LINK}
               isExternal
               newTab
               onClick={() => {

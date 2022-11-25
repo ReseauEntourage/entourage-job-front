@@ -7,7 +7,7 @@ import { Section } from 'src/components/utils';
 const AnnouncementPartial = () => {
   return (
     <Section container="small" style="muted" className="uk-padding-remove-top">
-      <SimpleLink href={EXTERNAL_LINKS.ARTICLE_TJV} isExternal target="_blank">
+      <SimpleLink href={EXTERNAL_LINKS.ARTICLE_RDR} isExternal target="_blank">
         <Img
           width="1440"
           height="420"

@@ -136,6 +136,11 @@ module.exports = withLess({
   async redirects() {
     return [
       {
+        source: '/don',
+        destination: process.env.IRAISER_DONATION_LINK,
+        permanent: false,
+      },
+      {
         source: '/tutoriel-video-premiers-pas',
         destination: process.env.TUTORIAL_VIDEO_FIRST_STEPS,
         permanent: false,
