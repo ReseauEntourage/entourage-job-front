@@ -5,7 +5,7 @@ import { Card, Grid, SimpleLink } from 'src/components/utils';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import schema from 'src/components/forms/schema/formEditLinkedUser';
-import Api from 'src/Axios';
+import Api from 'src/api/api.ts';
 import { USER_ROLES } from 'src/constants';
 import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
 import CandidateEmployedToggle from 'src/components/backoffice/candidate/CandidateEmployedToggle';
@@ -176,7 +176,7 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
                   ...newData,
                 });
               }}
-              candidatId={linkedUser.id}
+              candidateId={linkedUser.id}
             />
             <ToggleWithConfirmationModal
               id="hiddenToggle"
@@ -185,7 +185,7 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
               modalConfirmation="Oui, masquer le CV"
               defaultValue={userCandidat.hidden}
               onToggle={(hidden) => {
-                return Api.put(`/user/candidat/${linkedUser.id}`, {
+                return Api.putCandidate(linkedUser.id, {
                   hidden,
                 })
                   .then(() => {
@@ -250,33 +250,27 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
                         let promise = null;
                         if (user.role === USER_ROLES.CANDIDAT) {
                           // on lui assigne ou eleve un coach
-                          promise = Api.put(`/user/candidat/${user.id}`, {
+                          promise = Api.putCandidate(user.id, {
                             coachId: linkedUserId || null,
                           });
                         }
                         if (user.role === USER_ROLES.COACH) {
                           // on l'assigne à un candidat
                           if (linkedUserId) {
-                            promise = Api.put(
-                              `/user/candidat/${linkedUserId}`,
-                              {
-                                coachId: user.id,
-                              }
-                            );
+                            promise = Api.Api.putCandidate(linkedUser.id, {
+                              coachId: user.id,
+                            });
                           } else {
                             // on lui enleve son candidat
-                            promise = Api.put(
-                              `/user/candidat/${linkedUser.id}`,
-                              {
-                                coachId: null,
-                              }
-                            );
+                            promise = Api.Api.putCandidate(linkedUser.id, {
+                              coachId: null,
+                            });
                           }
                         }
                         if (promise) {
                           return promise
                             .then(() => {
-                              return Api.get(`/user/${user.id}`);
+                              return Api.getUserById(user.id);
                             })
                             .then(({ data }) => {
                               closeModal();

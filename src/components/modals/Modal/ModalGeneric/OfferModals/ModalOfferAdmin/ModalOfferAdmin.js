@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import schema, {
   adminMutations,
 } from 'src/components/forms/schema/formEditOpportunity';
@@ -178,13 +178,14 @@ const ModalOfferAdmin = ({
       updatedAt,
       createdBy,
       opportunityUsers,
+      id,
       ...restOpportunity
     } = opportunity;
+    const { candidateId } = isExternal ? opportunity : {};
     try {
-      const { data } = await Api.put(
-        `/opportunity/${isExternal ? 'external' : ''}`,
-        restOpportunity
-      );
+      const { data } = isExternal
+        ? await Api.putExternalOpportunity(id, candidateId, restOpportunity)
+        : await Api.putOpportunity(id, candidateId, restOpportunity);
       setOffer({
         ...data,
         opportunityUsers: isExternal
@@ -202,7 +203,7 @@ const ModalOfferAdmin = ({
 
   const updateOpportunityUser = async (opportunityUser) => {
     try {
-      const { data } = await Api.put(`/opportunity/join`, opportunityUser);
+      const { data } = await Api.putJoinOpportunity(opportunityUser);
       setOffer((prevOffer) => {
         return {
           ...prevOffer,

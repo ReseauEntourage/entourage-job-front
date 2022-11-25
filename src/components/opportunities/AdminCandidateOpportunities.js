@@ -4,17 +4,17 @@ import OpportunityList from 'src/components/opportunities/OpportunityList';
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 import { useFilters } from 'src/hooks';
 
-const AdminCandidateOpportunities = ({ candidatId }) => {
+const AdminCandidateOpportunities = ({ candidateId }) => {
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
     OPPORTUNITY_FILTERS_DATA,
-    `/backoffice/admin/membres/${candidatId}/offres`,
+    `/backoffice/admin/membres/${candidateId}/offres`,
     ['memberId', 'tab', 'offerId']
   );
 
   return (
     <div>
       <OpportunityList
-        candidatId={candidatId}
+        candidateId={candidateId}
         search={search}
         filters={filters}
         resetFilters={resetFilters}
@@ -27,7 +27,7 @@ const AdminCandidateOpportunities = ({ candidatId }) => {
 };
 
 AdminCandidateOpportunities.propTypes = {
-  candidatId: PropTypes.string.isRequired,
+  candidateId: PropTypes.string.isRequired,
 };
 
 AdminCandidateOpportunities.defaultProps = {};

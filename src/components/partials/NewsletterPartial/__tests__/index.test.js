@@ -37,11 +37,11 @@ jest.mock('src/lib/gtag', () => {
   };
 });
 
-jest.mock('src/Axios', () => {
-  const ActualApi = jest.requireActual('src/Axios');
+jest.mock('src/api/index.ts', () => {
+  const ActualApi = jest.requireActual('src/api/index.ts');
   return {
     ...ActualApi,
-    post: () => {
+    postNewsletter: () => {
       return Promise.resolve({
         status: 200,
         body: {},

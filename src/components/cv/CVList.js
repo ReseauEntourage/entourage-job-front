@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { filtersToQueryParams } from 'src/utils';
 import { Button, Grid } from 'src/components/utils';
 import { CandidatCard } from 'src/components/cards';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import { CV_FILTERS_DATA, INITIAL_NB_OF_CV_TO_DISPLAY } from 'src/constants';
 import SimpleLink from 'src/components/utils/SimpleLink';
 import { usePrevious } from 'src/hooks/utils';
@@ -68,7 +68,7 @@ const CVList = ({
       } else {
         setLoading(true);
       }
-      Api.get(`/cv/cards/random`, {
+      Api.getCVRandom({
         params: {
           search: searchValue,
           nb: nbOfCVToDisplayValue,

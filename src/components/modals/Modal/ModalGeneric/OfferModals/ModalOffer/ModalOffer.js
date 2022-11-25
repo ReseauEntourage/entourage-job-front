@@ -5,7 +5,7 @@ import Select from 'src/components/forms/fields/Select';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
 import { IconNoSSR } from 'src/components/utils/Icon';
 
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import {
   findConstantFromValue,
   formatParagraph,
@@ -116,7 +116,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
 
   const updateOpportunityUser = useCallback(
     async (opportunityUser) => {
-      const { data } = await Api.put(`/opportunity/join`, opportunityUser);
+      const { data } = await Api.putJoinOpportunity(opportunityUser);
       setOffer((prevOffer) => {
         return {
           ...prevOffer,
@@ -199,7 +199,11 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
   const updateOpportunity = async (opportunity) => {
     setLoading(true);
     try {
-      const { data } = await Api.put(`/opportunity/external`, opportunity);
+      const { data } = await Api.putExternalOpportunity(
+        opportunity.id,
+        user.candidatId,
+        opportunity
+      );
       setOffer(data);
       await onOfferUpdated();
       setIsEditing(false);

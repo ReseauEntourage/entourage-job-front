@@ -12,7 +12,7 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 import { Button } from 'src/components/utils';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import formEditExternalOpportunity from 'src/components/forms/schema/formEditExternalOpportunity';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import {
   getCandidateIdFromCoachOrCandidate,
   mutateFormSchema,
@@ -25,7 +25,7 @@ const CandidateOpportunityList = ({
   setFilters,
   setSearch,
   resetFilters,
-  candidatId,
+  candidateId,
   tabFilters,
   setTabFilters,
 }) => {
@@ -64,6 +64,7 @@ const CandidateOpportunityList = ({
       >
         <Button
           style="primary"
+          dataTestId="candidat-add-offer"
           onClick={() => {
             openModal(
               <ModalEdit
@@ -77,7 +78,7 @@ const CandidateOpportunityList = ({
                 onSubmit={async (fields, closeModal) => {
                   const { businessLines, ...restFields } = fields;
                   try {
-                    await Api.post(`/opportunity/external`, {
+                    await Api.postExternalOpportunity({
                       ...restFields,
                       status: parseInt(fields.status, 10),
                       startOfContract: restFields.startOfContract || null,
@@ -110,7 +111,7 @@ const CandidateOpportunityList = ({
       </HeaderBackoffice>
       <OpportunityList
         ref={opportunityListRef}
-        candidatId={candidatId}
+        candidateId={candidateId}
         tabFilters={tabFilters}
         setTabFilters={setTabFilters}
         search={search}
@@ -125,7 +126,7 @@ const CandidateOpportunityList = ({
 };
 
 CandidateOpportunityList.propTypes = {
-  candidatId: PropTypes.string.isRequired,
+  candidateId: PropTypes.string.isRequired,
   search: PropTypes.string,
   filters: PropTypes.shape(),
   setFilters: PropTypes.func,

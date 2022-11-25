@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import ButtonPost from 'src/components/backoffice/cv/ButtonPost';
 import { gaEvent } from 'src/lib/gtag';
 
 const ButtonDownload = ({
   disabled,
-  candidatId,
+  candidateId,
   firstName,
   lastName,
   tag,
@@ -22,7 +22,7 @@ const ButtonDownload = ({
       icon={pdfGenerating ? null : 'download'}
       action={() => {
         if (tag) gaEvent(tag);
-        return Api.get(`/cv/pdf/${candidatId}`, {
+        return Api.getCVPdf(candidateId, {
           params: {
             fileName: `${firstName}_${lastName}`,
           },
@@ -41,7 +41,7 @@ const ButtonDownload = ({
 };
 ButtonDownload.propTypes = {
   disabled: PropTypes.bool,
-  candidatId: PropTypes.string.isRequired,
+  candidateId: PropTypes.string.isRequired,
   firstName: PropTypes.string.isRequired,
   lastName: PropTypes.string.isRequired,
   tag: PropTypes.string,

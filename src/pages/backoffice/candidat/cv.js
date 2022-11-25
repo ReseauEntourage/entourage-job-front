@@ -1,7 +1,7 @@
 import UIkit from 'uikit';
 import React, { useContext, useEffect, useState } from 'react';
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import { Section } from 'src/components/utils';
 import CVEditWelcome from 'src/components/cv/CVEditWelcome';
 import { UserContext } from 'src/components/store/UserProvider';
@@ -18,7 +18,7 @@ const Edit = () => {
 
   useEffect(() => {
     if (user) {
-      Api.get(`/user/${user.id}`)
+      Api.getUserById(user.id)
         .then(({ data }) => {
           return setUserCompleteData(data);
         })
@@ -58,7 +58,7 @@ const Edit = () => {
         <CVPageContent
           cv={cv}
           setCV={setCV}
-          candidatId={getCandidateIdFromCoachOrCandidate(userCompleteData)}
+          candidateId={getCandidateIdFromCoachOrCandidate(userCompleteData)}
         />
       </>
     );

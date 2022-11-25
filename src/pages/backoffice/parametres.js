@@ -7,7 +7,7 @@ import { Card, Grid, Section } from 'src/components/utils';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import FormWithValidation from 'src/components/forms/FormWithValidation';
 import schemaPersonalData from 'src/components/forms/schema/formPersonalData';
 import schemaChangePassword from 'src/components/forms/schema/formChangePassword';
@@ -140,7 +140,7 @@ const Parametres = () => {
   useEffect(() => {
     if (user) {
       setLoadingPersonal(true);
-      Api.get(`/user/${user.id}`)
+      Api.getUserById(user.id)
         .then(({ data }) => {
           setUserData(data);
         })
@@ -152,7 +152,7 @@ const Parametres = () => {
 
   const updateUser = (newUserData, closeModal) => {
     if (!_.isEmpty(newUserData)) {
-      return Api.put(`/user/${userData.id}`, newUserData)
+      return Api.putUser(userData.id, newUserData)
         .then(() => {
           closeModal();
           setUserData((prevUserData) => {
@@ -200,7 +200,7 @@ const Parametres = () => {
                     modalTitle="Vous avez retrouvé un emploi ?"
                     modalConfirmation="Valider"
                     defaultValue={userData.candidat.employed}
-                    candidatId={userData.id}
+                    candidateId={userData.id}
                     notificationMessage="Votre profil a été mis à jour !"
                     subtitle={
                       userData &&
@@ -236,7 +236,7 @@ const Parametres = () => {
                     modalConfirmation="Oui, masquer mon CV"
                     defaultValue={userData.candidat.hidden}
                     onToggle={(hidden) => {
-                      return Api.put(`/user/candidat/${userData.id}`, {
+                      return Api.putCandidate(userData.id, {
                         hidden,
                       })
                         .then(() => {
@@ -454,7 +454,7 @@ const Parametres = () => {
                   ) {
                     setLoadingPassword(true);
                     try {
-                      await Api.put('/user/change-pwd', {
+                      await Api.putUserChangePwd({
                         newPassword,
                         oldPassword,
                       });
