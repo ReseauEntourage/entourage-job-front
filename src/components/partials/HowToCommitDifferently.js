@@ -24,7 +24,7 @@ const HowToCommitDifferently = () => {
             text: "Aidez-nous à développer le programme LinkedOut et à accompagner les candidats via un don déductible de vos impôts ou un dispositif d'arrondi solidaire.",
             button: {
               label: 'Faire un don',
-              href: EXTERNAL_LINKS.DONATION,
+              href: process.env.DONATION_LINK,
               external: true,
             },
             onClick: () => {

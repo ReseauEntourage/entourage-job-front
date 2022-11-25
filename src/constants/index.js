@@ -373,7 +373,6 @@ export const EXTERNAL_OFFERS_ORIGINS = [
 ];
 
 export const EXTERNAL_LINKS = {
-  DONATION: 'https://entourage.iraiser.eu/linkedout/~mon-don',
   LKO_VG: 'https://www.linkedout-vendeeglobe.com',
   LKO_VG_CONTEST: 'https://www.linkedout-vendeeglobe.com/vendeearctique',
   LKO_BLOG: 'https://blog.linkedout.fr',
@@ -383,6 +382,8 @@ export const EXTERNAL_LINKS = {
   ARTICLE_BC: 'https://blog.entourage.social/2020/06/22/benevole-coach/',
   ARTICLE_TJV:
     'https://blog.linkedout.fr/2021/11/25/le-bateau-linkedout-vainqueur-de-la-transat-jacques-vabre/',
+  ARTICLE_RDR:
+    'https://blog.linkedout.fr/2022/11/23/retour-sur-le-week-end-de-depart-de-la-route-du-rhum/',
   CAMPUS_INCLUSION: 'https://campus-inclusion.fr',
   FRANCE_UNE_CHANCE:
     'https://lafrance-unechance.fr/carte-des-clubs-la-france-une-chance/',

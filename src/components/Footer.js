@@ -150,7 +150,7 @@ const pages = [
       },
       {
         title: 'Nous soutenir',
-        path: EXTERNAL_LINKS.DONATION,
+        path: process.env.DONATION_LINK,
         props: {
           isExternal: true,
           newTab: true,
