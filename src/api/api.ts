@@ -185,7 +185,7 @@ class APIHandler {
     newPassword: string;
     oldPassword: string;
   }): Promise<AxiosResponse> {
-    return this.put(`/user/change-pwd`, params);
+    return this.put(`/user/changePwd`, params);
   }
 
   putBulkCandidates(params: object): Promise<AxiosResponse> {
