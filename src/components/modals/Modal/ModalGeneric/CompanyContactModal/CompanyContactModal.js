@@ -16,7 +16,7 @@ const CompanyContactModal = () => {
       formSchema={formCompanyContact}
       onSubmit={async (fields, closeModal) => {
         try {
-          await Api.postContactCompany('/contact/company', fields);
+          await Api.postContactCompany(fields);
           gaEvent(GA_TAGS.PAGE_ENTREPRISES_ENVOYER_CONTACT_REFERENT_CLIC);
           fbEvent(FB_TAGS.COMPANY_CONTACT);
           closeModal();
