@@ -109,6 +109,11 @@ export const BUSINESS_LINES = [
     value: 'fjr',
     prefix: ['la', 'les'],
   },
+  {
+    label: 'Santé, médical et recherche',
+    value: 'smr',
+    prefix: ['la', 'le', 'la'],
+  },
   /*  {
     label: 'Cadre',
     value: 'cad',
@@ -483,11 +488,11 @@ export const HEARD_ABOUT_FILTERS = [
     value: HEARD_ABOUT.COMPANY,
   },
   {
-    label: 'Le réseau Entourage (newsletter, application...)',
+    label: 'Le réseau Entourage',
     value: HEARD_ABOUT.ENTOURAGE,
   },
   {
-    label: 'Un article dans la presse, une newsletter',
+    label: 'Les médias (presse, web, TV)',
     value: HEARD_ABOUT.PRESS,
   },
   {
@@ -499,7 +504,7 @@ export const HEARD_ABOUT_FILTERS = [
     value: HEARD_ABOUT.SOCIAL,
   },
   {
-    label: 'Un partenariat sportif (Bateau LinkedOut, Red Star)',
+    label: 'Un partenariat sportif',
     value: HEARD_ABOUT.SPORTS,
   },
   {
