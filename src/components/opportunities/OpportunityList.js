@@ -369,7 +369,7 @@ const OpportunityList = forwardRef(
       hasSelection,
       toggleSelectionMode,
     } = useBulkActions(
-      '/opportunity',
+      'opportunity',
       async () => {
         await fetchData(role, search, tabFilterTag, filters, candidateId);
       },

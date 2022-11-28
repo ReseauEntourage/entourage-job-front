@@ -184,7 +184,7 @@ class APIHandler {
   }
 
   putBulkCandidates(params: object): Promise<AxiosResponse> {
-    return this.put('/opportunity/bulk', params);
+    return this.put('/user/candidate/bulk', params);
   }
 
   putCandidate(

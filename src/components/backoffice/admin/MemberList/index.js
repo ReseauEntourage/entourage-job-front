@@ -115,7 +115,7 @@ const MemberList = ({
   );
 
   const { selectElement, executeAction, hasSelection } = useBulkActions(
-    '/user/candidate',
+    'candidate',
     async () => {
       await fetchData(search, filters, role, offset, true);
     },
