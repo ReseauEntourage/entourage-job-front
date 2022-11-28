@@ -60,7 +60,7 @@ class APIHandler {
         `${this.name} put() function expects payload argument to be of type Object`
       );
     }
-    return this.api.post(route, payload);
+    return this.api.put(route, payload);
   }
 
   private delete(route: string): Promise<AxiosResponse> {
@@ -75,10 +75,6 @@ class APIHandler {
 
   getCVShares(): Promise<AxiosResponse> {
     return this.get('/cv/shares');
-  }
-
-  getCVCount(): Promise<AxiosResponse> {
-    return this.get('/cv/count');
   }
 
   getCVByCandidateId(candidateId): Promise<AxiosResponse> {
@@ -110,7 +106,6 @@ class APIHandler {
   }
 
   // post
-
   postCVCount(candidateId: string, type: SocialMedia): Promise<AxiosResponse> {
     return this.post('/cv/count', { candidateId, type });
   }
@@ -223,22 +218,22 @@ class APIHandler {
     candidateId: string,
     params: object
   ): Promise<AxiosResponse> {
-    return this.get(`/opporunity/user/private/${candidateId}`, params);
+    return this.get(`/opportunity/candidate/private/${candidateId}`, params);
   }
 
   getAllCandidateOpportunities(
     candidateId: string,
     params: object
   ): Promise<AxiosResponse> {
-    return this.get(`/opportunity/user/all/${candidateId}`, params);
+    return this.get(`/opportunity/candidate/all/${candidateId}`, params);
   }
 
   getOpportunitiesAdminCount(): Promise<AxiosResponse> {
-    return this.get('/oppotunity/admin/count');
+    return this.get('/opportunity/admin/count');
   }
 
   getOpportunitiesUserCount(candidateId: string): Promise<AxiosResponse> {
-    return this.get(`/opportunity/user/count${candidateId}`);
+    return this.get(`/opportunity/candidate/count/${candidateId}`);
   }
 
   getOpportunityById(opportunityId: string): Promise<AxiosResponse> {
@@ -317,7 +312,7 @@ class APIHandler {
   // }
 
   postAuthForgot(params: { email: string }): Promise<AxiosResponse> {
-    return this.post('auth/forgot', params);
+    return this.post('/auth/forgot', params);
   }
 
   postResetUserToken(
