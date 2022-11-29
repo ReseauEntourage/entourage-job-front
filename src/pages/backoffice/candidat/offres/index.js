@@ -56,7 +56,7 @@ const Opportunities = () => {
         };
 
         try {
-          const { data } = await Api.getCVByCandidateId(`/cv/${candId}`);
+          const { data } = await Api.getCVByCandidateId(candId);
 
           if (data.locations && data.locations.length > 0) {
             params.department = data.locations.map(({ name }) => {
