@@ -23,8 +23,10 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "src/api/interceptor.ts", "src/api/api.ts"  ],
+    "**/*.tsx",
+    "src/api/interceptor.ts",
+    "src/api/api.ts"
+  ],
   "exclude": [
     "node_modules"
   ]

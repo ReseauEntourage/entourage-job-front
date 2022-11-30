@@ -185,7 +185,7 @@ const ModalOfferAdmin = ({
     try {
       const { data } = isExternal
         ? await Api.putExternalOpportunity(id, candidateId, restOpportunity)
-        : await Api.putOpportunity(id, candidateId, restOpportunity);
+        : await Api.putOpportunity(id, restOpportunity);
       setOffer({
         ...data,
         opportunityUsers: isExternal
