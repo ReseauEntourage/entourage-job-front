@@ -17,7 +17,7 @@ describe('Candidat', () => {
                 cy.intercept('POST', '/cv/' + user.id, {
                     fixture: 'cv-for-candidat'
                 }).as('postCvCandidat')
-                cy.intercept('GET', '/opportunity/user/all/' + user.id + '?type=private&department[]=Seine-Saint-Denis+(93)', {
+                cy.intercept('GET', '/opportunity/candidate/all/' + user.id + '?type=private&department[]=Seine-Saint-Denis+(93)', {
                     fixture: 'user-opportunity-all-res'
                 }).as('allOpportunities')
                 cy.intercept('GET', '/cv/read/' + user.id, {
@@ -42,23 +42,23 @@ describe('Candidat', () => {
             cy.intercept('PUT', '/user/changePwd', {}).as('changePwd')
         })
 
-    // it('should open backoffice members', () => {
-    //     cy.visit('/backoffice/candidat/offres', {
-    //         onBeforeLoad: function async (window) {
-    //             window.localStorage.setItem('access-token', "1234");                
-    //         }
-    //     })
-    //     cy.get('[data-testid="candidat-add-offer"]')
-    //     // cy.wait('@userCount')
-    //     // cy.wait('@candidatCheckUpdate')
-    //     // cy.wait('@cvCheckUpdate')
-    //     // test if all members are in the table
-    //     // cy.fixture('members').then((members) => {
-    //     //     cy.get('[data-testid="member-list"]')
-    //     //         .find('tr')
-    //     //         .should('have.length', members.length)
-    //     // })
-    // })
+    it('should open backoffice members', () => {
+        cy.visit('/backoffice/candidat/offres', {
+            onBeforeLoad: function async (window) {
+                window.localStorage.setItem('access-token', "1234");                
+            }
+        })
+        cy.get('[data-testid="candidat-add-offer"]')
+        cy.wait('@allOpportunities')
+        // cy.wait('@candidatCheckUpdate')
+        // cy.wait('@cvCheckUpdate')
+        // // test if all members are in the table
+        // cy.fixture('user-members-res').then((members) => {
+        //     cy.get('[data-testid="member-list"]')
+        //         .find('tr')
+        //         .should('have.length', members.length)
+        // })
+    })
 
     it('should open backoffice cv candidat', () => {
         cy.visit('/backoffice/candidat/cv', {
