@@ -52,7 +52,7 @@ export type Opportunity = {
   salary: string;
   otherInfo: string;
   businessLines: { name: string; order: string }[];
-  candidatesId: string[];
+  candidatesIds: string[];
   isAdmin: boolean;
   shouldSendNotifications: boolean;
   isCopy: boolean;

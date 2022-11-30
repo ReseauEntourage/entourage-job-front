@@ -113,7 +113,7 @@ const Opportunities = () => {
   const fetchAssociatedCandidate = useCallback(
     async (coachId) => {
       try {
-        const { data } = await Api.getCandidateById(coachId);
+        const { data } = await Api.getUserCandidate(coachId);
         if (data) {
           setCandidateDefaultsIfNoTag(data.candidat.id, data.candidat.zone);
         } else {

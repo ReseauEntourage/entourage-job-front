@@ -16,8 +16,8 @@ export default {
       title: 'Adresser cette offre à tous les candidats',
     },
     {
-      id: 'candidatesId',
-      name: 'candidatesId',
+      id: 'candidatesIds',
+      name: 'candidatesIds',
       isMulti: true,
       type: 'text',
       dynamicTitle: (getValue) => {
@@ -302,7 +302,7 @@ export default {
   ],
   rules: [
     {
-      field: 'candidatesId',
+      field: 'candidatesIds',
       args: [],
       method: (fieldValue, state) => {
         return (
@@ -504,7 +504,7 @@ export default {
 
 export const adminMutations = [
   {
-    fieldId: 'candidatesId',
+    fieldId: 'candidatesIds',
     props: [
       {
         propName: 'loadOptions',

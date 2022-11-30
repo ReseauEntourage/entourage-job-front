@@ -138,7 +138,7 @@ const NewsletterPartial = ({ style, padding, tag }) => {
         )}
         <div className="uk-flex uk-flex-center uk-margin-small-top">
           <Button style="primary" onClick={onSubmit} dataTestId="nl-submit-btn">
-            S&apos;abonner&nbsp; à la newsletter !
+            S&apos;abonner à la newsletter !
           </Button>
         </div>
       </StyledNLForm>

@@ -197,12 +197,13 @@ const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
   );
 
   const updateOpportunity = async (opportunity) => {
+    const { candidateId, id, ...restOpportunity } = opportunity;
     setLoading(true);
     try {
       const { data } = await Api.putExternalOpportunity(
-        opportunity.id,
-        user.candidatId,
-        opportunity
+        id,
+        candidateId,
+        restOpportunity
       );
       setOffer(data);
       await onOfferUpdated();

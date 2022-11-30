@@ -179,9 +179,9 @@ const ModalOfferAdmin = ({
       createdBy,
       opportunityUsers,
       id,
+      candidateId,
       ...restOpportunity
     } = opportunity;
-    const { candidateId } = isExternal ? opportunity : {};
     try {
       const { data } = isExternal
         ? await Api.putExternalOpportunity(id, candidateId, restOpportunity)
@@ -296,7 +296,7 @@ const ModalOfferAdmin = ({
               formSchema={mutatedSchema}
               defaultValues={{
                 ...offer,
-                candidatesId: getCandidatesToShowInInput(offer),
+                candidatesIds: getCandidatesToShowInInput(offer),
                 businessLines: defaultBusinessLines,
                 department: findConstantFromValue(
                   offer.department,
@@ -315,8 +315,8 @@ const ModalOfferAdmin = ({
                   startOfContract: fields.startOfContract || null,
                   endOfContract: fields.endOfContract || null,
                   recruiterPhone: fields.recruiterPhone || null,
-                  candidatesId:
-                    fields.candidatesId?.map((candidateId) => {
+                  candidatesIds:
+                    fields.candidatesIds?.map((candidateId) => {
                       return typeof candidateId === 'object'
                         ? candidateId.value
                         : candidateId;

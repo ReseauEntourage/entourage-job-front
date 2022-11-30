@@ -279,18 +279,16 @@ const MemberList = ({
                   </tr>
                 </thead>
                 <tbody data-testid="member-list">
-                  {members.length > 0
-                    ? members.map((member, key) => {
-                        return (
-                          <Member
-                            role={role}
-                            member={member}
-                            key={key}
-                            callback={handleSelectedMembers}
-                          />
-                        );
-                      })
-                    : 'Aucun membre'}
+                  {members.map((member, key) => {
+                    return (
+                      <Member
+                        role={role}
+                        member={member}
+                        key={key}
+                        callback={handleSelectedMembers}
+                      />
+                    );
+                  })}
                 </tbody>
               </StyledTable>
             </div>

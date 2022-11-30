@@ -5,7 +5,7 @@ import { Card, Grid, SimpleLink } from 'src/components/utils';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import schema from 'src/components/forms/schema/formEditLinkedUser';
-import Api from 'src/api/api.ts';
+import Api from 'src/api/index.ts';
 import { USER_ROLES } from 'src/constants';
 import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
 import CandidateEmployedToggle from 'src/components/backoffice/candidate/CandidateEmployedToggle';
@@ -257,12 +257,12 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
                         if (user.role === USER_ROLES.COACH) {
                           // on l'assigne à un candidat
                           if (linkedUserId) {
-                            promise = Api.Api.putCandidate(linkedUser.id, {
+                            promise = Api.putCandidate(linkedUser.id, {
                               coachId: user.id,
                             });
                           } else {
                             // on lui enleve son candidat
-                            promise = Api.Api.putCandidate(linkedUser.id, {
+                            promise = Api.putCandidate(linkedUser.id, {
                               coachId: null,
                             });
                           }

@@ -154,8 +154,8 @@ class APIHandler {
   }
 
   // can be both coach or candidate ID
-  getCandidateById(candidateId: string): Promise<AxiosResponse> {
-    return this.get(`/user/candidate${candidateId}`);
+  getUserCandidate(): Promise<AxiosResponse> {
+    return this.get(`/user/candidate`);
   }
 
   getUserById(userId: string): Promise<AxiosResponse> {
