@@ -60,8 +60,23 @@ export type Opportunity = {
   visit: string;
   visitor: string;
   urlParams: object;
-  // for put:
-  id?: string;
+};
+
+export type ExternalOpportunity = {
+  title: string;
+  company: string;
+  contract: string;
+  startOfContract: string;
+  endOfContract: string;
+  isPartTime: string;
+  businessLines: { name: string; order: string }[];
+  department: string;
+  link: string;
+  description: string;
+  externalOrigin: string;
+  date: string;
+  candidateId: string;
+  status: string;
 };
 
 export type OpportunityJoin = {

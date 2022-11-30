@@ -12,8 +12,8 @@ import {
   ContactContactUs,
   PutCandidate,
   ContactCompany,
-  ContactNewsletter,
-} from './types';
+  ContactNewsletter, ExternalOpportunity
+} from "./types";
 
 class APIHandler {
   private name: string;
@@ -258,16 +258,15 @@ class APIHandler {
 
   putOpportunity(
     opportunityId: string,
-    candidateId: string,
     params: Opportunity
   ): Promise<AxiosResponse> {
-    return this.put(`/opportunity/${opportunityId}/${candidateId}`, params);
+    return this.put(`/opportunity/${opportunityId}`, params);
   }
 
   putExternalOpportunity(
     opportunityId: string,
     candidateId: string,
-    params: Opportunity
+    params: ExternalOpportunity
   ): Promise<AxiosResponse> {
     return this.put(
       `/opportunity/external/${opportunityId}/${candidateId}`,
