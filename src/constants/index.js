@@ -110,9 +110,9 @@ export const BUSINESS_LINES = [
     prefix: ['la', 'les'],
   },
   {
-    label: 'Santé, médical et recherche',
-    value: 'smr',
-    prefix: ['la', 'le', 'la'],
+    label: 'Santé et médical',
+    value: 'sm',
+    prefix: ['la', 'le'],
   },
   /*  {
     label: 'Cadre',
