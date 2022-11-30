@@ -3,6 +3,7 @@ import axios, {
   AxiosRequestHeaders,
   AxiosResponse,
 } from 'axios';
+import _ from 'lodash';
 import { addAxiosInterceptors } from './interceptor';
 import {
   SocialMedia,
@@ -12,8 +13,9 @@ import {
   ContactContactUs,
   PutCandidate,
   ContactCompany,
-  ContactNewsletter, ExternalOpportunity
-} from "./types";
+  ContactNewsletter,
+  ExternalOpportunity,
+} from './types';
 
 class APIHandler {
   private name: string;
@@ -275,7 +277,18 @@ class APIHandler {
   }
 
   putJoinOpportunity(params: OpportunityJoin): Promise<AxiosResponse> {
-    return this.put('/opportunity/join', params);
+    const filteredParams = _.pick(params, [
+      'status',
+      'seen',
+      'bookmarked',
+      'archived',
+      'recommended',
+      'note',
+    ]);
+    return this.put(
+      `/opportunity/join/${params.OpportunityId}/${params.UserId}`,
+      filteredParams
+    );
   }
 
   putBulkOpportunities(params: object): Promise<AxiosResponse> {

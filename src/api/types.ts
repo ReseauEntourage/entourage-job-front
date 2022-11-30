@@ -86,6 +86,8 @@ export type OpportunityJoin = {
   archived: boolean;
   recommended: boolean;
   note: string;
+  OpportunityId: string;
+  UserId: string;
 };
 
 export type ContactContactUs = {

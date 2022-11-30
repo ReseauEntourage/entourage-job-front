@@ -10,6 +10,7 @@ const ButtonIcon = ({
   ratio,
   tooltip,
   style,
+  dataTestId,
 }) => {
   return (
     <a
@@ -17,6 +18,7 @@ const ButtonIcon = ({
       href={href}
       data-uk-tooltip={tooltip}
       onClick={onClick}
+      data-testid={dataTestId}
     >
       <IconNoSSR
         name={name}
@@ -36,6 +38,7 @@ ButtonIcon.propTypes = {
   href: PropTypes.string,
   ratio: PropTypes.number,
   style: PropTypes.shape(),
+  dataTestId: PropTypes.string,
 };
 
 ButtonIcon.defaultProps = {
@@ -45,6 +48,7 @@ ButtonIcon.defaultProps = {
   style: {},
   ratio: 1.5,
   onClick: () => {},
+  dataTestId: '',
 };
 
 export default ButtonIcon;

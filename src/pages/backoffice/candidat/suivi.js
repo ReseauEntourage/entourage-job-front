@@ -59,7 +59,7 @@ const Suivi = () => {
   useEffect(() => {
     if (user) {
       setLoading(true);
-      Api.getCandidateById(`/user/candidate/${user.id}`)
+      Api.getCandidateById(user.id)
         .then(({ data }) => {
           if (data) {
             setUserCandidat(data);
