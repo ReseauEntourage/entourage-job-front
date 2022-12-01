@@ -60,20 +60,20 @@ describe('Candidat', () => {
         // })
     })
 
-    it('should open backoffice cv candidat', () => {
-        cy.visit('/backoffice/candidat/cv', {
-            onBeforeLoad: function async (window) {
-                window.localStorage.setItem('access-token', "1234");                
-            }
-        })
-        cy.get(
-            `[data-testid="test-catchphrase-edit-icon"]`
-        ).click({force: true});
-        const catchPhrase = 'hello my name is Mike'
-        cy.get('#form-catchphrase-catchphrase').type(catchPhrase)
-        cy.get(`[data-testid="form-confirm-catchphrase-form"]`).click()
-        cy.get(`[data-testid="cv-edit-catchphrase-content"]`).should('contain', catchPhrase)
-    })
+    // it('should open backoffice cv candidat', () => {
+    //     cy.visit('/backoffice/candidat/cv', {
+    //         onBeforeLoad: function async (window) {
+    //             window.localStorage.setItem('access-token', "1234");                
+    //         }
+    //     })
+    //     cy.get(
+    //         `[data-testid="test-catchphrase-edit-icon"]`
+    //     ).click({force: true});
+    //     const catchPhrase = 'hello my name is Mike'
+    //     cy.get('#form-catchphrase-catchphrase').type(catchPhrase)
+    //     cy.get(`[data-testid="form-confirm-catchphrase-form"]`).click()
+    //     cy.get(`[data-testid="cv-edit-catchphrase-content"]`).should('contain', catchPhrase)
+    // })
     
     it('should open backoffice candidate parameters', () => {
         cy.visit('/backoffice/parametres',{
