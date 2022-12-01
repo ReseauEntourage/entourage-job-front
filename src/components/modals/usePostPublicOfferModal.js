@@ -7,7 +7,7 @@ function usePostPublicOfferModal() {
     schema,
     [
       {
-        fieldId: 'candidatesId',
+        fieldId: 'candidatesIds',
         props: [
           {
             propName: 'disabled',

@@ -11,6 +11,7 @@ const ModalToggle = ({
   onToggle,
   setToggle,
   modalConfirmation,
+  id,
 }) => {
   const { onClose } = useModalContext();
 
@@ -22,6 +23,7 @@ const ModalToggle = ({
         </Button>
         <Button
           style="primary"
+          dataTestId={`test-confirm-${id}`}
           onClick={() => {
             onToggle(true).then(() => {
               return setToggle(true);
@@ -42,6 +44,7 @@ ModalToggle.propTypes = {
   modalConfirmation: PropTypes.string,
   onToggle: PropTypes.func.isRequired,
   setToggle: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 ModalToggle.defaultProps = {
@@ -73,6 +76,7 @@ const ToggleWithConfirmationModal = ({
             <label htmlFor={`ent-toggle-${id}`}>
               <input
                 id={`ent-toggle-${id}`}
+                data-testId={`test-toggle-${id}`}
                 type="checkbox"
                 checked={toggle}
                 onChange={() => {
@@ -87,6 +91,7 @@ const ToggleWithConfirmationModal = ({
                         description={modalDescription}
                         formSchema={formSchema}
                         submitText={modalConfirmation}
+                        // id={id}
                         onSubmit={async (fields, closeModal) => {
                           await onToggle(true, fields);
                           setToggle(true);
@@ -98,6 +103,7 @@ const ToggleWithConfirmationModal = ({
                     openModal(
                       <ModalToggle
                         modalTitle={modalTitle}
+                        id={id}
                         modalDescription={modalDescription}
                         modalConfirmation={modalConfirmation}
                         onToggle={onToggle}

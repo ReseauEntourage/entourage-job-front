@@ -3,6 +3,7 @@ import axios, {
   AxiosRequestHeaders,
   AxiosResponse,
 } from 'axios';
+import _ from 'lodash';
 import { addAxiosInterceptors } from './interceptor';
 import {
   SocialMedia,
@@ -13,6 +14,7 @@ import {
   PutCandidate,
   ContactCompany,
   ContactNewsletter,
+  ExternalOpportunity,
 } from './types';
 
 class APIHandler {
@@ -152,8 +154,8 @@ class APIHandler {
   }
 
   // can be both coach or candidate ID
-  getCandidateById(candidateId: string): Promise<AxiosResponse> {
-    return this.get(`/user/candidate${candidateId}`);
+  getUserCandidate(): Promise<AxiosResponse> {
+    return this.get(`/user/candidate`);
   }
 
   getUserById(userId: string): Promise<AxiosResponse> {
@@ -258,16 +260,15 @@ class APIHandler {
 
   putOpportunity(
     opportunityId: string,
-    candidateId: string,
     params: Opportunity
   ): Promise<AxiosResponse> {
-    return this.put(`/opportunity/${opportunityId}/${candidateId}`, params);
+    return this.put(`/opportunity/${opportunityId}`, params);
   }
 
   putExternalOpportunity(
     opportunityId: string,
     candidateId: string,
-    params: Opportunity
+    params: ExternalOpportunity
   ): Promise<AxiosResponse> {
     return this.put(
       `/opportunity/external/${opportunityId}/${candidateId}`,
@@ -276,7 +277,18 @@ class APIHandler {
   }
 
   putJoinOpportunity(params: OpportunityJoin): Promise<AxiosResponse> {
-    return this.put('/opportunity/join', params);
+    const filteredParams = _.pick(params, [
+      'status',
+      'seen',
+      'bookmarked',
+      'archived',
+      'recommended',
+      'note',
+    ]);
+    return this.put(
+      `/opportunity/join/${params.OpportunityId}/${params.UserId}`,
+      filteredParams
+    );
   }
 
   putBulkOpportunities(params: object): Promise<AxiosResponse> {

@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import { Button } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
 
-const ButtonPost = ({ text, icon, action, style, disabled }) => {
+const ButtonPost = ({ text, icon, action, style, disabled, dataTestId }) => {
   const [loading, setLoading] = useState(false);
   return (
     <Button
       disabled={disabled}
       style={style}
+      dataTestId={dataTestId}
       onClick={() => {
         if (!loading) {
           setLoading(true);
@@ -35,11 +36,13 @@ ButtonPost.propTypes = {
   style: PropTypes.string,
   icon: PropTypes.string,
   disabled: PropTypes.bool,
+  dataTestId: PropTypes.string,
 };
 ButtonPost.defaultProps = {
   action: undefined,
   style: undefined,
   icon: undefined,
   disabled: false,
+  dataTestId: '',
 };
 export default ButtonPost;

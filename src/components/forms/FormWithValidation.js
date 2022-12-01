@@ -28,6 +28,7 @@ const FormWithValidation = forwardRef(
       onCancel,
       enterToSubmit,
       onError,
+      formId,
     },
     ref
   ) => {
@@ -271,6 +272,7 @@ const FormWithValidation = forwardRef(
           error={error}
           submitText={submitText}
           onSubmit={submitForm}
+          formId={formId}
           onCancel={
             onCancel &&
             (() => {
@@ -296,6 +298,7 @@ FormWithValidation.propTypes = {
   }).isRequired,
   submitText: PropTypes.string,
   enterToSubmit: PropTypes.bool,
+  formId: PropTypes.string,
 };
 
 FormWithValidation.defaultProps = {
@@ -304,6 +307,7 @@ FormWithValidation.defaultProps = {
   onCancel: undefined,
   enterToSubmit: false,
   onError: () => {},
+  formId: '',
 };
 
 export default FormWithValidation;
