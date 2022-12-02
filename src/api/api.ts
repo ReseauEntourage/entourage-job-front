@@ -15,6 +15,8 @@ import {
   ContactCompany,
   ContactNewsletter,
   ExternalOpportunity,
+  Route,
+  APIRoute,
 } from './types';
 
 class APIHandler {
@@ -47,8 +49,8 @@ class APIHandler {
     return this.api.get(route, { ...query, ...{ headers } });
   }
 
-  private post(
-    route: string,
+  private post<T extends APIRoute>(
+    route: Route<T>,
     payload: object,
     headers?: AxiosRequestHeaders
   ): Promise<AxiosResponse> {
