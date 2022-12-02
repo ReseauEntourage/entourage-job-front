@@ -15,6 +15,8 @@ import {
   ContactCompany,
   ContactNewsletter,
   ExternalOpportunity,
+  Route,
+  APIRoute,
 } from './types';
 
 class APIHandler {
@@ -34,7 +36,10 @@ class APIHandler {
     addAxiosInterceptors(this.api);
   }
 
-  private get(route: string, query?: object): Promise<AxiosResponse> {
+  private get<T extends APIRoute>(
+    route: Route<T>,
+    query?: object
+  ): Promise<AxiosResponse> {
     if (query && typeof query !== 'object') {
       throw new Error(
         `${this.name} get() function expects query argument to be of type Object`
@@ -43,8 +48,8 @@ class APIHandler {
     return this.api.get(route, query);
   }
 
-  private post(
-    route: string,
+  private post<T extends APIRoute>(
+    route: Route<T>,
     payload: object,
     headers?: AxiosRequestHeaders
   ): Promise<AxiosResponse> {
@@ -56,7 +61,10 @@ class APIHandler {
     return this.api.post(route, payload, { headers });
   }
 
-  private put(route: string, payload?: object): Promise<AxiosResponse> {
+  private put<T extends APIRoute>(
+    route: Route<T>,
+    payload?: object
+  ): Promise<AxiosResponse> {
     if (payload && typeof payload !== 'object') {
       throw new Error(
         `${this.name} put() function expects payload argument to be of type Object`
