@@ -13,11 +13,6 @@ import {
   ExternalOpportunity,
   Route,
   APIRoute,
-  Opportunity,
-  OpportunityJoin,
-  PutCandidate,
-  SocialMedia,
-  User,
 } from './types';
 
 class APIHandler {
@@ -37,9 +32,10 @@ class APIHandler {
     addAxiosInterceptors(this.api);
   }
 
-  private get(
-    route: string,
-    query: object = {},
+  private get<T extends APIRoute>(
+    route: Route<T>,
+    query: object
+  = {},
     headers: AxiosRequestHeaders = {}
   ): Promise<AxiosResponse> {
     if (query && typeof query !== 'object') {
@@ -63,9 +59,10 @@ class APIHandler {
     return this.api.post(route, payload, { headers });
   }
 
-  private put(
-    route: string,
-    payload?: object,
+  private put<T extends APIRoute>(
+    route: Route<T>,
+    payload?: object
+  ,
     headers?: AxiosRequestHeaders
   ): Promise<AxiosResponse> {
     if (payload && typeof payload !== 'object') {
