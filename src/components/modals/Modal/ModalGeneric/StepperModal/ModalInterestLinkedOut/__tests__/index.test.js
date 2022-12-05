@@ -9,7 +9,7 @@ import Api from 'src/api/index.ts';
 import ModalInterestLinkedOut from '../ModalInterestLinkedOut';
 
 jest.mock('react-modal');
-jest.mock('src/api/index.ts');
+jest.mock('src/api/index.js');
 jest.mock('src/components/modals/Modal', () => {
   const modalModule = jest.requireActual('src/components/modals/Modal');
   return {
