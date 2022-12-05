@@ -9,6 +9,7 @@ import { openModal } from 'src/components/modals/Modal';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { Button } from 'src/components/utils';
 import ModalExternalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
+import ModalExternalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
 
 const CandidateOpportunityList = ({
   search,
@@ -41,11 +42,7 @@ const CandidateOpportunityList = ({
           style="primary"
           dataTestId="candidat-add-offer"
           onClick={() => {
-            openModal(
-              <ModalExternalOffer
-                fetchOpportunities={opportunityListRef.current.fetchData}
-              />
-            );
+            openModal(<ModalExternalOffer />);
           }}
         >
           <IconNoSSR
