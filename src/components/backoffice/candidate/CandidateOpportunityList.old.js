@@ -18,6 +18,7 @@ import {
   mutateFormSchema,
 } from 'src/utils';
 import moment from 'moment';
+import ModalExternalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
 
 const CandidateOpportunityList = ({
   search,
@@ -31,22 +32,6 @@ const CandidateOpportunityList = ({
 }) => {
   const { user } = useContext(UserContext);
   const opportunityListRef = useRef();
-
-  const mutatedSchema = mutateFormSchema(formEditExternalOpportunity, [
-    {
-      fieldId: 'startEndContract',
-      props: [
-        {
-          propName: 'hidden',
-          value: true,
-        },
-        {
-          propName: 'disabled',
-          value: true,
-        },
-      ],
-    },
-  ]);
 
   return (
     <>
@@ -66,39 +51,7 @@ const CandidateOpportunityList = ({
           style="primary"
           dataTestId="candidat-add-offer"
           onClick={() => {
-            openModal(
-              <ModalEdit
-                title={"Ajouter une offre d'emploi externe à LinkedOut"}
-                description="J'ai décroché un entretien à l'extérieur : j'informe Linkedout de mes avancées !"
-                submitText="Envoyer"
-                formSchema={mutatedSchema}
-                defaultValues={{
-                  candidateId: getCandidateIdFromCoachOrCandidate(user),
-                }}
-                onSubmit={async (fields, closeModal) => {
-                  const { businessLines, ...restFields } = fields;
-                  try {
-                    await Api.postExternalOpportunity({
-                      ...restFields,
-                      status: parseInt(fields.status, 10),
-                      startOfContract: restFields.startOfContract || null,
-                      endOfContract: restFields.endOfContract || null,
-                      candidateId: getCandidateIdFromCoachOrCandidate(user),
-                      date: moment().toISOString(),
-                    });
-                    closeModal();
-                    opportunityListRef.current.fetchData();
-                    UIkit.notification(
-                      "L'offre externe a bien été ajouté à votre liste d'offres",
-                      'success'
-                    );
-                  } catch (err) {
-                    console.error(err);
-                    UIkit.notification(`Une erreur est survenue.`, 'danger');
-                  }
-                }}
-              />
-            );
+            openModal(<ModalExternalOffer />);
           }}
         >
           <IconNoSSR

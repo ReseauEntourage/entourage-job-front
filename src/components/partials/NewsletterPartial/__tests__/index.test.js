@@ -37,8 +37,8 @@ jest.mock('src/lib/gtag', () => {
   };
 });
 
-jest.mock('src/api/index.ts', () => {
-  const ActualApi = jest.requireActual('src/api/index.ts');
+jest.mock('src/api/index.js', () => {
+  const ActualApi = jest.requireActual('src/api/index.js');
   return {
     ...ActualApi,
     postNewsletter: () => {
