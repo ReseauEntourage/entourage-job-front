@@ -14,16 +14,22 @@ const OpportunityDetails = ({ opportunityId }) => {
   return (
     <Container>
       <Scroll>
-        <ContentContainer>
-          {isLoading ? <OverlayLoader /> : <>{currentOpportunity.title}</>}
-        </ContentContainer>
+        {currentOpportunity && (
+          <ContentContainer>
+            {isLoading ? <OverlayLoader /> : <>{currentOpportunity.title}</>}
+          </ContentContainer>
+        )}
       </Scroll>
     </Container>
   );
 };
 
+OpportunityDetails.defaultProps = {
+  opportunityId: null,
+};
+
 OpportunityDetails.propTypes = {
-  opportunityId: PropTypes.string.isRequired,
+  opportunityId: PropTypes.string,
 };
 
 export default OpportunityDetails;
