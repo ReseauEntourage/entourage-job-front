@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 
 export const ListContainer = styled.div`
-  flex: 1;
+  flex: 2;
   overflow: hidden;
   @media screen and (min-width: ${BREAKPOINTS.desktop}px) {
     width: 100%;

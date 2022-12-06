@@ -31,9 +31,16 @@ import { useBulkActions } from 'src/hooks/useBulkActions';
 import { SEARCH_MAX_WIDTH } from 'src/constants/utils';
 import { GA_TAGS } from 'src/constants/tags';
 import moment from 'moment';
+import CandidateOpportunitiesList from 'src/components/opportunities/OpportunitiesContainer/OpportunitiesList/CandidateOpportunitiesList';
+import AdminOpportunitiesList from 'src/components/opportunities/OpportunitiesContainer/OpportunitiesList/AdminOpportunitiesList';
+import { OpportunitiesContainer } from 'src/components/opportunities/OpportunitiesContainer';
 import { ModalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer';
+import Link from 'next/link';
+import {
+  useOpportunityId
+} from "src/components/opportunities/OpportunitiesContainer/useOpportunityId";
 
-const OfferList = ({
+/* const OfferList = ({
   selectionModeActivated,
   selectElement,
   isElementSelected,
@@ -128,9 +135,9 @@ const OfferList = ({
       })}
     </Grid>
   );
-};
+}; */
 
-OfferList.propTypes = {
+/* OfferList.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   candidateId: PropTypes.string,
   role: PropTypes.oneOf(['admin', 'candidateAsAdmin', 'candidat']).isRequired,
@@ -144,7 +151,7 @@ OfferList.propTypes = {
 
 OfferList.defaultProps = {
   candidateId: undefined,
-};
+}; */
 
 const OpportunityList = forwardRef(
   (
@@ -178,7 +185,7 @@ const OpportunityList = forwardRef(
     const [numberOfResults, setNumberOfResults] = useState(0);
 
     const [bookmarkedOffers, setBookmarkedOffers] = useState(undefined);
-    const [offers, setOffers] = useState(undefined);
+    const [offers, setOffers] = useState([]);
     const [otherOffers, setOtherOffers] = useState(undefined);
     const [hasError, setHasError] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -345,6 +352,8 @@ const OpportunityList = forwardRef(
 
     const prevOpportunityId = usePrevious(opportunityId);
 
+    /*
+
     useEffect(() => {
       if (opportunityId && opportunityId !== prevOpportunityId) {
         getOpportunity(opportunityId).then((offer) => {
@@ -354,6 +363,7 @@ const OpportunityList = forwardRef(
         });
       }
     }, [getOpportunity, openOffer, opportunityId, prevOpportunityId]);
+*/
 
     useDeepCompareEffect(() => {
       setHasError(false);
@@ -390,7 +400,44 @@ const OpportunityList = forwardRef(
       }
     }, [prevTag, restQuery.tag, selectionModeActivated, toggleSelectionMode]);
 
-    const content = (
+    const content =
+      role === 'candidat' ? (
+        <OpportunitiesContainer
+          backButtonHref={{
+            pathname: `/backoffice/candidat/offres`,
+            query: restQuery,
+          }}
+          opportunities={
+            offers && offers.length > 0 ? (
+              <CandidateOpportunitiesList
+                query={restQuery}
+                opportunities={offers}
+              />
+            ) : null
+          }
+          isLoading={loading}
+          status="à traiter"
+        />
+      ) : (
+        <OpportunitiesContainer
+          backButtonHref={{
+            pathname: `/backoffice/admin/offres`,
+            query: restQuery,
+          }}
+          opportunities={
+            offers && offers.length > 0 ? (
+              <AdminOpportunitiesList
+                query={restQuery}
+                opportunities={offers}
+              />
+            ) : null
+          }
+          isLoading={loading}
+          status="à traiter"
+        />
+      );
+
+    /*   const content = (
       <div>
         {role !== 'candidat' && (
           <div className="uk-flex uk-flex-center">
@@ -496,7 +543,7 @@ const OpportunityList = forwardRef(
           </div>
         )}
       </div>
-    );
+    ); */
 
     return (
       <div>
