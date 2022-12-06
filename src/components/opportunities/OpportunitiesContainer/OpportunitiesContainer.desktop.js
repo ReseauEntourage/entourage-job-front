@@ -1,16 +1,19 @@
 import React from 'react';
-import { Container } from 'src/components/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
+import {
+  Container,
+  RightContainer,
+} from 'src/components/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
 import OpportunitiesList from 'src/components/opportunities/OpportunitiesContainer/OpportunitiesList';
 import { useOpportunityId } from 'src/components/opportunities/OpportunitiesContainer/useOpportunityId';
 import PropTypes from 'prop-types';
-import NoOpportunities from 'src/components/opportunities/OpportunitiesContainer/NoOpportunities';
+import NoOpportunities from 'src/components/opportunities/OpportunitiesContainer/NoOpportunities/NoOpportunities';
 import OpportunityDetails from 'src/components/opportunities/OpportunitiesContainer/OpportunityDetails';
 
-export function OpportunitiesContainerDesktop({
+const OpportunitiesContainerDesktop = ({
   opportunities,
   isLoading,
   status,
-}) {
+}) => {
   const opportunityId = useOpportunityId();
 
   return (
@@ -21,14 +24,16 @@ export function OpportunitiesContainerDesktop({
             isLoading={isLoading}
             opportunities={opportunities}
           />
-          <OpportunityDetails opportunityId={opportunityId} />
+          <RightContainer>
+            <OpportunityDetails opportunityId={opportunityId} />
+          </RightContainer>
         </>
       ) : (
         <NoOpportunities status={status} />
       )}
     </Container>
   );
-}
+};
 
 OpportunitiesContainerDesktop.defaultProps = {
   opportunities: null,
@@ -36,7 +41,7 @@ OpportunitiesContainerDesktop.defaultProps = {
 
 OpportunitiesContainerDesktop.propTypes = {
   isLoading: PropTypes.bool.isRequired,
-  opportunities: PropTypes.arrayOf(PropTypes.element),
+  opportunities: PropTypes.element,
   status: PropTypes.oneOf([
     'à traiter',
     'consultée',
@@ -45,3 +50,5 @@ OpportunitiesContainerDesktop.propTypes = {
     'acceptées',
   ]).isRequired,
 };
+
+export default OpportunitiesContainerDesktop;
