@@ -7,7 +7,7 @@ export const StyledPrimaryTextInput = styled.input`
   border-radius: 30px;
   width: 100%;
   &::placeholder {
-    color: ${COLORS.darkgray};
+    color: ${COLORS.darkGray};
     font-style: italic;
   }
 `;

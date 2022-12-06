@@ -29,11 +29,20 @@ export const StyledButton = styled.button`
     }
   }
   &.uk-button-default {
+    border: 0.5px solid
+      ${(props) => {
+        return COLORS[props.color] || COLORS.gray;
+      }};
+    color: ${(props) => {
+      return COLORS[props.color] || COLORS.black;
+    }} !important;
     &:hover {
-      /* background-color: ${COLORS.primaryOrange}; */
-      border-color: ${COLORS.primaryOrange};
-      /* color: white; */
-      color: ${COLORS.primaryOrange};
+      background-color: ${(props) => {
+        return colorToHoverBackgroundColor[props.color];
+      }};
+      color: ${(props) => {
+        return colorToHoverColor[props.color];
+      }} !important;
     }
   }
   &.custom-secondary {

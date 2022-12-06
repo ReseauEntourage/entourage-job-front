@@ -82,7 +82,10 @@ Button.propTypes = {
   ]),
   disabled: PropTypes.bool,
   visible: PropTypes.oneOf(UIKIT_SCREENS),
-  style: PropTypes.oneOf(['custom-secondary', ...UIKIT_BUTTON_STYLES_SPEC]),
+  style: PropTypes.oneOf([
+    'custom-secondary',
+    ...UIKIT_BUTTON_STYLES_SPEC,
+  ]),
   size: PropTypes.oneOf(UIKIT_BUTTON_SIZES),
   widths: PropTypes.arrayOf(PropTypes.string), // UIKIT_WIDTH_SCREENS
   isExternal: PropTypes.bool,
@@ -95,6 +98,7 @@ Button.propTypes = {
   dataTestId: PropTypes.string,
   color: PropTypes.string,
 };
+
 Button.defaultProps = {
   disabled: false,
   shallow: false,
