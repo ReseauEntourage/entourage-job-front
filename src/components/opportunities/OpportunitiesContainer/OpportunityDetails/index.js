@@ -1,3 +1,3 @@
-import OpportunityDetails from './OpportunityDetails'
+import OpportunityDetails from './OpportunityDetails';
 
-export default OpportunityDetails
+export default OpportunityDetails;

@@ -4,9 +4,10 @@ import { useOnScroll } from 'src/hooks/utils/useOnScroll';
 import PropTypes from 'prop-types';
 import { ListItem, Scroll } from '../OpportunitiesList.styles';
 
-const AdminOpportunitiesList = ({ opportunities }) => {
+const AdminOpportunitiesList = ({ opportunities, query }) => {
   const { onScroll } = useOnScroll({
     onScrollBottomEnd: () => {
+      console.log('BOTTOM');
       // TODO MANAGE PAGINATION
     },
   });
@@ -15,9 +16,12 @@ const AdminOpportunitiesList = ({ opportunities }) => {
     return (
       <ListItem key={opportunity.id}>
         <Link
-          as={`/backoffice/admin/offres/${opportunity.id}`}
-          href="/backoffice/admin/offres/[offerId]"
-          passHref
+          href={{
+            pathname: `/backoffice/admin/offres/${opportunity.id}`,
+            query,
+          }}
+          scroll={false}
+          shallow
         >
           {opportunity.title}
         </Link>
@@ -27,13 +31,18 @@ const AdminOpportunitiesList = ({ opportunities }) => {
 
   return (
     <Scroll onScroll={onScroll}>
-      <ul>{opportunitiesListContent}</ul>
+      {opportunitiesListContent}
     </Scroll>
   );
 };
 
+AdminOpportunitiesList.defaultProps = {
+  query: '',
+};
+
 AdminOpportunitiesList.propTypes = {
-  opportunities: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  opportunities: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  query: PropTypes.shape({}),
 };
 
 export default AdminOpportunitiesList;

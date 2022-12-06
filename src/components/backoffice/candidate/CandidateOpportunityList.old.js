@@ -1,5 +1,3 @@
-import UIkit from 'uikit';
-
 import React, { useContext, useRef } from 'react';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
 import { USER_ROLES } from 'src/constants';
@@ -10,14 +8,6 @@ import { UserContext } from 'src/components/store/UserProvider';
 import { openModal } from 'src/components/modals/Modal';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { Button } from 'src/components/utils';
-import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import formEditExternalOpportunity from 'src/components/forms/schema/formEditExternalOpportunity';
-import Api from 'src/api/index.ts';
-import {
-  getCandidateIdFromCoachOrCandidate,
-  mutateFormSchema,
-} from 'src/utils';
-import moment from 'moment';
 import ModalExternalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
 
 const CandidateOpportunityList = ({
