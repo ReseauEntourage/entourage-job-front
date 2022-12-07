@@ -1,5 +1,3 @@
-import UIkit from 'uikit';
-
 import React, {
   forwardRef,
   useCallback,
@@ -9,12 +7,6 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
-import { getOpportunityUserFromOffer } from 'src/utils';
-import Api from 'src/api/index.ts';
-import { Grid, SimpleLink, Button } from 'src/components/utils';
-import OfferCard from 'src/components/cards/OfferCard';
-import ModalOfferAdmin from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOfferAdmin';
-import OpportunityError from 'src/components/opportunities/OpportunityError';
 import { useOpportunityList } from 'src/hooks/useOpportunityList';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import {
@@ -23,22 +15,16 @@ import {
 } from 'src/constants';
 import FiltersTabs from 'src/components/utils/FiltersTabs';
 import SearchBar from 'src/components/filters/SearchBar';
-import { openModal } from 'src/components/modals/Modal';
 import { usePrevious } from 'src/hooks/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
-import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { useBulkActions } from 'src/hooks/useBulkActions';
-import { SEARCH_MAX_WIDTH } from 'src/constants/utils';
 import { GA_TAGS } from 'src/constants/tags';
-import moment from 'moment';
 import CandidateOpportunitiesList from 'src/components/opportunities/OpportunitiesContainer/OpportunitiesList/CandidateOpportunitiesList';
 import AdminOpportunitiesList from 'src/components/opportunities/OpportunitiesContainer/OpportunitiesList/AdminOpportunitiesList';
 import { OpportunitiesContainer } from 'src/components/opportunities/OpportunitiesContainer';
-import { ModalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer';
-import Link from 'next/link';
-import {
-  useOpportunityId
-} from "src/components/opportunities/OpportunitiesContainer/useOpportunityId";
+import CandidateOpportunityDetailsContainer from 'src/components/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails';
+import AdminOpportunityDetailsContainer from 'src/components/opportunities/OpportunitiesContainer/OpportunityDetails/AdminOpportunityDetails';
+import { useQueryParamsOpportunities } from 'src/components/opportunities/useQueryParamsOpportunities';
+import NoOpportunities from 'src/components/opportunities/OpportunitiesContainer/NoOpportunities';
 
 /* const OfferList = ({
   selectionModeActivated,
@@ -170,16 +156,12 @@ const OpportunityList = forwardRef(
   ) => {
     const {
       push,
-      query: {
-        offerId: opportunityId,
-        memberId,
-        tab,
-        updateStatus,
-        ...restQuery
-      },
+      query: { offerId: opportunityId, memberId, tab, updateStatus },
     } = useRouter();
 
-    const prevTag = usePrevious(restQuery.tag);
+    const queryParamsOpportunities = useQueryParamsOpportunities();
+
+    const prevTag = usePrevious(queryParamsOpportunities.tag);
 
     const [filtersConst, setFiltersConst] = useState(OPPORTUNITY_FILTERS_DATA);
     const [numberOfResults, setNumberOfResults] = useState(0);
@@ -197,20 +179,6 @@ const OpportunityList = forwardRef(
         ? `admin/membres/${candidateId}/offres`
         : `${role}/offres`
     }`;
-
-    const navigateBackToList = useCallback(() => {
-      push(
-        {
-          pathname: currentPath,
-          query: restQuery,
-        },
-        undefined,
-        {
-          shallow: true,
-          scroll: false,
-        }
-      );
-    }, [currentPath, push, restQuery]);
 
     const fetchData = useOpportunityList(
       setOffers,
@@ -232,138 +200,6 @@ const OpportunityList = forwardRef(
         },
       };
     });
-
-    const onClickOpportunityCardAsUser = useCallback(
-      async (offer) => {
-        const opportunity = { ...offer };
-        // si jamais ouvert
-        if (
-          !opportunity.opportunityUsers ||
-          !opportunity.opportunityUsers.seen
-        ) {
-          const { data } = await Api.postJoinOpportunity({
-            opportunityId: offer.id,
-            candidateId,
-          });
-          opportunity.opportunityUsers = data;
-        }
-        openModal(
-          <ModalOffer
-            currentOffer={opportunity}
-            onOfferUpdated={async () => {
-              await fetchData(role, search, tabFilterTag, filters, candidateId);
-            }}
-            navigateBackToList={navigateBackToList}
-          />
-        );
-      },
-      [
-        candidateId,
-        fetchData,
-        filters,
-        navigateBackToList,
-        role,
-        search,
-        tabFilterTag,
-      ]
-    );
-
-    const onClickOpportunityCardAsAdmin = useCallback(
-      (offer) => {
-        openModal(
-          <ModalOfferAdmin
-            currentOffer={offer}
-            onOfferUpdated={async () => {
-              await fetchData(role, search, tabFilterTag, filters, candidateId);
-            }}
-            navigateBackToList={navigateBackToList}
-            duplicateOffer={async (closeModal) => {
-              const {
-                id,
-                opportunityUsers,
-                createdBy,
-                createdAt,
-                updatedAt,
-                ...restOpportunity
-              } = offer;
-              const { data } = await Api.postOpportunity({
-                ...restOpportunity,
-                title: `${restOpportunity.title} (copie)`,
-                isAdmin: true,
-                isValidated: false,
-                date: moment().toISOString(),
-                isCopy: true,
-              });
-
-              closeModal();
-              UIkit.notification("L'offre a bien été dupliquée", 'success');
-              push(
-                {
-                  pathname: `${currentPath}/${data.id}`,
-                  query: restQuery,
-                },
-                undefined,
-                {
-                  shallow: true,
-                  scroll: false,
-                }
-              );
-              await fetchData(role, search, tabFilterTag, filters, candidateId);
-            }}
-          />
-        );
-      },
-      [
-        candidateId,
-        currentPath,
-        fetchData,
-        filters,
-        navigateBackToList,
-        push,
-        restQuery,
-        role,
-        search,
-        tabFilterTag,
-      ]
-    );
-
-    const openOffer = useCallback(
-      (offer) => {
-        if (offer) {
-          if (isAdmin) {
-            onClickOpportunityCardAsAdmin(offer);
-          } else {
-            onClickOpportunityCardAsUser(offer);
-          }
-        }
-      },
-      [isAdmin, onClickOpportunityCardAsAdmin, onClickOpportunityCardAsUser]
-    );
-
-    const getOpportunity = useCallback(async (oppId) => {
-      try {
-        const { data: offer } = await Api.getOpportunityById(oppId);
-        return offer;
-      } catch (err) {
-        console.error(err);
-        return null;
-      }
-    }, []);
-
-    const prevOpportunityId = usePrevious(opportunityId);
-
-    /*
-
-    useEffect(() => {
-      if (opportunityId && opportunityId !== prevOpportunityId) {
-        getOpportunity(opportunityId).then((offer) => {
-          if (offer) {
-            openOffer({ ...offer });
-          }
-        });
-      }
-    }, [getOpportunity, openOffer, opportunityId, prevOpportunityId]);
-*/
 
     useDeepCompareEffect(() => {
       setHasError(false);
@@ -387,9 +223,9 @@ const OpportunityList = forwardRef(
     );
 
     useEffect(() => {
-      if (restQuery.tag !== prevTag) {
+      if (queryParamsOpportunities.tag !== prevTag) {
         const initialFiltersConst =
-          restQuery.tag === OFFER_ADMIN_FILTERS_DATA[2].tag
+          queryParamsOpportunities.tag === OFFER_ADMIN_FILTERS_DATA[2].tag
             ? OPPORTUNITY_FILTERS_DATA.slice(1)
             : OPPORTUNITY_FILTERS_DATA;
 
@@ -398,44 +234,71 @@ const OpportunityList = forwardRef(
           toggleSelectionMode();
         }
       }
-    }, [prevTag, restQuery.tag, selectionModeActivated, toggleSelectionMode]);
+    }, [
+      prevTag,
+      queryParamsOpportunities.tag,
+      selectionModeActivated,
+      toggleSelectionMode,
+    ]);
 
-    const content =
-      role === 'candidat' ? (
-        <OpportunitiesContainer
-          backButtonHref={{
-            pathname: `/backoffice/candidat/offres`,
-            query: restQuery,
-          }}
-          opportunities={
-            offers && offers.length > 0 ? (
-              <CandidateOpportunitiesList
-                query={restQuery}
-                opportunities={offers}
-              />
-            ) : null
-          }
-          isLoading={loading}
-          status="à traiter"
-        />
-      ) : (
-        <OpportunitiesContainer
-          backButtonHref={{
-            pathname: `/backoffice/admin/offres`,
-            query: restQuery,
-          }}
-          opportunities={
-            offers && offers.length > 0 ? (
-              <AdminOpportunitiesList
-                query={restQuery}
-                opportunities={offers}
-              />
-            ) : null
-          }
-          isLoading={loading}
-          status="à traiter"
-        />
-      );
+    const content = (
+      <OpportunitiesContainer
+        backButtonHref={{
+          pathname:
+            role === 'candidat'
+              ? `/backoffice/candidat/offres`
+              : `/backoffice/admin/offres`,
+          query: queryParamsOpportunities,
+        }}
+        list={
+          offers && offers.length > 0 ? (
+            <>
+              {role === 'candidat' ? (
+                <CandidateOpportunitiesList opportunities={offers} />
+              ) : (
+                <AdminOpportunitiesList opportunities={offers} />
+              )}
+            </>
+          ) : null
+        }
+        isLoading={loading}
+        details={
+          role === 'candidat' ? (
+            <CandidateOpportunityDetailsContainer
+              fetchOpportunities={async () => {
+                await fetchData(
+                  role,
+                  search,
+                  tabFilterTag,
+                  filters,
+                  candidateId
+                );
+              }}
+            />
+          ) : (
+            <AdminOpportunityDetailsContainer
+              fetchOpportunities={async () => {
+                await fetchData(
+                  role,
+                  search,
+                  tabFilterTag,
+                  filters,
+                  candidateId
+                );
+              }}
+            />
+          )
+        }
+        noContent={
+          <NoOpportunities
+            status="à traiter"
+            fetchOpportunities={async () => {
+              await fetchData(role, search, tabFilterTag, filters, candidateId);
+            }}
+          />
+        }
+      />
+    );
 
     /*   const content = (
       <div>
@@ -482,7 +345,7 @@ const OpportunityList = forwardRef(
                   selectElement={selectElement}
                   selectionModeActivated={selectionModeActivated}
                   candidateId={candidateId}
-                  query={restQuery}
+                  query={queryParamsOpportunities}
                   role={role}
                   isAdmin={isAdmin}
                   offers={bookmarkedOffers}
@@ -497,7 +360,7 @@ const OpportunityList = forwardRef(
                 selectElement={selectElement}
                 selectionModeActivated={selectionModeActivated}
                 candidateId={candidateId}
-                query={restQuery}
+                query={queryParamsOpportunities}
                 role={role}
                 isAdmin={isAdmin}
                 offers={offers}
@@ -532,7 +395,7 @@ const OpportunityList = forwardRef(
                   selectElement={selectElement}
                   selectionModeActivated={selectionModeActivated}
                   candidateId={candidateId}
-                  query={restQuery}
+                  query={queryParamsOpportunities}
                   role={role}
                   isAdmin={isAdmin}
                   offers={otherOffers}
