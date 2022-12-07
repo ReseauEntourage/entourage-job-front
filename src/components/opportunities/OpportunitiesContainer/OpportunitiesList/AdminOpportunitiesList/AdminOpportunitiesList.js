@@ -2,9 +2,12 @@ import Link from 'next/link';
 import React from 'react';
 import { useOnScroll } from 'src/hooks/utils/useOnScroll';
 import PropTypes from 'prop-types';
+import { useQueryParamsOpportunities } from 'src/components/opportunities/useQueryParamsOpportunities';
 import { ListItem, Scroll } from '../OpportunitiesList.styles';
 
-const AdminOpportunitiesList = ({ opportunities, query }) => {
+const AdminOpportunitiesList = ({ opportunities }) => {
+  const queryParamsOpportunities = useQueryParamsOpportunities();
+
   const { onScroll } = useOnScroll({
     onScrollBottomEnd: () => {
       console.log('BOTTOM');
@@ -18,7 +21,7 @@ const AdminOpportunitiesList = ({ opportunities, query }) => {
         <Link
           href={{
             pathname: `/backoffice/admin/offres/${opportunity.id}`,
-            query,
+            query: queryParamsOpportunities,
           }}
           scroll={false}
           shallow
@@ -29,20 +32,11 @@ const AdminOpportunitiesList = ({ opportunities, query }) => {
     );
   });
 
-  return (
-    <Scroll onScroll={onScroll}>
-      {opportunitiesListContent}
-    </Scroll>
-  );
-};
-
-AdminOpportunitiesList.defaultProps = {
-  query: '',
+  return <Scroll onScroll={onScroll}>{opportunitiesListContent}</Scroll>;
 };
 
 AdminOpportunitiesList.propTypes = {
   opportunities: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  query: PropTypes.shape({}),
 };
 
 export default AdminOpportunitiesList;

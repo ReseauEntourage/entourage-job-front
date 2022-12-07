@@ -1,16 +1,34 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Api from 'src/api/index.ts';
 import { usePrevious } from 'src/hooks/utils';
+import { UserContext } from 'src/components/store/UserProvider';
+import { USER_ROLES } from 'src/constants';
 
-export function useFetchOpportunity(opportunityId) {
-  const [currentOpportunity, setCurrentOpportunity] = useState();
+export function useFetchOpportunity(opportunityId, candidateId) {
+  const { user } = useContext(UserContext);
+  const [opportunity, setOpportunity] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const prevOpportunityId = usePrevious(opportunityId);
 
   useEffect(() => {
     async function fetchOpportunity() {
-      const { data: opportunity } = await Api.getOpportunityById(opportunityId);
-      setCurrentOpportunity(opportunity);
+      const { data: fetchedOpportunity } = await Api.getOpportunityById(
+        opportunityId
+      );
+      if (
+        user.role !== USER_ROLES.ADMIN &&
+        candidateId &&
+        (!fetchedOpportunity.opportunityUsers ||
+          !fetchedOpportunity.opportunityUsers.seen)
+      ) {
+        const { data: opportunityUsers } = await Api.postJoinOpportunity({
+          opportunityId: fetchedOpportunity.id,
+          candidateId,
+        });
+        setOpportunity({ ...fetchedOpportunity, opportunityUsers });
+      } else {
+        setOpportunity(fetchedOpportunity);
+      }
       setIsLoading(false);
     }
 
@@ -18,7 +36,7 @@ export function useFetchOpportunity(opportunityId) {
       setIsLoading(true);
       fetchOpportunity();
     }
-  }, [opportunityId, prevOpportunityId]);
+  }, [candidateId, opportunity, opportunityId, prevOpportunityId, user.role]);
 
-  return { currentOpportunity, isLoading };
+  return { opportunity, isLoading };
 }
