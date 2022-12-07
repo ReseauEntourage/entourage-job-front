@@ -11,7 +11,7 @@ import {
   Description,
 } from './NoOpportunities.styles';
 
-const NoOpportunities = ({ status }) => {
+const NoOpportunities = ({ status, fetchOpportunities }) => {
   return (
     <Container>
       <Title>Vous n&apos;avez aucune offre {status.toLowerCase()}.</Title>
@@ -27,7 +27,9 @@ const NoOpportunities = ({ status }) => {
           color="primaryOrange"
           dataTestId="candidat-add-offer"
           onClick={() => {
-            openModal(<ModalExternalOffer />);
+            openModal(
+              <ModalExternalOffer fetchOpportunities={fetchOpportunities} />
+            );
           }}
         >
           <IconNoSSR
@@ -63,6 +65,7 @@ NoOpportunities.propTypes = {
     'abandonnée',
     'acceptées',
   ]).isRequired,
+  fetchOpportunities: PropTypes.func.isRequired,
 };
 
 export default NoOpportunities;

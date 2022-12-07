@@ -2,8 +2,10 @@ import styled from 'styled-components';
 import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 
 export const ListContainer = styled.div`
-  flex: 2;
+  height: 100vh;
   overflow: hidden;
+  position: relative;
+  flex: 2;
   @media screen and (min-width: ${BREAKPOINTS.desktop}px) {
     width: 100%;
   }
@@ -21,7 +23,7 @@ export const ListItem = styled.div`
 `;
 
 export const Scroll = styled.div`
-  position: relative;
   height: 100%;
+  position: relative;
   overflow: auto;
 `;

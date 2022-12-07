@@ -6,13 +6,13 @@ import Api from 'src/api/index.ts';
 import moment from 'moment/moment';
 import UIkit from 'uikit';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import React, { useContext, useRef } from 'react';
+import React, { useContext } from 'react';
 import { UserContext } from 'src/components/store/UserProvider';
 import formEditExternalOpportunity from 'src/components/forms/schema/formEditExternalOpportunity';
+import PropTypes from 'prop-types';
 
-const ModalExternalOffer = () => {
+const ModalExternalOffer = ({ fetchOpportunities }) => {
   const { user } = useContext(UserContext);
-  const opportunityListRef = useRef();
 
   const mutatedSchema = mutateFormSchema(formEditExternalOpportunity, [
     {
@@ -51,7 +51,7 @@ const ModalExternalOffer = () => {
             date: moment().toISOString(),
           });
           closeModal();
-          opportunityListRef.current.fetchData();
+          await fetchOpportunities();
           UIkit.notification(
             "L'offre externe a bien été ajouté à votre liste d'offres",
             'success'
@@ -63,6 +63,10 @@ const ModalExternalOffer = () => {
       }}
     />
   );
+};
+
+ModalExternalOffer.propTypes = {
+  fetchOpportunities: PropTypes.func.isRequired,
 };
 
 export default ModalExternalOffer;
