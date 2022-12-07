@@ -5,31 +5,29 @@ import {
   ContentContainer,
   Scroll,
 } from 'src/components/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunityDetails.styles';
-import { useFetchOpportunity } from 'src/components/opportunities/OpportunitiesContainer/OpportunityDetails/useFetchOpportunity';
 import PropTypes from 'prop-types';
 
-const OpportunityDetails = ({ opportunityId }) => {
-  const { currentOpportunity, isLoading } = useFetchOpportunity(opportunityId);
-
+const OpportunityDetails = ({ isLoading, details }) => {
   return (
     <Container>
       <Scroll>
-        {currentOpportunity && (
-          <ContentContainer>
-            {isLoading ? <OverlayLoader /> : <>{currentOpportunity.title}</>}
-          </ContentContainer>
-        )}
+        <ContentContainer>
+          {details}
+          {isLoading && <OverlayLoader />}
+        </ContentContainer>
       </Scroll>
     </Container>
   );
 };
 
 OpportunityDetails.defaultProps = {
-  opportunityId: null,
+  details: null,
+  isLoading: false,
 };
 
 OpportunityDetails.propTypes = {
-  opportunityId: PropTypes.string,
+  details: PropTypes.element,
+  isLoading: PropTypes.bool,
 };
 
 export default OpportunityDetails;
