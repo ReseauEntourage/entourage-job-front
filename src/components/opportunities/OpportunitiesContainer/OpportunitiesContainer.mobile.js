@@ -6,23 +6,22 @@ import {
 } from 'src/components/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
 import { useOpportunityId } from 'src/components/opportunities/OpportunitiesContainer/useOpportunityId';
 import PropTypes from 'prop-types';
-import OpportunityDetails from 'src/components/opportunities/OpportunitiesContainer/OpportunityDetails';
-import NoOpportunities from 'src/components/opportunities/OpportunitiesContainer/NoOpportunities/NoOpportunities';
 import OpportunitiesList from 'src/components/opportunities/OpportunitiesContainer/OpportunitiesList';
 import Link from 'next/link';
 import { IconNoSSR } from 'src/components/utils/Icon';
 
 const OpportunitiesContainerMobile = ({
-  opportunities,
+  list,
+  details,
   isLoading,
-  status,
   backButtonHref,
+  noContent,
 }) => {
   const opportunityId = useOpportunityId();
 
   return (
     <Container>
-      {opportunities ? (
+      {list ? (
         <>
           {opportunityId ? (
             <DetailsContainer>
@@ -32,40 +31,32 @@ const OpportunitiesContainerMobile = ({
                   Retour à la liste
                 </BackLink>
               </Link>
-              <OpportunityDetails opportunityId={opportunityId} />
+              {details}
             </DetailsContainer>
           ) : (
-            <OpportunitiesList
-              isLoading={isLoading}
-              opportunities={opportunities}
-            />
+            <OpportunitiesList isLoading={isLoading} list={list} />
           )}
         </>
       ) : (
-        <NoOpportunities status={status} />
+        noContent
       )}
     </Container>
   );
 };
 
 OpportunitiesContainerMobile.defaultProps = {
-  opportunities: null,
+  list: null,
 };
 
 OpportunitiesContainerMobile.propTypes = {
   isLoading: PropTypes.bool.isRequired,
-  opportunities: PropTypes.element,
+  list: PropTypes.element,
+  details: PropTypes.element.isRequired,
+  noContent: PropTypes.element.isRequired,
   backButtonHref: PropTypes.shape({
     pathname: PropTypes.string,
     query: PropTypes.shape({}),
   }).isRequired,
-  status: PropTypes.oneOf([
-    'à traiter',
-    'consultée',
-    "en phase d'entretien",
-    'abandonnée',
-    'acceptées',
-  ]).isRequired,
 };
 
 export default OpportunitiesContainerMobile;

@@ -41,7 +41,11 @@ const CandidateOpportunityList = ({
           style="primary"
           dataTestId="candidat-add-offer"
           onClick={() => {
-            openModal(<ModalExternalOffer />);
+            openModal(
+              <ModalExternalOffer
+                fetchOpportunities={opportunityListRef.current.fetchData}
+              />
+            );
           }}
         >
           <IconNoSSR
