@@ -305,6 +305,12 @@ const GA_TAGS = {
   BACKOFFICE_CANDIDAT_HEADER_OFFRES_CLIC: {
     action: 'Backoffice_Candidat_Header_Offres_Clic',
   },
+  BACKOFFICE_CANDIDAT_HEADER_OFFRES_GENERALES_CLIC: {
+    action: 'Backoffice_Candidat_Header_Offres_Generales_Clic',
+  },
+  BACKOFFICE_CANDIDAT_HEADER_MES_OFFRES_CLIC: {
+    action: 'Backoffice_Candidat_Header_Mes_Offres_Clic',
+  },
   BACKOFFICE_CANDIDAT_HEADER_SUIVI_CLIC: {
     action: 'Backoffice_Candidat_Header_Suivi_Clic',
   },
