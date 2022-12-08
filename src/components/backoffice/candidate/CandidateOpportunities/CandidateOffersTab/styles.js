@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { COLORS } from 'src/constants/styles'
 
 export const StyledTabsUl = styled.ul`
   width: 100%;
@@ -11,5 +12,13 @@ export const StyledTabsUl = styled.ul`
     list-style: none;
     width: 20%;
     text-align: center;
+    a {
+      color: ${COLORS.darkGray};
+    }
+    &.active {
+      a {
+        color: ${COLORS.primaryOrange};
+      }
+    }
   }
 `;

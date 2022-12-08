@@ -64,6 +64,7 @@ export const renderLinks = (user, logout) => {
           {
             href: '/backoffice/candidat/offres/private',
             name: 'Mes offres',
+            queryParams: `?status=-1`,
             // icon: 'list',
             badge: 'offers',
             tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_MES_OFFRES_CLIC,
