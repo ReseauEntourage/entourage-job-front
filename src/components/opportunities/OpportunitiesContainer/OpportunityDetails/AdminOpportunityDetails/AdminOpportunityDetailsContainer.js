@@ -9,7 +9,7 @@ const AdminOpportunityDetailsContainer = ({ fetchOpportunities }) => {
   const opportunityId = useOpportunityId();
   const { opportunity, isLoading } = useFetchOpportunity(opportunityId);
 
-  if (!opportunityId) {
+  if (!opportunityId || !opportunity) {
     return <OpportunityDetails isLoading={isLoading} />;
   }
 

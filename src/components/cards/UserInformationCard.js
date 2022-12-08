@@ -9,7 +9,7 @@ import Api from 'src/api/index.ts';
 import { USER_ROLES } from 'src/constants';
 import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
 import CandidateEmployedToggle from 'src/components/backoffice/candidate/CandidateEmployedToggle';
-import ContractLabel from 'src/components/backoffice/candidate/ContractLabel';
+import ContractLabel from 'src/components/backoffice/candidate/ContractLabel/ContractLabel';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
 import { getCandidateFromCoachOrCandidate, getRelatedUser } from 'src/utils';

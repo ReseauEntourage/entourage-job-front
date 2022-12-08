@@ -17,7 +17,7 @@ const CandidateOpportunityDetailsContainer = ({ fetchOpportunities }) => {
     candidateId
   );
 
-  if (!opportunityId && !opportunity) {
+  if (!opportunityId || !opportunity) {
     return <OpportunityDetails isLoading={isLoading} />;
   }
 
