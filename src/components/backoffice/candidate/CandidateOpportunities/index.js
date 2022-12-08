@@ -34,6 +34,7 @@ const CandidateOpportunities = ({
   resetFilters,
   candidateId,
 }) => {
+  console.log(filters)
   const { user } = useContext(UserContext);
   const opportunityListRef = useRef();
   const mutatedSchema = mutateFormSchema(formEditExternalOpportunity, [
@@ -180,7 +181,7 @@ const CandidateOpportunities = ({
           />
         </>
       ) : (
-        <CandidateOffersTab />
+        <CandidateOffersTab activeTab={filters.status} />
       )}
       <OpportunitiesList offers={offers} />
     </>
