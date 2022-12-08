@@ -7,24 +7,19 @@ import Api from 'src/api/index.ts';
 import { OPPORTUNITY_FILTERS_DATA, USER_ROLES } from 'src/constants';
 import OpportunityError from 'src/components/opportunities/OpportunityError';
 import { useRouter } from 'next/router';
-import { CandidateOpportunities } from 'src/components/backoffice/candidate/CandidateOpportunities';
+import CandidateOpportunities from 'src/components/backoffice/candidate/CandidateOpportunities';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { GA_TAGS } from 'src/constants/tags';
-import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
-import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
-import { useOpportunityType } from 'src/components/backoffice/opportunities/useOpportunityType';
-import useDeepCompareEffect from 'use-deep-compare-effect';
 
 // filters for the query
 const candidateQueryFilters = OPPORTUNITY_FILTERS_DATA.slice(1);
 
 const Opportunities = () => {
-  const { isReady, replace } = useRouter();
-
-  const opportunityId = useOpportunityId();
-  const opportunityType = useOpportunityType();
-
-  const queryParamsOpportunities = useQueryParamsOpportunities();
+  const {
+    isReady,
+    replace,
+    query: { offerId, type, ...restParams },
+  } = useRouter();
 
   const { user } = useContext(UserContext);
 
@@ -35,17 +30,19 @@ const Opportunities = () => {
 
   const [candidateId, setCandidateId] = useState();
 
+  const [tag, setTag] = useState();
+
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
     candidateQueryFilters,
-    `/backoffice/candidat/offres/${opportunityType}`,
+    `/backoffice/candidat/offres/${type}`,
     ['offerId', 'type'],
     GA_TAGS.BACKOFFICE_CANDIDAT_SUPPRIMER_FILTRES_CLIC
   );
 
   const setCandidateDefaultsIfPublicTag = useCallback(
     async (candId, candidatZone) => {
-      if (opportunityType === 'public') {
-        const params = queryParamsOpportunities;
+      if (type === 'public') {
+        const params = restParams;
 
         try {
           const { data } = await Api.getCVByCandidateId(candId);
@@ -69,7 +66,7 @@ const Opportunities = () => {
           await replace(
             {
               pathname: `/backoffice/candidat/offres/public${
-                opportunityId ? `/${opportunityId}` : ''
+                offerId ? `/${offerId}` : ''
               }`,
               query: params,
             },
@@ -88,7 +85,7 @@ const Opportunities = () => {
         setHasLoadedDefaultFilters(true);
       }
     },
-    [opportunityId, replace, queryParamsOpportunities, opportunityType]
+    [offerId, replace, restParams, type]
   );
 
   const fetchAssociatedCandidate = useCallback(
@@ -108,10 +105,20 @@ const Opportunities = () => {
     [setCandidateDefaultsIfPublicTag]
   );
 
-  useDeepCompareEffect(() => {
+  useEffect(() => {
+    console.log(isReady, 'is ready');
     if (isReady && user) {
-      if (opportunityType === 'private') {
-        if (!queryParamsOpportunities.status) {
+      if (type === 'public') {
+        setTag('public');
+        if (
+          hasLoadedDefaultFilters &&
+          !restParams.department &&
+          !restParams.businessLines
+        ) {
+          setHasLoadedDefaultFilters(false);
+        }
+      } else if (type === 'private') {
+        if (!restParams.status) {
           replace(
             {
               pathname: '/backoffice/candidat/offres/private',
@@ -123,8 +130,8 @@ const Opportunities = () => {
             }
           );
         }
-      } else if (opportunityType !== 'public') {
-        setHasLoadedDefaultFilters(false);
+        setTag('');
+      } else {
         replace(`/backoffice/candidat/offres/public`, undefined, {
           shallow: true,
         });
@@ -132,7 +139,7 @@ const Opportunities = () => {
 
       if (user.role === USER_ROLES.ADMIN) {
         replace(
-          `/backoffice/admin/offres${opportunityId ? `/${opportunityId}` : ''}`,
+          `/backoffice/admin/offres${offerId ? `/${offerId}` : ''}`,
           undefined,
           {
             shallow: true,
@@ -140,6 +147,7 @@ const Opportunities = () => {
         );
       } else if (!hasLoadedDefaultFilters) {
         if (user.role === USER_ROLES.CANDIDAT) {
+          console.log('will set default');
           setCandidateDefaultsIfPublicTag(user.id, user.zone);
         } else if (user.role === USER_ROLES.COACH) {
           fetchAssociatedCandidate(user.id, user.zone);
@@ -152,12 +160,13 @@ const Opportunities = () => {
     fetchAssociatedCandidate,
     hasLoadedDefaultFilters,
     isReady,
-    opportunityId,
+    offerId,
     replace,
-    queryParamsOpportunities,
+    restParams,
     setCandidateDefaultsIfPublicTag,
+    tag,
     user,
-    opportunityType,
+    type,
   ]);
 
   let content;
@@ -181,6 +190,7 @@ const Opportunities = () => {
   } else {
     content = (
       <CandidateOpportunities
+        isPublic={tag === 'public'}
         search={search}
         filters={filters}
         resetFilters={resetFilters}
