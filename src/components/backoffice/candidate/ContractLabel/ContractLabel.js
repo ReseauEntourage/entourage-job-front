@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { findConstantFromValue } from 'src/utils';
 import { CONTRACTS } from 'src/constants';
+import { Container } from './ContractLabel.styles';
 
 const ContractLabel = ({ contract, endOfContract, startOfContract }) => {
   if (contract) {
@@ -27,10 +28,10 @@ const ContractLabel = ({ contract, endOfContract, startOfContract }) => {
     }
 
     return (
-      <div className="uk-text-muted">
+      <Container>
         {findConstantFromValue(contract, CONTRACTS)?.label}
         {dates}
-      </div>
+      </Container>
     );
   }
 
