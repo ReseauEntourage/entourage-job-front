@@ -46,6 +46,7 @@ export const StyledButton = styled.button`
     }
   }
   &.custom-secondary {
+    font-family: Poppins, sans-serif;
     padding: 6px 15px;
     background-color: white;
     &.transparentBG {
