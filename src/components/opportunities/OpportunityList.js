@@ -25,6 +25,10 @@ import CandidateOpportunityDetailsContainer from 'src/components/opportunities/O
 import AdminOpportunityDetailsContainer from 'src/components/opportunities/OpportunitiesContainer/OpportunityDetails/AdminOpportunityDetails';
 import { useQueryParamsOpportunities } from 'src/components/opportunities/useQueryParamsOpportunities';
 import NoOpportunities from 'src/components/opportunities/OpportunitiesContainer/NoOpportunities';
+import { SEARCH_MAX_WIDTH } from 'src/constants/utils';
+import { Button } from 'src/components/utils';
+import { IconNoSSR } from 'src/components/utils/Icon';
+import OpportunityError from 'src/components/opportunities/OpportunityError';
 
 /* const OfferList = ({
   selectionModeActivated,
@@ -242,65 +246,6 @@ const OpportunityList = forwardRef(
     ]);
 
     const content = (
-      <OpportunitiesContainer
-        backButtonHref={{
-          pathname:
-            role === 'candidat'
-              ? `/backoffice/candidat/offres`
-              : `/backoffice/admin/offres`,
-          query: queryParamsOpportunities,
-        }}
-        list={
-          offers && offers.length > 0 ? (
-            <>
-              {role === 'candidat' ? (
-                <CandidateOpportunitiesList opportunities={offers} />
-              ) : (
-                <AdminOpportunitiesList opportunities={offers} />
-              )}
-            </>
-          ) : null
-        }
-        isLoading={loading}
-        details={
-          role === 'candidat' ? (
-            <CandidateOpportunityDetailsContainer
-              fetchOpportunities={async () => {
-                await fetchData(
-                  role,
-                  search,
-                  tabFilterTag,
-                  filters,
-                  candidateId
-                );
-              }}
-            />
-          ) : (
-            <AdminOpportunityDetailsContainer
-              fetchOpportunities={async () => {
-                await fetchData(
-                  role,
-                  search,
-                  tabFilterTag,
-                  filters,
-                  candidateId
-                );
-              }}
-            />
-          )
-        }
-        noContent={
-          <NoOpportunities
-            status="à traiter"
-            fetchOpportunities={async () => {
-              await fetchData(role, search, tabFilterTag, filters, candidateId);
-            }}
-          />
-        }
-      />
-    );
-
-    /*   const content = (
       <div>
         {role !== 'candidat' && (
           <div className="uk-flex uk-flex-center">
@@ -326,6 +271,88 @@ const OpportunityList = forwardRef(
             </div>
           </div>
         )}
+        {hasError ? (
+          <OpportunityError />
+        ) : (
+          <OpportunitiesContainer
+            backButtonHref={{
+              pathname:
+                role === 'candidat'
+                  ? `/backoffice/candidat/offres`
+                  : `/backoffice/admin/offres`,
+              query: queryParamsOpportunities,
+            }}
+            list={
+              offers && offers.length > 0 ? (
+                <>
+                  {role === 'candidat' ? (
+                    <CandidateOpportunitiesList
+                      opportunities={offers}
+                      fetchOpportunities={async () => {
+                        await fetchData(
+                          role,
+                          search,
+                          tabFilterTag,
+                          filters,
+                          candidateId
+                        );
+                      }}
+                    />
+                  ) : (
+                    <AdminOpportunitiesList opportunities={offers} />
+                  )}
+                </>
+              ) : null
+            }
+            isLoading={loading}
+            details={
+              role === 'candidat' ? (
+                <CandidateOpportunityDetailsContainer
+                  fetchOpportunities={async () => {
+                    await fetchData(
+                      role,
+                      search,
+                      tabFilterTag,
+                      filters,
+                      candidateId
+                    );
+                  }}
+                />
+              ) : (
+                <AdminOpportunityDetailsContainer
+                  fetchOpportunities={async () => {
+                    await fetchData(
+                      role,
+                      search,
+                      tabFilterTag,
+                      filters,
+                      candidateId
+                    );
+                  }}
+                />
+              )
+            }
+            noContent={
+              <NoOpportunities
+                status="à traiter"
+                fetchOpportunities={async () => {
+                  await fetchData(
+                    role,
+                    search,
+                    tabFilterTag,
+                    filters,
+                    candidateId
+                  );
+                }}
+              />
+            }
+          />
+        )}
+      </div>
+    );
+
+    /*    const content = (
+      <div>
         {loading && <LoadingScreen />}
         {!loading && hasError && <OpportunityError />}
         {!loading && !hasError && (
@@ -406,7 +433,9 @@ const OpportunityList = forwardRef(
           </div>
         )}
       </div>
-    ); */
+    )
+
+    */
 
     return (
       <div>
