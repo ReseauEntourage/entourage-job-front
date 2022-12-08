@@ -55,11 +55,27 @@ export const renderLinks = (user, logout) => {
     ],
     candidat: [
       {
-        href: '/backoffice/candidat/offres',
-        name: 'Mes offres',
+        href: '/backoffice/candidat/offres/public',
+        name: 'Les offres',
         icon: 'list',
-        badge: 'offers',
+        // badge: 'offers',
         tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_OFFRES_CLIC,
+        subMenu: [
+          {
+            href: '/backoffice/candidat/offres/private',
+            name: 'Mes offres',
+            // icon: 'list',
+            badge: 'offers',
+            tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_MES_OFFRES_CLIC,
+          },
+          {
+            href: '/backoffice/candidat/offres/public',
+            name: 'Toutes les offres',
+            // icon: 'list',
+            // badge: 'offers',
+            tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_OFFRES_GENERALES_CLIC,
+          },
+        ],
       },
       {
         href: '/backoffice/candidat/suivi',
