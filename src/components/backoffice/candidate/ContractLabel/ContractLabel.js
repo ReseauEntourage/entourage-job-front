@@ -5,6 +5,7 @@ import { findConstantFromValue } from 'src/utils';
 import { CONTRACTS } from 'src/constants';
 import { StyledContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel.styles';
 import { InfoText } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
+import { Container } from './ContractLabel.styles';
 
 const ContractLabel = ({ contract, endOfContract, startOfContract }) => {
   if (contract) {
