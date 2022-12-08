@@ -112,3 +112,38 @@ export function useOpportunityList(
     ]
   );
 }
+
+export function useCandidateOpportunities(
+  setOffers,
+  setLoading,
+  setHasError,
+  setOtherOffers,
+  offset
+) {
+  return useCallback(
+    async (candidateId, search, type, filters) => {
+      try {
+        setLoading(true);
+        const {
+          data: { offers, otherOffers },
+        } = await Api.getAllCandidateOpportunities(candidateId, {
+          params: {
+            search,
+            type,
+            offset,
+            ...filtersToQueryParams(filters),
+          },
+        });
+        setOffers(offers);
+        setOtherOffers(otherOffers);
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+        setLoading(false);
+        setHasError(true);
+      }
+
+    },
+    [setOffers, setLoading, setOtherOffers, setHasError]
+  );
+}

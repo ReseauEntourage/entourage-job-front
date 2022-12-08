@@ -12,17 +12,18 @@ import {
 } from 'src/constants';
 import OpportunityError from 'src/components/opportunities/OpportunityError';
 import { useRouter } from 'next/router';
-import CandidateOpportunityList from 'src/components/backoffice/candidate/CandidateOpportunityList';
+import CandidateOpportunities from 'src/components/backoffice/candidate/CandidateOpportunities';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { GA_TAGS } from 'src/constants/tags';
 
-const candidateFilters = OPPORTUNITY_FILTERS_DATA.slice(1);
+// filters for the query
+const candidateQueryFilters = OPPORTUNITY_FILTERS_DATA.slice(1);
 
 const Opportunities = () => {
   const {
     isReady,
     replace,
-    query: { q, offerId, tag, ...restParams },
+    query: { offerId, type, ...restParams },
   } = useRouter();
 
   const { user } = useContext(UserContext);
@@ -34,26 +35,19 @@ const Opportunities = () => {
 
   const [candidateId, setCandidateId] = useState();
 
+  const [tag, setTag] = useState();
+
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
-    candidateFilters,
-    '/backoffice/candidat/offres',
-    ['offerId'],
+    candidateQueryFilters,
+    `/backoffice/candidat/offres/${type}`,
+    ['offerId', 'type'],
     GA_TAGS.BACKOFFICE_CANDIDAT_SUPPRIMER_FILTRES_CLIC
   );
 
-  const { tabFilters, setTabFilters } = useTabFilters(
-    OFFER_CANDIDATE_FILTERS_DATA,
-    '/backoffice/candidat/offres',
-    ['offerId']
-  );
-
-  const setCandidateDefaultsIfNoTag = useCallback(
+  const setCandidateDefaultsIfPublicTag = useCallback(
     async (candId, candidatZone) => {
-      if (!tag) {
-        const params = {
-          tag: OFFER_CANDIDATE_FILTERS_DATA[0].tag,
-          ...restParams,
-        };
+      if (type === 'public') {
+        const params = restParams;
 
         try {
           const { data } = await Api.getCVByCandidateId(candId);
@@ -86,7 +80,7 @@ const Opportunities = () => {
 
           await replace(
             {
-              pathname: `/backoffice/candidat/offres${
+              pathname: `/backoffice/candidat/offres/public${
                 offerId ? `/${offerId}` : ''
               }`,
               query: params,
@@ -107,7 +101,7 @@ const Opportunities = () => {
       }
       setHasLoadedDefaultFilters(true);
     },
-    [offerId, replace, restParams, tag]
+    [offerId, replace, restParams, type]
   );
 
   const fetchAssociatedCandidate = useCallback(
@@ -115,7 +109,7 @@ const Opportunities = () => {
       try {
         const { data } = await Api.getUserCandidate(coachId);
         if (data) {
-          setCandidateDefaultsIfNoTag(data.candidat.id, data.candidat.zone);
+          setCandidateDefaultsIfPublicTag(data.candidat.id, data.candidat.zone);
         } else {
           setHasLoadedDefaultFilters(true);
         }
@@ -124,48 +118,58 @@ const Opportunities = () => {
         setHasLoadedDefaultFilters(true);
       }
     },
-    [setCandidateDefaultsIfNoTag]
+    [setCandidateDefaultsIfPublicTag]
   );
 
   useEffect(() => {
-    if (isReady) {
-      const redirectParams = tag
-        ? {
-            tag,
-            ...restParams,
-          }
-        : restParams;
-
-      // For retrocompatibility
-      if (q) {
-        replace(
-          {
-            pathname: `/backoffice/candidat/offres/${q}`,
-            query: redirectParams,
-          },
-          undefined,
-          {
-            shallow: true,
-          }
-        );
-      } else if (user) {
-        if (user.role === USER_ROLES.ADMIN) {
+    console.log(isReady, 'is ready');
+    if (isReady && user) {
+      if (type === 'public') {
+        setTag('public');
+        if (
+          hasLoadedDefaultFilters &&
+          !restParams.department &&
+          !restParams.businessLines
+        ) {
+          setHasLoadedDefaultFilters(false);
+        }
+      } else if (type === 'private') {
+        if (!restParams.status) {
           replace(
-            `/backoffice/admin/offres${offerId ? `/${offerId}` : ''}`,
+            {
+              pathname: '/backoffice/candidat/offres/private',
+              query: { status: -1 },
+            },
             undefined,
             {
               shallow: true,
             }
           );
-        } else if (!hasLoadedDefaultFilters) {
-          if (user.role === USER_ROLES.CANDIDAT) {
-            setCandidateDefaultsIfNoTag(user.id, user.zone);
-          } else if (user.role === USER_ROLES.COACH) {
-            fetchAssociatedCandidate(user.id, user.zone);
-          }
-        } else {
-          setLoading(false);
         }
+        setTag('');
+      } else {
+        replace(`/backoffice/candidat/offres/public`, undefined, {
+          shallow: true,
+        });
+      }
+
+      if (user.role === USER_ROLES.ADMIN) {
+        replace(
+          `/backoffice/admin/offres${offerId ? `/${offerId}` : ''}`,
+          undefined,
+          {
+            shallow: true,
+          }
+        );
+      } else if (!hasLoadedDefaultFilters) {
+        if (user.role === USER_ROLES.CANDIDAT) {
+          console.log('will set default');
+          setCandidateDefaultsIfPublicTag(user.id, user.zone);
+        } else if (user.role === USER_ROLES.COACH) {
+          fetchAssociatedCandidate(user.id, user.zone);
+        }
+      } else {
+        setLoading(false);
       }
     }
   }, [
@@ -173,12 +177,12 @@ const Opportunities = () => {
     hasLoadedDefaultFilters,
     isReady,
     offerId,
-    q,
     replace,
     restParams,
-    setCandidateDefaultsIfNoTag,
+    setCandidateDefaultsIfPublicTag,
     tag,
     user,
+    type,
   ]);
 
   let content;
@@ -201,15 +205,14 @@ const Opportunities = () => {
     );
   } else {
     content = (
-      <CandidateOpportunityList
+      <CandidateOpportunities
+        isPublic={tag === 'public'}
         search={search}
         filters={filters}
         resetFilters={resetFilters}
         setSearch={setSearch}
         setFilters={setFilters}
         candidateId={candidateId}
-        tabFilters={tabFilters}
-        setTabFilters={setTabFilters}
       />
     );
   }
