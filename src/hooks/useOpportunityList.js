@@ -119,38 +119,33 @@ export function useCandidateOpportunities(
   setOffers,
   setLoading,
   setHasError,
-  setHasFetchedAll
+  setOtherOffers,
+  offset
 ) {
   return useCallback(
-    async (candidateId, search, type, filters, offset, shouldFetchAll) => {
+    async (candidateId, search, type, filters) => {
       try {
         setLoading(true);
         const {
-          data: { offers },
+          data: { offers, otherOffers },
         } = await Api.getAllCandidateOpportunities(candidateId, {
           params: {
             search,
             type,
-            offset: shouldFetchAll ? 0 : offset,
-            limit: shouldFetchAll ? LIMIT + offset * LIMIT : LIMIT,
+            offset,
             ...filtersToQueryParams(filters),
           },
         });
-        setOffers((prevOffers) => {
-          return prevOffers && offset > 0 && !shouldFetchAll
-            ? [...prevOffers, ...offers]
-            : offers;
-        });
-        if (offers.length < LIMIT) {
-          setHasFetchedAll(true);
-        }
+        setOffers(offers);
+        setOtherOffers(otherOffers);
         setLoading(false);
       } catch (err) {
         console.error(err);
         setLoading(false);
         setHasError(true);
       }
+
     },
-    [setLoading, setOffers, setHasFetchedAll, setHasError]
+    [setOffers, setLoading, setOtherOffers, setHasError]
   );
 }
