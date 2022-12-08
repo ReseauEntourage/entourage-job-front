@@ -57,12 +57,10 @@ const OfferCard = ({
   const background = archived ? 'secondary' : 'default';
 
   return (
-    <div
-      className={`ent-offer${
-        isSelected ? '-selected' : ''
-      } uk-card uk-card-hover uk-card-body ${
+    <a
+      className={`${isSelected ? 'ent-offer-selected' : ''}${
         isExternal && !archived ? 'ent-external-offer' : ''
-      } uk-card-${background}`}
+      } uk-background-${background}`}
     >
       {(isNew || shouldShowRecommandationBadge) && (
         <div
@@ -197,7 +195,7 @@ const OfferCard = ({
           Voir l&rsquo;offre
         </u>
       </div>
-    </div>
+    </a>
   );
 };
 
