@@ -16,12 +16,12 @@ export const DetailsContainer = styled.div`
 
 export const RightContainer = styled.div`
   flex: 3;
-  padding-left: 25px;
+  padding-left: 24px;
 `;
 
 export const BackLink = styled.a`
   display: flex;
   flex-direction: row;
-  margin-bottom: 15px;
+  margin-bottom: 16px;
   color: ${COLORS.darkGray};
 `;
