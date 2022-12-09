@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-
-import { findConstantFromValue, findOfferStatus } from 'src/utils';
+import { findConstantFromValue } from 'src/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { BUSINESS_LINES, OFFER_STATUS } from 'src/constants';
 import ContractLabel from 'src/components/backoffice/candidate/ContractLabel/ContractLabel';
 import ProgressBarStatus from 'src/components/opportunities/OpportunitiesContainer/OpportunitiesList/CandidateOpportunitiesList/CandidateOpportunityItem/ProgressBarStatus';
-import Button from 'src/components/utils/Button';
 import ActionLabels from 'src/components/opportunities/OpportunitiesContainer/OpportunitiesList/CandidateOpportunitiesList/CandidateOpportunityItem/ActionLabels';
+import Api from 'src/api/index.ts';
+import UIkit from 'uikit';
+import EntourageIcon from './entourage.svg';
 import {
   Company,
   Container,
@@ -16,7 +17,6 @@ import {
   DescriptionTitle,
   TopContainer,
   TitleContainer,
-  Icon,
   Title,
   Info,
   DescriptionContainer,
@@ -24,6 +24,7 @@ import {
 } from './CandidateOpportunityItem.styles';
 
 const CandidateOpportunityItem = ({
+  id,
   title,
   company,
   description,
@@ -42,28 +43,46 @@ const CandidateOpportunityItem = ({
   startOfContract,
   businessLines,
 }) => {
+  const [opportunityUser, setOpportunityUser] = useState(opportunityUsers);
+
   const opportunityUsersWithoutDefaultStatus = Array.isArray(opportunityUsers)
     ? opportunityUsers.filter((oppUser) => {
         return oppUser.status !== OFFER_STATUS[0].value || oppUser.recommended;
       })
     : null;
 
-  const specificOpportunityUser =
-    opportunityUsers && !Array.isArray(opportunityUsers)
-      ? opportunityUsers
-      : null;
+  const bookmarkOpportunity = useCallback(async () => {
+    try {
+      const opportunityUser = opportunityUsers;
+      if (!opportunityUser) {
+        const { data: opportunityUser } = await Api.postJoinOpportunity({
+          opportunityId: id,
+          candidateId,
+        });
+      }
+      const {
+        data: { bookmarked: updatedBookmarked },
+      } = await Api.putJoinOpportunity({
+        ...opportunityUser,
+        bookmarked: !bookmarkedState,
+      });
 
-  const shouldShowRecommandationBadge =
-    isPublic && (specificOpportunityUser?.recommended || recommended);
-
-  const background = archived ? 'secondary' : 'default';
+      setBookmarkedState(updatedBookmarked);
+    } catch (err) {
+      console.error(err);
+      UIkit.notification(
+        "Une erreur s'est produite lors de l'ajout de l'offre aux favoris",
+        'danger'
+      );
+    }
+  }, [bookmarkedState, id, opportunityUsers]);
 
   return (
     <Container>
       <TopContainer>
-        <Icon>
+        {/*    <Icon>
           <IconNoSSR name="home" ratio={1.5} />
-        </Icon>
+        </Icon> */}
         <TitleContainer>
           <Title>{title}</Title>
           <Company>
@@ -89,14 +108,47 @@ const CandidateOpportunityItem = ({
           </Info>
         </TitleContainer>
         <ActionContainer>
-          <ActionLabels
-            color="yellow"
-            label="À traiter rapidement"
-            icon={<IconNoSSR name="star" ratio={0.8} />}
-          />
+          {!isPublic && (
+            <ActionLabels
+              disabled
+              fill
+              color="yellow"
+              label="À traiter rapidement"
+              icon={<IconNoSSR name="star" ratio={0.8} />}
+            />
+          )}
+          {isPublic && recommended && (
+            <ActionLabels
+              disabled
+              fill
+              color="primaryOrange"
+              label="Recommandée"
+              icon={
+                <EntourageIcon viewBox="0 0 16 11" height={16} width={11} />
+              }
+            />
+          )}
+          {(isExternal || bookmarked) && (
+            <ActionLabels
+              fill
+              color="primaryOrange"
+              label="Favoris"
+              onClick={bookmarkOpportunity}
+              icon={<IconNoSSR name="heart" ratio={0.8} />}
+            />
+          )}
+          {isPublic && !recommended && !bookmarked && (
+            <ActionLabels
+              hoverAnimation
+              color="primaryOrange"
+              label="Ajouter aux favoris"
+              onClick={bookmarkOpportunity}
+              icon={<IconNoSSR name="heart" ratio={0.8} />}
+            />
+          )}
         </ActionContainer>
       </TopContainer>
-      <ProgressBarStatus status={opportunityUsers.status} />
+      <ProgressBarStatus status={opportunityUsers?.status} />
       <BottomContainer>
         <DescriptionTitle>Description mission</DescriptionTitle>
         <DescriptionContainer>
