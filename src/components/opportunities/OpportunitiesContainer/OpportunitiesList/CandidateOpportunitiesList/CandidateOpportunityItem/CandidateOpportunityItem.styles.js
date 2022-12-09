@@ -27,7 +27,6 @@ export const TitleContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin-left: 14px;
   overflow: hidden;
   white-space: nowrap;
 `;
