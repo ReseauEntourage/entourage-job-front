@@ -23,7 +23,8 @@ export const COLORS = {
   noRed: '#FE2929',
   wheat: '#FFF8F6',
   darkGrayFont: '#6D6C6C',
-  black: '#000',
+  black: '#363636',
+  white: '#FFF',
   yellow: '#F89D34',
   lightBlack: '#363636',
   cvStatus: {

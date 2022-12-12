@@ -5,6 +5,7 @@ import {
 } from 'src/components/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
 import OpportunitiesList from 'src/components/opportunities/OpportunitiesContainer/OpportunitiesList';
 import PropTypes from 'prop-types';
+import { OverlayLoader } from 'src/components/utils/OverlayLoader';
 
 const OpportunitiesContainerDesktop = ({
   list,
@@ -14,13 +15,13 @@ const OpportunitiesContainerDesktop = ({
 }) => {
   return (
     <Container>
-      {list ? (
+      {!list && isLoading && <OverlayLoader />}
+      {!list && !isLoading && noContent}
+      {list && (
         <>
           <OpportunitiesList isLoading={isLoading} list={list} />
           <RightContainer>{details}</RightContainer>
         </>
-      ) : (
-        noContent
       )}
     </Container>
   );
