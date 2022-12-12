@@ -3,7 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { findConstantFromValue } from 'src/utils';
 import { CONTRACTS } from 'src/constants';
-import { Container } from './ContractLabel.styles';
+import { Container } from 'src/components/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel.styles';
+import { InfoText } from 'src/components/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
 
 const ContractLabel = ({ contract, endOfContract, startOfContract }) => {
   if (contract) {
@@ -29,8 +30,10 @@ const ContractLabel = ({ contract, endOfContract, startOfContract }) => {
 
     return (
       <Container>
-        {findConstantFromValue(contract, CONTRACTS)?.label}
-        {dates}
+        <InfoText>
+          {findConstantFromValue(contract, CONTRACTS)?.label}
+          {dates}
+        </InfoText>
       </Container>
     );
   }

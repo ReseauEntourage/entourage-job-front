@@ -3,11 +3,9 @@ import React from 'react';
 import { useOnScroll } from 'src/hooks/utils/useOnScroll';
 import PropTypes from 'prop-types';
 import { useQueryParamsOpportunities } from 'src/components/opportunities/useQueryParamsOpportunities';
+import OfferCard from 'src/components/cards/OfferCard';
+import { useOpportunityId } from 'src/components/opportunities/OpportunitiesContainer/useOpportunityId';
 import { ListItem, Scroll } from '../OpportunitiesList.styles';
-import OfferCard from "src/components/cards/OfferCard";
-import {
-  useOpportunityId
-} from "src/components/opportunities/OpportunitiesContainer/useOpportunityId";
 
 const AdminOpportunitiesList = ({ opportunities }) => {
   const queryParamsOpportunities = useQueryParamsOpportunities();
@@ -29,21 +27,24 @@ const AdminOpportunitiesList = ({ opportunities }) => {
 
   const linkPropsDependingOnMode = selectionModeActivated
     ? {
-      isExternal: true,
-      onClick: () => {
-        selectElement(offer);
-      },
-    }
+        isExternal: true,
+        onClick: () => {
+          selectElement(offer);
+        },
+      }
     : {
-      href: {
-        pathname: `${currentPath}/${offer.id}`,
-        query,
-      },
-    };
+        href: {
+          pathname: `${currentPath}/${offer.id}`,
+          query,
+        },
+      };
 
   const opportunitiesListContent = opportunities.map((opportunity) => {
     return (
-      <ListItem key={opportunity.id} isSelected={opportunityId === opportunity.id}>
+      <ListItem
+        key={opportunity.id}
+        isSelected={opportunityId === opportunity.id}
+      >
         <Link
           href={{
             pathname: `/backoffice/admin/offres/${opportunity.id}`,
@@ -51,26 +52,30 @@ const AdminOpportunitiesList = ({ opportunities }) => {
           }}
           scroll={false}
           shallow
+          passHref
+          legacyBehavior
         >
-          <OfferCard
-            title={opportunity.title}
-            from={opportunity.recruiterName}
-            shortDescription={opportunity.company}
-            date={opportunity.date}
-            archived={opportunity.isArchived}
-            isPublic={opportunity.isPublic}
-            isValidated={opportunity.isValidated}
-            department={opportunity.department}
-            opportunityUsers={opportunityUsers}
-            isExternal={opportunity.isExternal}
-            isNew={
-              role === 'candidateAsAdmin' &&
-              opportunityUsers &&
-              !opportunityUsers.seen
-            }
-            isAdmin
-            isSelected={isSelected}
-          />
+          <LinkCard>
+            <OfferCard
+              title={opportunity.title}
+              from={opportunity.recruiterName}
+              shortDescription={opportunity.company}
+              date={opportunity.date}
+              archived={opportunity.isArchived}
+              isPublic={opportunity.isPublic}
+              isValidated={opportunity.isValidated}
+              department={opportunity.department}
+              opportunityUsers={opportunityUsers}
+              isExternal={opportunity.isExternal}
+              isNew={
+                role === 'candidateAsAdmin' &&
+                opportunityUsers &&
+                !opportunityUsers.seen
+              }
+              isAdmin
+              isSelected={isSelected}
+            />
+          </LinkCard>
         </Link>
       </ListItem>
     );

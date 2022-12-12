@@ -9,18 +9,11 @@ import { Button } from 'src/components/utils';
 import { openModal } from 'src/components/modals/Modal';
 import ModalExternalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
 import { IconNoSSR } from 'src/components/utils/Icon';
-import { ListItem, Scroll } from '../OpportunitiesList.styles';
+import { LinkCard, ListContent, ListItem, Scroll } from "../OpportunitiesList.styles";
 
 const CandidateOpportunitiesList = ({ opportunities, fetchOpportunities }) => {
   const queryParamsOpportunities = useQueryParamsOpportunities();
   const opportunityId = useOpportunityId();
-
-  const { onScroll } = useOnScroll({
-    onScrollBottomEnd: () => {
-      console.log('BOTTOM');
-      // TODO MANAGE PAGINATION
-    },
-  });
 
   const opportunitiesListContent = opportunities.map((opportunity) => {
     return (
@@ -36,46 +29,50 @@ const CandidateOpportunitiesList = ({ opportunities, fetchOpportunities }) => {
           scroll={false}
           shallow
           passHref
+          legacyBehavior
         >
-          <CandidateOpportunityItem
-            title={opportunity.title}
-            company={opportunity.company}
-            description={opportunity.description}
-            date={opportunity.date}
-            isValidated={opportunity.isValidated}
-            isPublic={opportunity.isPublic}
-            opportunityUsers={opportunity.opportunityUsers}
-            businessLines={opportunity.businessLines}
-            contract={opportunity.contract}
-            startOfContract={opportunity.startOfContract}
-            endOfContract={opportunity.endOfContract}
-            isNew={
-              !opportunity.opportunityUsers ||
-              !opportunity.opportunityUsers.seen
-            }
-            isExternal={opportunity.isExternal}
-            archived={
-              opportunity.opportunityUsers &&
-              opportunity.opportunityUsers.archived
-            }
-            bookmarked={
-              opportunity.opportunityUsers &&
-              opportunity.opportunityUsers.bookmarked
-            }
-            recommended={
-              opportunity.opportunityUsers &&
-              opportunity.opportunityUsers.recommended
-            }
-            department={opportunity.department}
-          />
+          <LinkCard>
+            <CandidateOpportunityItem
+              id={opportunity.id}
+              title={opportunity.title}
+              company={opportunity.company}
+              description={opportunity.description}
+              date={opportunity.date}
+              isValidated={opportunity.isValidated}
+              isPublic={opportunity.isPublic}
+              opportunityUsers={opportunity.opportunityUsers}
+              businessLines={opportunity.businessLines}
+              contract={opportunity.contract}
+              startOfContract={opportunity.startOfContract}
+              endOfContract={opportunity.endOfContract}
+              isNew={
+                !opportunity.opportunityUsers ||
+                !opportunity.opportunityUsers.seen
+              }
+              isExternal={opportunity.isExternal}
+              archived={
+                opportunity.opportunityUsers &&
+                opportunity.opportunityUsers.archived
+              }
+              bookmarked={
+                opportunity.opportunityUsers &&
+                opportunity.opportunityUsers.bookmarked
+              }
+              recommended={
+                opportunity.opportunityUsers &&
+                opportunity.opportunityUsers.recommended
+              }
+              department={opportunity.department}
+            />
+          </LinkCard>
         </Link>
       </ListItem>
     );
   });
 
   return (
-    <Scroll onScroll={onScroll}>
-      {opportunitiesListContent}{' '}
+    <ListContent>
+      {opportunitiesListContent}
       <Button
         style="primary"
         color="primaryOrange"
@@ -89,7 +86,7 @@ const CandidateOpportunitiesList = ({ opportunities, fetchOpportunities }) => {
         <IconNoSSR name="plus" ratio="0.8" className="uk-margin-small-right" />
         Ajouter une offre externe
       </Button>
-    </Scroll>
+    </ListContent>
   );
 };
 
