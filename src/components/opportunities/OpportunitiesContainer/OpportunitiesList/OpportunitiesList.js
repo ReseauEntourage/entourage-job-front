@@ -2,10 +2,17 @@ import React from 'react';
 import { OverlayLoader } from 'src/components/utils/OverlayLoader';
 import PropTypes from 'prop-types';
 import { ListContainer } from './OpportunitiesList.styles';
+import { useOnScroll } from "src/hooks/utils/useOnScroll";
 
 const OpportunitiesList = React.memo(({ isLoading, list }) => {
+  const { onScroll } = useOnScroll({
+    onScrollBottomEnd: () => {
+      console.log('BOTTOM');
+      // TODO MANAGE PAGINATION
+    },
+  });
   return (
-    <ListContainer>
+    <ListContainer onScroll={onScroll}>
       {list}
       {isLoading && <OverlayLoader />}
     </ListContainer>

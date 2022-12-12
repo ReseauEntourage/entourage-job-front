@@ -4,8 +4,8 @@ import { COLORS } from 'src/constants/styles';
 export const Container = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 12px;
+  margin-bottom: 12px;
 `;
 
 export const Step = styled.div`
