@@ -3,19 +3,16 @@ import { OverlayLoader } from 'src/components/utils/OverlayLoader';
 import {
   Container,
   ContentContainer,
-  Scroll,
 } from 'src/components/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunityDetails.styles';
 import PropTypes from 'prop-types';
 
 const OpportunityDetails = ({ isLoading, details }) => {
   return (
     <Container>
-      <Scroll>
-        <ContentContainer>
-          {details}
-          {isLoading && <OverlayLoader />}
-        </ContentContainer>
-      </Scroll>
+      <ContentContainer>
+        {details}
+        {isLoading && <OverlayLoader />}
+      </ContentContainer>
     </Container>
   );
 };

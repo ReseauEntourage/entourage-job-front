@@ -4,9 +4,9 @@ import {
   Container,
   LabelContainer,
   IconContainer,
-} from './ActionLabels.styles';
+} from 'src/components/opportunities/OpportunitiesContainer/ActionLabel/ActionLabel.styles';
 
-const ActionLabels = ({
+const ActionLabel = ({
   color,
   label,
   icon,
@@ -17,26 +17,28 @@ const ActionLabels = ({
 }) => {
   return (
     <Container
-      className={hoverAnimation ? '.slide-in-right' : ''}
       fill={fill}
       color={color}
       disabled={disabled}
       hoverAnimation={hoverAnimation}
-      onClick={onClick}
+      onClick={(event) => {
+        event.preventDefault();
+        onClick();
+      }}
     >
-      <LabelContainer>{label}</LabelContainer>
       <IconContainer>{icon}</IconContainer>
+      <LabelContainer className="action-label">{label}</LabelContainer>
     </Container>
   );
 };
-ActionLabels.defaultProps = {
+ActionLabel.defaultProps = {
   disabled: false,
   hoverAnimation: false,
   fill: false,
   onClick: () => {},
 };
 
-ActionLabels.propTypes = {
+ActionLabel.propTypes = {
   color: PropTypes.oneOf(['yellow', 'primaryOrange']).isRequired,
   icon: PropTypes.element.isRequired,
   label: PropTypes.string.isRequired,
@@ -46,4 +48,4 @@ ActionLabels.propTypes = {
   onClick: PropTypes.func,
 };
 
-export default ActionLabels;
+export default ActionLabel;

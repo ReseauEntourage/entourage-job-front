@@ -25,8 +25,21 @@ const CandidateOpportunityDetailsContainer = ({ fetchOpportunities }) => {
     <OpportunityDetails
       details={
         <CandidateOpportunityDetails
-          opportunity={opportunity}
+          id={opportunity.id}
+          department={opportunity.department}
+          title={opportunity.title}
+          description={opportunity.description}
+          company={opportunity.company}
+          companyDescription={opportunity.companyDescription}
+          contract={opportunity.contract}
+          startOfContract={opportunity.startOfContract}
+          endOfContract={opportunity.endOfContract}
+          businessLines={opportunity.businessLines}
+          isPublic={opportunity.isPublic}
+          isExternal={opportunity.isExternal}
+          opportunityUsers={opportunity.opportunityUsers}
           fetchOpportunities={fetchOpportunities}
+          createdAt={opportunity.createdAt}
         />
       }
       isLoading={isLoading}
