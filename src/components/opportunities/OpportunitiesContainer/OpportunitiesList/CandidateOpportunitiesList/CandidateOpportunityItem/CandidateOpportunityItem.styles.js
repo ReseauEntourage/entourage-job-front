@@ -32,29 +32,23 @@ export const TitleContainer = styled.div`
 `;
 
 export const ActionContainer = styled.div`
-  color: ${COLORS.gray};
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
 `;
 
-export const Title = styled.p`
-  margin: 0;
-  font-weight: bold;
+export const Title = styled.div`
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
+export const Company = styled.div`
   text-overflow: ellipsis;
 `;
 
-export const Company = styled.p`
-  margin: 6px 0 0;
-  color: ${COLORS.darkGray};
-  text-overflow: ellipsis;
-`;
-
-export const Info = styled.p`
-  margin: 6px 0 0;
+export const InfoContainer = styled.div`
   display: flex;
   flex-direction: row;
-  color: ${COLORS.darkGray};
   text-overflow: ellipsis;
 `;
 
@@ -63,19 +57,12 @@ export const BottomContainer = styled.div`
   flex-direction: column;
 `;
 
-export const DescriptionTitle = styled.p`
-  margin: 0 0 6px;
-  font-weight: bold;
-`;
-
-export const DescriptionContainer = styled.div`
-  max-height: 3.6em;
-  overflow: hidden;
-  white-space: nowrap;
-`;
-
-export const Description = styled.p`
-  line-height: 1.2em;
-  margin: 0;
+export const Description = styled.div`
   text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+  color: ${COLORS.black};
 `;
