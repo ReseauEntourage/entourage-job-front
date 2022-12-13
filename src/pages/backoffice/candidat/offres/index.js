@@ -110,7 +110,6 @@ const Opportunities = () => {
   );
 
   useEffect(() => {
-    console.log(isReady, 'is ready');
     if (isReady && user) {
       if (type === 'public') {
         setTag('public');
@@ -151,7 +150,6 @@ const Opportunities = () => {
         );
       } else if (!hasLoadedDefaultFilters) {
         if (user.role === USER_ROLES.CANDIDAT) {
-          console.log('will set default');
           setCandidateDefaultsIfPublicTag(user.id, user.zone);
         } else if (user.role === USER_ROLES.COACH) {
           fetchAssociatedCandidate(user.id, user.zone);
@@ -213,7 +211,9 @@ const Opportunities = () => {
           : 'Opportunités du candidat'
       }
     >
-      {opportunityType ? content : null}
+      {/* <Section> */}
+        {content}
+      {/* </Section> */}
     </LayoutBackOffice>
   );
 };

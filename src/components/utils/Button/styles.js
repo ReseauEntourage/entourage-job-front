@@ -100,11 +100,9 @@ export const StyledButton = styled.button`
     font-family: Poppins, sans-serif;
     padding: 6px 15px;
     background-color: white;
-
     &.transparentBG {
       background-color: unset;
     }
-
     border: 0.5px solid
       ${(props) => {
         return COLORS[props.color] || COLORS.primaryOrange;

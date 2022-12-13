@@ -24,6 +24,7 @@ export const COLORS = {
   yesGreen: '#79CC6B',
   noRed: '#FE2929',
   wheat: '#FFF8F6',
+  lightBlack: '#363636',
   white: '#FFF',
   yellow: '#F89D34',
   cvStatus: {
