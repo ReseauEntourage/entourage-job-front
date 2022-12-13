@@ -5,21 +5,21 @@ import {
   SubtitleText,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
 import {
-  StyledContainer,
-  StyledContentContainer,
-  StyledTitleContainer,
+  Container,
+  ContentContainer,
+  TitleContainer,
 } from './OpportunitySection.styles';
 
 const OpportunitySection = ({ title, content }) => {
   return (
-    <StyledContainer>
-      <StyledTitleContainer>
+    <Container>
+      <TitleContainer>
         <SubtitleText>{title}</SubtitleText>
-      </StyledTitleContainer>
-      <StyledContentContainer>
+      </TitleContainer>
+      <ContentContainer>
         <DescriptionText>{content}</DescriptionText>
-      </StyledContentContainer>
-    </StyledContainer>
+      </ContentContainer>
+    </Container>
   );
 };
 OpportunitySection.propTypes = {

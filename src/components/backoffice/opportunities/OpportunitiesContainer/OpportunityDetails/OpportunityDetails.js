@@ -1,19 +1,19 @@
 import React from 'react';
 import { OverlayLoader } from 'src/components/utils/OverlayLoader';
 import {
-  StyledContainer,
-  StyledContentContainer,
+  Container,
+  ContentContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunityDetails.styles';
 import PropTypes from 'prop-types';
 
 const OpportunityDetails = ({ isLoading, details }) => {
   return (
-    <StyledContainer>
-      <StyledContentContainer>
+    <Container>
+      <ContentContainer>
         {details}
         {isLoading && <OverlayLoader />}
-      </StyledContentContainer>
-    </StyledContainer>
+      </ContentContainer>
+    </Container>
   );
 };
 

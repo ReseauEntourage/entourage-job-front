@@ -5,7 +5,7 @@ import {
   colorToHoverColor,
 } from 'src/components/utils/Button/styles';
 
-export const StyledContainer = styled.div`
+export const Container = styled.div`
   font-family: Poppins, sans-serif;
   display: flex;
   flex-direction: row-reverse;
@@ -26,12 +26,6 @@ export const StyledContainer = styled.div`
     return COLORS[color] || COLORS.primaryOrange;
   }} !important;
   path {
-    fill: ${({ fill, color }) => {
-      return fill ? COLORS[color] || COLORS.primaryOrange : 'transparent';
-    }} !important;
-  }
-
-  polygon {
     fill: ${({ fill, color }) => {
       return fill ? COLORS[color] || COLORS.primaryOrange : 'transparent';
     }} !important;
@@ -87,10 +81,10 @@ export const StyledContainer = styled.div`
   }
 `;
 
-export const StyledLabelContainer = styled.div`
+export const LabelContainer = styled.div`
   flex: 1;
 `;
 
-export const StyledIconContainer = styled.div`
+export const IconContainer = styled.div`
   margin-left: 8px;
 `;

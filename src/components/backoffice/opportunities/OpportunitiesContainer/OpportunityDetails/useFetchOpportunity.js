@@ -9,7 +9,6 @@ export function useFetchOpportunity(opportunityId, candidateId) {
   const [opportunity, setOpportunity] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const prevOpportunityId = usePrevious(opportunityId);
-  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     async function fetchOpportunity() {
@@ -31,25 +30,13 @@ export function useFetchOpportunity(opportunityId, candidateId) {
         setOpportunity(fetchedOpportunity);
       }
       setIsLoading(false);
-      setRefresh(false);
     }
 
-    if (refresh || (opportunityId && opportunityId !== prevOpportunityId)) {
+    if (opportunityId && opportunityId !== prevOpportunityId) {
       setIsLoading(true);
       fetchOpportunity();
     }
-  }, [
-    candidateId,
-    opportunity,
-    opportunityId,
-    prevOpportunityId,
-    user.role,
-    refresh,
-  ]);
+  }, [candidateId, opportunity, opportunityId, prevOpportunityId, user.role]);
 
-  function refreshOpportunity() {
-    setRefresh(true);
-  }
-
-  return { opportunity, isLoading, refreshOpportunity };
+  return { opportunity, isLoading };
 }

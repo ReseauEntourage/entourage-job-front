@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useFetchOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/useFetchOpportunity';
-import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
+import { useOpportunityId } from 'src/components/backoffice/opportunities/OpportunitiesContainer/useOpportunityId';
 import PropTypes from 'prop-types';
 import { UserContext } from 'src/components/store/UserProvider';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
@@ -12,7 +12,7 @@ const CandidateOpportunityDetailsContainer = ({ fetchOpportunities }) => {
   const { user } = useContext(UserContext);
   const candidateId = getCandidateIdFromCoachOrCandidate(user);
 
-  const { opportunity, isLoading, refreshOpportunity } = useFetchOpportunity(
+  const { opportunity, isLoading } = useFetchOpportunity(
     opportunityId,
     candidateId
   );
@@ -40,9 +40,6 @@ const CandidateOpportunityDetailsContainer = ({ fetchOpportunities }) => {
           opportunityUsers={opportunity.opportunityUsers}
           fetchOpportunities={fetchOpportunities}
           createdAt={opportunity.createdAt}
-          oppRefreshCallback={() => {
-            refreshOpportunity();
-          }}
         />
       }
       isLoading={isLoading}

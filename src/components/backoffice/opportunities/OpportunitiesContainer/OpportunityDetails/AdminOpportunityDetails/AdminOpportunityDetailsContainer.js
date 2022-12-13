@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFetchOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/useFetchOpportunity';
-import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
+import { useOpportunityId } from 'src/components/backoffice/opportunities/OpportunitiesContainer/useOpportunityId';
 import PropTypes from 'prop-types';
 import OpportunityDetails from '../OpportunityDetails';
 import AdminOpportunityDetails from './AdminOpportunityDetails';

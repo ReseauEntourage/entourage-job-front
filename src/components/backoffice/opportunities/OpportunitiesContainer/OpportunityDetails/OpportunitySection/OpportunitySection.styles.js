@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledContainer = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
   &:not(:last-child) {
@@ -9,12 +9,12 @@ export const StyledContainer = styled.div`
   }
 `;
 
-export const StyledTitleContainer = styled.div`
+export const TitleContainer = styled.div`
   flex: 1;
   flex-direction: column;
   border-bottom: 1px ${COLORS.primaryOrange} solid;
 `;
 
-export const StyledContentContainer = styled.div`
+export const ContentContainer = styled.div`
   margin-top: 12px;
 `;

@@ -1,3 +1,0 @@
-import CandidateOpportunityDetailsContainer from './CandidateOpportunityDetailsContainer';
-
-export default CandidateOpportunityDetailsContainer;

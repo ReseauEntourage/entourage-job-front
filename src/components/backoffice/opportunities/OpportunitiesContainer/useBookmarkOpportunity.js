@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
-import Api from 'src/api/index.ts';
+import { useCallback, useState } from 'react';
+import { useCandidateId } from 'src/components/backoffice/opportunities/OpportunitiesContainer/useCandidateId';
+import Api from 'src/api';
 import UIkit from 'uikit';
 
 export function useBookmarkOpportunity(opportunityId, opportunityUsersProp) {
@@ -8,10 +8,6 @@ export function useBookmarkOpportunity(opportunityId, opportunityUsersProp) {
     useState(opportunityUsersProp);
 
   const candidateId = useCandidateId();
-
-  useEffect(() => {
-    setOpportunityUsers(opportunityUsersProp);
-  }, [opportunityUsersProp]);
 
   const bookmarkOpportunity = useCallback(async () => {
     try {

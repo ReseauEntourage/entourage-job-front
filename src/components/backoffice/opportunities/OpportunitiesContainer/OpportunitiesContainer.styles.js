@@ -1,26 +1,26 @@
 import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledContainer = styled.div`
+export const Container = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
   position: relative;
 `;
 
-export const StyledDetailsContainer = styled.div`
+export const DetailsContainer = styled.div`
   display: flex;
   height: 100%;
   width: 100%;
   flex-direction: column;
 `;
 
-export const StyledRightContainer = styled.div`
-  flex: 5;
-  padding-left: 20px;
+export const RightContainer = styled.div`
+  flex: 3;
+  padding-left: 24px;
 `;
 
-export const StyledBackLink = styled.a`
+export const BackLink = styled.a`
   display: flex;
   flex-direction: row;
   margin-bottom: 16px;
@@ -30,15 +30,12 @@ export const StyledBackLink = styled.a`
   }
 `;
 
-export const StyledTitleText = styled.span`
+export const TitleText = styled.span`
   font-size: 16px;
   line-height: 19px;
   margin-bottom: 8px;
   color: ${COLORS.black};
   font-weight: bold;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 `;
 
 export const SubtitleText = styled.span`

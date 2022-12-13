@@ -1,14 +1,17 @@
+import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
 import React from 'react';
 import PropTypes from 'prop-types';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 
-const OpportunityDetailsBase = ({
+const ModalOfferBase = ({
   isArchived,
   isExternal,
   children,
+  navigateBackToList,
   editingForm,
   loading,
   isEditing,
+  setIsEditing,
 }) => {
   let className = '';
   if (isArchived) {
@@ -18,14 +21,25 @@ const OpportunityDetailsBase = ({
   }
 
   return (
-    <div className={className}>
+    <ModalGeneric
+      fullWidth
+      className={className}
+      onClose={(closeModal) => {
+        if (isEditing) {
+          setIsEditing(false);
+        } else {
+          closeModal();
+          navigateBackToList();
+        }
+      }}
+    >
       {loading && <LoadingScreen />}
       {!loading && (isEditing ? editingForm : children)}
-    </div>
+    </ModalGeneric>
   );
 };
 
-OpportunityDetailsBase.propTypes = {
+ModalOfferBase.propTypes = {
   isArchived: PropTypes.bool.isRequired,
   isExternal: PropTypes.bool.isRequired,
   children: PropTypes.oneOfType([
@@ -35,9 +49,11 @@ OpportunityDetailsBase.propTypes = {
       PropTypes.oneOfType([PropTypes.element, PropTypes.string, PropTypes.bool])
     ),
   ]).isRequired,
+  navigateBackToList: PropTypes.func.isRequired,
   editingForm: PropTypes.element.isRequired,
   loading: PropTypes.bool.isRequired,
   isEditing: PropTypes.bool.isRequired,
+  setIsEditing: PropTypes.func.isRequired,
 };
 
-export default OpportunityDetailsBase;
+export default ModalOfferBase;

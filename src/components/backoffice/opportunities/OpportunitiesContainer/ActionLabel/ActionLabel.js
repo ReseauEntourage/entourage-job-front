@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  StyledContainer,
-  StyledIconContainer,
-  StyledLabelContainer,
+  Container,
+  IconContainer,
+  LabelContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel/ActionLabel.styles';
 
 const ActionLabel = ({
@@ -16,7 +16,7 @@ const ActionLabel = ({
   onClick,
 }) => {
   return (
-    <StyledContainer
+    <Container
       fill={fill}
       color={color}
       disabled={disabled}
@@ -26,14 +26,11 @@ const ActionLabel = ({
         onClick();
       }}
     >
-      <StyledIconContainer>{icon}</StyledIconContainer>
-      <StyledLabelContainer className="action-label">
-        {label}
-      </StyledLabelContainer>
-    </StyledContainer>
+      <IconContainer>{icon}</IconContainer>
+      <LabelContainer className="action-label">{label}</LabelContainer>
+    </Container>
   );
 };
-
 ActionLabel.defaultProps = {
   disabled: false,
   hoverAnimation: false,
