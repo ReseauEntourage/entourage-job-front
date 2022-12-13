@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import React from 'react';
-import { useOnScroll } from 'src/hooks/utils/useOnScroll';
 import PropTypes from 'prop-types';
 import { useQueryParamsOpportunities } from 'src/components/opportunities/useQueryParamsOpportunities';
 import { useOpportunityId } from 'src/components/opportunities/OpportunitiesContainer/useOpportunityId';
