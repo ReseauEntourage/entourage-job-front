@@ -1,48 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {
+  Container,
+  Step,
+} from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/CandidateOpportunitiesList/CandidateOpportunityItem/ProgressBarStatus/ProgressBarStatus.styles';
 import _ from 'lodash';
-import { StyledContainer, StyledStep } from './ProgressBarStatus.styles';
 
-const ProgressBarStatus = ({ status, archived }) => {
-  const abandonned = archived || status === 3 || status === 4;
-  const hired = !archived && status === 2;
-  const noStatus = _.isNil(status);
-
-  let color = 'primaryOrange';
-  if (abandonned) {
-    color = 'noRed';
-  }
-  if (hired) {
-    color = 'yesGreen';
-  }
-
+const ProgressBarStatus = ({ status }) => {
   return (
-    <StyledContainer>
-      <StyledStep activate={!noStatus} color={color} />
-      <StyledStep
-        activate={!noStatus && (status >= 0 || abandonned || hired)}
-        color={color}
-      />
-      <StyledStep
-        activate={!noStatus && (status >= 1 || abandonned || hired)}
-        color={color}
-      />
-      <StyledStep
-        activate={!noStatus && (status >= 2 || abandonned || hired)}
-        color={color}
-      />
-    </StyledContainer>
+    <Container>
+      <Step activate={!_.isNil(status)} />
+      <Step activate={!_.isNil(status) && status >= 0} />
+      <Step activate={!_.isNil(status) && status >= 1} />
+      <Step activate={!_.isNil(status) && status >= 2} />
+    </Container>
   );
 };
 
 ProgressBarStatus.defaultProps = {
   status: null,
-  archived: false,
 };
 
 ProgressBarStatus.propTypes = {
   status: PropTypes.number,
-  archived: PropTypes.bool,
 };
 
 export default ProgressBarStatus;

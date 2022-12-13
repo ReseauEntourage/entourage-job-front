@@ -2,13 +2,9 @@ import Link from 'next/link';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
-import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
+import { useOpportunityId } from 'src/components/backoffice/opportunities/OpportunitiesContainer/useOpportunityId';
 
-import {
-  StyledLinkCard,
-  StyledListContent,
-  StyledListItem,
-} from '../OpportunitiesList.styles';
+import { LinkCard, ListContent, ListItem } from '../OpportunitiesList.styles';
 
 const AdminOpportunitiesList = ({ opportunities }) => {
   const queryParamsOpportunities = useQueryParamsOpportunities();
@@ -37,7 +33,7 @@ const AdminOpportunitiesList = ({ opportunities }) => {
 
   const opportunitiesListContent = opportunities.map((opportunity) => {
     return (
-      <StyledListItem
+      <ListItem
         key={opportunity.id}
         isSelected={opportunityId === opportunity.id}
       >
@@ -51,7 +47,7 @@ const AdminOpportunitiesList = ({ opportunities }) => {
           passHref
           legacyBehavior
         >
-          <StyledLinkCard>
+          <LinkCard>
             {/* <OfferCard
               title={opportunity.title}
               from={opportunity.recruiterName}
@@ -71,13 +67,13 @@ const AdminOpportunitiesList = ({ opportunities }) => {
               isAdmin
               isSelected={isSelected}
             /> */}
-          </StyledLinkCard>
+          </LinkCard>
         </Link>
-      </StyledListItem>
+      </ListItem>
     );
   });
 
-  return <StyledListContent>{opportunitiesListContent}</StyledListContent>;
+  return <ListContent>{opportunitiesListContent}</ListContent>;
 };
 
 AdminOpportunitiesList.propTypes = {

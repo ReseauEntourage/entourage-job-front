@@ -5,27 +5,25 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 import ModalExternalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
 import { openModal } from 'src/components/modals/Modal';
 import {
-  StyledButtonContainer,
-  StyledContainer,
-  StyledDescription,
-  StyledTitle,
+  ButtonContainer,
+  Container,
+  Title,
+  Description,
 } from './NoOpportunities.styles';
 
 const NoOpportunities = ({ status, fetchOpportunities }) => {
   return (
-    <StyledContainer>
-      <StyledTitle>
-        Vous n&apos;avez aucune offre {status.toLowerCase()}.
-      </StyledTitle>
-      <StyledDescription>
+    <Container>
+      <Title>Vous n&apos;avez aucune offre {status.toLowerCase()}.</Title>
+      <Description>
         Vous pouvez chercher des offres qui vous correspondent sur le site
         LinkedOut ou renseigner des offres externes qui vous interessent.
         L’avantage d’ajouter des offres externes, vous permet de centraliser
         toutes vos demarches afin de faciliter le suivi.
-      </StyledDescription>
-      <StyledButtonContainer>
+      </Description>
+      <ButtonContainer>
         <Button
-          style="custom-primary-inverted"
+          style="default"
           color="primaryOrange"
           dataTestId="candidat-add-offer"
           onClick={() => {
@@ -54,8 +52,8 @@ const NoOpportunities = ({ status, fetchOpportunities }) => {
           />
           Trouver des offres LinkedOut
         </Button>
-      </StyledButtonContainer>
-    </StyledContainer>
+      </ButtonContainer>
+    </Container>
   );
 };
 

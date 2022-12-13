@@ -1,20 +1,27 @@
 import React from 'react';
 import { OverlayLoader } from 'src/components/utils/OverlayLoader';
 import PropTypes from 'prop-types';
-import { StyledListContainer } from './OpportunitiesList.styles';
+import { useOnScroll } from 'src/hooks/utils/useOnScroll';
+import { ListContainer } from './OpportunitiesList.styles';
 
 const OpportunitiesList = React.memo(({ isLoading, list }) => {
+  const { onScroll } = useOnScroll({
+    onScrollBottomEnd: () => {
+      console.log('BOTTOM');
+      // TODO MANAGE PAGINATION
+    },
+  });
   return (
-    <StyledListContainer>
+    <ListContainer onScroll={onScroll}>
       {list}
       {isLoading && <OverlayLoader />}
-    </StyledListContainer>
+    </ListContainer>
   );
 });
 
 OpportunitiesList.propTypes = {
   isLoading: PropTypes.bool.isRequired,
-  list: PropTypes.element.isRequired,
+  list: PropTypes.arrayOf(PropTypes.element).isRequired,
 };
 
 export default OpportunitiesList;

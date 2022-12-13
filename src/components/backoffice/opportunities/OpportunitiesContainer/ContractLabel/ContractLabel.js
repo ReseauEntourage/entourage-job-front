@@ -3,8 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { findConstantFromValue } from 'src/utils';
 import { CONTRACTS } from 'src/constants';
-import { Container } from 'src/components/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel.styles';
-import { InfoText } from 'src/components/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
+import { Container } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel.styles';
+import { InfoText } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
 
 const ContractLabel = ({ contract, endOfContract, startOfContract }) => {
   if (contract) {

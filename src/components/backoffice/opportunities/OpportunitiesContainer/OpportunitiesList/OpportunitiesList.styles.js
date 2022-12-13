@@ -1,20 +1,18 @@
 import styled from 'styled-components';
 import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 
-export const StyledListContainer = styled.div`
+export const ListContainer = styled.div`
   overflow: hidden;
   position: relative;
-  flex: 4;
+  flex: 2;
   @media screen and (min-width: ${BREAKPOINTS.desktop}px) {
     width: 100%;
   }
 `;
 
-export const StyledLinkCard = styled.a`
-  padding: 14px;
-`;
+export const LinkCard = styled.a``;
 
-export const StyledListItem = styled.div`
+export const ListItem = styled.div`
   border: 1px solid
     ${({ isSelected }) => {
       return isSelected ? COLORS.primaryOrange : COLORS.lightgray;
@@ -25,12 +23,13 @@ export const StyledListItem = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
+  padding: 20px;
   &:not(:last-child) {
     margin-bottom: 20px;
   }
 `;
 
-export const StyledListContent = styled.div`
+export const ListContent = styled.div`
   height: 100%;
   position: relative;
 `;

@@ -22,7 +22,7 @@ import { openModal } from 'src/components/modals/Modal';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { OfferInfoContainer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferInfoContainer';
 import { List } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/NavList';
-import OpportunityDetailsBase from 'src/components/modals/Modal/ModalGeneric/OfferModals/OpportunityDetailsBase';
+import ModalOfferBase from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOfferBase';
 import useModalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/useModalOffer';
 import OfferContent from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferContent';
 import UIkit from 'uikit';
@@ -95,13 +95,12 @@ PrivateOfferSentence.propTypes = {
   lastName: PropTypes.string.isRequired,
 };
 
-const ModalOffer = ({ currentOffer, onOfferUpdated }) => {
+const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
   const {
     replace,
     pathname,
     query: { updateStatus, ...restQuery },
   } = useRouter();
-
   const prevUpdateStatus = usePrevious(updateStatus);
 
   const { user } = useContext(UserContext);
@@ -220,11 +219,13 @@ const ModalOffer = ({ currentOffer, onOfferUpdated }) => {
 
   // Modal
   return (
-    <OpportunityDetailsBase
+    <ModalOfferBase
       isExternal={offer.isExternal}
       isArchived={archived}
+      navigateBackToList={navigateBackToList}
       loading={loading}
       isEditing={isEditing}
+      setIsEditing={setIsEditing}
       editingForm={
         <div>
           <h3>Modification de l&apos;offre d&apos;emploi</h3>
@@ -597,7 +598,7 @@ const ModalOffer = ({ currentOffer, onOfferUpdated }) => {
           </div>
         )}
       </div>
-    </OpportunityDetailsBase>
+    </ModalOfferBase>
   );
 };
 
@@ -641,6 +642,7 @@ ModalOffer.propTypes = {
     workingHours: PropTypes.string,
   }),
   onOfferUpdated: PropTypes.func.isRequired,
+  navigateBackToList: PropTypes.func.isRequired,
 };
 
 ModalOffer.defaultProps = {

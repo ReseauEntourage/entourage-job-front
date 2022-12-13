@@ -1,17 +1,12 @@
 import styled from 'styled-components';
-// import { COLORS } from 'src/constants/styles';
-import { COLORS } from '../../../constants/styles';
+import { COLORS } from 'src/constants/styles';
 
 export const colorToHoverBackgroundColor = {
   primaryOrange: COLORS.hoverOrange,
-  darkGrayFont: 'white',
-  white: 'transparent',
 };
 
 export const colorToHoverColor = {
   primaryOrange: COLORS.primaryOrange,
-  darkGrayFont: COLORS.primaryOrange,
-  white: COLORS.primaryOrange,
 };
 
 export const StyledButton = styled.button`
@@ -41,67 +36,19 @@ export const StyledButton = styled.button`
   &.uk-button-default {
     border: 0.5px solid
       ${(props) => {
-        return COLORS[props.color] || COLORS.gray;
+        return COLORS[props.color];
       }};
     color: ${(props) => {
-      return COLORS[props.color] || COLORS.white;
+      return COLORS[props.color];
     }} !important;
+
     &:hover {
       background-color: ${(props) => {
-        return colorToHoverBackgroundColor[props.color]
+        return colorToHoverBackgroundColor[props.color];
       }};
       color: ${(props) => {
-        return colorToHoverColor[props.color] || COLORS.darkGray;
+        return colorToHoverColor[props.color];
       }} !important;
-    }
-  }
-
-  &.custom-primary {
-    padding: 8px 20px;
-    border: 1px solid
-      ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
-      }};
-    color: white;
-    background-color: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryOrange;
-    }} !important;
-    border-radius: 5px;
-    background-color: white;
-
-    &:hover {
-      cursor: pointer;
-      background-color: white !important;
-      color: ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
-      }} !important;
-    }
-  }
-
-  &.custom-primary-inverted {
-    padding: 8px 20px;
-    border: 1px solid
-      ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
-      }};
-    color: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryOrange;
-    }} !important;
-    border-radius: 5px;
-    background-color: transparent;
-
-    &:hover {
-      cursor: pointer;
-      background-color: ${(props) => {
-        return colorToHoverBackgroundColor[props.color] || COLORS.primaryOrange;
-      }};
-      color: ${(props) => {
-        return colorToHoverColor[props.color] || COLORS.primaryOrange;
-      }} !important;
-      border: 1px solid
-        ${(props) => {
-          return colorToHoverColor[props.color] || COLORS.primaryOrange;
-        }};
     }
   }
 
@@ -109,9 +56,11 @@ export const StyledButton = styled.button`
     font-family: Poppins, sans-serif;
     padding: 6px 15px;
     background-color: white;
+
     &.transparentBG {
       background-color: unset;
     }
+
     border: 0.5px solid
       ${(props) => {
         return COLORS[props.color] || COLORS.primaryOrange;

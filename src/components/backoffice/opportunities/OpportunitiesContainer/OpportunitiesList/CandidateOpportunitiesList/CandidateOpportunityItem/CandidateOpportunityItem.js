@@ -12,13 +12,13 @@ import {
   SubtitleText,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
 import {
-  StyledActionContainer,
-  StyledBottomContainer,
-  StyledContainer,
-  StyledDescription,
-  StyledInfoContainer,
-  StyledTitleContainer,
-  StyledTopContainer,
+  ActionContainer,
+  BottomContainer,
+  Container,
+  Description,
+  InfoContainer,
+  TitleContainer,
+  TopContainer,
 } from './CandidateOpportunityItem.styles';
 
 const CandidateOpportunityItem = ({
@@ -41,14 +41,14 @@ const CandidateOpportunityItem = ({
   );
 
   return (
-    <StyledContainer>
-      <StyledTopContainer>
+    <Container>
+      <TopContainer>
         {/*
           <Icon>
             <IconNoSSR name="home" ratio={1.5} />
           </Icon>
         */}
-        <StyledTitleContainer>
+        <TitleContainer>
           <SubtitleText>{title}</SubtitleText>
           <InfoText>
             {company}
@@ -64,17 +64,17 @@ const CandidateOpportunityItem = ({
             )}
           </InfoText>
           <InfoText>
-            <StyledInfoContainer>
+            <InfoContainer>
               <ContractLabel
                 contract={contract}
                 endOfContract={endOfContract}
                 startOfContract={startOfContract}
               />
               &nbsp;-&nbsp;{department}
-            </StyledInfoContainer>
+            </InfoContainer>
           </InfoText>
-        </StyledTitleContainer>
-        <StyledActionContainer>
+        </TitleContainer>
+        <ActionContainer>
           <ActionLabels
             isBookmarked={!!opportunityUsers?.bookmarked}
             isRecommended={!!opportunityUsers?.recommended}
@@ -82,19 +82,16 @@ const CandidateOpportunityItem = ({
             isExternal={isExternal}
             bookmarkOpportunity={bookmarkOpportunity}
           />
-        </StyledActionContainer>
-      </StyledTopContainer>
-      <ProgressBarStatus
-        status={opportunityUsers?.status}
-        archived={opportunityUsers?.archived}
-      />
-      <StyledBottomContainer>
+        </ActionContainer>
+      </TopContainer>
+      <ProgressBarStatus status={opportunityUsers?.status} />
+      <BottomContainer>
         <SubtitleText>Description mission</SubtitleText>
-        <StyledDescription>
+        <Description>
           <DescriptionText>{description}</DescriptionText>
-        </StyledDescription>
-      </StyledBottomContainer>
-    </StyledContainer>
+        </Description>
+      </BottomContainer>
+    </Container>
   );
 };
 

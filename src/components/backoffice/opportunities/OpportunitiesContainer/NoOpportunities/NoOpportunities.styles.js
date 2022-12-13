@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledContainer = styled.div`
+export const Container = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
@@ -10,7 +10,7 @@ export const StyledContainer = styled.div`
   text-align: center;
 `;
 
-export const StyledButtonContainer = styled.div`
+export const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -22,11 +22,11 @@ export const StyledButtonContainer = styled.div`
   }
 `;
 
-export const StyledTitle = styled.h4`
+export const Title = styled.h4`
   color: ${COLORS.darkGray};
   margin: 0;
 `;
 
-export const StyledDescription = styled.p`
+export const Description = styled.p`
   margin-bottom: 40px;
 `;
