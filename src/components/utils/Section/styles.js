@@ -15,15 +15,15 @@ export const StyledSection = styled.section`
     padding-top: 24px;
     padding-bottom: 24px;
     @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
-        padding-bottom: 12px;
+      padding-bottom: 12px;
     }
-}
-&.custom-primary {
+  }
+  &.custom-primary {
     padding-top: 24px;
     padding-bottom: 24px;
     @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
-        padding-top: 12px;
-        padding-bottom: 12px;
+      padding-top: 12px;
+      padding-bottom: 12px;
     }
   }
   &.custom-mobile-darkBG {
@@ -35,9 +35,9 @@ export const StyledSection = styled.section`
   }
   &.custom-mobile-fixed {
     @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
-        position: sticky;
-        top: 80px;
-        left: 0;
+      position: sticky;
+      top: 80px;
+      left: 0;
     }
   }
 `;

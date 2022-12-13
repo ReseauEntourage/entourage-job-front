@@ -19,6 +19,7 @@ import {
   candidateSearchFilters,
   mutatedSchema,
 } from 'src/components/backoffice/candidate/CandidateOpportunities/utils';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 
 const CandidateOpportunities = ({
   isPublic,
@@ -49,9 +50,13 @@ const CandidateOpportunities = ({
     setOtherOffers
   );
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     const type = isPublic ? 'public' : '';
-    fetchData(candidateId, search, type, filters, offset);
+    console.log(filters);
+    if ((!isPublic && filters.status.length) || isPublic) {
+      fetchData(candidateId, search, type, filters, offset);
+    }
+    console.log(type);
   }, [candidateId, fetchData, filters, isPublic, search, offset]);
 
   return (
