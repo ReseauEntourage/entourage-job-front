@@ -1,15 +1,11 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { ADMIN_ZONES, DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import { useFilters, useTabFilters } from 'src/hooks';
+import { useFilters } from 'src/hooks';
 import { UserContext } from 'src/components/store/UserProvider';
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
 import { Section } from 'src/components/utils';
 import Api from 'src/api/index.ts';
-import {
-  OFFER_CANDIDATE_FILTERS_DATA,
-  OPPORTUNITY_FILTERS_DATA,
-  USER_ROLES,
-} from 'src/constants';
+import { OPPORTUNITY_FILTERS_DATA, USER_ROLES } from 'src/constants';
 import OpportunityError from 'src/components/opportunities/OpportunityError';
 import { useRouter } from 'next/router';
 import CandidateOpportunities from 'src/components/backoffice/candidate/CandidateOpportunities';
@@ -68,16 +64,6 @@ const Opportunities = () => {
             });
           }
 
-          /*
-            if (data.businessLines && data.businessLines.length > 0) {
-              params.businessLines = _.uniq(
-                data.businessLines.map((businessLine) => {
-                  return businessLine.name;
-                })
-              );
-            }
-          */
-
           await replace(
             {
               pathname: `/backoffice/candidat/offres/public${
@@ -122,7 +108,6 @@ const Opportunities = () => {
   );
 
   useEffect(() => {
-    console.log(isReady, 'is ready');
     if (isReady && user) {
       if (type === 'public') {
         setTag('public');
@@ -163,7 +148,6 @@ const Opportunities = () => {
         );
       } else if (!hasLoadedDefaultFilters) {
         if (user.role === USER_ROLES.CANDIDAT) {
-          console.log('will set default');
           setCandidateDefaultsIfPublicTag(user.id, user.zone);
         } else if (user.role === USER_ROLES.COACH) {
           fetchAssociatedCandidate(user.id, user.zone);
@@ -225,7 +209,9 @@ const Opportunities = () => {
           : 'Opportunités du candidat'
       }
     >
-      <Section>{content}</Section>
+      {/* <Section> */}
+        {content}
+      {/* </Section> */}
     </LayoutBackOffice>
   );
 };
