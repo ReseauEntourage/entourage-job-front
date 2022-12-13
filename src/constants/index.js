@@ -167,12 +167,6 @@ export const AMBITIONS_PREFIXES = [
   },
 ];
 
-export const OFFER_CANDIDATE_FILTERS_DATA = [
-  { tag: 'private', title: 'Offres personnelles', active: true },
-  { tag: 'public', title: 'Offres générales' },
-  { tag: 'archived', title: 'Offres archivées' },
-];
-
 export const OFFER_ADMIN_FILTERS_DATA = [
   { tag: 'pending', title: 'Offres à valider' },
   { tag: 'validated', title: 'Offres publiées', active: true },

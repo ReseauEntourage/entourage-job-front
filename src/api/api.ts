@@ -250,6 +250,12 @@ class APIHandler {
     return this.get(`/opportunity/${opportunityId}`);
   }
 
+  getOpportunitiesTabCountByCandidate(
+    candidateId: string
+  ): Promise<AxiosResponse> {
+    return this.get(`/opportunity/candidate/tabCount/${candidateId}`);
+  }
+
   // post
 
   postOpportunity(params: Opportunity): Promise<AxiosResponse> {
