@@ -13,6 +13,7 @@ const HeaderBackoffice = ({
   children,
   childrenBottom,
   page,
+  noSeparator,
 }) => {
   const { user } = useContext(UserContext);
   const router = useRouter();
@@ -41,7 +42,7 @@ const HeaderBackoffice = ({
           </p>
         </div>
       ) : (
-        <div className="simple-separator" />
+        !noSeparator && <div className="simple-separator" />
       )}
     </StyledHeaderBackOffice>
   );
@@ -55,10 +56,12 @@ HeaderBackoffice.propTypes = {
   ]),
   childrenBottom: PropTypes.bool,
   page: PropTypes.oneOf(['', ...BACKOFFICE_PAGES]),
+  noSeparator: PropTypes.bool,
 };
 HeaderBackoffice.defaultProps = {
   children: undefined,
   childrenBottom: false,
   page: '',
+  noSeparator: false,
 };
 export default HeaderBackoffice;

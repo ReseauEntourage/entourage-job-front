@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { UIKIT_SECTION_SIZES, UIKIT_STYLES } from 'src/components/variables';
+import { StyledSection } from 'src/components/utils/Section/styles';
 
 const Section = ({
   style,
@@ -11,16 +12,25 @@ const Section = ({
   className,
   preserveColor,
 }) => {
+  let custom = 0;
   let classBuffer = 'uk-section';
-  if (style) classBuffer += ` uk-section-${style}`;
-  if (size) classBuffer += ` uk-section-${size}`;
-  if (className) classBuffer += ` ${className}`;
-  if (preserveColor) classBuffer += ` uk-preserve-color`;
-
   let classBuffer2 = 'uk-container';
-  if (container) classBuffer2 += ` uk-container-${container}`;
+  if (className?.includes('custom')) {
+    custom = 1;
+  } else {
+    if (style) classBuffer += ` uk-section-${style}`;
+    if (size) classBuffer += ` uk-section-${size}`;
+    if (className) classBuffer += ` ${className}`;
+    if (preserveColor) classBuffer += ` uk-preserve-color`;
 
-  return (
+    if (container) classBuffer2 += ` uk-container-${container}`;
+  }
+
+  return custom ? (
+    <StyledSection className={className}>
+      <div className="section-container">{children}</div>
+    </StyledSection>
+  ) : (
     <div className={classBuffer} id={id}>
       <div className={classBuffer2}>{children}</div>
     </div>
