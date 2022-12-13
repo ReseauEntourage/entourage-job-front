@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import CandidateOpportunities from 'src/components/backoffice/candidate/CandidateOpportunities';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { GA_TAGS } from 'src/constants/tags';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 
 // filters for the query
 const candidateQueryFilters = OPPORTUNITY_FILTERS_DATA.slice(1);
@@ -29,8 +30,6 @@ const Opportunities = () => {
   const [hasLoadedDefaultFilters, setHasLoadedDefaultFilters] = useState(false);
 
   const [candidateId, setCandidateId] = useState();
-
-  const [tag, setTag] = useState();
 
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
     candidateQueryFilters,
@@ -80,7 +79,7 @@ const Opportunities = () => {
         } catch (e) {
           setHasError(true);
         }
-      } else if (opportunityType === 'private') {
+      } else if (type === 'private') {
         setCandidateId(candId);
         setHasLoadedDefaultFilters(true);
       }
@@ -105,18 +104,9 @@ const Opportunities = () => {
     [setCandidateDefaultsIfPublicTag]
   );
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     if (isReady && user) {
-      if (type === 'public') {
-        setTag('public');
-        if (
-          hasLoadedDefaultFilters &&
-          !restParams.department &&
-          !restParams.businessLines
-        ) {
-          setHasLoadedDefaultFilters(false);
-        }
-      } else if (type === 'private') {
+      if (type === 'private') {
         if (!restParams.status) {
           replace(
             {
@@ -129,8 +119,8 @@ const Opportunities = () => {
             }
           );
         }
-        setTag('');
-      } else {
+      } else if (type !== 'public') {
+        setHasLoadedDefaultFilters(false);
         replace(`/backoffice/candidat/offres/public`, undefined, {
           shallow: true,
         });
@@ -162,7 +152,6 @@ const Opportunities = () => {
     replace,
     restParams,
     setCandidateDefaultsIfPublicTag,
-    tag,
     user,
     type,
   ]);
@@ -188,7 +177,7 @@ const Opportunities = () => {
   } else {
     content = (
       <CandidateOpportunities
-        isPublic={tag === 'public'}
+        isPublic={type === 'public'}
         search={search}
         filters={filters}
         resetFilters={resetFilters}
@@ -207,9 +196,7 @@ const Opportunities = () => {
           : 'Opportunités du candidat'
       }
     >
-      {/* <Section> */}
-        {content}
-      {/* </Section> */}
+      {type ? content : null}
     </LayoutBackOffice>
   );
 };
