@@ -23,19 +23,15 @@ import {
   OFFER_STATUS,
 } from 'src/constants';
 import ModalOfferInfo from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/ModalOfferInfo';
+import { useModalContext } from 'src/components/modals/Modal';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import formEditExternalOpportunitySchema from 'src/components/forms/schema/formEditExternalOpportunity';
 import { List } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/NavList';
 import { OfferInfoContainer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferInfoContainer';
-import OpportunityDetailsBase from 'src/components/modals/Modal/ModalGeneric/OfferModals/OpportunityDetailsBase';
+import ModalOfferBase from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOfferBase';
 import useModalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/useModalOffer';
 import OfferContent from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferContent';
 import UIkit from 'uikit';
-import moment from 'moment/moment';
-import { useRouter } from 'next/router';
-import {
-  useQueryParamsOpportunities
-} from "src/components/opportunities/useQueryParamsOpportunities";
 
 const getCandidatesToShowInInput = (offer) => {
   if (offer.opportunityUsers && offer.opportunityUsers.length > 0) {
@@ -61,11 +57,13 @@ const getCandidatesToShowInInput = (offer) => {
   return undefined;
 };
 
-const ModalOfferAdmin = ({ currentOffer, onOfferUpdated }) => {
-  const { push } = useRouter();
-
-  const queryParamsOpportunities = useQueryParamsOpportunities();
-
+const ModalOfferAdmin = ({
+  currentOffer,
+  onOfferUpdated,
+  duplicateOffer,
+  navigateBackToList,
+}) => {
+  const { onClose } = useModalContext();
   const { loading, setLoading, isEditing, setIsEditing, offer, setOffer } =
     useModalOffer(currentOffer);
 
@@ -230,39 +228,6 @@ const ModalOfferAdmin = ({ currentOffer, onOfferUpdated }) => {
     }
   };
 
-  const duplicateOffer = async () => {
-    const {
-      id,
-      opportunityUsers,
-      createdBy,
-      createdAt,
-      updatedAt,
-      ...restOpportunity
-    } = offer;
-    const { data } = await Api.postOpportunity({
-      ...restOpportunity,
-      title: `${restOpportunity.title} (copie)`,
-      isAdmin: true,
-      isValidated: false,
-      date: moment().toISOString(),
-      isCopy: true,
-    });
-
-    UIkit.notification("L'offre a bien été dupliquée", 'success');
-    await push(
-      {
-        pathname: `${currentPath}/${data.id}`,
-        query: queryParamsOpportunities,
-      },
-      undefined,
-      {
-        shallow: true,
-        scroll: false,
-      }
-    );
-    await onOfferUpdated();
-  };
-
   const getUsersToShow = () => {
     if (Array.isArray(offer.opportunityUsers)) {
       if (offer.isPublic) {
@@ -281,9 +246,10 @@ const ModalOfferAdmin = ({ currentOffer, onOfferUpdated }) => {
 
   // Modal
   return (
-    <OpportunityDetailsBase
+    <ModalOfferBase
       isExternal={offer.isExternal}
       isArchived={offer.isArchived}
+      navigateBackToList={navigateBackToList}
       loading={loading}
       isEditing={isEditing}
       setIsEditing={setIsEditing}
@@ -412,8 +378,8 @@ const ModalOfferAdmin = ({ currentOffer, onOfferUpdated }) => {
                 <ButtonIcon
                   name="copy"
                   tooltip="Dupliquer l'offre"
-                  onClick={async () => {
-                    await duplicateOffer();
+                  onClick={() => {
+                    duplicateOffer(onClose);
                   }}
                 />
               )}
@@ -661,7 +627,7 @@ const ModalOfferAdmin = ({ currentOffer, onOfferUpdated }) => {
           </div>
         )}
       </div>
-    </OpportunityDetailsBase>
+    </ModalOfferBase>
   );
 };
 ModalOfferAdmin.propTypes = {
@@ -712,6 +678,8 @@ ModalOfferAdmin.propTypes = {
     workingHours: PropTypes.string,
   }),
   onOfferUpdated: PropTypes.func.isRequired,
+  duplicateOffer: PropTypes.func.isRequired,
+  navigateBackToList: PropTypes.func.isRequired,
 };
 
 ModalOfferAdmin.defaultProps = {
