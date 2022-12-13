@@ -1,22 +1,14 @@
 import Link from 'next/link';
 import React from 'react';
-import { useOnScroll } from 'src/hooks/utils/useOnScroll';
 import PropTypes from 'prop-types';
 import { useQueryParamsOpportunities } from 'src/components/opportunities/useQueryParamsOpportunities';
 import OfferCard from 'src/components/cards/OfferCard';
 import { useOpportunityId } from 'src/components/opportunities/OpportunitiesContainer/useOpportunityId';
-import { ListItem, Scroll } from '../OpportunitiesList.styles';
+import { LinkCard, ListContent, ListItem } from '../OpportunitiesList.styles';
 
 const AdminOpportunitiesList = ({ opportunities }) => {
   const queryParamsOpportunities = useQueryParamsOpportunities();
   const opportunityId = useOpportunityId();
-
-  const { onScroll } = useOnScroll({
-    onScrollBottomEnd: () => {
-      console.log('BOTTOM');
-      // TODO MANAGE PAGINATION
-    },
-  });
 
   const opportunityUsers =
     role === 'candidateAsAdmin'
@@ -81,7 +73,7 @@ const AdminOpportunitiesList = ({ opportunities }) => {
     );
   });
 
-  return <Scroll onScroll={onScroll}>{opportunitiesListContent}</Scroll>;
+  return <ListContent>{opportunitiesListContent}</ListContent>;
 };
 
 AdminOpportunitiesList.propTypes = {
