@@ -48,7 +48,7 @@ const SearchBar = ({
   const hasFilters = numberOfFilters > 0 || search;
 
   return (
-    <div className="uk-flex uk-flex-column uk-flex-middle uk-margin-small-bottom">
+    <div className="uk-flex uk-flex-column uk-flex-middle">
       <div className="uk-width-expand ent-search-bar">
         <form className="uk-search uk-search-navbar uk-width-expand">
           <input
@@ -88,7 +88,7 @@ const SearchBar = ({
         filters={filters}
         setFilters={setFilters}
       />
-      <div className="uk-width-expand uk-padding-small uk-padding-remove-vertical uk-flex uk-flex-between@m uk-margin-top">
+      <div className="uk-width-expand uk-padding-remove-vertical uk-flex uk-flex-between@m uk-margin-top">
         <FiltersCheckboxes
           filterData={filtersConstants}
           filters={filters}

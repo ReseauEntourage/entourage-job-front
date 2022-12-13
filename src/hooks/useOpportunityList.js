@@ -117,11 +117,10 @@ export function useCandidateOpportunities(
   setOffers,
   setLoading,
   setHasError,
-  setOtherOffers,
-  offset
+  setOtherOffers
 ) {
   return useCallback(
-    async (candidateId, search, type, filters) => {
+    async (candidateId, search, type, filters, offset) => {
       try {
         setLoading(true);
         const {
@@ -142,7 +141,6 @@ export function useCandidateOpportunities(
         setLoading(false);
         setHasError(true);
       }
-
     },
     [setOffers, setLoading, setOtherOffers, setHasError]
   );
