@@ -34,14 +34,14 @@ export const StyledButton = styled.button`
         return COLORS[props.color] || COLORS.gray;
       }};
     color: ${(props) => {
-      return COLORS[props.color] || COLORS.black;
+      return COLORS[props.color] || COLORS.white;
     }} !important;
     &:hover {
       background-color: ${(props) => {
-        return colorToHoverBackgroundColor[props.color];
+        return colorToHoverBackgroundColor[props.color]
       }};
       color: ${(props) => {
-        return colorToHoverColor[props.color];
+        return colorToHoverColor[props.color] || COLORS.darkGray;
       }} !important;
     }
   }

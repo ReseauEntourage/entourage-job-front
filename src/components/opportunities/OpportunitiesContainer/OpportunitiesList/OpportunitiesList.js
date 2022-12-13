@@ -1,8 +1,8 @@
 import React from 'react';
 import { OverlayLoader } from 'src/components/utils/OverlayLoader';
 import PropTypes from 'prop-types';
+import { useOnScroll } from 'src/hooks/utils/useOnScroll';
 import { ListContainer } from './OpportunitiesList.styles';
-import { useOnScroll } from "src/hooks/utils/useOnScroll";
 
 const OpportunitiesList = React.memo(({ isLoading, list }) => {
   const { onScroll } = useOnScroll({
