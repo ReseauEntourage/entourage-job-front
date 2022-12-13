@@ -4,7 +4,7 @@ import EntourageIcon from 'src/components/opportunities/OpportunitiesContainer/O
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ActionLabels = ({
+const ActionLabelContainer = ({
   isPublic,
   isRecommended,
   isBookmarked,
@@ -62,7 +62,7 @@ const ActionLabels = ({
   );
 };
 
-ActionLabels.propTypes = {
+ActionLabelContainer.propTypes = {
   isPublic: PropTypes.bool.isRequired,
   isRecommended: PropTypes.bool.isRequired,
   isBookmarked: PropTypes.bool.isRequired,
@@ -70,4 +70,4 @@ ActionLabels.propTypes = {
   bookmarkOpportunity: PropTypes.func.isRequired,
 };
 
-export default ActionLabels;
+export default ActionLabelContainer;
