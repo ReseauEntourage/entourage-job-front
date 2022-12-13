@@ -18,7 +18,7 @@ import UserInformationCard from 'src/components/cards/UserInformationCard';
 import { mutateFormSchema } from 'src/utils';
 import _ from 'lodash';
 import CandidateEmployedToggle from 'src/components/backoffice/candidate/CandidateEmployedToggle';
-import ContractLabel from 'src/components/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
+import ContractLabel from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
 import PasswordCriterias from 'src/components/PasswordCriterias';

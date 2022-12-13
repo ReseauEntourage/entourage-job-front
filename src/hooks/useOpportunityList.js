@@ -115,9 +115,10 @@ export function useOpportunityList(
 
 export function useCandidateOpportunities(
   setOffers,
+  setOtherOffers,
+  setNumberOfResults,
   setLoading,
-  setHasError,
-  setOtherOffers
+  setHasError
 ) {
   return useCallback(
     async (candidateId, search, type, filters, offset) => {
