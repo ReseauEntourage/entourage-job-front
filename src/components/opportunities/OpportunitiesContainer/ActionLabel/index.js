@@ -1,3 +1,3 @@
-import ActionLabels from 'src/components/opportunities/OpportunitiesContainer/ActionLabel/ActionLabels';
+import ActionLabelContainer from 'src/components/opportunities/OpportunitiesContainer/ActionLabel/ActionLabelContainer';
 
-export default ActionLabels;
+export default ActionLabelContainer;
