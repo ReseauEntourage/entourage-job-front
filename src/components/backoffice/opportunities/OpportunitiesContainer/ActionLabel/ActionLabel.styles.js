@@ -31,6 +31,12 @@ export const Container = styled.div`
     }} !important;
   }
 
+  polygon {
+    fill: ${({ fill, color }) => {
+      return fill ? COLORS[color] || COLORS.primaryOrange : 'transparent';
+    }} !important;
+  }
+
   .action-label {
     ${({ disabled, hoverAnimation }) => {
       return (
