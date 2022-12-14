@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS, BREAKPOINTS } from 'src/constants/styles';
+import { BREAKPOINTS, COLORS, HEIGHTS } from 'src/constants/styles';
 
 export const StyledSection = styled.section`
   > .section-container {
@@ -12,31 +12,41 @@ export const StyledSection = styled.section`
     padding-right: 15px;
   }
   &.custom-header {
-    padding-top: 24px;
-    padding-bottom: 24px;
+    padding-top: ${HEIGHTS.SECTION_PADDING}px;
+    padding-bottom: ${HEIGHTS.SECTION_PADDING}px;
     @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
-      padding-bottom: 12px;
+      padding-top: ${HEIGHTS.SECTION_PADDING_MOBILE}px;
+      padding-bottom: ${HEIGHTS.SECTION_PADDING_MOBILE}px;
     }
   }
   &.custom-primary {
-    padding-top: 24px;
-    padding-bottom: 24px;
+    padding-top: ${HEIGHTS.SECTION_PADDING}px;
+    padding-bottom: ${HEIGHTS.SECTION_PADDING}px;
     @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
-      padding-top: 12px;
-      padding-bottom: 12px;
+      padding-top: ${HEIGHTS.SECTION_PADDING_MOBILE}px;
+      padding-bottom: ${HEIGHTS.SECTION_PADDING_MOBILE}px;
     }
   }
   &.custom-mobile-darkBG {
-    padding-top: 24px;
-    padding-bottom: 24px;
+    padding-top: ${HEIGHTS.SECTION_PADDING}px;
+    padding-bottom: ${HEIGHTS.SECTION_PADDING}px;
     @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
       background-color: ${COLORS.lightBlack};
     }
   }
-  &.custom-mobile-fixed {
+  &.custom-fixed {
+    position: sticky;
+    background-color: ${COLORS.white} !important;
+    z-index: 1;
+    height: ${HEIGHTS.TABS_HEIGHT - 2 * HEIGHTS.SECTION_PADDING}px;
+    top: ${HEIGHTS.HEADER}px;
     @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
+      padding-top: ${HEIGHTS.SECTION_PADDING_MOBILE}px;
+      padding-bottom: ${HEIGHTS.SECTION_PADDING_MOBILE}px;
+      height: ${HEIGHTS.TABS_HEIGHT_MOBILE -
+      2 * HEIGHTS.SECTION_PADDING_MOBILE}px;
       position: sticky;
-      top: 80px;
+      top: ${HEIGHTS.HEADER_MOBILE}px;
       left: 0;
     }
   }

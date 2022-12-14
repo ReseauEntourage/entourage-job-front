@@ -2,6 +2,15 @@ export const BREAKPOINTS = {
   desktop: 960,
 };
 
+export const HEIGHTS = {
+  HEADER: 84,
+  HEADER_MOBILE: 80,
+  TABS_HEIGHT: 150,
+  TABS_HEIGHT_MOBILE: 125,
+  SECTION_PADDING: 24,
+  SECTION_PADDING_MOBILE: 12,
+};
+
 export const COLORS = {
   lightgray: '#F5F5F5',
   gray: '#D9D9D9',

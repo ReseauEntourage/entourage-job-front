@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
 import { Button, Section } from 'src/components/utils';
@@ -23,9 +17,10 @@ import NoOpportunities from 'src/components/backoffice/opportunities/Opportuniti
 import CandidateOpportunityDetailsContainer from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails';
 import CandidateOpportunitiesList from 'src/components/backoffice//opportunities/OpportunitiesContainer/OpportunitiesList/CandidateOpportunitiesList';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import { useQueryParamsOpportunities } from '../../opportunities/useQueryParamsOpportunities';
-import ModalExternalOffer from '../../../modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
-import OpportunityError from '../../../opportunities/OpportunityError';
+import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
+import OpportunityError from 'src/components/opportunities/OpportunityError';
+import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer';
+import { useOpportunityType } from '../../opportunities/OpportunitiesContainer/useOpportunityType';
 
 const CandidateOpportunities = ({
   isPublic,
@@ -37,7 +32,8 @@ const CandidateOpportunities = ({
   candidateId,
 }) => {
   const { user } = useContext(UserContext);
-  const opportunityListRef = useRef();
+
+  const opportunityType = useOpportunityType();
 
   const [numberOfResults, setNumberOfResults] = useState(0);
   const [offset, setOffset] = useState(0);
@@ -99,7 +95,7 @@ const CandidateOpportunities = ({
         </HeaderBackoffice>
       </Section>
       {isPublic ? (
-        <Section className="custom-mobile-darkBG custom-mobile-fixed">
+        <Section className="custom-mobile-darkBG custom-fixed">
           <SearchBar
             filtersConstants={candidateSearchFilters}
             filters={filters}
@@ -112,7 +108,7 @@ const CandidateOpportunities = ({
           />
         </Section>
       ) : (
-        <Section className="custom-primary">
+        <Section className="custom-primary custom-fixed">
           <CandidateOffersTab activeTab={filters.status} />
         </Section>
       )}
@@ -122,7 +118,7 @@ const CandidateOpportunities = ({
         ) : (
           <OpportunitiesContainer
             backButtonHref={{
-              pathname: `/backoffice/candidat/offres`,
+              pathname: `/backoffice/candidat/offres/${opportunityType}`,
               query: queryParamsOpportunities,
             }}
             list={
@@ -140,10 +136,16 @@ const CandidateOpportunities = ({
               />
             }
             noContent={
-              <NoOpportunities
-                status="à traiter"
-                fetchOpportunities={fetchOpportunities}
-              />
+              isPublic ? (
+                <div className="uk-width-expand uk-flex uk-flex-center uk-flex-middle">
+                  Aucun résultat.
+                </div>
+              ) : (
+                <NoOpportunities
+                  status="à traiter"
+                  fetchOpportunities={fetchOpportunities}
+                />
+              )
             }
           />
         )}

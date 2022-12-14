@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BREAKPOINTS, COLORS } from 'src/constants/styles';
+import { COLORS } from 'src/constants/styles';
 
 export const Container = styled.div`
   display: flex;
@@ -28,7 +28,6 @@ export const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  white-space: nowrap;
 `;
 
 export const ActionContainer = styled.div`

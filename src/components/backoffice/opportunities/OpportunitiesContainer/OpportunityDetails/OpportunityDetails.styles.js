@@ -1,13 +1,17 @@
 import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { BREAKPOINTS, COLORS, HEIGHTS } from 'src/constants/styles';
 
 export const Container = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  position: -webkit-sticky;
   position: sticky;
-  top: 108px;
+  top: ${HEIGHTS.HEADER + HEIGHTS.TABS_HEIGHT + HEIGHTS.SECTION_PADDING}px;
+  @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
+    top: ${HEIGHTS.HEADER_MOBILE +
+    HEIGHTS.TABS_HEIGHT_MOBILE +
+    HEIGHTS.SECTION_PADDING_MOBILE}px;
+  }
 `;
 
 export const Scroll = styled.div`
@@ -28,6 +32,7 @@ export const TitleContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 `;
 
 export const ContentContainer = styled.div`

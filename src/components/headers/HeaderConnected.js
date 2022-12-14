@@ -1,8 +1,8 @@
 import UIkit from 'uikit';
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
-import { Navbar, Nav, NavbarLogo, SimpleLink } from 'src/components/utils';
+import { Nav, Navbar, NavbarLogo, SimpleLink } from 'src/components/utils';
 import uuid from 'uuid/v4';
 
 import { UserContext } from 'src/components/store/UserProvider';
@@ -119,11 +119,17 @@ const HeaderConnected = ({ isHome }) => {
                   },
                   index
                 ) => {
+                  const isActiveOrChildActive =
+                    router.asPath.includes(href) ||
+                    (subMenu &&
+                      subMenu.some(({ href: subMenuHref }) => {
+                        return router.asPath.includes(subMenuHref);
+                      }));
                   return (
                     <StyledConnectedItem
                       key={`${index}-${uuid}`}
                       className={`${subMenu ? 'hasSubMenu ' : ''} ${
-                        router.asPath.includes(href) ? 'active' : ''
+                        isActiveOrChildActive ? 'active' : ''
                       }`}
                     >
                       <SimpleLink
@@ -182,12 +188,18 @@ const HeaderConnected = ({ isHome }) => {
               return href !== '#';
             })
             .map(({ href, icon, name, badge, tag, subMenu }, index) => {
+              const isActiveOrChildActive =
+                router.asPath.includes(href) ||
+                (subMenu &&
+                  subMenu.some(({ href: subMenuHref }) => {
+                    return router.asPath.includes(subMenuHref);
+                  }));
               return (
                 <>
                   <StyledConnectedItemMobile
                     key={`${index}-${uuid}`}
                     className={`${subMenu ? 'hasSubMenu ' : ''} ${
-                      router.asPath.includes(href) ? 'active' : ''
+                      isActiveOrChildActive ? 'active' : ''
                     }`}
                   >
                     <a
