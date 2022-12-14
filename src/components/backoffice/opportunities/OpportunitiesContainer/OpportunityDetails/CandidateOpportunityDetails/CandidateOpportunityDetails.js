@@ -112,6 +112,7 @@ const CandidateOpportunityDetails = ({
 
 CandidateOpportunityDetails.defaultProps = {
   opportunityUsers: null,
+  companyDescription: null,
   businessLines: null,
   fetchOpportunities: () => {},
   contract: null,
@@ -124,7 +125,7 @@ CandidateOpportunityDetails.propTypes = {
   title: PropTypes.string.isRequired,
   company: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  companyDescription: PropTypes.string.isRequired,
+  companyDescription: PropTypes.string,
   contract: PropTypes.string,
   endOfContract: PropTypes.string,
   startOfContract: PropTypes.string,
