@@ -3,7 +3,7 @@ export const BREAKPOINTS = {
 };
 
 export const HEIGHTS = {
-  HEADER: 80,
+  HEADER: 84,
   HEADER_MOBILE: 80,
   TABS_HEIGHT: 150,
   TABS_HEIGHT_MOBILE: 125,

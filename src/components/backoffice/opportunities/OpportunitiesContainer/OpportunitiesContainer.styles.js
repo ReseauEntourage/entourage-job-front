@@ -36,6 +36,9 @@ export const TitleText = styled.span`
   margin-bottom: 8px;
   color: ${COLORS.black};
   font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const SubtitleText = styled.span`
