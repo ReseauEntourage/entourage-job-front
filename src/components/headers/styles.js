@@ -7,8 +7,9 @@ export const StyledConnectedItem = styled.li`
     display: list-item;
     border-right: 1px solid ${COLORS.lightgray};
     position: relative;
+    border-bottom: solid transparent 4px;
     &.active {
-      border-bottom: solid #f55f24 4px;
+      border-bottom: solid ${COLORS.primaryOrange} 4px;
     }
     .icon-span {
       color: black;

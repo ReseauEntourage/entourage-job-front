@@ -8,6 +8,7 @@ export const StyledTabsUl = styled.ul`
   align-items: flex-end;
   justify-content: space-between;
   padding: 0;
+  margin-bottom: 0;
   li {
     list-style: none;
     width: 20%;
@@ -61,7 +62,7 @@ export const StyledTabsUl = styled.ul`
         a {
           color: ${COLORS.primaryOrange};
           font-weight: 700;
-      }
+        }
       }
     }
   }
