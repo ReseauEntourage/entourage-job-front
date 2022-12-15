@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { findConstantFromValue } from 'src/utils';
 import { BUSINESS_LINES } from 'src/constants';
@@ -8,7 +8,6 @@ import {
   DetailsContainer,
   DetailsContentContainer,
   InfoContainer,
-  Scroll,
   TitleContainer,
   TopContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunityDetails.styles';
@@ -20,6 +19,9 @@ import {
   TitleText,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
 import moment from 'moment';
+import { useWindowHeight } from '@react-hook/window-size';
+import { useScrollPosition } from '@n8tb1t/use-scroll-position';
+import { HEIGHTS } from '../../../../../../constants/styles';
 
 const CandidateOpportunityDetails = ({
   id,
@@ -43,8 +45,36 @@ const CandidateOpportunityDetails = ({
     opportunityUsersProp
   );
 
+  const ref = useRef();
+  const windowHeight = useWindowHeight();
+
+  const [containerHeight, setContainerHeight] = useState(
+    windowHeight -
+      HEIGHTS.HEADER -
+      HEIGHTS.TABS_HEIGHT +
+      HEIGHTS.SECTION_PADDING +
+      8
+  );
+
+  // Element scroll position
+  useScrollPosition(
+    ({ currPos }) => {
+      console.log(currPos.y);
+      const bottom =
+        windowHeight -
+        HEIGHTS.HEADER -
+        HEIGHTS.TABS_HEIGHT +
+        HEIGHTS.SECTION_PADDING +
+        8;
+
+      setContainerHeight(bottom - currPos.y);
+    },
+    [windowHeight],
+    ref
+  );
+
   return (
-    <DetailsContainer>
+    <DetailsContainer ref={ref}>
       <TopContainer>
         <TitleContainer>
           <TitleText>{title}</TitleText>
@@ -86,22 +116,17 @@ const CandidateOpportunityDetails = ({
           />
         </ActionContainer>
       </TopContainer>
-      <Scroll>
-        <DetailsContentContainer>
-          {companyDescription && (
-            <OpportunitySection
-              title="Information sur l'entreprise"
-              content={companyDescription}
-            />
-          )}
-          {description && (
-            <OpportunitySection
-              title="Détail de l'offre"
-              content={description}
-            />
-          )}
-        </DetailsContentContainer>
-      </Scroll>
+      <DetailsContentContainer height={containerHeight}>
+        {companyDescription && (
+          <OpportunitySection
+            title="Information sur l'entreprise"
+            content={companyDescription}
+          />
+        )}
+        {description && (
+          <OpportunitySection title="Détail de l'offre" content={description} />
+        )}
+      </DetailsContentContainer>
     </DetailsContainer>
     /* <ModalOffer
       currentOffer={opportunity}

@@ -14,7 +14,7 @@ const OpportunitiesList = React.memo(({ isLoading, list }) => {
 
 OpportunitiesList.propTypes = {
   isLoading: PropTypes.bool.isRequired,
-  list: PropTypes.arrayOf(PropTypes.element).isRequired,
+  list: PropTypes.element.isRequired,
 };
 
 export default OpportunitiesList;

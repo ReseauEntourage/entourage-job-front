@@ -136,8 +136,14 @@ export function useCandidateOpportunities(
             ...filtersToQueryParams(filters),
           },
         });
-        setOffers(offers);
-        setOtherOffers(otherOffers);
+        setOffers((prevOffers) => {
+          return prevOffers && offset > 0 ? [...prevOffers, ...offers] : offers;
+        });
+        setOtherOffers((prevOtherOffers) => {
+          return prevOtherOffers && offset > 0
+            ? [...prevOtherOffers, ...otherOffers]
+            : prevOtherOffers;
+        });
         setLoading(false);
       } catch (err) {
         console.error(err);
