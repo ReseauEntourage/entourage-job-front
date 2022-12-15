@@ -10,17 +10,21 @@ import { useRouter } from 'next/router';
 import CandidateOpportunities from 'src/components/backoffice/candidate/CandidateOpportunities';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { GA_TAGS } from 'src/constants/tags';
+import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
+import { useOpportunityId } from 'src/components/backoffice/opportunities/OpportunitiesContainer/useOpportunityId';
+import { useOpportunityType } from 'src/components/backoffice/opportunities/OpportunitiesContainer/useOpportunityType';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 
 // filters for the query
 const candidateQueryFilters = OPPORTUNITY_FILTERS_DATA.slice(1);
 
 const Opportunities = () => {
-  const {
-    isReady,
-    replace,
-    query: { offerId, type, ...restParams },
-  } = useRouter();
+  const { isReady, replace } = useRouter();
+
+  const opportunityId = useOpportunityId();
+  const opportunityType = useOpportunityType();
+
+  const queryParamsOpportunities = useQueryParamsOpportunities();
 
   const { user } = useContext(UserContext);
 
@@ -33,15 +37,15 @@ const Opportunities = () => {
 
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
     candidateQueryFilters,
-    `/backoffice/candidat/offres/${type}`,
+    `/backoffice/candidat/offres/${opportunityType}`,
     ['offerId', 'type'],
     GA_TAGS.BACKOFFICE_CANDIDAT_SUPPRIMER_FILTRES_CLIC
   );
 
   const setCandidateDefaultsIfPublicTag = useCallback(
     async (candId, candidatZone) => {
-      if (type === 'public') {
-        const params = restParams;
+      if (opportunityType === 'public') {
+        const params = queryParamsOpportunities;
 
         try {
           const { data } = await Api.getCVByCandidateId(candId);
@@ -65,7 +69,7 @@ const Opportunities = () => {
           await replace(
             {
               pathname: `/backoffice/candidat/offres/public${
-                offerId ? `/${offerId}` : ''
+                opportunityId ? `/${opportunityId}` : ''
               }`,
               query: params,
             },
@@ -79,12 +83,12 @@ const Opportunities = () => {
         } catch (e) {
           setHasError(true);
         }
-      } else if (type === 'private') {
+      } else if (opportunityType === 'private') {
         setCandidateId(candId);
         setHasLoadedDefaultFilters(true);
       }
     },
-    [offerId, replace, restParams, type]
+    [opportunityId, replace, queryParamsOpportunities, opportunityType]
   );
 
   const fetchAssociatedCandidate = useCallback(
@@ -105,9 +109,9 @@ const Opportunities = () => {
   );
 
   useDeepCompareEffect(() => {
-    if (isReady && user) {
-      if (type === 'private') {
-        if (!restParams.status) {
+    if (opportunityType && user) {
+      if (opportunityType === 'private') {
+        if (!queryParamsOpportunities.status) {
           replace(
             {
               pathname: '/backoffice/candidat/offres/private',
@@ -119,7 +123,7 @@ const Opportunities = () => {
             }
           );
         }
-      } else if (type !== 'public') {
+      } else if (opportunityType !== 'public') {
         setHasLoadedDefaultFilters(false);
         replace(`/backoffice/candidat/offres/public`, undefined, {
           shallow: true,
@@ -128,7 +132,7 @@ const Opportunities = () => {
 
       if (user.role === USER_ROLES.ADMIN) {
         replace(
-          `/backoffice/admin/offres${offerId ? `/${offerId}` : ''}`,
+          `/backoffice/admin/offres${opportunityId ? `/${opportunityId}` : ''}`,
           undefined,
           {
             shallow: true,
@@ -148,12 +152,12 @@ const Opportunities = () => {
     fetchAssociatedCandidate,
     hasLoadedDefaultFilters,
     isReady,
-    offerId,
+    opportunityId,
     replace,
-    restParams,
+    queryParamsOpportunities,
     setCandidateDefaultsIfPublicTag,
     user,
-    type,
+    opportunityType,
   ]);
 
   let content;
@@ -177,7 +181,7 @@ const Opportunities = () => {
   } else {
     content = (
       <CandidateOpportunities
-        isPublic={type === 'public'}
+        isPublic={opportunityType === 'public'}
         search={search}
         filters={filters}
         resetFilters={resetFilters}
@@ -196,7 +200,7 @@ const Opportunities = () => {
           : 'Opportunités du candidat'
       }
     >
-      {type ? content : null}
+      {opportunityType ? content : null}
     </LayoutBackOffice>
   );
 };
