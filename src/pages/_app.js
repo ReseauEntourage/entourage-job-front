@@ -46,17 +46,6 @@ const Container = ({ Component, pageProps, err }) => {
     setTimeout(() => {
       setFading(true);
     }, 1000);
-
-    const handleScroll = (event) => {
-      console.log('window.scrollY', window.scrollY);
-      console.log('target', event.target);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
   });
 
   useEffect(() => {

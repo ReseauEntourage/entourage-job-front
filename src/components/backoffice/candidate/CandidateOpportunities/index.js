@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
 import { Button, Section } from 'src/components/utils';
@@ -20,7 +20,9 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
 import OpportunityError from 'src/components/opportunities/OpportunityError';
 import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 import { useOpportunityType } from '../../opportunities/OpportunitiesContainer/useOpportunityType';
+import { usePrevious } from '../../../../hooks/utils';
 
 const CandidateOpportunities = ({
   isPublic,
@@ -53,17 +55,18 @@ const CandidateOpportunities = ({
     setHasError
   );
 
+  const prevOffset = usePrevious(offset);
   const fetchOpportunities = async () => {
     const type = isPublic ? 'public' : '';
-    console.log(filters);
-    if ((!isPublic && filters.status.length) || isPublic) {
-      fetchData(candidateId, search, type, filters, offset);
-    }
-    console.log(type);
+    await fetchData(candidateId, search, type, filters, offset);
   };
 
   useDeepCompareEffect(() => {
-    fetchOpportunities();
+    if (offset === 0 || offset !== prevOffset) {
+      fetchOpportunities();
+    } else {
+      setOffset(0);
+    }
   }, [candidateId, fetchData, filters, isPublic, offset, search]);
 
   return (
@@ -124,6 +127,7 @@ const CandidateOpportunities = ({
             list={
               offers && offers.length > 0 ? (
                 <CandidateOpportunitiesList
+                  setOffset={setOffset}
                   opportunities={offers}
                   fetchOpportunities={fetchOpportunities}
                 />

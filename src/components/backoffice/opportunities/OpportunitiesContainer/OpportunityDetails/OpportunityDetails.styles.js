@@ -61,6 +61,10 @@ export const DetailsContentContainer = styled.div`
   padding: 20px;
   border-radius: 5px;
   background-color: ${COLORS.white};
+  overflow: auto;
+  height: ${({ height }) => {
+    return height;
+  }}px;
 `;
 
 export const ActionContainer = styled.div`

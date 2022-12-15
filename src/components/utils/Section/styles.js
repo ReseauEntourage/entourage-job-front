@@ -35,6 +35,8 @@ export const StyledSection = styled.section`
     }
   }
   &.custom-fixed {
+    display: flex;
+    align-items: center;
     position: sticky;
     background-color: ${COLORS.white} !important;
     z-index: 1;
@@ -48,6 +50,13 @@ export const StyledSection = styled.section`
       position: sticky;
       top: ${HEIGHTS.HEADER_MOBILE}px;
       left: 0;
+    }
+
+    & > div {
+      flex: 1;
+      @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
+        overflow: hidden;
+      }
     }
   }
 `;
