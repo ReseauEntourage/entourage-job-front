@@ -63,8 +63,12 @@ export const DetailsContentContainer = styled.div`
   background-color: ${COLORS.white};
   overflow: auto;
   height: ${({ height }) => {
-    return height;
-  }}px;
+    return height ? `${height}px` : '100%';
+  }};
+
+  @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
+    height: 100%;
+  }
 `;
 
 export const ActionContainer = styled.div`

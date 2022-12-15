@@ -11,8 +11,8 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 import { useOpportunityType } from 'src/components/backoffice/opportunities/OpportunitiesContainer/useOpportunityType';
 import { useScrollPosition } from '@n8tb1t/use-scroll-position';
 import { useWindowHeight } from '@react-hook/window-size';
+import { usePrevious } from 'src/hooks/utils';
 import { LinkCard, ListContent, ListItem } from '../OpportunitiesList.styles';
-import { usePrevious } from '../../../../../../hooks/utils';
 
 const CandidateOpportunitiesList = ({
   opportunities,
