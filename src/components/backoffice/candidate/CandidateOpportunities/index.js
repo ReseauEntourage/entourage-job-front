@@ -16,13 +16,12 @@ import {
 import NoOpportunities from 'src/components/backoffice/opportunities/OpportunitiesContainer/NoOpportunities';
 import CandidateOpportunityDetailsContainer from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails';
 import CandidateOpportunitiesList from 'src/components/backoffice//opportunities/OpportunitiesContainer/OpportunitiesList/CandidateOpportunitiesList';
-import useDeepCompareEffect from 'use-deep-compare-effect';
 import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
 import OpportunityError from 'src/components/opportunities/OpportunityError';
 import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import { useOpportunityType } from '../../opportunities/OpportunitiesContainer/useOpportunityType';
-import { usePrevious } from '../../../../hooks/utils';
+import { useOpportunityType } from 'src/components/backoffice/opportunities/OpportunitiesContainer/useOpportunityType';
+import { usePrevious } from 'src/hooks/utils';
 
 const CandidateOpportunities = ({
   isPublic,
