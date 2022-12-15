@@ -8,9 +8,7 @@ export const Container = styled.div`
   position: sticky;
   top: ${HEIGHTS.HEADER + HEIGHTS.TABS_HEIGHT + HEIGHTS.SECTION_PADDING}px;
   @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
-    top: ${HEIGHTS.HEADER_MOBILE +
-    HEIGHTS.TABS_HEIGHT_MOBILE +
-    HEIGHTS.SECTION_PADDING_MOBILE}px;
+    top: ${HEIGHTS.HEADER_MOBILE + HEIGHTS.SECTION_PADDING_MOBILE}px;
   }
 `;
 
