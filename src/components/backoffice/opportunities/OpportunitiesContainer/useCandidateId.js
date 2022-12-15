@@ -5,6 +5,5 @@ import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
 export function useCandidateId() {
   const { user } = useContext(UserContext);
 
-  const candidateId = getCandidateIdFromCoachOrCandidate(user);
-  return candidateId;
+  return getCandidateIdFromCoachOrCandidate(user);
 }
