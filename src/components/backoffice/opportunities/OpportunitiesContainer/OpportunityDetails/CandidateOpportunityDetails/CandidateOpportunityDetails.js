@@ -22,7 +22,6 @@ import moment from 'moment';
 import { useWindowHeight } from '@react-hook/window-size';
 import { useScrollPosition } from '@n8tb1t/use-scroll-position';
 import { HEIGHTS } from 'src/constants/styles';
-import { useMount } from '../../../../../../hooks/utils';
 
 const CandidateOpportunityDetails = ({
   id,
@@ -49,16 +48,10 @@ const CandidateOpportunityDetails = ({
   const ref = useRef();
   const windowHeight = useWindowHeight();
 
-  console.log(window.innerHeight);
-
   const [containerHeight, setContainerHeight] = useState(0);
-  useMount(() => {});
 
-  console.log('scrollTop', ref?.current?.scrollTop);
-  // Element scroll position
   useScrollPosition(
     ({ currPos }) => {
-      console.log(currPos.y);
       const bottom =
         windowHeight -
         HEIGHTS.HEADER -
