@@ -31,14 +31,14 @@ export const StyledSection = styled.section`
     padding-top: ${HEIGHTS.SECTION_PADDING}px;
     padding-bottom: ${HEIGHTS.SECTION_PADDING}px;
     @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
-      background-color: ${COLORS.lightBlack};
+      background-color: ${COLORS.lightBlack} !important;
     }
   }
   &.custom-fixed {
     display: flex;
     align-items: center;
     position: sticky;
-    background-color: ${COLORS.white} !important;
+    background-color: ${COLORS.white};
     z-index: 1;
     height: ${HEIGHTS.TABS_HEIGHT - 2 * HEIGHTS.SECTION_PADDING}px;
     top: ${HEIGHTS.HEADER}px;

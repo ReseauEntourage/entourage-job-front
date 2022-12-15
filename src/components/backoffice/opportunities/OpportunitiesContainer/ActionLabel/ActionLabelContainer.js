@@ -45,7 +45,7 @@ const ActionLabelContainer = ({
           disabled
           fill
           color="primaryOrange"
-          label="Favoris"
+          label="Perso"
           icon={<IconNoSSR name="heart" ratio={0.8} />}
         />
       )}
