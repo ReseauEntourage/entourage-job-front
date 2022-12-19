@@ -53,7 +53,7 @@ const DetailsProgressBar = ({ tab }) => {
       {steps &&
         steps.map(({ text, className, mobile }) => {
           return (
-            <div key={uuid()} className={className}>
+            <div key={uuid} className={className}>
               {isDesktop ? text : mobile}
             </div>
           );
