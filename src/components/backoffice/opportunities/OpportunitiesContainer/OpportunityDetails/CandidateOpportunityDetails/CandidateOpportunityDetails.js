@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { findConstantFromValue } from 'src/utils';
 import { BUSINESS_LINES } from 'src/constants';
@@ -10,6 +10,7 @@ import {
   InfoContainer,
   TitleContainer,
   TopContainer,
+  StyledCTAContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunityDetails.styles';
 import OpportunitySection from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunitySection';
 import ActionLabels from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel';
@@ -22,6 +23,9 @@ import moment from 'moment';
 import { useWindowHeight } from '@react-hook/window-size';
 import { useScrollPosition } from '@n8tb1t/use-scroll-position';
 import { HEIGHTS } from 'src/constants/styles';
+import DetailsProgressBar from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/DetailsProgressBar';
+import CandidateOpportunityDetailsCTAs from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/CandidateOpportunityDetailsCTAs';
+import { renderTabFromStatus } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.utils';
 
 const CandidateOpportunityDetails = ({
   id,
@@ -107,7 +111,21 @@ const CandidateOpportunityDetails = ({
             }}
           />
         </ActionContainer>
+        <DetailsProgressBar
+          tab={renderTabFromStatus(
+            opportunityUsersProp.status,
+            opportunityUsersProp.archived
+          )}
+        />
       </TopContainer>
+      <StyledCTAContainer>
+        <CandidateOpportunityDetailsCTAs
+          tab={renderTabFromStatus(
+            opportunityUsersProp.status,
+            opportunityUsersProp.archived
+          )}
+        />
+      </StyledCTAContainer>
       <DetailsContentContainer height={containerHeight}>
         {companyDescription && (
           <OpportunitySection

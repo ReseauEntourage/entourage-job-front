@@ -3,10 +3,12 @@ import { COLORS } from 'src/constants/styles';
 
 export const colorToHoverBackgroundColor = {
   primaryOrange: COLORS.hoverOrange,
+  darkGrayFont: 'white',
 };
 
 export const colorToHoverColor = {
   primaryOrange: COLORS.primaryOrange,
+  darkGrayFont: COLORS.primaryOrange,
 };
 
 export const StyledButton = styled.button`
@@ -49,6 +51,33 @@ export const StyledButton = styled.button`
       color: ${(props) => {
         return colorToHoverColor[props.color];
       }} !important;
+    }
+  }
+
+  &.custom-primary-inverted {
+    padding: 8px 20px;
+    border: 1px solid
+      ${(props) => {
+        return COLORS[props.color] || COLORS.primaryOrange;
+      }};
+    color: ${(props) => {
+      return COLORS[props.color] || COLORS.primaryOrange;
+    }} !important;
+    border-radius: 5px;
+    background-color: white;
+
+    &:hover {
+      cursor: pointer;
+      background-color: ${(props) => {
+        return colorToHoverBackgroundColor[props.color] || COLORS.primaryOrange;
+      }};
+      color: ${(props) => {
+        return colorToHoverColor[props.color] || COLORS.primaryOrange;
+      }} !important;
+      border: 1px solid
+      ${(props) => {
+        return colorToHoverColor[props.color] || COLORS.primaryOrange;
+      }};
     }
   }
 
