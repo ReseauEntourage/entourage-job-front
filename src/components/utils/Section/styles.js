@@ -5,7 +5,7 @@ export const StyledSection = styled.section`
   > .section-container {
     display: flow-root;
     box-sizing: content-box;
-    max-width: 1200px;
+    max-width: 1360px;
     margin-left: auto;
     margin-right: auto;
     padding-left: 15px;
@@ -31,7 +31,7 @@ export const StyledSection = styled.section`
     padding-top: ${HEIGHTS.SECTION_PADDING}px;
     padding-bottom: ${HEIGHTS.SECTION_PADDING}px;
     @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
-      background-color: ${COLORS.lightBlack} !important;
+      background-color: ${COLORS.black} !important;
     }
   }
   &.custom-fixed {
