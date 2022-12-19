@@ -15,6 +15,8 @@ export const COLORS = {
   lightgray: '#F5F5F5',
   gray: '#D9D9D9',
   darkGray: '#A0A0A0',
+  darkGrayFont: '#6D6C6C',
+  black: '#363636',
   darkerBlack: '#222',
   primaryOrange: '#F55F24',
   hoverOrange: '#FFEADC',
@@ -22,11 +24,8 @@ export const COLORS = {
   yesGreen: '#79CC6B',
   noRed: '#FE2929',
   wheat: '#FFF8F6',
-  darkGrayFont: '#6D6C6C',
-  black: '#363636',
   white: '#FFF',
   yellow: '#F89D34',
-  lightBlack: '#363636',
   cvStatus: {
     none: {
       border: '#F5F5F5',

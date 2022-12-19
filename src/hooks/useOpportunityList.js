@@ -117,7 +117,6 @@ export function useOpportunityList(
 
 export function useCandidateOpportunities(
   setOffers,
-  setOtherOffers,
   setNumberOfResults,
   setLoading,
   setHasError
@@ -127,7 +126,7 @@ export function useCandidateOpportunities(
       try {
         setLoading(true);
         const {
-          data: { offers, otherOffers },
+          data: { offers },
         } = await Api.getAllCandidateOpportunities(candidateId, {
           params: {
             search,
@@ -139,11 +138,6 @@ export function useCandidateOpportunities(
         setOffers((prevOffers) => {
           return prevOffers && offset > 0 ? [...prevOffers, ...offers] : offers;
         });
-        setOtherOffers((prevOtherOffers) => {
-          return prevOtherOffers && offset > 0
-            ? [...prevOtherOffers, ...otherOffers]
-            : prevOtherOffers;
-        });
         setLoading(false);
       } catch (err) {
         console.error(err);
@@ -151,6 +145,6 @@ export function useCandidateOpportunities(
         setHasError(true);
       }
     },
-    [setOffers, setLoading, setOtherOffers, setHasError]
+    [setOffers, setLoading, setHasError]
   );
 }
