@@ -21,9 +21,21 @@ export const Scroll = styled.div`
 export const TopContainer = styled.div`
   display: flex;
   flex-direction: row;
-  border-radius: 5px;
+  border-radius: 5px 5px 0 0;
   background-color: ${COLORS.white};
-  padding: 20px;
+  padding: 16px;
+  flex-wrap: wrap;
+`;
+
+export const StyledCTAContainer = styled.div`
+  background-color: ${COLORS.white};
+  border-radius: 0 0 5px 5px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 2px;
 `;
 
 export const TitleContainer = styled.div`
@@ -31,6 +43,7 @@ export const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  width: 80%;
 `;
 
 export const ContentContainer = styled.div`
@@ -42,6 +55,7 @@ export const InfoContainer = styled.div`
   display: flex;
   flex-direction: row;
   text-overflow: ellipsis;
+  width: 20%;
 `;
 
 export const DetailsContainer = styled.div`
