@@ -40,7 +40,6 @@ const CandidateOpportunities = ({
   const [offset, setOffset] = useState(0);
 
   const [offers, setOffers] = useState(undefined);
-  const [otherOffers, setOtherOffers] = useState(undefined);
   const [hasError, setHasError] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -48,7 +47,6 @@ const CandidateOpportunities = ({
 
   const fetchData = useCandidateOpportunities(
     setOffers,
-    setOtherOffers,
     setNumberOfResults,
     setLoading,
     setHasError
