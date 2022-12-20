@@ -70,7 +70,7 @@ export const DetailsContentContainer = styled.div`
   margin-top: 4px;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 16px;
   border-radius: 5px;
   background-color: ${COLORS.white};
   overflow: auto;

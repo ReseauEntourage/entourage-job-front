@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useState } from 'react';
 import { ADMIN_ZONES, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { useFilters } from 'src/hooks';
 import { UserContext } from 'src/components/store/UserProvider';
@@ -7,12 +7,12 @@ import Api from 'src/api/index.ts';
 import { OPPORTUNITY_FILTERS_DATA, USER_ROLES } from 'src/constants';
 import OpportunityError from 'src/components/opportunities/OpportunityError';
 import { useRouter } from 'next/router';
-import CandidateOpportunities from 'src/components/backoffice/candidate/CandidateOpportunities';
+import { CandidateOpportunities } from 'src/components/backoffice/candidate/CandidateOpportunities';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { GA_TAGS } from 'src/constants/tags';
 import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
-import { useOpportunityId } from 'src/components/backoffice/opportunities/OpportunitiesContainer/useOpportunityId';
-import { useOpportunityType } from 'src/components/backoffice/opportunities/OpportunitiesContainer/useOpportunityType';
+import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
+import { useOpportunityType } from 'src/components/backoffice/opportunities/useOpportunityType';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 
 // filters for the query
