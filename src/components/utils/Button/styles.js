@@ -75,9 +75,9 @@ export const StyledButton = styled.button`
         return colorToHoverColor[props.color] || COLORS.primaryOrange;
       }} !important;
       border: 1px solid
-      ${(props) => {
-        return colorToHoverColor[props.color] || COLORS.primaryOrange;
-      }};
+        ${(props) => {
+          return colorToHoverColor[props.color] || COLORS.primaryOrange;
+        }};
     }
   }
 
