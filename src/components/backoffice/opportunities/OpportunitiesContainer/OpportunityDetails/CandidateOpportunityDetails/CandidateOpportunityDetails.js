@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { findConstantFromValue } from 'src/utils';
 import { BUSINESS_LINES } from 'src/constants';
@@ -8,9 +8,9 @@ import {
   DetailsContainer,
   DetailsContentContainer,
   InfoContainer,
+  StyledCTAContainer,
   TitleContainer,
   TopContainer,
-  StyledCTAContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunityDetails.styles';
 import OpportunitySection from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunitySection';
 import ActionLabels from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel';
@@ -59,9 +59,8 @@ const CandidateOpportunityDetails = ({
       const bottom =
         windowHeight -
         HEIGHTS.HEADER -
-        HEIGHTS.TABS_HEIGHT +
-        HEIGHTS.SECTION_PADDING +
-        8;
+        HEIGHTS.TABS_HEIGHT -
+        2 * HEIGHTS.SECTION_PADDING;
 
       setContainerHeight(bottom - currPos.y);
     },

@@ -8,11 +8,7 @@ import PropTypes from 'prop-types';
 
 const OpportunityDetails = ({ isLoading, details }) => {
   return (
-    <Container
-      onScroll={(event) => {
-        console.log('DETAILS SCROLL', event);
-      }}
-    >
+    <Container>
       <ContentContainer>
         {details}
         {isLoading && <OverlayLoader />}
