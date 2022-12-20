@@ -16,8 +16,8 @@ export const DetailsContainer = styled.div`
 `;
 
 export const RightContainer = styled.div`
-  flex: 3;
-  padding-left: 24px;
+  flex: 5;
+  padding-left: 20px;
 `;
 
 export const BackLink = styled.a`

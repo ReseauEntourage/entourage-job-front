@@ -1,6 +1,5 @@
 import React from 'react';
 import { Section } from 'src/components/utils';
-import { EXTERNAL_LINKS } from 'src/constants';
 import MultipleCTA from 'src/components/partials/MultipleCTA';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
