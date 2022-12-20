@@ -23,9 +23,9 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import { useOpportunityType } from 'src/components/backoffice/opportunities/useOpportunityType';
 import { usePrevious } from 'src/hooks/utils';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
-import { useTabsCount } from './useTabsCount';
 
 const CandidateOpportunities = ({
+  isPublic,
   search,
   filters,
   setFilters,
@@ -36,14 +36,11 @@ const CandidateOpportunities = ({
 }) => {
   const { user } = useContext(UserContext);
 
-  const opportunityId = useOpportunityId();
   const opportunityType = useOpportunityType();
+  const opportunityId = useOpportunityId();
 
-  const isPublic = opportunityType === 'public';
-
-  // const [numberOfResults, setNumberOfResults] = useState(0);
+  const [numberOfResults, setNumberOfResults] = useState(0);
   const [offset, setOffset] = useState(0);
-  const [hasFetchedAll, setHasFetchedAll] = useState(false);
 
   const [offers, setOffers] = useState(undefined);
   const [hasError, setHasError] = useState(false);
@@ -53,39 +50,24 @@ const CandidateOpportunities = ({
 
   const fetchData = useCandidateOpportunities(
     setOffers,
-    // setNumberOfResults,
+    setNumberOfResults,
     setLoading,
-    setHasError,
-    setHasFetchedAll
+    setHasError
   );
 
-  const { tabCounts, fetchTabsCount } = useTabsCount();
-
   const prevOffset = usePrevious(offset);
-  const fetchOpportunities = async (shouldFetchAll) => {
-    await fetchData(
-      candidateId,
-      search,
-      opportunityType,
-      filters,
-      offset,
-      shouldFetchAll
-    );
-    await fetchTabsCount();
-  };
-
-  const resetOffset = async () => {
-    setOffset(0);
-    setHasFetchedAll(false);
+  const fetchOpportunities = async () => {
+    const type = isPublic ? 'public' : '';
+    await fetchData(candidateId, search, type, filters, offset);
   };
 
   useDeepCompareEffect(() => {
-    if (offset !== 0 && offset === prevOffset) {
-      resetOffset();
-    } else if ((offset === 0 || !hasFetchedAll) && filters.status) {
+    if (offset === 0 || offset !== prevOffset) {
       fetchOpportunities();
+    } else {
+      setOffset(0);
     }
-  }, [candidateId, fetchData, filters, opportunityType, offset, search]);
+  }, [candidateId, fetchData, filters, isPublic, offset, search]);
 
   return (
     <>
@@ -104,7 +86,9 @@ const CandidateOpportunities = ({
                 dataTestId="candidat-add-offer"
                 onClick={() => {
                   openModal(
-                    <ModalExternalOffer fetchOpportunities={resetOffset} />
+                    <ModalExternalOffer
+                      fetchOpportunities={fetchOpportunities}
+                    />
                   );
                 }}
               >
@@ -122,7 +106,7 @@ const CandidateOpportunities = ({
               <SearchBar
                 filtersConstants={candidateSearchFilters}
                 filters={filters}
-                // numberOfResults={numberOfResults}
+                numberOfResults={numberOfResults}
                 resetFilters={resetFilters}
                 search={search}
                 setSearch={setSearch}
@@ -132,10 +116,7 @@ const CandidateOpportunities = ({
             </Section>
           ) : (
             <Section className="custom-primary custom-fixed">
-              <CandidateOffersTab
-                activeTab={filters.status}
-                tabCounts={tabCounts}
-              />
+              <CandidateOffersTab activeTab={filters.status} />
             </Section>
           )}
         </>
@@ -152,19 +133,16 @@ const CandidateOpportunities = ({
             list={
               offers && offers.length > 0 ? (
                 <CandidateOpportunitiesList
-                  hasFetchedAll={hasFetchedAll}
                   setOffset={setOffset}
                   opportunities={offers}
-                  fetchOpportunities={resetOffset}
+                  fetchOpportunities={fetchOpportunities}
                 />
               ) : null
             }
             isLoading={loading}
             details={
               <CandidateOpportunityDetailsContainer
-                fetchOpportunities={async () => {
-                  await fetchOpportunities(true);
-                }}
+                fetchOpportunities={fetchOpportunities}
               />
             }
             noContent={
@@ -175,7 +153,7 @@ const CandidateOpportunities = ({
               ) : (
                 <NoOpportunities
                   status="à traiter"
-                  fetchOpportunities={resetOffset}
+                  fetchOpportunities={fetchOpportunities}
                 />
               )
             }
@@ -187,6 +165,7 @@ const CandidateOpportunities = ({
 };
 
 CandidateOpportunities.propTypes = {
+  isPublic: PropTypes.bool,
   search: PropTypes.string,
   filters: PropTypes.shape(),
   setFilters: PropTypes.func,
@@ -197,6 +176,7 @@ CandidateOpportunities.propTypes = {
 };
 
 CandidateOpportunities.defaultProps = {
+  isPublic: true,
   isMobile: false,
   search: undefined,
   filters: {},

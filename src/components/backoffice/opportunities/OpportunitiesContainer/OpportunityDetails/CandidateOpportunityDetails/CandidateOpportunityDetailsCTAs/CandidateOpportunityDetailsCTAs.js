@@ -17,7 +17,7 @@ const CandidateOpportunityDetailsCTAs = ({ tab }) => {
         }).ctas.map((cta) => {
           const { color, className, action, text } = allCTAs[cta];
           return (
-            <li key={uuid}>
+            <li key={uuid()}>
               <Button color={color} style={className} onClick={action}>
                 {text}
               </Button>

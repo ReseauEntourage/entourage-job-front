@@ -4,7 +4,7 @@ import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 export const ListContainer = styled.div`
   overflow: hidden;
   position: relative;
-  flex: 2;
+  flex: 4;
   @media screen and (min-width: ${BREAKPOINTS.desktop}px) {
     width: 100%;
   }
@@ -23,7 +23,7 @@ export const ListItem = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
-  padding: 20px;
+  padding: 14px;
   &:not(:last-child) {
     margin-bottom: 20px;
   }
