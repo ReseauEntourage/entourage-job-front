@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
-import { useOpportunityId } from 'src/components/backoffice/opportunities/OpportunitiesContainer/useOpportunityId';
+import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 
 import { LinkCard, ListContent, ListItem } from '../OpportunitiesList.styles';
 

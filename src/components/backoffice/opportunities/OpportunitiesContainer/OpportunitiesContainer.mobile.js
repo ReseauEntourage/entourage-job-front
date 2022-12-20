@@ -4,7 +4,7 @@ import {
   Container,
   DetailsContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
-import { useOpportunityId } from 'src/components/backoffice/opportunities/OpportunitiesContainer/useOpportunityId';
+import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import PropTypes from 'prop-types';
 import OpportunitiesList from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList';
 import Link from 'next/link';
