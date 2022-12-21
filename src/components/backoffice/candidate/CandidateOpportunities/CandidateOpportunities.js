@@ -41,6 +41,7 @@ const CandidateOpportunities = ({
 
   const [numberOfResults, setNumberOfResults] = useState(0);
   const [offset, setOffset] = useState(0);
+  const [hasFetchedAll, setHasFetchedAll] = useState(false);
 
   const [offers, setOffers] = useState(undefined);
   const [hasError, setHasError] = useState(false);
@@ -52,7 +53,8 @@ const CandidateOpportunities = ({
     setOffers,
     setNumberOfResults,
     setLoading,
-    setHasError
+    setHasError,
+    setHasFetchedAll
   );
 
   const prevOffset = usePrevious(offset);
@@ -62,10 +64,11 @@ const CandidateOpportunities = ({
   };
 
   useDeepCompareEffect(() => {
-    if (offset === 0 || offset !== prevOffset) {
-      fetchOpportunities();
-    } else {
+    if (offset !== 0 && offset === prevOffset) {
       setOffset(0);
+      setHasFetchedAll(false);
+    } else if (offset === 0 || !hasFetchedAll) {
+      fetchOpportunities();
     }
   }, [candidateId, fetchData, filters, isPublic, offset, search]);
 
