@@ -28,13 +28,21 @@ const CandidateOpportunitiesList = ({
 
   const prevIsAtBottom = usePrevious(isAtBottom);
 
+  const prevOpportunitiesLength = usePrevious(opportunities.length);
+
   useEffect(() => {
     if (isAtBottom && isAtBottom !== prevIsAtBottom) {
       setOffset((prevOffset) => {
         return prevOffset + 1;
       });
     }
-  }, [setOffset, isAtBottom, prevIsAtBottom]);
+  }, [
+    setOffset,
+    isAtBottom,
+    prevIsAtBottom,
+    opportunities.length,
+    prevOpportunitiesLength,
+  ]);
 
   useScrollPosition(
     ({ currPos }) => {
