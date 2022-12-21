@@ -12814,6 +12814,7 @@ mark,
   border: 1px solid #f55f24;
 }
 .ent-filter-menu {
+  margin-top: 80px;
   background-color: white;
   border-right: 1px solid #FFF8F5;
   color: #363636;
@@ -12880,4 +12881,7 @@ mark,
 .uk-list-disc > li:nth-child(n+2),
 .uk-list-disc > li > ul {
   margin-top: 20px;
+}
+.uk-offcanvas-page {
+  overflow: inherit !important;
 }
