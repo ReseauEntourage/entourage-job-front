@@ -31,6 +31,7 @@ const ActionLabel = ({
     </Container>
   );
 };
+
 ActionLabel.defaultProps = {
   disabled: false,
   hoverAnimation: false,

@@ -45,7 +45,7 @@ export const StyledSection = styled.section`
     @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
       padding-top: ${HEIGHTS.SECTION_PADDING_MOBILE}px;
       padding-bottom: ${HEIGHTS.SECTION_PADDING_MOBILE}px;
-      height: inherit;
+      height: auto;
       position: sticky;
       top: ${HEIGHTS.HEADER_MOBILE}px;
       left: 0;
