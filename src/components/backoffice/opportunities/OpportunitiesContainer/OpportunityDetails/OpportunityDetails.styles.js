@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BREAKPOINTS, COLORS, HEIGHTS } from 'src/constants/styles';
 
-export const Container = styled.div`
+export const StyledContainer = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -12,13 +12,13 @@ export const Container = styled.div`
   }
 `;
 
-export const Scroll = styled.div`
+export const StyledScroll = styled.div`
   height: 100%;
   position: relative;
   overflow: auto;
 `;
 
-export const TopContainer = styled.div`
+export const StyledTopContainer = styled.div`
   display: flex;
   flex-direction: row;
   border-radius: 5px 5px 0 0;
@@ -38,7 +38,7 @@ export const StyledCTAContainer = styled.div`
   margin-top: 2px;
 `;
 
-export const TitleContainer = styled.div`
+export const StyledTitleContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -46,19 +46,19 @@ export const TitleContainer = styled.div`
   width: 80%;
 `;
 
-export const ContentContainer = styled.div`
+export const StyledContentContainer = styled.div`
   position: relative;
   min-height: 200px;
 `;
 
-export const InfoContainer = styled.div`
+export const StyledInfoContainer = styled.div`
   display: flex;
   flex-direction: row;
   text-overflow: ellipsis;
   width: 20%;
 `;
 
-export const DetailsContainer = styled.div`
+export const StyledDetailsContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 4px;
@@ -66,7 +66,7 @@ export const DetailsContainer = styled.div`
   background-color: ${COLORS.lightgray};
 `;
 
-export const DetailsContentContainer = styled.div`
+export const StyledDetailsContentContainer = styled.div`
   margin-top: 4px;
   display: flex;
   flex-direction: column;
@@ -83,7 +83,7 @@ export const DetailsContentContainer = styled.div`
   }
 `;
 
-export const ActionContainer = styled.div`
+export const StyledActionContainer = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;

@@ -1,18 +1,18 @@
 import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
-export const Container = styled.div`
+export const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: stretch;
 `;
 
-export const TopContainer = styled.div`
+export const StyledTopContainer = styled.div`
   display: flex;
   flex-direction: row;
 `;
 
-export const Icon = styled.div`
+export const StyledIcon = styled.div`
   width: 58px;
   height: 58px;
   border-radius: 50%;
@@ -23,40 +23,40 @@ export const Icon = styled.div`
   justify-content: center;
 `;
 
-export const TitleContainer = styled.div`
+export const StyledTitleContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 `;
 
-export const ActionContainer = styled.div`
+export const StyledActionContainer = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
 `;
 
-export const Title = styled.div`
+export const StyledTitle = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
 `;
 
-export const Company = styled.div`
+export const StyledCompany = styled.div`
   text-overflow: ellipsis;
 `;
 
-export const InfoContainer = styled.div`
+export const StyledInfoContainer = styled.div`
   display: flex;
   flex-direction: row;
   text-overflow: ellipsis;
 `;
 
-export const BottomContainer = styled.div`
+export const StyledBottomContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-export const Description = styled.div`
+export const StyledDescription = styled.div`
   text-overflow: ellipsis;
   overflow: hidden;
   display: -webkit-box !important;

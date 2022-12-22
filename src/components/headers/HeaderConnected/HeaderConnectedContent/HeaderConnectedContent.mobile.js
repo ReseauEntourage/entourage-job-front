@@ -25,7 +25,6 @@ const HeaderConnectedContentMobile = ({ badges, links }) => {
     <StyledHeaderMobile id="header">
       <Navbar
         backgroundColor="black"
-        sticky
         left={
           <NavbarLogo
             href={links[user?.role?.toLowerCase()][0].href}

@@ -3,15 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { findConstantFromValue } from 'src/utils';
 import { CONTRACTS } from 'src/constants';
-<<<<<<<< HEAD:src/components/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel.js
 import { StyledContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel.styles';
 import { InfoText } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
-import { Container } from 'src/components/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel.styles';
-import { InfoText } from 'src/components/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
-========
-import { Container } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel.styles';
-import { InfoText } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
->>>>>>>> aa736fb ([EN-5297] feat(offers): adapt new offer components to new page):src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel.js
 
 const ContractLabel = ({ contract, endOfContract, startOfContract }) => {
   if (contract) {
@@ -36,12 +29,12 @@ const ContractLabel = ({ contract, endOfContract, startOfContract }) => {
     }
 
     return (
-      <Container>
+      <StyledContainer>
         <InfoText>
           {findConstantFromValue(contract, CONTRACTS)?.label}
           {dates}
         </InfoText>
-      </Container>
+      </StyledContainer>
     );
   }
 

@@ -5,26 +5,15 @@ export const StyledConnectedItem = styled.li`
   display: list-item;
   border-right: 1px solid ${COLORS.lightgray};
   position: relative;
-
-  transition: 0.1s ease-in-out;
-  transition-property: color, background-color, opacity;
-  & > a {
-    border-bottom: solid transparent 4px;
-  }
-  &.active > a {
+  border-bottom: solid transparent 4px;
+  &.active {
     border-bottom: solid ${COLORS.primaryOrange} 4px;
   }
   .icon-span {
-    color: ${({ color }) => {
-      return COLORS[color] || COLORS.black;
-    }};
   }
   .name-span {
     text-transform: none;
     font-size: 1rem;
-    color: ${({ color }) => {
-      return COLORS[color] || COLORS.black;
-    }};
     font-weight: 500;
   }
 
@@ -39,9 +28,6 @@ export const StyledConnectedItem = styled.li`
       max-height: 1000px;
       visibility: visible;
     }
-  }
-  & > a:hover {
-    opacity: 0.5;
   }
 `;
 
