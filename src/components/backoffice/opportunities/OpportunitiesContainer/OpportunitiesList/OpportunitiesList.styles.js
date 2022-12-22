@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 
-export const ListContainer = styled.div`
+export const StyledListContainer = styled.div`
   overflow: hidden;
   position: relative;
   flex: 4;
@@ -10,9 +10,9 @@ export const ListContainer = styled.div`
   }
 `;
 
-export const LinkCard = styled.a``;
+export const StyledLinkCard = styled.a``;
 
-export const ListItem = styled.div`
+export const StyledListItem = styled.div`
   border: 1px solid
     ${({ isSelected }) => {
       return isSelected ? COLORS.primaryOrange : COLORS.lightgray;
@@ -29,7 +29,7 @@ export const ListItem = styled.div`
   }
 `;
 
-export const ListContent = styled.div`
+export const StyledListContent = styled.div`
   height: 100%;
   position: relative;
 `;

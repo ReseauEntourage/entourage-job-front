@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  BackLink,
-  Container,
-  DetailsContainer,
+  StyledBackLink,
+  StyledContainer,
+  StyledDetailsContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import PropTypes from 'prop-types';
@@ -20,19 +20,19 @@ const OpportunitiesContainerMobile = ({
   const opportunityId = useOpportunityId();
 
   return (
-    <Container>
+    <StyledContainer>
       {list ? (
         <>
           {opportunityId ? (
-            <DetailsContainer>
+            <StyledDetailsContainer>
               <Link href={backButtonHref} scroll={false} shallow passHref>
-                <BackLink>
+                <StyledBackLink>
                   <IconNoSSR name="chevron-left" />
                   Retour à la liste
-                </BackLink>
+                </StyledBackLink>
               </Link>
               {details}
-            </DetailsContainer>
+            </StyledDetailsContainer>
           ) : (
             <OpportunitiesList isLoading={isLoading} list={list} />
           )}
@@ -40,7 +40,7 @@ const OpportunitiesContainerMobile = ({
       ) : (
         noContent
       )}
-    </Container>
+    </StyledContainer>
   );
 };
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Container,
-  Step,
+  StyledContainer,
+  StyledStep,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/CandidateOpportunitiesList/CandidateOpportunityItem/ProgressBarStatus/ProgressBarStatus.styles';
 import _ from 'lodash';
 
@@ -10,12 +10,12 @@ const ProgressBarStatus = ({ status, archived }) => {
   const noStatusOrAbandonned =
     archived || _.isNil(status) || status === 3 || status === 4;
   return (
-    <Container>
-      <Step activate={!noStatusOrAbandonned} />
-      <Step activate={!noStatusOrAbandonned && status >= 0} />
-      <Step activate={!noStatusOrAbandonned && status >= 1} />
-      <Step activate={!noStatusOrAbandonned && status >= 2} />
-    </Container>
+    <StyledContainer>
+      <StyledStep activate={!noStatusOrAbandonned} />
+      <StyledStep activate={!noStatusOrAbandonned && status >= 0} />
+      <StyledStep activate={!noStatusOrAbandonned && status >= 1} />
+      <StyledStep activate={!noStatusOrAbandonned && status >= 2} />
+    </StyledContainer>
   );
 };
 

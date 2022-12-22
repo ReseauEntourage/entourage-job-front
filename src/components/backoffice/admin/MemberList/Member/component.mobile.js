@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { getCandidateFromCoachOrCandidate, getRelatedUser } from 'src/utils';
 import moment from 'moment';
-import ImgProfile from 'src/components/headers/ImgProfile';
+import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
 import { MemberPropTypes } from 'src/components/backoffice/admin/MemberList/shape';
 import { translateStatusCV } from 'src/components/backoffice/admin/MemberList/utils';
 import { USER_ROLES } from 'src/constants';
