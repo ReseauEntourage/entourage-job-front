@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { findConstantFromValue } from 'src/utils';
 import { CONTRACTS } from 'src/constants';
-import { Container } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel.styles';
+import { StyledContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel.styles';
 import { InfoText } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
 
 const ContractLabel = ({ contract, endOfContract, startOfContract }) => {
@@ -29,12 +29,12 @@ const ContractLabel = ({ contract, endOfContract, startOfContract }) => {
     }
 
     return (
-      <Container>
+      <StyledContainer>
         <InfoText>
           {findConstantFromValue(contract, CONTRACTS)?.label}
           {dates}
         </InfoText>
-      </Container>
+      </StyledContainer>
     );
   }
 

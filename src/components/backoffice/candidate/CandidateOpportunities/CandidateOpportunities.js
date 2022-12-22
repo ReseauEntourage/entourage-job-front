@@ -136,6 +136,7 @@ const CandidateOpportunities = ({
             list={
               offers && offers.length > 0 ? (
                 <CandidateOpportunitiesList
+                  hasFetchedAll={hasFetchedAll}
                   setOffset={setOffset}
                   opportunities={offers}
                   fetchOpportunities={fetchOpportunities}

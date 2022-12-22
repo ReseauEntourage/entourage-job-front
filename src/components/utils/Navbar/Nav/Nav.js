@@ -1,25 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { StyledNav, StyledNavItem } from './Nav.styles';
 
-const Nav = ({ navbar, items }) => {
+const Nav = ({ items, color }) => {
   return (
-    <ul className={navbar ? 'uk-navbar-nav' : 'uk-nav uk-nav-default ent-nav'}>
+    <StyledNav>
       {items.map((value, index) => {
         return (
-          <li key={index} className="ent-nav-item">
+          <StyledNavItem color={color} key={index}>
             {value}
-          </li>
+          </StyledNavItem>
         );
       })}
-    </ul>
+    </StyledNav>
   );
 };
 Nav.propTypes = {
-  navbar: PropTypes.bool,
   items: PropTypes.arrayOf(PropTypes.element).isRequired,
+  color: PropTypes.string,
 };
+
 Nav.defaultProps = {
-  navbar: false,
+  color: 'white',
 };
 
 export default Nav;

@@ -7,8 +7,6 @@ import {
   LandingPagePartial,
   NumberPartial,
 } from 'src/components/partials';
-
-import Header from 'src/components/headers/Header';
 import HowItWorks from 'src/components/partials/HowItWorks';
 import AnnouncementPartial from 'src/components/partials/AnnouncementPartial';
 import LinkedInPartial from 'src/components/partials/LinkedInPartial';
@@ -27,7 +25,6 @@ const Index = () => {
 
   return (
     <Layout>
-      <Header />
       <LandingPagePartial />
       <CandidatListPartial />
       <AnnouncementPartial />

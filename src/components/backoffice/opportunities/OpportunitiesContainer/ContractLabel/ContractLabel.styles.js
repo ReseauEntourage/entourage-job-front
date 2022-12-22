@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.span`
+export const StyledContainer = styled.span`
   display: flex;
   flex-direction: row;
   overflow: hidden;
