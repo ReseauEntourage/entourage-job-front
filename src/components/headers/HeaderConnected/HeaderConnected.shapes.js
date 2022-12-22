@@ -20,6 +20,25 @@ export const HeaderSubItemDefaultProps = {
   queryParams: '',
 };
 
+export const HeaderConnectedItemShape = PropTypes.shape({
+  href: PropTypes.string.isRequired,
+  badge: PropTypes.string,
+  icon: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  queryParams: PropTypes.string,
+  tag: PropTypes.shape({
+    action: PropTypes.string,
+  }),
+  subMenu: PropTypes.arrayOf(HeaderSubItemShape),
+});
+
+export const HeaderConnectedItemDefaultProps = {
+  badge: '',
+  tag: null,
+  queryParams: '',
+  subMenu: null,
+};
+
 export const NotifBadgesShape = PropTypes.shape({
   cv: PropTypes.number.isRequired,
   members: PropTypes.number.isRequired,

@@ -12,12 +12,17 @@ import { useOpportunityType } from 'src/components/backoffice/opportunities/useO
 import { useScrollPosition } from '@n8tb1t/use-scroll-position';
 import { useWindowHeight } from '@react-hook/window-size';
 import { usePrevious } from 'src/hooks/utils';
-import { LinkCard, ListContent, ListItem } from '../OpportunitiesList.styles';
+import {
+  StyledLinkCard,
+  StyledListContent,
+  StyledListItem,
+} from '../OpportunitiesList.styles';
 
 const CandidateOpportunitiesList = ({
   opportunities,
   fetchOpportunities,
   setOffset,
+  hasFetchedAll,
 }) => {
   const queryParamsOpportunities = useQueryParamsOpportunities();
   const opportunityId = useOpportunityId();
@@ -60,7 +65,7 @@ const CandidateOpportunitiesList = ({
 
   const opportunitiesListContent = opportunities.map((opportunity) => {
     return (
-      <ListItem
+      <StyledListItem
         key={opportunity.id}
         isSelected={opportunityId === opportunity.id}
       >
@@ -74,7 +79,7 @@ const CandidateOpportunitiesList = ({
           passHref
           legacyBehavior
         >
-          <LinkCard>
+          <StyledLinkCard>
             <CandidateOpportunityItem
               id={opportunity.id}
               title={opportunity.title}
@@ -89,16 +94,16 @@ const CandidateOpportunitiesList = ({
               isExternal={opportunity.isExternal}
               department={opportunity.department}
             />
-          </LinkCard>
+          </StyledLinkCard>
         </Link>
-      </ListItem>
+      </StyledListItem>
     );
   });
 
   return (
-    <ListContent>
+    <StyledListContent>
       {opportunitiesListContent}
-      {opportunityType === 'private' && (
+      {opportunityType === 'private' && hasFetchedAll && (
         <Button
           style="primary"
           color="primaryOrange"
@@ -117,7 +122,7 @@ const CandidateOpportunitiesList = ({
           Ajouter une offre externe
         </Button>
       )}
-    </ListContent>
+    </StyledListContent>
   );
 };
 
@@ -125,6 +130,7 @@ CandidateOpportunitiesList.propTypes = {
   opportunities: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   fetchOpportunities: PropTypes.func.isRequired,
   setOffset: PropTypes.func.isRequired,
+  hasFetchedAll: PropTypes.bool.isRequired,
 };
 
 export default CandidateOpportunitiesList;
