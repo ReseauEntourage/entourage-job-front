@@ -1,7 +1,7 @@
 import React from 'react';
 import {
-  Container,
-  RightContainer,
+  StyledContainer,
+  StyledRightContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
 import OpportunitiesList from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList';
 import PropTypes from 'prop-types';
@@ -14,16 +14,16 @@ const OpportunitiesContainerDesktop = ({
   noContent,
 }) => {
   return (
-    <Container>
+    <StyledContainer>
       {!list && isLoading && <OverlayLoader />}
       {!list && !isLoading && noContent}
       {list && (
         <>
           <OpportunitiesList isLoading={isLoading} list={list} />
-          <RightContainer>{details}</RightContainer>
+          <StyledRightContainer>{details}</StyledRightContainer>
         </>
       )}
-    </Container>
+    </StyledContainer>
   );
 };
 

@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
-export const Container = styled.div`
+export const StyledContainer = styled.div`
   display: flex;
   flex-direction: row;
   margin-top: 12px;
   margin-bottom: 12px;
 `;
 
-export const Step = styled.div`
+export const StyledStep = styled.div`
   flex: 1;
   height: 2px;
   &:not(:last-child) {

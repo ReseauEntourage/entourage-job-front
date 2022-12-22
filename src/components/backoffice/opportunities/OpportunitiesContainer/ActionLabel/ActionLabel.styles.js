@@ -5,7 +5,7 @@ import {
   colorToHoverColor,
 } from 'src/components/utils/Button/styles';
 
-export const Container = styled.div`
+export const StyledContainer = styled.div`
   font-family: Poppins, sans-serif;
   display: flex;
   flex-direction: row-reverse;
@@ -87,10 +87,10 @@ export const Container = styled.div`
   }
 `;
 
-export const LabelContainer = styled.div`
+export const StyledLabelContainer = styled.div`
   flex: 1;
 `;
 
-export const IconContainer = styled.div`
+export const StyledIconContainer = styled.div`
   margin-left: 8px;
 `;
