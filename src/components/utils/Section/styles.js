@@ -39,7 +39,7 @@ export const StyledSection = styled.section`
     align-items: center;
     position: sticky;
     background-color: ${COLORS.white};
-    z-index: 1;
+    z-index: 12;
     height: ${HEIGHTS.TABS_HEIGHT - 2 * HEIGHTS.SECTION_PADDING}px;
     top: ${HEIGHTS.HEADER}px;
     @media screen and (max-width: ${BREAKPOINTS.desktop}px) {

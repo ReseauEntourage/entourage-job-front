@@ -3,7 +3,7 @@ import Head from 'next/head';
 import PropTypes from 'prop-types';
 import { withRouter } from 'next/router';
 import Footer from 'src/components/Footer';
-import Header from 'src/components/headers/Header';
+import HeaderPublic from 'src/components/headers/HeaderPublic/HeaderPublic';
 import HeaderConnected from 'src/components/headers/HeaderConnected';
 import { addPrefix } from 'src/utils';
 import Script from 'next/script';
@@ -62,15 +62,7 @@ const Layout = ({
           content={process.env.FB_DOMAIN_VERIFICATION}
         />
       </Head>
-      {!isPDF && (
-        <>
-          {isBackoffice ? (
-            <HeaderConnected />
-          ) : (
-            router.pathname !== '/' && <Header isHome={false} />
-          )}
-        </>
-      )}
+      {!isPDF && <>{isBackoffice ? <HeaderConnected /> : <HeaderPublic />}</>}
       {children}
       {!isPDF && !isBackoffice && <Footer />}
       {!isPDF && (

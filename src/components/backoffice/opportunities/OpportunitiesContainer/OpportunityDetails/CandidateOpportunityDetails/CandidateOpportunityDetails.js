@@ -4,20 +4,20 @@ import { findConstantFromValue } from 'src/utils';
 import { BUSINESS_LINES } from 'src/constants';
 import ContractLabel from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel';
 import {
-  ActionContainer,
-  DetailsContainer,
-  DetailsContentContainer,
-  InfoContainer,
+  StyledActionContainer,
+  StyledDetailsContainer,
+  StyledDetailsContentContainer,
+  StyledInfoContainer,
   StyledCTAContainer,
-  TitleContainer,
-  TopContainer,
+  StyledTitleContainer,
+  StyledTopContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunityDetails.styles';
 import OpportunitySection from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunitySection';
 import ActionLabels from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel';
 import { useBookmarkOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/useBookmarkOpportunity';
 import {
   InfoText,
-  TitleText,
+  StyledTitleText,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
 import moment from 'moment';
 import { useWindowHeight } from '@react-hook/window-size';
@@ -69,10 +69,10 @@ const CandidateOpportunityDetails = ({
   );
 
   return (
-    <DetailsContainer ref={ref}>
-      <TopContainer>
-        <TitleContainer>
-          <TitleText>{title}</TitleText>
+    <StyledDetailsContainer ref={ref}>
+      <StyledTopContainer>
+        <StyledTitleContainer>
+          <StyledTitleText>{title}</StyledTitleText>
           <InfoText>
             {company}
             {businessLines && businessLines.length > 0 && (
@@ -87,18 +87,18 @@ const CandidateOpportunityDetails = ({
             )}
           </InfoText>
           <InfoText>
-            <InfoContainer>
+            <StyledInfoContainer>
               <ContractLabel
                 contract={contract}
                 endOfContract={endOfContract}
                 startOfContract={startOfContract}
               />
               &nbsp;-&nbsp;{department}
-            </InfoContainer>
+            </StyledInfoContainer>
           </InfoText>
           <InfoText>{moment(createdAt).format('DD/MM/YYYY')}</InfoText>
-        </TitleContainer>
-        <ActionContainer>
+        </StyledTitleContainer>
+        <StyledActionContainer>
           <ActionLabels
             isBookmarked={!!opportunityUsers?.bookmarked}
             isRecommended={!!opportunityUsers?.recommended}
@@ -109,14 +109,14 @@ const CandidateOpportunityDetails = ({
               await fetchOpportunities();
             }}
           />
-        </ActionContainer>
+        </StyledActionContainer>
         <DetailsProgressBar
           tab={renderTabFromStatus(
             opportunityUsersProp.status,
             opportunityUsersProp.archived
           )}
         />
-      </TopContainer>
+      </StyledTopContainer>
       <StyledCTAContainer>
         <CandidateOpportunityDetailsCTAs
           tab={renderTabFromStatus(
@@ -125,7 +125,7 @@ const CandidateOpportunityDetails = ({
           )}
         />
       </StyledCTAContainer>
-      <DetailsContentContainer height={containerHeight}>
+      <StyledDetailsContentContainer height={containerHeight}>
         {companyDescription && (
           <OpportunitySection
             title="Information sur l'entreprise"
@@ -135,8 +135,8 @@ const CandidateOpportunityDetails = ({
         {description && (
           <OpportunitySection title="Détail de l'offre" content={description} />
         )}
-      </DetailsContentContainer>
-    </DetailsContainer>
+      </StyledDetailsContentContainer>
+    </StyledDetailsContainer>
     /* <ModalOffer
       currentOffer={opportunity}
       onOfferUpdated={fetchOpportunities}

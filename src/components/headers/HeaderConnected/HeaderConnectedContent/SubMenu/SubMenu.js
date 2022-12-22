@@ -1,14 +1,14 @@
 import React from 'react';
 import { uuid } from 'uuid/v4';
 import { PropTypes } from 'prop-types';
-import { StyledSubMenu } from 'src/components/headers/SubMenu/styles';
+import { StyledSubMenu } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/SubMenu/SubMenu.styles';
 import SimpleLink from 'src/components/utils/SimpleLink';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import {
-  HeaderSubItemShape,
   HeaderSubItemDefaultProps,
+  HeaderSubItemShape,
   NotifBadgesShape,
-} from 'src/components/headers/Header.shape';
+} from 'src/components/headers/HeaderConnected/HeaderConnected.shapes';
 import { gaEvent } from 'src/lib/gtag';
 
 const SubMenu = ({ items, badges }) => {
