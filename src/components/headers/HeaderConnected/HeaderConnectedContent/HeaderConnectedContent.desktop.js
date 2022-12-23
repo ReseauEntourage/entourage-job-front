@@ -12,9 +12,9 @@ import { UserContext } from 'src/components/store/UserProvider';
 import { useRouter } from 'next/router';
 import Nav from 'src/components/utils/Navbar/Nav';
 import NavbarLogo from 'src/components/utils/Navbar/NavbarLogo';
+import { StyledNav } from 'src/components/utils/Navbar/Nav/Nav.styles';
 import { HeaderConnectedItemShape } from '../HeaderConnected.shapes';
 import { StyledHeaderDesktop } from '../../Header.styles';
-import { StyledNav } from '../../../utils/Navbar/Nav/Nav.styles';
 
 const HeaderConnectedContentDesktop = ({ badges, links }) => {
   const { user } = useContext(UserContext);
@@ -109,6 +109,7 @@ const HeaderConnectedContentDesktop = ({ badges, links }) => {
                       }));
                   return (
                     <StyledConnectedItem
+                      color="black"
                       key={`${index}-${uuid}`}
                       className={`${subMenu ? 'hasSubMenu ' : ''} ${
                         isActiveOrChildActive ? 'active' : ''
