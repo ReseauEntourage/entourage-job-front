@@ -123,7 +123,7 @@ export function useCandidateOpportunities(
   setHasFetchedAll
 ) {
   return useCallback(
-    async (candidateId, search, type, filters, offset) => {
+    async (candidateId, search, type, filters, offset, shouldFetchAll) => {
       try {
         setLoading(true);
         const {
@@ -132,12 +132,15 @@ export function useCandidateOpportunities(
           params: {
             search,
             type,
-            offset,
+            offset: shouldFetchAll ? 0 : offset,
+            limit: shouldFetchAll ? LIMIT + offset * LIMIT : LIMIT,
             ...filtersToQueryParams(filters),
           },
         });
         setOffers((prevOffers) => {
-          return prevOffers && offset > 0 ? [...prevOffers, ...offers] : offers;
+          return prevOffers && offset > 0 && !shouldFetchAll
+            ? [...prevOffers, ...offers]
+            : offers;
         });
         if (offers.length < LIMIT) {
           setHasFetchedAll(true);
@@ -149,6 +152,6 @@ export function useCandidateOpportunities(
         setHasError(true);
       }
     },
-    [setOffers, setLoading, setHasError]
+    [setLoading, setOffers, setHasFetchedAll, setHasError]
   );
 }
