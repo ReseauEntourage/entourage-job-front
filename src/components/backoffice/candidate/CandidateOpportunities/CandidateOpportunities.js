@@ -23,6 +23,7 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import { useOpportunityType } from 'src/components/backoffice/opportunities/useOpportunityType';
 import { usePrevious } from 'src/hooks/utils';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
+import { useTabsCount } from './useTabsCount';
 
 const CandidateOpportunities = ({
   isPublic,
@@ -57,10 +58,13 @@ const CandidateOpportunities = ({
     setHasFetchedAll
   );
 
+  const { tabCounts, fetchTabsCount } = useTabsCount();
+
   const prevOffset = usePrevious(offset);
   const fetchOpportunities = async () => {
     const type = isPublic ? 'public' : '';
     await fetchData(candidateId, search, type, filters, offset);
+    await fetchTabsCount();
   };
 
   useDeepCompareEffect(() => {
@@ -119,7 +123,10 @@ const CandidateOpportunities = ({
             </Section>
           ) : (
             <Section className="custom-primary custom-fixed">
-              <CandidateOffersTab activeTab={filters.status} />
+              <CandidateOffersTab
+                activeTab={filters.status}
+                tabCounts={tabCounts}
+              />
             </Section>
           )}
         </>
