@@ -2,39 +2,43 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'src/components/utils/Button';
 import ButtonPost from 'src/components/backoffice/cv/ButtonPost';
+import { StyledFooterForm } from 'src/components/forms/Forms.styles';
 
 const FooterForm = ({ error, onSubmit, onCancel, submitText, formId }) => {
   return (
-    <div className="uk-flex uk-flex-column uk-flex-left">
+    <StyledFooterForm className="uk-flex uk-flex-column uk-flex-left">
       {error && (
         <div className="uk-flex uk-flex-1">
           <span className="uk-text-danger uk-margin-small-bottom">{error}</span>
         </div>
       )}
-      <div className="uk-flex uk-flex-1 uk-flex-column uk-margin-medium-top">
+      <div>
         <div className="uk-width-auto@s uk-margin-small-bottom">
           <span className="uk-text-meta">* : Mentions obligatoires</span>
         </div>
 
-        <div className="uk-modal-footer uk-padding-remove-horizontal uk-padding-remove-bottom">
-          {onCancel && (
-            <Button
-              style="default"
-              onClick={onCancel}
-              dataTestId={`form-cancel-${formId}`}
-            >
-              Annuler
-            </Button>
-          )}
-          <ButtonPost
-            text={submitText || 'Envoyer'}
-            style="primary"
-            action={onSubmit}
-            dataTestId={`form-confirm-${formId}`}
-          />
+        <div className="cta-container">
+          <div>
+            {onCancel && (
+              <Button
+                style="custom-primary-inverted"
+                color="primaryOrange"
+                onClick={onCancel}
+                dataTestId={`form-cancel-${formId}`}
+              >
+                Annuler
+              </Button>
+            )}
+            <ButtonPost
+              text={submitText || 'Envoyer'}
+              style="custom-primary"
+              action={onSubmit}
+              dataTestId={`form-confirm-${formId}`}
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </StyledFooterForm>
   );
 };
 

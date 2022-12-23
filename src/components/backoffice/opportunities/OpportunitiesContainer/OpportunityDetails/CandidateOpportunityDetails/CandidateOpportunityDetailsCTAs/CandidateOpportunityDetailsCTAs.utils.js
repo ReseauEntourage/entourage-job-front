@@ -8,13 +8,13 @@ export const allCTAs = {
   applied: {
     color: 'primaryOrange',
     className: 'custom-primary-inverted',
-    action: () => {},
+    action: 'updateToApplied',
     text: "J'ai déjà postulé",
   },
   notInterested: {
     color: 'darkGrayFont',
     className: 'custom-primary-inverted',
-    action: () => {},
+    action: 'archive',
     text: 'Je ne suis pas intéressé',
   },
   resend: {
@@ -26,13 +26,13 @@ export const allCTAs = {
   gotInterview: {
     color: 'primaryOrange',
     className: 'custom-primary-inverted',
-    action: () => {},
+    action: "updateToInterview",
     text: "J'ai décroché un entretien",
   },
   abandon: {
     color: 'darkGrayFont',
     className: 'custom-primary-inverted',
-    action: () => {},
+    action: "abandon",
     text: "J'abandonne cette offre",
   },
   dateInterview: {
@@ -44,7 +44,7 @@ export const allCTAs = {
   gotJob: {
     color: 'primaryOrange',
     className: 'custom-primary-inverted',
-    action: () => {},
+    action: 'updateToHired',
     text: "J'ai décroché le job",
   },
   dateBegin: {
@@ -80,18 +80,26 @@ export const CTAsByTab = [
   },
   {
     tab: 1,
-    ctas: ['resend', 'gotInterview', 'notInterested'],
+    ctas: ['resend', 'gotInterview', 'abandon'],
   },
   {
     tab: 2,
-    ctas: ['dateInterview', 'gotJob', 'abandon'],
-  },
-  {
-    tab: 4,
-    ctas: ['dateBegin', 'trialValidated', 'trialUnvalidated'],
+    ctas: [
+      // 'dateInterview',
+      'gotJob',
+      'abandon',
+    ],
   },
   {
     tab: 3,
     ctas: ['feedback'],
+  },
+  {
+    tab: 4,
+    ctas: [
+      // 'dateBegin',
+      // 'trialValidated',
+      // 'trialUnvalidated'
+    ],
   },
 ];
