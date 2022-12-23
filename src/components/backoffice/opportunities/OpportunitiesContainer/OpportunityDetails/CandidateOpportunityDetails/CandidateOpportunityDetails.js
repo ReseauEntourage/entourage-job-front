@@ -123,6 +123,10 @@ const CandidateOpportunityDetails = ({
             opportunityUsersProp.status,
             opportunityUsersProp.archived
           )}
+          OpportunityId={id}
+          fetchOpportunities={async () => {
+            await fetchOpportunities();
+          }}
         />
       </StyledCTAContainer>
       <StyledDetailsContentContainer height={containerHeight}>

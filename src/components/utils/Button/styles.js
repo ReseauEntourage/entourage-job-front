@@ -54,6 +54,29 @@ export const StyledButton = styled.button`
     }
   }
 
+  &.custom-primary {
+    padding: 8px 20px;
+    border: 1px solid
+      ${(props) => {
+        return COLORS[props.color] || COLORS.primaryOrange;
+      }};
+    color: white;
+    background-color: ${(props) => {
+      return COLORS[props.color] || COLORS.primaryOrange;
+    }} !important;
+    border-radius: 5px;
+    background-color: white;
+
+    &:hover {
+      cursor: pointer;
+      background-color: white !important;
+      color: ${(props) => {
+        return COLORS[props.color] || COLORS.primaryOrange;
+      }} !important;
+    }
+  }
+
+
   &.custom-primary-inverted {
     padding: 8px 20px;
     border: 1px solid
