@@ -1,9 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { StyledTabsUl } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab/CandidateOffersTab.styles';
 import { uuid } from 'uuid/v4';
-import API from 'src/api/index.ts';
-import { UserContext } from 'src/components/store/UserProvider';
 import {
   formatPlural,
   tabs,
@@ -12,17 +10,8 @@ import PropTypes from 'prop-types';
 import { isSSR } from 'src/utils/isSSR';
 import { BREAKPOINTS } from 'src/constants/styles';
 
-const CandidateOffersTab = ({ activeTab }) => {
+const CandidateOffersTab = ({ activeTab, tabCounts }) => {
   const basePath = '/backoffice/candidat/offres/private';
-  const [tabCounts, setTabCounts] = useState();
-  const { user } = useContext(UserContext);
-  useEffect(() => {
-    if (user) {
-      API.getOpportunitiesTabCountByCandidate(user.id).then((res) => {
-        return setTabCounts(res.data);
-      });
-    }
-  }, [user]);
 
   let isDesktop = true;
   if (!isSSR) {
@@ -81,7 +70,13 @@ const CandidateOffersTab = ({ activeTab }) => {
 };
 
 CandidateOffersTab.propTypes = {
-  activeTab: PropTypes.shape().isRequired,
+  activeTab: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  tabCounts: PropTypes.arrayOf(
+    PropTypes.shape({
+      status: PropTypes.number.isRequired,
+      count: PropTypes.number.isRequired,
+    })
+  ).isRequired,
 };
 
 export default CandidateOffersTab;
