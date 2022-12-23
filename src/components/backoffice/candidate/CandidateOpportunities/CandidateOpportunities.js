@@ -41,7 +41,7 @@ const CandidateOpportunities = ({
 
   const isPublic = opportunityType === 'public';
 
-  const [numberOfResults, setNumberOfResults] = useState(0);
+  // const [numberOfResults, setNumberOfResults] = useState(0);
   const [offset, setOffset] = useState(0);
   const [hasFetchedAll, setHasFetchedAll] = useState(false);
 
@@ -53,7 +53,7 @@ const CandidateOpportunities = ({
 
   const fetchData = useCandidateOpportunities(
     setOffers,
-    setNumberOfResults,
+    // setNumberOfResults,
     setLoading,
     setHasError,
     setHasFetchedAll
@@ -82,7 +82,7 @@ const CandidateOpportunities = ({
   useDeepCompareEffect(() => {
     if (offset !== 0 && offset === prevOffset) {
       resetOffset();
-    } else if (offset === 0 || !hasFetchedAll) {
+    } else if ((offset === 0 || !hasFetchedAll) && filters.status) {
       fetchOpportunities();
     }
   }, [candidateId, fetchData, filters, opportunityType, offset, search]);
@@ -122,7 +122,7 @@ const CandidateOpportunities = ({
               <SearchBar
                 filtersConstants={candidateSearchFilters}
                 filters={filters}
-                numberOfResults={numberOfResults}
+                // numberOfResults={numberOfResults}
                 resetFilters={resetFilters}
                 search={search}
                 setSearch={setSearch}

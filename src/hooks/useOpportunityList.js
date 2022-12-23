@@ -117,7 +117,6 @@ export function useOpportunityList(
 
 export function useCandidateOpportunities(
   setOffers,
-  setNumberOfResults,
   setLoading,
   setHasError,
   setHasFetchedAll

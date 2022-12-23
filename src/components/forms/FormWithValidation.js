@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react';
 import PropTypes from 'prop-types';
-import FooterForm from 'src/components/utils/FooterForm';
+import FooterForm from 'src/components/forms/FooterForm';
 import FormValidator from 'src/components/forms/FormValidator';
 import GenericField from 'src/components/forms/GenericField';
 import FieldGroup from 'src/components/forms/fields/FieldGroup';
@@ -63,6 +63,8 @@ const FormWithValidation = forwardRef(
 
         /* Validators start */
         tmpFieldValues[name] = fieldValue;
+
+        console.log(tmpFieldValues)
 
         const validation = validator.validate(tmpFieldValues); // envoie une copie des champs pour que le state ne soit pas altéré
 
