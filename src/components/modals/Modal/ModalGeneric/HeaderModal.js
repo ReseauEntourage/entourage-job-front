@@ -1,26 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { StyledHeaderModal } from 'src/components/modals/Modal/Modals.styles';
 
-const HeaderModal = ({ children }) => {
+const HeaderModal = ({ title, description }) => {
+  console.log(description);
   return (
-    <div className="uk-flex uk-flex-middle uk-margin-medium-bottom">
-      <div
-        className="uk-margin-small-right uk-flex uk-flex-center uk-flex-middle"
-        style={{ width: 30 }}
-      >
-        <span className="uk-text-primary">
-          <IconNoSSR name="linkedout-contract" ratio={1.2} />
-        </span>
-      </div>
-      <div className="">
-        <h3 className="uk-text-bold uk-margin-remove">{children}</h3>
-      </div>
-    </div>
+    <>
+      {title ? (
+        <StyledHeaderModal>
+          <div className="title-container">
+            <h3>{title}</h3>
+          </div>
+          <div className="description-container">
+            <div>{description}</div>
+          </div>
+        </StyledHeaderModal>
+      ) : null}
+    </>
   );
 };
 HeaderModal.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
+  title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]).isRequired,
+  description: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
     .isRequired,
 };
 export default HeaderModal;
