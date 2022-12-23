@@ -11,13 +11,9 @@ const HeaderModal = ({ title, description }) => {
           <div className="title-container">
             <h3>{title}</h3>
           </div>
-          {description ? (
-            <div className="description-container">
-              <div>{description}</div>
-            </div>
-          ) : (
-            <div className="simple-margin" />
-          )}
+          <div className="description-container">
+            <div>{description}</div>
+          </div>
         </StyledHeaderModal>
       ) : null}
     </>
