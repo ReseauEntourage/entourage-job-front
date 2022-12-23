@@ -109,7 +109,7 @@ const Opportunities = () => {
   );
 
   useDeepCompareEffect(() => {
-    if (opportunityType && user) {
+    if (isReady && user) {
       if (opportunityType === 'private') {
         if (!queryParamsOpportunities.status) {
           replace(
@@ -181,7 +181,6 @@ const Opportunities = () => {
   } else {
     content = (
       <CandidateOpportunities
-        isPublic={opportunityType === 'public'}
         search={search}
         filters={filters}
         resetFilters={resetFilters}

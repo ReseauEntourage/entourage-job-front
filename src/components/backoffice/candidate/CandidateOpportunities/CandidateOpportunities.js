@@ -26,7 +26,6 @@ import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpp
 import { useTabsCount } from './useTabsCount';
 
 const CandidateOpportunities = ({
-  isPublic,
   search,
   filters,
   setFilters,
@@ -37,8 +36,10 @@ const CandidateOpportunities = ({
 }) => {
   const { user } = useContext(UserContext);
 
-  const opportunityType = useOpportunityType();
   const opportunityId = useOpportunityId();
+  const opportunityType = useOpportunityType();
+
+  const isPublic = opportunityType === 'public';
 
   const [numberOfResults, setNumberOfResults] = useState(0);
   const [offset, setOffset] = useState(0);
@@ -62,8 +63,7 @@ const CandidateOpportunities = ({
 
   const prevOffset = usePrevious(offset);
   const fetchOpportunities = async () => {
-    const type = isPublic ? 'public' : '';
-    await fetchData(candidateId, search, type, filters, offset);
+    await fetchData(candidateId, search, opportunityType, filters, offset);
     await fetchTabsCount();
   };
 
@@ -74,7 +74,7 @@ const CandidateOpportunities = ({
     } else if (offset === 0 || !hasFetchedAll) {
       fetchOpportunities();
     }
-  }, [candidateId, fetchData, filters, isPublic, offset, search]);
+  }, [candidateId, fetchData, filters, opportunityType, offset, search]);
 
   return (
     <>
@@ -176,7 +176,6 @@ const CandidateOpportunities = ({
 };
 
 CandidateOpportunities.propTypes = {
-  isPublic: PropTypes.bool,
   search: PropTypes.string,
   filters: PropTypes.shape(),
   setFilters: PropTypes.func,
@@ -187,7 +186,6 @@ CandidateOpportunities.propTypes = {
 };
 
 CandidateOpportunities.defaultProps = {
-  isPublic: true,
   isMobile: false,
   search: undefined,
   filters: {},
