@@ -62,15 +62,26 @@ const CandidateOpportunities = ({
   const { tabCounts, fetchTabsCount } = useTabsCount();
 
   const prevOffset = usePrevious(offset);
-  const fetchOpportunities = async () => {
-    await fetchData(candidateId, search, opportunityType, filters, offset);
+  const fetchOpportunities = async (shouldFetchAll) => {
+    await fetchData(
+      candidateId,
+      search,
+      opportunityType,
+      filters,
+      offset,
+      shouldFetchAll
+    );
     await fetchTabsCount();
+  };
+
+  const resetOffset = async () => {
+    setOffset(0);
+    setHasFetchedAll(false);
   };
 
   useDeepCompareEffect(() => {
     if (offset !== 0 && offset === prevOffset) {
-      setOffset(0);
-      setHasFetchedAll(false);
+      resetOffset();
     } else if (offset === 0 || !hasFetchedAll) {
       fetchOpportunities();
     }
@@ -93,9 +104,7 @@ const CandidateOpportunities = ({
                 dataTestId="candidat-add-offer"
                 onClick={() => {
                   openModal(
-                    <ModalExternalOffer
-                      fetchOpportunities={fetchOpportunities}
-                    />
+                    <ModalExternalOffer fetchOpportunities={resetOffset} />
                   );
                 }}
               >
@@ -146,14 +155,16 @@ const CandidateOpportunities = ({
                   hasFetchedAll={hasFetchedAll}
                   setOffset={setOffset}
                   opportunities={offers}
-                  fetchOpportunities={fetchOpportunities}
+                  fetchOpportunities={resetOffset}
                 />
               ) : null
             }
             isLoading={loading}
             details={
               <CandidateOpportunityDetailsContainer
-                fetchOpportunities={fetchOpportunities}
+                fetchOpportunities={async () => {
+                  await fetchOpportunities(true);
+                }}
               />
             }
             noContent={
@@ -164,7 +175,7 @@ const CandidateOpportunities = ({
               ) : (
                 <NoOpportunities
                   status="à traiter"
-                  fetchOpportunities={fetchOpportunities}
+                  fetchOpportunities={resetOffset}
                 />
               )
             }
