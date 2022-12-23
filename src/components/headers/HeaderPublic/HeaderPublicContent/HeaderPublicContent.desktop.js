@@ -13,6 +13,7 @@ import NavbarLogo from 'src/components/utils/Navbar/NavbarLogo';
 import Nav from 'src/components/utils/Navbar/Nav';
 import { StyledHeaderDesktop } from '../../Header.styles';
 import { HeaderPublicItemShape } from '../HeaderPublic.shapes';
+import { StyledPublicItem } from './HeaderPublicContent.styles';
 
 const HeaderPublicDesktop = ({ links }) => {
   const router = useRouter();
@@ -21,41 +22,27 @@ const HeaderPublicDesktop = ({ links }) => {
     ...links.map((link, i) => {
       if (router.asPath.includes(link.href)) {
         return (
-          <div className="uk-navbar-item uk-padding-remove-horizontal uk-visible@m">
-            <a
+          <div>
+            <StyledPublicItem
+              selected
               href={link.href}
-              className="uk-text-center"
-              style={{
-                borderBottom: 'white solid 1px',
-                marginLeft: 15,
-                marginRight: 15,
-                color: 'white',
-              }}
+              color="white"
               onClick={() => {
                 gaEvent(link.tag);
               }}
             >
               {link.name}
-            </a>
+            </StyledPublicItem>
           </div>
         );
       }
       return (
         <Link href={link.href} key={i}>
-          {/* Hack so that the links don't move when changing current page */}
-          <a
-            style={{ borderBottom: '1px solid transparent' }}
-            className={`uk-visible@m ${
-              router.asPath === link.href && 'uk-text-bold uk-text-primary'
-            } uk-text-center`}
-          >
-            {link.name}
-          </a>
+          <StyledPublicItem color="white">{link.name}</StyledPublicItem>
         </Link>
       );
     }),
-    // separateurs en css .ent-nav
-    <div className="uk-navbar-item uk-visible@m">
+    <div>
       <Button
         href={{
           pathname: '/candidats',
