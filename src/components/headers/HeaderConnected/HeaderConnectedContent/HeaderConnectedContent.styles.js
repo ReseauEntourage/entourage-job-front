@@ -5,10 +5,13 @@ export const StyledConnectedItem = styled.li`
   display: list-item;
   border-right: 1px solid ${COLORS.lightgray};
   position: relative;
-  border-bottom: solid transparent 4px;
+
   transition: 0.1s ease-in-out;
   transition-property: color, background-color, opacity;
-  &.active {
+  & > a {
+    border-bottom: solid transparent 4px;
+  }
+  &.active > a {
     border-bottom: solid ${COLORS.primaryOrange} 4px;
   }
   .icon-span {
