@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { StyledTextInputContainer } from './TextInput.styles';
 
-const TextInput = ({ title, type, onChange, name }) => {
+const TextInput = ({ label, password, onChange }) => {
   const [value, setValue] = useState();
   return (
     <StyledTextInputContainer>
@@ -10,27 +10,24 @@ const TextInput = ({ title, type, onChange, name }) => {
         className={value ? '' : 'empty-value'}
         onChange={(e) => {
           setValue(e.target.value);
-          return onChange(e);
+          return onChange();
         }}
-        type={type || 'text'}
-        placeholder={title}
-        name={name}
+        type={password ? 'password' : 'text'}
+        placeholder={label}
       />
     </StyledTextInputContainer>
   );
 };
 
 TextInput.propTypes = {
-  title: PropTypes.string,
-  type: PropTypes.string,
+  label: PropTypes.string,
+  password: PropTypes.bool,
   onChange: PropTypes.func,
-  name: PropTypes.func,
 };
 
 TextInput.defaultProps = {
-  title: '',
-  type: 'text',
+  label: '',
+  password: false,
   onChange: () => {},
-  name: '',
 };
 export default TextInput;

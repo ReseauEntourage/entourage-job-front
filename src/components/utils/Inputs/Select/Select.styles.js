@@ -2,14 +2,12 @@ import styled from 'styled-components';
 import { COLORS } from '../../../../constants/styles';
 
 export const StyledSelectContainer = styled.div`
-  min-width: 300px;
-  width: 100%;
+  width: 400px;
   max-width: 100%;
   .select {
     width: 100%;
     border: none;
     position: relative;
-    margin-bottom: 18px;
     .placeholder,
     .selected-value {
       padding: 4px 0;
@@ -23,12 +21,6 @@ export const StyledSelectContainer = styled.div`
       &:hover {
         cursor: pointer;
       }
-      span {
-        float: right;
-        height: 18px;
-        width: 18px;
-        color: ${COLORS.primaryOrange};
-      }
     }
     .placeholder {
       color: ${COLORS.darkGray};
@@ -41,9 +33,7 @@ export const StyledSelectContainer = styled.div`
     }
 
     ul.options-container {
-      min-width: 300px;
-      width: 100%;
-      z-index: 100;
+      width: 400px;
       max-width: 100%;
       margin: 0;
       padding: 0;
