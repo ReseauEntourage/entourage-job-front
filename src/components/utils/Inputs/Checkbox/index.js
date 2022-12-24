@@ -1,6 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { StyledCheckbox } from 'src/components/utils/Inputs/Checkbox/styles';
+// import { StyledCheckbox } from 'src/components/utils/Inputs/Checkbox/styles';
+import { StyledCheckbox } from './styles';
 
 const Checkbox = ({ handleClick, disabled, value, checked }) => {
   return (
