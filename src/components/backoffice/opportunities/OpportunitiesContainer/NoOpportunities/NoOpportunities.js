@@ -25,7 +25,7 @@ const NoOpportunities = ({ status, fetchOpportunities }) => {
       </StyledDescription>
       <StyledButtonContainer>
         <Button
-          style="default"
+          style="custom-primary-inverted"
           color="primaryOrange"
           dataTestId="candidat-add-offer"
           onClick={() => {
