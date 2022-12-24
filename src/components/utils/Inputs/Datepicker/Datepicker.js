@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
+import FormValidatorErrorMessage from '../../../forms/FormValidatorErrorMessage';
 import { StyledDatePickerContainer } from './DatePicker.styles';
 
 const DatePicker = ({

@@ -1,10 +1,11 @@
 import styled from 'styled-components';
-import { StyledInputContainer } from '../Inputs.styles';
+// import { commonInputDesignFeatures } from "../Inputs.styles";
 import { COLORS } from '../../../../constants/styles';
 
-export const StyledTextInputContainer = styled(StyledInputContainer)`
+export const StyledTextInputContainer = styled.div`
+  width: 400px;
+  max-width: 100%;
   input {
-    min-width: unset;
     width: 100%;
     background-color: white;
     border: 0.5px solid white;
@@ -13,7 +14,6 @@ export const StyledTextInputContainer = styled(StyledInputContainer)`
     font-size: 14px;
     line-height: 17px;
     padding: 4px 0;
-    margin-bottom: 18px;
     &::placeholder {
       font-style: italic;
       color: ${COLORS.darkGray};

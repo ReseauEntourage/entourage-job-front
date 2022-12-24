@@ -1,14 +1,17 @@
 import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+// import { COLORS } from 'src/constants/styles';
+import { COLORS } from '../../../constants/styles';
 
 export const colorToHoverBackgroundColor = {
   primaryOrange: COLORS.hoverOrange,
   darkGrayFont: 'white',
+  white: 'transparent',
 };
 
 export const colorToHoverColor = {
   primaryOrange: COLORS.primaryOrange,
   darkGrayFont: COLORS.primaryOrange,
+  white: COLORS.primaryOrange,
 };
 
 export const StyledButton = styled.button`
@@ -35,22 +38,13 @@ export const StyledButton = styled.button`
     }
   }
 
-  &.uk-button-default {
-    border: 0.5px solid
-      ${(props) => {
-        return COLORS[props.color];
-      }};
-    color: ${(props) => {
-      return COLORS[props.color];
-    }} !important;
 
+  &.uk-button-default {
     &:hover {
-      background-color: ${(props) => {
-        return colorToHoverBackgroundColor[props.color];
-      }};
-      color: ${(props) => {
-        return colorToHoverColor[props.color];
-      }} !important;
+      /* background-color: ${COLORS.primaryOrange}; */
+      border-color: ${COLORS.primaryOrange};
+      /* color: white; */
+      color: ${COLORS.primaryOrange};
     }
   }
 
@@ -87,7 +81,7 @@ export const StyledButton = styled.button`
       return COLORS[props.color] || COLORS.primaryOrange;
     }} !important;
     border-radius: 5px;
-    background-color: white;
+    background-color: transparent;
 
     &:hover {
       cursor: pointer;

@@ -1,9 +1,13 @@
+/* eslint-disable react/button-has-type */
 import React, { useEffect, useState } from 'react';
-import { PropTypes } from 'prop-types';
-import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
-import { IconNoSSR } from 'src/components/utils/Icon';
-import { isSSR } from 'src/utils/isSSR';
+import PropTypes from 'prop-types';
 import { StyledSelectContainer } from './Select.styles';
+
+// import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
+import FormValidatorErrorMessage from '../../../forms/FormValidatorErrorMessage';
+
+// import { IconNoSSR } from 'src/components/utils/Icon';
+// import { IconNoSSR } from '../../Icon';
 
 // import { isSSR } from 'src/utils/isSSR';
 // import { isSSR } from '../../../../utils/isSSR';
@@ -21,9 +25,9 @@ const Select = ({
 }) => {
   const [selectedOption, setSelectedOption] = useState({});
   const [optionsOpen, setOptionsOpen] = useState(false);
-  // useEffect(() => {
-  //   onChange(selectedOption.value);
-  // }, [selectedOption, onChange, optionsOpen]);
+  useEffect(() => {
+    onChange(selectedOption.value);
+  }, [selectedOption, onChange, optionsOpen]);
   // if (!isSSR) {
   //   document.body.addEventListener('click', (e) => {
   //     e.preventDefault();
@@ -32,26 +36,13 @@ const Select = ({
   //     }
   //   });
   // }
-  useEffect(() => {
-    if (!isSSR && id) {
-      const input = document.getElementById(`${id}`);
-      const MutationObserver =
-        window.MutationObserver || window.WebKitMutationObserver;
-      const myObserver = new MutationObserver(() => {
-        console.log('triggered', id);
-      });
-      const changeOfValueConfig = { attributeFilter: ['value'] };
-      myObserver.observe(input, changeOfValueConfig);
-    }
-  }, [id]);
-
   return (
     <StyledSelectContainer className={`${hidden ? 'hidden' : ''}`}>
       <input
         type="hidden"
         value={selectedOption.value}
-        onInput={(event) => {
-          console.log(event);
+        onChange={(event) => {
+          event.preventDefault();
           return onChange(event);
         }}
         name={name}
@@ -61,7 +52,6 @@ const Select = ({
         {!selectedOption.value || (selectedOption.value && optionsOpen) ? (
           <button
             className="placeholder"
-            type="button"
             onClick={() => {
               return setOptionsOpen(!optionsOpen);
             }}
@@ -71,18 +61,16 @@ const Select = ({
                 {title}
               </label>
             ) : null}
-            <IconNoSSR name="chevron-down" ratio="2.5" />
+            {/* <IconNoSSR name="chevron-down" ratio="2.5" /> */}
           </button>
         ) : (
           <button
             className="selected-value"
-            type="button"
             onClick={() => {
               return setOptionsOpen(!optionsOpen);
             }}
           >
             {selectedOption.label}
-            <IconNoSSR name="chevron-down" ratio="2.5" />
           </button>
         )}
         {optionsOpen && (
@@ -91,7 +79,6 @@ const Select = ({
               return (
                 <li className="option">
                   <button
-                    type="button"
                     onClick={() => {
                       setOptionsOpen(!optionsOpen);
                       return setSelectedOption(option);
@@ -142,3 +129,35 @@ Select.propTypes = {
   hidden: PropTypes.bool,
 };
 export default Select;
+
+/*
+        {title ? (
+                <label className="" htmlFor={id}>
+                {title}
+                </label>
+            ) : null} */
+/* <select
+                className=""
+                onChange={(event) => {
+                return onChange(event);
+                }}
+                name={name}
+                id={id}
+                value={value}
+                disabled={disabled}
+            >
+                {options.map((item, i) => {
+                return !item.hidden ? (
+                    <option
+                    className={item.disabled && item.selected ? 'placeholder' : ''}
+                    value={item.value}
+                    key={i}
+                    disabled={item.disabled}
+                    selected={item.selected}
+                    >
+                    {item.label}
+                    </option>
+                ) : undefined;
+                })}
+         </select>
+    */
