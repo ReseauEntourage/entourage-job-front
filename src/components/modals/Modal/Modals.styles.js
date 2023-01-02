@@ -11,6 +11,11 @@ export const StyledHeaderModal = styled.div`
       padding: 20px 24px;
       box-sizing: border-box;
       margin-bottom: 0;
+      font-size: 24px;
+      @media screen and (max-width: ${BREAKPOINTS.desktop - 1}px) {
+        font-size: 16px;
+        padding: 12px 24px 20px;
+      }
     }
   }
   .description-container {
@@ -27,5 +32,8 @@ export const StyledHeaderModal = styled.div`
         color: ${COLORS.darkGray};
       }
     }
+  }
+  .simple-margin {
+    margin-bottom: 20px;
   }
 `;

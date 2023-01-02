@@ -9,7 +9,6 @@ import {
 } from 'src/components/variables';
 import { StyledButton } from 'src/components/utils/Button/styles';
 
-
 const Button = ({
   visible,
   style,

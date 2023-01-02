@@ -30,6 +30,11 @@ export const StyledSelectContainer = styled.div`
           cursor: pointer;
         }
       }
+      span {
+        float: right;
+        height: 15px;
+        width: 15px;
+      }
     }
 
     ul.options-container {
