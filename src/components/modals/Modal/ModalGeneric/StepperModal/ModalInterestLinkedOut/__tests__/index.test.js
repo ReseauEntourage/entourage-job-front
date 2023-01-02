@@ -8,6 +8,7 @@ import { ModalsListener, openModal } from 'src/components/modals/Modal';
 import Api from 'src/api/index.ts';
 import ModalInterestLinkedOut from '../ModalInterestLinkedOut';
 
+jest.mock('@react-hook/window-size');
 jest.mock('react-modal');
 jest.mock('src/api/index.ts');
 jest.mock('src/components/modals/Modal', () => {
