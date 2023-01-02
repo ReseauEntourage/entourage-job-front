@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { COLORS, BREAKPOINTS } from 'src/constants/styles';
 
 export const StyledSendMailContent = styled.div`
   border: none;
@@ -30,6 +30,19 @@ export const StyledSendMailContent = styled.div`
     .email-details {
       padding: 12px;
       margin: 16px 0;
+    }
+  }
+  @media screen and (max-width: ${BREAKPOINTS.desktop - 1}px) {
+    font-size: 14px;
+    .email-content {
+      background-color: unset;
+      padding: 0;
+    }
+    .email-details,
+    .email-headers,
+    .textarea-container {
+      border: solid 1px ${COLORS.gray};
+      border-radius: 5px;
     }
   }
 `;

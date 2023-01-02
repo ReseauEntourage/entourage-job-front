@@ -28,12 +28,9 @@ const CandidateOpportunityDetailsCTAs = ({
 }) => {
   const { user } = useContext(UserContext);
 
-  console.log(typeof oppRefreshCallback);
-
   const updateOpportunityUser = useCallback(
     async (opportunityUser) => {
-      const { data } = await Api.putJoinOpportunity(opportunityUser);
-      console.log(data);
+      await Api.putJoinOpportunity(opportunityUser);
       fetchOpportunities();
       oppRefreshCallback();
 

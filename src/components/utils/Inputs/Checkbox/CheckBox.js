@@ -1,8 +1,8 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { StyledCheckbox } from 'src/components/utils/Inputs/Checkbox/CheckBox.styles';
+import { StyledCheckbox } from 'src/components/utils/Inputs/Checkbox/styles';
 
-const Checkbox = ({ handleClick, disabled, value, checked, title }) => {
+const Checkbox = ({ handleClick, disabled, value, checked }) => {
   return (
     <StyledCheckbox>
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
@@ -16,7 +16,6 @@ const Checkbox = ({ handleClick, disabled, value, checked, title }) => {
         />
         <span className="checkmark" />
       </label>
-      {title && <span className="label">{title}</span>}
     </StyledCheckbox>
   );
 };
@@ -26,13 +25,11 @@ Checkbox.propTypes = {
   disabled: PropTypes.bool,
   value: PropTypes.string,
   checked: PropTypes.bool.isRequired,
-  title: PropTypes.string,
 };
 
 Checkbox.defaultProps = {
   disabled: false,
   value: '',
-  title: '',
 };
 
 export default Checkbox;
