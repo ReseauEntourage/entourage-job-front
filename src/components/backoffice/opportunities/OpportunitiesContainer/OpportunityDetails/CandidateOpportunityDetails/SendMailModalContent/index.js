@@ -1,3 +1,3 @@
-import SendMailModalContent from './SendMailModalContent';
+import SendMailModalContent from "./SendMailModalContent";
 
 export default SendMailModalContent;
