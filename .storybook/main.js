@@ -14,9 +14,9 @@ module.exports = {
     // Make whatever fine-grained changes you need
     // Return the altered config
     config.resolve.modules = [
-      path.resolve(__dirname, "..", "./"),
-      "node_modules",
-    ]
+      path.resolve(__dirname, '..', './'),
+      'node_modules',
+    ];
     return config;
   },
 };
