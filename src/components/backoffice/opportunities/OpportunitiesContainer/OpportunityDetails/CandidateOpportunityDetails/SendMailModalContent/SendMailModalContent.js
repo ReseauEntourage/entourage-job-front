@@ -1,20 +1,18 @@
 import React, { useContext } from 'react';
+import { PropTypes } from 'prop-types';
 import { StyledSendMailContent } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/SendMailModalContent/SendMailContent.styles';
 import TextArea from 'src/components/utils/Inputs/TextArea';
 import { useFetchOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/useFetchOpportunity';
 import { UserContext } from 'src/components/store/UserProvider';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
 import FooterForm from 'src/components/forms/FooterForm';
+import { useModalContext } from 'src/components/modals/Modal';
 
-const SendMailModalContent = ({
-  OpportunityId,
-  relance,
-  onSumbit,
-  onCancel,
-}) => {
+const SendMailModalContent = ({ OpportunityId, relance, onSumbit }) => {
   const { user } = useContext(UserContext);
   const candidateId = getCandidateIdFromCoachOrCandidate(user);
   const { opportunity } = useFetchOpportunity(OpportunityId, candidateId);
+  const { onClose } = useModalContext();
   const object = relance
     ? 'Relance - demande de contact'
     : 'Demande de contact';
@@ -74,7 +72,7 @@ const SendMailModalContent = ({
       <div className="description">
         <p>{description}</p>
         <p>
-          <span className="margin-right">Référent de l'entreprise:</span>
+          <span className="margin-right">Référent de l’entreprise:</span>
           {opportunity?.recruiterFirstName} {opportunity?.recruiterName}
           <br />
           <span className="margin-right">Email entreprise:</span>
@@ -85,13 +83,14 @@ const SendMailModalContent = ({
         <div className="email-headers">
           <div>
             <span className="gray margin-right">De : </span>
-            <span className="margin-right">coordo@entourage.social ;</span>
+            <span className="margin-right">coordo@entourage.social&nbsp;;</span>
             <span className="margin-right">
-              {opportunity?.opportunityUsers?.user?.email} ;
+              {opportunity?.opportunityUsers?.user?.email}&nbsp;;
             </span>
             {opportunity?.opportunityUsers?.user?.candidat?.coach && (
               <span className="margin-right">
-                {opportunity?.opportunityUsers?.user?.candidat?.coach?.email} ;
+                {opportunity?.opportunityUsers?.user?.candidat?.coach?.email}
+                &nbsp;;
               </span>
             )}
           </div>
@@ -104,17 +103,17 @@ const SendMailModalContent = ({
           </div>
         </div>
         <div className="email-details">{emailContent}</div>
-        <div>
+        <div className="textarea-container">
           <TextArea label="Ajouter une description personnelle" />
         </div>
         <FooterForm
-          error={"Une erreur esr survenue à l'envoi"}
           noCompulsory
           onSubmit={() => {
             onSumbit();
+            onClose();
           }}
           onCancel={() => {
-            onCancel();
+            onClose();
           }}
           submitText="Envoyer"
           formId="send-mail-recruiter"
@@ -122,6 +121,12 @@ const SendMailModalContent = ({
       </div>
     </StyledSendMailContent>
   );
+};
+
+SendMailModalContent.propTypes = {
+  OpportunityId: PropTypes.string.isRequired,
+  relance: PropTypes.bool.isRequired,
+  onSumbit: PropTypes.func.isRequired,
 };
 
 export default SendMailModalContent;
