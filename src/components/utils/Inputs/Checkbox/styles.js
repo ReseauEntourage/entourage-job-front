@@ -1,7 +1,5 @@
 import styled from 'styled-components';
-// import { COLORS } from 'src/constants/styles';
-import { COLORS } from '../../../../constants/styles';
-
+import { COLORS } from 'src/constants/styles';
 
 export const StyledCheckbox = styled.div`
   height: 100%;
