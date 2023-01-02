@@ -24,6 +24,9 @@ export const tabs = [
 export const formatPlural = (text, count) => {
   if (count <= 1) {
     text = text.replace('s ', ' ');
+    if (text.charAt(text.length - 1) === 's') {
+      return text.substring(0, text.length - 1);
+    }
   }
   return text;
 };
