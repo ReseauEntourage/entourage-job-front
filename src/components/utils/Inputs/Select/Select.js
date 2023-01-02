@@ -1,10 +1,9 @@
 /* eslint-disable react/button-has-type */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
 import { StyledSelectContainer } from './Select.styles';
 
-// import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
-import FormValidatorErrorMessage from '../../../forms/FormValidatorErrorMessage';
 
 // import { IconNoSSR } from 'src/components/utils/Icon';
 // import { IconNoSSR } from '../../Icon';
