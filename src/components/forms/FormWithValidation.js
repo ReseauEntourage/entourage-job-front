@@ -68,7 +68,7 @@ const FormWithValidation = forwardRef(
         /* Validators start */
         tmpFieldValues[name] = fieldValue;
 
-        console.log(tmpFieldValues)
+        console.log(tmpFieldValues);
 
         const validation = validator.validate(tmpFieldValues); // envoie une copie des champs pour que le state ne soit pas altéré
 
