@@ -23,7 +23,7 @@ export const StyledTextAreaContainer = styled.div`
     border: none;
     resize: vertical;
     :focus-visible {
-        outline: none;
+      outline: none;
     }
   }
 `;
