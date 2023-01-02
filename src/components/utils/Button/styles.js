@@ -38,7 +38,6 @@ export const StyledButton = styled.button`
     }
   }
 
-
   &.uk-button-default {
     &:hover {
       /* background-color: ${COLORS.primaryOrange}; */
@@ -69,7 +68,6 @@ export const StyledButton = styled.button`
       }} !important;
     }
   }
-
 
   &.custom-primary-inverted {
     padding: 8px 20px;

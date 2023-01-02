@@ -27,7 +27,9 @@ const ActionLabel = ({
       }}
     >
       <StyledIconContainer>{icon}</StyledIconContainer>
-      <StyledLabelContainer className="action-label">{label}</StyledLabelContainer>
+      <StyledLabelContainer className="action-label">
+        {label}
+      </StyledLabelContainer>
     </StyledContainer>
   );
 };
