@@ -10,5 +10,5 @@ module.exports = defineConfig({
       // implement node event listeners here
     },
   },
-  retries: 5
+  retries: 5,
 });

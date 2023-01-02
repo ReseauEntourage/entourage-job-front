@@ -1,8 +1,8 @@
 describe('Parcours CV', () => {
   beforeEach(() => {
-    cy.intercept('GET', '/cv/cards/random*', { fixture: 'cv-cards-random-res' }).as(
-      'getAllCV'
-    );
+    cy.intercept('GET', '/cv/cards/random*', {
+      fixture: 'cv-cards-random-res',
+    }).as('getAllCV');
 
     cy.fixture('cv-url-res').then((cv) => {
       cy.intercept(
@@ -48,7 +48,7 @@ describe('Parcours CV', () => {
 
     cy.wait('@getCandidats');
 
-    cy.get('#form-offer-isPublic').scrollIntoView().click()
+    cy.get('#form-offer-isPublic').scrollIntoView().click();
     cy.get('#form-offer-title').scrollIntoView().type('Form test');
     cy.get('#form-offer-company').scrollIntoView().type('Random company');
     cy.get('#form-offer-recruiterFirstName').scrollIntoView().type('John');
