@@ -5,6 +5,7 @@ import NewsletterPartial from '..';
 
 jest.mock('react-modal');
 jest.mock('cookies-next');
+jest.mock('@react-hook/window-size');
 
 jest.mock('src/components/modals/Modal', () => {
   const modalModule = jest.requireActual('src/components/modals/Modal');

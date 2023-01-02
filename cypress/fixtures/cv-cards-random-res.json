@@ -1,51 +1,51 @@
 {
   "cvs": [
     {
-        "id": "d9908633-370b-4dcd-9e61-bd70ecf9f4e5",
-        "catchphrase": "opkkopijodfsiodsjfiods ofsdpofkdspofsd fdsf",
-        "urlImg": "images/33e64d73-a66b-40ad-9e81-99060243aa37.Published.jpg",
-        "updatedAt": "2022-02-01T15:03:30.041Z",
-        "ambitions": [],
-        "skills": [],
-        "businessLines": [
-            {
-                "name": "Artisanat / Art",
-                "order": -1
-            },
-            {
-                "name": "Bâtiment",
-                "order": -1
-            },
-            {
-                "name": "Associatif",
-                "order": -1
-            }
-        ],
-        "locations": [
-          {
-            "name":"Paris (75)"
-          },
-          {
-            "name":"Val-de-Marne (94)"
-          },
-          {
-            "name":"Seine-Saint-Denis (93)"
-          },
-          {
-            "name":"Seine-et-Marne (77)"
-          },
-          {
-            "name":"Essonne (91)"
-          },
-          {
-            "name":"Yvelines (78)"
-          },
-          {
-            "name":"Val-d'Oise (95)"
-          },
-          {
-            "name":"Hauts-de-Seine (92)"
-          }
+      "id": "d9908633-370b-4dcd-9e61-bd70ecf9f4e5",
+      "catchphrase": "opkkopijodfsiodsjfiods ofsdpofkdspofsd fdsf",
+      "urlImg": "images/33e64d73-a66b-40ad-9e81-99060243aa37.Published.jpg",
+      "updatedAt": "2022-02-01T15:03:30.041Z",
+      "ambitions": [],
+      "skills": [],
+      "businessLines": [
+        {
+          "name": "Artisanat / Art",
+          "order": -1
+        },
+        {
+          "name": "Bâtiment",
+          "order": -1
+        },
+        {
+          "name": "Associatif",
+          "order": -1
+        }
+      ],
+      "locations": [
+        {
+          "name": "Paris (75)"
+        },
+        {
+          "name": "Val-de-Marne (94)"
+        },
+        {
+          "name": "Seine-Saint-Denis (93)"
+        },
+        {
+          "name": "Seine-et-Marne (77)"
+        },
+        {
+          "name": "Essonne (91)"
+        },
+        {
+          "name": "Yvelines (78)"
+        },
+        {
+          "name": "Val-d'Oise (95)"
+        },
+        {
+          "name": "Hauts-de-Seine (92)"
+        }
       ],
       "user": {
         "employed": false,
@@ -67,4 +67,5 @@
       },
       "ranking": 0.05426356589147287
     }
-]}
+  ]
+}
