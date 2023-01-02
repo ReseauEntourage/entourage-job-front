@@ -4,7 +4,14 @@ import Button from 'src/components/utils/Button';
 import ButtonPost from 'src/components/backoffice/cv/ButtonPost';
 import { StyledFooterForm } from 'src/components/forms/Forms.styles';
 
-const FooterForm = ({ error, onSubmit, onCancel, submitText, formId }) => {
+const FooterForm = ({
+  error,
+  onSubmit,
+  onCancel,
+  submitText,
+  formId,
+  noCompulsory,
+}) => {
   return (
     <StyledFooterForm className="uk-flex uk-flex-column uk-flex-left">
       {error && (
@@ -13,9 +20,11 @@ const FooterForm = ({ error, onSubmit, onCancel, submitText, formId }) => {
         </div>
       )}
       <div>
-        <div className="uk-width-auto@s uk-margin-small-bottom">
-          <span className="uk-text-meta">* : Mentions obligatoires</span>
-        </div>
+        {!noCompulsory && (
+          <div className="uk-width-auto@s uk-margin-small-bottom">
+            <span className="uk-text-meta">* : Mentions obligatoires</span>
+          </div>
+        )}
 
         <div className="cta-container">
           <div>
@@ -48,6 +57,7 @@ FooterForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   submitText: PropTypes.string,
   formId: PropTypes.string,
+  noCompulsory: PropTypes.bool,
 };
 
 FooterForm.defaultProps = {
@@ -55,6 +65,7 @@ FooterForm.defaultProps = {
   onCancel: undefined,
   submitText: undefined,
   formId: '',
+  noCompulsory: false,
 };
 
 export default FooterForm;
