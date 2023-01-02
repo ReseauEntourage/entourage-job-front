@@ -2,7 +2,7 @@ export const allCTAs = {
   apply: {
     color: 'primaryOrange',
     className: 'custom-primary-inverted',
-    action: () => {},
+    action: 'contactEmail',
     text: 'Je postule',
   },
   applied: {
@@ -20,19 +20,19 @@ export const allCTAs = {
   resend: {
     color: 'primaryOrange',
     className: 'custom-primary-inverted',
-    action: () => {},
+    action: 'contactRelance',
     text: "Je veux relancer l'entreprise",
   },
   gotInterview: {
     color: 'primaryOrange',
     className: 'custom-primary-inverted',
-    action: "updateToInterview",
+    action: 'updateToInterview',
     text: "J'ai décroché un entretien",
   },
   abandon: {
     color: 'darkGrayFont',
     className: 'custom-primary-inverted',
-    action: "abandon",
+    action: 'abandon',
     text: "J'abandonne cette offre",
   },
   dateInterview: {

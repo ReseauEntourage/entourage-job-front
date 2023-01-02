@@ -43,6 +43,7 @@ const CandidateOpportunityDetails = ({
   isExternal,
   fetchOpportunities,
   createdAt,
+  oppRefreshCallback,
 }) => {
   const { opportunityUsers, bookmarkOpportunity } = useBookmarkOpportunity(
     id,
@@ -124,6 +125,9 @@ const CandidateOpportunityDetails = ({
             opportunityUsersProp.archived
           )}
           OpportunityId={id}
+          oppRefreshCallback={() => {
+            oppRefreshCallback();
+          }}
           fetchOpportunities={async () => {
             await fetchOpportunities();
           }}
@@ -196,6 +200,7 @@ CandidateOpportunityDetails.propTypes = {
     })
   ),
   fetchOpportunities: PropTypes.func,
+  oppRefreshCallback: PropTypes.func.isRequired,
 };
 
 export default CandidateOpportunityDetails;
