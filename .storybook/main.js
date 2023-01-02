@@ -1,5 +1,4 @@
 const path = require('path');
-console.log(path.resolve(__dirname, './'));
 module.exports = {
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
@@ -11,7 +10,13 @@ module.exports = {
   core: {
     builder: '@storybook/builder-webpack5',
   },
-  resolve: {
-    modules: [path.resolve(__dirname, './'), 'node_modules']
-  }
+  webpackFinal: async (config, { configType }) => {
+    // Make whatever fine-grained changes you need
+    // Return the altered config
+    config.resolve.modules = [
+      path.resolve(__dirname, "..", "./"),
+      "node_modules",
+    ]
+    return config;
+  },
 };
