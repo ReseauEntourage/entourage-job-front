@@ -12,7 +12,7 @@ const CandidateOpportunityDetailsContainer = ({ fetchOpportunities }) => {
   const { user } = useContext(UserContext);
   const candidateId = getCandidateIdFromCoachOrCandidate(user);
 
-  const { opportunity, isLoading } = useFetchOpportunity(
+  const { opportunity, isLoading, refreshOpportunity } = useFetchOpportunity(
     opportunityId,
     candidateId
   );
@@ -40,6 +40,9 @@ const CandidateOpportunityDetailsContainer = ({ fetchOpportunities }) => {
           opportunityUsers={opportunity.opportunityUsers}
           fetchOpportunities={fetchOpportunities}
           createdAt={opportunity.createdAt}
+          oppRefreshCallback={() => {
+            refreshOpportunity();
+          }}
         />
       }
       isLoading={isLoading}

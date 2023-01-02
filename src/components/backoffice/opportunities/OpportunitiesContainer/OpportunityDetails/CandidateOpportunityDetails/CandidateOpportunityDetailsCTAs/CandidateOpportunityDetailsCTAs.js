@@ -17,23 +17,25 @@ import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import renderSimpleSelectField from 'src/components/forms/schema/formSimpleSelectField';
 import { UserContext } from 'src/components/store/UserProvider';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
+import ModalGeneric from 'src/components/modals/Modal/ModalGeneric/ModalGeneric';
+import SendMailModalContent from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/SendMailModalContent';
 
 const CandidateOpportunityDetailsCTAs = ({
   tab,
   OpportunityId,
   fetchOpportunities,
+  oppRefreshCallback,
 }) => {
   const { user } = useContext(UserContext);
 
-  console.log(OpportunityId);
+  console.log(typeof oppRefreshCallback);
+
   const updateOpportunityUser = useCallback(
     async (opportunityUser) => {
       const { data } = await Api.putJoinOpportunity(opportunityUser);
       console.log(data);
       fetchOpportunities();
-
-
-
+      oppRefreshCallback();
 
       // à gérer: update du statut de l'offre
 
@@ -47,6 +49,7 @@ const CandidateOpportunityDetailsCTAs = ({
     },
     [
       // onOfferUpdated, setOffer
+      oppRefreshCallback,
       fetchOpportunities,
     ]
   );
@@ -148,9 +151,20 @@ const CandidateOpportunityDetailsCTAs = ({
         />
       );
     },
-
-
-
+    contactEmail: () => {
+      openModal(
+        <ModalGeneric title={"Contacter l'entreprise"}>
+          <SendMailModalContent OpportunityId={OpportunityId} />
+        </ModalGeneric>
+      );
+    },
+    contactRelance: () => {
+      openModal(
+        <ModalGeneric title={"Contacter l'entreprise"}>
+          <SendMailModalContent OpportunityId={OpportunityId} relance />
+        </ModalGeneric>
+      );
+    },
     //   openModal(
     //     <ModalEdit
     //       title="Félicitation vous avez décroché un emploi"
@@ -196,6 +210,7 @@ CandidateOpportunityDetailsCTAs.propTypes = {
   tab: PropTypes.number.isRequired,
   OpportunityId: PropTypes.string.isRequired,
   fetchOpportunities: PropTypes.func.isRequired,
+  oppRefreshCallback: PropTypes.func.isRequired,
 };
 
 export default CandidateOpportunityDetailsCTAs;
