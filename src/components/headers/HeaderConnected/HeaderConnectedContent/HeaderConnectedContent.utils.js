@@ -57,6 +57,7 @@ export const renderLinks = (user, logout) => {
       {
         href: '/backoffice/candidat/offres/private',
         name: 'Les offres',
+        queryParams: `?status=-1`,
         icon: 'list',
         // badge: 'offers',
         tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_OFFRES_CLIC,
@@ -95,11 +96,29 @@ export const renderLinks = (user, logout) => {
     ],
     coach: [
       {
-        href: '/backoffice/candidat/offres',
-        name: 'Offres',
+        href: '/backoffice/candidat/offres/private',
+        name: 'Les offres',
+        queryParams: `?status=-1`,
         icon: 'list',
-        badge: 'offers',
+        // badge: 'offers',
         tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_OFFRES_CLIC,
+        subMenu: [
+          {
+            href: '/backoffice/candidat/offres/private',
+            name: 'Offres du candidat',
+            queryParams: `?status=-1`,
+            // icon: 'list',
+            badge: 'offers',
+            tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_MES_OFFRES_CLIC,
+          },
+          {
+            href: '/backoffice/candidat/offres',
+            name: 'Toutes les offres',
+            // icon: 'list',
+            // badge: 'offers',
+            tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_OFFRES_GENERALES_CLIC,
+          },
+        ],
       },
       {
         href: '/backoffice/candidat/suivi',

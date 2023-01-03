@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ADMIN_ROLES, USER_ROLES } from 'src/constants';
 import Api from 'src/api/index.ts';
+import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
 
 const reducePromisesResults = (data) => {
   return data.reduce((acc, curr) => {
@@ -65,12 +66,7 @@ export function useNotifBadges(user, path) {
             console.error(err);
           });
       } else {
-        let candidateId;
-        if (user.role === USER_ROLES.CANDIDAT) {
-          candidateId = user.id;
-        } else if (user.role === USER_ROLES.COACH) {
-          candidateId = user.candidat?.id;
-        }
+        const candidateId = getCandidateIdFromCoachOrCandidate(user);
         if (candidateId) {
           Promise.all([
             Api.getOpportunitiesUserCount(candidateId),
