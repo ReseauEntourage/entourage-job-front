@@ -75,11 +75,11 @@ const CandidateOpportunityList = ({
 CandidateOpportunityList.propTypes = {
   candidateId: PropTypes.string.isRequired,
   search: PropTypes.string,
-  filters: PropTypes.shape(),
+  filters: PropTypes.shape({}),
   setFilters: PropTypes.func,
   setSearch: PropTypes.func,
   resetFilters: PropTypes.func,
-  tabFilters: PropTypes.arrayOf(PropTypes.shape()),
+  tabFilters: PropTypes.arrayOf(PropTypes.shape({})),
   setTabFilters: PropTypes.func,
 };
 

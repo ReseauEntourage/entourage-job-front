@@ -148,7 +148,7 @@ const NewsletterPartial = ({ style, padding, tag }) => {
 
 NewsletterPartial.propTypes = {
   padding: PropTypes.bool,
-  tag: PropTypes.shape(),
+  tag: PropTypes.shape({}),
   style: PropTypes.oneOf(['default', 'muted']),
 };
 

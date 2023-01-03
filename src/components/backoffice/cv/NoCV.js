@@ -55,7 +55,7 @@ NoCV.propTypes = {
   candidateId: PropTypes.string.isRequired,
   user: PropTypes.shape({
     role: PropTypes.string,
-    candidat: PropTypes.shape(),
+    candidat: PropTypes.shape({}),
   }).isRequired,
   setCV: PropTypes.func.isRequired,
 };

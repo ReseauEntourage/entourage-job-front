@@ -13,7 +13,7 @@ const FormValidatorErrorMessage = ({ validObj }) => {
 };
 
 FormValidatorErrorMessage.propTypes = {
-  validObj: PropTypes.shape(),
+  validObj: PropTypes.shape({ message: PropTypes.string }),
 };
 
 FormValidatorErrorMessage.defaultProps = {

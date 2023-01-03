@@ -27,7 +27,7 @@ const FiltersTabs = ({ tabFilters, setTabFilters }) => {
 };
 FiltersTabs.propTypes = {
   setTabFilters: PropTypes.func.isRequired,
-  tabFilters: PropTypes.arrayOf(PropTypes.shape()),
+  tabFilters: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 FiltersTabs.defaultProps = {

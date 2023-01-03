@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 const NumberGrid = ({ numbers, numbersPerRow }) => {
   return (
-    <div uk-height-match="target: .ent-number-description">
+    <div data-uk-height-match="target: .ent-number-description">
       <Grid
         center
         middle

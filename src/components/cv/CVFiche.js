@@ -24,9 +24,10 @@ import { usePostOpportunity, useUpdateSharesCount } from 'src/hooks';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
 import CVCareerPathSentence from 'src/components/cv/CVCareerPathSentence';
-import { AMBITIONS_PREFIXES, CONTRACTS } from 'src/constants';
+import { CONTRACTS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { fbEvent } from 'src/lib/fb';
+import { CVShape } from './CV.shape';
 
 /**
  * Le cv en public et en preview
@@ -512,80 +513,7 @@ const CVFiche = ({ cv, actionDisabled }) => {
 };
 
 CVFiche.propTypes = {
-  cv: PropTypes.shape({
-    user: PropTypes.shape({
-      candidat: PropTypes.shape({
-        firstName: PropTypes.string.isRequired,
-        lastName: PropTypes.string.isRequired,
-      }).isRequired,
-    }).isRequired,
-    catchphrase: PropTypes.string,
-    story: PropTypes.string,
-    locations: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    availability: PropTypes.string,
-    urlImg: PropTypes.string,
-    contracts: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    ambitions: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        order: PropTypes.number.isRequired,
-        prefix: PropTypes.oneOf(
-          AMBITIONS_PREFIXES.map(({ value }) => {
-            return value;
-          })
-        ),
-      })
-    ),
-    businessLines: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        order: PropTypes.number.isRequired,
-      })
-    ).isRequired,
-    languages: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    transport: PropTypes.string,
-    skills: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    passions: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    reviews: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        text: PropTypes.string.isRequired,
-        status: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    experiences: PropTypes.arrayOf(
-      PropTypes.shape({
-        description: PropTypes.string.isRequired,
-        skills: PropTypes.arrayOf(
-          PropTypes.shape({
-            name: PropTypes.string.isRequired,
-          })
-        ).isRequired,
-      })
-    ).isRequired,
-    status: PropTypes.string,
-    UserId: PropTypes.string,
-  }).isRequired,
+  cv: CVShape.isRequired,
   actionDisabled: PropTypes.bool,
 };
 

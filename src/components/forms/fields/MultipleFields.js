@@ -90,8 +90,8 @@ const FieldGroup = memo(
 FieldGroup.propTypes = {
   index: PropTypes.string.isRequired,
   parentName: PropTypes.string.isRequired,
-  values: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  fields: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  values: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  fields: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   childWidths: PropTypes.arrayOf(PropTypes.string).isRequired,
   formId: PropTypes.string.isRequired,
   onFieldChange: PropTypes.func.isRequired,
@@ -233,8 +233,8 @@ const MultipleFields = ({
 MultipleFields.propTypes = {
   title: PropTypes.string,
   action: PropTypes.string,
-  values: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  fields: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  values: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  fields: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   childWidths: PropTypes.arrayOf(PropTypes.string),
   formId: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,

@@ -16,6 +16,7 @@ import Button from 'src/components/utils/Button';
 import { CV_FILTERS_DATA } from 'src/constants';
 import CVList from 'src/components/cv/CVList';
 import { IconNoSSR } from 'src/components/utils/Icon';
+import { CVShape } from 'src/components/cv/CV.shape';
 
 const CVPage = ({ cv, exists, router, hideShareOptions }) => {
   const updateSharesCount = useUpdateSharesCount();
@@ -152,9 +153,9 @@ CVPage.getInitialProps = async ({ query }) => {
     });
 };
 CVPage.propTypes = {
-  cv: PropTypes.shape(),
+  cv: CVShape,
   hideShareOptions: PropTypes.bool,
-  router: PropTypes.shape(),
+  router: PropTypes.shape({ asPath: PropTypes.string }),
   exists: PropTypes.bool,
 };
 

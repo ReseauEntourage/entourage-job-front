@@ -53,7 +53,7 @@ const SimpleLink = ({
 SimpleLink.propTypes = {
   href: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.shape({ pathname: PropTypes.string, query: PropTypes.shape() }),
+    PropTypes.shape({ pathname: PropTypes.string, query: PropTypes.shape({}) }),
   ]),
   visible: PropTypes.oneOf(UIKIT_SCREENS),
   children: PropTypes.oneOfType([

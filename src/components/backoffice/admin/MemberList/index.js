@@ -322,7 +322,7 @@ const MemberList = ({
 
 MemberList.propTypes = {
   search: PropTypes.string,
-  filters: PropTypes.shape(),
+  filters: PropTypes.shape({}),
   setFilters: PropTypes.func,
   setSearch: PropTypes.func,
   resetFilters: PropTypes.func,
