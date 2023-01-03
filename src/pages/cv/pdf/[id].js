@@ -5,6 +5,7 @@ import Layout from 'src/components/Layout';
 import Api from 'src/api/index.ts';
 import { Section } from 'src/components/utils';
 import CVPDF from 'src/components/cv/CVPDF';
+import { CVShape } from 'src/components/cv/CV.shape';
 
 const CVPDFPage = ({ cv, page, router }) => {
   if (!cv) {
@@ -64,9 +65,9 @@ CVPDFPage.getInitialProps = async ({ query }) => {
 };
 
 CVPDFPage.propTypes = {
-  cv: PropTypes.shape(),
+  cv: CVShape,
   page: PropTypes.number,
-  router: PropTypes.shape(),
+  router: PropTypes.shape({ asPath: PropTypes.string }),
 };
 
 CVPDFPage.defaultProps = {

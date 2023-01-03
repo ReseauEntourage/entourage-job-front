@@ -379,7 +379,14 @@ const GenericField = ({
 };
 
 GenericField.propTypes = {
-  data: PropTypes.objectOf(PropTypes.any).isRequired,
+  data: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.shape({})),
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.shape({}),
+      PropTypes.string,
+    ])
+  ).isRequired,
   formId: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([
     PropTypes.bool,

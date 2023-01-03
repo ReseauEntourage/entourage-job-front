@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 const AnimatedList = ({ items }) => {
   return (
     <ul
-      uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;"
+      data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;"
       className="uk-list uk-list-disc uk-margin-remove-bottom"
     >
       {items.map((item, index) => {

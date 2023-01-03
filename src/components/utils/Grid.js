@@ -108,7 +108,7 @@ Grid.propTypes = {
   column: PropTypes.bool,
   row: PropTypes.bool,
   masonry: PropTypes.bool,
-  style: PropTypes.shape(),
+  style: PropTypes.shape({}),
   reverse: PropTypes.bool,
 };
 Grid.defaultProps = {
