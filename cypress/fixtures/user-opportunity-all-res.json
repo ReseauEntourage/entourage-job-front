@@ -1,0 +1,155 @@
+{
+    "offers": [],
+    "otherOffers": [
+        {
+            "id": "b96d9f5d-8fe4-4138-92ba-ec49fa4d70c9",
+            "updatedAt": "2022-05-18T10:48:18.322Z",
+            "createdAt": "2022-03-16T10:14:33.967Z",
+            "title": "Développeur HTML/CSS",
+            "company": "Web Services SA",
+            "description": "Desc Offre externe\n",
+            "companyDescription": null,
+            "numberOfPositions": 1,
+            "prerequisites": null,
+            "skills": null,
+            "contract": "cdd-6",
+            "endOfContract": null,
+            "startOfContract": "2022-05-26",
+            "isPartTime": false,
+            "recruiterName": null,
+            "recruiterFirstName": null,
+            "recruiterPosition": null,
+            "isPublic": false,
+            "isValidated": true,
+            "isExternal": true,
+            "link": "YAHOU",
+            "externalOrigin": "network",
+            "recruiterMail": null,
+            "date": "2022-03-16T10:14:33.783Z",
+            "department": "Paris (75)",
+            "message": null,
+            "address": null,
+            "driversLicense": false,
+            "workingHours": null,
+            "salary": null,
+            "otherInfo": null,
+            "createdBy": null,
+            "businessLines": [],
+            "opportunityUsers": {
+                "id": "4a58990a-8229-4a37-b76a-384ae33423df",
+                "UserId": "198e8950-d5be-4e82-aaf8-d18840dffba1",
+                "OpportunityId": "b96d9f5d-8fe4-4138-92ba-ec49fa4d70c9",
+                "status": 1,
+                "seen": true,
+                "bookmarked": false,
+                "archived": false,
+                "note": null,
+                "updatedAt": "2022-05-18T10:47:26.571Z",
+                "recommended": false,
+                "user": {
+                    "id": "198e8950-d5be-4e82-aaf8-d18840dffba1",
+                    "email": "m.fleuri@interflora.fr",
+                    "firstName": "Mike",
+                    "lastName": "Fleuri",
+                    "gender": 0,
+                    "zone": "PARIS",
+                    "phone": "0123456789",
+                    "candidat": {
+                        "employed": false,
+                        "hidden": false,
+                        "note": "Suite à notre rdv de ce lundi : retravailler ensemble mon CV\n\n23.03 - revoir comment mener mon prochain entretien",
+                        "url": "michael-198e8950",
+                        "coach": {
+                            "id": "65ab1daa-b65d-4c38-ab9a-b3cb8eb1e390",
+                            "email": "khadiata.sow@accenture.com",
+                            "firstName": "Khadiata",
+                            "lastName": "Sow",
+                            "zone": "PARIS"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "id": "f81cc22b-6998-4ac8-be45-a1919e3fed2b",
+            "updatedAt": "2022-05-11T09:22:37.251Z",
+            "createdAt": "2021-10-28T15:44:32.885Z",
+            "title": "Développeur pour 2ème Test de duplication du 05/01/2022 (copie)",
+            "company": "Entourage",
+            "description": "ERTY",
+            "companyDescription": "AZER",
+            "numberOfPositions": 6,
+            "prerequisites": "YUIO",
+            "skills": "YTUI-YTUI-YTUI",
+            "contract": "cdd-6",
+            "endOfContract": "2021-10-30",
+            "startOfContract": null,
+            "isPartTime": true,
+            "recruiterName": "Bex",
+            "recruiterFirstName": "Emile",
+            "recruiterPosition": "Développeur Test",
+            "isPublic": false,
+            "isValidated": true,
+            "isExternal": false,
+            "link": null,
+            "externalOrigin": null,
+            "recruiterMail": "emile.bex@gmail.com",
+            "date": "2021-10-28T15:44:32.746Z",
+            "department": "Ain (01)",
+            "message": "Pour Test de dupliquer et ensuite rendre PUBLIQUE cette offre privée",
+            "address": "32 rue",
+            "driversLicense": false,
+            "workingHours": null,
+            "salary": null,
+            "otherInfo": "",
+            "createdBy": null,
+            "businessLines": [
+                {
+                    "name": "Artisanat / Art",
+                    "order": 0,
+                    "OpportunityBusinessLine": {
+                        "id": "8420b1e0-7c86-4ec3-977d-baacd9a7f344",
+                        "OpportunityId": "f81cc22b-6998-4ac8-be45-a1919e3fed2b",
+                        "BusinessLineId": "ed87e142-aaf6-4ab9-961e-ad3f2b54679e",
+                        "createdAt": "2022-05-11T09:22:37.266Z",
+                        "updatedAt": "2022-05-11T09:22:37.266Z"
+                    }
+                }
+            ],
+            "opportunityUsers": {
+                "id": "f1ccd689-d17f-40f2-b54b-69e4ec1e4cec",
+                "UserId": "198e8950-d5be-4e82-aaf8-d18840dffba1",
+                "OpportunityId": "f81cc22b-6998-4ac8-be45-a1919e3fed2b",
+                "status": 0,
+                "seen": true,
+                "bookmarked": false,
+                "archived": false,
+                "note": null,
+                "updatedAt": "2022-05-18T10:50:39.283Z",
+                "recommended": false,
+                "user": {
+                    "id": "198e8950-d5be-4e82-aaf8-d18840dffba1",
+                    "email": "m.fleuri@interflora.fr",
+                    "firstName": "Mike",
+                    "lastName": "Fleuri",
+                    "gender": 0,
+                    "zone": "PARIS",
+                    "phone": "0123456789",
+                    "candidat": {
+                        "employed": false,
+                        "hidden": false,
+                        "note": "Suite à notre rdv de ce lundi : retravailler ensemble mon CV\n\n23.03 - revoir comment mener mon prochain entretien",
+                        "url": "michael-198e8950",
+                        "coach": {
+                            "id": "65ab1daa-b65d-4c38-ab9a-b3cb8eb1e390",
+                            "email": "khadiata.sow@accenture.com",
+                            "firstName": "Khadiata",
+                            "lastName": "Sow",
+                            "zone": "PARIS"
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

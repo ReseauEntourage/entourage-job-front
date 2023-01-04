@@ -1,7 +1,7 @@
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import { STORAGE_KEYS, USER_ROLES } from 'src/constants';
 
 export const UserContext = createContext();
@@ -54,7 +54,7 @@ const UserProvider = ({ children }) => {
   }, [resetAndRedirect]);
 
   const login = useCallback(async (email, password) => {
-    const { data } = await Api.post('/auth/login', {
+    const { data } = await Api.postAuthLogin({
       email: email.toLowerCase(),
       password,
     });
@@ -66,7 +66,7 @@ const UserProvider = ({ children }) => {
     if (isReady && isFirstLoad) {
       const accessToken = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
       if (accessToken) {
-        Api.get('/auth/current')
+        Api.getAuthCurrent()
           .then(({ data: currentUser }) => {
             setUser(currentUser);
             setIsFirstLoad(false);

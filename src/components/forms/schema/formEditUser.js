@@ -1,4 +1,4 @@
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import { ADMIN_ROLES, USER_ROLES } from 'src/constants';
 import { ADMIN_ZONES_FILTERS } from 'src/constants/departements';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
@@ -110,7 +110,7 @@ export default {
             getValue('role') === USER_ROLES.COACH
               ? USER_ROLES.CANDIDAT
               : USER_ROLES.COACH;
-          Api.get('/user/search', {
+          Api.getUsersSearch({
             params: {
               query: inputValue,
               role, // un certain role

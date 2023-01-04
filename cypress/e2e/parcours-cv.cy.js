@@ -1,23 +1,23 @@
 describe('Parcours CV', () => {
   beforeEach(() => {
-    cy.intercept('GET', '/api/v1/cv/cards/random*', { fixture: 'cvs.json' }).as(
+    cy.intercept('GET', '/cv/cards/random*', { fixture: 'cv-cards-random-res' }).as(
       'getAllCV'
     );
 
-    cy.fixture('cv').then((cv) => {
+    cy.fixture('cv-url-res').then((cv) => {
       cy.intercept(
         'GET',
-        '/api/v1/cv/' + cv.cv.user.candidat.firstName.toLowerCase() + '*',
+        '/cv/url/' + cv.cv.user.candidat.firstName.toLowerCase() + '*',
         cv
       ).as('getCV');
     });
 
-    cy.intercept('POST', '/api/v1/opportunity', {
-      fixture: 'response-opportunity',
+    cy.intercept('POST', '/opportunity', {
+      fixture: 'opportunity-res',
     }).as('postOpportunity');
 
-    cy.intercept('GET', '/api/v1/user/search/candidates*', {
-      fixture: 'candidats-query',
+    cy.intercept('GET', '/user/search/candidates*', {
+      fixture: 'user-search-candidates-res',
     }).as('getCandidats');
   });
 
@@ -32,7 +32,7 @@ describe('Parcours CV', () => {
   });
 
   it("Ouvrir la page d'un CV", () => {
-    cy.fixture('cvs').then((cvs) => {
+    cy.fixture('cv-cards-random-res').then((cvs) => {
       cy.get(
         `[data-testid="card-${cvs.cvs[0].user.candidat.firstName}"]`
       ).click();
@@ -48,6 +48,7 @@ describe('Parcours CV', () => {
 
     cy.wait('@getCandidats');
 
+    cy.get('#form-offer-isPublic').scrollIntoView().click()
     cy.get('#form-offer-title').scrollIntoView().type('Form test');
     cy.get('#form-offer-company').scrollIntoView().type('Random company');
     cy.get('#form-offer-recruiterFirstName').scrollIntoView().type('John');

@@ -1,4 +1,4 @@
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import { USER_ROLES } from 'src/constants';
 
 export default {
@@ -27,7 +27,7 @@ export default {
       loadOptions: (inputValue, callback, getValue) => {
         if (inputValue.length > 0) {
           const role = getValue('role');
-          Api.get('/user/search', {
+          Api.getUsersSearch({
             params: {
               query: inputValue,
               role, // un certain role

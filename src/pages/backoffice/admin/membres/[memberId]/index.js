@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { usePrevious } from 'src/hooks/utils';
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import { Button, Card, Grid, Section, SimpleLink } from 'src/components/utils';
 import schemaEditUser from 'src/components/forms/schema/formEditUser';
 import schemaDeleteUser from 'src/components/forms/schema/formDeleteUser.json';
@@ -122,7 +122,7 @@ const EditUserModal = ({ user, setUser }) => {
       onSubmit={async (fields, closeModal) => {
         const updateUser = async (onError) => {
           try {
-            const { data } = await Api.put(`/user/${user.id}`, {
+            const { data } = await Api.putUser(user.id, {
               ...fields,
               email: fields.email.toLowerCase(),
               firstName: fields.firstName.trim().replace(/\s\s+/g, ' '),
@@ -214,7 +214,7 @@ const User = () => {
   const prevId = usePrevious(memberId);
 
   const getUser = useCallback(() => {
-    Api.get(`/user/${memberId}`)
+    Api.getUserById(memberId)
       .then(({ data }) => {
         setUser(data);
         setLoading(false);
@@ -238,7 +238,7 @@ const User = () => {
   const deleteUser = async (fields, closeModal) => {
     try {
       if (fields.confirmation === 'SUPPRIMER') {
-        await Api.delete(`/user/${memberId}`);
+        await Api.deleteUser(memberId);
         closeModal();
         UIkit.notification("L'utilisateur a bien été supprimé", 'success');
         replace('/backoffice/admin/membres');
@@ -384,14 +384,14 @@ const User = () => {
                 <div>
                   {tab === 'cv' && (
                     <CVPageContent
-                      candidatId={getCandidateIdFromCoachOrCandidate(user)}
+                      candidateId={getCandidateIdFromCoachOrCandidate(user)}
                       cv={cv}
                       setCV={setCV}
                     />
                   )}
                   {tab === 'offres' && (
                     <AdminCandidateOpportunities
-                      candidatId={getCandidateIdFromCoachOrCandidate(user)}
+                      candidateId={getCandidateIdFromCoachOrCandidate(user)}
                     />
                   )}
                 </div>
@@ -412,10 +412,10 @@ const User = () => {
           {tab !== 'parametres' && user.role === USER_ROLES.CANDIDAT && (
             <div>
               {tab === 'cv' && (
-                <CVPageContent candidatId={user.id} cv={cv} setCV={setCV} />
+                <CVPageContent candidateId={user.id} cv={cv} setCV={setCV} />
               )}
               {tab === 'offres' && (
-                <AdminCandidateOpportunities candidatId={user.id} />
+                <AdminCandidateOpportunities candidateId={user.id} />
               )}
             </div>
           )}
@@ -455,7 +455,7 @@ const User = () => {
                               },
                             });
                           }}
-                          candidatId={user.id}
+                          candidateId={user.id}
                         />
                         <ToggleWithConfirmationModal
                           id="hidden"
@@ -464,7 +464,7 @@ const User = () => {
                           modalConfirmation="Oui, masquer le CV"
                           defaultValue={user.candidat.hidden}
                           onToggle={(hidden) => {
-                            return Api.put(`/user/candidat/${user.id}`, {
+                            return Api.putCandidate(user.id, {
                               hidden,
                             })
                               .then(() => {

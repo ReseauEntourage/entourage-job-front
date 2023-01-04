@@ -1,6 +1,6 @@
 describe('Parcours Entreprises', () => {
   beforeEach(() => {
-    cy.intercept('POST', 'api/v1/contact/company', {
+    cy.intercept('POST', '/contact/company', {
       statusCode: 201,
     }).as('postContactCompany');
   });

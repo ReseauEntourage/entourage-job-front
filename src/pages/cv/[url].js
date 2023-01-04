@@ -8,7 +8,7 @@ import {
 } from 'src/components/partials';
 import { CVBackground, CVFiche } from 'src/components/cv';
 import Layout from 'src/components/Layout';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import { Grid, Section, SimpleLink } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';
 import { useUpdateSharesCount } from 'src/hooks';
@@ -138,7 +138,7 @@ const CVPage = ({ cv, exists, router, hideShareOptions }) => {
 };
 
 CVPage.getInitialProps = async ({ query }) => {
-  return Api.get(`/cv/${query.url}`)
+  return Api.getCVByUrl(query.url)
     .then(({ data: { cv, exists } }) => {
       return {
         cv,

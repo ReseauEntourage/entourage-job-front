@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import StepperModal from 'src/components/modals/Modal/ModalGeneric/StepperModal';
 import FormWithValidation from 'src/components/forms/FormWithValidation';
 import schemaGetEmail from 'src/components/forms/schema/formGetEmail.json';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import { Button, Img } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { gaEvent } from 'src/lib/gtag';
@@ -36,7 +36,7 @@ const ModalShareCV = ({ firstName }) => {
                 onCancel={close}
                 onSubmit={({ email }) => {
                   gaEvent(GA_TAGS.POPUP_PARTAGE_ENVOYER_MAIL_SUCCES);
-                  return Api.post('/contact/newsletter', {
+                  return Api.postNewsletter({
                     email,
                     ...newsletterParams,
                   })

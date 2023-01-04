@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 
 import { Grid, Img, SimpleLink } from 'src/components/utils';
 import ModalShareCV from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import { SharesCountContext } from 'src/components/store/SharesCountProvider';
 import { gaEvent } from 'src/lib/gtag';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
@@ -65,9 +65,9 @@ const CandidatCard = ({
     openModal(<ModalShareCV firstName={firstName} />);
   };
 
-  const updateShareCount = (candidatId, type) => {
-    Api.post('/cv/count', {
-      candidatId,
+  const updateShareCount = (candidateId, type) => {
+    Api.postCVCount({
+      candidateId,
       type,
     })
       .then(() => {

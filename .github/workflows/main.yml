@@ -18,7 +18,7 @@ env:
   TUTORIAL_INTERVIEW_TRAINING: https://google.com
   IRAISER_DONATION_LINK: https://google.com
   SERVER_URL: http://localhost:3000
-  API_URL: http://localhost:3002/api/v1
+  API_URL: http://localhost:3002
   PORT: 3000
   CYPRESS_IO_PROJECT_ID: ${{ secrets.CYPRESS_IO_PROJECT_ID }}
 

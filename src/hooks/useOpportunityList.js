@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import { filtersToQueryParams, getOpportunityUserFromOffer } from 'src/utils';
 
 export function useOpportunityList(
@@ -11,14 +11,14 @@ export function useOpportunityList(
   setHasError
 ) {
   return useCallback(
-    async (role, search, tabFilter, filters, candidatId) => {
+    async (role, search, tabFilter, filters, candidateId) => {
       try {
         setLoading(true);
 
         switch (role) {
           case 'candidateAsAdmin': {
-            const { data: offers } = await Api.get(
-              `/opportunity/user/private/${candidatId}`,
+            const { data: offers } = await Api.getUserPrivateOpportunities(
+              candidateId,
               {
                 params: {
                   search,
@@ -28,11 +28,11 @@ export function useOpportunityList(
             );
 
             const bookmarkedOffers = offers.filter((offer) => {
-              const oppUser = getOpportunityUserFromOffer(offer, candidatId);
+              const oppUser = getOpportunityUserFromOffer(offer, candidateId);
               return offer && oppUser && oppUser.bookmarked;
             });
             const restOffers = offers.filter((offer) => {
-              const oppUser = getOpportunityUserFromOffer(offer, candidatId);
+              const oppUser = getOpportunityUserFromOffer(offer, candidateId);
 
               return !offer || !oppUser || !oppUser.bookmarked;
             });
@@ -43,7 +43,7 @@ export function useOpportunityList(
             break;
           }
           case 'admin': {
-            const { data: offers } = await Api.get(`/opportunity/admin`, {
+            const { data: offers } = await Api.getOpportunityAdmin({
               params: {
                 search,
                 type: tabFilter,
@@ -65,7 +65,7 @@ export function useOpportunityList(
           default: {
             const {
               data: { offers, otherOffers },
-            } = await Api.get(`/opportunity/user/all/${candidatId}`, {
+            } = await Api.getAllCandidateOpportunities(candidateId, {
               params: {
                 search,
                 type: tabFilter,

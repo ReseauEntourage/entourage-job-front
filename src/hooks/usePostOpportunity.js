@@ -1,7 +1,7 @@
 import UIkit from 'uikit';
 
 import React, { memo, useCallback, useEffect, useState } from 'react';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import _ from 'lodash';
 import { usePrevious } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
@@ -33,8 +33,8 @@ export function usePostOpportunity({
   const postOpportunity = useCallback(
     async (fields, closeModal, adminCallback) => {
       const { openNewForm, ...opportunity } = fields;
-      const candidatesId = opportunity.candidatesId
-        ? opportunity.candidatesId.map((id) => {
+      const candidatesIds = opportunity.candidatesIds
+        ? opportunity.candidatesIds.map((id) => {
             return typeof id === 'object' ? id.value : id;
           })
         : [];
@@ -44,7 +44,7 @@ export function usePostOpportunity({
         if (opportunity.isPublic) {
           gaEvent(GA_TAGS.POPUP_OFFRE_ENVOYER_OFFRE_GENERALE_CLIC);
           fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER);
-        } else if (candidatesId.length > 1) {
+        } else if (candidatesIds.length > 1) {
           gaEvent(GA_TAGS.POPUP_OFFRE_ENVOYER_OFFRE_MULTIPLE_CLIC);
           fbEvent(FB_TAGS.COMPANY_CV_OFFER);
         } else {
@@ -57,11 +57,12 @@ export function usePostOpportunity({
       }
 
       try {
-        await Api.post(`/opportunity/`, {
+        await Api.postOpportunity({
           ...opportunity,
           startOfContract: opportunity.startOfContract || null,
           endOfContract: opportunity.endOfContract || null,
-          candidatesId: opportunity.isPublic && !isAdmin ? null : candidatesId,
+          candidatesIds:
+            opportunity.isPublic && !isAdmin ? null : candidatesIds,
           message: opportunity.isPublic ? null : opportunity.message,
           recruiterPhone: opportunity.recruiterPhone || null,
           businessLines: opportunity.businessLines
@@ -87,7 +88,7 @@ export function usePostOpportunity({
         if (openNewForm) {
           setLastFilledForm({
             ...fields,
-            candidatesId: [],
+            candidatesIds: [],
             businessLines: fields.businessLines
               ? fields.businessLines.map((businessLine) => {
                   return findConstantFromValue(businessLine, BUSINESS_LINES);
@@ -107,7 +108,7 @@ export function usePostOpportunity({
   const PostOpportunityModal = memo(() => {
     const mutatedDefaultValue = {
       ...defaultValues,
-      candidatesId: defaultValues.candidat
+      candidatesIds: defaultValues.candidat
         ? [
             {
               label: `${defaultValues.candidat.firstName} ${defaultValues.candidat.lastName}`,
@@ -130,7 +131,7 @@ export function usePostOpportunity({
         defaultValues={{
           ...mutatedDefaultValue,
           ...lastFilledForm,
-          candidatesId: mutatedDefaultValue.candidatesId,
+          candidatesIds: mutatedDefaultValue.candidatesIds,
           shouldSendNotifications: true,
         }}
         formSchema={schema}
@@ -138,7 +139,7 @@ export function usePostOpportunity({
           if (!isAdmin) {
             if (fields.isPublic) {
               gaEvent(GA_TAGS.POPUP_OFFRE_ENVOYER_OFFRE_GENERALE_INVALIDE);
-            } else if (fields.candidatesId?.length > 1) {
+            } else if (fields.candidatesIds?.length > 1) {
               gaEvent(GA_TAGS.POPUP_OFFRE_ENVOYER_OFFRE_MULTIPLE_INVALIDE);
             } else {
               gaEvent(GA_TAGS.POPUP_OFFRE_ENVOYER_OFFRE_UNIQUE_INVALIDE);

@@ -1,16 +1,13 @@
 import { useCallback, useContext } from 'react';
 import { SharesCountContext } from 'src/components/store/SharesCountProvider';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 
 export function useUpdateSharesCount() {
   const { incrementSharesCount } = useContext(SharesCountContext);
 
   return useCallback(
-    (candidatId, type) => {
-      Api.post('/cv/count', {
-        candidatId,
-        type,
-      })
+    (candidateId, type) => {
+      Api.postCVCount(candidateId, type)
         .then(() => {
           incrementSharesCount();
         })

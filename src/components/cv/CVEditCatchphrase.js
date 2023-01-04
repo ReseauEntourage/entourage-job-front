@@ -16,12 +16,14 @@ const CVEditCatchphrase = ({ catchphrase, onChange }) => {
         {onChange && (
           <ButtonIcon
             name="pencil"
+            dataTestId="test-catchphrase-edit-icon"
             onClick={() => {
               openModal(
                 <ModalEdit
                   title="Édition - Ma phrase d'accroche"
                   formSchema={schemaCatchphrase}
                   defaultValues={{ catchphrase }}
+                  formId="catchphrase-form"
                   onSubmit={async (fields, closeModal) => {
                     closeModal();
                     await onChange({
@@ -35,7 +37,7 @@ const CVEditCatchphrase = ({ catchphrase, onChange }) => {
         )}
       </Grid>
       {catchphrase ? (
-        <p>{catchphrase}</p>
+        <p data-testid="cv-edit-catchphrase-content">{catchphrase}</p>
       ) : (
         <p className="uk-text-italic">
           Aucune phrase d&apos;accroche n&apos;a encore été créé

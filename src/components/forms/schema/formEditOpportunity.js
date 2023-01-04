@@ -1,6 +1,6 @@
 import { BUSINESS_LINES, CONTRACTS, USER_ROLES } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import moment from 'moment';
 import { findConstantFromValue, getValueFromFormField } from 'src/utils';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
@@ -16,8 +16,8 @@ export default {
       title: 'Adresser cette offre à tous les candidats',
     },
     {
-      id: 'candidatesId',
-      name: 'candidatesId',
+      id: 'candidatesIds',
+      name: 'candidatesIds',
       isMulti: true,
       type: 'text',
       dynamicTitle: (getValue) => {
@@ -35,7 +35,7 @@ export default {
         return getValue('isPublic') === true;
       },
       loadOptions: (inputValue, callback) => {
-        Api.get('/user/search/candidates', {
+        Api.getUsersSearchCandidates({
           params: {
             query: inputValue,
           },
@@ -302,7 +302,7 @@ export default {
   ],
   rules: [
     {
-      field: 'candidatesId',
+      field: 'candidatesIds',
       args: [],
       method: (fieldValue, state) => {
         return (
@@ -504,12 +504,12 @@ export default {
 
 export const adminMutations = [
   {
-    fieldId: 'candidatesId',
+    fieldId: 'candidatesIds',
     props: [
       {
         propName: 'loadOptions',
         value: (inputValue, callback) => {
-          Api.get('/user/search', {
+          Api.getUsersSearchCandidates({
             params: {
               query: inputValue,
               role: USER_ROLES.CANDIDAT,

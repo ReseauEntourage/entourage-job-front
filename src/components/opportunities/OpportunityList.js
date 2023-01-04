@@ -10,7 +10,7 @@ import React, {
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { getOpportunityUserFromOffer } from 'src/utils';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import { Grid, SimpleLink, Button } from 'src/components/utils';
 import OfferCard from 'src/components/cards/OfferCard';
 import ModalOfferAdmin from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOfferAdmin';
@@ -37,7 +37,7 @@ const OfferList = ({
   selectionModeActivated,
   selectElement,
   isElementSelected,
-  candidatId,
+  candidateId,
   role,
   offers,
   isAdmin,
@@ -49,7 +49,7 @@ const OfferList = ({
       {offers.map((offer, i) => {
         const opportunityUsers =
           role === 'candidateAsAdmin'
-            ? getOpportunityUserFromOffer(offer, candidatId)
+            ? getOpportunityUserFromOffer(offer, candidateId)
             : offer.opportunityUsers;
 
         const isSelected = isElementSelected(offer);
@@ -132,7 +132,7 @@ const OfferList = ({
 
 OfferList.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  candidatId: PropTypes.string,
+  candidateId: PropTypes.string,
   role: PropTypes.oneOf(['admin', 'candidateAsAdmin', 'candidat']).isRequired,
   isAdmin: PropTypes.bool.isRequired,
   currentPath: PropTypes.string.isRequired,
@@ -143,13 +143,13 @@ OfferList.propTypes = {
 };
 
 OfferList.defaultProps = {
-  candidatId: undefined,
+  candidateId: undefined,
 };
 
 const OpportunityList = forwardRef(
   (
     {
-      candidatId,
+      candidateId,
       search,
       filters,
       userRole: role,
@@ -187,7 +187,7 @@ const OpportunityList = forwardRef(
 
     const currentPath = `/backoffice/${
       role === 'candidateAsAdmin'
-        ? `admin/membres/${candidatId}/offres`
+        ? `admin/membres/${candidateId}/offres`
         : `${role}/offres`
     }`;
 
@@ -221,7 +221,7 @@ const OpportunityList = forwardRef(
     useImperativeHandle(ref, () => {
       return {
         fetchData: () => {
-          return fetchData(role, search, tabFilterTag, filters, candidatId);
+          return fetchData(role, search, tabFilterTag, filters, candidateId);
         },
       };
     });
@@ -234,9 +234,9 @@ const OpportunityList = forwardRef(
           !opportunity.opportunityUsers ||
           !opportunity.opportunityUsers.seen
         ) {
-          const { data } = await Api.post(`/opportunity/join`, {
+          const { data } = await Api.postJoinOpportunity({
             opportunityId: offer.id,
-            userId: candidatId,
+            candidateId,
           });
           opportunity.opportunityUsers = data;
         }
@@ -244,14 +244,14 @@ const OpportunityList = forwardRef(
           <ModalOffer
             currentOffer={opportunity}
             onOfferUpdated={async () => {
-              await fetchData(role, search, tabFilterTag, filters, candidatId);
+              await fetchData(role, search, tabFilterTag, filters, candidateId);
             }}
             navigateBackToList={navigateBackToList}
           />
         );
       },
       [
-        candidatId,
+        candidateId,
         fetchData,
         filters,
         navigateBackToList,
@@ -267,7 +267,7 @@ const OpportunityList = forwardRef(
           <ModalOfferAdmin
             currentOffer={offer}
             onOfferUpdated={async () => {
-              await fetchData(role, search, tabFilterTag, filters, candidatId);
+              await fetchData(role, search, tabFilterTag, filters, candidateId);
             }}
             navigateBackToList={navigateBackToList}
             duplicateOffer={async (closeModal) => {
@@ -279,7 +279,7 @@ const OpportunityList = forwardRef(
                 updatedAt,
                 ...restOpportunity
               } = offer;
-              const { data } = await Api.post(`/opportunity/`, {
+              const { data } = await Api.postOpportunity({
                 ...restOpportunity,
                 title: `${restOpportunity.title} (copie)`,
                 isAdmin: true,
@@ -301,13 +301,13 @@ const OpportunityList = forwardRef(
                   scroll: false,
                 }
               );
-              await fetchData(role, search, tabFilterTag, filters, candidatId);
+              await fetchData(role, search, tabFilterTag, filters, candidateId);
             }}
           />
         );
       },
       [
-        candidatId,
+        candidateId,
         currentPath,
         fetchData,
         filters,
@@ -335,7 +335,7 @@ const OpportunityList = forwardRef(
 
     const getOpportunity = useCallback(async (oppId) => {
       try {
-        const { data: offer } = await Api.get(`/opportunity/${oppId}`);
+        const { data: offer } = await Api.getOpportunityById(oppId);
         return offer;
       } catch (err) {
         console.error(err);
@@ -357,8 +357,8 @@ const OpportunityList = forwardRef(
 
     useDeepCompareEffect(() => {
       setHasError(false);
-      fetchData(role, search, tabFilterTag, filters, candidatId);
-    }, [role, search, tabFilters, filters, candidatId]);
+      fetchData(role, search, tabFilterTag, filters, candidateId);
+    }, [role, search, tabFilters, filters, candidateId]);
 
     const {
       selectElement,
@@ -369,9 +369,9 @@ const OpportunityList = forwardRef(
       hasSelection,
       toggleSelectionMode,
     } = useBulkActions(
-      '/opportunity',
+      'opportunity',
       async () => {
-        await fetchData(role, search, tabFilterTag, filters, candidatId);
+        await fetchData(role, search, tabFilterTag, filters, candidateId);
       },
       GA_TAGS.BACKOFFICE_ADMIN_ARCHIVER_MASSE_CLIC
     );
@@ -434,7 +434,7 @@ const OpportunityList = forwardRef(
                   isElementSelected={isElementSelected}
                   selectElement={selectElement}
                   selectionModeActivated={selectionModeActivated}
-                  candidatId={candidatId}
+                  candidateId={candidateId}
                   query={restQuery}
                   role={role}
                   isAdmin={isAdmin}
@@ -449,7 +449,7 @@ const OpportunityList = forwardRef(
                 isElementSelected={isElementSelected}
                 selectElement={selectElement}
                 selectionModeActivated={selectionModeActivated}
-                candidatId={candidatId}
+                candidateId={candidateId}
                 query={restQuery}
                 role={role}
                 isAdmin={isAdmin}
@@ -484,7 +484,7 @@ const OpportunityList = forwardRef(
                   isElementSelected={isElementSelected}
                   selectElement={selectElement}
                   selectionModeActivated={selectionModeActivated}
-                  candidatId={candidatId}
+                  candidateId={candidateId}
                   query={restQuery}
                   role={role}
                   isAdmin={isAdmin}
@@ -541,7 +541,7 @@ const OpportunityList = forwardRef(
 );
 
 OpportunityList.propTypes = {
-  candidatId: PropTypes.string,
+  candidateId: PropTypes.string,
   filters: PropTypes.shape(),
   search: PropTypes.string,
   userRole: PropTypes.oneOf(['admin', 'candidateAsAdmin', 'candidat']),
@@ -553,7 +553,7 @@ OpportunityList.propTypes = {
 };
 
 OpportunityList.defaultProps = {
-  candidatId: undefined,
+  candidateId: undefined,
   filters: undefined,
   userRole: 'candidat',
   search: undefined,

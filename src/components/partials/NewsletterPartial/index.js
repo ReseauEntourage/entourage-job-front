@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import validator from 'validator';
 import { Section } from 'src/components/utils';
-import Api from 'src/Axios';
+import Api from 'src/api/index.ts';
 import Button from 'src/components/utils/Button';
 import { gaEvent } from 'src/lib/gtag';
 import { NEWSLETTER_TAGS } from 'src/constants';
@@ -32,7 +32,7 @@ const NewsletterPartial = ({ style, padding, tag }) => {
     } else {
       gaEvent(tag);
       try {
-        await Api.post('/contact/newsletter', {
+        await Api.postNewsletter({
           email,
           zone,
           status,
@@ -138,7 +138,7 @@ const NewsletterPartial = ({ style, padding, tag }) => {
         )}
         <div className="uk-flex uk-flex-center uk-margin-small-top">
           <Button style="primary" onClick={onSubmit} dataTestId="nl-submit-btn">
-            S&apos;abonner&nbsp; à la newsletter !
+            S&apos;abonner à la newsletter !
           </Button>
         </div>
       </StyledNLForm>
