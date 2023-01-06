@@ -12,6 +12,13 @@ import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMe
 import { SimpleLink } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
 import PhoneInput from 'src/components/forms/fields/PhoneInput';
+import { StyledFormHeading } from 'src/components/forms/Forms.styles';
+
+import CheckBoxNew from 'src/components/utils/Inputs/Checkbox';
+import DatepickerNew from 'src/components/utils/Inputs/Datepicker';
+import SelectNew from 'src/components/utils/Inputs/Select';
+import TextareaNew from 'src/components/utils/Inputs/TextArea';
+import TextInputNew from 'src/components/utils/Inputs/TextInput';
 
 let debounceTimeoutId;
 
@@ -102,6 +109,18 @@ const GenericField = ({
       );
     }
 
+    case 'text-input': {
+      return (
+        <TextInputNew
+          title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
+          onChange={onChangeCustom}
+          type={data.type}
+          name={data.name}
+        />
+      );
+    }
+
+    case 'select-new':
     case 'select': {
       let { options } = data;
       if (data.generate) {
@@ -127,22 +146,47 @@ const GenericField = ({
       let valueToUse = value;
       if (!valueToUse) valueToUse = options[0].value;
 
+      if (data.component === 'select') {
+        return (
+          <Select
+            id={`${formId}-${data.id}`}
+            placeholder={data.placeholder}
+            name={data.name}
+            title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
+            value={valueToUse}
+            options={options}
+            valid={getValid(data.name)}
+            onChange={onChangeCustom}
+            disabled={data.disable ? data.disable(getValue) : data.disabled}
+            hidden={data.hide ? data.hide(getValue) : data.hidden}
+          />
+        );
+      }
       return (
-        <Select
+        <SelectNew
           id={`${formId}-${data.id}`}
           placeholder={data.placeholder}
           name={data.name}
           title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
-          value={valueToUse}
+          // value={valueToUse}
           options={options}
           valid={getValid(data.name)}
           onChange={onChangeCustom}
-          disabled={data.disable ? data.disable(getValue) : data.disabled}
+          // disabled={data.disable ? data.disable(getValue) : data.disabled}
           hidden={data.hide ? data.hide(getValue) : data.hidden}
         />
       );
     }
 
+    case 'textarea-new': {
+      return (
+        <TextareaNew
+          id={`${formId}-${data.id}`}
+          name={data.name}
+          title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
+        />
+      );
+    }
     case 'textarea': {
       return (
         <Textarea
@@ -158,6 +202,17 @@ const GenericField = ({
           disabled={data.disable ? data.disable(getValue) : data.disabled}
           hidden={data.hide ? data.hide(getValue) : data.hidden}
           maxLength={data.maxLength}
+        />
+      );
+    }
+    case 'checkbox-new': {
+      return (
+        <CheckBoxNew
+          handleClick={onChangeCustom}
+          disabled={data.disable ? data.disable(getValue) : data.disabled}
+          value={value}
+          checked={data.checked}
+          title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
         />
       );
     }
@@ -213,6 +268,8 @@ const GenericField = ({
           valueToUse = typeof value === 'string' ? getValue(value) : value;
         }
       }
+
+      console.log(data); 
 
       const shouldHide = data.hide ? data.hide(getValue) : data.hidden;
 
@@ -360,11 +417,7 @@ const GenericField = ({
     }
 
     case 'heading': {
-      return (
-        <p className="uk-heading-divider uk-margin-top uk-margin-remove-bottom">
-          {data.title}
-        </p>
-      );
+      return <StyledFormHeading>{data.title}</StyledFormHeading>;
     }
     case 'text': {
       return (
