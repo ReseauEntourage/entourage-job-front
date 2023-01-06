@@ -104,7 +104,7 @@ const SendMailModalContent = ({ OpportunityId, relance, onSumbit }) => {
         </div>
         <div className="email-details">{emailContent}</div>
         <div className="textarea-container">
-          <TextArea label="Ajouter une description personnelle" />
+          <TextArea title="Ajouter une description personnelle" />
         </div>
         <FooterForm
           noCompulsory

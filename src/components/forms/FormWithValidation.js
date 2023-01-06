@@ -46,12 +46,16 @@ const FormWithValidation = forwardRef(
         onChangeArgs = [onChangeArgs];
       }
 
+      console.log(args)
+
       const tmpFieldValues = { ...fieldValues };
       const tmpFieldValidations = fieldValidations;
       for (let i = 0; i < onChangeArgs.length; i += 1) {
         const {
           target: { name, type, value, checked, selectedIndex },
         } = onChangeArgs[i];
+
+        console.log(name, type, value, checked, selectedIndex);
 
         let fieldValue;
         if (type === 'checkbox') {
@@ -63,8 +67,6 @@ const FormWithValidation = forwardRef(
 
         /* Validators start */
         tmpFieldValues[name] = fieldValue;
-
-        console.log(tmpFieldValues);
 
         const validation = validator.validate(tmpFieldValues); // envoie une copie des champs pour que le state ne soit pas altéré
 
@@ -85,6 +87,7 @@ const FormWithValidation = forwardRef(
       if (event) event.preventDefault();
       // Vérifie les champs avant soumission
       /* Validators control before submit */
+
       const validation = validator.validate(fieldValues);
 
       const formattedFieldValues = Object.keys(fieldValues).reduce(
@@ -96,6 +99,7 @@ const FormWithValidation = forwardRef(
         },
         {}
       );
+
 
       if (validation.isValid) {
         // Si les validators sont OK.
