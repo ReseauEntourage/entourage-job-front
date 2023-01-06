@@ -9,5 +9,5 @@ export default {
 };
 
 export function Default() {
-  return <TextInput label="A long story to tell" />;
+  return <TextInput title="A long story to tell" />;
 }

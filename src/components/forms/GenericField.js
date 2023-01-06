@@ -270,6 +270,7 @@ const GenericField = ({
         }
       }
 
+      console.log(data);
 
       const shouldHide = data.hide ? data.hide(getValue) : data.hidden;
 
