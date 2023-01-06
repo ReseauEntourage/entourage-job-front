@@ -1,8 +1,8 @@
-/* eslint-disable react/button-has-type */
 import React, { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
 import { IconNoSSR } from 'src/components/utils/Icon';
+import { isSSR } from 'src/utils/isSSR';
 import { StyledSelectContainer } from './Select.styles';
 
 // import { isSSR } from 'src/utils/isSSR';
@@ -21,9 +21,9 @@ const Select = ({
 }) => {
   const [selectedOption, setSelectedOption] = useState({});
   const [optionsOpen, setOptionsOpen] = useState(false);
-  useEffect(() => {
-    onChange(selectedOption.value);
-  }, [selectedOption, onChange, optionsOpen]);
+  // useEffect(() => {
+  //   onChange(selectedOption.value);
+  // }, [selectedOption, onChange, optionsOpen]);
   // if (!isSSR) {
   //   document.body.addEventListener('click', (e) => {
   //     e.preventDefault();
@@ -32,13 +32,26 @@ const Select = ({
   //     }
   //   });
   // }
+  useEffect(() => {
+    if (!isSSR && id) {
+      const input = document.getElementById(`${id}`);
+      const MutationObserver =
+        window.MutationObserver || window.WebKitMutationObserver;
+      const myObserver = new MutationObserver(() => {
+        console.log('triggered', id);
+      });
+      const changeOfValueConfig = { attributeFilter: ['value'] };
+      myObserver.observe(input, changeOfValueConfig);
+    }
+  }, [id]);
+
   return (
     <StyledSelectContainer className={`${hidden ? 'hidden' : ''}`}>
       <input
         type="hidden"
         value={selectedOption.value}
-        onChange={(event) => {
-          event.preventDefault();
+        onInput={(event) => {
+          console.log(event);
           return onChange(event);
         }}
         name={name}
@@ -48,6 +61,7 @@ const Select = ({
         {!selectedOption.value || (selectedOption.value && optionsOpen) ? (
           <button
             className="placeholder"
+            type="button"
             onClick={() => {
               return setOptionsOpen(!optionsOpen);
             }}
@@ -62,11 +76,13 @@ const Select = ({
         ) : (
           <button
             className="selected-value"
+            type="button"
             onClick={() => {
               return setOptionsOpen(!optionsOpen);
             }}
           >
             {selectedOption.label}
+            <IconNoSSR name="chevron-down" ratio="2.5" />
           </button>
         )}
         {optionsOpen && (
@@ -75,6 +91,7 @@ const Select = ({
               return (
                 <li className="option">
                   <button
+                    type="button"
                     onClick={() => {
                       setOptionsOpen(!optionsOpen);
                       return setSelectedOption(option);

@@ -10,7 +10,9 @@ export const StyledListContainer = styled.div`
   }
 `;
 
-export const StyledLinkCard = styled.a``;
+export const StyledLinkCard = styled.a`
+  padding: 14px;
+`;
 
 export const StyledListItem = styled.div`
   border: 1px solid
@@ -23,7 +25,6 @@ export const StyledListItem = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
-  padding: 14px;
   &:not(:last-child) {
     margin-bottom: 20px;
   }

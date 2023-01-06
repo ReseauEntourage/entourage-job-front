@@ -2,11 +2,11 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import { StyledTextAreaContainer } from './TextArea.styles';
 
-const TextArea = ({ label, name, id }) => {
+const TextArea = ({ title, name, id }) => {
   return (
     <StyledTextAreaContainer>
       <div className="label" id={id}>
-        <label htmlFor={name}>{label}</label>
+        <label htmlFor={name}>{title}</label>
       </div>
       <textarea name={name} rows={5} />
     </StyledTextAreaContainer>
@@ -14,7 +14,7 @@ const TextArea = ({ label, name, id }) => {
 };
 
 TextArea.propTypes = {
-  label: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
 };

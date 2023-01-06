@@ -74,4 +74,7 @@ export const StyledCheckbox = styled.div`
       display: block;
     }
   }
+  .label {
+    margin-left: 16px;
+  }
 `;

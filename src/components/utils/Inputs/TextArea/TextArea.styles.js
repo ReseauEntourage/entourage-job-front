@@ -5,7 +5,6 @@ export const StyledTextAreaContainer = styled.div`
   max-width: 100%;
   background-color: ${COLORS.white};
   border-radius: 5px;
-  padding: 12px;
   div.label {
     border-bottom: solid 2px ${COLORS.gray};
     text-align: left;
@@ -19,6 +18,7 @@ export const StyledTextAreaContainer = styled.div`
   }
   textarea {
     width: 100%;
+    padding: 12px;
     box-sizing: border-box;
     border: none;
     resize: vertical;

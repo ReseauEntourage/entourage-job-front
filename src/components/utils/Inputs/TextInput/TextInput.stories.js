@@ -9,9 +9,13 @@ export default {
 };
 
 export function Default() {
-  return <TextInput label="A short story to tell" />;
+  return <TextInput title="A short story to tell" />;
 }
 
 export function Password() {
-  return <TextInput password label="A secret story to tell" />;
+  return <TextInput type="password" title="A secret story to tell" />;
+}
+
+export function Email() {
+  return <TextInput type="email" title="Share your email" />;
 }
