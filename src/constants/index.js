@@ -557,4 +557,124 @@ export const COMPANY_CONTACT_ZONES_FILTERS = [
   { value: ADMIN_ZONES.HZ, label: 'Autre région' },
 ];
 
+export const CANDIDATE_NATIONALITIES = {
+  FR: 'fr',
+  EU: 'ue',
+  NOT_EU: 'not_eu',
+  STATELESS: 'stateless',
+};
+
+export const CANDIDATE_NATIONALITIES_FILTERS = [
+  {
+    label: 'Française',
+    value: CANDIDATE_NATIONALITIES.FR,
+  },
+  {
+    label: 'Union Européenne',
+    value: CANDIDATE_NATIONALITIES.EU,
+  },
+  {
+    label: 'Hors Union Européenne',
+    value: CANDIDATE_NATIONALITIES.NOT_EU,
+  },
+  {
+    label: 'Apatride',
+    value: CANDIDATE_NATIONALITIES.STATELESS,
+  },
+];
+
+export const CANDIDATE_ADMINISTRATIVE_SITUATIONS = {
+  ID_CARD_FR: 'id_card_fr',
+  PASSPORT: 'passport',
+  RESIDENCE_PERMIT: 'residence_permit',
+  RESIDENCE_PERMIT_RECEIPT: 'residence_permit_receipt',
+  RESIDENT_CARD: 'resident_card',
+  ASYLUM: 'asylum',
+  ASYLUM_DISMISSED: 'asylum_dismissed',
+};
+
+export const CANDIDATE_ADMINISTRATIVE_SITUATIONS_FILTERS = [
+  {
+    value: CANDIDATE_ADMINISTRATIVE_SITUATIONS.ID_CARD_FR,
+    label: "Carte nationale d'identité Française",
+  },
+  {
+    value: CANDIDATE_ADMINISTRATIVE_SITUATIONS.PASSPORT,
+    label: 'Passeport',
+  },
+  {
+    value: CANDIDATE_ADMINISTRATIVE_SITUATIONS.ASYLUM,
+    label: "Demande d'asile",
+  },
+  {
+    value: CANDIDATE_ADMINISTRATIVE_SITUATIONS.ASYLUM_DISMISSED,
+    label: "Débouté de droit d'asile",
+  },
+  {
+    value: CANDIDATE_ADMINISTRATIVE_SITUATIONS.RESIDENT_CARD,
+    label: 'Carte de résident',
+  },
+  {
+    value: CANDIDATE_ADMINISTRATIVE_SITUATIONS.RESIDENCE_PERMIT,
+    label: 'Titre de séjour',
+  },
+  {
+    value: CANDIDATE_ADMINISTRATIVE_SITUATIONS.RESIDENCE_PERMIT_RECEIPT,
+    label: 'Récépissé de titre de séjour',
+  },
+];
+
+export const CANDIDATE_YES_NO = {
+  YES: 'yes',
+  NO: 'no',
+};
+
+export const CANDIDATE_YES_NO_FILTERS = [
+  {
+    value: CANDIDATE_YES_NO.YES,
+    label: 'Oui',
+  },
+  {
+    value: CANDIDATE_YES_NO.NO,
+    label: 'Non',
+  },
+];
+
+export const CANDIDATE_ACCOMMODATIONS = {
+  PERSONAL: 'personal',
+  SOMEONE: 'someone',
+  URGENCY: 'urgency',
+  INSERTION: 'insertion',
+  STREET: 'street',
+  OTHER: 'other',
+};
+
+export const CANDIDATE_ACCOMMODATIONS_FILTERS = [
+  {
+    value: CANDIDATE_ACCOMMODATIONS.PERSONAL,
+    label: 'Logement personnel',
+  },
+  {
+    value: CANDIDATE_ACCOMMODATIONS.SOMEONE,
+    label: 'Hébergé chez un tiers (famille, amis, etc, ...)',
+  },
+  {
+    value: CANDIDATE_ACCOMMODATIONS.URGENCY,
+    label: "Hébergement d'urgence (CHU, hôtel...)",
+  },
+  {
+    value: CANDIDATE_ACCOMMODATIONS.INSERTION,
+    label:
+      "Hébergement d'insertion (CHRS, FJT, Solibail, Résidence Sociale, Pension, ...)",
+  },
+  {
+    value: CANDIDATE_ACCOMMODATIONS.STREET,
+    label: 'Rue ou abri de fortune (squat, voiture, camping...)',
+  },
+  {
+    value: CANDIDATE_ACCOMMODATIONS.OTHER,
+    label: 'Autre',
+  },
+];
+
 export const BACKOFFICE_PAGES = ['candidates', 'coachs', 'oppotunities'];
