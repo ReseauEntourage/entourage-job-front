@@ -257,7 +257,7 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
                         if (user.role === USER_ROLES.COACH) {
                           // on l'assigne à un candidat
                           if (linkedUserId) {
-                            promise = Api.putCandidate(linkedUser.id, {
+                            promise = Api.putCandidate(linkedUserId, {
                               coachId: user.id,
                             });
                           } else {
