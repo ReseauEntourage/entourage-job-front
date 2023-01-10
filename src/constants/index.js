@@ -557,29 +557,55 @@ export const COMPANY_CONTACT_ZONES_FILTERS = [
   { value: ADMIN_ZONES.HZ, label: 'Autre région' },
 ];
 
-export const CANDIDATE_NATIONALITIES = {
-  FR: 'fr',
-  EU: 'ue',
-  NOT_EU: 'not_eu',
-  STATELESS: 'stateless',
+export const CANDIDATE_HELP_WITH = {
+  WORK: 'work',
+  SOCIAL: 'social',
+  ACCOMMODATION: 'accommodation',
+  HEALTH: 'health',
+  RIGHTS: 'rights',
+  OTHER: 'other',
 };
 
-export const CANDIDATE_NATIONALITIES_FILTERS = [
+export const CANDIDATE_HELP_WITH_FILTERS = [
   {
-    label: 'Française',
-    value: CANDIDATE_NATIONALITIES.FR,
+    label: 'Emploi',
+    value: CANDIDATE_HELP_WITH.WORK,
   },
   {
-    label: 'Union Européenne',
-    value: CANDIDATE_NATIONALITIES.EU,
+    label: 'Social',
+    value: CANDIDATE_HELP_WITH.SOCIAL,
   },
   {
-    label: 'Hors Union Européenne',
-    value: CANDIDATE_NATIONALITIES.NOT_EU,
+    label: 'Logement',
+    value: CANDIDATE_HELP_WITH.ACCOMMODATION,
   },
   {
-    label: 'Apatride',
-    value: CANDIDATE_NATIONALITIES.STATELESS,
+    label: 'Santé',
+    value: CANDIDATE_HELP_WITH.HEALTH,
+  },
+  {
+    label: 'Accès aux droits',
+    value: CANDIDATE_HELP_WITH.RIGHTS,
+  },
+  {
+    label: 'Autre',
+    value: CANDIDATE_HELP_WITH.OTHER,
+  },
+];
+
+export const CANDIDATE_GENDERS = {
+  MALE: 'male',
+  FEMALE: 'female',
+};
+
+export const CANDIDATE_GENDERS_FILTERS = [
+  {
+    label: 'Homme',
+    value: CANDIDATE_GENDERS.MALE,
+  },
+  {
+    label: 'Femme',
+    value: CANDIDATE_GENDERS.FEMALE,
   },
 ];
 
@@ -624,22 +650,6 @@ export const CANDIDATE_ADMINISTRATIVE_SITUATIONS_FILTERS = [
   },
 ];
 
-export const CANDIDATE_YES_NO = {
-  YES: 'yes',
-  NO: 'no',
-};
-
-export const CANDIDATE_YES_NO_FILTERS = [
-  {
-    value: CANDIDATE_YES_NO.YES,
-    label: 'Oui',
-  },
-  {
-    value: CANDIDATE_YES_NO.NO,
-    label: 'Non',
-  },
-];
-
 export const CANDIDATE_ACCOMMODATIONS = {
   PERSONAL: 'personal',
   SOMEONE: 'someone',
@@ -674,6 +684,109 @@ export const CANDIDATE_ACCOMMODATIONS_FILTERS = [
   {
     value: CANDIDATE_ACCOMMODATIONS.OTHER,
     label: 'Autre',
+  },
+];
+
+export const CANDIDATE_PROFESSIONAL_SITUATIONS = {
+  UNEMPLOYED: 'unemployed',
+  CDI: 'cdi',
+  CDD: 'cdd',
+  FORM: 'form',
+  INTE: 'inte',
+  STUDENT: 'student',
+  CDDI: 'cddi',
+  OTHER: 'other',
+};
+
+export const CANDIDATE_PROFESSIONAL_SITUATIONS_FILTERS = [
+  {
+    label: 'Sans emploi',
+    value: CANDIDATE_PROFESSIONAL_SITUATIONS.UNEMPLOYED,
+  },
+  {
+    label: 'CDI',
+    value: CANDIDATE_PROFESSIONAL_SITUATIONS.CDI,
+  },
+  {
+    label: 'CDD',
+    value: CANDIDATE_PROFESSIONAL_SITUATIONS.CDD,
+  },
+  {
+    label: 'Intérim',
+    value: CANDIDATE_PROFESSIONAL_SITUATIONS.INTE,
+  },
+  {
+    label: 'Étudiant',
+    value: CANDIDATE_PROFESSIONAL_SITUATIONS.STUDENT,
+  },
+  {
+    label: 'En formation',
+    value: CANDIDATE_PROFESSIONAL_SITUATIONS.FORM,
+  },
+  {
+    label: "Contrat d'insertion",
+    value: CANDIDATE_PROFESSIONAL_SITUATIONS.CDDI,
+  },
+  {
+    label: 'Autre',
+    value: CANDIDATE_PROFESSIONAL_SITUATIONS.OTHER,
+  },
+];
+
+export const CANDIDATE_RESOURCES = {
+  SALARY: 'salary',
+  UNEMPLOYMENT: 'unemployment',
+  AAH: 'aah',
+  RSA: 'rsa',
+  INVALIDITY: 'invalidity',
+  OTHER: 'other',
+  NONE: 'none',
+};
+
+export const CANDIDATE_RESOURCES_FILTERS = [
+  {
+    label: 'Salaire',
+    value: CANDIDATE_RESOURCES.SALARY,
+  },
+  {
+    label: 'Allocation chômage',
+    value: CANDIDATE_RESOURCES.UNEMPLOYMENT,
+  },
+  {
+    label: 'AAH',
+    value: CANDIDATE_RESOURCES.AAH,
+  },
+  {
+    label: 'RSA',
+    value: CANDIDATE_RESOURCES.RSA,
+  },
+  {
+    label: "Pension d'invalidité",
+    value: CANDIDATE_RESOURCES.INVALIDITY,
+  },
+  {
+    label: 'Autre',
+    value: CANDIDATE_RESOURCES.OTHER,
+  },
+  {
+    label: 'Aucune',
+    value: CANDIDATE_RESOURCES.NONE,
+  },
+];
+
+export const CANDIDATE_YES_NO = {
+  YES: 'yes',
+  NO: 'no',
+};
+
+export const CANDIDATE_YES_NO_FILTERS = [
+  {
+    value: CANDIDATE_YES_NO.YES,
+    label: 'Oui',
+  },
+  {
+    value: CANDIDATE_YES_NO.NO,
+    label: 'Non',
   },
 ];
 

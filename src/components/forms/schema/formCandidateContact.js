@@ -1,74 +1,19 @@
 import {
+  BUSINESS_LINES,
   CANDIDATE_ACCOMMODATIONS_FILTERS,
   CANDIDATE_ADMINISTRATIVE_SITUATIONS_FILTERS,
-  CANDIDATE_NATIONALITIES_FILTERS,
+  CANDIDATE_GENDERS_FILTERS,
+  CANDIDATE_HELP_WITH_FILTERS,
+  CANDIDATE_PROFESSIONAL_SITUATIONS_FILTERS,
+  CANDIDATE_RESOURCES_FILTERS,
   CANDIDATE_YES_NO_FILTERS,
+  HEARD_ABOUT_FILTERS,
 } from 'src/constants';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 
 export default {
-  id: 'form-company-contact',
+  id: 'form-candidate-contact',
   fields: [
-    {
-      id: 'firstName',
-      name: 'firstName',
-      type: 'text',
-      component: 'input',
-      placeholder: 'Tapez le prénom du candidat',
-      title: 'Prénom du candidat*',
-    },
-    {
-      id: 'lastName',
-      name: 'lastName',
-      type: 'text',
-      component: 'input',
-      placeholder: 'Tapez le nom du candidat',
-      title: 'Nom du candidat*',
-    },
-    {
-      id: 'email',
-      name: 'email',
-      type: 'email',
-      component: 'input',
-      placeholder: "Tapez l'adresse mail du candidat",
-      title: 'Adresse mail du candidat*',
-    },
-    {
-      id: 'phone',
-      name: 'phone',
-      component: 'tel',
-      placeholder: 'Tapez le téléphone portable du candidat',
-      title: 'Téléphone portable du candidat*',
-    },
-    {
-      id: 'postalCode',
-      name: 'postalCode',
-      component: 'input',
-      placeholder: 'La personne doit résider dans les départements 75, 93, 92, 56, 69 ou 59.',
-      title: 'Code postal du candidat*',
-    },
-    {
-      id: 'birthDate',
-      name: 'birthDate',
-      component: 'datepicker',
-      title: 'Date de naissance du candidat*',
-    },
-    {
-      id: 'structure',
-      name: 'structure',
-      type: 'text',
-      component: 'input',
-      placeholder: '(Association, CCAS, EDAS, etc.)',
-      title: 'Nom de votre structure*',
-    },
-    {
-      id: 'structureAddress',
-      name: 'structureAddress',
-      type: 'text',
-      component: 'input',
-      placeholder: "Tapez l'adresse postale de votre structure",
-      title: 'Adresse postale de votre structure',
-    },
     {
       id: 'workerFirstName',
       name: 'workerFirstName',
@@ -86,11 +31,20 @@ export default {
       title: 'Votre nom*',
     },
     {
-      id: 'workerPhone',
-      name: 'workerPhone',
-      component: 'tel',
-      placeholder: 'Tapez votre numéro de téléphone portable',
-      title: 'Votre numéro de téléphone portable*',
+      id: 'structure',
+      name: 'structure',
+      type: 'text',
+      component: 'input',
+      placeholder: '(Association, CCAS, EDAS, etc.)',
+      title: 'Votre structure*',
+    },
+    {
+      id: 'workerPosition',
+      name: 'workerPosition',
+      type: 'text',
+      component: 'input',
+      placeholder: 'Tapez votre fonction',
+      title: 'Votre fonction',
     },
     {
       id: 'workerEmail',
@@ -101,25 +55,111 @@ export default {
       title: 'Votre adresse mail*',
     },
     {
-      id: 'nationality',
-      name: 'nationality',
+      id: 'workerPhone',
+      name: 'workerPhone',
+      component: 'tel',
+      placeholder: 'Tapez votre numéro de téléphone portable',
+      title: 'Votre numéro de téléphone portable*',
+    },
+    {
+      id: 'firstName',
+      name: 'firstName',
+      type: 'text',
+      component: 'input',
+      placeholder: 'Tapez le prénom de la personne',
+      title: 'Prénom de la personne que vous souhaitez orienter*',
+    },
+    {
+      id: 'lastName',
+      name: 'lastName',
+      type: 'text',
+      component: 'input',
+      placeholder: 'Tapez le nom de la personne',
+      title: 'Son nom*',
+    },
+    {
+      id: 'helpWith',
+      name: 'helpWith',
+      component: 'select-request',
+      isMulti: true,
+      options: CANDIDATE_HELP_WITH_FILTERS,
+      placeholder: 'Choisissez les domaines',
+      title: "Dans quel(s) domaine(s) l'accompagnez-vous ?*",
+    },
+    {
+      id: 'gender',
+      name: 'gender',
       component: 'select',
       options: [
-        { value: -1, label: 'Choisissez la nationalité du candidat' },
-        ...CANDIDATE_NATIONALITIES_FILTERS,
+        { value: -1, label: 'Choisissez le sexe' },
+        ...CANDIDATE_GENDERS_FILTERS,
       ],
-      title: 'Nationalité du candidat*',
+      title: 'Son sexe*',
+    },
+    {
+      id: 'birthDate',
+      name: 'birthDate',
+      component: 'datepicker',
+      title:
+        'Sa date de naissance (la personne doit avoir plus de 18 ans pour rejoindre LinkedOut)',
+    },
+    {
+      id: 'address',
+      name: 'address',
+      component: 'input',
+      placeholder: 'Tapez son adresse',
+      title: 'Son adresse',
+    },
+    {
+      id: 'postalCode',
+      name: 'postalCode',
+      component: 'input',
+      placeholder:
+        'La personne doit résider dans les départements 75, 93, 92, 56, 35, 69 ou 59.',
+      title: 'Son code postal*',
+    },
+    {
+      id: 'city',
+      name: 'city',
+      component: 'input',
+      placeholder: 'Tapez sa ville',
+      title: 'Sa ville*',
+    },
+    {
+      id: 'phone',
+      name: 'phone',
+      component: 'tel',
+      placeholder: "Nous inviterons la personne à une réunion d'information",
+      title: 'Son téléphone*',
+    },
+    {
+      id: 'email',
+      name: 'email',
+      type: 'email',
+      component: 'input',
+      placeholder: "Tapez l'adresse mail de la personne",
+      title: 'Son adresse mail',
+    },
+    {
+      id: 'registeredUnemploymentOffice',
+      name: 'registeredUnemploymentOffice',
+      component: 'select',
+      options: [
+        { value: -1, label: 'Choisissez si oui ou non' },
+        ...CANDIDATE_YES_NO_FILTERS,
+      ],
+      title:
+        'La personne que vous souhaitez orienter est-elle inscrite au Pôle Emploi ?*',
     },
     {
       id: 'administrativeSituation',
       name: 'administrativeSituation',
       component: 'select',
-      isMulti: true,
       options: [
-        { value: -1, label: 'Choisissez les papiers du candidat' },
+        { value: -1, label: 'Choisissez les papiers de la personne' },
         ...CANDIDATE_ADMINISTRATIVE_SITUATIONS_FILTERS,
       ],
-      title: 'Type de papier dont dispose le candidat*',
+      title: "De quels papiers d'identité la personne dispose-t-elle ?",
     },
     {
       id: 'workingRight',
@@ -130,17 +170,40 @@ export default {
         ...CANDIDATE_YES_NO_FILTERS,
       ],
       title:
-        'Le candidat possède une autorisation de droit de travail sur le territoire français ?*',
+        "A-t-elle l'autorisation de travailler sur le territoire Français ?*",
     },
     {
       id: 'accommodation',
       name: 'accommodation',
       component: 'select',
       options: [
-        { value: -1, label: "Choisissez l'hébergement du candidat" },
+        { value: -1, label: "Choisissez l'hébergement de la personne" },
         ...CANDIDATE_ACCOMMODATIONS_FILTERS,
       ],
-      title: 'Type de papier dont dispose le candidat*',
+      title: "Quelle est sa situation d'hébergement ?*",
+    },
+    {
+      id: 'professionalSituation',
+      name: 'professionalSituation',
+      component: 'select',
+      options: [
+        {
+          value: -1,
+          label: 'Choisissez la situation professionnel de la personne',
+        },
+        ...CANDIDATE_PROFESSIONAL_SITUATIONS_FILTERS,
+      ],
+      title: 'Quelle est sa situation professionnelle ?*',
+    },
+    {
+      id: 'resources',
+      name: 'resources',
+      component: 'select',
+      options: [
+        { value: -1, label: 'Choisissez les ressources de la personne' },
+        ...CANDIDATE_RESOURCES_FILTERS,
+      ],
+      title: 'Quelle est la nature de ses ressources ?',
     },
     {
       id: 'domiciliation',
@@ -150,7 +213,8 @@ export default {
         { value: -1, label: 'Choisissez si oui ou non' },
         ...CANDIDATE_YES_NO_FILTERS,
       ],
-      title: 'Est-ce que le candidat a une domiciliation administrative ?*',
+      title:
+        'A-t-elle une adresse de domiciliation ? Si c\'est la même que celle de son logement, choisir "Oui"*',
     },
     {
       id: 'socialSecurity',
@@ -160,7 +224,19 @@ export default {
         { value: -1, label: 'Choisissez si oui ou non' },
         ...CANDIDATE_YES_NO_FILTERS,
       ],
-      title: 'Est-ce que le candidat a le droit à la sécurité sociale ?*',
+      title:
+        'A-t-elle des droits ouverts à la sécurité sociale ? (régime général, CSS, CMU, AME, etc.)*',
+    },
+    {
+      id: 'handicapped',
+      name: 'handicapped',
+      component: 'select',
+      options: [
+        { value: -1, label: 'Choisissez si oui ou non' },
+        ...CANDIDATE_YES_NO_FILTERS,
+      ],
+      title:
+        'A-t-elle la reconnaissance RQTH ? (Reconnaissance de la qualité de travailleur handicapé)',
     },
     {
       id: 'bankAccount',
@@ -170,34 +246,54 @@ export default {
         { value: -1, label: 'Choisissez si oui ou non' },
         ...CANDIDATE_YES_NO_FILTERS,
       ],
-      title: 'Est-ce que le candidat a un compte bancaire ?*',
+      title: 'A-t-elle un compte bancaire ?*',
+    },
+    {
+      id: 'businessLines',
+      name: 'businessLines',
+      title: 'Dans quel secteur professionnel souhaite-t-elle travailler ?',
+      placeholder: 'Sélectionnez les familles de métiers',
+      component: 'select-request',
+      isMulti: true,
+      options: BUSINESS_LINES,
+    },
+    {
+      id: 'description',
+      name: 'description',
+      component: 'textarea',
+      placeholder: 'Tapez la description',
+      title:
+        'En quelques lignes, merci de vous présenter et détailler pourquoi vous souhaitez orienter cette personne vers LinkedOut*',
+    },
+    {
+      id: 'heardAbout',
+      name: 'heardAbout',
+      component: 'select',
+      options: [
+        { value: -1, label: 'Choisissez comment vous avez connu LinkedOut' },
+        ...HEARD_ABOUT_FILTERS,
+      ],
+      title: 'Comment avez-vous connu LinkedOut ?*',
     },
     {
       id: 'diagnostic',
       name: 'diagnostic',
       component: 'textarea',
-      placeholder:
-        "(situation vis à vis du logement/hébergement, insertion professionnelle, le degré d'autonomie du candidat, etc.)",
+      placeholder: 'Ce document restera strictement confidentiel.',
       title:
-        "Merci de nous transmettre un diagnostic social du candidat (situation vis à vis du logement/hébergement, insertion professionnelle, le degré d'autonomie du candidat, etc.)*",
+        'Souhaitez-vous nous faire parvenir une évaluation de la personne ?',
     },
     {
-      id: 'comment',
-      name: 'comment',
-      component: 'textarea',
-      placeholder: 'Tapez votre commentaire',
+      id: 'contactWithCoach',
+      name: 'contactWithCoach',
+      component: 'checkbox',
       title:
-        'Si vous avez une question, une remarque, vous pouvez nous la partager ci-dessous !',
-    },
-    {
-      id: 'cgu',
-      name: 'cgu',
-      component: 'cgu',
+        'Souhaitez-vous être mis en relation avec le/la Coach LinkedOut si besoin et avec l’accord de la personne ?',
     },
   ],
   rules: [
     {
-      field: 'lastName',
+      field: 'workerFirstName',
       method: 'isEmpty',
       args: [
         {
@@ -208,29 +304,7 @@ export default {
       message: 'Obligatoire',
     },
     {
-      field: 'lastName',
-      method: 'isLength',
-      args: [
-        {
-          max: 80,
-        },
-      ],
-      validWhen: true,
-      message: '80 caractères maximum',
-    },
-    {
-      field: 'firstName',
-      method: 'isEmpty',
-      args: [
-        {
-          ignore_whitespace: true,
-        },
-      ],
-      validWhen: false,
-      message: 'Obligatoire',
-    },
-    {
-      field: 'firstName',
+      field: 'workerFirstName',
       method: 'isLength',
       args: [
         {
@@ -253,28 +327,6 @@ export default {
     },
     {
       field: 'workerLastName',
-      method: 'isLength',
-      args: [
-        {
-          max: 80,
-        },
-      ],
-      validWhen: true,
-      message: '80 caractères maximum',
-    },
-    {
-      field: 'workerFirstName',
-      method: 'isEmpty',
-      args: [
-        {
-          ignore_whitespace: true,
-        },
-      ],
-      validWhen: false,
-      message: 'Obligatoire',
-    },
-    {
-      field: 'workerFirstName',
       method: 'isLength',
       args: [
         {
@@ -307,34 +359,6 @@ export default {
       message: 'Obligatoire',
     },
     {
-      field: 'structureAddress',
-      method: 'isEmpty',
-      args: [
-        {
-          ignore_whitespace: true,
-        },
-      ],
-      validWhen: false,
-      message: 'Obligatoire',
-    },
-    {
-      field: 'email',
-      method: 'isEmpty',
-      args: [
-        {
-          ignore_whitespace: true,
-        },
-      ],
-      validWhen: false,
-      message: 'Obligatoire',
-    },
-    {
-      field: 'email',
-      method: 'isEmail',
-      validWhen: true,
-      message: 'Adresse e-mail invalide',
-    },
-    {
       field: 'workerEmail',
       method: 'isEmpty',
       args: [
@@ -350,30 +374,6 @@ export default {
       method: 'isEmail',
       validWhen: true,
       message: 'Adresse e-mail invalide',
-    },
-    {
-      field: 'phone',
-      method: 'isEmpty',
-      args: [
-        {
-          ignore_whitespace: true,
-        },
-      ],
-      validWhen: false,
-      message: 'Obligatoire',
-    },
-    {
-      field: 'phone',
-      method: (fieldValue) => {
-        return (
-          !fieldValue ||
-          fieldValue.length === 0 ||
-          isValidPhoneNumber(fieldValue, 'FR')
-        );
-      },
-      args: [],
-      validWhen: true,
-      message: 'Numéro de téléphone invalide',
     },
     {
       field: 'workerPhone',
@@ -398,6 +398,79 @@ export default {
       args: [],
       validWhen: true,
       message: 'Numéro de téléphone invalide',
+    },
+    {
+      field: 'firstName',
+      method: 'isEmpty',
+      args: [
+        {
+          ignore_whitespace: true,
+        },
+      ],
+      validWhen: false,
+      message: 'Obligatoire',
+    },
+    {
+      field: 'firstName',
+      method: 'isLength',
+      args: [
+        {
+          max: 80,
+        },
+      ],
+      validWhen: true,
+      message: '80 caractères maximum',
+    },
+    {
+      field: 'lastName',
+      method: 'isEmpty',
+      args: [
+        {
+          ignore_whitespace: true,
+        },
+      ],
+      validWhen: false,
+      message: 'Obligatoire',
+    },
+    {
+      field: 'lastName',
+      method: 'isLength',
+      args: [
+        {
+          max: 80,
+        },
+      ],
+      validWhen: true,
+      message: '80 caractères maximum',
+    },
+    {
+      field: 'helpWith',
+      method: 'isEmpty',
+      args: [
+        {
+          ignore_whitespace: true,
+        },
+      ],
+      validWhen: false,
+      message: 'Obligatoire',
+    },
+    {
+      field: 'gender',
+      method: 'isEmpty',
+      args: [
+        {
+          ignore_whitespace: true,
+        },
+      ],
+      validWhen: false,
+      message: 'Obligatoire',
+    },
+    {
+      field: 'postalCode',
+      method: 'isPostalCode',
+      args: ['FR'],
+      validWhen: true,
+      message: 'Obligatoire',
     },
     {
       field: 'postalCode',
@@ -411,7 +484,7 @@ export default {
       message: 'Obligatoire',
     },
     {
-      field: 'birthDate',
+      field: 'city',
       method: 'isEmpty',
       args: [
         {
@@ -422,7 +495,7 @@ export default {
       message: 'Obligatoire',
     },
     {
-      field: 'nationality',
+      field: 'phone',
       method: 'isEmpty',
       args: [
         {
@@ -433,7 +506,26 @@ export default {
       message: 'Obligatoire',
     },
     {
-      field: 'administrativeSituation',
+      field: 'phone',
+      method: (fieldValue) => {
+        return (
+          !fieldValue ||
+          fieldValue.length === 0 ||
+          isValidPhoneNumber(fieldValue, 'FR')
+        );
+      },
+      args: [],
+      validWhen: true,
+      message: 'Numéro de téléphone invalide',
+    },
+    {
+      field: 'email',
+      method: 'isEmail',
+      validWhen: true,
+      message: 'Adresse e-mail invalide',
+    },
+    {
+      field: 'registeredUnemploymentOffice',
       method: 'isEmpty',
       args: [
         {
@@ -456,6 +548,17 @@ export default {
     },
     {
       field: 'accommodation',
+      method: 'isEmpty',
+      args: [
+        {
+          ignore_whitespace: true,
+        },
+      ],
+      validWhen: false,
+      message: 'Obligatoire',
+    },
+    {
+      field: 'professionalSituation',
       method: 'isEmpty',
       args: [
         {
@@ -499,7 +602,7 @@ export default {
       message: 'Obligatoire',
     },
     {
-      field: 'diagnostic',
+      field: 'description',
       method: 'isEmpty',
       args: [
         {
@@ -510,7 +613,7 @@ export default {
       message: 'Obligatoire',
     },
     {
-      field: 'diagnostic',
+      field: 'heardAbout',
       method: 'isEmpty',
       args: [
         {
@@ -518,13 +621,6 @@ export default {
         },
       ],
       validWhen: false,
-      message: 'Obligatoire',
-    },
-    {
-      field: 'cgu',
-      method: 'equals',
-      args: ['true'],
-      validWhen: true,
       message: 'Obligatoire',
     },
   ],
