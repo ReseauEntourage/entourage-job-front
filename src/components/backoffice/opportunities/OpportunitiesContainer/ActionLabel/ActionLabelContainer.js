@@ -28,7 +28,7 @@ const ActionLabelContainer = ({
           fill
           color="primaryOrange"
           label="Recommandée"
-          icon={<EntourageIcon viewBox="0 0 16 11" height={16} width={11} />}
+          icon={<EntourageIcon viewBox="-1 6 16 10" height={16} width={10} />}
         />
       )}
       {isPublic && isBookmarked && (

@@ -19,6 +19,7 @@ import { UserContext } from 'src/components/store/UserProvider';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import ModalGeneric from 'src/components/modals/Modal/ModalGeneric/ModalGeneric';
 import SendMailModalContent from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/SendMailModalContent';
+import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
 
 const CandidateOpportunityDetailsCTAs = ({
   tab,
@@ -56,7 +57,7 @@ const CandidateOpportunityDetailsCTAs = ({
       gaEvent(GA_TAGS.BACKOFFICE_CANDIDAT_VALIDER_CONTACTER_RECRUTEUR_CLIC);
       await updateOpportunityUser({
         OpportunityId,
-        UserId: user.id,
+        UserId: getCandidateIdFromCoachOrCandidate(user),
         status: OFFER_STATUS[1].value,
       });
     },
@@ -66,7 +67,7 @@ const CandidateOpportunityDetailsCTAs = ({
           onConfirm={async () => {
             await updateOpportunityUser({
               OpportunityId,
-              UserId: user.id,
+              UserId: getCandidateIdFromCoachOrCandidate(user),
               archived: true,
             });
           }}
@@ -87,14 +88,14 @@ const CandidateOpportunityDetailsCTAs = ({
     updateToHired: async () => {
       await updateOpportunityUser({
         OpportunityId,
-        UserId: user.id,
+        UserId: getCandidateIdFromCoachOrCandidate(user),
         status: OFFER_STATUS[3].value,
       });
     },
     updateToInterview: async () => {
       await updateOpportunityUser({
         OpportunityId,
-        UserId: user.id,
+        UserId: getCandidateIdFromCoachOrCandidate(user),
         status: OFFER_STATUS[2].value,
       });
     },
@@ -140,7 +141,7 @@ const CandidateOpportunityDetailsCTAs = ({
             }
             await updateOpportunityUser({
               OpportunityId,
-              UserId: user.id,
+              UserId: getCandidateIdFromCoachOrCandidate(user),
               ...queryParams,
             });
             closeModal();

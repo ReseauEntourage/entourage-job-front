@@ -16,6 +16,7 @@ import {
   StyledLinkCard,
   StyledListContent,
   StyledListItem,
+  StyledListItemContainer,
 } from '../OpportunitiesList.styles';
 
 const CandidateOpportunitiesList = ({
@@ -65,10 +66,7 @@ const CandidateOpportunitiesList = ({
 
   const opportunitiesListContent = opportunities.map((opportunity) => {
     return (
-      <StyledListItem
-        key={opportunity.id}
-        isSelected={opportunityId === opportunity.id}
-      >
+      <StyledListItemContainer>
         <Link
           href={{
             pathname: `/backoffice/candidat/offres/${opportunityType}/${opportunity.id}`,
@@ -80,23 +78,28 @@ const CandidateOpportunitiesList = ({
           legacyBehavior
         >
           <StyledLinkCard>
-            <CandidateOpportunityItem
-              id={opportunity.id}
-              title={opportunity.title}
-              company={opportunity.company}
-              description={opportunity.description}
-              isPublic={opportunity.isPublic}
-              opportunityUsers={opportunity.opportunityUsers}
-              businessLines={opportunity.businessLines}
-              contract={opportunity.contract}
-              startOfContract={opportunity.startOfContract}
-              endOfContract={opportunity.endOfContract}
-              isExternal={opportunity.isExternal}
-              department={opportunity.department}
-            />
+            <StyledListItem
+              key={opportunity.id}
+              isSelected={opportunityId === opportunity.id}
+            >
+              <CandidateOpportunityItem
+                id={opportunity.id}
+                title={opportunity.title}
+                company={opportunity.company}
+                description={opportunity.description}
+                isPublic={opportunity.isPublic}
+                opportunityUsers={opportunity.opportunityUsers}
+                businessLines={opportunity.businessLines}
+                contract={opportunity.contract}
+                startOfContract={opportunity.startOfContract}
+                endOfContract={opportunity.endOfContract}
+                isExternal={opportunity.isExternal}
+                department={opportunity.department}
+              />
+            </StyledListItem>
           </StyledLinkCard>
         </Link>
-      </StyledListItem>
+      </StyledListItemContainer>
     );
   });
 
