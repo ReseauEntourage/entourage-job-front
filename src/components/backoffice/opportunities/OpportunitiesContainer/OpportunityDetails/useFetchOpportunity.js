@@ -4,7 +4,11 @@ import { usePrevious } from 'src/hooks/utils';
 import { UserContext } from 'src/components/store/UserProvider';
 import { USER_ROLES } from 'src/constants';
 
-export function useFetchOpportunity(opportunityId, candidateId) {
+export function useFetchOpportunity(
+  opportunityId,
+  candidateId,
+  fetchOpportunities
+) {
   const { user } = useContext(UserContext);
   const [opportunity, setOpportunity] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -27,6 +31,7 @@ export function useFetchOpportunity(opportunityId, candidateId) {
           candidateId,
         });
         setOpportunity({ ...fetchedOpportunity, opportunityUsers });
+        await fetchOpportunities();
       } else {
         setOpportunity(fetchedOpportunity);
       }
@@ -45,6 +50,7 @@ export function useFetchOpportunity(opportunityId, candidateId) {
     prevOpportunityId,
     user.role,
     refresh,
+    fetchOpportunities,
   ]);
 
   function refreshOpportunity() {

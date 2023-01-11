@@ -24,6 +24,9 @@ export const StyledListItem = styled.div`
   justify-content: center;
   align-items: stretch;
   padding: 14px;
+`;
+
+export const StyledListItemContainer = styled.div`
   &:not(:last-child) {
     margin-bottom: 20px;
   }
