@@ -129,8 +129,9 @@ export default {
       id: 'phone',
       name: 'phone',
       component: 'tel',
-      placeholder: "Nous inviterons la personne à une réunion d'information",
-      title: 'Son téléphone*',
+      placeholder: 'Tapez son numéro de téléphone portable',
+      title:
+        "Son téléphone portable (nous inviterons la personne à une réunion d'information)*",
     },
     {
       id: 'email',
@@ -258,12 +259,16 @@ export default {
       options: BUSINESS_LINES,
     },
     {
+      id: 'descriptionLabel',
+      title:
+        'En quelques lignes, merci de vous présenter et détailler pourquoi vous souhaitez orienter cette personne vers LinkedOut',
+      component: 'heading',
+    },
+    {
       id: 'description',
       name: 'description',
       component: 'textarea',
-      placeholder: 'Tapez la description',
-      title:
-        'En quelques lignes, merci de vous présenter et détailler pourquoi vous souhaitez orienter cette personne vers LinkedOut*',
+      title: 'Présentation*',
     },
     {
       id: 'heardAbout',
@@ -276,12 +281,16 @@ export default {
       title: 'Comment avez-vous connu LinkedOut ?*',
     },
     {
+      id: 'diagnosticLabel',
+      title:
+        'Souhaitez-vous nous faire parvenir une évaluation de la personne ? Ce document restera strictement confidentiel',
+      component: 'heading',
+    },
+    {
       id: 'diagnostic',
       name: 'diagnostic',
       component: 'textarea',
-      placeholder: 'Ce document restera strictement confidentiel.',
-      title:
-        'Souhaitez-vous nous faire parvenir une évaluation de la personne ?',
+      title: 'Diagnostic',
     },
     {
       id: 'contactWithCoach',
