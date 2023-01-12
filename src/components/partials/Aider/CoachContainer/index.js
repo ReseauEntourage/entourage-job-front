@@ -79,7 +79,7 @@ const CoachContainer = () => {
             votre entrée dans le parcours
           </p>
           <Button
-            href="https://airtable.com/shrospLiHWS9OFCD6"
+            href={process.env.AIRTABLE_LINK_BECOME_COACH}
             newTab
             isExternal
             style="primary"

@@ -17,7 +17,7 @@ const cardsContent = [
     img: HelpCoach,
     text: "Vous soutenez un candidat individuellement et dans la durée dans sa recherche d'emploi pour booster la rencontre avec les entreprises et son intégration durable dans un nouveau job.",
     cta: 'Devenir coach LinkedOut',
-    href: 'https://airtable.com/shrospLiHWS9OFCD6',
+    href: process.env.AIRTABLE_LINK_BECOME_COACH,
     alt: 'Des candidats LinkedOut et une coach',
     newTab: true,
     tag: GA_TAGS.PAGE_AIDER_INSCRIPTION_COACH_CLIC,
