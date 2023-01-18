@@ -34,13 +34,17 @@ class APIHandler {
     addAxiosInterceptors(this.api);
   }
 
-  private get(route: string, query?: object): Promise<AxiosResponse> {
+  private get(
+    route: string,
+    query: object = {},
+    headers: AxiosRequestHeaders = {}
+  ): Promise<AxiosResponse> {
     if (query && typeof query !== 'object') {
       throw new Error(
         `${this.name} get() function expects query argument to be of type Object`
       );
     }
-    return this.api.get(route, query);
+    return this.api.get(route, { ...query, ...{ headers } });
   }
 
   private post(
@@ -56,13 +60,17 @@ class APIHandler {
     return this.api.post(route, payload, { headers });
   }
 
-  private put(route: string, payload?: object): Promise<AxiosResponse> {
+  private put(
+    route: string,
+    payload?: object,
+    headers?: AxiosRequestHeaders
+  ): Promise<AxiosResponse> {
     if (payload && typeof payload !== 'object') {
       throw new Error(
         `${this.name} put() function expects payload argument to be of type Object`
       );
     }
-    return this.api.put(route, payload);
+    return this.api.put(route, payload, { headers });
   }
 
   private delete(route: string): Promise<AxiosResponse> {
@@ -79,8 +87,8 @@ class APIHandler {
     return this.get('/cv/shares');
   }
 
-  getCVByCandidateId(candidateId): Promise<AxiosResponse> {
-    return this.get(`/cv/${candidateId}`);
+  getCVByCandidateId(candidateId, headers): Promise<AxiosResponse> {
+    return this.get(`/cv/${candidateId}`, {}, headers);
   }
 
   getCVRandom(params): Promise<AxiosResponse> {
