@@ -5,8 +5,7 @@ import Button from 'src/components/utils/Button';
 import ImageTitle from 'src/components/partials/ImageTitle';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { gaEvent } from 'src/lib/gtag';
-import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { fbEvent } from 'src/lib/fb';
+import { GA_TAGS } from 'src/constants/tags';
 import { openModal } from 'src/components/modals/Modal';
 import ModalInterestLinkedOut from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import MultipleCTA from 'src/components/partials/MultipleCTA';
@@ -16,6 +15,7 @@ import Reviews from 'src/components/partials/Reviews';
 import LogoList from 'src/components/partials/LogoList';
 import PARTNERS from 'src/constants/partners';
 import NumberGrid from 'src/components/partials/NumberGrid';
+import CandidateContactModal from '../components/modals/Modal/ModalGeneric/CandidateContactModal';
 
 const reviews = [
   {
@@ -96,12 +96,9 @@ const Orienter = () => {
         }
         cta={{
           label: 'Inscrire un candidat',
-          href: `${process.env.AIRTABLE_LINK_PROFESSIONAL_REINTEGRATION}`,
-          isExternal: true,
-          newTab: true,
           onClick: () => {
             gaEvent(GA_TAGS.PAGE_ORIENTER_INSCRIPTION_CLIC);
-            fbEvent(FB_TAGS.SOCIAL_WORKER_REGISTRATION);
+            openModal(<CandidateContactModal />);
           },
         }}
       />
@@ -160,13 +157,10 @@ const Orienter = () => {
         <div className="uk-flex uk-flex uk-flex-center uk-flex-wrap uk-margin-medium-top">
           <Button
             style="secondary"
-            href={process.env.AIRTABLE_LINK_PROFESSIONAL_REINTEGRATION}
-            isExternal
-            newTab
             className="uk-margin-small-right uk-margin-small-left uk-margin-small-top"
             onClick={() => {
               gaEvent(GA_TAGS.PAGE_ORIENTER_INSCRIPTION_CLIC);
-              fbEvent(FB_TAGS.SOCIAL_WORKER_REGISTRATION);
+              openModal(<CandidateContactModal />);
             }}
           >
             Inscrire un candidat&nbsp;
@@ -237,12 +231,9 @@ const Orienter = () => {
         cta={
           <Button
             style="secondary"
-            href={process.env.AIRTABLE_LINK_PROFESSIONAL_REINTEGRATION}
-            isExternal
-            newTab
             onClick={() => {
               gaEvent(GA_TAGS.PAGE_ORIENTER_INSCRIPTION_CLIC);
-              fbEvent(FB_TAGS.SOCIAL_WORKER_REGISTRATION);
+              openModal(<CandidateContactModal />);
             }}
           >
             Inscrire un candidat&nbsp;
