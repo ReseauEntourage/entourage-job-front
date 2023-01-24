@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactSelect, { components } from 'react-select';
+import AsyncSelectNew from 'src/components/utils/Inputs/SelectAsync';
 import AsyncSelect from 'react-select/async';
 import PropTypes from 'prop-types';
 import CreatableSelect from 'react-select/creatable';
@@ -269,7 +270,6 @@ const GenericField = ({
         }
       }
 
-      console.log(data); 
 
       const shouldHide = data.hide ? data.hide(getValue) : data.hidden;
 
@@ -287,6 +287,56 @@ const GenericField = ({
             </label>
           )}
           <AsyncSelect
+            id={`${formId}-${data.id}`}
+            cacheOptions={
+              data.cacheOptions === undefined ? true : data.cacheOptions
+            }
+            isClearable
+            defaultOptions
+            value={valueToUse}
+            isMulti={data.isMulti}
+            placeholder={data.placeholder || 'Sélectionnez...'}
+            noOptionsMessage={
+              data.noOptionsMessage ||
+              (() => {
+                return `Aucun résultat`;
+              })
+            }
+            loadOptions={(inputValue, callback) => {
+              clearTimeout(debounceTimeoutId);
+              debounceTimeoutId = setTimeout(() => {
+                return data.loadOptions(inputValue, callback, getValue);
+              }, 1000);
+            }}
+            isDisabled={data.disable ? data.disable(getValue) : false}
+            isHidden={data.hide ? data.hide(getValue) : false}
+            onChange={parseValueToReturnSelect}
+            openMenuOnClick={data.openMenuOnClick ?? true}
+          />
+          <FormValidatorErrorMessage validObj={getValid(data.name)} />
+        </div>
+      );
+    }
+    case 'select-request-async-new': {
+      let valueToUse = null;
+      if (value) {
+        if (data.isMulti) {
+          valueToUse = value.every((v) => {
+            return typeof v === 'object';
+          })
+            ? value
+            : getValue(value);
+        } else {
+          valueToUse = typeof value === 'string' ? getValue(value) : value;
+        }
+      };
+
+
+      // const shouldHide = data.hide ? data.hide(getValue) : data.hidden;
+
+      return (
+        <div>
+          <AsyncSelectNew
             id={`${formId}-${data.id}`}
             cacheOptions={
               data.cacheOptions === undefined ? true : data.cacheOptions

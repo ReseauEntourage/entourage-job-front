@@ -17,6 +17,7 @@ const SelectAsync = ({
   return (
     <StyledAsyncSelect
       id={id}
+      classNamePrefix="react-select"
       cacheOptions={cacheOptions}
       isClearable
       defaultOptions

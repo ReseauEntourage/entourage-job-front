@@ -30,7 +30,7 @@ export const formAddExternalOpportunityCandidate = {
           title: 'Localisation *',
           placeholder: 'Localisation',
           openMenuOnClick: false,
-          component: 'select-request-async',
+          component: 'select-request-async-new',
           options: DEPARTMENTS_FILTERS,
           loadOptions: (inputValue, callback) => {
             callback([]);

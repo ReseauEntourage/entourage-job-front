@@ -1,10 +1,8 @@
 import styled from 'styled-components';
-// import { commonInputDesignFeatures } from "../Inputs.styles";
+import { StyledInputContainer } from '../Inputs.styles';
 import { COLORS } from '../../../../constants/styles';
 
-export const StyledTextInputContainer = styled.div`
-  min-width: 300px;
-  max-width: 100%;
+export const StyledTextInputContainer = styled(StyledInputContainer)`
   input {
     min-width: unset;
     width: 100%;
