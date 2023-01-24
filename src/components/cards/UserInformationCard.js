@@ -309,7 +309,14 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
 };
 UserInformationCard.propTypes = {
   isAdmin: PropTypes.bool,
-  user: PropTypes.shape().isRequired,
+  user: PropTypes.shape({
+    role: PropTypes.oneOf([
+      USER_ROLES.CANDIDAT,
+      USER_ROLES.COACH,
+      USER_ROLES.ADMIN,
+    ]),
+    id: PropTypes.string,
+  }).isRequired,
   onChange: PropTypes.func,
 };
 

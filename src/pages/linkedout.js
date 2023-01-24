@@ -10,7 +10,7 @@ const Card = ({ text, number }) => {
   return (
     <div
       key={number}
-      uk-scrollspy={`cls:uk-animation-slide-bottom-small; delay: ${
+      data-uk-scrollspy={`cls:uk-animation-slide-bottom-small; delay: ${
         100 * number
       };`}
       className="uk-flex uk-card uk-card-small uk-card-primary uk-card-body uk-box-shadow-medium"

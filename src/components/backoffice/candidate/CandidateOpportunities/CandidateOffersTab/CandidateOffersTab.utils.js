@@ -12,7 +12,7 @@ export const tabs = [
     text: "offres en phase d'entretien",
   },
   {
-    status: [3, 4],
+    status: [3, 4, 'archived'],
     text: 'offres abandonnées',
   },
   {

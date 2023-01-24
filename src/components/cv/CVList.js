@@ -124,7 +124,7 @@ const CVList = ({
     return (
       <div
         className="cv-list"
-        uk-scrollspy="cls:uk-animation-slide-bottom-small; target: .uk-card; delay: 200"
+        data-uk-scrollspy="cls:uk-animation-slide-bottom-small; target: .uk-card; delay: 200"
       >
         <Grid
           childWidths={['1-1', '1-2@s', '1-3@m']}
@@ -260,7 +260,7 @@ CVList.propTypes = {
   hideSearchBar: PropTypes.bool,
   nb: PropTypes.number,
   search: PropTypes.string,
-  filters: PropTypes.shape(),
+  filters: PropTypes.shape({}),
   setFilters: PropTypes.func,
   setSearch: PropTypes.func,
   resetFilters: PropTypes.func,

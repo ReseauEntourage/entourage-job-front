@@ -112,8 +112,8 @@ const SearchBar = ({
 };
 
 SearchBar.propTypes = {
-  filtersConstants: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  filters: PropTypes.shape().isRequired,
+  filtersConstants: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  filters: PropTypes.shape({}).isRequired,
   setFilters: PropTypes.func.isRequired,
   search: PropTypes.string,
   setSearch: PropTypes.func.isRequired,

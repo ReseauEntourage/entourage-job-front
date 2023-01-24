@@ -10,7 +10,7 @@ const Reviews = ({ reviews, title }) => {
       </h2>
       <div
         className="uk-flex uk-flex-center"
-        uk-height-match=".ent-review-card"
+        data-uk-height-match=".ent-review-card"
       >
         <Grid center middle match gap="medium" childWidths={['1-2@m']}>
           {reviews.map(
@@ -29,7 +29,7 @@ const Reviews = ({ reviews, title }) => {
               return (
                 <div
                   key={index}
-                  uk-scrollspy={`cls:uk-animation-slide-bottom-small; delay: ${
+                  data-uk-scrollspy={`cls:uk-animation-slide-bottom-small; delay: ${
                     200 + index * 200
                   };`}
                   className="ent-review-card uk-flex uk-flex-row uk-card uk-card-medium uk-card-default uk-card-body uk-box-shadow-medium uk-border-rounded"

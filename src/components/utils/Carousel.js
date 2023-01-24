@@ -49,7 +49,7 @@ const Carousel = ({
         <a
           href="#"
           className="uk-position-center-left uk-position-small"
-          uk-slider-item="previous"
+          data-uk-slider-item="previous"
           onClick={() => {
             if (tag) {
               gaEvent(tag);
@@ -65,7 +65,7 @@ const Carousel = ({
         <a
           href="#"
           className="uk-position-center-right uk-position-small"
-          uk-slider-item="next"
+          data-uk-slider-item="next"
           onClick={() => {
             if (tag) {
               gaEvent(tag);
@@ -83,7 +83,7 @@ const Carousel = ({
         <a
           href="#"
           className="uk-position-center-left-out uk-position-small"
-          uk-slider-item="previous"
+          data-uk-slider-item="previous"
           onClick={() => {
             if (tag) {
               gaEvent(tag);
@@ -99,7 +99,7 @@ const Carousel = ({
         <a
           href="#"
           className="uk-position-center-right-out uk-position-small"
-          uk-slider-item="next"
+          data-uk-slider-item="next"
           onClick={() => {
             if (tag) {
               gaEvent(tag);

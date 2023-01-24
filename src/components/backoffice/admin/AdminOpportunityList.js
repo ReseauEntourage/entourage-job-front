@@ -173,9 +173,9 @@ const AdminOpportunityList = ({
 
 AdminOpportunityList.propTypes = {
   search: PropTypes.string,
-  filters: PropTypes.shape(),
+  filters: PropTypes.shape({}),
   setFilters: PropTypes.func,
-  tabFilters: PropTypes.arrayOf(PropTypes.shape()),
+  tabFilters: PropTypes.arrayOf(PropTypes.shape({})),
   setTabFilters: PropTypes.func,
   setSearch: PropTypes.func,
   resetFilters: PropTypes.func,

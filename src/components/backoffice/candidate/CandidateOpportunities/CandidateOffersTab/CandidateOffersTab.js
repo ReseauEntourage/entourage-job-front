@@ -9,6 +9,7 @@ import {
 import PropTypes from 'prop-types';
 import { isSSR } from 'src/utils/isSSR';
 import { BREAKPOINTS } from 'src/constants/styles';
+import _ from 'lodash';
 
 const CandidateOffersTab = ({ activeTab, tabCounts }) => {
   const basePath = '/backoffice/candidat/offres/private';
@@ -25,8 +26,13 @@ const CandidateOffersTab = ({ activeTab, tabCounts }) => {
           let queryString = '?';
           let tabCount = 0;
           for (let i = 0; i < status.length; i += 1) {
-            queryString += `status=${status[i]}`;
-            if (i < status.length - 1) queryString += '&';
+            if (_.isInteger(status[i])) {
+              queryString += `status=${status[i]}`;
+              if (i < status.length - 1 && _.isInteger(status[i + 1])) {
+                queryString += '&';
+              }
+            }
+
             if (tabCounts) {
               for (let j = 0; j < tabCounts.length; j += 1) {
                 if (status[i] === tabCounts[j].status) {

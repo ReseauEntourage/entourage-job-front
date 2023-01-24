@@ -25,7 +25,14 @@ const CVEditWelcome = ({ user }) => {
   );
 };
 CVEditWelcome.propTypes = {
-  user: PropTypes.shape(),
+  user: PropTypes.shape({
+    role: PropTypes.oneOf([
+      USER_ROLES.CANDIDAT,
+      USER_ROLES.COACH,
+      USER_ROLES.ADMIN,
+    ]),
+    firstName: PropTypes.string,
+  }),
 };
 CVEditWelcome.defaultProps = {
   user: undefined,

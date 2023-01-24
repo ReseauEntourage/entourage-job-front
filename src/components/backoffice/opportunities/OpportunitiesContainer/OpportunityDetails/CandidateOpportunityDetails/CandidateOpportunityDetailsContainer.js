@@ -14,7 +14,8 @@ const CandidateOpportunityDetailsContainer = ({ fetchOpportunities }) => {
 
   const { opportunity, isLoading, refreshOpportunity } = useFetchOpportunity(
     opportunityId,
-    candidateId
+    candidateId,
+    fetchOpportunities
   );
 
   if (!opportunityId || !opportunity) {

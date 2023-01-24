@@ -132,7 +132,7 @@ module.exports = withLess({
 
     return config;
   },
-  assetPrefix: !dev ? process.env.CDN_URL || '' : '',
+  assetPrefix: !dev ? process.env.CDN_URL || undefined : undefined,
   async redirects() {
     return [
       {

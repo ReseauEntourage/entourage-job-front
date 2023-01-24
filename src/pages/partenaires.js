@@ -27,7 +27,7 @@ const CarouselSection = ({ children, partners, img, forwardAnimation }) => {
         style={{
           backgroundImage: `url(${addPrefix(img)})`,
         }}
-        uk-scrollspy={`cls: uk-animation-kenburns ${
+        data-uk-scrollspy={`cls: uk-animation-kenburns ${
           forwardAnimation ? '' : 'uk-animation-reverse'
         }; delay: 200;`}
       />
@@ -38,7 +38,7 @@ const CarouselSection = ({ children, partners, img, forwardAnimation }) => {
         }}
       />
       <div className="uk-overlay uk-position-center">
-        <div uk-scrollspy="cls: uk-animation-fade; delay: 200;">
+        <div data-uk-scrollspy="cls: uk-animation-fade; delay: 200;">
           <h2 className="uk-text-bold uk-align-center uk-text-center">
             <mark>{children}</mark>
           </h2>
@@ -65,7 +65,7 @@ const CarouselSection = ({ children, partners, img, forwardAnimation }) => {
 
 CarouselSection.propTypes = {
   children: PropTypes.element.isRequired,
-  partners: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  partners: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   img: PropTypes.string.isRequired,
   forwardAnimation: PropTypes.bool,
 };
@@ -85,11 +85,11 @@ const Title = ({ children, overlay = false, img }) => {
         style={{
           backgroundImage: `url("${addPrefix(img)}")`,
         }}
-        uk-scrollspy="cls: uk-animation-kenburns uk-animation-reverse; delay: 200;"
+        data-uk-scrollspy="cls: uk-animation-kenburns uk-animation-reverse; delay: 200;"
       />
       <div className={`uk-overlay-${overlay} uk-position-cover`} />
       <div className="uk-overlay uk-position-center">
-        <div uk-scrollspy="cls: uk-animation-fade; delay: 200;">
+        <div data-uk-scrollspy="cls: uk-animation-fade; delay: 200;">
           <h1 className="uk-text-bold uk-align-center uk-text-center uk-margin-remove">
             <mark>{children}</mark>
           </h1>
@@ -123,7 +123,7 @@ const PartnerItem = ({
     <Section style={index % 2 === 0 ? 'muted' : 'default'} key={index}>
       <div
         className="uk-flex uk-flex-center uk-flex-middle uk-overflow-hidden"
-        uk-scrollspy="target: .animate; cls: uk-animation-fade; delay: 200;"
+        data-uk-scrollspy="target: .animate; cls: uk-animation-fade; delay: 200;"
         style={{ minHeight: viewportHeightWithoutHeaderAndPadding }}
       >
         <SimpleLink
@@ -164,7 +164,7 @@ const PartnerItem = ({
             <div className="uk-flex uk-flex-column uk-flex-middle">
               <div
                 className="animate uk-flex uk-flex-column"
-                uk-scrollspy-class={`uk-animation-slide-${secondDirection}`}
+                data-uk-scrollspy-class={`uk-animation-slide-${secondDirection}`}
               >
                 <h4
                   className={`${
@@ -178,7 +178,7 @@ const PartnerItem = ({
               {answer && (
                 <div
                   className={`uk-text-secondary animate uk-flex uk-flex-column uk-flex-stretch uk-margin-large-${secondDirection} uk-margin-medium-top`}
-                  uk-scrollspy-class={`uk-animation-slide-${firstDirection}`}
+                  data-uk-scrollspy-class={`uk-animation-slide-${firstDirection}`}
                 >
                   {question && (
                     <p

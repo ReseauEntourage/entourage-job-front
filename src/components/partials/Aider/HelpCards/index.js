@@ -67,7 +67,7 @@ const HelpCards = () => {
         </div>
         <div
           className="cards-container"
-          uk-scrollspy="cls:uk-animation-slide-bottom-small; target: .aider-card; delay: 200"
+          data-uk-scrollspy="cls:uk-animation-slide-bottom-small; target: .aider-card; delay: 200"
         >
           {cardsContent.map((cardContent, key) => {
             return (

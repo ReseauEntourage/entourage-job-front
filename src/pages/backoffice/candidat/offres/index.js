@@ -91,22 +91,19 @@ const Opportunities = () => {
     [opportunityId, replace, queryParamsOpportunities, opportunityType]
   );
 
-  const fetchAssociatedCandidate = useCallback(
-    async (coachId) => {
-      try {
-        const { data } = await Api.getUserCandidate(coachId);
-        if (data) {
-          setCandidateDefaultsIfPublicTag(data.candidat.id, data.candidat.zone);
-        } else {
-          setHasLoadedDefaultFilters(true);
-        }
-      } catch (e) {
-        setHasError(true);
+  const fetchAssociatedCandidate = useCallback(async () => {
+    try {
+      const { data } = await Api.getUserCandidate();
+      if (data) {
+        setCandidateDefaultsIfPublicTag(data.candidat.id, data.candidat.zone);
+      } else {
         setHasLoadedDefaultFilters(true);
       }
-    },
-    [setCandidateDefaultsIfPublicTag]
-  );
+    } catch (e) {
+      setHasError(true);
+      setHasLoadedDefaultFilters(true);
+    }
+  }, [setCandidateDefaultsIfPublicTag]);
 
   useDeepCompareEffect(() => {
     if (isReady && user) {
@@ -142,7 +139,7 @@ const Opportunities = () => {
         if (user.role === USER_ROLES.CANDIDAT) {
           setCandidateDefaultsIfPublicTag(user.id, user.zone);
         } else if (user.role === USER_ROLES.COACH) {
-          fetchAssociatedCandidate(user.id, user.zone);
+          fetchAssociatedCandidate();
         }
       } else {
         setLoading(false);

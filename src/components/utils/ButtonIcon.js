@@ -37,7 +37,7 @@ ButtonIcon.propTypes = {
   className: PropTypes.string,
   href: PropTypes.string,
   ratio: PropTypes.number,
-  style: PropTypes.shape(),
+  style: PropTypes.shape({}),
   dataTestId: PropTypes.string,
 };
 

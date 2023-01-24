@@ -40,12 +40,19 @@ ModalEdit.propTypes = {
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]).isRequired,
   formSchema: PropTypes.shape({
     id: PropTypes.string,
-    fields: PropTypes.arrayOf(PropTypes.object),
-    rules: PropTypes.arrayOf(PropTypes.object),
+    fields: PropTypes.arrayOf(PropTypes.shape({})),
+    rules: PropTypes.arrayOf(PropTypes.shape({})),
   }).isRequired,
   onSubmit: PropTypes.func.isRequired,
   onError: PropTypes.func,
-  defaultValues: PropTypes.objectOf(PropTypes.any),
+  defaultValues: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.shape({})),
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.shape({}),
+      PropTypes.string,
+    ])
+  ),
   description: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   submitText: PropTypes.string,
   formId: PropTypes.string,
