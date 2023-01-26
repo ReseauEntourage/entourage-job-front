@@ -132,6 +132,40 @@ export type ContactCompany = {
   heardAbout?: object;
 };
 
+export type ContactCandidate = {
+  workerFirstName: string;
+  workerLastName: string;
+  structure: string;
+  workerPosition?: string;
+  workerEmail: string;
+  workerPhone: string;
+  firstName: string;
+  lastName: string;
+  helpWith: string[];
+  gender: string;
+  birthDate?: Date;
+  address?: string;
+  postalCode: string;
+  city: string;
+  phone: string;
+  email?: string;
+  registeredUnemploymentOffice: string;
+  administrativeSituation?: string;
+  workingRight: string;
+  accommodation: string;
+  professionalSituation: string;
+  resources?: string;
+  domiciliation: string;
+  socialSecurity: string;
+  handicapped?: string;
+  bankAccount: string;
+  businessLines?: string[];
+  description: string;
+  heardAbout: string;
+  diagnostic?: string;
+  contactWithCoach?: boolean;
+};
+
 export type ContactNewsletter = {
   email: string;
   zone?: string;

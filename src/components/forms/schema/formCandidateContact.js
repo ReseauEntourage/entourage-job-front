@@ -10,6 +10,7 @@ import {
   HEARD_ABOUT_FILTERS,
 } from 'src/constants';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
+import { isEmail } from 'validator';
 
 export default {
   id: 'form-candidate-contact',
@@ -529,7 +530,9 @@ export default {
     },
     {
       field: 'email',
-      method: 'isEmail',
+      method: (fieldValue) => {
+        return !fieldValue || fieldValue.length === 0 || isEmail(fieldValue);
+      },
       validWhen: true,
       message: 'Adresse e-mail invalide',
     },
