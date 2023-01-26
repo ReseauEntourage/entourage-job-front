@@ -6,19 +6,19 @@ import axios, {
 import _ from 'lodash';
 import { addAxiosInterceptors } from './interceptor';
 import {
-  APIRoute,
+  ContactCandidate,
   ContactCompany,
   ContactContactUs,
-  ContactCandidate,
+  APIRoute,
   ContactNewsletter,
   ExternalOpportunity,
   Opportunity,
   OpportunityJoin,
-  OpportunityUserEvent,
   PutCandidate,
-  Route,
   SocialMedia,
   User,
+  OpportunityUserEvent,
+  Route,
 } from './types';
 
 class APIHandler {
