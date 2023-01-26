@@ -51,7 +51,7 @@ const CandidateContactModal = () => {
       formSchema={formCandidateContact}
       onSubmit={async (fields, closeModal) => {
         try {
-          await Api.postContactCompany(fields);
+          await Api.postContactCandidate(fields);
           gaEvent(GA_TAGS.PAGE_ORIENTER_ENVOYER_INSCRIPTION_CLIC);
           fbEvent(FB_TAGS.SOCIAL_WORKER_REGISTRATION);
           closeModal();
