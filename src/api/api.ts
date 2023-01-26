@@ -10,6 +10,7 @@ import {
   ContactCandidate,
   ContactCompany,
   ContactContactUs,
+  ContactCandidate,
   ContactNewsletter,
   ExternalOpportunity,
   Opportunity,
