@@ -47,7 +47,7 @@ const FormWithValidation = forwardRef(
         onChangeArgs = [onChangeArgs];
       }
 
-      console.log(args)
+      console.log(args);
 
       const tmpFieldValues = { ...fieldValues };
       const tmpFieldValidations = fieldValidations;
