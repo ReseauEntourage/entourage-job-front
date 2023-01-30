@@ -1,8 +1,9 @@
-/* eslint-disable react/button-has-type */
 import React, { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
 import { IconNoSSR } from 'src/components/utils/Icon';
+import { isSSR } from 'src/utils/isSSR';
+import { uuid } from 'uuid/v4';
 import { StyledSelectContainer } from './Select.styles';
 
 // import { isSSR } from 'src/utils/isSSR';
@@ -19,35 +20,34 @@ const Select = ({
   // disabled,
   hidden,
 }) => {
-  const [selectedOption, setSelectedOption] = useState({});
+  const [selectedOption, setSelectedOption] = useState({ value: '' });
   const [optionsOpen, setOptionsOpen] = useState(false);
+  const selectId = `${id}-${uuid}`;
+
   useEffect(() => {
-    onChange(selectedOption.value);
-  }, [selectedOption, onChange, optionsOpen]);
-  // if (!isSSR) {
-  //   document.body.addEventListener('click', (e) => {
-  //     e.preventDefault();
-  //     if (optionsOpen && !e.target.className === 'placeholder') {
-  //       setOptionsOpen(false);
-  //     }
-  //   });
-  // }
+    if (!isSSR && id) {
+      const container = document.getElementById(selectId);
+      document.addEventListener('click', function closeSelect(e) {
+        e.preventDefault();
+        const isClickInside = container.contains(e.target);
+        if (optionsOpen && !isClickInside) {
+          setOptionsOpen(!optionsOpen);
+        }
+      });
+    }
+  }, [id, optionsOpen, selectId, onChange, name]);
+
   return (
-    <StyledSelectContainer className={`${hidden ? 'hidden' : ''}`}>
-      <input
-        type="hidden"
-        value={selectedOption.value}
-        onChange={(event) => {
-          event.preventDefault();
-          return onChange(event);
-        }}
-        name={name}
-        id={id}
-      />
+    <StyledSelectContainer
+      className={`${hidden ? 'hidden' : ''}`}
+      id={selectId}
+    >
+      <input type="hidden" value={selectedOption.value} name={name} id={id} />
       <div className="select">
         {!selectedOption.value || (selectedOption.value && optionsOpen) ? (
           <button
             className="placeholder"
+            type="button"
             onClick={() => {
               return setOptionsOpen(!optionsOpen);
             }}
@@ -62,11 +62,13 @@ const Select = ({
         ) : (
           <button
             className="selected-value"
+            type="button"
             onClick={() => {
               return setOptionsOpen(!optionsOpen);
             }}
           >
             {selectedOption.label}
+            <IconNoSSR name="chevron-down" ratio="2.5" />
           </button>
         )}
         {optionsOpen && (
@@ -75,8 +77,18 @@ const Select = ({
               return (
                 <li className="option">
                   <button
+                    type="button"
                     onClick={() => {
                       setOptionsOpen(!optionsOpen);
+                      onChange({
+                        target: {
+                          name,
+                          type: 'select',
+                          value: option.value,
+                          checked: 0,
+                          selectedIndex: 0,
+                        },
+                      });
                       return setSelectedOption(option);
                     }}
                   >

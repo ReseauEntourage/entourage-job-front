@@ -5,23 +5,30 @@ export const StyledTextAreaContainer = styled.div`
   max-width: 100%;
   background-color: ${COLORS.white};
   border-radius: 5px;
-  padding: 12px;
-  div.label {
+  /* div.label {
     border-bottom: solid 2px ${COLORS.gray};
     text-align: left;
     font-size: 14px;
     line-height: 17px;
-    padding: 4px 0;
     width: 100%;
     font-style: italic;
     color: ${COLORS.darkGray};
     margin-bottom: 8px;
-  }
+  } */
   textarea {
     width: 100%;
+    padding-bottom: 12px;
     box-sizing: border-box;
     border: none;
     resize: vertical;
+    border-bottom: solid 2px ${COLORS.gray};
+    margin-bottom: 18px;
+    font-family: Poppins, sans-serif;
+    &::placeholder {
+      font-style: italic;
+      color: ${COLORS.darkGray};
+      font-family: Poppins, sans-serif;
+    }
     :focus-visible {
       outline: none;
     }
