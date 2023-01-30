@@ -546,7 +546,7 @@ const ModalOfferAdmin = ({
                                 )}
                               </div>
                             </SimpleLink>
-                            <div uk-form-custom="target: true">
+                            <div data-uk-form-custom="target: true">
                               <select
                                 className="uk-select"
                                 onChange={async (event) => {
@@ -657,7 +657,7 @@ ModalOfferAdmin.propTypes = {
         recommended: PropTypes.bool,
         note: PropTypes.string,
         archived: PropTypes.bool,
-        User: PropTypes.shape(),
+        User: PropTypes.shape({}),
       })
     ),
     companyDescription: PropTypes.string,

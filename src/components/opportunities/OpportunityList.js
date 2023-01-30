@@ -131,12 +131,12 @@ const OfferList = ({
 };
 
 OfferList.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  offers: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   candidateId: PropTypes.string,
   role: PropTypes.oneOf(['admin', 'candidateAsAdmin', 'candidat']).isRequired,
   isAdmin: PropTypes.bool.isRequired,
   currentPath: PropTypes.string.isRequired,
-  query: PropTypes.shape().isRequired,
+  query: PropTypes.shape({}).isRequired,
   selectionModeActivated: PropTypes.bool.isRequired,
   selectElement: PropTypes.func.isRequired,
   isElementSelected: PropTypes.func.isRequired,
@@ -542,13 +542,13 @@ const OpportunityList = forwardRef(
 
 OpportunityList.propTypes = {
   candidateId: PropTypes.string,
-  filters: PropTypes.shape(),
+  filters: PropTypes.shape({}),
   search: PropTypes.string,
   userRole: PropTypes.oneOf(['admin', 'candidateAsAdmin', 'candidat']),
   setFilters: PropTypes.func,
   setSearch: PropTypes.func,
   resetFilters: PropTypes.func,
-  tabFilters: PropTypes.arrayOf(PropTypes.shape()),
+  tabFilters: PropTypes.arrayOf(PropTypes.shape({})),
   setTabFilters: PropTypes.func,
 };
 

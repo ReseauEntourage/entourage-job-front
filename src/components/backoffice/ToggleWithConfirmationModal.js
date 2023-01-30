@@ -137,8 +137,8 @@ ToggleWithConfirmationModal.propTypes = {
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   formSchema: PropTypes.shape({
     id: PropTypes.string,
-    fields: PropTypes.arrayOf(PropTypes.object),
-    rules: PropTypes.arrayOf(PropTypes.object),
+    fields: PropTypes.arrayOf(PropTypes.shape({})),
+    rules: PropTypes.arrayOf(PropTypes.shape({})),
   }),
 };
 

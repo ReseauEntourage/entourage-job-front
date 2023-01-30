@@ -181,7 +181,7 @@ EditUserModal.propTypes = {
       USER_ROLES.CANDIDAT,
     ]).isRequired,
     gender: PropTypes.number.isRequired,
-    ...PropTypes.shape(),
+    ...PropTypes.shape({}),
   }).isRequired,
   setUser: PropTypes.func.isRequired,
 };

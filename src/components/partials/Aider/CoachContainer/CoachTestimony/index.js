@@ -58,7 +58,7 @@ const CoachTestimony = () => {
         />
         <div
           className="testimony-container"
-          uk-scrollspy="cls:uk-animation-slide-bottom; target: > .testimony-content; delay: 200;"
+          data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > .testimony-content; delay: 200;"
         >
           {testimonyContent.map(({ text, coach, candidat }, key) => {
             return (

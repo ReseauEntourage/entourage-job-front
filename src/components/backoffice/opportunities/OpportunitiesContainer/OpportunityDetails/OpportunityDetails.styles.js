@@ -43,7 +43,6 @@ export const StyledTitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  width: 80%;
 `;
 
 export const StyledContentContainer = styled.div`
@@ -55,7 +54,6 @@ export const StyledInfoContainer = styled.div`
   display: flex;
   flex-direction: row;
   text-overflow: ellipsis;
-  width: 20%;
 `;
 
 export const StyledDetailsContainer = styled.div`

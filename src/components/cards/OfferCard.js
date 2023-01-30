@@ -213,8 +213,8 @@ OfferCard.propTypes = {
   isExternal: PropTypes.bool,
   date: PropTypes.string,
   opportunityUsers: PropTypes.oneOfType([
-    PropTypes.shape(),
-    PropTypes.arrayOf(PropTypes.shape()),
+    PropTypes.shape({}),
+    PropTypes.arrayOf(PropTypes.shape({})),
   ]),
   isValidated: PropTypes.bool,
   isAdmin: PropTypes.bool,

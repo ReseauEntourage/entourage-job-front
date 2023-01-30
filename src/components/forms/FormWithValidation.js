@@ -46,6 +46,8 @@ const FormWithValidation = forwardRef(
         onChangeArgs = [onChangeArgs];
       }
 
+      console.log(args)
+
       const tmpFieldValues = { ...fieldValues };
       const tmpFieldValidations = fieldValidations;
       for (let i = 0; i < onChangeArgs.length; i += 1) {
@@ -65,6 +67,8 @@ const FormWithValidation = forwardRef(
 
         /* Validators start */
         tmpFieldValues[name] = fieldValue;
+
+        console.log(tmpFieldValues);
 
         const validation = validator.validate(tmpFieldValues); // envoie une copie des champs pour que le state ne soit pas altéré
 
@@ -291,14 +295,21 @@ const FormWithValidation = forwardRef(
 );
 
 FormWithValidation.propTypes = {
-  defaultValues: PropTypes.objectOf(PropTypes.any),
+  defaultValues: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.shape({})),
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.shape({}),
+      PropTypes.string,
+    ])
+  ),
   onCancel: PropTypes.func,
   onSubmit: PropTypes.func.isRequired,
   onError: PropTypes.func,
   formSchema: PropTypes.shape({
     id: PropTypes.string,
-    fields: PropTypes.arrayOf(PropTypes.shape()),
-    rules: PropTypes.arrayOf(PropTypes.shape()),
+    fields: PropTypes.arrayOf(PropTypes.shape({})),
+    rules: PropTypes.arrayOf(PropTypes.shape({})),
   }).isRequired,
   submitText: PropTypes.string,
   enterToSubmit: PropTypes.bool,
