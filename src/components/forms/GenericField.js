@@ -16,6 +16,7 @@ import PhoneInput from 'src/components/forms/fields/PhoneInput';
 import { StyledFormHeading } from 'src/components/forms/Forms.styles';
 
 import CheckBoxNew from 'src/components/utils/Inputs/Checkbox';
+import { useCheckbox } from 'src/components/utils/Inputs/Checkbox/useCheckbox';
 import DatepickerNew from 'src/components/utils/Inputs/Datepicker';
 import SelectNew from 'src/components/utils/Inputs/Select';
 import TextareaNew from 'src/components/utils/Inputs/TextArea';
@@ -45,6 +46,8 @@ const GenericField = ({
     }
     onChange(events);
   };
+
+  const { checked, handleCheckBox } = useCheckbox(() => {}, null, data.checked);
 
   const parseValueToReturnSelect = (event) => {
     onChangeCustom({
@@ -146,7 +149,6 @@ const GenericField = ({
 
       let valueToUse = value;
       if (!valueToUse) valueToUse = options[0].value;
-
       if (data.component === 'select') {
         return (
           <Select
@@ -154,7 +156,7 @@ const GenericField = ({
             placeholder={data.placeholder}
             name={data.name}
             title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
-            value={valueToUse}
+            // value={valueToUse}—
             options={options}
             valid={getValid(data.name)}
             onChange={onChangeCustom}
@@ -169,7 +171,7 @@ const GenericField = ({
           placeholder={data.placeholder}
           name={data.name}
           title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
-          // value={valueToUse}
+          value={valueToUse}
           options={options}
           valid={getValid(data.name)}
           onChange={onChangeCustom}
@@ -184,6 +186,7 @@ const GenericField = ({
         <TextareaNew
           id={`${formId}-${data.id}`}
           name={data.name}
+          onChange={onChangeCustom}
           title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
         />
       );
@@ -209,10 +212,22 @@ const GenericField = ({
     case 'checkbox-new': {
       return (
         <CheckBoxNew
-          handleClick={onChangeCustom}
+          handleClick={() => {
+            handleCheckBox();
+            onChangeCustom({
+              target: {
+                name: data.name,
+                type: 'checkbox',
+                value: !checked, // opposite of the previous value
+                checked,
+              },
+            });
+          }}
           disabled={data.disable ? data.disable(getValue) : data.disabled}
-          value={value}
-          checked={data.checked}
+          checked={checked}
+          value={checked}
+          name={data.name}
+          id={data.id}
           title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
         />
       );
@@ -269,8 +284,6 @@ const GenericField = ({
           valueToUse = typeof value === 'string' ? getValue(value) : value;
         }
       }
-
-      console.log(data); 
 
       const shouldHide = data.hide ? data.hide(getValue) : data.hidden;
 
@@ -330,12 +343,12 @@ const GenericField = ({
         } else {
           valueToUse = typeof value === 'string' ? getValue(value) : value;
         }
-      };
-
+      }
 
       // const shouldHide = data.hide ? data.hide(getValue) : data.hidden;
 
       return (
+        // !!! to be finished !!! //
         <div>
           <AsyncSelectNew
             id={`${formId}-${data.id}`}

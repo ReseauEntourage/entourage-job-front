@@ -16,7 +16,7 @@ export const formAddExternalOpportunityCandidate = {
       title: 'Intitulé du poste *',
     },
     {
-      component: 'fieldgroup',
+      component: 'fieldgroup-new',
       fields: [
         {
           id: 'company',
@@ -29,12 +29,8 @@ export const formAddExternalOpportunityCandidate = {
           name: 'department',
           title: 'Localisation *',
           placeholder: 'Localisation',
-          openMenuOnClick: false,
-          component: 'select-request-async',
+          component: 'select-new',
           options: DEPARTMENTS_FILTERS,
-          loadOptions: (inputValue, callback) => {
-            callback([]);
-          },
         },
       ],
     },
@@ -87,12 +83,6 @@ export const formAddExternalOpportunityCandidate = {
         'Ecrire ou copier le detail de l’offre pour faciliter le suivi de votre candidature',
     },
     {
-      id: 'otherInfo',
-      name: 'otherInfo',
-      component: 'textarea-new',
-      title: 'Informations complémentaires',
-    },
-    {
       id: 'link',
       name: 'link',
       component: 'text-input',
@@ -103,6 +93,8 @@ export const formAddExternalOpportunityCandidate = {
       id: 'coachNotification',
       name: 'coachNotification',
       component: 'checkbox-new',
+      checked: true,
+      disable: false,
       title:
         'Voulez- vous envoyer un mail à votre coach pour l’avertir que vous avez ajouter une nouvelle offre',
     },

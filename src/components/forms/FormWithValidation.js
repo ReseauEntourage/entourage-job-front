@@ -10,6 +10,7 @@ import FooterForm from 'src/components/forms/FooterForm';
 import FormValidator from 'src/components/forms/FormValidator';
 import GenericField from 'src/components/forms/GenericField';
 import FieldGroup from 'src/components/forms/fields/FieldGroup';
+import InputsContainer from 'src/components/forms/fields/InputsContainer';
 import MultipleFields from 'src/components/forms/fields/MultipleFields';
 import { getValueFromFormField } from 'src/utils';
 
@@ -55,8 +56,6 @@ const FormWithValidation = forwardRef(
           target: { name, type, value, checked, selectedIndex },
         } = onChangeArgs[i];
 
-        console.log(name, type, value, checked, selectedIndex);
-
         let fieldValue;
         if (type === 'checkbox') {
           fieldValue = checked;
@@ -91,7 +90,6 @@ const FormWithValidation = forwardRef(
       /* Validators control before submit */
 
       const validation = validator.validate(fieldValues);
-
       const formattedFieldValues = Object.keys(fieldValues).reduce(
         (acc, curr) => {
           return {
@@ -101,7 +99,6 @@ const FormWithValidation = forwardRef(
         },
         {}
       );
-
 
       if (validation.isValid) {
         // Si les validators sont OK.
@@ -202,6 +199,39 @@ const FormWithValidation = forwardRef(
                 return (
                   <li key={i} hidden={!!value.hidden}>
                     <FieldGroup
+                      id={childrenId}
+                      title={title}
+                      childWidths={childWidths}
+                      fields={childrenFields.map((field) => {
+                        return !field.hidden ? (
+                          <GenericField
+                            data={field}
+                            formId={id}
+                            value={fieldValues[field.id]}
+                            onChange={updateForm}
+                            getValid={(name) => {
+                              return fieldValidations[`valid_${name}`];
+                            }}
+                            getValue={(name) => {
+                              return fieldValues[name];
+                            }}
+                          />
+                        ) : null;
+                      })}
+                    />
+                  </li>
+                );
+              }
+              if (value.component === 'fieldgroup-new') {
+                const {
+                  fields: childrenFields,
+                  title,
+                  id: childrenId,
+                  childWidths,
+                } = value;
+                return (
+                  <li key={i} hidden={!!value.hidden}>
+                    <InputsContainer
                       id={childrenId}
                       title={title}
                       childWidths={childWidths}

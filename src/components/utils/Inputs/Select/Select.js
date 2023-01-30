@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { isSSR } from 'src/utils/isSSR';
+import { uuid } from 'uuid/v4';
 import { StyledSelectContainer } from './Select.styles';
 
 // import { isSSR } from 'src/utils/isSSR';
@@ -19,44 +20,29 @@ const Select = ({
   // disabled,
   hidden,
 }) => {
-  const [selectedOption, setSelectedOption] = useState({});
+  const [selectedOption, setSelectedOption] = useState({ value: '' });
   const [optionsOpen, setOptionsOpen] = useState(false);
-  // useEffect(() => {
-  //   onChange(selectedOption.value);
-  // }, [selectedOption, onChange, optionsOpen]);
-  // if (!isSSR) {
-  //   document.body.addEventListener('click', (e) => {
-  //     e.preventDefault();
-  //     if (optionsOpen && !e.target.className === 'placeholder') {
-  //       setOptionsOpen(false);
-  //     }
-  //   });
-  // }
+  const selectId = `${id}-${uuid}`;
+
   useEffect(() => {
     if (!isSSR && id) {
-      const input = document.getElementById(`${id}`);
-      const MutationObserver =
-        window.MutationObserver || window.WebKitMutationObserver;
-      const myObserver = new MutationObserver(() => {
-        console.log('triggered', id);
+      const container = document.getElementById(selectId);
+      document.addEventListener('click', function closeSelect(e) {
+        e.preventDefault();
+        const isClickInside = container.contains(e.target);
+        if (optionsOpen && !isClickInside) {
+          setOptionsOpen(!optionsOpen);
+        }
       });
-      const changeOfValueConfig = { attributeFilter: ['value'] };
-      myObserver.observe(input, changeOfValueConfig);
     }
-  }, [id]);
+  }, [id, optionsOpen, selectId, onChange, name]);
 
   return (
-    <StyledSelectContainer className={`${hidden ? 'hidden' : ''}`}>
-      <input
-        type="hidden"
-        value={selectedOption.value}
-        onInput={(event) => {
-          console.log(event);
-          return onChange(event);
-        }}
-        name={name}
-        id={id}
-      />
+    <StyledSelectContainer
+      className={`${hidden ? 'hidden' : ''}`}
+      id={selectId}
+    >
+      <input type="hidden" value={selectedOption.value} name={name} id={id} />
       <div className="select">
         {!selectedOption.value || (selectedOption.value && optionsOpen) ? (
           <button
@@ -94,6 +80,15 @@ const Select = ({
                     type="button"
                     onClick={() => {
                       setOptionsOpen(!optionsOpen);
+                      onChange({
+                        target: {
+                          name,
+                          type: 'select',
+                          value: option.value,
+                          checked: 0,
+                          selectedIndex: 0,
+                        },
+                      });
                       return setSelectedOption(option);
                     }}
                   >
