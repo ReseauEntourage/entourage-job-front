@@ -6,15 +6,16 @@ import axios, {
 import _ from 'lodash';
 import { addAxiosInterceptors } from './interceptor';
 import {
-  SocialMedia,
-  User,
-  Opportunity,
-  OpportunityJoin,
-  ContactContactUs,
-  PutCandidate,
+  ContactCandidate,
   ContactCompany,
+  ContactContactUs,
   ContactNewsletter,
   ExternalOpportunity,
+  Opportunity,
+  OpportunityJoin,
+  PutCandidate,
+  SocialMedia,
+  User,
 } from './types';
 
 class APIHandler {
@@ -353,6 +354,10 @@ class APIHandler {
 
   postContactCompany(params: ContactCompany): Promise<AxiosResponse> {
     return this.post('/contact/company', params);
+  }
+
+  postContactCandidate(params: ContactCandidate): Promise<AxiosResponse> {
+    return this.post('/contact/candidate', params);
   }
 
   postNewsletter(params: ContactNewsletter): Promise<AxiosResponse> {

@@ -47,7 +47,7 @@ export default {
       name: 'phone',
       component: 'tel',
       placeholder: 'Tapez votre numéro de téléphone portable',
-      title: 'Votre numéro de téléphone portable',
+      title: 'Votre numéro de téléphone portable*',
     },
     {
       id: 'company',
@@ -129,17 +129,6 @@ export default {
       ],
       validWhen: true,
       message: '80 caractères maximum',
-    },
-    {
-      field: 'structure',
-      method: 'isLength',
-      args: [
-        {
-          max: 60,
-        },
-      ],
-      validWhen: true,
-      message: '60 caractères maximum',
     },
     {
       field: 'email',

@@ -248,6 +248,9 @@ const GA_TAGS = {
   PAGE_ORIENTER_INSCRIPTION_CLIC: {
     action: 'Page_Orienter_Inscription_Clic',
   },
+  PAGE_ORIENTER_ENVOYER_INSCRIPTION_CLIC: {
+    action: 'Page_Orienter_Envoyer_Inscription_Clic',
+  },
   PAGE_ORIENTER_CONTACT_CLIC: {
     action: 'Page_Orienter_Contact_Clic',
   },
