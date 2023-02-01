@@ -6,17 +6,18 @@ import axios, {
 import _ from 'lodash';
 import { addAxiosInterceptors } from './interceptor';
 import {
-  SocialMedia,
-  User,
-  Opportunity,
-  OpportunityJoin,
-  ContactContactUs,
-  PutCandidate,
+  APIRoute,
   ContactCompany,
+  ContactContactUs,
   ContactNewsletter,
   ExternalOpportunity,
+  Opportunity,
+  OpportunityJoin,
+  OpportunityUserEvent,
+  PutCandidate,
   Route,
-  APIRoute,
+  SocialMedia,
+  User,
 } from './types';
 
 class APIHandler {
@@ -272,6 +273,18 @@ class APIHandler {
     return this.post('/opportunity/join', params);
   }
 
+  postOpportunityUserEvent(
+    opportunityId,
+    candidateId,
+    event: OpportunityUserEvent
+  ) {
+    return this.post('/opportunity/event', {
+      opportunityId,
+      candidateId,
+      ...event,
+    });
+  }
+
   postOpportunityContactEmployer(params: object): Promise<AxiosResponse> {
     return this.post('/opportunity/contactEmployer', params);
   }
@@ -313,6 +326,13 @@ class APIHandler {
 
   putBulkOpportunities(params: object): Promise<AxiosResponse> {
     return this.put('/opportunity/bulk', params);
+  }
+
+  putOpportunityUserEvent(
+    eventId: string,
+    event: Partial<OpportunityUserEvent>
+  ) {
+    return this.put(`/opportunity/event/${eventId}`, event);
   }
 
   /// //////

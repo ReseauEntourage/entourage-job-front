@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-// import { COLORS } from 'src/constants/styles';
-import { COLORS } from '../../../constants/styles';
+import { COLORS } from 'src/constants/styles';
 
 export const colorToHoverBackgroundColor = {
   primaryOrange: COLORS.hoverOrange,
@@ -16,6 +15,15 @@ export const colorToHoverColor = {
 
 export const StyledButton = styled.button`
   font-size: 14px;
+  line-height: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 20px;
+
+  > svg {
+    margin-right: 8px;
+  }
 
   &:hover {
     transition: 0.2s ease-in-out;
@@ -48,6 +56,7 @@ export const StyledButton = styled.button`
   }
 
   &.custom-primary {
+    font-family: Poppins, sans-serif;
     padding: 8px 20px;
     border: 1px solid
       ${(props) => {
@@ -57,8 +66,15 @@ export const StyledButton = styled.button`
     background-color: ${(props) => {
       return COLORS[props.color] || COLORS.primaryOrange;
     }} !important;
+
+    path {
+      transition: 0.2s ease-in-out;
+      fill: ${(props) => {
+        return COLORS[props.color] || COLORS.primaryOrange;
+      }} !important;
+    }
+
     border-radius: 5px;
-    background-color: white;
 
     &:hover {
       cursor: pointer;
@@ -66,10 +82,18 @@ export const StyledButton = styled.button`
       color: ${(props) => {
         return COLORS[props.color] || COLORS.primaryOrange;
       }} !important;
+
+      path {
+        transition: 0.2s ease-in-out;
+        fill: ${(props) => {
+          return COLORS[props.color] || COLORS.primaryOrange;
+        }} !important;
+      }
     }
   }
 
   &.custom-primary-inverted {
+    font-family: Poppins, sans-serif;
     padding: 8px 20px;
     border: 1px solid
       ${(props) => {
@@ -78,6 +102,14 @@ export const StyledButton = styled.button`
     color: ${(props) => {
       return COLORS[props.color] || COLORS.primaryOrange;
     }} !important;
+
+    path {
+      transition: 0.2s ease-in-out;
+      fill: ${(props) => {
+        return COLORS[props.color] || COLORS.primaryOrange;
+      }} !important;
+    }
+
     border-radius: 5px;
     background-color: transparent;
 
@@ -93,6 +125,13 @@ export const StyledButton = styled.button`
         ${(props) => {
           return colorToHoverColor[props.color] || COLORS.primaryOrange;
         }};
+
+      path {
+        transition: 0.2s ease-in-out;
+        fill: ${(props) => {
+          return colorToHoverColor[props.color] || COLORS.primaryOrange;
+        }} !important;
+      }
     }
   }
 
@@ -112,6 +151,14 @@ export const StyledButton = styled.button`
     color: ${(props) => {
       return COLORS[props.color] || COLORS.primaryOrange;
     }} !important;
+
+    path {
+      transition: 0.2s ease-in-out;
+      fill: ${(props) => {
+        return COLORS[props.color] || COLORS.primaryOrange;
+      }} !important;
+    }
+
     border-radius: 25px;
 
     &:hover {
@@ -122,6 +169,13 @@ export const StyledButton = styled.button`
       color: ${(props) => {
         return colorToHoverColor[props.color];
       }} !important;
+
+      path {
+        transition: 0.2s ease-in-out;
+        fill: ${(props) => {
+          return colorToHoverColor[props.color];
+        }} !important;
+      }
     }
 
     &.disabled {
@@ -133,5 +187,11 @@ export const StyledButton = styled.button`
         cursor: default;
       }
     }
+  }
+
+  &.custom-button-small {
+    padding: 6px 10px;
+    font-size: 13px;
+    line-height: 16px;
   }
 `;

@@ -784,4 +784,51 @@ export const CANDIDATE_YES_NO_FILTERS = [
   },
 ];
 
+export const EVENT_TYPES = {
+  CONTACT: 'contact',
+  FOLLOWUP: 'followup',
+  INTERVIEW: 'interview',
+  TRIAL: 'trial',
+  PMSMP: 'pmsmp',
+  HIRING: 'hiring',
+  END: 'end',
+};
+
+export const EVENT_TYPE_MAPPING = {
+  [OFFER_STATUS[1].value]: EVENT_TYPES.CONTACT,
+  [OFFER_STATUS[2].value]: EVENT_TYPES.INTERVIEW,
+  [OFFER_STATUS[3].value]: EVENT_TYPES.HIRING,
+};
+
+export const EVENT_TYPES_FILTERS = [
+  {
+    label: 'Contacté le',
+    value: EVENT_TYPES.CONTACT,
+  },
+  {
+    label: 'Relancé le',
+    value: EVENT_TYPES.FOLLOWUP,
+  },
+  {
+    label: 'Entretien le',
+    value: EVENT_TYPES.INTERVIEW,
+  },
+  {
+    label: "Période d'essai le",
+    value: EVENT_TYPES.TRIAL,
+  },
+  {
+    label: 'PMSMP le',
+    value: EVENT_TYPES.PMSMP,
+  },
+  {
+    label: 'Embauché le',
+    value: EVENT_TYPES.HIRING,
+  },
+  {
+    label: 'Arrêt de contrat le',
+    value: EVENT_TYPES.END,
+  },
+];
+
 export const BACKOFFICE_PAGES = ['candidates', 'coachs', 'oppotunities'];

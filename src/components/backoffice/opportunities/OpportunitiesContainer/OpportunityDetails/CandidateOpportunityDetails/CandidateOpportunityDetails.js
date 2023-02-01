@@ -4,11 +4,11 @@ import { findConstantFromValue } from 'src/utils';
 import { BUSINESS_LINES } from 'src/constants';
 import ContractLabel from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel';
 import {
-  StyledActionContainer,
+  StyledCTAContainer,
   StyledDetailsContainer,
   StyledDetailsContentContainer,
   StyledInfoContainer,
-  StyledCTAContainer,
+  StyledRightContainer,
   StyledTitleContainer,
   StyledTopContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunityDetails.styles';
@@ -17,6 +17,7 @@ import ActionLabels from 'src/components/backoffice/opportunities/OpportunitiesC
 import { useBookmarkOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/useBookmarkOpportunity';
 import {
   InfoText,
+  RightAlignText,
   StyledTitleText,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
 import moment from 'moment';
@@ -28,6 +29,7 @@ import CandidateOpportunityDetailsCTAs from 'src/components/backoffice/opportuni
 import { renderTabFromStatus } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.utils';
 import { CTAsByTab } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/CandidateOpportunityDetailsCTAs/CandidateOpportunityDetailsCTAs.utils';
 import { tabs } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab/CandidateOffersTab.utils';
+import { mapEventDateFromStatus } from './CandidateOpportunityDetails.utils';
 
 const CandidateOpportunityDetails = ({
   id,
@@ -44,6 +46,7 @@ const CandidateOpportunityDetails = ({
   isPublic,
   isExternal,
   fetchOpportunities,
+  events,
   createdAt,
   oppRefreshCallback,
 }) => {
@@ -62,7 +65,11 @@ const CandidateOpportunityDetails = ({
   const ref = useRef();
   const windowHeight = useWindowHeight();
 
-  const [containerHeight, setContainerHeight] = useState(0);
+  const [containerHeight, setContainerHeight] = useState(
+    2 * HEIGHTS.SECTION_PADDING
+  );
+
+  const event = mapEventDateFromStatus(opportunityUsers.status, events);
 
   useScrollPosition(
     ({ currPos }) => {
@@ -72,7 +79,12 @@ const CandidateOpportunityDetails = ({
         HEIGHTS.TABS_HEIGHT -
         2 * HEIGHTS.SECTION_PADDING;
 
-      setContainerHeight(bottom - currPos.y);
+      const calculatedContainerHeight = bottom - currPos.y;
+      setContainerHeight(
+        calculatedContainerHeight < 2 * HEIGHTS.SECTION_PADDING
+          ? 2 * HEIGHTS.SECTION_PADDING
+          : calculatedContainerHeight
+      );
     },
     [windowHeight],
     ref
@@ -108,7 +120,7 @@ const CandidateOpportunityDetails = ({
           </InfoText>
           <InfoText>{moment(createdAt).format('DD/MM/YYYY')}</InfoText>
         </StyledTitleContainer>
-        <StyledActionContainer>
+        <StyledRightContainer>
           <ActionLabels
             isBookmarked={!!opportunityUsers?.bookmarked}
             isRecommended={!!opportunityUsers?.recommended}
@@ -119,11 +131,17 @@ const CandidateOpportunityDetails = ({
               await fetchOpportunities();
             }}
           />
-        </StyledActionContainer>
+          {event && event.date && (
+            <InfoText>
+              <RightAlignText>{event.label}</RightAlignText>
+              <RightAlignText>{event.date}</RightAlignText>
+            </InfoText>
+          )}
+        </StyledRightContainer>
         <DetailsProgressBar
           tab={renderTabFromStatus(
-            opportunityUsersProp.status,
-            opportunityUsersProp.archived
+            opportunityUsers.status,
+            opportunityUsers.archived
           )}
         />
       </StyledTopContainer>
@@ -134,10 +152,11 @@ const CandidateOpportunityDetails = ({
         <StyledCTAContainer>
           <CandidateOpportunityDetailsCTAs
             tab={renderTabFromStatus(
-              opportunityUsersProp.status,
-              opportunityUsersProp.archived
+              opportunityUsers.status,
+              opportunityUsers.archived
             )}
             OpportunityId={id}
+            contract={contract}
             oppRefreshCallback={() => {
               oppRefreshCallback();
             }}
@@ -179,6 +198,7 @@ CandidateOpportunityDetails.defaultProps = {
   contract: null,
   endOfContract: null,
   startOfContract: null,
+  events: [],
 };
 
 CandidateOpportunityDetails.propTypes = {
@@ -207,6 +227,24 @@ CandidateOpportunityDetails.propTypes = {
         archived: PropTypes.bool,
       })
     ),
+  ]),
+  events: PropTypes.arrayOf([
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      OpportunityUserId: PropTypes.string.isRequired,
+      ContractId: PropTypes.string,
+      type: PropTypes.string.isRequired,
+      startDate: PropTypes.string.isRequired,
+      endDate: PropTypes.string,
+      createdAt: PropTypes.string.isRequired,
+      updatedAt: PropTypes.string.isRequired,
+      contract: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        createdAt: PropTypes.string.isRequired,
+        updatedAt: PropTypes.string.isRequired,
+      }),
+    }),
   ]),
   department: PropTypes.string.isRequired,
   isPublic: PropTypes.bool.isRequired,

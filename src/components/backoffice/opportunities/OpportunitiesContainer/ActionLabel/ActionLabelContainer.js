@@ -1,6 +1,6 @@
 import ActionLabel from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel/ActionLabel';
 import { IconNoSSR } from 'src/components/utils/Icon';
-import EntourageIcon from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/CandidateOpportunitiesList/CandidateOpportunityItem/entourage.svg';
+import EntourageIcon from 'assets/custom/icons/entourage.svg';
 import React from 'react';
 import PropTypes from 'prop-types';
 

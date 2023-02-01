@@ -41,6 +41,7 @@ const CandidateOpportunityDetailsContainer = ({ fetchOpportunities }) => {
           opportunityUsers={opportunity.opportunityUsers}
           fetchOpportunities={fetchOpportunities}
           createdAt={opportunity.createdAt}
+          events={opportunity.opportunityUsers.events}
           oppRefreshCallback={() => {
             refreshOpportunity();
           }}

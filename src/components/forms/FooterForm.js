@@ -9,6 +9,7 @@ const FooterForm = ({
   onSubmit,
   onCancel,
   submitText,
+  cancelText,
   formId,
   noCompulsory,
 }) => {
@@ -35,7 +36,7 @@ const FooterForm = ({
                 onClick={onCancel}
                 dataTestId={`form-cancel-${formId}`}
               >
-                Annuler
+                {cancelText || 'Annuler'}
               </Button>
             )}
             <ButtonPost
@@ -56,6 +57,7 @@ FooterForm.propTypes = {
   onCancel: PropTypes.func,
   onSubmit: PropTypes.func.isRequired,
   submitText: PropTypes.string,
+  cancelText: PropTypes.string,
   formId: PropTypes.string,
   noCompulsory: PropTypes.bool,
 };
@@ -64,6 +66,7 @@ FooterForm.defaultProps = {
   error: undefined,
   onCancel: undefined,
   submitText: undefined,
+  cancelText: undefined,
   formId: '',
   noCompulsory: false,
 };

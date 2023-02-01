@@ -11,7 +11,7 @@ import Api from 'src/api/index.ts';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import UIkit from 'uikit';
 
-const SendMailModalContent = ({ OpportunityId, relance }) => {
+const SendMailModalContent = ({ OpportunityId, relance, onSubmit }) => {
   const { user } = useContext(UserContext);
   const candidateId = getCandidateIdFromCoachOrCandidate(user);
   const { opportunity } = useFetchOpportunity(OpportunityId, candidateId);
@@ -126,6 +126,7 @@ const SendMailModalContent = ({ OpportunityId, relance }) => {
               description: textAreaContent,
             });
             UIkit.notification('Le recruteur a bien été contacté', 'success');
+            onSubmit();
             onClose();
           }}
           onCancel={() => {
@@ -158,6 +159,7 @@ const SendMailModalContent = ({ OpportunityId, relance }) => {
 SendMailModalContent.propTypes = {
   OpportunityId: PropTypes.string.isRequired,
   relance: PropTypes.bool.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default SendMailModalContent;
