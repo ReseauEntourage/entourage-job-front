@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { StyledSendMailContent } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/SendMailModalContent/SendMailContent.styles';
 import TextArea from 'src/components/utils/Inputs/TextArea';
@@ -7,12 +7,17 @@ import { UserContext } from 'src/components/store/UserProvider';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
 import FooterForm from 'src/components/forms/FooterForm';
 import { useModalContext } from 'src/components/modals/Modal';
+import Api from 'src/api/index.ts';
 
-const SendMailModalContent = ({ OpportunityId, relance, onSumbit }) => {
+const SendMailModalContent = ({ OpportunityId, relance }) => {
   const { user } = useContext(UserContext);
   const candidateId = getCandidateIdFromCoachOrCandidate(user);
   const { opportunity } = useFetchOpportunity(OpportunityId, candidateId);
   const { onClose } = useModalContext();
+  const [textAreaContent, setTextAreaContent] = useState();
+  const handleDescription = (e) => {
+    setTextAreaContent(e.target.value);
+  };
   const object = relance
     ? 'Relance - demande de contact'
     : 'Demande de contact';
@@ -104,12 +109,20 @@ const SendMailModalContent = ({ OpportunityId, relance, onSumbit }) => {
         </div>
         <div className="email-details">{emailContent}</div>
         <div className="textarea-container">
-          <TextArea title="Ajouter une description personnelle" />
+          <TextArea
+            title="Ajouter une description personnelle"
+            onChange={handleDescription}
+          />
         </div>
         <FooterForm
           noCompulsory
           onSubmit={() => {
-            onSumbit();
+            Api.postOpportunityContactEmployer({
+              opportunityId: OpportunityId,
+              type: relance ? 'relance' : 'contact',
+              candidateId,
+              description: textAreaContent,
+            });
             onClose();
           }}
           onCancel={() => {
@@ -126,7 +139,6 @@ const SendMailModalContent = ({ OpportunityId, relance, onSumbit }) => {
 SendMailModalContent.propTypes = {
   OpportunityId: PropTypes.string.isRequired,
   relance: PropTypes.bool.isRequired,
-  onSumbit: PropTypes.func.isRequired,
 };
 
 export default SendMailModalContent;
