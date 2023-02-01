@@ -270,6 +270,10 @@ class APIHandler {
     return this.post('/opportunity/join', params);
   }
 
+  postOpportunityContactEmployer(params: object): Promise<AxiosResponse> {
+    return this.post('/opportunity/contactEmployer', params);
+  }
+
   // put
 
   putOpportunity(
