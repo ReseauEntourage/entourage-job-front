@@ -68,7 +68,6 @@ export const StyledButton = styled.button`
     }} !important;
 
     path {
-      transition: 0.2s ease-in-out;
       fill: ${(props) => {
         return COLORS[props.color] || COLORS.primaryOrange;
       }} !important;
@@ -104,7 +103,6 @@ export const StyledButton = styled.button`
     }} !important;
 
     path {
-      transition: 0.2s ease-in-out;
       fill: ${(props) => {
         return COLORS[props.color] || COLORS.primaryOrange;
       }} !important;
@@ -177,19 +175,26 @@ export const StyledButton = styled.button`
         }} !important;
       }
     }
+  }
 
-    &.disabled {
-      border-color: ${COLORS.gray};
+  &.disabled {
+    border-color: ${COLORS.gray} !important;
+    color: ${COLORS.gray} !important;
+    path {
+      fill: ${COLORS.gray} !important;
+    }
+
+    &:hover {
       color: ${COLORS.gray} !important;
-
-      &:hover {
-        background-color: white;
-        cursor: default;
+      background-color: white !important;
+      cursor: default !important;
+      path {
+        fill: ${COLORS.gray} !important;
       }
     }
   }
 
-  &.custom-button-small {
+  &.small {
     padding: 6px 10px;
     font-size: 13px;
     line-height: 16px;

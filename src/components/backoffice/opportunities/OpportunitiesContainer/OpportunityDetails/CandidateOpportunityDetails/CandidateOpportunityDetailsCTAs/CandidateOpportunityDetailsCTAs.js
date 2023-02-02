@@ -25,8 +25,10 @@ import { HiredDateModal, InterviewDateModel } from '../DateModals';
 
 const CandidateOpportunityDetailsCTAs = ({
   tab,
+  event,
   OpportunityId,
   contract,
+  isExternal,
   fetchOpportunities,
   oppRefreshCallback,
 }) => {
@@ -279,6 +281,12 @@ const CandidateOpportunityDetailsCTAs = ({
     },
   };
 
+  const disables = {
+    contactRelance: () => {
+      return event.value === EVENT_TYPES.FOLLOWUP || isExternal;
+    },
+  };
+
   return (
     <StyledOppCTAsContainer>
       {(tab || tab === 0) &&
@@ -289,6 +297,7 @@ const CandidateOpportunityDetailsCTAs = ({
           return (
             <li key={uuid()}>
               <Button
+                disabled={disables[action] ? disables[action]() : false}
                 size="small"
                 color={color}
                 style={className}
@@ -305,10 +314,20 @@ const CandidateOpportunityDetailsCTAs = ({
 
 CandidateOpportunityDetailsCTAs.propTypes = {
   tab: PropTypes.number.isRequired,
+  event: PropTypes.shape({
+    value: PropTypes.string,
+    label: PropTypes.string,
+    date: PropTypes.string,
+  }),
   OpportunityId: PropTypes.string.isRequired,
   contract: PropTypes.shape({ name: PropTypes.string }).isRequired,
+  isExternal: PropTypes.bool.isRequired,
   fetchOpportunities: PropTypes.func.isRequired,
   oppRefreshCallback: PropTypes.func.isRequired,
+};
+
+CandidateOpportunityDetailsCTAs.defaultProps = {
+  event: null,
 };
 
 export default CandidateOpportunityDetailsCTAs;

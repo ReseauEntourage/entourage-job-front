@@ -31,19 +31,20 @@ const Button = ({
   if (visible) classBuffer += ` uk-visible@${visible}`;
   if (style && style.includes('custom')) {
     classBuffer = style;
-    if (size) classBuffer += ` custom-button-${size}`;
+    if (size) classBuffer += ` ${size}`;
+    if (disabled) classBuffer += ' disabled';
   } else {
     if (style) {
       classBuffer += ` uk-button-${style}`;
     }
     if (size) classBuffer += ` uk-button-${size}`;
+    if (disabled) classBuffer += ' disabled';
   }
 
   if (className) classBuffer += ` ${className}`;
   widths.forEach((width) => {
     classBuffer += ` uk-width-${width}`;
   });
-  if (disabled) classBuffer += ' disabled';
 
   const buttonComponent = (
     <StyledButton

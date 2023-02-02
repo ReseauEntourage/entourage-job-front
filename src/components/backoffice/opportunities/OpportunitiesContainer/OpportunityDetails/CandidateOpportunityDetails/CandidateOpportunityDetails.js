@@ -151,12 +151,14 @@ const CandidateOpportunityDetails = ({
       })[0].ctas.length > 0 && (
         <StyledCTAContainer>
           <CandidateOpportunityDetailsCTAs
+            event={event}
             tab={renderTabFromStatus(
               opportunityUsers.status,
               opportunityUsers.archived
             )}
             OpportunityId={id}
             contract={contract}
+            isExternal={isExternal}
             oppRefreshCallback={() => {
               oppRefreshCallback();
             }}

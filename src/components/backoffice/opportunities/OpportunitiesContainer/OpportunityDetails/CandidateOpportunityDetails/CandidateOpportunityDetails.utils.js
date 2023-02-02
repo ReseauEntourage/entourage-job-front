@@ -25,16 +25,16 @@ export function mapEventObject(events, eventType) {
               )[0].startDate
             ).format('DD/MM/YYYY')
           : null,
-      label: EVENT_TYPES_FILTERS.find(({ value }) => {
+      ...EVENT_TYPES_FILTERS.find(({ value }) => {
         return value === eventType;
-      }).label,
+      }),
     };
   }
   return null;
 }
 
 export function mapEventDateFromStatus(offerStatus, events) {
-  if (offerStatus === OFFER_STATUS[1]) {
+  if (offerStatus === OFFER_STATUS[1].value) {
     const followup = mapEventObject(events, EVENT_TYPES.FOLLOWUP);
 
     if (followup.date) {
