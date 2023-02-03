@@ -1,4 +1,4 @@
-export default function renderSimpleSelectField(placeholder, options) {
+export default function renderSimpleSelectField(placeholder, options, id) {
   if (placeholder) {
     options.unshift({
       value: '',
@@ -6,14 +6,13 @@ export default function renderSimpleSelectField(placeholder, options) {
       disabled: true,
     });
   }
-  console.log(options);
   return {
     id: 'simple-select',
     rules: [],
     fields: [
       {
-        id: 'select',
-        name: 'select',
+        id,
+        name: id,
         // type: 'password',
         component: 'select',
         placeholder,

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { StyledHeaderModal } from 'src/components/modals/Modal/Modals.styles';
 
 const HeaderModal = ({ title, description }) => {
-  console.log(description);
   return (
     <>
       {title ? (

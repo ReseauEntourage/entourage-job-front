@@ -15,7 +15,7 @@ export const StyledButtonContainer = styled.div`
   flex-direction: row;
   justify-content: space-around;
   flex-wrap: wrap;
-  & .uk-button {
+  button {
     margin-top: 10px;
     margin-left: 10px;
     margin-right: 10px;

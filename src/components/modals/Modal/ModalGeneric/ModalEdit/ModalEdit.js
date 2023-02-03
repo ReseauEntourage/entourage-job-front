@@ -17,8 +17,6 @@ const ModalEdit = ({
   formId,
 }) => {
   const { onClose } = useModalContext();
-  console.log(description);
-
   return (
     <ModalGeneric title={title} description={description}>
       <FormWithValidation

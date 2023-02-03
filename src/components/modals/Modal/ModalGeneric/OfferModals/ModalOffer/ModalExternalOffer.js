@@ -43,7 +43,6 @@ const ModalExternalOffer = ({ fetchOpportunities }) => {
       }}
       onSubmit={async (fields, closeModal) => {
         try {
-          console.log(fields);
           await Api.postExternalOpportunity({
             ...fields,
             status: parseInt(fields.status, 10),

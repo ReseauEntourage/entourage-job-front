@@ -11,7 +11,7 @@ import { isSSR } from 'src/utils/isSSR';
 import { BREAKPOINTS } from 'src/constants/styles';
 import _ from 'lodash';
 
-const CandidateOffersTab = ({ activeTab, tabCounts }) => {
+const CandidateOffersTab = ({ activeStatus, tabCounts }) => {
   const basePath = '/backoffice/candidat/offres/private';
 
   let isDesktop = true;
@@ -42,19 +42,15 @@ const CandidateOffersTab = ({ activeTab, tabCounts }) => {
             }
           }
           text = formatPlural(text, tabCount);
+          let active;
+          for (let i = 0; i < activeStatus.length; i += 1) {
+            if (status.includes(activeStatus[i].value)) {
+              active = true;
+              break;
+            }
+          }
           return (
-            <li
-              className={
-                JSON.stringify(
-                  activeTab.map((t) => {
-                    return t.value;
-                  })
-                ) === JSON.stringify(status)
-                  ? 'active'
-                  : ''
-              }
-              key={`${k}-${uuid}`}
-            >
+            <li className={active ? 'active' : ''} key={`${k}-${uuid}`}>
               {isDesktop ? (
                 <Link href={`${basePath}${queryString}`}>
                   <div>
@@ -76,7 +72,13 @@ const CandidateOffersTab = ({ activeTab, tabCounts }) => {
 };
 
 CandidateOffersTab.propTypes = {
-  activeTab: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  activeStatus: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.number,
+      label: PropTypes.string,
+      color: PropTypes.string,
+    })
+  ).isRequired,
   tabCounts: PropTypes.arrayOf(
     PropTypes.shape({
       status: PropTypes.number.isRequired,

@@ -6,8 +6,10 @@ import { useFetchOpportunity } from 'src/components/backoffice/opportunities/Opp
 import { UserContext } from 'src/components/store/UserProvider';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
 import FooterForm from 'src/components/forms/FooterForm';
-import { useModalContext } from 'src/components/modals/Modal';
+import { useModalContext, openModal } from 'src/components/modals/Modal';
 import Api from 'src/api/index.ts';
+import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
+import UIkit from 'uikit';
 
 const SendMailModalContent = ({ OpportunityId, relance }) => {
   const { user } = useContext(UserContext);
@@ -123,10 +125,27 @@ const SendMailModalContent = ({ OpportunityId, relance }) => {
               candidateId,
               description: textAreaContent,
             });
+            UIkit.notification('Le recruteur a bien été contacté', 'success');
             onClose();
           }}
           onCancel={() => {
-            onClose();
+            openModal(
+              <ModalConfirm
+                onConfirm={() => {
+                  onClose();
+                }}
+                title="Êtes-vous sûr de vouloir abandonner?"
+                buttonText="Abandonner le mail"
+                text={
+                  <>
+                    <p>
+                      Si vous avez commencé à écrire un message, celui-ci sera
+                      abandonné en quittant.
+                    </p>
+                  </>
+                }
+              />
+            );
           }}
           submitText="Envoyer"
           formId="send-mail-recruiter"
