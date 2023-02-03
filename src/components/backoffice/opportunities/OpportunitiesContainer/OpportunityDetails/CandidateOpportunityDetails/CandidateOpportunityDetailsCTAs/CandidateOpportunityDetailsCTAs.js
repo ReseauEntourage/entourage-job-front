@@ -20,6 +20,7 @@ import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm'
 import ModalGeneric from 'src/components/modals/Modal/ModalGeneric/ModalGeneric';
 import SendMailModalContent from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/SendMailModalContent';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
+import UIkit from 'uikit';
 
 const CandidateOpportunityDetailsCTAs = ({
   tab,
@@ -60,6 +61,10 @@ const CandidateOpportunityDetailsCTAs = ({
         UserId: getCandidateIdFromCoachOrCandidate(user),
         status: OFFER_STATUS[1].value,
       });
+      UIkit.notification(
+        "L'offre est bien passée au statut 'contactée'",
+        'success'
+      );
     },
     archive: async () => {
       openModal(
@@ -70,6 +75,7 @@ const CandidateOpportunityDetailsCTAs = ({
               UserId: getCandidateIdFromCoachOrCandidate(user),
               archived: true,
             });
+            UIkit.notification("L'offre a bien été abandonnée", 'success');
           }}
           title="Abandonner l'offre"
           buttonText="Abandonner l'offre"
@@ -91,6 +97,10 @@ const CandidateOpportunityDetailsCTAs = ({
         UserId: getCandidateIdFromCoachOrCandidate(user),
         status: OFFER_STATUS[3].value,
       });
+      UIkit.notification(
+        "L'offre est bien passée au statut 'acceptée'",
+        'success'
+      );
     },
     updateToInterview: async () => {
       await updateOpportunityUser({
@@ -98,6 +108,10 @@ const CandidateOpportunityDetailsCTAs = ({
         UserId: getCandidateIdFromCoachOrCandidate(user),
         status: OFFER_STATUS[2].value,
       });
+      UIkit.notification(
+        "L'offre est bien passée au statut 'en phrase d'entretien'",
+        'success'
+      );
     },
     abandon: async () => {
       openModal(
@@ -127,23 +141,25 @@ const CandidateOpportunityDetailsCTAs = ({
                   "Le recruteur a donné un réponse négative après l'entretien",
               },
               { value: 'archived', label: 'Autre motif' },
-            ]
+            ],
+            'status'
           )}
-          //   defaultValues={{ catchphrase }}
+          defaultValues={{ status: '3' }}
           formId="abandon-offer-reason"
           submitText="Abandonner l'offre"
           onSubmit={async (selectedReason, closeModal) => {
             const queryParams = {};
-            if (selectedReason.select === 'archived') {
+            if (selectedReason.status === 'archived') {
               queryParams.archived = true;
             } else {
-              queryParams.status = selectedReason.select * 1;
+              queryParams.status = selectedReason.status * 1;
             }
             await updateOpportunityUser({
               OpportunityId,
               UserId: getCandidateIdFromCoachOrCandidate(user),
               ...queryParams,
             });
+            UIkit.notification("L'offre a bien été abandonnée", 'success');
             closeModal();
           }}
         />

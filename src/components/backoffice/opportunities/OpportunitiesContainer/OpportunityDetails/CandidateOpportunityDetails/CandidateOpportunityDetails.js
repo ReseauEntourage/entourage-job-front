@@ -26,6 +26,8 @@ import { HEIGHTS } from 'src/constants/styles';
 import DetailsProgressBar from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/DetailsProgressBar';
 import CandidateOpportunityDetailsCTAs from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/CandidateOpportunityDetailsCTAs';
 import { renderTabFromStatus } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.utils';
+import { CTAsByTab } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/CandidateOpportunityDetailsCTAs/CandidateOpportunityDetailsCTAs.utils';
+import { tabs } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab/CandidateOffersTab.utils';
 
 const CandidateOpportunityDetails = ({
   id,
@@ -49,6 +51,13 @@ const CandidateOpportunityDetails = ({
     id,
     opportunityUsersProp
   );
+
+  let currentTab;
+  for (let i = 0; i < tabs.length; i += 1) {
+    if (tabs[i].status.includes(opportunityUsersProp.status)) {
+      currentTab = i;
+    }
+  }
 
   const ref = useRef();
   const windowHeight = useWindowHeight();
@@ -118,32 +127,42 @@ const CandidateOpportunityDetails = ({
           )}
         />
       </StyledTopContainer>
-      <StyledCTAContainer>
-        <CandidateOpportunityDetailsCTAs
-          tab={renderTabFromStatus(
-            opportunityUsersProp.status,
-            opportunityUsersProp.archived
-          )}
-          OpportunityId={id}
-          oppRefreshCallback={() => {
-            oppRefreshCallback();
-          }}
-          fetchOpportunities={async () => {
-            await fetchOpportunities();
-          }}
-        />
-      </StyledCTAContainer>
-      <StyledDetailsContentContainer height={containerHeight}>
-        {companyDescription && (
-          <OpportunitySection
-            title="Information sur l'entreprise"
-            content={companyDescription}
+      {/* check if there are CTAS on the current tab to render ctas container */}
+      {CTAsByTab.filter((tab) => {
+        return tab.tab === currentTab;
+      })[0].ctas.length > 0 && (
+        <StyledCTAContainer>
+          <CandidateOpportunityDetailsCTAs
+            tab={renderTabFromStatus(
+              opportunityUsersProp.status,
+              opportunityUsersProp.archived
+            )}
+            OpportunityId={id}
+            oppRefreshCallback={() => {
+              oppRefreshCallback();
+            }}
+            fetchOpportunities={async () => {
+              await fetchOpportunities();
+            }}
           />
-        )}
-        {description && (
-          <OpportunitySection title="Détail de l'offre" content={description} />
-        )}
-      </StyledDetailsContentContainer>
+        </StyledCTAContainer>
+      )}
+      {(companyDescription || description) && (
+        <StyledDetailsContentContainer height={containerHeight}>
+          {companyDescription && (
+            <OpportunitySection
+              title="Information sur l'entreprise"
+              content={companyDescription}
+            />
+          )}
+          {description && (
+            <OpportunitySection
+              title="Détail de l'offre"
+              content={description}
+            />
+          )}
+        </StyledDetailsContentContainer>
+      )}
     </StyledDetailsContainer>
     /* <ModalOffer
       currentOffer={opportunity}

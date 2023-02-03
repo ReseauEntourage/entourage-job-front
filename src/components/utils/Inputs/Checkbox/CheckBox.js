@@ -11,7 +11,6 @@ const Checkbox = ({
   name,
   id,
 }) => {
-  console.log(checked);
   return (
     <StyledCheckbox
       onClick={(e) => {

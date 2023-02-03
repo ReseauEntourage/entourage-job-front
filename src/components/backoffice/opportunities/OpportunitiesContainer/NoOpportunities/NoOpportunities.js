@@ -42,7 +42,7 @@ const NoOpportunities = ({ status, fetchOpportunities }) => {
           Ajouter une offre externe
         </Button>
         <Button
-          style="primary"
+          style="custom-primary"
           dataTestId="candidat-find-offer"
           href="/backoffice/candidat/offres?tag=public"
           shallow

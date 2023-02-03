@@ -34,7 +34,6 @@ const DatePicker = ({
         type="date"
         onChange={(e) => {
           setValue(e.target.value);
-          console.log(e.target.value);
           onChange();
         }}
         disabled={disabled}

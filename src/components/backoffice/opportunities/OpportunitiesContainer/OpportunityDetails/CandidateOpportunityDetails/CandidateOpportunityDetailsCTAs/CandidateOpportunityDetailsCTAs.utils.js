@@ -92,7 +92,9 @@ export const CTAsByTab = [
   },
   {
     tab: 3,
-    ctas: ['feedback'],
+    ctas: [
+      // 'feedback'
+    ],
   },
   {
     tab: 4,

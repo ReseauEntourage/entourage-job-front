@@ -47,8 +47,6 @@ const FormWithValidation = forwardRef(
         onChangeArgs = [onChangeArgs];
       }
 
-      console.log(args);
-
       const tmpFieldValues = { ...fieldValues };
       const tmpFieldValidations = fieldValidations;
       for (let i = 0; i < onChangeArgs.length; i += 1) {
@@ -66,8 +64,6 @@ const FormWithValidation = forwardRef(
 
         /* Validators start */
         tmpFieldValues[name] = fieldValue;
-
-        console.log(tmpFieldValues);
 
         const validation = validator.validate(tmpFieldValues); // envoie une copie des champs pour que le state ne soit pas altéré
 

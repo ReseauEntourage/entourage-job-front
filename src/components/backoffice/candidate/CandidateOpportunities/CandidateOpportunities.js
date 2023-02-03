@@ -133,7 +133,7 @@ const CandidateOpportunities = ({
           ) : (
             <Section className="custom-primary custom-fixed">
               <CandidateOffersTab
-                activeTab={filters.status}
+                activeStatus={filters.status}
                 tabCounts={tabCounts}
               />
             </Section>
