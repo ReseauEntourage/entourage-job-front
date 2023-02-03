@@ -1,11 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'src/components/utils';
 import { StyledHeaderBackOffice } from 'src/components/headers/HeaderBackoffice/HeaderBackoffice.styles';
-import { useRouter } from 'next/router';
-import { useNotifBadges } from 'src/hooks';
-import { UserContext } from 'src/components/store/UserProvider';
 import { BACKOFFICE_PAGES } from 'src/constants';
+import { usePendingMembers } from './usePendingMembers';
 
 const HeaderBackoffice = ({
   title,
@@ -15,10 +13,7 @@ const HeaderBackoffice = ({
   page,
   noSeparator,
 }) => {
-  const { user } = useContext(UserContext);
-  const router = useRouter();
-  const badges = useNotifBadges(user, router.asPath);
-
+  const { pendingMembersCount } = usePendingMembers();
   return (
     <StyledHeaderBackOffice>
       <Grid
@@ -36,7 +31,7 @@ const HeaderBackoffice = ({
         <div className="notif-container">
           <p>
             <div className="uk-badge uk-margin-small-left">
-              {badges.members}
+              {pendingMembersCount}
             </div>
             CV en attente de validation
           </p>

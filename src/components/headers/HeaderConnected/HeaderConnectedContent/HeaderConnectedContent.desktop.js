@@ -8,7 +8,7 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledConnectedItem } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/HeaderConnectedContent.styles';
 import SubMenu from 'src/components/headers/HeaderConnected/HeaderConnectedContent/SubMenu';
-import { UserContext } from 'src/components/store/UserProvider';
+import { UserContext } from 'src/store/UserProvider';
 import { useRouter } from 'next/router';
 import Nav from 'src/components/utils/Navbar/Nav';
 import NavbarLogo from 'src/components/utils/Navbar/NavbarLogo';

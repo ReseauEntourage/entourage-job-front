@@ -14,7 +14,7 @@ import { EVENT_TYPES, OFFER_STATUS } from 'src/constants';
 import { openModal } from 'src/components/modals/Modal';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import renderSimpleSelectField from 'src/components/forms/schema/formSimpleSelectField';
-import { UserContext } from 'src/components/store/UserProvider';
+import { UserContext } from 'src/store/UserProvider';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import ModalGeneric from 'src/components/modals/Modal/ModalGeneric/ModalGeneric';
 import SendMailModalContent from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/SendMailModalContent';
@@ -227,9 +227,7 @@ const CandidateOpportunityDetailsCTAs = ({
           <SendMailModalContent
             OpportunityId={OpportunityId}
             onSubmit={async () => {
-              // rest onSubmit
               const date = moment();
-
               try {
                 await Api.postOpportunityUserEvent(
                   OpportunityId,
@@ -257,7 +255,6 @@ const CandidateOpportunityDetailsCTAs = ({
             OpportunityId={OpportunityId}
             relance
             onSubmit={async () => {
-              // rest onSubmit
               try {
                 const date = moment();
                 await Api.postOpportunityUserEvent(

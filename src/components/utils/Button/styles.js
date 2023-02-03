@@ -19,7 +19,7 @@ export const StyledButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 11px 20px;
+  padding: 11px 20px !important;
 
   > svg {
     margin-right: 8px;
@@ -179,23 +179,26 @@ export const StyledButton = styled.button`
 
   &.disabled {
     border-color: ${COLORS.gray} !important;
-    color: ${COLORS.gray} !important;
+    color: ${COLORS.darkGray} !important;
+    background-color: ${COLORS.lightgray} !important;
+
     path {
-      fill: ${COLORS.gray} !important;
+      fill: ${COLORS.darkGray} !important;
     }
 
     &:hover {
-      color: ${COLORS.gray} !important;
-      background-color: white !important;
+      color: ${COLORS.darkGray} !important;
+      background-color: ${COLORS.lightgray} !important;
       cursor: default !important;
+
       path {
-        fill: ${COLORS.gray} !important;
+        fill: ${COLORS.darkGray} !important;
       }
     }
   }
 
   &.small {
-    padding: 6px 10px;
+    padding: 6px 10px !important;
     font-size: 13px;
     line-height: 16px;
   }

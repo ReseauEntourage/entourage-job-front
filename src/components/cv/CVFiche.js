@@ -13,10 +13,10 @@ import { Grid, Img, SimpleLink } from 'src/components/utils';
 import ModalShareCV from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
 import Button from 'src/components/utils/Button';
 import {
-  formatParagraph,
-  sortByOrder,
-  sortByName,
   findConstantFromValue,
+  formatParagraph,
+  sortByName,
+  sortByOrder,
 } from 'src/utils';
 import { gaEvent } from 'src/lib/gtag';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
@@ -64,11 +64,11 @@ const CVFiche = ({ cv, actionDisabled }) => {
     },
   });
 
-  const router = useRouter();
+  const { asPath } = useRouter();
   const hostname = process.env.SERVER_URL;
-  const path = router.asPath.includes('?')
-    ? router.asPath.slice(0, router.asPath.indexOf('?'))
-    : router.asPath;
+  const path = asPath.includes('?')
+    ? asPath.slice(0, asPath.indexOf('?'))
+    : asPath;
   const link = `${hostname}${path}`;
   const hashtags = ['LinkedOut'];
   const candidateExists = cv && cv.user && cv.user.candidat;

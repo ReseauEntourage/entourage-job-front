@@ -1,7 +1,7 @@
 // store/SharesCount.js
 import React, { createContext, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import Api from 'src/api/index.ts';
+import Api from 'src/api';
 import { VALUES } from 'src/constants';
 import { useMount } from 'src/hooks/utils';
 

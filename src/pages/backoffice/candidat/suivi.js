@@ -4,11 +4,12 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
 import Api from 'src/api/index.ts';
 import { Button, Grid, Section } from 'src/components/utils';
-import { UserContext } from 'src/components/store/UserProvider';
+import { UserContext } from 'src/store/UserProvider';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
 import { USER_ROLES } from 'src/constants';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
+import { usePrevious } from 'src/hooks/utils';
 
 const Suivi = () => {
   const { user } = useContext(UserContext);
@@ -16,6 +17,8 @@ const Suivi = () => {
   const [labelClass, setLabelClass] = useState('');
   const [loading, setLoading] = useState(true);
   const [value, setValue] = useState();
+
+  const prevUser = usePrevious(user);
 
   const title =
     user && user.role === USER_ROLES.CANDIDAT
@@ -57,7 +60,7 @@ const Suivi = () => {
   }, [user, userCandidat?.candidat?.id]);
 
   useEffect(() => {
-    if (user) {
+    if (user && user !== prevUser) {
       setLoading(true);
       Api.getUserCandidate()
         .then(({ data }) => {
@@ -74,7 +77,7 @@ const Suivi = () => {
           return setLoading(false);
         });
     }
-  }, [setNoteHasBeenRead, user]);
+  }, [prevUser, setNoteHasBeenRead, user]);
 
   let content;
   if (loading || !user) {

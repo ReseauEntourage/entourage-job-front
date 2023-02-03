@@ -10,7 +10,7 @@ import { OFFCANVAS_LOGGED } from 'src/constants/utils';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledConnectedItemMobile } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/HeaderConnectedContent.styles';
 import SubMenu from 'src/components/headers/HeaderConnected/HeaderConnectedContent/SubMenu';
-import { UserContext } from 'src/components/store/UserProvider';
+import { UserContext } from 'src/store/UserProvider';
 import { useRouter } from 'next/router';
 import NavbarLogo from 'src/components/utils/Navbar/NavbarLogo';
 import { HeaderConnectedItemShape } from '../HeaderConnected.shapes';

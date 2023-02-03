@@ -18,7 +18,7 @@ export const InterviewDateModel = ({
       formSchema={renderSimpleDatePickerField("Date d'entretien*")}
       formId="update-to-hired-datepicker"
       submitText="Valider la date d'entretien"
-      cancelText="Je n’ai pas encore de date d\'entretien"
+      cancelText="Je n’ai pas encore de date d'entretien"
       onSubmit={async ({ datepicker }, closeModal) => {
         try {
           await Api.postOpportunityUserEvent(opportunityId, candidateId, {

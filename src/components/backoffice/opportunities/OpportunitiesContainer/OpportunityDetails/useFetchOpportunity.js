@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import Api from 'src/api/index.ts';
 import { usePrevious } from 'src/hooks/utils';
-import { UserContext } from 'src/components/store/UserProvider';
+import { UserContext } from 'src/store/UserProvider';
 import { USER_ROLES } from 'src/constants';
 
 export function useFetchOpportunity(

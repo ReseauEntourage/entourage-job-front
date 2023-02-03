@@ -16,7 +16,7 @@ import { StyledHeaderMobile } from '../../Header.styles';
 import { HeaderPublicItemShape } from '../HeaderPublic.shapes';
 
 const HeaderPublicMobile = ({ links }) => {
-  const router = useRouter();
+  const { asPath, push } = useRouter();
 
   return (
     <StyledHeaderMobile id="header">
@@ -47,7 +47,7 @@ const HeaderPublicMobile = ({ links }) => {
               style={{ color: 'white' }}
               onClick={() => {
                 UIkit.offcanvas(`#${OFFCANVAS_GUEST}`).hide();
-                router.push('/');
+                push('/');
               }}
             >
               <div className="uk-flex">
@@ -66,7 +66,7 @@ const HeaderPublicMobile = ({ links }) => {
                 return href !== '#';
               })
               .map(({ href, name, tag }, index) => {
-                if (router.asPath.includes(href)) {
+                if (asPath.includes(href)) {
                   return (
                     <li key={index} className="uk-flex-center">
                       <a
@@ -79,7 +79,7 @@ const HeaderPublicMobile = ({ links }) => {
                         onClick={() => {
                           UIkit.offcanvas(`#${OFFCANVAS_GUEST}`).hide();
                           gaEvent(tag);
-                          router.push(href);
+                          push(href);
                         }}
                       >
                         {name}
@@ -101,7 +101,7 @@ const HeaderPublicMobile = ({ links }) => {
                       onClick={() => {
                         UIkit.offcanvas(`#${OFFCANVAS_GUEST}`).hide();
                         gaEvent(tag);
-                        router.push(href);
+                        push(href);
                       }}
                     >
                       {name}

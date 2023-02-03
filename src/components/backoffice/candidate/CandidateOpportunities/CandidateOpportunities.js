@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
 import { Button, Section } from 'src/components/utils';
 import { openModal } from 'src/components/modals/Modal';
-import { UserContext } from 'src/components/store/UserProvider';
+import { UserContext } from 'src/store/UserProvider';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import SearchBar from 'src/components/filters/SearchBar';
 import CandidateOffersTab from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab';
@@ -23,6 +23,7 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import { useOpportunityType } from 'src/components/backoffice/opportunities/useOpportunityType';
 import { usePrevious } from 'src/hooks/utils';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
+import { useRouter } from 'next/router';
 import { useTabsCount } from './useTabsCount';
 
 const CandidateOpportunities = ({
@@ -34,6 +35,8 @@ const CandidateOpportunities = ({
   candidateId,
   isMobile,
 }) => {
+  const { replace } = useRouter();
+
   const { user } = useContext(UserContext);
 
   const opportunityId = useOpportunityId();
@@ -58,6 +61,36 @@ const CandidateOpportunities = ({
     setHasError,
     setHasFetchedAll
   );
+
+  const prevOffers = usePrevious(offers);
+
+  useDeepCompareEffect(() => {
+    if (
+      offers &&
+      offers.length > 0 &&
+      offers !== prevOffers &&
+      !opportunityId
+    ) {
+      replace(
+        {
+          pathname: `/backoffice/candidat/offres/${opportunityType}${
+            offers[0].id ? `/${offers[0].id}` : ''
+          }`,
+          query: queryParamsOpportunities,
+        },
+        undefined,
+        {
+          shallow: true,
+        }
+      );
+    }
+  }, [
+    offers,
+    opportunityId,
+    opportunityType,
+    queryParamsOpportunities,
+    replace,
+  ]);
 
   const { tabCounts, fetchTabsCount } = useTabsCount();
 
