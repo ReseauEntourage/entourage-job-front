@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { findConstantFromValue } from 'src/utils';
 import { BUSINESS_LINES } from 'src/constants';
@@ -50,18 +50,6 @@ const CandidateOpportunityDetails = ({
   createdAt,
   oppRefreshCallback,
 }) => {
-  const { opportunityUsers, bookmarkOpportunity } = useBookmarkOpportunity(
-    id,
-    opportunityUsersProp
-  );
-
-  let currentTab;
-  for (let i = 0; i < tabs.length; i += 1) {
-    if (tabs[i].status.includes(opportunityUsersProp.status)) {
-      currentTab = i;
-    }
-  }
-
   const ref = useRef();
   const windowHeight = useWindowHeight();
 
@@ -69,15 +57,36 @@ const CandidateOpportunityDetails = ({
     2 * HEIGHTS.SECTION_PADDING
   );
 
+  const { opportunityUsers, bookmarkOpportunity } = useBookmarkOpportunity(
+    id,
+    opportunityUsersProp
+  );
+
+  const [hasCTAContainer, setHasCTAContainer] = useState(true);
+
+  useEffect(() => {
+    const index = tabs.findIndex(({ status }) => {
+      return status.includes(opportunityUsers.status);
+    });
+
+    const hasCTAs =
+      CTAsByTab.find((tab) => {
+        return tab.tab === index;
+      }).ctas.length > 0;
+
+    setHasCTAContainer(hasCTAs);
+  }, [hasCTAContainer, opportunityUsers.status]);
+
   const event = mapEventDateFromStatus(opportunityUsers.status, events);
 
   useScrollPosition(
     ({ currPos }) => {
+      const conditionalHeight = hasCTAContainer
+        ? 2 * HEIGHTS.SECTION_PADDING
+        : 0;
+
       const bottom =
-        windowHeight -
-        HEIGHTS.HEADER -
-        HEIGHTS.TABS_HEIGHT -
-        2 * HEIGHTS.SECTION_PADDING;
+        windowHeight - HEIGHTS.HEADER - HEIGHTS.TABS_HEIGHT - conditionalHeight;
 
       const calculatedContainerHeight = bottom - currPos.y;
       setContainerHeight(
@@ -86,7 +95,7 @@ const CandidateOpportunityDetails = ({
           : calculatedContainerHeight
       );
     },
-    [windowHeight],
+    [windowHeight, hasCTAContainer],
     ref
   );
 
@@ -146,9 +155,7 @@ const CandidateOpportunityDetails = ({
         />
       </StyledTopContainer>
       {/* check if there are CTAS on the current tab to render ctas container */}
-      {CTAsByTab.filter((tab) => {
-        return tab.tab === currentTab;
-      })[0].ctas.length > 0 && (
+      {hasCTAContainer && (
         <StyledCTAContainer>
           <CandidateOpportunityDetailsCTAs
             event={event}

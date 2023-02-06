@@ -71,6 +71,8 @@ const HeaderConnectedContentDesktop = ({ badges, links }) => {
     </div>,
   ];
 
+  const logoLink = links[user?.role?.toLowerCase()][0];
+
   return (
     <StyledHeaderDesktop id="header">
       <Navbar
@@ -79,7 +81,7 @@ const HeaderConnectedContentDesktop = ({ badges, links }) => {
         left={
           <>
             <NavbarLogo
-              href={links[user?.role?.toLowerCase()][0].href}
+              href={logoLink.href + (logoLink.queryParams || '')}
               src="/static/img/linkedout_logo_orange.png"
               alt="Linkedout"
             />

@@ -66,6 +66,7 @@ const CandidateOpportunities = ({
 
   useDeepCompareEffect(() => {
     if (
+      !isMobile &&
       offers &&
       offers.length > 0 &&
       offers !== prevOffers &&
@@ -90,6 +91,7 @@ const CandidateOpportunities = ({
     opportunityType,
     queryParamsOpportunities,
     replace,
+    isMobile,
   ]);
 
   const { tabCounts, fetchTabsCount } = useTabsCount();

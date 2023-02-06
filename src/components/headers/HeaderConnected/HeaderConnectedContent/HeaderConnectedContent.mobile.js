@@ -20,6 +20,7 @@ const HeaderConnectedContentMobile = ({ badges, links }) => {
   const { user } = useContext(UserContext);
 
   const { push, asPath } = useRouter();
+  const logoLink = links[user?.role?.toLowerCase()][0];
 
   return (
     <StyledHeaderMobile id="header">
@@ -28,7 +29,7 @@ const HeaderConnectedContentMobile = ({ badges, links }) => {
         sticky
         left={
           <NavbarLogo
-            href={links[user?.role?.toLowerCase()][0].href}
+            href={logoLink.href + (logoLink.queryParams || '')}
             src="/static/img/linkedout_logo_white.png"
             alt="Linkedout"
           />
