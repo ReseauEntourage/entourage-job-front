@@ -24,6 +24,7 @@ import { useOpportunityType } from 'src/components/backoffice/opportunities/useO
 import { usePrevious } from 'src/hooks/utils';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { useRouter } from 'next/router';
+import _ from 'lodash';
 import { useTabsCount } from './useTabsCount';
 
 const CandidateOpportunities = ({
@@ -40,7 +41,9 @@ const CandidateOpportunities = ({
   const { user } = useContext(UserContext);
 
   const opportunityId = useOpportunityId();
+  const prevOpportunityId = usePrevious(opportunityId);
   const opportunityType = useOpportunityType();
+  const prevOpportunityType = usePrevious(opportunityType);
 
   const isPublic = opportunityType === 'public';
 
@@ -53,6 +56,7 @@ const CandidateOpportunities = ({
   const [loading, setLoading] = useState(true);
 
   const queryParamsOpportunities = useQueryParamsOpportunities();
+  const prevStatus = usePrevious(queryParamsOpportunities.status);
 
   const fetchData = useCandidateOpportunities(
     setOffers,
@@ -69,8 +73,11 @@ const CandidateOpportunities = ({
       !isMobile &&
       offers &&
       offers.length > 0 &&
-      offers !== prevOffers &&
-      !opportunityId
+      ((offers !== prevOffers && !opportunityId) ||
+        (opportunityId !== prevOpportunityId &&
+          !opportunityId &&
+          _.isEqual(queryParamsOpportunities.status, prevStatus) &&
+          opportunityType === prevOpportunityType))
     ) {
       replace(
         {
@@ -90,6 +97,9 @@ const CandidateOpportunities = ({
     opportunityId,
     opportunityType,
     queryParamsOpportunities,
+    prevOpportunityId,
+    prevStatus,
+    prevOpportunityType,
     replace,
     isMobile,
   ]);

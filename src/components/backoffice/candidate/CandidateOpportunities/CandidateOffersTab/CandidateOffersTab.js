@@ -47,22 +47,18 @@ const CandidateOffersTab = ({ activeStatus, tabCounts }) => {
             return status.includes(value);
           });
 
-          const linkContent = isDesktop ? (
-            <div>
-              <span>{tabCount}</span>
-              <p>{text}</p>
-            </div>
-          ) : (
-            `${tabCount} ${text}`
-          );
-
           return (
             <li className={isActive ? 'active' : ''} key={`${k}-${uuid}`}>
-              {isActive ? (
-                <div>{linkContent}</div>
-              ) : (
-                <Link href={`${basePath}${queryString}`}>{linkContent}</Link>
-              )}
+              <Link href={`${basePath}${queryString}`}>
+                {isDesktop ? (
+                  <div>
+                    <span>{tabCount}</span>
+                    <p>{text}</p>
+                  </div>
+                ) : (
+                  `${tabCount} ${text}`
+                )}
+              </Link>
             </li>
           );
         })}

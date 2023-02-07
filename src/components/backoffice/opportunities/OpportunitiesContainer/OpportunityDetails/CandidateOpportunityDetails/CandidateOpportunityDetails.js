@@ -82,13 +82,14 @@ const CandidateOpportunityDetails = ({
   useScrollPosition(
     ({ currPos }) => {
       const conditionalHeight = hasCTAContainer
-        ? 2 * HEIGHTS.SECTION_PADDING
-        : 0;
+        ? HEIGHTS.OFFER_CTA_HEIGHT
+        : -HEIGHTS.SECTION_PADDING;
 
       const bottom =
         windowHeight - HEIGHTS.HEADER - HEIGHTS.TABS_HEIGHT - conditionalHeight;
 
       const calculatedContainerHeight = bottom - currPos.y;
+
       setContainerHeight(
         calculatedContainerHeight < 2 * HEIGHTS.SECTION_PADDING
           ? 2 * HEIGHTS.SECTION_PADDING
