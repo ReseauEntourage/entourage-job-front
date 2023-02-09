@@ -17,7 +17,6 @@ import { StyledFormHeading } from 'src/components/forms/Forms.styles';
 
 import CheckBoxNew from 'src/components/utils/Inputs/Checkbox';
 import { useCheckbox } from 'src/components/utils/Inputs/Checkbox/useCheckbox';
-import DatepickerNew from 'src/components/utils/Inputs/Datepicker';
 import SelectNew from 'src/components/utils/Inputs/Select';
 import TextareaNew from 'src/components/utils/Inputs/TextArea';
 import TextInputNew from 'src/components/utils/Inputs/TextInput';

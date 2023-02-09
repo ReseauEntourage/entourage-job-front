@@ -1,14 +1,14 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { findConstantFromValue } from 'src/utils';
 import { BUSINESS_LINES } from 'src/constants';
 import ContractLabel from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel';
 import {
-  StyledActionContainer,
+  StyledCTAContainer,
   StyledDetailsContainer,
   StyledDetailsContentContainer,
   StyledInfoContainer,
-  StyledCTAContainer,
+  StyledRightContainer,
   StyledTitleContainer,
   StyledTopContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunityDetails.styles';
@@ -17,6 +17,7 @@ import ActionLabels from 'src/components/backoffice/opportunities/OpportunitiesC
 import { useBookmarkOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/useBookmarkOpportunity';
 import {
   InfoText,
+  RightAlignText,
   StyledTitleText,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
 import moment from 'moment';
@@ -28,6 +29,7 @@ import CandidateOpportunityDetailsCTAs from 'src/components/backoffice/opportuni
 import { renderTabFromStatus } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.utils';
 import { CTAsByTab } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/CandidateOpportunityDetailsCTAs/CandidateOpportunityDetailsCTAs.utils';
 import { tabs } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab/CandidateOffersTab.utils';
+import { mapEventDateFromStatus } from './CandidateOpportunityDetails.utils';
 
 const CandidateOpportunityDetails = ({
   id,
@@ -44,37 +46,57 @@ const CandidateOpportunityDetails = ({
   isPublic,
   isExternal,
   fetchOpportunities,
+  events,
   createdAt,
   oppRefreshCallback,
 }) => {
+  const ref = useRef();
+  const windowHeight = useWindowHeight();
+
+  const [containerHeight, setContainerHeight] = useState(
+    2 * HEIGHTS.SECTION_PADDING
+  );
+
   const { opportunityUsers, bookmarkOpportunity } = useBookmarkOpportunity(
     id,
     opportunityUsersProp
   );
 
-  let currentTab;
-  for (let i = 0; i < tabs.length; i += 1) {
-    if (tabs[i].status.includes(opportunityUsersProp.status)) {
-      currentTab = i;
-    }
-  }
+  const [hasCTAContainer, setHasCTAContainer] = useState(true);
 
-  const ref = useRef();
-  const windowHeight = useWindowHeight();
+  useEffect(() => {
+    const index = tabs.findIndex(({ status }) => {
+      return status.includes(opportunityUsers.status);
+    });
 
-  const [containerHeight, setContainerHeight] = useState(0);
+    const hasCTAs =
+      CTAsByTab.find((tab) => {
+        return tab.tab === index;
+      }).ctas.length > 0;
+
+    setHasCTAContainer(hasCTAs);
+  }, [hasCTAContainer, opportunityUsers.status]);
+
+  const event = mapEventDateFromStatus(opportunityUsers.status, events);
 
   useScrollPosition(
     ({ currPos }) => {
-      const bottom =
-        windowHeight -
-        HEIGHTS.HEADER -
-        HEIGHTS.TABS_HEIGHT -
-        2 * HEIGHTS.SECTION_PADDING;
+      const conditionalHeight = hasCTAContainer
+        ? HEIGHTS.OFFER_CTA_HEIGHT
+        : -HEIGHTS.SECTION_PADDING;
 
-      setContainerHeight(bottom - currPos.y);
+      const bottom =
+        windowHeight - HEIGHTS.HEADER - HEIGHTS.TABS_HEIGHT - conditionalHeight;
+
+      const calculatedContainerHeight = bottom - currPos.y;
+
+      setContainerHeight(
+        calculatedContainerHeight < 2 * HEIGHTS.SECTION_PADDING
+          ? 2 * HEIGHTS.SECTION_PADDING
+          : calculatedContainerHeight
+      );
     },
-    [windowHeight],
+    [windowHeight, hasCTAContainer],
     ref
   );
 
@@ -108,7 +130,7 @@ const CandidateOpportunityDetails = ({
           </InfoText>
           <InfoText>{moment(createdAt).format('DD/MM/YYYY')}</InfoText>
         </StyledTitleContainer>
-        <StyledActionContainer>
+        <StyledRightContainer>
           <ActionLabels
             isBookmarked={!!opportunityUsers?.bookmarked}
             isRecommended={!!opportunityUsers?.recommended}
@@ -119,25 +141,32 @@ const CandidateOpportunityDetails = ({
               await fetchOpportunities();
             }}
           />
-        </StyledActionContainer>
+          {event && event.date && (
+            <InfoText>
+              <RightAlignText>{event.label}</RightAlignText>
+              <RightAlignText>{event.date}</RightAlignText>
+            </InfoText>
+          )}
+        </StyledRightContainer>
         <DetailsProgressBar
           tab={renderTabFromStatus(
-            opportunityUsersProp.status,
-            opportunityUsersProp.archived
+            opportunityUsers.status,
+            opportunityUsers.archived
           )}
         />
       </StyledTopContainer>
       {/* check if there are CTAS on the current tab to render ctas container */}
-      {CTAsByTab.filter((tab) => {
-        return tab.tab === currentTab;
-      })[0].ctas.length > 0 && (
+      {hasCTAContainer && (
         <StyledCTAContainer>
           <CandidateOpportunityDetailsCTAs
+            event={event}
             tab={renderTabFromStatus(
-              opportunityUsersProp.status,
-              opportunityUsersProp.archived
+              opportunityUsers.status,
+              opportunityUsers.archived
             )}
             OpportunityId={id}
+            contract={contract}
+            isExternal={isExternal}
             oppRefreshCallback={() => {
               oppRefreshCallback();
             }}
@@ -179,6 +208,7 @@ CandidateOpportunityDetails.defaultProps = {
   contract: null,
   endOfContract: null,
   startOfContract: null,
+  events: [],
 };
 
 CandidateOpportunityDetails.propTypes = {
@@ -207,6 +237,24 @@ CandidateOpportunityDetails.propTypes = {
         archived: PropTypes.bool,
       })
     ),
+  ]),
+  events: PropTypes.arrayOf([
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      OpportunityUserId: PropTypes.string.isRequired,
+      ContractId: PropTypes.string,
+      type: PropTypes.string.isRequired,
+      startDate: PropTypes.string.isRequired,
+      endDate: PropTypes.string,
+      createdAt: PropTypes.string.isRequired,
+      updatedAt: PropTypes.string.isRequired,
+      contract: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        createdAt: PropTypes.string.isRequired,
+        updatedAt: PropTypes.string.isRequired,
+      }),
+    }),
   ]),
   department: PropTypes.string.isRequired,
   isPublic: PropTypes.bool.isRequired,

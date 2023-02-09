@@ -11,7 +11,7 @@ const FiltersOptions = ({ resetFilters }) => {
             {' '}
             &nbsp;
             <Button
-              style="custom-secondary transparentBG"
+              style="custom-secondary transparentBG small"
               color="primaryOrange"
               onClick={resetFilters}
             >

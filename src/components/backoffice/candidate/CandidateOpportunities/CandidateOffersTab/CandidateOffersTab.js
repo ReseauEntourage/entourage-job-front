@@ -42,27 +42,23 @@ const CandidateOffersTab = ({ activeStatus, tabCounts }) => {
             }
           }
           text = formatPlural(text, tabCount);
-          let active;
-          for (let i = 0; i < activeStatus.length; i += 1) {
-            if (status.includes(activeStatus[i].value)) {
-              active = true;
-              break;
-            }
-          }
+
+          const isActive = activeStatus.some(({ value }) => {
+            return status.includes(value);
+          });
+
           return (
-            <li className={active ? 'active' : ''} key={`${k}-${uuid}`}>
-              {isDesktop ? (
-                <Link href={`${basePath}${queryString}`}>
+            <li className={isActive ? 'active' : ''} key={`${k}-${uuid}`}>
+              <Link href={`${basePath}${queryString}`}>
+                {isDesktop ? (
                   <div>
                     <span>{tabCount}</span>
                     <p>{text}</p>
                   </div>
-                </Link>
-              ) : (
-                <Link href={`${basePath}${queryString}`}>
-                  {`${tabCount} ${text}`}
-                </Link>
-              )}
+                ) : (
+                  `${tabCount} ${text}`
+                )}
+              </Link>
             </li>
           );
         })}

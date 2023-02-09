@@ -1,57 +1,113 @@
+import React from 'react';
+import CalendarIcon from 'assets/custom/icons/calendar.svg';
+import MailIcon from 'assets/custom/icons/mail.svg';
+import TrashIcon from 'assets/custom/icons/trash.svg';
+import CheckIcon from 'assets/custom/icons/check.svg';
+
+const MailIconProps = { width: 17, height: 15, viewBox: '0 -2 15 17' };
+const TrashIconProps = { width: 13, height: 15, viewBox: '0 0 13 15' };
+const CalendarIconProps = { width: 15, height: 15, viewBox: '0 0 15 18' };
+const CheckIconProps = { width: 22, height: 15, viewBox: '0 0 26 18' };
+
 export const allCTAs = {
   apply: {
     color: 'primaryOrange',
     className: 'custom-primary-inverted',
     action: 'contactEmail',
-    text: 'Je postule',
+    text: (
+      <>
+        <MailIcon {...MailIconProps} />
+        Je postule
+      </>
+    ),
   },
   applied: {
     color: 'primaryOrange',
     className: 'custom-primary-inverted',
     action: 'updateToApplied',
-    text: "J'ai déjà postulé",
+    text: (
+      <>
+        <MailIcon {...MailIconProps} />
+        J&apos;ai déjà postulé
+      </>
+    ),
   },
   notInterested: {
     color: 'darkGrayFont',
     className: 'custom-primary-inverted',
     action: 'archive',
-    text: 'Je ne suis pas intéressé',
+    text: (
+      <>
+        <TrashIcon {...TrashIconProps} />
+        Je ne suis pas intéressé
+      </>
+    ),
   },
   resend: {
     color: 'primaryOrange',
     className: 'custom-primary-inverted',
     action: 'contactRelance',
-    text: "Je veux relancer l'entreprise",
+    text: (
+      <>
+        <MailIcon {...MailIconProps} />
+        Je veux relancer l&apos;entreprise
+      </>
+    ),
   },
   gotInterview: {
     color: 'primaryOrange',
     className: 'custom-primary-inverted',
     action: 'updateToInterview',
-    text: "J'ai décroché un entretien",
+    text: (
+      <>
+        <CheckIcon {...CheckIconProps} />
+        J&apos;ai décroché un entretien
+      </>
+    ),
   },
   abandon: {
     color: 'darkGrayFont',
     className: 'custom-primary-inverted',
     action: 'abandon',
-    text: "J'abandonne cette offre",
+    text: (
+      <>
+        <TrashIcon {...TrashIconProps} />
+        J&apos;abandonne cette offre
+      </>
+    ),
   },
   dateInterview: {
     color: 'primaryOrange',
     className: 'custom-primary-inverted',
-    action: () => {},
-    text: "Je note une date d'entretien",
+    action: 'addDateInterview',
+    text: (
+      <>
+        <CalendarIcon {...CalendarIconProps} />
+        Je note une date d&apos;entretien
+      </>
+    ),
   },
   gotJob: {
     color: 'primaryOrange',
     className: 'custom-primary-inverted',
     action: 'updateToHired',
-    text: "J'ai décroché le job",
+    text: (
+      <>
+        <CheckIcon {...CheckIconProps} />
+        J&apos;ai décroché le job
+      </>
+    ),
   },
   dateBegin: {
     color: 'primaryOrange',
     className: 'custom-primary-inverted',
-    action: () => {},
-    text: "Je note ma date d'embauche",
+    action: 'addDateHired',
+    text: (
+      <>
+        <CalendarIcon {...CalendarIconProps} />
+        Je note ma date d&apos;embauche
+      </>
+    ),
   },
   trialValidated: {
     color: 'primaryOrange',
@@ -84,11 +140,7 @@ export const CTAsByTab = [
   },
   {
     tab: 2,
-    ctas: [
-      // 'dateInterview',
-      'gotJob',
-      'abandon',
-    ],
+    ctas: ['dateInterview', 'gotJob', 'abandon'],
   },
   {
     tab: 3,
@@ -99,7 +151,7 @@ export const CTAsByTab = [
   {
     tab: 4,
     ctas: [
-      // 'dateBegin',
+      'dateBegin',
       // 'trialValidated',
       // 'trialUnvalidated'
     ],

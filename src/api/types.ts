@@ -91,6 +91,13 @@ export type ExternalOpportunity = {
   status: string;
 };
 
+export type OpportunityUserEvent = {
+  startDate: Date;
+  endDate: Date;
+  type: string;
+  contract: { name: string };
+};
+
 export type OpportunityJoin = {
   status: number;
   seen: boolean;

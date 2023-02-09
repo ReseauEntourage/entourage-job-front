@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useFetchOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/useFetchOpportunity';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import PropTypes from 'prop-types';
-import { UserContext } from 'src/components/store/UserProvider';
+import { UserContext } from 'src/store/UserProvider';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
 import CandidateOpportunityDetails from './CandidateOpportunityDetails';
 import OpportunityDetails from '../OpportunityDetails';
@@ -41,6 +41,7 @@ const CandidateOpportunityDetailsContainer = ({ fetchOpportunities }) => {
           opportunityUsers={opportunity.opportunityUsers}
           fetchOpportunities={fetchOpportunities}
           createdAt={opportunity.createdAt}
+          events={opportunity.opportunityUsers.events}
           oppRefreshCallback={() => {
             refreshOpportunity();
           }}

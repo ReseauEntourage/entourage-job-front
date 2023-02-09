@@ -7,7 +7,7 @@ import Pusher from 'pusher-js';
 import Api from 'src/api/index.ts';
 import { Button, Grid } from 'src/components/utils';
 import { CVBackground, CVFiche, CVFicheEdition } from 'src/components/cv';
-import { UserContext } from 'src/components/store/UserProvider';
+import { UserContext } from 'src/store/UserProvider';
 import ButtonPost from 'src/components/backoffice/cv/ButtonPost';
 
 import { CV_STATUS, SOCKETS, USER_ROLES } from 'src/constants';

@@ -31,15 +31,20 @@ const Button = ({
   if (visible) classBuffer += ` uk-visible@${visible}`;
   if (style && style.includes('custom')) {
     classBuffer = style;
-  } else if (style) {
-    classBuffer += ` uk-button-${style}`;
+    if (size) classBuffer += ` ${size}`;
+    if (disabled) classBuffer += ' disabled';
+  } else {
+    if (style) {
+      classBuffer += ` uk-button-${style}`;
+    }
+    if (size) classBuffer += ` uk-button-${size}`;
+    if (disabled) classBuffer += ' disabled';
   }
-  if (size) classBuffer += ` uk-button-${size}`;
+
   if (className) classBuffer += ` ${className}`;
   widths.forEach((width) => {
     classBuffer += ` uk-width-${width}`;
   });
-  if (disabled) classBuffer += ' disabled';
 
   const buttonComponent = (
     <StyledButton
@@ -82,7 +87,12 @@ Button.propTypes = {
   ]),
   disabled: PropTypes.bool,
   visible: PropTypes.oneOf(UIKIT_SCREENS),
-  style: PropTypes.oneOf(['custom-secondary', ...UIKIT_BUTTON_STYLES_SPEC]),
+  style: PropTypes.oneOf([
+    'custom-secondary',
+    'custom-primary',
+    'custom-primary-inverted',
+    ...UIKIT_BUTTON_STYLES_SPEC,
+  ]),
   size: PropTypes.oneOf(UIKIT_BUTTON_SIZES),
   widths: PropTypes.arrayOf(PropTypes.string), // UIKIT_WIDTH_SCREENS
   isExternal: PropTypes.bool,

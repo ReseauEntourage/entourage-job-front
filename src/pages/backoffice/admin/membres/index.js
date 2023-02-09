@@ -4,7 +4,7 @@ import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
 import { Section } from 'src/components/utils';
 import { MEMBER_FILTERS_DATA } from 'src/constants';
 import { useFilters } from 'src/hooks';
-import { UserContext } from 'src/components/store/UserProvider';
+import { UserContext } from 'src/store/UserProvider';
 import MemberList from 'src/components/backoffice/admin/MemberList';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 

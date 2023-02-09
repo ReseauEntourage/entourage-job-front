@@ -25,6 +25,7 @@ const FormWithValidation = forwardRef(
       formSchema: { id, rules, fields },
       defaultValues,
       submitText,
+      cancelText,
       onSubmit,
       onCancel,
       enterToSubmit,
@@ -60,7 +61,9 @@ const FormWithValidation = forwardRef(
           // TODO replace type select-one
         } else if (type === 'select-one' && selectedIndex === 0) {
           fieldValue = null; // si on est sur le placeholder ( option sans valeur )
-        } else fieldValue = value;
+        } else {
+          fieldValue = value;
+        }
 
         /* Validators start */
         tmpFieldValues[name] = fieldValue;
@@ -305,6 +308,7 @@ const FormWithValidation = forwardRef(
         <FooterForm
           error={error}
           submitText={submitText}
+          cancelText={cancelText}
           onSubmit={submitForm}
           formId={formId}
           onCancel={
@@ -338,12 +342,14 @@ FormWithValidation.propTypes = {
     rules: PropTypes.arrayOf(PropTypes.shape({})),
   }).isRequired,
   submitText: PropTypes.string,
+  cancelText: PropTypes.string,
   enterToSubmit: PropTypes.bool,
   formId: PropTypes.string,
 };
 
 FormWithValidation.defaultProps = {
   submitText: undefined,
+  cancelText: undefined,
   defaultValues: {},
   onCancel: undefined,
   enterToSubmit: false,

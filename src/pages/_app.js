@@ -15,10 +15,10 @@ import 'react-phone-number-input/style.css';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import * as Sentry from '@sentry/react';
-import UserProvider from 'src/components/store/UserProvider';
-import DataProvider from 'src/components/store/DataProvider';
+import UserProvider from 'src/store/UserProvider';
+import DataProvider from 'src/store/DataProvider';
 
-import SharesCountProvider from 'src/components/store/SharesCountProvider';
+import SharesCountProvider from 'src/store/SharesCountProvider';
 
 import * as gtag from 'src/lib/gtag';
 import SplashScreen from 'src/components/SplashScreen';
