@@ -13,9 +13,9 @@ import { uuid } from 'uuid/v4';
 import { StyledShareButton } from 'src/components/partials/SharePartial/styles';
 
 const SharePartial = ({ padding }) => {
-  const router = useRouter();
+  const { asPath } = useRouter();
 
-  const isCVPage = router.asPath.includes('/cv');
+  const isCVPage = asPath.includes('/cv');
 
   return (
     <div id="share" className={!padding ? 'uk-padding-remove-vertical' : ''}>

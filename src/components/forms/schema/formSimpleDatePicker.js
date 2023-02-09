@@ -1,14 +1,25 @@
-export default function renderSimpleDatePickerField(placeholder) {
+export default function renderSimpleDatePickerField(title) {
   return {
     id: 'simple-date-picker',
     fields: [
       {
         id: 'datepicker',
-        name: 'datePicker',
-        // type: 'password',
+        name: 'datepicker',
         component: 'datepicker',
-        placeholder,
-        // title: 'Ancien mot de passe*',
+        title,
+      },
+    ],
+    rules: [
+      {
+        field: 'datepicker',
+        method: 'isEmpty',
+        args: [
+          {
+            ignore_whitespace: true,
+          },
+        ],
+        validWhen: false,
+        message: 'Obligatoire',
       },
     ],
   };

@@ -16,11 +16,11 @@ import { HeaderPublicItemShape } from '../HeaderPublic.shapes';
 import { StyledPublicItem } from './HeaderPublicContent.styles';
 
 const HeaderPublicDesktop = ({ links }) => {
-  const router = useRouter();
+  const { asPath } = useRouter();
 
   const rightItems = [
     ...links.map((link, i) => {
-      if (router.asPath.includes(link.href)) {
+      if (asPath.includes(link.href)) {
         return (
           <div>
             <StyledPublicItem

@@ -25,6 +25,7 @@ export const StyledBackLink = styled.a`
   flex-direction: row;
   margin-bottom: 16px;
   color: ${COLORS.darkGray};
+
   &:visited {
     color: ${COLORS.darkGray};
   }
@@ -56,12 +57,20 @@ export const InfoText = styled.span`
   font-size: 14px;
   line-height: 17px;
   color: ${COLORS.darkGray};
+
   &:not(:last-child) {
     margin-bottom: 4px;
   }
+
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+`;
+
+export const RightAlignText = styled.span`
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
 `;
 
 export const DescriptionText = styled.span`

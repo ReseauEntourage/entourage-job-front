@@ -10,7 +10,7 @@ import { OFFCANVAS_LOGGED } from 'src/constants/utils';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledConnectedItemMobile } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/HeaderConnectedContent.styles';
 import SubMenu from 'src/components/headers/HeaderConnected/HeaderConnectedContent/SubMenu';
-import { UserContext } from 'src/components/store/UserProvider';
+import { UserContext } from 'src/store/UserProvider';
 import { useRouter } from 'next/router';
 import NavbarLogo from 'src/components/utils/Navbar/NavbarLogo';
 import { HeaderConnectedItemShape } from '../HeaderConnected.shapes';
@@ -20,6 +20,7 @@ const HeaderConnectedContentMobile = ({ badges, links }) => {
   const { user } = useContext(UserContext);
 
   const { push, asPath } = useRouter();
+  const logoLink = links[user?.role?.toLowerCase()][0];
 
   return (
     <StyledHeaderMobile id="header">
@@ -28,7 +29,7 @@ const HeaderConnectedContentMobile = ({ badges, links }) => {
         sticky
         left={
           <NavbarLogo
-            href={links[user?.role?.toLowerCase()][0].href}
+            href={logoLink.href + (logoLink.queryParams || '')}
             src="/static/img/linkedout_logo_white.png"
             alt="Linkedout"
           />

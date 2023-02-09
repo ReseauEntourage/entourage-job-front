@@ -5,7 +5,7 @@ import { Section, SimpleLink } from 'src/components/utils';
 import schemaLogin from 'src/components/forms/schema/formLogin.json';
 import schemaLostPwd from 'src/components/forms/schema/formLostPwd.json';
 import FormWithValidation from 'src/components/forms/FormWithValidation';
-import { UserContext } from 'src/components/store/UserProvider';
+import { UserContext } from 'src/store/UserProvider';
 import Api from 'src/api/index.ts';
 import { USER_ROLES } from 'src/constants';
 import StepperModal from 'src/components/modals/Modal/ModalGeneric/StepperModal';

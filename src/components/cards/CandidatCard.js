@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 import { Grid, Img, SimpleLink } from 'src/components/utils';
 import ModalShareCV from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
 import Api from 'src/api/index.ts';
-import { SharesCountContext } from 'src/components/store/SharesCountProvider';
+import { SharesCountContext } from 'src/store/SharesCountProvider';
 import { gaEvent } from 'src/lib/gtag';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import moment from 'moment';
@@ -40,10 +40,10 @@ const CandidatCard = ({
   endOfContract,
   id,
 }) => {
-  const router = useRouter();
+  const { asPath } = useRouter();
 
-  const isCandidatsPage = router.asPath.includes('/candidats');
-  const isCompaniesCvsPage = router.asPath.includes('/entreprises/cvs');
+  const isCandidatsPage = asPath.includes('/candidats');
+  const isCompaniesCvsPage = asPath.includes('/entreprises/cvs');
 
   let onCvClickEvent = GA_TAGS.HOME_CV_CLIC;
   if (isCandidatsPage) {
@@ -52,7 +52,7 @@ const CandidatCard = ({
     onCvClickEvent = GA_TAGS.PAGE_ENTREPRISES_GALERIE_CV_CLIC;
   }
 
-  const showShareOptions = !router.asPath.includes('/entreprises');
+  const showShareOptions = !asPath.includes('/entreprises');
 
   const link = encodeURI(`${process.env.SERVER_URL}/cv/${url}`);
   const hashtags = ['LinkedOut'];

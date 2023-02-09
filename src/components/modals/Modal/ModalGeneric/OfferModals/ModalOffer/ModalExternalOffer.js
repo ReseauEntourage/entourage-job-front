@@ -1,13 +1,10 @@
-import {
-  getCandidateIdFromCoachOrCandidate,
-  // mutateFormSchema,
-} from 'src/utils';
+import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
 import Api from 'src/api/index.ts';
 import moment from 'moment/moment';
 import UIkit from 'uikit';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import React, { useContext } from 'react';
-import { UserContext } from 'src/components/store/UserProvider';
+import { UserContext } from 'src/store/UserProvider';
 // import formEditExternalOpportunity from 'src/components/forms/schema/formEditExternalOpportunity';
 import PropTypes from 'prop-types';
 import { formAddExternalOpportunityCandidate } from 'src/components/forms/schema/formAddExternalOpportunity';

@@ -4,22 +4,20 @@ import { StyledHeaderModal } from 'src/components/modals/Modal/Modals.styles';
 
 const HeaderModal = ({ title, description }) => {
   return (
-    <>
-      {title ? (
-        <StyledHeaderModal>
-          <div className="title-container">
-            <h3>{title}</h3>
-          </div>
-          {description ? (
-            <div className="description-container">
-              <div>{description}</div>
-            </div>
-          ) : (
-            <div className="simple-margin" />
-          )}
-        </StyledHeaderModal>
-      ) : null}
-    </>
+    <StyledHeaderModal>
+      {title && (
+        <div className="title-container">
+          <h3>{title}</h3>
+        </div>
+      )}
+      {description ? (
+        <div className="description-container">
+          <div>{description}</div>
+        </div>
+      ) : (
+        <div className="simple-margin" />
+      )}
+    </StyledHeaderModal>
   );
 };
 HeaderModal.propTypes = {

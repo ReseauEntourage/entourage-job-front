@@ -6,25 +6,29 @@ import {
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/CandidateOpportunityDetailsCTAs/CandidateOpportunityDetailsCTAs.utils';
 import Button from 'src/components/utils/Button';
 import { StyledOppCTAsContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/CandidateOpportunityDetailsCTAs/CandidateOpportunityDetailsCTAS.styles';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import PropTypes from 'prop-types';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
-import { OFFER_STATUS } from 'src/constants';
+import { EVENT_TYPES, OFFER_STATUS } from 'src/constants';
 import { openModal } from 'src/components/modals/Modal';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-// import renderSimpleDatePickerField from 'src/components/forms/schema/formSimpleDatePicker';
 import renderSimpleSelectField from 'src/components/forms/schema/formSimpleSelectField';
-import { UserContext } from 'src/components/store/UserProvider';
+import { UserContext } from 'src/store/UserProvider';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import ModalGeneric from 'src/components/modals/Modal/ModalGeneric/ModalGeneric';
 import SendMailModalContent from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/SendMailModalContent';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
 import UIkit from 'uikit';
+import moment from 'moment';
+import { HiredDateModal, InterviewDateModel } from '../DateModals';
 
 const CandidateOpportunityDetailsCTAs = ({
   tab,
+  event,
   OpportunityId,
+  contract,
+  isExternal,
   fetchOpportunities,
   oppRefreshCallback,
 }) => {
@@ -56,15 +60,31 @@ const CandidateOpportunityDetailsCTAs = ({
   const actions = {
     updateToApplied: async () => {
       gaEvent(GA_TAGS.BACKOFFICE_CANDIDAT_VALIDER_CONTACTER_RECRUTEUR_CLIC);
-      await updateOpportunityUser({
-        OpportunityId,
-        UserId: getCandidateIdFromCoachOrCandidate(user),
-        status: OFFER_STATUS[1].value,
-      });
-      UIkit.notification(
-        "L'offre est bien passée au statut 'contactée'",
-        'success'
-      );
+      try {
+        await updateOpportunityUser({
+          OpportunityId,
+          UserId: getCandidateIdFromCoachOrCandidate(user),
+          status: OFFER_STATUS[1].value,
+        });
+        const date = moment();
+        await Api.postOpportunityUserEvent(
+          OpportunityId,
+          getCandidateIdFromCoachOrCandidate(user),
+          {
+            type: EVENT_TYPES.CONTACT,
+            startDate: date,
+            endDate: date,
+            contract: { name: contract },
+          }
+        );
+        oppRefreshCallback();
+        UIkit.notification(
+          "L'offre est bien passée au statut 'contactée'",
+          'success'
+        );
+      } catch (e) {
+        UIkit.notification("Une erreur s'est produite", 'danger');
+      }
     },
     archive: async () => {
       openModal(
@@ -98,8 +118,26 @@ const CandidateOpportunityDetailsCTAs = ({
         status: OFFER_STATUS[3].value,
       });
       UIkit.notification(
-        "L'offre est bien passée au statut 'acceptée'",
+        "L'offre est bien passée au statut 'en phrase d'entretien'",
         'success'
+      );
+      openModal(
+        <HiredDateModal
+          opportunityId={OpportunityId}
+          candidateId={getCandidateIdFromCoachOrCandidate(user)}
+          contract={contract}
+          callback={oppRefreshCallback}
+        />
+      );
+    },
+    addDateHired: () => {
+      openModal(
+        <HiredDateModal
+          opportunityId={OpportunityId}
+          candidateId={getCandidateIdFromCoachOrCandidate(user)}
+          contract={contract}
+          callback={oppRefreshCallback}
+        />
       );
     },
     updateToInterview: async () => {
@@ -111,6 +149,24 @@ const CandidateOpportunityDetailsCTAs = ({
       UIkit.notification(
         "L'offre est bien passée au statut 'en phrase d'entretien'",
         'success'
+      );
+      openModal(
+        <InterviewDateModel
+          opportunityId={OpportunityId}
+          candidateId={getCandidateIdFromCoachOrCandidate(user)}
+          contract={contract}
+          callback={oppRefreshCallback}
+        />
+      );
+    },
+    addDateInterview: () => {
+      openModal(
+        <InterviewDateModel
+          opportunityId={OpportunityId}
+          candidateId={getCandidateIdFromCoachOrCandidate(user)}
+          contract={contract}
+          callback={oppRefreshCallback}
+        />
       );
     },
     abandon: async () => {
@@ -168,37 +224,64 @@ const CandidateOpportunityDetailsCTAs = ({
     contactEmail: () => {
       openModal(
         <ModalGeneric title={"Contacter l'entreprise"}>
-          <SendMailModalContent OpportunityId={OpportunityId} />
+          <SendMailModalContent
+            OpportunityId={OpportunityId}
+            onSubmit={async () => {
+              const date = moment();
+              try {
+                await Api.postOpportunityUserEvent(
+                  OpportunityId,
+                  getCandidateIdFromCoachOrCandidate(user),
+                  {
+                    type: EVENT_TYPES.CONTACT,
+                    startDate: date,
+                    endDate: date,
+                    contract: { name: contract },
+                  }
+                );
+                oppRefreshCallback();
+              } catch (e) {
+                UIkit.notification("Une erreur s'est produite", 'danger');
+              }
+            }}
+          />
         </ModalGeneric>
       );
     },
     contactRelance: () => {
       openModal(
         <ModalGeneric title={"Contacter l'entreprise"}>
-          <SendMailModalContent OpportunityId={OpportunityId} relance />
+          <SendMailModalContent
+            OpportunityId={OpportunityId}
+            relance
+            onSubmit={async () => {
+              try {
+                const date = moment();
+                await Api.postOpportunityUserEvent(
+                  OpportunityId,
+                  getCandidateIdFromCoachOrCandidate(user),
+                  {
+                    type: EVENT_TYPES.FOLLOWUP,
+                    startDate: date,
+                    endDate: date,
+                    contract: { name: contract },
+                  }
+                );
+                oppRefreshCallback();
+              } catch (e) {
+                UIkit.notification("Une erreur s'est produite", 'danger');
+              }
+            }}
+          />
         </ModalGeneric>
       );
     },
-    //   openModal(
-    //     <ModalEdit
-    //       title="Félicitation vous avez décroché un emploi"
-    //       formSchema={renderSimpleDatePickerField("Date d'entretien")}
-    //     //   defaultValues={{ catchphrase }}
-    //       formId="update-to-hired-datepicker"
-    //       onSubmit={async (fields, closeModal) => {
-    //         console.log(fields);
-    //         // await updateOpportunityUser({
-    //         //     OpportunityId,
-    //         //     status: OFFER_STATUS[1].value,
-    //         //   });
-    //         // closeModal();
-    //         // await onChange({
-    //         //   ...fields,
-    //         // });
-    //       }}
-    //     />
-    //   );
-    // },
+  };
+
+  const disables = {
+    contactRelance: () => {
+      return event.value === EVENT_TYPES.FOLLOWUP || isExternal;
+    },
   };
 
   return (
@@ -209,8 +292,14 @@ const CandidateOpportunityDetailsCTAs = ({
         }).ctas.map((cta) => {
           const { color, className, action, text } = allCTAs[cta];
           return (
-            <li key={uuid}>
-              <Button color={color} style={className} onClick={actions[action]}>
+            <li key={uuid()}>
+              <Button
+                disabled={disables[action] ? disables[action]() : false}
+                size="small"
+                color={color}
+                style={className}
+                onClick={actions[action]}
+              >
                 {text}
               </Button>
             </li>
@@ -222,9 +311,20 @@ const CandidateOpportunityDetailsCTAs = ({
 
 CandidateOpportunityDetailsCTAs.propTypes = {
   tab: PropTypes.number.isRequired,
+  event: PropTypes.shape({
+    value: PropTypes.string,
+    label: PropTypes.string,
+    date: PropTypes.string,
+  }),
   OpportunityId: PropTypes.string.isRequired,
+  contract: PropTypes.shape({ name: PropTypes.string }).isRequired,
+  isExternal: PropTypes.bool.isRequired,
   fetchOpportunities: PropTypes.func.isRequired,
   oppRefreshCallback: PropTypes.func.isRequired,
+};
+
+CandidateOpportunityDetailsCTAs.defaultProps = {
+  event: null,
 };
 
 export default CandidateOpportunityDetailsCTAs;
