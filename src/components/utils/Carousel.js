@@ -12,20 +12,20 @@ const Carousel = ({
   pagination,
   padding,
 }) => {
-  const router = useRouter();
+  const { asPath } = useRouter();
 
   let tag;
 
-  if (router.asPath.includes('/recruter')) {
+  if (asPath.includes('/recruter')) {
     tag = GA_TAGS.PAGE_RECRUTER_CARROUSEL_CLIC;
   }
-  if (router.asPath.includes('/travailler')) {
+  if (asPath.includes('/travailler')) {
     tag = GA_TAGS.PAGE_TRAVAILLER_CARROUSEL_CLIC;
   }
-  if (router.asPath.includes('/orienter')) {
+  if (asPath.includes('/orienter')) {
     tag = GA_TAGS.PAGE_ORIENTER_CARROUSEL_CLIC;
   }
-  if (router.asPath.includes('/entreprises')) {
+  if (asPath.includes('/entreprises')) {
     tag = GA_TAGS.PAGE_ENTREPRISES_CARROUSEL_CLIC;
   }
 

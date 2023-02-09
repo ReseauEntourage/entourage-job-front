@@ -22,8 +22,8 @@ import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { Member } from 'src/components/backoffice/admin/MemberList/Member';
 import BackToTop from 'src/components/utils/BackToTop/index';
 import {
-  StyledTable,
   ActionsContainer,
+  StyledTable,
 } from 'src/components/backoffice/admin/MemberList/styles';
 import { useBulkActions } from 'src/hooks/useBulkActions';
 import { GA_TAGS } from 'src/constants/tags';
@@ -245,7 +245,7 @@ const MemberList = ({
           {role === USER_ROLES.CANDIDAT && (
             <ActionsContainer>
               <Button
-                style="custom-secondary"
+                style="custom-secondary small"
                 disabled={!hasSelection}
                 color="primaryOrange"
                 onClick={() => {

@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 import { StyledSendMailContent } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/SendMailModalContent/SendMailContent.styles';
 import TextArea from 'src/components/utils/Inputs/TextArea';
 import { useFetchOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/useFetchOpportunity';
-import { UserContext } from 'src/components/store/UserProvider';
+import { UserContext } from 'src/store/UserProvider';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
 import FooterForm from 'src/components/forms/FooterForm';
 import { useModalContext, openModal } from 'src/components/modals/Modal';
@@ -11,7 +11,7 @@ import Api from 'src/api/index.ts';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import UIkit from 'uikit';
 
-const SendMailModalContent = ({ OpportunityId, relance }) => {
+const SendMailModalContent = ({ OpportunityId, relance, onSubmit }) => {
   const { user } = useContext(UserContext);
   const candidateId = getCandidateIdFromCoachOrCandidate(user);
   const { opportunity } = useFetchOpportunity(OpportunityId, candidateId);
@@ -118,14 +118,15 @@ const SendMailModalContent = ({ OpportunityId, relance }) => {
         </div>
         <FooterForm
           noCompulsory
-          onSubmit={() => {
-            Api.postOpportunityContactEmployer({
+          onSubmit={async () => {
+            await Api.postOpportunityContactEmployer({
               opportunityId: OpportunityId,
               type: relance ? 'relance' : 'contact',
               candidateId,
               description: textAreaContent,
             });
             UIkit.notification('Le recruteur a bien été contacté', 'success');
+            await onSubmit();
             onClose();
           }}
           onCancel={() => {
@@ -157,7 +158,10 @@ const SendMailModalContent = ({ OpportunityId, relance }) => {
 
 SendMailModalContent.propTypes = {
   OpportunityId: PropTypes.string.isRequired,
-  relance: PropTypes.bool.isRequired,
+  relance: PropTypes.bool,
+  onSubmit: PropTypes.func.isRequired,
 };
-
+SendMailModalContent.defaultProps = {
+  relance: false,
+};
 export default SendMailModalContent;

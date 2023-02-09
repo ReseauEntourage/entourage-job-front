@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useState } from 'react';
 import { ADMIN_ZONES, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { useFilters } from 'src/hooks';
-import { UserContext } from 'src/components/store/UserProvider';
+import { UserContext } from 'src/store/UserProvider';
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
 import Api from 'src/api/index.ts';
 import { OPPORTUNITY_FILTERS_DATA, USER_ROLES } from 'src/constants';
@@ -14,19 +14,25 @@ import { useQueryParamsOpportunities } from 'src/components/backoffice/opportuni
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { useOpportunityType } from 'src/components/backoffice/opportunities/useOpportunityType';
 import useDeepCompareEffect from 'use-deep-compare-effect';
+import { usePrevious } from 'src/hooks/utils';
+import { getCandidateIdFromCoachOrCandidate, getRelatedUser } from 'src/utils';
 
 // filters for the query
 const candidateQueryFilters = OPPORTUNITY_FILTERS_DATA.slice(1);
 
 const Opportunities = () => {
-  const { isReady, replace } = useRouter();
+  const { replace } = useRouter();
 
   const opportunityId = useOpportunityId();
+
   const opportunityType = useOpportunityType();
+  const prevOpportunityType = usePrevious(opportunityType);
 
   const queryParamsOpportunities = useQueryParamsOpportunities();
+  const prevStatus = usePrevious(queryParamsOpportunities.status);
 
   const { user } = useContext(UserContext);
+  const prevUser = usePrevious(user);
 
   const [hasError, setHasError] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -44,70 +50,73 @@ const Opportunities = () => {
 
   const setCandidateDefaultsIfPublicTag = useCallback(
     async (candId, candidatZone) => {
-      if (opportunityType === 'public') {
-        const params = queryParamsOpportunities;
+      let params = { ...queryParamsOpportunities };
 
-        try {
-          const { data } = await Api.getCVByCandidateId(candId);
+      try {
+        const { data } = await Api.getCVByCandidateId(candId);
 
-          if (data.locations && data.locations.length > 0) {
-            params.department = data.locations.map(({ name }) => {
+        if (data.locations && data.locations.length > 0) {
+          params = {
+            ...params,
+            department: data.locations.map(({ name }) => {
               return name;
-            });
-          } else if (candidatZone && candidatZone !== ADMIN_ZONES.HZ) {
-            const defaultDepartmentsForCandidate = DEPARTMENTS_FILTERS.filter(
-              (dept) => {
-                return candidatZone === dept.zone;
-              }
-            );
-
-            params.department = defaultDepartmentsForCandidate.map((dept) => {
-              return dept.value;
-            });
-          }
-
-          await replace(
-            {
-              pathname: `/backoffice/candidat/offres/public${
-                opportunityId ? `/${opportunityId}` : ''
-              }`,
-              query: params,
-            },
-            undefined,
-            {
-              shallow: true,
+            }),
+          };
+        } else if (candidatZone && candidatZone !== ADMIN_ZONES.HZ) {
+          const defaultDepartmentsForCandidate = DEPARTMENTS_FILTERS.filter(
+            (dept) => {
+              return candidatZone === dept.zone;
             }
           );
-          setCandidateId(candId);
-          setHasLoadedDefaultFilters(true);
-        } catch (e) {
-          setHasError(true);
+
+          params = {
+            ...params,
+            department: defaultDepartmentsForCandidate.map((dept) => {
+              return dept.value;
+            }),
+          };
         }
-      } else if (opportunityType === 'private') {
+
+        await replace(
+          {
+            pathname: `/backoffice/candidat/offres/public${
+              opportunityId ? `/${opportunityId}` : ''
+            }`,
+            query: params,
+          },
+          undefined,
+          {
+            shallow: true,
+          }
+        );
         setCandidateId(candId);
         setHasLoadedDefaultFilters(true);
+      } catch (e) {
+        setHasError(true);
       }
     },
-    [opportunityId, replace, queryParamsOpportunities, opportunityType]
+    [opportunityId, replace, queryParamsOpportunities]
   );
 
-  const fetchAssociatedCandidate = useCallback(async () => {
-    try {
-      const { data } = await Api.getUserCandidate();
-      if (data) {
-        setCandidateDefaultsIfPublicTag(data.candidat.id, data.candidat.zone);
-      } else {
-        setHasLoadedDefaultFilters(true);
-      }
-    } catch (e) {
-      setHasError(true);
-      setHasLoadedDefaultFilters(true);
-    }
-  }, [setCandidateDefaultsIfPublicTag]);
-
   useDeepCompareEffect(() => {
-    if (isReady && user) {
-      if (opportunityType === 'private') {
+    if (
+      user &&
+      (user !== prevUser ||
+        opportunityType !== prevOpportunityType ||
+        queryParamsOpportunities.status !== prevStatus)
+    ) {
+      if (opportunityType !== prevOpportunityType) {
+        setHasLoadedDefaultFilters(false);
+      }
+      if (user.role === USER_ROLES.ADMIN) {
+        replace(
+          `/backoffice/admin/offres${opportunityId ? `/${opportunityId}` : ''}`,
+          undefined,
+          {
+            shallow: true,
+          }
+        );
+      } else if (opportunityType === 'private') {
         if (!queryParamsOpportunities.status) {
           replace(
             {
@@ -119,42 +128,37 @@ const Opportunities = () => {
               shallow: true,
             }
           );
+        } else {
+          const candId = getCandidateIdFromCoachOrCandidate(user);
+          setCandidateId(candId);
+          setHasLoadedDefaultFilters(true);
+          setLoading(false);
         }
-      } else if (opportunityType !== 'public') {
-        setHasLoadedDefaultFilters(false);
+      } else if (opportunityType === 'public') {
+        if (!hasLoadedDefaultFilters) {
+          const candidate =
+            user.role === USER_ROLES.CANDIDAT ? user : getRelatedUser(user);
+          setCandidateDefaultsIfPublicTag(candidate.id, candidate.zone);
+        }
+      } else {
         replace(`/backoffice/candidat/offres/public`, undefined, {
           shallow: true,
         });
       }
-
-      if (user.role === USER_ROLES.ADMIN) {
-        replace(
-          `/backoffice/admin/offres${opportunityId ? `/${opportunityId}` : ''}`,
-          undefined,
-          {
-            shallow: true,
-          }
-        );
-      } else if (!hasLoadedDefaultFilters) {
-        if (user.role === USER_ROLES.CANDIDAT) {
-          setCandidateDefaultsIfPublicTag(user.id, user.zone);
-        } else if (user.role === USER_ROLES.COACH) {
-          fetchAssociatedCandidate();
-        }
-      } else {
-        setLoading(false);
-      }
+    } else {
+      setLoading(false);
     }
   }, [
-    fetchAssociatedCandidate,
     hasLoadedDefaultFilters,
-    isReady,
     opportunityId,
     replace,
-    queryParamsOpportunities,
+    queryParamsOpportunities.status,
+    prevStatus,
     setCandidateDefaultsIfPublicTag,
     user,
+    prevUser,
     opportunityType,
+    prevOpportunityType,
   ]);
 
   let content;

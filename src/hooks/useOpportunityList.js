@@ -125,6 +125,7 @@ export function useCandidateOpportunities(
     async (candidateId, search, type, filters, offset, shouldFetchAll) => {
       try {
         setLoading(true);
+        setHasError(false);
         const {
           data: { offers },
         } = await Api.getAllCandidateOpportunities(candidateId, {

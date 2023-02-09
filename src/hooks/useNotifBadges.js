@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ADMIN_ROLES, USER_ROLES } from 'src/constants';
 import Api from 'src/api/index.ts';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
+import { usePrevious } from './utils';
 
 const reducePromisesResults = (data) => {
   return data.reduce((acc, curr) => {
@@ -23,8 +24,10 @@ export function useNotifBadges(user, path) {
     members: 0,
   });
 
+  const prevUser = usePrevious(user);
+
   useEffect(() => {
-    if (user) {
+    if (user && user !== prevUser) {
       if (user.role === USER_ROLES.ADMIN) {
         const queriesToExecute = [];
         if (user.adminRole === ADMIN_ROLES.CANDIDATES) {
@@ -97,7 +100,7 @@ export function useNotifBadges(user, path) {
         }
       }
     }
-  }, [user, path]);
+  }, [user, path, prevUser]);
 
   return badges;
 }

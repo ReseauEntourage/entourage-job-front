@@ -15,6 +15,7 @@ export function Default() {
       name="default"
       id="default"
       onChange={() => {
+        // eslint-disable-next-line no-console
         console.log('changed');
       }}
     />

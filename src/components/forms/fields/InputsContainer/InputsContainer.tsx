@@ -4,12 +4,14 @@ import uuid from 'uuid/v4';
 import { StyledInputsContainer } from './InputsContainer.styles';
 
 interface ContainerTypes {
-  title: string;
-  fields: React.ReactChild[];
-  childWidths: number;
+  fields: React.ReactNode[];
+  /*  title: string;
+  childWidths: number; */
 }
 
-const InputsContainer = ({ title, fields, childWidths }: ContainerTypes) => {
+const InputsContainer = ({
+  fields /* title, childWidths */,
+}: ContainerTypes) => {
   return (
     <StyledInputsContainer>
       {fields.map((field) => {
@@ -24,13 +26,13 @@ const InputsContainer = ({ title, fields, childWidths }: ContainerTypes) => {
 };
 
 InputsContainer.propTypes = {
-  title: PropTypes.string,
   fields: PropTypes.arrayOf(PropTypes.element).isRequired,
-  childWidths: PropTypes.arrayOf(PropTypes.string),
+  /* title: PropTypes.string,
+  childWidths: PropTypes.arrayOf(PropTypes.string), */
 };
 
 InputsContainer.defaultProps = {
-  title: undefined,
-  childWidths: undefined,
+  /* title: undefined,
+  childWidths: undefined, */
 };
 export default InputsContainer;

@@ -13,6 +13,7 @@ const ModalEdit = ({
   defaultValues,
   onSubmit,
   submitText,
+  cancelText,
   onError,
   formId,
 }) => {
@@ -21,6 +22,7 @@ const ModalEdit = ({
     <ModalGeneric title={title} description={description}>
       <FormWithValidation
         submitText={submitText}
+        cancelText={cancelText}
         formSchema={formSchema}
         defaultValues={defaultValues}
         onCancel={onClose}
@@ -53,12 +55,14 @@ ModalEdit.propTypes = {
   ),
   description: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   submitText: PropTypes.string,
+  cancelText: PropTypes.string,
   formId: PropTypes.string,
 };
 ModalEdit.defaultProps = {
   defaultValues: {},
   description: undefined,
   submitText: 'Sauvegarder',
+  cancelText: 'Annuler',
   formId: '',
   onError: () => {},
 };

@@ -81,8 +81,9 @@ export const StyledDetailsContentContainer = styled.div`
   }
 `;
 
-export const StyledActionContainer = styled.div`
+export const StyledRightContainer = styled.div`
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
 `;
