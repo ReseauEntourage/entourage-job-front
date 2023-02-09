@@ -1,13 +1,13 @@
 # ==== CONFIGURE =====
 # Use a Node 16 base image
-FROM node:14.2-alpine AS dev
+FROM node:16.17-alpine AS dev
 # Set the working directory to /src inside the container
 RUN mkdir -p /app
 WORKDIR /app
 # Copy src files
 COPY package*.json /app/
 # Install dependencies
-RUN npm ci --omit=dev --ignore-scripts
+RUN npm i --omit=dev --ignore-scripts --legacy-peer-deps
 COPY . /app
 # Set the env to "dev"
 ENV NODE_ENV dev
