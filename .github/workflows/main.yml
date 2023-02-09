@@ -31,6 +31,9 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
+      
+      - name: install
+        run: npm i --legacy-peer-deps
 
       - name: cypress
         uses: cypress-io/github-action@v4
@@ -46,7 +49,7 @@ jobs:
       - name: set-up
         uses: actions/setup-node@v1
         with:
-          node-version: '14.x'
+          node-version: '16.x'
       # - run: npm i --legacy-peer-deps
       - run: npm run test
 
