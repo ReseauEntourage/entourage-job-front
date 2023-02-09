@@ -24,11 +24,13 @@ env:
 
 jobs:
   install: 
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 16.18.1
-    - run: npm i --legacy-peer-deps
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.18.1
+      - run: npm i --legacy-peer-deps
 
   test:
     runs-on: ubuntu-latest
