@@ -24,41 +24,44 @@ env:
 
 jobs:
 
-  install:
-    runs-on: ubuntu-latest
-    environment: 'entourage-job-front'
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-      - name: install
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16.18.1
+  # install:
+  #   runs-on: ubuntu-latest
+  #   environment: 'entourage-job-front'
+  #   steps:
+  #     - name: checkout
+  #       uses: actions/checkout@v3
+  #     - name: install
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16.18.1
 
-      - run: npm i --legacy-peer-deps --unsafe-perm=true --allow-root
-      - run: npm run build
+  #     - run: npm i --legacy-peer-deps --unsafe-perm=true --allow-root
+  
 
   test:
     runs-on: ubuntu-latest
     environment: 'entourage-job-front'
     container: cypress/browsers:node-16.18.1-chrome-109.0.5414.74-1-ff-109.0-edge-109.0.1518.52-1
-    needs: install
+    # needs: install
 
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - name: see content
-        run: ls -la
-      - name: Download the build folders
-        uses: actions/download-artifact@v3
+      # - name: Download the build folders
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: build
+      #     path: build
+      - name: install
+        uses: actions/setup-node@v3
         with:
-          name: build
-          path: build
+          node-version: 16.18.1
+      - run: npm i --legacy-peer-deps --unsafe-perm=true --allow-root
       - name: cypress
         uses: cypress-io/github-action@v4
         with:
           install: false
-          start: node -r dotenv/config server-next.js
+          start: npm run dev
           config: e2e.baseUrl=http://localhost:3000
           browser: chrome
           command: npx cypress run --record --key ${{ secrets.CYPRESS_IO_KEY }}
