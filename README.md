@@ -2,7 +2,7 @@
 
 ## Modules principaux & versions
 
-> Node 14.x.x
+> Node 16.x.x
 
 > React 17.0.2
 
