@@ -95,8 +95,7 @@ export const formAddExternalOpportunityCandidate = {
       component: 'checkbox-new',
       checked: true,
       disable: false,
-      title:
-        'Voulez- vous envoyer un mail à votre coach pour l’avertir que vous avez ajouter une nouvelle offre',
+      title: "Envoyer un mail à votre coach pour l'informer",
     },
   ],
   rules: [
