@@ -20,8 +20,7 @@ const NoOpportunities = ({ status, fetchOpportunities }) => {
       <StyledDescription>
         Vous pouvez chercher des offres qui vous correspondent sur le site
         LinkedOut ou renseigner des offres externes qui vous interessent.
-        L’avantage d’ajouter des offres externes, vous permet de centraliser
-        toutes vos demarches afin de faciliter le suivi.
+        Centraliser toutes vos candidatures en facilite le suivi.
       </StyledDescription>
       <StyledButtonContainer>
         <Button
