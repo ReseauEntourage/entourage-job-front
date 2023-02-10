@@ -36,6 +36,7 @@ jobs:
           node-version: 16.18.1
 
       - run: npm i --legacy-peer-deps --unsafe-perm=true --allow-root
+      - run: npm run build
 
   test:
     runs-on: ubuntu-latest
@@ -57,7 +58,7 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           install: false
-          start: npm run dev
+          start: node -r dotenv/config server-next.js
           config: e2e.baseUrl=http://localhost:3000
           browser: chrome
           command: npx cypress run --record --key ${{ secrets.CYPRESS_IO_KEY }}
