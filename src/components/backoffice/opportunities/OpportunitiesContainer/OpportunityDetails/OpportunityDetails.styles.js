@@ -72,6 +72,7 @@ export const StyledDetailsContentContainer = styled.div`
   border-radius: 5px;
   background-color: ${COLORS.white};
   overflow: auto;
+  overscroll-behavior: contain;
   height: ${({ height }) => {
     return height ? `${height}px` : '100%';
   }};

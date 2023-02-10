@@ -53,9 +53,7 @@ const CandidateOpportunityDetails = ({
   const ref = useRef();
   const windowHeight = useWindowHeight();
 
-  const [containerHeight, setContainerHeight] = useState(
-    2 * HEIGHTS.SECTION_PADDING
-  );
+  const [containerHeight, setContainerHeight] = useState(0);
 
   const { opportunityUsers, bookmarkOpportunity } = useBookmarkOpportunity(
     id,
@@ -177,7 +175,9 @@ const CandidateOpportunityDetails = ({
         </StyledCTAContainer>
       )}
       {(companyDescription || description) && (
-        <StyledDetailsContentContainer height={containerHeight}>
+        <StyledDetailsContentContainer
+          height={containerHeight === 0 ? '100%' : containerHeight}
+        >
           {companyDescription && (
             <OpportunitySection
               title="Information sur l'entreprise"

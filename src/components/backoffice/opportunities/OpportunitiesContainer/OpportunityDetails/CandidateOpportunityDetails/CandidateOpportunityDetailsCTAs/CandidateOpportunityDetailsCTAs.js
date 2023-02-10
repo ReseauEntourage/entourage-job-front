@@ -118,7 +118,7 @@ const CandidateOpportunityDetailsCTAs = ({
         status: OFFER_STATUS[3].value,
       });
       UIkit.notification(
-        "L'offre est bien passée au statut 'en phrase d'entretien'",
+        "L'offre est bien passée au statut 'acceptée'",
         'success'
       );
       openModal(
@@ -189,12 +189,12 @@ const CandidateOpportunityDetailsCTAs = ({
               {
                 value: '3',
                 label:
-                  "Le recruteur a donné un réponse négative avant l'entretien",
+                  "Le recruteur a donné une réponse négative avant l'entretien",
               },
               {
                 value: '4',
                 label:
-                  "Le recruteur a donné un réponse négative après l'entretien",
+                  "Le recruteur a donné une réponse négative après l'entretien",
               },
               { value: 'archived', label: 'Autre motif' },
             ],
@@ -239,6 +239,7 @@ const CandidateOpportunityDetailsCTAs = ({
                     contract: { name: contract },
                   }
                 );
+                fetchOpportunities();
                 oppRefreshCallback();
               } catch (e) {
                 UIkit.notification("Une erreur s'est produite", 'danger');
@@ -267,6 +268,7 @@ const CandidateOpportunityDetailsCTAs = ({
                     contract: { name: contract },
                   }
                 );
+                fetchOpportunities();
                 oppRefreshCallback();
               } catch (e) {
                 UIkit.notification("Une erreur s'est produite", 'danger');
