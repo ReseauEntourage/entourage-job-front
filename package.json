@@ -13,7 +13,7 @@
     "lint": "npx eslint src --ext js,jsx,ts,tsx",
     "lint:fix": "npx eslint './src' --ext js,jsx,ts,tsx --fix",
     "format": "prettier --write './**/*.{js,jsx,md,json}' --config .prettierrc.json",
-    "build": "next build",
+    "build": "next build --debug",
     "uikit-install": "cd ./node_modules/uikit && yarn",
     "uikit-update": "cd ./node_modules/uikit/ && git pull && yarn",
     "uikit-compile": "cp -r ./assets/custom/ ./node_modules/uikit/custom/ && cd ./node_modules/uikit && yarn compile && cd ../../ && cp -r ./node_modules/uikit/dist ./src/styles/ && cp ./node_modules/uikit/dist/css/*.print.* ./public/static/css/",
