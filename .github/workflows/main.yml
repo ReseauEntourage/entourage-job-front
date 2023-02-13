@@ -59,7 +59,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.18.1
-      - run: CYPRESS_CACHE_FOLDER: /src/.cache npm i -g cypress --legacy-peer-deps --unsafe-perm=true --allow-root
+      - name: Set env
+        run: echo "CYPRESS_CACHE_FOLDER=$(echo /src/.cache)" >> $GITHUB_ENV
+        run: echo ${{ env.CYPRESS_CACHE_FOLDER }}
+      - run: npm i -g cypress --legacy-peer-deps --unsafe-perm=true --allow-root
       - name: cypress
         uses: cypress-io/github-action@v4
         with:
