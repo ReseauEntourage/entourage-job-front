@@ -62,7 +62,7 @@ jobs:
       - name: Set env
         run: echo "CYPRESS_CACHE_FOLDER=$(echo /src/.cache)" >> $GITHUB_ENV
       - run: npm i -g cypress --legacy-peer-deps --unsafe-perm=true --allow-root
-      - run: next build --debug
+      - run: npm run build --debug
       - name: cypress
         uses: cypress-io/github-action@v4
         with:
