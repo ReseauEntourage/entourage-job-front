@@ -43,8 +43,10 @@ const CandidateOffersTab = ({ activeStatus, tabCounts }) => {
           }
           text = formatPlural(text, tabCount);
 
-          const isActive = activeStatus.some(({ value }) => {
-            return status.includes(value);
+          const isActive = activeStatus.some((singleActiveStatus) => {
+            return (
+              singleActiveStatus && status.includes(singleActiveStatus.value)
+            );
           });
 
           return (
