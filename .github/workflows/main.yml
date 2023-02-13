@@ -36,7 +36,14 @@ jobs:
           node-version: 16.18.1
 
       - run: npm i --legacy-peer-deps --unsafe-perm=true --allow-root
-      - run: npm run build
+      # - run: npm run build
+
+      - name: Save node modules folder
+        uses: actions/upload-artifact@v3
+        with:
+          name: node_modules
+          if-no-files-found: error
+          path: node_modules
 
   test:
     runs-on: ubuntu-latest
@@ -49,16 +56,16 @@ jobs:
         uses: actions/checkout@v3
       - name: see content
         run: ls -la
-      - name: Download the build folders
+      - name: Download the node_modules folders
         uses: actions/download-artifact@v3
         with:
-          name: build
-          path: build
+          name: node_modules
+          path: node_modules
       - name: cypress
         uses: cypress-io/github-action@v4
         with:
           install: false
-          start: node -r dotenv/config server-next.js
+          start: npm run dev
           config: e2e.baseUrl=http://localhost:3000
           browser: chrome
           command: npx cypress run --record --key ${{ secrets.CYPRESS_IO_KEY }}
