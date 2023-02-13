@@ -26,6 +26,10 @@ import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpp
 import { useRouter } from 'next/router';
 import _ from 'lodash';
 import { useTabsCount } from './useTabsCount';
+import {
+  formatPlural,
+  tabs,
+} from './CandidateOffersTab/CandidateOffersTab.utils';
 
 const CandidateOpportunities = ({
   search,
@@ -219,7 +223,20 @@ const CandidateOpportunities = ({
                 </div>
               ) : (
                 <NoOpportunities
-                  status="à traiter"
+                  status={
+                    tabs.find(({ status: tabStatus }) => {
+                      if (Array.isArray(queryParamsOpportunities.status)) {
+                        return queryParamsOpportunities.status.some(
+                          (status) => {
+                            return tabStatus.includes(parseInt(status, 10));
+                          }
+                        );
+                      }
+                      return tabStatus.includes(
+                        parseInt(queryParamsOpportunities.status, 10)
+                      );
+                    })?.text
+                  }
                   fetchOpportunities={resetOffset}
                 />
               )
