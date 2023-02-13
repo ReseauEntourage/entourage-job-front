@@ -54,15 +54,15 @@ jobs:
       #     name: build
       #     path: build
       - name: see files content
-        run: ls -la ~/
+        run: ls -la
       - name: install
         uses: actions/setup-node@v3
         with:
           node-version: 16.18.1
       - name: Set env
         run: echo "CYPRESS_CACHE_FOLDER=$(echo /src/.cache)" >> $GITHUB_ENV
-      - run: echo ${{ env.CYPRESS_CACHE_FOLDER }}
       - run: npm i -g cypress --legacy-peer-deps --unsafe-perm=true --allow-root
+      - run: next build --debug
       - name: cypress
         uses: cypress-io/github-action@v4
         with:
@@ -72,8 +72,8 @@ jobs:
           browser: chrome
           command: npx cypress run --record --key ${{ secrets.CYPRESS_IO_KEY }}
           wait-on: http://localhost:3000
-
       - run: npm run lint
+
 
       - name: set-up
         uses: actions/setup-node@v1
