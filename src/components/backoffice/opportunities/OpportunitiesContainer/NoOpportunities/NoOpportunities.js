@@ -5,6 +5,10 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 import ModalExternalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
 import { openModal } from 'src/components/modals/Modal';
 import {
+  formatPlural,
+  tabs,
+} from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab/CandidateOffersTab.utils';
+import {
   StyledButtonContainer,
   StyledContainer,
   StyledDescription,
@@ -15,7 +19,7 @@ const NoOpportunities = ({ status, fetchOpportunities }) => {
   return (
     <StyledContainer>
       <StyledTitle>
-        Vous n&apos;avez aucune offre {status.toLowerCase()}.
+        Vous n&apos;avez aucune {formatPlural(status.toLowerCase(), 0)}.
       </StyledTitle>
       <StyledDescription>
         Vous pouvez chercher des offres qui vous correspondent sur le site
@@ -59,14 +63,16 @@ const NoOpportunities = ({ status, fetchOpportunities }) => {
 };
 
 NoOpportunities.propTypes = {
-  status: PropTypes.oneOf([
-    'à traiter',
-    'consultée',
-    "en phase d'entretien",
-    'abandonnée',
-    'acceptées',
-  ]).isRequired,
+  status: PropTypes.oneOf(
+    tabs.map(({ text }) => {
+      return text;
+    })
+  ),
   fetchOpportunities: PropTypes.func.isRequired,
+};
+
+NoOpportunities.defaultProps = {
+  status: tabs[0].text,
 };
 
 export default NoOpportunities;
