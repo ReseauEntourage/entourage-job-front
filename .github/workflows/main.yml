@@ -1,10 +1,11 @@
-
 name: LinkedOut Frontend Test
+
 on:
   [push]
   # pull_request:
   # branches: [master, develop]
   # workflow_dispatch:
+
 env:
   WEBINAR_URL: https://google.com
   TOOLBOX_URL: https://google.com
@@ -20,154 +21,33 @@ env:
   API_URL: http://localhost:3002
   PORT: 3000
   CYPRESS_IO_PROJECT_ID: ${{ secrets.CYPRESS_IO_PROJECT_ID }}
+
 jobs:
-  install:
+  test:
     runs-on: ubuntu-latest
     environment: 'entourage-job-front'
+    container:
+      image: cypress/browsers:node16.17.0-chrome106
+      options: --user 1001
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - name: install
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16.18.1
 
-      - run: npm i --legacy-peer-deps --unsafe-perm=true --allow-root
-      - run: next build --debug
-      - name: Save build folder
-        uses: actions/upload-artifact@v3
-        with:
-          name: build
-          if-no-files-found: error
-          path: build
-
-  test:
-    runs-on: ubuntu-latest  
-    environment: 'entourage-job-front'
-    container: cypress/browsers:node-16.18.1-chrome-109.0.5414.74-1-ff-109.0-edge-109.0.1518.52-1
-    needs: install
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-      - name: Download the build folders
-        uses: actions/download-artifact@v3
-        with:
-          name: build
-          path: build
       - name: cypress
         uses: cypress-io/github-action@v4
         with:
-          install: false
-          start: node -r dotenv/config server-next.js
+          start: yarn dev
           config: e2e.baseUrl=http://localhost:3000
           browser: chrome
           command: npx cypress run --record --key ${{ secrets.CYPRESS_IO_KEY }}
           wait-on: http://localhost:3000
-      - run: npm run lint
+
+      - run: yarn lint
+
       - name: set-up
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '16.x'
-      # - run: npm i --legacy-peer-deps
-      - run: npm run test
+
+      - run: yarn run test
       - run: echo No tests
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# name: LinkedOut Frontend Test
-
-# on:
-#   [push]
-#   # pull_request:
-#   # branches: [master, develop]
-#   # workflow_dispatch:
-
-# env:
-#   WEBINAR_URL: https://google.com
-#   TOOLBOX_URL: https://google.com
-#   TUTORIAL_CV: https://google.com
-#   TUTORIAL_PP: https://google.com
-#   TUTORIAL_VIDEO_FIRST_STEPS: https://google.com
-#   TUTORIAL_VIDEO_CV: https://google.com
-#   TUTORIAL_VIDEO_OFFERS: https://google.com
-#   TUTORIAL_VIDEO_OFFERS_2: https://google.com
-#   TUTORIAL_INTERVIEW_TRAINING: https://google.com
-#   IRAISER_DONATION_LINK: https://google.com
-#   SERVER_URL: http://localhost:3000
-#   API_URL: http://localhost:3002
-#   PORT: 3000
-#   CYPRESS_IO_PROJECT_ID: ${{ secrets.CYPRESS_IO_PROJECT_ID }}
-#   CYPRESS_CACHE_FOLDER: /app/.cache
-
-# jobs:
-
-#   # install:
-#   #   runs-on: ubuntu-latest
-#   #   environment: 'entourage-job-front'
-#   #   steps:
-#   #     - name: checkout
-#   #       uses: actions/checkout@v3
-#   #     - name: install
-#   #       uses: actions/setup-node@v3
-#   #       with:
-#   #         node-version: 16.18.1
-
-#   #     - run: npm i --legacy-peer-deps --unsafe-perm=true --allow-root
-  
-
-#   test:
-#     runs-on: ubuntu-latest
-#     environment: 'entourage-job-front'
-#     container: cypress/browsers:node-16.18.1-chrome-109.0.5414.74-1-ff-109.0-edge-109.0.1518.52-1
-#     # needs: install
-
-#     steps:
-#       - name: checkout
-#         uses: actions/checkout@v3
-#       # - name: Download the build folders
-#       #   uses: actions/download-artifact@v3
-#       #   with:
-#       #     name: build
-#       #     path: build
-#       - name: see files content
-#         run: ls -la
-#       - name: install
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: 16.18.1
-#       - name: Set env
-#         run: echo "CYPRESS_CACHE_FOLDER=$(echo /src/.cache)" >> $GITHUB_ENV
-#       - run: npm i -g cypress --legacy-peer-deps --unsafe-perm=true --allow-root
-#       - run: npm run build --debug
-#       - name: cypress
-#         uses: cypress-io/github-action@v4
-#         with:
-#           install: false
-#           start: npm run dev
-#           config: e2e.baseUrl=http://localhost:3000
-#           browser: chrome
-#           command: npx cypress run --record --key ${{ secrets.CYPRESS_IO_KEY }}
-#           wait-on: http://localhost:3000
-#       - run: npm run lint
-
-
-#       - name: set-up
-#         uses: actions/setup-node@v1
-#         with:
-#           node-version: '16.x'
-#       # - run: npm i --legacy-peer-deps
-#       - run: npm run test
-
-#       - run: echo No tests

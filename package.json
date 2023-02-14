@@ -28,7 +28,7 @@
     "cypress:local": "npx cypress open"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "npm run lint:fix"
+    "src/**/*.ts?(x) src/**/*.js?(x) cypress/**/*.ts?(x) cypress/**/*.js?(x)": "yarn lint:fix"
   },
   "repository": {
     "type": "git",
