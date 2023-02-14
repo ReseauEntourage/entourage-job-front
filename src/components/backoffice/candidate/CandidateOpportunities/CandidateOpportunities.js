@@ -26,10 +26,7 @@ import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpp
 import { useRouter } from 'next/router';
 import _ from 'lodash';
 import { useTabsCount } from './useTabsCount';
-import {
-  formatPlural,
-  tabs,
-} from './CandidateOffersTab/CandidateOffersTab.utils';
+import { tabs } from './CandidateOffersTab/CandidateOffersTab.utils';
 
 const CandidateOpportunities = ({
   search,

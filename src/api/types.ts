@@ -8,7 +8,7 @@ export const APIRoutes = {
   CVS: 'cv',
 } as const;
 
-export type APIRoute = typeof APIRoutes[keyof typeof APIRoutes];
+export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
 
 export type Route<T extends APIRoute> = `/${T}/${string}` | `/${T}`;
 
