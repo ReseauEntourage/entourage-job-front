@@ -53,7 +53,7 @@ describe('Candidat', () => {
     cy.intercept('PUT', '/user/changePwd', {}).as('changePwd');
   });
 
-  it('should open backoffice members', () => {
+  it('should open backoffice offers', () => {
     cy.visit('/backoffice/candidat/offres', {
       onBeforeLoad: function async(window) {
         window.localStorage.setItem('access-token', '1234');
