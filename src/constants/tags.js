@@ -347,27 +347,51 @@ const GA_TAGS = {
 };
 
 const FB_TAGS = {
-  CANDIDATE_REGISTRATION: {
+  CANDIDATE_REGISTRATION_OPEN: {
+    action: 'Pré-Prospect 1',
+    options: { content_category: '1' },
+  },
+  CANDIDATE_REGISTRATION_SEND: {
     action: 'Prospect 1',
     options: { content_category: '1' },
   },
-  COMPANY_CONTACT: {
-    action: 'Prospect 2',
+  COMPANY_CONTACT_OPEN: {
+    action: 'Pré-Prospect 2.1',
     options: { content_category: '2.1' },
   },
-  COMPANY_GENERAL_OFFER: {
-    action: 'Prospect 2',
+  COMPANY_CONTACT_SEND: {
+    action: 'Prospect 2.1',
+    options: { content_category: '2.1' },
+  },
+  COMPANY_GENERAL_OFFER_OPEN: {
+    action: 'Pré-Prospect 2.2',
     options: { content_category: '2.2' },
   },
-  COMPANY_CV_OFFER: {
-    action: 'Prospect 2',
+  COMPANY_GENERAL_OFFER_SEND: {
+    action: 'Prospect 2.2',
+    options: { content_category: '2.2' },
+  },
+  COMPANY_CV_OFFER_OPEN: {
+    action: 'Pré-Prospect 2.3',
     options: { content_category: '2.3' },
   },
-  COACH_REGISTRATION: {
+  COMPANY_CV_OFFER_SEND: {
+    action: 'Prospect 2.3',
+    options: { content_category: '2.3' },
+  },
+  COACH_REGISTRATION_OPEN: {
+    action: 'Pré-Prospect 3',
+    options: { content_category: '3' },
+  },
+  COACH_REGISTRATION_SEND: {
     action: 'Prospect 3',
     options: { content_category: '3' },
   },
-  SOCIAL_WORKER_REGISTRATION: {
+  SOCIAL_WORKER_REGISTRATION_OPEN: {
+    action: 'Pré-Prospect 4',
+    options: { content_category: '4' },
+  },
+  SOCIAL_WORKER_REGISTRATION_SEND: {
     action: 'Prospect 4',
     options: { content_category: '4' },
   },

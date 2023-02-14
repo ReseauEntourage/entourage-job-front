@@ -7,17 +7,6 @@ import { NewsletterPartial } from 'src/components/partials';
 import { useRouter } from 'next/router';
 
 const thankYouMessages = {
-  company: (
-    <>
-      <h2 className="uk-text-bold">
-        Merci d&apos;avoir répondu à ce formulaire&nbsp;!
-      </h2>
-      <h3>
-        Nous revenons le plus rapidement possible vers vous pour convenir
-        d&apos;un échange.
-      </h3>
-    </>
-  ),
   coach: (
     <>
       <h2 className="uk-text-bold">
@@ -35,17 +24,6 @@ const thankYouMessages = {
         Merci beaucoup pour votre inscription&nbsp;!
       </h2>
       <h3>Nous vous donnerons des nouvelles rapidement.</h3>
-    </>
-  ),
-  orientation: (
-    <>
-      <h2 className="uk-text-bold">
-        Merci beaucoup pour cette orientation&nbsp;!
-      </h2>
-      <h3>
-        Si elle entre dans les critères d’admission, nous prendrons rapidement
-        contact avec la personne orientée.
-      </h3>
     </>
   ),
 };

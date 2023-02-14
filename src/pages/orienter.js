@@ -5,7 +5,7 @@ import Button from 'src/components/utils/Button';
 import ImageTitle from 'src/components/partials/ImageTitle';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { gaEvent } from 'src/lib/gtag';
-import { GA_TAGS } from 'src/constants/tags';
+import { FB_TAGS, GA_TAGS } from "src/constants/tags";
 import { openModal } from 'src/components/modals/Modal';
 import ModalInterestLinkedOut from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import MultipleCTA from 'src/components/partials/MultipleCTA';
@@ -16,6 +16,7 @@ import LogoList from 'src/components/partials/LogoList';
 import PARTNERS from 'src/constants/partners';
 import NumberGrid from 'src/components/partials/NumberGrid';
 import CandidateContactModal from '../components/modals/Modal/ModalGeneric/CandidateContactModal';
+import { fbEvent } from "../lib/fb";
 
 const reviews = [
   {
@@ -98,6 +99,7 @@ const Orienter = () => {
           label: 'Inscrire un candidat',
           onClick: () => {
             gaEvent(GA_TAGS.PAGE_ORIENTER_INSCRIPTION_CLIC);
+            fbEvent(FB_TAGS.SOCIAL_WORKER_REGISTRATION_OPEN);
             openModal(<CandidateContactModal />);
           },
         }}
@@ -160,6 +162,7 @@ const Orienter = () => {
             className="uk-margin-small-right uk-margin-small-left uk-margin-small-top"
             onClick={() => {
               gaEvent(GA_TAGS.PAGE_ORIENTER_INSCRIPTION_CLIC);
+              fbEvent(FB_TAGS.SOCIAL_WORKER_REGISTRATION_OPEN);
               openModal(<CandidateContactModal />);
             }}
           >
@@ -233,6 +236,7 @@ const Orienter = () => {
             style="secondary"
             onClick={() => {
               gaEvent(GA_TAGS.PAGE_ORIENTER_INSCRIPTION_CLIC);
+              fbEvent(FB_TAGS.SOCIAL_WORKER_REGISTRATION_OPEN);
               openModal(<CandidateContactModal />);
             }}
           >

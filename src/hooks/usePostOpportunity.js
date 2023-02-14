@@ -43,13 +43,13 @@ export function usePostOpportunity({
       if (!isAdmin) {
         if (opportunity.isPublic) {
           gaEvent(GA_TAGS.POPUP_OFFRE_ENVOYER_OFFRE_GENERALE_CLIC);
-          fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER);
+          fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER_SEND);
         } else if (candidatesIds.length > 1) {
           gaEvent(GA_TAGS.POPUP_OFFRE_ENVOYER_OFFRE_MULTIPLE_CLIC);
-          fbEvent(FB_TAGS.COMPANY_CV_OFFER);
+          fbEvent(FB_TAGS.COMPANY_CV_OFFER_SEND);
         } else {
           gaEvent(GA_TAGS.POPUP_OFFRE_ENVOYER_OFFRE_UNIQUE_CLIC);
-          fbEvent(FB_TAGS.COMPANY_CV_OFFER);
+          fbEvent(FB_TAGS.COMPANY_CV_OFFER_SEND);
         }
         successMessage = opportunity.isPublic
           ? 'Merci pour votre offre, nous reviendrons bientôt vers vous.'
