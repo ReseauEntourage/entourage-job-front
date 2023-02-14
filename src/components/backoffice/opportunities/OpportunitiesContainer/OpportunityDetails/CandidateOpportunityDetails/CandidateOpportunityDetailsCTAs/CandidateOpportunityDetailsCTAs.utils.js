@@ -1,7 +1,7 @@
 import React from 'react';
-import CalendarIcon from 'assets/custom/icons/calendar.svg';
-import MailIcon from 'assets/custom/icons/mail.svg';
-import TrashIcon from 'assets/custom/icons/trash.svg';
+import CalendarIcon from 'assets/custom/icons/linkedout-calendar.svg';
+import MailIcon from 'assets/custom/icons/linkedout-mail.svg';
+import TrashIcon from 'assets/custom/icons/linkedout-trash.svg';
 import CheckIcon from 'assets/custom/icons/check.svg';
 
 const MailIconProps = { width: 17, height: 15, viewBox: '0 -2 15 17' };

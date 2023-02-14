@@ -15,9 +15,9 @@ services:
       - /app/.next
     ports:
       - 3001:3001
-    command: npm run dev
+    command: yarn dev
     environment:
-      - NODE_ENV=development 
+      - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
 
   #storybook:

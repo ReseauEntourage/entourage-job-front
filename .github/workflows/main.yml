@@ -49,5 +49,5 @@ jobs:
         with:
           node-version: '16.x'
 
-      - run: yarn run test
+      - run: yarn test
       - run: echo No tests
