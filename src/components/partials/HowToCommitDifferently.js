@@ -1,10 +1,11 @@
 import React from 'react';
 import { Section } from 'src/components/utils';
 import MultipleCTA from 'src/components/partials/MultipleCTA';
-import { GA_TAGS } from 'src/constants/tags';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 import CompanyContactModal from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
 import { openModal } from 'src/components/modals/Modal/openModal';
+import { fbEvent } from 'src/lib/fb';
 
 const HowToCommitDifferently = () => {
   return (
@@ -39,6 +40,7 @@ const HowToCommitDifferently = () => {
               label: 'Sensibiliser mon équipe',
               onClick: () => {
                 gaEvent(GA_TAGS.PAGE_ENTREPRISES_SENSIBILISER_CLIC);
+                fbEvent(FB_TAGS.COMPANY_CONTACT_OPEN);
                 openModal(<CompanyContactModal />);
               },
             },
@@ -51,6 +53,7 @@ const HowToCommitDifferently = () => {
               label: 'Proposer du mécénat',
               onClick: () => {
                 gaEvent(GA_TAGS.PAGE_ENTREPRISES_MECENAT_CLIC);
+                fbEvent(FB_TAGS.COMPANY_CONTACT_OPEN);
                 openModal(<CompanyContactModal />);
               },
             },

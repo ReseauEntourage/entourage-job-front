@@ -18,7 +18,7 @@ const CompanyContactModal = () => {
         try {
           await Api.postContactCompany(fields);
           gaEvent(GA_TAGS.PAGE_ENTREPRISES_ENVOYER_CONTACT_REFERENT_CLIC);
-          fbEvent(FB_TAGS.COMPANY_CONTACT);
+          fbEvent(FB_TAGS.COMPANY_CONTACT_SEND);
           closeModal();
           UIkit.notification(
             "Merci d'avoir répondu à ce formulaire !\nNous revenons le plus rapidement possible vers vous pour convenir d'un échange.",

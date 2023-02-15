@@ -33,7 +33,7 @@ const Travailler = () => {
         cta={{
           onClick: () => {
             gaEvent(GA_TAGS.PAGE_TRAVAILLER_DEPOSER_CANDIDATURE_CLIC);
-            fbEvent(FB_TAGS.CANDIDATE_REGISTRATION);
+            fbEvent(FB_TAGS.CANDIDATE_REGISTRATION_OPEN);
           },
           href: process.env.AIRTABLE_LINK_JOIN_LINKEDOUT,
           label: 'Rejoindre LinkedOut',
@@ -69,7 +69,7 @@ const Travailler = () => {
               newTab
               onClick={() => {
                 gaEvent(GA_TAGS.PAGE_TRAVAILLER_DEPOSER_CANDIDATURE_CLIC);
-                fbEvent(FB_TAGS.CANDIDATE_REGISTRATION);
+                fbEvent(FB_TAGS.CANDIDATE_REGISTRATION_OPEN);
               }}
               href={process.env.AIRTABLE_LINK_JOIN_LINKEDOUT}
             >
