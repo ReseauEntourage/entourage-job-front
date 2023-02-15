@@ -5,7 +5,7 @@ import Button from 'src/components/utils/Button';
 import ImageTitle from 'src/components/partials/ImageTitle';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { gaEvent } from 'src/lib/gtag';
-import { FB_TAGS, GA_TAGS } from "src/constants/tags";
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { openModal } from 'src/components/modals/Modal';
 import ModalInterestLinkedOut from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import MultipleCTA from 'src/components/partials/MultipleCTA';
@@ -15,8 +15,8 @@ import Reviews from 'src/components/partials/Reviews';
 import LogoList from 'src/components/partials/LogoList';
 import PARTNERS from 'src/constants/partners';
 import NumberGrid from 'src/components/partials/NumberGrid';
-import CandidateContactModal from '../components/modals/Modal/ModalGeneric/CandidateContactModal';
-import { fbEvent } from "../lib/fb";
+import { fbEvent } from 'src/lib/fb';
+import CandidateContactModal from 'src/components/modals/Modal/ModalGeneric/CandidateContactModal';
 
 const reviews = [
   {

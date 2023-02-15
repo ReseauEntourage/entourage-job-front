@@ -1,7 +1,7 @@
 import React from 'react';
 import { Section } from 'src/components/utils';
 import MultipleCTA from 'src/components/partials/MultipleCTA';
-import { FB_TAGS, GA_TAGS } from "src/constants/tags";
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 import CompanyContactModal from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
 import { openModal } from 'src/components/modals/Modal/openModal';
