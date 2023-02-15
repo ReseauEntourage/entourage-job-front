@@ -14,6 +14,8 @@ import { openModal } from 'src/components/modals/Modal';
 import usePostPublicOfferModal from 'src/components/modals/usePostPublicOfferModal';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
+import { fbEvent } from 'src/lib/fb';
+import { FB_TAGS } from 'src/constants/tags';
 
 const NoCVInThisArea = () => {
   return (
@@ -209,6 +211,7 @@ const CVList = ({
                 }}
                 className="uk-link-text"
                 onClick={() => {
+                  fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER_OPEN);
                   openModal(<PublicOfferModal />);
                 }}
               >

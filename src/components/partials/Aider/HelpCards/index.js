@@ -8,8 +8,9 @@ import HelpReseau from 'public/static/img/aider-reseau.jpg';
 import TitleSection from 'src/components/partials/Aider/H2';
 import { COLORS } from 'src/constants/styles';
 import { Container } from 'src/components/utils/containers';
-import { GA_TAGS } from 'src/constants/tags';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import uuid from 'uuid/v4';
+import { fbEvent } from 'src/lib/fb';
 
 const cardsContent = [
   {
@@ -18,6 +19,9 @@ const cardsContent = [
     text: "Vous soutenez un candidat individuellement et dans la durée dans sa recherche d'emploi pour booster la rencontre avec les entreprises et son intégration durable dans un nouveau job.",
     cta: 'Devenir coach LinkedOut',
     href: process.env.AIRTABLE_LINK_BECOME_COACH,
+    onClick: () => {
+      fbEvent(FB_TAGS.COACH_REGISTRATION_OPEN);
+    },
     alt: 'Des candidats LinkedOut et une coach',
     newTab: true,
     tag: GA_TAGS.PAGE_AIDER_INSCRIPTION_COACH_CLIC,
