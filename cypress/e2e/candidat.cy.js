@@ -101,7 +101,11 @@ describe('Candidat', () => {
         window.localStorage.setItem('access-token', '1234');
       },
     });
-    cy.wait('@getOneOffer')
+    // check if the right opportunity is open
+    cy.fixture('user-opportunity-all-res').then((offersList) => {
+      cy.url().should('include', offersList.offers[0].id)
+      cy.get('[data-testid="candidat-offer-details-title"]').contains(offersList.offers[0].title)
+    })
     cy.get('[data-testid="candidat-add-offer"]').click()
     cy.get('#form-input-title').scrollIntoView().type('test');
     cy.get('#form-input-company').scrollIntoView().type('test');
