@@ -1,0 +1,26 @@
+[
+    {
+        "status": "archived",
+        "count": 7
+    },
+    {
+        "status": 0,
+        "count": "10"
+    },
+    {
+        "status": 1,
+        "count": "5"
+    },
+    {
+        "status": 2,
+        "count": "8"
+    },
+    {
+        "status": 3,
+        "count": "15"
+    },
+    {
+        "status": 4,
+        "count": "3"
+    }
+]

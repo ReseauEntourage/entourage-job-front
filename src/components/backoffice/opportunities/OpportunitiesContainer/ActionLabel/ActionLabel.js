@@ -14,6 +14,7 @@ const ActionLabel = ({
   hoverAnimation,
   fill,
   onClick,
+  id,
 }) => {
   return (
     <StyledContainer
@@ -25,6 +26,7 @@ const ActionLabel = ({
         event.preventDefault();
         onClick();
       }}
+      data-testid={id}
     >
       <StyledIconContainer>{icon}</StyledIconContainer>
       <StyledLabelContainer className="action-label">
@@ -39,6 +41,7 @@ ActionLabel.defaultProps = {
   hoverAnimation: false,
   fill: false,
   onClick: () => {},
+  id: '',
 };
 
 ActionLabel.propTypes = {
@@ -49,6 +52,7 @@ ActionLabel.propTypes = {
   hoverAnimation: PropTypes.bool,
   fill: PropTypes.bool,
   onClick: PropTypes.func,
+  id: PropTypes.string,
 };
 
 export default ActionLabel;

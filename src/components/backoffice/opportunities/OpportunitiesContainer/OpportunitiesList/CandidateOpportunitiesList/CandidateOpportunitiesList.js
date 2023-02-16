@@ -66,7 +66,7 @@ const CandidateOpportunitiesList = ({
 
   const opportunitiesListContent = opportunities.map((opportunity) => {
     return (
-      <StyledListItemContainer>
+      <StyledListItemContainer data-testid="candidat-offer-list-element">
         <Link
           href={{
             pathname: `/backoffice/candidat/offres/${opportunityType}/${opportunity.id}`,
@@ -104,7 +104,7 @@ const CandidateOpportunitiesList = ({
   });
 
   return (
-    <StyledListContent>
+    <StyledListContent data-testid="candidat-offer-list-container">
       {opportunitiesListContent}
       {opportunityType === 'private' && hasFetchedAll && (
         <Button

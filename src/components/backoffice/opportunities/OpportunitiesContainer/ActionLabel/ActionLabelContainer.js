@@ -37,6 +37,7 @@ const ActionLabelContainer = ({
           color="primaryOrange"
           label="Favoris"
           onClick={bookmarkOpportunity}
+          id="cta-unbookmark"
           icon={<IconNoSSR name="heart" ratio={0.8} />}
         />
       )}
@@ -55,6 +56,7 @@ const ActionLabelContainer = ({
           color="primaryOrange"
           label="Ajouter aux favoris"
           onClick={bookmarkOpportunity}
+          id="cta-bookmark"
           icon={<IconNoSSR name="heart" ratio={0.8} />}
         />
       )}
