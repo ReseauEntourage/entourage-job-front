@@ -12,8 +12,10 @@ const TextInput = ({ label, password, onChange }) => {
           setValue(e.target.value);
           return onChange();
         }}
-        type={password ? 'password' : 'text'}
-        placeholder={label}
+        type={type || 'text'}
+        placeholder={title}
+        name={name}
+        id={`form-input-${name}`}
       />
     </StyledTextInputContainer>
   );

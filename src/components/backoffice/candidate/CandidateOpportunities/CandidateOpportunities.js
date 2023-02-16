@@ -117,7 +117,9 @@ const CandidateOpportunities = ({
       offset,
       shouldFetchAll
     );
-    await fetchTabsCount();
+    if (opportunityType === 'private') {
+      await fetchTabsCount();
+    }
   };
 
   const resetOffset = async () => {
