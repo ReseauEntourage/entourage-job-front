@@ -167,6 +167,59 @@ export const AMBITIONS_PREFIXES = [
   },
 ];
 
+export const CONTRACTS = [
+  {
+    label: 'CDI',
+    value: 'cdi',
+    end: false,
+  },
+  {
+    label: 'CDD + de 6 mois',
+    value: 'cdd+6',
+    end: true,
+  },
+  {
+    label: 'CDD - de 6 mois',
+    value: 'cdd-6',
+    end: true,
+  },
+  {
+    label: "Contrat d'insertion",
+    value: 'cddi',
+    end: true,
+  },
+  {
+    label: 'Alternance',
+    value: 'alt',
+    end: true,
+  },
+  {
+    label: 'Intérim',
+    value: 'inte',
+    end: true,
+  },
+  {
+    label: 'Stage',
+    value: 'stage',
+    end: true,
+  },
+  {
+    label: 'Formation certifiante',
+    value: 'form',
+    end: true,
+  },
+  {
+    label: "Période d'immersion (PMSMP)",
+    value: 'pmsmp',
+    end: true,
+  },
+  {
+    label: 'Autre',
+    value: 'other',
+    end: true,
+  },
+];
+
 export const OFFER_ADMIN_FILTERS_DATA = [
   { tag: 'pending', title: 'Offres à valider' },
   { tag: 'validated', title: 'Offres publiées', active: true },
@@ -237,6 +290,12 @@ export const OPPORTUNITY_FILTERS_DATA = [
     title: 'Métiers',
     tag: GA_TAGS.BACKOFFICE_OFFRES_FILTRE_SECTEUR_CLIC,
   },
+  {
+    key: 'contracts',
+    constants: CONTRACTS,
+    title: 'Type de contrat',
+    tag: GA_TAGS.BACKOFFICE_OFFRES_FILTRE_CONTRAT_CLIC,
+  },
 ];
 
 export const MEMBER_FILTERS_DATA = [
@@ -302,59 +361,6 @@ export const ADMIN_ROLES = {
   CANDIDATES: 'Candidats',
   COMPANIES: 'Entreprises',
 };
-
-export const CONTRACTS = [
-  {
-    label: 'CDI',
-    value: 'cdi',
-    end: false,
-  },
-  {
-    label: 'CDD + de 6 mois',
-    value: 'cdd+6',
-    end: true,
-  },
-  {
-    label: 'CDD - de 6 mois',
-    value: 'cdd-6',
-    end: true,
-  },
-  {
-    label: "Contrat d'insertion",
-    value: 'cddi',
-    end: true,
-  },
-  {
-    label: 'Alternance',
-    value: 'alt',
-    end: true,
-  },
-  {
-    label: 'Intérim',
-    value: 'inte',
-    end: true,
-  },
-  {
-    label: 'Stage',
-    value: 'stage',
-    end: true,
-  },
-  {
-    label: 'Formation certifiante',
-    value: 'form',
-    end: true,
-  },
-  {
-    label: "Période d'immersion (PMSMP)",
-    value: 'pmsmp',
-    end: true,
-  },
-  {
-    label: 'Autre',
-    value: 'other',
-    end: true,
-  },
-];
 
 export const EXTERNAL_OFFERS_ORIGINS = [
   {

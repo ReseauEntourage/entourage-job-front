@@ -11,7 +11,7 @@
     "next": "next",
     "start": "NODE_ENV=production node -r dotenv/config server-next.js",
     "lint": "npx eslint src --ext js,jsx,ts,tsx",
-    "lint:fix": "npx eslint './src' --ext js,jsx,ts,tsx --fix",
+    "lint:fix": "npx eslint src --ext js,jsx,ts,tsx --fix",
     "format": "prettier --write './**/*.{js,jsx,md,json}' --config .prettierrc.json",
     "build": "next build",
     "uikit-install": "cd ./node_modules/uikit && yarn",
