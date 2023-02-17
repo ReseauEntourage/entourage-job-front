@@ -287,6 +287,9 @@ const GA_TAGS = {
   BACKOFFICE_OFFRES_FILTRE_SECTEUR_CLIC: {
     action: 'Backoffice_Offres_Filtre_Secteur_Clic',
   },
+  BACKOFFICE_OFFRES_FILTRE_CONTRAT_CLIC: {
+    action: 'Backoffice_Offres_Filtre_Contrat_Clic',
+  },
   BACKOFFICE_MEMBERS_FILTRE_ZONE_CLIC: {
     action: 'Backoffice_Members_Filtre_Zone_Clic',
   },
