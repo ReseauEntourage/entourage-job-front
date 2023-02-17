@@ -7,7 +7,6 @@ import _ from 'lodash';
 import { addAxiosInterceptors } from './interceptor';
 import {
   APIRoute,
-  ContactCandidate,
   ContactCompany,
   ContactContactUs,
   ContactCandidate,
@@ -39,10 +38,9 @@ class APIHandler {
     addAxiosInterceptors(this.api);
   }
 
-  private get<T extends APIRoute>(
-    route: Route<T>,
-    query: object
-  = {},
+  private get(
+    route: string,
+    query: object = {},
     headers: AxiosRequestHeaders = {}
   ): Promise<AxiosResponse> {
     if (query && typeof query !== 'object') {
@@ -66,10 +64,9 @@ class APIHandler {
     return this.api.post(route, payload, { headers });
   }
 
-  private put<T extends APIRoute>(
-    route: Route<T>,
-    payload?: object
-  ,
+  private put(
+    route: string,
+    payload?: object,
     headers?: AxiosRequestHeaders
   ): Promise<AxiosResponse> {
     if (payload && typeof payload !== 'object') {

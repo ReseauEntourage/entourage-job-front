@@ -1,13 +1,15 @@
 import styled from 'styled-components';
-import { COLORS } from '../../../../constants/styles';
+import { COLORS } from 'src/constants/styles';
 
 export const StyledSelectContainer = styled.div`
-  width: 400px;
+  min-width: 300px;
+  width: 100%;
   max-width: 100%;
   .select {
     width: 100%;
     border: none;
     position: relative;
+    margin-bottom: 18px;
     .placeholder,
     .selected-value {
       padding: 4px 0;
@@ -21,6 +23,12 @@ export const StyledSelectContainer = styled.div`
       &:hover {
         cursor: pointer;
       }
+      span {
+        float: right;
+        height: 18px;
+        width: 18px;
+        color: ${COLORS.primaryOrange};
+      }
     }
     .placeholder {
       color: ${COLORS.darkGray};
@@ -30,15 +38,12 @@ export const StyledSelectContainer = styled.div`
           cursor: pointer;
         }
       }
-      span {
-        float: right;
-        height: 15px;
-        width: 15px;
-      }
     }
 
     ul.options-container {
-      width: 400px;
+      min-width: 300px;
+      width: 100%;
+      z-index: 100;
       max-width: 100%;
       margin: 0;
       padding: 0;
