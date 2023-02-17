@@ -4,6 +4,8 @@ const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
   projectId: process.env.CYPRESS_IO_PROJECT_ID,
+  defaultCommandTimeout: 10000,
+  pageLoadTimeout: 120000,
   e2e: {
     baseUrl: `${process.env.SERVER_URL}`,
     setupNodeEvents(on, config) {

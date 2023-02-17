@@ -15,6 +15,7 @@ const TextInput = ({ title, type, onChange, name }) => {
         type={type || 'text'}
         placeholder={title}
         name={name}
+        id={`form-input-${name}`}
       />
     </StyledTextInputContainer>
   );

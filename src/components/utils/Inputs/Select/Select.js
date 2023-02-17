@@ -3,7 +3,6 @@ import { PropTypes } from 'prop-types';
 import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { isSSR } from 'src/utils/isSSR';
-import { uuid } from 'uuid/v4';
 import { StyledSelectContainer } from './Select.styles';
 
 // import { isSSR } from 'src/utils/isSSR';
@@ -22,7 +21,7 @@ const Select = ({
 }) => {
   const [selectedOption, setSelectedOption] = useState({ value: '' });
   const [optionsOpen, setOptionsOpen] = useState(false);
-  const selectId = `${id}-${uuid}`;
+  const selectId = `${id}-container`;
 
   useEffect(() => {
     if (!isSSR && id) {

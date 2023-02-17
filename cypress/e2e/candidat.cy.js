@@ -18,11 +18,18 @@ describe('Candidat', () => {
         'GET',
         '/opportunity/candidate/all/' +
           user.id +
-          '?type=private&department[]=Seine-Saint-Denis+(93)',
+          '?type=public&offset=0&limit=25&department[]=Seine-Saint-Denis+(93)',
         {
           fixture: 'user-opportunity-all-res',
         }
       ).as('allOpportunities');
+      cy.intercept(
+        'GET',
+        'opportunity/candidate/tabCount/' + user.id,
+        {
+          fixture: 'tabCount-res'
+        }
+      ).as('tabCount')
       cy.intercept('GET', '/cv/read/' + user.id, {
         fixture: 'cv-read-res',
       }).as('cvCandidatDetails');
@@ -38,6 +45,12 @@ describe('Candidat', () => {
       cy.intercept('GET', '/cv/lastVersion/' + user.id, {
         fixture: 'cv-for-candidat',
       });
+      cy.fixture('user-opportunity-all-res').then((offersRes) => {
+        cy.intercept('opportunity/' + offersRes.offers[0].id, offersRes.offers[0]).as('getOneOffer')
+        let opportunityToModify = offersRes.offers[0];
+        opportunityToModify.bookmarked = false;
+        cy.intercept('PUT', 'opportunity/join/'+ offersRes.offers[0].id + '/' + user.id, opportunityToModify).as('putOffer')
+      })
     });
     cy.intercept('GET', '/user/candidate/checkUpdate', {
       noteHasBeenModified: true,
@@ -50,41 +63,82 @@ describe('Candidat', () => {
       'https://tarteaucitron.io/load.js?domain=localhost:3001&uuid=0e7dccd2edb0f870afc26ab86d989e93ef6da0a9',
       {}
     );
+    cy.intercept('POST', '/opportunity/external', {}).as('postExternal')
     cy.intercept('PUT', '/user/changePwd', {}).as('changePwd');
   });
 
-  it('should open backoffice offers', () => {
+  it('should open backoffice public offers', () => {
     cy.visit('/backoffice/candidat/offres', {
       onBeforeLoad: function async(window) {
         window.localStorage.setItem('access-token', '1234');
       },
     });
-    cy.get('[data-testid="candidat-add-offer"]');
-    cy.wait('@allOpportunities');
-    // cy.wait('@candidatCheckUpdate')
-    // cy.wait('@cvCheckUpdate')
-    // // test if all members are in the table
-    // cy.fixture('user-members-res').then((members) => {
-    //     cy.get('[data-testid="member-list"]')
-    //         .find('tr')
-    //         .should('have.length', members.length)
-    // })
+
+    // check if list is complete
+    cy.get('[data-testid="candidat-offer-list-container"]').find('> div').should('have.length', 16)
+
+    // check if the right opportunity is open
+    cy.fixture('user-opportunity-all-res').then((offersList) => {
+      cy.url().should('include', offersList.offers[0].id)
+      cy.get('[data-testid="candidat-offer-details-title"]').contains(offersList.offers[0].title)
+    })
+
+    // bookmark/unbookmark an offer from the list
+    cy.fixture('user-opportunity-all-res').then((offersRes) => {
+      let bookmarked = offersRes.offers[0].opportunityUsers.bookmarked;
+      let cta1 = bookmarked ?  'cta-unbookmark' : 'cta-bookmark';
+      let cta2 = !bookmarked ?  'cta-unbookmark' : 'cta-bookmark';
+      cy.get('[data-testid="' + cta1 + '"]').first().should(bookmarked? 'contain' : 'not.contain', 'Favoris')
+      cy.get('[data-testid="' + cta1 + '"]').first().click();
+      cy.wait('@putOffer')
+      cy.get('[data-testid="' + cta2 + '"]').first().should(!bookmarked? 'contain' : 'not.contain', 'Favoris')
+    });
   });
 
-  // it('should open backoffice cv candidat', () => {
-  //     cy.visit('/backoffice/candidat/cv', {
-  //         onBeforeLoad: function async (window) {
-  //             window.localStorage.setItem('access-token', "1234");
-  //         }
-  //     })
-  //     cy.get(
-  //         `[data-testid="test-catchphrase-edit-icon"]`
-  //     ).click({force: true});
-  //     const catchPhrase = 'hello my name is Mike'
-  //     cy.get('#form-catchphrase-catchphrase').type(catchPhrase)
-  //     cy.get(`[data-testid="form-confirm-catchphrase-form"]`).click()
-  //     cy.get(`[data-testid="cv-edit-catchphrase-content"]`).should('contain', catchPhrase)
-  // })
+  it('should open backoffice public offers and add new opportunity', () => {
+    cy.visit('/backoffice/candidat/offres', {
+      onBeforeLoad: function async(window) {
+        window.localStorage.setItem('access-token', '1234');
+      },
+    });
+    // check if the right opportunity is open
+    cy.fixture('user-opportunity-all-res').then((offersList) => {
+      cy.url().should('include', offersList.offers[0].id)
+      cy.get('[data-testid="candidat-offer-details-title"]').contains(offersList.offers[0].title)
+    })
+    cy.get('[data-testid="candidat-add-offer"]').click()
+    cy.get('#form-input-title').scrollIntoView().type('test');
+    cy.get('#form-input-company').scrollIntoView().type('test');
+    cy.get('#form-offer-external-department-container').scrollIntoView().click()
+    cy.get('#form-offer-external-department-container .options-container .option button').first().click()
+    cy.get('#form-offer-external-contract-container').scrollIntoView().click()
+    cy.get('#form-offer-external-contract-container .options-container .option button').first().click()
+    cy.get('#form-input-recruiterFirstName').scrollIntoView().type('test');
+    cy.get('#form-input-recruiterName').scrollIntoView().type('test');
+    cy.get('#form-input-recruiterMail').scrollIntoView().type('test@gmail.com');
+    cy.get('#form-offer-external-description').scrollIntoView().type('test');
+    cy.get('#form-input-link').scrollIntoView().type('test');
+    cy.get('button').contains('Envoyer').click();
+    cy.wait('@postExternal')
+
+    //modal should be closed
+    cy.get('.uk-modal-body').should('not.exist');
+  })
+  
+  it('should open backoffice cv candidat', () => {
+      cy.visit('/backoffice/candidat/cv', {
+          onBeforeLoad: function async (window) {
+              window.localStorage.setItem('access-token', "1234");
+          }
+      })
+      cy.get(
+          `[data-testid="test-catchphrase-edit-icon"]`
+      ).click({force: true});
+      const catchPhrase = 'hello my name is Mike'
+      cy.get('#form-catchphrase-catchphrase').type(catchPhrase)
+      cy.get(`[data-testid="form-confirm-catchphrase-form"]`).click()
+      cy.get(`[data-testid="cv-edit-catchphrase-content"]`).should('contain', catchPhrase)
+  })
 
   it('should open backoffice candidate parameters', () => {
     cy.visit('/backoffice/parametres', {

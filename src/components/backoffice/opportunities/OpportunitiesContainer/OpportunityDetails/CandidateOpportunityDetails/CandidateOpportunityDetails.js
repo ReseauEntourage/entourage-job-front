@@ -54,7 +54,7 @@ const CandidateOpportunityDetails = ({
   const windowHeight = useWindowHeight();
 
   const [containerHeight, setContainerHeight] = useState(0);
-
+  
   const { opportunityUsers, bookmarkOpportunity } = useBookmarkOpportunity(
     id,
     opportunityUsersProp
@@ -99,10 +99,12 @@ const CandidateOpportunityDetails = ({
   );
 
   return (
-    <StyledDetailsContainer ref={ref}>
+    <StyledDetailsContainer ref={ref} data-testid="candidat-offer-details">
       <StyledTopContainer>
         <StyledTitleContainer>
-          <StyledTitleText>{title}</StyledTitleText>
+          <StyledTitleText data-testid="candidat-offer-details-title">
+            {title}
+          </StyledTitleText>
           <InfoText>
             {company}
             {businessLines && businessLines.length > 0 && (
