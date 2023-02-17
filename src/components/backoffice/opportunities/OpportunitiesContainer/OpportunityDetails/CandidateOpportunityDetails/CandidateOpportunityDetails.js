@@ -54,7 +54,7 @@ const CandidateOpportunityDetails = ({
   const windowHeight = useWindowHeight();
 
   const [containerHeight, setContainerHeight] = useState(0);
-  
+
   const { opportunityUsers, bookmarkOpportunity } = useBookmarkOpportunity(
     id,
     opportunityUsersProp
