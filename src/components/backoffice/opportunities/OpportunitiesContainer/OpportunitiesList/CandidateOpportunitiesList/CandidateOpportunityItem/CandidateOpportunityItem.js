@@ -87,6 +87,8 @@ const CandidateOpportunityItem = ({
       <ProgressBarStatus
         status={opportunityUsers?.status}
         archived={opportunityUsers?.archived}
+        isBookmarked={opportunityUsers?.bookmarked}
+        isRecommended={opportunityUsers?.recommended}
       />
       <StyledBottomContainer>
         <SubtitleText>Description mission</SubtitleText>

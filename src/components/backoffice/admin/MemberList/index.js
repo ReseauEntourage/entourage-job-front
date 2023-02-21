@@ -22,7 +22,7 @@ import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { Member } from 'src/components/backoffice/admin/MemberList/Member';
 import BackToTop from 'src/components/utils/BackToTop/index';
 import {
-  ActionsContainer,
+  StyledActionsContainer,
   StyledTable,
 } from 'src/components/backoffice/admin/MemberList/styles';
 import { useBulkActions } from 'src/hooks/useBulkActions';
@@ -243,7 +243,7 @@ const MemberList = ({
             smallSelectors
           />
           {role === USER_ROLES.CANDIDAT && (
-            <ActionsContainer>
+            <StyledActionsContainer>
               <Button
                 style="custom-secondary small"
                 disabled={!hasSelection}
@@ -254,7 +254,7 @@ const MemberList = ({
               >
                 Masquer CV
               </Button>
-            </ActionsContainer>
+            </StyledActionsContainer>
           )}
           {loading ? (
             <LoadingScreen />

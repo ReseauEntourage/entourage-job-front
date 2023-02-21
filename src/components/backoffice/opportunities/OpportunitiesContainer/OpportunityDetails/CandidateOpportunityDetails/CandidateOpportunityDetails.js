@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import { findConstantFromValue } from 'src/utils';
 import { BUSINESS_LINES } from 'src/constants';
 import ContractLabel from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel';
@@ -153,6 +154,13 @@ const CandidateOpportunityDetails = ({
             opportunityUsers.status,
             opportunityUsers.archived
           )}
+          noProcess={
+            _.isNil(opportunityUsers.status) ||
+            (opportunityUsers.status === -1 &&
+              !opportunityUsers.bookmarked &&
+              !opportunityUsers.recommended &&
+              !opportunityUsers.archived)
+          }
         />
       </StyledTopContainer>
       {/* check if there are CTAS on the current tab to render ctas container */}

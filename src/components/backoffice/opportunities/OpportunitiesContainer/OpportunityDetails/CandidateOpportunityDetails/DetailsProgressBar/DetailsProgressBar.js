@@ -4,7 +4,7 @@ import uuid from 'uuid/v4';
 import { useIsDesktop } from 'src/hooks/utils/usePlatforms';
 import PropTypes from 'prop-types';
 
-const DetailsProgressBar = ({ tab }) => {
+const DetailsProgressBar = ({ tab, noProcess }) => {
   const isDesktop = useIsDesktop();
   const [steps, setSteps] = useState();
   const renderClassNames = (className, index, array) => {
@@ -36,7 +36,9 @@ const DetailsProgressBar = ({ tab }) => {
         className: '',
       },
     ];
-    if (tab === 0) {
+    if (noProcess) {
+      renderClassNames('', -1, basicSteps);
+    } else if (tab === 0) {
       renderClassNames('fullOrange', 0, basicSteps);
     } else if (tab === 1) {
       renderClassNames('fullOrange', 1, basicSteps);
@@ -47,7 +49,7 @@ const DetailsProgressBar = ({ tab }) => {
     } else if (tab === 4) {
       renderClassNames('fullGreen', 3, basicSteps);
     }
-  }, [tab]);
+  }, [tab, noProcess]);
   return (
     <StyledDetailsProgressBar>
       {steps &&
@@ -64,6 +66,7 @@ const DetailsProgressBar = ({ tab }) => {
 
 DetailsProgressBar.propTypes = {
   tab: PropTypes.number.isRequired,
+  noProcess: PropTypes.bool.isRequired,
 };
 
 export default DetailsProgressBar;

@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { StyledContainer, StyledStep } from './ProgressBarStatus.styles';
 
-const ProgressBarStatus = ({ status, archived }) => {
+const ProgressBarStatus = ({
+  status,
+  archived,
+  isBookmarked,
+  isRecommended,
+}) => {
   const abandonned = archived || status === 3 || status === 4;
   const hired = !archived && status === 2;
   const noStatus = _.isNil(status);
@@ -18,7 +23,13 @@ const ProgressBarStatus = ({ status, archived }) => {
 
   return (
     <StyledContainer>
-      <StyledStep activate={!noStatus} color={color} />
+      <StyledStep
+        activate={
+          !noStatus &&
+          (status >= 0 || (status === -1 && (isBookmarked || isRecommended)))
+        }
+        color={color}
+      />
       <StyledStep
         activate={!noStatus && (status >= 0 || abandonned || hired)}
         color={color}
@@ -43,6 +54,8 @@ ProgressBarStatus.defaultProps = {
 ProgressBarStatus.propTypes = {
   status: PropTypes.number,
   archived: PropTypes.bool,
+  isBookmarked: PropTypes.bool.isRequired,
+  isRecommended: PropTypes.bool.isRequired,
 };
 
 export default ProgressBarStatus;
