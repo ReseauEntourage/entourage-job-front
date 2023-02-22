@@ -52,17 +52,17 @@ const SendMailModalContent = ({ OpportunityId, relance, onSubmit }) => {
     <>
       <p>Bonjour,</p>
       <p>
-        Vous n&aposavez pas encore répondu à la candidature de {user.firstName}{' '}
+        Vous n&apos;avez pas encore répondu à la candidature de {user.firstName}{' '}
         sur votre offre.
       </p>
       <p>
-        Voici son CV pour en savoir plus sur son profil et prendre contact avec
+        Voici son CV pour en savoir plus sur son profil et prendre contact avec{' '}
         {genderTab[user.gender].indPronoun}.
       </p>
       <p>
         Contactez-{genderTab[user.gender].pronoun} vite pour lui indiquer si
         vous souhaitez ou non poursuivre les échanges. En cas de refus,
-        n&aposoubliez pas de lui apporter des informations complémentaires et
+        n&apos;oubliez pas de lui apporter des informations complémentaires et
         pourquoi pas partager son CV à votre réseau !
       </p>
       <p>A bientôt,</p>
@@ -82,7 +82,7 @@ const SendMailModalContent = ({ OpportunityId, relance, onSubmit }) => {
       <p>
         Contactez-{genderTab[user.gender].pronoun} vite pour lui indiquer si
         vous souhaitez ou non poursuivre les échanges. En cas de refus,
-        n&aposoubliez pas de lui apporter des informations complémentaires et
+        n&apos;oubliez pas de lui apporter des informations complémentaires et
         pourquoi pas partager son CV à votre réseau !
       </p>
       <p>A bientôt,</p>
