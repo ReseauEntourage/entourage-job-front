@@ -34,43 +34,58 @@ const SendMailModalContent = ({ OpportunityId, relance, onSubmit }) => {
     `Vous pouvez ci-dessous envoyer une demande de contact pour le poste de${' '}
   ${opportunity?.title} dans l’entreprise ${opportunity?.company}`
   );
+  const genderTab = [
+    // male
+    {
+      term: '',
+      pronoun: 'le',
+      indPronoun: 'lui',
+    },
+    // female
+    {
+      term: 'e',
+      pronoun: 'la',
+      indPronoun: 'elle',
+    },
+  ];
   const emailContent = relance ? (
     <>
-      <p>Lorem ipsum dolor sit amet,</p>
+      <p>Bonjour,</p>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing
-        elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-        ut aliquip ex ea.
+        Vous n&aposavez pas encore répondu à la candidature de {user.firstName}{' '}
+        sur votre offre.
       </p>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud.
+        Voici son CV pour en savoir plus sur son profil et prendre contact avec
+        {genderTab[user.gender].indPronoun}.
       </p>
-      <p>quis nostrud.</p>
+      <p>
+        Contactez-{genderTab[user.gender].pronoun} vite pour lui indiquer si
+        vous souhaitez ou non poursuivre les échanges. En cas de refus,
+        n&aposoubliez pas de lui apporter des informations complémentaires et
+        pourquoi pas partager son CV à votre réseau !
+      </p>
+      <p>A bientôt,</p>
     </>
   ) : (
     <>
-      <p>Lorem ipsum dolor sit amet,</p>
+      <p>Bonjour,</p>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing
-        elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-        ut aliquip ex ea.
+        Un{genderTab[user.gender].term} candidat{genderTab[user.gender].term}{' '}
+        LinkedOut est intéressé{genderTab[user.gender].term} par votre offre !
+      </p>
+      <p>{user.firstName} a postulé à votre offre.</p>
+      <p>
+        Voici son CV pour en savoir plus sur son profil et prendre contact avec{' '}
+        {genderTab[user.gender].indPronoun}.
       </p>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud.
+        Contactez-{genderTab[user.gender].pronoun} vite pour lui indiquer si
+        vous souhaitez ou non poursuivre les échanges. En cas de refus,
+        n&aposoubliez pas de lui apporter des informations complémentaires et
+        pourquoi pas partager son CV à votre réseau !
       </p>
-      <p>quis nostrud.</p>
+      <p>A bientôt,</p>
     </>
   );
 
@@ -112,7 +127,7 @@ const SendMailModalContent = ({ OpportunityId, relance, onSubmit }) => {
         <div className="email-details">{emailContent}</div>
         <div className="textarea-container">
           <TextArea
-            title="Ajouter une description personnelle"
+            title="Ajouter un message personnel"
             onChange={handleDescription}
           />
         </div>

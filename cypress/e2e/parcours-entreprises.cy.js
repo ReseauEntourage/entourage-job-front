@@ -43,9 +43,15 @@ describe('Parcours Entreprises', () => {
   it('Remplir le formulaire, envoyer et fermer', () => {
     cy.get('.ReactModalPortal div').first().should('be.visible');
 
-    cy.get('#form-company-contact-firstName').should('be.visible').scrollIntoView().type('John');
+    cy.get('#form-company-contact-firstName')
+      .should('be.visible')
+      .scrollIntoView()
+      .type('John');
 
-    cy.get('#form-company-contact-lastName').should('be.visible').scrollIntoView().type('Doe');
+    cy.get('#form-company-contact-lastName')
+      .should('be.visible')
+      .scrollIntoView()
+      .type('Doe');
 
     cy.get('#form-company-contact-approach')
       .should('be.visible')
@@ -53,13 +59,19 @@ describe('Parcours Entreprises', () => {
       .select('information');
 
     cy.get('#form-company-contact-email')
-    .should('be.visible')
+      .should('be.visible')
       .scrollIntoView()
       .type('johndoe@gmail.com');
 
-    cy.get('#form-company-contact-phone').should('be.visible').scrollIntoView().type('0698754321');
+    cy.get('#form-company-contact-phone')
+      .should('be.visible')
+      .scrollIntoView()
+      .type('0698754321');
 
-    cy.get('#form-company-contact-company').should('be.visible').scrollIntoView().type('Entourage');
+    cy.get('#form-company-contact-company')
+      .should('be.visible')
+      .scrollIntoView()
+      .type('Entourage');
 
     cy.get('#form-company-contact-position')
       .should('be.visible')
@@ -71,7 +83,10 @@ describe('Parcours Entreprises', () => {
       .scrollIntoView()
       .type('Paris{downArrow}{enter}');
 
-    cy.get('#form-company-contact-heardAbout').should('be.visible').scrollIntoView().select('Autre');
+    cy.get('#form-company-contact-heardAbout')
+      .should('be.visible')
+      .scrollIntoView()
+      .select('Autre');
 
     cy.get('button').contains('Envoyer').should('be.visible').click();
 
