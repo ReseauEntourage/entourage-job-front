@@ -38,7 +38,7 @@ const Button = ({
       classBuffer += ` uk-button-${style}`;
     }
     if (size) classBuffer += ` uk-button-${size}`;
-    if (disabled) classBuffer += 'uk-button-disabled';
+    if (disabled) classBuffer += ' uk-button-disabled';
   }
 
   if (className) classBuffer += ` ${className}`;
