@@ -14,6 +14,8 @@ import InterviewIcon from 'public/static/img/icons/aider-interview.svg';
 import BoiteOutilsIcon from 'public/static/img/icons/aider-boite-outils.svg';
 import { Container } from 'src/components/utils/containers';
 import uuid from 'uuid/v4';
+import { fbEvent } from 'src/lib/fb';
+import { FB_TAGS } from 'src/constants/tags';
 
 const pictoContent = [
   {
@@ -82,6 +84,9 @@ const CoachContainer = () => {
             href={process.env.AIRTABLE_LINK_BECOME_COACH}
             newTab
             isExternal
+            onClick={() => {
+              fbEvent(FB_TAGS.COACH_REGISTRATION_OPEN);
+            }}
             style="primary"
           >
             Devenir Coach LinkedOut&nbsp;

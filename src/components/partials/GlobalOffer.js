@@ -1,8 +1,9 @@
 import React from 'react';
 import { gaEvent } from 'src/lib/gtag';
-import { GA_TAGS } from 'src/constants/tags';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { openModal } from 'src/components/modals/Modal';
 import usePostPublicOfferModal from 'src/components/modals/usePostPublicOfferModal';
+import { fbEvent } from 'src/lib/fb';
 
 const GlobalOffer = () => {
   const PublicOfferModal = usePostPublicOfferModal();
@@ -18,6 +19,7 @@ const GlobalOffer = () => {
         style={{ textDecoration: 'underline' }}
         onClick={() => {
           gaEvent(GA_TAGS.PAGE_RECRUTER_DEPOSER_OFFRE_CLIC);
+          fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER_OPEN);
           openModal(<PublicOfferModal />);
         }}
       >

@@ -53,7 +53,7 @@ const CandidateContactModal = () => {
         try {
           await Api.postContactCandidate(fields);
           gaEvent(GA_TAGS.PAGE_ORIENTER_ENVOYER_INSCRIPTION_CLIC);
-          fbEvent(FB_TAGS.SOCIAL_WORKER_REGISTRATION);
+          fbEvent(FB_TAGS.SOCIAL_WORKER_REGISTRATION_SEND);
           closeModal();
           UIkit.notification(
             "Merci d'avoir répondu à ce formulaire !\nNous revenons le plus rapidement possible vers vous pour convenir d'un échange.",

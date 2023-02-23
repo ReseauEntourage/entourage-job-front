@@ -188,6 +188,7 @@ const CVFiche = ({ cv, actionDisabled }) => {
           style="secondary"
           onClick={() => {
             gaEvent(GA_TAGS.PAGE_CV_CONTACTEZ_MOI_CLIC);
+            fbEvent(FB_TAGS.COMPANY_CV_OFFER_OPEN);
             openModal(<PostOpportunityModal />);
           }}
         >
