@@ -14,6 +14,8 @@ import {
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { GA_TAGS } from 'src/constants/tags';
 
+const adminQueryFilters = OPPORTUNITY_FILTERS_DATA.slice(0, -1);
+
 const LesOpportunites = () => {
   const {
     isReady,
@@ -25,7 +27,7 @@ const LesOpportunites = () => {
   const [loadingDefaultFilters, setLoadingDefaultFilters] = useState(true);
 
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
-    OPPORTUNITY_FILTERS_DATA,
+    adminQueryFilters,
     '/backoffice/admin/offres',
     ['offerId'],
     GA_TAGS.BACKOFFICE_ADMIN_SUPPRIMER_FILTRES_CLIC
