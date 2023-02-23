@@ -5,6 +5,7 @@ import Api from 'src/api/index.ts';
 import { EVENT_TYPES } from 'src/constants';
 import UIkit from 'uikit';
 import { PropTypes } from 'prop-types';
+import moment from 'moment';
 
 export const InterviewDateModel = ({
   opportunityId,
@@ -19,6 +20,7 @@ export const InterviewDateModel = ({
       formId="update-to-hired-datepicker"
       submitText="Valider la date d'entretien"
       cancelText="Je n’ai pas encore de date d'entretien"
+      defaultValues={{ datepicker: moment().format('YYYY-MM-DD') }}
       onSubmit={async ({ datepicker }, closeModal) => {
         try {
           await Api.postOpportunityUserEvent(opportunityId, candidateId, {
