@@ -6,14 +6,17 @@ import axios, {
 import _ from 'lodash';
 import { addAxiosInterceptors } from './interceptor';
 import {
-  ContactCandidate,
+  APIRoute,
   ContactCompany,
   ContactContactUs,
+  ContactCandidate,
   ContactNewsletter,
   ExternalOpportunity,
   Opportunity,
   OpportunityJoin,
+  OpportunityUserEvent,
   PutCandidate,
+  Route,
   SocialMedia,
   User,
 } from './types';
@@ -48,8 +51,8 @@ class APIHandler {
     return this.api.get(route, { ...query, ...{ headers } });
   }
 
-  private post(
-    route: string,
+  private post<T extends APIRoute>(
+    route: Route<T>,
     payload: object,
     headers?: AxiosRequestHeaders
   ): Promise<AxiosResponse> {
@@ -251,6 +254,12 @@ class APIHandler {
     return this.get(`/opportunity/${opportunityId}`);
   }
 
+  getOpportunitiesTabCountByCandidate(
+    candidateId: string
+  ): Promise<AxiosResponse> {
+    return this.get(`/opportunity/candidate/tabCount/${candidateId}`);
+  }
+
   // post
 
   postOpportunity(params: Opportunity): Promise<AxiosResponse> {
@@ -263,6 +272,22 @@ class APIHandler {
 
   postJoinOpportunity(params: object): Promise<AxiosResponse> {
     return this.post('/opportunity/join', params);
+  }
+
+  postOpportunityUserEvent(
+    opportunityId,
+    candidateId,
+    event: OpportunityUserEvent
+  ) {
+    return this.post('/opportunity/event', {
+      opportunityId,
+      candidateId,
+      ...event,
+    });
+  }
+
+  postOpportunityContactEmployer(params: object): Promise<AxiosResponse> {
+    return this.post('/opportunity/contactEmployer', params);
   }
 
   // put
@@ -302,6 +327,13 @@ class APIHandler {
 
   putBulkOpportunities(params: object): Promise<AxiosResponse> {
     return this.put('/opportunity/bulk', params);
+  }
+
+  putOpportunityUserEvent(
+    eventId: string,
+    event: Partial<OpportunityUserEvent>
+  ) {
+    return this.put(`/opportunity/event/${eventId}`, event);
   }
 
   /// //////

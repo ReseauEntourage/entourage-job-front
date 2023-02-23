@@ -18,7 +18,7 @@ Icon.propTypes = {
   ratio: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   className: PropTypes.string,
   flip: PropTypes.bool,
-  style: PropTypes.shape(),
+  style: PropTypes.shape({}),
 };
 Icon.defaultProps = {
   className: '',

@@ -15,7 +15,7 @@ const Timeline = ({ items }) => {
         return (
           <div key={index}>
             <div
-              uk-scrollspy={`cls:uk-animation-slide-right; delay: ${
+              data-uk-scrollspy={`cls:uk-animation-slide-right; delay: ${
                 200 + index * 200
               };`}
               className="uk-margin-medium-right uk-visible@m uk-flex uk-flex-column uk-flex-middle"
@@ -36,7 +36,7 @@ const Timeline = ({ items }) => {
             </div>
             <div
               className="uk-hidden@m"
-              uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;"
+              data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;"
             >
               <div className="ent-timeline-arrow ent-timeline-arrow-mobile">
                 <div className="ent-timeline-number ent-timeline-number-mobile">

@@ -31,7 +31,7 @@ export const Chapter = ({
           }`}
         >
           <div
-            uk-scrollspy={
+            data-uk-scrollspy={
               animate
                 ? `cls:uk-animation-slide-${
                     direction === 'left' ? 'right' : 'left'
@@ -56,7 +56,7 @@ export const Chapter = ({
           {imgSrc && (
             <div
               className="uk-flex uk-flex-center uk-flex-middle"
-              uk-scrollspy="cls:uk-animation-fade; delay: 200;"
+              data-uk-scrollspy="cls:uk-animation-fade; delay: 200;"
             >
               <Img
                 src={imgSrc}

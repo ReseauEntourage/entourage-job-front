@@ -2,7 +2,7 @@ import UIkit from 'uikit';
 
 import React, { useContext, useEffect, useState } from 'react';
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
-import { UserContext } from 'src/components/store/UserProvider';
+import { UserContext } from 'src/store/UserProvider';
 import { Card, Grid, Section } from 'src/components/utils';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
@@ -18,7 +18,7 @@ import UserInformationCard from 'src/components/cards/UserInformationCard';
 import { mutateFormSchema } from 'src/utils';
 import _ from 'lodash';
 import CandidateEmployedToggle from 'src/components/backoffice/candidate/CandidateEmployedToggle';
-import ContractLabel from 'src/components/backoffice/candidate/ContractLabel';
+import ContractLabel from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
 import PasswordCriterias from 'src/components/PasswordCriterias';

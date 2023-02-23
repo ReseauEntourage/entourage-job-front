@@ -167,10 +167,57 @@ export const AMBITIONS_PREFIXES = [
   },
 ];
 
-export const OFFER_CANDIDATE_FILTERS_DATA = [
-  { tag: 'private', title: 'Offres personnelles', active: true },
-  { tag: 'public', title: 'Offres générales' },
-  { tag: 'archived', title: 'Offres archivées' },
+export const CONTRACTS = [
+  {
+    label: 'CDI',
+    value: 'cdi',
+    end: false,
+  },
+  {
+    label: 'CDD + de 6 mois',
+    value: 'cdd+6',
+    end: true,
+  },
+  {
+    label: 'CDD - de 6 mois',
+    value: 'cdd-6',
+    end: true,
+  },
+  {
+    label: "Contrat d'insertion",
+    value: 'cddi',
+    end: true,
+  },
+  {
+    label: 'Alternance',
+    value: 'alt',
+    end: true,
+  },
+  {
+    label: 'Intérim',
+    value: 'inte',
+    end: true,
+  },
+  {
+    label: 'Stage',
+    value: 'stage',
+    end: true,
+  },
+  {
+    label: 'Formation certifiante',
+    value: 'form',
+    end: true,
+  },
+  {
+    label: "Période d'immersion (PMSMP)",
+    value: 'pmsmp',
+    end: true,
+  },
+  {
+    label: 'Autre',
+    value: 'other',
+    end: true,
+  },
 ];
 
 export const OFFER_ADMIN_FILTERS_DATA = [
@@ -243,6 +290,12 @@ export const OPPORTUNITY_FILTERS_DATA = [
     title: 'Métiers',
     tag: GA_TAGS.BACKOFFICE_OFFRES_FILTRE_SECTEUR_CLIC,
   },
+  {
+    key: 'contracts',
+    constants: CONTRACTS,
+    title: 'Type de contrat',
+    tag: GA_TAGS.BACKOFFICE_OFFRES_FILTRE_CONTRAT_CLIC,
+  },
 ];
 
 export const MEMBER_FILTERS_DATA = [
@@ -308,59 +361,6 @@ export const ADMIN_ROLES = {
   CANDIDATES: 'Candidats',
   COMPANIES: 'Entreprises',
 };
-
-export const CONTRACTS = [
-  {
-    label: 'CDI',
-    value: 'cdi',
-    end: false,
-  },
-  {
-    label: 'CDD + de 6 mois',
-    value: 'cdd+6',
-    end: true,
-  },
-  {
-    label: 'CDD - de 6 mois',
-    value: 'cdd-6',
-    end: true,
-  },
-  {
-    label: "Contrat d'insertion",
-    value: 'cddi',
-    end: true,
-  },
-  {
-    label: 'Alternance',
-    value: 'alt',
-    end: true,
-  },
-  {
-    label: 'Intérim',
-    value: 'inte',
-    end: true,
-  },
-  {
-    label: 'Stage',
-    value: 'stage',
-    end: true,
-  },
-  {
-    label: 'Formation certifiante',
-    value: 'form',
-    end: true,
-  },
-  {
-    label: "Période d'immersion (PMSMP)",
-    value: 'pmsmp',
-    end: true,
-  },
-  {
-    label: 'Autre',
-    value: 'other',
-    end: true,
-  },
-];
 
 export const EXTERNAL_OFFERS_ORIGINS = [
   {
@@ -787,6 +787,53 @@ export const CANDIDATE_YES_NO_FILTERS = [
   {
     value: CANDIDATE_YES_NO.NO,
     label: 'Non',
+  },
+];
+
+export const EVENT_TYPES = {
+  CONTACT: 'contact',
+  FOLLOWUP: 'followup',
+  INTERVIEW: 'interview',
+  TRIAL: 'trial',
+  PMSMP: 'pmsmp',
+  HIRING: 'hiring',
+  END: 'end',
+};
+
+export const EVENT_TYPE_MAPPING = {
+  [OFFER_STATUS[1].value]: EVENT_TYPES.CONTACT,
+  [OFFER_STATUS[2].value]: EVENT_TYPES.INTERVIEW,
+  [OFFER_STATUS[3].value]: EVENT_TYPES.HIRING,
+};
+
+export const EVENT_TYPES_FILTERS = [
+  {
+    label: 'Contacté le',
+    value: EVENT_TYPES.CONTACT,
+  },
+  {
+    label: 'Relancé le',
+    value: EVENT_TYPES.FOLLOWUP,
+  },
+  {
+    label: 'Entretien le',
+    value: EVENT_TYPES.INTERVIEW,
+  },
+  {
+    label: "Période d'essai le",
+    value: EVENT_TYPES.TRIAL,
+  },
+  {
+    label: 'PMSMP le',
+    value: EVENT_TYPES.PMSMP,
+  },
+  {
+    label: 'Embauché le',
+    value: EVENT_TYPES.HIRING,
+  },
+  {
+    label: 'Arrêt de contrat le',
+    value: EVENT_TYPES.END,
   },
 ];
 

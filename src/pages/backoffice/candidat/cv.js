@@ -1,16 +1,16 @@
-import UIkit from 'uikit';
 import React, { useContext, useEffect, useState } from 'react';
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
-import Api from 'src/api/index.ts';
 import { Section } from 'src/components/utils';
 import CVEditWelcome from 'src/components/cv/CVEditWelcome';
-import { UserContext } from 'src/components/store/UserProvider';
 import CVPageContent from 'src/components/backoffice/cv/CVPageContent';
 import { USER_ROLES } from 'src/constants';
 import ErrorMessage from 'src/components/backoffice/cv/ErrorMessage';
 import { useFetchCV } from 'src/hooks/useFetchCV';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { getCandidateIdFromCoachOrCandidate, getRelatedUser } from 'src/utils';
+import Api from 'src/api/index.ts';
+import { UserContext } from 'src/store/UserProvider';
+import UIkit from 'uikit';
 
 const Edit = () => {
   const { user } = useContext(UserContext);

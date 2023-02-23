@@ -12,20 +12,20 @@ const Carousel = ({
   pagination,
   padding,
 }) => {
-  const router = useRouter();
+  const { asPath } = useRouter();
 
   let tag;
 
-  if (router.asPath.includes('/recruter')) {
+  if (asPath.includes('/recruter')) {
     tag = GA_TAGS.PAGE_RECRUTER_CARROUSEL_CLIC;
   }
-  if (router.asPath.includes('/travailler')) {
+  if (asPath.includes('/travailler')) {
     tag = GA_TAGS.PAGE_TRAVAILLER_CARROUSEL_CLIC;
   }
-  if (router.asPath.includes('/orienter')) {
+  if (asPath.includes('/orienter')) {
     tag = GA_TAGS.PAGE_ORIENTER_CARROUSEL_CLIC;
   }
-  if (router.asPath.includes('/entreprises')) {
+  if (asPath.includes('/entreprises')) {
     tag = GA_TAGS.PAGE_ENTREPRISES_CARROUSEL_CLIC;
   }
 
@@ -49,7 +49,7 @@ const Carousel = ({
         <a
           href="#"
           className="uk-position-center-left uk-position-small"
-          uk-slider-item="previous"
+          data-uk-slider-item="previous"
           onClick={() => {
             if (tag) {
               gaEvent(tag);
@@ -65,7 +65,7 @@ const Carousel = ({
         <a
           href="#"
           className="uk-position-center-right uk-position-small"
-          uk-slider-item="next"
+          data-uk-slider-item="next"
           onClick={() => {
             if (tag) {
               gaEvent(tag);
@@ -83,7 +83,7 @@ const Carousel = ({
         <a
           href="#"
           className="uk-position-center-left-out uk-position-small"
-          uk-slider-item="previous"
+          data-uk-slider-item="previous"
           onClick={() => {
             if (tag) {
               gaEvent(tag);
@@ -99,7 +99,7 @@ const Carousel = ({
         <a
           href="#"
           className="uk-position-center-right-out uk-position-small"
-          uk-slider-item="next"
+          data-uk-slider-item="next"
           onClick={() => {
             if (tag) {
               gaEvent(tag);

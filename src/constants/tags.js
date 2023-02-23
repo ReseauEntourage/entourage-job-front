@@ -287,6 +287,9 @@ const GA_TAGS = {
   BACKOFFICE_OFFRES_FILTRE_SECTEUR_CLIC: {
     action: 'Backoffice_Offres_Filtre_Secteur_Clic',
   },
+  BACKOFFICE_OFFRES_FILTRE_CONTRAT_CLIC: {
+    action: 'Backoffice_Offres_Filtre_Contrat_Clic',
+  },
   BACKOFFICE_MEMBERS_FILTRE_ZONE_CLIC: {
     action: 'Backoffice_Members_Filtre_Zone_Clic',
   },
@@ -307,6 +310,12 @@ const GA_TAGS = {
   },
   BACKOFFICE_CANDIDAT_HEADER_OFFRES_CLIC: {
     action: 'Backoffice_Candidat_Header_Offres_Clic',
+  },
+  BACKOFFICE_CANDIDAT_HEADER_OFFRES_GENERALES_CLIC: {
+    action: 'Backoffice_Candidat_Header_Offres_Generales_Clic',
+  },
+  BACKOFFICE_CANDIDAT_HEADER_MES_OFFRES_CLIC: {
+    action: 'Backoffice_Candidat_Header_Mes_Offres_Clic',
   },
   BACKOFFICE_CANDIDAT_HEADER_SUIVI_CLIC: {
     action: 'Backoffice_Candidat_Header_Suivi_Clic',

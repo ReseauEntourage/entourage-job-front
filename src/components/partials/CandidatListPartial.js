@@ -4,7 +4,7 @@ import { Grid, Section } from 'src/components/utils';
 import CVList from 'src/components/cv/CVList';
 import Button from 'src/components/utils/Button';
 import { INITIAL_NB_OF_CV_TO_DISPLAY } from 'src/constants';
-import { SharesCountContext } from 'src/components/store/SharesCountProvider';
+import { SharesCountContext } from 'src/store/SharesCountProvider';
 import { IconNoSSR } from 'src/components/utils/Icon';
 
 const CandidatListPartial = () => {

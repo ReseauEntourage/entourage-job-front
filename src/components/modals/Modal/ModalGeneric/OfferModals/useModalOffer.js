@@ -7,6 +7,10 @@ function useModalOffer(currentOffer) {
   const [offer, setOffer] = useState(currentOffer);
 
   useEffect(() => {
+    setOffer(currentOffer);
+  }, [currentOffer]);
+
+  useEffect(() => {
     setIsEditing(false);
   }, [offer]);
 

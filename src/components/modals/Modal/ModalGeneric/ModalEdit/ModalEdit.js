@@ -13,15 +13,16 @@ const ModalEdit = ({
   defaultValues,
   onSubmit,
   submitText,
+  cancelText,
   onError,
   formId,
 }) => {
   const { onClose } = useModalContext();
-
   return (
     <ModalGeneric title={title} description={description}>
       <FormWithValidation
         submitText={submitText}
+        cancelText={cancelText}
         formSchema={formSchema}
         defaultValues={defaultValues}
         onCancel={onClose}
@@ -39,20 +40,29 @@ ModalEdit.propTypes = {
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]).isRequired,
   formSchema: PropTypes.shape({
     id: PropTypes.string,
-    fields: PropTypes.arrayOf(PropTypes.object),
-    rules: PropTypes.arrayOf(PropTypes.object),
+    fields: PropTypes.arrayOf(PropTypes.shape({})),
+    rules: PropTypes.arrayOf(PropTypes.shape({})),
   }).isRequired,
   onSubmit: PropTypes.func.isRequired,
   onError: PropTypes.func,
-  defaultValues: PropTypes.objectOf(PropTypes.any),
+  defaultValues: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.shape({})),
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.shape({}),
+      PropTypes.string,
+    ])
+  ),
   description: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   submitText: PropTypes.string,
+  cancelText: PropTypes.string,
   formId: PropTypes.string,
 };
 ModalEdit.defaultProps = {
   defaultValues: {},
   description: undefined,
   submitText: 'Sauvegarder',
+  cancelText: 'Annuler',
   formId: '',
   onError: () => {},
 };

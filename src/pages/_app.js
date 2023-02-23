@@ -8,7 +8,6 @@ import 'src/styles/dist/css/uikit.entourage.min.css';
 import 'src/styles/styles.less';
 import 'src/components/forms/Forms.less';
 import 'src/components/backoffice/Toggle.less';
-import 'src/components/headers/Header.less';
 import 'src/components/modals/Modal/Modal.less';
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 import 'react-phone-number-input/style.css';
@@ -16,10 +15,10 @@ import 'react-phone-number-input/style.css';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import * as Sentry from '@sentry/react';
-import UserProvider from 'src/components/store/UserProvider';
-import DataProvider from 'src/components/store/DataProvider';
+import UserProvider from 'src/store/UserProvider';
+import DataProvider from 'src/store/DataProvider';
 
-import SharesCountProvider from 'src/components/store/SharesCountProvider';
+import SharesCountProvider from 'src/store/SharesCountProvider';
 
 import * as gtag from 'src/lib/gtag';
 import SplashScreen from 'src/components/SplashScreen';
@@ -43,6 +42,7 @@ const Container = ({ Component, pageProps, err }) => {
     events.on('routeChangeComplete', (url) => {
       gtag.pageview(url);
     });
+
     setTimeout(() => {
       setFading(true);
     }, 1000);

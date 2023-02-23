@@ -2,7 +2,7 @@
 
 ## Modules principaux & versions
 
-> Node 14.x.x
+> Node 16.x.x
 
 > React 17.0.2
 
@@ -66,7 +66,7 @@ npm install
 #### Lancement en en mode développement
 
 ```
-npm run dev
+yarn dev
 ```
 
 ### Lancement en mode production
@@ -74,15 +74,15 @@ npm run dev
 (pour le moment sans Docker)
 
 ```
-npm run build
+yarn build
 npm start
 ```
 
 ### Prettier + Linter
 
 ```
-npm run lint
-npm run format
+yarn lint
+yarn format
 ```
 
 avec docker, précéder chaque commande par "docker exec front ${cmd}"
@@ -92,7 +92,7 @@ Ces deux commandes sont lancées par les hooks de commit
 ### Storybook
 
 ```
-npm run storybook
+yarn storybook
 ```
 
 ### Tests
@@ -102,13 +102,13 @@ npm run storybook
 La commande pour lancer les tests une fois:
 
 ```
-npm run test
+yarn test
 ```
 
 La commande pour lancer les tests en mode watch:
 
 ```
-npm run test:watch
+yarn test:watch
 ```
 
 Si vous souhaitez obtenir le code coverage:
@@ -120,7 +120,7 @@ npx jest --coverage
 Un dossier coverage sera créé. Afin de pouvoir le consulter dans le navigateur:
 
 ```
-npm run posttest:cov
+yarn posttest:cov
 ```
 
 #### tests End to End - Cypress
@@ -134,7 +134,7 @@ npx run cypress
 Pour obtenir la vidéo des tests sur cypress.io, utilisez la commande suivante:
 
 ```
-npm run cypress:io
+yarn cypress:io
 ```
 
 ### Fichier .env minimal
@@ -189,19 +189,19 @@ Après avoir modifié les fichiers du thème, ou après avoir rajouté un icône
 - Installer d'abord **_UIkit_** au sein de son propre module :
 
 ```
-npm run uikit-install
+yarn uikit-install
 ```
 
 - Si le module est déjà installé, le mettre à jour ;
 
 ```
-npm run uikit-update
+yarn uikit-update
 ```
 
 - Ensuite, compiler les fichiers SCSS en CSS :
 
 ```
-npm run uikit-compile
+yarn uikit-compile
 ```
 
 Les fichiers transformés se retrouvent dans le dossier `/src/styles/dist`.

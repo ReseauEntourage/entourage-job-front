@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactSelect, { components } from 'react-select';
+import AsyncSelectNew from 'src/components/utils/Inputs/SelectAsync';
 import AsyncSelect from 'react-select/async';
 import PropTypes from 'prop-types';
 import CreatableSelect from 'react-select/creatable';
@@ -12,6 +13,13 @@ import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMe
 import { SimpleLink } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
 import PhoneInput from 'src/components/forms/fields/PhoneInput';
+import { StyledFormHeading } from 'src/components/forms/Forms.styles';
+
+import CheckBoxNew from 'src/components/utils/Inputs/Checkbox';
+import { useCheckbox } from 'src/components/utils/Inputs/Checkbox/useCheckbox';
+import SelectNew from 'src/components/utils/Inputs/Select';
+import TextareaNew from 'src/components/utils/Inputs/TextArea';
+import TextInputNew from 'src/components/utils/Inputs/TextInput';
 
 let debounceTimeoutId;
 
@@ -37,6 +45,8 @@ const GenericField = ({
     }
     onChange(events);
   };
+
+  const { checked, handleCheckBox } = useCheckbox(() => {}, null, data.checked);
 
   const parseValueToReturnSelect = (event) => {
     onChangeCustom({
@@ -102,6 +112,18 @@ const GenericField = ({
       );
     }
 
+    case 'text-input': {
+      return (
+        <TextInputNew
+          title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
+          onChange={onChangeCustom}
+          type={data.type}
+          name={data.name}
+        />
+      );
+    }
+
+    case 'select-new':
     case 'select': {
       let { options } = data;
       if (data.generate) {
@@ -126,9 +148,24 @@ const GenericField = ({
 
       let valueToUse = value;
       if (!valueToUse) valueToUse = options[0].value;
-
+      if (data.component === 'select') {
+        return (
+          <Select
+            id={`${formId}-${data.id}`}
+            placeholder={data.placeholder}
+            name={data.name}
+            title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
+            // value={valueToUse}—
+            options={options}
+            valid={getValid(data.name)}
+            onChange={onChangeCustom}
+            disabled={data.disable ? data.disable(getValue) : data.disabled}
+            hidden={data.hide ? data.hide(getValue) : data.hidden}
+          />
+        );
+      }
       return (
-        <Select
+        <SelectNew
           id={`${formId}-${data.id}`}
           placeholder={data.placeholder}
           name={data.name}
@@ -137,12 +174,22 @@ const GenericField = ({
           options={options}
           valid={getValid(data.name)}
           onChange={onChangeCustom}
-          disabled={data.disable ? data.disable(getValue) : data.disabled}
+          // disabled={data.disable ? data.disable(getValue) : data.disabled}
           hidden={data.hide ? data.hide(getValue) : data.hidden}
         />
       );
     }
 
+    case 'textarea-new': {
+      return (
+        <TextareaNew
+          id={`${formId}-${data.id}`}
+          name={data.name}
+          onChange={onChangeCustom}
+          title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
+        />
+      );
+    }
     case 'textarea': {
       return (
         <Textarea
@@ -158,6 +205,29 @@ const GenericField = ({
           disabled={data.disable ? data.disable(getValue) : data.disabled}
           hidden={data.hide ? data.hide(getValue) : data.hidden}
           maxLength={data.maxLength}
+        />
+      );
+    }
+    case 'checkbox-new': {
+      return (
+        <CheckBoxNew
+          handleClick={() => {
+            handleCheckBox();
+            onChangeCustom({
+              target: {
+                name: data.name,
+                type: 'checkbox',
+                value: !checked, // opposite of the previous value
+                checked,
+              },
+            });
+          }}
+          disabled={data.disable ? data.disable(getValue) : data.disabled}
+          checked={checked}
+          value={checked}
+          name={data.name}
+          id={data.id}
+          title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
         />
       );
     }
@@ -230,6 +300,56 @@ const GenericField = ({
             </label>
           )}
           <AsyncSelect
+            id={`${formId}-${data.id}`}
+            cacheOptions={
+              data.cacheOptions === undefined ? true : data.cacheOptions
+            }
+            isClearable
+            defaultOptions
+            value={valueToUse}
+            isMulti={data.isMulti}
+            placeholder={data.placeholder || 'Sélectionnez...'}
+            noOptionsMessage={
+              data.noOptionsMessage ||
+              (() => {
+                return `Aucun résultat`;
+              })
+            }
+            loadOptions={(inputValue, callback) => {
+              clearTimeout(debounceTimeoutId);
+              debounceTimeoutId = setTimeout(() => {
+                return data.loadOptions(inputValue, callback, getValue);
+              }, 1000);
+            }}
+            isDisabled={data.disable ? data.disable(getValue) : false}
+            isHidden={data.hide ? data.hide(getValue) : false}
+            onChange={parseValueToReturnSelect}
+            openMenuOnClick={data.openMenuOnClick ?? true}
+          />
+          <FormValidatorErrorMessage validObj={getValid(data.name)} />
+        </div>
+      );
+    }
+    case 'select-request-async-new': {
+      let valueToUse = null;
+      if (value) {
+        if (data.isMulti) {
+          valueToUse = value.every((v) => {
+            return typeof v === 'object';
+          })
+            ? value
+            : getValue(value);
+        } else {
+          valueToUse = typeof value === 'string' ? getValue(value) : value;
+        }
+      }
+
+      // const shouldHide = data.hide ? data.hide(getValue) : data.hidden;
+
+      return (
+        // !!! to be finished !!! //
+        <div>
+          <AsyncSelectNew
             id={`${formId}-${data.id}`}
             cacheOptions={
               data.cacheOptions === undefined ? true : data.cacheOptions
@@ -360,11 +480,7 @@ const GenericField = ({
     }
 
     case 'heading': {
-      return (
-        <p className="uk-heading-divider uk-margin-top uk-margin-remove-bottom">
-          {data.title}
-        </p>
-      );
+      return <StyledFormHeading>{data.title}</StyledFormHeading>;
     }
     case 'text': {
       return (
@@ -379,7 +495,14 @@ const GenericField = ({
 };
 
 GenericField.propTypes = {
-  data: PropTypes.objectOf(PropTypes.any).isRequired,
+  data: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.shape({})),
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.shape({}),
+      PropTypes.string,
+    ])
+  ).isRequired,
   formId: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([
     PropTypes.bool,

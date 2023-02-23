@@ -31,15 +31,20 @@ const Button = ({
   if (visible) classBuffer += ` uk-visible@${visible}`;
   if (style && style.includes('custom')) {
     classBuffer = style;
-  } else if (style) {
-    classBuffer += ` uk-button-${style}`;
+    if (size) classBuffer += ` ${size}`;
+    if (disabled) classBuffer += ' disabled';
+  } else {
+    if (style) {
+      classBuffer += ` uk-button-${style}`;
+    }
+    if (size) classBuffer += ` uk-button-${size}`;
+    if (disabled) classBuffer += 'uk-button-disabled';
   }
-  if (size) classBuffer += ` uk-button-${size}`;
+
   if (className) classBuffer += ` ${className}`;
   widths.forEach((width) => {
     classBuffer += ` uk-width-${width}`;
   });
-  if (disabled) classBuffer += ' disabled';
 
   const buttonComponent = (
     <StyledButton
@@ -78,11 +83,16 @@ Button.propTypes = {
   ]).isRequired,
   href: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.shape({ pathname: PropTypes.string, query: PropTypes.shape() }),
+    PropTypes.shape({ pathname: PropTypes.string, query: PropTypes.shape({}) }),
   ]),
   disabled: PropTypes.bool,
   visible: PropTypes.oneOf(UIKIT_SCREENS),
-  style: PropTypes.oneOf(['custom-secondary', ...UIKIT_BUTTON_STYLES_SPEC]),
+  style: PropTypes.oneOf([
+    'custom-secondary',
+    'custom-primary',
+    'custom-primary-inverted',
+    ...UIKIT_BUTTON_STYLES_SPEC,
+  ]),
   size: PropTypes.oneOf(UIKIT_BUTTON_SIZES),
   widths: PropTypes.arrayOf(PropTypes.string), // UIKIT_WIDTH_SCREENS
   isExternal: PropTypes.bool,
@@ -95,6 +105,7 @@ Button.propTypes = {
   dataTestId: PropTypes.string,
   color: PropTypes.string,
 };
+
 Button.defaultProps = {
   disabled: false,
   shallow: false,

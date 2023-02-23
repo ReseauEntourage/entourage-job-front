@@ -7,21 +7,17 @@ import Pusher from 'pusher-js';
 import Api from 'src/api/index.ts';
 import { Button, Grid } from 'src/components/utils';
 import { CVBackground, CVFiche, CVFicheEdition } from 'src/components/cv';
-import { UserContext } from 'src/components/store/UserProvider';
+import { UserContext } from 'src/store/UserProvider';
 import ButtonPost from 'src/components/backoffice/cv/ButtonPost';
 
-import {
-  AMBITIONS_PREFIXES,
-  CV_STATUS,
-  SOCKETS,
-  USER_ROLES,
-} from 'src/constants';
+import { CV_STATUS, SOCKETS, USER_ROLES } from 'src/constants';
 import NoCV from 'src/components/backoffice/cv/NoCV';
 import ButtonDownload from 'src/components/backoffice/cv/ButtonDownload';
 import { openModal, useModalContext } from 'src/components/modals/Modal';
 import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
 import { usePrevious } from 'src/hooks/utils';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
+import { CVShape } from 'src/components/cv/CV.shape';
 
 const pusher = new Pusher(process.env.PUSHER_API_KEY, {
   cluster: 'eu',
@@ -49,75 +45,7 @@ const ModalPreview = ({ imageUrl, cv }) => {
 };
 
 ModalPreview.propTypes = {
-  cv: PropTypes.shape({
-    catchphrase: PropTypes.string,
-    story: PropTypes.string,
-    locations: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    availability: PropTypes.string,
-    urlImg: PropTypes.string,
-    contracts: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    ambitions: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        order: PropTypes.number.isRequired,
-        prefix: PropTypes.oneOf(
-          AMBITIONS_PREFIXES.map(({ value }) => {
-            return value;
-          })
-        ),
-      })
-    ),
-    businessLines: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        order: PropTypes.number.isRequired,
-      })
-    ).isRequired,
-    languages: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    transport: PropTypes.string,
-    skills: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    passions: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    reviews: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        text: PropTypes.string.isRequired,
-        status: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    experiences: PropTypes.arrayOf(
-      PropTypes.shape({
-        description: PropTypes.string.isRequired,
-        skills: PropTypes.arrayOf(
-          PropTypes.shape({
-            name: PropTypes.string.isRequired,
-          })
-        ).isRequired,
-      })
-    ).isRequired,
-    status: PropTypes.string,
-    UserId: PropTypes.string,
-    profileImageObjectUrl: PropTypes.string,
-  }).isRequired,
+  cv: CVShape.isRequired,
   imageUrl: PropTypes.string.isRequired,
 };
 
@@ -453,86 +381,7 @@ const CVPageContent = ({ candidateId, cv, setCV }) => {
 
 CVPageContent.propTypes = {
   candidateId: PropTypes.string.isRequired,
-  cv: PropTypes.shape({
-    user: PropTypes.shape({
-      candidat: PropTypes.shape({
-        firstName: PropTypes.string.isRequired,
-        lastName: PropTypes.string.isRequired,
-        email: PropTypes.string.isRequired,
-        phone: PropTypes.string.isRequired,
-        address: PropTypes.string.isRequired,
-        zone: PropTypes.string.isRequired,
-      }).isRequired,
-    }).isRequired,
-    catchphrase: PropTypes.string,
-    story: PropTypes.string,
-    locations: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    availability: PropTypes.string,
-    urlImg: PropTypes.string,
-    contracts: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    ambitions: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        order: PropTypes.number.isRequired,
-        prefix: PropTypes.oneOf(
-          AMBITIONS_PREFIXES.map(({ value }) => {
-            return value;
-          })
-        ),
-      })
-    ),
-    businessLines: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        order: PropTypes.number.isRequired,
-      })
-    ).isRequired,
-    languages: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    transport: PropTypes.string,
-    skills: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    passions: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    reviews: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        text: PropTypes.string.isRequired,
-        status: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    experiences: PropTypes.arrayOf(
-      PropTypes.shape({
-        description: PropTypes.string.isRequired,
-        skills: PropTypes.arrayOf(
-          PropTypes.shape({
-            name: PropTypes.string.isRequired,
-          })
-        ).isRequired,
-      })
-    ).isRequired,
-    status: PropTypes.string,
-    version: PropTypes.number,
-    UserId: PropTypes.string,
-    profileImage: PropTypes.string,
-  }),
+  cv: CVShape,
   setCV: PropTypes.func.isRequired,
 };
 

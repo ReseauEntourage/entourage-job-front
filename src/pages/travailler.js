@@ -45,7 +45,7 @@ const Travailler = () => {
         <div className="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
           <h4
             className="uk-align-center uk-text-center"
-            uk-scrollspy="cls:uk-animation-slide-bottom; target: > span; delay: 200;"
+            data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > span; delay: 200;"
           >
             <span>
               LinkedOut vous propose{' '}

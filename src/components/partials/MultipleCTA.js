@@ -15,7 +15,7 @@ const MultipleCTA = ({
   animate,
 }) => {
   return (
-    <div uk-height-match="target : h4, .text" className={className}>
+    <div data-uk-height-match="target : h4, .text" className={className}>
       <Grid
         childWidths={[`1-${data.length}@m`]}
         match
@@ -24,7 +24,7 @@ const MultipleCTA = ({
         items={data.map((item, index) => {
           return (
             <div
-              uk-scrollspy={
+              data-uk-scrollspy={
                 animate
                   ? `cls: uk-animation-slide-${
                       index % 2 === 0 ? 'bottom' : 'top'

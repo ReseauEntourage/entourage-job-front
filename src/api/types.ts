@@ -1,5 +1,17 @@
 export type SocialMedia = 'facebook' | 'linkedin' | 'twitter';
 
+export const APIRoutes = {
+  USERS: 'user',
+  AUTH: 'auth',
+  OPPORTUNITIES: 'opportunity',
+  CONTACTS: 'contact',
+  CVS: 'cv',
+} as const;
+
+export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
+
+export type Route<T extends APIRoute> = `/${T}/${string}` | `/${T}`;
+
 export type User = {
   firstName: string;
   lastName: string;
@@ -77,6 +89,13 @@ export type ExternalOpportunity = {
   date: string;
   candidateId: string;
   status: string;
+};
+
+export type OpportunityUserEvent = {
+  startDate: Date;
+  endDate: Date;
+  type: string;
+  contract: { name: string };
 };
 
 export type OpportunityJoin = {

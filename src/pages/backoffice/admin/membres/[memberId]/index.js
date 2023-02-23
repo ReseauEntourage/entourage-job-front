@@ -21,7 +21,7 @@ import {
 } from 'src/utils';
 import AdminCandidateOpportunities from 'src/components/opportunities/AdminCandidateOpportunities';
 import CandidateEmployedToggle from 'src/components/backoffice/candidate/CandidateEmployedToggle';
-import ContractLabel from 'src/components/backoffice/candidate/ContractLabel';
+import ContractLabel from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import PropTypes from 'prop-types';
 import { openModal } from 'src/components/modals/Modal';
@@ -181,7 +181,7 @@ EditUserModal.propTypes = {
       USER_ROLES.CANDIDAT,
     ]).isRequired,
     gender: PropTypes.number.isRequired,
-    ...PropTypes.shape(),
+    ...PropTypes.shape({}),
   }).isRequired,
   setUser: PropTypes.func.isRequired,
 };

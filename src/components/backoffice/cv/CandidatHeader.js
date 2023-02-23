@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Grid, SimpleLink } from 'src/components/utils';
-import ImgProfile from 'src/components/headers/ImgProfile';
+import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
 import { USER_ROLES } from 'src/constants';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { getRelatedUser } from 'src/utils';
