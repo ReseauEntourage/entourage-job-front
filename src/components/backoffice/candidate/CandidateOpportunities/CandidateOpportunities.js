@@ -107,7 +107,6 @@ const CandidateOpportunities = ({
 
   const { tabCounts, fetchTabsCount } = useTabsCount();
 
-  const prevOffset = usePrevious(offset);
   const fetchOpportunities = async (shouldFetchAll) => {
     await fetchData(
       candidateId,
@@ -128,12 +127,14 @@ const CandidateOpportunities = ({
   };
 
   useDeepCompareEffect(() => {
-    if (offset !== 0 && offset === prevOffset) {
-      resetOffset();
-    } else if ((offset === 0 || !hasFetchedAll) && filters.status) {
+    if ((offset === 0 || !hasFetchedAll) && filters.status) {
       fetchOpportunities();
     }
   }, [candidateId, fetchData, filters, opportunityType, offset, search]);
+
+  useDeepCompareEffect(() => {
+    resetOffset();
+  }, [candidateId, fetchData, filters, opportunityType, search]);
 
   return (
     <>
