@@ -3,7 +3,11 @@ import CountUp from 'react-countup';
 import { Grid, Section } from 'src/components/utils';
 import CVList from 'src/components/cv/CVList';
 import Button from 'src/components/utils/Button';
-import { INITIAL_NB_OF_CV_TO_DISPLAY } from 'src/constants';
+import {
+  CANDIDATE_GENDERS_FILTERS,
+  CV_FILTERS_DATA,
+  INITIAL_NB_OF_CV_TO_DISPLAY,
+} from 'src/constants';
 import { SharesCountContext } from 'src/store/SharesCountProvider';
 import { IconNoSSR } from 'src/components/utils/Icon';
 
@@ -79,8 +83,27 @@ const CandidatListPartial = () => {
             </span>
             &nbsp;fois&nbsp;!
           </h4>
+          {process.env.WOMENS_DAY && (
+            <h3 className="uk-text-bold">
+              À l&apos;occasion du 8 mars,{' '}
+              <span className="uk-text-italic uk-text-primary">
+                Journée internationale des droits des femmes
+              </span>
+              , on a décidé de mettre à l&apos;honneur nos candidates&nbsp;!
+            </h3>
+          )}
         </div>
-        <CVList hideSearchBar nb={INITIAL_NB_OF_CV_TO_DISPLAY} />
+        <CVList
+          hideSearchBar
+          nb={INITIAL_NB_OF_CV_TO_DISPLAY}
+          filters={
+            process.env.WOMENS_DAY === 'true'
+              ? {
+                  [CV_FILTERS_DATA[3].key]: [CV_FILTERS_DATA[3].constants[1]],
+                }
+              : {}
+          }
+        />
         <Grid middle column gap="collapse">
           <Button
             href={{ pathname: '/candidats', query: { employed: false } }}

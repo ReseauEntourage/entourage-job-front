@@ -19,12 +19,10 @@ const cardsContent = [
     text: "Vous soutenez un candidat individuellement et dans la durée dans sa recherche d'emploi pour booster la rencontre avec les entreprises et son intégration durable dans un nouveau job.",
     cta: 'Devenir coach LinkedOut',
     href: process.env.AIRTABLE_LINK_BECOME_COACH,
-    onClick: () => {
-      fbEvent(FB_TAGS.COACH_REGISTRATION_OPEN);
-    },
     alt: 'Des candidats LinkedOut et une coach',
     newTab: true,
-    tag: GA_TAGS.PAGE_AIDER_INSCRIPTION_COACH_CLIC,
+    gaTag: GA_TAGS.PAGE_AIDER_INSCRIPTION_COACH_CLIC,
+    fbTag: FB_TAGS.COACH_REGISTRATION_OPEN,
   },
   {
     title: 'Partagez les CV des candidats',
@@ -34,7 +32,7 @@ const cardsContent = [
     href: '/candidats?employed=false',
     alt: 'CV de Candidat LinkedOut',
     newTab: false,
-    tag: GA_TAGS.PAGE_AIDER_PARTAGER_CV_CLIC,
+    gaTag: GA_TAGS.PAGE_AIDER_PARTAGER_CV_CLIC,
   },
   {
     title: 'Activez votre réseau pour un candidat',
@@ -44,7 +42,7 @@ const cardsContent = [
     href: 'https://airtable.com/shravv7gRI4c64yzw',
     alt: 'Des connecteurs LinkedOut',
     newTab: true,
-    tag: GA_TAGS.PAGE_AIDER_CONNECTEUR_CLIC,
+    gaTag: GA_TAGS.PAGE_AIDER_CONNECTEUR_CLIC,
   },
   {
     title: 'Soutenez financièrement le projet',
@@ -54,7 +52,7 @@ const cardsContent = [
     href: 'https://entourage.iraiser.eu/linkedout/~mon-don',
     alt: 'Des soutiens du projet LinkedOut rassemblés',
     newTab: true,
-    tag: GA_TAGS.PAGE_AIDER_DON_CLIC,
+    gaTag: GA_TAGS.PAGE_AIDER_DON_CLIC,
   },
 ];
 

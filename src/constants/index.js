@@ -8,6 +8,22 @@ import {
 } from 'src/constants/departements';
 import _ from 'lodash';
 
+export const GENDERS = {
+  MALE: 0,
+  FEMALE: 1,
+};
+
+export const GENDERS_FILTERS = [
+  {
+    label: 'Homme',
+    value: GENDERS.MALE,
+  },
+  {
+    label: 'Femme',
+    value: GENDERS.FEMALE,
+  },
+];
+
 export const OFFER_STATUS = [
   {
     value: -1,
@@ -256,6 +272,11 @@ export const CV_FILTERS_DATA = [
     constants: BUSINESS_LINES,
     title: 'Métiers',
     tag: GA_TAGS.PAGE_GALERIE_FILTRE_SECTEURS_CLIC,
+  },
+  {
+    key: 'gender',
+    constants: GENDERS_FILTERS,
+    title: 'Genre',
   },
 ];
 
