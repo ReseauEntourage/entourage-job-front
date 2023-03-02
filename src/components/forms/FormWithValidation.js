@@ -6,10 +6,11 @@ import React, {
   useState,
 } from 'react';
 import PropTypes from 'prop-types';
-import FooterForm from 'src/components/utils/FooterForm';
+import FooterForm from 'src/components/forms/FooterForm';
 import FormValidator from 'src/components/forms/FormValidator';
 import GenericField from 'src/components/forms/GenericField';
 import FieldGroup from 'src/components/forms/fields/FieldGroup';
+import InputsContainer from 'src/components/forms/fields/InputsContainer';
 import MultipleFields from 'src/components/forms/fields/MultipleFields';
 import { getValueFromFormField } from 'src/utils';
 
@@ -24,6 +25,7 @@ const FormWithValidation = forwardRef(
       formSchema: { id, rules, fields },
       defaultValues,
       submitText,
+      cancelText,
       onSubmit,
       onCancel,
       enterToSubmit,
@@ -59,7 +61,9 @@ const FormWithValidation = forwardRef(
           // TODO replace type select-one
         } else if (type === 'select-one' && selectedIndex === 0) {
           fieldValue = null; // si on est sur le placeholder ( option sans valeur )
-        } else fieldValue = value;
+        } else {
+          fieldValue = value;
+        }
 
         /* Validators start */
         tmpFieldValues[name] = fieldValue;
@@ -83,8 +87,8 @@ const FormWithValidation = forwardRef(
       if (event) event.preventDefault();
       // Vérifie les champs avant soumission
       /* Validators control before submit */
-      const validation = validator.validate(fieldValues);
 
+      const validation = validator.validate(fieldValues);
       const formattedFieldValues = Object.keys(fieldValues).reduce(
         (acc, curr) => {
           return {
@@ -217,6 +221,39 @@ const FormWithValidation = forwardRef(
                   </li>
                 );
               }
+              if (value.component === 'fieldgroup-new') {
+                const {
+                  fields: childrenFields,
+                  title,
+                  id: childrenId,
+                  childWidths,
+                } = value;
+                return (
+                  <li key={i} hidden={!!value.hidden}>
+                    <InputsContainer
+                      id={childrenId}
+                      title={title}
+                      childWidths={childWidths}
+                      fields={childrenFields.map((field) => {
+                        return !field.hidden ? (
+                          <GenericField
+                            data={field}
+                            formId={id}
+                            value={fieldValues[field.id]}
+                            onChange={updateForm}
+                            getValid={(name) => {
+                              return fieldValidations[`valid_${name}`];
+                            }}
+                            getValue={(name) => {
+                              return fieldValues[name];
+                            }}
+                          />
+                        ) : null;
+                      })}
+                    />
+                  </li>
+                );
+              }
               if (value.component === 'multiple-fields') {
                 const {
                   fields: childrenFields,
@@ -271,6 +308,7 @@ const FormWithValidation = forwardRef(
         <FooterForm
           error={error}
           submitText={submitText}
+          cancelText={cancelText}
           onSubmit={submitForm}
           formId={formId}
           onCancel={
@@ -287,22 +325,31 @@ const FormWithValidation = forwardRef(
 );
 
 FormWithValidation.propTypes = {
-  defaultValues: PropTypes.objectOf(PropTypes.any),
+  defaultValues: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.shape({})),
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.shape({}),
+      PropTypes.string,
+    ])
+  ),
   onCancel: PropTypes.func,
   onSubmit: PropTypes.func.isRequired,
   onError: PropTypes.func,
   formSchema: PropTypes.shape({
     id: PropTypes.string,
-    fields: PropTypes.arrayOf(PropTypes.shape()),
-    rules: PropTypes.arrayOf(PropTypes.shape()),
+    fields: PropTypes.arrayOf(PropTypes.shape({})),
+    rules: PropTypes.arrayOf(PropTypes.shape({})),
   }).isRequired,
   submitText: PropTypes.string,
+  cancelText: PropTypes.string,
   enterToSubmit: PropTypes.bool,
   formId: PropTypes.string,
 };
 
 FormWithValidation.defaultProps = {
   submitText: undefined,
+  cancelText: undefined,
   defaultValues: {},
   onCancel: undefined,
   enterToSubmit: false,

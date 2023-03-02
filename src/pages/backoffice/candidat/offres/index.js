@@ -1,31 +1,38 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { ADMIN_ZONES, DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import { useFilters, useTabFilters } from 'src/hooks';
-import { UserContext } from 'src/components/store/UserProvider';
+import { useFilters } from 'src/hooks';
+import { UserContext } from 'src/store/UserProvider';
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
-import { Section } from 'src/components/utils';
 import Api from 'src/api/index.ts';
-import {
-  OFFER_CANDIDATE_FILTERS_DATA,
-  OPPORTUNITY_FILTERS_DATA,
-  USER_ROLES,
-} from 'src/constants';
+import { OPPORTUNITY_FILTERS_DATA, USER_ROLES } from 'src/constants';
 import OpportunityError from 'src/components/opportunities/OpportunityError';
 import { useRouter } from 'next/router';
-import CandidateOpportunityList from 'src/components/backoffice/candidate/CandidateOpportunityList';
+import { CandidateOpportunities } from 'src/components/backoffice/candidate/CandidateOpportunities';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { GA_TAGS } from 'src/constants/tags';
+import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
+import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
+import { useOpportunityType } from 'src/components/backoffice/opportunities/useOpportunityType';
+import useDeepCompareEffect from 'use-deep-compare-effect';
+import { usePrevious } from 'src/hooks/utils';
+import { getCandidateIdFromCoachOrCandidate, getRelatedUser } from 'src/utils';
 
-const candidateFilters = OPPORTUNITY_FILTERS_DATA.slice(1);
+// filters for the query
+const candidateQueryFilters = OPPORTUNITY_FILTERS_DATA.slice(1);
 
 const Opportunities = () => {
-  const {
-    isReady,
-    replace,
-    query: { q, offerId, tag, ...restParams },
-  } = useRouter();
+  const { replace } = useRouter();
+
+  const opportunityId = useOpportunityId();
+
+  const opportunityType = useOpportunityType();
+  const prevOpportunityType = usePrevious(opportunityType);
+
+  const queryParamsOpportunities = useQueryParamsOpportunities();
+  const prevStatus = usePrevious(queryParamsOpportunities.status);
 
   const { user } = useContext(UserContext);
+  const prevUser = usePrevious(user);
 
   const [hasError, setHasError] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -35,150 +42,123 @@ const Opportunities = () => {
   const [candidateId, setCandidateId] = useState();
 
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
-    candidateFilters,
-    '/backoffice/candidat/offres',
-    ['offerId'],
+    candidateQueryFilters,
+    `/backoffice/candidat/offres/${opportunityType}`,
+    ['offerId', 'type'],
     GA_TAGS.BACKOFFICE_CANDIDAT_SUPPRIMER_FILTRES_CLIC
   );
 
-  const { tabFilters, setTabFilters } = useTabFilters(
-    OFFER_CANDIDATE_FILTERS_DATA,
-    '/backoffice/candidat/offres',
-    ['offerId']
-  );
-
-  const setCandidateDefaultsIfNoTag = useCallback(
+  const setCandidateDefaultsIfPublicTag = useCallback(
     async (candId, candidatZone) => {
-      if (!tag) {
-        const params = {
-          tag: OFFER_CANDIDATE_FILTERS_DATA[0].tag,
-          ...restParams,
-        };
+      let params = { ...queryParamsOpportunities };
 
-        try {
-          const { data } = await Api.getCVByCandidateId(candId);
+      try {
+        const { data } = await Api.getCVByCandidateId(candId);
 
-          if (data.locations && data.locations.length > 0) {
-            params.department = data.locations.map(({ name }) => {
+        if (data.locations && data.locations.length > 0) {
+          params = {
+            ...params,
+            department: data.locations.map(({ name }) => {
               return name;
-            });
-          } else if (candidatZone && candidatZone !== ADMIN_ZONES.HZ) {
-            const defaultDepartmentsForCandidate = DEPARTMENTS_FILTERS.filter(
-              (dept) => {
-                return candidatZone === dept.zone;
-              }
-            );
-
-            params.department = defaultDepartmentsForCandidate.map((dept) => {
-              return dept.value;
-            });
-          }
-
-          /*
-            if (data.businessLines && data.businessLines.length > 0) {
-              params.businessLines = _.uniq(
-                data.businessLines.map((businessLine) => {
-                  return businessLine.name;
-                })
-              );
-            }
-          */
-
-          await replace(
-            {
-              pathname: `/backoffice/candidat/offres${
-                offerId ? `/${offerId}` : ''
-              }`,
-              query: params,
-            },
-            undefined,
-            {
-              shallow: true,
+            }),
+          };
+        } else if (candidatZone && candidatZone !== ADMIN_ZONES.HZ) {
+          const defaultDepartmentsForCandidate = DEPARTMENTS_FILTERS.filter(
+            (dept) => {
+              return candidatZone === dept.zone;
             }
           );
-          setCandidateId(candId);
-          setHasLoadedDefaultFilters(true);
-        } catch (e) {
-          setHasError(true);
+
+          params = {
+            ...params,
+            department: defaultDepartmentsForCandidate.map((dept) => {
+              return dept.value;
+            }),
+          };
         }
-      } else {
-        setCandidateId(candId);
-        setHasLoadedDefaultFilters(true);
-      }
-      setHasLoadedDefaultFilters(true);
-    },
-    [offerId, replace, restParams, tag]
-  );
 
-  const fetchAssociatedCandidate = useCallback(
-    async (coachId) => {
-      try {
-        const { data } = await Api.getUserCandidate(coachId);
-        if (data) {
-          setCandidateDefaultsIfNoTag(data.candidat.id, data.candidat.zone);
-        } else {
-          setHasLoadedDefaultFilters(true);
-        }
-      } catch (e) {
-        setHasError(true);
-        setHasLoadedDefaultFilters(true);
-      }
-    },
-    [setCandidateDefaultsIfNoTag]
-  );
-
-  useEffect(() => {
-    if (isReady) {
-      const redirectParams = tag
-        ? {
-            tag,
-            ...restParams,
-          }
-        : restParams;
-
-      // For retrocompatibility
-      if (q) {
-        replace(
+        await replace(
           {
-            pathname: `/backoffice/candidat/offres/${q}`,
-            query: redirectParams,
+            pathname: `/backoffice/candidat/offres/public${
+              opportunityId ? `/${opportunityId}` : ''
+            }`,
+            query: params,
           },
           undefined,
           {
             shallow: true,
           }
         );
-      } else if (user) {
-        if (user.role === USER_ROLES.ADMIN) {
+        setCandidateId(candId);
+        setHasLoadedDefaultFilters(true);
+      } catch (e) {
+        setHasError(true);
+      }
+    },
+    [opportunityId, replace, queryParamsOpportunities]
+  );
+
+  useDeepCompareEffect(() => {
+    if (
+      user &&
+      (user !== prevUser ||
+        opportunityType !== prevOpportunityType ||
+        queryParamsOpportunities.status !== prevStatus)
+    ) {
+      if (opportunityType !== prevOpportunityType) {
+        setHasLoadedDefaultFilters(false);
+      }
+      if (user.role === USER_ROLES.ADMIN) {
+        replace(
+          `/backoffice/admin/offres${opportunityId ? `/${opportunityId}` : ''}`,
+          undefined,
+          {
+            shallow: true,
+          }
+        );
+      } else if (opportunityType === 'private') {
+        if (!queryParamsOpportunities.status) {
           replace(
-            `/backoffice/admin/offres${offerId ? `/${offerId}` : ''}`,
+            {
+              pathname: '/backoffice/candidat/offres/private',
+              query: { status: -1 },
+            },
             undefined,
             {
               shallow: true,
             }
           );
-        } else if (!hasLoadedDefaultFilters) {
-          if (user.role === USER_ROLES.CANDIDAT) {
-            setCandidateDefaultsIfNoTag(user.id, user.zone);
-          } else if (user.role === USER_ROLES.COACH) {
-            fetchAssociatedCandidate(user.id, user.zone);
-          }
         } else {
+          const candId = getCandidateIdFromCoachOrCandidate(user);
+          setCandidateId(candId);
+          setHasLoadedDefaultFilters(true);
           setLoading(false);
         }
+      } else if (opportunityType === 'public') {
+        if (!hasLoadedDefaultFilters) {
+          const candidate =
+            user.role === USER_ROLES.CANDIDAT ? user : getRelatedUser(user);
+          setCandidateDefaultsIfPublicTag(candidate.id, candidate.zone);
+        }
+      } else {
+        replace(`/backoffice/candidat/offres/public`, undefined, {
+          shallow: true,
+        });
       }
+    } else {
+      setLoading(false);
     }
   }, [
-    fetchAssociatedCandidate,
     hasLoadedDefaultFilters,
-    isReady,
-    offerId,
-    q,
+    opportunityId,
     replace,
-    restParams,
-    setCandidateDefaultsIfNoTag,
-    tag,
+    queryParamsOpportunities.status,
+    prevStatus,
+    setCandidateDefaultsIfPublicTag,
     user,
+    prevUser,
+    opportunityType,
+    prevOpportunityType,
   ]);
 
   let content;
@@ -201,15 +181,13 @@ const Opportunities = () => {
     );
   } else {
     content = (
-      <CandidateOpportunityList
+      <CandidateOpportunities
         search={search}
         filters={filters}
         resetFilters={resetFilters}
         setSearch={setSearch}
         setFilters={setFilters}
         candidateId={candidateId}
-        tabFilters={tabFilters}
-        setTabFilters={setTabFilters}
       />
     );
   }
@@ -222,7 +200,7 @@ const Opportunities = () => {
           : 'Opportunités du candidat'
       }
     >
-      <Section>{content}</Section>
+      {opportunityType ? content : null}
     </LayoutBackOffice>
   );
 };

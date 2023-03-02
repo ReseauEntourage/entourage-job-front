@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { getOpportunityUserFromOffer } from 'src/utils';
 import Api from 'src/api/index.ts';
-import { Grid, SimpleLink, Button } from 'src/components/utils';
+import { Button, Grid, SimpleLink } from 'src/components/utils';
 import OfferCard from 'src/components/cards/OfferCard';
 import ModalOfferAdmin from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOfferAdmin';
 import OpportunityError from 'src/components/opportunities/OpportunityError';
@@ -31,7 +31,7 @@ import { useBulkActions } from 'src/hooks/useBulkActions';
 import { SEARCH_MAX_WIDTH } from 'src/constants/utils';
 import { GA_TAGS } from 'src/constants/tags';
 import moment from 'moment';
-import ModalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer';
+import { ModalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer';
 
 const OfferList = ({
   selectionModeActivated,
@@ -131,12 +131,12 @@ const OfferList = ({
 };
 
 OfferList.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  offers: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   candidateId: PropTypes.string,
   role: PropTypes.oneOf(['admin', 'candidateAsAdmin', 'candidat']).isRequired,
   isAdmin: PropTypes.bool.isRequired,
   currentPath: PropTypes.string.isRequired,
-  query: PropTypes.shape().isRequired,
+  query: PropTypes.shape({}).isRequired,
   selectionModeActivated: PropTypes.bool.isRequired,
   selectElement: PropTypes.func.isRequired,
   isElementSelected: PropTypes.func.isRequired,
@@ -542,13 +542,13 @@ const OpportunityList = forwardRef(
 
 OpportunityList.propTypes = {
   candidateId: PropTypes.string,
-  filters: PropTypes.shape(),
+  filters: PropTypes.shape({}),
   search: PropTypes.string,
   userRole: PropTypes.oneOf(['admin', 'candidateAsAdmin', 'candidat']),
   setFilters: PropTypes.func,
   setSearch: PropTypes.func,
   resetFilters: PropTypes.func,
-  tabFilters: PropTypes.arrayOf(PropTypes.shape()),
+  tabFilters: PropTypes.arrayOf(PropTypes.shape({})),
   setTabFilters: PropTypes.func,
 };
 

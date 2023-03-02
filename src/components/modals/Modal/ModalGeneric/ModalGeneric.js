@@ -38,10 +38,7 @@ const ModalGeneric = ({
               }
             }}
           />
-          {title && <HeaderModal>{title}</HeaderModal>}
-          {description ? (
-            <div className="uk-margin-small-bottom">{description}</div>
-          ) : null}
+          <HeaderModal title={title} description={description} />
           {children}
         </div>
       </div>

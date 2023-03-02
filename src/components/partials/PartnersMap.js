@@ -474,7 +474,7 @@ const PartnersMap = ({ google }) => {
 };
 
 PartnersMap.propTypes = {
-  google: PropTypes.shape().isRequired,
+  google: PropTypes.shape({}).isRequired,
 };
 
 export default GoogleApiWrapper({

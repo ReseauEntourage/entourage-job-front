@@ -9,7 +9,7 @@ import Api from 'src/api/index.ts';
 import { USER_ROLES } from 'src/constants';
 import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
 import CandidateEmployedToggle from 'src/components/backoffice/candidate/CandidateEmployedToggle';
-import ContractLabel from 'src/components/backoffice/candidate/ContractLabel';
+import ContractLabel from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
 import { getCandidateFromCoachOrCandidate, getRelatedUser } from 'src/utils';
@@ -309,7 +309,14 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
 };
 UserInformationCard.propTypes = {
   isAdmin: PropTypes.bool,
-  user: PropTypes.shape().isRequired,
+  user: PropTypes.shape({
+    role: PropTypes.oneOf([
+      USER_ROLES.CANDIDAT,
+      USER_ROLES.COACH,
+      USER_ROLES.ADMIN,
+    ]),
+    id: PropTypes.string,
+  }).isRequired,
   onChange: PropTypes.func,
 };
 

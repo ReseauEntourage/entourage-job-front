@@ -24,7 +24,13 @@ const ButtonPost = ({ text, icon, action, style, disabled, dataTestId }) => {
         {loading ? (
           <div className="uk-margin-small-left" data-uk-spinner="ratio: .5" />
         ) : (
-          icon && <IconNoSSR className="uk-margin-small-left" name={icon} />
+          icon && (
+            <IconNoSSR
+              className="uk-margin-small-left"
+              name={icon}
+              ratio={0.8}
+            />
+          )
         )}
       </div>
     </Button>

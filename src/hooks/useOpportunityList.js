@@ -2,6 +2,8 @@ import { useCallback } from 'react';
 import Api from 'src/api/index.ts';
 import { filtersToQueryParams, getOpportunityUserFromOffer } from 'src/utils';
 
+const LIMIT = 25;
+
 export function useOpportunityList(
   setOffers,
   setOtherOffers,
@@ -110,5 +112,46 @@ export function useOpportunityList(
       setOffers,
       setOtherOffers,
     ]
+  );
+}
+
+export function useCandidateOpportunities(
+  setOffers,
+  setLoading,
+  setHasError,
+  setHasFetchedAll
+) {
+  return useCallback(
+    async (candidateId, search, type, filters, offset, shouldFetchAll) => {
+      try {
+        setLoading(true);
+        setHasError(false);
+        const {
+          data: { offers },
+        } = await Api.getAllCandidateOpportunities(candidateId, {
+          params: {
+            search,
+            type,
+            offset: shouldFetchAll ? 0 : offset,
+            limit: shouldFetchAll ? LIMIT + offset * LIMIT : LIMIT,
+            ...filtersToQueryParams(filters),
+          },
+        });
+        setOffers((prevOffers) => {
+          return prevOffers && offset > 0 && !shouldFetchAll
+            ? [...prevOffers, ...offers]
+            : offers;
+        });
+        if (offers.length < LIMIT) {
+          setHasFetchedAll(true);
+        }
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+        setLoading(false);
+        setHasError(true);
+      }
+    },
+    [setLoading, setOffers, setHasFetchedAll, setHasError]
   );
 }

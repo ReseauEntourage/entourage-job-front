@@ -59,7 +59,12 @@ const Select = ({
         >
           {options.map((item, i) => {
             return !item.hidden ? (
-              <option value={item.value} key={i}>
+              <option
+                value={item.value}
+                key={i}
+                disabled={item.disabled}
+                selected={item.selected}
+              >
                 {item.label}
               </option>
             ) : undefined;

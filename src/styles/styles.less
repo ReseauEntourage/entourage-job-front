@@ -111,36 +111,6 @@ hr.uk-divider-small::after {
   width: calc((100vw - 1280px) / 2) !important
 }
 
-// .ent-nav
-.ent-nav-item:not(:first-child)::before {
-  content: "|";
-  align-items: center;
-  margin: 0 20px;
-  font-size: 14px;
-  color: @disabled;
-  display: flex;
-}
-
-@media (max-width: 959px) {
-  .ent-nav-item:not(:first-child):not(:last-child)::before {
-    display: none !important;
-  }
-}
-
-// .ent-nav
-.ent-nav-item {
-  display: flex;
-}
-
-.ent-nav-item>a {
-  color: @white !important;
-  text-transform: none !important;
-}
-
-.ent-nav-item:hover>a {
-  color: rgba(255, 255, 255, .5) !important;
-}
-
 .ent-site-map {
   color: @white !important;
   margin-bottom: 10px;

@@ -22,8 +22,8 @@ import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { Member } from 'src/components/backoffice/admin/MemberList/Member';
 import BackToTop from 'src/components/utils/BackToTop/index';
 import {
+  StyledActionsContainer,
   StyledTable,
-  ActionsContainer,
 } from 'src/components/backoffice/admin/MemberList/styles';
 import { useBulkActions } from 'src/hooks/useBulkActions';
 import { GA_TAGS } from 'src/constants/tags';
@@ -243,9 +243,9 @@ const MemberList = ({
             smallSelectors
           />
           {role === USER_ROLES.CANDIDAT && (
-            <ActionsContainer>
+            <StyledActionsContainer>
               <Button
-                style="custom-secondary"
+                style="custom-secondary small"
                 disabled={!hasSelection}
                 color="primaryOrange"
                 onClick={() => {
@@ -254,7 +254,7 @@ const MemberList = ({
               >
                 Masquer CV
               </Button>
-            </ActionsContainer>
+            </StyledActionsContainer>
           )}
           {loading ? (
             <LoadingScreen />
@@ -322,7 +322,7 @@ const MemberList = ({
 
 MemberList.propTypes = {
   search: PropTypes.string,
-  filters: PropTypes.shape(),
+  filters: PropTypes.shape({}),
   setFilters: PropTypes.func,
   setSearch: PropTypes.func,
   resetFilters: PropTypes.func,

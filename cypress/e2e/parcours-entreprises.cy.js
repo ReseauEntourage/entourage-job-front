@@ -8,55 +8,89 @@ describe('Parcours Entreprises', () => {
   it('Ouvrir la popup du formulaire', () => {
     describe('Bouton header', () => {
       cy.visit('/entreprises');
-      cy.get('[data-testid="button-contact-company-header"]').first().scrollIntoView().click();
-
-      cy.wait(500);
+      cy.get('[data-testid="button-contact-company-header"]')
+        .should('be.visible')
+        .first()
+        .scrollIntoView()
+        .click();
 
       cy.get('.ReactModalPortal div').first().should('be.visible');
-    })
+    });
 
     describe('Bouton première section', () => {
       cy.visit('/entreprises');
-      cy.get('[data-testid="button-contact-company-first-section"]').first().scrollIntoView().click();
-
-      cy.wait(500);
+      cy.get('[data-testid="button-contact-company-first-section"]')
+        .should('be.visible')
+        .first()
+        .scrollIntoView()
+        .click();
 
       cy.get('.ReactModalPortal div').first().should('be.visible');
-    })
+    });
 
     describe('Bouton dernière section', () => {
       cy.visit('/entreprises');
-      cy.get('[data-testid="button-contact-company-last-section"]').first().scrollIntoView().click();
-
-      cy.wait(500);
+      cy.get('[data-testid="button-contact-company-last-section"]')
+        .should('be.visible')
+        .first()
+        .scrollIntoView()
+        .click();
 
       cy.get('.ReactModalPortal div').first().should('be.visible');
-    })
-
+    });
   });
 
   it('Remplir le formulaire, envoyer et fermer', () => {
-    cy.get('#form-company-contact-firstName').scrollIntoView().type('John');
+    cy.get('.ReactModalPortal div').first().should('be.visible');
 
-    cy.get('#form-company-contact-lastName').scrollIntoView().type('Doe');
+    cy.get('#form-company-contact-firstName')
+      .should('be.visible')
+      .scrollIntoView()
+      .type('John');
 
-    cy.get('#form-company-contact-approach').scrollIntoView().select('information');
+    cy.get('#form-company-contact-lastName')
+      .should('be.visible')
+      .scrollIntoView()
+      .type('Doe');
 
-    cy.get('#form-company-contact-email').scrollIntoView().type('johndoe@gmail.com');
+    cy.get('#form-company-contact-approach')
+      .should('be.visible')
+      .scrollIntoView()
+      .select('information');
 
-    cy.get('#form-company-contact-phone').scrollIntoView().type('0698754321');
+    cy.get('#form-company-contact-email')
+      .should('be.visible')
+      .scrollIntoView()
+      .type('johndoe@gmail.com');
 
-    cy.get('#form-company-contact-company').scrollIntoView().type('Entourage');
+    cy.get('#form-company-contact-phone')
+      .should('be.visible')
+      .scrollIntoView()
+      .type('0698754321');
 
-    cy.get('#form-company-contact-position').scrollIntoView().type('Développeur');
+    cy.get('#form-company-contact-company')
+      .should('be.visible')
+      .scrollIntoView()
+      .type('Entourage');
 
-    cy.get('#form-company-contact-zone').scrollIntoView().type('Paris{downArrow}{enter}');
+    cy.get('#form-company-contact-position')
+      .should('be.visible')
+      .scrollIntoView()
+      .type('Développeur');
 
-    cy.get('#form-company-contact-heardAbout').scrollIntoView().select('Autre');
+    cy.get('#form-company-contact-zone')
+      .should('be.visible')
+      .scrollIntoView()
+      .type('Paris{downArrow}{enter}');
 
-    cy.get('button').contains('Envoyer').click();
+    cy.get('#form-company-contact-heardAbout')
+      .should('be.visible')
+      .scrollIntoView()
+      .select('Autre');
 
-    cy.wait('@postContactCompany')
+    cy.get('button').contains('Envoyer').should('be.visible').click();
+
+    cy.wait('@postContactCompany');
 
     cy.get('.ReactModalPortal div').should('not.exist');
   });
