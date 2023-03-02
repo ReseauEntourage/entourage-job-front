@@ -130,7 +130,10 @@ const CandidatListPartial = () => {
             href={{ pathname: '/candidats', query: { employed: false } }}
             style="secondary"
           >
-            Voir tous les candidats <IconNoSSR name="chevron-right" />
+            {process.env.WOMENS_DAY === 'true'
+              ? 'Voir toutes les candidates'
+              : 'Voir tous les candidats'}{' '}
+            <IconNoSSR name="chevron-right" />
           </Button>
         </Grid>
       </Grid>
