@@ -52,19 +52,39 @@ const CandidatListPartial = () => {
     <Section style="muted" id="candidat">
       <Grid column middle eachWidths={['2-3@m', '1-1']}>
         <div className="uk-text-center">
-          <h1 className="uk-text-bold uk-margin-remove-bottom">
-            Ils sont <span className="uk-text-primary">motivés</span> pour
-            travailler
-          </h1>
-          <h3 className="uk-text-bold uk-margin-remove-top">
-            Votre partage peut tout{' '}
-            <span className="uk-text-primary">changer</span>
-          </h3>
-          <p className="uk-margin-remove-bottom">
-            Si vous pensez comme nous que chacun doit avoir sa place dans la
-            société et en entreprise, partagez votre réseau professionnel avec
-            ceux qui en ont le plus besoin.
-          </p>
+          {process.env.WOMENS_DAY === 'true' ? (
+            <>
+              <h1 className="uk-text-bold uk-margin-remove-bottom">
+                Elles sont <span className="uk-text-primary">motivées</span>{' '}
+                pour travailler
+              </h1>
+              <h3 className="uk-text-bold uk-margin-remove-top">
+                Votre partage peut tout{' '}
+                <span className="uk-text-primary">changer</span>
+              </h3>
+              <p className="uk-margin-remove-bottom">
+                Si vous pensez comme nous que chacune doit avoir sa place dans
+                la société et en entreprise, partagez votre réseau professionnel
+                avec celles qui en ont le plus besoin.
+              </p>
+            </>
+          ) : (
+            <>
+              <h1 className="uk-text-bold uk-margin-remove-bottom">
+                Ils sont <span className="uk-text-primary">motivés</span> pour
+                travailler
+              </h1>
+              <h3 className="uk-text-bold uk-margin-remove-top">
+                Votre partage peut tout{' '}
+                <span className="uk-text-primary">changer</span>
+              </h3>
+              <p className="uk-margin-remove-bottom">
+                Si vous pensez comme nous que chacun doit avoir sa place dans la
+                société et en entreprise, partagez votre réseau professionnel
+                avec ceux qui en ont le plus besoin.
+              </p>
+            </>
+          )}
           <h4 className="uk-text-bold">
             Grâce à vos partages, les CV ont été rendus visibles
             <br className="uk-visible@m" />
@@ -83,13 +103,14 @@ const CandidatListPartial = () => {
             </span>
             &nbsp;fois&nbsp;!
           </h4>
-          {process.env.WOMENS_DAY && (
+          {process.env.WOMENS_DAY === 'true' && (
             <h3 className="uk-text-bold">
               À l&apos;occasion du 8 mars,{' '}
               <span className="uk-text-italic uk-text-primary">
                 Journée internationale des droits des femmes
               </span>
-              , on a décidé de mettre à l&apos;honneur nos candidates&nbsp;!
+              , on a décidé de mettre à l&apos;honneur les candidates
+              LinkedOut&nbsp;!
             </h3>
           )}
         </div>
