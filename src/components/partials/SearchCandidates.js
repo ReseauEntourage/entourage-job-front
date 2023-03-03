@@ -5,9 +5,10 @@ import { Grid, Section } from 'src/components/utils';
 import { CV_FILTERS_DATA } from 'src/constants';
 import { useFilters } from 'src/hooks';
 
+const cvFiltersWithoutGender = CV_FILTERS_DATA.slice(0, -1);
 const SearchCandidates = ({ style }) => {
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
-    CV_FILTERS_DATA,
+    cvFiltersWithoutGender,
     '/candidats'
   );
 
