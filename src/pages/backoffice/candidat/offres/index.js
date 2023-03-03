@@ -16,6 +16,7 @@ import { useOpportunityType } from 'src/components/backoffice/opportunities/useO
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { usePrevious } from 'src/hooks/utils';
 import { getCandidateIdFromCoachOrCandidate, getRelatedUser } from 'src/utils';
+import _ from 'lodash';
 
 // filters for the query
 const candidateQueryFilters = OPPORTUNITY_FILTERS_DATA.slice(1);
@@ -135,10 +136,14 @@ const Opportunities = () => {
           setLoading(false);
         }
       } else if (opportunityType === 'public') {
-        if (!hasLoadedDefaultFilters) {
-          const candidate =
-            user.role === USER_ROLES.CANDIDAT ? user : getRelatedUser(user);
+        const { status, ...restQueryParams } = queryParamsOpportunities;
+        const candidate =
+          user.role === USER_ROLES.CANDIDAT ? user : getRelatedUser(user);
+        if (!hasLoadedDefaultFilters && _.isEmpty(restQueryParams)) {
           setCandidateDefaultsIfPublicTag(candidate.id, candidate.zone);
+        } else {
+          setCandidateId(candidate.id);
+          setHasLoadedDefaultFilters(true);
         }
       } else {
         replace(`/backoffice/candidat/offres/public`, undefined, {
