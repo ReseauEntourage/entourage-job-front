@@ -39,7 +39,14 @@ const LandingPagePartial = () => {
               >
                 <span>Partagez votre </span>
                 <span className="uk-text-primary">réseau professionnel</span>
-                <span> avec ceux qui n&apos;en ont pas</span>
+                <span>
+                  {' '}
+                  avec{' '}
+                  {process.env.WOMENS_DAY === 'true'
+                    ? 'celles'
+                    : 'celles et ceux'}{' '}
+                  qui n&apos;en ont pas
+                </span>
               </h1>
               {/* <div className="uk-margin-bottom">
                   <a

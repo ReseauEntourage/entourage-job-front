@@ -5,10 +5,12 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 import { gaEvent } from 'src/lib/gtag';
 import { PropTypes } from 'prop-types';
 import Link from 'next/link';
+import { fbEvent } from 'src/lib/fb';
 import { StyledHelpCard, StyledLink } from './styles';
 
 const HelpCard = ({ cardContent, keyMap }) => {
-  const { title, img, text, cta, href, alt, newTab, tag } = cardContent;
+  const { title, img, text, cta, href, alt, newTab, gaTag, fbTag } =
+    cardContent;
   const card = (
     <div className="card-content">
       <div>
@@ -22,7 +24,8 @@ const HelpCard = ({ cardContent, keyMap }) => {
         newTab={newTab}
         isExternal={newTab}
         onClick={() => {
-          gaEvent(tag);
+          if (gaTag) gaEvent(gaTag);
+          if (fbTag) fbEvent(fbTag);
         }}
       >
         {cta}&nbsp;
@@ -39,7 +42,8 @@ const HelpCard = ({ cardContent, keyMap }) => {
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => {
-            gaEvent(tag);
+            if (gaTag) gaEvent(gaTag);
+            if (fbTag) fbEvent(fbTag);
           }}
         >
           {card}
@@ -48,7 +52,8 @@ const HelpCard = ({ cardContent, keyMap }) => {
         <Link href={href} passHref legacyBehavior>
           <StyledLink
             onClick={() => {
-              gaEvent(tag);
+              if (gaTag) gaEvent(gaTag);
+              if (fbTag) fbEvent(fbTag);
             }}
           >
             {card}
@@ -68,7 +73,8 @@ HelpCard.propTypes = {
     cta: PropTypes.string.isRequired,
     alt: PropTypes.string.isRequired,
     newTab: PropTypes.bool.isRequired,
-    tag: PropTypes.string.isRequired,
+    gaTag: PropTypes.string,
+    fbTag: PropTypes.string,
   }).isRequired,
   keyMap: PropTypes.string.isRequired,
 };
