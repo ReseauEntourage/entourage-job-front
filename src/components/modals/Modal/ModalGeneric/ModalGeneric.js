@@ -14,6 +14,7 @@ const ModalGeneric = ({
   removePadding,
 }) => {
   const { onClose } = useModalContext();
+
   return (
     <Modal className={className} fullWidth={fullWidth}>
       <div

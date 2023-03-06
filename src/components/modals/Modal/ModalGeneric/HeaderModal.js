@@ -10,12 +10,10 @@ const HeaderModal = ({ title, description }) => {
           <h3>{title}</h3>
         </div>
       )}
-      {description ? (
+      {description && (
         <div className="description-container">
           <div>{description}</div>
         </div>
-      ) : (
-        <div className="simple-margin" />
       )}
     </StyledHeaderModal>
   );

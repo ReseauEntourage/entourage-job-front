@@ -417,6 +417,7 @@ export const EXTERNAL_LINKS = {
   REDSTAR:
     'https://blog.linkedout.fr/2021/07/21/apres-la-voile-le-foot-linkedout-nouveau-partenaire-maillot-du-red-star-fc-avec-le-soutien-de-randstad/',
   RECRUITMENTS: 'https://www.welcometothejungle.com/fr/companies/entourage',
+  TAX: 'https://taxe-apprentissage.linkedout.fr',
 };
 
 export const NEWSLETTER_TAGS = {
@@ -468,6 +469,7 @@ export const NEWSLETTER_TAGS = {
 
 export const STORAGE_KEYS = {
   ACCESS_TOKEN: 'access-token',
+  TAX_MODAL_CLOSED: 'tax-modal-closed',
 };
 
 export const SOCKETS = {

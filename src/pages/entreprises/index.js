@@ -10,7 +10,7 @@ import PARTNERS from 'src/constants/partners';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { Chapter } from 'src/components/partials/Chapter';
 import CVList from 'src/components/cv/CVList';
-import { CV_FILTERS_DATA } from 'src/constants';
+import { CV_FILTERS_DATA, STORAGE_KEYS } from 'src/constants';
 import Timeline from 'src/components/partials/Timeline';
 import NumberGrid from 'src/components/partials/NumberGrid';
 import AnimatedList from 'src/components/utils/AnimatedList';
@@ -22,6 +22,8 @@ import { gaEvent } from 'src/lib/gtag';
 import CompanyContactModal from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
 import { openModal } from 'src/components/modals/Modal';
 import { fbEvent } from 'src/lib/fb';
+import { useMount } from 'src/hooks/utils';
+import { TaxModal } from 'src/components/modals/PopupModal/TaxModal';
 
 const timeline = [
   {
@@ -144,6 +146,15 @@ const reviews = [
 ];
 
 const Entreprises = ({ nbPublishedCVs }) => {
+  useMount(() => {
+    const taxModalClosed = localStorage.getItem(STORAGE_KEYS.TAX_MODAL_CLOSED);
+    if (!process.env.HIDE_HOME_POPUP && !taxModalClosed) {
+      setTimeout(() => {
+        openModal(<TaxModal />);
+      }, 1500);
+    }
+  });
+
   return (
     <Layout title="Entreprises - LinkedOut">
       <ImageTitle
