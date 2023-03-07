@@ -3,11 +3,16 @@ describe('Parcours Entreprises', () => {
     cy.intercept('POST', '/contact/company', {
       statusCode: 201,
     }).as('postContactCompany');
+
   });
 
   it('Ouvrir la popup du formulaire', () => {
     describe('Bouton header', () => {
-      cy.visit('/entreprises');
+      cy.visit('/entreprises', {
+        onBeforeLoad: function async(window) {
+          window.localStorage.setItem('tax-modal-closed', true);
+        },
+      });
       cy.get('[data-testid="button-contact-company-header"]')
         .should('be.visible')
         .first()
@@ -18,7 +23,11 @@ describe('Parcours Entreprises', () => {
     });
 
     describe('Bouton première section', () => {
-      cy.visit('/entreprises');
+      cy.visit('/entreprises', {
+        onBeforeLoad: function async(window) {
+          window.localStorage.setItem('tax-modal-closed', true);
+        },
+      });
       cy.get('[data-testid="button-contact-company-first-section"]')
         .should('be.visible')
         .first()
@@ -29,7 +38,11 @@ describe('Parcours Entreprises', () => {
     });
 
     describe('Bouton dernière section', () => {
-      cy.visit('/entreprises');
+      cy.visit('/entreprises', {
+        onBeforeLoad: function async(window) {
+          window.localStorage.setItem('tax-modal-closed', true);
+        },
+      });
       cy.get('[data-testid="button-contact-company-last-section"]')
         .should('be.visible')
         .first()
