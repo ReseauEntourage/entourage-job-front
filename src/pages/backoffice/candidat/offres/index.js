@@ -139,10 +139,14 @@ const Opportunities = () => {
         const { status, ...restQueryParams } = queryParamsOpportunities;
         const candidate =
           user.role === USER_ROLES.CANDIDAT ? user : getRelatedUser(user);
-        if (!hasLoadedDefaultFilters && _.isEmpty(restQueryParams)) {
+        if (
+          candidate &&
+          !hasLoadedDefaultFilters &&
+          _.isEmpty(restQueryParams)
+        ) {
           setCandidateDefaultsIfPublicTag(candidate.id, candidate.zone);
         } else {
-          setCandidateId(candidate.id);
+          setCandidateId(candidate?.id);
           setHasLoadedDefaultFilters(true);
         }
       } else {
@@ -173,7 +177,7 @@ const Opportunities = () => {
     content = <OpportunityError />;
   } else if (!candidateId) {
     content = (
-      <div className="uk-flex uk-flex-column uk-flex-middle">
+      <div className="uk-flex uk-flex-column uk-flex-middle uk-margin-large-top">
         <h2 className="uk-text-bold uk-text-center">
           <span className="uk-text-primary">Aucun candidat</span> n&apos;est
           rattaché à ce compte.
