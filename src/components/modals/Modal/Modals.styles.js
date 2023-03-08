@@ -33,7 +33,8 @@ export const StyledHeaderModal = styled.div`
       }
     }
   }
-  .simple-margin {
+
+  :not(.uk-padding-remove) .simple-margin > {
     margin-bottom: 20px;
   }
 `;
