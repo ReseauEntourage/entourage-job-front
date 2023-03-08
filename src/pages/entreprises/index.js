@@ -23,7 +23,7 @@ import CompanyContactModal from 'src/components/modals/Modal/ModalGeneric/Compan
 import { openModal } from 'src/components/modals/Modal';
 import { fbEvent } from 'src/lib/fb';
 import { useMount } from 'src/hooks/utils';
-import { TaxModal } from 'src/components/modals/PopupModal/TaxModal';
+import { TaxModal } from 'src/components/modals/PopupModal/TaxModal.tsx';
 
 const timeline = [
   {
@@ -148,7 +148,7 @@ const reviews = [
 const Entreprises = ({ nbPublishedCVs }) => {
   useMount(() => {
     const taxModalClosed = localStorage.getItem(STORAGE_KEYS.TAX_MODAL_CLOSED);
-    if (!process.env.HIDE_HOME_POPUP && !taxModalClosed) {
+    if (process.env.SHOW_POPUP === 'true' && !taxModalClosed) {
       setTimeout(() => {
         openModal(<TaxModal />);
       }, 1500);

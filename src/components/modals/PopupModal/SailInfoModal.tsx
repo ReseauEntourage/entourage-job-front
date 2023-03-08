@@ -1,10 +1,10 @@
 import React from 'react';
+import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
 import { Button } from 'src/components/utils';
+import Icon from 'src/components/utils/Icon';
+import Img from 'src/components/utils/Img';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { addPrefix } from 'src/utils';
-import Img from 'src/components/utils/Img';
-import { IconNoSSR } from 'src/components/utils/Icon';
-import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
 
 const SailInfoModal = () => {
   const modalContent = (
@@ -25,7 +25,7 @@ const SailInfoModal = () => {
         className="uk-margin-medium-top"
       >
         Lire l&apos;histoire&nbsp;
-        <IconNoSSR name="chevron-right" />
+        <Icon name="chevron-right" />
       </Button>
     </>
   );

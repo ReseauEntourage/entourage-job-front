@@ -5,7 +5,6 @@ export const StyledHeaderModal = styled.div`
   .title-container {
     width: 100%;
     border-bottom: 1px solid ${COLORS.primaryOrange};
-    margin-bottom: 20px;
     h3 {
       width: 100%;
       text-align: center;
@@ -33,5 +32,9 @@ export const StyledHeaderModal = styled.div`
         color: ${COLORS.darkGray};
       }
     }
+  }
+
+  :not(.uk-padding-remove) .simple-margin > {
+    margin-bottom: 20px;
   }
 `;
