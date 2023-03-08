@@ -12,6 +12,7 @@ const Icon = ({ name, ratio, flip, className, id, style }) => {
     />
   );
 };
+
 Icon.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string.isRequired,
@@ -20,6 +21,7 @@ Icon.propTypes = {
   flip: PropTypes.bool,
   style: PropTypes.shape({}),
 };
+
 Icon.defaultProps = {
   className: '',
   ratio: 1,
