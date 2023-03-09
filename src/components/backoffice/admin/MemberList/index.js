@@ -262,6 +262,49 @@ const MemberList = ({
           />
           Créer
         </ButtonMultiple>
+        <Button
+          style="primary"
+          onClick={() => {
+            openModal(
+              <ModalEdit
+                formSchema={formAddOrganization}
+                title="Création de structure partenaire"
+                description="Merci de renseigner quelques informations afin de créer la structure"
+                submitText="Créer la structure"
+                onSubmit={async (fields, closeModal) => {
+                  try {
+                    const { data } = await Api.postOrganization(fields);
+                    if (data) {
+                      closeModal();
+                      UIkit.notification(
+                        'La structure a bien été créé',
+                        'success'
+                      );
+                    } else {
+                      UIkit.notification(
+                        "Une erreur s'est produite lors de la création de la structure",
+                        'danger'
+                      );
+                    }
+                  } catch (error) {
+                    console.error(error);
+                    UIkit.notification(
+                      "Une erreur s'est produite lors de la création de la structure",
+                      'danger'
+                    );
+                  }
+                }}
+              />
+            );
+          }}
+        >
+          <IconNoSSR
+            name="plus"
+            ratio={0.8}
+            className="uk-margin-small-right"
+          />
+          Nouvelle structure
+        </Button>
       </HeaderBackoffice>
       {hasError ? (
         <Section className="uk-width-1-1">
