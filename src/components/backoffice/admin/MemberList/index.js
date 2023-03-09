@@ -12,6 +12,7 @@ import Api from 'src/api/index.ts';
 import SearchBar from 'src/components/filters/SearchBar';
 import { filtersToQueryParams, mutateFormSchema } from 'src/utils';
 import schemaCreateUser from 'src/components/forms/schema/formEditUser';
+import schemaCreateOrganization from 'src/components/forms/schema/formOrganization';
 import { openModal } from 'src/components/modals/Modal';
 import { usePrevious } from 'src/hooks/utils';
 
@@ -212,6 +213,49 @@ const MemberList = ({
             className="uk-margin-small-right"
           />
           Nouveau membre
+        </Button>
+        <Button
+          style="primary"
+          onClick={() => {
+            openModal(
+              <ModalEdit
+                formSchema={schemaCreateOrganization}
+                title="Création de structure partenaire"
+                description="Merci de renseigner quelques informations afin de créer la structure"
+                submitText="Créer la structure"
+                onSubmit={async (fields, closeModal) => {
+                  try {
+                    const { data } = await Api.postOrganization(fields);
+                    if (data) {
+                      closeModal();
+                      UIkit.notification(
+                        'La structure a bien été créé',
+                        'success'
+                      );
+                    } else {
+                      UIkit.notification(
+                        "Une erreur s'est produite lors de la création de la structure",
+                        'danger'
+                      );
+                    }
+                  } catch (error) {
+                    console.error(error);
+                    UIkit.notification(
+                      "Une erreur s'est produite lors de la création de la structure",
+                      'danger'
+                    );
+                  }
+                }}
+              />
+            );
+          }}
+        >
+          <IconNoSSR
+            name="plus"
+            ratio={0.8}
+            className="uk-margin-small-right"
+          />
+          Nouvelle structure
         </Button>
       </HeaderBackoffice>
       {hasError ? (

@@ -19,6 +19,7 @@ import {
   Route,
   SocialMedia,
   User,
+  Organization,
 } from './types';
 
 class APIHandler {
@@ -216,6 +217,15 @@ class APIHandler {
 
   deleteUser(userId: string): Promise<AxiosResponse> {
     return this.delete(`/user/${userId}`);
+  }
+
+  /// ///////////// ///
+  /// organization  ///
+  /// //////////// ///
+
+  // post
+  postOrganization(params: Organization): Promise<AxiosResponse> {
+    return this.post('/organization', params);
   }
 
   /// //////
