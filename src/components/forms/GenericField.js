@@ -13,6 +13,7 @@ import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMe
 import { SimpleLink } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
 import PhoneInput from 'src/components/forms/fields/PhoneInput';
+import { PhoneInput as PhoneInputNew } from 'src/components/utils/Inputs/PhoneInput/index.ts';
 import { StyledFormHeading } from 'src/components/forms/Forms.styles';
 
 import CheckBoxNew from 'src/components/utils/Inputs/Checkbox';
@@ -115,10 +116,28 @@ const GenericField = ({
     case 'text-input': {
       return (
         <TextInputNew
+          id={`${formId}-${data.id}`}
+          valid={getValid(data.name)}
           title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
           onChange={onChangeCustom}
           type={data.type}
           name={data.name}
+        />
+      );
+    }
+    case 'tel-input': {
+      return (
+        <PhoneInputNew
+          id={`${formId}-${data.id}`}
+          name={data.name}
+          title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
+          value={value}
+          type={data.type}
+          valid={getValid(data.name)}
+          onChange={parseValueToReturnSelect}
+          disabled={data.disable ? data.disable(getValue) : data.disabled}
+          hidden={data.hide ? data.hide(getValue) : data.hidden}
+          autocomplete={data.autocomplete}
         />
       );
     }

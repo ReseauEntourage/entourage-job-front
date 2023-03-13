@@ -65,6 +65,9 @@ const CandidateOpportunityDetails = ({
 
   useEffect(() => {
     const index = tabs.findIndex(({ status }) => {
+      if (opportunityUsers.archived) {
+        return status.includes('archived');
+      }
       return status.includes(opportunityUsers.status);
     });
 
@@ -74,7 +77,7 @@ const CandidateOpportunityDetails = ({
       }).ctas.length > 0;
 
     setHasCTAContainer(hasCTAs);
-  }, [hasCTAContainer, opportunityUsers.status]);
+  }, [hasCTAContainer, opportunityUsers.archived, opportunityUsers.status]);
 
   const event = mapEventDateFromStatus(opportunityUsers.status, events);
 

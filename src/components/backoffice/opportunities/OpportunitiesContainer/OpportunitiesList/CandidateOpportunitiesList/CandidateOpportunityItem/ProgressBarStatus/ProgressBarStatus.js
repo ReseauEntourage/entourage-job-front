@@ -26,7 +26,10 @@ const ProgressBarStatus = ({
       <StyledStep
         activate={
           !noStatus &&
-          (status >= 0 || (status === -1 && (isBookmarked || isRecommended)))
+          (status >= 0 ||
+            abandonned ||
+            hired ||
+            (status === -1 && (isBookmarked || isRecommended)))
         }
         color={color}
       />

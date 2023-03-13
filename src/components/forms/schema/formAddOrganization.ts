@@ -1,65 +1,68 @@
-import { ADMIN_ZONES_FILTERS } from 'src/constants/departements';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
+import { ADMIN_ZONES_FILTERS } from 'src/constants/departements';
 
-export default {
-  id: 'form-organization',
+export const formAddOrganization = {
+  id: 'form-add-organization',
   fields: [
+    {
+      id: 'organizationInformation',
+      title: 'Information structure partenaire',
+      component: 'heading',
+    },
     {
       id: 'name',
       name: 'name',
-      type: 'text',
-      component: 'input',
-      placeholder: 'Tapez le nom de la structure',
-      title: 'Nom de la structure*',
+      component: 'text-input',
+      title: 'Nom de la structure *',
     },
     {
       id: 'address',
       name: 'address',
-      component: 'input',
-      type: 'text',
-      placeholder: "Tapez l'adresse postale de la structure",
-      title: 'Adresse postale*',
+      component: 'text-input',
+      title: 'Adresse postale de la structure *',
     },
     {
-      id: 'referentFirstName',
-      name: 'referentFirstName',
-      type: 'text',
-      component: 'input',
-      placeholder: 'Tapez le prénom du référent',
-      title: 'Prénom du référent*',
+      id: 'zone',
+      title: 'Zone de la structure *',
+      name: 'zone',
+      component: 'select-new',
+      options: ADMIN_ZONES_FILTERS,
     },
     {
-      id: 'referentLastName',
-      name: 'referentLastName',
-      type: 'text',
-      component: 'input',
-      placeholder: 'Tapez le nom du référent',
-      title: 'Nom du référent*',
+      id: 'referentInformation',
+      title: 'Coordonnées du référent',
+      component: 'heading',
+    },
+    {
+      component: 'fieldgroup',
+      fields: [
+        {
+          id: 'referentFirstName',
+          name: 'referentFirstName',
+          component: 'text-input',
+          title: 'Prénom du référent *',
+        },
+        {
+          id: 'referentLastName',
+          name: 'referentLastName',
+          component: 'text-input',
+          title: 'Nom du référent *',
+        },
+      ],
+    },
+
+    {
+      id: 'referentPhone',
+      name: 'referentPhone',
+      component: 'tel-input',
+      title: 'Numéro de téléphone portable du référent *',
     },
     {
       id: 'referentMail',
       name: 'referentMail',
-      type: 'email',
-      component: 'input',
-      placeholder: "Tapez l'adresse mail du référent",
-      title: 'Adresse mail du référent*',
-    },
-    {
-      id: 'referentPhone',
-      name: 'referentPhone',
-      component: 'tel',
-      placeholder: 'Tapez le numéro de téléphone portable du référent',
-      title: 'Numéro de téléphone portable du référent*',
-    },
-    {
-      id: 'zone',
-      title: 'Zone*',
-      name: 'zone',
-      component: 'select',
-      options: [
-        { value: -1, label: 'Choisissez une zone' },
-        ...ADMIN_ZONES_FILTERS,
-      ],
+      type: 'mail',
+      component: 'text-input',
+      title: 'Adresse mail du référent *',
     },
   ],
   rules: [

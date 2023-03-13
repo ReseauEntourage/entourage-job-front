@@ -12,7 +12,7 @@ import Api from 'src/api/index.ts';
 import SearchBar from 'src/components/filters/SearchBar';
 import { filtersToQueryParams, mutateFormSchema } from 'src/utils';
 import schemaCreateUser from 'src/components/forms/schema/formEditUser';
-import schemaCreateOrganization from 'src/components/forms/schema/formOrganization';
+import { formAddOrganization } from 'src/components/forms/schema/formAddOrganization.ts';
 import { openModal } from 'src/components/modals/Modal';
 import { usePrevious } from 'src/hooks/utils';
 
@@ -216,10 +216,12 @@ const MemberList = ({
         </Button>
         <Button
           style="primary"
+          dataTestId="button-create-organization"
           onClick={() => {
             openModal(
               <ModalEdit
-                formSchema={schemaCreateOrganization}
+                formId={formAddOrganization.id}
+                formSchema={formAddOrganization}
                 title="Création de structure partenaire"
                 description="Merci de renseigner quelques informations afin de créer la structure"
                 submitText="Créer la structure"

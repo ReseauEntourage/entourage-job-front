@@ -122,8 +122,8 @@ describe('Candidat', () => {
       );
     });
     cy.get('[data-testid="candidat-add-offer"]').click();
-    cy.get('#form-input-title').scrollIntoView().type('test');
-    cy.get('#form-input-company').scrollIntoView().type('test');
+    cy.get('#form-offer-external-title').scrollIntoView().type('test');
+    cy.get('#form-offer-external-company').scrollIntoView().type('test');
     cy.get('#form-offer-external-department-container')
       .scrollIntoView()
       .click();
@@ -138,11 +138,11 @@ describe('Candidat', () => {
     )
       .first()
       .click();
-    cy.get('#form-input-recruiterFirstName').scrollIntoView().type('test');
-    cy.get('#form-input-recruiterName').scrollIntoView().type('test');
-    cy.get('#form-input-recruiterMail').scrollIntoView().type('test@gmail.com');
+    cy.get('#form-offer-external-recruiterFirstName').scrollIntoView().type('test');
+    cy.get('#form-offer-external-recruiterName').scrollIntoView().type('test');
+    cy.get('#form-offer-external-recruiterMail').scrollIntoView().type('test@gmail.com');
     cy.get('#form-offer-external-description').scrollIntoView().type('test');
-    cy.get('#form-input-link').scrollIntoView().type('test');
+    cy.get('#form-offer-external-link').scrollIntoView().type('test');
     cy.get('button').contains('Envoyer').click();
     cy.wait('@postExternal');
 
