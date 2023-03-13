@@ -264,10 +264,12 @@ const MemberList = ({
         </ButtonMultiple>
         <Button
           style="primary"
+          dataTestId="button-create-organization"
           onClick={() => {
             openModal(
               <ModalEdit
                 formSchema={formAddOrganization}
+                formId={formAddOrganization.id}
                 title="Création de structure partenaire"
                 description="Merci de renseigner quelques informations afin de créer la structure"
                 submitText="Créer la structure"
