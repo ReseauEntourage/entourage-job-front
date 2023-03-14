@@ -59,6 +59,12 @@ describe('Admin', () => {
   });
 
   it("Remplir le formulaire de création d'une structure, envoyer et fermer", () => {
+    cy.get('[data-testid="button-admin-create"]')
+      .should('be.visible')
+      .first()
+      .scrollIntoView()
+      .click();
+
     cy.get('[data-testid="button-create-organization"]')
       .should('be.visible')
       .first()

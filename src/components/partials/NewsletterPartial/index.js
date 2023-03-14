@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import validator from 'validator';
 import { Section } from 'src/components/utils';
 import Api from 'src/api/index.ts';
-import Button from 'src/components/utils/Button';
+import { Button } from 'src/components/utils/Button';
 import { gaEvent } from 'src/lib/gtag';
 import { NEWSLETTER_TAGS } from 'src/constants';
 import Checkbox from 'src/components/utils/Inputs/Checkbox';

@@ -10,7 +10,6 @@ import { COLORS } from 'src/constants/styles';
 import { Container } from 'src/components/utils/containers';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import uuid from 'uuid/v4';
-import { fbEvent } from 'src/lib/fb';
 
 const cardsContent = [
   {

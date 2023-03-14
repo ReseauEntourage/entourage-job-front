@@ -133,6 +133,35 @@ export const StyledButton = styled.button`
     }
   }
 
+  &.custom-text {
+    font-family: Poppins, sans-serif;
+    padding: 8px 20px;
+    border: none;
+    color: ${(props) => {
+      return COLORS[props.color] || COLORS.primaryOrange;
+    }} !important;
+
+    path {
+      fill: ${(props) => {
+        return COLORS[props.color] || COLORS.primaryOrange;
+      }} !important;
+    }
+    background-color: transparent;
+
+    &:hover {
+      cursor: pointer;
+      background-color: ${() => {
+        return colorToHoverBackgroundColor.primaryOrange;
+      }};
+      path {
+        transition: 0.2s ease-in-out;
+        fill: ${(props) => {
+          return colorToHoverColor[props.color] || COLORS.primaryOrange;
+        }} !important;
+      }
+    }
+  }
+
   &.custom-secondary {
     font-family: Poppins, sans-serif;
     padding: 6px 15px;

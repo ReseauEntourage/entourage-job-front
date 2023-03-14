@@ -1,5 +1,5 @@
 export { default as Background } from 'src/components/utils/Background';
-export { default as Button } from 'src/components/utils/Button';
+export { Button, ButtonMultiple } from 'src/components/utils/Button';
 export { default as CloseButton } from 'src/components/utils/CloseButton';
 export { default as Grid } from 'src/components/utils/Grid';
 export { default as Hamburger } from 'src/components/utils/Hamburger';

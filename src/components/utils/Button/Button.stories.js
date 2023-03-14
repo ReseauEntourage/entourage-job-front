@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { COLORS } from '../../../constants/styles';
+import { COLORS } from 'src/constants/styles';
 
-import Button from '.';
+import { Button } from './Button';
 
 const StyledDarkBG = styled.div`
   height: 100px;

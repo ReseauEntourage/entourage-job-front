@@ -4,7 +4,7 @@ import {
   allCTAs,
   CTAsByTab,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/CandidateOpportunityDetailsCTAs/CandidateOpportunityDetailsCTAs.utils';
-import Button from 'src/components/utils/Button';
+import { Button } from 'src/components/utils/Button';
 import { StyledOppCTAsContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/CandidateOpportunityDetailsCTAs/CandidateOpportunityDetailsCTAS.styles';
 import { v4 as uuid } from 'uuid';
 import PropTypes from 'prop-types';

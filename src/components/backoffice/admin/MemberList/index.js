@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
-import Button from 'src/components/utils/Button';
+import { Button } from 'src/components/utils/Button';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import Api from 'src/api/index.ts';
 import SearchBar from 'src/components/filters/SearchBar';
@@ -14,10 +14,10 @@ import { filtersToQueryParams, mutateFormSchema } from 'src/utils';
 import schemaCreateUser from 'src/components/forms/schema/formEditUser';
 import { formAddOrganization } from 'src/components/forms/schema/formAddOrganization.ts';
 import { openModal } from 'src/components/modals/Modal';
-import { usePrevious } from 'src/hooks/utils';
+import { useIsDesktop, usePrevious } from 'src/hooks/utils';
 
 import { MEMBER_FILTERS_DATA, USER_ROLES } from 'src/constants';
-import { Section } from 'src/components/utils';
+import { Section, ButtonMultiple } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { Member } from 'src/components/backoffice/admin/MemberList/Member';
@@ -38,6 +38,8 @@ const MemberList = ({
   setSearch,
   resetFilters,
 }) => {
+  const isDesktop = useIsDesktop();
+
   const {
     query: { role },
   } = useRouter();
@@ -157,108 +159,109 @@ const MemberList = ({
         }s afin d'effectuer un suivi individuel de leur avancée.`}
         page={roleToPage[role]}
       >
-        <Button
-          style="primary"
-          onClick={() => {
-            openModal(
-              <ModalEdit
-                formSchema={mutatedSchema}
-                title="Création de membre"
-                description="Merci de renseigner quelques informations afin de créer le membre"
-                submitText="Créer le membre"
-                onSubmit={async (fields, closeModal) => {
-                  try {
-                    const { data } = await Api.postUser({
-                      ...fields,
-                      adminRole:
-                        fields.role === USER_ROLES.ADMIN
-                          ? fields.adminRole
-                          : null,
-                    });
-                    if (data) {
-                      closeModal();
-                      UIkit.notification(
-                        'Le membre a bien été créé',
-                        'success'
-                      );
-                      await fetchData(search, filters, role, offset, true);
-                    } else {
-                      UIkit.notification(
-                        "Une erreur s'est produite lors de la création du membre",
-                        'danger'
-                      );
-                    }
-                  } catch (error) {
-                    console.error(error);
-                    if (error?.response?.status === 409) {
-                      UIkit.notification(
-                        'Cette adresse email est déjà utilisée',
-                        'danger'
-                      );
-                    } else {
-                      UIkit.notification(
-                        "Une erreur s'est produite lors de la création du membre",
-                        'danger'
-                      );
-                    }
-                  }
-                }}
-              />
-            );
-          }}
+        <ButtonMultiple
+          id="admin-create"
+          align={isDesktop ? 'right' : 'left'}
+          dataTestId="button-admin-create"
+          style="custom-primary"
+          buttons={[
+            {
+              onClick: () => {
+                openModal(
+                  <ModalEdit
+                    formSchema={mutatedSchema}
+                    title="Création de membre"
+                    description="Merci de renseigner quelques informations afin de créer le membre"
+                    submitText="Créer le membre"
+                    onSubmit={async (fields, closeModal) => {
+                      try {
+                        const { data } = await Api.postUser({
+                          ...fields,
+                          adminRole:
+                            fields.role === USER_ROLES.ADMIN
+                              ? fields.adminRole
+                              : null,
+                        });
+                        if (data) {
+                          closeModal();
+                          UIkit.notification(
+                            'Le membre a bien été créé',
+                            'success'
+                          );
+                          await fetchData(search, filters, role, offset, true);
+                        } else {
+                          UIkit.notification(
+                            "Une erreur s'est produite lors de la création du membre",
+                            'danger'
+                          );
+                        }
+                      } catch (error) {
+                        console.error(error);
+                        if (error?.response?.status === 409) {
+                          UIkit.notification(
+                            'Cette adresse email est déjà utilisée',
+                            'danger'
+                          );
+                        } else {
+                          UIkit.notification(
+                            "Une erreur s'est produite lors de la création du membre",
+                            'danger'
+                          );
+                        }
+                      }
+                    }}
+                  />
+                );
+              },
+              label: 'Nouveau membre',
+            },
+            {
+              onClick: () => {
+                openModal(
+                  <ModalEdit
+                    formId={formAddOrganization.id}
+                    formSchema={formAddOrganization}
+                    title="Création de structure partenaire"
+                    description="Merci de renseigner quelques informations afin de créer la structure"
+                    submitText="Créer la structure"
+                    onSubmit={async (fields, closeModal) => {
+                      try {
+                        const { data } = await Api.postOrganization(fields);
+                        if (data) {
+                          closeModal();
+                          UIkit.notification(
+                            'La structure a bien été créé',
+                            'success'
+                          );
+                        } else {
+                          UIkit.notification(
+                            "Une erreur s'est produite lors de la création de la structure",
+                            'danger'
+                          );
+                        }
+                      } catch (error) {
+                        console.error(error);
+                        UIkit.notification(
+                          "Une erreur s'est produite lors de la création de la structure",
+                          'danger'
+                        );
+                      }
+                    }}
+                  />
+                );
+              },
+              dataTestId: 'button-create-organization',
+              label: 'Nouvelle structure',
+            },
+          ]}
         >
           <IconNoSSR
             name="plus"
             ratio={0.8}
             className="uk-margin-small-right"
           />
-          Nouveau membre
-        </Button>
-        <Button
-          style="primary"
-          dataTestId="button-create-organization"
-          onClick={() => {
-            openModal(
-              <ModalEdit
-                formId={formAddOrganization.id}
-                formSchema={formAddOrganization}
-                title="Création de structure partenaire"
-                description="Merci de renseigner quelques informations afin de créer la structure"
-                submitText="Créer la structure"
-                onSubmit={async (fields, closeModal) => {
-                  try {
-                    const { data } = await Api.postOrganization(fields);
-                    if (data) {
-                      closeModal();
-                      UIkit.notification(
-                        'La structure a bien été créé',
-                        'success'
-                      );
-                    } else {
-                      UIkit.notification(
-                        "Une erreur s'est produite lors de la création de la structure",
-                        'danger'
-                      );
-                    }
-                  } catch (error) {
-                    console.error(error);
-                    UIkit.notification(
-                      "Une erreur s'est produite lors de la création de la structure",
-                      'danger'
-                    );
-                  }
-                }}
-              />
-            );
-          }}
-        >
-          <IconNoSSR
-            name="plus"
-            ratio={0.8}
-            className="uk-margin-small-right"
-          />
-          Nouvelle structure
-        </Button>
+          Nouveau
+        </ButtonMultiple>
       </HeaderBackoffice>
       {hasError ? (
         <Section className="uk-width-1-1">
