@@ -260,7 +260,7 @@ const MemberList = ({
             ratio={0.8}
             className="uk-margin-small-right"
           />
-          Nouveau
+          Créer
         </ButtonMultiple>
       </HeaderBackoffice>
       {hasError ? (

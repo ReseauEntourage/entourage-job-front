@@ -4,12 +4,14 @@ import { COLORS } from 'src/constants/styles';
 export const colorToHoverBackgroundColor = {
   primaryOrange: COLORS.hoverOrange,
   darkGrayFont: 'white',
+  black: COLORS.hoverOrange,
   white: 'transparent',
 };
 
 export const colorToHoverColor = {
   primaryOrange: COLORS.primaryOrange,
   darkGrayFont: COLORS.primaryOrange,
+  black: COLORS.black,
   white: COLORS.primaryOrange,
 };
 
@@ -150,8 +152,8 @@ export const StyledButton = styled.button`
 
     &:hover {
       cursor: pointer;
-      background-color: ${() => {
-        return colorToHoverBackgroundColor.primaryOrange;
+      background-color: ${(props) => {
+        return colorToHoverBackgroundColor[props.color] || COLORS.primaryOrange;
       }};
       path {
         transition: 0.2s ease-in-out;
