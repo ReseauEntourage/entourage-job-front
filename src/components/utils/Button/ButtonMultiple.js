@@ -64,7 +64,7 @@ export function ButtonMultiple({
           }) => {
             return (
               <Button
-                color="darkGrayFont"
+                color="black"
                 style="custom-text"
                 href={href}
                 newTab={newTab}
