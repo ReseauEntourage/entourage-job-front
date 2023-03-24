@@ -35,10 +35,12 @@ export default class FormValidator {
 
         let isValid;
         try {
+          console.log(fieldValue, ...args, fieldValues);
           isValid =
             validationMethod(fieldValue, ...args, fieldValues) !==
             rule.validWhen;
         } catch (e) {
+          console.log(e);
           console.log(`Stringify validation fallback, reason: '${e.message}'`);
           isValid =
             validationMethod(fieldValue.toString(), ...args, fieldValues) !==

@@ -31,3 +31,10 @@ export const StyledFormHeading = styled.div`
     font-size: 14px;
   }
 `;
+
+export const StyledErrorMessage = styled.div`
+  color: ${COLORS.darkOrange};
+  /* margin-top: -30px; */
+  transform: translate(0, -30px);
+  font-size: 12px;
+`;

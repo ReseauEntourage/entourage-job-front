@@ -2,7 +2,7 @@ import React from 'react';
 import ReactSelect, { components } from 'react-select';
 import AsyncSelectNew from 'src/components/utils/Inputs/SelectAsync';
 import AsyncSelect from 'react-select/async';
-import PropTypes from 'prop-types';
+import PropTypes, { shape } from 'prop-types';
 import CreatableSelect from 'react-select/creatable';
 import DatePicker from 'src/components/forms/fields/DatePicker';
 import Select from 'src/components/forms/fields/Select';
@@ -20,6 +20,12 @@ import { useCheckbox } from 'src/components/utils/Inputs/Checkbox/useCheckbox';
 import SelectNew from 'src/components/utils/Inputs/Select';
 import TextareaNew from 'src/components/utils/Inputs/TextArea';
 import TextInputNew from 'src/components/utils/Inputs/TextInput';
+import DatePickerNew from 'src/components/utils/Inputs/Datepicker';
+import {
+  Radio as RadioNew,
+  RadioAsync as RadioAsyncNew,
+} from 'src/components/utils/Inputs/Radio';
+import { PhoneInput as PhoneInputNew } from 'src/components/utils/Inputs/PhoneInput/index.ts';
 
 let debounceTimeoutId;
 
@@ -30,6 +36,8 @@ const GenericField = ({
   onChange,
   getValid,
   getValue,
+  updateFieldOptions,
+  fieldOptions,
 }) => {
   const onChangeCustom = (event) => {
     let events = [event];
@@ -111,7 +119,22 @@ const GenericField = ({
         />
       );
     }
-
+    case 'datepicker-new': {
+      return (
+        <DatePickerNew
+          id={`${formId}-${data.id}`}
+          name={data.name}
+          title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
+          value={value}
+          valid={getValid(data.name)}
+          onChange={onChangeCustom}
+          min={data.min}
+          max={data.max}
+          disabled={data.disable ? data.disable(getValue) : data.disabled}
+          hidden={data.hide ? data.hide(getValue) : data.hidden}
+        />
+      );
+    }
     case 'text-input': {
       return (
         <TextInputNew
@@ -119,10 +142,30 @@ const GenericField = ({
           onChange={onChangeCustom}
           type={data.type}
           name={data.name}
+          placeholder={data.placeholder}
+          showLabel={data.showLabel}
+          valid={getValid(data.name)}
         />
       );
     }
-
+    case 'tel-input': {
+      return (
+        <PhoneInputNew
+          id={`${formId}-${data.id}`}
+          name={data.name}
+          title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
+          value={value}
+          type={data.type}
+          valid={getValid(data.name)}
+          onChange={parseValueToReturnSelect}
+          disabled={data.disable ? data.disable(getValue) : data.disabled}
+          hidden={data.hide ? data.hide(getValue) : data.hidden}
+          autocomplete={data.autocomplete}
+          placeholder={data.placeholder}
+          showLabel={data.showLabel}
+        />
+      );
+    }
     case 'select-new':
     case 'select': {
       let { options } = data;
@@ -145,7 +188,6 @@ const GenericField = ({
             });
         }
       }
-
       let valueToUse = value;
       if (!valueToUse) valueToUse = options[0].value;
       if (data.component === 'select') {
@@ -174,12 +216,12 @@ const GenericField = ({
           options={options}
           valid={getValid(data.name)}
           onChange={onChangeCustom}
+          showLabel={data.showLabel}
           // disabled={data.disable ? data.disable(getValue) : data.disabled}
           hidden={data.hide ? data.hide(getValue) : data.hidden}
         />
       );
     }
-
     case 'textarea-new': {
       return (
         <TextareaNew
@@ -421,6 +463,37 @@ const GenericField = ({
         </div>
       );
     }
+    case 'radio-new': {
+      return (
+        <RadioNew
+          options={data.options}
+          id={data.id}
+          name={data.name}
+          legend={data.title}
+          onChange={onChangeCustom}
+          filter={data.dynamicFilter(getValue)}
+          hidden={data.hide ? data.hide(getValue, fieldOptions) : data.hidden}
+        />
+      );
+    }
+    case 'radio-async-new': {
+      return (
+        <RadioAsyncNew
+          loadOptions={async () => {
+            const options = await data.loadOptions();
+            updateFieldOptions({ [data.id]: options });
+            return options;
+          }}
+          id={data.id}
+          name={data.name}
+          legend={data.title}
+          onChange={onChangeCustom}
+          filter={data.dynamicFilter(getValue)}
+          errorMessage={data.errorMessage}
+          hidden={data.hide ? data.hide(getValue, fieldOptions) : data.hidden}
+        />
+      );
+    }
     case 'select-request-creatable': {
       const hasOptions = data.options && data.options.length > 0;
 
@@ -480,14 +553,32 @@ const GenericField = ({
     }
 
     case 'heading': {
+      if (data.hide && data.hide(getValue, fieldOptions)) {
+        return null;
+      }
       return <StyledFormHeading>{data.title}</StyledFormHeading>;
     }
     case 'text': {
+      if (data.hide && data.hide(getValue, fieldOptions)) {
+        return null;
+      }
       return (
         <p className="uk-margin-top uk-text-bold uk-text-italic">
           {data.title}
         </p>
       );
+    }
+    case 'text-new': {
+      if (data.hide && data.hide(getValue, fieldOptions)) {
+        return null;
+      }
+      return <p>{data.title}</p>;
+    }
+    case 'dynamic-text': {
+      if (data.hide && data.hide(getValue, fieldOptions)) {
+        return null;
+      }
+      return <p>{data.title(getValue)}</p>;
     }
     default:
       throw `component ${data.component} does not exist`; // eslint-disable-line no-throw-literal
@@ -517,6 +608,8 @@ GenericField.propTypes = {
   onChange: PropTypes.func.isRequired,
   getValid: PropTypes.func.isRequired,
   getValue: PropTypes.func.isRequired,
+  fieldOptions: shape({}).isRequired,
+  updateFieldOptions: PropTypes.func.isRequired,
 };
 
 GenericField.defaultProps = {

@@ -11,8 +11,33 @@ import { gaEvent } from 'src/lib/gtag';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { fbEvent } from 'src/lib/fb';
+import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { openModal } from 'src/components/modals/Modal';
+import formCandidateInscription from 'src/components/forms/schema/formCandidateInscription';
+import api from 'src/api/index.ts';
+import UIkit from 'uikit';
 
 const Travailler = () => {
+  function openModalInscription() {
+    openModal(
+      <ModalEdit
+        title="Rejoindre LinkedOut"
+        description="LinkedOut accompagne des personnes en situation de précarité et sans réseau à trouver des opportunités d’emploi. Merci de répondre à quelques questions. Cela prend moins de 5 minutes"
+        formSchema={formCandidateInscription}
+        submitText="Valider"
+        id="candidate-inscription-form"
+        onSubmit={async (fields, closeModal) => {
+          // closeModal();
+          await api.postInscriptionCandidate(fields);
+          UIkit.notification(
+            'Félicitations ! Votre inscription a bien été prise en compte !',
+            'success'
+          );
+        }}
+      />
+    );
+  }
+
   return (
     <Layout title="Travailler - LinkedOut">
       <ImageTitle
@@ -32,10 +57,11 @@ const Travailler = () => {
         }
         cta={{
           onClick: () => {
+            openModalInscription();
             gaEvent(GA_TAGS.PAGE_TRAVAILLER_DEPOSER_CANDIDATURE_CLIC);
             fbEvent(FB_TAGS.CANDIDATE_REGISTRATION_OPEN);
           },
-          href: process.env.AIRTABLE_LINK_JOIN_LINKEDOUT,
+          // href: process.env.AIRTABLE_LINK_JOIN_LINKEDOUT,
           label: 'Rejoindre LinkedOut',
           isExternal: true,
           newTab: true,
@@ -68,10 +94,11 @@ const Travailler = () => {
               isExternal
               newTab
               onClick={() => {
+                openModalInscription();
                 gaEvent(GA_TAGS.PAGE_TRAVAILLER_DEPOSER_CANDIDATURE_CLIC);
                 fbEvent(FB_TAGS.CANDIDATE_REGISTRATION_OPEN);
               }}
-              href={process.env.AIRTABLE_LINK_JOIN_LINKEDOUT}
+              // href={process.env.AIRTABLE_LINK_JOIN_LINKEDOUT}
             >
               Je m&apos;inscris <IconNoSSR name="chevron-right" />
             </Button>

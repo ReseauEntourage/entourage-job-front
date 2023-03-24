@@ -34,12 +34,12 @@ const DatePicker = ({
         type="date"
         onChange={(e) => {
           setValue(e.target.value);
-          onChange();
+          onChange(e);
         }}
         disabled={disabled}
         hidden={hidden}
       />
-      <FormValidatorErrorMessage validObj={valid} />
+      <FormValidatorErrorMessage validObj={valid} newInput />
     </StyledDatePickerContainer>
   );
 };
