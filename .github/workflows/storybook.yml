@@ -5,7 +5,7 @@ name: 'Storybook deploy'
 on: 
   push:
     branches: 
-      - develop
+      - feat/storybook
 
 # List of jobs
 jobs:
