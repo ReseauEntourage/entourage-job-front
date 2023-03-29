@@ -1,13 +1,13 @@
 /* eslint-disable react/jsx-no-target-blank */
-import React from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
+import React from 'react';
+import { StyledButton } from 'src/components/utils/Button/Button.styles';
 import {
   UIKIT_BUTTON_SIZES,
   UIKIT_BUTTON_STYLES_SPEC,
   UIKIT_SCREENS,
 } from 'src/components/variables';
-import { StyledButton } from 'src/components/utils/Button/Button.styles';
 
 export function Button({
   visible,
@@ -51,7 +51,11 @@ export function Button({
       className={classBuffer}
       disabled={disabled}
       type="button"
-      onClick={onClick}
+      onClick={() => {
+        if (onClick) {
+          onClick();
+        }
+      }}
       data-uk-toggle={toggle}
       data-testid={dataTestId}
       color={color}
@@ -119,7 +123,7 @@ Button.defaultProps = {
   isExternal: false,
   newTab: false,
   className: undefined,
-  onClick: () => {},
+  onClick: undefined,
   toggle: undefined,
   scroll: true,
   dataTestId: '',

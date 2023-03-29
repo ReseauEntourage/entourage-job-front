@@ -60,6 +60,14 @@ export function SecondaryOrange() {
   );
 }
 
+export function ButtonSmall() {
+  return (
+    <Button style="custom-primary" size="small" href="/">
+      Button
+    </Button>
+  );
+}
+
 export function ButtonDisabled() {
   return (
     <Button style="custom-secondary disabled" color="primaryOrange">

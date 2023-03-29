@@ -1,12 +1,12 @@
 /* eslint-disable react/jsx-no-target-blank */
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import {
   UIKIT_BUTTON_SIZES,
   UIKIT_BUTTON_STYLES_SPEC,
   UIKIT_SCREENS,
 } from 'src/components/variables';
-import { useCloseOnClickOutsideComponent } from 'src/hooks/useCloseOnClickOutsideComponent.ts';
+import { useCloseOnClickOutsideComponent } from 'src/hooks/useCloseOnClickOutsideComponent';
 import { Button } from './Button';
 import {
   StyledButtonContainer,
@@ -108,7 +108,7 @@ ButtonMultiple.propTypes = {
   dataTestId: PropTypes.string,
   color: PropTypes.string,
   align: PropTypes.oneOf(['left', 'right']),
-  buttons: PropTypes.arrayOf([
+  buttons: PropTypes.arrayOf(
     PropTypes.shape({
       href: PropTypes.oneOfType([
         PropTypes.string,
@@ -124,9 +124,10 @@ ButtonMultiple.propTypes = {
       shallow: PropTypes.bool,
       scroll: PropTypes.bool,
       isExternal: PropTypes.bool,
-      children: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-    }),
-  ]).isRequired,
+      children: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
+        .isRequired,
+    }).isRequired
+  ).isRequired,
 };
 
 ButtonMultiple.defaultProps = {

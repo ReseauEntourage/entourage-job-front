@@ -251,7 +251,7 @@ CandidateOpportunityDetails.propTypes = {
       })
     ),
   ]),
-  events: PropTypes.arrayOf([
+  events: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       OpportunityUserId: PropTypes.string.isRequired,
@@ -267,8 +267,8 @@ CandidateOpportunityDetails.propTypes = {
         createdAt: PropTypes.string.isRequired,
         updatedAt: PropTypes.string.isRequired,
       }),
-    }),
-  ]),
+    })
+  ),
   department: PropTypes.string.isRequired,
   isPublic: PropTypes.bool.isRequired,
   isExternal: PropTypes.bool.isRequired,

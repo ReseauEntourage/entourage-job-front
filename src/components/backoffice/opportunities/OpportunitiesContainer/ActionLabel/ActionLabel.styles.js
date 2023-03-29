@@ -3,7 +3,7 @@ import { COLORS } from 'src/constants/styles';
 import {
   colorToHoverBackgroundColor,
   colorToHoverColor,
-} from 'src/components/utils/Button/Button.styles';
+} from 'src/components/utils/Button/Button.styles.ts';
 
 export const StyledContainer = styled.div`
   font-family: Poppins, sans-serif;
