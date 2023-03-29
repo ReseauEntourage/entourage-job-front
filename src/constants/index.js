@@ -375,7 +375,9 @@ export const MEMBER_FILTERS_DATA = [
 
 export const USER_ROLES = {
   COACH: 'Coach',
-  CANDIDAT: 'Candidat',
+  COACH_EXTERNAL: 'Coach externe',
+  CANDIDATE: 'Candidat',
+  CANDIDATE_EXTERNAL: 'Candidat externe',
   ADMIN: 'Admin',
 };
 
@@ -383,6 +385,18 @@ export const ADMIN_ROLES = {
   CANDIDATES: 'Candidats',
   COMPANIES: 'Entreprises',
 };
+
+export const NORMAL_USERS_ROLES = [USER_ROLES.CANDIDATE, USER_ROLES.COACH];
+export const EXTERNAL_USER_ROLES = [
+  USER_ROLES.CANDIDATE_EXTERNAL,
+  USER_ROLES.COACH_EXTERNAL,
+];
+
+export const CANDIDATE_USER_ROLES = [
+  USER_ROLES.CANDIDATE,
+  USER_ROLES.CANDIDATE_EXTERNAL,
+];
+export const COACH_USER_ROLES = [USER_ROLES.COACH, USER_ROLES.COACH_EXTERNAL];
 
 export const EXTERNAL_OFFERS_ORIGINS = [
   {

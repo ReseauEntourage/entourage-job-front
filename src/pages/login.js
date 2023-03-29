@@ -23,8 +23,7 @@ const Login = () => {
     if (user) {
       if (user.role === USER_ROLES.ADMIN) {
         replace(requestedPath || '/backoffice/admin/offres');
-      }
-      if (user.role === USER_ROLES.CANDIDAT || user.role === USER_ROLES.COACH) {
+      } else {
         replace(requestedPath || '/backoffice/candidat/offres');
       }
     }

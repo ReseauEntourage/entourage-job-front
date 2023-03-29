@@ -214,6 +214,13 @@ class APIHandler {
     return this.put(`/user/candidate/read/${candidateId}`);
   }
 
+  putLinkedUser(
+    userId: string,
+    userToLinkId: string | string[]
+  ): Promise<AxiosResponse> {
+    return this.put(`/user/linkUser/${userId}`, { userToLinkId });
+  }
+
   // delete
 
   deleteUser(userId: string): Promise<AxiosResponse> {

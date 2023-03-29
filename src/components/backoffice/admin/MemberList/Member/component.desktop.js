@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { getCandidateFromCoachOrCandidate, getRelatedUser } from 'src/utils';
+import {
+  getUserCandidateFromCoachOrCandidate,
+  getRelatedUser,
+  areRolesIncluded,
+} from 'src/utils';
 import moment from 'moment';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
 import { MemberPropTypes } from 'src/components/backoffice/admin/MemberList/shape';
-import { USER_ROLES } from 'src/constants';
+import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants';
 import { Grid } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { StyledRow } from 'src/components/backoffice/admin/MemberList/Member/styles';
@@ -71,11 +75,11 @@ const Member = ({ member, role, callback }) => {
       {role !== USER_ROLES.COACH && (
         <>
           <td>
-            {member.role === USER_ROLES.CANDIDAT ? (
+            {areRolesIncluded(CANDIDATE_USER_ROLES, [member.role]) ? (
               <>
-                {getCandidateFromCoachOrCandidate(member) && (
+                {getUserCandidateFromCoachOrCandidate(member) && (
                   <>
-                    {getCandidateFromCoachOrCandidate(member).employed ? (
+                    {getUserCandidateFromCoachOrCandidate(member).employed ? (
                       <span className="yes">Oui</span>
                     ) : (
                       <span className="no">Non</span>
@@ -88,7 +92,7 @@ const Member = ({ member, role, callback }) => {
             )}
           </td>
           <td className="cv-status-cell">
-            {member.role === USER_ROLES.CANDIDAT ? (
+            {areRolesIncluded(CANDIDATE_USER_ROLES, [member.role]) ? (
               <>
                 {cvStatus === 'none' ? (
                   <span className="uk-text-info">Aucun</span>
@@ -101,11 +105,11 @@ const Member = ({ member, role, callback }) => {
             )}
           </td>
           <td className="hiddenCV-cell">
-            {member.role === USER_ROLES.CANDIDAT ? (
+            {areRolesIncluded(CANDIDATE_USER_ROLES, [member.role]) ? (
               <>
-                {getCandidateFromCoachOrCandidate(member) && (
+                {getUserCandidateFromCoachOrCandidate(member) && (
                   <div>
-                    {getCandidateFromCoachOrCandidate(member).hidden ? (
+                    {getUserCandidateFromCoachOrCandidate(member).hidden ? (
                       <IconNoSSR
                         name="eye-hidden"
                         ratio={1.2}
@@ -130,7 +134,7 @@ const Member = ({ member, role, callback }) => {
               size={16}
               checked={checked}
               handleClick={handleCheckBox}
-              disabled={getCandidateFromCoachOrCandidate(member)?.hidden}
+              disabled={getUserCandidateFromCoachOrCandidate(member)?.hidden}
             />
           </td>
         </>
@@ -141,7 +145,7 @@ const Member = ({ member, role, callback }) => {
 
 Member.propTypes = {
   member: MemberPropTypes.isRequired,
-  role: PropTypes.oneOf([USER_ROLES.CANDIDAT, USER_ROLES.COACH]),
+  role: PropTypes.oneOf([USER_ROLES.CANDIDATE, USER_ROLES.COACH]),
   callback: PropTypes.func.isRequired,
 };
 

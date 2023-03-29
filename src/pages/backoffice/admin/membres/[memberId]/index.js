@@ -12,12 +12,18 @@ import CandidatHeader from 'src/components/backoffice/cv/CandidatHeader';
 import UserInformationCard from 'src/components/cards/UserInformationCard';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { OFFER_ADMIN_FILTERS_DATA, USER_ROLES } from 'src/constants';
+import {
+  CANDIDATE_USER_ROLES,
+  COACH_USER_ROLES,
+  OFFER_ADMIN_FILTERS_DATA,
+  USER_ROLES,
+} from 'src/constants';
 import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
 import {
-  getCandidateFromCoachOrCandidate,
+  getUserCandidateFromCoachOrCandidate,
   getCandidateIdFromCoachOrCandidate,
   mutateFormSchema,
+  areRolesIncluded,
 } from 'src/utils';
 import AdminCandidateOpportunities from 'src/components/opportunities/AdminCandidateOpportunities';
 import CandidateEmployedToggle from 'src/components/backoffice/candidate/CandidateEmployedToggle';
@@ -73,7 +79,7 @@ const EditUserModal = ({ user, setUser }) => {
   ]);
 
   if (user) {
-    if (user.role !== USER_ROLES.CANDIDAT) {
+    if (user.role !== USER_ROLES.CANDIDATE) {
       mutatedSchema = mutateFormSchema(mutatedSchema, [
         {
           fieldId: 'address',
@@ -178,7 +184,7 @@ EditUserModal.propTypes = {
     role: PropTypes.oneOf([
       USER_ROLES.COACH,
       USER_ROLES.ADMIN,
-      USER_ROLES.CANDIDAT,
+      USER_ROLES.CANDIDATE,
     ]).isRequired,
     gender: PropTypes.number.isRequired,
     ...PropTypes.shape({}),
@@ -250,7 +256,10 @@ const User = () => {
     }
   };
 
-  const isCandidat = user && user.candidat && user.role === USER_ROLES.CANDIDAT;
+  const isCandidat =
+    user &&
+    user.candidat &&
+    areRolesIncluded(CANDIDATE_USER_ROLES, [user.role]);
 
   if (loading || cvLoading || !tab) {
     return (
@@ -378,52 +387,52 @@ const User = () => {
               </SimpleLink>
             </li>
           </ul>
-          {tab !== 'parametres' && user.role === USER_ROLES.COACH && (
-            <>
-              {getCandidateFromCoachOrCandidate(user) ? (
-                <div>
-                  {tab === 'cv' && (
-                    <CVPageContent
-                      candidateId={getCandidateIdFromCoachOrCandidate(user)}
-                      cv={cv}
-                      setCV={setCV}
-                    />
-                  )}
-                  {tab === 'offres' && (
-                    <AdminCandidateOpportunities
-                      candidateId={getCandidateIdFromCoachOrCandidate(user)}
-                    />
-                  )}
-                </div>
-              ) : (
-                <div>
-                  <h2 className="uk-text-bold uk-text-center">
-                    <span className="uk-text-primary">Aucun candidat</span>{' '}
-                    n&apos;est rattaché à ce compte coach.
-                  </h2>
-                  <p className="uk-text-center">
-                    Il peut y avoir plusieurs raisons à ce sujet. Contacte
-                    l&apos;équipe LinkedOut pour en savoir plus.
-                  </p>
-                </div>
-              )}
-            </>
-          )}
-          {tab !== 'parametres' && user.role === USER_ROLES.CANDIDAT && (
-            <div>
-              {tab === 'cv' && (
-                <CVPageContent candidateId={user.id} cv={cv} setCV={setCV} />
-              )}
-              {tab === 'offres' && (
-                <AdminCandidateOpportunities candidateId={user.id} />
-              )}
-            </div>
-          )}
+          {tab !== 'parametres' &&
+            areRolesIncluded(COACH_USER_ROLES, [user.role]) && (
+              <>
+                {getUserCandidateFromCoachOrCandidate(user) ? (
+                  <div>
+                    {tab === 'cv' && (
+                      <CVPageContent
+                        candidateId={getCandidateIdFromCoachOrCandidate(user)}
+                        cv={cv}
+                        setCV={setCV}
+                      />
+                    )}
+                    {tab === 'offres' && (
+                      <AdminCandidateOpportunities
+                        candidateId={getCandidateIdFromCoachOrCandidate(user)}
+                      />
+                    )}
+                  </div>
+                ) : (
+                  <div>
+                    <h2 className="uk-text-bold uk-text-center">
+                      <span className="uk-text-primary">Aucun candidat</span>{' '}
+                      n&apos;est rattaché à ce compte coach.
+                    </h2>
+                    <p className="uk-text-center">
+                      Il peut y avoir plusieurs raisons à ce sujet. Contacte
+                      l&apos;équipe LinkedOut pour en savoir plus.
+                    </p>
+                  </div>
+                )}
+              </>
+            )}
+          {tab !== 'parametres' &&
+            areRolesIncluded(CANDIDATE_USER_ROLES, [user.role]) && (
+              <div>
+                {tab === 'cv' && (
+                  <CVPageContent candidateId={user.id} cv={cv} setCV={setCV} />
+                )}
+                {tab === 'offres' && (
+                  <AdminCandidateOpportunities candidateId={user.id} />
+                )}
+              </div>
+            )}
           {tab === 'parametres' && (
             <Grid childWidths={['1-2@m']}>
-              {(user.role === USER_ROLES.CANDIDAT ||
-                user.role === USER_ROLES.COACH) && (
-                /* TODO CHECK IF BUG COMES FROM HERE */
+              {user.role !== USER_ROLES.ADMIN && (
                 <Grid
                   gap={isCandidat ? 'medium' : 'collapse'}
                   childWidths={['1-1']}
@@ -533,7 +542,9 @@ const User = () => {
                             </span>
                           )}
                         </Grid>
-                        {user.role === USER_ROLES.CANDIDAT && (
+                        {areRolesIncluded(CANDIDATE_USER_ROLES, [
+                          user.role,
+                        ]) && (
                           <Grid row gap="small" middle>
                             <IconNoSSR name="home" style={{ width: 20 }} />
                             {user.address ? (
@@ -551,8 +562,7 @@ const User = () => {
                 </Grid>
               )}
               <Grid childWidths={['1-1']} gap="medium">
-                {(user.role === USER_ROLES.CANDIDAT ||
-                  user.role === USER_ROLES.COACH) && (
+                {user.role !== USER_ROLES.ADMIN && (
                   <UserInformationCard
                     isAdmin
                     user={user}

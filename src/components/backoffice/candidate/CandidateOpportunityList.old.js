@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
-import { USER_ROLES } from 'src/constants';
+import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants';
 import OpportunityList from 'src/components/opportunities/OpportunityList';
 import PropTypes from 'prop-types';
 
@@ -9,6 +9,7 @@ import { openModal } from 'src/components/modals/Modal';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { Button } from 'src/components/utils';
 import ModalExternalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
+import { areRolesIncluded } from '../../../utils';
 
 const CandidateOpportunityList = ({
   search,
@@ -27,12 +28,12 @@ const CandidateOpportunityList = ({
     <>
       <HeaderBackoffice
         title={
-          user.role === USER_ROLES.CANDIDAT
+          areRolesIncluded(CANDIDATE_USER_ROLES, [user.role])
             ? 'Consultez toutes les opportunités de travail'
             : 'Consultez les opportunités de travail du candidat'
         }
         description={
-          user.role === USER_ROLES.CANDIDAT
+          areRolesIncluded(CANDIDATE_USER_ROLES, [user.role])
             ? 'Parcourez les offres qui vous sont directement adressées ainsi que celles communes aux différents candidats du parcours LinkedOut.'
             : 'Parcourez les offres qui ont été adressées à votre candidat ainsi que celles communes aux différents candidats du parcours LinkedOut.'
         }

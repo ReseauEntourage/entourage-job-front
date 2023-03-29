@@ -1,2 +1,2 @@
-export { Button } from './Button';
-export { ButtonMultiple } from './ButtonMultiple';
+export { Button } from './Button.tsx';
+export { ButtonMultiple } from './ButtonMultiple.tsx';

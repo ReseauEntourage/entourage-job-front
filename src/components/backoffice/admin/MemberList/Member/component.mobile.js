@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { getCandidateFromCoachOrCandidate, getRelatedUser } from 'src/utils';
+import {
+  getUserCandidateFromCoachOrCandidate,
+  getRelatedUser,
+} from 'src/utils';
 import moment from 'moment';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
 import { MemberPropTypes } from 'src/components/backoffice/admin/MemberList/shape';
@@ -39,7 +42,7 @@ const Member = ({ member, role, callback }) => {
               checked={checked}
               size={16}
               handleClick={handleCheckBox}
-              disabled={getCandidateFromCoachOrCandidate(member)?.hidden}
+              disabled={getUserCandidateFromCoachOrCandidate(member)?.hidden}
             />
           </div>
         )}
@@ -94,7 +97,7 @@ const Member = ({ member, role, callback }) => {
           <div className="cell">
             <span className="title">En emploi</span>
             <span>
-              {getCandidateFromCoachOrCandidate(member).employed ? (
+              {getUserCandidateFromCoachOrCandidate(member).employed ? (
                 <span className="yes">Oui</span>
               ) : (
                 <span className="no">Non</span>
@@ -110,7 +113,7 @@ const Member = ({ member, role, callback }) => {
           <div className="cell">
             <span className="title">CV masqué</span>
             <span>
-              {getCandidateFromCoachOrCandidate(member).hidden ? (
+              {getUserCandidateFromCoachOrCandidate(member).hidden ? (
                 <IconNoSSR
                   name="eye-hidden"
                   ratio={1.2}
@@ -129,7 +132,7 @@ const Member = ({ member, role, callback }) => {
 
 Member.propTypes = {
   member: MemberPropTypes.isRequired,
-  role: PropTypes.oneOf([USER_ROLES.CANDIDAT, USER_ROLES.COACH]),
+  role: PropTypes.oneOf([USER_ROLES.CANDIDATE, USER_ROLES.COACH]),
   callback: PropTypes.func.isRequired,
 };
 

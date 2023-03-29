@@ -1,15 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Grid } from 'src/components/utils';
-import { CV_STATUS, USER_ROLES } from 'src/constants';
+import {
+  CANDIDATE_USER_ROLES,
+  COACH_USER_ROLES,
+  CV_STATUS,
+  USER_ROLES,
+} from 'src/constants';
 import Api from 'src/api/index.ts';
-import { getCandidateFromCoachOrCandidate } from 'src/utils';
+import {
+  areRolesIncluded,
+  getUserCandidateFromCoachOrCandidate,
+} from 'src/utils';
 
 const NoCV = ({ candidateId, user, setCV }) => {
-  const candidate = getCandidateFromCoachOrCandidate(user);
+  const candidate = getUserCandidateFromCoachOrCandidate(user);
   return (
     <Grid column middle>
-      {user.role === USER_ROLES.COACH &&
+      {areRolesIncluded(COACH_USER_ROLES, [user.role]) &&
       (!candidate || (candidate && candidate.deletedAt)) ? (
         <div className="uk-flex uk-flex-column uk-flex-middle">
           <h2 className="uk-text-bold uk-text-center">

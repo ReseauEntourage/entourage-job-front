@@ -225,7 +225,7 @@ export const adminMutations = [
           Api.getUsersSearch({
             params: {
               query: inputValue,
-              role: USER_ROLES.CANDIDAT,
+              role: USER_ROLES.CANDIDATE,
             },
           })
             .then(({ data }) => {

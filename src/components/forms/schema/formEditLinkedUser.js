@@ -13,7 +13,7 @@ export default {
       hidden: true,
       options: [
         { value: -1, label: 'Choisissez un role' },
-        { value: USER_ROLES.CANDIDAT, label: USER_ROLES.CANDIDAT },
+        { value: USER_ROLES.CANDIDATE, label: USER_ROLES.CANDIDATE },
         { value: USER_ROLES.COACH, label: USER_ROLES.COACH },
         { value: USER_ROLES.ADMIN, label: USER_ROLES.ADMIN },
       ],

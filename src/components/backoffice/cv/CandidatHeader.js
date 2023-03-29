@@ -3,9 +3,13 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Grid, SimpleLink } from 'src/components/utils';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
-import { USER_ROLES } from 'src/constants';
+import {
+  CANDIDATE_USER_ROLES,
+  COACH_USER_ROLES,
+  USER_ROLES,
+} from 'src/constants';
 import { IconNoSSR } from 'src/components/utils/Icon';
-import { getRelatedUser } from 'src/utils';
+import { areRolesIncluded, getRelatedUser } from 'src/utils';
 
 const CandidatHeader = ({ user, showZone }) => {
   if (!user) return null;
@@ -30,23 +34,30 @@ const CandidatHeader = ({ user, showZone }) => {
           </span>
         </Grid>
 
-        {(user.role === USER_ROLES.CANDIDAT ||
-          (user.role === USER_ROLES.COACH && user.coach)) && (
+        {(areRolesIncluded(CANDIDATE_USER_ROLES, [user.role]) ||
+          (areRolesIncluded(COACH_USER_ROLES, [user.role]) &&
+            user.coaches)) && (
           <Grid row gap="small" middle className="uk-margin-small-top">
             <IconNoSSR name="link" style={{ width: 20 }} />
             <SimpleLink
               className="uk-link-text uk-margin-small-top"
               target="_blank"
               href={`/cv/${
-                user[user.role === USER_ROLES.CANDIDAT ? 'candidat' : 'coach']
-                  .url
+                user[
+                  areRolesIncluded(CANDIDATE_USER_ROLES, [user.role])
+                    ? 'candidat'
+                    : 'coach'
+                ].url
               }`}
             >
               <span>
                 {process.env.SERVER_URL}/cv/
                 {
-                  user[user.role === USER_ROLES.CANDIDAT ? 'candidat' : 'coach']
-                    .url
+                  user[
+                    areRolesIncluded(CANDIDATE_USER_ROLES, [user.role])
+                      ? 'candidat'
+                      : 'coach'
+                  ].url
                 }
               </span>
             </SimpleLink>
@@ -81,13 +92,15 @@ CandidatHeader.propTypes = {
         lastName: PropTypes.string,
       }),
     }),
-    coach: PropTypes.shape({
-      url: PropTypes.string,
-      candidat: PropTypes.shape({
-        firstName: PropTypes.string,
-        lastName: PropTypes.string,
-      }),
-    }),
+    coaches: PropTypes.arrayOf(
+      PropTypes.shape({
+        url: PropTypes.string,
+        candidat: PropTypes.shape({
+          firstName: PropTypes.string,
+          lastName: PropTypes.string,
+        }),
+      })
+    ),
     zone: PropTypes.string,
   }).isRequired,
   showZone: PropTypes.bool,

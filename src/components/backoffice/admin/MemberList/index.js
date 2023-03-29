@@ -10,13 +10,22 @@ import { Button } from 'src/components/utils/Button';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import Api from 'src/api/index.ts';
 import SearchBar from 'src/components/filters/SearchBar';
-import { filtersToQueryParams, mutateFormSchema } from 'src/utils';
+import {
+  areRolesIncluded,
+  filtersToQueryParams,
+  mutateFormSchema,
+} from 'src/utils';
 import schemaCreateUser from 'src/components/forms/schema/formEditUser';
 import { formAddOrganization } from 'src/components/forms/schema/formAddOrganization.ts';
 import { openModal } from 'src/components/modals/Modal';
 import { useIsDesktop, usePrevious } from 'src/hooks/utils';
 
-import { MEMBER_FILTERS_DATA, USER_ROLES } from 'src/constants';
+import {
+  CANDIDATE_USER_ROLES,
+  COACH_USER_ROLES,
+  MEMBER_FILTERS_DATA,
+  USER_ROLES,
+} from 'src/constants';
 import { Section, ButtonMultiple } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
@@ -131,10 +140,9 @@ const MemberList = ({
 
   useEffect(() => {
     if (role !== prevRole) {
-      const initialFiltersConst =
-        role === USER_ROLES.COACH
-          ? [MEMBER_FILTERS_DATA[0], MEMBER_FILTERS_DATA[2]]
-          : MEMBER_FILTERS_DATA;
+      const initialFiltersConst = areRolesIncluded(COACH_USER_ROLES, [role])
+        ? [MEMBER_FILTERS_DATA[0], MEMBER_FILTERS_DATA[2]]
+        : MEMBER_FILTERS_DATA;
 
       setFiltersConst(initialFiltersConst);
     }
@@ -291,7 +299,7 @@ const MemberList = ({
             placeholder="Rechercher..."
             smallSelectors
           />
-          {role === USER_ROLES.CANDIDAT && (
+          {areRolesIncluded(CANDIDATE_USER_ROLES, [role]) && (
             <StyledActionsContainer>
               <Button
                 style="custom-secondary small"
@@ -313,11 +321,15 @@ const MemberList = ({
                 <thead>
                   <tr>
                     <th className="uk-text-nowrap">{role}</th>
-                    {role === USER_ROLES.CANDIDAT && <th>Coach</th>}
-                    {role === USER_ROLES.COACH && <th>Candidat</th>}
+                    {areRolesIncluded(CANDIDATE_USER_ROLES, [role]) && (
+                      <th>Coach</th>
+                    )}
+                    {areRolesIncluded(COACH_USER_ROLES, [role]) && (
+                      <th>Candidat</th>
+                    )}
                     <th>Zone</th>
                     <th>Dernière connexion</th>
-                    {role !== USER_ROLES.COACH && (
+                    {areRolesIncluded(CANDIDATE_USER_ROLES, [role]) && (
                       <>
                         <th>En emploi</th>
                         <th>Statut CV</th>
