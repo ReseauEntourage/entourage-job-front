@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { Navbar } from 'src/components/utils';
 
-import Button from 'src/components/utils/Button';
+import { Button } from 'src/components/utils/Button';
 import { gaEvent } from 'src/lib/gtag';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { IconNoSSR } from 'src/components/utils/Icon';

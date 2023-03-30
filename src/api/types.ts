@@ -6,6 +6,7 @@ export const APIRoutes = {
   OPPORTUNITIES: 'opportunity',
   CONTACTS: 'contact',
   CVS: 'cv',
+  ORGANIZATION: 'organization',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -28,6 +29,16 @@ export type User = {
   saltReset: string;
   zone: string;
   userToCoach: string;
+};
+
+export type Organization = {
+  name: string;
+  address: string;
+  referentFirstName: string;
+  referentLastName: string;
+  referentMail: string;
+  referentPhone: string;
+  zone: string;
 };
 
 export type Opportunity = {

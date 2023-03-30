@@ -1,19 +1,16 @@
 {
-  "user": {
-    "id": "123",
-    "email": "test@test.com",
-    "firstName": "test",
-    "lastName": "Test",
-    "gender": 0,
-    "phone": "0698754321",
-    "address": "address",
-    "zone": "LYON",
-    "role": "Admin",
-    "adminRole": "Candidats",
-    "candidat": false,
-    "coach": false,
-    "lastConnection": "",
-    "sub": "123"
-  },
-  "token": "123"
+  "id": "123",
+  "email": "test@test.com",
+  "firstName": "test",
+  "lastName": "Test",
+  "gender": 0,
+  "phone": "0698754321",
+  "address": "address",
+  "zone": "LYON",
+  "role": "Admin",
+  "adminRole": "Candidats",
+  "candidat": false,
+  "coach": false,
+  "lastConnection": "",
+  "sub": "123"
 }

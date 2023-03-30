@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'src/components/utils/Button';
+import { Button } from 'src/components/utils/Button';
 
 const FiltersOptions = ({ resetFilters }) => {
   return (

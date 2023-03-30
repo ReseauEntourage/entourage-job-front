@@ -252,6 +252,7 @@ export const CV_FILTERS_DATA = [
       { label: 'En emploi', value: true },
     ],
     title: 'Masquer les candidats en emploi',
+    tag: GA_TAGS.PAGE_GALERIE_FILTRE_EMPLOYE_CLIC,
   },
   {
     key: 'locations',

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
 import { IconNoSSR } from 'src/components/utils/Icon';
-import { isSSR } from 'src/utils/isSSR';
+import { useCloseOnClickOutsideComponent } from 'src/hooks/useCloseOnClickOutsideComponent.ts';
 import { StyledSelectContainer } from './Select.styles';
 
 const Select = ({
@@ -16,20 +16,11 @@ const Select = ({
   hidden,
 }) => {
   const [selectedOption, setSelectedOption] = useState({ value: '' });
-  const [optionsOpen, setOptionsOpen] = useState(false);
-  const selectId = `${id}-container`;
-
-  useEffect(() => {
-    if (!isSSR && id) {
-      const container = document.getElementById(selectId);
-      document.addEventListener('click', function closeSelect(e) {
-        const isClickInside = container.contains(e.target);
-        if (optionsOpen && !isClickInside) {
-          setOptionsOpen(!optionsOpen);
-        }
-      });
-    }
-  }, [id, optionsOpen, selectId, onChange, name]);
+  const {
+    componentId: selectId,
+    isOpen: optionsOpen,
+    setIsOpen: setOptionsOpen,
+  } = useCloseOnClickOutsideComponent(id);
 
   return (
     <StyledSelectContainer

@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import Button from 'src/components/utils/Button';
+import { Button } from 'src/components/utils/Button';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { gaEvent } from 'src/lib/gtag';
 import { PropTypes } from 'prop-types';

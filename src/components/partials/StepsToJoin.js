@@ -1,6 +1,6 @@
 import React from 'react';
 import { Section } from 'src/components/utils';
-import Button from 'src/components/utils/Button';
+import { Button } from 'src/components/utils/Button';
 import { gaEvent } from 'src/lib/gtag';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { SharePartial } from 'src/components/partials/index';

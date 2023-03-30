@@ -23,6 +23,7 @@ const Grid = ({
   masonry,
   style,
   reverse,
+  dataTestId,
 }) => {
   let classBuffer = '';
   let gridBuffer = '';
@@ -58,7 +59,12 @@ const Grid = ({
   })();
   // on filtre les elemnt vide
   return (
-    <div className={classBuffer} data-uk-grid={gridBuffer} style={style}>
+    <div
+      className={classBuffer}
+      data-uk-grid={gridBuffer}
+      style={style}
+      data-testid={dataTestId}
+    >
       {content
         .filter((_) => {
           return _;
@@ -110,6 +116,7 @@ Grid.propTypes = {
   masonry: PropTypes.bool,
   style: PropTypes.shape({}),
   reverse: PropTypes.bool,
+  dataTestId: PropTypes.string,
 };
 Grid.defaultProps = {
   match: false,
@@ -132,6 +139,7 @@ Grid.defaultProps = {
   masonry: false,
   style: undefined,
   reverse: false,
+  dataTestId: '',
 };
 
 export const GridNoSSR = dynamic(

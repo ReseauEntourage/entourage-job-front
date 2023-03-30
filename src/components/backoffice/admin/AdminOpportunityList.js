@@ -7,7 +7,7 @@ import formEditOpportunitySchema, {
 import formEditExternalOpportunitySchema, {
   adminMutations as externalOpportunityAdminMutations,
 } from 'src/components/forms/schema/formEditExternalOpportunity';
-import { Button } from 'src/components/utils';
+import { ButtonMultiple } from 'src/components/utils';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import OpportunityList from 'src/components/opportunities/OpportunityList';
@@ -17,6 +17,7 @@ import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import Api from 'src/api/index.ts';
 import UIkit from 'uikit';
 import moment from 'moment';
+import { useIsDesktop } from 'src/hooks/utils';
 
 const AdminOpportunityList = ({
   search,
@@ -27,6 +28,8 @@ const AdminOpportunityList = ({
   setSearch,
   resetFilters,
 }) => {
+  const isDesktop = useIsDesktop();
+
   // desactivation du champ de disclaimer
   const mutatedOfferSchema = mutateFormSchema(formEditOpportunitySchema, [
     {
@@ -92,69 +95,72 @@ const AdminOpportunityList = ({
         title="Modération des offres d'emploi"
         description="Ici vous pouvez accéder à toutes les opportunités et valider les offres envoyées par les recruteurs !"
       >
-        <div className="uk-flex uk-flex-column uk-flex-bottom">
-          <Button
-            style="primary"
-            className="uk-margin-small-bottom"
-            onClick={() => {
-              openModal(<PostOpportunityModal />);
-            }}
-          >
-            <IconNoSSR
-              name="plus"
-              ratio="0.8"
-              className="uk-margin-small-right"
-            />
-            Créer une nouvelle offre
-          </Button>
-          <Button
-            style="default"
-            onClick={() => {
-              openModal(
-                <ModalEdit
-                  title="Ajouter une offre externe"
-                  submitText="Envoyer"
-                  formSchema={mutatedExternalOfferSchema}
-                  onSubmit={async (fields, closeModal) => {
-                    try {
-                      await Api.postExternalOpportunity({
-                        ...fields,
-                        status: parseInt(fields.status, 10),
-                        startOfContract: fields.startOfContract || null,
-                        endOfContract: fields.endOfContract || null,
-                        date: moment().toISOString(),
-                        businessLines: fields.businessLines
-                          ? fields.businessLines.map((businessLine, index) => {
-                              return {
-                                name: businessLine,
-                                order: index,
-                              };
-                            })
-                          : [],
-                      });
-                      closeModal();
-                      await opportunityListRef?.current?.fetchData();
-                      UIkit.notification(
-                        "L'offre externe a bien été ajouté",
-                        'success'
-                      );
-                    } catch (err) {
-                      console.error(err);
-                      UIkit.notification(`Une erreur est survenue.`, 'danger');
-                    }
-                  }}
-                />
-              );
-            }}
-          >
-            <IconNoSSR
-              name="plus"
-              ratio="0.8"
-              className="uk-margin-small-right"
-            />
-            Ajouter une offre externe
-          </Button>
-        </div>
+        <ButtonMultiple
+          id="admin-create"
+          align={isDesktop ? 'right' : 'left'}
+          dataTestId="button-admin-create"
+          style="custom-primary"
+          buttons={[
+            {
+              onClick: () => {
+                openModal(<PostOpportunityModal />);
+              },
+              label: 'Nouvelle offre',
+            },
+            {
+              onClick: () => {
+                openModal(
+                  <ModalEdit
+                    title="Ajouter une offre externe"
+                    submitText="Envoyer"
+                    formSchema={mutatedExternalOfferSchema}
+                    onSubmit={async (fields, closeModal) => {
+                      try {
+                        await Api.postExternalOpportunity({
+                          ...fields,
+                          status: parseInt(fields.status, 10),
+                          startOfContract: fields.startOfContract || null,
+                          endOfContract: fields.endOfContract || null,
+                          date: moment().toISOString(),
+                          businessLines: fields.businessLines
+                            ? fields.businessLines.map(
+                                (businessLine, index) => {
+                                  return {
+                                    name: businessLine,
+                                    order: index,
+                                  };
+                                }
+                              )
+                            : [],
+                        });
+                        closeModal();
+                        await opportunityListRef?.current?.fetchData();
+                        UIkit.notification(
+                          "L'offre externe a bien été ajouté",
+                          'success'
+                        );
+                      } catch (err) {
+                        console.error(err);
+                        UIkit.notification(
+                          `Une erreur est survenue.`,
+                          'danger'
+                        );
+                      }
+                    }}
+                  />
+                );
+              },
+              label: 'Offre externe',
+            },
+          ]}
+        >
+          <IconNoSSR
+            name="plus"
+            ratio={0.8}
+            className="uk-margin-small-right"
+          />
+          Créer
+        </ButtonMultiple>
       </HeaderBackoffice>
       <OpportunityList
         ref={opportunityListRef}

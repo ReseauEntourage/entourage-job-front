@@ -28,6 +28,8 @@ const ProgressBarStatus = ({
         activate={
           !noStatus &&
           (status >= 0 ||
+            abandonned ||
+            hired ||
             (status === -1 && isPublic && (isBookmarked || isRecommended)) ||
             (status === -1 && !isPublic))
         }

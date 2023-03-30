@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { COLORS } from '../../../constants/styles';
+import { COLORS } from 'src/constants/styles';
 
-import Button from '.';
+import { Button } from './Button';
 
 const StyledDarkBG = styled.div`
   height: 100px;
@@ -55,6 +55,14 @@ export function PrimaryInvertedGray() {
 export function SecondaryOrange() {
   return (
     <Button style="custom-secondary" color="primaryOrange">
+      Button
+    </Button>
+  );
+}
+
+export function ButtonSmall() {
+  return (
+    <Button style="custom-primary" size="small" href="/">
       Button
     </Button>
   );
