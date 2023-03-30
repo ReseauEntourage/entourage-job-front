@@ -5,6 +5,7 @@ exports[`Carousel Item renders the Carousel item 1`] = `
   <li>
     <div
       class=" uk-child-width-1-2@m uk-grid-collapse uk-grid-match uk-flex-center uk-flex-middle uk-flex-wrap uk-flex-wrap-middle"
+      data-testid=""
       data-uk-grid=""
     >
       <div>

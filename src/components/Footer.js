@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Grid, Section, SimpleLink } from 'src/components/utils';
 import AssociationEntourage from 'src/components/partials/AssociationEntourage';
 import Partners from 'src/components/partials/Partners';
-import Button from 'src/components/utils/Button';
+import { Button } from 'src/components/utils/Button';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { gaEvent } from 'src/lib/gtag.ts';
 import { GA_TAGS } from 'src/constants/tags';

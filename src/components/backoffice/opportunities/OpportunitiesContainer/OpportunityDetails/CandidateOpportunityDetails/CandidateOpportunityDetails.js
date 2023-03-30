@@ -65,6 +65,9 @@ const CandidateOpportunityDetails = ({
 
   useEffect(() => {
     const index = tabs.findIndex(({ status }) => {
+      if (opportunityUsers.archived) {
+        return status.includes('archived');
+      }
       return status.includes(opportunityUsers.status);
     });
 
@@ -74,7 +77,7 @@ const CandidateOpportunityDetails = ({
       }).ctas.length > 0;
 
     setHasCTAContainer(hasCTAs);
-  }, [hasCTAContainer, opportunityUsers.status]);
+  }, [hasCTAContainer, opportunityUsers.archived, opportunityUsers.status]);
 
   const event = mapEventDateFromStatus(opportunityUsers.status, events);
 
@@ -249,7 +252,7 @@ CandidateOpportunityDetails.propTypes = {
       })
     ),
   ]),
-  events: PropTypes.arrayOf([
+  events: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       OpportunityUserId: PropTypes.string.isRequired,
@@ -265,8 +268,8 @@ CandidateOpportunityDetails.propTypes = {
         createdAt: PropTypes.string.isRequired,
         updatedAt: PropTypes.string.isRequired,
       }),
-    }),
-  ]),
+    })
+  ),
   department: PropTypes.string.isRequired,
   isPublic: PropTypes.bool.isRequired,
   isExternal: PropTypes.bool.isRequired,

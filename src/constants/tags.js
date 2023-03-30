@@ -113,6 +113,9 @@ const GA_TAGS = {
   PAGE_GALERIE_FILTRE_GEOGRAPHIQUE_CLIC: {
     action: 'Page_Galerie_Filtre_Géographique_Clic',
   },
+  PAGE_GALERIE_FILTRE_EMPLOYE_CLIC: {
+    action: 'Page_Galerie_Filtre_Employe_Clic',
+  },
   PAGE_AIDER_PARTAGER_CV_CLIC: {
     action: 'Page_Aider_Partager_Cv_Clic',
   },

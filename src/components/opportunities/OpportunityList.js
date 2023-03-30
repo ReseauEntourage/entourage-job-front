@@ -45,7 +45,12 @@ const OfferList = ({
   query,
 }) => {
   return (
-    <Grid childWidths={['1-4@l', '1-3@m', '1-2@s']} left top>
+    <Grid
+      childWidths={['1-4@l', '1-3@m', '1-2@s']}
+      left
+      top
+      dataTestId="offer-list"
+    >
       {offers.map((offer, i) => {
         const opportunityUsers =
           role === 'candidateAsAdmin'

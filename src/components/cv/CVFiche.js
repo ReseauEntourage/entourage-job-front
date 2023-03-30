@@ -11,7 +11,7 @@ import {
 import { Grid, Img, SimpleLink } from 'src/components/utils';
 
 import ModalShareCV from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
-import Button from 'src/components/utils/Button';
+import { Button } from 'src/components/utils/Button';
 import {
   findConstantFromValue,
   formatParagraph,

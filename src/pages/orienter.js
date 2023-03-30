@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from 'src/components/Layout.tsx';
 import { Section } from 'src/components/utils';
-import Button from 'src/components/utils/Button';
+import { Button } from 'src/components/utils/Button';
 import ImageTitle from 'src/components/partials/ImageTitle';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { gaEvent } from 'src/lib/gtag.ts';
