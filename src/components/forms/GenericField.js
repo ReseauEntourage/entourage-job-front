@@ -145,6 +145,7 @@ const GenericField = ({
           placeholder={data.placeholder}
           showLabel={data.showLabel}
           valid={getValid(data.name)}
+          id={`${formId}-${data.id}`}
         />
       );
     }
@@ -268,7 +269,7 @@ const GenericField = ({
           checked={checked}
           value={checked}
           name={data.name}
-          id={data.id}
+          id={`${formId}-${data.id}`}
           title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
         />
       );
@@ -467,7 +468,7 @@ const GenericField = ({
       return (
         <RadioNew
           options={data.options}
-          id={data.id}
+          id={`${formId}-${data.id}`}
           name={data.name}
           legend={data.title}
           onChange={onChangeCustom}
@@ -484,7 +485,7 @@ const GenericField = ({
             updateFieldOptions({ [data.id]: options });
             return options;
           }}
-          id={data.id}
+          id={`${formId}-${data.id}`}
           name={data.name}
           legend={data.title}
           onChange={onChangeCustom}
@@ -556,14 +557,25 @@ const GenericField = ({
       if (data.hide && data.hide(getValue, fieldOptions)) {
         return null;
       }
-      return <StyledFormHeading>{data.title}</StyledFormHeading>;
+      return (
+        <StyledFormHeading
+          id={`${formId}-${data.id}`}
+          data-testid={`${formId}-${data.id}`}
+        >
+          {data.title}
+        </StyledFormHeading>
+      );
     }
     case 'text': {
       if (data.hide && data.hide(getValue, fieldOptions)) {
         return null;
       }
       return (
-        <p className="uk-margin-top uk-text-bold uk-text-italic">
+        <p
+          className="uk-margin-top uk-text-bold uk-text-italic"
+          id={`${formId}-${data.id}`}
+          data-testid={`${formId}-${data.id}`}
+        >
           {data.title}
         </p>
       );
@@ -572,13 +584,21 @@ const GenericField = ({
       if (data.hide && data.hide(getValue, fieldOptions)) {
         return null;
       }
-      return <p>{data.title}</p>;
+      return (
+        <p id={`${formId}-${data.id}`} data-testid={`${formId}-${data.id}`}>
+          {data.title}
+        </p>
+      );
     }
     case 'dynamic-text': {
       if (data.hide && data.hide(getValue, fieldOptions)) {
         return null;
       }
-      return <p>{data.title(getValue)}</p>;
+      return (
+        <p id={`${formId}-${data.id}`} data-testid={`${formId}-${data.id}`}>
+          {data.title(getValue)}
+        </p>
+      );
     }
     default:
       throw `component ${data.component} does not exist`; // eslint-disable-line no-throw-literal

@@ -50,6 +50,7 @@ const Select = ({
             onClick={() => {
               return setOptionsOpen(!optionsOpen);
             }}
+            data-testid={id}
           >
             {showLabel || !title ? (
               <div>
@@ -82,6 +83,11 @@ const Select = ({
                 <li className="option">
                   <button
                     type="button"
+                    data-testid={`select-option-${option.value.replace(
+                      /\s+/g,
+                      ''
+                    )}`}
+                    id={`select-option-${option.value.replace(/\s+/g, '')}`}
                     onClick={() => {
                       setOptionsOpen(!optionsOpen);
                       onChange({

@@ -26,6 +26,7 @@ const DatePicker = ({
       ) : null}
       <input
         id={id}
+        data-testid={id}
         className={`${!value ? 'empty-value' : ''}`}
         name={name}
         value={value}

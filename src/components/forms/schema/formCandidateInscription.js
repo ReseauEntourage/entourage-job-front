@@ -14,7 +14,7 @@ const dptToCity = {
 };
 
 export default {
-  id: 'form-candidate-contact',
+  id: 'form-candidate-inscription',
   fields: [
     {
       id: 'generalInformation',
@@ -236,7 +236,7 @@ export default {
             const noChoice = {
               inputId: `infoco-radio-nochoice`,
               label: 'je ne suis pas disponible à ces dates',
-              value: 'none',
+              value: '',
             };
             const options = res.data.map((record) => {
               return {

@@ -31,8 +31,6 @@ const Radio = ({
     onChange(e);
   };
 
-  console.log(hidden);
-
   if (hidden) {
     return null;
   }
@@ -47,6 +45,7 @@ const Radio = ({
           <div className="inputs-container">
             {options.map(({ inputId, label, value, filterData }, i) => {
               if (filter && filterData && filter !== filterData) return null;
+              if (!inputId) inputId = `radio-${value.replace(/\s+/g, '')}`;
               return (
                 <label
                   htmlFor={inputId}
@@ -57,6 +56,7 @@ const Radio = ({
                     type="radio"
                     value={value}
                     id={inputId}
+                    data-testid={inputId}
                     name={name}
                     checked={i === checkedRadio}
                     onChange={(e) => {

@@ -30,6 +30,7 @@ export function PhoneInput({
           title={title}
           name={name}
           id={id}
+          data-testid={id}
           value={value || ''}
           placeholder={placeholder || title}
           onChange={(event) => {

@@ -27,6 +27,7 @@ const TextInput = ({
         placeholder={placeholder || title}
         name={name}
         id={id}
+        data-testid={id}
       />
       <FormValidatorErrorMessage validObj={valid} newInput />
     </StyledTextInputContainer>

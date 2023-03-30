@@ -27,12 +27,19 @@ const Travailler = () => {
         submitText="Valider"
         id="candidate-inscription-form"
         onSubmit={async (fields, closeModal) => {
-          // closeModal();
-          await api.postInscriptionCandidate(fields);
-          UIkit.notification(
-            'Félicitations ! Votre inscription a bien été prise en compte !',
-            'success'
-          );
+          await api
+            .postInscriptionCandidate(fields)
+            .then(() => {
+              closeModal();
+              UIkit.notification(
+                'Félicitations ! Votre inscription a bien été prise en compte !',
+                'success'
+              );
+            })
+            .catch((err) => {
+              console.log(err);
+              UIkit.notification('Un problème est survenu', 'danger');
+            });
         }}
       />
     );
@@ -65,6 +72,7 @@ const Travailler = () => {
           label: 'Rejoindre LinkedOut',
           isExternal: true,
           newTab: true,
+          dataTestId: 'cta-inscription',
         }}
       />
       <Section id="introWork" container="small" style="muted">
@@ -93,6 +101,7 @@ const Travailler = () => {
               className="uk-margin-small-top"
               isExternal
               newTab
+              dataTestId="cta-inscription"
               onClick={() => {
                 openModalInscription();
                 gaEvent(GA_TAGS.PAGE_TRAVAILLER_DEPOSER_CANDIDATURE_CLIC);
