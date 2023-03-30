@@ -138,6 +138,8 @@ const GenericField = ({
     case 'text-input': {
       return (
         <TextInputNew
+          id={`${formId}-${data.id}`}
+          valid={getValid(data.name)}
           title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
           onChange={onChangeCustom}
           type={data.type}
@@ -145,8 +147,6 @@ const GenericField = ({
           value={value}
           placeholder={data.placeholder}
           showLabel={data.showLabel}
-          valid={getValid(data.name)}
-          id={`${formId}-${data.id}`}
         />
       );
     }
@@ -199,7 +199,7 @@ const GenericField = ({
             placeholder={data.placeholder}
             name={data.name}
             title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
-            // value={valueToUse}—
+            value={valueToUse}
             options={options}
             valid={getValid(data.name)}
             onChange={onChangeCustom}

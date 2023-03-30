@@ -42,6 +42,7 @@ export const StyledSelectContainer = styled.div`
     .placeholder {
       color: ${COLORS.darkGray};
       font-style: italic;
+      font-family: Poppins, sans-serif !important;
       label {
         &:hover {
           cursor: pointer;
@@ -57,7 +58,7 @@ export const StyledSelectContainer = styled.div`
       margin: 0;
       padding: 0;
       border: 1px solid #f4f3f3;
-      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       position: absolute;
       max-height: 175px;
       overflow-y: scroll;
@@ -76,6 +77,7 @@ export const StyledSelectContainer = styled.div`
           line-height: 17px;
           padding: 16px 12px;
           transition: 0.2s ease-in-out;
+          font-family: Poppins, sans-serif !important;
           &:hover {
             border: 0.5px solid ${COLORS.primaryOrange};
             color: ${COLORS.primaryOrange};

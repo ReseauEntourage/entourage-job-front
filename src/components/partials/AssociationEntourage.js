@@ -1,6 +1,6 @@
 import React from 'react';
 import { Background, Grid, Img, Section } from 'src/components/utils';
-import Button from 'src/components/utils/Button';
+import { Button } from 'src/components/utils/Button';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { gaEvent } from 'src/lib/gtag.ts';
 import { GA_TAGS } from 'src/constants/tags';

@@ -4,12 +4,14 @@ import { COLORS } from 'src/constants/styles';
 export const colorToHoverBackgroundColor = {
   primaryOrange: COLORS.hoverOrange,
   darkGrayFont: 'white',
+  black: COLORS.hoverOrange,
   white: 'transparent',
 };
 
 export const colorToHoverColor = {
   primaryOrange: COLORS.primaryOrange,
   darkGrayFont: COLORS.primaryOrange,
+  black: COLORS.black,
   white: COLORS.primaryOrange,
 };
 
@@ -124,6 +126,35 @@ export const StyledButton = styled.button`
           return colorToHoverColor[props.color] || COLORS.primaryOrange;
         }};
 
+      path {
+        transition: 0.2s ease-in-out;
+        fill: ${(props) => {
+          return colorToHoverColor[props.color] || COLORS.primaryOrange;
+        }} !important;
+      }
+    }
+  }
+
+  &.custom-text {
+    font-family: Poppins, sans-serif;
+    padding: 8px 20px;
+    border: none;
+    color: ${(props) => {
+      return COLORS[props.color] || COLORS.primaryOrange;
+    }} !important;
+
+    path {
+      fill: ${(props) => {
+        return COLORS[props.color] || COLORS.primaryOrange;
+      }} !important;
+    }
+    background-color: transparent;
+
+    &:hover {
+      cursor: pointer;
+      background-color: ${(props) => {
+        return colorToHoverBackgroundColor[props.color] || COLORS.primaryOrange;
+      }};
       path {
         transition: 0.2s ease-in-out;
         fill: ${(props) => {

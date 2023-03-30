@@ -2,7 +2,7 @@ import UIkit from 'uikit';
 import React from 'react';
 import { useRouter } from 'next/router';
 import { Hamburger, Navbar } from 'src/components/utils';
-import Button from 'src/components/utils/Button';
+import { Button } from 'src/components/utils/Button';
 import { gaEvent } from 'src/lib/gtag.ts';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { IconNoSSR } from 'src/components/utils/Icon';

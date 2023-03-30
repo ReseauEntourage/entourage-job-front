@@ -34,13 +34,13 @@ const TextInput = ({
 };
 
 TextInput.propTypes = {
+  id: PropTypes.string,
   title: PropTypes.string,
   type: PropTypes.string,
   onChange: PropTypes.func,
   name: PropTypes.func,
   placeholder: PropTypes.string,
   showLabel: PropTypes.bool,
-  id: PropTypes.string,
   valid: PropTypes.shape({
     isInvalid: PropTypes.bool,
     message: PropTypes.string,
@@ -51,12 +51,12 @@ TextInput.propTypes = {
 
 TextInput.defaultProps = {
   title: '',
+  id: '',
   type: 'text',
   onChange: () => {},
   name: '',
   placeholder: '',
   showLabel: false,
-  id: '',
   valid: undefined,
   value: '',
   style: '',
