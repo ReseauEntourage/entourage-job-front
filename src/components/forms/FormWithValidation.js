@@ -120,7 +120,6 @@ const FormWithValidation = forwardRef(
     };
 
     const updateFieldOptions = (fieldWithOptions) => {
-      console.log(fieldWithOptions);
       setFieldOptions({ ...fieldOptions, ...fieldWithOptions });
     };
 

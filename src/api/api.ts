@@ -404,7 +404,6 @@ class APIHandler {
   postInscriptionCandidate(
     params: CandidateInscription
   ): Promise<AxiosResponse> {
-    console.log(params);
     return this.post('/contact/candidateInscription', params);
   }
 }
