@@ -1,12 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Grid } from 'src/components/utils';
-import {
-  CANDIDATE_USER_ROLES,
-  COACH_USER_ROLES,
-  CV_STATUS,
-  USER_ROLES,
-} from 'src/constants';
+import { COACH_USER_ROLES, CV_STATUS } from 'src/constants';
 import Api from 'src/api/index.ts';
 import {
   areRolesIncluded,

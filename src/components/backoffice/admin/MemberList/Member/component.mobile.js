@@ -9,7 +9,11 @@ import moment from 'moment';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
 import { MemberPropTypes } from 'src/components/backoffice/admin/MemberList/shape';
 import { translateStatusCV } from 'src/components/backoffice/admin/MemberList/utils';
-import { USER_ROLES } from 'src/constants';
+import {
+  EXTERNAL_USER_ROLES,
+  NORMAL_USERS_ROLES,
+  USER_ROLES,
+} from 'src/constants';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { StyledMobileMember } from 'src/components/backoffice/admin/MemberList/Member/styles';
 import Checkbox from 'src/components/utils/Inputs/Checkbox';
@@ -132,7 +136,7 @@ const Member = ({ member, role, callback }) => {
 
 Member.propTypes = {
   member: MemberPropTypes.isRequired,
-  role: PropTypes.oneOf([USER_ROLES.CANDIDATE, USER_ROLES.COACH]),
+  role: PropTypes.oneOf([...NORMAL_USERS_ROLES, ...EXTERNAL_USER_ROLES]),
   callback: PropTypes.func.isRequired,
 };
 

@@ -7,7 +7,7 @@ import {
   COACH_USER_ROLES,
   USER_ROLES,
 } from 'src/constants';
-import { areRolesIncluded } from '../../utils';
+import { areRolesIncluded } from 'src/utils';
 
 const CVEditWelcome = ({ user }) => {
   if (user === null) {

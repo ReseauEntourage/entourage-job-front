@@ -3,11 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Grid, SimpleLink } from 'src/components/utils';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
-import {
-  CANDIDATE_USER_ROLES,
-  COACH_USER_ROLES,
-  USER_ROLES,
-} from 'src/constants';
+import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { areRolesIncluded, getRelatedUser } from 'src/utils';
 

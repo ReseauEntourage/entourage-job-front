@@ -12,6 +12,9 @@ export const StyledSelectContainer = styled.div`
     line-height: 17px;
     font-family: Poppins, sans-serif;
   }
+  &.hidden {
+    display: none;
+  }
   .select {
     width: 100%;
     border: none;

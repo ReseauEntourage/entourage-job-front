@@ -73,8 +73,8 @@ export function useNotifBadges(user, path) {
         if (candidateId) {
           Promise.all([
             Api.getOpportunitiesUserCount(candidateId),
-            Api.getCandidateCheckUpdate(),
-            Api.getCheckUpdate(),
+            Api.getCandidateCheckUpdate(candidateId),
+            Api.getCheckUpdate(candidateId),
           ])
             .then((data) => {
               if (data) {

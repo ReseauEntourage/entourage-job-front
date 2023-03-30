@@ -13,7 +13,6 @@ import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMe
 import { SimpleLink } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
 import PhoneInput from 'src/components/forms/fields/PhoneInput';
-import { PhoneInput as PhoneInputNew } from 'src/components/utils/Inputs/PhoneInput/index.ts';
 import { StyledFormHeading } from 'src/components/forms/Forms.styles';
 
 import CheckBoxNew from 'src/components/utils/Inputs/Checkbox';

@@ -24,7 +24,7 @@ import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
 import { usePrevious } from 'src/hooks/utils';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { CVShape } from 'src/components/cv/CV.shape';
-import { areRolesIncluded } from '../../../utils';
+import { areRolesIncluded } from 'src/utils';
 
 const pusher = new Pusher(process.env.PUSHER_API_KEY, {
   cluster: 'eu',

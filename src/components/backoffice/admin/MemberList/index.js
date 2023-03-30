@@ -10,13 +10,9 @@ import { Button } from 'src/components/utils/Button';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import Api from 'src/api/index.ts';
 import SearchBar from 'src/components/filters/SearchBar';
-import {
-  areRolesIncluded,
-  filtersToQueryParams,
-  mutateFormSchema,
-} from 'src/utils';
-import schemaCreateUser from 'src/components/forms/schema/formEditUser';
+import { areRolesIncluded, filtersToQueryParams } from 'src/utils';
 import { formAddOrganization } from 'src/components/forms/schema/formAddOrganization.ts';
+import { formAddUser } from 'src/components/forms/schema/formAddUser.ts';
 import { openModal } from 'src/components/modals/Modal';
 import { useIsDesktop, usePrevious } from 'src/hooks/utils';
 
@@ -63,19 +59,6 @@ const MemberList = ({
   const [loading, setLoading] = useState(true);
   const [allLoaded, setAllLoaded] = useState(false);
   const [offset, setOffset] = useState(0);
-
-  const mutatedSchema = mutateFormSchema(schemaCreateUser, [
-    {
-      fieldId: 'role',
-      props: [
-        {
-          propName: 'hidden',
-          value: false,
-          option: USER_ROLES.ADMIN,
-        },
-      ],
-    },
-  ]);
 
   const fetchData = useCallback(
     (searchValue, filtersValue, roleValue, offsetValue, doReset) => {
@@ -177,10 +160,10 @@ const MemberList = ({
               onClick: () => {
                 openModal(
                   <ModalEdit
-                    formSchema={mutatedSchema}
-                    title="Création de membre"
-                    description="Merci de renseigner quelques informations afin de créer le membre"
-                    submitText="Créer le membre"
+                    formSchema={formAddUser}
+                    title="Ajouter un nouveau membre"
+                    description="Merci de renseigner quelques informations afin de créer un nouveau membre"
+                    submitText="Ajouter"
                     onSubmit={async (fields, closeModal) => {
                       try {
                         const { data } = await Api.postUser({

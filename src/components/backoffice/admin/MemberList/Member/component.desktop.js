@@ -9,7 +9,12 @@ import {
 import moment from 'moment';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
 import { MemberPropTypes } from 'src/components/backoffice/admin/MemberList/shape';
-import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants';
+import {
+  CANDIDATE_USER_ROLES,
+  EXTERNAL_USER_ROLES,
+  NORMAL_USERS_ROLES,
+  USER_ROLES,
+} from 'src/constants';
 import { Grid } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { StyledRow } from 'src/components/backoffice/admin/MemberList/Member/styles';
@@ -145,7 +150,7 @@ const Member = ({ member, role, callback }) => {
 
 Member.propTypes = {
   member: MemberPropTypes.isRequired,
-  role: PropTypes.oneOf([USER_ROLES.CANDIDATE, USER_ROLES.COACH]),
+  role: PropTypes.oneOf([...NORMAL_USERS_ROLES, ...EXTERNAL_USER_ROLES]),
   callback: PropTypes.func.isRequired,
 };
 

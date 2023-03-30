@@ -3,7 +3,7 @@ import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
 import { Section } from 'src/components/utils';
 import CVEditWelcome from 'src/components/cv/CVEditWelcome';
 import CVPageContent from 'src/components/backoffice/cv/CVPageContent';
-import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants';
+import { CANDIDATE_USER_ROLES } from 'src/constants';
 import ErrorMessage from 'src/components/backoffice/cv/ErrorMessage';
 import { useFetchCV } from 'src/hooks/useFetchCV';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';

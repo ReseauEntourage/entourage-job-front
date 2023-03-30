@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
-import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants';
+import { CANDIDATE_USER_ROLES } from 'src/constants';
 import OpportunityList from 'src/components/opportunities/OpportunityList';
 import PropTypes from 'prop-types';
 
@@ -9,7 +9,7 @@ import { openModal } from 'src/components/modals/Modal';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { Button } from 'src/components/utils';
 import ModalExternalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
-import { areRolesIncluded } from '../../../utils';
+import { areRolesIncluded } from 'src/utils';
 
 const CandidateOpportunityList = ({
   search,

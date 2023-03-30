@@ -114,6 +114,7 @@ export default {
             params: {
               query: inputValue,
               role, // un certain role
+              // TODO add organizationId
             },
           })
             .then(({ data }) => {

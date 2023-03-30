@@ -113,8 +113,8 @@ class APIHandler {
     return this.get('/cv/published');
   }
 
-  getCheckUpdate(): Promise<AxiosResponse> {
-    return this.get('/cv/checkUpdate');
+  getCheckUpdate(candidateId: string): Promise<AxiosResponse> {
+    return this.get(`/cv/checkUpdate/${candidateId}`);
   }
 
   getCVByUrl(url: string): Promise<AxiosResponse> {
@@ -176,8 +176,8 @@ class APIHandler {
     return this.get(`/user/${userId}`);
   }
 
-  getCandidateCheckUpdate(): Promise<AxiosResponse> {
-    return this.get(`/user/candidate/checkUpdate`);
+  getCandidateCheckUpdate(candidateId: string): Promise<AxiosResponse> {
+    return this.get(`/user/candidate/checkUpdate/${candidateId}`);
   }
 
   // post
@@ -218,7 +218,7 @@ class APIHandler {
     userId: string,
     userToLinkId: string | string[]
   ): Promise<AxiosResponse> {
-    return this.put(`/user/linkUser/${userId}`, { userToLinkId });
+    return this.put(`/user/linkedUser/${userId}`, { userToLinkId });
   }
 
   // delete
@@ -230,6 +230,13 @@ class APIHandler {
   /// ///////////// ///
   /// organization  ///
   /// //////////// ///
+
+  // get
+  getAllOrganizations(params: {
+    params: { search: string };
+  }): Promise<AxiosResponse> {
+    return this.get('/organization', params);
+  }
 
   // post
   postOrganization(params: Organization): Promise<AxiosResponse> {
