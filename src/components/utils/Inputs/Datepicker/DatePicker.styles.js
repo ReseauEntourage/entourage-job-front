@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS } from '../../../../constants/styles';
+import { COLORS } from 'src/constants/styles';
 
 export const StyledDatePickerContainer = styled.div`
   min-width: 300px;

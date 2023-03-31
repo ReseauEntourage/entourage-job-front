@@ -1,5 +1,5 @@
-import React from 'react';
-import { CONTACT_INFO } from 'src/constants';
+import React, { useState } from 'react';
+import { CONTACT_INFO, antenneInfo } from 'src/constants';
 import { Section, SimpleLink, Button } from 'src/components/utils';
 import Layout from 'src/components/Layout';
 import ImageTitle from 'src/components/partials/ImageTitle';
@@ -15,9 +15,28 @@ import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { openModal } from 'src/components/modals/Modal';
 import formCandidateInscription from 'src/components/forms/schema/formCandidateInscription';
 import api from 'src/api/index.ts';
+import ModalGeneric from 'src/components/modals/Modal/ModalGeneric/';
 import UIkit from 'uikit';
+import { StyledModalContent } from 'src/components/modals/Modal/Modals.styles';
+import { useMount } from 'src/hooks/utils/useMount';
+import moment from 'moment';
+import 'moment/locale/fr';
 
 const Travailler = () => {
+  const [campaigns, setCampaigns] = useState([]);
+
+  useMount(() => {
+    api
+      .getCampaigns()
+      .then((res) => {
+        setCampaigns(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+
   function openModalInscription() {
     openModal(
       <ModalEdit
@@ -27,13 +46,67 @@ const Travailler = () => {
         submitText="Valider"
         id="candidate-inscription-form"
         onSubmit={async (fields, closeModal) => {
+          gaEvent(GA_TAGS.PAGE_TRAVAILLER_VALIDER_CANDIDATURE_CLIC);
+          fbEvent(FB_TAGS.CANDIDATE_REGISTRATION_SEND);
           await api
             .postInscriptionCandidate(fields)
             .then(() => {
               closeModal();
-              UIkit.notification(
-                'Félicitations ! Votre inscription a bien été prise en compte !',
-                'success'
+              const antenne = antenneInfo.find((info) => {
+                return info.dpt === fields.location;
+              });
+              const infoCoAddress = antenne?.address;
+              const email = antenne?.mailCoordo;
+              const infoCoDate = `${moment(
+                campaigns.find((campaign) => {
+                  return campaign.id === fields.infoCo;
+                })?.time
+              ).format('dddd D MMMM [à] HH[h]mm')}`;
+              openModal(
+                <ModalGeneric
+                  title="Merci pour votre inscription !"
+                  onClose={closeModal()}
+                  withCloseButton
+                >
+                  <StyledModalContent>
+                    <p>Votre inscription a bien été prise en compte </p>
+                    {fields.infoCo ? (
+                      <>
+                        <p>
+                          Nous sommes impatient de vous retrouver pour la
+                          réunion d’information collective, qui aura lieu dans
+                          nos locaux le
+                        </p>
+                        <p>
+                          <strong>{infoCoDate}</strong>
+                        </p>
+                        <p>
+                          <strong>{infoCoAddress}</strong>
+                        </p>
+                        <p>
+                          N’oubliez pas de noter la date dans votre agenda,
+                          cette réunion est indispensable pour commencer le
+                          programme LinkedOut
+                        </p>
+                        <p>
+                          Si vous avez un empêchement, n’oubliez pas de nous
+                          prévenir par mail : {email}
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <p>
+                          Nous allons vous contacter rapidement pour vous
+                          proposer un rendez-vous
+                        </p>
+                        <p>
+                          si vous avez des questions, n’hésitez pas à nous
+                          contacter par mail : {email}
+                        </p>
+                      </>
+                    )}
+                  </StyledModalContent>
+                </ModalGeneric>
               );
             })
             .catch((err) => {

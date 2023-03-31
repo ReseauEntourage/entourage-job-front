@@ -2,16 +2,7 @@ import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import api from 'src/api/index.ts';
 import moment from 'moment';
 import 'moment/locale/fr';
-
-const dptToCity = {
-  93: 'Paris',
-  92: 'Paris',
-  75: 'Paris',
-  35: 'Rennes',
-  56: 'Lorient',
-  69: 'Lyon',
-  59: 'Lille',
-};
+import { antenneInfo } from 'src/constants';
 
 export default {
   id: 'form-candidate-inscription',
@@ -179,10 +170,13 @@ export default {
       title: 'Date des prochaines réunion d’information',
       component: 'heading',
       hide: (getValue, fieldOptions) => {
+        const city = antenneInfo.find((antenne) => {
+          return antenne.dpt === getValue('location');
+        })?.city;
         const filteredOptions = fieldOptions?.infoCo?.find((fieldOption) => {
-          return fieldOption.filterData === dptToCity[getValue('location')];
+          return fieldOption.filterData === city;
         });
-        if (!dptToCity[getValue('location')]?.length) {
+        if (!city?.length) {
           return true;
         }
         return !filteredOptions;
@@ -191,21 +185,21 @@ export default {
     {
       id: 'infoCoSubtitle',
       title: (getValue) => {
-        const addresses = {
-          Paris: '174 rue de Championnet 75018, Paris',
-          Lille: '21 rue Maracci 59000, Lille',
-          Lyon: '17 avenue Lacassagne 69003, Lyon',
-        };
         return `Les réunions d’informations ont lieu dans nos locaux au ${
-          addresses[dptToCity[getValue('location')]]
+          antenneInfo.find((antenne) => {
+            return antenne.dpt === getValue('location');
+          })?.address
         }`;
       },
       component: 'dynamic-text',
       hide: (getValue, fieldOptions) => {
+        const city = antenneInfo.find((antenne) => {
+          return antenne.dpt === getValue('location');
+        })?.city;
         const filteredOptions = fieldOptions?.infoCo?.find((fieldOption) => {
-          return fieldOption.filterData === dptToCity[getValue('location')];
+          return fieldOption.filterData === city;
         });
-        if (!dptToCity[getValue('location')]?.length) {
+        if (!city?.length) {
           return true;
         }
         return !filteredOptions;
@@ -218,13 +212,18 @@ export default {
         'Selectionnez la date de la prochaine réunion d’information à laquelle vous souhaitez participer',
       component: 'radio-async-new',
       dynamicFilter: (getValue) => {
-        return dptToCity[getValue('location')];
+        return antenneInfo.find((antenne) => {
+          return antenne.dpt === getValue('location');
+        })?.city;
       },
       hide: (getValue, fieldOptions) => {
+        const city = antenneInfo.find((antenne) => {
+          return antenne.dpt === getValue('location');
+        })?.city;
         const filteredOptions = fieldOptions?.infoCo?.find((fieldOption) => {
-          return fieldOption.filterData === dptToCity[getValue('location')];
+          return fieldOption.filterData === city;
         });
-        if (!dptToCity[getValue('location')]?.length) {
+        if (!city?.length) {
           return true;
         }
         return !filteredOptions;
@@ -248,7 +247,6 @@ export default {
                 filterData: record.antenne,
               };
             });
-            console.log(options);
             return options.length ? [...options, noChoice] : [];
           })
           .catch((err) => {
@@ -365,7 +363,7 @@ export default {
       args: [],
       validWhen: true,
       message:
-        'Il faut avoit le droit de travailler en France pour participer au programme',
+        'Vous devez avoir le droit de travailler en France pour participer au programme LinkedOut',
     },
     {
       field: 'heardAbout',
@@ -397,7 +395,7 @@ export default {
       args: [],
       validWhen: true,
       message:
-        'Nous sommes désolée, le programme est disponible uniquement dans les villes /départements indiqués dans la liste',
+        'Nous sommes désolée, le programme est disponible uniquement dans les villes /départements indiqués dans la liste.',
     },
     {
       field: 'birthdate',
@@ -419,7 +417,8 @@ export default {
         return minBirtdate > realBirthdate;
       },
       validWhen: true,
-      message: 'Vous devez être majeur pour participer au programme',
+      message:
+        'Vous devez être majeur pour participer au programme. En attendant, vous pouvez contacter la Mission locale dont dépend votre commune.',
     },
   ],
 };

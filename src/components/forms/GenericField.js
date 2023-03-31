@@ -2,7 +2,7 @@ import React from 'react';
 import ReactSelect, { components } from 'react-select';
 import AsyncSelectNew from 'src/components/utils/Inputs/SelectAsync';
 import AsyncSelect from 'react-select/async';
-import PropTypes, { shape } from 'prop-types';
+import PropTypes from 'prop-types';
 import CreatableSelect from 'react-select/creatable';
 import DatePicker from 'src/components/forms/fields/DatePicker';
 import Select from 'src/components/forms/fields/Select';
@@ -628,7 +628,7 @@ GenericField.propTypes = {
   onChange: PropTypes.func.isRequired,
   getValid: PropTypes.func.isRequired,
   getValue: PropTypes.func.isRequired,
-  fieldOptions: shape({}).isRequired,
+  fieldOptions: PropTypes.shape({}).isRequired,
   updateFieldOptions: PropTypes.func.isRequired,
 };
 

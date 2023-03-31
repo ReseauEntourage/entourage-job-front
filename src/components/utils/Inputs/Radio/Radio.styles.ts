@@ -42,8 +42,8 @@ export const StyledRadioContainer = styled.div`
           &::after {
             content: '';
             position: absolute;
-            top: 1.5px;
-            left: 1.5px;
+            top: 1px;
+            left: 1px;
             height: 10px;
             width: 10px;
             background-color: white;

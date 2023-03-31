@@ -353,6 +353,9 @@ const GA_TAGS = {
   BACKOFFICE_COACH_HEADER_BAO_CLIC: {
     action: 'Backoffice_Coach_Header_BAO_Clic',
   },
+  PAGE_TRAVAILLER_VALIDER_CANDIDATURE_CLIC: {
+    action: 'Page_Travailler_Valider_Candidature_Clic',
+  },
 };
 
 const FB_TAGS = {
