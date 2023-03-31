@@ -33,6 +33,7 @@ describe('Parcours travailler', () => {
         cy.get('[data-testid="infoco-radio-5"]').click();
         cy.get('button').contains('Valider').should('be.visible').click();
         cy.wait('@postInscription');
+        cy.get('button').contains('Fermer').should('be.visible').click();
         cy.get('.ReactModalPortal div').should('not.exist');
 
     })
