@@ -190,3 +190,15 @@ export type PutCandidate = {
   url: string;
   lastModifiedBy: string;
 };
+
+export type CandidateInscription = {
+  birthdate: string;
+  email: string;
+  firstName: string;
+  heardAbout: string;
+  infoCo?: string;
+  lastName: string;
+  location: string;
+  phone: string;
+  workingRight: string;
+};

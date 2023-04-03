@@ -861,3 +861,55 @@ export const EVENT_TYPES_FILTERS = [
 ];
 
 export const BACKOFFICE_PAGES = ['candidates', 'coachs', 'oppotunities'];
+
+export const antenneInfo = [
+  {
+    dpt: '93',
+    mailCoordo: process.env.ADMIN_CANDIDATES_PARIS,
+    mailEntreprise: process.env.ADMIN_COMPANIES_PARIS,
+    city: 'Paris',
+    address: '174 rue de Championnet 75018, Paris',
+  },
+  {
+    dpt: '75',
+    mailCoordo: process.env.ADMIN_CANDIDATES_PARIS,
+    mailEntreprise: process.env.ADMIN_COMPANIES_PARIS,
+    city: 'Paris',
+    address: '174 rue de Championnet 75018, Paris',
+  },
+  {
+    dpt: '92',
+    mailCoordo: process.env.ADMIN_CANDIDATES_PARIS,
+    mailEntreprise: process.env.ADMIN_COMPANIES_PARIS,
+    city: 'Paris',
+    address: '174 rue de Championnet 75018, Paris',
+  },
+  {
+    dpt: '35',
+    mailCoordo: process.env.ADMIN_CANDIDATES_RENNES,
+    mailEntreprise: process.env.ADMIN_COMPANIES_RENNES,
+    city: 'Lorient',
+    address: '',
+  },
+  {
+    dpt: '56',
+    mailCoordo: process.env.ADMIN_CANDIDATES_LORIENT,
+    mailEntreprise: process.env.ADMIN_COMPANIES_LORIENT,
+    city: 'Rennes',
+    address: '',
+  },
+  {
+    dpt: '59',
+    mailCoordo: process.env.ADMIN_CANDIDATES_LILLE,
+    mailEntreprise: process.env.ADMIN_COMPANIES_LILLE,
+    city: 'Lille',
+    address: '21 rue Maracci 59000, Lille',
+  },
+  {
+    dpt: '69',
+    mailCoordo: process.env.ADMIN_CANDIDATES_LYON,
+    mailEntreprise: process.env.ADMIN_COMPANIES_LYON,
+    city: 'Lyon',
+    address: '17 avenue Lacassagne 69003, Lyon',
+  },
+];

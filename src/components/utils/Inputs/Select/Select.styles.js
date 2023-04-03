@@ -5,13 +5,21 @@ export const StyledSelectContainer = styled.div`
   min-width: 300px;
   width: 100%;
   max-width: 100%;
+  .label-top {
+    font-size: 14px;
+    padding: 4px 0;
+    display: inline-block;
+    line-height: 17px;
+    font-family: Poppins, sans-serif;
+  }
   .select {
     width: 100%;
     border: none;
     position: relative;
-    margin-bottom: 18px;
+    margin-bottom: 30px;
     .placeholder,
     .selected-value {
+      font-family: Poppins, Arial, sans-serif;
       padding: 4px 0;
       font-size: 14px;
       line-height: 17px;
@@ -20,6 +28,7 @@ export const StyledSelectContainer = styled.div`
       background-color: transparent;
       text-align: left;
       width: 100%;
+      min-height: 30px;
       &:hover {
         cursor: pointer;
       }

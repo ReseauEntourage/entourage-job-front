@@ -26,6 +26,7 @@ const DatePicker = ({
       ) : null}
       <input
         id={id}
+        data-testid={id}
         className={`${!value ? 'empty-value' : ''}`}
         name={name}
         value={value}
@@ -34,12 +35,12 @@ const DatePicker = ({
         type="date"
         onChange={(e) => {
           setValue(e.target.value);
-          onChange();
+          onChange(e);
         }}
         disabled={disabled}
         hidden={hidden}
       />
-      <FormValidatorErrorMessage validObj={valid} />
+      <FormValidatorErrorMessage validObj={valid} newInput />
     </StyledDatePickerContainer>
   );
 };

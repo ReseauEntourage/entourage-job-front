@@ -5,18 +5,14 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 import { isSSR } from 'src/utils/isSSR';
 import { StyledSelectContainer } from './Select.styles';
 
-// import { isSSR } from 'src/utils/isSSR';
-// import { isSSR } from '../../../../utils/isSSR';
-
 const Select = ({
   id,
   name,
   title,
   valid,
   options,
-  // value,
   onChange,
-  // disabled,
+  showLabel,
   hidden,
 }) => {
   const [selectedOption, setSelectedOption] = useState({ value: '' });
@@ -27,7 +23,6 @@ const Select = ({
     if (!isSSR && id) {
       const container = document.getElementById(selectId);
       document.addEventListener('click', function closeSelect(e) {
-        e.preventDefault();
         const isClickInside = container.contains(e.target);
         if (optionsOpen && !isClickInside) {
           setOptionsOpen(!optionsOpen);
@@ -41,6 +36,11 @@ const Select = ({
       className={`${hidden ? 'hidden' : ''}`}
       id={selectId}
     >
+      {showLabel && title && (
+        <label htmlFor={id} className="label-top">
+          {title}
+        </label>
+      )}
       <input type="hidden" value={selectedOption.value} name={name} id={id} />
       <div className="select">
         {!selectedOption.value || (selectedOption.value && optionsOpen) ? (
@@ -50,13 +50,19 @@ const Select = ({
             onClick={() => {
               return setOptionsOpen(!optionsOpen);
             }}
+            data-testid={id}
           >
-            {title ? (
-              <label className="" htmlFor={id}>
-                {title}
-              </label>
-            ) : null}
-            <IconNoSSR name="chevron-down" ratio="2.5" />
+            {showLabel || !title ? (
+              <div>
+                Selectionnez dans la liste{' '}
+                <IconNoSSR name="chevron-down" ratio="2.5" />
+              </div>
+            ) : (
+              <>
+                <label htmlFor={id}>{title}</label>
+                <IconNoSSR name="chevron-down" ratio="2.5" />
+              </>
+            )}
           </button>
         ) : (
           <button
@@ -77,6 +83,11 @@ const Select = ({
                 <li className="option">
                   <button
                     type="button"
+                    data-testid={`select-option-${option.value.replace(
+                      /\s+/g,
+                      ''
+                    )}`}
+                    id={`select-option-${option.value.replace(/\s+/g, '')}`}
                     onClick={() => {
                       setOptionsOpen(!optionsOpen);
                       onChange({
@@ -99,7 +110,7 @@ const Select = ({
           </ul>
         )}
       </div>
-      <FormValidatorErrorMessage validObj={valid} />
+      <FormValidatorErrorMessage validObj={valid} newInput />
     </StyledSelectContainer>
   );
 };
@@ -110,6 +121,7 @@ Select.defaultProps = {
   onChange: () => {},
   hidden: false,
   title: undefined,
+  showLabel: false,
 };
 
 Select.propTypes = {
@@ -118,6 +130,7 @@ Select.propTypes = {
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func,
   title: PropTypes.string,
+  showLabel: PropTypes.bool,
   valid: PropTypes.shape({
     isInvalid: PropTypes.bool,
     message: PropTypes.string,

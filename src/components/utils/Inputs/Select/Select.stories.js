@@ -38,3 +38,13 @@ const options = [
 export function Default() {
   return <Select title="title / placeholder" options={options} />;
 }
+
+export function WithLabel() {
+  return (
+    <Select
+      title="A choice to make between different options"
+      options={options}
+      showLabel
+    />
+  );
+}

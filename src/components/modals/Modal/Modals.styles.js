@@ -38,3 +38,15 @@ export const StyledHeaderModal = styled.div`
     margin-bottom: 20px;
   }
 `;
+
+export const StyledModalContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  p {
+    text-align: center;
+  }
+  button {
+    margin: 20px 0;
+  }
+`;
