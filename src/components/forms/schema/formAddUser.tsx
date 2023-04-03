@@ -1,5 +1,7 @@
+import React from 'react';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import Api from 'src/api/index';
+import { Icon } from 'src/components/utils';
 import {
   ADMIN_ROLES,
   USER_ROLES,
@@ -9,6 +11,19 @@ import {
 } from 'src/constants';
 import { ADMIN_ZONES_FILTERS } from 'src/constants/departements';
 import { areRolesIncluded } from 'src/utils';
+
+const CREATE_NEW_ORGANIZATION_VALUE = 'createNewOrganization';
+
+const CREATE_NEW_ORGANIZATION_OPTION = {
+  value: CREATE_NEW_ORGANIZATION_VALUE,
+  label: (
+    // TODO style
+    <>
+      <Icon name="plus-circle" />
+      Ajouter une nouvelle structure
+    </>
+  ),
+};
 
 export const formAddUser = {
   id: 'form-add-user',
@@ -85,15 +100,20 @@ export const formAddUser = {
     },
     {
       component: 'fieldgroup-new',
+      hide: (getValue) => {
+        const role = getValue('role');
+        return !role || role === USER_ROLES.ADMIN;
+      },
       fields: [
         {
           id: 'organizationId',
           name: 'organizationId',
-          component: 'select-request-async',
+          component: 'select-request-async-new',
           cacheOptions: false,
-          disable: (getValue) => {
+          hide: (getValue) => {
             return !areRolesIncluded(EXTERNAL_USER_ROLES, [getValue('role')]);
           },
+          defaultOptions: [CREATE_NEW_ORGANIZATION_OPTION],
           loadOptions: async (inputValue, callback) => {
             if (inputValue.length > 0) {
               const { data: organizations } = await Api.getAllOrganizations({
@@ -102,16 +122,17 @@ export const formAddUser = {
                 },
               });
 
-              callback(
-                organizations.map((u) => {
+              callback([
+                CREATE_NEW_ORGANIZATION_OPTION,
+                ...organizations.map((u) => {
                   return {
                     value: u.id,
                     label: `${u.name}`,
                   };
-                })
-              );
+                }),
+              ]);
             }
-            callback([]);
+            callback([CREATE_NEW_ORGANIZATION_OPTION]);
           },
           title: 'Structure partenaire *',
           fieldsToReset: ['userToLinkId'],
@@ -119,21 +140,28 @@ export const formAddUser = {
         {
           id: 'userToLinkId',
           name: 'userToLinkId',
-          component: 'select-request-async',
+          component: 'select-request-async-new',
           cacheOptions: false,
-          disable: (getValue) => {
+          isMulti: (getValue) => {
+            const role = getValue('role');
+            return role === USER_ROLES.COACH_EXTERNAL;
+          },
+          hide: (getValue) => {
             const role = getValue('role');
             const organizationId = getValue('organizationId')?.value;
+            console.log(organizationId);
             return (
               role === USER_ROLES.ADMIN ||
-              (areRolesIncluded(EXTERNAL_USER_ROLES, [role]) && !organizationId)
+              (areRolesIncluded(EXTERNAL_USER_ROLES, [role]) &&
+                !organizationId) ||
+              organizationId === CREATE_NEW_ORGANIZATION_VALUE
             );
           },
           loadOptions: async (inputValue, callback, getValue) => {
             if (inputValue.length > 0) {
               const role = RELATED_ROLES[getValue('role')];
 
-              const organizationId = getValue('organizationId').value;
+              const organizationId = getValue('organizationId')?.value;
 
               const { data: users } = await Api.getUsersSearch({
                 params: {
@@ -159,17 +187,23 @@ export const formAddUser = {
       ],
     },
     {
-      id: 'adminRole',
-      name: 'adminRole',
-      component: 'select-new',
-      title: 'Responsabilité *',
-      options: [
-        { value: ADMIN_ROLES.CANDIDATES, label: ADMIN_ROLES.CANDIDATES },
-        { value: ADMIN_ROLES.COMPANIES, label: ADMIN_ROLES.COMPANIES },
-      ],
+      component: 'fieldgroup-new',
       hide: (getValue) => {
-        return getValue('role') !== USER_ROLES.ADMIN;
+        const role = getValue('role');
+        return role !== USER_ROLES.ADMIN;
       },
+      fields: [
+        {
+          id: 'adminRole',
+          name: 'adminRole',
+          component: 'select-new',
+          title: 'Responsabilité *',
+          options: [
+            { value: ADMIN_ROLES.CANDIDATES, label: ADMIN_ROLES.CANDIDATES },
+            { value: ADMIN_ROLES.COMPANIES, label: ADMIN_ROLES.COMPANIES },
+          ],
+        },
+      ],
     },
   ],
   rules: [

@@ -12,7 +12,7 @@ import Api from 'src/api/index.ts';
 import SearchBar from 'src/components/filters/SearchBar';
 import { areRolesIncluded, filtersToQueryParams } from 'src/utils';
 import { formAddOrganization } from 'src/components/forms/schema/formAddOrganization.ts';
-import { formAddUser } from 'src/components/forms/schema/formAddUser.ts';
+import { formAddUser } from 'src/components/forms/schema/formAddUser.tsx';
 import { openModal } from 'src/components/modals/Modal';
 import { useIsDesktop, usePrevious } from 'src/hooks/utils';
 

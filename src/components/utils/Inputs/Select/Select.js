@@ -70,15 +70,18 @@ const Select = ({
         {optionsOpen && (
           <ul className="options-container">
             {options?.map((option) => {
+              const optionId = `select-option-${
+                typeof option.value === 'string'
+                  ? option.value.replace(/\s+/g, '')
+                  : option.value
+              }`;
+
               return (
-                <li className="option">
+                <li className="option" key={option.value}>
                   <button
                     type="button"
-                    data-testid={`select-option-${option.value.replace(
-                      /\s+/g,
-                      ''
-                    )}`}
-                    id={`select-option-${option.value.replace(/\s+/g, '')}`}
+                    data-testid={optionId}
+                    id={optionId}
                     onClick={() => {
                       setOptionsOpen(!optionsOpen);
                       onChange({

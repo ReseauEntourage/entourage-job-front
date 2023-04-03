@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactSelect, { components } from 'react-select';
-import AsyncSelectNew from 'src/components/utils/Inputs/SelectAsync';
+import { SelectAsync as AsyncSelectNew } from 'src/components/utils/Inputs/SelectAsync/index.ts';
 import AsyncSelect from 'react-select/async';
 import PropTypes from 'prop-types';
 import CreatableSelect from 'react-select/creatable';
@@ -214,7 +214,7 @@ const GenericField = ({
           placeholder={data.placeholder}
           name={data.name}
           title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
-          value={valueToUse}
+          // value={valueToUse}
           options={options}
           valid={getValid(data.name)}
           onChange={onChangeCustom}
@@ -315,9 +315,16 @@ const GenericField = ({
       );
     }
     case 'select-request-async': {
+      const isMultiDefined = data.isMulti || false;
+
+      const isMulti =
+        typeof isMultiDefined === 'function'
+          ? isMultiDefined(getValue)
+          : isMultiDefined;
+
       let valueToUse = null;
       if (value) {
-        if (data.isMulti) {
+        if (isMulti) {
           valueToUse = value.every((v) => {
             return typeof v === 'object';
           })
@@ -348,10 +355,8 @@ const GenericField = ({
             cacheOptions={
               data.cacheOptions === undefined ? true : data.cacheOptions
             }
-            isClearable
-            defaultOptions
             value={valueToUse}
-            isMulti={data.isMulti}
+            isMulti={isMulti}
             placeholder={data.placeholder || 'Sélectionnez...'}
             noOptionsMessage={
               data.noOptionsMessage ||
@@ -375,9 +380,16 @@ const GenericField = ({
       );
     }
     case 'select-request-async-new': {
+      const isMultiDefined = data.isMulti || false;
+
+      const isMulti =
+        typeof isMultiDefined === 'function'
+          ? isMultiDefined(getValue)
+          : isMultiDefined;
+
       let valueToUse = null;
       if (value) {
-        if (data.isMulti) {
+        if (isMulti) {
           valueToUse = value.every((v) => {
             return typeof v === 'object';
           })
@@ -388,40 +400,36 @@ const GenericField = ({
         }
       }
 
-      // const shouldHide = data.hide ? data.hide(getValue) : data.hidden;
+      const shouldHide = data.hide ? data.hide(getValue) : data.hidden;
 
       return (
-        // !!! to be finished !!! //
-        <div>
-          <AsyncSelectNew
-            id={`${formId}-${data.id}`}
-            cacheOptions={
-              data.cacheOptions === undefined ? true : data.cacheOptions
-            }
-            isClearable
-            defaultOptions
-            value={valueToUse}
-            isMulti={data.isMulti}
-            placeholder={data.placeholder || 'Sélectionnez...'}
-            noOptionsMessage={
-              data.noOptionsMessage ||
-              (() => {
-                return `Aucun résultat`;
-              })
-            }
-            loadOptions={(inputValue, callback) => {
-              clearTimeout(debounceTimeoutId);
-              debounceTimeoutId = setTimeout(() => {
-                return data.loadOptions(inputValue, callback, getValue);
-              }, 1000);
-            }}
-            isDisabled={data.disable ? data.disable(getValue) : false}
-            isHidden={data.hide ? data.hide(getValue) : false}
-            onChange={parseValueToReturnSelect}
-            openMenuOnClick={data.openMenuOnClick ?? true}
-          />
-          <FormValidatorErrorMessage validObj={getValid(data.name)} />
-        </div>
+        <AsyncSelectNew
+          id={`${formId}-${data.id}`}
+          cacheOptions={
+            data.cacheOptions === undefined ? true : data.cacheOptions
+          }
+          defaultOptions={data.defaultOptions}
+          value={valueToUse}
+          isMulti={isMulti}
+          placeholder={data.title || 'Sélectionnez...'}
+          noOptionsMessage={
+            data.noOptionsMessage ||
+            (() => {
+              return `Aucun résultat`;
+            })
+          }
+          loadOptions={(inputValue, callback) => {
+            clearTimeout(debounceTimeoutId);
+            debounceTimeoutId = setTimeout(() => {
+              return data.loadOptions(inputValue, callback, getValue);
+            }, 1000);
+          }}
+          isDisabled={data.disable ? data.disable(getValue) : false}
+          isHidden={shouldHide}
+          onChange={parseValueToReturnSelect}
+          valid={getValid(data.name)}
+          openMenuOnClick={data.openMenuOnClick ?? true}
+        />
       );
     }
     case 'select-request': {

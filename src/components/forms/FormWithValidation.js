@@ -235,32 +235,50 @@ const FormWithValidation = forwardRef(
                   id: childrenId,
                   childWidths,
                 } = value;
+
+                const shouldHide = value.hide
+                  ? value.hide((name) => {
+                      return fieldValues[name];
+                    })
+                  : value.hidden;
+
                 return (
-                  <li key={i} hidden={!!value.hidden}>
-                    <InputsContainer
-                      id={childrenId}
-                      title={title}
-                      childWidths={childWidths}
-                      fields={childrenFields.map((field) => {
-                        return !field.hidden ? (
-                          <GenericField
-                            data={field}
-                            formId={id}
-                            value={fieldValues[field.id]}
-                            onChange={updateForm}
-                            fieldOptions={fieldOptions}
-                            updateFieldOptions={updateFieldOptions}
-                            getValid={(name) => {
-                              return fieldValidations[`valid_${name}`];
-                            }}
-                            getValue={(name) => {
-                              return fieldValues[name];
-                            }}
-                          />
-                        ) : null;
-                      })}
-                    />
-                  </li>
+                  !shouldHide && (
+                    <li key={i}>
+                      <InputsContainer
+                        id={childrenId}
+                        title={title}
+                        childWidths={childWidths}
+                        getValue={(name) => {
+                          return fieldValues[name];
+                        }}
+                        fields={childrenFields.map((field) => {
+                          const shouldHideField = field.hide
+                            ? field.hide((name) => {
+                                return fieldValues[name];
+                              })
+                            : field.hidden;
+
+                          return !shouldHideField ? (
+                            <GenericField
+                              data={field}
+                              formId={id}
+                              value={fieldValues[field.id]}
+                              onChange={updateForm}
+                              fieldOptions={fieldOptions}
+                              updateFieldOptions={updateFieldOptions}
+                              getValid={(name) => {
+                                return fieldValidations[`valid_${name}`];
+                              }}
+                              getValue={(name) => {
+                                return fieldValues[name];
+                              }}
+                            />
+                          ) : null;
+                        })}
+                      />
+                    </li>
+                  )
                 );
               }
               if (value.component === 'multiple-fields') {
