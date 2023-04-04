@@ -27,6 +27,7 @@ import { useRouter } from 'next/router';
 import _ from 'lodash';
 import { useTabsCount } from './useTabsCount';
 import { tabs } from './CandidateOffersTab/CandidateOffersTab.utils';
+import { useUpdateOpportunityStatus } from './useUpdateOpportunityStatus';
 
 const CandidateOpportunities = ({
   search,
@@ -58,6 +59,8 @@ const CandidateOpportunities = ({
 
   const queryParamsOpportunities = useQueryParamsOpportunities();
   const prevStatus = usePrevious(queryParamsOpportunities.status);
+
+  useUpdateOpportunityStatus();
 
   const fetchData = useCandidateOpportunities(
     setOffers,

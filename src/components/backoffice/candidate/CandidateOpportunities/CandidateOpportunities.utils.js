@@ -54,19 +54,3 @@ export const textVariables = {
 export const candidateSearchFilters = OPPORTUNITY_FILTERS_DATA.filter((el) => {
   return el.key !== 'status';
 });
-
-export const mutatedSchema = mutateFormSchema(formEditExternalOpportunity, [
-  {
-    fieldId: 'startEndContract',
-    props: [
-      {
-        propName: 'hidden',
-        value: true,
-      },
-      {
-        propName: 'disabled',
-        value: true,
-      },
-    ],
-  },
-]);
