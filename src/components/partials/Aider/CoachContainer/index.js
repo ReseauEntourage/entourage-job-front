@@ -13,9 +13,11 @@ import ReseauIcon from 'public/static/img/icons/aider-reseau.svg';
 import InterviewIcon from 'public/static/img/icons/aider-interview.svg';
 import BoiteOutilsIcon from 'public/static/img/icons/aider-boite-outils.svg';
 import { Container } from 'src/components/utils/containers';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import { fbEvent } from 'src/lib/fb';
 import { FB_TAGS } from 'src/constants/tags';
+
+const uuidValue = uuid();
 
 const pictoContent = [
   {
@@ -59,7 +61,7 @@ const CoachContainer = () => {
           <div className="picto-text-container">
             {pictoContent.map((content, key) => {
               return (
-                <div className="picto-text-content" key={`${key}-${uuid}`}>
+                <div className="picto-text-content" key={`${key}-${uuidValue}`}>
                   <div className="svg-container">
                     <content.picto />
                   </div>

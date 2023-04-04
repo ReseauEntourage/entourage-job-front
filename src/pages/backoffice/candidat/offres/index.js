@@ -17,6 +17,7 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import { usePrevious } from 'src/hooks/utils';
 import { getCandidateIdFromCoachOrCandidate, getRelatedUser } from 'src/utils';
 import _ from 'lodash';
+import { validate as uuidValidate } from 'uuid';
 
 // filters for the query
 const candidateQueryFilters = OPPORTUNITY_FILTERS_DATA.slice(1);
@@ -99,7 +100,7 @@ const Opportunities = () => {
     [opportunityId, replace, queryParamsOpportunities]
   );
 
-  useDeepCompareEffect(() => {
+  useDeepCompareEffect(async () => {
     if (
       user &&
       (user !== prevUser ||
@@ -110,7 +111,7 @@ const Opportunities = () => {
         setHasLoadedDefaultFilters(false);
       }
       if (user.role === USER_ROLES.ADMIN) {
-        replace(
+        await replace(
           `/backoffice/admin/offres${opportunityId ? `/${opportunityId}` : ''}`,
           undefined,
           {
@@ -119,9 +120,11 @@ const Opportunities = () => {
         );
       } else if (opportunityType === 'private') {
         if (!queryParamsOpportunities.status) {
-          replace(
+          await replace(
             {
-              pathname: '/backoffice/candidat/offres/private',
+              pathname: `/backoffice/candidat/offres/private${
+                opportunityId ? `/${opportunityId}` : ''
+              }`,
               query: { status: -1 },
             },
             undefined,
@@ -150,9 +153,18 @@ const Opportunities = () => {
           setHasLoadedDefaultFilters(true);
         }
       } else {
-        replace(`/backoffice/candidat/offres/public`, undefined, {
-          shallow: true,
-        });
+        const realOpportunityId = uuidValidate(opportunityType)
+          ? opportunityType
+          : opportunityId;
+        await replace(
+          `/backoffice/candidat/offres/private${
+            realOpportunityId ? `/${realOpportunityId}` : ''
+          }`,
+          undefined,
+          {
+            shallow: true,
+          }
+        );
       }
     } else {
       setLoading(false);

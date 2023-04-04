@@ -9,8 +9,9 @@ import TitleSection from 'src/components/partials/Aider/H2';
 import { COLORS } from 'src/constants/styles';
 import { Container } from 'src/components/utils/containers';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import uuid from 'uuid/v4';
-import { fbEvent } from 'src/lib/fb';
+import { v4 as uuid } from 'uuid';
+
+const uuidValue = uuid();
 
 const cardsContent = [
   {
@@ -73,7 +74,10 @@ const HelpCards = () => {
         >
           {cardsContent.map((cardContent, key) => {
             return (
-              <HelpCard cardContent={cardContent} keyMap={`${key}-${uuid}`} />
+              <HelpCard
+                cardContent={cardContent}
+                keyMap={`${key}-${uuidValue}`}
+              />
             );
           })}
         </div>

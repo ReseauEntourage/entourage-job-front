@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { StyledTabsUl } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab/CandidateOffersTab.styles';
-import { uuid } from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import {
   formatPlural,
   tabs,
@@ -10,6 +10,8 @@ import PropTypes from 'prop-types';
 import { isSSR } from 'src/utils/isSSR';
 import { BREAKPOINTS } from 'src/constants/styles';
 import _ from 'lodash';
+
+const uuidValue = uuid();
 
 const CandidateOffersTab = ({ activeStatus, tabCounts }) => {
   const basePath = '/backoffice/candidat/offres/private';
@@ -50,7 +52,7 @@ const CandidateOffersTab = ({ activeStatus, tabCounts }) => {
           });
 
           return (
-            <li className={isActive ? 'active' : ''} key={`${k}-${uuid}`}>
+            <li className={isActive ? 'active' : ''} key={`${k}-${uuidValue}`}>
               <Link href={`${basePath}${queryString}`}>
                 {isDesktop ? (
                   <div>

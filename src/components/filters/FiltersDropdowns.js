@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { gaEvent } from 'src/lib/gtag';
 import { Button } from 'src/components/utils';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
+
+const uuidValue = uuid();
 
 const FiltersDropdowns = ({
   filterData,
@@ -45,7 +47,7 @@ const FiltersDropdowns = ({
         }
       };
 
-      const id = `${key}-${uuid()}`;
+      const id = `${key}-${uuidValue}`;
 
       return (
         <label

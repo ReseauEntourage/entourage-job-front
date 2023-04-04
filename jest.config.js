@@ -13,6 +13,10 @@ const customJestConfig = {
   // if using TypeScript with a baseUrl set to the root directory then you need the below for alias' to work
   moduleDirectories: ['node_modules', '<rootDir>/'],
   testEnvironment: 'jest-environment-jsdom',
+  moduleNameMapper: {
+    // Force module uuid to resolve with the CJS entry point, because Jest does not support package.json.exports. See https://github.com/uuidjs/uuid/issues/451
+    uuid: require.resolve('uuid'),
+  },
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

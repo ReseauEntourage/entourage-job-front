@@ -10,9 +10,11 @@ import { gaEvent } from 'src/lib/gtag';
 import { NEWSLETTER_TAGS } from 'src/constants';
 import Checkbox from 'src/components/utils/Inputs/Checkbox';
 import { StyledPrimaryTextInput } from 'src/styles/components/inputs/styles';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import { StyledNLForm } from 'src/components/partials/NewsletterPartial/styles';
 import { useNewsletterTracking } from 'src/hooks';
+
+const uuidValue = uuid();
 
 const NewsletterPartial = ({ style, padding, tag }) => {
   const [email, setEmail] = useState('');
@@ -72,7 +74,7 @@ const NewsletterPartial = ({ style, padding, tag }) => {
           <div className="checkbox-container">
             {NEWSLETTER_TAGS.STATUS.map(({ tag: tagConst, label }, key) => {
               return (
-                <div className="input-label" key={`${key}-${uuid}`}>
+                <div className="input-label" key={`${key}-status-${uuidValue}`}>
                   <div>
                     <Checkbox
                       checked={tagConst === status}
@@ -96,7 +98,7 @@ const NewsletterPartial = ({ style, padding, tag }) => {
           <div className="checkbox-container">
             {NEWSLETTER_TAGS.ZONE.map(({ tag: tagConst, label }, key) => {
               return (
-                <div className="input-label" key={`${key}-${uuid}`}>
+                <div className="input-label" key={`${key}-zone-${uuidValue}`}>
                   <div>
                     <Checkbox
                       checked={tagConst === zone}

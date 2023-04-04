@@ -157,6 +157,7 @@ const CandidateOpportunityDetails = ({
           noProcess={
             _.isNil(opportunityUsers.status) ||
             (opportunityUsers.status === -1 &&
+              isPublic &&
               !opportunityUsers.bookmarked &&
               !opportunityUsers.recommended &&
               !opportunityUsers.archived)

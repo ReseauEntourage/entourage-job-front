@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { StyledDetailsProgressBar } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/DetailsProgressBar/DetailsProgressBar.styles';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import { useIsDesktop } from 'src/hooks/utils/usePlatforms';
 import PropTypes from 'prop-types';
+
+const uuidValue = uuid();
 
 const DetailsProgressBar = ({ tab, noProcess }) => {
   const isDesktop = useIsDesktop();
@@ -53,9 +55,9 @@ const DetailsProgressBar = ({ tab, noProcess }) => {
   return (
     <StyledDetailsProgressBar>
       {steps &&
-        steps.map(({ text, className, mobile }) => {
+        steps.map(({ text, className, mobile }, key) => {
           return (
-            <div key={uuid()} className={className}>
+            <div key={`${key}-${uuidValue}`} className={className}>
               {isDesktop ? text : mobile}
             </div>
           );

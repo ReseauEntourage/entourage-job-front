@@ -2,7 +2,7 @@ import UIkit from 'uikit';
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Navbar, SimpleLink } from 'src/components/utils';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import Hamburger from 'src/components/utils/Hamburger';
 import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas';
@@ -15,6 +15,8 @@ import { useRouter } from 'next/router';
 import NavbarLogo from 'src/components/utils/Navbar/NavbarLogo';
 import { HeaderConnectedItemShape } from '../HeaderConnected.shapes';
 import { StyledHeaderMobile } from '../../Header.styles';
+
+const uuidValue = uuid();
 
 const HeaderConnectedContentMobile = ({ badges, links }) => {
   const { user } = useContext(UserContext);
@@ -62,7 +64,7 @@ const HeaderConnectedContentMobile = ({ badges, links }) => {
               return (
                 <>
                   <StyledConnectedItemMobile
-                    key={`${index}-${uuid}`}
+                    key={`${index}-items-${uuidValue}`}
                     className={`${subMenu ? 'hasSubMenu ' : ''} ${
                       isActiveOrChildActive ? 'active' : ''
                     }`}
@@ -99,7 +101,7 @@ const HeaderConnectedContentMobile = ({ badges, links }) => {
           <hr style={{ opacity: '.5' }} />
           {links.dropdown.map(({ href, icon, name, onClick, tag }, index) => {
             return (
-              <StyledConnectedItemMobile key={`${index}-${uuid}`}>
+              <StyledConnectedItemMobile key={`${index}-children-${uuidValue}`}>
                 <a
                   aria-hidden="true"
                   onClick={() => {

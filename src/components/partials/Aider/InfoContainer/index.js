@@ -10,7 +10,9 @@ import AiderInformationsMissions from 'public/static/img/aider-informations-miss
 import AiderImgFullWidth from 'public/static/img/aider-img-full-width.jpg';
 import { Container } from 'src/components/utils/containers';
 import { isSSR } from 'src/utils/isSSR';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
+
+const uuidValue = uuid();
 
 const infoContent = [
   {
@@ -98,14 +100,14 @@ const InfoContainer = () => {
           </div>
           {infoContent.map((content, key) => {
             return (
-              <div className="informer-card" key={`${key}-${uuid}`}>
+              <div className="informer-card" key={`${key}-parent-${uuidValue}`}>
                 <div className="picto-h4">
                   <content.picto />
                   <h4>{content.title}</h4>
                 </div>
                 <ul data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;">
                   {content.ul.map((li, k) => {
-                    return <li key={`${k}-${uuid}`}>{li}</li>;
+                    return <li key={`${k}-child-${uuidValue}`}>{li}</li>;
                   })}
                 </ul>
               </div>
