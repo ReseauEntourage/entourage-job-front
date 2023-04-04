@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Navbar, SimpleLink } from 'src/components/utils';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
 import Dropdown from 'src/components/utils/Dropdown';
 import { IconNoSSR } from 'src/components/utils/Icon';
@@ -15,6 +15,8 @@ import NavbarLogo from 'src/components/utils/Navbar/NavbarLogo';
 import { StyledNav } from 'src/components/utils/Navbar/Nav/Nav.styles';
 import { HeaderConnectedItemShape } from '../HeaderConnected.shapes';
 import { StyledHeaderDesktop } from '../../Header.styles';
+
+const uuidValue = uuid();
 
 const HeaderConnectedContentDesktop = ({ badges, links }) => {
   const { user } = useContext(UserContext);
@@ -51,7 +53,7 @@ const HeaderConnectedContentDesktop = ({ badges, links }) => {
         {links.dropdown.map(({ href, name, onClick, tag }, index) => {
           return (
             <a
-              key={`${index}-${uuid}`}
+              key={`${index}-right-${uuidValue}`}
               aria-hidden="true"
               onClick={() => {
                 if (tag) gaEvent(tag);
@@ -112,7 +114,7 @@ const HeaderConnectedContentDesktop = ({ badges, links }) => {
                   return (
                     <StyledConnectedItem
                       color="black"
-                      key={`${index}-${uuid}`}
+                      key={`${index}-left-${uuidValue}`}
                       className={`${subMenu ? 'hasSubMenu ' : ''} ${
                         isActiveOrChildActive ? 'active' : ''
                       }`}

@@ -3,11 +3,7 @@ import CountUp from 'react-countup';
 import { Grid, Section } from 'src/components/utils';
 import CVList from 'src/components/cv/CVList';
 import Button from 'src/components/utils/Button';
-import {
-  CANDIDATE_GENDERS_FILTERS,
-  CV_FILTERS_DATA,
-  INITIAL_NB_OF_CV_TO_DISPLAY,
-} from 'src/constants';
+import { CV_FILTERS_DATA, INITIAL_NB_OF_CV_TO_DISPLAY } from 'src/constants';
 import { SharesCountContext } from 'src/store/SharesCountProvider';
 import { IconNoSSR } from 'src/components/utils/Icon';
 

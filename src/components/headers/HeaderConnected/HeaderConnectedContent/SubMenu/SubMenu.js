@@ -1,5 +1,5 @@
 import React from 'react';
-import { uuid } from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import { PropTypes } from 'prop-types';
 import { StyledSubMenu } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/SubMenu/SubMenu.styles';
 import SimpleLink from 'src/components/utils/SimpleLink';
@@ -11,6 +11,8 @@ import {
 } from 'src/components/headers/HeaderConnected/HeaderConnected.shapes';
 import { gaEvent } from 'src/lib/gtag';
 
+const uuidValue = uuid();
+
 const SubMenu = ({ items, badges }) => {
   return (
     <StyledSubMenu className="subMenu-container">
@@ -20,7 +22,7 @@ const SubMenu = ({ items, badges }) => {
             <SimpleLink
               href={href + (queryParams || '')}
               className="subMenu-item"
-              key={`${key}-${uuid}`}
+              key={`${key}-${uuidValue}`}
               onClick={() => {
                 if (tag) gaEvent(tag);
               }}

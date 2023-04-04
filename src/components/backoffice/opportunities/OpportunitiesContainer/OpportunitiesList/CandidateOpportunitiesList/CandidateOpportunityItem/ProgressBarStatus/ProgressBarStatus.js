@@ -8,6 +8,7 @@ const ProgressBarStatus = ({
   archived,
   isBookmarked,
   isRecommended,
+  isPublic,
 }) => {
   const abandonned = archived || status === 3 || status === 4;
   const hired = !archived && status === 2;
@@ -26,7 +27,9 @@ const ProgressBarStatus = ({
       <StyledStep
         activate={
           !noStatus &&
-          (status >= 0 || (status === -1 && (isBookmarked || isRecommended)))
+          (status >= 0 ||
+            (status === -1 && isPublic && (isBookmarked || isRecommended)) ||
+            (status === -1 && !isPublic))
         }
         color={color}
       />
@@ -56,6 +59,7 @@ ProgressBarStatus.propTypes = {
   archived: PropTypes.bool,
   isBookmarked: PropTypes.bool.isRequired,
   isRecommended: PropTypes.bool.isRequired,
+  isPublic: PropTypes.bool.isRequired,
 };
 
 export default ProgressBarStatus;

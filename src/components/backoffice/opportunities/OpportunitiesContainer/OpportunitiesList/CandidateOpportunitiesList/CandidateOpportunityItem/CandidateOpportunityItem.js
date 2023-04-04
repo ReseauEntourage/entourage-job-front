@@ -89,6 +89,7 @@ const CandidateOpportunityItem = ({
         archived={opportunityUsers?.archived}
         isBookmarked={opportunityUsers?.bookmarked}
         isRecommended={opportunityUsers?.recommended}
+        isPublic={isPublic}
       />
       <StyledBottomContainer>
         <SubtitleText>Description mission</SubtitleText>

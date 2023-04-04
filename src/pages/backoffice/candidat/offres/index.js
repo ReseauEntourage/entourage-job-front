@@ -17,6 +17,7 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import { usePrevious } from 'src/hooks/utils';
 import { getCandidateIdFromCoachOrCandidate, getRelatedUser } from 'src/utils';
 import _ from 'lodash';
+import { validate as uuidValidate } from 'uuid';
 
 // filters for the query
 const candidateQueryFilters = OPPORTUNITY_FILTERS_DATA.slice(1);
@@ -39,6 +40,8 @@ const Opportunities = () => {
   const [loading, setLoading] = useState(true);
 
   const [hasLoadedDefaultFilters, setHasLoadedDefaultFilters] = useState(false);
+
+  const prevHasLoadedDefaultFilters = usePrevious(hasLoadedDefaultFilters);
 
   const [candidateId, setCandidateId] = useState();
 
@@ -99,18 +102,21 @@ const Opportunities = () => {
     [opportunityId, replace, queryParamsOpportunities]
   );
 
-  useDeepCompareEffect(() => {
+  useDeepCompareEffect(async () => {
     if (
       user &&
       (user !== prevUser ||
         opportunityType !== prevOpportunityType ||
+        hasLoadedDefaultFilters !== prevHasLoadedDefaultFilters ||
         queryParamsOpportunities.status !== prevStatus)
     ) {
+      // Si changement de page et donc potentiel premier chargement
       if (opportunityType !== prevOpportunityType) {
         setHasLoadedDefaultFilters(false);
       }
       if (user.role === USER_ROLES.ADMIN) {
-        replace(
+        // Redirection si on est connecté en tant qu'admin
+        await replace(
           `/backoffice/admin/offres${opportunityId ? `/${opportunityId}` : ''}`,
           undefined,
           {
@@ -118,10 +124,15 @@ const Opportunities = () => {
           }
         );
       } else if (opportunityType === 'private') {
+        // Cas pour les offres privée
         if (!queryParamsOpportunities.status) {
-          replace(
+          // Si pas le paramètre status dans l'URL
+          // Redirection par défaut pour tout le temps avoir le paramètre status
+          await replace(
             {
-              pathname: '/backoffice/candidat/offres/private',
+              pathname: `/backoffice/candidat/offres/private${
+                opportunityId ? `/${opportunityId}` : ''
+              }`,
               query: { status: -1 },
             },
             undefined,
@@ -130,12 +141,13 @@ const Opportunities = () => {
             }
           );
         } else {
+          // On a déja le paramètre status
           const candId = getCandidateIdFromCoachOrCandidate(user);
           setCandidateId(candId);
-          setHasLoadedDefaultFilters(true);
           setLoading(false);
         }
       } else if (opportunityType === 'public') {
+        // Cas pour les offres publiques
         const { status, ...restQueryParams } = queryParamsOpportunities;
         const candidate =
           user.role === USER_ROLES.CANDIDAT ? user : getRelatedUser(user);
@@ -144,15 +156,32 @@ const Opportunities = () => {
           !hasLoadedDefaultFilters &&
           _.isEmpty(restQueryParams)
         ) {
+          // Si on a pas encore appliqué les filtres par défaut
+          // Et si on a pas d'autres paramètres qui indiquerait qu'on est pas sur un premier chargement de la page
+          // Appliquer les filtres par défaut
           setCandidateDefaultsIfPublicTag(candidate.id, candidate.zone);
         } else {
+          // Si on a déjà appliqué les filtres par défaut
+          // Ou si on a d'autres paramètres donc ce n'est pas un premier chargement de la page
           setCandidateId(candidate?.id);
           setHasLoadedDefaultFilters(true);
         }
       } else {
-        replace(`/backoffice/candidat/offres/public`, undefined, {
-          shallow: true,
-        });
+        // Dernier cas pour la rétrocompatibilité.
+        // Si pas de opportunityType, on regarde si on a un opportunityId dans opportunityType.
+        // Redirection par défaut sur les offres privées
+        const realOpportunityId = uuidValidate(opportunityType)
+          ? opportunityType
+          : opportunityId;
+        await replace(
+          `/backoffice/candidat/offres/private${
+            realOpportunityId ? `/${realOpportunityId}` : ''
+          }`,
+          undefined,
+          {
+            shallow: true,
+          }
+        );
       }
     } else {
       setLoading(false);
@@ -171,7 +200,11 @@ const Opportunities = () => {
   ]);
 
   let content;
-  if (loading || !user || !hasLoadedDefaultFilters) {
+  if (
+    loading ||
+    !user ||
+    (opportunityType === 'public' && !hasLoadedDefaultFilters)
+  ) {
     content = <LoadingScreen />;
   } else if (hasError) {
     content = <OpportunityError />;

@@ -23,6 +23,8 @@ import UIkit from 'uikit';
 import moment from 'moment';
 import { HiredDateModal, InterviewDateModel } from '../DateModals';
 
+const uuidValue = uuid();
+
 const CandidateOpportunityDetailsCTAs = ({
   tab,
   event,
@@ -291,10 +293,10 @@ const CandidateOpportunityDetailsCTAs = ({
       {(tab || tab === 0) &&
         CTAsByTab.find((CTAByTab) => {
           return CTAByTab.tab === tab;
-        }).ctas.map((cta) => {
+        }).ctas.map((cta, key) => {
           const { color, className, action, text } = allCTAs[cta];
           return (
-            <li key={uuid()}>
+            <li key={`${key}-${uuidValue}`}>
               <Button
                 disabled={disables[action] ? disables[action]() : false}
                 size="small"

@@ -18,7 +18,7 @@ describe('Candidat', () => {
         'GET',
         '/opportunity/candidate/all/' +
           user.id +
-          '?type=public&offset=0&limit=25&department[]=Seine-Saint-Denis+(93)',
+          '?type=private&offset=0&limit=25&status[]=-1',
         {
           fixture: 'user-opportunity-all-res',
         }
@@ -121,7 +121,7 @@ describe('Candidat', () => {
         offersList.offers[0].title
       );
     });
-    cy.get('[data-testid="candidat-add-offer"]').click();
+    cy.get('[data-testid="candidat-add-offer-main"]').click();
     cy.get('#form-input-title').scrollIntoView().type('test');
     cy.get('#form-input-company').scrollIntoView().type('test');
     cy.get('#form-offer-external-department-container')
