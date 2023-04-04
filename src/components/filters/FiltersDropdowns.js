@@ -17,10 +17,10 @@ const FiltersDropdowns = ({
   showSeparator,
   smallSelectors,
 }) => {
-  const renderFilters = (filterConstants, key, tag) => {
+  const renderFilters = (filterConstants, key, tag, index) => {
     const reducedFilters = Object.values(filterConstants);
 
-    return reducedFilters.map((filterConst, index) => {
+    return reducedFilters.map((filterConst, i) => {
       const indexInSelectedFilters = filters[key].findIndex((filter) => {
         return filter && filter.value === filterConst.value;
       });
@@ -47,7 +47,7 @@ const FiltersDropdowns = ({
         }
       };
 
-      const id = `${key}-${uuidValue}`;
+      const id = `${key}-${index}-${i}-${uuidValue}`;
 
       return (
         <label
@@ -78,7 +78,7 @@ const FiltersDropdowns = ({
   return (
     <div className={hideOnMobile ? 'uk-visible@m' : ''}>
       {filterData.map(
-        ({ title, constants, priority, key, tag, type, disabled }) => {
+        ({ title, constants, priority, key, tag, type, disabled }, index) => {
           if (filters[key]) {
             if (!type || type !== 'checkbox') {
               return (
@@ -127,7 +127,7 @@ const FiltersDropdowns = ({
                     >
                       {priority && priority.length > 0 ? (
                         <>
-                          {renderFilters(priority, key, tag)}
+                          {renderFilters(priority, key, tag, index)}
                           <hr />
                           {renderFilters(
                             constants.filter((filterConst) => {
@@ -138,11 +138,12 @@ const FiltersDropdowns = ({
                                 .includes(filterConst.value);
                             }),
                             key,
-                            tag
+                            tag,
+                            index
                           )}
                         </>
                       ) : (
-                        renderFilters(constants, key, tag)
+                        renderFilters(constants, key, tag, index)
                       )}
                     </div>
                   </div>

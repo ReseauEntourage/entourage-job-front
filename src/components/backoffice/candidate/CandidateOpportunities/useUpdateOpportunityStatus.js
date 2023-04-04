@@ -48,10 +48,14 @@ export function useUpdateOpportunityStatus() {
       } else {
         updateStatusOffer(statusAsNumber);
       }
-      replace({
-        pathname,
-        query: restQuery,
-      });
+      replace(
+        {
+          pathname,
+          query: restQuery,
+        },
+        undefined,
+        { shallow: true }
+      );
     }
   }, [
     candidateId,

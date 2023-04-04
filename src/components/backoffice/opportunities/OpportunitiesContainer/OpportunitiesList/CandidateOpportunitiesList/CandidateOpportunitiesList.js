@@ -12,12 +12,15 @@ import { useOpportunityType } from 'src/components/backoffice/opportunities/useO
 import { useScrollPosition } from '@n8tb1t/use-scroll-position';
 import { useWindowHeight } from '@react-hook/window-size';
 import { usePrevious } from 'src/hooks/utils';
+import { v4 as uuid } from 'uuid';
 import {
   StyledLinkCard,
   StyledListContent,
   StyledListItem,
   StyledListItemContainer,
 } from '../OpportunitiesList.styles';
+
+const uuidValue = uuid();
 
 const CandidateOpportunitiesList = ({
   opportunities,
@@ -64,9 +67,12 @@ const CandidateOpportunitiesList = ({
     [windowHeight]
   );
 
-  const opportunitiesListContent = opportunities.map((opportunity) => {
+  const opportunitiesListContent = opportunities.map((opportunity, index) => {
     return (
-      <StyledListItemContainer data-testid="candidat-offer-list-element">
+      <StyledListItemContainer
+        data-testid="candidat-offer-list-element"
+        key={`${index}-${uuidValue}`}
+      >
         <Link
           href={{
             pathname: `/backoffice/candidat/offres/${opportunityType}/${opportunity.id}`,
