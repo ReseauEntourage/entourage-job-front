@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import FormValidatorErrorMessage from '../../../forms/FormValidatorErrorMessage';
+import ReactSelect, { components } from 'react-select';
+import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
+import Icon from 'src/components/utils/Icon';
 import {
   StyledAsyncSelect,
   StyledAsyncSelectContainer,
@@ -22,11 +24,35 @@ export function SelectAsync({
   valid,
   defaultOptions,
 }) {
+  const DropdownIndicator = (props) => {
+    return (
+      <components.DropdownIndicator {...props}>
+        <Icon name="chevron-down" ratio={0.9} />
+      </components.DropdownIndicator>
+    );
+  };
+
+  const ClearIndicator = (props) => {
+    return (
+      <components.ClearIndicator {...props}>
+        <Icon name="close" ratio={0.8} />
+      </components.ClearIndicator>
+    );
+  };
+
+  const MultiValueRemove = (props) => {
+    return (
+      <components.MultiValueRemove {...props}>
+        <Icon name="close" ratio={0.6} />
+      </components.MultiValueRemove>
+    );
+  };
   return (
     !isHidden && (
       <StyledAsyncSelectContainer>
         <StyledAsyncSelect
           id={id}
+          components={{ ClearIndicator, DropdownIndicator, MultiValueRemove }}
           classNamePrefix="Select"
           cacheOptions={cacheOptions}
           isClearable

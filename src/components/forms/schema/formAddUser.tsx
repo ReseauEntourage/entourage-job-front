@@ -1,7 +1,7 @@
 import React from 'react';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
+import PlusFilledIcon from 'assets/custom/icons/plus-filled.svg';
 import Api from 'src/api/index';
-import { Icon } from 'src/components/utils';
 import {
   ADMIN_ROLES,
   USER_ROLES,
@@ -10,6 +10,7 @@ import {
   EXTERNAL_USER_ROLES,
 } from 'src/constants';
 import { ADMIN_ZONES_FILTERS } from 'src/constants/departements';
+import { COLORS } from 'src/constants/styles';
 import { areRolesIncluded } from 'src/utils';
 
 const CREATE_NEW_ORGANIZATION_VALUE = 'createNewOrganization';
@@ -17,13 +18,14 @@ const CREATE_NEW_ORGANIZATION_VALUE = 'createNewOrganization';
 const CREATE_NEW_ORGANIZATION_OPTION = {
   value: CREATE_NEW_ORGANIZATION_VALUE,
   label: (
-    // TODO style
     <>
-      <Icon name="plus-circle" />
+      <PlusFilledIcon color={COLORS.primaryOrange} />
       Ajouter une nouvelle structure
     </>
   ),
 };
+
+// TODO FIX field to reset
 
 export const formAddUser = {
   id: 'form-add-user',
@@ -274,6 +276,15 @@ export const formAddUser = {
           ignore_whitespace: true,
         },
       ],
+      validWhen: false,
+      message: 'Obligatoire',
+    },
+    {
+      field: 'adminRole',
+      method: (fieldValue) => {
+        return fieldValue && isValidPhoneNumber(fieldValue, 'FR');
+      },
+      args: [],
       validWhen: false,
       message: 'Obligatoire',
     },

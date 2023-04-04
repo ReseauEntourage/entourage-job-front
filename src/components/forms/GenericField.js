@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactSelect, { components } from 'react-select';
+import ReactSelect from 'react-select';
 import { SelectAsync as AsyncSelectNew } from 'src/components/utils/Inputs/SelectAsync/index.ts';
 import AsyncSelect from 'react-select/async';
 import PropTypes from 'prop-types';

@@ -41,6 +41,11 @@ export const StyledAsyncSelect = styled(AsyncSelect)`
     padding: 0 !important;
   }
 
+  & .Select__single-value {
+    display: flex;
+    align-items: center;
+  }
+
   & .Select__dropdown-indicator {
     color: ${COLORS.primaryOrange};
     padding: 0 !important;
@@ -79,14 +84,14 @@ export const StyledAsyncSelect = styled(AsyncSelect)`
   }
 
   & .Select__clear-indicator {
-    color: ${COLORS.gray};
+    color: ${COLORS.darkGray};
     visibility: visible;
     cursor: pointer;
     padding-bottom: 0 !important;
     padding-top: 0 !important;
     :hover {
       color: ${COLORS.gray};
-      opacity: 0.6;
+      opacity: 0.6 !important;
     }
   }
 
@@ -130,6 +135,11 @@ export const StyledAsyncSelect = styled(AsyncSelect)`
     padding: 16px 12px;
     transition: 0.2s ease-in-out;
     font-family: Poppins, sans-serif !important;
+    display: flex;
+    align-items: center;
+    & svg {
+      margin-right: 4px !important;
+    }
   }
   & .Select__option--is-selected {
     color: ${COLORS.black} !important;
@@ -147,13 +157,15 @@ export const StyledAsyncSelect = styled(AsyncSelect)`
 
   & .Select__multi-value__label {
     border-radius: 0 !important;
+    padding: 0 !important;
   }
 
   & .Select__multi-value__remove {
     color: ${COLORS.primaryOrange};
+    padding-right: 0 !important;
     :hover {
       background-color: white !important;
-      opacity: 0.6;
+      opacity: 0.6 !important;
       cursor: pointer;
     }
   }
@@ -161,5 +173,16 @@ export const StyledAsyncSelect = styled(AsyncSelect)`
   & .Select__single-value {
     color: ${COLORS.black} !important;
     font-size: 14px !important;
+    display: flex;
+    align-items: center;
+    & svg {
+      margin-right: 4px !important;
+    }
+  }
+
+  & .Select__input > input {
+    font-size: 14px !important;
+    line-height: 17px !important;
+    font-family: Poppins, sans-serif !important;
   }
 `;
