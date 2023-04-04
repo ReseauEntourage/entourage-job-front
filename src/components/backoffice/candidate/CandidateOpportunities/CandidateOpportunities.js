@@ -150,7 +150,7 @@ const CandidateOpportunities = ({
             >
               <Button
                 style="primary"
-                dataTestId="candidat-add-offer"
+                dataTestId="candidat-add-offer-main"
                 onClick={() => {
                   openModal(
                     <ModalExternalOffer fetchOpportunities={resetOffset} />
