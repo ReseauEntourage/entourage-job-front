@@ -9,8 +9,10 @@ import YoutubeIcon from 'public/static/img/icons/youtube.svg';
 import InstaIcon from 'public/static/img/icons/instagram.svg';
 import TwitterIcon from 'public/static/img/icons/twitter.svg';
 import LinkedInIcon from 'public/static/img/icons/linked-in.svg';
-import { uuid } from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import { StyledShareButton } from 'src/components/partials/SharePartial/styles';
+
+const uuidValue = uuid();
 
 const SharePartial = ({ padding }) => {
   const { asPath } = useRouter();
@@ -58,7 +60,7 @@ const SharePartial = ({ padding }) => {
           },
         ].map((share, key) => {
           return (
-            <a key={key + uuid} href={share.href} target="_blanck">
+            <a key={`${key}-${uuidValue}`} href={share.href} target="_blanck">
               <StyledShareButton
                 onClick={() => {
                   gaEvent(share.tag);

@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import { StyledInputsContainer } from './InputsContainer.styles';
+
+const uuidValue = uuid();
 
 interface ContainerTypes {
   fields: React.ReactNode[];
@@ -14,9 +16,9 @@ const InputsContainer = ({
 }: ContainerTypes) => {
   return (
     <StyledInputsContainer>
-      {fields.map((field) => {
+      {fields.map((field, key) => {
         return (
-          <div key={uuid} className="field-container">
+          <div key={`${key}-${uuidValue}`} className="field-container">
             {field}
           </div>
         );

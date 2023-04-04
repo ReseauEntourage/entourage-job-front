@@ -3,7 +3,9 @@ import { StyledCoachTestimony } from 'src/components/partials/Aider/CoachContain
 import TitleSection from 'src/components/partials/Aider/H2';
 import { COLORS } from 'src/constants/styles';
 import { Container } from 'src/components/utils/containers';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
+
+const uuidValue = uuid();
 
 const testimonyContent = [
   {
@@ -62,7 +64,7 @@ const CoachTestimony = () => {
         >
           {testimonyContent.map(({ text, coach, candidat }, key) => {
             return (
-              <div className="testimony-content" key={`${key}-${uuid}`}>
+              <div className="testimony-content" key={`${key}-${uuidValue}`}>
                 <div className="quote">{text}</div>
                 <div>
                   <p className="names">
