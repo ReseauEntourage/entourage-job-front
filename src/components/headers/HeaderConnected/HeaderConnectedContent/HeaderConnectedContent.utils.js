@@ -71,7 +71,7 @@ export const renderLinks = (user, logout) => {
             tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_MES_OFFRES_CLIC,
           },
           {
-            href: '/backoffice/candidat/offres',
+            href: '/backoffice/candidat/offres/public',
             name: 'Toutes les offres',
             // icon: 'list',
             // badge: 'offers',
