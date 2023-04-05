@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { uuid } from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import { StyledRadioContainer } from './Radio.styles';
 import { RadioComponentType } from './Radio.type';
+
+const uuidValue = uuid();
 
 const Radio = ({
   options,
@@ -50,7 +52,7 @@ const Radio = ({
                 <label
                   htmlFor={inputId}
                   className={i === checkedRadio ? 'checked' : ''}
-                  key={`${i}-${uuid}`}
+                  key={`${i}-${uuidValue}`}
                 >
                   <input
                     type="radio"
