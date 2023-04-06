@@ -22,26 +22,28 @@ export function PhoneInput({
   };
 
   return (
-    <>
-      <StyledPhoneInput hidden={hidden}>
-        {showLabel && <label htmlFor={`form-input-${name}`}>{title}</label>}
-        <PhoneInputWithCountry
-          defaultCountry="FR"
-          title={title}
-          name={name}
-          id={id}
-          data-testid={id}
-          value={value || ''}
-          placeholder={placeholder || title}
-          onChange={(event) => {
-            return update(event);
-          }}
-          disabled={disabled}
-          autoComplete={autocomplete}
-        />
-      </StyledPhoneInput>
-      <FormValidatorErrorMessage validObj={valid} newInput />
-    </>
+    !hidden && (
+      <>
+        <StyledPhoneInput>
+          {showLabel && <label htmlFor={`form-input-${name}`}>{title}</label>}
+          <PhoneInputWithCountry
+            defaultCountry="FR"
+            title={title}
+            name={name}
+            id={id}
+            data-testid={id}
+            value={value || ''}
+            placeholder={placeholder || title}
+            onChange={(event) => {
+              return update(event);
+            }}
+            disabled={disabled}
+            autoComplete={autocomplete}
+          />
+        </StyledPhoneInput>
+        <FormValidatorErrorMessage validObj={valid} newInput />
+      </>
+    )
   );
 }
 

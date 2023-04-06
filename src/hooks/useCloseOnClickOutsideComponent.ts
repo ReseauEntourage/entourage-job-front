@@ -8,9 +8,9 @@ export function useCloseOnClickOutsideComponent(id) {
 
   const closeSelect = useCallback(
     (e) => {
-      const container = document.getElementById(componentId);
       e.preventDefault();
-      const isClickInside = container.contains(e.target);
+      const container = document.getElementById(componentId);
+      const isClickInside = container?.contains(e.target);
       if (isOpen && !isClickInside) {
         setIsOpen(false);
       }

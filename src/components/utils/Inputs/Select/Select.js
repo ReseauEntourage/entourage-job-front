@@ -23,89 +23,88 @@ const Select = ({
   } = useCloseOnClickOutsideComponent(id);
 
   return (
-    <StyledSelectContainer
-      className={`${hidden ? 'hidden' : ''}`}
-      id={selectId}
-    >
-      {showLabel && title && (
-        <label htmlFor={id} className="label-top">
-          {title}
-        </label>
-      )}
-      <input type="hidden" value={selectedOption.value} name={name} id={id} />
-      <div className="select">
-        {!selectedOption.value || (selectedOption.value && optionsOpen) ? (
-          <button
-            className="placeholder"
-            type="button"
-            onClick={() => {
-              return setOptionsOpen(!optionsOpen);
-            }}
-            data-testid={id}
-          >
-            {showLabel || !title ? (
-              <div>
-                Selectionnez dans la liste{' '}
-                <IconNoSSR name="chevron-down" ratio="2.5" />
-              </div>
-            ) : (
-              <>
-                <label htmlFor={id}>{title}</label>
-                <IconNoSSR name="chevron-down" ratio="2.5" />
-              </>
-            )}
-          </button>
-        ) : (
-          <button
-            className="selected-value"
-            type="button"
-            onClick={() => {
-              return setOptionsOpen(!optionsOpen);
-            }}
-          >
-            {selectedOption.label}
-            <IconNoSSR name="chevron-down" ratio="2.5" />
-          </button>
+    !hidden && (
+      <StyledSelectContainer id={selectId}>
+        {showLabel && title && (
+          <label htmlFor={id} className="label-top">
+            {title}
+          </label>
         )}
-        {optionsOpen && (
-          <ul className="options-container">
-            {options?.map((option) => {
-              const optionId = `select-option-${
-                typeof option.value === 'string'
-                  ? option.value.replace(/\s+/g, '')
-                  : option.value
-              }`;
+        <input type="hidden" value={selectedOption.value} name={name} id={id} />
+        <div className="select">
+          {(!selectedOption.value && selectedOption.value !== 0) ||
+          (selectedOption.value && optionsOpen) ? (
+            <button
+              className="placeholder"
+              type="button"
+              onClick={() => {
+                return setOptionsOpen(!optionsOpen);
+              }}
+              data-testid={id}
+            >
+              {showLabel || !title ? (
+                <div>
+                  Selectionnez dans la liste{' '}
+                  <IconNoSSR name="chevron-down" ratio="2.5" />
+                </div>
+              ) : (
+                <>
+                  <label htmlFor={id}>{title}</label>
+                  <IconNoSSR name="chevron-down" ratio="2.5" />
+                </>
+              )}
+            </button>
+          ) : (
+            <button
+              className="selected-value"
+              type="button"
+              onClick={() => {
+                return setOptionsOpen(!optionsOpen);
+              }}
+            >
+              {selectedOption.label}
+              <IconNoSSR name="chevron-down" ratio="2.5" />
+            </button>
+          )}
+          {optionsOpen && (
+            <ul className="options-container">
+              {options?.map((option) => {
+                const optionId = `select-option-${
+                  typeof option.value === 'string'
+                    ? option.value.replace(/\s+/g, '')
+                    : option.value
+                }`;
 
-              return (
-                <li className="option" key={option.value}>
-                  <button
-                    type="button"
-                    data-testid={optionId}
-                    id={optionId}
-                    onClick={() => {
-                      setOptionsOpen(!optionsOpen);
-                      onChange({
-                        target: {
-                          name,
-                          type: 'select',
-                          value: option.value,
-                          checked: 0,
-                          selectedIndex: 0,
-                        },
-                      });
-                      return setSelectedOption(option);
-                    }}
-                  >
-                    {option.label}
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-        )}
-      </div>
-      <FormValidatorErrorMessage validObj={valid} newInput />
-    </StyledSelectContainer>
+                return (
+                  <li className="option" key={option.value}>
+                    <button
+                      type="button"
+                      data-testid={optionId}
+                      id={optionId}
+                      onClick={() => {
+                        setOptionsOpen(!optionsOpen);
+                        onChange({
+                          target: {
+                            name,
+                            type: 'select',
+                            value: option.value,
+                            checked: 0,
+                          },
+                        });
+                        return setSelectedOption(option);
+                      }}
+                    >
+                      {option.label}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
+        <FormValidatorErrorMessage validObj={valid} newInput />
+      </StyledSelectContainer>
+    )
   );
 };
 Select.defaultProps = {

@@ -3,9 +3,6 @@ import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledPhoneInput = styled.div`
-  display: ${({ hidden }) => {
-    return hidden ? 'none' : 'inherit';
-  }};
   min-width: 300px;
   max-width: 100%;
   margin-bottom: 30px;

@@ -5,7 +5,7 @@ import { Section } from 'src/components/utils';
 import { MEMBER_FILTERS_DATA } from 'src/constants';
 import { useFilters } from 'src/hooks';
 import { UserContext } from 'src/store/UserProvider';
-import MemberList from 'src/components/backoffice/admin/MemberList';
+import { MemberList } from 'src/components/backoffice/admin/MemberList/index.ts';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 
 const MembersAdmin = () => {

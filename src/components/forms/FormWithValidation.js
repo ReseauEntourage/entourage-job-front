@@ -3,6 +3,7 @@ import React, {
   useCallback,
   useEffect,
   useImperativeHandle,
+  useMemo,
   useState,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -34,7 +35,9 @@ const FormWithValidation = forwardRef(
     },
     ref
   ) => {
-    const validator = new FormValidator(rules);
+    const validator = useMemo(() => {
+      return new FormValidator(rules);
+    }, [rules]);
 
     const [error, setError] = useState();
 
@@ -43,90 +46,105 @@ const FormWithValidation = forwardRef(
     const [fieldOptions, setFieldOptions] = useState({});
 
     // fonction permettant de verifier une champs d'entré utilisateur
-    const updateForm = (args) => {
-      let onChangeArgs = args;
-      if (!Array.isArray(onChangeArgs)) {
-        onChangeArgs = [onChangeArgs];
-      }
-
-      const tmpFieldValues = { ...fieldValues };
-      const tmpFieldValidations = fieldValidations;
-      for (let i = 0; i < onChangeArgs.length; i += 1) {
-        const {
-          target: { name, type, value, checked, selectedIndex },
-        } = onChangeArgs[i];
-
-        let fieldValue;
-        if (type === 'checkbox') {
-          fieldValue = checked;
-          // TODO replace type select-one
-        } else if (type === 'select-one' && selectedIndex === 0) {
-          fieldValue = null; // si on est sur le placeholder ( option sans valeur )
-        } else {
-          fieldValue = value;
+    const updateForm = useCallback(
+      (args) => {
+        let onChangeArgs = args;
+        if (!Array.isArray(onChangeArgs)) {
+          onChangeArgs = [onChangeArgs];
         }
 
-        /* Validators start */
-        tmpFieldValues[name] = fieldValue;
-
-        const validation = validator.validate(tmpFieldValues); // envoie une copie des champs pour que le state ne soit pas altéré
-
-        // enregistre la raison de la validation {isInvalid: boolean, message: string}
-        if (validation[name] !== undefined) {
-          tmpFieldValidations[`valid_${name}`] = validation[name];
-        }
-      }
-
-      setFieldValues(tmpFieldValues); // enregistre la valeur du champs
-      setFieldValidations(tmpFieldValidations);
-
-      /* Validators end */
-      setError('');
-    };
-
-    const submitForm = async (event) => {
-      if (event) event.preventDefault();
-      // Vérifie les champs avant soumission
-      /* Validators control before submit */
-
-      const validation = validator.validate(fieldValues);
-      const formattedFieldValues = Object.keys(fieldValues).reduce(
-        (acc, curr) => {
-          return {
-            ...acc,
-            [curr]: getValueFromFormField(fieldValues[curr]),
-          };
-        },
-        {}
-      );
-
-      if (validation.isValid) {
-        // Si les validators sont OK.
-        await onSubmit(formattedFieldValues, (msg) => {
-          return setError(msg);
-        }); // c'est le props onsubmit de FormWithValidation
-      } else {
-        // erreur de validation
+        const tmpFieldValues = { ...fieldValues };
         const tmpFieldValidations = fieldValidations;
-        Object.keys(validation).forEach((key) => {
-          if (key !== 'isValid') {
-            tmpFieldValidations[`valid_${key}`] = validation[key];
-          }
-        });
-        setFieldValidations(tmpFieldValidations);
-        setError('Un ou plusieurs champs sont invalides');
-        await onError(fieldValues);
-      }
-    };
+        for (let i = 0; i < onChangeArgs.length; i += 1) {
+          const {
+            target: { name, type, value, checked },
+            isReset,
+          } = onChangeArgs[i];
 
-    const updateFieldOptions = (fieldWithOptions) => {
-      setFieldOptions({ ...fieldOptions, ...fieldWithOptions });
-    };
+          let fieldValue;
+
+          if (type === 'checkbox') {
+            fieldValue = checked;
+            // TODO replace type select-one
+          } else {
+            fieldValue = value;
+          }
+
+          /* Validators start */
+          tmpFieldValues[name] = fieldValue;
+
+          const validation = validator.validate(tmpFieldValues, fields); // envoie une copie des champs pour que le state ne soit pas altéré
+
+          // enregistre la raison de la validation {isInvalid: boolean, message: string}
+          if (validation[name] !== undefined && !isReset) {
+            tmpFieldValidations[`valid_${name}`] = validation[name];
+          }
+          if (isReset) {
+            delete tmpFieldValidations[`valid_${name}`];
+          }
+        }
+
+        setFieldValues(tmpFieldValues); // enregistre la valeur du champs
+        setFieldValidations(tmpFieldValidations);
+
+        /* Validators end */
+        setError('');
+      },
+      [fieldValidations, fieldValues, fields, validator]
+    );
+
+    const submitForm = useCallback(
+      async (event) => {
+        if (event) event.preventDefault();
+        // Vérifie les champs avant soumission
+        /* Validators control before submit */
+
+        const validation = validator.validate(fieldValues, fields);
+        const formattedFieldValues = Object.keys(fieldValues).reduce(
+          (acc, curr) => {
+            return {
+              ...acc,
+              [curr]: getValueFromFormField(fieldValues[curr]),
+            };
+          },
+          {}
+        );
+
+        if (validation.isValid) {
+          // Si les validators sont OK.
+          await onSubmit(formattedFieldValues, (msg) => {
+            return setError(msg);
+          }); // c'est le props onsubmit de FormWithValidation
+        } else {
+          // erreur de validation
+          const tmpFieldValidations = fieldValidations;
+          Object.keys(validation).forEach((key) => {
+            if (key !== 'isValid') {
+              tmpFieldValidations[`valid_${key}`] = validation[key];
+            }
+          });
+          setFieldValidations(tmpFieldValidations);
+          setError('Un ou plusieurs champs sont invalides');
+          await onError(fieldValues);
+        }
+      },
+      [fieldValidations, fieldValues, fields, onError, onSubmit, validator]
+    );
+
+    const updateFieldOptions = useCallback(
+      (fieldWithOptions) => {
+        setFieldOptions({ ...fieldOptions, ...fieldWithOptions });
+      },
+      [fieldOptions]
+    );
 
     const initializeForm = useCallback(() => {
       // on extrait les nom des champs
       const fieldsId = fields.reduce((acc, curr) => {
-        if (curr.component === 'fieldgroup') {
+        if (
+          curr.component === 'fieldgroup' ||
+          curr.component === 'fieldgroup-new'
+        ) {
           return [
             ...acc,
             ...curr.fields.map((field) => {

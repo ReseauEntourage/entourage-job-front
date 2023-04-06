@@ -12,8 +12,9 @@ import {
 import { ADMIN_ZONES_FILTERS } from 'src/constants/departements';
 import { COLORS } from 'src/constants/styles';
 import { areRolesIncluded } from 'src/utils';
+import { formAddOrganization } from './formAddOrganization';
 
-const CREATE_NEW_ORGANIZATION_VALUE = 'createNewOrganization';
+export const CREATE_NEW_ORGANIZATION_VALUE = 'createNewOrganization';
 
 const CREATE_NEW_ORGANIZATION_OPTION = {
   value: CREATE_NEW_ORGANIZATION_VALUE,
@@ -25,7 +26,46 @@ const CREATE_NEW_ORGANIZATION_OPTION = {
   ),
 };
 
-// TODO FIX field to reset
+const hideMethod = (getValue) => {
+  const role = getValue('role');
+  const organizationId = getValue('organizationId')?.value;
+  return !(
+    areRolesIncluded(EXTERNAL_USER_ROLES, [role]) &&
+    organizationId === CREATE_NEW_ORGANIZATION_VALUE
+  );
+};
+
+const addHideMethodAndSuffixToAllFields = (field) => {
+  const fieldToReturn = {
+    ...field,
+    id: field.id ? `${field.id}Organization` : field.id,
+    name: field.name ? `${field.name}Organization` : field.name,
+    hide: hideMethod,
+  };
+
+  if (field.fields) {
+    return {
+      ...fieldToReturn,
+      fields: field.fields.map(addHideMethodAndSuffixToAllFields),
+    };
+  }
+
+  return fieldToReturn;
+};
+
+const mutatedAddOrganizationForm = {
+  fields: formAddOrganization.fields.map(addHideMethodAndSuffixToAllFields),
+  rules: formAddOrganization.rules.map((rule) => {
+    return {
+      ...rule,
+      field: `${rule.field}Organization`,
+    };
+  }),
+};
+
+const organizationFieldsNames = mutatedAddOrganizationForm.fields.map(
+  ({ name }) => name
+);
 
 export const formAddUser = {
   id: 'form-add-user',
@@ -60,7 +100,6 @@ export const formAddUser = {
           name: 'gender',
           title: 'Genre *',
           component: 'select-new',
-          // TODO FIX BUG VALUE = 0
           options: [
             { value: 0, label: 'Homme' },
             { value: 1, label: 'Femme' },
@@ -137,7 +176,7 @@ export const formAddUser = {
             callback([CREATE_NEW_ORGANIZATION_OPTION]);
           },
           title: 'Structure partenaire *',
-          fieldsToReset: ['userToLinkId'],
+          fieldsToReset: ['userToLinkId', ...organizationFieldsNames],
         },
         {
           id: 'userToLinkId',
@@ -151,7 +190,6 @@ export const formAddUser = {
           hide: (getValue) => {
             const role = getValue('role');
             const organizationId = getValue('organizationId')?.value;
-            console.log(organizationId);
             return (
               role === USER_ROLES.ADMIN ||
               (areRolesIncluded(EXTERNAL_USER_ROLES, [role]) &&
@@ -207,6 +245,7 @@ export const formAddUser = {
         },
       ],
     },
+    ...mutatedAddOrganizationForm.fields,
   ],
   rules: [
     {
@@ -281,12 +320,25 @@ export const formAddUser = {
     },
     {
       field: 'adminRole',
-      method: (fieldValue) => {
-        return fieldValue && isValidPhoneNumber(fieldValue, 'FR');
+      method: (fieldValue, fieldValues) => {
+        return !fieldValue && fieldValues.role === USER_ROLES.ADMIN;
       },
       args: [],
       validWhen: false,
       message: 'Obligatoire',
     },
+    {
+      field: 'organizationId',
+      method: (fieldValue, fieldValues) => {
+        return (
+          !fieldValue &&
+          areRolesIncluded(EXTERNAL_USER_ROLES, [fieldValues.role])
+        );
+      },
+      args: [],
+      validWhen: false,
+      message: 'Obligatoire',
+    },
+    ...mutatedAddOrganizationForm.rules,
   ],
 };

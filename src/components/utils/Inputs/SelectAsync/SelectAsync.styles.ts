@@ -6,9 +6,9 @@ export const StyledAsyncSelectContainer = styled.div`
   min-width: 300px;
   width: 100%;
   max-width: 100%;
-  margin-bottom: 30px;
 `;
 export const StyledAsyncSelect = styled(AsyncSelect)`
+  margin-bottom: 30px;
   font-family: Poppins, Arial, sans-serif !important;
   & .Select__control--is-disabled {
     background-color: ${COLORS.lightgray} !important;

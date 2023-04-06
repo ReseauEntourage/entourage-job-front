@@ -52,18 +52,16 @@ export function useNotifBadges(user, path) {
           })
         )
           .then((data) => {
-            if (data) {
-              const { pendingCVs, pendingOpportunities } =
-                reducePromisesResults(data);
+            const { pendingCVs, pendingOpportunities } =
+              reducePromisesResults(data);
 
-              setBadges((prevBadges) => {
-                return {
-                  ...prevBadges,
-                  members: pendingCVs || 0,
-                  offers: pendingOpportunities || 0,
-                };
-              });
-            }
+            setBadges((prevBadges) => {
+              return {
+                ...prevBadges,
+                members: pendingCVs || 0,
+                offers: pendingOpportunities || 0,
+              };
+            });
           })
           .catch((err) => {
             console.error(err);
@@ -77,22 +75,20 @@ export function useNotifBadges(user, path) {
             Api.getCheckUpdate(candidateId),
           ])
             .then((data) => {
-              if (data) {
-                const {
-                  unseenOpportunities,
-                  noteHasBeenModified,
-                  cvHasBeenModified,
-                } = reducePromisesResults(data);
+              const {
+                unseenOpportunities,
+                noteHasBeenModified,
+                cvHasBeenModified,
+              } = reducePromisesResults(data);
 
-                setBadges((prevBadges) => {
-                  return {
-                    ...prevBadges,
-                    offers: unseenOpportunities || 0,
-                    note: noteHasBeenModified ? 1 : 0,
-                    cv: cvHasBeenModified ? 1 : 0,
-                  };
-                });
-              }
+              setBadges((prevBadges) => {
+                return {
+                  ...prevBadges,
+                  offers: unseenOpportunities || 0,
+                  note: noteHasBeenModified ? 1 : 0,
+                  cv: cvHasBeenModified ? 1 : 0,
+                };
+              });
             })
             .catch((err) => {
               console.error(err);

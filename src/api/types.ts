@@ -1,3 +1,6 @@
+import { USER_ROLES } from 'src/constants';
+import { ADMIN_ZONES } from 'src/constants/departements';
+
 export type SocialMedia = 'facebook' | 'linkedin' | 'twitter';
 
 export const APIRoutes = {
@@ -29,6 +32,17 @@ export type User = {
   saltReset: string;
   zone: string;
   userToCoach: string;
+};
+
+export type CreateUserDto = {
+  firstName: string;
+  lastName: string;
+  role: typeof USER_ROLES;
+  gender: 0 | 1;
+  zone: typeof ADMIN_ZONES;
+  phone: string;
+  userToLinkId: string | string[];
+  email: string;
 };
 
 export type Organization = {

@@ -1,30 +1,30 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
-import {
-  getUserCandidateFromCoachOrCandidate,
-  getRelatedUser,
-  areRolesIncluded,
-} from 'src/utils';
 import moment from 'moment';
+import Link from 'next/link';
+import PropTypes from 'prop-types';
+import React from 'react';
+
+import { StyledRow } from 'src/components/backoffice/admin/MemberList/Member/Member.styles';
+import { renderCVStatus } from 'src/components/backoffice/admin/MemberList/Member/Member.utils';
+import { MemberPropTypes } from 'src/components/backoffice/admin/MemberList/MemberList.shapes';
+import { translateStatusCV } from 'src/components/backoffice/admin/MemberList/MemberList.utils';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
-import { MemberPropTypes } from 'src/components/backoffice/admin/MemberList/shape';
+import { Grid } from 'src/components/utils';
+import Icon from 'src/components/utils/Icon';
+import Checkbox from 'src/components/utils/Inputs/Checkbox';
+import { useCheckbox } from 'src/components/utils/Inputs/Checkbox/useCheckbox';
 import {
   CANDIDATE_USER_ROLES,
   EXTERNAL_USER_ROLES,
   NORMAL_USERS_ROLES,
   USER_ROLES,
 } from 'src/constants';
-import { Grid } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
-import { StyledRow } from 'src/components/backoffice/admin/MemberList/Member/styles';
-import { renderCVStatus } from 'src/components/backoffice/admin/MemberList/Member/utils';
-import Checkbox from 'src/components/utils/Inputs/Checkbox';
-import { useCheckbox } from 'src/components/utils/Inputs/Checkbox/useCheckbox';
-import { translateStatusCV } from 'src/components/backoffice/admin/MemberList/utils';
-import Link from 'next/link';
+import {
+  getUserCandidateFromCoachOrCandidate,
+  getRelatedUser,
+  areRolesIncluded,
+} from 'src/utils';
 
-const Member = ({ member, role, callback }) => {
+export function MemberDesktop({ member, role, callback }) {
   const cvStatus = renderCVStatus(member);
   const { checked, handleCheckBox } = useCheckbox(callback, member.id);
   const relatedUser = getRelatedUser(member);
@@ -115,13 +115,13 @@ const Member = ({ member, role, callback }) => {
                 {getUserCandidateFromCoachOrCandidate(member) && (
                   <div>
                     {getUserCandidateFromCoachOrCandidate(member).hidden ? (
-                      <IconNoSSR
+                      <Icon
                         name="eye-hidden"
                         ratio={1.2}
                         className="uk-visible@m eye-hidden"
                       />
                     ) : (
-                      <IconNoSSR
+                      <Icon
                         name="eye-visible"
                         ratio={1.2}
                         className="uk-visible@m"
@@ -136,7 +136,6 @@ const Member = ({ member, role, callback }) => {
           </td>
           <td className="checkbox-cell">
             <Checkbox
-              size={16}
               checked={checked}
               handleClick={handleCheckBox}
               disabled={getUserCandidateFromCoachOrCandidate(member)?.hidden}
@@ -146,16 +145,14 @@ const Member = ({ member, role, callback }) => {
       )}
     </StyledRow>
   );
-};
+}
 
-Member.propTypes = {
+MemberDesktop.propTypes = {
   member: MemberPropTypes.isRequired,
   role: PropTypes.oneOf([...NORMAL_USERS_ROLES, ...EXTERNAL_USER_ROLES]),
   callback: PropTypes.func.isRequired,
 };
 
-Member.defaultProps = {
+MemberDesktop.defaultProps = {
   role: 'Candidat',
 };
-
-export default Member;

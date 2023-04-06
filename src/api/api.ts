@@ -18,9 +18,9 @@ import {
   PutCandidate,
   Route,
   SocialMedia,
-  User,
   CandidateInscription,
   Organization,
+  CreateUserDto,
 } from './types';
 
 class APIHandler {
@@ -182,7 +182,7 @@ class APIHandler {
 
   // post
 
-  postUser(params: User): Promise<AxiosResponse> {
+  postUser(params: CreateUserDto): Promise<AxiosResponse> {
     return this.post('/user', params);
   }
 

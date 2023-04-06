@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import ReactSelect, { components } from 'react-select';
+import { components } from 'react-select';
 import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
 import Icon from 'src/components/utils/Icon';
 import {
@@ -47,6 +47,7 @@ export function SelectAsync({
       </components.MultiValueRemove>
     );
   };
+
   return (
     !isHidden && (
       <StyledAsyncSelectContainer>

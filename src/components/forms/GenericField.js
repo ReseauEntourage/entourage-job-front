@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactSelect from 'react-select';
+import React, { useCallback } from 'react';
+import ReactSelect, { components } from 'react-select';
 import { SelectAsync as AsyncSelectNew } from 'src/components/utils/Inputs/SelectAsync/index.ts';
 import AsyncSelect from 'react-select/async';
 import PropTypes from 'prop-types';
@@ -39,32 +39,39 @@ const GenericField = ({
   updateFieldOptions,
   fieldOptions,
 }) => {
-  const onChangeCustom = (event) => {
-    let events = [event];
-    if (data.fieldsToReset) {
-      events = [
-        ...events,
-        ...data.fieldsToReset.map((field) => {
-          return {
-            target: { name: field, value: undefined, selectedIndex: 0 },
-          };
-        }),
-      ];
-    }
-    onChange(events);
-  };
+  const onChangeCustom = useCallback(
+    (event) => {
+      let events = [event];
+      if (data.fieldsToReset) {
+        events = [
+          ...events,
+          ...data.fieldsToReset.map((field) => {
+            return {
+              target: { name: field, value: undefined },
+              isReset: true,
+            };
+          }),
+        ];
+      }
+      onChange(events);
+    },
+    [data.fieldsToReset, onChange]
+  );
 
   const { checked, handleCheckBox } = useCheckbox(() => {}, null, data.checked);
 
-  const parseValueToReturnSelect = (event) => {
-    onChangeCustom({
-      target: {
-        name: data.name,
-        value: event,
-        type: data.type,
-      },
-    });
-  };
+  const parseValueToReturnSelect = useCallback(
+    (event) => {
+      onChangeCustom({
+        target: {
+          name: data.name,
+          value: event,
+          type: data.type,
+        },
+      });
+    },
+    [data.name, data.type, onChangeCustom]
+  );
 
   switch (data.component) {
     case 'input': {
@@ -146,6 +153,7 @@ const GenericField = ({
           name={data.name}
           placeholder={data.placeholder}
           showLabel={data.showLabel}
+          hidden={data.hide ? data.hide(getValue) : data.hidden}
         />
       );
     }
@@ -191,7 +199,7 @@ const GenericField = ({
         }
       }
       let valueToUse = value;
-      if (!valueToUse) valueToUse = options[0].value;
+      if (!valueToUse && valueToUse !== 0) valueToUse = options[0].value;
       if (data.component === 'select') {
         return (
           <Select
@@ -637,12 +645,16 @@ GenericField.propTypes = {
   onChange: PropTypes.func.isRequired,
   getValid: PropTypes.func.isRequired,
   getValue: PropTypes.func.isRequired,
-  fieldOptions: PropTypes.shape({}).isRequired,
-  updateFieldOptions: PropTypes.func.isRequired,
+  fieldOptions: PropTypes.shape({}),
+  updateFieldOptions: PropTypes.func,
 };
 
 GenericField.defaultProps = {
   value: undefined,
+  fieldOptions: undefined,
+  updateFieldOptions: () => {
+    return null;
+  },
 };
 
 export default GenericField;

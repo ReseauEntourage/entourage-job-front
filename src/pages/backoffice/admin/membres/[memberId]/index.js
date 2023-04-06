@@ -134,13 +134,9 @@ const EditUserModal = ({ user, setUser }) => {
               firstName: fields.firstName.trim().replace(/\s\s+/g, ' '),
               lastName: fields.lastName.trim().replace(/\s\s+/g, ' '),
             });
-            if (data) {
-              closeModal();
-              UIkit.notification('Le membre a bien été modifié', 'success');
-              setUser(data);
-            } else {
-              throw new Error('réponse de la requete vide');
-            }
+            closeModal();
+            UIkit.notification('Le membre a bien été modifié', 'success');
+            setUser(data);
           } catch (error) {
             console.error(error);
             if (onError) onError();

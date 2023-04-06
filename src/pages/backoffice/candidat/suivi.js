@@ -69,11 +69,9 @@ const Suivi = () => {
       setLoading(true);
       Api.getUserCandidate()
         .then(({ data }) => {
-          if (data) {
-            setUserCandidat(data);
-            setNoteHasBeenRead();
-            updateValue(data.note);
-          }
+          setUserCandidat(data);
+          setNoteHasBeenRead();
+          updateValue(data.note);
         })
         .catch(() => {
           UIkit.notification('Erreur lors du chargement du suivi', 'danger');

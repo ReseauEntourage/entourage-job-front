@@ -12,25 +12,28 @@ const TextInput = ({
   placeholder,
   showLabel,
   valid,
+  hidden,
 }) => {
   const [value, setValue] = useState();
   return (
-    <StyledTextInputContainer>
-      {showLabel && <label htmlFor={`form-input-${name}`}>{title}</label>}
-      <input
-        className={value ? '' : 'empty-value'}
-        onChange={(e) => {
-          setValue(e.target.value);
-          return onChange(e);
-        }}
-        type={type || 'text'}
-        placeholder={placeholder || title}
-        name={name}
-        id={id}
-        data-testid={id}
-      />
-      <FormValidatorErrorMessage validObj={valid} newInput />
-    </StyledTextInputContainer>
+    !hidden && (
+      <StyledTextInputContainer>
+        {showLabel && <label htmlFor={`form-input-${name}`}>{title}</label>}
+        <input
+          className={value ? '' : 'empty-value'}
+          onChange={(e) => {
+            setValue(e.target.value);
+            return onChange(e);
+          }}
+          type={type || 'text'}
+          placeholder={placeholder || title}
+          name={name}
+          id={id}
+          data-testid={id}
+        />
+        <FormValidatorErrorMessage validObj={valid} newInput />
+      </StyledTextInputContainer>
+    )
   );
 };
 
@@ -46,6 +49,7 @@ TextInput.propTypes = {
     isInvalid: PropTypes.bool,
     message: PropTypes.string,
   }),
+  hidden: PropTypes.bool,
 };
 
 TextInput.defaultProps = {
@@ -57,5 +61,6 @@ TextInput.defaultProps = {
   placeholder: '',
   showLabel: false,
   valid: undefined,
+  hidden: false,
 };
 export default TextInput;
