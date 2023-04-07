@@ -43,6 +43,7 @@ export type CreateUserDto = {
   phone: string;
   userToLinkId: string | string[];
   email: string;
+  OrganizationId?: string;
 };
 
 export type Organization = {

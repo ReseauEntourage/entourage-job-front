@@ -151,6 +151,7 @@ const GenericField = ({
           onChange={onChangeCustom}
           type={data.type}
           name={data.name}
+          value={value}
           placeholder={data.placeholder}
           showLabel={data.showLabel}
           hidden={data.hide ? data.hide(getValue) : data.hidden}
@@ -198,9 +199,10 @@ const GenericField = ({
             });
         }
       }
-      let valueToUse = value;
-      if (!valueToUse && valueToUse !== 0) valueToUse = options[0].value;
+
       if (data.component === 'select') {
+        let valueToUse = value;
+        if (!valueToUse && valueToUse !== 0) valueToUse = options[0].value;
         return (
           <Select
             id={`${formId}-${data.id}`}
@@ -222,7 +224,7 @@ const GenericField = ({
           placeholder={data.placeholder}
           name={data.name}
           title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
-          // value={valueToUse}
+          value={value}
           options={options}
           valid={getValid(data.name)}
           onChange={onChangeCustom}
@@ -238,6 +240,7 @@ const GenericField = ({
           id={`${formId}-${data.id}`}
           name={data.name}
           onChange={onChangeCustom}
+          value={value}
           title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
         />
       );
@@ -395,19 +398,6 @@ const GenericField = ({
           ? isMultiDefined(getValue)
           : isMultiDefined;
 
-      let valueToUse = null;
-      if (value) {
-        if (isMulti) {
-          valueToUse = value.every((v) => {
-            return typeof v === 'object';
-          })
-            ? value
-            : getValue(value);
-        } else {
-          valueToUse = typeof value === 'string' ? getValue(value) : value;
-        }
-      }
-
       const shouldHide = data.hide ? data.hide(getValue) : data.hidden;
 
       return (
@@ -417,7 +407,7 @@ const GenericField = ({
             data.cacheOptions === undefined ? true : data.cacheOptions
           }
           defaultOptions={data.defaultOptions}
-          value={valueToUse}
+          value={value}
           isMulti={isMulti}
           placeholder={data.title || 'Sélectionnez...'}
           noOptionsMessage={

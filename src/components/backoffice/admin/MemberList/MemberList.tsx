@@ -143,9 +143,7 @@ export function MemberList({
         page={roleToPage[role]}
       >
         <MemberCreationButtons
-          fetchMembers={async () => {
-            await fetchData(search, filters, role, offset, true);
-          }}
+          fetchMembers={() => fetchData(search, filters, role, offset, true)}
         />
       </HeaderBackoffice>
       {hasError ? (

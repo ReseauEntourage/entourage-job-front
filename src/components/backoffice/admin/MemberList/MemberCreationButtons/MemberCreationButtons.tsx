@@ -1,5 +1,6 @@
+import _ from 'lodash';
 import PropTypes from 'prop-types';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import UIkit from 'uikit';
 import Api from 'src/api';
 import { formAddOrganization } from 'src/components/forms/schema/formAddOrganization';
@@ -12,34 +13,26 @@ import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { ButtonMultiple } from 'src/components/utils';
 import Icon from 'src/components/utils/Icon';
 import { USER_ROLES } from 'src/constants';
-import { useIsDesktop, useMount } from 'src/hooks/utils';
+import { useIsDesktop, usePrevious } from 'src/hooks/utils';
 
 export function MemberCreationButtons({ fetchMembers }) {
-  console.log('rerender');
   const isDesktop = useIsDesktop();
 
-  useMount(() => {
-    return () => {
-      console.log('UNMOUNT');
-    };
-  });
+  const [filledUserFields, setFilledUserFields] = useState({});
 
-  const [createdOrganizationId, setCreatedOrganizationId] = useState(null);
-
-  useEffect(() => {
-    console.log('createdOrganizationId', createdOrganizationId);
-  }, [createdOrganizationId]);
+  const prevFilledUserFields = usePrevious(filledUserFields);
 
   const handleMemberCreationSubmit = useCallback(
     async (fields, closeModal) => {
+      let userFields;
+      let name;
+      const shouldTryToCreateOrganization =
+        fields.organizationId === CREATE_NEW_ORGANIZATION_VALUE;
+
       try {
         let { organizationId } = fields;
 
-        console.log('createdOrganizationId on submit', createdOrganizationId);
-
-        if (createdOrganizationId) {
-          organizationId = createdOrganizationId;
-        } else if (organizationId === CREATE_NEW_ORGANIZATION_VALUE) {
+        if (shouldTryToCreateOrganization) {
           const organizationFields = {
             name: fields.nameOrganization,
             address: fields.addressOrganization,
@@ -51,14 +44,22 @@ export function MemberCreationButtons({ fetchMembers }) {
             referentMail: fields.referentMailOrganization,
           };
 
-          ({
-            data: { id: organizationId },
-          } = await Api.postOrganization(organizationFields));
+          try {
+            ({
+              data: { id: organizationId, name },
+            } = await Api.postOrganization(organizationFields));
 
-          setCreatedOrganizationId(organizationId);
+            UIkit.notification('La structure a bien été créé', 'success');
+          } catch (error) {
+            console.error(error);
+            UIkit.notification(
+              "Une erreur s'est produite lors de la création de la structure",
+              'danger'
+            );
+          }
         }
 
-        const userFields = {
+        userFields = {
           firstName: fields.firstName,
           lastName: fields.lastName,
           gender: fields.gender,
@@ -73,12 +74,10 @@ export function MemberCreationButtons({ fetchMembers }) {
           ...(organizationId ? { OrganizationId: organizationId } : {}),
         };
 
-        // TODO MANAGE IF USER FAILS DOUBLE ORGANIZATION
         await Api.postUser(userFields);
-
+        setFilledUserFields({});
         closeModal();
         UIkit.notification('Le membre a bien été créé', 'success');
-        setCreatedOrganizationId(null);
         await fetchMembers();
       } catch (error) {
         console.error(error);
@@ -90,9 +89,19 @@ export function MemberCreationButtons({ fetchMembers }) {
             'danger'
           );
         }
+
+        if (shouldTryToCreateOrganization) {
+          const { OrganizationId, ...restUserFields } = userFields;
+
+          setFilledUserFields({
+            ...restUserFields,
+            organizationId: { value: OrganizationId, label: name },
+          });
+          closeModal();
+        }
       }
     },
-    [createdOrganizationId, fetchMembers]
+    [fetchMembers]
   );
 
   const handleOrganizationCreationSubmit = useCallback(
@@ -112,6 +121,29 @@ export function MemberCreationButtons({ fetchMembers }) {
     []
   );
 
+  const addUserModalProps = useMemo(() => {
+    return {
+      formSchema: formAddUser,
+      title: 'Ajouter un nouveau membre',
+      description:
+        'Merci de renseigner quelques informations afin de créer un nouveau membre',
+      submitText: 'Ajouter',
+      onSubmit: handleMemberCreationSubmit,
+      onCancel: () => setFilledUserFields({}),
+    };
+  }, [handleMemberCreationSubmit]);
+
+  useEffect(() => {
+    if (
+      !_.isEmpty(filledUserFields) &&
+      filledUserFields !== prevFilledUserFields
+    ) {
+      openModal(
+        <ModalEdit {...addUserModalProps} defaultValues={filledUserFields} />
+      );
+    }
+  }, [addUserModalProps, filledUserFields, prevFilledUserFields]);
+
   return (
     <ButtonMultiple
       id="admin-create"
@@ -121,15 +153,7 @@ export function MemberCreationButtons({ fetchMembers }) {
       buttons={[
         {
           onClick: () => {
-            openModal(
-              <ModalEdit
-                formSchema={formAddUser}
-                title="Ajouter un nouveau membre"
-                description="Merci de renseigner quelques informations afin de créer un nouveau membre"
-                submitText="Ajouter"
-                onSubmit={handleMemberCreationSubmit}
-              />
-            );
+            openModal(<ModalEdit {...addUserModalProps} />);
           },
           label: 'Nouveau membre',
         },

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
 import { IconNoSSR } from 'src/components/utils/Icon';
@@ -14,8 +14,17 @@ const Select = ({
   onChange,
   showLabel,
   hidden,
+  value,
 }) => {
   const [selectedOption, setSelectedOption] = useState({ value: '' });
+
+  useEffect(() => {
+    const optionToSelect = options.find(
+      ({ value: optionValue }) => optionValue === value
+    );
+    setSelectedOption(optionToSelect || { value: '' });
+  }, [options, value]);
+
   const {
     componentId: selectId,
     isOpen: optionsOpen,
@@ -91,7 +100,6 @@ const Select = ({
                             checked: 0,
                           },
                         });
-                        return setSelectedOption(option);
                       }}
                     >
                       {option.label}
@@ -109,7 +117,7 @@ const Select = ({
 };
 Select.defaultProps = {
   valid: undefined,
-  // value: undefined,
+  value: undefined,
   // disabled: false,
   onChange: () => {},
   hidden: false,
@@ -128,7 +136,7 @@ Select.propTypes = {
     isInvalid: PropTypes.bool,
     message: PropTypes.string,
   }),
-  // value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   options: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.oneOfType([

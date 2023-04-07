@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { PropTypes } from 'prop-types';
 import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
 import { StyledTextInputContainer } from './TextInput.styles';
@@ -13,18 +13,16 @@ const TextInput = ({
   showLabel,
   valid,
   hidden,
+  value,
 }) => {
-  const [value, setValue] = useState();
   return (
     !hidden && (
       <StyledTextInputContainer>
         {showLabel && <label htmlFor={`form-input-${name}`}>{title}</label>}
         <input
+          value={value}
           className={value ? '' : 'empty-value'}
-          onChange={(e) => {
-            setValue(e.target.value);
-            return onChange(e);
-          }}
+          onChange={onChange}
           type={type || 'text'}
           placeholder={placeholder || title}
           name={name}
@@ -40,6 +38,7 @@ const TextInput = ({
 TextInput.propTypes = {
   id: PropTypes.string,
   title: PropTypes.string,
+  value: PropTypes.string,
   type: PropTypes.string,
   onChange: PropTypes.func,
   name: PropTypes.func,
@@ -55,6 +54,7 @@ TextInput.propTypes = {
 TextInput.defaultProps = {
   title: '',
   id: '',
+  value: '',
   type: 'text',
   onChange: () => {},
   name: '',
