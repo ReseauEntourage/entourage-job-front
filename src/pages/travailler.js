@@ -41,7 +41,7 @@ const Travailler = () => {
     openModal(
       <ModalEdit
         title="Rejoindre LinkedOut"
-        description="LinkedOut accompagne des personnes en situation de précarité et sans réseau à trouver des opportunités d’emploi. Merci de répondre à quelques questions. Cela prend moins de 5 minutes"
+        description="Pour mieux vous connaitre, nous avons besoins de quelques informations ! Merci de répondre à ces quelques questions, cela prend moins de 5 min !"
         formSchema={formCandidateInscription}
         submitText="Valider"
         id="candidate-inscription-form"
