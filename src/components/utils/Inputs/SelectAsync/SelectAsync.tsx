@@ -8,6 +8,7 @@ import {
   StyledAsyncSelectContainer,
 } from './SelectAsync.styles';
 
+let debounceTimeoutId;
 export function SelectAsync({
   id,
   cacheOptions,
@@ -55,15 +56,25 @@ export function SelectAsync({
           id={id}
           components={{ ClearIndicator, DropdownIndicator, MultiValueRemove }}
           classNamePrefix="Select"
-          cacheOptions={cacheOptions}
+          cacheOptions={!!cacheOptions}
           isClearable
           defaultOptions={defaultOptions}
           value={value}
           isMulti={isMulti}
-          placeholder={placeholder}
-          noOptionsMessage={noOptionsMessage}
+          placeholder={placeholder || 'Sélectionnez...'}
+          noOptionsMessage={
+            noOptionsMessage ||
+            (() => {
+              return `Aucun résultat`;
+            })
+          }
           loadingMessage={loadingMessage}
-          loadOptions={loadOptions}
+          loadOptions={(inputValue, callback) => {
+            clearTimeout(debounceTimeoutId);
+            debounceTimeoutId = setTimeout(() => {
+              return loadOptions(inputValue, callback);
+            }, 1000);
+          }}
           isDisabled={isDisabled}
           isHidden={isHidden}
           onChange={onChange}

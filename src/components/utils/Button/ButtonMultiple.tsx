@@ -43,9 +43,11 @@ export function ButtonMultiple({
         widths={widths}
         className={className}
         onClick={() => {
-          setIsOpen((prevIsOpen) => {
-            return !prevIsOpen;
-          });
+          if (!disabled) {
+            setIsOpen((prevIsOpen) => {
+              return !prevIsOpen;
+            });
+          }
         }}
         dataTestId={dataTestId}
         color={color}
@@ -141,10 +143,10 @@ ButtonMultiple.defaultProps = {
   align: 'left',
   disabled: false,
   visible: undefined,
-  style: undefined,
-  size: undefined,
+  style: 'custom-primary',
+  size: 'normal',
   widths: [],
   className: undefined,
   dataTestId: '',
-  color: '',
+  color: 'primaryOrange',
 };

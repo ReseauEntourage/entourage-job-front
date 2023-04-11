@@ -1,17 +1,22 @@
 import React from 'react';
 import { COLORS } from 'src/constants/styles';
 
-import { Button } from './Button';
+import { ButtonMultiple } from './ButtonMultiple';
 
 const meta = {
-  title: 'Button',
-  component: Button,
+  title: 'ButtonMultiple',
+  component: ButtonMultiple,
   parameters: {
     controls: {
-      include: ['color', 'size', 'disabled'],
+      include: ['color', 'size', 'disabled', 'align'],
     },
   },
   argTypes: {
+    align: {
+      control: 'select',
+      options: ['left', 'right'],
+      defaultValue: 'left',
+    },
     color: {
       control: 'select',
       options: ['primaryOrange', 'darkGrayFont'],
@@ -28,7 +33,22 @@ const meta = {
     },
   },
   args: {
-    children: 'Button',
+    id: 'button-multiple-stories',
+    buttons: [
+      {
+        onClick: () => {
+          return null;
+        },
+        label: 'Action 1',
+      },
+      {
+        onClick: () => {
+          return null;
+        },
+        label: 'Action 2',
+      },
+    ],
+    children: 'Button Multiple',
   },
   decorators: [
     (Story, { args }) => {

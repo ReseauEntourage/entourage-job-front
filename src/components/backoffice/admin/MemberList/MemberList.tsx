@@ -177,7 +177,8 @@ export function MemberList({
           {areRolesIncluded(CANDIDATE_USER_ROLES, [role]) && (
             <StyledActionsContainer>
               <Button
-                style="custom-secondary small"
+                style="custom-secondary"
+                size="small"
                 disabled={!hasSelection}
                 color="primaryOrange"
                 onClick={() => {

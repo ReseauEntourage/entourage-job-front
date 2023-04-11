@@ -384,7 +384,7 @@ const GenericField = ({
             isDisabled={data.disable ? data.disable(getValue) : false}
             isHidden={data.hide ? data.hide(getValue) : false}
             onChange={parseValueToReturnSelect}
-            openMenuOnClick={data.openMenuOnClick ?? true}
+            openMenuOnClick={data.openMenuOnClick || true}
           />
           <FormValidatorErrorMessage validObj={getValid(data.name)} />
         </div>
@@ -403,30 +403,23 @@ const GenericField = ({
       return (
         <AsyncSelectNew
           id={`${formId}-${data.id}`}
-          cacheOptions={
-            data.cacheOptions === undefined ? true : data.cacheOptions
-          }
+          cacheOptions={data.cacheOptions}
           defaultOptions={data.defaultOptions}
           value={value}
           isMulti={isMulti}
-          placeholder={data.title || 'Sélectionnez...'}
-          noOptionsMessage={
-            data.noOptionsMessage ||
-            (() => {
-              return `Aucun résultat`;
-            })
+          placeholder={data.title}
+          noOptionsMessage={data.noOptionsMessage}
+          loadOptions={
+            data.loadOptions
+              ? (inputValue, callback) =>
+                  data.loadOptions(inputValue, callback, getValue)
+              : () => {}
           }
-          loadOptions={(inputValue, callback) => {
-            clearTimeout(debounceTimeoutId);
-            debounceTimeoutId = setTimeout(() => {
-              return data.loadOptions(inputValue, callback, getValue);
-            }, 1000);
-          }}
           isDisabled={data.disable ? data.disable(getValue) : false}
           isHidden={shouldHide}
           onChange={parseValueToReturnSelect}
           valid={getValid(data.name)}
-          openMenuOnClick={data.openMenuOnClick ?? true}
+          openMenuOnClick={data.openMenuOnClick || true}
         />
       );
     }
@@ -465,7 +458,7 @@ const GenericField = ({
             onChange={parseValueToReturnSelect}
             isDisabled={data.disable ? data.disable(getValue) : false}
             isHidden={data.hide ? data.hide(getValue) : false}
-            openMenuOnClick={data.openMenuOnClick ?? true}
+            openMenuOnClick={data.openMenuOnClick || true}
           />
           <FormValidatorErrorMessage validObj={getValid(data.name)} />
         </div>
@@ -553,7 +546,7 @@ const GenericField = ({
             onChange={parseValueToReturnSelect}
             isDisabled={data.disable ? data.disable(getValue) : false}
             isHidden={data.hide ? data.hide(getValue) : false}
-            openMenuOnClick={data.openMenuOnClick ?? true}
+            openMenuOnClick={data.openMenuOnClick || true}
           />
           <FormValidatorErrorMessage validObj={getValid(data.name)} />
         </div>
