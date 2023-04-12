@@ -24,8 +24,8 @@ const meta = {
     },
     size: {
       control: 'select',
-      options: ['normal', 'small'],
-      defaultValue: 'normal',
+      options: ['large', 'small'],
+      defaultValue: 'large',
     },
     disabled: {
       control: 'boolean',
@@ -55,10 +55,10 @@ const meta = {
       return (
         <div
           style={{
-            display: 'flex',
-            padding: 8,
             backgroundColor:
               args.color === 'white' ? COLORS.darkerBlack : 'transparent',
+            display: 'flex',
+            padding: 8,
           }}
         >
           <Story />

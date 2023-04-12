@@ -1,23 +1,47 @@
-import React from 'react';
-import TextArea from './TextArea';
+import React, { useState } from 'react';
+import { TextArea } from './TextArea';
 
-export default {
+const meta = {
   title: 'Text Area',
+  component: TextArea,
   parameters: {
-    component: null,
+    controls: {
+      exclude: /.*/g,
+    },
+  },
+  decorators: [
+    (Story) => {
+      return (
+        <div
+          style={{
+            width: 300,
+          }}
+        >
+          <Story />
+        </div>
+      );
+    },
+  ],
+};
+const Template = (args) => {
+  const [value, setValue] = useState('');
+
+  return (
+    <TextArea
+      {...args}
+      onChange={(event) => {
+        setValue(event.target.value);
+      }}
+      value={value}
+    />
+  );
+};
+
+export const Default = {
+  render: Template,
+  args: {
+    title: 'A long story to tell',
   },
 };
 
-export function Default() {
-  return (
-    <TextArea
-      title="A long story to tell"
-      name="default"
-      id="default"
-      onChange={() => {
-        // eslint-disable-next-line no-console
-        console.log('changed');
-      }}
-    />
-  );
-}
+export default meta;

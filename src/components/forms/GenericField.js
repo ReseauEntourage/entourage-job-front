@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import ReactSelect, { components } from 'react-select';
-import { SelectAsync as AsyncSelectNew } from 'src/components/utils/Inputs/SelectAsync/index.ts';
+import { SelectAsync as AsyncSelectNew } from 'src/components/utils/Inputs/SelectAsync';
 import AsyncSelect from 'react-select/async';
 import PropTypes from 'prop-types';
 import CreatableSelect from 'react-select/creatable';
@@ -15,17 +15,19 @@ import { EXTERNAL_LINKS } from 'src/constants';
 import PhoneInput from 'src/components/forms/fields/PhoneInput';
 import { StyledFormHeading } from 'src/components/forms/Forms.styles';
 
-import CheckBoxNew from 'src/components/utils/Inputs/Checkbox';
-import { useCheckbox } from 'src/components/utils/Inputs/Checkbox/useCheckbox';
-import SelectNew from 'src/components/utils/Inputs/Select';
-import TextareaNew from 'src/components/utils/Inputs/TextArea';
-import TextInputNew from 'src/components/utils/Inputs/TextInput';
-import DatePickerNew from 'src/components/utils/Inputs/Datepicker';
+import {
+  Checkbox as CheckBoxNew,
+  useCheckbox,
+} from 'src/components/utils/Inputs/Checkbox';
+import { Select as SelectNew } from 'src/components/utils/Inputs/Select';
+import { TextArea as TextareaNew } from 'src/components/utils/Inputs/TextArea';
+import { TextInput as TextInputNew } from 'src/components/utils/Inputs/TextInput';
+import { DatePicker as DatePickerNew } from 'src/components/utils/Inputs/Datepicker';
 import {
   Radio as RadioNew,
   RadioAsync as RadioAsyncNew,
 } from 'src/components/utils/Inputs/Radio';
-import { PhoneInput as PhoneInputNew } from 'src/components/utils/Inputs/PhoneInput/index.ts';
+import { PhoneInput as PhoneInputNew } from 'src/components/utils/Inputs/PhoneInput';
 
 let debounceTimeoutId;
 
@@ -165,7 +167,6 @@ const GenericField = ({
           name={data.name}
           title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
           value={value}
-          type={data.type}
           valid={getValid(data.name)}
           onChange={parseValueToReturnSelect}
           disabled={data.disable ? data.disable(getValue) : data.disabled}
@@ -278,7 +279,6 @@ const GenericField = ({
             });
           }}
           disabled={data.disable ? data.disable(getValue) : data.disabled}
-          checked={checked}
           value={checked}
           name={data.name}
           id={`${formId}-${data.id}`}
@@ -474,6 +474,7 @@ const GenericField = ({
           onChange={onChangeCustom}
           filter={data.dynamicFilter(getValue)}
           hidden={data.hide ? data.hide(getValue, fieldOptions) : data.hidden}
+          value={value}
         />
       );
     }
@@ -492,6 +493,7 @@ const GenericField = ({
           filter={data.dynamicFilter(getValue)}
           errorMessage={data.errorMessage}
           hidden={data.hide ? data.hide(getValue, fieldOptions) : data.hidden}
+          value={value}
         />
       );
     }

@@ -144,7 +144,7 @@ ButtonMultiple.defaultProps = {
   disabled: false,
   visible: undefined,
   style: 'custom-primary',
-  size: 'normal',
+  size: 'large',
   widths: [],
   className: undefined,
   dataTestId: '',

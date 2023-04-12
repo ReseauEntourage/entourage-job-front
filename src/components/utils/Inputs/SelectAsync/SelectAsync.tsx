@@ -49,53 +49,74 @@ export function SelectAsync({
     );
   };
 
+  if (isHidden) {
+    return null;
+  }
+
   return (
-    !isHidden && (
-      <StyledAsyncSelectContainer>
-        <StyledAsyncSelect
-          id={id}
-          components={{ ClearIndicator, DropdownIndicator, MultiValueRemove }}
-          classNamePrefix="Select"
-          cacheOptions={!!cacheOptions}
-          isClearable
-          defaultOptions={defaultOptions}
-          value={value}
-          isMulti={isMulti}
-          placeholder={placeholder || 'Sélectionnez...'}
-          noOptionsMessage={
-            noOptionsMessage ||
-            (() => {
-              return `Aucun résultat`;
-            })
-          }
-          loadingMessage={loadingMessage}
-          loadOptions={(inputValue, callback) => {
-            clearTimeout(debounceTimeoutId);
-            debounceTimeoutId = setTimeout(() => {
-              return loadOptions(inputValue, callback);
-            }, 1000);
-          }}
-          isDisabled={isDisabled}
-          isHidden={isHidden}
-          onChange={onChange}
-          openMenuOnClick={openMenuOnClick}
-        />
-        <FormValidatorErrorMessage validObj={valid} newInput />
-      </StyledAsyncSelectContainer>
-    )
+    <StyledAsyncSelectContainer>
+      <StyledAsyncSelect
+        id={id}
+        components={{ ClearIndicator, DropdownIndicator, MultiValueRemove }}
+        classNamePrefix="Select"
+        cacheOptions={!!cacheOptions}
+        isClearable
+        defaultOptions={defaultOptions}
+        value={value}
+        isMulti={isMulti}
+        placeholder={placeholder || 'Sélectionnez...'}
+        noOptionsMessage={
+          noOptionsMessage ||
+          (() => {
+            return `Aucun résultat`;
+          })
+        }
+        loadingMessage={loadingMessage}
+        loadOptions={(inputValue, callback) => {
+          clearTimeout(debounceTimeoutId);
+          debounceTimeoutId = setTimeout(() => {
+            return loadOptions(inputValue, callback);
+          }, 1000);
+        }}
+        isDisabled={isDisabled}
+        isHidden={isHidden}
+        onChange={onChange}
+        openMenuOnClick={openMenuOnClick}
+      />
+      <FormValidatorErrorMessage validObj={valid} newInput />
+    </StyledAsyncSelectContainer>
   );
 }
 
 SelectAsync.propTypes = {
   id: PropTypes.string,
   cacheOptions: PropTypes.bool,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  defaultOptions: PropTypes.oneOfType([
-    PropTypes.bool,
+  value: PropTypes.oneOfType([
     PropTypes.shape({
       label: PropTypes.string,
       value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     }),
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        label: PropTypes.string,
+        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      })
+    ),
+  ]),
+  defaultOptions: PropTypes.oneOfType([
+    PropTypes.oneOfType([
+      PropTypes.shape({
+        label: PropTypes.string,
+        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      }),
+      PropTypes.arrayOf(
+        PropTypes.shape({
+          label: PropTypes.string,
+          value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        })
+      ),
+    ]),
+    PropTypes.bool,
   ]),
   isMulti: PropTypes.bool,
   placeholder: PropTypes.string,

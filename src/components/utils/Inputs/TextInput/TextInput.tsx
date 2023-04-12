@@ -1,9 +1,9 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import { PropTypes } from 'prop-types';
 import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
 import { StyledTextInputContainer } from './TextInput.styles';
 
-const TextInput = ({
+export function TextInput({
   id,
   title,
   type,
@@ -14,26 +14,28 @@ const TextInput = ({
   valid,
   hidden,
   value,
-}) => {
+}) {
+  if (hidden) {
+    return null;
+  }
+
   return (
-    !hidden && (
-      <StyledTextInputContainer>
-        {showLabel && <label htmlFor={`form-input-${name}`}>{title}</label>}
-        <input
-          value={value}
-          className={value ? '' : 'empty-value'}
-          onChange={onChange}
-          type={type || 'text'}
-          placeholder={placeholder || title}
-          name={name}
-          id={id}
-          data-testid={id}
-        />
-        <FormValidatorErrorMessage validObj={valid} newInput />
-      </StyledTextInputContainer>
-    )
+    <StyledTextInputContainer>
+      {showLabel && <label htmlFor={`form-input-${name}`}>{title}</label>}
+      <input
+        value={value}
+        className={value ? '' : 'empty-value'}
+        onChange={onChange}
+        type={type || 'text'}
+        placeholder={placeholder || title}
+        name={name}
+        id={id}
+        data-testid={id}
+      />
+      <FormValidatorErrorMessage validObj={valid} newInput />
+    </StyledTextInputContainer>
   );
-};
+}
 
 TextInput.propTypes = {
   id: PropTypes.string,
@@ -41,7 +43,7 @@ TextInput.propTypes = {
   value: PropTypes.string,
   type: PropTypes.string,
   onChange: PropTypes.func,
-  name: PropTypes.func,
+  name: PropTypes.string,
   placeholder: PropTypes.string,
   showLabel: PropTypes.bool,
   valid: PropTypes.shape({
@@ -56,11 +58,12 @@ TextInput.defaultProps = {
   id: '',
   value: '',
   type: 'text',
-  onChange: () => {},
+  onChange: () => {
+    return null;
+  },
   name: '',
   placeholder: '',
   showLabel: false,
   valid: undefined,
   hidden: false,
 };
-export default TextInput;

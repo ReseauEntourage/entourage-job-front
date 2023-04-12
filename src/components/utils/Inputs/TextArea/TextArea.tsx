@@ -6,11 +6,23 @@ interface TextAreaTypes {
   title: string;
   name: string;
   id: string;
-  onChange: () => void;
+  onChange: (event) => void;
   value: string;
+  hidden: boolean;
 }
 
-const TextArea = ({ title, name, id, onChange, value }: TextAreaTypes) => {
+export function TextArea({
+  title,
+  name,
+  id,
+  onChange,
+  value,
+  hidden,
+}: TextAreaTypes) {
+  if (hidden) {
+    return null;
+  }
+
   return (
     <StyledTextAreaContainer>
       <textarea
@@ -23,7 +35,7 @@ const TextArea = ({ title, name, id, onChange, value }: TextAreaTypes) => {
       />
     </StyledTextAreaContainer>
   );
-};
+}
 
 TextArea.propTypes = {
   title: PropTypes.string.isRequired,
@@ -31,6 +43,7 @@ TextArea.propTypes = {
   id: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
+  hidden: PropTypes.bool,
 };
 
 TextArea.defaultProps = {
@@ -39,6 +52,5 @@ TextArea.defaultProps = {
   },
   id: '',
   value: '',
+  hidden: false,
 };
-
-export default TextArea;

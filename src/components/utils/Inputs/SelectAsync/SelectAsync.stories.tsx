@@ -23,20 +23,6 @@ const meta = {
   },
   args: {
     id: 'select-async-stories',
-    defaultOptions: [
-      {
-        value: '1',
-        label: 'Emile Bex',
-      },
-      {
-        value: '2',
-        label: 'Paul Carillon',
-      },
-      {
-        value: '3',
-        label: 'Alice Bertaut',
-      },
-    ],
     loadOptions: async (inputValue, callback) => {
       if (inputValue.length > 0) {
         await asyncTimeout(2000);
@@ -59,32 +45,36 @@ const meta = {
     },
   },
   decorators: [
-    (Story, { args }) => {
-      const [value, setValue] = useState(
-        args.value || (args.isMulti ? [] : null)
-      );
-
+    (Story) => {
       return (
         <div
           style={{
             display: 'flex',
-            padding: 8,
             width: 100,
           }}
         >
-          <Story
-            {...args}
-            onChange={(event) => {
-              setValue(event);
-            }}
-            value={value}
-          />
+          <Story />
         </div>
       );
     },
   ],
 };
+const Template = (args) => {
+  const [value, setValue] = useState();
 
-export const Default = {};
+  return (
+    <SelectAsync
+      {...args}
+      onChange={(newValue) => {
+        setValue(newValue);
+      }}
+      value={value}
+    />
+  );
+};
+
+export const Default = {
+  render: Template,
+};
 
 export default meta;

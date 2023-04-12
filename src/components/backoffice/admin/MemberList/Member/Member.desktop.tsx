@@ -10,8 +10,7 @@ import { translateStatusCV } from 'src/components/backoffice/admin/MemberList/Me
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
 import { Grid } from 'src/components/utils';
 import Icon from 'src/components/utils/Icon';
-import Checkbox from 'src/components/utils/Inputs/Checkbox';
-import { useCheckbox } from 'src/components/utils/Inputs/Checkbox/useCheckbox';
+import { Checkbox, useCheckbox } from 'src/components/utils/Inputs/Checkbox';
 import {
   CANDIDATE_USER_ROLES,
   EXTERNAL_USER_ROLES,

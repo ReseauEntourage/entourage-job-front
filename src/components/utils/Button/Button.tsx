@@ -117,7 +117,7 @@ Button.defaultProps = {
   shallow: false,
   visible: undefined,
   style: 'custom-primary',
-  size: 'normal',
+  size: 'large',
   href: undefined,
   widths: [],
   isExternal: false,

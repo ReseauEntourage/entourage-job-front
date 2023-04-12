@@ -9,8 +9,7 @@ import { MemberPropTypes } from 'src/components/backoffice/admin/MemberList/Memb
 import { translateStatusCV } from 'src/components/backoffice/admin/MemberList/MemberList.utils';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
 import Icon from 'src/components/utils/Icon';
-import Checkbox from 'src/components/utils/Inputs/Checkbox';
-import { useCheckbox } from 'src/components/utils/Inputs/Checkbox/useCheckbox';
+import { Checkbox, useCheckbox } from 'src/components/utils/Inputs/Checkbox';
 import {
   EXTERNAL_USER_ROLES,
   NORMAL_USERS_ROLES,

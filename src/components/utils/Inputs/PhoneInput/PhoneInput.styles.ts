@@ -17,6 +17,7 @@ export const StyledPhoneInput = styled.div`
     margin-left: 5px;
   }
   input {
+    border: none;
     min-width: unset;
     width: 100%;
     background-color: white;

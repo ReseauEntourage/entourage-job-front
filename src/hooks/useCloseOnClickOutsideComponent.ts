@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { isSSR } from 'src/utils/isSSR';
 
-export function useCloseOnClickOutsideComponent(id) {
+export function useCloseOnClickOutsideComponent(id: string) {
   const [isOpen, setIsOpen] = useState(false);
 
   const componentId = `${id}-container`;

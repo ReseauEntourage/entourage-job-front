@@ -17,40 +17,36 @@ export function PhoneInput({
   showLabel,
   placeholder,
 }) {
-  const update = (eventValue) => {
-    if (onChange) onChange(eventValue);
-  };
+  if (hidden) {
+    return null;
+  }
 
   return (
-    !hidden && (
-      <>
-        <StyledPhoneInput>
-          {showLabel && <label htmlFor={`form-input-${name}`}>{title}</label>}
-          <PhoneInputWithCountry
-            defaultCountry="FR"
-            title={title}
-            name={name}
-            id={id}
-            data-testid={id}
-            value={value || ''}
-            placeholder={placeholder || title}
-            onChange={(event) => {
-              return update(event);
-            }}
-            disabled={disabled}
-            autoComplete={autocomplete}
-          />
-        </StyledPhoneInput>
-        <FormValidatorErrorMessage validObj={valid} newInput />
-      </>
-    )
+    <>
+      <StyledPhoneInput>
+        {showLabel && <label htmlFor={`form-input-${name}`}>{title}</label>}
+        <PhoneInputWithCountry
+          defaultCountry="FR"
+          title={title}
+          name={name}
+          id={id}
+          data-testid={id}
+          value={value || ''}
+          placeholder={placeholder || title}
+          onChange={onChange}
+          disabled={disabled}
+          autoComplete={autocomplete}
+        />
+      </StyledPhoneInput>
+      <FormValidatorErrorMessage validObj={valid} newInput />
+    </>
   );
 }
 
 PhoneInput.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
-  onChange: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
   title: PropTypes.string,
   valid: PropTypes.shape({
     isInvalid: PropTypes.bool,
@@ -72,7 +68,6 @@ PhoneInput.defaultProps = {
   hidden: false,
   autocomplete: 'tel',
   title: '',
-  onChange: undefined,
   name: '',
   showLabel: false,
   placeholder: '',

@@ -8,7 +8,7 @@ import Api from 'src/api/index.ts';
 import { Button } from 'src/components/utils/Button';
 import { gaEvent } from 'src/lib/gtag';
 import { NEWSLETTER_TAGS } from 'src/constants';
-import Checkbox from 'src/components/utils/Inputs/Checkbox';
+import { Checkbox } from 'src/components/utils/Inputs/Checkbox';
 import { StyledPrimaryTextInput } from 'src/styles/components/inputs/styles';
 import { v4 as uuid } from 'uuid';
 import { StyledNLForm } from 'src/components/partials/NewsletterPartial/styles';

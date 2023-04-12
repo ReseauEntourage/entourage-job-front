@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { PhoneInput } from './PhoneInput';
+import { Checkbox } from './CheckBox';
 
 const meta = {
-  title: 'Phone Input',
-  component: PhoneInput,
+  title: 'Checkbox',
+  component: Checkbox,
   parameters: {
     controls: {
       exclude: /.*/g,
@@ -15,7 +15,7 @@ const meta = {
         <div
           style={{
             display: 'flex',
-            width: 100,
+            width: 0,
           }}
         >
           <Story />
@@ -24,25 +24,24 @@ const meta = {
     },
   ],
 };
+
 const Template = (args) => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState();
 
   return (
-    <PhoneInput
+    <Checkbox
       {...args}
-      onChange={(newValue) => {
-        setValue(newValue);
+      onChange={(event) => {
+        setValue(event.target.value);
       }}
       value={value}
+      checked={value}
     />
   );
 };
 
 export const Default = {
   render: Template,
-  args: {
-    title: 'Numéro de téléphone',
-  },
 };
 
 export default meta;

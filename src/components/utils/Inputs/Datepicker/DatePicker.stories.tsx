@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { PhoneInput } from './PhoneInput';
+import { DatePicker } from './DatePicker';
 
 const meta = {
-  title: 'Phone Input',
-  component: PhoneInput,
+  title: 'DatePicker',
+  component: DatePicker,
   parameters: {
     controls: {
       exclude: /.*/g,
@@ -24,14 +24,15 @@ const meta = {
     },
   ],
 };
+
 const Template = (args) => {
   const [value, setValue] = useState('');
 
   return (
-    <PhoneInput
+    <DatePicker
       {...args}
-      onChange={(newValue) => {
-        setValue(newValue);
+      onChange={(event) => {
+        setValue(event.target.value);
       }}
       value={value}
     />
@@ -41,7 +42,7 @@ const Template = (args) => {
 export const Default = {
   render: Template,
   args: {
-    title: 'Numéro de téléphone',
+    title: "Date d'embauche",
   },
 };
 
