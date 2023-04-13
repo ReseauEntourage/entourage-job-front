@@ -207,8 +207,8 @@ const Orienter = () => {
               items={[
                 <>
                   <span className="uk-text-bold">
-                    Domiciliés à Paris, dans le 92 et le 93, à Lille, à Lyon ou
-                    à Lorient
+                    Domiciliés à Paris, dans le 92 et le 93, à Lille, à Lyon, à
+                    Rennes ou à Lorient
                   </span>
                 </>,
                 <>

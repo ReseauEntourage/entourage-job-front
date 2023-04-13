@@ -164,8 +164,8 @@ const Travailler = () => {
             <br />
             <br />
             <span>
-              Candidatez au programme à Paris, dans le 92 et 93, à Lille, Lyon
-              et Lorient.
+              Candidatez au programme à Paris, dans le 92 et 93, à Lille, Lyon,
+              Rennes et Lorient.
             </span>
           </h4>
           <div className="uk-flex uk-flex-top uk-flex-center uk-padding-small">

@@ -9,7 +9,7 @@ const HowToJoin = () => {
         <div>
           Résider à{' '}
           <span className="uk-text-bold">
-            Paris, dans le 92, 93, à Lille, à Lyon ou à Lorient
+            Paris, dans le 92, 93, à Lille, à Lyon, à Rennes ou à Lorient
           </span>
         </div>
       ),

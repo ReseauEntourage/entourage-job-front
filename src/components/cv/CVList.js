@@ -20,9 +20,9 @@ import { FB_TAGS } from 'src/constants/tags';
 const NoCVInThisArea = () => {
   return (
     <p className="uk-text-center uk-text-italic">
-      LinkedOut se déploie dans les régions de Paris, de Lille, de Lyon et de
-      Lorient. Vous ne trouvez pas de candidats LinkedOut dans votre
-      région&nbsp;? Contactez-nous à{' '}
+      LinkedOut se déploie dans les régions de Paris, de Lille, de Lyon, de
+      Rennes et de Lorient. Vous ne trouvez pas de candidats LinkedOut dans
+      votre région&nbsp;? Contactez-nous à{' '}
       <SimpleLink
         isExternal
         target="_blank"

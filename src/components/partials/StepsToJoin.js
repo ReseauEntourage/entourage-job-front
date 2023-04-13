@@ -41,7 +41,7 @@ const StepsToJoin = () => {
         <span className="uk-text-bold">
           <u>
             Attention, hors de Paris, Seine-Saint-Denis, Haut-de-Seine, Lille,
-            Lyon et Lorient, nous ne pourrons vous accompagner.
+            Rennes, Lyon et Lorient, nous ne pourrons vous accompagner.
           </u>
         </span>
         <br />
