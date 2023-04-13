@@ -20,7 +20,7 @@ export const COLORS = {
   black: '#363636',
   darkerBlack: '#222',
   primaryOrange: '#F55F24',
-  hoverOrange: '#FFEADC',
+  hoverOrange: 'rgba(245,95,36,0.13)',
   darkOrange: '#d53f00',
   yesGreen: '#79CC6B',
   noRed: '#FE2929',

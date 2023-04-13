@@ -3,15 +3,13 @@ import { COLORS } from 'src/constants/styles';
 
 export const colorToHoverBackgroundColor = {
   primaryOrange: COLORS.hoverOrange,
-  darkGrayFont: 'white',
-  black: 'white',
+  darkGrayFont: 'transparent',
   white: 'transparent',
 };
 
 export const colorToHoverColor = {
   primaryOrange: COLORS.primaryOrange,
   darkGrayFont: COLORS.primaryOrange,
-  black: COLORS.primaryOrange,
   white: COLORS.primaryOrange,
 };
 
@@ -153,12 +151,6 @@ export const StyledButton = styled.button`
     &:hover {
       cursor: pointer;
       background-color: ${COLORS.hoverOrange};
-      path {
-        transition: 0.2s ease-in-out;
-        fill: ${(props) => {
-          return colorToHoverColor[props.color] || COLORS.primaryOrange;
-        }} !important;
-      }
     }
   }
 
