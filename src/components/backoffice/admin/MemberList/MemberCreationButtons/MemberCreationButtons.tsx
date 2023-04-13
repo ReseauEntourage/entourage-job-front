@@ -156,6 +156,7 @@ export function MemberCreationButtons({ fetchMembers }) {
             openModal(<ModalEdit {...addUserModalProps} />);
           },
           label: 'Nouveau membre',
+          dataTestId: 'button-create-user',
         },
         {
           onClick: () => {
