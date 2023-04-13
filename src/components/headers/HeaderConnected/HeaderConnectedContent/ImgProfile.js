@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { UserContext } from 'src/store/UserProvider';
 import { Img } from 'src/components/utils';
 import { CANDIDATE_USER_ROLES } from 'src/constants';
-import { areRolesIncluded } from 'src/utils';
+import { isRoleIncluded } from 'src/utils';
 
 const ImgProfile = ({ user, size }) => {
   const userFromContext = useContext(UserContext).user;
@@ -13,7 +13,7 @@ const ImgProfile = ({ user, size }) => {
 
   useEffect(() => {
     if (
-      areRolesIncluded(CANDIDATE_USER_ROLES, [role]) &&
+      isRoleIncluded(CANDIDATE_USER_ROLES, role) &&
       candidat &&
       candidat.cvs
     ) {

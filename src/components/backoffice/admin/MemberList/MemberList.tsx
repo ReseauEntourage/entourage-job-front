@@ -23,7 +23,7 @@ import {
 import { GA_TAGS } from 'src/constants/tags';
 import { useBulkActions } from 'src/hooks/useBulkActions';
 import { usePrevious } from 'src/hooks/utils';
-import { areRolesIncluded, filtersToQueryParams } from 'src/utils';
+import { isRoleIncluded, filtersToQueryParams } from 'src/utils';
 import { MemberCreationButtons } from './MemberCreationButtons/MemberCreationButtons';
 
 const LIMIT = 50;
@@ -115,7 +115,7 @@ export function MemberList({
 
   useEffect(() => {
     if (role !== prevRole) {
-      const initialFiltersConst = areRolesIncluded(COACH_USER_ROLES, [role])
+      const initialFiltersConst = isRoleIncluded(COACH_USER_ROLES, role)
         ? [MEMBER_FILTERS_DATA[0], MEMBER_FILTERS_DATA[2]]
         : MEMBER_FILTERS_DATA;
 
@@ -174,7 +174,7 @@ export function MemberList({
             placeholder="Rechercher..."
             smallSelectors
           />
-          {areRolesIncluded(CANDIDATE_USER_ROLES, [role]) && (
+          {isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
             <StyledActionsContainer>
               <Button
                 style="custom-secondary"
@@ -197,15 +197,15 @@ export function MemberList({
                 <thead>
                   <tr>
                     <th className="uk-text-nowrap">{role}</th>
-                    {areRolesIncluded(CANDIDATE_USER_ROLES, [role]) && (
+                    {isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
                       <th>Coach</th>
                     )}
-                    {areRolesIncluded(COACH_USER_ROLES, [role]) && (
+                    {isRoleIncluded(COACH_USER_ROLES, role) && (
                       <th>Candidat</th>
                     )}
                     <th>Zone</th>
                     <th>Dernière connexion</th>
-                    {areRolesIncluded(CANDIDATE_USER_ROLES, [role]) && (
+                    {isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
                       <>
                         <th>En emploi</th>
                         <th>Statut CV</th>

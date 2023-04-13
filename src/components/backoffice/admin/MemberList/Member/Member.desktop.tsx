@@ -20,7 +20,7 @@ import {
 import {
   getUserCandidateFromCoachOrCandidate,
   getRelatedUser,
-  areRolesIncluded,
+  isRoleIncluded,
 } from 'src/utils';
 
 export function MemberDesktop({ member, role, callback }) {
@@ -79,7 +79,7 @@ export function MemberDesktop({ member, role, callback }) {
       {role !== USER_ROLES.COACH && (
         <>
           <td>
-            {areRolesIncluded(CANDIDATE_USER_ROLES, [member.role]) ? (
+            {isRoleIncluded(CANDIDATE_USER_ROLES, member.role) ? (
               <>
                 {getUserCandidateFromCoachOrCandidate(member) && (
                   <>
@@ -96,7 +96,7 @@ export function MemberDesktop({ member, role, callback }) {
             )}
           </td>
           <td className="cv-status-cell">
-            {areRolesIncluded(CANDIDATE_USER_ROLES, [member.role]) ? (
+            {isRoleIncluded(CANDIDATE_USER_ROLES, member.role) ? (
               <>
                 {cvStatus === 'none' ? (
                   <span className="uk-text-info">Aucun</span>
@@ -109,7 +109,7 @@ export function MemberDesktop({ member, role, callback }) {
             )}
           </td>
           <td className="hiddenCV-cell">
-            {areRolesIncluded(CANDIDATE_USER_ROLES, [member.role]) ? (
+            {isRoleIncluded(CANDIDATE_USER_ROLES, member.role) ? (
               <>
                 {getUserCandidateFromCoachOrCandidate(member) && (
                   <div>

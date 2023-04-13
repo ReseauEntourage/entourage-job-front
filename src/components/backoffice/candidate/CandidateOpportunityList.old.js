@@ -9,7 +9,7 @@ import { openModal } from 'src/components/modals/Modal';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { Button } from 'src/components/utils';
 import ModalExternalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
-import { areRolesIncluded } from 'src/utils';
+import { isRoleIncluded } from 'src/utils';
 
 const CandidateOpportunityList = ({
   search,
@@ -28,12 +28,12 @@ const CandidateOpportunityList = ({
     <>
       <HeaderBackoffice
         title={
-          areRolesIncluded(CANDIDATE_USER_ROLES, [user.role])
+          isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
             ? 'Consultez toutes les opportunités de travail'
             : 'Consultez les opportunités de travail du candidat'
         }
         description={
-          areRolesIncluded(CANDIDATE_USER_ROLES, [user.role])
+          isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
             ? 'Parcourez les offres qui vous sont directement adressées ainsi que celles communes aux différents candidats du parcours LinkedOut.'
             : 'Parcourez les offres qui ont été adressées à votre candidat ainsi que celles communes aux différents candidats du parcours LinkedOut.'
         }

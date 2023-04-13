@@ -20,7 +20,7 @@ import { useOpportunityType } from 'src/components/backoffice/opportunities/useO
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { usePrevious } from 'src/hooks/utils';
 import {
-  areRolesIncluded,
+  isRoleIncluded,
   getCandidateIdFromCoachOrCandidate,
   getRelatedUser,
 } from 'src/utils';
@@ -157,7 +157,7 @@ const Opportunities = () => {
       } else if (opportunityType === 'public') {
         // Cas pour les offres publiques
         const { status, ...restQueryParams } = queryParamsOpportunities;
-        const candidate = areRolesIncluded(CANDIDATE_USER_ROLES, [user.role])
+        const candidate = isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
           ? user
           : getRelatedUser(user);
         if (
@@ -246,7 +246,7 @@ const Opportunities = () => {
   return (
     <LayoutBackOffice
       title={
-        user && areRolesIncluded(CANDIDATE_USER_ROLES, [user.role])
+        user && isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
           ? 'Mes opportunités'
           : 'Opportunités du candidat'
       }

@@ -24,7 +24,7 @@ import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
 import { usePrevious } from 'src/hooks/utils';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { CVShape } from 'src/components/cv/CV.shape';
-import { areRolesIncluded } from 'src/utils';
+import { isRoleIncluded } from 'src/utils';
 
 const pusher = new Pusher(process.env.PUSHER_API_KEY, {
   cluster: 'eu',
@@ -247,7 +247,7 @@ const CVPageContent = ({ candidateId, cv, setCV }) => {
           setCvVersion(data.version);
 
           UIkit.notification(
-            areRolesIncluded(CANDIDATE_USER_ROLES, [user.role])
+            isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
               ? 'Votre CV a bien été sauvegardé'
               : 'Le profil a été mis à jour',
             'success'
@@ -347,7 +347,7 @@ const CVPageContent = ({ candidateId, cv, setCV }) => {
             }}
             text="Sauvegarder"
           />
-          {areRolesIncluded(COACH_USER_ROLES, [user.role]) && (
+          {isRoleIncluded(COACH_USER_ROLES, user.role) && (
             <ButtonPost
               style="primary"
               action={async () => {

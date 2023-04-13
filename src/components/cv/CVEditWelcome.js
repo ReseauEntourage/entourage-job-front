@@ -7,7 +7,7 @@ import {
   COACH_USER_ROLES,
   USER_ROLES,
 } from 'src/constants';
-import { areRolesIncluded } from 'src/utils';
+import { isRoleIncluded } from 'src/utils';
 
 const CVEditWelcome = ({ user }) => {
   if (user === null) {
@@ -17,10 +17,10 @@ const CVEditWelcome = ({ user }) => {
     <HeaderBackoffice
       childrenBottom
       title={`Ravi de vous revoir,${
-        areRolesIncluded(COACH_USER_ROLES, [user.role]) ? ' coach' : ''
+        isRoleIncluded(COACH_USER_ROLES, user.role) ? ' coach' : ''
       } ${user.firstName} !`}
       description={
-        areRolesIncluded(CANDIDATE_USER_ROLES, [user.role])
+        isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
           ? "Bienvenue dans votre espace personnel, depuis lequel vous pouvez modifier les informations qui s'affichent sur votre CV sur LinkedOut."
           : `Bienvenue dans l'espace personnel de votre candidat, depuis lequel vous pouvez modifier avec lui/elle les informations qui s'affichent sur son CV sur LinkedOut.`
       }

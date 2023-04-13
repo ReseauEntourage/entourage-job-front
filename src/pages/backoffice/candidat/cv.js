@@ -8,7 +8,7 @@ import ErrorMessage from 'src/components/backoffice/cv/ErrorMessage';
 import { useFetchCV } from 'src/hooks/useFetchCV';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import {
-  areRolesIncluded,
+  isRoleIncluded,
   getCandidateIdFromCoachOrCandidate,
   getRelatedUser,
 } from 'src/utils';
@@ -40,7 +40,7 @@ const Edit = () => {
   } else if (error) {
     return <ErrorMessage error={error} />;
   } else if (
-    areRolesIncluded(CANDIDATE_USER_ROLES, [userCompleteData.role]) &&
+    isRoleIncluded(CANDIDATE_USER_ROLES, userCompleteData.role) &&
     !getRelatedUser(userCompleteData)
   ) {
     content = (

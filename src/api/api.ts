@@ -218,7 +218,7 @@ class APIHandler {
     userId: string,
     userToLinkId: string | string[]
   ): Promise<AxiosResponse> {
-    return this.put(`/user/linkedUser/${userId}`, { userToLinkId });
+    return this.put(`/user/linkUser/${userId}`, { userToLinkId });
   }
 
   // delete

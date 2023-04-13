@@ -19,7 +19,7 @@ import { openModal } from 'src/components/modals/Modal';
 import {
   getUserCandidateFromCoachOrCandidate,
   getRelatedUser,
-  areRolesIncluded,
+  isRoleIncluded,
 } from 'src/utils';
 
 // userId du candidat ou coach lié
@@ -103,7 +103,7 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
               </span>
             </Grid>
           )}
-          {areRolesIncluded(COACH_USER_ROLES, [user.role]) &&
+          {isRoleIncluded(COACH_USER_ROLES, user.role) &&
             (linkedUser.address ? (
               <Grid row gap="small">
                 <IconNoSSR name="home" />
@@ -117,7 +117,7 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
                 </span>
               </Grid>
             ))}
-          {areRolesIncluded(COACH_USER_ROLES, [user.role]) && userCandidat && (
+          {isRoleIncluded(COACH_USER_ROLES, user.role) && userCandidat && (
             <SimpleLink
               className="uk-link-muted"
               target="_blank"
@@ -130,7 +130,7 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
             </SimpleLink>
           )}
           {isAdmin &&
-            areRolesIncluded(COACH_USER_ROLES, [user.role]) &&
+            isRoleIncluded(COACH_USER_ROLES, user.role) &&
             userCandidat && (
               <Grid row gap="small">
                 <IconNoSSR name="cog" />
@@ -158,14 +158,12 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
 
   return (
     <Grid
-      gap={
-        areRolesIncluded(COACH_USER_ROLES, [user.role]) ? 'medium' : 'collapse'
-      }
+      gap={isRoleIncluded(COACH_USER_ROLES, user.role) ? 'medium' : 'collapse'}
       childWidths={['1-1']}
     >
       {!isAdmin &&
         userCandidat &&
-        areRolesIncluded(COACH_USER_ROLES, [user.role]) &&
+        isRoleIncluded(COACH_USER_ROLES, user.role) &&
         !linkedUser.deletedAt && (
           <Card style="secondary" title="Préférences du CV">
             <CandidateEmployedToggle
@@ -225,9 +223,7 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
       <Card
         style="secondary"
         title={`Information du${
-          areRolesIncluded(COACH_USER_ROLES, [user.role])
-            ? ' candidat'
-            : ' coach'
+          isRoleIncluded(COACH_USER_ROLES, user.role) ? ' candidat' : ' coach'
         }`}
         badge={(() => {
           if (isAdmin) {
@@ -262,13 +258,11 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
                       onSubmit={({ linkedUser: linkedUserId }, closeModal) => {
                         setLoading(true);
                         let promise = null;
-                        if (
-                          areRolesIncluded(CANDIDATE_USER_ROLES, [user.role])
-                        ) {
+                        if (isRoleIncluded(CANDIDATE_USER_ROLES, user.role)) {
                           // on lui assigne ou eleve un coach
                           promise = Api.putLinkedUser(user.id, linkedUserId);
                         }
-                        if (areRolesIncluded(COACH_USER_ROLES, [user.role])) {
+                        if (isRoleIncluded(COACH_USER_ROLES, user.role)) {
                           // on l'assigne à un candidat
                           if (linkedUserId) {
                             promise = Api.putLinkedUser(user.id, linkedUserId);

@@ -63,17 +63,20 @@ export function getValueFromFormField(fieldValue) {
   return fieldValue;
 }
 
-export function areRolesIncluded(superset, subset) {
+export function isRoleIncluded(superset, subset) {
+  if (!Array.isArray(subset)) {
+    return _.difference([subset], superset).length === 0;
+  }
   return _.difference(subset, superset).length === 0;
 }
 
 export function getUserCandidateFromCoachOrCandidate(member) {
   if (member) {
-    if (areRolesIncluded(CANDIDATE_USER_ROLES, [member.role])) {
+    if (isRoleIncluded(CANDIDATE_USER_ROLES, member.role)) {
       return member.candidat;
     }
 
-    if (areRolesIncluded(COACH_USER_ROLES, [member.role])) {
+    if (isRoleIncluded(COACH_USER_ROLES, member.role)) {
       return member.coaches;
     }
   }
@@ -96,7 +99,7 @@ export function getRelatedUser(member) {
 }
 
 export function getCoachFromCandidate(candidate) {
-  if (candidate && areRolesIncluded(CANDIDATE_USER_ROLES, [candidate.role])) {
+  if (candidate && isRoleIncluded(CANDIDATE_USER_ROLES, candidate.role)) {
     if (candidate.candidat && candidate.candidat.coach) {
       return candidate.candidat.coach;
     }
@@ -106,7 +109,7 @@ export function getCoachFromCandidate(candidate) {
 }
 
 export function getCandidateFromCoach(coach, candidateId) {
-  if (coach && areRolesIncluded(COACH_USER_ROLES, [coach.role])) {
+  if (coach && isRoleIncluded(COACH_USER_ROLES, coach.role)) {
     if (coach.coaches && coach.coaches.length > 0) {
       return coach.coaches.find(({ candidat }) => {
         return candidat.id === candidateId;
@@ -119,12 +122,12 @@ export function getCandidateFromCoach(coach, candidateId) {
 
 export function getCandidateIdFromCoachOrCandidate(member) {
   if (member) {
-    if (areRolesIncluded(CANDIDATE_USER_ROLES, [member.role])) {
+    if (isRoleIncluded(CANDIDATE_USER_ROLES, member.role)) {
       return member.id;
     }
 
     if (
-      areRolesIncluded(COACH_USER_ROLES, [member.role]) &&
+      isRoleIncluded(COACH_USER_ROLES, member.role) &&
       member.coaches &&
       member.coaches.length > 0
     ) {

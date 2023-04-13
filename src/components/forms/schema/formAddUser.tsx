@@ -11,7 +11,7 @@ import {
 } from 'src/constants';
 import { ADMIN_ZONES_FILTERS } from 'src/constants/departements';
 import { COLORS } from 'src/constants/styles';
-import { areRolesIncluded } from 'src/utils';
+import { isRoleIncluded } from 'src/utils';
 import { formAddOrganization } from './formAddOrganization';
 
 export const CREATE_NEW_ORGANIZATION_VALUE = 'createNewOrganization';
@@ -30,7 +30,7 @@ const hideMethod = (getValue) => {
   const role = getValue('role');
   const organizationId = getValue('organizationId')?.value;
   return !(
-    areRolesIncluded(EXTERNAL_USER_ROLES, [role]) &&
+    isRoleIncluded(EXTERNAL_USER_ROLES, role) &&
     organizationId === CREATE_NEW_ORGANIZATION_VALUE
   );
 };
@@ -152,7 +152,7 @@ export const formAddUser = {
           component: 'select-request-async-new',
           cacheOptions: false,
           hide: (getValue) => {
-            return !areRolesIncluded(EXTERNAL_USER_ROLES, [getValue('role')]);
+            return !isRoleIncluded(EXTERNAL_USER_ROLES, getValue('role'));
           },
           defaultOptions: [CREATE_NEW_ORGANIZATION_OPTION],
           loadOptions: async (inputValue, callback) => {
@@ -192,8 +192,7 @@ export const formAddUser = {
             const organizationId = getValue('organizationId')?.value;
             return (
               role === USER_ROLES.ADMIN ||
-              (areRolesIncluded(EXTERNAL_USER_ROLES, [role]) &&
-                !organizationId) ||
+              (isRoleIncluded(EXTERNAL_USER_ROLES, role) && !organizationId) ||
               organizationId === CREATE_NEW_ORGANIZATION_VALUE
             );
           },
@@ -331,8 +330,7 @@ export const formAddUser = {
       field: 'organizationId',
       method: (fieldValue, fieldValues) => {
         return (
-          !fieldValue &&
-          areRolesIncluded(EXTERNAL_USER_ROLES, [fieldValues.role])
+          !fieldValue && isRoleIncluded(EXTERNAL_USER_ROLES, fieldValues.role)
         );
       },
       args: [],

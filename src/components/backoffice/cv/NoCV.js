@@ -4,7 +4,7 @@ import { Button, Grid } from 'src/components/utils';
 import { COACH_USER_ROLES, CV_STATUS } from 'src/constants';
 import Api from 'src/api/index.ts';
 import {
-  areRolesIncluded,
+  isRoleIncluded,
   getUserCandidateFromCoachOrCandidate,
 } from 'src/utils';
 
@@ -12,7 +12,7 @@ const NoCV = ({ candidateId, user, setCV }) => {
   const candidate = getUserCandidateFromCoachOrCandidate(user);
   return (
     <Grid column middle>
-      {areRolesIncluded(COACH_USER_ROLES, [user.role]) &&
+      {isRoleIncluded(COACH_USER_ROLES, user.role) &&
       (!candidate || (candidate && candidate.deletedAt)) ? (
         <div className="uk-flex uk-flex-column uk-flex-middle">
           <h2 className="uk-text-bold uk-text-center">

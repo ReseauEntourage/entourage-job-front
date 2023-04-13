@@ -15,7 +15,7 @@ import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithCon
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants';
 import { useResetForm } from 'src/hooks/utils';
 import UserInformationCard from 'src/components/cards/UserInformationCard';
-import { areRolesIncluded, mutateFormSchema } from 'src/utils';
+import { isRoleIncluded, mutateFormSchema } from 'src/utils';
 import _ from 'lodash';
 import CandidateEmployedToggle from 'src/components/backoffice/candidate/CandidateEmployedToggle';
 import ContractLabel from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
@@ -193,7 +193,7 @@ const Parametres = () => {
           <Grid childWidths={['1-2@m']}>
             <Grid childWidths={['1-1']}>
               {/* Preferences du CV */}
-              {areRolesIncluded(CANDIDATE_USER_ROLES, [userData.role]) && (
+              {isRoleIncluded(CANDIDATE_USER_ROLES, userData.role) && (
                 <Card title="Préférences du CV">
                   <CandidateEmployedToggle
                     title="J'ai retrouvé un emploi"
@@ -393,9 +393,7 @@ const Parametres = () => {
                         )}
                       </Grid>
                     )}
-                    {areRolesIncluded(CANDIDATE_USER_ROLES, [
-                      userData.role,
-                    ]) && (
+                    {isRoleIncluded(CANDIDATE_USER_ROLES, [userData.role]) && (
                       <Grid row gap="small">
                         <IconNoSSR name="home" style={{ width: 20 }} />
                         {userData.address ? (

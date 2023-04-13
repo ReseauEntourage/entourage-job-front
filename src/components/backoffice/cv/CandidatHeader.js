@@ -5,7 +5,7 @@ import { Grid, SimpleLink } from 'src/components/utils';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
 import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants';
 import { IconNoSSR } from 'src/components/utils/Icon';
-import { areRolesIncluded, getRelatedUser } from 'src/utils';
+import { isRoleIncluded, getRelatedUser } from 'src/utils';
 
 const CandidatHeader = ({ user, showZone }) => {
   if (!user) return null;
@@ -30,9 +30,8 @@ const CandidatHeader = ({ user, showZone }) => {
           </span>
         </Grid>
 
-        {(areRolesIncluded(CANDIDATE_USER_ROLES, [user.role]) ||
-          (areRolesIncluded(COACH_USER_ROLES, [user.role]) &&
-            user.coaches)) && (
+        {(isRoleIncluded(CANDIDATE_USER_ROLES, user.role) ||
+          (isRoleIncluded(COACH_USER_ROLES, user.role) && user.coaches)) && (
           <Grid row gap="small" middle className="uk-margin-small-top">
             <IconNoSSR name="link" style={{ width: 20 }} />
             <SimpleLink
@@ -40,7 +39,7 @@ const CandidatHeader = ({ user, showZone }) => {
               target="_blank"
               href={`/cv/${
                 user[
-                  areRolesIncluded(CANDIDATE_USER_ROLES, [user.role])
+                  isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
                     ? 'candidat'
                     : 'coach'
                 ].url
@@ -50,7 +49,7 @@ const CandidatHeader = ({ user, showZone }) => {
                 {process.env.SERVER_URL}/cv/
                 {
                   user[
-                    areRolesIncluded(CANDIDATE_USER_ROLES, [user.role])
+                    isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
                       ? 'candidat'
                       : 'coach'
                   ].url

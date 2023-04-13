@@ -23,7 +23,7 @@ import {
   getUserCandidateFromCoachOrCandidate,
   getCandidateIdFromCoachOrCandidate,
   mutateFormSchema,
-  areRolesIncluded,
+  isRoleIncluded,
 } from 'src/utils';
 import AdminCandidateOpportunities from 'src/components/opportunities/AdminCandidateOpportunities';
 import CandidateEmployedToggle from 'src/components/backoffice/candidate/CandidateEmployedToggle';
@@ -253,9 +253,7 @@ const User = () => {
   };
 
   const isCandidat =
-    user &&
-    user.candidat &&
-    areRolesIncluded(CANDIDATE_USER_ROLES, [user.role]);
+    user && user.candidat && isRoleIncluded(CANDIDATE_USER_ROLES, user.role);
 
   if (loading || cvLoading || !tab) {
     return (
@@ -384,7 +382,7 @@ const User = () => {
             </li>
           </ul>
           {tab !== 'parametres' &&
-            areRolesIncluded(COACH_USER_ROLES, [user.role]) && (
+            isRoleIncluded(COACH_USER_ROLES, user.role) && (
               <>
                 {getUserCandidateFromCoachOrCandidate(user) ? (
                   <div>
@@ -416,7 +414,7 @@ const User = () => {
               </>
             )}
           {tab !== 'parametres' &&
-            areRolesIncluded(CANDIDATE_USER_ROLES, [user.role]) && (
+            isRoleIncluded(CANDIDATE_USER_ROLES, user.role) && (
               <div>
                 {tab === 'cv' && (
                   <CVPageContent candidateId={user.id} cv={cv} setCV={setCV} />
@@ -538,9 +536,7 @@ const User = () => {
                             </span>
                           )}
                         </Grid>
-                        {areRolesIncluded(CANDIDATE_USER_ROLES, [
-                          user.role,
-                        ]) && (
+                        {isRoleIncluded(CANDIDATE_USER_ROLES, [user.role]) && (
                           <Grid row gap="small" middle>
                             <IconNoSSR name="home" style={{ width: 20 }} />
                             {user.address ? (
