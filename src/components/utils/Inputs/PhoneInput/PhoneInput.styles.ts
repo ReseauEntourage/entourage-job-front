@@ -6,11 +6,19 @@ export const StyledPhoneInput = styled.div`
   min-width: 300px;
   max-width: 100%;
   margin-bottom: 30px;
+  .label-top {
+    font-size: 14px;
+    padding: 4px 0;
+    display: inline-block;
+    line-height: 17px;
+    font-family: Poppins, sans-serif;
+  }
   .PhoneInput {
     background-color: white;
     border: 0.5px solid white;
     border-bottom: solid 2px ${COLORS.gray};
     padding-top: 0;
+    min-height: 30px;
   }
   .PhoneInputCountry {
     margin-right: 10px;

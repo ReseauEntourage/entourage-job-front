@@ -274,7 +274,7 @@ const GenericField = ({
                 name: data.name,
                 type: 'checkbox',
                 value: !checked, // opposite of the previous value
-                checked,
+                checked: !checked,
               },
             });
           }}

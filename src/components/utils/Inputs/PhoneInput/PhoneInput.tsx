@@ -24,7 +24,11 @@ export function PhoneInput({
   return (
     <>
       <StyledPhoneInput>
-        {showLabel && <label htmlFor={`form-input-${name}`}>{title}</label>}
+        {showLabel && title && (
+          <label htmlFor={id} className="label-top">
+            {title}
+          </label>
+        )}
         <PhoneInputWithCountry
           defaultCountry="FR"
           title={title}

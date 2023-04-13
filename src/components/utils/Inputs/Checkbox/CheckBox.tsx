@@ -28,14 +28,14 @@ export function Checkbox({
         <input
           type="checkbox"
           id={id}
-          onClick={handleClick}
+          onChange={handleClick}
           disabled={disabled}
-          value={value}
+          checked={value}
           name={name}
         />
         <span className="checkmark" />
+        {title && <span className="label">{title}</span>}
       </label>
-      {title && <span className="label">{title}</span>}
     </StyledCheckbox>
   );
 }

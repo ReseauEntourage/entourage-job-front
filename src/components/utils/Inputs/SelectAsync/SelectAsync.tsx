@@ -127,7 +127,10 @@ SelectAsync.propTypes = {
   isHidden: PropTypes.bool,
   onChange: PropTypes.func,
   openMenuOnClick: PropTypes.bool,
-  valid: PropTypes.bool,
+  valid: PropTypes.shape({
+    isInvalid: PropTypes.bool,
+    message: PropTypes.string,
+  }),
 };
 
 SelectAsync.defaultProps = {
@@ -144,5 +147,5 @@ SelectAsync.defaultProps = {
   onChange: () => null,
   openMenuOnClick: false,
   defaultOptions: true,
-  valid: false,
+  valid: undefined,
 };

@@ -14,7 +14,7 @@ const meta = {
       return (
         <div
           style={{
-            width: 300,
+            width: 500,
           }}
         >
           <Story />

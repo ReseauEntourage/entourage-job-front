@@ -61,17 +61,8 @@ const FormWithValidation = forwardRef(
             isReset,
           } = onChangeArgs[i];
 
-          let fieldValue;
-
-          if (type === 'checkbox') {
-            fieldValue = checked;
-            // TODO replace type select-one
-          } else {
-            fieldValue = value;
-          }
-
           /* Validators start */
-          tmpFieldValues[name] = fieldValue;
+          tmpFieldValues[name] = type === 'checkbox' ? checked : value;
 
           const validation = validator.validate(tmpFieldValues, fields); // envoie une copie des champs pour que le state ne soit pas altéré
 

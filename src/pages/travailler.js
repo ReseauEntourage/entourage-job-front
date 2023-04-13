@@ -30,7 +30,6 @@ const Travailler = () => {
       .getCampaigns()
       .then((res) => {
         setCampaigns(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);

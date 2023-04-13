@@ -20,7 +20,12 @@ export function DatePicker({
   }
 
   return (
-    <StyledDatePickerContainer className={`${hidden ? 'uk-hidden' : ''}`}>
+    <StyledDatePickerContainer
+      className={`${hidden ? 'uk-hidden' : ''}`}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
       {title ? (
         <label className="" htmlFor={id}>
           {title}

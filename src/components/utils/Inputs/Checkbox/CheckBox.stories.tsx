@@ -15,7 +15,6 @@ const meta = {
         <div
           style={{
             display: 'flex',
-            width: 0,
           }}
         >
           <Story />
@@ -31,17 +30,23 @@ const Template = (args) => {
   return (
     <Checkbox
       {...args}
-      onChange={(event) => {
-        setValue(event.target.value);
+      handleClick={(event) => {
+        setValue(event.target.checked);
       }}
       value={value}
-      checked={value}
     />
   );
 };
 
 export const Default = {
   render: Template,
+};
+
+export const WithLabel = {
+  render: Template,
+  args: {
+    title: 'Click on me',
+  },
 };
 
 export default meta;

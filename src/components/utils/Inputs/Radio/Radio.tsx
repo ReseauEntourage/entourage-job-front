@@ -61,6 +61,7 @@ export function Radio({
                   htmlFor={inputId}
                   className={i === checkedRadio ? 'checked' : ''}
                   key={`${i}-${uuidValue}`}
+                  onClick={(event) => event.stopPropagation()}
                 >
                   <input
                     type="radio"
