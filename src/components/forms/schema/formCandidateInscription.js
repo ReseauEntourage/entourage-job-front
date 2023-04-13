@@ -61,7 +61,7 @@ export default {
           id: 'birthdate',
           name: 'birthdate',
           component: 'datepicker-new',
-          title: 'Quel âge avez-vous? *',
+          title: 'Quelle est votre date de naissance? *',
         },
         {
           id: 'workingRight',
@@ -131,7 +131,7 @@ export default {
     {
       id: 'heardAbout',
       name: 'heardAbout',
-      title: 'Comment nous avez-vous connus? *',
+      title: 'Comment avez-vous connu LinkedOut ? *',
       component: 'select-new',
       showLabel: true,
       options: [
