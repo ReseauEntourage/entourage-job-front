@@ -79,7 +79,7 @@ const EditUserModal = ({ user, setUser }) => {
   ]);
 
   if (user) {
-    if (user.role !== USER_ROLES.CANDIDATE) {
+    if (!isRoleIncluded(CANDIDATE_USER_ROLES, user.role)) {
       mutatedSchema = mutateFormSchema(mutatedSchema, [
         {
           fieldId: 'address',

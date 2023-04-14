@@ -29,7 +29,7 @@ const ImgProfile = ({ user, size }) => {
 
   return (
     <div
-      className="uk-background-primary uk-border-circle uk-position-relative"
+      className="profileImage uk-background-primary uk-border-circle uk-position-relative"
       style={{
         width: `${size}px`,
         height: `${size}px`,

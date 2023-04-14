@@ -5,7 +5,9 @@ export const StyledCheckbox = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
-  margin-bottom: 30px;
+  margin-bottom: ${({ removeMargin }) => {
+    return removeMargin ? 0 : 30;
+  }}px;
   .checkbox-label {
     height: 16px;
     display: block;

@@ -1,5 +1,4 @@
 import moment from 'moment';
-import Link from 'next/link';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -8,65 +7,62 @@ import { renderCVStatus } from 'src/components/backoffice/admin/MemberList/Membe
 import { MemberPropTypes } from 'src/components/backoffice/admin/MemberList/MemberList.shapes';
 import { translateStatusCV } from 'src/components/backoffice/admin/MemberList/MemberList.utils';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
-import { Grid } from 'src/components/utils';
 import Icon from 'src/components/utils/Icon';
-import { Checkbox, useCheckbox } from 'src/components/utils/Inputs/Checkbox';
+import { CheckBox, useCheckBox } from 'src/components/utils/Inputs/CheckBox';
 import {
   CANDIDATE_USER_ROLES,
+  COACH_USER_ROLES,
   EXTERNAL_USER_ROLES,
-  NORMAL_USERS_ROLES,
-  USER_ROLES,
+  ALL_USER_ROLES,
 } from 'src/constants';
+import { ADMIN_ZONES } from 'src/constants/departements';
 import {
   getUserCandidateFromCoachOrCandidate,
   getRelatedUser,
   isRoleIncluded,
 } from 'src/utils';
+import { MemberInfo, RelatedMemberInfo } from './MemberInfo';
 
 export function MemberDesktop({ member, role, callback }) {
   const cvStatus = renderCVStatus(member);
-  const { checked, handleCheckBox } = useCheckbox(callback, member.id);
+  const { checked, handleCheckBox } = useCheckBox(callback, member.id);
   const relatedUser = getRelatedUser(member);
+
   return (
     <StyledRow
       cvStatus={cvStatus.toLowerCase()}
       className={checked ? 'selected' : ''}
     >
       <td className="name-cell">
-        <Link href={`/backoffice/admin/membres/${member.id}`}>
-          <a>
-            <Grid row gap="small" middle className="uk-visible@m">
-              <ImgProfile user={member} size={36} />
-              <Grid column gap="collapse">
-                <span className="bold">
-                  {member.firstName} {member.lastName}
-                </span>
-                <span>{member.email}</span>
-              </Grid>
-            </Grid>
-          </a>
-        </Link>
+        <MemberInfo
+          id={member.id}
+          firstName={member.firstName}
+          lastName={member.lastName}
+          email={member.email}
+          organizationName={
+            isRoleIncluded(EXTERNAL_USER_ROLES, member.role)
+              ? member.organization?.name
+              : null
+          }
+        >
+          <ImgProfile user={member} size={36} />
+        </MemberInfo>
       </td>
       <td className="associated-user-cell">
-        {relatedUser ? (
-          <Link href={`/backoffice/admin/membres/${relatedUser.id}`}>
-            <a>
-              <div className="bold">
-                {relatedUser.firstName}
-                &nbsp;
-                {relatedUser.lastName}
-              </div>
-              <div>{relatedUser.email}</div>
-            </a>
-          </Link>
-        ) : (
-          <span>Non lié</span>
-        )}
+        <RelatedMemberInfo relatedUser={relatedUser} />
       </td>
       <td>
         <span className="uk-text-nowrap uk-visible@m">
-          {member?.zone?.charAt(0).toUpperCase() +
-            member?.zone?.slice(1).toLowerCase()}
+          {isRoleIncluded(EXTERNAL_USER_ROLES, member.role) ? 'Externe' : 'LKO'}
+        </span>
+      </td>
+      <td>
+        <span className="uk-text-nowrap uk-visible@m">
+          {member?.zone
+            ? member.zone.charAt(0).toUpperCase() +
+              member.zone.slice(1).toLowerCase()
+            : ADMIN_ZONES.HZ.charAt(0).toUpperCase() +
+              ADMIN_ZONES.HZ.slice(1).toLowerCase()}
         </span>
       </td>
       <td>
@@ -76,7 +72,7 @@ export function MemberDesktop({ member, role, callback }) {
           <span>Aucune connexion</span>
         )}
       </td>
-      {role !== USER_ROLES.COACH && (
+      {!isRoleIncluded(COACH_USER_ROLES, role) && (
         <>
           <td>
             {isRoleIncluded(CANDIDATE_USER_ROLES, member.role) ? (
@@ -134,8 +130,11 @@ export function MemberDesktop({ member, role, callback }) {
             )}
           </td>
           <td className="checkbox-cell">
-            <Checkbox
-              checked={checked}
+            <CheckBox
+              removeMargin
+              id={`member-${member.id}-check`}
+              name={`member-${member.id}-check`}
+              value={checked}
               handleClick={handleCheckBox}
               disabled={getUserCandidateFromCoachOrCandidate(member)?.hidden}
             />
@@ -148,7 +147,10 @@ export function MemberDesktop({ member, role, callback }) {
 
 MemberDesktop.propTypes = {
   member: MemberPropTypes.isRequired,
-  role: PropTypes.oneOf([...NORMAL_USERS_ROLES, ...EXTERNAL_USER_ROLES]),
+  role: PropTypes.oneOfType([
+    PropTypes.oneOf(ALL_USER_ROLES),
+    PropTypes.arrayOf(PropTypes.oneOf(ALL_USER_ROLES)),
+  ]),
   callback: PropTypes.func.isRequired,
 };
 

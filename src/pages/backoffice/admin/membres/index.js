@@ -2,11 +2,17 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
 import { Section } from 'src/components/utils';
-import { MEMBER_FILTERS_DATA } from 'src/constants';
+import {
+  ALL_USER_ROLES,
+  CANDIDATE_USER_ROLES,
+  COACH_USER_ROLES,
+  MEMBER_FILTERS_DATA,
+} from 'src/constants';
 import { useFilters } from 'src/hooks';
 import { UserContext } from 'src/store/UserProvider';
 import { MemberList } from 'src/components/backoffice/admin/MemberList/index.ts';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
+import { isRoleIncluded } from 'src/utils';
 
 const MembersAdmin = () => {
   const {
@@ -21,8 +27,12 @@ const MembersAdmin = () => {
   useEffect(() => {
     if (isReady) {
       if (user) {
-        if (!role || !['Candidat', 'Coach'].includes(role)) {
-          const params = { role: 'Candidat', ...restParams };
+        if (
+          !role ||
+          (Array.isArray(role) && role.length === 0) ||
+          !isRoleIncluded(ALL_USER_ROLES, role)
+        ) {
+          const params = { role: CANDIDATE_USER_ROLES, ...restParams };
           if (user && user.zone) {
             params.zone = user.zone;
           }

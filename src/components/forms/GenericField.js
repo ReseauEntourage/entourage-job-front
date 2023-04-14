@@ -16,9 +16,9 @@ import PhoneInput from 'src/components/forms/fields/PhoneInput';
 import { StyledFormHeading } from 'src/components/forms/Forms.styles';
 
 import {
-  Checkbox as CheckBoxNew,
-  useCheckbox,
-} from 'src/components/utils/Inputs/Checkbox';
+  CheckBox as CheckBoxNew,
+  useCheckBox,
+} from 'src/components/utils/Inputs/CheckBox';
 import { Select as SelectNew } from 'src/components/utils/Inputs/Select';
 import { TextArea as TextareaNew } from 'src/components/utils/Inputs/TextArea';
 import { TextInput as TextInputNew } from 'src/components/utils/Inputs/TextInput';
@@ -60,7 +60,7 @@ const GenericField = ({
     [data.fieldsToReset, onChange]
   );
 
-  const { checked, handleCheckBox } = useCheckbox(() => {}, null, data.checked);
+  const { checked, handleCheckBox } = useCheckBox(() => {}, null, data.checked);
 
   const parseValueToReturnSelect = useCallback(
     (event) => {

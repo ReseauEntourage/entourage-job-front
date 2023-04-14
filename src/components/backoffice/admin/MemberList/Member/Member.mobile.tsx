@@ -1,5 +1,4 @@
 import moment from 'moment';
-import Link from 'next/link';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -9,21 +8,25 @@ import { MemberPropTypes } from 'src/components/backoffice/admin/MemberList/Memb
 import { translateStatusCV } from 'src/components/backoffice/admin/MemberList/MemberList.utils';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
 import Icon from 'src/components/utils/Icon';
-import { Checkbox, useCheckbox } from 'src/components/utils/Inputs/Checkbox';
+import { CheckBox, useCheckBox } from 'src/components/utils/Inputs/CheckBox';
 import {
+  COACH_USER_ROLES,
   EXTERNAL_USER_ROLES,
-  NORMAL_USERS_ROLES,
-  USER_ROLES,
+  ALL_USER_ROLES,
 } from 'src/constants';
+import { ADMIN_ZONES } from 'src/constants/departements';
 import {
   getUserCandidateFromCoachOrCandidate,
   getRelatedUser,
+  isRoleIncluded,
 } from 'src/utils';
+import { MemberInfo, RelatedMemberInfo } from './MemberInfo';
 
 export function MemberMobile({ member, role, callback }) {
   const cvStatus = renderCVStatus(member);
-  const { checked, handleCheckBox } = useCheckbox(callback, member.id);
+  const { checked, handleCheckBox } = useCheckBox(callback, member.id);
   const relatedUser = getRelatedUser(member);
+
   return (
     <StyledMobileMember
       cvStatus={cvStatus.toLowerCase()}
@@ -31,19 +34,25 @@ export function MemberMobile({ member, role, callback }) {
     >
       <div className="line member-head">
         <ImgProfile user={member} size={29} />
-        <Link href={`/backoffice/admin/membres/${member.id}`}>
-          <a>
-            <span className="uk-text-bold">
-              {member.firstName} {member.lastName}
-            </span>
-            <span>{member.email}</span>
-          </a>
-        </Link>
-        {role !== USER_ROLES.COACH && (
+        <MemberInfo
+          id={member.id}
+          firstName={member.firstName}
+          lastName={member.lastName}
+          email={member.email}
+          organizationName={
+            isRoleIncluded(EXTERNAL_USER_ROLES, member.role)
+              ? member.organization?.name
+              : null
+          }
+        />
+        {!isRoleIncluded(COACH_USER_ROLES, role) && (
           <div className="checkbox-container">
-            <Checkbox
-              checked={checked}
+            <CheckBox
+              id={`member-${member.id}-check`}
+              name={`member-${member.id}-check`}
+              value={checked}
               handleClick={handleCheckBox}
+              removeMargin
               disabled={getUserCandidateFromCoachOrCandidate(member)?.hidden}
             />
           </div>
@@ -55,32 +64,26 @@ export function MemberMobile({ member, role, callback }) {
             {role === 'Coach' && 'Candidat'}
             {role === 'Candidat' && 'Coach'}
           </span>
-
-          {getRelatedUser(member) ? (
-            <Link href={`/backoffice/admin/membres/${relatedUser.id}`}>
-              <a>
-                <span>
-                  <span className="uk-text-bold">
-                    {getRelatedUser(member).firstName}
-                    &nbsp;
-                    {getRelatedUser(member).lastName}
-                  </span>
-                  &nbsp; &#8226; &nbsp;
-                  {getRelatedUser(member).email}
-                </span>
-              </a>
-            </Link>
-          ) : (
-            <span>Non lié</span>
-          )}
+          <RelatedMemberInfo relatedUser={relatedUser} />
         </div>
       </div>
       <div className="line zone-date">
         <div className="cell">
+          <span className="title">type</span>
+          <span>
+            {isRoleIncluded(EXTERNAL_USER_ROLES, member.role)
+              ? 'Externe'
+              : 'LKO'}
+          </span>
+        </div>
+        <div className="cell">
           <span className="title">Zone</span>
           <span>
-            {member?.zone?.charAt(0).toUpperCase() +
-              member?.zone?.slice(1).toLowerCase()}
+            {member?.zone
+              ? member.zone.charAt(0).toUpperCase() +
+                member.zone.slice(1).toLowerCase()
+              : ADMIN_ZONES.HZ.charAt(0).toUpperCase() +
+                ADMIN_ZONES.HZ.slice(1).toLowerCase()}
           </span>
         </div>
         <div className="cell">
@@ -94,7 +97,7 @@ export function MemberMobile({ member, role, callback }) {
           </span>
         </div>
       </div>
-      {role !== USER_ROLES.COACH && (
+      {!isRoleIncluded(COACH_USER_ROLES, role) && (
         <div className="line work-cv">
           <div className="cell">
             <span className="title">En emploi</span>
@@ -130,7 +133,7 @@ export function MemberMobile({ member, role, callback }) {
 
 MemberMobile.propTypes = {
   member: MemberPropTypes.isRequired,
-  role: PropTypes.oneOf([...NORMAL_USERS_ROLES, ...EXTERNAL_USER_ROLES]),
+  role: PropTypes.oneOf(ALL_USER_ROLES),
   callback: PropTypes.func.isRequired,
 };
 

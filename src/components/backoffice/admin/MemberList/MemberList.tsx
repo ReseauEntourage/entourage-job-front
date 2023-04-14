@@ -132,14 +132,16 @@ export function MemberList({
     selectElement({ id: memberId });
   };
 
+  const roleToDisplay = isRoleIncluded(CANDIDATE_USER_ROLES, role)
+    ? 'candidats'
+    : 'coachs';
+
   return (
     <>
       <BackToTop />
       <HeaderBackoffice
-        title={`Gestion des ${role?.toLocaleLowerCase()}s`}
-        description={`Ici vous pouvez accéder à tous les profils des ${
-          role?.toLocaleLowerCase() || 'membres'
-        }s afin d'effectuer un suivi individuel de leur avancée.`}
+        title={`Gestion des ${roleToDisplay}`}
+        description={`Ici vous pouvez accéder à tous les profils des ${roleToDisplay} afin d'effectuer un suivi individuel de leur avancée.`}
         page={roleToPage[role]}
       >
         <MemberCreationButtons
@@ -196,13 +198,19 @@ export function MemberList({
               <StyledTable>
                 <thead>
                   <tr>
-                    <th className="uk-text-nowrap">{role}</th>
+                    {isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
+                      <th className="uk-text-nowrap">Candidat</th>
+                    )}
+                    {isRoleIncluded(COACH_USER_ROLES, role) && (
+                      <th className="uk-text-nowrap">Coach</th>
+                    )}
                     {isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
                       <th>Coach</th>
                     )}
                     {isRoleIncluded(COACH_USER_ROLES, role) && (
                       <th>Candidat</th>
                     )}
+                    <th>Type</th>
                     <th>Zone</th>
                     <th>Dernière connexion</th>
                     {isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
@@ -242,7 +250,7 @@ export function MemberList({
                   await fetchData(search, filters, role, offset, false);
                 }}
               >
-                Voir tous les {role?.toLocaleLowerCase()}s
+                Voir tous les {roleToDisplay}
               </Button>
             </div>
           )}

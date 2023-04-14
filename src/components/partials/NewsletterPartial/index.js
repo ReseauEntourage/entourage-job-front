@@ -8,7 +8,7 @@ import Api from 'src/api/index.ts';
 import { Button } from 'src/components/utils/Button';
 import { gaEvent } from 'src/lib/gtag';
 import { NEWSLETTER_TAGS } from 'src/constants';
-import { Checkbox } from 'src/components/utils/Inputs/Checkbox';
+import { CheckBox } from 'src/components/utils/Inputs/CheckBox';
 import { StyledPrimaryTextInput } from 'src/styles/components/inputs/styles';
 import { v4 as uuid } from 'uuid';
 import { StyledNLForm } from 'src/components/partials/NewsletterPartial/styles';
@@ -76,7 +76,9 @@ const NewsletterPartial = ({ style, padding, tag }) => {
               return (
                 <div className="input-label" key={`${key}-status-${uuidValue}`}>
                   <div>
-                    <Checkbox
+                    <CheckBox
+                      name={tagConst}
+                      id={tagConst}
                       checked={tagConst === status}
                       handleClick={() => {
                         if (status === tagConst) {
@@ -100,7 +102,9 @@ const NewsletterPartial = ({ style, padding, tag }) => {
               return (
                 <div className="input-label" key={`${key}-zone-${uuidValue}`}>
                   <div>
-                    <Checkbox
+                    <CheckBox
+                      name={tagConst}
+                      id={tagConst}
                       checked={tagConst === zone}
                       handleClick={() => {
                         if (zone === tagConst) {

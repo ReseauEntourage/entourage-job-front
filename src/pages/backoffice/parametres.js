@@ -105,7 +105,7 @@ const Parametres = () => {
       ]);
     }
 
-    if (userData.role !== USER_ROLES.CANDIDATE) {
+    if (!isRoleIncluded(CANDIDATE_USER_ROLES, userData.role)) {
       mutatedSchema = mutateFormSchema(mutatedSchema, [
         {
           fieldId: 'address',
