@@ -1,7 +1,11 @@
-import { OFFER_STATUS, USER_ROLES } from 'src/constants';
+import {
+  CANDIDATE_USER_ROLES,
+  COACH_USER_ROLES,
+  OFFER_STATUS,
+} from 'src/constants';
 import _ from 'lodash';
 
-const findOfferStatus = (status, isPublic, isRecommended) => {
+export function findOfferStatus(status, isPublic, isRecommended) {
   const currentStatus = OFFER_STATUS.find((oStatus) => {
     return oStatus.value === status;
   });
@@ -29,9 +33,9 @@ const findOfferStatus = (status, isPublic, isRecommended) => {
     };
   }
   return { label: 'Non défini', color: 'muted' };
-};
+}
 
-const findConstantFromValue = (valToFind, constantsToFindFrom) => {
+export function findConstantFromValue(valToFind, constantsToFindFrom) {
   return (
     constantsToFindFrom.find(({ value }) => {
       return value === valToFind;
@@ -40,9 +44,9 @@ const findConstantFromValue = (valToFind, constantsToFindFrom) => {
       value: valToFind,
     }
   );
-};
+}
 
-const getValueFromFormField = (fieldValue) => {
+export function getValueFromFormField(fieldValue) {
   if (
     _.isArray(fieldValue) &&
     _.every(fieldValue, (fieldVal) => {
@@ -57,56 +61,80 @@ const getValueFromFormField = (fieldValue) => {
     return fieldValue.value;
   }
   return fieldValue;
-};
+}
 
-const getRelatedUser = (member) => {
+export function isRoleIncluded(superset, subset) {
+  if (!Array.isArray(subset)) {
+    return _.difference([subset], superset).length === 0;
+  }
+  return _.difference(subset, superset).length === 0;
+}
+
+export function getUserCandidateFromCoachOrCandidate(member) {
+  if (member) {
+    if (isRoleIncluded(CANDIDATE_USER_ROLES, member.role)) {
+      return member.candidat;
+    }
+
+    if (isRoleIncluded(COACH_USER_ROLES, member.role)) {
+      return member.coaches;
+    }
+  }
+  return null;
+}
+
+export function getRelatedUser(member) {
   if (member) {
     if (member.candidat && member.candidat.coach) {
       return member.candidat.coach;
     }
-    if (member.coach && member.coach.candidat) {
-      return member.coach.candidat;
+    if (member.coaches && member.coaches.length > 0) {
+      return member.coaches.map(({ candidat }) => {
+        return candidat;
+      });
     }
   }
 
   return null;
-};
+}
 
-const getCandidateFromCoachOrCandidate = (member) => {
-  if (member) {
-    if (member.role === USER_ROLES.CANDIDAT) {
-      return member.candidat;
-    }
-
-    if (member.role === USER_ROLES.COACH) {
-      return member.coach;
+export function getCoachFromCandidate(candidate) {
+  if (candidate && isRoleIncluded(CANDIDATE_USER_ROLES, candidate.role)) {
+    if (candidate.candidat && candidate.candidat.coach) {
+      return candidate.candidat.coach;
     }
   }
-  return null;
-};
 
-const getCandidateIdFromCoachOrCandidate = (member) => {
+  return null;
+}
+
+export function getCandidateFromCoach(coach, candidateId) {
+  if (coach && isRoleIncluded(COACH_USER_ROLES, coach.role)) {
+    if (coach.coaches && coach.coaches.length > 0) {
+      return coach.coaches.find(({ candidat }) => {
+        return candidat.id === candidateId;
+      })?.candidat;
+    }
+  }
+
+  return null;
+}
+
+export function getCandidateIdFromCoachOrCandidate(member) {
   if (member) {
-    if (member.role === USER_ROLES.CANDIDAT) {
+    if (isRoleIncluded(CANDIDATE_USER_ROLES, member.role)) {
       return member.id;
     }
 
     if (
-      member.role === USER_ROLES.COACH &&
-      member.coach &&
-      member.coach.candidat
+      isRoleIncluded(COACH_USER_ROLES, member.role) &&
+      member.coaches &&
+      member.coaches.length > 0
     ) {
-      return member.coach.candidat.id;
+      return member.coaches.map(({ candidat }) => {
+        return candidat.id;
+      });
     }
   }
   return null;
-};
-
-export {
-  findOfferStatus,
-  findConstantFromValue,
-  getValueFromFormField,
-  getRelatedUser,
-  getCandidateIdFromCoachOrCandidate,
-  getCandidateFromCoachOrCandidate,
-};
+}

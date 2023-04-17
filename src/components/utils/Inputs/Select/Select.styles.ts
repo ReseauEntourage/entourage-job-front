@@ -12,6 +12,9 @@ export const StyledSelectContainer = styled.div`
     line-height: 17px;
     font-family: Poppins, sans-serif;
   }
+  &.hidden {
+    display: none;
+  }
   .select {
     width: 100%;
     border: none;
@@ -22,6 +25,7 @@ export const StyledSelectContainer = styled.div`
       font-family: Poppins, Arial, sans-serif;
       padding: 4px 0;
       font-size: 14px;
+      color: ${COLORS.black};
       line-height: 17px;
       border: 0.5px solid white;
       border-bottom: solid 2px ${COLORS.gray};
@@ -71,7 +75,7 @@ export const StyledSelectContainer = styled.div`
           width: 100%;
           background-color: white;
           border: 0.5px solid white;
-          border-bottom: 1px solid #f4f3f3;
+          border-bottom: 0.5px solid #f4f3f3;
           text-align: left;
           font-size: 14px;
           line-height: 17px;

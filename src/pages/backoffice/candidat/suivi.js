@@ -6,10 +6,15 @@ import { Api } from 'src/api/index.ts';
 import { Button, Grid, Section } from 'src/components/utils';
 import { UserContext } from 'src/store/UserProvider';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
-import { USER_ROLES } from 'src/constants';
+import {
+  CANDIDATE_USER_ROLES,
+  COACH_USER_ROLES,
+  USER_ROLES,
+} from 'src/constants';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { usePrevious } from 'src/hooks/utils';
+import { isRoleIncluded } from 'src/utils';
 
 const Suivi = () => {
   const { user } = useContext(UserContext);
@@ -21,11 +26,11 @@ const Suivi = () => {
   const prevUser = usePrevious(user);
 
   const title =
-    user && user.role === USER_ROLES.CANDIDAT
+    user && isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
       ? 'Suivez votre progression'
       : 'Suivi du candidat';
   const description =
-    user && user.role === USER_ROLES.CANDIDAT
+    user && isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
       ? "Ici, vous pouvez prendre des notes sur la progression de vos recherches, noter vos différents rendez-vous, etc. et échanger avec votre coach. Profitez de cet espace d'écriture libre qui vous est dédié !"
       : "Ici, vous pouvez suivre la progression de votre candidat.e grâce à ses notes, et échanger avec lui/elle. Profitez de cet espace d'échange libre qui vous est dédié !";
 
@@ -64,11 +69,9 @@ const Suivi = () => {
       setLoading(true);
       Api.getUserCandidate()
         .then(({ data }) => {
-          if (data) {
-            setUserCandidat(data);
-            setNoteHasBeenRead();
-            updateValue(data.note);
-          }
+          setUserCandidat(data);
+          setNoteHasBeenRead();
+          updateValue(data.note);
         })
         .catch(() => {
           UIkit.notification('Erreur lors du chargement du suivi', 'danger');
@@ -87,7 +90,7 @@ const Suivi = () => {
       <div className="uk-flex uk-flex-column uk-flex-middle">
         <h2 className="uk-text-bold">
           <span className="uk-text-primary">
-            {user.role === USER_ROLES.COACH
+            {isRoleIncluded(COACH_USER_ROLES, user.role)
               ? 'Aucun candidat'
               : 'Aucun bénévole coach'}
           </span>{' '}

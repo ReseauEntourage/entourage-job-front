@@ -12,6 +12,7 @@ const ModalEdit = ({
   formSchema,
   defaultValues,
   onSubmit,
+  onCancel,
   submitText,
   cancelText,
   onError,
@@ -25,12 +26,15 @@ const ModalEdit = ({
         cancelText={cancelText}
         formSchema={formSchema}
         defaultValues={defaultValues}
-        onCancel={onClose}
+        onCancel={() => {
+          if (onCancel) {
+            onCancel();
+          }
+          onClose();
+        }}
         onError={onError}
         formId={formId}
-        onSubmit={(fields, setError) => {
-          return onSubmit(fields, onClose, setError);
-        }}
+        onSubmit={(fields, setError) => onSubmit(fields, onClose, setError)}
       />
     </ModalGeneric>
   );
@@ -44,6 +48,7 @@ ModalEdit.propTypes = {
     rules: PropTypes.arrayOf(PropTypes.shape({})),
   }).isRequired,
   onSubmit: PropTypes.func.isRequired,
+  onCancel: PropTypes.func,
   onError: PropTypes.func,
   defaultValues: PropTypes.objectOf(
     PropTypes.oneOfType([
@@ -65,6 +70,7 @@ ModalEdit.defaultProps = {
   cancelText: 'Annuler',
   formId: '',
   onError: () => {},
+  onCancel: () => {},
 };
 
 export default ModalEdit;

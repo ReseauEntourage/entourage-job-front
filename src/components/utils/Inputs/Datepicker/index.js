@@ -1,3 +1,1 @@
-import DatePicker from './Datepicker';
-
-export default DatePicker;
+export { DatePicker } from './DatePicker.tsx';

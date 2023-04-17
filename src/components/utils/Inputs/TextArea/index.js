@@ -1,3 +1,1 @@
-import TextArea from './TextArea.tsx';
-
-export default TextArea;
+export { TextArea } from './TextArea.tsx';

@@ -1,4 +1,4 @@
-export interface RadioType {
+export interface RadioTypes {
   inputId: string;
   label: string;
   value: string;
@@ -7,27 +7,26 @@ export interface RadioType {
 }
 
 export interface RadioAsyncComponentType {
-  loadOptions: () => RadioType[];
+  loadOptions: () => RadioTypes[];
   id: string;
   legend: string;
   name: string;
   filter?: string;
   errorMessage?: string;
   hidden?: boolean;
-  onChange: (
-    e: React.MouseEvent<HTMLInputElement> | React.FormEvent<HTMLInputElement>
-  ) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
 }
 
 export interface RadioComponentType {
-  options: RadioType[];
+  options: RadioTypes[];
   id: string;
   legend: string;
   name: string;
   filter?: string;
   errorMessage?: string;
   hidden?: boolean;
-  onChange: (
-    e: React.MouseEvent<HTMLInputElement> | React.FormEvent<HTMLInputElement>
-  ) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+
+  value: string;
 }

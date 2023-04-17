@@ -4,7 +4,11 @@ import { useFilters } from 'src/hooks';
 import { UserContext } from 'src/store/UserProvider';
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
 import { Api } from 'src/api/index.ts';
-import { OPPORTUNITY_FILTERS_DATA, USER_ROLES } from 'src/constants';
+import {
+  CANDIDATE_USER_ROLES,
+  OPPORTUNITY_FILTERS_DATA,
+  USER_ROLES,
+} from 'src/constants';
 import OpportunityError from 'src/components/opportunities/OpportunityError';
 import { useRouter } from 'next/router';
 import { CandidateOpportunities } from 'src/components/backoffice/candidate/CandidateOpportunities';
@@ -15,7 +19,11 @@ import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpp
 import { useOpportunityType } from 'src/components/backoffice/opportunities/useOpportunityType';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { usePrevious } from 'src/hooks/utils';
-import { getCandidateIdFromCoachOrCandidate, getRelatedUser } from 'src/utils';
+import {
+  isRoleIncluded,
+  getCandidateIdFromCoachOrCandidate,
+  getRelatedUser,
+} from 'src/utils';
 import _ from 'lodash';
 import { validate as uuidValidate } from 'uuid';
 
@@ -149,8 +157,9 @@ const Opportunities = () => {
       } else if (opportunityType === 'public') {
         // Cas pour les offres publiques
         const { status, ...restQueryParams } = queryParamsOpportunities;
-        const candidate =
-          user.role === USER_ROLES.CANDIDAT ? user : getRelatedUser(user);
+        const candidate = isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
+          ? user
+          : getRelatedUser(user);
         if (
           candidate &&
           !hasLoadedDefaultFilters &&
@@ -237,7 +246,7 @@ const Opportunities = () => {
   return (
     <LayoutBackOffice
       title={
-        user && user.role === USER_ROLES.CANDIDAT
+        user && isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
           ? 'Mes opportunités'
           : 'Opportunités du candidat'
       }

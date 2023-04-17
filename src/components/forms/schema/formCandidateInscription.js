@@ -112,6 +112,11 @@ export default {
           placeholder: 'Ecrivez votre nom',
           showLabel: true,
         },
+      ],
+    },
+    {
+      component: 'fieldgroup-new',
+      fields: [
         {
           id: 'phone',
           name: 'phone',
@@ -120,22 +125,24 @@ export default {
           placeholder: 'Ecrivez votre numéro de téléphone',
           showLabel: true,
         },
+        {
+          id: 'email',
+          name: 'email',
+          title: 'Adresse mail *',
+          component: 'text-input',
+          placeholder: 'Ecrivez votre adresse email',
+          showLabel: true,
+        },
       ],
     },
-    {
-      id: 'email',
-      name: 'email',
-      title: 'Adresse mail *',
-      component: 'text-input',
-      placeholder: 'Ecrivez votre adresse email',
-      showLabel: true,
-    },
+
     {
       id: 'heardAbout',
       name: 'heardAbout',
       title: 'Comment avez-vous connu LinkedOut ? *',
       component: 'select-new',
       showLabel: true,
+      // TODO use already existing heard about
       options: [
         {
           label: 'LinkedIn',
@@ -252,7 +259,7 @@ export default {
             return options.length ? [...options, noChoice] : [];
           })
           .catch((err) => {
-            console.log(err);
+            console.error(err);
             return [];
           });
       },
