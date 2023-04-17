@@ -66,8 +66,6 @@ export function useFilters(filtersData, path, otherPathParams, resetTag) {
     (updatedFilters) => {
       const searchFilter = search ? { search } : {};
 
-      console.log('updatedFilters', updatedFilters);
-
       const query = {
         ...otherParams,
         ..._.omitBy(filtersToQueryParams(updatedFilters), _.isNil),
