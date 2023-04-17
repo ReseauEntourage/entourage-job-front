@@ -9,13 +9,13 @@ import { translateStatusCV } from 'src/components/backoffice/admin/MemberList/Me
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
 import Icon from 'src/components/utils/Icon';
 import { CheckBox, useCheckBox } from 'src/components/utils/Inputs/CheckBox';
+import { ADMIN_ZONES } from 'src/constants/departements';
 import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
   EXTERNAL_USER_ROLES,
   ALL_USER_ROLES,
-} from 'src/constants';
-import { ADMIN_ZONES } from 'src/constants/departements';
+} from 'src/constants/users';
 import {
   getUserCandidateFromCoachOrCandidate,
   getRelatedUser,

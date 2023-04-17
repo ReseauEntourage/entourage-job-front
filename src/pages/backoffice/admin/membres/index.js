@@ -2,17 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
 import { Section } from 'src/components/utils';
-import {
-  ALL_USER_ROLES,
-  CANDIDATE_USER_ROLES,
-  COACH_USER_ROLES,
-  MEMBER_FILTERS_DATA,
-} from 'src/constants';
+import { ALL_USER_ROLES, CANDIDATE_USER_ROLES } from 'src/constants/users.ts';
 import { useFilters } from 'src/hooks';
 import { UserContext } from 'src/store/UserProvider';
 import { MemberList } from 'src/components/backoffice/admin/MemberList/index.ts';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
-import { isRoleIncluded } from 'src/utils';
+import { isRoleIncluded, mutateTypeFilterDependingOnRole } from 'src/utils';
 
 const MembersAdmin = () => {
   const {
@@ -52,7 +47,7 @@ const MembersAdmin = () => {
   }, [isReady, replace, restParams, role, user]);
 
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
-    MEMBER_FILTERS_DATA,
+    mutateTypeFilterDependingOnRole(role),
     '/backoffice/admin/membres'
   );
 

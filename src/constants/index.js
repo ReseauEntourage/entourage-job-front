@@ -5,24 +5,9 @@ import {
   ADMIN_ZONES_FILTERS,
   DEPARTMENTS_FILTERS,
   REGIONS_FILTERS,
-} from 'src/constants/departements';
+} from 'src/constants/departements.ts';
 import _ from 'lodash';
-
-export const GENDERS = {
-  MALE: 0,
-  FEMALE: 1,
-};
-
-export const GENDERS_FILTERS = [
-  {
-    label: 'Homme',
-    value: GENDERS.MALE,
-  },
-  {
-    label: 'Femme',
-    value: GENDERS.FEMALE,
-  },
-];
+import { GENDERS_FILTERS, USER_ROLES_FILTERS } from './users.ts';
 
 export const OFFER_STATUS = [
   {
@@ -322,6 +307,13 @@ export const OPPORTUNITY_FILTERS_DATA = [
 
 export const MEMBER_FILTERS_DATA = [
   {
+    key: 'role',
+    constants: USER_ROLES_FILTERS,
+    title: 'Type',
+    mandatory: true,
+    tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_TYPE_CLIC,
+  },
+  {
     key: 'zone',
     constants: ADMIN_ZONES_FILTERS,
     title: 'Zone',
@@ -372,52 +364,6 @@ export const MEMBER_FILTERS_DATA = [
     tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_STATUT_CV_CLIC,
   },
 ];
-
-export const USER_ROLES = {
-  COACH: 'Coach',
-  COACH_EXTERNAL: 'Coach externe',
-  CANDIDATE: 'Candidat',
-  CANDIDATE_EXTERNAL: 'Candidat externe',
-  ADMIN: 'Admin',
-};
-
-export const USER_ROLES_FILTERS = [
-  { value: USER_ROLES.CANDIDATE, label: `${USER_ROLES.CANDIDATE} LKO` },
-  {
-    value: USER_ROLES.CANDIDATE_EXTERNAL,
-    label: USER_ROLES.CANDIDATE_EXTERNAL,
-  },
-  { value: USER_ROLES.COACH, label: `${USER_ROLES.COACH} LKO` },
-  { value: USER_ROLES.COACH_EXTERNAL, label: USER_ROLES.COACH_EXTERNAL },
-  { value: USER_ROLES.ADMIN, label: USER_ROLES.ADMIN },
-];
-
-export const RELATED_ROLES = {
-  [USER_ROLES.CANDIDATE]: USER_ROLES.COACH,
-  [USER_ROLES.CANDIDATE_EXTERNAL]: USER_ROLES.COACH_EXTERNAL,
-  [USER_ROLES.COACH]: USER_ROLES.CANDIDATE,
-  [USER_ROLES.COACH_EXTERNAL]: USER_ROLES.CANDIDATE_EXTERNAL,
-  [USER_ROLES.ADMIN]: USER_ROLES.ADMIN,
-};
-
-export const ADMIN_ROLES = {
-  CANDIDATES: 'Candidats',
-  COMPANIES: 'Entreprises',
-};
-
-export const NORMAL_USER_ROLES = [USER_ROLES.CANDIDATE, USER_ROLES.COACH];
-export const EXTERNAL_USER_ROLES = [
-  USER_ROLES.CANDIDATE_EXTERNAL,
-  USER_ROLES.COACH_EXTERNAL,
-];
-
-export const CANDIDATE_USER_ROLES = [
-  USER_ROLES.CANDIDATE,
-  USER_ROLES.CANDIDATE_EXTERNAL,
-];
-export const COACH_USER_ROLES = [USER_ROLES.COACH, USER_ROLES.COACH_EXTERNAL];
-
-export const ALL_USER_ROLES = [...CANDIDATE_USER_ROLES, ...COACH_USER_ROLES];
 
 export const EXTERNAL_OFFERS_ORIGINS = [
   {

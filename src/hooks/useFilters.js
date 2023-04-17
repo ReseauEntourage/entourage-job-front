@@ -24,11 +24,29 @@ export function useFilters(filtersData, path, otherPathParams, resetTag) {
   const filters = getFiltersObjectsFromQueryParamsFront(params, filtersData);
 
   const resetFilters = useCallback(() => {
-    const query = {
+    let query = {
       ...otherParams,
     };
     if (resetTag) {
       gaEvent(resetTag);
+    }
+
+    const mandatoryFilterConstants = filtersData.filter(({ mandatory }) => {
+      return mandatory;
+    });
+
+    if (mandatoryFilterConstants.length > 0) {
+      const mandatoryFilters = mandatoryFilterConstants.reduce((acc, curr) => {
+        return {
+          ...acc,
+          [curr.key]: curr.constants,
+        };
+      }, {});
+
+      query = {
+        ...query,
+        ...filtersToQueryParams(mandatoryFilters),
+      };
     }
 
     push(
@@ -42,11 +60,13 @@ export function useFilters(filtersData, path, otherPathParams, resetTag) {
         scroll: false,
       }
     );
-  }, [otherParams, path, push, resetTag]);
+  }, [filtersData, otherParams, path, push, resetTag]);
 
   const setFilters = useCallback(
     (updatedFilters) => {
       const searchFilter = search ? { search } : {};
+
+      console.log('updatedFilters', updatedFilters);
 
       const query = {
         ...otherParams,

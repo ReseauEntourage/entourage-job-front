@@ -8,7 +8,7 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 
 import { findConstantFromValue, mutateFormSchema } from 'src/utils';
 
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
 import { openModal } from 'src/components/modals/Modal';
 import { CONTRACTS } from 'src/constants';
 

@@ -1,6 +1,6 @@
 import { UserContext } from 'src/store/UserProvider';
 import Api from 'src/api/index.ts';
-import { USER_ROLES } from 'src/constants';
+import { USER_ROLES } from 'src/constants/users.ts';
 import { useContext, useEffect, useState } from 'react';
 import { usePrevious } from 'src/hooks/utils';
 

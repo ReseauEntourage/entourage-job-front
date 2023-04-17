@@ -24,7 +24,7 @@ import {
 } from 'src/constants';
 import ModalOfferInfo from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/ModalOfferInfo';
 import { useModalContext } from 'src/components/modals/Modal';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
 import formEditExternalOpportunitySchema from 'src/components/forms/schema/formEditExternalOpportunity';
 import { List } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/NavList';
 import { OfferInfoContainer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferInfoContainer';

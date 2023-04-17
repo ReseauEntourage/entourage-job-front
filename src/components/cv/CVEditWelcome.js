@@ -6,7 +6,7 @@ import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
   USER_ROLES,
-} from 'src/constants';
+} from 'src/constants/users.ts';
 import { isRoleIncluded } from 'src/utils';
 
 const CVEditWelcome = ({ user }) => {

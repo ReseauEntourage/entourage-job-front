@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { UserContext } from 'src/store/UserProvider';
 import { Img } from 'src/components/utils';
-import { CANDIDATE_USER_ROLES } from 'src/constants';
+import { CANDIDATE_USER_ROLES } from 'src/constants/users.ts';
 import { isRoleIncluded } from 'src/utils';
 
 const ImgProfile = ({ user, size }) => {

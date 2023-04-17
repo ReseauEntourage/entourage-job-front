@@ -10,7 +10,7 @@ import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
   USER_ROLES,
-} from 'src/constants';
+} from 'src/constants/users.ts';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { usePrevious } from 'src/hooks/utils';

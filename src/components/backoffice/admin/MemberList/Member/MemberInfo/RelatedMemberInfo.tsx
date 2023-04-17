@@ -1,6 +1,6 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import { EXTERNAL_USER_ROLES, USER_ROLES } from 'src/constants';
+import { EXTERNAL_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils';
 import { MemberInfo } from './MemberInfo';
 import { StyledRelatedMemberListItem } from './RelatedMemberInfo.styles';

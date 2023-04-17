@@ -1,6 +1,6 @@
 import { GA_TAGS } from 'src/constants/tags';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
-import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants';
+import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users.ts';
 
 const rolesToParams = (roles) => {
   return `${roles

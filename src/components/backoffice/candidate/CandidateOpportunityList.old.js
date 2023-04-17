@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
-import { CANDIDATE_USER_ROLES } from 'src/constants';
+import { CANDIDATE_USER_ROLES } from 'src/constants/users.ts';
 import OpportunityList from 'src/components/opportunities/OpportunityList';
 import PropTypes from 'prop-types';
 

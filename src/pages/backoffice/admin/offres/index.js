@@ -1,7 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from 'src/store/UserProvider';
 import { useFilters, useTabFilters } from 'src/hooks';
-import { ADMIN_ZONES, DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import {
+  ADMIN_ZONES,
+  DEPARTMENTS_FILTERS,
+} from 'src/constants/departements.ts';
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
 import { Section } from 'src/components/utils';
 import AdminOpportunityList from 'src/components/backoffice/admin/AdminOpportunityList';
@@ -9,8 +12,8 @@ import { useRouter } from 'next/router';
 import {
   OFFER_ADMIN_FILTERS_DATA,
   OPPORTUNITY_FILTERS_DATA,
-  USER_ROLES,
 } from 'src/constants';
+import { USER_ROLES } from 'src/constants/users.ts';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { GA_TAGS } from 'src/constants/tags';
 

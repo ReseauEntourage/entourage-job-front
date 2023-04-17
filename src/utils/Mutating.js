@@ -1,5 +1,5 @@
 import { OFFER_STATUS } from 'src/constants';
-import { findOfferStatus } from 'src/utils/Finding';
+import { findOfferStatus } from 'src/utils/Finding.ts';
 
 const updateField = (fieldToUpdate, props, i) => {
   const field = { ...fieldToUpdate };
