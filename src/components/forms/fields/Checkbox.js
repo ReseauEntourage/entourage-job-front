@@ -15,6 +15,9 @@ const Checkbox = ({
 }) => {
   return (
     <div
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
       className={`uk-form-controls ${
         removePadding
           ? ''

@@ -12,10 +12,10 @@ import FormWithValidation from 'src/components/forms/FormWithValidation';
 import schemaPersonalData from 'src/components/forms/schema/formPersonalData';
 import schemaChangePassword from 'src/components/forms/schema/formChangePassword';
 import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
-import { USER_ROLES } from 'src/constants';
+import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants';
 import { useResetForm } from 'src/hooks/utils';
 import UserInformationCard from 'src/components/cards/UserInformationCard';
-import { mutateFormSchema } from 'src/utils';
+import { isRoleIncluded, mutateFormSchema } from 'src/utils';
 import _ from 'lodash';
 import CandidateEmployedToggle from 'src/components/backoffice/candidate/CandidateEmployedToggle';
 import ContractLabel from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
@@ -105,7 +105,7 @@ const Parametres = () => {
       ]);
     }
 
-    if (userData.role !== USER_ROLES.CANDIDAT) {
+    if (userData.role !== USER_ROLES.CANDIDATE) {
       mutatedSchema = mutateFormSchema(mutatedSchema, [
         {
           fieldId: 'address',
@@ -193,7 +193,7 @@ const Parametres = () => {
           <Grid childWidths={['1-2@m']}>
             <Grid childWidths={['1-1']}>
               {/* Preferences du CV */}
-              {userData.role === USER_ROLES.CANDIDAT && (
+              {isRoleIncluded(CANDIDATE_USER_ROLES, userData.role) && (
                 <Card title="Préférences du CV">
                   <CandidateEmployedToggle
                     title="J'ai retrouvé un emploi"
@@ -393,7 +393,7 @@ const Parametres = () => {
                         )}
                       </Grid>
                     )}
-                    {userData.role === USER_ROLES.CANDIDAT && (
+                    {isRoleIncluded(CANDIDATE_USER_ROLES, [userData.role]) && (
                       <Grid row gap="small">
                         <IconNoSSR name="home" style={{ width: 20 }} />
                         {userData.address ? (
@@ -422,8 +422,7 @@ const Parametres = () => {
                   </Grid>
                 ) : undefined}
               </div>
-              {(userData.role === USER_ROLES.CANDIDAT ||
-                userData.role === USER_ROLES.COACH) && (
+              {userData.role !== USER_ROLES.ADMIN && (
                 <UserInformationCard
                   user={userData}
                   onChange={(data) => {

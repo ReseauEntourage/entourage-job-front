@@ -10,7 +10,13 @@ import { CVBackground, CVFiche, CVFicheEdition } from 'src/components/cv';
 import { UserContext } from 'src/store/UserProvider';
 import ButtonPost from 'src/components/backoffice/cv/ButtonPost';
 
-import { CV_STATUS, SOCKETS, USER_ROLES } from 'src/constants';
+import {
+  CANDIDATE_USER_ROLES,
+  COACH_USER_ROLES,
+  CV_STATUS,
+  SOCKETS,
+  USER_ROLES,
+} from 'src/constants';
 import NoCV from 'src/components/backoffice/cv/NoCV';
 import ButtonDownload from 'src/components/backoffice/cv/ButtonDownload';
 import { openModal, useModalContext } from 'src/components/modals/Modal';
@@ -18,6 +24,7 @@ import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
 import { usePrevious } from 'src/hooks/utils';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { CVShape } from 'src/components/cv/CV.shape';
+import { isRoleIncluded } from 'src/utils';
 
 const pusher = new Pusher(process.env.PUSHER_API_KEY, {
   cluster: 'eu',
@@ -240,7 +247,7 @@ const CVPageContent = ({ candidateId, cv, setCV }) => {
           setCvVersion(data.version);
 
           UIkit.notification(
-            user.role === USER_ROLES.CANDIDAT
+            isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
               ? 'Votre CV a bien été sauvegardé'
               : 'Le profil a été mis à jour',
             'success'
@@ -340,7 +347,7 @@ const CVPageContent = ({ candidateId, cv, setCV }) => {
             }}
             text="Sauvegarder"
           />
-          {user.role === USER_ROLES.COACH && (
+          {isRoleIncluded(COACH_USER_ROLES, user.role) && (
             <ButtonPost
               style="primary"
               action={async () => {
@@ -366,9 +373,7 @@ const CVPageContent = ({ candidateId, cv, setCV }) => {
         address={cv.user.candidat.address}
         cv={cv}
         previewGenerating={previewGenerating}
-        disablePicture={
-          user.role === USER_ROLES.CANDIDAT || user.role === USER_ROLES.COACH
-        }
+        disablePicture={user.role !== USER_ROLES.ADMIN}
         onChange={async (fields) => {
           await autoSaveCV({ ...cv, ...fields });
           setCV({ ...cv, ...fields, status: CV_STATUS.Draft.value });

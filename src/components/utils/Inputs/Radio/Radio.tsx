@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { v4 as uuid } from 'uuid';
 import { StyledRadioContainer } from './Radio.styles';
-import { RadioComponentType } from './Radio.type';
+import { RadioComponentType } from './Radio.types';
 
 const uuidValue = uuid();
 
-const Radio = ({
+export function Radio({
   options,
   id,
   legend,
@@ -14,7 +14,8 @@ const Radio = ({
   onChange,
   errorMessage,
   hidden,
-}: RadioComponentType) => {
+  value: valueProp,
+}: RadioComponentType) {
   const [checkedRadio, setCheckedRadio] = useState<number>();
 
   useEffect(() => {
@@ -25,13 +26,20 @@ const Radio = ({
     }
   }, [options]);
 
-  const onHandleRadio = (
-    i: number,
-    e: React.MouseEvent<HTMLInputElement> | React.FormEvent<HTMLInputElement>
-  ) => {
-    setCheckedRadio(i);
-    onChange(e);
-  };
+  const onHandleRadio = useCallback(
+    (i: number, e: React.ChangeEvent<HTMLInputElement>) => {
+      setCheckedRadio(i);
+      onChange(e);
+    },
+    [onChange]
+  );
+
+  useEffect(() => {
+    const optionIndexToSelect = options.findIndex(
+      ({ value: optionValue }) => optionValue === valueProp
+    );
+    setCheckedRadio(optionIndexToSelect);
+  }, [options, valueProp]);
 
   if (hidden) {
     return null;
@@ -53,6 +61,7 @@ const Radio = ({
                   htmlFor={inputId}
                   className={i === checkedRadio ? 'checked' : ''}
                   key={`${i}-${uuidValue}`}
+                  onClick={(event) => event.stopPropagation()}
                 >
                   <input
                     type="radio"
@@ -74,6 +83,4 @@ const Radio = ({
       )}
     </StyledRadioContainer>
   );
-};
-
-export default Radio;
+}

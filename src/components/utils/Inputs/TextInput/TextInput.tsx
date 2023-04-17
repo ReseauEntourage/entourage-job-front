@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
+import React from 'react';
 import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
 import { StyledTextInputContainer } from './TextInput.styles';
 
-const TextInput = ({
+export function TextInput({
   id,
   title,
   type,
@@ -12,17 +12,20 @@ const TextInput = ({
   placeholder,
   showLabel,
   valid,
-}) => {
-  const [value, setValue] = useState();
+  hidden,
+  value,
+}) {
+  if (hidden) {
+    return null;
+  }
+
   return (
     <StyledTextInputContainer>
       {showLabel && <label htmlFor={`form-input-${name}`}>{title}</label>}
       <input
+        value={value}
         className={value ? '' : 'empty-value'}
-        onChange={(e) => {
-          setValue(e.target.value);
-          return onChange(e);
-        }}
+        onChange={onChange}
         type={type || 'text'}
         placeholder={placeholder || title}
         name={name}
@@ -32,30 +35,35 @@ const TextInput = ({
       <FormValidatorErrorMessage validObj={valid} newInput />
     </StyledTextInputContainer>
   );
-};
+}
 
 TextInput.propTypes = {
   id: PropTypes.string,
   title: PropTypes.string,
+  value: PropTypes.string,
   type: PropTypes.string,
   onChange: PropTypes.func,
-  name: PropTypes.func,
+  name: PropTypes.string,
   placeholder: PropTypes.string,
   showLabel: PropTypes.bool,
   valid: PropTypes.shape({
     isInvalid: PropTypes.bool,
     message: PropTypes.string,
   }),
+  hidden: PropTypes.bool,
 };
 
 TextInput.defaultProps = {
   title: '',
   id: '',
+  value: '',
   type: 'text',
-  onChange: () => {},
+  onChange: () => {
+    return null;
+  },
   name: '',
   placeholder: '',
   showLabel: false,
   valid: undefined,
+  hidden: false,
 };
-export default TextInput;

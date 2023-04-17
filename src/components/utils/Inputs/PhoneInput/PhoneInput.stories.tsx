@@ -1,13 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PhoneInput } from './PhoneInput';
 
-export default {
+const meta = {
   title: 'Phone Input',
+  component: PhoneInput,
   parameters: {
-    component: null,
+    controls: {
+      exclude: /.*/g,
+    },
+  },
+  decorators: [
+    (Story) => {
+      return (
+        <div
+          style={{
+            display: 'flex',
+            width: 100,
+          }}
+        >
+          <Story />
+        </div>
+      );
+    },
+  ],
+};
+const Template = (args) => {
+  const [value, setValue] = useState('');
+
+  return (
+    <PhoneInput
+      {...args}
+      onChange={(newValue) => {
+        setValue(newValue);
+      }}
+      value={value}
+    />
+  );
+};
+
+export const Default = {
+  render: Template,
+  args: {
+    title: 'Numéro de téléphone',
   },
 };
 
-export function Default() {
-  return <PhoneInput title="Numéro de téléphone" />;
-}
+export default meta;

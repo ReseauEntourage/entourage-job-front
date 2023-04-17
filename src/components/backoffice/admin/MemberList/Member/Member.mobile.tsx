@@ -1,20 +1,26 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
-import { getCandidateFromCoachOrCandidate, getRelatedUser } from 'src/utils';
 import moment from 'moment';
-import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
-import { MemberPropTypes } from 'src/components/backoffice/admin/MemberList/shape';
-import { translateStatusCV } from 'src/components/backoffice/admin/MemberList/utils';
-import { USER_ROLES } from 'src/constants';
-import { IconNoSSR } from 'src/components/utils/Icon';
-import { StyledMobileMember } from 'src/components/backoffice/admin/MemberList/Member/styles';
-import Checkbox from 'src/components/utils/Inputs/Checkbox';
-import { useCheckbox } from 'src/components/utils/Inputs/Checkbox/useCheckbox';
-import { renderCVStatus } from 'src/components/backoffice/admin/MemberList/Member/utils';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-const Member = ({ member, role, callback }) => {
+import { StyledMobileMember } from 'src/components/backoffice/admin/MemberList/Member/Member.styles';
+import { renderCVStatus } from 'src/components/backoffice/admin/MemberList/Member/Member.utils';
+import { MemberPropTypes } from 'src/components/backoffice/admin/MemberList/MemberList.shapes';
+import { translateStatusCV } from 'src/components/backoffice/admin/MemberList/MemberList.utils';
+import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
+import Icon from 'src/components/utils/Icon';
+import { Checkbox, useCheckbox } from 'src/components/utils/Inputs/Checkbox';
+import {
+  EXTERNAL_USER_ROLES,
+  NORMAL_USERS_ROLES,
+  USER_ROLES,
+} from 'src/constants';
+import {
+  getUserCandidateFromCoachOrCandidate,
+  getRelatedUser,
+} from 'src/utils';
+
+export function MemberMobile({ member, role, callback }) {
   const cvStatus = renderCVStatus(member);
   const { checked, handleCheckBox } = useCheckbox(callback, member.id);
   const relatedUser = getRelatedUser(member);
@@ -37,9 +43,8 @@ const Member = ({ member, role, callback }) => {
           <div className="checkbox-container">
             <Checkbox
               checked={checked}
-              size={16}
               handleClick={handleCheckBox}
-              disabled={getCandidateFromCoachOrCandidate(member)?.hidden}
+              disabled={getUserCandidateFromCoachOrCandidate(member)?.hidden}
             />
           </div>
         )}
@@ -94,7 +99,7 @@ const Member = ({ member, role, callback }) => {
           <div className="cell">
             <span className="title">En emploi</span>
             <span>
-              {getCandidateFromCoachOrCandidate(member).employed ? (
+              {getUserCandidateFromCoachOrCandidate(member).employed ? (
                 <span className="yes">Oui</span>
               ) : (
                 <span className="no">Non</span>
@@ -110,14 +115,10 @@ const Member = ({ member, role, callback }) => {
           <div className="cell">
             <span className="title">CV masqué</span>
             <span>
-              {getCandidateFromCoachOrCandidate(member).hidden ? (
-                <IconNoSSR
-                  name="eye-hidden"
-                  ratio={1.2}
-                  className="eye-hidden"
-                />
+              {getUserCandidateFromCoachOrCandidate(member).hidden ? (
+                <Icon name="eye-hidden" ratio={1.2} className="eye-hidden" />
               ) : (
-                <IconNoSSR name="eye-visible" ratio={1.2} />
+                <Icon name="eye-visible" ratio={1.2} />
               )}
             </span>
           </div>
@@ -125,16 +126,14 @@ const Member = ({ member, role, callback }) => {
       )}
     </StyledMobileMember>
   );
-};
+}
 
-Member.propTypes = {
+MemberMobile.propTypes = {
   member: MemberPropTypes.isRequired,
-  role: PropTypes.oneOf([USER_ROLES.CANDIDAT, USER_ROLES.COACH]),
+  role: PropTypes.oneOf([...NORMAL_USERS_ROLES, ...EXTERNAL_USER_ROLES]),
   callback: PropTypes.func.isRequired,
 };
 
-Member.defaultProps = {
+MemberMobile.defaultProps = {
   role: 'Candidat',
 };
-
-export default Member;

@@ -1,48 +1,45 @@
-import UIkit from 'uikit';
-
-import React, { useCallback, useEffect, useState } from 'react';
-
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
+import React, { useCallback, useEffect, useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
-import { Button } from 'src/components/utils/Button';
-import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import Api from 'src/api/index.ts';
-import SearchBar from 'src/components/filters/SearchBar';
-import { filtersToQueryParams, mutateFormSchema } from 'src/utils';
-import schemaCreateUser from 'src/components/forms/schema/formEditUser';
-import { formAddOrganization } from 'src/components/forms/schema/formAddOrganization.ts';
-import { openModal } from 'src/components/modals/Modal';
-import { useIsDesktop, usePrevious } from 'src/hooks/utils';
+import Api from 'src/api';
 
-import { MEMBER_FILTERS_DATA, USER_ROLES } from 'src/constants';
-import { Section, ButtonMultiple } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
-import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { Member } from 'src/components/backoffice/admin/MemberList/Member';
-import BackToTop from 'src/components/utils/BackToTop/index';
 import {
   StyledActionsContainer,
   StyledTable,
-} from 'src/components/backoffice/admin/MemberList/styles';
-import { useBulkActions } from 'src/hooks/useBulkActions';
+} from 'src/components/backoffice/admin/MemberList/MemberList.styles';
+import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
+import SearchBar from 'src/components/filters/SearchBar';
+import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
+import { Section } from 'src/components/utils';
+import BackToTop from 'src/components/utils/BackToTop/index';
+import { Button } from 'src/components/utils/Button';
+import {
+  CANDIDATE_USER_ROLES,
+  COACH_USER_ROLES,
+  MEMBER_FILTERS_DATA,
+} from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
+import { useBulkActions } from 'src/hooks/useBulkActions';
+import { usePrevious } from 'src/hooks/utils';
+import { isRoleIncluded, filtersToQueryParams } from 'src/utils';
+import { MemberCreationButtons } from './MemberCreationButtons/MemberCreationButtons';
 
 const LIMIT = 50;
 
-const MemberList = ({
+export function MemberList({
   search,
   filters,
   setFilters,
   setSearch,
   resetFilters,
-}) => {
-  const isDesktop = useIsDesktop();
-
+}) {
   const {
-    query: { role },
+    query: { role: queryRole },
   } = useRouter();
+
+  const role = queryRole as string;
 
   const prevRole = usePrevious(role);
   const [filtersConst, setFiltersConst] = useState(MEMBER_FILTERS_DATA);
@@ -54,19 +51,6 @@ const MemberList = ({
   const [loading, setLoading] = useState(true);
   const [allLoaded, setAllLoaded] = useState(false);
   const [offset, setOffset] = useState(0);
-
-  const mutatedSchema = mutateFormSchema(schemaCreateUser, [
-    {
-      fieldId: 'role',
-      props: [
-        {
-          propName: 'hidden',
-          value: false,
-          option: USER_ROLES.ADMIN,
-        },
-      ],
-    },
-  ]);
 
   const fetchData = useCallback(
     (searchValue, filtersValue, roleValue, offsetValue, doReset) => {
@@ -131,10 +115,9 @@ const MemberList = ({
 
   useEffect(() => {
     if (role !== prevRole) {
-      const initialFiltersConst =
-        role === USER_ROLES.COACH
-          ? [MEMBER_FILTERS_DATA[0], MEMBER_FILTERS_DATA[2]]
-          : MEMBER_FILTERS_DATA;
+      const initialFiltersConst = isRoleIncluded(COACH_USER_ROLES, role)
+        ? [MEMBER_FILTERS_DATA[0], MEMBER_FILTERS_DATA[2]]
+        : MEMBER_FILTERS_DATA;
 
       setFiltersConst(initialFiltersConst);
     }
@@ -159,109 +142,9 @@ const MemberList = ({
         }s afin d'effectuer un suivi individuel de leur avancée.`}
         page={roleToPage[role]}
       >
-        <ButtonMultiple
-          id="admin-create"
-          align={isDesktop ? 'right' : 'left'}
-          dataTestId="button-admin-create"
-          style="custom-primary"
-          buttons={[
-            {
-              onClick: () => {
-                openModal(
-                  <ModalEdit
-                    formSchema={mutatedSchema}
-                    title="Création de membre"
-                    description="Merci de renseigner quelques informations afin de créer le membre"
-                    submitText="Créer le membre"
-                    onSubmit={async (fields, closeModal) => {
-                      try {
-                        const { data } = await Api.postUser({
-                          ...fields,
-                          adminRole:
-                            fields.role === USER_ROLES.ADMIN
-                              ? fields.adminRole
-                              : null,
-                        });
-                        if (data) {
-                          closeModal();
-                          UIkit.notification(
-                            'Le membre a bien été créé',
-                            'success'
-                          );
-                          await fetchData(search, filters, role, offset, true);
-                        } else {
-                          UIkit.notification(
-                            "Une erreur s'est produite lors de la création du membre",
-                            'danger'
-                          );
-                        }
-                      } catch (error) {
-                        console.error(error);
-                        if (error?.response?.status === 409) {
-                          UIkit.notification(
-                            'Cette adresse email est déjà utilisée',
-                            'danger'
-                          );
-                        } else {
-                          UIkit.notification(
-                            "Une erreur s'est produite lors de la création du membre",
-                            'danger'
-                          );
-                        }
-                      }
-                    }}
-                  />
-                );
-              },
-              label: 'Nouveau membre',
-            },
-            {
-              onClick: () => {
-                openModal(
-                  <ModalEdit
-                    formId={formAddOrganization.id}
-                    formSchema={formAddOrganization}
-                    title="Création de structure partenaire"
-                    description="Merci de renseigner quelques informations afin de créer la structure"
-                    submitText="Créer la structure"
-                    onSubmit={async (fields, closeModal) => {
-                      try {
-                        const { data } = await Api.postOrganization(fields);
-                        if (data) {
-                          closeModal();
-                          UIkit.notification(
-                            'La structure a bien été créé',
-                            'success'
-                          );
-                        } else {
-                          UIkit.notification(
-                            "Une erreur s'est produite lors de la création de la structure",
-                            'danger'
-                          );
-                        }
-                      } catch (error) {
-                        console.error(error);
-                        UIkit.notification(
-                          "Une erreur s'est produite lors de la création de la structure",
-                          'danger'
-                        );
-                      }
-                    }}
-                  />
-                );
-              },
-              dataTestId: 'button-create-organization',
-              label: 'Nouvelle structure',
-            },
-          ]}
-        >
-          <IconNoSSR
-            name="plus"
-            ratio={0.8}
-            className="uk-margin-small-right"
-          />
-          Créer
-        </ButtonMultiple>
+        <MemberCreationButtons
+          fetchMembers={() => fetchData(search, filters, role, offset, true)}
+        />
       </HeaderBackoffice>
       {hasError ? (
         <Section className="uk-width-1-1">
@@ -291,10 +174,11 @@ const MemberList = ({
             placeholder="Rechercher..."
             smallSelectors
           />
-          {role === USER_ROLES.CANDIDAT && (
+          {isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
             <StyledActionsContainer>
               <Button
-                style="custom-secondary small"
+                style="custom-secondary"
+                size="small"
                 disabled={!hasSelection}
                 color="primaryOrange"
                 onClick={() => {
@@ -313,11 +197,15 @@ const MemberList = ({
                 <thead>
                   <tr>
                     <th className="uk-text-nowrap">{role}</th>
-                    {role === USER_ROLES.CANDIDAT && <th>Coach</th>}
-                    {role === USER_ROLES.COACH && <th>Candidat</th>}
+                    {isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
+                      <th>Coach</th>
+                    )}
+                    {isRoleIncluded(COACH_USER_ROLES, role) && (
+                      <th>Candidat</th>
+                    )}
                     <th>Zone</th>
                     <th>Dernière connexion</th>
-                    {role !== USER_ROLES.COACH && (
+                    {isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
                       <>
                         <th>En emploi</th>
                         <th>Statut CV</th>
@@ -367,7 +255,7 @@ const MemberList = ({
       )}
     </>
   );
-};
+}
 
 MemberList.propTypes = {
   search: PropTypes.string,
@@ -380,9 +268,7 @@ MemberList.propTypes = {
 MemberList.defaultProps = {
   search: undefined,
   filters: {},
-  setFilters: () => {},
-  setSearch: () => {},
-  resetFilters: () => {},
+  setFilters: () => null,
+  setSearch: () => null,
+  resetFilters: () => null,
 };
-
-export default MemberList;

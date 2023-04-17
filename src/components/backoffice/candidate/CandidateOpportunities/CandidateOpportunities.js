@@ -25,6 +25,8 @@ import { usePrevious } from 'src/hooks/utils';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { useRouter } from 'next/router';
 import _ from 'lodash';
+import { isRoleIncluded } from 'src/utils';
+import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants';
 import { useTabsCount } from './useTabsCount';
 import { tabs } from './CandidateOffersTab/CandidateOffersTab.utils';
 import { useUpdateOpportunityStatus } from './useUpdateOpportunityStatus';
@@ -145,9 +147,19 @@ const CandidateOpportunities = ({
         <>
           <Section className="custom-header">
             <HeaderBackoffice
-              title={textVariables.title[user.role][isPublic ? 'all' : 'mine']}
+              title={
+                textVariables.title[
+                  isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
+                    ? USER_ROLES.CANDIDATE
+                    : USER_ROLES.COACH
+                ][isPublic ? 'all' : 'mine']
+              }
               description={
-                textVariables.description[user.role][isPublic ? 'all' : 'mine']
+                textVariables.description[
+                  isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
+                    ? USER_ROLES.CANDIDATE
+                    : USER_ROLES.COACH
+                ][isPublic ? 'all' : 'mine']
               }
               noSeparator
             >

@@ -3,11 +3,15 @@ import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
 import { Section } from 'src/components/utils';
 import CVEditWelcome from 'src/components/cv/CVEditWelcome';
 import CVPageContent from 'src/components/backoffice/cv/CVPageContent';
-import { USER_ROLES } from 'src/constants';
+import { CANDIDATE_USER_ROLES } from 'src/constants';
 import ErrorMessage from 'src/components/backoffice/cv/ErrorMessage';
 import { useFetchCV } from 'src/hooks/useFetchCV';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
-import { getCandidateIdFromCoachOrCandidate, getRelatedUser } from 'src/utils';
+import {
+  isRoleIncluded,
+  getCandidateIdFromCoachOrCandidate,
+  getRelatedUser,
+} from 'src/utils';
 import Api from 'src/api/index.ts';
 import { UserContext } from 'src/store/UserProvider';
 import UIkit from 'uikit';
@@ -36,7 +40,7 @@ const Edit = () => {
   } else if (error) {
     return <ErrorMessage error={error} />;
   } else if (
-    userCompleteData.role === USER_ROLES.COACH &&
+    isRoleIncluded(CANDIDATE_USER_ROLES, userCompleteData.role) &&
     !getRelatedUser(userCompleteData)
   ) {
     content = (

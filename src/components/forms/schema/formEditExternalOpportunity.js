@@ -2,10 +2,10 @@ import moment from 'moment';
 
 import {
   BUSINESS_LINES,
+  CANDIDATE_USER_ROLES,
   CONTRACTS,
   EXTERNAL_OFFERS_ORIGINS,
   OFFER_STATUS,
-  USER_ROLES,
 } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import Api from 'src/api/index.ts';
@@ -225,7 +225,7 @@ export const adminMutations = [
           Api.getUsersSearch({
             params: {
               query: inputValue,
-              role: USER_ROLES.CANDIDAT,
+              role: CANDIDATE_USER_ROLES,
             },
           })
             .then(({ data }) => {

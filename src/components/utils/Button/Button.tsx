@@ -116,8 +116,8 @@ Button.defaultProps = {
   disabled: false,
   shallow: false,
   visible: undefined,
-  style: undefined,
-  size: undefined,
+  style: 'custom-primary',
+  size: 'large',
   href: undefined,
   widths: [],
   isExternal: false,
@@ -127,5 +127,5 @@ Button.defaultProps = {
   toggle: undefined,
   scroll: true,
   dataTestId: '',
-  color: '',
+  color: 'primaryOrange',
 };

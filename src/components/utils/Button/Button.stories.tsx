@@ -1,77 +1,88 @@
 import React from 'react';
-import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 import { Button } from './Button';
 
-const StyledDarkBG = styled.div`
-  height: 100px;
-  width: 500px;
-  padding: 50px;
-  background-color: ${COLORS.darkerBlack};
-`;
-
-export default {
+const meta = {
   title: 'Button',
+  component: Button,
   parameters: {
-    component: null,
+    controls: {
+      include: ['color', 'size', 'disabled'],
+    },
+  },
+  argTypes: {
+    color: {
+      control: 'select',
+      options: ['primaryOrange', 'darkGrayFont'],
+      defaultValue: 'primaryOrange',
+    },
+    size: {
+      control: 'select',
+      options: ['large', 'small'],
+      defaultValue: 'large',
+    },
+    disabled: {
+      control: 'boolean',
+      defaultValue: false,
+    },
+  },
+  args: {
+    children: 'Button',
+  },
+  decorators: [
+    (Story, { args }) => {
+      return (
+        <div
+          style={{
+            backgroundColor:
+              args.color === 'white' ? COLORS.darkerBlack : 'transparent',
+            display: 'flex',
+            padding: 8,
+          }}
+        >
+          <Story />
+        </div>
+      );
+    },
+  ],
+};
+
+export const Primary = {
+  args: {
+    style: 'custom-primary',
   },
 };
 
-export function PrimaryOrange() {
-  return (
-    <Button style="custom-primary" href="/">
-      Button
-    </Button>
-  );
-}
+export const PrimaryInverted = {
+  args: {
+    style: 'custom-primary-inverted',
+  },
+  argTypes: {
+    color: {
+      control: 'select',
+      options: ['primaryOrange', 'darkGrayFont', 'white'],
+      defaultValue: 'primaryOrange',
+    },
+  },
+};
 
-export function PrimaryInvertedWhite() {
-  return (
-    <StyledDarkBG>
-      <Button style="custom-primary-inverted" color="white">
-        Button
-      </Button>
-    </StyledDarkBG>
-  );
-}
+export const Secondary = {
+  args: {
+    style: 'custom-secondary',
+  },
+};
+export const Text = {
+  args: {
+    style: 'custom-text',
+  },
+  argTypes: {
+    color: {
+      control: 'select',
+      options: ['primaryOrange', 'black'],
+      defaultValue: 'primaryOrange',
+    },
+  },
+};
 
-export function PrimaryInvertedOrange() {
-  return (
-    <Button style="custom-primary-inverted" color="primaryOrange">
-      Button
-    </Button>
-  );
-}
-
-export function PrimaryInvertedGray() {
-  return (
-    <Button style="custom-primary-inverted" color="darkGrayFont">
-      Button
-    </Button>
-  );
-}
-
-export function SecondaryOrange() {
-  return (
-    <Button style="custom-secondary" color="primaryOrange">
-      Button
-    </Button>
-  );
-}
-
-export function ButtonSmall() {
-  return (
-    <Button style="custom-primary" size="small" href="/">
-      Button
-    </Button>
-  );
-}
-
-export function ButtonDisabled() {
-  return (
-    <Button style="custom-secondary disabled" color="primaryOrange">
-      Button
-    </Button>
-  );
-}
+export default meta;

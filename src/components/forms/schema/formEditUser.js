@@ -73,7 +73,7 @@ export default {
       component: 'select',
       options: [
         { value: -1, label: 'Choisissez un role' },
-        { value: USER_ROLES.CANDIDAT, label: USER_ROLES.CANDIDAT },
+        { value: USER_ROLES.CANDIDATE, label: USER_ROLES.CANDIDATE },
         { value: USER_ROLES.COACH, label: USER_ROLES.COACH },
         { value: USER_ROLES.ADMIN, label: USER_ROLES.ADMIN },
       ],
@@ -100,7 +100,7 @@ export default {
       cacheOptions: false,
       disable: (getValue) => {
         return (
-          getValue('role') !== USER_ROLES.CANDIDAT &&
+          getValue('role') !== USER_ROLES.CANDIDATE &&
           getValue('role') !== USER_ROLES.COACH
         );
       },
@@ -108,12 +108,13 @@ export default {
         if (inputValue.length > 0) {
           const role =
             getValue('role') === USER_ROLES.COACH
-              ? USER_ROLES.CANDIDAT
+              ? USER_ROLES.CANDIDATE
               : USER_ROLES.COACH;
           Api.getUsersSearch({
             params: {
               query: inputValue,
               role, // un certain role
+              // TODO add organizationId
             },
           })
             .then(({ data }) => {
