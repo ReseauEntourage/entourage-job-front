@@ -11,8 +11,9 @@ const FiltersOptions = ({ resetFilters }) => {
             {' '}
             &nbsp;
             <Button
-              style="custom-secondary transparentBG small"
+              style="custom-secondary"
               color="primaryOrange"
+              size="small"
               onClick={resetFilters}
             >
               Réinitialiser les filtres

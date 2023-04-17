@@ -3,7 +3,7 @@ import { USER_ROLES, OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 
 export const textVariables = {
   title: {
-    [USER_ROLES.CANDIDAT]: {
+    [USER_ROLES.CANDIDATE]: {
       all: 'Consulter toutes les offres',
       mine: 'Consulter mes offres',
     },
@@ -13,7 +13,7 @@ export const textVariables = {
     },
   },
   description: {
-    [USER_ROLES.CANDIDAT]: {
+    [USER_ROLES.CANDIDATE]: {
       all: (
         <>
           Retrouvez toutes les offres LinkedOut.

@@ -20,6 +20,7 @@ export const StyledTextInputContainer = styled.div`
     width: 100%;
     background-color: white;
     border: 0.5px solid white;
+    color: ${COLORS.black};
     border-bottom: solid 2px ${COLORS.gray};
     text-align: left;
     font-size: 14px;

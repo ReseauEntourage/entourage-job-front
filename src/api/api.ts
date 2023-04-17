@@ -18,9 +18,9 @@ import {
   PutCandidate,
   Route,
   SocialMedia,
-  User,
   CandidateInscription,
   Organization,
+  CreateUserDto,
 } from './types';
 
 class APIHandler {
@@ -113,8 +113,8 @@ class APIHandler {
     return this.get('/cv/published');
   }
 
-  getCheckUpdate(): Promise<AxiosResponse> {
-    return this.get('/cv/checkUpdate');
+  getCheckUpdate(candidateId: string): Promise<AxiosResponse> {
+    return this.get(`/cv/checkUpdate/${candidateId}`);
   }
 
   getCVByUrl(url: string): Promise<AxiosResponse> {
@@ -176,13 +176,13 @@ class APIHandler {
     return this.get(`/user/${userId}`);
   }
 
-  getCandidateCheckUpdate(): Promise<AxiosResponse> {
-    return this.get(`/user/candidate/checkUpdate`);
+  getCandidateCheckUpdate(candidateId: string): Promise<AxiosResponse> {
+    return this.get(`/user/candidate/checkUpdate/${candidateId}`);
   }
 
   // post
 
-  postUser(params: User): Promise<AxiosResponse> {
+  postUser(params: CreateUserDto): Promise<AxiosResponse> {
     return this.post('/user', params);
   }
 
@@ -214,6 +214,13 @@ class APIHandler {
     return this.put(`/user/candidate/read/${candidateId}`);
   }
 
+  putLinkedUser(
+    userId: string,
+    userToLinkId: string | string[]
+  ): Promise<AxiosResponse> {
+    return this.put(`/user/linkUser/${userId}`, { userToLinkId });
+  }
+
   // delete
 
   deleteUser(userId: string): Promise<AxiosResponse> {
@@ -223,6 +230,13 @@ class APIHandler {
   /// ///////////// ///
   /// organization  ///
   /// //////////// ///
+
+  // get
+  getAllOrganizations(params: {
+    params: { search: string };
+  }): Promise<AxiosResponse> {
+    return this.get('/organization', params);
+  }
 
   // post
   postOrganization(params: Organization): Promise<AxiosResponse> {

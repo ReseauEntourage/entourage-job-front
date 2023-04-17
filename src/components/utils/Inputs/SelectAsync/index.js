@@ -1,3 +1,1 @@
-import SelectAsync from './SelectAsync';
-
-export default SelectAsync;
+export { SelectAsync } from './SelectAsync.tsx';

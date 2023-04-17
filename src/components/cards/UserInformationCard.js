@@ -6,13 +6,21 @@ import ButtonIcon from 'src/components/utils/ButtonIcon';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import schema from 'src/components/forms/schema/formEditLinkedUser';
 import { Api } from 'src/api/index.ts';
-import { USER_ROLES } from 'src/constants';
+import {
+  CANDIDATE_USER_ROLES,
+  COACH_USER_ROLES,
+  USER_ROLES,
+} from 'src/constants';
 import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
 import CandidateEmployedToggle from 'src/components/backoffice/candidate/CandidateEmployedToggle';
 import ContractLabel from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
-import { getCandidateFromCoachOrCandidate, getRelatedUser } from 'src/utils';
+import {
+  getUserCandidateFromCoachOrCandidate,
+  getRelatedUser,
+  isRoleIncluded,
+} from 'src/utils';
 
 // userId du candidat ou coach lié
 const UserInformationCard = ({ isAdmin, user, onChange }) => {
@@ -25,7 +33,7 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
   const assignUser = (userToAssign) => {
     if (userToAssign.role === USER_ROLES.COACH) {
       const candidat = getRelatedUser(userToAssign);
-      const candidateLink = getCandidateFromCoachOrCandidate(userToAssign);
+      const candidateLink = getUserCandidateFromCoachOrCandidate(userToAssign);
       if (candidat) {
         setLinkedUser(candidat);
         setUserCandidat(candidateLink);
@@ -36,9 +44,9 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
       // customisation du schema en fonction de l'utilisateur
       schema.fields[1].title = 'Candidat lié';
     }
-    if (userToAssign.role === USER_ROLES.CANDIDAT) {
+    if (userToAssign.role === USER_ROLES.CANDIDATE) {
       const coach = getRelatedUser(userToAssign);
-      const coachLink = getCandidateFromCoachOrCandidate(userToAssign);
+      const coachLink = getUserCandidateFromCoachOrCandidate(userToAssign);
       if (coach) {
         setLinkedUser(coach);
         setUserCandidat(coachLink);
@@ -95,7 +103,7 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
               </span>
             </Grid>
           )}
-          {user.role === USER_ROLES.COACH &&
+          {isRoleIncluded(COACH_USER_ROLES, user.role) &&
             (linkedUser.address ? (
               <Grid row gap="small">
                 <IconNoSSR name="home" />
@@ -109,7 +117,7 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
                 </span>
               </Grid>
             ))}
-          {user.role === USER_ROLES.COACH && userCandidat && (
+          {isRoleIncluded(COACH_USER_ROLES, user.role) && userCandidat && (
             <SimpleLink
               className="uk-link-muted"
               target="_blank"
@@ -121,14 +129,16 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
               </Grid>
             </SimpleLink>
           )}
-          {isAdmin && user.role === USER_ROLES.COACH && userCandidat && (
-            <Grid row gap="small">
-              <IconNoSSR name="cog" />
-              <span className="uk-text-italic">
-                {userCandidat.hidden ? 'CV caché' : 'CV visible'}
-              </span>
-            </Grid>
-          )}
+          {isAdmin &&
+            isRoleIncluded(COACH_USER_ROLES, user.role) &&
+            userCandidat && (
+              <Grid row gap="small">
+                <IconNoSSR name="cog" />
+                <span className="uk-text-italic">
+                  {userCandidat.hidden ? 'CV caché' : 'CV visible'}
+                </span>
+              </Grid>
+            )}
           {isAdmin && user.role === USER_ROLES.COACH && userCandidat && (
             <Grid row gap="small">
               <IconNoSSR name="cog" />
@@ -148,12 +158,12 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
 
   return (
     <Grid
-      gap={user.role === USER_ROLES.COACH ? 'medium' : 'collapse'}
+      gap={isRoleIncluded(COACH_USER_ROLES, user.role) ? 'medium' : 'collapse'}
       childWidths={['1-1']}
     >
       {!isAdmin &&
         userCandidat &&
-        user.role === USER_ROLES.COACH &&
+        isRoleIncluded(COACH_USER_ROLES, user.role) &&
         !linkedUser.deletedAt && (
           <Card style="secondary" title="Préférences du CV">
             <CandidateEmployedToggle
@@ -213,7 +223,7 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
       <Card
         style="secondary"
         title={`Information du${
-          user.role === USER_ROLES.COACH ? ' candidat' : ' coach'
+          isRoleIncluded(COACH_USER_ROLES, user.role) ? ' candidat' : ' coach'
         }`}
         badge={(() => {
           if (isAdmin) {
@@ -228,14 +238,14 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
                     <ModalEdit
                       submitText="Envoyer"
                       title={
-                        user.role === USER_ROLES.CANDIDAT
+                        user.role === USER_ROLES.CANDIDATE
                           ? 'Bénévole coach lié'
                           : 'Candidat lié'
                       }
                       defaultValues={{
                         role:
                           user.role === USER_ROLES.COACH
-                            ? USER_ROLES.CANDIDAT
+                            ? USER_ROLES.CANDIDATE
                             : USER_ROLES.COACH,
                         linkedUser: linkedUser
                           ? {
@@ -248,23 +258,17 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
                       onSubmit={({ linkedUser: linkedUserId }, closeModal) => {
                         setLoading(true);
                         let promise = null;
-                        if (user.role === USER_ROLES.CANDIDAT) {
+                        if (isRoleIncluded(CANDIDATE_USER_ROLES, user.role)) {
                           // on lui assigne ou eleve un coach
-                          promise = Api.putCandidate(user.id, {
-                            coachId: linkedUserId || null,
-                          });
+                          promise = Api.putLinkedUser(user.id, linkedUserId);
                         }
-                        if (user.role === USER_ROLES.COACH) {
+                        if (isRoleIncluded(COACH_USER_ROLES, user.role)) {
                           // on l'assigne à un candidat
                           if (linkedUserId) {
-                            promise = Api.putCandidate(linkedUserId, {
-                              coachId: user.id,
-                            });
+                            promise = Api.putLinkedUser(user.id, linkedUserId);
                           } else {
                             // on lui enleve son candidat
-                            promise = Api.putCandidate(linkedUser.id, {
-                              coachId: null,
-                            });
+                            promise = Api.putLinkedUser(user.id, null);
                           }
                         }
                         if (promise) {
@@ -311,7 +315,7 @@ UserInformationCard.propTypes = {
   isAdmin: PropTypes.bool,
   user: PropTypes.shape({
     role: PropTypes.oneOf([
-      USER_ROLES.CANDIDAT,
+      USER_ROLES.CANDIDATE,
       USER_ROLES.COACH,
       USER_ROLES.ADMIN,
     ]),

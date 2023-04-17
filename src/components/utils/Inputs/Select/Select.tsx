@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
-import { IconNoSSR } from 'src/components/utils/Icon';
-import { useCloseOnClickOutsideComponent } from 'src/hooks/useCloseOnClickOutsideComponent.ts';
+import Icon from 'src/components/utils/Icon';
+import { useCloseOnClickOutsideComponent } from 'src/hooks/useCloseOnClickOutsideComponent';
 import { StyledSelectContainer } from './Select.styles';
 
-const Select = ({
+export function Select({
   id,
   name,
   title,
@@ -14,19 +14,32 @@ const Select = ({
   onChange,
   showLabel,
   hidden,
-}) => {
-  const [selectedOption, setSelectedOption] = useState({ value: '' });
+  value,
+}) {
+  const [selectedOption, setSelectedOption] = useState<{
+    value: string | number;
+    label?: string;
+  }>({ value: '' });
+
+  useEffect(() => {
+    const optionToSelect = options.find(
+      ({ value: optionValue }) => optionValue === value
+    );
+    setSelectedOption(optionToSelect || { value: '' });
+  }, [options, value]);
+
   const {
     componentId: selectId,
     isOpen: optionsOpen,
     setIsOpen: setOptionsOpen,
   } = useCloseOnClickOutsideComponent(id);
 
+  if (hidden) {
+    return null;
+  }
+
   return (
-    <StyledSelectContainer
-      className={`${hidden ? 'hidden' : ''}`}
-      id={selectId}
-    >
+    <StyledSelectContainer id={selectId}>
       {showLabel && title && (
         <label htmlFor={id} className="label-top">
           {title}
@@ -34,7 +47,8 @@ const Select = ({
       )}
       <input type="hidden" value={selectedOption.value} name={name} id={id} />
       <div className="select">
-        {!selectedOption.value || (selectedOption.value && optionsOpen) ? (
+        {(!selectedOption.value && selectedOption.value !== 0) ||
+        (selectedOption.value && optionsOpen) ? (
           <button
             className="placeholder"
             type="button"
@@ -46,12 +60,12 @@ const Select = ({
             {showLabel || !title ? (
               <div>
                 Selectionnez dans la liste{' '}
-                <IconNoSSR name="chevron-down" ratio="2.5" />
+                <Icon name="chevron-down" ratio="2.5" />
               </div>
             ) : (
               <>
                 <label htmlFor={id}>{title}</label>
-                <IconNoSSR name="chevron-down" ratio="2.5" />
+                <Icon name="chevron-down" ratio="2.5" />
               </>
             )}
           </button>
@@ -64,21 +78,24 @@ const Select = ({
             }}
           >
             {selectedOption.label}
-            <IconNoSSR name="chevron-down" ratio="2.5" />
+            <Icon name="chevron-down" ratio="2.5" />
           </button>
         )}
         {optionsOpen && (
           <ul className="options-container">
             {options?.map((option) => {
+              const optionId = `select-option-${
+                typeof option.value === 'string'
+                  ? option.value.replace(/\s+/g, '')
+                  : option.value
+              }`;
+
               return (
-                <li className="option">
+                <li className="option" key={option.value}>
                   <button
                     type="button"
-                    data-testid={`select-option-${option.value.replace(
-                      /\s+/g,
-                      ''
-                    )}`}
-                    id={`select-option-${option.value.replace(/\s+/g, '')}`}
+                    data-testid={optionId}
+                    id={optionId}
                     onClick={() => {
                       setOptionsOpen(!optionsOpen);
                       onChange({
@@ -87,10 +104,8 @@ const Select = ({
                           type: 'select',
                           value: option.value,
                           checked: 0,
-                          selectedIndex: 0,
                         },
                       });
-                      return setSelectedOption(option);
                     }}
                   >
                     {option.label}
@@ -104,12 +119,15 @@ const Select = ({
       <FormValidatorErrorMessage validObj={valid} newInput />
     </StyledSelectContainer>
   );
-};
+}
+
 Select.defaultProps = {
   valid: undefined,
-  // value: undefined,
+  value: undefined,
   // disabled: false,
-  onChange: () => {},
+  onChange: () => {
+    return null;
+  },
   hidden: false,
   title: undefined,
   showLabel: false,
@@ -126,7 +144,7 @@ Select.propTypes = {
     isInvalid: PropTypes.bool,
     message: PropTypes.string,
   }),
-  // value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   options: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.oneOfType([
@@ -139,4 +157,3 @@ Select.propTypes = {
   ).isRequired,
   hidden: PropTypes.bool,
 };
-export default Select;

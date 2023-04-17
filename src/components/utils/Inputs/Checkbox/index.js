@@ -1,3 +1,3 @@
-import Checkbox from 'src/components/utils/Inputs/Checkbox/CheckBox';
+export { Checkbox } from './CheckBox.tsx';
 
-export default Checkbox;
+export { useCheckbox } from './useCheckbox.ts';

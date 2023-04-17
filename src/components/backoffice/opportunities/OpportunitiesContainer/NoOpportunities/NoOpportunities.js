@@ -47,7 +47,7 @@ const NoOpportunities = ({ status, fetchOpportunities }) => {
         <Button
           style="custom-primary"
           dataTestId="candidat-find-offer"
-          href="/backoffice/candidat/offres?tag=public"
+          href="/backoffice/candidat/offres/public"
           shallow
         >
           <IconNoSSR

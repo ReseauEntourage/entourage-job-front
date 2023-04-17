@@ -1,23 +1,26 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { StyledCheckbox } from 'src/components/utils/Inputs/Checkbox/CheckBox.styles';
 
-const Checkbox = ({
+export function Checkbox({
   handleClick,
   disabled,
+  hidden,
   value,
-  checked,
   title,
   name,
   id,
-}) => {
+}) {
+  if (hidden) {
+    return null;
+  }
+
   return (
     <StyledCheckbox
       onClick={(e) => {
         e.stopPropagation();
       }}
     >
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
       <label
         className={`checkbox-label ${disabled ? 'disabled' : ''}`}
         htmlFor={id}
@@ -25,33 +28,31 @@ const Checkbox = ({
         <input
           type="checkbox"
           id={id}
-          onClick={handleClick}
+          onChange={handleClick}
           disabled={disabled}
-          value={value}
-          checked={checked}
+          checked={value}
           name={name}
         />
         <span className="checkmark" />
+        {title && <span className="label">{title}</span>}
       </label>
-      {title && <span className="label">{title}</span>}
     </StyledCheckbox>
   );
-};
+}
 
 Checkbox.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   handleClick: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
-  value: PropTypes.bool,
-  checked: PropTypes.bool.isRequired,
+  hidden: PropTypes.bool,
+  value: PropTypes.string,
   title: PropTypes.string,
 };
 
 Checkbox.defaultProps = {
   disabled: false,
+  hidden: false,
   value: false,
   title: '',
 };
-
-export default Checkbox;

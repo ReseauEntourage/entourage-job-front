@@ -7,19 +7,44 @@ export default class FormValidator {
     this.validations = validations;
   }
 
-  validate(state) {
+  validate(state, fields) {
     const fieldValues = JSON.parse(JSON.stringify(state));
     // start out assuming valid
     const validation = this.valid();
     // for each validation rule
     this.validations.forEach((rule) => {
-      // if the field isn't already marked invalid by an earlier rule
-      if (!validation[rule.field].isInvalid) {
+      const fieldValue = getValueFromFormField(
+        fieldValues[rule.field] || fieldValues[rule.field] === 0
+          ? fieldValues[rule.field]
+          : ''
+      );
+
+      const fieldsParams = fields.reduce((acc, curr) => {
+        if (curr.fields) {
+          return [...acc, ...curr.fields];
+        }
+
+        return [...acc, curr];
+      }, []);
+
+      const fieldParams = fieldsParams.find(({ name }) => {
+        return rule.field === name;
+      });
+
+      if (
+        !(
+          fieldParams &&
+          ((fieldParams.hide &&
+            fieldParams.hide((value) => {
+              return fieldValues[value];
+            })) ||
+            fieldParams.hidden)
+        ) &&
+        !validation[rule.field].isInvalid
+      ) {
+        // if the field isn't already marked invalid by an earlier rule and is not currently hidden
         // determine the field value, the method to invoke and
         // optional args from the rule definition
-        const fieldValue = getValueFromFormField(
-          fieldValues[rule.field] ? fieldValues[rule.field] : ''
-        );
 
         const args = rule.args || [];
         const validationMethod =
