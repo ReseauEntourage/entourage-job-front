@@ -93,7 +93,7 @@ class APIHandler {
     return this.get('/cv/shares');
   }
 
-  getCVByCandidateId(candidateId, headers): Promise<AxiosResponse> {
+  getCVByCandidateId(candidateId, headers?): Promise<AxiosResponse> {
     return this.get(`/cv/${candidateId}`, {}, headers);
   }
 
@@ -205,7 +205,7 @@ class APIHandler {
 
   putCandidate(
     candidateId: string,
-    params: PutCandidate
+    params: Partial<PutCandidate>
   ): Promise<AxiosResponse> {
     return this.put(`/user/candidate/${candidateId}`, params);
   }

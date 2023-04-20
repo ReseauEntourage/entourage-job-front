@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
+import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId.ts';
 import Api from 'src/api/index.ts';
 import UIkit from 'uikit';
 

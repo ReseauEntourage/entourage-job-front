@@ -895,3 +895,9 @@ export const antenneInfo = [
     address: '17 avenue Lacassagne 69003, Lyon',
   },
 ];
+
+export const MEMBER_TABS = {
+  CV: 'cv',
+  PARAMETERS: 'parametres',
+  OFFERS: 'offres',
+};

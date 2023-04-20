@@ -1,219 +1,59 @@
-import UIkit from 'uikit';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { usePrevious } from 'src/hooks/utils';
-import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
 import Api from 'src/api/index.ts';
-import { Button, Card, Grid, Section, SimpleLink } from 'src/components/utils';
-import schemaEditUser from 'src/components/forms/schema/formEditUser';
-import schemaDeleteUser from 'src/components/forms/schema/formDeleteUser.json';
-import CVPageContent from 'src/components/backoffice/cv/CVPageContent';
-import CandidatHeader from 'src/components/backoffice/cv/CandidatHeader';
-import UserInformationCard from 'src/components/cards/UserInformationCard';
-import ButtonIcon from 'src/components/utils/ButtonIcon';
-import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import {
-  CANDIDATE_USER_ROLES,
-  COACH_USER_ROLES,
-  USER_ROLES,
-} from 'src/constants/users.ts';
-import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
-import {
-  getUserCandidateFromCoachOrCandidate,
-  getCandidateIdFromCoachOrCandidate,
-  mutateFormSchema,
-  isRoleIncluded,
-} from 'src/utils';
-import AdminCandidateOpportunities from 'src/components/opportunities/AdminCandidateOpportunities';
-import CandidateEmployedToggle from 'src/components/backoffice/candidate/CandidateEmployedToggle';
-import ContractLabel from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
+import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users.ts';
+import { isRoleIncluded } from 'src/utils/Finding.ts';
+import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
+import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
+import { Grid, Section, SimpleLink } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
-import PropTypes from 'prop-types';
-import { openModal } from 'src/components/modals/Modal';
-import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
-import ErrorMessage from 'src/components/backoffice/cv/ErrorMessage';
-import { useFetchCV } from 'src/hooks/useFetchCV';
-import _ from 'lodash';
-import { gaEvent } from 'src/lib/gtag';
-import { GA_TAGS } from 'src/constants/tags';
-import { OFFER_ADMIN_FILTERS_DATA } from 'src/constants';
-
-const EditUserModal = ({ user, setUser }) => {
-  let mutatedSchema = mutateFormSchema(schemaEditUser, [
-    {
-      fieldId: 'userToCoach',
-      props: [
-        {
-          propName: 'disabled',
-          value: true,
-        },
-        {
-          propName: 'hidden',
-          value: true,
-        },
-      ],
-    },
-    {
-      fieldId: 'role',
-      props: [
-        {
-          propName: 'hidden',
-          value: true,
-          option: USER_ROLES.ADMIN,
-        },
-      ],
-    },
-    {
-      fieldId: 'adminRole',
-      props: [
-        {
-          propName: 'hidden',
-          value: true,
-        },
-        {
-          propName: 'disabled',
-          value: true,
-        },
-      ],
-    },
-  ]);
-
-  if (user) {
-    if (!isRoleIncluded(CANDIDATE_USER_ROLES, user.role)) {
-      mutatedSchema = mutateFormSchema(mutatedSchema, [
-        {
-          fieldId: 'address',
-          props: [
-            {
-              propName: 'disabled',
-              value: true,
-            },
-            {
-              propName: 'hidden',
-              value: true,
-            },
-          ],
-        },
-      ]);
-    }
-    if (user.role === USER_ROLES.ADMIN) {
-      mutatedSchema = mutateFormSchema(mutatedSchema, [
-        {
-          fieldId: 'phone',
-          props: [
-            {
-              propName: 'disabled',
-              value: true,
-            },
-            {
-              propName: 'hidden',
-              value: true,
-            },
-          ],
-        },
-      ]);
-    }
-  }
-
-  return (
-    <ModalEdit
-      formSchema={mutatedSchema}
-      title="Edition d'un membre"
-      description="Merci de modifier les informations que vous souhaitez concernant le membre."
-      submitText="Modifier le membre"
-      defaultValues={{
-        ...user,
-        gender: user.gender.toString(),
-      }}
-      onSubmit={async (fields, closeModal) => {
-        const updateUser = async (onError) => {
-          try {
-            const { data } = await Api.putUser(user.id, {
-              ...fields,
-              email: fields.email.toLowerCase(),
-              firstName: fields.firstName.trim().replace(/\s\s+/g, ' '),
-              lastName: fields.lastName.trim().replace(/\s\s+/g, ' '),
-            });
-            closeModal();
-            UIkit.notification('Le membre a bien été modifié', 'success');
-            setUser(data);
-          } catch (error) {
-            console.error(error);
-            if (onError) onError();
-            if (error.response.status === 409) {
-              UIkit.notification(
-                'Cette adresse email est déjà utilisée',
-                'danger'
-              );
-            } else {
-              UIkit.notification(
-                "Une erreur s'est produite lors de la modification du membre",
-                'danger'
-              );
-            }
-          }
-        };
-
-        if (fields.role !== user.role) {
-          openModal(
-            <ModalConfirm
-              text="Attention, si vous modifiez le rôle d'un candidat, tout son suivi sera perdu et son CV sera dépublié. Êtes-vous sûr de vouloir continuer ?"
-              buttonText="Valider"
-              onConfirm={async () => {
-                await updateUser(() => {
-                  openModal(<EditUserModal user={user} setUser={setUser} />);
-                });
-              }}
-            />
-          );
-        } else {
-          await updateUser();
-        }
-      }}
-    />
-  );
-};
-
-EditUserModal.propTypes = {
-  user: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    role: PropTypes.oneOf([
-      USER_ROLES.COACH,
-      USER_ROLES.ADMIN,
-      USER_ROLES.CANDIDATE,
-    ]).isRequired,
-    gender: PropTypes.number.isRequired,
-    ...PropTypes.shape({}),
-  }).isRequired,
-  setUser: PropTypes.func.isRequired,
-};
+import { MemberDetails } from 'src/components/backoffice/admin/MemberDetails';
+import { MEMBER_TABS } from 'src/constants';
+import { useTab } from 'src/components/backoffice/admin/MemberDetails/useTab.ts';
+import { useMemberId } from 'src/components/backoffice/admin/MemberDetails/useMemberId.ts';
 
 const User = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
+
+  const prevUser = usePrevious(user);
 
   const [loading, setLoading] = useState(true);
 
-  const {
-    isReady,
-    replace,
-    query: { memberId, tab, offerId },
-  } = useRouter();
+  const { replace } = useRouter();
+
+  const memberId = useMemberId();
+  const prevMemberId = usePrevious(memberId);
+
+  const tab = useTab();
+  const opportunityId = useOpportunityId();
 
   useEffect(() => {
-    if (isReady) {
-      if (memberId && !tab) {
-        replace(`/backoffice/admin/membres/${memberId}/cv`, undefined, {
-          shallow: true,
-        });
-      } else if (offerId && tab !== 'offres') {
-        replace(`/backoffice/admin/membres/${memberId}/${tab}`, undefined, {
-          shallow: true,
-        });
+    if (user !== prevUser && user) {
+      if (
+        isRoleIncluded(COACH_USER_ROLES, user.role) &&
+        (!tab || tab !== MEMBER_TABS.PARAMETERS)
+      ) {
+        replace(
+          `/backoffice/admin/membres/${user.id}/${MEMBER_TABS.PARAMETERS}`,
+          undefined,
+          {
+            shallow: true,
+          }
+        );
+      } else if (isRoleIncluded(CANDIDATE_USER_ROLES, user.role)) {
+        if (!tab) {
+          replace(`/backoffice/admin/membres/${user.id}/cv`, undefined, {
+            shallow: true,
+          });
+        } else if (opportunityId && tab !== MEMBER_TABS.OFFERS) {
+          replace(`/backoffice/admin/membres/${user.id}/${tab}`, undefined, {
+            shallow: true,
+          });
+        }
       }
     }
-  }, [isReady, memberId, offerId, replace, tab]);
-
-  const prevId = usePrevious(memberId);
+  }, [opportunityId, replace, tab, prevMemberId, user, prevUser, memberId]);
 
   const getUser = useCallback(() => {
     Api.getUserById(memberId)
@@ -228,34 +68,14 @@ const User = () => {
   }, [memberId]);
 
   useEffect(() => {
-    if (memberId !== prevId) {
+    if (memberId !== prevMemberId) {
       getUser();
-    } else if (tab === 'parametres') {
+    } else if (tab === MEMBER_TABS.PARAMETERS) {
       getUser();
     }
-  }, [tab, getUser, memberId, prevId]);
+  }, [tab, getUser, memberId, prevMemberId]);
 
-  const { cv, setCV, error, loading: cvLoading } = useFetchCV(user);
-
-  const deleteUser = async (fields, closeModal) => {
-    try {
-      if (fields.confirmation === 'SUPPRIMER') {
-        await Api.deleteUser(memberId);
-        closeModal();
-        UIkit.notification("L'utilisateur a bien été supprimé", 'success');
-        replace('/backoffice/admin/membres');
-      } else {
-        UIkit.notification('Erreur de confirmation', 'danger');
-      }
-    } catch {
-      UIkit.notification('Une erreur est survenue', 'danger');
-    }
-  };
-
-  const isCandidat =
-    user && user.candidat && isRoleIncluded(CANDIDATE_USER_ROLES, user.role);
-
-  if (loading || cvLoading || !tab) {
+  if (loading) {
     return (
       <LayoutBackOffice title="Chargement - Gestion des membres">
         <Section>
@@ -303,296 +123,7 @@ const User = () => {
     );
   }
 
-  // erreur pendant la requete
-  if (error) {
-    return (
-      <LayoutBackOffice title="Erreur - Gestion des membres">
-        <Section className="uk-text-center" size="large">
-          <ErrorMessage error={error} />
-        </Section>
-      </LayoutBackOffice>
-    );
-  }
-
-  return (
-    <LayoutBackOffice title={`${user.firstName} - Gestion des membres`}>
-      <Section>
-        <Grid column gap="medium">
-          <Grid between eachWidths={['expand@m', 'auto@m']}>
-            <SimpleLink
-              href={`/backoffice/admin/membres?role=${user.role}${
-                user.zone ? `&zone=${user.zone}` : ''
-              }`}
-              className="uk-link-reset uk-flex uk-flex-middle"
-            >
-              <IconNoSSR name="chevron-left" />
-              Retour à la liste
-            </SimpleLink>
-            {cv && (
-              <Button
-                style="default"
-                href={{
-                  pathname: '/backoffice/admin/offres',
-                  query: {
-                    tag: OFFER_ADMIN_FILTERS_DATA[1].tag,
-                    department: cv.locations.map(({ name }) => {
-                      return name;
-                    }),
-                    businessLines: _.uniq(
-                      cv.businessLines.map(({ name }) => {
-                        return name;
-                      })
-                    ),
-                  },
-                }}
-                onClick={() => {
-                  gaEvent(GA_TAGS.BACKOFFICE_ADMIN_OFFRES_INTERESSER_CLIC);
-                }}
-              >
-                Voir les offres qui pourraient intéresser le candidat
-                <IconNoSSR
-                  name="chevron-right"
-                  ratio="0.8"
-                  className="uk-margin-small-left"
-                />
-              </Button>
-            )}
-          </Grid>
-          <div>
-            <CandidatHeader user={user} showZone />
-            <hr className="ent-divier-backoffice uk-margin-medium-top" />
-          </div>
-          <ul className="uk-subnav">
-            <li className={tab === 'cv' ? 'uk-active' : ''}>
-              <SimpleLink href={`/backoffice/admin/membres/${memberId}/cv`}>
-                CV
-              </SimpleLink>
-            </li>
-            <li className={tab === 'offres' ? 'uk-active' : ''}>
-              <SimpleLink href={`/backoffice/admin/membres/${memberId}/offres`}>
-                Opportunités
-              </SimpleLink>
-            </li>
-            <li className={tab === 'parametres' ? 'uk-active' : ''}>
-              <SimpleLink
-                href={`/backoffice/admin/membres/${memberId}/parametres`}
-              >
-                Paramètres
-              </SimpleLink>
-            </li>
-          </ul>
-          {tab !== 'parametres' &&
-            isRoleIncluded(COACH_USER_ROLES, user.role) && (
-              <>
-                {getUserCandidateFromCoachOrCandidate(user) ? (
-                  <div>
-                    {tab === 'cv' && (
-                      <CVPageContent
-                        candidateId={getCandidateIdFromCoachOrCandidate(user)}
-                        cv={cv}
-                        setCV={setCV}
-                      />
-                    )}
-                    {tab === 'offres' && (
-                      <AdminCandidateOpportunities
-                        candidateId={getCandidateIdFromCoachOrCandidate(user)}
-                      />
-                    )}
-                  </div>
-                ) : (
-                  <div>
-                    <h2 className="uk-text-bold uk-text-center">
-                      <span className="uk-text-primary">Aucun candidat</span>{' '}
-                      n&apos;est rattaché à ce compte coach.
-                    </h2>
-                    <p className="uk-text-center">
-                      Il peut y avoir plusieurs raisons à ce sujet. Contacte
-                      l&apos;équipe LinkedOut pour en savoir plus.
-                    </p>
-                  </div>
-                )}
-              </>
-            )}
-          {tab !== 'parametres' &&
-            isRoleIncluded(CANDIDATE_USER_ROLES, user.role) && (
-              <div>
-                {tab === 'cv' && (
-                  <CVPageContent candidateId={user.id} cv={cv} setCV={setCV} />
-                )}
-                {tab === 'offres' && (
-                  <AdminCandidateOpportunities candidateId={user.id} />
-                )}
-              </div>
-            )}
-          {tab === 'parametres' && (
-            <Grid childWidths={['1-2@m']}>
-              {user.role !== USER_ROLES.ADMIN && (
-                <Grid
-                  gap={isCandidat ? 'medium' : 'collapse'}
-                  childWidths={['1-1']}
-                >
-                  <div>
-                    {isCandidat && (
-                      <Card title="Préférences du CV">
-                        <CandidateEmployedToggle
-                          title="A retrouvé un emploi"
-                          modalTitle="Le candidat a retrouvé un emploi ?"
-                          modalConfirmation="Valider"
-                          defaultValue={user.candidat.employed}
-                          notificationMessage="Le profil du candidat a été mis à jour !"
-                          subtitle={
-                            user &&
-                            user.candidat && (
-                              <ContractLabel
-                                contract={user.candidat.contract}
-                                endOfContract={user.candidat.endOfContract}
-                              />
-                            )
-                          }
-                          setData={(newData) => {
-                            setUser({
-                              ...user,
-                              candidat: {
-                                ...user.candidat,
-                                ...newData,
-                              },
-                            });
-                          }}
-                          candidateId={user.id}
-                        />
-                        <ToggleWithConfirmationModal
-                          id="hidden"
-                          title="Masquer le CV"
-                          modalTitle="Changer la visibilité du CV en ligne ?"
-                          modalConfirmation="Oui, masquer le CV"
-                          defaultValue={user.candidat.hidden}
-                          onToggle={(hidden) => {
-                            return Api.putCandidate(user.id, {
-                              hidden,
-                            })
-                              .then(() => {
-                                setUser({
-                                  ...user,
-                                  candidat: {
-                                    ...user.candidat,
-                                    hidden,
-                                  },
-                                });
-                                UIkit.notification(
-                                  hidden
-                                    ? 'Le CV est désormais masqué'
-                                    : 'Le CV est désormais visible',
-                                  'success'
-                                );
-                              })
-                              .catch(() => {
-                                return UIkit.notification(
-                                  'Une erreur est survenue lors du masquage du profil',
-                                  'danger'
-                                );
-                              });
-                          }}
-                        />
-                      </Card>
-                    )}
-                  </div>
-                  <div className="uk-card uk-card-default uk-card-body">
-                    <Grid gap="small" between eachWidths={['expand', 'auto']}>
-                      <h3 className="uk-card-title">
-                        Informations personnelles
-                      </h3>
-                      <ButtonIcon
-                        name="pencil"
-                        onClick={() => {
-                          openModal(
-                            <EditUserModal user={user} setUser={setUser} />
-                          );
-                        }}
-                      />
-                    </Grid>
-                    {user ? (
-                      <Grid column gap="small">
-                        <Grid row gap="small" middle>
-                          <IconNoSSR name="user" style={{ width: 20 }} />
-                          <span>{`${user.firstName} ${user.lastName}`}</span>
-                        </Grid>
-                        <Grid row gap="small" middle>
-                          <IconNoSSR name="gender" style={{ width: 20 }} />
-                          <span>
-                            {`${user.gender === 0 ? 'Homme' : 'Femme'}`}
-                          </span>
-                        </Grid>
-                        <Grid row gap="small" middle>
-                          <IconNoSSR name="mail" style={{ width: 20 }} />
-                          <span>{user.email}</span>
-                        </Grid>
-                        <Grid row gap="small" middle>
-                          <IconNoSSR name="phone" style={{ width: 20 }} />
-                          {user.phone ? (
-                            <span>{user.phone}</span>
-                          ) : (
-                            <span className="uk-text-italic">
-                              Numéro de téléphone non renseigné
-                            </span>
-                          )}
-                        </Grid>
-                        {isRoleIncluded(CANDIDATE_USER_ROLES, [user.role]) && (
-                          <Grid row gap="small" middle>
-                            <IconNoSSR name="home" style={{ width: 20 }} />
-                            {user.address ? (
-                              <span>{user.address}</span>
-                            ) : (
-                              <span className="uk-text-italic">
-                                Adresse postale non renseignée
-                              </span>
-                            )}
-                          </Grid>
-                        )}
-                      </Grid>
-                    ) : undefined}
-                  </div>
-                </Grid>
-              )}
-              <Grid childWidths={['1-1']} gap="medium">
-                {user.role !== USER_ROLES.ADMIN && (
-                  <UserInformationCard
-                    isAdmin
-                    user={user}
-                    onChange={(data) => {
-                      setUser(data);
-                    }}
-                  />
-                )}
-                <div className="uk-flex uk-flex-center">
-                  <Button
-                    style="danger"
-                    size="large"
-                    onClick={() => {
-                      openModal(
-                        <ModalEdit
-                          id="delete-user"
-                          title="Supprimer un membre"
-                          description="Attention, si vous supprimer ce membre, toutes les données qui lui sont associées seront définitivement perdues. Êtes-vous sûr de vouloir continuer ?"
-                          submitText="Supprimer le membre"
-                          formSchema={schemaDeleteUser}
-                          onSubmit={deleteUser}
-                        />
-                      );
-                    }}
-                  >
-                    <span className="uk-margin-small-right">
-                      Supprimer l&apos;utilisateur
-                    </span>
-                    <IconNoSSR name="trash" />
-                  </Button>
-                </div>
-              </Grid>
-            </Grid>
-          )}
-        </Grid>
-      </Section>
-    </LayoutBackOffice>
-  );
+  return <MemberDetails user={user} setUser={setUser} />;
 };
 
 export default User;

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { AMBITIONS_PREFIXES } from 'src/constants';
 
-export const CVShape = PropTypes.shape({
+export const CVShape = PropTypes.exact({
   user: PropTypes.shape({
     candidat: PropTypes.shape({
       firstName: PropTypes.string.isRequired,

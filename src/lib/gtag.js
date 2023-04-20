@@ -8,12 +8,15 @@ export const pageview = (url) => {
 };
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/events
-export const gaEvent = ({ action, category, label, value }) => {
+export const gaEvent = ({ action /* , category, label, value */ }) => {
   if (window.gtag) {
-    window.gtag('event', action, {
+    window.gtag(
+      'event',
+      action /* {
       event_category: category,
       event_label: label,
       value,
-    });
+    } */
+    );
   }
 };
