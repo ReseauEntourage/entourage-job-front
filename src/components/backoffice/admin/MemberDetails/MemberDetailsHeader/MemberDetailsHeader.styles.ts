@@ -8,8 +8,12 @@ export const StyledContainer = styled.div`
 export const StyledNameContainer = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: left;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 29px;
+  margin-bottom: 8px;
 `;
 
 export const StyledRoleContainer = styled.div`
@@ -17,11 +21,20 @@ export const StyledRoleContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  margin-top: 18px;
+`;
+export const StyledRole = styled.div`
+  margin-left: 4px;
 `;
 
 export const StyledInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  margin-left: 18px;
   justify-content: center;
+
+  .bold {
+    font-weight: bold;
+  }
 `;

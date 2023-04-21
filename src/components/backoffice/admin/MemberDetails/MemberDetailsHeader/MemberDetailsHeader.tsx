@@ -2,24 +2,17 @@ import _ from 'lodash';
 import React, { useContext } from 'react';
 import { User } from 'src/api/types';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
-import { SimpleLink } from 'src/components/utils';
-import Icon, { IconNoSSR } from 'src/components/utils/Icon';
-import {
-  CANDIDATE_USER_ROLES,
-  EXTERNAL_USER_ROLES,
-  USER_ROLES,
-} from 'src/constants/users';
+import Icon from 'src/components/utils/Icon';
+import { USER_ROLES } from 'src/constants/users';
 import { UserContext } from 'src/store/UserProvider';
+import { getRelatedUser } from 'src/utils/Finding';
 import {
-  getRelatedUser,
-  getUserCandidateFromCoach,
-  isRoleIncluded,
-  Grid,
-} from 'src/utils';
-import {
-  StyledContainer, StyledInfoContainer,
-  StyledNameContainer, StyledRoleContainer
-} from "./MemberDetailsHeader.styles";
+  StyledContainer,
+  StyledInfoContainer,
+  StyledNameContainer,
+  StyledRole,
+  StyledRoleContainer,
+} from './MemberDetailsHeader.styles';
 
 interface MemberDetailsHeaderProps {
   user: User;
@@ -32,15 +25,14 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
 
   const relatedUser = getRelatedUser(user);
 
-  const relatedUserArray =
-    relatedUser && !Array.isArray(relatedUser) ? [relatedUser] : relatedUser;
-
   const relatedUserText =
     user.role === USER_ROLES.COACH_EXTERNAL
-      ? `${relatedUser.length} candidat(s)`
+      ? `${relatedUser ? relatedUser.length : 0} candidat${
+          relatedUser && relatedUser.length > 1 ? 's' : ''
+        }`
       : `${
-          relatedUserArray?.length > 0
-            ? `${relatedUserArray[0].firstName} ${relatedUserArray[0].lastName}`
+          relatedUser && relatedUser.length > 0
+            ? `${relatedUser[0].firstName} ${relatedUser[0].lastName}`
             : `personne`
         }`;
 
@@ -57,10 +49,10 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
         </span>
         <StyledRoleContainer>
           <Icon name="user" style={{ width: 20 }} />
-          <div>
+          <StyledRole>
             <span className="bold">{`${_.capitalize(user.role)}`}</span>
             {` de ${relatedUserText}`}
-          </div>
+          </StyledRole>
         </StyledRoleContainer>
       </StyledInfoContainer>
     </StyledContainer>

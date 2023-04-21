@@ -72,7 +72,7 @@ export const formAddUser = {
   fields: [
     {
       id: 'memberInformation',
-      title: 'Information du nouveau membre',
+      title: 'Information du membre',
       component: 'heading',
     },
     {

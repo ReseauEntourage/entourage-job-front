@@ -1,163 +1,132 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import _ from 'lodash';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import UIkit from 'uikit';
+import { useOnMemberFormSubmit } from '../useOnMemberFormSubmit';
 import Api from 'src/api';
-import { User } from 'src/api/types';
-import schemaEditUser from 'src/components/forms/schema/formEditUser';
+import { User, UserDto } from 'src/api/types';
+import { formAddUser } from 'src/components/forms/schema/formAddUser';
 import { openModal } from 'src/components/modals/Modal';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import {
-  ALL_USER_ROLES,
-  CANDIDATE_USER_ROLES,
-  USER_ROLES,
-} from 'src/constants/users';
-import { mutateFormSchema } from 'src/utils';
-import { isRoleIncluded } from 'src/utils/Finding';
+import { EXTERNAL_USER_ROLES, USER_ROLES } from 'src/constants/users';
+import { getRelatedUser, isRoleIncluded } from 'src/utils/Finding';
 
 interface EditMemberModal {
   user: User;
   setUser: (user: User) => void;
 }
 export function EditMemberModal({ user, setUser }: EditMemberModal) {
-  let mutatedSchema = mutateFormSchema(schemaEditUser, [
-    {
-      fieldId: 'userToCoach',
-      props: [
-        {
-          propName: 'disabled',
-          value: true,
-        },
-        {
-          propName: 'hidden',
-          value: true,
-        },
-      ],
-    },
-    {
-      fieldId: 'role',
-      props: [
-        {
-          propName: 'hidden',
-          value: true,
-          option: USER_ROLES.ADMIN,
-        },
-      ],
-    },
-    {
-      fieldId: 'adminRole',
-      props: [
-        {
-          propName: 'hidden',
-          value: true,
-        },
-        {
-          propName: 'disabled',
-          value: true,
-        },
-      ],
-    },
-  ]);
+  const userToLink = useMemo(() => {
+    const relatedUser = getRelatedUser(user);
 
-  if (user) {
-    if (!isRoleIncluded(CANDIDATE_USER_ROLES, user.role)) {
-      mutatedSchema = mutateFormSchema(mutatedSchema, [
-        {
-          fieldId: 'address',
-          props: [
-            {
-              propName: 'disabled',
-              value: true,
-            },
-            {
-              propName: 'hidden',
-              value: true,
-            },
-          ],
-        },
-      ]);
+    if (relatedUser) {
+      if (user.role === USER_ROLES.COACH_EXTERNAL) {
+        return relatedUser.map(({ id, firstName, lastName }) => {
+          return { value: id, label: `${firstName} ${lastName}` };
+        });
+      }
+      return {
+        value: relatedUser[0].id,
+        label: `${relatedUser[0].firstName} ${relatedUser[0].lastName}`,
+      };
     }
-    if (user.role === USER_ROLES.ADMIN) {
-      mutatedSchema = mutateFormSchema(mutatedSchema, [
-        {
-          fieldId: 'phone',
-          props: [
-            {
-              propName: 'disabled',
-              value: true,
-            },
-            {
-              propName: 'hidden',
-              value: true,
-            },
-          ],
-        },
-      ]);
-    }
-  }
+  }, [user]);
 
-  // TODO TEST
-  return (
-    <ModalEdit
-      formSchema={mutatedSchema}
-      title="Edition d'un membre"
-      description="Merci de modifier les informations que vous souhaitez concernant le membre."
-      submitText="Modifier le membre"
-      defaultValues={{ ...user, gender: user.gender.toString() }}
-      onSubmit={async (fields, closeModal) => {
-        const updateUser = async (onError?: () => void) => {
-          try {
-            const { data } = await Api.putUser(user.id, {
-              ...fields,
-              email: fields.email.toLowerCase(),
-              firstName: fields.firstName.trim().replace(/\s\s+/g, ' '),
-              lastName: fields.lastName.trim().replace(/\s\s+/g, ' '),
-            });
-            closeModal();
-            UIkit.notification('Le membre a bien été modifié', 'success');
-            setUser(data);
-          } catch (error) {
-            console.error(error);
-            if (onError) onError();
-            if (error.response.status === 409) {
-              UIkit.notification(
-                'Cette adresse email est déjà utilisée',
-                'danger'
-              );
-            } else {
-              UIkit.notification(
-                "Une erreur s'est produite lors de la modification du membre",
-                'danger'
-              );
-            }
-          }
-        };
+  const organization = useMemo(() => {
+    return isRoleIncluded(EXTERNAL_USER_ROLES, user.role) && user.organization
+      ? {
+          value: user.organization.id,
+          label: user.organization.name,
+        }
+      : undefined;
+  }, [user.organization, user.role]);
 
+  const {
+    onSubmit,
+    filledUserFields,
+    prevFilledUserFields,
+    setFilledUserFields,
+  } = useOnMemberFormSubmit(async (userToUpdate: UserDto) => {
+    return Api.putUser(user.id, userToUpdate);
+  });
+
+  const handleMemberUpdateSubmit = useCallback(
+    async (fields, closeModal) => {
+      const updatedUser = await onSubmit(fields, closeModal);
+      UIkit.notification('Le membre a bien été mis à jour', 'success');
+      return updatedUser;
+    },
+    [onSubmit]
+  );
+
+  const updateUserModalProps = useMemo(() => {
+    return {
+      formSchema: formAddUser,
+      title: "Edition d'un membre",
+      description:
+        'Merci de modifier les informations que vous souhaitez concernant le membre.',
+      submitText: 'Modifier le membre',
+      onSubmit: async (fields, closeModal) => {
         if (fields.role !== user.role) {
           openModal(
             <ModalConfirm
               text="Attention, si vous modifiez le rôle d'un candidat, tout son suivi sera perdu et son CV sera dépublié. Êtes-vous sûr de vouloir continuer ?"
               buttonText="Valider"
               onConfirm={async () => {
-                await updateUser(() => {
-                  openModal(<EditMemberModal user={user} setUser={setUser} />);
-                });
+                await handleMemberUpdateSubmit(fields, closeModal);
               }}
             />
           );
         } else {
-          await updateUser();
-        }
-      }}
-    />
-  );
-}
+          const updatedUser = await handleMemberUpdateSubmit(
+            fields,
+            closeModal
+          );
 
-EditMemberModal.propTypes = {
-  user: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    role: PropTypes.oneOf(ALL_USER_ROLES),
-    gender: PropTypes.number.isRequired,
-  }).isRequired,
-  setUser: PropTypes.func.isRequired,
-};
+          try {
+            const { data: updatedUserWithLinkedMember } = await Api.putLinkUser(
+              user.id,
+              fields.userToLinkId
+            );
+
+            setUser(updatedUserWithLinkedMember);
+          } catch (err) {
+            console.error(err);
+            UIkit.notification(
+              "Une erreur s'est produite lors de l'association à un autre membre",
+              'danger'
+            );
+            setUser(updatedUser);
+          }
+        }
+      },
+      onCancel: () => setFilledUserFields({}),
+      defaultValues: {
+        ...user,
+        organizationId: organization,
+        userToLinkId: userToLink,
+      },
+    };
+  }, [
+    handleMemberUpdateSubmit,
+    organization,
+    setFilledUserFields,
+    setUser,
+    user,
+    userToLink,
+  ]);
+
+  useEffect(() => {
+    if (
+      !_.isEmpty(filledUserFields) &&
+      filledUserFields !== prevFilledUserFields
+    ) {
+      openModal(
+        <ModalEdit {...updateUserModalProps} defaultValues={filledUserFields} />
+      );
+    }
+  }, [updateUserModalProps, filledUserFields, prevFilledUserFields]);
+
+  // TODO TEST
+  return <ModalEdit {...updateUserModalProps} />;
+}

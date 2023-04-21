@@ -19,9 +19,6 @@ const CandidatHeader = ({ user, showZone }) => {
 
   const relatedUser = getRelatedUser(user);
 
-  const relatedUserArray =
-    relatedUser && !Array.isArray(relatedUser) ? [relatedUser] : relatedUser;
-
   return (
     <Grid row gap="small">
       <ImgProfile user={user} size={48} />
@@ -32,11 +29,11 @@ const CandidatHeader = ({ user, showZone }) => {
         </h3>
         <Grid row gap="small" middle className="uk-margin-small-top">
           <>{`${_.capitalize(user.role)} de ${
-            !relatedUserArray || relatedUserArray.length === 0 ? 'personne' : ''
+            !relatedUser || relatedUser.length === 0 ? 'personne' : ''
           }`}</>
         </Grid>
-        {relatedUserArray &&
-          relatedUserArray.map(({ firstName, lastName, id }) => {
+        {relatedUser &&
+          relatedUser.map(({ firstName, lastName, id }) => {
             const cvUrl = isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
               ? user.candidat.url
               : getUserCandidateFromCoach(user, id).url;

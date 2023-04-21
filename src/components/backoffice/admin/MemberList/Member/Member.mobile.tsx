@@ -19,7 +19,7 @@ import {
   getUserCandidateFromCoachOrCandidate,
   getRelatedUser,
   isRoleIncluded,
-} from 'src/utils';
+} from 'src/utils/Finding';
 import { MemberInfo, RelatedMemberInfo } from './MemberInfo';
 
 export function MemberMobile({ member, role, callback }) {
@@ -64,7 +64,7 @@ export function MemberMobile({ member, role, callback }) {
             {role === 'Coach' && 'Candidat'}
             {role === 'Candidat' && 'Coach'}
           </span>
-          <RelatedMemberInfo relatedUser={relatedUser} />
+          <RelatedMemberInfo relatedUser={relatedUser} role={member.role} />
         </div>
       </div>
       <div className="line zone-date">

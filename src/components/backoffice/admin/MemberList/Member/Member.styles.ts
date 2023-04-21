@@ -28,10 +28,10 @@ export const StyledRow = styled.tr`
       font-weight: 700;
     }
     a {
-      color: black;
+      color: ${COLORS.black};
       &:hover {
         .bold {
-          color: #d53f00;
+          color: ${COLORS.primaryOrange};
         }
       }
     }
@@ -39,7 +39,7 @@ export const StyledRow = styled.tr`
       padding-left: 24px;
       border-left: solid 3px
         ${(props) => {
-          return COLORS.cvStatus[props.cvStatus]?.border || 'white';
+          return COLORS.cvStatus[props.cvStatus]?.border || COLORS.white;
         }};
 
       a {
@@ -52,7 +52,7 @@ export const StyledRow = styled.tr`
     }
     &.cv-status-cell {
       padding-left: 24px;
-      color: black;
+      color: ${COLORS.black};
       position: relative;
       &::before {
         content: '';
@@ -63,16 +63,16 @@ export const StyledRow = styled.tr`
         top: calc(50% - 6px);
         border-radius: 12px;
         background-color: ${(props) => {
-          return COLORS.cvStatus[props.cvStatus]?.background || 'white';
+          return COLORS.cvStatus[props.cvStatus]?.background || COLORS.white;
         }};
         border: 2px solid
           ${(props) => {
-            return COLORS.cvStatus[props.cvStatus]?.border || 'white';
+            return COLORS.cvStatus[props.cvStatus]?.border || COLORS.white;
           }};
       }
     }
     &.hiddenCV-cell {
-      color: black;
+      color: ${COLORS.black};
       .eye-hidden {
         color: ${COLORS.darkGray};
       }
@@ -117,10 +117,10 @@ export const StyledMobileMember = styled.tr`
     border-radius: 5px 5px 0 0;
     border-left: solid 3px
       ${(props) => {
-        return COLORS.cvStatus[props.cvStatus]?.border || 'white';
+        return COLORS.cvStatus[props.cvStatus]?.border || COLORS.white;
       }};
     a {
-      color: black;
+      color: ${COLORS.black};
       display: flex;
       flex-direction: column;
       flex-grow: 1;
@@ -137,7 +137,7 @@ export const StyledMobileMember = styled.tr`
   .work-cv {
     border-left: solid 3px
       ${(props) => {
-        return COLORS.cvStatus[props.cvStatus]?.border || 'white';
+        return COLORS.cvStatus[props.cvStatus]?.border || COLORS.white;
       }};
     border-right: 1px solid ${COLORS.gray};
     padding: 8px;
@@ -169,11 +169,11 @@ export const StyledMobileMember = styled.tr`
         top: calc(50% - 6px);
         border-radius: 12px;
         background-color: ${(props) => {
-          return COLORS.cvStatus[props.cvStatus]?.background || 'white';
+          return COLORS.cvStatus[props.cvStatus]?.background || COLORS.white;
         }};
         border: 2px solid
           ${(props) => {
-            return COLORS.cvStatus[props.cvStatus]?.border || 'white';
+            return COLORS.cvStatus[props.cvStatus]?.border || COLORS.white;
           }};
       }
     }
@@ -182,7 +182,7 @@ export const StyledMobileMember = styled.tr`
   .cell {
     display: flex;
     flex-direction: column;
-    color: black;
+    color: ${COLORS.black};
     span.title {
       overflow-wrap: normal;
       margin-bottom: 4px;
@@ -190,7 +190,7 @@ export const StyledMobileMember = styled.tr`
       font-size: 12px;
     }
     a {
-      color: black;
+      color: ${COLORS.black};
     }
     .eye-hidden {
       color: ${COLORS.darkGray};

@@ -11,6 +11,8 @@ export function useCandidateId() {
   } = useRouter();
 
   return (
-    isRoleIncluded(CANDIDATE_USER_ROLES, user.role) ? user.id : candidateId
+    user && isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
+      ? user.id
+      : candidateId
   ) as string;
 }

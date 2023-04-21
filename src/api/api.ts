@@ -20,7 +20,7 @@ import {
   SocialMedia,
   CandidateInscription,
   Organization,
-  CreateUserDto,
+  UserDto,
 } from './types';
 
 class APIHandler {
@@ -182,13 +182,13 @@ class APIHandler {
 
   // post
 
-  postUser(params: CreateUserDto): Promise<AxiosResponse> {
+  postUser(params: UserDto): Promise<AxiosResponse> {
     return this.post('/user', params);
   }
 
   // put
 
-  putUser(userId: string, params: object): Promise<AxiosResponse> {
+  putUser(userId: string, params: UserDto): Promise<AxiosResponse> {
     return this.put(`/user/${userId}`, params);
   }
 
@@ -214,7 +214,7 @@ class APIHandler {
     return this.put(`/user/candidate/read/${candidateId}`);
   }
 
-  putLinkedUser(
+  putLinkUser(
     userId: string,
     userToLinkId: string | string[]
   ): Promise<AxiosResponse> {

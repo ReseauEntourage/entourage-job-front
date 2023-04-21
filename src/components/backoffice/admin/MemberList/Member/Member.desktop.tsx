@@ -49,7 +49,7 @@ export function MemberDesktop({ member, role, callback }) {
         </MemberInfo>
       </td>
       <td className="associated-user-cell">
-        <RelatedMemberInfo relatedUser={relatedUser} />
+        <RelatedMemberInfo relatedUser={relatedUser} role={member.role} />
       </td>
       <td>
         <span className="uk-text-nowrap uk-visible@m">

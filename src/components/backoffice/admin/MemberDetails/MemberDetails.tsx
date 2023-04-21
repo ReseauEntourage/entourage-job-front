@@ -1,20 +1,19 @@
 import React from 'react';
 import { User } from 'src/api/types';
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
-import CandidatHeader from 'src/components/backoffice/admin/CandidatHeader';
 import { useTab } from 'src/components/backoffice/admin/MemberDetails/useTab';
 import { Grid, Icon, Section, SimpleLink } from 'src/components/utils';
 import { MEMBER_TABS } from 'src/constants';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 
 import { isRoleIncluded } from 'src/utils/Finding';
+import { MemberDetailsHeader } from './MemberDetailsHeader';
 import {
   CVMemberTab,
   OffersMemberTab,
   ParametersMemberTab,
 } from './MemberTabs';
 import { RecommendedOffersButton } from './RecommendedOffersButton';
-import { MemberDetailsHeader } from "./MemberDetailsHeader";
 
 interface MemberDetails {
   user: User;

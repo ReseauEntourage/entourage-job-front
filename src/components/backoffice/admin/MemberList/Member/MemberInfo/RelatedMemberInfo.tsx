@@ -1,9 +1,12 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import { EXTERNAL_USER_ROLES, USER_ROLES } from 'src/constants/users';
+import { EXTERNAL_USER_ROLES, USER_ROLES, UserRole } from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils/Finding';
 import { MemberInfo } from './MemberInfo';
-import { StyledRelatedMemberListItem } from './RelatedMemberInfo.styles';
+import {
+  StyledNumberCandidates,
+  StyledRelatedMemberListItem,
+} from './RelatedMemberInfo.styles';
 
 const uuidValue = uuid();
 
@@ -12,27 +15,34 @@ interface MemberProps {
   firstName: string;
   lastName: string;
   email: string;
-  role: typeof USER_ROLES;
+  role: UserRole;
   organization: {
     name: string;
   };
 }
 interface RelatedMemberInfoProps {
-  relatedUser: MemberProps | MemberProps[];
+  relatedUser: MemberProps[];
+  role: UserRole;
 }
 
-export function RelatedMemberInfo({ relatedUser }: RelatedMemberInfoProps) {
-  if (
-    !relatedUser ||
-    (Array.isArray(relatedUser) && relatedUser.length === 0)
-  ) {
+export function RelatedMemberInfo({
+  role,
+  relatedUser,
+}: RelatedMemberInfoProps) {
+  if (!relatedUser || relatedUser.length === 0) {
     return <span>Non lié</span>;
   }
 
-  if (Array.isArray(relatedUser)) {
-    return (
-      <>
-        {relatedUser.map(
+  return (
+    <>
+      {role === USER_ROLES.COACH_EXTERNAL ? (
+        <StyledNumberCandidates>{`${
+          relatedUser ? relatedUser.length : 0
+        } candidat${
+          relatedUser && relatedUser.length > 1 ? 's' : ''
+        }`}</StyledNumberCandidates>
+      ) : (
+        relatedUser.map(
           ({
             id,
             firstName,
@@ -57,22 +67,8 @@ export function RelatedMemberInfo({ relatedUser }: RelatedMemberInfoProps) {
               </StyledRelatedMemberListItem>
             );
           }
-        )}
-      </>
-    );
-  }
-
-  return (
-    <MemberInfo
-      id={relatedUser.id}
-      firstName={relatedUser.firstName}
-      lastName={relatedUser.lastName}
-      email={relatedUser.email}
-      organizationName={
-        isRoleIncluded(EXTERNAL_USER_ROLES, relatedUser.role)
-          ? relatedUser.organization?.name
-          : null
-      }
-    />
+        )
+      )}
+    </>
   );
 }
