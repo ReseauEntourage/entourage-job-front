@@ -48,7 +48,11 @@ export const ImageTitle = ({
             {description}
           </p>
           {cta && (
-            <Button style={cta.className} onClick={cta.onClick}>
+            <Button
+              style={cta.className}
+              onClick={cta.onClick}
+              dataTestId={cta.dataTest}
+            >
               {cta.label}
             </Button>
           )}

@@ -11,7 +11,7 @@ describe('Parcours travailler', () => {
 
   it("Ouvrir la page et le formulaire d'inscription", () => {
     cy.visit('/travailler');
-    cy.get('[data-testid="cta-inscription"]').first().click();
+    cy.get('[data-testid="banner-cta"]').first().click();
     cy.wait(500);
     cy.get('.ReactModalPortal div').first().should('be.visible');
   });
