@@ -5,7 +5,7 @@ import { Button, Section } from 'src/components/utils';
 import ImageTitle from 'src/components/partials/ImageTitle';
 import Reviews from 'src/components/partials/Reviews';
 import HowToCommitDifferently from 'src/components/partials/HowToCommitDifferently';
-import NewsletterPartial from 'src/components/partials/NewsletterPartial';
+import { NewsletterPartial } from 'src/components/partials/NewsletterPartial';
 import PARTNERS from 'src/constants/partners';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { Chapter } from 'src/components/partials/Chapter';
