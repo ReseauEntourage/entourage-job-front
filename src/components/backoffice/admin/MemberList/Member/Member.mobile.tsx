@@ -4,6 +4,10 @@ import React from 'react';
 
 import { StyledMobileMember } from 'src/components/backoffice/admin/MemberList/Member/Member.styles';
 import { renderCVStatus } from 'src/components/backoffice/admin/MemberList/Member/Member.utils';
+import {
+  MemberInfo,
+  RelatedMemberInfo,
+} from 'src/components/backoffice/admin/MemberList/Member/MemberInfo';
 import { MemberPropTypes } from 'src/components/backoffice/admin/MemberList/MemberList.shapes';
 import { translateStatusCV } from 'src/components/backoffice/admin/MemberList/MemberList.utils';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
@@ -20,7 +24,6 @@ import {
   getRelatedUser,
   isRoleIncluded,
 } from 'src/utils';
-import { MemberInfo, RelatedMemberInfo } from './MemberInfo';
 
 export function MemberMobile({ member, role, callback }) {
   const cvStatus = renderCVStatus(member);
