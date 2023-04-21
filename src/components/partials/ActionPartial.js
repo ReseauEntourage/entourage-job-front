@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Section } from 'src/components/utils';
 import SharePartial from 'src/components/partials/SharePartial';
-import NewsletterPartial from 'src/components/partials/NewsletterPartial';
+import { NewsletterPartial } from 'src/components/partials/NewsletterPartial';
 import MultipleCTA from 'src/components/partials/MultipleCTA';
 import { GA_TAGS } from 'src/constants/tags';
 
