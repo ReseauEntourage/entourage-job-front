@@ -10,6 +10,11 @@ export const StyledSection = styled.section`
     margin-right: auto;
     padding-left: 15px;
     padding-right: 15px;
+    &.flex-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   }
   &.custom-header {
     padding-top: ${HEIGHTS.SECTION_PADDING}px;

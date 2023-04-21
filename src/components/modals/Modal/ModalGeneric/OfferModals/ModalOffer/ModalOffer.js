@@ -28,7 +28,7 @@ import OfferContent from 'src/components/modals/Modal/ModalGeneric/OfferModals/p
 import UIkit from 'uikit';
 import { useRouter } from 'next/router';
 import { usePrevious } from 'src/hooks/utils';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 import { GA_TAGS } from 'src/constants/tags';
 import formEditExternalOpportunitySchema from 'src/components/forms/schema/formEditExternalOpportunity';
 

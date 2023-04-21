@@ -7,7 +7,7 @@ import { addPrefix, formatParagraph } from 'src/utils';
 import ModalInterestLinkedOut from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import SimpleSection from 'src/components/partials/SimpleSection';
 import SimpleLink from 'src/components/utils/SimpleLink';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 import { GA_TAGS } from 'src/constants/tags';
 import { openModal } from 'src/components/modals/Modal';
 import PropTypes from 'prop-types';

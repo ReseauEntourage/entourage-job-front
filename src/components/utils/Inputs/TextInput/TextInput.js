@@ -12,13 +12,14 @@ const TextInput = ({
   placeholder,
   showLabel,
   valid,
+  style,
 }) => {
   const [value, setValue] = useState();
   return (
     <StyledTextInputContainer>
       {showLabel && <label htmlFor={`form-input-${name}`}>{title}</label>}
       <input
-        className={value ? '' : 'empty-value'}
+        className={`${value ? '' : 'empty-value'} ${style}`}
         onChange={(e) => {
           setValue(e.target.value);
           return onChange(e);
@@ -46,6 +47,7 @@ TextInput.propTypes = {
     isInvalid: PropTypes.bool,
     message: PropTypes.string,
   }),
+  style: PropTypes.string,
 };
 
 TextInput.defaultProps = {
@@ -57,5 +59,6 @@ TextInput.defaultProps = {
   showLabel: false,
   id: '',
   valid: undefined,
+  style: '',
 };
 export default TextInput;

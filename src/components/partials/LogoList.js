@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Grid from 'src/components/utils/Grid';
 import SimpleLink from 'src/components/utils/SimpleLink';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 import { GA_TAGS } from 'src/constants/tags';
 import { addPrefix } from 'src/utils';
 import Carousel from 'src/components/utils/Carousel';

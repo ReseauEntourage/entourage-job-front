@@ -20,7 +20,7 @@ import DataProvider from 'src/store/DataProvider';
 
 import SharesCountProvider from 'src/store/SharesCountProvider';
 
-import * as gtag from 'src/lib/gtag';
+import * as gtag from 'src/lib/gtag.ts';
 import SplashScreen from 'src/components/SplashScreen';
 import { useMount } from 'src/hooks/utils';
 import { ModalsListener } from 'src/components/modals/Modal';

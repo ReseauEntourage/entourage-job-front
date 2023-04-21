@@ -5,7 +5,7 @@ import {
 } from 'src/utils';
 import { useRouter } from 'next/router';
 import _ from 'lodash';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 
 export function useFilters(filtersData, path, otherPathParams, resetTag) {
   const { push, query: originalQuery } = useRouter();

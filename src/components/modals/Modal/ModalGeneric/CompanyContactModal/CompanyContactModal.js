@@ -1,11 +1,11 @@
 import React from 'react';
 import formCompanyContact from 'src/components/forms/schema/formCompanyContact';
 import Api from 'src/api/index.ts';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import UIkit from 'uikit';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { fbEvent } from 'src/lib/fb';
+import { fbEvent } from 'src/lib/fb.ts';
 
 const CompanyContactModal = () => {
   return (

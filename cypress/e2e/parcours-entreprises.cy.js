@@ -3,7 +3,6 @@ describe('Parcours Entreprises', () => {
     cy.intercept('POST', '/contact/company', {
       statusCode: 201,
     }).as('postContactCompany');
-
   });
 
   it('Ouvrir la popup du formulaire', () => {

@@ -28,6 +28,14 @@ export const StyledTextInputContainer = styled.div`
     margin-bottom: 30px;
     min-height: 30px;
     box-sizing: border-box;
+    &.secondary {
+      padding: 16px 36px;
+      border: #d9d9d9 1px solid;
+      border-radius: 30px;
+      width: 100%;
+      font-size: 12px;
+      line-height: normal;
+    }
     &::placeholder {
       font-style: italic;
       color: ${COLORS.darkGray};

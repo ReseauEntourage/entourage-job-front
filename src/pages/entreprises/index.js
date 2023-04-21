@@ -18,10 +18,10 @@ import Api from 'src/api/index.ts';
 import PropTypes from 'prop-types';
 import TextLoop from 'react-text-loop';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 import CompanyContactModal from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
 import { openModal } from 'src/components/modals/Modal';
-import { fbEvent } from 'src/lib/fb';
+import { fbEvent } from 'src/lib/fb.ts';
 import { useMount } from 'src/hooks/utils';
 import { TaxModal } from 'src/components/modals/PopupModal/TaxModal.tsx';
 

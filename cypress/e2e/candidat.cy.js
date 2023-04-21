@@ -138,9 +138,13 @@ describe('Candidat', () => {
     )
       .first()
       .click();
-    cy.get('#form-offer-external-recruiterFirstName').scrollIntoView().type('test');
+    cy.get('#form-offer-external-recruiterFirstName')
+      .scrollIntoView()
+      .type('test');
     cy.get('#form-offer-external-recruiterName').scrollIntoView().type('test');
-    cy.get('#form-offer-external-recruiterMail').scrollIntoView().type('test@gmail.com');
+    cy.get('#form-offer-external-recruiterMail')
+      .scrollIntoView()
+      .type('test@gmail.com');
     cy.get('#form-offer-external-description').scrollIntoView().type('test');
     cy.get('#form-offer-external-link').scrollIntoView().type('test');
     cy.get('button').contains('Envoyer').click();

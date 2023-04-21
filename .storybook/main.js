@@ -5,6 +5,7 @@ module.exports = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
+    'storybook-addon-next',
   ],
   framework: '@storybook/react',
   core: {
@@ -17,6 +18,21 @@ module.exports = {
       path.resolve(__dirname, '..', './'),
       'node_modules',
     ];
+
+    config.resolve.roots = [
+      path.resolve(__dirname, '../public'),
+      'node_modules',
+    ];
+
+    const rules = config.module.rules;
+    const fileLoaderRule = rules.find((rule) => rule.test.test('.svg'));
+    fileLoaderRule.exclude = /\.svg$/;
+
+    rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    });
+
     return config;
   },
 };

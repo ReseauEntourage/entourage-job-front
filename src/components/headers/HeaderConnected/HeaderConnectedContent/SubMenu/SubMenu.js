@@ -9,7 +9,7 @@ import {
   HeaderSubItemShape,
   NotifBadgesShape,
 } from 'src/components/headers/HeaderConnected/HeaderConnected.shapes';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 
 const uuidValue = uuid();
 

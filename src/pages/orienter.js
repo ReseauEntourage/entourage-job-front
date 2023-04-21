@@ -4,7 +4,7 @@ import { Section } from 'src/components/utils';
 import Button from 'src/components/utils/Button';
 import ImageTitle from 'src/components/partials/ImageTitle';
 import { IconNoSSR } from 'src/components/utils/Icon';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { openModal } from 'src/components/modals/Modal';
 import ModalInterestLinkedOut from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
@@ -15,7 +15,7 @@ import Reviews from 'src/components/partials/Reviews';
 import LogoList from 'src/components/partials/LogoList';
 import PARTNERS from 'src/constants/partners';
 import NumberGrid from 'src/components/partials/NumberGrid';
-import { fbEvent } from 'src/lib/fb';
+import { fbEvent } from 'src/lib/fb.ts';
 import CandidateContactModal from 'src/components/modals/Modal/ModalGeneric/CandidateContactModal';
 
 const reviews = [

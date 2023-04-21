@@ -3,7 +3,7 @@ import React from 'react';
 import Layout from 'src/components/Layout';
 import { ShareCandidatesCVTutorial } from 'src/components/partials';
 import SearchCandidates from 'src/components/partials/SearchCandidates';
-import CandidateTestimoniesOrientation from 'src/components/partials/CandidateTestimoniesOrientation';
+import CandidateTestimoniesOrientation from 'src/components/partials/CandidateTestimoniesOrientation.tsx';
 
 const Candidats = () => {
   return (

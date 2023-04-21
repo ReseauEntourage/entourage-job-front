@@ -2,10 +2,10 @@ import React from 'react';
 import { Section } from 'src/components/utils';
 import MultipleCTA from 'src/components/partials/MultipleCTA';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 import CompanyContactModal from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
 import { openModal } from 'src/components/modals/Modal/openModal';
-import { fbEvent } from 'src/lib/fb';
+import { fbEvent } from 'src/lib/fb.ts';
 
 const HowToCommitDifferently = () => {
   return (

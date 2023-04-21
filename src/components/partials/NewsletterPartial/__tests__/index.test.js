@@ -2,7 +2,7 @@ import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BREAKPOINTS } from 'src/constants/styles';
-import NewsletterPartial from '..';
+import { NewsletterPartial } from '..';
 
 jest.mock('react-modal');
 jest.mock('cookies-next');
@@ -37,8 +37,8 @@ jest.mock('src/hooks', () => {
   };
 });
 
-jest.mock('src/lib/gtag', () => {
-  const gtag = jest.requireActual('src/lib/gtag');
+jest.mock('src/lib/gtag.ts', () => {
+  const gtag = jest.requireActual('src/lib/gtag.ts');
   return {
     ...gtag,
     gaEvent: () => {},
