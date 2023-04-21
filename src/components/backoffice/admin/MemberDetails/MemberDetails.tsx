@@ -8,10 +8,13 @@ import { MEMBER_TABS } from 'src/constants';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 
 import { isRoleIncluded } from 'src/utils/Finding';
-import { CVMemberTab } from './MemberTabs/CVMemberTab';
-import { OffersMemberTab } from './MemberTabs/OffersMemberTab';
-import { ParametersMemberTab } from './MemberTabs/ParametersMemberTab';
+import {
+  CVMemberTab,
+  OffersMemberTab,
+  ParametersMemberTab,
+} from './MemberTabs';
 import { RecommendedOffersButton } from './RecommendedOffersButton';
+import { MemberDetailsHeader } from "./MemberDetailsHeader";
 
 interface MemberDetails {
   user: User;
@@ -40,7 +43,7 @@ export function MemberDetails({ user, setUser }: MemberDetails) {
             )}
           </Grid>
           <div>
-            <CandidatHeader user={user} showZone />
+            <MemberDetailsHeader user={user} />
             <hr className="ent-divier-backoffice uk-margin-medium-top" />
           </div>
           <ul className="uk-subnav">

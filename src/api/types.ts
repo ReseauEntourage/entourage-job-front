@@ -26,6 +26,16 @@ export type UserCandidat = {
   lastModifiedBy: string;
 };
 
+export type Organization = {
+  name: string;
+  address: string;
+  referentFirstName: string;
+  referentLastName: string;
+  referentMail: string;
+  referentPhone: string;
+  zone: AdminZone;
+};
+
 export type User = {
   id: string;
   firstName: string;
@@ -45,6 +55,7 @@ export type User = {
   userToCoach: string;
   candidat?: UserCandidat;
   coaches?: UserCandidat[];
+  organization: Organization;
 };
 
 export type CreateUserDto = {
@@ -67,16 +78,6 @@ export type PutCandidate = {
   note: string;
   url: string;
   lastModifiedBy: string;
-};
-
-export type Organization = {
-  name: string;
-  address: string;
-  referentFirstName: string;
-  referentLastName: string;
-  referentMail: string;
-  referentPhone: string;
-  zone: AdminZone;
 };
 
 export type Opportunity = {

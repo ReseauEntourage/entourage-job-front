@@ -1,5 +1,5 @@
 import UIkit from 'uikit';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { Card, Grid, SimpleLink } from 'src/components/utils';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
@@ -30,7 +30,7 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
 
   const [loading, setLoading] = useState(false);
 
-  const assignUser = (userToAssign) => {
+  const assignUser = useCallback((userToAssign) => {
     if (userToAssign.role === USER_ROLES.COACH) {
       const candidat = getRelatedUser(userToAssign);
       const candidateLink = getUserCandidateFromCoachOrCandidate(userToAssign);
@@ -42,7 +42,9 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
         setUserCandidat(null);
       }
       // customisation du schema en fonction de l'utilisateur
-      schema.fields[1].title = 'Candidat lié';
+      schema.fields[1].title = `Candidat(s) lié${
+        user.organization?.name ? ` - ${user.organization?.name}` : ''
+      }`;
     }
     if (userToAssign.role === USER_ROLES.CANDIDATE) {
       const coach = getRelatedUser(userToAssign);
@@ -56,7 +58,7 @@ const UserInformationCard = ({ isAdmin, user, onChange }) => {
       }
       schema.fields[1].title = 'Coach lié';
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -320,6 +322,7 @@ UserInformationCard.propTypes = {
       USER_ROLES.ADMIN,
     ]),
     id: PropTypes.string,
+    organization: PropTypes.shape({ name: PropTypes.string.isRequired }),
   }).isRequired,
   onChange: PropTypes.func,
 };

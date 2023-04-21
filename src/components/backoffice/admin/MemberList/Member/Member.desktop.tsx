@@ -20,7 +20,7 @@ import {
   getUserCandidateFromCoachOrCandidate,
   getRelatedUser,
   isRoleIncluded,
-} from 'src/utils';
+} from 'src/utils/Finding';
 import { MemberInfo, RelatedMemberInfo } from './MemberInfo';
 
 export function MemberDesktop({ member, role, callback }) {

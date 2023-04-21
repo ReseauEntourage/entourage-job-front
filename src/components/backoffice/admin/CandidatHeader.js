@@ -22,7 +22,6 @@ const CandidatHeader = ({ user, showZone }) => {
   const relatedUserArray =
     relatedUser && !Array.isArray(relatedUser) ? [relatedUser] : relatedUser;
 
-  console.log(user);
   return (
     <Grid row gap="small">
       <ImgProfile user={user} size={48} />

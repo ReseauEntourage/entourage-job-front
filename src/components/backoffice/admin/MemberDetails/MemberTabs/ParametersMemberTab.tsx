@@ -43,7 +43,7 @@ export function ParametersMemberTab({
   };
 
   const isCandidat =
-    user && user.candidat && isRoleIncluded(CANDIDATE_USER_ROLES, user.role);
+    user.candidat && isRoleIncluded(CANDIDATE_USER_ROLES, user.role);
 
   return (
     <Grid childWidths={['1-2@m']}>
@@ -124,44 +124,42 @@ export function ParametersMemberTab({
               }}
             />
           </Grid>
-          {user ? (
-            <Grid column gap="small">
+          <Grid column gap="small">
+            <Grid row gap="small" middle>
+              <Icon name="user" style={{ width: 20 }} />
+              <span>{`${user.firstName} ${user.lastName}`}</span>
+            </Grid>
+            <Grid row gap="small" middle>
+              <Icon name="gender" style={{ width: 20 }} />
+              <span>{`${user.gender === 0 ? 'Homme' : 'Femme'}`}</span>
+            </Grid>
+            <Grid row gap="small" middle>
+              <Icon name="mail" style={{ width: 20 }} />
+              <span>{user.email}</span>
+            </Grid>
+            <Grid row gap="small" middle>
+              <Icon name="phone" style={{ width: 20 }} />
+              {user.phone ? (
+                <span>{user.phone}</span>
+              ) : (
+                <span className="uk-text-italic">
+                  Numéro de téléphone non renseigné
+                </span>
+              )}
+            </Grid>
+            {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) && (
               <Grid row gap="small" middle>
-                <Icon name="user" style={{ width: 20 }} />
-                <span>{`${user.firstName} ${user.lastName}`}</span>
-              </Grid>
-              <Grid row gap="small" middle>
-                <Icon name="gender" style={{ width: 20 }} />
-                <span>{`${user.gender === 0 ? 'Homme' : 'Femme'}`}</span>
-              </Grid>
-              <Grid row gap="small" middle>
-                <Icon name="mail" style={{ width: 20 }} />
-                <span>{user.email}</span>
-              </Grid>
-              <Grid row gap="small" middle>
-                <Icon name="phone" style={{ width: 20 }} />
-                {user.phone ? (
-                  <span>{user.phone}</span>
+                <Icon name="home" style={{ width: 20 }} />
+                {user.address ? (
+                  <span>{user.address}</span>
                 ) : (
                   <span className="uk-text-italic">
-                    Numéro de téléphone non renseigné
+                    Adresse postale non renseignée
                   </span>
                 )}
               </Grid>
-              {isRoleIncluded(CANDIDATE_USER_ROLES, [user.role]) && (
-                <Grid row gap="small" middle>
-                  <Icon name="home" style={{ width: 20 }} />
-                  {user.address ? (
-                    <span>{user.address}</span>
-                  ) : (
-                    <span className="uk-text-italic">
-                      Adresse postale non renseignée
-                    </span>
-                  )}
-                </Grid>
-              )}
-            </Grid>
-          ) : undefined}
+            )}
+          </Grid>
         </div>
       </Grid>
       <Grid childWidths={['1-1']} gap="medium">
