@@ -56,6 +56,7 @@ export const Rejoindre = ({ cta }: { cta: (label: string) => void }) => {
             layout="fill"
             objectFit="cover"
             objectPosition="top"
+            alt="Communauté LinkedOut au départ de la route du rhum"
           />
         </div>
       </StyledRejoindre>

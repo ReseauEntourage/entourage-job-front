@@ -129,7 +129,7 @@ const Travailler = () => {
         description="Vous êtes dans une situation de précarité ou d’exclusion ? Vous avez un projet professionnel mais vous n’avez pas de réseau ?"
         img={MainImg}
         imgMobile={MainImg}
-        alt="Un candidat LinkedOut et sa coach"
+        alt="Candidats LinkedOut en recherche d’emploi"
         cta={{
           label: 'Rejoindre Linkedout',
           href: '',

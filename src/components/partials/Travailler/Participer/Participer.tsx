@@ -20,6 +20,7 @@ export const Participer = ({ cta }: { cta: (label: string) => void }) => {
               layout="fill"
               objectFit="cover"
               objectPosition="top"
+              alt="Binôme coach et candidat LinkedOut"
             />
           </div>
         )}
@@ -36,6 +37,7 @@ export const Participer = ({ cta }: { cta: (label: string) => void }) => {
                 layout="fill"
                 objectFit="cover"
                 objectPosition="top"
+                alt="Binôme coach et candidat LinkedOut"
               />
             </div>
           )}
