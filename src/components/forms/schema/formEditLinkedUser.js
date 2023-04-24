@@ -1,5 +1,5 @@
 import Api from 'src/api/index.ts';
-import { USER_ROLES } from 'src/constants';
+import { USER_ROLES } from 'src/constants/users.ts';
 
 export default {
   id: 'form-edit-linked-user',

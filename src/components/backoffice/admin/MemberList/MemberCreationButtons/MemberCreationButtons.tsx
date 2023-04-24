@@ -12,7 +12,7 @@ import { openModal } from 'src/components/modals/Modal';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { ButtonMultiple } from 'src/components/utils';
 import Icon from 'src/components/utils/Icon';
-import { USER_ROLES } from 'src/constants';
+import { USER_ROLES } from 'src/constants/users';
 import { useIsDesktop, usePrevious } from 'src/hooks/utils';
 
 export function MemberCreationButtons({ fetchMembers }) {

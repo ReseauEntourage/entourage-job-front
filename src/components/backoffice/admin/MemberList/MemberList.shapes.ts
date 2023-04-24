@@ -8,4 +8,7 @@ export const MemberPropTypes = PropTypes.shape({
   lastConnection: PropTypes.string,
   role: PropTypes.string,
   zone: PropTypes.string,
+  organization: PropTypes.shape({
+    name: PropTypes.string,
+  }),
 });

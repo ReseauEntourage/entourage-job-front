@@ -15,9 +15,8 @@ import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
-  OFFER_ADMIN_FILTERS_DATA,
   USER_ROLES,
-} from 'src/constants';
+} from 'src/constants/users.ts';
 import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
 import {
   getUserCandidateFromCoachOrCandidate,
@@ -37,6 +36,7 @@ import { useFetchCV } from 'src/hooks/useFetchCV';
 import _ from 'lodash';
 import { gaEvent } from 'src/lib/gtag';
 import { GA_TAGS } from 'src/constants/tags';
+import { OFFER_ADMIN_FILTERS_DATA } from 'src/constants';
 
 const EditUserModal = ({ user, setUser }) => {
   let mutatedSchema = mutateFormSchema(schemaEditUser, [
@@ -79,7 +79,7 @@ const EditUserModal = ({ user, setUser }) => {
   ]);
 
   if (user) {
-    if (user.role !== USER_ROLES.CANDIDATE) {
+    if (!isRoleIncluded(CANDIDATE_USER_ROLES, user.role)) {
       mutatedSchema = mutateFormSchema(mutatedSchema, [
         {
           fieldId: 'address',

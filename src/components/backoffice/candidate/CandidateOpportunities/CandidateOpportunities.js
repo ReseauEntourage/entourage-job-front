@@ -26,7 +26,7 @@ import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpp
 import { useRouter } from 'next/router';
 import _ from 'lodash';
 import { isRoleIncluded } from 'src/utils';
-import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants';
+import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users.ts';
 import { useTabsCount } from './useTabsCount';
 import { tabs } from './CandidateOffersTab/CandidateOffersTab.utils';
 import { useUpdateOpportunityStatus } from './useUpdateOpportunityStatus';

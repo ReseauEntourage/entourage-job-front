@@ -1,12 +1,26 @@
 import { GA_TAGS } from 'src/constants/tags';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
+import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users.ts';
+
+const rolesToParams = (roles) => {
+  return `${roles
+    .map((role) => {
+      return `role=${role}&`;
+    })
+    .join('')}`;
+};
+
+const candidateRolesParams = rolesToParams(CANDIDATE_USER_ROLES);
+const coachRolesParams = rolesToParams(COACH_USER_ROLES);
 
 export const renderLinks = (user, logout) => {
   return {
     admin: [
       {
         href: '/backoffice/admin/membres',
-        queryParams: `?role=Candidat${user?.zone ? `&zone=${user?.zone}` : ''}`,
+        queryParams: `?${candidateRolesParams}${
+          user?.zone ? `zone=${user?.zone}` : ''
+        }`,
         name: 'Les membres',
         icon: 'users',
         badge: '',
@@ -14,8 +28,8 @@ export const renderLinks = (user, logout) => {
         subMenu: [
           {
             href: '/backoffice/admin/membres',
-            queryParams: `?role=Candidat${
-              user?.zone ? `&zone=${user?.zone}` : ''
+            queryParams: `?${candidateRolesParams}${
+              user?.zone ? `zone=${user?.zone}` : ''
             }`,
             name: 'Les candidats',
             icon: 'users',
@@ -24,8 +38,8 @@ export const renderLinks = (user, logout) => {
           },
           {
             href: '/backoffice/admin/membres',
-            queryParams: `?role=Coach${
-              user?.zone ? `&zone=${user?.zone}` : ''
+            queryParams: `?${coachRolesParams}${
+              user?.zone ? `zone=${user?.zone}` : ''
             }`,
             name: 'Les coachs',
             icon: 'users',

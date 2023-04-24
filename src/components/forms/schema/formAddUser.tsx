@@ -2,15 +2,15 @@ import React from 'react';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import PlusFilledIcon from 'assets/custom/icons/plus-filled.svg';
 import Api from 'src/api/index';
+import { ADMIN_ZONES_FILTERS } from 'src/constants/departements';
+import { COLORS } from 'src/constants/styles';
 import {
   ADMIN_ROLES,
   USER_ROLES,
   USER_ROLES_FILTERS,
   RELATED_ROLES,
   EXTERNAL_USER_ROLES,
-} from 'src/constants';
-import { ADMIN_ZONES_FILTERS } from 'src/constants/departements';
-import { COLORS } from 'src/constants/styles';
+} from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils';
 import { formAddOrganization } from './formAddOrganization';
 

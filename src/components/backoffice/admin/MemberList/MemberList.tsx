@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
@@ -15,16 +14,18 @@ import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
 import { Section } from 'src/components/utils';
 import BackToTop from 'src/components/utils/BackToTop/index';
 import { Button } from 'src/components/utils/Button';
-import {
-  CANDIDATE_USER_ROLES,
-  COACH_USER_ROLES,
-  MEMBER_FILTERS_DATA,
-} from 'src/constants';
+import { MEMBER_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
+import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
 import { useBulkActions } from 'src/hooks/useBulkActions';
 import { usePrevious } from 'src/hooks/utils';
-import { isRoleIncluded, filtersToQueryParams } from 'src/utils';
+import {
+  filtersToQueryParams,
+  mutateTypeFilterDependingOnRole,
+} from 'src/utils';
+import { isRoleIncluded } from 'src/utils/Finding';
 import { MemberCreationButtons } from './MemberCreationButtons/MemberCreationButtons';
+import { useRole } from './useRole';
 
 const LIMIT = 50;
 
@@ -35,14 +36,11 @@ export function MemberList({
   setSearch,
   resetFilters,
 }) {
-  const {
-    query: { role: queryRole },
-  } = useRouter();
-
-  const role = queryRole as string;
+  const role = useRole();
 
   const prevRole = usePrevious(role);
-  const [filtersConst, setFiltersConst] = useState(MEMBER_FILTERS_DATA);
+  const [filtersConst, setFiltersConst] =
+    useState<Partial<typeof MEMBER_FILTERS_DATA>>(MEMBER_FILTERS_DATA);
 
   const [numberOfResults, setNumberOfResults] = useState(0);
 
@@ -115,11 +113,7 @@ export function MemberList({
 
   useEffect(() => {
     if (role !== prevRole) {
-      const initialFiltersConst = isRoleIncluded(COACH_USER_ROLES, role)
-        ? [MEMBER_FILTERS_DATA[0], MEMBER_FILTERS_DATA[2]]
-        : MEMBER_FILTERS_DATA;
-
-      setFiltersConst(initialFiltersConst);
+      setFiltersConst(mutateTypeFilterDependingOnRole(role));
     }
   }, [prevRole, role]);
 
@@ -132,14 +126,16 @@ export function MemberList({
     selectElement({ id: memberId });
   };
 
+  const roleToDisplay = isRoleIncluded(CANDIDATE_USER_ROLES, role)
+    ? 'candidats'
+    : 'coachs';
+
   return (
     <>
       <BackToTop />
       <HeaderBackoffice
-        title={`Gestion des ${role?.toLocaleLowerCase()}s`}
-        description={`Ici vous pouvez accéder à tous les profils des ${
-          role?.toLocaleLowerCase() || 'membres'
-        }s afin d'effectuer un suivi individuel de leur avancée.`}
+        title={`Gestion des ${roleToDisplay}`}
+        description={`Ici vous pouvez accéder à tous les profils des ${roleToDisplay} afin d'effectuer un suivi individuel de leur avancée.`}
         page={roleToPage[role]}
       >
         <MemberCreationButtons
@@ -192,25 +188,31 @@ export function MemberList({
           {loading ? (
             <LoadingScreen />
           ) : (
-            <div className="uk-overflow-auto uk-margin-top table-wrapper">
+            <div className="uk-overflow-auto uk-margin-top">
               <StyledTable>
                 <thead>
                   <tr>
-                    <th className="uk-text-nowrap">{role}</th>
                     {isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
-                      <th>Coach</th>
+                      <th className="uk-text-nowrap">Candidat</th>
                     )}
                     {isRoleIncluded(COACH_USER_ROLES, role) && (
-                      <th>Candidat</th>
+                      <th className="uk-text-nowrap">Coach</th>
                     )}
-                    <th>Zone</th>
-                    <th>Dernière connexion</th>
+                    {isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
+                      <th className="uk-text-nowrap">Coach</th>
+                    )}
+                    {isRoleIncluded(COACH_USER_ROLES, role) && (
+                      <th className="uk-text-nowrap">Candidat</th>
+                    )}
+                    <th className="uk-text-nowrap">Type</th>
+                    <th className="uk-text-nowrap">Zone</th>
+                    <th className="uk-text-nowrap">Dernière connexion</th>
                     {isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
                       <>
-                        <th>En emploi</th>
-                        <th>Statut CV</th>
-                        <th>CV masqué</th>
-                        <th>Sélection</th>
+                        <th className="uk-text-nowrap">En emploi</th>
+                        <th className="uk-text-nowrap">Statut CV</th>
+                        <th className="uk-text-nowrap">CV masqué</th>
+                        <th className="uk-text-nowrap">Sélection</th>
                       </>
                     )}
                   </tr>
@@ -242,7 +244,7 @@ export function MemberList({
                   await fetchData(search, filters, role, offset, false);
                 }}
               >
-                Voir tous les {role?.toLocaleLowerCase()}s
+                Voir tous les {roleToDisplay}
               </Button>
             </div>
           )}

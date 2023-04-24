@@ -1,24 +1,26 @@
 import _ from 'lodash';
 
-const ADMIN_ZONES = {
+export const ADMIN_ZONES = {
   PARIS: 'PARIS',
   LYON: 'LYON',
   LILLE: 'LILLE',
   LORIENT: 'LORIENT',
   RENNES: 'RENNES',
   HZ: 'HORS ZONE',
-};
+} as const;
 
-const ADMIN_ZONES_FILTERS = [
+export type AdminZone = (typeof ADMIN_ZONES)[keyof typeof ADMIN_ZONES];
+
+export const ADMIN_ZONES_FILTERS = [
   { value: ADMIN_ZONES.PARIS, label: _.capitalize(ADMIN_ZONES.PARIS) },
   { value: ADMIN_ZONES.LILLE, label: _.capitalize(ADMIN_ZONES.LILLE) },
   { value: ADMIN_ZONES.LYON, label: _.capitalize(ADMIN_ZONES.LYON) },
   { value: ADMIN_ZONES.LORIENT, label: _.capitalize(ADMIN_ZONES.LORIENT) },
   { value: ADMIN_ZONES.RENNES, label: _.capitalize(ADMIN_ZONES.RENNES) },
   { value: ADMIN_ZONES.HZ, label: _.capitalize(ADMIN_ZONES.HZ) },
-];
+] as const;
 
-const DEPARTMENTS = [
+export const DEPARTMENTS = [
   {
     name: 'Ain (01)',
     zone: ADMIN_ZONES.LYON,
@@ -526,17 +528,17 @@ const DEPARTMENTS = [
     zone: ADMIN_ZONES.HZ,
     region: 'Mayotte',
   },
-];
+] as const;
 
-const REGIONS_LABELS = {
+export const REGIONS_LABELS = {
   'Île-de-France': 'Paris et sa région',
   'Auvergne-Rhône-Alpes': 'Lyon et sa région',
   'Hauts-de-France': 'Lille et sa région',
   Bretagne: 'Rennes et sa région',
   Lorient: 'Lorient',
-};
+} as const;
 
-const REGIONS_FILTERS = _.sortBy(
+export const REGIONS_FILTERS = _.sortBy(
   Object.values(
     DEPARTMENTS.reduce((acc, curr) => {
       if (acc[curr.region]) {
@@ -562,7 +564,7 @@ const REGIONS_FILTERS = _.sortBy(
   'label'
 );
 
-const DEPARTMENTS_FILTERS = [
+export const DEPARTMENTS_FILTERS = [
   ...DEPARTMENTS.map(({ name, zone }) => {
     return {
       value: name,
@@ -570,12 +572,4 @@ const DEPARTMENTS_FILTERS = [
       zone,
     };
   }),
-];
-
-export {
-  DEPARTMENTS,
-  ADMIN_ZONES,
-  DEPARTMENTS_FILTERS,
-  REGIONS_FILTERS,
-  ADMIN_ZONES_FILTERS,
-};
+] as const;

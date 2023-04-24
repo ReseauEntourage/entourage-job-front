@@ -12,7 +12,7 @@ import FormWithValidation from 'src/components/forms/FormWithValidation';
 import schemaPersonalData from 'src/components/forms/schema/formPersonalData';
 import schemaChangePassword from 'src/components/forms/schema/formChangePassword';
 import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
-import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants';
+import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users.ts';
 import { useResetForm } from 'src/hooks/utils';
 import UserInformationCard from 'src/components/cards/UserInformationCard';
 import { isRoleIncluded, mutateFormSchema } from 'src/utils';
@@ -105,7 +105,7 @@ const Parametres = () => {
       ]);
     }
 
-    if (userData.role !== USER_ROLES.CANDIDATE) {
+    if (!isRoleIncluded(CANDIDATE_USER_ROLES, userData.role)) {
       mutatedSchema = mutateFormSchema(mutatedSchema, [
         {
           fieldId: 'address',

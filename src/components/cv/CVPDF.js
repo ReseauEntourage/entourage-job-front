@@ -12,7 +12,7 @@ import {
   findConstantFromValue,
 } from 'src/utils';
 import CVCareerPathSentence from 'src/components/cv/CVCareerPathSentence';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
 import { CONTRACTS } from 'src/constants';
 import { CVShape } from './CV.shape';
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import PropTypes from 'prop-types';
 import { IconNoSSR } from 'src/components/utils/Icon';
@@ -17,68 +17,77 @@ const FiltersDropdowns = ({
   showSeparator,
   smallSelectors,
 }) => {
-  const renderFilters = (filterConstants, key, tag, index) => {
-    const reducedFilters = Object.values(filterConstants);
+  const renderFilters = useCallback(
+    (filterConstants, key, tag, mandatory, index) => {
+      const reducedFilters = Object.values(filterConstants);
 
-    return reducedFilters.map((filterConst, i) => {
-      const indexInSelectedFilters = filters[key].findIndex((filter) => {
-        return filter && filter.value === filterConst.value;
-      });
+      return reducedFilters.map((filterConst, i) => {
+        const indexInSelectedFilters = filters[key].findIndex((filter) => {
+          return filter && filter.value === filterConst.value;
+        });
 
-      const isFilterSelected = indexInSelectedFilters > -1;
+        const isFilterSelected = indexInSelectedFilters > -1;
 
-      const onFilterClick = () => {
-        const updatedFilters = JSON.parse(JSON.stringify(filters));
-        if (isFilterSelected) {
-          // remove filter
-          updatedFilters[key].splice(indexInSelectedFilters, 1);
-        } else {
-          // add filter
-          updatedFilters[key].push(filterConst);
-          if (tag) gaEvent(tag);
-        }
-
-        setFilters(updatedFilters);
-      };
-
-      const handleKeyDown = (ev) => {
-        if (ev.key === 'Enter') {
-          onFilterClick();
-        }
-      };
-
-      const id = `${key}-${index}-${i}-${uuidValue}`;
-
-      return (
-        <label
-          key={id}
-          htmlFor={id}
-          className={`uk-flex uk-flex-middle uk-text-small ${
-            index < reducedFilters.length - 1 ? 'uk-margin-small-bottom' : ''
-          }`}
-        >
-          <input
-            id={id}
-            data-testid={
-              filterConst.value ? `input-checkbox-${filterConst.value}` : ''
+        const onFilterClick = () => {
+          const updatedFilters = JSON.parse(JSON.stringify(filters));
+          if (isFilterSelected) {
+            if (!mandatory || filters[key].length > 1) {
+              // remove filter
+              updatedFilters[key].splice(indexInSelectedFilters, 1);
             }
-            style={{ marginTop: 1 }}
-            type="checkbox"
-            className="uk-checkbox uk-margin-small-right"
-            checked={isFilterSelected}
-            onChange={onFilterClick}
-            onKeyDown={handleKeyDown}
-          />
-          <div className="uk-flex-1">{filterConst.label}</div>
-        </label>
-      );
-    });
-  };
+          } else {
+            // add filter
+            updatedFilters[key].push(filterConst);
+            if (tag) gaEvent(tag);
+          }
+
+          setFilters(updatedFilters);
+        };
+
+        const handleKeyDown = (ev) => {
+          if (ev.key === 'Enter') {
+            onFilterClick();
+          }
+        };
+
+        const id = `${key}-${index}-${i}-${uuidValue}`;
+
+        return (
+          <label
+            key={id}
+            htmlFor={id}
+            className={`uk-flex uk-flex-middle uk-text-small ${
+              i < reducedFilters.length - 1 ? 'uk-margin-small-bottom' : ''
+            }`}
+            onClick={(event) => event.stopPropagation()}
+          >
+            <input
+              id={id}
+              data-testid={
+                filterConst.value ? `input-checkbox-${filterConst.value}` : ''
+              }
+              style={{ marginTop: 1 }}
+              type="checkbox"
+              className="uk-checkbox uk-margin-small-right"
+              checked={isFilterSelected}
+              onChange={onFilterClick}
+              onKeyDown={handleKeyDown}
+            />
+            <div className="uk-flex-1">{filterConst.label}</div>
+          </label>
+        );
+      });
+    },
+    [filters, setFilters]
+  );
 
   return (
     <div className={hideOnMobile ? 'uk-visible@m' : ''}>
       {filterData.map(
-        ({ title, constants, priority, key, tag, type, disabled }, index) => {
+        (
+          { title, constants, priority, key, tag, type, disabled, mandatory },
+          index
+        ) => {
           if (filters[key]) {
             if (!type || type !== 'checkbox') {
               return (
@@ -92,8 +101,8 @@ const FiltersDropdowns = ({
                 >
                   <div
                     className={`ent-select-search ${
-                      showSeparator ? 'ent-select-separator' : ''
-                    }`}
+                      smallSelectors ? 'ent-select-search-no-padding' : ''
+                    } ${showSeparator ? 'ent-select-separator' : ''}`}
                     style={{ opacity: disabled ? 0.6 : 1 }}
                   >
                     <Button
@@ -127,7 +136,7 @@ const FiltersDropdowns = ({
                     >
                       {priority && priority.length > 0 ? (
                         <>
-                          {renderFilters(priority, key, tag, index)}
+                          {renderFilters(priority, key, tag, mandatory, index)}
                           <hr />
                           {renderFilters(
                             constants.filter((filterConst) => {
@@ -139,11 +148,12 @@ const FiltersDropdowns = ({
                             }),
                             key,
                             tag,
+                            mandatory,
                             index
                           )}
                         </>
                       ) : (
-                        renderFilters(constants, key, tag, index)
+                        renderFilters(constants, key, tag, mandatory, index)
                       )}
                     </div>
                   </div>

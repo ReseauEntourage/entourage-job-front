@@ -1,5 +1,5 @@
-import { USER_ROLES } from 'src/constants';
-import { ADMIN_ZONES } from 'src/constants/departements';
+import { AdminZone } from 'src/constants/departements';
+import { UserRole } from 'src/constants/users';
 
 export type SocialMedia = 'facebook' | 'linkedin' | 'twitter';
 
@@ -30,16 +30,16 @@ export type User = {
   lastConnection: Date;
   hashReset: string;
   saltReset: string;
-  zone: string;
+  zone: AdminZone;
   userToCoach: string;
 };
 
 export type CreateUserDto = {
   firstName: string;
   lastName: string;
-  role: typeof USER_ROLES;
+  role: UserRole;
   gender: 0 | 1;
-  zone: typeof ADMIN_ZONES;
+  zone: AdminZone;
   phone: string;
   userToLinkId: string | string[];
   email: string;
@@ -53,7 +53,7 @@ export type Organization = {
   referentLastName: string;
   referentMail: string;
   referentPhone: string;
-  zone: string;
+  zone: AdminZone;
 };
 
 export type Opportunity = {

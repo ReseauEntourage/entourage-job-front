@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { StyledCheckbox } from 'src/components/utils/Inputs/Checkbox/CheckBox.styles';
+import { StyledCheckbox } from 'src/components/utils/Inputs/CheckBox/CheckBox.styles';
 
-export function Checkbox({
+export function CheckBox({
   handleClick,
   disabled,
   hidden,
@@ -10,6 +10,7 @@ export function Checkbox({
   title,
   name,
   id,
+  removeMargin,
 }) {
   if (hidden) {
     return null;
@@ -17,6 +18,7 @@ export function Checkbox({
 
   return (
     <StyledCheckbox
+      removeMargin={removeMargin}
       onClick={(e) => {
         e.stopPropagation();
       }}
@@ -40,19 +42,21 @@ export function Checkbox({
   );
 }
 
-Checkbox.propTypes = {
+CheckBox.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   handleClick: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
+  removeMargin: PropTypes.bool,
   hidden: PropTypes.bool,
   value: PropTypes.string,
   title: PropTypes.string,
 };
 
-Checkbox.defaultProps = {
+CheckBox.defaultProps = {
   disabled: false,
   hidden: false,
+  removeMargin: false,
   value: '',
   title: '',
 };
