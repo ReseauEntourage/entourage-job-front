@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Checkbox } from './CheckBox';
+import { CheckBox } from './CheckBox';
 
 const meta = {
-  title: 'Checkbox',
-  component: Checkbox,
+  title: 'CheckBox',
+  component: CheckBox,
   parameters: {
     controls: {
       exclude: /.*/g,
@@ -28,7 +28,7 @@ const Template = (args) => {
   const [value, setValue] = useState();
 
   return (
-    <Checkbox
+    <CheckBox
       {...args}
       handleClick={(event) => {
         setValue(event.target.checked);

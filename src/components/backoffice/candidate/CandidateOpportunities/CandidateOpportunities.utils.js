@@ -1,5 +1,6 @@
 import React from 'react';
-import { USER_ROLES, OPPORTUNITY_FILTERS_DATA } from 'src/constants';
+import { USER_ROLES } from 'src/constants/users.ts';
+import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 
 export const textVariables = {
   title: {

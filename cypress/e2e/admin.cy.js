@@ -13,7 +13,7 @@ describe('Admin', () => {
     cy.intercept('GET', '/user/members/count', { pendingCVs: 0 });
     cy.intercept(
       'GET',
-      '/user/members?limit=50&offset=0&role=Candidat&zone[]=LYON',
+      '/user/members?limit=50&offset=0&role[]=Candidat&zone[]=LYON',
       {
         fixture: 'user-members-res',
       }

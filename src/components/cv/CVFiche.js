@@ -25,7 +25,7 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
 import CVCareerPathSentence from 'src/components/cv/CVCareerPathSentence';
 import { CONTRACTS } from 'src/constants';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
 import { fbEvent } from 'src/lib/fb.ts';
 import { CVShape } from './CV.shape';
 

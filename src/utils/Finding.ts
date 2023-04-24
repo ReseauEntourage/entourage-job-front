@@ -1,9 +1,10 @@
+import _ from 'lodash';
+import { OFFER_STATUS } from 'src/constants';
 import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
-  OFFER_STATUS,
-} from 'src/constants';
-import _ from 'lodash';
+  UserRole,
+} from 'src/constants/users';
 
 export function findOfferStatus(status, isPublic, isRecommended) {
   const currentStatus = OFFER_STATUS.find((oStatus) => {
@@ -46,24 +47,31 @@ export function findConstantFromValue(valToFind, constantsToFindFrom) {
   );
 }
 
-export function getValueFromFormField(fieldValue) {
-  if (
-    _.isArray(fieldValue) &&
-    _.every(fieldValue, (fieldVal) => {
-      return _.isObject(fieldVal) && _.has(fieldVal, 'value');
-    })
-  ) {
-    return fieldValue.map(({ value }) => {
-      return value;
-    });
-  }
-  if (_.isObject(fieldValue) && _.has(fieldValue, 'value')) {
+interface FormValue {
+  value: number | string;
+}
+
+export function getValueFromFormField(fieldValue: FormValue | FormValue[]) {
+  if (_.isArray(fieldValue)) {
+    if (
+      _.every(fieldValue, (fieldVal) => {
+        return _.isObject(fieldVal) && _.has(fieldVal, 'value');
+      })
+    ) {
+      return fieldValue.map(({ value }) => {
+        return value;
+      });
+    }
+  } else if (_.isObject(fieldValue) && _.has(fieldValue, 'value')) {
     return fieldValue.value;
   }
   return fieldValue;
 }
 
-export function isRoleIncluded(superset, subset) {
+export function isRoleIncluded(
+  superset: readonly UserRole[],
+  subset: UserRole | UserRole[]
+) {
   if (!Array.isArray(subset)) {
     return _.difference([subset], superset).length === 0;
   }

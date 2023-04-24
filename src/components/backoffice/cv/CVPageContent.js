@@ -13,10 +13,8 @@ import ButtonPost from 'src/components/backoffice/cv/ButtonPost';
 import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
-  CV_STATUS,
-  SOCKETS,
   USER_ROLES,
-} from 'src/constants';
+} from 'src/constants/users.ts';
 import NoCV from 'src/components/backoffice/cv/NoCV';
 import ButtonDownload from 'src/components/backoffice/cv/ButtonDownload';
 import { openModal, useModalContext } from 'src/components/modals/Modal';
@@ -25,6 +23,7 @@ import { usePrevious } from 'src/hooks/utils';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { CVShape } from 'src/components/cv/CV.shape';
 import { isRoleIncluded } from 'src/utils';
+import { CV_STATUS, SOCKETS } from 'src/constants';
 
 const pusher = new Pusher(process.env.PUSHER_API_KEY, {
   cluster: 'eu',

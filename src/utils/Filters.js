@@ -1,6 +1,35 @@
 import _ from 'lodash';
+import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users.ts';
+import { MEMBER_FILTERS_DATA } from 'src/constants';
+import { isRoleIncluded } from './Finding.ts';
 
-const getOpportunityUserFromOffer = (offer, candidateId) => {
+const filterMemberTypeConstantsByRole = (roles) => {
+  return {
+    ...MEMBER_FILTERS_DATA[0],
+    constants: MEMBER_FILTERS_DATA[0].constants.filter((roleConstants) => {
+      return isRoleIncluded(roles, roleConstants.value);
+    }),
+  };
+};
+export const mutateTypeFilterDependingOnRole = (role) => {
+  if (isRoleIncluded(COACH_USER_ROLES, role)) {
+    return [
+      filterMemberTypeConstantsByRole(COACH_USER_ROLES),
+      MEMBER_FILTERS_DATA[1],
+      MEMBER_FILTERS_DATA[3],
+    ];
+  }
+  if (isRoleIncluded(CANDIDATE_USER_ROLES, role)) {
+    return [
+      filterMemberTypeConstantsByRole(CANDIDATE_USER_ROLES),
+      ...MEMBER_FILTERS_DATA.slice(1),
+    ];
+  }
+
+  return MEMBER_FILTERS_DATA;
+};
+
+export const getOpportunityUserFromOffer = (offer, candidateId) => {
   let opportunityUser;
   if (
     offer.opportunityUsers &&
@@ -16,7 +45,7 @@ const getOpportunityUserFromOffer = (offer, candidateId) => {
   return opportunityUser;
 };
 
-const filtersToQueryParams = (filters) => {
+export const filtersToQueryParams = (filters) => {
   const params = {};
   _.forEach(Object.keys(filters), (filter) => {
     params[filter] =
@@ -29,7 +58,7 @@ const filtersToQueryParams = (filters) => {
   return params;
 };
 
-const getFiltersObjectsFromQueryParamsFront = (params, filtersConst) => {
+export const getFiltersObjectsFromQueryParamsFront = (params, filtersConst) => {
   const filters = {};
   if (filtersConst) {
     _.forEach(filtersConst, (filterConst) => {
@@ -58,7 +87,7 @@ const getFiltersObjectsFromQueryParamsFront = (params, filtersConst) => {
   return filters;
 };
 
-const getFiltersTagsFromQueryParamsFront = (tag, filters) => {
+export const getFiltersTagsFromQueryParamsFront = (tag, filters) => {
   const updatedFilters = JSON.parse(JSON.stringify(filters));
   const filterToDeActivate = updatedFilters.find((filter) => {
     return filter.active;
@@ -69,11 +98,4 @@ const getFiltersTagsFromQueryParamsFront = (tag, filters) => {
   if (filterToDeActivate) filterToDeActivate.active = false;
   if (filterToActivate) filterToActivate.active = true;
   return updatedFilters;
-};
-
-export {
-  getOpportunityUserFromOffer,
-  filtersToQueryParams,
-  getFiltersObjectsFromQueryParamsFront,
-  getFiltersTagsFromQueryParamsFront,
 };

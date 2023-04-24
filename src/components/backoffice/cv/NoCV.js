@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Grid } from 'src/components/utils';
-import { COACH_USER_ROLES, CV_STATUS } from 'src/constants';
+import { CV_STATUS } from 'src/constants';
 import { Api } from 'src/api/index.ts';
 import {
   isRoleIncluded,
   getUserCandidateFromCoachOrCandidate,
 } from 'src/utils';
+import { COACH_USER_ROLES } from 'src/constants/users.ts';
 
 const NoCV = ({ candidateId, user, setCV }) => {
   const candidate = getUserCandidateFromCoachOrCandidate(user);
