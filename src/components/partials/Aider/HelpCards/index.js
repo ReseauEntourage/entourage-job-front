@@ -40,7 +40,7 @@ const cardsContent = [
     img: HelpReseau,
     text: 'Une mission souple et ponctuelle pour apporter un coup de pouce et des mises en relation aux candidats et leurs coachs tout au long de leur parcours LinkedOut ! Mission disponible à Paris et Lyon pour le moment !',
     cta: 'Rejoindre les connecteurs',
-    href: 'https://airtable.com/shravv7gRI4c64yzw',
+    href: 'https://entourage2.my.site.com/coachs/s/rejoindre-les-connecteurs',
     alt: 'Des connecteurs LinkedOut',
     newTab: true,
     gaTag: GA_TAGS.PAGE_AIDER_CONNECTEUR_CLIC,
