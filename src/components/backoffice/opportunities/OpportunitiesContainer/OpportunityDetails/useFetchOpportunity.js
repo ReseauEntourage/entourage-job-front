@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Api } from 'src/api/index.ts';
 import { usePrevious } from 'src/hooks/utils';
 import { UserContext } from 'src/store/UserProvider';
-import { USER_ROLES } from 'src/constants';
+import { USER_ROLES } from 'src/constants/users.ts';
 
 export function useFetchOpportunity(
   opportunityId,

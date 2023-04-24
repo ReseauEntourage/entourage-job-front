@@ -2,14 +2,14 @@ import moment from 'moment';
 
 import {
   BUSINESS_LINES,
-  CANDIDATE_USER_ROLES,
   CONTRACTS,
   EXTERNAL_OFFERS_ORIGINS,
   OFFER_STATUS,
 } from 'src/constants';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
 import { Api } from 'src/api/index.ts';
 import { findConstantFromValue } from 'src/utils';
+import { CANDIDATE_USER_ROLES } from 'src/constants/users.ts';
 
 export default {
   id: 'form-offer-external',

@@ -17,7 +17,7 @@ import ModalOfferInfo from 'src/components/modals/Modal/ModalGeneric/OfferModals
 import FormWithValidation from 'src/components/forms/FormWithValidation';
 import { UserContext } from 'src/store/UserProvider';
 import { EXTERNAL_OFFERS_ORIGINS, OFFER_STATUS } from 'src/constants';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
 import { openModal } from 'src/components/modals/Modal';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { OfferInfoContainer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferInfoContainer';

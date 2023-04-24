@@ -1,14 +1,13 @@
 import React, { useCallback, useContext, useState } from 'react';
-import { ADMIN_ZONES, DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import {
+  ADMIN_ZONES,
+  DEPARTMENTS_FILTERS,
+} from 'src/constants/departements.ts';
 import { useFilters } from 'src/hooks';
 import { UserContext } from 'src/store/UserProvider';
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
 import { Api } from 'src/api/index.ts';
-import {
-  CANDIDATE_USER_ROLES,
-  OPPORTUNITY_FILTERS_DATA,
-  USER_ROLES,
-} from 'src/constants';
+import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users.ts';
 import OpportunityError from 'src/components/opportunities/OpportunityError';
 import { useRouter } from 'next/router';
 import { CandidateOpportunities } from 'src/components/backoffice/candidate/CandidateOpportunities';
@@ -26,6 +25,7 @@ import {
 } from 'src/utils';
 import _ from 'lodash';
 import { validate as uuidValidate } from 'uuid';
+import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 
 // filters for the query
 const candidateQueryFilters = OPPORTUNITY_FILTERS_DATA.slice(1);

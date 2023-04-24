@@ -7,7 +7,7 @@ import schemaLostPwd from 'src/components/forms/schema/formLostPwd.json';
 import FormWithValidation from 'src/components/forms/FormWithValidation';
 import { UserContext } from 'src/store/UserProvider';
 import { Api } from 'src/api/index.ts';
-import { USER_ROLES } from 'src/constants';
+import { USER_ROLES } from 'src/constants/users.ts';
 import StepperModal from 'src/components/modals/Modal/ModalGeneric/StepperModal';
 import SuccessModalContent from 'src/components/modals/SuccessModalContent';
 import { openModal } from 'src/components/modals/Modal';
