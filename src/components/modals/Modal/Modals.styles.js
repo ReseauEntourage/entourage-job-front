@@ -22,7 +22,7 @@ export const StyledHeaderModal = styled.div`
     padding: 20px 0;
     text-align: center;
     > div {
-      max-width: 440px;
+      max-width: 90%;
       display: block;
       margin: auto;
       p {

@@ -167,7 +167,7 @@ export default {
     },
     {
       id: 'infoCoTitle',
-      title: 'Date des prochaines réunion d’information',
+      title: 'Prochaine étape: nous rencontrer',
       component: 'heading',
       hide: (getValue, fieldOptions) => {
         const city = antenneInfo.find((antenne) => {
@@ -185,7 +185,7 @@ export default {
     {
       id: 'infoCoSubtitle',
       title: (getValue) => {
-        return `Les réunions d’informations ont lieu dans nos locaux au ${
+        return `Pour bien comprendre votre besoin et vous accompagner au mieux nous vous invitons dans nos bureaux, au ${
           antenneInfo.find((antenne) => {
             return antenne.dpt === getValue('location');
           })?.address

@@ -142,6 +142,7 @@ const GenericField = ({
           onChange={onChangeCustom}
           type={data.type}
           name={data.name}
+          value={value}
           placeholder={data.placeholder}
           showLabel={data.showLabel}
           valid={getValid(data.name)}

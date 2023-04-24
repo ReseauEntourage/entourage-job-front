@@ -7,7 +7,7 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 import Hamburger from 'src/components/utils/Hamburger';
 import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas';
 import { OFFCANVAS_LOGGED } from 'src/constants/utils';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 import { StyledConnectedItemMobile } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/HeaderConnectedContent.styles';
 import SubMenu from 'src/components/headers/HeaderConnected/HeaderConnectedContent/SubMenu';
 import { UserContext } from 'src/store/UserProvider';

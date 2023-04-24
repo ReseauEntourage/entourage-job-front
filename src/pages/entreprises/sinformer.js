@@ -10,7 +10,7 @@ import CompanyTestimonies from 'src/components/partials/CompanyTestimonies';
 import { NewsletterPartial } from 'src/components/partials';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import { GA_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 import CompanyContactModal from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
 import { openModal } from 'src/components/modals/Modal';
 

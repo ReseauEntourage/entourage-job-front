@@ -1,3 +1,5 @@
+import { CookieValueTypes } from 'cookies-next';
+
 export type SocialMedia = 'facebook' | 'linkedin' | 'twitter';
 
 export const APIRoutes = {
@@ -170,14 +172,14 @@ export type ContactNewsletter = {
   email: string;
   zone?: string;
   status?: string;
-  visit?: string;
+  visit?: CookieValueTypes;
   visitor?: string;
   urlParams?: {
-    utm?: string;
-    utm_medium?: string;
-    utm_source?: string;
-    gclid?: string;
-    referer?: string;
+    utm?: string | string[];
+    utm_medium?: string | string[];
+    utm_source?: string | string[];
+    gclid?: string | string[];
+    referer?: string | string[];
   };
 };
 

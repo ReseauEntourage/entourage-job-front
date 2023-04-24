@@ -6,7 +6,7 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 import { usePrevious } from 'src/hooks/utils';
 import { openModal } from 'src/components/modals/Modal';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 
 export function useBulkActions(apiRoute, refreshElementsCallback, tag) {
   const [selectedIds, setSelectedIds] = useState([]);

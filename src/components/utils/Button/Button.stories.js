@@ -60,6 +60,14 @@ export function SecondaryOrange() {
   );
 }
 
+export function SecondaryInvertedOrange() {
+  return (
+    <Button style="custom-secondary-inverted" color="primaryOrange">
+      Button
+    </Button>
+  );
+}
+
 export function ButtonDisabled() {
   return (
     <Button style="custom-secondary disabled" color="primaryOrange">

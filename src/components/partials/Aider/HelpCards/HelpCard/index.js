@@ -2,10 +2,10 @@ import React from 'react';
 import Image from 'next/image';
 import Button from 'src/components/utils/Button';
 import { IconNoSSR } from 'src/components/utils/Icon';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 import { PropTypes } from 'prop-types';
 import Link from 'next/link';
-import { fbEvent } from 'src/lib/fb';
+import { fbEvent } from 'src/lib/fb.ts';
 import { StyledHelpCard, StyledLink } from './styles';
 
 const HelpCard = ({ cardContent, keyMap }) => {

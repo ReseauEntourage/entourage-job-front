@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { Grid } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 import FacebookIcon from 'public/static/img/icons/facebook.svg';
 import YoutubeIcon from 'public/static/img/icons/youtube.svg';
 import InstaIcon from 'public/static/img/icons/instagram.svg';

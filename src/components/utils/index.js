@@ -7,7 +7,7 @@ export { default as Icon } from 'src/components/utils/Icon';
 export { default as Navbar } from 'src/components/utils/Navbar/Navbar';
 export { default as Offcanvas } from 'src/components/utils/Offcanvas';
 export { default as Padding } from 'src/components/utils/Padding';
-export { default as Section } from 'src/components/utils/Section';
+export { Section } from 'src/components/utils/Section';
 export { default as SimpleLink } from 'src/components/utils/SimpleLink';
 export { default as Slider } from 'src/components/utils/Slider';
 export { default as Text } from 'src/components/utils/Text';

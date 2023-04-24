@@ -9,7 +9,7 @@ import { StyledOppCTAsContainer } from 'src/components/backoffice/opportunities/
 import { v4 as uuid } from 'uuid';
 import PropTypes from 'prop-types';
 import { GA_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 import { EVENT_TYPES, OFFER_STATUS } from 'src/constants';
 import { openModal } from 'src/components/modals/Modal';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';

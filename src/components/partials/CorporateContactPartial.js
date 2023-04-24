@@ -1,6 +1,6 @@
 import React from 'react';
 import ModalInterestLinkedOut from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 import { GA_TAGS } from 'src/constants/tags';
 import { Button, Grid, Section } from 'src/components/utils';
 import { openModal } from 'src/components/modals/Modal';

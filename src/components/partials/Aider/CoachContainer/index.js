@@ -14,7 +14,7 @@ import InterviewIcon from 'public/static/img/icons/aider-interview.svg';
 import BoiteOutilsIcon from 'public/static/img/icons/aider-boite-outils.svg';
 import { Container } from 'src/components/utils/containers';
 import { v4 as uuid } from 'uuid';
-import { fbEvent } from 'src/lib/fb';
+import { fbEvent } from 'src/lib/fb.ts';
 import { FB_TAGS } from 'src/constants/tags';
 
 const uuidValue = uuid();
