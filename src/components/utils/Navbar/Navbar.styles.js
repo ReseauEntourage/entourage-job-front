@@ -40,7 +40,6 @@ export const StyledRightContainer = styled.div`
 `;
 
 export const StyledLeftContainer = styled.div`
-  flex-wrap: wrap;
   display: flex;
   align-items: center;
 `;
