@@ -2,7 +2,7 @@ import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BREAKPOINTS } from 'src/constants/styles';
-import { NewsletterPartial } from '..';
+import { NewsletterPartial } from '../NewsletterPartial.tsx';
 
 jest.mock('react-modal');
 jest.mock('cookies-next');

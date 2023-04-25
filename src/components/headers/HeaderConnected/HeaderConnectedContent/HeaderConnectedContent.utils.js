@@ -93,6 +93,15 @@ export const renderLinks = (user, logout) => {
         badge: 'cv',
         tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_CV_CLIC,
       },
+      {
+        href: `${
+          process.env.TOOLBOX_CANDIDATE_URL
+        }?id=${getCandidateIdFromCoachOrCandidate(user)}`,
+        name: 'Boîte à outils',
+        icon: 'question',
+        external: true,
+        tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_BAO_CLIC,
+      },
     ],
     coach: [
       {
@@ -136,7 +145,7 @@ export const renderLinks = (user, logout) => {
       },
       {
         href: `${
-          process.env.TOOLBOX_URL
+          process.env.TOOLBOX_COACH_URL
         }?id=${getCandidateIdFromCoachOrCandidate(user)}`,
         name: 'Boîte à outils',
         icon: 'question',
