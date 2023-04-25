@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import Layout from 'src/components/Layout';
+import Layout from 'src/components/Layout.tsx';
 import { Button, Section } from 'src/components/utils';
 import schema from 'src/components/forms/schema/formResetPassword';
 import FormWithValidation from 'src/components/forms/FormWithValidation';

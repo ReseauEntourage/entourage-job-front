@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'next/router';
-import Layout from 'src/components/Layout';
+import Layout from 'src/components/Layout.tsx';
 import Api from 'src/api/index.ts';
 import { Section } from 'src/components/utils';
 import CVPDF from 'src/components/cv/CVPDF';

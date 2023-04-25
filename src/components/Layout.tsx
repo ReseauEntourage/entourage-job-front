@@ -1,12 +1,24 @@
-import React from 'react';
+import { WithRouterProps } from 'next/dist/client/with-router';
 import Head from 'next/head';
-import PropTypes from 'prop-types';
 import { withRouter } from 'next/router';
-import Footer from 'src/components/Footer';
-import HeaderPublic from 'src/components/headers/HeaderPublic/HeaderPublic';
-import HeaderConnected from 'src/components/headers/HeaderConnected';
-import { addPrefix } from 'src/utils';
 import Script from 'next/script';
+import React from 'react';
+import Footer from 'src/components/Footer';
+import HeaderConnected from 'src/components/headers/HeaderConnected';
+import HeaderPublic from 'src/components/headers/HeaderPublic/HeaderPublic';
+import { addPrefix } from 'src/utils';
+
+interface LayoutProps extends WithRouterProps {
+  children: JSX.Element | JSX.Element[];
+  title?: string;
+  metaTitle?: string;
+  metaImage?: string;
+  metaDescription?: string;
+  metaUrl?: string;
+  metaType?: string;
+  noIndex?: boolean;
+  isBackoffice?: boolean;
+}
 
 const Layout = ({
   children,
@@ -19,7 +31,7 @@ const Layout = ({
   router,
   noIndex,
   isBackoffice,
-}) => {
+}: LayoutProps) => {
   const isPDF = router.pathname.includes('/pdf/');
   const domain = process.env.SERVER_URL.replace(/https:\/\/|http:\/\//g, '');
 
@@ -75,24 +87,6 @@ const Layout = ({
   );
 };
 
-Layout.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
-  ]).isRequired,
-  title: PropTypes.string,
-  metaTitle: PropTypes.string,
-  metaImage: PropTypes.string,
-  metaDescription: PropTypes.string,
-  metaUrl: PropTypes.string,
-  metaType: PropTypes.string,
-  router: PropTypes.shape({
-    pathname: PropTypes.string,
-  }).isRequired,
-  noIndex: PropTypes.bool,
-  isBackoffice: PropTypes.bool,
-};
-
 Layout.defaultProps = {
   title: 'LinkedOut\xa0: partagez votre réseau avec ceux qui n’en ont pas',
   metaTitle: 'LinkedOut\xa0: partagez votre réseau avec ceux qui n’en ont pas',
@@ -104,4 +98,4 @@ Layout.defaultProps = {
   noIndex: false,
   isBackoffice: false,
 };
-export default withRouter(Layout);
+export default withRouter<LayoutProps>(Layout);

@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from 'src/components/Layout';
+import Layout from 'src/components/Layout.tsx';
 import { Section } from 'src/components/utils';
 import PartnersMap from 'src/components/partials/PartnersMap';
 import MultipleCTA from 'src/components/partials/MultipleCTA';
