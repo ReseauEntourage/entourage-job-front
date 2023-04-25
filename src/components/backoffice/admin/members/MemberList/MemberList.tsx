@@ -1,22 +1,19 @@
 import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
+import { MemberTable } from '../MemberTable';
 import Api from 'src/api';
 
-import { Member } from 'src/components/backoffice/admin/MemberList/Member';
-import {
-  StyledActionsContainer,
-  StyledTable,
-} from 'src/components/backoffice/admin/MemberList/MemberList.styles';
+import { StyledActionsContainer } from 'src/components/backoffice/admin/members/MemberList/MemberList.styles';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import SearchBar from 'src/components/filters/SearchBar';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
 import { Section } from 'src/components/utils';
-import BackToTop from 'src/components/utils/BackToTop/index';
+import BackToTop from 'src/components/utils/BackToTop';
 import { Button } from 'src/components/utils/Button';
 import { MEMBER_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
-import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
+import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 import { useBulkActions } from 'src/hooks/useBulkActions';
 import { usePrevious } from 'src/hooks/utils';
 import {
@@ -189,47 +186,20 @@ export function MemberList({
             <LoadingScreen />
           ) : (
             <div className="uk-overflow-auto uk-margin-top">
-              <StyledTable>
-                <thead>
-                  <tr>
-                    {isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
-                      <th className="uk-text-nowrap">Candidat</th>
-                    )}
-                    {isRoleIncluded(COACH_USER_ROLES, role) && (
-                      <th className="uk-text-nowrap">Coach</th>
-                    )}
-                    {isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
-                      <th className="uk-text-nowrap">Coach</th>
-                    )}
-                    {isRoleIncluded(COACH_USER_ROLES, role) && (
-                      <th className="uk-text-nowrap">Candidat</th>
-                    )}
-                    <th className="uk-text-nowrap">Type</th>
-                    <th className="uk-text-nowrap">Zone</th>
-                    <th className="uk-text-nowrap">Dernière connexion</th>
-                    {isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
-                      <>
-                        <th className="uk-text-nowrap">En emploi</th>
-                        <th className="uk-text-nowrap">Statut CV</th>
-                        <th className="uk-text-nowrap">CV masqué</th>
-                        <th className="uk-text-nowrap">Sélection</th>
-                      </>
-                    )}
-                  </tr>
-                </thead>
-                <tbody data-testid="member-list">
-                  {members.map((member, key) => {
-                    return (
-                      <Member
-                        role={role}
-                        member={member}
-                        key={key}
-                        callback={handleSelectedMembers}
-                      />
-                    );
-                  })}
-                </tbody>
-              </StyledTable>
+              <MemberTable
+                columns={[
+                  'associatedUser',
+                  'zone',
+                  'type',
+                  'lastConnection',
+                  'employed',
+                  'cvStatus',
+                  'cvHidden',
+                ]}
+                members={members}
+                role={role}
+                handleSelectedMembers={handleSelectedMembers}
+              />
             </div>
           )}
           {!loading && !allLoaded && (

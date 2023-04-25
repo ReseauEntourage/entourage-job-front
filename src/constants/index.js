@@ -842,7 +842,7 @@ export const EVENT_TYPES_FILTERS = [
   },
 ];
 
-export const BACKOFFICE_PAGES = ['candidates', 'coachs', 'oppotunities'];
+export const BACKOFFICE_PAGES = ['candidates', 'coachs', 'opportunities'];
 
 export const antenneInfo = [
   {

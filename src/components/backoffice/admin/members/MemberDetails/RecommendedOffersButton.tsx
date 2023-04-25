@@ -21,7 +21,8 @@ export function RecommendedOffersButton({
 
   return (
     <Button
-      style="default"
+      style="custom-primary-inverted"
+      color="darkGrayFont"
       href={{
         pathname: '/backoffice/admin/offres',
         query: {

@@ -21,17 +21,6 @@ export const StyledFooterForm = styled.div`
   }
 `;
 
-export const StyledFormHeading = styled.div`
-  width: 100%;
-  font-size: 16px;
-  margin: 28px 0 24px;
-  padding-bottom: 4px;
-  border-bottom: 1px solid ${COLORS.primaryOrange};
-  @media screen and (max-width: ${BREAKPOINTS.desktop - 1}px) {
-    font-size: 14px;
-  }
-`;
-
 export const StyledErrorMessage = styled.div`
   color: ${COLORS.darkOrange};
   /* margin-top: -30px; */

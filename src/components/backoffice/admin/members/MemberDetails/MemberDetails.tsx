@@ -1,18 +1,14 @@
 import React from 'react';
 import { User } from 'src/api/types';
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
-import { useTab } from 'src/components/backoffice/admin/MemberDetails/useTab';
+import { useTab } from 'src/components/backoffice/admin/members/MemberDetails/useTab';
 import { Grid, Icon, Section, SimpleLink } from 'src/components/utils';
 import { MEMBER_TABS } from 'src/constants';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 
 import { isRoleIncluded } from 'src/utils/Finding';
 import { MemberDetailsHeader } from './MemberDetailsHeader';
-import {
-  CVMemberTab,
-  OffersMemberTab,
-  ParametersMemberTab,
-} from './MemberTabs';
+import { CVMemberTab, OffersMemberTab, ParametersMemberTab } from './MemberTab';
 import { RecommendedOffersButton } from './RecommendedOffersButton';
 
 interface MemberDetails {
@@ -25,7 +21,7 @@ export function MemberDetails({ user, setUser }: MemberDetails) {
 
   return (
     <LayoutBackOffice title={`${user.firstName} - Gestion des membres`}>
-      <Section>
+      <Section container="large">
         <Grid column gap="medium">
           <Grid between eachWidths={['expand@m', 'auto@m']}>
             <SimpleLink
@@ -41,10 +37,7 @@ export function MemberDetails({ user, setUser }: MemberDetails) {
               <RecommendedOffersButton candidateId={user.id} />
             )}
           </Grid>
-          <div>
-            <MemberDetailsHeader user={user} />
-            <hr className="ent-divier-backoffice uk-margin-medium-top" />
-          </div>
+          <MemberDetailsHeader user={user} />
           <ul className="uk-subnav">
             {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) && (
               <>

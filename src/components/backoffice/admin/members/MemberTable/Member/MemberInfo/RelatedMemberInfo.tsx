@@ -1,4 +1,5 @@
 import React from 'react';
+import { Tooltip } from 'react-tooltip';
 import { v4 as uuid } from 'uuid';
 import { EXTERNAL_USER_ROLES, USER_ROLES, UserRole } from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils/Finding';
@@ -6,6 +7,7 @@ import { MemberInfo } from './MemberInfo';
 import {
   StyledNumberCandidates,
   StyledRelatedMemberListItem,
+  StyledNumberCandidatesContainer,
 } from './RelatedMemberInfo.styles';
 
 const uuidValue = uuid();
@@ -25,6 +27,8 @@ interface RelatedMemberInfoProps {
   role: UserRole;
 }
 
+const tooltipId = 'multiple-users-tooltip';
+
 export function RelatedMemberInfo({
   role,
   relatedUser,
@@ -33,14 +37,29 @@ export function RelatedMemberInfo({
     return <span>Non lié</span>;
   }
 
+  const multipleUsersString = `${
+    relatedUser ? relatedUser.length : 0
+  } candidat${relatedUser && relatedUser.length > 1 ? 's' : ''}`;
+
+  const multipleUsersTooltip = relatedUser
+    .map(({ firstName, lastName }, index) => {
+      return `${firstName} ${lastName}`;
+    })
+    .join(`, `);
+
   return (
     <>
       {role === USER_ROLES.COACH_EXTERNAL ? (
-        <StyledNumberCandidates>{`${
-          relatedUser ? relatedUser.length : 0
-        } candidat${
-          relatedUser && relatedUser.length > 1 ? 's' : ''
-        }`}</StyledNumberCandidates>
+        <StyledNumberCandidatesContainer>
+          <StyledNumberCandidates
+            data-tooltip-id={tooltipId}
+            data-tooltip-content={multipleUsersTooltip}
+            data-tooltip-place="top"
+          >
+            {multipleUsersString}
+          </StyledNumberCandidates>
+          <Tooltip id={tooltipId} />
+        </StyledNumberCandidatesContainer>
       ) : (
         relatedUser.map(
           ({

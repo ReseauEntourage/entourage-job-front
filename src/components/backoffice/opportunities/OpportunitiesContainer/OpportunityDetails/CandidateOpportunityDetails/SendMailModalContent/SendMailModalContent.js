@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import { StyledSendMailContent } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/SendMailModalContent/SendMailContent.styles';
-import TextArea from 'src/components/utils/Inputs/TextArea';
+import { TextArea } from 'src/components/utils/Inputs/TextArea';
 import { useFetchOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/useFetchOpportunity';
 import { UserContext } from 'src/store/UserProvider';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
@@ -20,6 +20,7 @@ const SendMailModalContent = ({ OpportunityId, relance, onSubmit }) => {
   const handleDescription = (e) => {
     setTextAreaContent(e.target.value);
   };
+
   const object = relance
     ? 'Relance - demande de contact'
     : 'Demande de contact';
@@ -129,6 +130,8 @@ const SendMailModalContent = ({ OpportunityId, relance, onSubmit }) => {
           <TextArea
             title="Ajouter un message personnel"
             onChange={handleDescription}
+            value={textAreaContent}
+            name="contact-description"
           />
         </div>
         <FooterForm

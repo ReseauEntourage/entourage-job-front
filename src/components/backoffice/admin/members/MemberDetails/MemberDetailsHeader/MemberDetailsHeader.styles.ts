@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const StyledContainer = styled.div`
   display: flex;
   flex-direction: row;
+  padding-bottom: 24px;
 `;
 
 export const StyledNameContainer = styled.div`

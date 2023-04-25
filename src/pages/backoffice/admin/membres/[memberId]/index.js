@@ -8,10 +8,10 @@ import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpp
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
 import { Grid, Section, SimpleLink } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
-import { MemberDetails } from 'src/components/backoffice/admin/MemberDetails';
+import { MemberDetails } from 'src/components/backoffice/admin/members/MemberDetails';
 import { MEMBER_TABS } from 'src/constants';
-import { useTab } from 'src/components/backoffice/admin/MemberDetails/useTab.ts';
-import { useMemberId } from 'src/components/backoffice/admin/MemberDetails/useMemberId.ts';
+import { useTab } from 'src/components/backoffice/admin/members/MemberDetails/useTab.ts';
+import { useMemberId } from 'src/components/backoffice/admin/members/MemberDetails/useMemberId.ts';
 
 const User = () => {
   const [user, setUser] = useState();

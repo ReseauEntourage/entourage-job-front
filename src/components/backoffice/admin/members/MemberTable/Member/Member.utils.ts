@@ -1,4 +1,4 @@
-import { getUserCandidateFromCoachOrCandidate } from 'src/utils';
+import { getUserCandidateFromCoachOrCandidate } from 'src/utils/Finding';
 
 export const renderCVStatus = (member) => {
   if (getUserCandidateFromCoachOrCandidate(member)?.cvs?.[0]?.status) {

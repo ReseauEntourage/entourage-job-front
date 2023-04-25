@@ -169,9 +169,9 @@ export const StyledButton = styled.button`
 
     path {
       transition: 0.2s ease-in-out;
-      fill: ${(props) => {
+     /* fill: ${(props) => {
         return COLORS[props.color] || COLORS.primaryOrange;
-      }} !important;
+      }} !important;*/
     }
 
     border-radius: 25px;
@@ -193,9 +193,9 @@ export const StyledButton = styled.button`
 
       path {
         transition: 0.2s ease-in-out;
-        fill: ${(props) => {
+       /* fill: ${(props) => {
           return colorToHoverColor[props.color];
-        }} !important;
+        }} !important;*/
       }
     }
   }

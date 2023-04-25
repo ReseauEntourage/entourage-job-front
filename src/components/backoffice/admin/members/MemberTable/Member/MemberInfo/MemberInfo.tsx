@@ -31,7 +31,7 @@ export function MemberInfo({
               <span className="bold">&nbsp;-&nbsp;{organizationName}</span>
             )}
           </span>
-          <span>{email}</span>
+          {email && <span>{email}</span>}
         </StyledMemberInfoContainer>
       </a>
     </Link>

@@ -11,3 +11,7 @@ export const StyledNumberCandidates = styled.div`
   font-weight: bold;
   color: ${COLORS.black};
 `;
+
+export const StyledNumberCandidatesContainer = styled.div`
+  display: flex;
+`;

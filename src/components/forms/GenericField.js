@@ -20,7 +20,7 @@ import {
   useCheckBox,
 } from 'src/components/utils/Inputs/CheckBox';
 import { Select as SelectNew } from 'src/components/utils/Inputs/Select';
-import { TextArea as TextareaNew } from 'src/components/utils/Inputs/TextArea';
+import { TextArea as TextAreaNew } from 'src/components/utils/Inputs/TextArea';
 import { TextInput as TextInputNew } from 'src/components/utils/Inputs/TextInput';
 import { DatePicker as DatePickerNew } from 'src/components/utils/Inputs/Datepicker';
 import {
@@ -28,6 +28,7 @@ import {
   RadioAsync as RadioAsyncNew,
 } from 'src/components/utils/Inputs/Radio';
 import { PhoneInput as PhoneInputNew } from 'src/components/utils/Inputs/PhoneInput';
+import { Heading } from '../utils/Inputs/Heading';
 
 let debounceTimeoutId;
 
@@ -237,7 +238,7 @@ const GenericField = ({
     }
     case 'textarea-new': {
       return (
-        <TextareaNew
+        <TextAreaNew
           id={`${formId}-${data.id}`}
           name={data.name}
           onChange={onChangeCustom}
@@ -559,14 +560,7 @@ const GenericField = ({
       if (data.hide && data.hide(getValue, fieldOptions)) {
         return null;
       }
-      return (
-        <StyledFormHeading
-          id={`${formId}-${data.id}`}
-          data-testid={`${formId}-${data.id}`}
-        >
-          {data.title}
-        </StyledFormHeading>
-      );
+      return <Heading id={`${formId}-${data.id}`} title={data.title} />;
     }
     case 'text': {
       if (data.hide && data.hide(getValue, fieldOptions)) {

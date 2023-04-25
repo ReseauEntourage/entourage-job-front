@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import UIkit from 'uikit';
 import Api from 'src/api';
-import { useOnMemberFormSubmit } from 'src/components/backoffice/admin/useOnMemberFormSubmit';
+import { useOnMemberFormSubmit } from 'src/components/backoffice/admin/members/useOnMemberFormSubmit';
 import { formAddOrganization } from 'src/components/forms/schema/formAddOrganization';
 import { formAddUser } from 'src/components/forms/schema/formAddUser';
 import { openModal } from 'src/components/modals/Modal';

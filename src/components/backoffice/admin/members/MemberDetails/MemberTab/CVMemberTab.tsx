@@ -5,7 +5,7 @@ import ErrorMessage from 'src/components/backoffice/cv/ErrorMessage';
 import { Section } from 'src/components/utils';
 import { OverlayLoader } from 'src/components/utils/OverlayLoader';
 import { useFetchCV } from 'src/hooks/useFetchCV';
-import { StyledMemberTabLoaderContainer } from './MemberTabs.styles';
+import { StyledMemberTabLoaderContainer } from './MemberTab.styles';
 
 interface CVMemberTabProps {
   candidateId: string;

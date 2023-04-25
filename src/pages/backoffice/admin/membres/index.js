@@ -5,7 +5,7 @@ import { Section } from 'src/components/utils';
 import { ALL_USER_ROLES, CANDIDATE_USER_ROLES } from 'src/constants/users.ts';
 import { useFilters } from 'src/hooks';
 import { UserContext } from 'src/store/UserProvider';
-import { MemberList } from 'src/components/backoffice/admin/MemberList/index.ts';
+import { MemberList } from 'src/components/backoffice/admin/members/MemberList/index.ts';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { isRoleIncluded, mutateTypeFilterDependingOnRole } from 'src/utils';
 

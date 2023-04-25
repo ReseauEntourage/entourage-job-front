@@ -5,8 +5,15 @@ import { findConstantFromValue } from 'src/utils';
 import { CONTRACTS } from 'src/constants';
 import { StyledContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel.styles';
 import { InfoText } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
+import { Tooltip } from 'react-tooltip';
 
-const ContractLabel = ({ contract, endOfContract, startOfContract }) => {
+const tooltipId = 'contract-tooltip';
+const ContractLabel = ({
+  contract,
+  endOfContract,
+  startOfContract,
+  textWrap,
+}) => {
   if (contract) {
     let dates = '';
     if (startOfContract || endOfContract) {
@@ -28,13 +35,23 @@ const ContractLabel = ({ contract, endOfContract, startOfContract }) => {
       }
     }
 
+    const content = `${
+      findConstantFromValue(contract, CONTRACTS)?.label
+    }${dates}`;
+
     return (
-      <StyledContainer>
-        <InfoText>
-          {findConstantFromValue(contract, CONTRACTS)?.label}
-          {dates}
-        </InfoText>
-      </StyledContainer>
+      <>
+        <StyledContainer textWrap={textWrap}>
+          <InfoText
+            data-tooltip-id={tooltipId}
+            data-tooltip-content={content}
+            data-tooltip-place="top"
+          >
+            {content}
+          </InfoText>
+        </StyledContainer>
+        <Tooltip id={tooltipId} />
+      </>
     );
   }
 
@@ -45,12 +62,14 @@ ContractLabel.propTypes = {
   contract: PropTypes.string,
   endOfContract: PropTypes.string,
   startOfContract: PropTypes.string,
+  textWrap: PropTypes.bool,
 };
 
 ContractLabel.defaultProps = {
   contract: undefined,
   endOfContract: undefined,
   startOfContract: undefined,
+  textWrap: false,
 };
 
 export default ContractLabel;

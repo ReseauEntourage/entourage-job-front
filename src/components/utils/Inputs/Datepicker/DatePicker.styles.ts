@@ -22,6 +22,7 @@ export const StyledDatePickerContainer = styled.div`
     font-size: 14px;
     line-height: 17px;
     margin-bottom: 30px;
+    font-family: Poppins, sans-serif;
     &.empty-value {
       color: ${COLORS.darkGray};
       font-style: italic;

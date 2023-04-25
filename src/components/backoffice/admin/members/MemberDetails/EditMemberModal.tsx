@@ -127,6 +127,5 @@ export function EditMemberModal({ user, setUser }: EditMemberModal) {
     }
   }, [updateUserModalProps, filledUserFields, prevFilledUserFields]);
 
-  // TODO TEST
   return <ModalEdit {...updateUserModalProps} />;
 }

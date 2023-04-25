@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
-import CandidatHeader from 'src/components/backoffice/admin/CandidatHeader';
+import CandidatHeader from 'src/components/backoffice/candidate/CandidatHeader';
 import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,

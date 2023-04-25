@@ -50,7 +50,7 @@ export const StyledRow = styled.tr`
         margin-right: 15px;
       }
     }
-    &.cv-status-cell {
+    & > .cv-status-cell {
       padding-left: 24px;
       color: ${COLORS.black};
       position: relative;
@@ -77,6 +77,13 @@ export const StyledRow = styled.tr`
         color: ${COLORS.darkGray};
       }
     }
+    &.checkbox-cell {
+      > * {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
     .yes {
       color: ${COLORS.yesGreen};
     }
@@ -95,6 +102,7 @@ export const StyledMobileMember = styled.tr`
   &.selected {
     background-color: ${COLORS.hoverOrange} !important;
     .coach-line,
+    .phone-sex,
     .zone-date,
     .member-head,
     .work-cv {
@@ -134,6 +142,7 @@ export const StyledMobileMember = styled.tr`
   }
   .coach-line,
   .zone-date,
+  .phone-sex,
   .work-cv {
     border-left: solid 3px
       ${(props) => {
@@ -142,6 +151,8 @@ export const StyledMobileMember = styled.tr`
     border-right: 1px solid ${COLORS.gray};
     padding: 8px;
   }
+
+  .phone-sex,
   .zone-date,
   .work-cv {
     display: flex;
