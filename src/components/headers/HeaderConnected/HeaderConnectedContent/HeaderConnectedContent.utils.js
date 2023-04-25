@@ -96,7 +96,7 @@ export const renderLinks = (user, logout) => {
       {
         href: `${
           process.env.TOOLBOX_CANDIDATE_URL
-        }-${getCandidateIdFromCoachOrCandidate(user)}`,
+        }?id=${getCandidateIdFromCoachOrCandidate(user)}`,
         name: 'Boîte à outils',
         icon: 'question',
         external: true,
