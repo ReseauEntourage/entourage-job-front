@@ -11,7 +11,7 @@ import { ImageTitle } from 'src/components/partials/ImageTitleNew';
 import { Grid, Section } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';
 
-export const Aider = () => {
+const Aider = () => {
   return (
     <Layout title="Aider - LinkedOut">
       <ImageTitle
@@ -36,3 +36,5 @@ export const Aider = () => {
     </Layout>
   );
 };
+
+export default Aider;
