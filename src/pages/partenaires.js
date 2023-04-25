@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from 'src/components/Layout';
+import Layout from 'src/components/Layout.tsx';
 import PARTNERS from 'src/constants/partners';
 import Grid from 'src/components/utils/Grid';
 import { Img, Section } from 'src/components/utils';

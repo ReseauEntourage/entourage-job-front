@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Layout from 'src/components/Layout';
+import Layout from 'src/components/Layout.tsx';
 import { Section, SimpleLink } from 'src/components/utils';
 import schemaLogin from 'src/components/forms/schema/formLogin.json';
 import schemaLostPwd from 'src/components/forms/schema/formLostPwd.json';

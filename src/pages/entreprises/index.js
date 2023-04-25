@@ -1,6 +1,6 @@
 import React from 'react';
 import LogoList from 'src/components/partials/LogoList';
-import Layout from 'src/components/Layout';
+import Layout from 'src/components/Layout.tsx';
 import { Button, Section } from 'src/components/utils';
 import ImageTitle from 'src/components/partials/ImageTitle';
 import Reviews from 'src/components/partials/Reviews';

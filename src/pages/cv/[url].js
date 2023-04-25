@@ -7,7 +7,7 @@ import {
   NewsletterPartial,
 } from 'src/components/partials';
 import { CVBackground, CVFiche } from 'src/components/cv';
-import Layout from 'src/components/Layout';
+import Layout from 'src/components/Layout.tsx';
 import Api from 'src/api/index.ts';
 import { Grid, Section, SimpleLink } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';

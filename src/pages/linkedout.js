@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Layout from 'src/components/Layout';
+import Layout from 'src/components/Layout.tsx';
 import { Section, SimpleLink } from 'src/components/utils';
 import Grid from 'src/components/utils/Grid';
 import { Chapter } from 'src/components/partials/Chapter';

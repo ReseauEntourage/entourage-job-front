@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from 'src/components/Layout';
+import Layout from 'src/components/Layout.tsx';
 import { Section } from 'src/components/utils';
 import ImageTitle from 'src/components/partials/ImageTitle';
 import { CONTACT_INFO, EXTERNAL_LINKS } from 'src/constants';

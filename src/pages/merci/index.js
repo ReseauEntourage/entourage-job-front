@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from 'src/components/Layout';
+import Layout from 'src/components/Layout.tsx';
 import { Grid, Section } from 'src/components/utils';
 import Button from 'src/components/utils/Button';
 import { GA_TAGS } from 'src/constants/tags';
