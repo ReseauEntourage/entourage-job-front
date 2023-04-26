@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import UIkit from 'uikit';
 import Api from 'src/api';
+import { UserDto } from 'src/api/types';
 import { useOnMemberFormSubmit } from 'src/components/backoffice/admin/members/useOnMemberFormSubmit';
 import { formAddOrganization } from 'src/components/forms/schema/formAddOrganization';
 import { formAddUser } from 'src/components/forms/schema/formAddUser';
@@ -20,7 +21,9 @@ export function MemberCreationButtons({ fetchMembers }) {
     filledUserFields,
     prevFilledUserFields,
     setFilledUserFields,
-  } = useOnMemberFormSubmit(Api.postUser);
+  } = useOnMemberFormSubmit(async (userToCreate: UserDto) => {
+    return Api.postUser(userToCreate);
+  });
 
   const handleMemberCreationSubmit = useCallback(
     async (fields, closeModal) => {

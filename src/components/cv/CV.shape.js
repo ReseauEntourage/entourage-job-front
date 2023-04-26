@@ -40,23 +40,26 @@ export const CVShape = PropTypes.exact({
   businessLines: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      order: PropTypes.number.isRequired,
+      order: PropTypes.number,
     })
   ).isRequired,
   languages: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
+      order: PropTypes.number,
     })
   ).isRequired,
   transport: PropTypes.string,
   skills: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
+      order: PropTypes.number,
     })
   ).isRequired,
   passions: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
+      order: PropTypes.number,
     })
   ).isRequired,
   reviews: PropTypes.arrayOf(
@@ -72,6 +75,7 @@ export const CVShape = PropTypes.exact({
       skills: PropTypes.arrayOf(
         PropTypes.shape({
           name: PropTypes.string.isRequired,
+          order: PropTypes.number,
         })
       ).isRequired,
     })

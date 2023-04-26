@@ -26,8 +26,8 @@ import {
 import { buildContractLabel } from 'src/utils/Formatting';
 import { MemberProps } from './Member.types';
 import { MemberInfo, RelatedMemberInfo } from './MemberInfo';
-import { MemberEmployedToggle } from './MemberToggles/MemberEmployedToggle';
-import { MemberHiddenToggle } from './MemberToggles/MemberHiddenToggle';
+import { MemberEmployedToggle } from './MemberToggle/MemberEmployedToggle';
+import { MemberHiddenToggle } from './MemberToggle/MemberHiddenToggle';
 
 const tooltipId = 'contract-tooltip';
 

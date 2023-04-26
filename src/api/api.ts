@@ -216,7 +216,7 @@ class APIHandler {
 
   putLinkUser(
     userId: string,
-    userToLinkId: string | string[]
+    userToLinkId?: string | string[]
   ): Promise<AxiosResponse> {
     return this.put(`/user/linkUser/${userId}`, { userToLinkId });
   }

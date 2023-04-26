@@ -3,7 +3,7 @@ import React from 'react';
 import { Tooltip } from 'react-tooltip';
 import { UserWithUserCandidate } from 'src/api/types';
 import CandidateEmployedToggle from 'src/components/backoffice/candidate/CandidateEmployedToggle';
-import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel';
+import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
 import { buildContractLabel } from 'src/utils/Formatting';
 import { StyledMemberToggleLabel } from './MemberToggle.styles';
 

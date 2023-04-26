@@ -54,9 +54,23 @@ export function EditMemberModal({ user, setUser }: EditMemberModal) {
     async (fields, closeModal) => {
       const updatedUser = await onSubmit(fields, closeModal);
       UIkit.notification('Le membre a bien été mis à jour', 'success');
-      return updatedUser;
+      try {
+        const { data: updatedUserWithLinkedMember } = await Api.putLinkUser(
+          user.id,
+          fields.userToLinkId || null
+        );
+
+        setUser(updatedUserWithLinkedMember);
+      } catch (err) {
+        console.error(err);
+        UIkit.notification(
+          "Une erreur s'est produite lors de l'association à un autre membre",
+          'danger'
+        );
+        setUser(updatedUser);
+      }
     },
-    [onSubmit]
+    [onSubmit, setUser, user.id]
   );
 
   const updateUserModalProps = useMemo(() => {
@@ -78,26 +92,7 @@ export function EditMemberModal({ user, setUser }: EditMemberModal) {
             />
           );
         } else {
-          const updatedUser = await handleMemberUpdateSubmit(
-            fields,
-            closeModal
-          );
-
-          try {
-            const { data: updatedUserWithLinkedMember } = await Api.putLinkUser(
-              user.id,
-              fields.userToLinkId
-            );
-
-            setUser(updatedUserWithLinkedMember);
-          } catch (err) {
-            console.error(err);
-            UIkit.notification(
-              "Une erreur s'est produite lors de l'association à un autre membre",
-              'danger'
-            );
-            setUser(updatedUser);
-          }
+          await handleMemberUpdateSubmit(fields, closeModal);
         }
       },
       onCancel: () => setFilledUserFields({}),
@@ -111,7 +106,6 @@ export function EditMemberModal({ user, setUser }: EditMemberModal) {
     handleMemberUpdateSubmit,
     organization,
     setFilledUserFields,
-    setUser,
     user,
     userToLink,
   ]);

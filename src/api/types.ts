@@ -209,7 +209,7 @@ export type CV = {
     id: string;
     description: string;
     order: string;
-    skills: CVEntity;
+    skills: CVEntity[];
   }[];
 
   reviews: CVEntity[];
