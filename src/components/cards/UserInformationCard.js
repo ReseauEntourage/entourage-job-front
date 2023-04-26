@@ -2,7 +2,6 @@ import UIkit from 'uikit';
 import React, { useCallback, useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { Card, Grid, SimpleLink } from 'src/components/utils';
-import schema from 'src/components/forms/schema/formEditLinkedUser';
 import Api from 'src/api/index.ts';
 import {
   CANDIDATE_USER_ROLES,
@@ -11,7 +10,7 @@ import {
 } from 'src/constants/users.ts';
 import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
 import CandidateEmployedToggle from 'src/components/backoffice/candidate/CandidateEmployedToggle';
-import ContractLabel from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
+import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import {
   getRelatedUser,
@@ -22,32 +21,24 @@ import {
 const UserInformationCard = ({ isAdmin, user }) => {
   const [linkedUser, setLinkedUser] = useState();
 
-  const assignUser = useCallback(
-    (userToAssign) => {
-      if (isRoleIncluded(COACH_USER_ROLES, userToAssign.role)) {
-        const candidat = getRelatedUser(userToAssign);
-        if (candidat) {
-          setLinkedUser(candidat);
-        } else {
-          setLinkedUser(null);
-        }
-        // customisation du schema en fonction de l'utilisateur
-        schema.fields[1].title = `Candidat(s) lié${
-          user.organization?.name ? ` - ${user.organization?.name}` : ''
-        }`;
+  const assignUser = useCallback((userToAssign) => {
+    if (isRoleIncluded(COACH_USER_ROLES, userToAssign.role)) {
+      const candidat = getRelatedUser(userToAssign);
+      if (candidat) {
+        setLinkedUser(candidat);
+      } else {
+        setLinkedUser(null);
       }
-      if (isRoleIncluded(CANDIDATE_USER_ROLES, userToAssign.role)) {
-        const coach = getRelatedUser(userToAssign);
-        if (coach) {
-          setLinkedUser(coach);
-        } else {
-          setLinkedUser(null);
-        }
-        schema.fields[1].title = 'Coach lié';
+    }
+    if (isRoleIncluded(CANDIDATE_USER_ROLES, userToAssign.role)) {
+      const coach = getRelatedUser(userToAssign);
+      if (coach) {
+        setLinkedUser(coach);
+      } else {
+        setLinkedUser(null);
       }
-    },
-    [user.organization?.name]
-  );
+    }
+  }, []);
 
   const updateUserCandidate = useCallback((id, props) => {
     setLinkedUser((prevLinkedUser) => {

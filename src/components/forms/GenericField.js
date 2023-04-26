@@ -13,7 +13,6 @@ import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMe
 import { SimpleLink } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
 import PhoneInput from 'src/components/forms/fields/PhoneInput';
-import { StyledFormHeading } from 'src/components/forms/Forms.styles';
 
 import {
   CheckBox as CheckBoxNew,
@@ -28,7 +27,7 @@ import {
   RadioAsync as RadioAsyncNew,
 } from 'src/components/utils/Inputs/Radio';
 import { PhoneInput as PhoneInputNew } from 'src/components/utils/Inputs/PhoneInput';
-import { Heading } from '../utils/Inputs/Heading';
+import { Heading } from 'src/components/utils/Inputs/Heading/index.ts';
 
 let debounceTimeoutId;
 

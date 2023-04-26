@@ -42,7 +42,7 @@ export function RelatedMemberInfo({
   } candidat${relatedUser && relatedUser.length > 1 ? 's' : ''}`;
 
   const multipleUsersTooltip = relatedUser
-    .map(({ firstName, lastName }, index) => {
+    .map(({ firstName, lastName }) => {
       return `${firstName} ${lastName}`;
     })
     .join(`, `);

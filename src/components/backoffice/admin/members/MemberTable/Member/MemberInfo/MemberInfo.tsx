@@ -1,6 +1,9 @@
 import Link from 'next/link';
-import React from 'react';
-import { StyledMemberInfoContainer } from './MemberInfo.styles';
+import React, { useMemo } from 'react';
+import {
+  StyledMemberInfoContainer,
+  StyledMemberInfoNameContainer,
+} from './MemberInfo.styles';
 
 export interface MemberInfoProps {
   id: string;
@@ -9,6 +12,7 @@ export interface MemberInfoProps {
   email: string;
   organizationName?: string;
   children?: React.ReactNode;
+  disableLink?: boolean;
 }
 export function MemberInfo({
   id,
@@ -17,12 +21,13 @@ export function MemberInfo({
   email,
   organizationName,
   children,
+  disableLink,
 }: MemberInfoProps) {
-  return (
-    <Link href={`/backoffice/admin/membres/${id}`}>
-      <a>
+  const content = useMemo(
+    () => (
+      <StyledMemberInfoContainer>
         {children && children}
-        <StyledMemberInfoContainer>
+        <StyledMemberInfoNameContainer>
           <span>
             <span className="bold">
               {firstName} {lastName}
@@ -32,8 +37,17 @@ export function MemberInfo({
             )}
           </span>
           {email && <span>{email}</span>}
-        </StyledMemberInfoContainer>
-      </a>
+        </StyledMemberInfoNameContainer>
+      </StyledMemberInfoContainer>
+    ),
+    [children, email, firstName, lastName, organizationName]
+  );
+
+  return disableLink ? (
+    content
+  ) : (
+    <Link href={`/backoffice/admin/membres/${id}`}>
+      <a>{content}</a>
     </Link>
   );
 }
@@ -41,4 +55,5 @@ export function MemberInfo({
 MemberInfo.defaultProps = {
   children: undefined,
   organizationName: undefined,
+  disableLink: false,
 };

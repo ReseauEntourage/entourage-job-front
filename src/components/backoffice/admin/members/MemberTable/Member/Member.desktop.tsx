@@ -1,6 +1,7 @@
 import moment from 'moment';
 import React from 'react';
 
+import { Tooltip } from 'react-tooltip';
 import { translateStatusCV } from 'src/components/backoffice/admin/members/MemberList/MemberList.utils';
 import { StyledRow } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.styles';
 import { renderCVStatus } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.utils';
@@ -20,10 +21,13 @@ import {
   isRoleIncluded,
   findConstantFromValue,
 } from 'src/utils/Finding';
+import { buildContractLabel } from 'src/utils/Formatting';
 import { MemberProps } from './Member.types';
-import { MemberEmployedToggle } from './MemberEmployedToggle';
-import { MemberHiddenToggle } from './MemberHiddenToggle';
 import { MemberInfo, RelatedMemberInfo } from './MemberInfo';
+import { MemberEmployedToggle } from './MemberToggles/MemberEmployedToggle';
+import { MemberHiddenToggle } from './MemberToggles/MemberHiddenToggle';
+
+const tooltipId = 'contract-tooltip';
 
 export function MemberDesktop({
   member,
@@ -32,12 +36,20 @@ export function MemberDesktop({
   columns,
   isEditable,
   setMember,
+  disableLink,
 }: MemberProps) {
   const cvStatus = renderCVStatus(member);
   const { checked, handleCheckBox } = useCheckBox(callback, member.id);
   const relatedUser = getRelatedUser(member);
 
   const userCandidate = getUserCandidateFromCoachOrCandidate(member);
+
+  const contractLabel = member.candidat?.contract
+    ? buildContractLabel(
+        member.candidat.contract,
+        member.candidat.endOfContract
+      )
+    : null;
 
   return (
     <StyledRow
@@ -56,6 +68,7 @@ export function MemberDesktop({
               ? member.organization?.name
               : null
           }
+          disableLink={disableLink}
         >
           <ImgProfile user={member} size={36} />
         </MemberInfo>
@@ -122,13 +135,15 @@ export function MemberDesktop({
         <>
           {columns.includes('cvUrl') && (
             <td>
-              <SimpleLink
-                href={`/cv/${userCandidate?.url}`}
-                isExternal
-                target="_blank"
-              >
-                <Icon name="link" style={{ width: 20 }} />
-              </SimpleLink>
+              <span>
+                <SimpleLink
+                  href={`/cv/${userCandidate?.url}`}
+                  isExternal
+                  target="_blank"
+                >
+                  <Icon name="link" style={{ width: 20 }} />
+                </SimpleLink>
+              </span>
             </td>
           )}
           {columns.includes('employed') && (
@@ -136,13 +151,18 @@ export function MemberDesktop({
               {isEditable ? (
                 <MemberEmployedToggle setMember={setMember} member={member} />
               ) : (
-                <>
+                <span
+                  data-tooltip-id={tooltipId}
+                  data-tooltip-content={contractLabel}
+                  data-tooltip-place="bottom"
+                >
                   {userCandidate?.employed ? (
                     <span className="yes">Oui</span>
                   ) : (
                     <span className="no">Non</span>
                   )}
-                </>
+                  <Tooltip id={tooltipId} />
+                </span>
               )}
             </td>
           )}
@@ -182,7 +202,7 @@ export function MemberDesktop({
               )}
             </td>
           )}
-          {callback && (
+          {columns.includes('selection') && callback && (
             <td className="checkbox-cell">
               <CheckBox
                 removeMargin

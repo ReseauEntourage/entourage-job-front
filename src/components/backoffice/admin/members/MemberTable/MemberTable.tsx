@@ -1,33 +1,19 @@
-/* eslint-disable react/require-default-props */
-
 import React from 'react';
-import { UserWithUserCandidate } from 'src/api/types';
 import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
   UserRole,
 } from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils/Finding';
-import { Member } from './Member';
 import { MemberColumn } from './Member/Member.types';
 import { StyledTable } from './MemberTable.styles';
 
 interface MemberTableProps {
   columns: MemberColumn[];
-  members: UserWithUserCandidate[];
+  members: JSX.Element[];
   role: UserRole;
-  handleSelectedMembers?: (memberId: string) => void;
-  isEditable?: boolean;
-  setUser?: (user: UserWithUserCandidate) => void;
 }
-export function MemberTable({
-  columns,
-  members,
-  role,
-  handleSelectedMembers,
-  isEditable = false,
-  setUser,
-}: MemberTableProps) {
+export function MemberTable({ columns, members, role }: MemberTableProps) {
   return (
     <StyledTable>
       <thead>
@@ -81,28 +67,14 @@ export function MemberTable({
               {columns.includes('cvHidden') && (
                 <th className="uk-text-nowrap">CV masqué</th>
               )}
-              {handleSelectedMembers && (
+              {columns.includes('selection') && (
                 <th className="uk-text-nowrap">Sélection</th>
               )}
             </>
           )}
         </tr>
       </thead>
-      <tbody data-testid="member-list">
-        {members.map((member, key) => {
-          return (
-            <Member
-              columns={columns}
-              role={role}
-              member={member}
-              key={key}
-              callback={handleSelectedMembers}
-              isEditable={isEditable}
-              setMember={setUser}
-            />
-          );
-        })}
-      </tbody>
+      <tbody data-testid="member-list">{members}</tbody>
     </StyledTable>
   );
 }

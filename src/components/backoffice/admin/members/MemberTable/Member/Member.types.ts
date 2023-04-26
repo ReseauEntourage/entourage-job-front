@@ -13,14 +13,16 @@ export type MemberColumn =
   | 'cvUrl'
   | 'cvStatus'
   | 'cvHidden'
-  | 'organization';
+  | 'organization'
+  | 'selection';
 
 export interface MemberProps {
   columns: MemberColumn[];
   member: UserWithUserCandidate;
   role: UserRole | UserRole[];
-  callback: (memberId: string) => void;
-  isEditable: boolean;
+  callback?: (memberId: string) => void;
+  isEditable?: boolean;
 
-  setMember: (user: UserWithUserCandidate) => void;
+  setMember?: (user: UserWithUserCandidate) => void;
+  disableLink?: boolean;
 }

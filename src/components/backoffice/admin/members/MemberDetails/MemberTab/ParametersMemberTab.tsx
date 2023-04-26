@@ -1,11 +1,12 @@
 import { useRouter } from 'next/router';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import UIkit from 'uikit';
 import Api from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
 import { EditMemberModal } from 'src/components/backoffice/admin/members/MemberDetails/EditMemberModal';
 import { useMemberId } from 'src/components/backoffice/admin/members/MemberDetails/useMemberId';
 import { MemberTable } from 'src/components/backoffice/admin/members/MemberTable';
+import { Member } from 'src/components/backoffice/admin/members/MemberTable/Member';
 import { MemberColumn } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.types';
 import schemaDeleteUser from 'src/components/forms/schema/formDeleteUser.json';
 import { openModal } from 'src/components/modals/Modal';
@@ -55,7 +56,7 @@ export function ParametersMemberTab({
     [memberId, replace]
   );
 
-  const getColumnsToShow = useCallback((): MemberColumn[] => {
+  const memberColumns: MemberColumn[] = useMemo(() => {
     const columnsToShow: MemberColumn[] = [
       'phone',
       'gender',
@@ -86,6 +87,20 @@ export function ParametersMemberTab({
       organization: user.organization,
     };
   });
+
+  const relatedMemberList = useMemo(() => {
+    return relatedMembers?.map((member, key) => {
+      return (
+        <Member
+          columns={memberColumns}
+          role={RELATED_ROLES[user.role]}
+          member={member}
+          key={key}
+          setMember={setUser}
+        />
+      );
+    });
+  }, [memberColumns, relatedMembers, setUser, user.role]);
 
   return (
     <>
@@ -126,13 +141,20 @@ export function ParametersMemberTab({
         title={`Information du ${user.role.toLowerCase()}`}
       />
       <MemberTable
-        columns={getColumnsToShow()}
-        members={[user]}
+        columns={memberColumns}
+        members={[
+          <Member
+            columns={memberColumns}
+            member={user}
+            role={user.role}
+            isEditable
+            setMember={setUser}
+            disableLink
+          />,
+        ]}
         role={user.role}
-        isEditable
-        setUser={setUser}
       />
-      {relatedMembers && relatedMembers.length > 0 && (
+      {relatedMemberList && relatedMemberList.length > 0 && (
         <StyledRelatedMemberList>
           <Heading
             id="related-user-title"
@@ -143,8 +165,8 @@ export function ParametersMemberTab({
             } `}
           />
           <MemberTable
-            columns={getColumnsToShow()}
-            members={relatedMembers}
+            columns={memberColumns}
+            members={relatedMemberList}
             role={RELATED_ROLES[user.role]}
           />
         </StyledRelatedMemberList>

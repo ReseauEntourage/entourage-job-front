@@ -1,6 +1,7 @@
 import moment from 'moment';
 import React from 'react';
 
+import { Tooltip } from 'react-tooltip';
 import { translateStatusCV } from 'src/components/backoffice/admin/members/MemberList/MemberList.utils';
 import { StyledMobileMember } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.styles';
 import { renderCVStatus } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.utils';
@@ -22,10 +23,13 @@ import {
   isRoleIncluded,
   findConstantFromValue,
 } from 'src/utils/Finding';
+import { buildContractLabel } from 'src/utils/Formatting';
 import { MemberProps } from './Member.types';
-import { MemberEmployedToggle } from './MemberEmployedToggle';
-import { MemberHiddenToggle } from './MemberHiddenToggle';
 import { MemberInfo, RelatedMemberInfo } from './MemberInfo';
+import { MemberEmployedToggle } from './MemberToggles/MemberEmployedToggle';
+import { MemberHiddenToggle } from './MemberToggles/MemberHiddenToggle';
+
+const tooltipId = 'contract-tooltip';
 
 export function MemberMobile({
   member,
@@ -34,13 +38,20 @@ export function MemberMobile({
   columns,
   setMember,
   isEditable,
+  disableLink,
 }: MemberProps) {
   const cvStatus = renderCVStatus(member);
   const { checked, handleCheckBox } = useCheckBox(callback, member.id);
   const relatedUser = getRelatedUser(member);
 
   const userCandidate = getUserCandidateFromCoachOrCandidate(member);
-  // TODO MOBILE
+
+  const contractLabel = member.candidat?.contract
+    ? buildContractLabel(
+        member.candidat.contract,
+        member.candidat.endOfContract
+      )
+    : null;
 
   return (
     <StyledMobileMember
@@ -59,19 +70,22 @@ export function MemberMobile({
               ? member.organization?.name
               : null
           }
+          disableLink={disableLink}
         />
-        {callback && !isRoleIncluded(COACH_USER_ROLES, role) && (
-          <div className="checkbox-container">
-            <CheckBox
-              id={`member-${member.id}-check`}
-              name={`member-${member.id}-check`}
-              value={checked}
-              handleClick={handleCheckBox}
-              removeMargin
-              disabled={userCandidate?.hidden}
-            />
-          </div>
-        )}
+        {columns.includes('selection') &&
+          callback &&
+          !isRoleIncluded(COACH_USER_ROLES, role) && (
+            <div className="checkbox-container">
+              <CheckBox
+                id={`member-${member.id}-check`}
+                name={`member-${member.id}-check`}
+                value={checked}
+                handleClick={handleCheckBox}
+                removeMargin
+                disabled={userCandidate?.hidden}
+              />
+            </div>
+          )}
       </div>
       {columns.includes('associatedUser') && (
         <div className="line coach-line">
@@ -156,13 +170,15 @@ export function MemberMobile({
           {columns.includes('cvUrl') && (
             <div className="cell">
               <span className="title">Lien CV</span>
-              <SimpleLink
-                href={`/cv/${userCandidate?.url}`}
-                isExternal
-                target="_blank"
-              >
-                <Icon name="link" style={{ width: 20 }} />
-              </SimpleLink>
+              <span>
+                <SimpleLink
+                  href={`/cv/${userCandidate?.url}`}
+                  isExternal
+                  target="_blank"
+                >
+                  <Icon name="link" style={{ width: 20 }} />
+                </SimpleLink>
+              </span>
             </div>
           )}
           {columns.includes('employed') && (
@@ -171,12 +187,17 @@ export function MemberMobile({
               {isEditable ? (
                 <MemberEmployedToggle setMember={setMember} member={member} />
               ) : (
-                <span>
+                <span
+                  data-tooltip-id={tooltipId}
+                  data-tooltip-content={contractLabel}
+                  data-tooltip-place="bottom"
+                >
                   {userCandidate?.employed ? (
                     <span className="yes">Oui</span>
                   ) : (
                     <span className="no">Non</span>
                   )}
+                  <Tooltip id={tooltipId} />
                 </span>
               )}
             </div>

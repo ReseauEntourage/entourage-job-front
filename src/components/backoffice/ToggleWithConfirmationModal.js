@@ -71,8 +71,8 @@ const ToggleWithConfirmationModal = ({
   return (
     <>
       <div className="uk-form-controls">
-        <div className="uk-flex uk-flex-middle">
-          <div className="ent-toggle">
+        <div className="uk-flex uk-flex-middle uk-flex-wrap">
+          <div className="ent-toggle uk-margin-small-right">
             <label htmlFor={`ent-toggle-${id}`}>
               <input
                 id={`ent-toggle-${id}`}
@@ -117,7 +117,7 @@ const ToggleWithConfirmationModal = ({
             </label>
           </div>
           {(title || subtitle) && (
-            <div className="uk-flex uk-flex-column uk-margin-small-left">
+            <div className="uk-flex uk-flex-column">
               {title && <span>{title}</span>}
               {subtitle}
             </div>

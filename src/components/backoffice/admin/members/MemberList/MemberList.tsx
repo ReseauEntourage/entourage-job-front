@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { MemberTable } from '../MemberTable';
+import { Member } from '../MemberTable/Member';
+import { MemberColumn } from '../MemberTable/Member/Member.types';
 import Api from 'src/api';
 
 import { StyledActionsContainer } from 'src/components/backoffice/admin/members/MemberList/MemberList.styles';
@@ -119,13 +121,44 @@ export function MemberList({
     Coach: 'coachs',
   };
 
-  const handleSelectedMembers = (memberId) => {
-    selectElement({ id: memberId });
-  };
+  const handleSelectedMembers = useCallback(
+    (memberId) => {
+      selectElement({ id: memberId });
+    },
+    [selectElement]
+  );
 
   const roleToDisplay = isRoleIncluded(CANDIDATE_USER_ROLES, role)
     ? 'candidats'
     : 'coachs';
+
+  const memberColumns: MemberColumn[] = useMemo(
+    () => [
+      'associatedUser',
+      'zone',
+      'type',
+      'lastConnection',
+      'employed',
+      'cvStatus',
+      'cvHidden',
+      'selection',
+    ],
+    []
+  );
+
+  const memberList = useMemo(() => {
+    return members.map((member, key) => {
+      return (
+        <Member
+          columns={memberColumns}
+          role={role}
+          member={member}
+          key={key}
+          callback={handleSelectedMembers}
+        />
+      );
+    });
+  }, [handleSelectedMembers, memberColumns, members, role]);
 
   return (
     <>
@@ -187,18 +220,9 @@ export function MemberList({
           ) : (
             <div className="uk-overflow-auto uk-margin-top">
               <MemberTable
-                columns={[
-                  'associatedUser',
-                  'zone',
-                  'type',
-                  'lastConnection',
-                  'employed',
-                  'cvStatus',
-                  'cvHidden',
-                ]}
-                members={members}
+                columns={memberColumns}
+                members={memberList}
                 role={role}
-                handleSelectedMembers={handleSelectedMembers}
               />
             </div>
           )}

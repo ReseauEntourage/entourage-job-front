@@ -1,6 +1,9 @@
+import moment from 'moment/moment';
 import React from 'react';
+import { CONTRACTS } from 'src/constants';
+import { findConstantFromValue } from './Finding';
 
-const formatParagraph = (text, condense) => {
+export function formatParagraph(text, condense) {
   if (text) {
     let formattedText = text;
     if (condense) formattedText = text.replace(/\n\n/g, '\n');
@@ -12,9 +15,9 @@ const formatParagraph = (text, condense) => {
     }, []);
   }
   return text;
-};
+}
 
-const getAmbitionsLinkingSentence = (ambitions) => {
+export function getAmbitionsLinkingSentence(ambitions) {
   return (
     <>
       {' '}
@@ -23,14 +26,14 @@ const getAmbitionsLinkingSentence = (ambitions) => {
         : `${ambitions[1].prefix || ambitions[1].prefix}`}{' '}
     </>
   );
-};
+}
 
-const addSpaceToPrefixIfNeeded = (prefix) => {
+export function addSpaceToPrefixIfNeeded(prefix) {
   if (!prefix) return '';
   return prefix.includes("'") ? prefix : `${prefix} `;
-};
+}
 
-const buildBusinessLineForSentence = ({ label, prefix }) => {
+export function buildBusinessLineForSentence({ label, prefix }) {
   const separator = 'et ';
   if (Array.isArray(prefix)) {
     let mutatedLabel = '';
@@ -44,10 +47,30 @@ const buildBusinessLineForSentence = ({ label, prefix }) => {
     );
   }
   return addSpaceToPrefixIfNeeded(prefix) + label;
-};
+}
 
-export {
-  formatParagraph,
-  getAmbitionsLinkingSentence,
-  buildBusinessLineForSentence,
-};
+export function buildContractLabel(
+  contract: string,
+  endOfContract?: string,
+  startOfContract?: string
+) {
+  let dates = '';
+  if (startOfContract || endOfContract) {
+    dates += ` - `;
+    if (startOfContract) {
+      if (endOfContract) {
+        dates += `du ${moment(startOfContract).format('DD/MM/YYYY')} au `;
+      } else {
+        dates += `à partir du ${moment(startOfContract).format('DD/MM/YYYY')}`;
+      }
+    } else {
+      dates += `jusqu'au `;
+    }
+
+    if (endOfContract) {
+      dates += `${moment(endOfContract).format('DD/MM/YYYY')}`;
+    }
+  }
+
+  return `${findConstantFromValue(contract, CONTRACTS)?.label}${dates}`;
+}

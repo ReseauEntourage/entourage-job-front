@@ -167,13 +167,6 @@ export const StyledButton = styled.button`
       return COLORS[props.color] || COLORS.primaryOrange;
     }} !important;
 
-    path {
-      transition: 0.2s ease-in-out;
-     /* fill: ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
-      }} !important;*/
-    }
-
     border-radius: 25px;
 
     &:hover {
@@ -190,13 +183,6 @@ export const StyledButton = styled.button`
         ${(props) => {
           return colorToHoverColor[props.color] || COLORS.primaryOrange;
         }};
-
-      path {
-        transition: 0.2s ease-in-out;
-       /* fill: ${(props) => {
-          return colorToHoverColor[props.color];
-        }} !important;*/
-      }
     }
   }
 
