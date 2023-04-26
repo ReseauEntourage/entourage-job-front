@@ -79,7 +79,7 @@ const NewsletterPartial = ({ style, padding, tag }) => {
                     <CheckBox
                       name={tagConst}
                       id={tagConst}
-                      checked={tagConst === status}
+                      value={tagConst === status}
                       handleClick={() => {
                         if (status === tagConst) {
                           setStatus();
@@ -105,7 +105,7 @@ const NewsletterPartial = ({ style, padding, tag }) => {
                     <CheckBox
                       name={tagConst}
                       id={tagConst}
-                      checked={tagConst === zone}
+                      value={tagConst === zone}
                       handleClick={() => {
                         if (zone === tagConst) {
                           setZone();

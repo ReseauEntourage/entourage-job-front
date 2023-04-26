@@ -23,7 +23,7 @@ import {
   mutateTypeFilterDependingOnRole,
 } from 'src/utils';
 import { isRoleIncluded } from 'src/utils/Finding';
-import { MemberCreationButtons } from './MemberCreationButtons/MemberCreationButtons';
+import { MemberCreationButtons } from './MemberCreationButtons';
 import { useRole } from './useRole';
 
 const LIMIT = 50;
