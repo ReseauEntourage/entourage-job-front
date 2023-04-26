@@ -26,7 +26,7 @@ export function MemberInfo({
   const content = useMemo(
     () => (
       <StyledMemberInfoContainer>
-        {children && children}
+        {children}
         <StyledMemberInfoNameContainer>
           <span>
             <span className="bold">

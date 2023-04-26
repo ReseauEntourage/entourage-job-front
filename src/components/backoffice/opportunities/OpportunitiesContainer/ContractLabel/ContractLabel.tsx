@@ -13,7 +13,7 @@ export function ContractLabel({
   contract,
   endOfContract,
   startOfContract,
-  textWrap = false,
+  textWrap,
 }: ContractLabelProps) {
   if (contract) {
     const content = buildContractLabel(

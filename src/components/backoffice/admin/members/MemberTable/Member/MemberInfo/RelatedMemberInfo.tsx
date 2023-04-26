@@ -12,7 +12,7 @@ import {
 
 const uuidValue = uuid();
 
-interface MemberProps {
+interface RelatedMemberProps {
   id: string;
   firstName: string;
   lastName: string;
@@ -23,7 +23,7 @@ interface MemberProps {
   };
 }
 interface RelatedMemberInfoProps {
-  relatedUser: MemberProps[];
+  relatedUser: RelatedMemberProps[];
   role: UserRole;
 }
 
