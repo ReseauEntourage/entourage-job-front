@@ -5,7 +5,7 @@ import CVEditWelcome from 'src/components/cv/CVEditWelcome';
 import CVPageContent from 'src/components/backoffice/cv/CVPageContent';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users.ts';
 import ErrorMessage from 'src/components/backoffice/cv/ErrorMessage';
-import { useFetchCV } from 'src/hooks/useFetchCV';
+import { useFetchCV } from 'src/hooks/useFetchCV.ts';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import {
   isRoleIncluded,
@@ -15,10 +15,13 @@ import {
 import { Api } from 'src/api/index.ts';
 import { UserContext } from 'src/store/UserProvider';
 import UIkit from 'uikit';
+import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId.ts';
 
 const Edit = () => {
   const { user } = useContext(UserContext);
   const [userCompleteData, setUserCompleteData] = useState();
+
+  const candidateId = useCandidateId();
 
   useEffect(() => {
     if (user) {
@@ -32,7 +35,7 @@ const Edit = () => {
     }
   }, [user]);
 
-  const { cv, setCV, error, loading } = useFetchCV(userCompleteData);
+  const { cv, setCV, error, loading } = useFetchCV(candidateId);
 
   let content;
   if (loading || !user || !userCompleteData) {

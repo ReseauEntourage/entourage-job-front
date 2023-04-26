@@ -59,7 +59,7 @@ const CandidateEmployedToggle = ({
 
 CandidateEmployedToggle.propTypes = {
   candidateId: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   subtitle: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   modalTitle: PropTypes.string.isRequired,
   modalConfirmation: PropTypes.string.isRequired,
@@ -70,6 +70,7 @@ CandidateEmployedToggle.propTypes = {
 
 CandidateEmployedToggle.defaultProps = {
   subtitle: undefined,
+  title: undefined,
 };
 
 export default CandidateEmployedToggle;

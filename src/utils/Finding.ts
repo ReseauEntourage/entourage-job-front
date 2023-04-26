@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { User, UserWithUserCandidate } from 'src/api/types';
 import { OFFER_STATUS } from 'src/constants';
 import {
   CANDIDATE_USER_ROLES,
@@ -91,10 +92,10 @@ export function getUserCandidateFromCoachOrCandidate(member) {
   return null;
 }
 
-export function getRelatedUser(member) {
+export function getRelatedUser(member: UserWithUserCandidate): User[] {
   if (member) {
     if (member.candidat && member.candidat.coach) {
-      return member.candidat.coach;
+      return [member.candidat.coach];
     }
     if (member.coaches && member.coaches.length > 0) {
       return member.coaches.map(({ candidat }) => {
@@ -116,16 +117,20 @@ export function getCoachFromCandidate(candidate) {
   return null;
 }
 
-export function getCandidateFromCoach(coach, candidateId) {
+export function getUserCandidateFromCoach(coach, candidateId) {
   if (coach && isRoleIncluded(COACH_USER_ROLES, coach.role)) {
     if (coach.coaches && coach.coaches.length > 0) {
       return coach.coaches.find(({ candidat }) => {
         return candidat.id === candidateId;
-      })?.candidat;
+      });
     }
   }
 
   return null;
+}
+
+export function getCandidateFromCoach(coach, candidateId) {
+  return getUserCandidateFromCoach(coach, candidateId)?.candidat;
 }
 
 export function getCandidateIdFromCoachOrCandidate(member) {

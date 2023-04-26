@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { AMBITIONS_PREFIXES } from 'src/constants';
 
-export const CVShape = PropTypes.shape({
+export const CVShape = PropTypes.exact({
   user: PropTypes.shape({
     candidat: PropTypes.shape({
       firstName: PropTypes.string.isRequired,
@@ -40,23 +40,26 @@ export const CVShape = PropTypes.shape({
   businessLines: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      order: PropTypes.number.isRequired,
+      order: PropTypes.number,
     })
   ).isRequired,
   languages: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
+      order: PropTypes.number,
     })
   ).isRequired,
   transport: PropTypes.string,
   skills: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
+      order: PropTypes.number,
     })
   ).isRequired,
   passions: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
+      order: PropTypes.number,
     })
   ).isRequired,
   reviews: PropTypes.arrayOf(
@@ -72,6 +75,7 @@ export const CVShape = PropTypes.shape({
       skills: PropTypes.arrayOf(
         PropTypes.shape({
           name: PropTypes.string.isRequired,
+          order: PropTypes.number,
         })
       ).isRequired,
     })

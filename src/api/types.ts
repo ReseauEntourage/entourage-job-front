@@ -1,7 +1,7 @@
 import { CookieValueTypes } from 'cookies-next';
 
 import { AdminZone } from 'src/constants/departements';
-import { UserRole } from 'src/constants/users';
+import { AdminRole, UserRole } from 'src/constants/users';
 
 export type SocialMedia = 'facebook' | 'linkedin' | 'twitter';
 
@@ -18,11 +18,33 @@ export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
 
 export type Route<T extends APIRoute> = `/${T}/${string}` | `/${T}`;
 
+export type UserCandidate = {
+  employed: boolean;
+  contract: string;
+  endOfContract: string;
+  hidden: boolean;
+  note: string;
+  url: string;
+  lastModifiedBy: string;
+};
+
+export type Organization = {
+  id?: string;
+  name: string;
+  address: string;
+  referentFirstName: string;
+  referentLastName: string;
+  referentMail: string;
+  referentPhone: string;
+  zone: AdminZone;
+};
+
 export type User = {
+  id: string;
   firstName: string;
   lastName: string;
   email: string;
-  role: string;
+  role: UserRole;
   adminRole: string;
   password: string;
   salt: string;
@@ -34,9 +56,20 @@ export type User = {
   saltReset: string;
   zone: AdminZone;
   userToCoach: string;
+  organization: Organization;
 };
 
-export type CreateUserDto = {
+export interface UserCandidateWithUsers extends UserCandidate {
+  candidat?: User;
+  coach?: User;
+}
+
+export interface UserWithUserCandidate extends User {
+  candidat?: UserCandidateWithUsers;
+  coaches?: UserCandidateWithUsers[];
+}
+
+export type UserDto = {
   firstName: string;
   lastName: string;
   role: UserRole;
@@ -45,17 +78,18 @@ export type CreateUserDto = {
   phone: string;
   userToLinkId: string | string[];
   email: string;
+  adminRole?: AdminRole;
   OrganizationId?: string;
 };
 
-export type Organization = {
-  name: string;
-  address: string;
-  referentFirstName: string;
-  referentLastName: string;
-  referentMail: string;
-  referentPhone: string;
-  zone: AdminZone;
+export type PutCandidate = {
+  employed: boolean;
+  contract: string;
+  endOfContract: Date;
+  hidden: boolean;
+  note: string;
+  url: string;
+  lastModifiedBy: string;
 };
 
 export type Opportunity = {
@@ -148,6 +182,41 @@ export type ContactContactUs = {
   cgu: boolean;
 };
 
+type CVEntity = {
+  name: string;
+  order?: number;
+};
+
+export type CV = {
+  id: string;
+  UserId: string;
+  urlImg: string;
+  intro: string;
+  story: string;
+  availability: string;
+  transport: string;
+  catchphrase: string;
+  status: string;
+  version: number;
+  lastModifiedBy: string;
+  user: User;
+  businessLines: CVEntity[];
+  locations: CVEntity[];
+  ambitions: CVEntity[];
+  contracts: CVEntity[];
+  languages: CVEntity[];
+  passions: CVEntity[];
+  skills: CVEntity[];
+  experiences: {
+    id: string;
+    description: string;
+    order: string;
+    skills: CVEntity[];
+  }[];
+
+  reviews: CVEntity[];
+};
+
 export type ContactCompany = {
   firstName: string;
   lastName: string;
@@ -207,16 +276,6 @@ export type ContactNewsletter = {
     gclid?: string | string[];
     referer?: string | string[];
   };
-};
-
-export type PutCandidate = {
-  employed: boolean;
-  contract: string;
-  endOfContract: Date;
-  hidden: boolean;
-  note: string;
-  url: string;
-  lastModifiedBy: string;
 };
 
 export type CandidateInscription = {

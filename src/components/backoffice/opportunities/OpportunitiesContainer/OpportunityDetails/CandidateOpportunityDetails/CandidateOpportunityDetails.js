@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { findConstantFromValue } from 'src/utils';
 import { BUSINESS_LINES } from 'src/constants';
-import ContractLabel from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel';
+import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel';
 import {
   StyledCTAContainer,
   StyledDetailsContainer,

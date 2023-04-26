@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { UserContext } from 'src/store/UserProvider';
 import { Img } from 'src/components/utils';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users.ts';
-import { isRoleIncluded } from 'src/utils';
+import { isRoleIncluded } from 'src/utils/Finding.ts';
 
 const ImgProfile = ({ user, size }) => {
   const userFromContext = useContext(UserContext).user;

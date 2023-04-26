@@ -21,11 +21,12 @@ import { usePrevious } from 'src/hooks/utils';
 import {
   isRoleIncluded,
   getCandidateIdFromCoachOrCandidate,
-  getRelatedUser,
+  getCandidateFromCoach,
 } from 'src/utils';
 import _ from 'lodash';
 import { validate as uuidValidate } from 'uuid';
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
+import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId.ts';
 
 // filters for the query
 const candidateQueryFilters = OPPORTUNITY_FILTERS_DATA.slice(1);
@@ -33,6 +34,7 @@ const candidateQueryFilters = OPPORTUNITY_FILTERS_DATA.slice(1);
 const Opportunities = () => {
   const { replace } = useRouter();
 
+  const candidateIdFromQuery = useCandidateId();
   const opportunityId = useOpportunityId();
 
   const opportunityType = useOpportunityType();
@@ -159,7 +161,7 @@ const Opportunities = () => {
         const { status, ...restQueryParams } = queryParamsOpportunities;
         const candidate = isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
           ? user
-          : getRelatedUser(user);
+          : getCandidateFromCoach(user, candidateIdFromQuery);
         if (
           candidate &&
           !hasLoadedDefaultFilters &&

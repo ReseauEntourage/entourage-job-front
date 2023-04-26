@@ -11,7 +11,7 @@ import {
   RELATED_ROLES,
   EXTERNAL_USER_ROLES,
 } from 'src/constants/users';
-import { isRoleIncluded } from 'src/utils';
+import { isRoleIncluded } from 'src/utils/Finding';
 import { formAddOrganization } from './formAddOrganization';
 
 export const CREATE_NEW_ORGANIZATION_VALUE = 'createNewOrganization';
@@ -72,7 +72,7 @@ export const formAddUser = {
   fields: [
     {
       id: 'memberInformation',
-      title: 'Information du nouveau membre',
+      title: 'Information du membre',
       component: 'heading',
     },
     {
