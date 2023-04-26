@@ -25,7 +25,7 @@ import { usePrevious } from 'src/hooks/utils';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { useRouter } from 'next/router';
 import _ from 'lodash';
-import { isRoleIncluded } from 'src/utils';
+import { isRoleIncluded } from 'src/utils/Finding.ts';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users.ts';
 import { useTabsCount } from './useTabsCount';
 import { tabs } from './CandidateOffersTab/CandidateOffersTab.utils';

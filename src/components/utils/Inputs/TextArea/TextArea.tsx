@@ -8,7 +8,7 @@ interface TextAreaTypes {
   id: string;
   onChange: (event) => void;
   value: string;
-  hidden: boolean;
+  hidden?: boolean;
 }
 
 export function TextArea({

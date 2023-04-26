@@ -9,7 +9,7 @@ import { openModal } from 'src/components/modals/Modal';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { Button } from 'src/components/utils';
 import ModalExternalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
-import { isRoleIncluded } from 'src/utils';
+import { isRoleIncluded } from 'src/utils/Finding.ts';
 
 const CandidateOpportunityList = ({
   search,

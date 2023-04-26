@@ -70,9 +70,9 @@ const ToggleWithConfirmationModal = ({
 
   return (
     <>
-      <div className="uk-form-controls uk-margin-top">
-        <div className="uk-flex uk-flex-middle">
-          <div className="ent-toggle">
+      <div className="uk-form-controls">
+        <div className="uk-flex uk-flex-middle uk-flex-wrap">
+          <div className="ent-toggle uk-margin-small-right">
             <label htmlFor={`ent-toggle-${id}`}>
               <input
                 id={`ent-toggle-${id}`}
@@ -116,10 +116,12 @@ const ToggleWithConfirmationModal = ({
               <span className="ent-slider round" />
             </label>
           </div>
-          <div className="uk-flex uk-flex-column uk-margin-small-left">
-            <span>{title}</span>
-            {subtitle}
-          </div>
+          {(title || subtitle) && (
+            <div className="uk-flex uk-flex-column">
+              {title && <span>{title}</span>}
+              {subtitle}
+            </div>
+          )}
         </div>
       </div>
     </>
@@ -128,7 +130,7 @@ const ToggleWithConfirmationModal = ({
 
 ToggleWithConfirmationModal.propTypes = {
   id: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   subtitle: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   modalTitle: PropTypes.string.isRequired,
   modalDescription: PropTypes.element,
@@ -145,6 +147,7 @@ ToggleWithConfirmationModal.propTypes = {
 ToggleWithConfirmationModal.defaultProps = {
   defaultValue: undefined,
   subtitle: undefined,
+  title: undefined,
   modalDescription: undefined,
   modalConfirmation: 'Oui',
   formSchema: undefined,

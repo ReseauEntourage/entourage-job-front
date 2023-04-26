@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
-import CandidatHeader from 'src/components/backoffice/cv/CandidatHeader';
+import CandidatHeader from 'src/components/backoffice/candidate/CandidatHeader';
 import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
   USER_ROLES,
 } from 'src/constants/users.ts';
-import { isRoleIncluded } from 'src/utils';
+import { isRoleIncluded } from 'src/utils/Finding.ts';
 
 const CVEditWelcome = ({ user }) => {
   if (user === null) {

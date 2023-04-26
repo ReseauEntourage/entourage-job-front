@@ -56,7 +56,7 @@ const meta = {
         <div
           style={{
             backgroundColor:
-              args.color === 'white' ? COLORS.darkerBlack : 'transparent',
+              args.color === 'white' ? COLORS.black : 'transparent',
             display: 'flex',
             padding: 8,
           }}

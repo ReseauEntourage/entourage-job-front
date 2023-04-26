@@ -18,7 +18,7 @@ import UserInformationCard from 'src/components/cards/UserInformationCard';
 import { isRoleIncluded, mutateFormSchema } from 'src/utils';
 import _ from 'lodash';
 import CandidateEmployedToggle from 'src/components/backoffice/candidate/CandidateEmployedToggle';
-import ContractLabel from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
+import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
 import PasswordCriterias from 'src/components/PasswordCriterias';
@@ -195,73 +195,77 @@ const Parametres = () => {
               {/* Preferences du CV */}
               {isRoleIncluded(CANDIDATE_USER_ROLES, userData.role) && (
                 <Card title="Préférences du CV">
-                  <CandidateEmployedToggle
-                    title="J'ai retrouvé un emploi"
-                    modalTitle="Vous avez retrouvé un emploi ?"
-                    modalConfirmation="Valider"
-                    defaultValue={userData.candidat.employed}
-                    candidateId={userData.id}
-                    notificationMessage="Votre profil a été mis à jour !"
-                    subtitle={
-                      userData &&
-                      userData.candidat && (
-                        <ContractLabel
-                          contract={userData.candidat.contract}
-                          endOfContract={userData.candidat.endOfContract}
-                        />
-                      )
-                    }
-                    setData={(newData) => {
-                      setUserData({
-                        ...userData,
-                        candidat: {
-                          ...userData.candidat,
-                          ...newData,
-                        },
-                      });
-                    }}
-                  />
-                  <ToggleWithConfirmationModal
-                    id="hidden"
-                    title="Masquer mon CV"
-                    modalTitle="Changer la visibilité du CV en ligne ?"
-                    modalDescription={
-                      <>
-                        En masquant votre CV de LinkedOut, il ne sera plus
-                        visible par les utilisateurs du site.
-                        <br />
-                        Vous pourrez le remettre en ligne à tout moment.
-                      </>
-                    }
-                    modalConfirmation="Oui, masquer mon CV"
-                    defaultValue={userData.candidat.hidden}
-                    onToggle={(hidden) => {
-                      return Api.putCandidate(userData.id, {
-                        hidden,
-                      })
-                        .then(() => {
-                          setUserData({
-                            ...userData,
-                            candidat: {
-                              ...userData.candidat,
-                              hidden,
-                            },
-                          });
-                          UIkit.notification(
-                            hidden
-                              ? 'Votre CV est désormais masqué'
-                              : 'Votre CV est désormais visible',
-                            'success'
-                          );
-                        })
-                        .catch(() => {
-                          return UIkit.notification(
-                            'Une erreur est survenue lors du masquage de votre profil',
-                            'danger'
-                          );
+                  <div className="uk-margin-small-top">
+                    <CandidateEmployedToggle
+                      title="J'ai retrouvé un emploi"
+                      modalTitle="Vous avez retrouvé un emploi ?"
+                      modalConfirmation="Valider"
+                      defaultValue={userData.candidat.employed}
+                      candidateId={userData.id}
+                      notificationMessage="Votre profil a été mis à jour !"
+                      subtitle={
+                        userData &&
+                        userData.candidat && (
+                          <ContractLabel
+                            contract={userData.candidat.contract}
+                            endOfContract={userData.candidat.endOfContract}
+                          />
+                        )
+                      }
+                      setData={(newData) => {
+                        setUserData({
+                          ...userData,
+                          candidat: {
+                            ...userData.candidat,
+                            ...newData,
+                          },
                         });
-                    }}
-                  />
+                      }}
+                    />
+                  </div>
+                  <div className="uk-margin-small-top">
+                    <ToggleWithConfirmationModal
+                      id="hidden"
+                      title="Masquer mon CV"
+                      modalTitle="Changer la visibilité du CV en ligne ?"
+                      modalDescription={
+                        <>
+                          En masquant votre CV de LinkedOut, il ne sera plus
+                          visible par les utilisateurs du site.
+                          <br />
+                          Vous pourrez le remettre en ligne à tout moment.
+                        </>
+                      }
+                      modalConfirmation="Oui, masquer mon CV"
+                      defaultValue={userData.candidat.hidden}
+                      onToggle={(hidden) => {
+                        return Api.putCandidate(userData.id, {
+                          hidden,
+                        })
+                          .then(() => {
+                            setUserData({
+                              ...userData,
+                              candidat: {
+                                ...userData.candidat,
+                                hidden,
+                              },
+                            });
+                            UIkit.notification(
+                              hidden
+                                ? 'Votre CV est désormais masqué'
+                                : 'Votre CV est désormais visible',
+                              'success'
+                            );
+                          })
+                          .catch(() => {
+                            return UIkit.notification(
+                              'Une erreur est survenue lors du masquage de votre profil',
+                              'danger'
+                            );
+                          });
+                      }}
+                    />
+                  </div>
                 </Card>
               )}
               {/* Informations personnelles */}

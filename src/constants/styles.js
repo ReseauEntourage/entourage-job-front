@@ -18,7 +18,6 @@ export const COLORS = {
   darkGray: '#A0A0A0',
   darkGrayFont: '#6D6C6C',
   black: '#363636',
-  darkerBlack: '#222',
   primaryOrange: '#F55F24',
   hoverOrange: 'rgba(245,95,36,0.13)',
   darkOrange: '#d53f00',

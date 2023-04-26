@@ -11,6 +11,7 @@ import 'src/components/backoffice/Toggle.less';
 import 'src/components/modals/Modal/Modal.less';
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 import 'react-phone-number-input/style.css';
+import 'react-tooltip/dist/react-tooltip.css';
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';

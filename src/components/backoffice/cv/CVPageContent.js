@@ -22,7 +22,7 @@ import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
 import { usePrevious } from 'src/hooks/utils';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { CVShape } from 'src/components/cv/CV.shape';
-import { isRoleIncluded } from 'src/utils';
+import { isRoleIncluded } from 'src/utils/Finding.ts';
 import { CV_STATUS, SOCKETS } from 'src/constants';
 
 const pusher = new Pusher(process.env.PUSHER_API_KEY, {

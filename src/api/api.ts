@@ -20,7 +20,7 @@ import {
   SocialMedia,
   CandidateInscription,
   Organization,
-  CreateUserDto,
+  UserDto,
 } from './types';
 
 class APIHandler {
@@ -93,7 +93,7 @@ class APIHandler {
     return this.get('/cv/shares');
   }
 
-  getCVByCandidateId(candidateId, headers): Promise<AxiosResponse> {
+  getCVByCandidateId(candidateId, headers?): Promise<AxiosResponse> {
     return this.get(`/cv/${candidateId}`, {}, headers);
   }
 
@@ -182,13 +182,13 @@ class APIHandler {
 
   // post
 
-  postUser(params: CreateUserDto): Promise<AxiosResponse> {
+  postUser(params: UserDto): Promise<AxiosResponse> {
     return this.post('/user', params);
   }
 
   // put
 
-  putUser(userId: string, params: object): Promise<AxiosResponse> {
+  putUser(userId: string, params: UserDto): Promise<AxiosResponse> {
     return this.put(`/user/${userId}`, params);
   }
 
@@ -205,7 +205,7 @@ class APIHandler {
 
   putCandidate(
     candidateId: string,
-    params: PutCandidate
+    params: Partial<PutCandidate>
   ): Promise<AxiosResponse> {
     return this.put(`/user/candidate/${candidateId}`, params);
   }
@@ -214,9 +214,9 @@ class APIHandler {
     return this.put(`/user/candidate/read/${candidateId}`);
   }
 
-  putLinkedUser(
+  putLinkUser(
     userId: string,
-    userToLinkId: string | string[]
+    userToLinkId?: string | string[]
   ): Promise<AxiosResponse> {
     return this.put(`/user/linkUser/${userId}`, { userToLinkId });
   }

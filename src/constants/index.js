@@ -842,7 +842,7 @@ export const EVENT_TYPES_FILTERS = [
   },
 ];
 
-export const BACKOFFICE_PAGES = ['candidates', 'coachs', 'oppotunities'];
+export const BACKOFFICE_PAGES = ['candidates', 'coachs', 'opportunities'];
 
 const ADDRESSES = {
   PARIS: '174 Rue Championnet 75018, Paris',
@@ -903,3 +903,9 @@ export const ANTENNE_INFO = [
     address: ADDRESSES.LYON,
   },
 ];
+
+export const MEMBER_TABS = {
+  CV: 'cv',
+  PARAMETERS: 'parametres',
+  OFFERS: 'offres',
+};

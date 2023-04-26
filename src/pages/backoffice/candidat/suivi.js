@@ -14,7 +14,7 @@ import {
 import { IconNoSSR } from 'src/components/utils/Icon';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { usePrevious } from 'src/hooks/utils';
-import { isRoleIncluded } from 'src/utils';
+import { isRoleIncluded } from 'src/utils/Finding.ts';
 
 const Suivi = () => {
   const { user } = useContext(UserContext);

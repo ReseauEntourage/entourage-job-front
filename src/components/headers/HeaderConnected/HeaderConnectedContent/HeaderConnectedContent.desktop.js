@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Navbar, SimpleLink } from 'src/components/utils';
 import { v4 as uuid } from 'uuid';
@@ -13,8 +13,10 @@ import { useRouter } from 'next/router';
 import Nav from 'src/components/utils/Navbar/Nav';
 import NavbarLogo from 'src/components/utils/Navbar/NavbarLogo';
 import { StyledNav } from 'src/components/utils/Navbar/Nav/Nav.styles';
-import { HeaderConnectedItemShape } from '../HeaderConnected.shapes';
-import { StyledHeaderDesktop } from '../../Header.styles';
+import { HeaderConnectedItemShape } from 'src/components/headers/HeaderConnected/HeaderConnected.shapes';
+import { StyledHeaderDesktop } from 'src/components/headers/Header.styles';
+import { isRoleIncluded } from 'src/utils';
+import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users.ts';
 
 const uuidValue = uuid();
 
@@ -73,7 +75,17 @@ const HeaderConnectedContentDesktop = ({ badges, links }) => {
     </div>,
   ];
 
-  const logoLink = links[user?.role?.toLowerCase()][0];
+  const getLinksDependingOnRole = useCallback(() => {
+    if (isRoleIncluded(CANDIDATE_USER_ROLES, user.role)) {
+      return links.candidat;
+    }
+    if (isRoleIncluded(COACH_USER_ROLES, user.role)) {
+      return links.coach;
+    }
+    return links.admin;
+  }, [links.admin, links.candidat, links.coach, user.role]);
+
+  const logoLink = getLinksDependingOnRole()[0];
 
   return (
     <StyledHeaderDesktop id="header">
@@ -91,7 +103,7 @@ const HeaderConnectedContentDesktop = ({ badges, links }) => {
               className="uk-navbar-nav"
               style={{ borderLeft: '1px solid lightgray' }}
             >
-              {links[user?.role?.toLowerCase()].map(
+              {getLinksDependingOnRole().map(
                 (
                   {
                     href,
