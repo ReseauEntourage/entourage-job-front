@@ -1,2 +1,2 @@
-export * from './CheckListElement.tsx';
-export * from './BulletListElement.tsx';
+export { CheckListElement } from './CheckListElement.tsx';
+export { BulletListElement } from './BulletListElement.tsx';

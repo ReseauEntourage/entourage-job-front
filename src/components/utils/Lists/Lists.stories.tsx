@@ -1,6 +1,7 @@
 import React from 'react';
 import { H6 } from 'src/components/utils/Headings';
-import { BulletList as BL, CheckList as CL } from '.';
+import { BulletListElement } from './BulletListElement';
+import { CheckListElement } from './CheckListElement';
 
 const meta = {
   title: 'Lists',
@@ -23,38 +24,38 @@ const meta = {
 const BulletListTemplate = () => {
   return (
     <>
-      <BL>
+      <BulletListElement>
         <H6 title="Lorem ipsum dolor sit amet" />
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus et
           dapibus nunc. Cras at laoreet mauris. Cras est augue, sollicitudin non
           diam ut, eleifend commodo neque.
         </p>
-      </BL>
-      <BL>
+      </BulletListElement>
+      <BulletListElement>
         <H6 title="Lorem ipsum dolor sit amet" />
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus et
           dapibus nunc. Cras at laoreet mauris. Cras est augue, sollicitudin non
           diam ut, eleifend commodo neque.
         </p>
-      </BL>
-      <BL>
+      </BulletListElement>
+      <BulletListElement>
         <H6 title="Lorem ipsum dolor sit amet" />
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus et
           dapibus nunc. Cras at laoreet mauris. Cras est augue, sollicitudin non
           diam ut, eleifend commodo neque.
         </p>
-      </BL>
-      <BL>
+      </BulletListElement>
+      <BulletListElement>
         <H6 title="Lorem ipsum dolor sit amet" />
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus et
           dapibus nunc. Cras at laoreet mauris. Cras est augue, sollicitudin non
           diam ut, eleifend commodo neque.
         </p>
-      </BL>
+      </BulletListElement>
     </>
   );
 };
@@ -66,38 +67,38 @@ export const BulletList = {
 const CheckListTemplate = () => {
   return (
     <>
-      <CL>
+      <CheckListElement>
         <H6 title="Lorem ipsum dolor sit amet" />
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus et
           dapibus nunc. Cras at laoreet mauris. Cras est augue, sollicitudin non
           diam ut, eleifend commodo neque.
         </p>
-      </CL>
-      <CL>
+      </CheckListElement>
+      <CheckListElement>
         <H6 title="Lorem ipsum dolor sit amet" />
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus et
           dapibus nunc. Cras at laoreet mauris. Cras est augue, sollicitudin non
           diam ut, eleifend commodo neque.
         </p>
-      </CL>
-      <CL>
+      </CheckListElement>
+      <CheckListElement>
         <H6 title="Lorem ipsum dolor sit amet" />
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus et
           dapibus nunc. Cras at laoreet mauris. Cras est augue, sollicitudin non
           diam ut, eleifend commodo neque.
         </p>
-      </CL>
-      <CL>
+      </CheckListElement>
+      <CheckListElement>
         <H6 title="Lorem ipsum dolor sit amet" />
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus et
           dapibus nunc. Cras at laoreet mauris. Cras est augue, sollicitudin non
           diam ut, eleifend commodo neque.
         </p>
-      </CL>
+      </CheckListElement>
     </>
   );
 };

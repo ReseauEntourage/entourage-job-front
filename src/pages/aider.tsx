@@ -36,3 +36,5 @@ export const Aider = () => {
     </Layout>
   );
 };
+
+export default Aider;

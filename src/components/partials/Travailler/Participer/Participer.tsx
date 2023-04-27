@@ -3,7 +3,7 @@ import React from 'react';
 import ImgSrc from 'public/static/img/travailler-participer.jpg';
 import { Button, Section } from 'src/components/utils';
 import { H2, H6 } from 'src/components/utils/Headings';
-import { CheckList } from 'src/components/utils/Lists';
+import { CheckListElement as CheckList } from 'src/components/utils/Lists';
 import { useIsDesktop } from 'src/hooks/utils/usePlatforms';
 import { StyledParticiper } from './Participer.styles';
 

@@ -4,7 +4,7 @@ import ImgSrc from 'public/static/img/travailler-rejoindre.jpg';
 import { StyledRejoindre } from 'src/components/partials/Travailler/Rejoindre/Rejoindre.styles';
 import { Section, Button } from 'src/components/utils';
 import { H2, H6 } from 'src/components/utils/Headings';
-import { BulletList } from 'src/components/utils/Lists';
+import { BulletListElement as BulletList } from 'src/components/utils/Lists';
 
 export const Rejoindre = ({ cta }: { cta: (label: string) => void }) => {
   return (
