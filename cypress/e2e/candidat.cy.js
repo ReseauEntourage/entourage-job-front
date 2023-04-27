@@ -1,5 +1,3 @@
-const domain = process.env.SERVER_URL.replace(/https:\/\/|http:\/\//g, '');
-
 describe('Candidat', () => {
   beforeEach(() => {
     cy.intercept('GET', '/cv/shares', { total: 184222 }).as('cvShares');
@@ -65,7 +63,7 @@ describe('Candidat', () => {
     );
     cy.intercept(
       'GET',
-      `https://tarteaucitron.io/load.js?domain=${domain}&uuid=${process.env.TARTEAUCITRON_UUID}`,
+      `https://tarteaucitron.io/load.js*`,
       {}
     );
     cy.intercept('POST', '/opportunity/external', {}).as('postExternal');
