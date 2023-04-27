@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { useCallback, useState } from 'react';
 import UIkit from 'uikit';
-import Api from 'src/api';
+import { Api } from 'src/api';
 import { UserDto } from 'src/api/types';
 import { CREATE_NEW_ORGANIZATION_VALUE } from 'src/components/forms/schema/formAddUser';
 import { USER_ROLES } from 'src/constants/users';

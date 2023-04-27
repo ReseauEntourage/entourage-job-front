@@ -73,6 +73,12 @@ export const Secondary = {
   },
 };
 
+export const SecondaryInverted = {
+  args: {
+    style: 'custom-secondary-inverted',
+  },
+};
+
 export const Text = {
   args: {
     style: 'custom-text',
@@ -85,13 +91,5 @@ export const Text = {
     },
   },
 };
-
-export function SecondaryInvertedOrange() {
-  return (
-    <Button style="custom-secondary-inverted" color="primaryOrange">
-      Button
-    </Button>
-  );
-}
 
 export default meta;

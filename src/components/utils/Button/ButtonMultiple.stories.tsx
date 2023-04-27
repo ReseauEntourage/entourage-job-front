@@ -92,6 +92,13 @@ export const Secondary = {
     style: 'custom-secondary',
   },
 };
+
+export const SecondaryInverted = {
+  args: {
+    style: 'custom-secondary-inverted',
+  },
+};
+
 export const Text = {
   args: {
     style: 'custom-text',

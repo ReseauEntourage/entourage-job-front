@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
 import UIkit from 'uikit';
-import Api from 'src/api';
+import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
 import { EditMemberModal } from 'src/components/backoffice/admin/members/MemberDetails/EditMemberModal';
 import { useMemberId } from 'src/components/backoffice/admin/members/MemberDetails/useMemberId';

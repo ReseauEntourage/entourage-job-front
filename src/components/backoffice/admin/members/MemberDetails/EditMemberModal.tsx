@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import UIkit from 'uikit';
 import { useOnMemberFormSubmit } from '../useOnMemberFormSubmit';
-import Api from 'src/api';
+import { Api } from 'src/api';
 import { User, UserDto } from 'src/api/types';
 import { formAddUser } from 'src/components/forms/schema/formAddUser';
 import { openModal } from 'src/components/modals/Modal';

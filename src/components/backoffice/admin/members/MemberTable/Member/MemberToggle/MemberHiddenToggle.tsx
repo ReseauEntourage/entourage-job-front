@@ -1,6 +1,6 @@
 import React from 'react';
 import UIkit from 'uikit';
-import Api from 'src/api';
+import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
 import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
 

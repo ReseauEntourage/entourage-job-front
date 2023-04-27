@@ -155,6 +155,7 @@ export const StyledButton = styled.button`
   }
 
   &.custom-secondary {
+    font-family: Poppins, sans-serif;
     padding: 6px 15px;
     background-color: white;
 
@@ -186,6 +187,7 @@ export const StyledButton = styled.button`
   }
 
   &.custom-secondary-inverted {
+    font-family: Poppins, sans-serif;
     padding: 6px 15px;
     color: white;
 
@@ -208,21 +210,15 @@ export const StyledButton = styled.button`
 
     &:hover {
       cursor: pointer;
-      background-color: transparent !important;
-
+      background-color: white !important;
       color: ${(props) => {
-        return colorToHoverColor[props.color] || COLORS.primaryOrange;
+        return COLORS[props.color] || COLORS.primaryOrange;
       }} !important;
-
-      border: 0.5px solid
-        ${(props) => {
-          return colorToHoverColor[props.color] || COLORS.primaryOrange;
-        }};
 
       path {
         transition: 0.2s ease-in-out;
         fill: ${(props) => {
-          return colorToHoverColor[props.color];
+          return COLORS[props.color] || COLORS.primaryOrange;
         }} !important;
       }
     }
