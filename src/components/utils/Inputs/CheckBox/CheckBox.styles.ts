@@ -8,8 +8,10 @@ export const StyledCheckbox = styled.div`
     return removeMargin ? 0 : 30;
   }}px;
   .checkbox-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 16px;
-    display: block;
     position: relative;
     cursor: pointer;
     -webkit-user-select: none;

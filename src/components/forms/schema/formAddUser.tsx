@@ -1,7 +1,7 @@
 import React from 'react';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import PlusFilledIcon from 'assets/custom/icons/plus-filled.svg';
-import Api from 'src/api/index';
+import { Api } from 'src/api/index';
 import { ADMIN_ZONES_FILTERS } from 'src/constants/departements';
 import { COLORS } from 'src/constants/styles';
 import {
