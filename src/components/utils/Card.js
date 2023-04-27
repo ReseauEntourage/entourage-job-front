@@ -1,5 +1,5 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import Grid from 'src/components/utils/Grid';
 
 // todo create a card component with each class parameters

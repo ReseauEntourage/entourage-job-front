@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyledTitleSection } from 'src/components/partials/Aider/H2/styles';
 import DoubleCarresIcon from 'public/static/img/icons/double-carres.svg';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 
 const TitleSection = ({ title, titleColor, svgStroke, svgColor }) => {
   return (

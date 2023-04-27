@@ -1,5 +1,5 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import { StyledCheckbox } from 'src/components/utils/Inputs/Checkbox/CheckBox.styles';
 
 const Checkbox = ({

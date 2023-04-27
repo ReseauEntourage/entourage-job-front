@@ -17,13 +17,14 @@ import AnimatedList from 'src/components/utils/AnimatedList';
 import Api from 'src/api/index.ts';
 import PropTypes from 'prop-types';
 import TextLoop from 'react-text-loop';
-import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { FB_TAGS, GA_TAGS, LINK_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag.ts';
 import CompanyContactModal from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
 import { openModal } from 'src/components/modals/Modal';
 import { fbEvent } from 'src/lib/fb.ts';
 import { useMount } from 'src/hooks/utils';
 import { TaxModal } from 'src/components/modals/PopupModal/TaxModal.tsx';
+import { linkEvent } from 'src/lib/lintrk.ts';
 
 const timeline = [
   {
@@ -198,6 +199,7 @@ const Entreprises = ({ nbPublishedCVs }) => {
           onClick: () => {
             gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
             fbEvent(FB_TAGS.COMPANY_CONTACT_OPEN);
+            linkEvent(LINK_TAGS.COMPANY_CONTACT_OPEN);
             openModal(<CompanyContactModal />);
           },
           label: 'Nous contacter',
@@ -274,6 +276,7 @@ const Entreprises = ({ nbPublishedCVs }) => {
             onClick={() => {
               gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
               fbEvent(FB_TAGS.COMPANY_CONTACT_OPEN);
+              linkEvent(LINK_TAGS.COMPANY_CONTACT_OPEN);
               openModal(<CompanyContactModal />);
             }}
             dataTestId="button-contact-company-first-section"
@@ -422,6 +425,7 @@ const Entreprises = ({ nbPublishedCVs }) => {
             onClick={() => {
               gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
               fbEvent(FB_TAGS.COMPANY_CONTACT_OPEN);
+              linkEvent(LINK_TAGS.COMPANY_CONTACT_OPEN);
               openModal(<CompanyContactModal />);
             }}
             style="secondary"
