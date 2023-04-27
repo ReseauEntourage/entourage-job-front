@@ -79,7 +79,7 @@ const Layout = ({
       {!isPDF && !isBackoffice && <Footer />}
       {!isPDF && (
         <Script
-          src={`https://tarteaucitron.io/load.js?domain=${domain}&uuid=0e7dccd2edb0f870afc26ab86d989e93ef6da0a9`}
+          src={`https://tarteaucitron.io/load.js?domain=${domain}&uuid=${process.env.TARTEAUCITRON_UUID}`}
           strategy="afterInteractive"
         />
       )}

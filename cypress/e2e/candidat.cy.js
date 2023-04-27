@@ -63,7 +63,7 @@ describe('Candidat', () => {
     );
     cy.intercept(
       'GET',
-      'https://tarteaucitron.io/load.js?domain=localhost:3001&uuid=0e7dccd2edb0f870afc26ab86d989e93ef6da0a9',
+      `https://tarteaucitron.io/load.js*`,
       {}
     );
     cy.intercept('POST', '/opportunity/external', {}).as('postExternal');

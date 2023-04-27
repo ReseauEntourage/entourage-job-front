@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { isSSR } from 'src/utils/isSSR';

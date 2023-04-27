@@ -32,14 +32,14 @@ const Travailler = () => {
       .getCampaigns()
       .then((res) => {
         setCampaigns(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   });
 
   const openModalInscription = (gTagLabel: string) => {
+    fbEvent(FB_TAGS.CANDIDATE_REGISTRATION_OPEN);
     openModal(
       <ModalEdit
         title="Rejoindre LinkedOut"
@@ -114,7 +114,7 @@ const Travailler = () => {
               );
             })
             .catch((err) => {
-              console.log(err);
+              console.error(err);
               UIkit.notification('Un problème est survenu', 'danger');
             });
         }}

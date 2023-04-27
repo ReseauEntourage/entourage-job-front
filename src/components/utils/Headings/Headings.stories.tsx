@@ -13,7 +13,7 @@ const meta = {
     },
   },
   decorators: [
-    (Story, { args }) => {
+    (Story) => {
       return (
         <div>
           <Story />

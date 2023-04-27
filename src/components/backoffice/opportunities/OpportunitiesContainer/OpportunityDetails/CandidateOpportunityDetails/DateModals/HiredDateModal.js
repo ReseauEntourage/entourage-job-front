@@ -4,7 +4,7 @@ import renderSimpleDatePickerField from 'src/components/forms/schema/formSimpleD
 import Api from 'src/api/index.ts';
 import { EVENT_TYPES } from 'src/constants';
 import UIkit from 'uikit';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 
 export const HiredDateModal = ({

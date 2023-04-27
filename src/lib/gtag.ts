@@ -1,6 +1,8 @@
+import { AnyCantFix } from 'src/utils/Types';
+
 declare global {
   interface Window {
-    gtag: any;
+    gtag: AnyCantFix;
   }
 }
 
