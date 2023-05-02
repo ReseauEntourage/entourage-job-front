@@ -50,7 +50,7 @@ export const Participer = ({ cta }: { cta: (label: string) => void }) => {
               <p data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;">
                 Le coach vous soutient à chaque étape de votre recherche
                 d’emploi et pendant votre intégration en entreprise (1 rencontre
-                / semaine)
+                / semaine).
               </p>
             </CheckList>
             <CheckList>
@@ -60,7 +60,7 @@ export const Participer = ({ cta }: { cta: (label: string) => void }) => {
               />
               <p data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;">
                 Une large proposition d’offres d’emploi, de contacts et de
-                conseil grâce à notre communauté d’entreprise et de citoyens
+                conseils grâce à notre communauté d’entreprises et de citoyens
                 engagés.
               </p>
             </CheckList>
@@ -70,9 +70,9 @@ export const Participer = ({ cta }: { cta: (label: string) => void }) => {
                 data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;"
               />
               <p data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;">
-                Le CV LinkedOut valorise votre parcours et vos qualités et vous
-                rend visible auprès des entreprises grâce aux partages sur les
-                réseaux sociaux professionnels.
+                Le CV LinkedOut valorise votre parcours quel qu’il soit et vos
+                qualités et vous rend visible auprès des entreprises grâce aux
+                partages sur les réseaux sociaux professionnels.
               </p>
             </CheckList>
             <CheckList>
