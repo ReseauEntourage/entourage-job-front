@@ -17,7 +17,8 @@ export default {
       name: 'location',
       component: 'select-new',
       showLabel: true,
-      title: 'Habitez-vous dans une des villes / départements suivants? *',
+      title:
+        'Êtes-vous domicilié dans l’une des villes / départements suivants? *',
       options: [
         {
           label: 'Seine-Saint-Denis (93)',
@@ -167,7 +168,7 @@ export default {
     },
     {
       id: 'infoCoTitle',
-      title: 'Prochaine étape: nous rencontrer',
+      title: 'Prochaine étape : Nous rencontrer',
       component: 'heading',
       hide: (getValue, fieldOptions) => {
         const city = antenneInfo.find((antenne) => {
@@ -189,7 +190,7 @@ export default {
           antenneInfo.find((antenne) => {
             return antenne.dpt === getValue('location');
           })?.address
-        }`;
+        }.`;
       },
       component: 'dynamic-text',
       hide: (getValue, fieldOptions) => {
@@ -209,7 +210,7 @@ export default {
       id: 'infoCo',
       name: 'infoCo',
       title:
-        'Selectionnez la date de la prochaine réunion d’information à laquelle vous souhaitez participer',
+        'Selectionnez la date de la prochaine réunion d’information à laquelle vous souhaitez participer :',
       component: 'radio-async-new',
       dynamicFilter: (getValue) => {
         return antenneInfo.find((antenne) => {

@@ -43,7 +43,7 @@ export const Steps = ({ cta }: { cta: (label: string) => void }) => {
             Nous trouvons un coach bénévole pour vous accompagner
           </div>
           <div data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;">
-            Nous programmons la première rencontre avec votre coach. celle-ci se
+            Nous programmons la première rencontre avec votre coach. Celle-ci se
             fait dans les locaux de votre ville, selon vos disponibilités.
           </div>
         </div>
