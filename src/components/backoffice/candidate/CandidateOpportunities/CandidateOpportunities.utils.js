@@ -1,7 +1,5 @@
 import React from 'react';
 import { USER_ROLES, OPPORTUNITY_FILTERS_DATA } from 'src/constants';
-import formEditExternalOpportunity from 'src/components/forms/schema/formEditExternalOpportunity';
-import { mutateFormSchema } from 'src/utils';
 
 export const textVariables = {
   title: {

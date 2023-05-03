@@ -40,6 +40,7 @@ const FormWithValidation = forwardRef(
 
     const [fieldValidations, setFieldValidations] = useState({});
     const [fieldValues, setFieldValues] = useState({});
+    const [fieldOptions, setFieldOptions] = useState({});
 
     // fonction permettant de verifier une champs d'entré utilisateur
     const updateForm = (args) => {
@@ -116,6 +117,10 @@ const FormWithValidation = forwardRef(
         setError('Un ou plusieurs champs sont invalides');
         await onError(fieldValues);
       }
+    };
+
+    const updateFieldOptions = (fieldWithOptions) => {
+      setFieldOptions({ ...fieldOptions, ...fieldWithOptions });
     };
 
     const initializeForm = useCallback(() => {
@@ -206,8 +211,10 @@ const FormWithValidation = forwardRef(
                           <GenericField
                             data={field}
                             formId={id}
+                            fieldOptions={fieldOptions}
                             value={fieldValues[field.id]}
                             onChange={updateForm}
+                            updateFieldOptions={updateFieldOptions}
                             getValid={(name) => {
                               return fieldValidations[`valid_${name}`];
                             }}
@@ -241,6 +248,8 @@ const FormWithValidation = forwardRef(
                             formId={id}
                             value={fieldValues[field.id]}
                             onChange={updateForm}
+                            fieldOptions={fieldOptions}
+                            updateFieldOptions={updateFieldOptions}
                             getValid={(name) => {
                               return fieldValidations[`valid_${name}`];
                             }}
@@ -293,6 +302,8 @@ const FormWithValidation = forwardRef(
                     formId={id}
                     value={fieldValues[value.id]}
                     onChange={updateForm}
+                    updateFieldOptions={updateFieldOptions}
+                    fieldOptions={fieldOptions}
                     getValid={(name) => {
                       return fieldValidations[`valid_${name}`];
                     }}

@@ -63,7 +63,7 @@ describe('Candidat', () => {
     );
     cy.intercept(
       'GET',
-      'https://tarteaucitron.io/load.js?domain=localhost:3001&uuid=0e7dccd2edb0f870afc26ab86d989e93ef6da0a9',
+      `https://tarteaucitron.io/load.js*`,
       {}
     );
     cy.intercept('POST', '/opportunity/external', {}).as('postExternal');
@@ -122,8 +122,8 @@ describe('Candidat', () => {
       );
     });
     cy.get('[data-testid="candidat-add-offer-main"]').click();
-    cy.get('#form-input-title').scrollIntoView().type('test');
-    cy.get('#form-input-company').scrollIntoView().type('test');
+    cy.get('#form-offer-external-title').scrollIntoView().type('test');
+    cy.get('#form-offer-external-company').scrollIntoView().type('test');
     cy.get('#form-offer-external-department-container')
       .scrollIntoView()
       .click();
@@ -138,11 +138,15 @@ describe('Candidat', () => {
     )
       .first()
       .click();
-    cy.get('#form-input-recruiterFirstName').scrollIntoView().type('test');
-    cy.get('#form-input-recruiterName').scrollIntoView().type('test');
-    cy.get('#form-input-recruiterMail').scrollIntoView().type('test@gmail.com');
+    cy.get('#form-offer-external-recruiterFirstName')
+      .scrollIntoView()
+      .type('test');
+    cy.get('#form-offer-external-recruiterName').scrollIntoView().type('test');
+    cy.get('#form-offer-external-recruiterMail')
+      .scrollIntoView()
+      .type('test@gmail.com');
     cy.get('#form-offer-external-description').scrollIntoView().type('test');
-    cy.get('#form-input-link').scrollIntoView().type('test');
+    cy.get('#form-offer-external-link').scrollIntoView().type('test');
     cy.get('button').contains('Envoyer').click();
     cy.wait('@postExternal');
 

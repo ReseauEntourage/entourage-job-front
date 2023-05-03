@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from 'src/components/Layout';
+import Layout from 'src/components/Layout.tsx';
 import { Section } from 'src/components/utils';
 import ImageTitle from 'src/components/partials/ImageTitle';
 import { CONTACT_INFO, EXTERNAL_LINKS } from 'src/constants';
@@ -10,7 +10,7 @@ import CompanyTestimonies from 'src/components/partials/CompanyTestimonies';
 import { NewsletterPartial } from 'src/components/partials';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import { GA_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 import CompanyContactModal from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
 import { openModal } from 'src/components/modals/Modal';
 

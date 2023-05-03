@@ -16,7 +16,7 @@ import Link from 'next/link';
 
 const Member = ({ member, role, callback }) => {
   const cvStatus = renderCVStatus(member);
-  const { checked, handleCheckBox } = useCheckbox(callback, member.id);
+  const { checked, handleCheckBox } = useCheckbox(callback, member.id, false);
   const relatedUser = getRelatedUser(member);
   return (
     <StyledMobileMember

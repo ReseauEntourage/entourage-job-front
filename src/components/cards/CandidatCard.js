@@ -12,7 +12,7 @@ import { Grid, Img, SimpleLink } from 'src/components/utils';
 import ModalShareCV from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
 import Api from 'src/api/index.ts';
 import { SharesCountContext } from 'src/store/SharesCountProvider';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import moment from 'moment';
 import { IconNoSSR } from 'src/components/utils/Icon';
@@ -23,7 +23,7 @@ import {
   findConstantFromValue,
   sortByOrder,
 } from 'src/utils';
-import { fbEvent } from 'src/lib/fb';
+import { fbEvent } from 'src/lib/fb.ts';
 import _ from 'lodash';
 
 const CandidatCard = ({

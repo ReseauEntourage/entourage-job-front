@@ -4,14 +4,14 @@ import React, { memo, useCallback, useEffect, useState } from 'react';
 import Api from 'src/api/index.ts';
 import _ from 'lodash';
 import { usePrevious } from 'src/hooks/utils';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { openModal } from 'src/components/modals/Modal';
 import defaultSchema from 'src/components/forms/schema/formEditOpportunity';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { findConstantFromValue, getValueFromFormField } from 'src/utils';
 import { BUSINESS_LINES } from 'src/constants';
-import { fbEvent } from 'src/lib/fb';
+import { fbEvent } from 'src/lib/fb.ts';
 import moment from 'moment';
 import { useNewsletterTracking } from 'src/hooks/useNewsletterTracking';
 

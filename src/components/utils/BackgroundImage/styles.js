@@ -10,6 +10,14 @@ export const StyledBackground = styled.section`
         height: 300px;
         max-height: 300px;
       }
+      &.hasCta {
+        max-height: 360px;
+        height: 360px;
+        .banner {
+          height: 360px;
+          max-height: 360px;
+        }
+      }
     }
   }
   .banner-container {
@@ -43,6 +51,14 @@ export const StyledBackground = styled.section`
       max-height: ${(props) => {
         return props.mobileHeight ? `${props.mobileHeight}px` : '199px';
       }};
+      &.hasCta {
+        max-height: 260px;
+        height: 260px;
+        .banner {
+          height: 260px;
+          max-height: 260px;
+        }
+      }
 
       .banner {
         height: ${(props) => {

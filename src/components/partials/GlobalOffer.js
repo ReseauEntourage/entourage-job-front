@@ -1,9 +1,9 @@
 import React from 'react';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { openModal } from 'src/components/modals/Modal';
 import usePostPublicOfferModal from 'src/components/modals/usePostPublicOfferModal';
-import { fbEvent } from 'src/lib/fb';
+import { fbEvent } from 'src/lib/fb.ts';
 
 const GlobalOffer = () => {
   const PublicOfferModal = usePostPublicOfferModal();

@@ -2,13 +2,12 @@ import UIkit from 'uikit';
 import React from 'react';
 import { useRouter } from 'next/router';
 import { Hamburger, Navbar } from 'src/components/utils';
-
 import Button from 'src/components/utils/Button';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas';
-import { fbEvent } from 'src/lib/fb';
+import { fbEvent } from 'src/lib/fb.ts';
 import { OFFCANVAS_GUEST } from 'src/constants/utils';
 import PropTypes from 'prop-types';
 import NavbarLogo from 'src/components/utils/Navbar/NavbarLogo';

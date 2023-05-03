@@ -29,7 +29,7 @@ import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm'
 import ErrorMessage from 'src/components/backoffice/cv/ErrorMessage';
 import { useFetchCV } from 'src/hooks/useFetchCV';
 import _ from 'lodash';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 import { GA_TAGS } from 'src/constants/tags';
 
 const EditUserModal = ({ user, setUser }) => {

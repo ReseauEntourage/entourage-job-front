@@ -1,6 +1,6 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import { StyledSubMenu } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/SubMenu/SubMenu.styles';
 import SimpleLink from 'src/components/utils/SimpleLink';
 import { IconNoSSR } from 'src/components/utils/Icon';
@@ -9,7 +9,7 @@ import {
   HeaderSubItemShape,
   NotifBadgesShape,
 } from 'src/components/headers/HeaderConnected/HeaderConnected.shapes';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 
 const uuidValue = uuid();
 

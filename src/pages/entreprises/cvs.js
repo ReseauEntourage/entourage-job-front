@@ -1,17 +1,17 @@
 import React from 'react';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 import { Button, Grid, Img, Section } from 'src/components/utils';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import Layout from 'src/components/Layout';
+import Layout from 'src/components/Layout.tsx';
 import ImageTitle from 'src/components/partials/ImageTitle';
 import SearchCandidates from 'src/components/partials/SearchCandidates';
 import CorporateContact from 'src/components/partials/CorporateContactPartial';
-import NewsletterPartial from 'src/components/partials/NewsletterPartial';
+import { NewsletterPartial } from 'src/components/partials/NewsletterPartial';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
 import usePostPublicOfferModal from 'src/components/modals/usePostPublicOfferModal';
 import { isSSR } from 'src/utils/isSSR';
-import { fbEvent } from 'src/lib/fb';
+import { fbEvent } from 'src/lib/fb.ts';
 
 const CVEntreprises = () => {
   const PublicOfferModal = usePostPublicOfferModal();

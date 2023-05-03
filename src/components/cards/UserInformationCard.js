@@ -1,6 +1,6 @@
 import UIkit from 'uikit';
 import React, { useEffect, useState } from 'react';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import { Card, Grid, SimpleLink } from 'src/components/utils';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';

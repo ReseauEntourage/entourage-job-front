@@ -12,6 +12,16 @@ export function Default() {
   return <TextInput title="A short story to tell" />;
 }
 
+export function WithLabel() {
+  return (
+    <TextInput
+      title="A short story to tell"
+      showLabel
+      placeholder="Tell us everything"
+    />
+  );
+}
+
 export function Password() {
   return <TextInput type="password" title="A secret story to tell" />;
 }

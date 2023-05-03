@@ -12,6 +12,7 @@ const BackgroundImage = ({
   imgMobile,
   mobileHeight,
   isHero,
+  hasCta,
 }) => {
   const { width } = useWindowSize();
   const [isDesktop, setIsDesktop] = useState(true);
@@ -26,7 +27,8 @@ const BackgroundImage = ({
       <div
         className={`banner-container ${
           imgMobile && !isDesktop ? 'mobile-banner-container' : ''
-        }`}
+        } ${hasCta ? 'hasCta' : ''}
+        `}
       >
         <div className="banner-content">{children}</div>
         <div className="banner">
@@ -63,12 +65,14 @@ BackgroundImage.propTypes = {
   imgMobile: PropTypes.oneOf(PropTypes.string, undefined),
   mobileHeight: PropTypes.oneOf(PropTypes.number, undefined),
   isHero: PropTypes.bool,
+  hasCta: PropTypes.bool,
 };
 
 BackgroundImage.defaultProps = {
   imgMobile: undefined,
   mobileHeight: undefined,
   isHero: false,
+  hasCta: false,
 };
 
 export default BackgroundImage;

@@ -22,7 +22,7 @@ export const StyledHeaderModal = styled.div`
     padding: 20px 0;
     text-align: center;
     > div {
-      max-width: 440px;
+      max-width: 90%;
       display: block;
       margin: auto;
       p {
@@ -36,5 +36,17 @@ export const StyledHeaderModal = styled.div`
 
   :not(.uk-padding-remove) .simple-margin > {
     margin-bottom: 20px;
+  }
+`;
+
+export const StyledModalContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  p {
+    text-align: center;
+  }
+  button {
+    margin: 20px 0;
   }
 `;

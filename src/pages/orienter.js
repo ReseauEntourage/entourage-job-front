@@ -1,10 +1,10 @@
 import React from 'react';
-import Layout from 'src/components/Layout';
+import Layout from 'src/components/Layout.tsx';
 import { Section } from 'src/components/utils';
 import Button from 'src/components/utils/Button';
 import ImageTitle from 'src/components/partials/ImageTitle';
 import { IconNoSSR } from 'src/components/utils/Icon';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { openModal } from 'src/components/modals/Modal';
 import ModalInterestLinkedOut from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
@@ -15,7 +15,7 @@ import Reviews from 'src/components/partials/Reviews';
 import LogoList from 'src/components/partials/LogoList';
 import PARTNERS from 'src/constants/partners';
 import NumberGrid from 'src/components/partials/NumberGrid';
-import { fbEvent } from 'src/lib/fb';
+import { fbEvent } from 'src/lib/fb.ts';
 import CandidateContactModal from 'src/components/modals/Modal/ModalGeneric/CandidateContactModal';
 
 const reviews = [
@@ -207,8 +207,8 @@ const Orienter = () => {
               items={[
                 <>
                   <span className="uk-text-bold">
-                    Domiciliés à Paris, dans le 92 et le 93, à Lille, à Lyon ou
-                    à Lorient
+                    Domiciliés à Paris, dans le 92 et le 93, à Lille, à Lyon, à
+                    Rennes ou à Lorient
                   </span>
                 </>,
                 <>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyledContainer } from 'src/components/utils/containers/styles';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 
 export const Container = ({ children }) => {
   return <StyledContainer>{children}</StyledContainer>;

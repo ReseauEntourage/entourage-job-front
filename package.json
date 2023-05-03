@@ -1,6 +1,6 @@
 {
   "name": "linkedout-front",
-  "version": "2.2.2",
+  "version": "2.3.0",
   "description": "",
   "main": "index.js",
   "engines": {
@@ -20,7 +20,7 @@
     "prepare": "husky install",
     "test": "jest",
     "test:watch": "jest --watch",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 6006 -s ./public",
     "build-storybook": "build-storybook",
     "chromatic": "chromatic --exit-zero-on-changes",
     "posttest:cov": "node commands/open-coverage.command.mjs",
@@ -125,6 +125,7 @@
     "lint-staged": "^13.0.3",
     "postcss": "^8.4.5",
     "prettier": "^2.1.2",
+    "storybook-addon-next": "^1.8.0",
     "typescript": "^4.8.4",
     "webpack": "^5.74.0"
   }

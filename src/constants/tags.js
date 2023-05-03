@@ -353,6 +353,9 @@ const GA_TAGS = {
   BACKOFFICE_COACH_HEADER_BAO_CLIC: {
     action: 'Backoffice_Coach_Header_BAO_Clic',
   },
+  BACKOFFICE_CANDIDAT_HEADER_BAO_CLIC: {
+    action: 'Backoffice_Candidat_Header_BAO_Clic',
+  },
 };
 
 const FB_TAGS = {
@@ -414,4 +417,13 @@ const FB_TAGS = {
   },
 };
 
-export { GA_TAGS, FB_TAGS };
+const LINK_TAGS = {
+  COMPANY_CONTACT_OPEN: {
+    conversionId: 11224572,
+  },
+  COMPANY_CONTACT_SEND: {
+    conversionId: 11224580,
+  },
+};
+
+export { GA_TAGS, FB_TAGS, LINK_TAGS };

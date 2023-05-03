@@ -5,7 +5,7 @@ import { v4 as uuid } from 'uuid';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
 import Dropdown from 'src/components/utils/Dropdown';
 import { IconNoSSR } from 'src/components/utils/Icon';
-import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag.ts';
 import { StyledConnectedItem } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/HeaderConnectedContent.styles';
 import SubMenu from 'src/components/headers/HeaderConnected/HeaderConnectedContent/SubMenu';
 import { UserContext } from 'src/store/UserProvider';

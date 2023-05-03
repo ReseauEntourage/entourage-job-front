@@ -19,6 +19,7 @@ import {
   Route,
   SocialMedia,
   User,
+  CandidateInscription,
 } from './types';
 
 class APIHandler {
@@ -380,6 +381,10 @@ class APIHandler {
   // contact /
   /// // //////
 
+  getCampaigns() {
+    return this.get(`/contact/campaigns`);
+  }
+
   postContactContactUs(params: ContactContactUs): Promise<AxiosResponse> {
     return this.post('/contact/contactUs', params);
   }
@@ -394,6 +399,12 @@ class APIHandler {
 
   postNewsletter(params: ContactNewsletter): Promise<AxiosResponse> {
     return this.post('/contact/newsletter', params);
+  }
+
+  postInscriptionCandidate(
+    params: CandidateInscription
+  ): Promise<AxiosResponse> {
+    return this.post('/contact/candidateInscription', params);
   }
 }
 
