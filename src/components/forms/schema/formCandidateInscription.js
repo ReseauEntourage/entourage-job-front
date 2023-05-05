@@ -241,9 +241,9 @@ export default {
             const options = res.data.map((record) => {
               return {
                 inputId: `infoco-radio-${record.id}`,
-                label: `${moment(record.time).format(
-                  'dddd D MMMM [à] HH[h]mm'
-                )}`,
+                label: `${moment(record.time)
+                  .utc()
+                  .format('dddd D MMMM [à] HH[h]mm')}`,
                 value: record.id,
                 filterData: record.antenne,
               };
