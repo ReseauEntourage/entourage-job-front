@@ -51,7 +51,7 @@ const ResetPasswordPage = ({ valid, id, token, isCreation }) => {
                 <IconNoSSR name="ban" ratio={4} className="uk-text-primary" />
                 <p className="uk-text-lead">
                   Ce lien ne semble pas valide. Veuillez contacter l&apos;équipe
-                  Linkedout.
+                  LinkedOut.
                 </p>
                 <div className="uk-flex uk-flex-center">
                   <Button

@@ -134,7 +134,7 @@ const Travailler = () => {
         imgMobile={MainImg}
         alt="Candidats LinkedOut en recherche d’emploi"
         cta={{
-          label: 'Rejoindre Linkedout',
+          label: 'Rejoindre LinkedOut',
           href: '',
           onClick: () => {
             openModalInscription('Header');

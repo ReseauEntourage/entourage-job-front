@@ -41,7 +41,7 @@ jest.mock('src/components/forms/FormValidator', () => {
   });
 });
 
-describe('Modal Interest Linkedout', () => {
+describe('Modal Interest LinkedOut', () => {
   Api.postContactContactUs.mockResolvedValue({});
   it('should render and next on submit, then close', async () => {
     const { container } = render(
