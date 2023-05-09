@@ -3,6 +3,7 @@ import api from 'src/api/index.ts';
 import moment from 'moment';
 import 'moment/locale/fr';
 import { antenneInfo } from 'src/constants';
+import _ from 'lodash';
 
 export default {
   id: 'form-candidate-inscription',
@@ -235,15 +236,15 @@ export default {
           .then((res) => {
             const noChoice = {
               inputId: `infoco-radio-nochoice`,
-              label: 'je ne suis pas disponible à ces dates',
+              label: 'Je ne suis pas disponible à ces dates',
               value: '',
             };
             const options = res.data.map((record) => {
               return {
                 inputId: `infoco-radio-${record.id}`,
-                label: `${moment(record.time)
-                  .utc()
-                  .format('dddd D MMMM [à] HH[h]mm')}`,
+                label: _.upperFirst(
+                  `${moment(record.time).format('dddd D MMMM [à] HH[h]mm')}`
+                ),
                 value: record.id,
                 filterData: record.antenne,
               };

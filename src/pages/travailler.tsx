@@ -61,9 +61,9 @@ const Travailler = () => {
               const antenne = antenneInfo.find((info) => {
                 return info.dpt === fields.location;
               });
-              const infoCoAddress = _.capitalize(antenne?.address);
+              const infoCoAddress = _.upperFirst(antenne?.address);
               const email = antenne?.mailCoordo;
-              const infoCoDate = _.capitalize(
+              const infoCoDate = _.upperFirst(
                 `${moment(
                   campaigns.find((campaign) => {
                     return campaign.id === fields.infoCo;
