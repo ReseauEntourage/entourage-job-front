@@ -33,7 +33,7 @@ const HeaderConnectedContentMobile = ({ badges, links }) => {
           <NavbarLogo
             href={logoLink.href + (logoLink.queryParams || '')}
             src="/static/img/linkedout_logo_white.png"
-            alt="Linkedout"
+            alt="LinkedOut"
           />
         }
         right={

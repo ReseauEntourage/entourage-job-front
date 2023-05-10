@@ -78,7 +78,7 @@ const innovations = [
   },
 ];
 
-const Linkedout = () => {
+const LinkedOut = () => {
   const tempInnovations = [...innovations];
 
   return (
@@ -151,7 +151,7 @@ const Linkedout = () => {
             sociabilité.
             <br />
             <br />
-            Le modèle Linkedout repose sur&nbsp;:
+            Le modèle LinkedOut repose sur&nbsp;:
             <br />
             <AnimatedList
               items={[
@@ -201,7 +201,7 @@ const Linkedout = () => {
             </span>{' '}
             personnes hébergées en centres d’hébergement, à l&apos;hôtel social,
             réfugiés, jeunes en précarité, personnes issues de parcours
-            d’insertion, en situation de handicap,… Le modèle Linkedout repose
+            d’insertion, en situation de handicap,... Le modèle LinkedOut repose
             sur&nbsp;:
             <br />
             <AnimatedList
@@ -287,4 +287,4 @@ const Linkedout = () => {
   );
 };
 
-export default Linkedout;
+export default LinkedOut;

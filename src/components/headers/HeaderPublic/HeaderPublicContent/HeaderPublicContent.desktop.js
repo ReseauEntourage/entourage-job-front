@@ -65,7 +65,7 @@ const HeaderPublicDesktop = ({ links }) => {
             <NavbarLogo
               href="/"
               src="/static/img/linkedout_logo_white.png"
-              alt="Linkedout"
+              alt="LinkedOut"
             />
             <div className="uk-margin-small-left uk-flex uk-flex-center uk-light">
               <Button

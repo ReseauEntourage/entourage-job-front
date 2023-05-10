@@ -28,7 +28,7 @@ const testimonies = [
     image: '/static/img/temoignage-candidat-lamin.jpg',
     author: 'Lamin',
     quote:
-      'C’est très organisé, je suis très satisfait. La vie est compliquée mais on peut avancer grâce à Linkedout.',
+      'C’est très organisé, je suis très satisfait. La vie est compliquée mais on peut avancer grâce à LinkedOut.',
   },
 ];
 

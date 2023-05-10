@@ -31,7 +31,7 @@ const ModalExternalOffer = ({ fetchOpportunities }) => {
   return (
     <ModalEdit
       title={"Ajouter une offre d'emploi externe à LinkedOut"}
-      description="J'ai décroché un entretien à l'extérieur : j'informe Linkedout de mes avancées !"
+      description="J'ai décroché un entretien à l'extérieur : j'informe LinkedOut de mes avancées !"
       submitText="Envoyer"
       formSchema={formAddExternalOpportunityCandidate}
       defaultValues={{
