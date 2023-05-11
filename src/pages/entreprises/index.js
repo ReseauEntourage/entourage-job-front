@@ -52,12 +52,12 @@ const timeline = [
 
 const numbers = [
   {
-    value: 300,
+    value: 400,
     description: 'candidats accompagnés depuis le lancement',
     animate: true,
   },
   {
-    value: '61%',
+    value: '72%',
     description:
       'des candidats parvenus au bout du parcours ont retrouvé un travail',
   },
