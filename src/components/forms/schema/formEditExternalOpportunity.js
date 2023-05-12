@@ -8,7 +8,7 @@ import {
   USER_ROLES,
 } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import { findConstantFromValue } from 'src/utils';
 
 export default {

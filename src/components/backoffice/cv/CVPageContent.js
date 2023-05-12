@@ -4,7 +4,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
 import Pusher from 'pusher-js';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import { Button, Grid } from 'src/components/utils';
 import { CVBackground, CVFiche, CVFicheEdition } from 'src/components/cv';
 import { UserContext } from 'src/store/UserProvider';

@@ -1,4 +1,4 @@
-import API from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import { UserContext } from 'src/store/UserProvider';
 import { useCallback, useContext, useState } from 'react';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
@@ -9,7 +9,7 @@ export function useTabsCount() {
 
   const fetchTabsCount = useCallback(async () => {
     const candidateId = getCandidateIdFromCoachOrCandidate(user);
-    const { data } = await API.getOpportunitiesTabCountByCandidate(candidateId);
+    const { data } = await Api.getOpportunitiesTabCountByCandidate(candidateId);
     setTabCounts(data);
   }, [user]);
 

@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { usePrevious } from 'src/hooks/utils';
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import { Button, Card, Grid, Section, SimpleLink } from 'src/components/utils';
 import schemaEditUser from 'src/components/forms/schema/formEditUser';
 import schemaDeleteUser from 'src/components/forms/schema/formDeleteUser.json';

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import UIkit from 'uikit';
 import MainImg from 'public/static/img/travailler-banner.png';
-import api from 'src/api/index';
+import { Api } from 'src/api';
 import Layout from 'src/components/Layout';
 import formCandidateInscription from 'src/components/forms/schema/formCandidateInscription';
 import { openModal } from 'src/components/modals/Modal';
@@ -19,7 +19,7 @@ import { Participer } from 'src/components/partials/Travailler/Participer';
 import { Rejoindre } from 'src/components/partials/Travailler/Rejoindre';
 import { Steps } from 'src/components/partials/Travailler/Steps';
 import { Section } from 'src/components/utils';
-import { antenneInfo } from 'src/constants';
+import { ANTENNE_INFO } from 'src/constants';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { useMount } from 'src/hooks/utils/useMount';
 import { fbEvent } from 'src/lib/fb';
@@ -29,8 +29,7 @@ const Travailler = () => {
   const [campaigns, setCampaigns] = useState([]);
 
   useMount(() => {
-    api
-      .getCampaigns()
+    Api.getCampaigns()
       .then((res) => {
         setCampaigns(res.data);
       })
@@ -54,15 +53,23 @@ const Travailler = () => {
             label: gTagLabel,
           });
           fbEvent(FB_TAGS.CANDIDATE_REGISTRATION_SEND);
-          await api
-            .postInscriptionCandidate(fields)
+          await Api.postInscriptionCandidate(fields)
             .then(() => {
               closeModal();
-              const antenne = antenneInfo.find((info) => {
+              const selectedCampaign = campaigns.find((campaign) => {
+                return campaign.id === fields.infoCo;
+              });
+
+              const antenne = ANTENNE_INFO.find((info) => {
                 return info.dpt === fields.location;
               });
-              const infoCoAddress = _.upperFirst(antenne?.address);
+
+              const infoCoAddress = selectedCampaign?.address
+                ? _.upperFirst(selectedCampaign?.address)
+                : _.upperFirst(antenne?.address);
+
               const email = antenne?.mailCoordo;
+
               const infoCoDate = _.upperFirst(
                 `${moment(
                   campaigns.find((campaign) => {
@@ -70,6 +77,7 @@ const Travailler = () => {
                   })?.time
                 ).format('dddd D MMMM [à] HH[h]mm')}`
               );
+
               openModal(
                 <ModalGeneric
                   title="Merci pour votre inscription !"

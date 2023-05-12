@@ -1,5 +1,5 @@
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import moment from 'moment/moment';
 import UIkit from 'uikit';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import UIkit from 'uikit';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 

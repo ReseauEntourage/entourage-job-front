@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 
 import { Grid, Img, SimpleLink } from 'src/components/utils';
 import ModalShareCV from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import { SharesCountContext } from 'src/store/SharesCountProvider';
 import { gaEvent } from 'src/lib/gtag.ts';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';

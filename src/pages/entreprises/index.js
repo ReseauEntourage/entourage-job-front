@@ -14,7 +14,7 @@ import { CV_FILTERS_DATA, STORAGE_KEYS } from 'src/constants';
 import Timeline from 'src/components/partials/Timeline';
 import NumberGrid from 'src/components/partials/NumberGrid';
 import AnimatedList from 'src/components/utils/AnimatedList';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import PropTypes from 'prop-types';
 import TextLoop from 'react-text-loop';
 import { FB_TAGS, GA_TAGS, LINK_TAGS } from 'src/constants/tags';

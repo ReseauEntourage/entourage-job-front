@@ -2,7 +2,7 @@ import UIkit from 'uikit';
 
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import { Button, Grid, Section } from 'src/components/utils';
 import { UserContext } from 'src/store/UserProvider';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';

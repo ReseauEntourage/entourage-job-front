@@ -36,7 +36,7 @@ describe('Parcours travailler', () => {
     cy.get('[data-testid="select-option-LinkedIn"]').click();
     cy.get('[data-testid="form-candidate-inscription-infoCoSubtitle"]').should(
       'include.text',
-      '174 rue de Championnet 75018, Paris'
+      '174 Rue Championnet 75018, Paris'
     );
     cy.get('[data-testid="infoco-radio-5"]').click();
     cy.get('button').contains('Valider').should('be.visible').click();

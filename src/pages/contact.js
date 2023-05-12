@@ -5,7 +5,7 @@ import Layout from 'src/components/Layout.tsx';
 import interestLinkedOutSchema from 'src/components/forms/schema/formInterestLinkedOut';
 import { Section } from 'src/components/utils';
 import FormWithValidation from 'src/components/forms/FormWithValidation';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import { useResetForm } from 'src/hooks/utils';
 import SimpleLink from 'src/components/utils/SimpleLink';
 

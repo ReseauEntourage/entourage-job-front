@@ -3,7 +3,7 @@ import UIkit from 'uikit';
 
 import { v4 as uuid } from 'uuid';
 import validator from 'validator';
-import Api from 'src/api/index';
+import { Api } from 'src/api/index';
 import { StyledNLForm } from 'src/components/partials/NewsletterPartial/NewsletterPartial.styles';
 import { Section } from 'src/components/utils';
 import Button from 'src/components/utils/Button';

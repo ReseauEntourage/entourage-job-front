@@ -291,6 +291,14 @@ const ORIENTATION = [
 
 const HIRED = [
   {
+    key: 'decathlon',
+    link: 'https://www.decathlon.fr/',
+  },
+  {
+    key: 'jcdecaux',
+    link: 'https://www.jcdecaux.fr/',
+  },
+  {
     key: 'webgeo',
     link: 'https://www.webgeoservices.com/fr/',
   },

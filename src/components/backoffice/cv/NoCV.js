@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Grid } from 'src/components/utils';
 import { CV_STATUS, USER_ROLES } from 'src/constants';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import { getCandidateFromCoachOrCandidate } from 'src/utils';
 
 const NoCV = ({ candidateId, user, setCV }) => {

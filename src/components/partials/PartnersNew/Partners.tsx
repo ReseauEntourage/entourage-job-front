@@ -10,16 +10,30 @@ import { Button, Section } from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
 import { StyledPartners } from './Partners.styles';
 
+/* const partnersToShow = [
+  'leroymerlin',
+  'manomano',
+  'murfy',
+  'carrefour',
+  'decathlon',
+  'jcdecaux',
+]; */
+
 export const Partners = () => {
   return (
     <StyledPartners>
       <Section className="custom-primary" display="flex-center">
         <H2 type="big" title="Elles ont déjà recruté" />
+        {/* <LogoList
+          logos={PARTNERS.HIRED.filter(({ key }) => {
+            return partnersToShow.includes(key);
+          })}
+        /> */}
         <div className="logos-container">
           <div>
             <Image
               src={LeRoyMerlinLogo}
-              objectFit="cover"
+              objectFit="contain"
               objectPosition="center"
               alt="leroymerlin"
             />
@@ -27,7 +41,7 @@ export const Partners = () => {
           <div>
             <Image
               src={ManoManoLogo}
-              objectFit="cover"
+              objectFit="contain"
               objectPosition="center"
               alt="manomano"
             />
@@ -38,7 +52,7 @@ export const Partners = () => {
           <div>
             <Image
               src={CarrefourLogo}
-              objectFit="cover"
+              objectFit="contain"
               objectPosition="center"
               alt="carrefour"
             />
@@ -46,7 +60,7 @@ export const Partners = () => {
           <div>
             <Image
               src={DecathlonLogo}
-              objectFit="cover"
+              objectFit="contain"
               objectPosition="center"
               alt="decathlon"
             />
@@ -54,7 +68,7 @@ export const Partners = () => {
           <div>
             <Image
               src={JCDecauxLogo}
-              objectFit="cover"
+              objectFit="contain"
               objectPosition="center"
               alt="jcdecaux"
             />
