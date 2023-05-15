@@ -1,7 +1,7 @@
 import UIkit from 'uikit';
 
 import React, { memo, useCallback, useEffect, useState } from 'react';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import _ from 'lodash';
 import { usePrevious } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag.ts';

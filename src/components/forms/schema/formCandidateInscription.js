@@ -1,8 +1,8 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
-import api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import moment from 'moment';
 import 'moment/locale/fr';
-import { antenneInfo } from 'src/constants';
+import { ANTENNE_INFO } from 'src/constants';
 import _ from 'lodash';
 
 export default {
@@ -172,7 +172,7 @@ export default {
       title: 'Prochaine étape : Nous rencontrer',
       component: 'heading',
       hide: (getValue, fieldOptions) => {
-        const city = antenneInfo.find((antenne) => {
+        const city = ANTENNE_INFO.find((antenne) => {
           return antenne.dpt === getValue('location');
         })?.city;
         const filteredOptions = fieldOptions?.infoCo?.find((fieldOption) => {
@@ -187,15 +187,16 @@ export default {
     {
       id: 'infoCoSubtitle',
       title: (getValue) => {
-        return `Pour bien comprendre votre besoin et vous accompagner au mieux nous vous invitons dans nos bureaux, au ${
-          antenneInfo.find((antenne) => {
-            return antenne.dpt === getValue('location');
-          })?.address
-        }.`;
+        const text =
+          'Pour bien comprendre votre besoin et vous accompagner au mieux nous vous invitons dans nos bureaux';
+        const address = ANTENNE_INFO.find((antenne) => {
+          return antenne.dpt === getValue('location');
+        })?.address;
+        return `${text}${address ? ` au ${address}` : ''}`;
       },
       component: 'dynamic-text',
       hide: (getValue, fieldOptions) => {
-        const city = antenneInfo.find((antenne) => {
+        const city = ANTENNE_INFO.find((antenne) => {
           return antenne.dpt === getValue('location');
         })?.city;
         const filteredOptions = fieldOptions?.infoCo?.find((fieldOption) => {
@@ -214,12 +215,12 @@ export default {
         'Selectionnez la date de la prochaine réunion d’information à laquelle vous souhaitez participer :',
       component: 'radio-async-new',
       dynamicFilter: (getValue) => {
-        return antenneInfo.find((antenne) => {
+        return ANTENNE_INFO.find((antenne) => {
           return antenne.dpt === getValue('location');
         })?.city;
       },
       hide: (getValue, fieldOptions) => {
-        const city = antenneInfo.find((antenne) => {
+        const city = ANTENNE_INFO.find((antenne) => {
           return antenne.dpt === getValue('location');
         })?.city;
         const filteredOptions = fieldOptions?.infoCo?.find((fieldOption) => {
@@ -231,8 +232,7 @@ export default {
         return !filteredOptions;
       },
       loadOptions: () => {
-        return api
-          .getCampaigns()
+        return Api.getCampaigns()
           .then((res) => {
             const noChoice = {
               inputId: `infoco-radio-nochoice`,

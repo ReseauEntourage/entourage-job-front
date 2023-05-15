@@ -107,9 +107,14 @@ const YOUNG_FINANCE = [
     title: 'Fondation Bettencourt-Schueller',
     link: 'https://www.fondationbs.org/',
   },
-];
+].sort(sortByTitleOrKey);
 
 const IMPORTANT_FINANCE = [
+  {
+    key: 'renault',
+    title: 'Fondation Renault',
+    link: 'https://www.renaultgroup.com/groupe/la-fondation-renault/',
+  },
   {
     key: 'airliquide',
     title: 'Fondation Air Liquide',
@@ -167,7 +172,9 @@ const IMPORTANT_FINANCE = [
   },
 ].sort(sortByTitleOrKey);
 
-const MAIN_FINANCE = [...YOUNG_FINANCE, ...IMPORTANT_FINANCE];
+const MAIN_FINANCE = [...YOUNG_FINANCE, ...IMPORTANT_FINANCE].sort(
+  sortByTitleOrKey
+);
 
 const ALL_FINANCE = [
   ...IMPORTANT_FINANCE,
@@ -283,6 +290,14 @@ const ORIENTATION = [
 ].sort(sortByTitleOrKey);
 
 const HIRED = [
+  {
+    key: 'decathlon',
+    link: 'https://www.decathlon.fr/',
+  },
+  {
+    key: 'jcdecaux',
+    link: 'https://www.jcdecaux.fr/',
+  },
   {
     key: 'webgeo',
     link: 'https://www.webgeoservices.com/fr/',

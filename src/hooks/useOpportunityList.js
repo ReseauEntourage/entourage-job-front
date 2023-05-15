@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import { filtersToQueryParams, getOpportunityUserFromOffer } from 'src/utils';
 
 const LIMIT = 25;

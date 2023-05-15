@@ -1,4 +1,4 @@
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import { USER_ROLES } from 'src/constants';
 
 export default {

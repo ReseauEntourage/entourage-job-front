@@ -1,6 +1,6 @@
 import { BUSINESS_LINES, CONTRACTS, USER_ROLES } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import moment from 'moment';
 import { findConstantFromValue, getValueFromFormField } from 'src/utils';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';

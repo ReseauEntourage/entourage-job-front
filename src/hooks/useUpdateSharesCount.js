@@ -1,6 +1,6 @@
 import { useCallback, useContext } from 'react';
 import { SharesCountContext } from 'src/store/SharesCountProvider';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 
 export function useUpdateSharesCount() {
   const { incrementSharesCount } = useContext(SharesCountContext);

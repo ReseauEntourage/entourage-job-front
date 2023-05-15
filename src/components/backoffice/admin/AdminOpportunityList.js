@@ -14,7 +14,7 @@ import OpportunityList from 'src/components/opportunities/OpportunityList';
 import PropTypes from 'prop-types';
 import { openModal } from 'src/components/modals/Modal';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import UIkit from 'uikit';
 import moment from 'moment';
 

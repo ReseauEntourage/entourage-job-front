@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import UIkit from 'uikit';
 import { Button } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';

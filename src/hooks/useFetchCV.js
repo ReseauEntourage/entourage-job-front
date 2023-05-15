@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
 import _ from 'lodash';
 

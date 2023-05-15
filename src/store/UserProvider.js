@@ -1,7 +1,7 @@
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import { STORAGE_KEYS, USER_ROLES } from 'src/constants';
 
 export const UserContext = createContext();

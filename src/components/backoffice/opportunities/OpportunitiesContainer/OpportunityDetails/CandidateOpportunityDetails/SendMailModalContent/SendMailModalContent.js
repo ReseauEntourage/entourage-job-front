@@ -7,7 +7,7 @@ import { UserContext } from 'src/store/UserProvider';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
 import FooterForm from 'src/components/forms/FooterForm';
 import { useModalContext, openModal } from 'src/components/modals/Modal';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import UIkit from 'uikit';
 

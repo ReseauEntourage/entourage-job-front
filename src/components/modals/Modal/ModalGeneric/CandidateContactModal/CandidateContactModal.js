@@ -1,5 +1,5 @@
 import React from 'react';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import { gaEvent } from 'src/lib/gtag.ts';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import UIkit from 'uikit';

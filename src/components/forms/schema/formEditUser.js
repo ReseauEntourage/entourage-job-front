@@ -1,4 +1,4 @@
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import { ADMIN_ROLES, USER_ROLES } from 'src/constants';
 import { ADMIN_ZONES_FILTERS } from 'src/constants/departements';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';

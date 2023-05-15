@@ -48,12 +48,14 @@ jest.mock('src/lib/gtag.ts', () => {
 jest.mock('src/api/index.ts', () => {
   const ActualApi = jest.requireActual('src/api/index.ts');
   return {
-    ...ActualApi,
-    postNewsletter: () => {
-      return Promise.resolve({
-        status: 200,
-        body: {},
-      });
+    Api: {
+      ...ActualApi.Api,
+      postNewsletter: () => {
+        return Promise.resolve({
+          status: 200,
+          body: {},
+        });
+      },
     },
   };
 });

@@ -10,7 +10,7 @@ import React, {
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { getOpportunityUserFromOffer } from 'src/utils';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import { Button, Grid, SimpleLink } from 'src/components/utils';
 import OfferCard from 'src/components/cards/OfferCard';
 import ModalOfferAdmin from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOfferAdmin';

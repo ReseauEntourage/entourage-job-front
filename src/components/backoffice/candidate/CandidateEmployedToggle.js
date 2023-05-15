@@ -2,7 +2,7 @@ import UIkit from 'uikit';
 
 import React from 'react';
 import schemaEditEmployed from 'src/components/forms/schema/formEditEmployed';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import PropTypes from 'prop-types';
 import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
 import { findConstantFromValue } from 'src/utils';
