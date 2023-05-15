@@ -1,5 +1,3 @@
 import APIHandler from './api';
 
-const API = new APIHandler();
-
-export default API;
+export const Api = new APIHandler();

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import ButtonPost from 'src/components/backoffice/cv/ButtonPost';
 import { gaEvent } from 'src/lib/gtag.ts';
 

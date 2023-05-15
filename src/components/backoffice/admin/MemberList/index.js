@@ -8,7 +8,7 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
 import Button from 'src/components/utils/Button';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import SearchBar from 'src/components/filters/SearchBar';
 import { filtersToQueryParams, mutateFormSchema } from 'src/utils';
 import schemaCreateUser from 'src/components/forms/schema/formEditUser';

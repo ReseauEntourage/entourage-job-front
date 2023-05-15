@@ -5,7 +5,7 @@ import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { ModalsListener, openModal } from 'src/components/modals/Modal';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import { BREAKPOINTS } from 'src/constants/styles';
 import ModalInterestLinkedOut from '../ModalInterestLinkedOut';
 
@@ -41,7 +41,7 @@ jest.mock('src/components/forms/FormValidator', () => {
   });
 });
 
-describe('Modal Interest Linkedout', () => {
+describe('Modal Interest LinkedOut', () => {
   Api.postContactContactUs.mockResolvedValue({});
   it('should render and next on submit, then close', async () => {
     const { container } = render(

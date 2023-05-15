@@ -1,5 +1,5 @@
 import React, { useCallback, useContext } from 'react';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import {
   allCTAs,
   CTAsByTab,

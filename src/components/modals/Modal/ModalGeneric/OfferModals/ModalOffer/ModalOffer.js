@@ -5,7 +5,7 @@ import Select from 'src/components/forms/fields/Select';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
 import { IconNoSSR } from 'src/components/utils/Icon';
 
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import {
   findConstantFromValue,
   formatParagraph,

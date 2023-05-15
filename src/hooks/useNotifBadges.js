@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ADMIN_ROLES, USER_ROLES } from 'src/constants';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils';
 import { usePrevious } from './utils';
 

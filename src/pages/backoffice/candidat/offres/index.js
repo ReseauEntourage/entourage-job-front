@@ -3,7 +3,7 @@ import { ADMIN_ZONES, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { useFilters } from 'src/hooks';
 import { UserContext } from 'src/store/UserProvider';
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import { OPPORTUNITY_FILTERS_DATA, USER_ROLES } from 'src/constants';
 import OpportunityError from 'src/components/opportunities/OpportunityError';
 import { useRouter } from 'next/router';

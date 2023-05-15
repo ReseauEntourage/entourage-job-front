@@ -4,12 +4,12 @@ import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import NumberGrid from 'src/components/partials/NumberGrid';
 
 const staticNumbers = [
-  { value: 300, description: 'candidats accompagnés', animated: true },
+  { value: 400, description: 'candidats accompagnés', animated: true },
   {
-    value: '61%',
-    description: 'de sorties positives',
+    value: '72%',
+    description: 'de sorties positives en 2022',
   },
-  { value: 500, description: "entreprises mobilisées dans l'inclusion" },
+  { value: 700, description: "entreprises mobilisées dans l'inclusion" },
 ];
 
 const NumberPartial = () => {

@@ -1,9 +1,10 @@
+import _ from 'lodash';
 import moment from 'moment';
 import React, { useState } from 'react';
 
 import UIkit from 'uikit';
 import MainImg from 'public/static/img/travailler-banner.png';
-import api from 'src/api/index';
+import { Api } from 'src/api';
 import Layout from 'src/components/Layout';
 import formCandidateInscription from 'src/components/forms/schema/formCandidateInscription';
 import { openModal } from 'src/components/modals/Modal';
@@ -18,7 +19,7 @@ import { Participer } from 'src/components/partials/Travailler/Participer';
 import { Rejoindre } from 'src/components/partials/Travailler/Rejoindre';
 import { Steps } from 'src/components/partials/Travailler/Steps';
 import { Section } from 'src/components/utils';
-import { antenneInfo } from 'src/constants';
+import { ANTENNE_INFO } from 'src/constants';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { useMount } from 'src/hooks/utils/useMount';
 import { fbEvent } from 'src/lib/fb';
@@ -28,8 +29,7 @@ const Travailler = () => {
   const [campaigns, setCampaigns] = useState([]);
 
   useMount(() => {
-    api
-      .getCampaigns()
+    Api.getCampaigns()
       .then((res) => {
         setCampaigns(res.data);
       })
@@ -53,20 +53,31 @@ const Travailler = () => {
             label: gTagLabel,
           });
           fbEvent(FB_TAGS.CANDIDATE_REGISTRATION_SEND);
-          await api
-            .postInscriptionCandidate(fields)
+          await Api.postInscriptionCandidate(fields)
             .then(() => {
               closeModal();
-              const antenne = antenneInfo.find((info) => {
+              const selectedCampaign = campaigns.find((campaign) => {
+                return campaign.id === fields.infoCo;
+              });
+
+              const antenne = ANTENNE_INFO.find((info) => {
                 return info.dpt === fields.location;
               });
-              const infoCoAddress = antenne?.address;
+
+              const infoCoAddress = selectedCampaign?.address
+                ? _.upperFirst(selectedCampaign?.address)
+                : _.upperFirst(antenne?.address);
+
               const email = antenne?.mailCoordo;
-              const infoCoDate = `${moment(
-                campaigns.find((campaign) => {
-                  return campaign.id === fields.infoCo;
-                })?.time
-              ).format('dddd D MMMM [à] HH[h]mm')}`;
+
+              const infoCoDate = _.upperFirst(
+                `${moment(
+                  campaigns.find((campaign) => {
+                    return campaign.id === fields.infoCo;
+                  })?.time
+                ).format('dddd D MMMM [à] HH[h]mm')}`
+              );
+
               openModal(
                 <ModalGeneric
                   title="Merci pour votre inscription !"
@@ -78,8 +89,8 @@ const Travailler = () => {
                       <>
                         <p>
                           Nous sommes impatient de vous retrouver pour la
-                          réunion d’information collective, qui aura lieu dans
-                          nos locaux le
+                          réunion d&apos;information collective, qui aura lieu
+                          dans nos locaux le&nbsp;:
                         </p>
                         <p>
                           <strong>{infoCoDate}</strong>
@@ -90,22 +101,22 @@ const Travailler = () => {
                         <p>
                           N’oubliez pas de noter la date dans votre agenda,
                           cette réunion est indispensable pour commencer le
-                          programme LinkedOut
+                          programme LinkedOut.
                         </p>
                         <p>
                           Si vous avez un empêchement, n’oubliez pas de nous
-                          prévenir par mail : {email}
+                          prévenir par mail&nbsp;: {email}
                         </p>
                       </>
                     ) : (
                       <>
                         <p>
                           Nous allons vous contacter rapidement pour vous
-                          proposer un rendez-vous
+                          proposer un rendez-vous.
                         </p>
                         <p>
-                          si vous avez des questions, n’hésitez pas à nous
-                          contacter par mail : {email}
+                          Si vous avez des questions, n’hésitez pas à nous
+                          contacter par mail&nbsp;: {email}
                         </p>
                       </>
                     )}
@@ -126,12 +137,12 @@ const Travailler = () => {
     <Layout title="Travailler - LinkedOut">
       <ImageTitle
         title="LinkedOut, un tremplin vers l’emploi"
-        description="Vous êtes dans une situation de précarité ou d’exclusion ? Vous avez un projet professionnel mais vous n’avez pas de réseau ?"
+        description={`Vous êtes dans une situation de précarité ou d’exclusion\xa0? Vous avez un projet professionnel mais vous n’avez pas de réseau\xa0?`}
         img={MainImg}
         imgMobile={MainImg}
         alt="Candidats LinkedOut en recherche d’emploi"
         cta={{
-          label: 'Rejoindre Linkedout',
+          label: 'Rejoindre LinkedOut',
           href: '',
           onClick: () => {
             openModalInscription('Header');

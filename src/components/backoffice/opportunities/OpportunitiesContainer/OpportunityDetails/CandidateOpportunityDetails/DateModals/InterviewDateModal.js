@@ -1,7 +1,7 @@
 import React from 'react';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import renderSimpleDatePickerField from 'src/components/forms/schema/formSimpleDatePicker';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import { EVENT_TYPES } from 'src/constants';
 import UIkit from 'uikit';
 import PropTypes from 'prop-types';

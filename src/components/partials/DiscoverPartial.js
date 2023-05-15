@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Section } from 'src/components/utils';
 import { CandidatCard } from 'src/components/cards';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import Button from 'src/components/utils/Button';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';

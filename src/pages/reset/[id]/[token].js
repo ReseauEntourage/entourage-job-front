@@ -4,7 +4,7 @@ import Layout from 'src/components/Layout.tsx';
 import { Button, Section } from 'src/components/utils';
 import schema from 'src/components/forms/schema/formResetPassword';
 import FormWithValidation from 'src/components/forms/FormWithValidation';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import PasswordCriterias from 'src/components/PasswordCriterias';
 import PropTypes from 'prop-types';
@@ -51,7 +51,7 @@ const ResetPasswordPage = ({ valid, id, token, isCreation }) => {
                 <IconNoSSR name="ban" ratio={4} className="uk-text-primary" />
                 <p className="uk-text-lead">
                   Ce lien ne semble pas valide. Veuillez contacter l&apos;équipe
-                  Linkedout.
+                  LinkedOut.
                 </p>
                 <div className="uk-flex uk-flex-center">
                   <Button

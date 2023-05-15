@@ -85,7 +85,7 @@ const HeaderConnectedContentDesktop = ({ badges, links }) => {
             <NavbarLogo
               href={logoLink.href + (logoLink.queryParams || '')}
               src="/static/img/linkedout_logo_orange.png"
-              alt="Linkedout"
+              alt="LinkedOut"
             />
             <StyledNav
               className="uk-navbar-nav"

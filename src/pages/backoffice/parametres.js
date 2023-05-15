@@ -7,7 +7,7 @@ import { Card, Grid, Section } from 'src/components/utils';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import FormWithValidation from 'src/components/forms/FormWithValidation';
 import schemaPersonalData from 'src/components/forms/schema/formPersonalData';
 import schemaChangePassword from 'src/components/forms/schema/formChangePassword';

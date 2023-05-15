@@ -8,7 +8,7 @@ import ErrorMessage from 'src/components/backoffice/cv/ErrorMessage';
 import { useFetchCV } from 'src/hooks/useFetchCV';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { getCandidateIdFromCoachOrCandidate, getRelatedUser } from 'src/utils';
-import Api from 'src/api/index.ts';
+import { Api } from 'src/api/index.ts';
 import { UserContext } from 'src/store/UserProvider';
 import UIkit from 'uikit';
 
