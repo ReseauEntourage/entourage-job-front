@@ -33,7 +33,7 @@ export const Logo = ({ logoKey, link, bis }) => {
           objectPosition="center"
           width={150}
           height={100}
-          alt={bis}
+          alt={logoKey}
         />
       )}
     </SimpleLink>
