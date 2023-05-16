@@ -13,11 +13,11 @@ export const Section = ({
   preserveColor,
   display,
 }) => {
-  let custom = 0;
+  let custom = false;
   let classBuffer = 'uk-section';
   let classBuffer2 = 'uk-container';
   if (className?.includes('custom')) {
-    custom = 1;
+    custom = true;
   } else {
     if (style) classBuffer += ` uk-section-${style}`;
     if (size) classBuffer += ` uk-section-${size}`;
@@ -38,7 +38,13 @@ export const Section = ({
   );
 };
 Section.propTypes = {
-  style: PropTypes.oneOf(UIKIT_STYLES),
+  style: PropTypes.oneOf([
+    ...UIKIT_STYLES,
+    'custom-header',
+    'custom-primary',
+    'custom-mobile-darkBG',
+    'custom-fixed',
+  ]),
   size: PropTypes.oneOf(UIKIT_SECTION_SIZES),
   id: PropTypes.string,
   children: PropTypes.oneOfType([

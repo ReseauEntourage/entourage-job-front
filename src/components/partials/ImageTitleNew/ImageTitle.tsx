@@ -17,7 +17,7 @@ export const ImageTitle = ({
   title: string;
   description: string;
   img: StaticImageData;
-  imgMobile: StaticImageData | undefined;
+  imgMobile?: StaticImageData;
   alt?: string;
   cta?: {
     onClick: () => void;
@@ -65,4 +65,5 @@ export const ImageTitle = ({
 ImageTitle.defaultProps = {
   alt: '',
   cta: null,
+  imgMobile: undefined,
 };
