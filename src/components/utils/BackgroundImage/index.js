@@ -16,9 +16,11 @@ const BackgroundImage = ({
 }) => {
   const { width } = useWindowSize();
   const [isDesktop, setIsDesktop] = useState(true);
+
   useEffect(() => {
     setIsDesktop(width >= BREAKPOINTS.desktop);
   }, [imgMobile, width]);
+
   return (
     <StyledBackground
       mobileHeight={mobileHeight}
@@ -62,14 +64,13 @@ BackgroundImage.propTypes = {
     PropTypes.element,
     PropTypes.arrayOf(PropTypes.element),
   ]).isRequired,
-  imgMobile: PropTypes.oneOf(PropTypes.string, undefined),
-  mobileHeight: PropTypes.oneOf(PropTypes.number, undefined),
+  imgMobile: PropTypes.shape({}).isRequired,
+  mobileHeight: PropTypes.number,
   isHero: PropTypes.bool,
   hasCta: PropTypes.bool,
 };
 
 BackgroundImage.defaultProps = {
-  imgMobile: undefined,
   mobileHeight: undefined,
   isHero: false,
   hasCta: false,

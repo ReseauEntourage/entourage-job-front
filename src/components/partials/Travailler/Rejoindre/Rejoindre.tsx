@@ -11,17 +11,17 @@ export const Rejoindre = ({ cta }: { cta: (label: string) => void }) => {
     <Section className="custom-primary">
       <StyledRejoindre>
         <div className="text-container">
-          <H2 type="light" title="Vous avez envie de nous rejoindre?" />
+          <H2 type="light" title={`Vous avez envie de nous rejoindre\xa0?`} />
           <p>
             LinkedOut s&apos;adresse à des personnes motivées et disponibles
             pour travailler et qui en raison d&apos;un parcours de vie difficile
             peinent à retrouver un emploi.
           </p>
-          <p>Pour participer au programme vous devez :</p>
+          <p>Pour participer au programme vous devez&nbsp;:</p>
           <ul>
             <BulletList>
               <H6
-                title="Habiter dans les villes / département suivants :"
+                title={`Habiter dans les villes / département suivants\xa0:`}
                 effect="cls:uk-animation-slide-bottom; delay: 200;"
               />
               <p data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;">
