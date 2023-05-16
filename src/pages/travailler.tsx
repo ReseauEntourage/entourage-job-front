@@ -3,7 +3,7 @@ import moment from 'moment';
 import React, { useState } from 'react';
 
 import UIkit from 'uikit';
-import MainImg from 'public/static/img/travailler-banner.png';
+import MainImg from 'public/static/img/travailler-banner.jpg';
 import { Api } from 'src/api';
 import Layout from 'src/components/Layout';
 import formCandidateInscription from 'src/components/forms/schema/formCandidateInscription';
