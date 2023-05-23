@@ -1,6 +1,6 @@
-import { USER_ROLES } from 'src/constants/users.ts';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
 import { Api } from 'src/api/index.ts';
+import { USER_ROLES } from 'src/constants/users.ts';
 import moment from 'moment';
 import { findConstantFromValue, getValueFromFormField } from 'src/utils';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';

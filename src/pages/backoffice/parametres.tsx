@@ -22,8 +22,8 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useResetForm } from 'src/hooks/utils/useResetForm';
 import { UserContext } from 'src/store/UserProvider';
-import { mutateFormSchema } from 'src/utils';
 import { isRoleIncluded } from 'src/utils/Finding';
+import { mutateFormSchema } from 'src/utils/Mutating';
 
 const Parametres = () => {
   const { user, setUser } = useContext(UserContext);
