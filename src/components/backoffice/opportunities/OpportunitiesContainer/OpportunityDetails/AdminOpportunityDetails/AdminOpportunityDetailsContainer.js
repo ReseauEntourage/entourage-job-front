@@ -1,8 +1,8 @@
 import React from 'react';
-import { useFetchOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/useFetchOpportunity';
-import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
+import { useFetchOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/useFetchOpportunity.ts';
+import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId.ts';
 import PropTypes from 'prop-types';
-import OpportunityDetails from '../OpportunityDetails';
+import OpportunityDetails from '../OpportunityDetails.tsx';
 import AdminOpportunityDetails from './AdminOpportunityDetails';
 
 const AdminOpportunityDetailsContainer = ({ fetchOpportunities }) => {

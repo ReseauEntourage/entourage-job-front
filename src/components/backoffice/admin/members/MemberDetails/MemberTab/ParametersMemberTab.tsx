@@ -79,11 +79,11 @@ export function ParametersMemberTab({
   const pluralForm = relatedUser && relatedUser.length > 1 ? 's' : '';
   const externalCoachTitle = `des candidat${pluralForm} externe${pluralForm}`;
 
-  const relatedMembers: UserWithUserCandidate[] = relatedUser?.map((member) => {
+  const relatedMembers = relatedUser?.map((member) => {
     return {
       ...member,
       candidat: user.coaches.find(({ candidat: { id } }) => member.id === id),
-      coach: [user.candidat],
+      coaches: [user.candidat],
       organization: user.organization,
     };
   });

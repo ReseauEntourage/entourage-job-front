@@ -5,7 +5,7 @@ import moment from 'moment';
 import { findConstantFromValue, getValueFromFormField } from 'src/utils';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { isEmail } from 'validator';
-import { BUSINESS_LINES, CONTRACTS } from 'src/constants';
+import { BUSINESS_LINES, CONTRACTS } from 'src/constants/index.ts';
 
 export default {
   id: 'form-offer',

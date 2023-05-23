@@ -23,7 +23,7 @@ import { usePrevious } from 'src/hooks/utils';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { CVShape } from 'src/components/cv/CV.shape';
 import { isRoleIncluded } from 'src/utils/Finding.ts';
-import { CV_STATUS, SOCKETS } from 'src/constants';
+import { CV_STATUS, SOCKETS } from 'src/constants/index.ts';
 
 const pusher = new Pusher(process.env.PUSHER_API_KEY, {
   cluster: 'eu',

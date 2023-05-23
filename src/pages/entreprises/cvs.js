@@ -7,7 +7,7 @@ import ImageTitle from 'src/components/partials/ImageTitle';
 import SearchCandidates from 'src/components/partials/SearchCandidates';
 import CorporateContact from 'src/components/partials/CorporateContactPartial';
 import { NewsletterPartial } from 'src/components/partials/NewsletterPartial';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import { openModal } from 'src/components/modals/Modal';
 import usePostPublicOfferModal from 'src/components/modals/usePostPublicOfferModal';
 import { isSSR } from 'src/utils/isSSR';

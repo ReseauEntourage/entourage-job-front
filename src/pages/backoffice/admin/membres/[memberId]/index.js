@@ -4,12 +4,12 @@ import { usePrevious } from 'src/hooks/utils';
 import { Api } from 'src/api/index.ts';
 import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users.ts';
 import { isRoleIncluded } from 'src/utils/Finding.ts';
-import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
-import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
+import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId.ts';
+import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice.tsx';
 import { Grid, Section, SimpleLink } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import { MemberDetails } from 'src/components/backoffice/admin/members/MemberDetails';
-import { MEMBER_TABS } from 'src/constants';
+import { MEMBER_TABS } from 'src/constants/index.ts';
 import { useTab } from 'src/components/backoffice/admin/members/MemberDetails/useTab.ts';
 import { useMemberId } from 'src/components/backoffice/admin/members/MemberDetails/useMemberId.ts';
 

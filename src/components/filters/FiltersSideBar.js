@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FiltersDropdowns from 'src/components/filters/FiltersDropdowns';
 import FiltersCheckboxes from 'src/components/filters/FiltersCheckboxes';
-import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas';
+import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas.tsx';
 
 const FiltersSideBar = ({ filterData, filters, setFilters }) => {
   return (

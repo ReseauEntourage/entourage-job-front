@@ -5,7 +5,7 @@ import {
   CONTRACTS,
   EXTERNAL_OFFERS_ORIGINS,
   OFFER_STATUS,
-} from 'src/constants';
+} from 'src/constants/index.ts';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
 import { Api } from 'src/api/index.ts';
 import { findConstantFromValue } from 'src/utils';

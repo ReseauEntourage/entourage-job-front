@@ -1,7 +1,7 @@
 import { OfferInfoContainer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferInfoContainer';
 import { findConstantFromValue, formatParagraph } from 'src/utils';
 import { Button, Grid, SimpleLink } from 'src/components/utils';
-import { BUSINESS_LINES } from 'src/constants';
+import { BUSINESS_LINES } from 'src/constants/index.ts';
 import React from 'react';
 import PropTypes from 'prop-types';
 

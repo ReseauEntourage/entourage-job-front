@@ -3,9 +3,9 @@ import { useRouter } from 'next/router';
 import Layout from 'src/components/Layout.tsx';
 import { Button, Section } from 'src/components/utils';
 import schema from 'src/components/forms/schema/formResetPassword';
-import FormWithValidation from 'src/components/forms/FormWithValidation';
 import { Api } from 'src/api/index.ts';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import FormWithValidation from 'src/components/forms/FormWithValidation.tsx';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import PasswordCriterias from 'src/components/PasswordCriterias';
 import PropTypes from 'prop-types';
 

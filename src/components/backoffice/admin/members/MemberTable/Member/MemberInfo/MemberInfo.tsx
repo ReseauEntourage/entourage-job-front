@@ -1,5 +1,7 @@
 import Link from 'next/link';
-import React, { useMemo } from 'react';
+import React, { useMemo, useContext } from 'react';
+import { USER_ROLES } from 'src/constants/users';
+import { UserContext } from 'src/store/UserProvider';
 import {
   StyledMemberInfoContainer,
   StyledMemberInfoNameContainer,
@@ -23,6 +25,8 @@ export function MemberInfo({
   children,
   disableLink,
 }: MemberInfoProps) {
+  const { user } = useContext(UserContext);
+
   const content = useMemo(
     () => (
       <StyledMemberInfoContainer>
@@ -43,13 +47,19 @@ export function MemberInfo({
     [children, email, firstName, lastName, organizationName]
   );
 
-  return disableLink ? (
-    content
-  ) : (
-    <Link href={`/backoffice/admin/membres/${id}`}>
-      <a>{content}</a>
-    </Link>
-  );
+  return disableLink
+    ? content
+    : user && (
+        <Link
+          href={
+            user.role === USER_ROLES.ADMIN
+              ? `/backoffice/admin/membres/${id}`
+              : `/backoffice/candidat/${id}/cv`
+          }
+        >
+          <a>{content}</a>
+        </Link>
+      );
 }
 
 MemberInfo.defaultProps = {

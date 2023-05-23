@@ -1,4 +1,4 @@
-import { CONTRACTS } from 'src/constants';
+import { CONTRACTS } from 'src/constants/index.ts';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
 
 export const formAddExternalOpportunityCandidate = {

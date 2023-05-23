@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Grid, SimpleLink } from 'src/components/utils';
 import Select from 'src/components/forms/fields/Select';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 
 import { Api } from 'src/api/index.ts';
 import {
@@ -14,9 +14,9 @@ import {
   mutateFormSchema,
 } from 'src/utils';
 import ModalOfferInfo from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/ModalOfferInfo';
-import FormWithValidation from 'src/components/forms/FormWithValidation';
+import FormWithValidation from 'src/components/forms/FormWithValidation.tsx';
 import { UserContext } from 'src/store/UserProvider';
-import { EXTERNAL_OFFERS_ORIGINS, OFFER_STATUS } from 'src/constants';
+import { EXTERNAL_OFFERS_ORIGINS, OFFER_STATUS } from 'src/constants/index.ts';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
 import { openModal } from 'src/components/modals/Modal';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
+import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice.tsx';
 import { Section } from 'src/components/utils';
 import { ALL_USER_ROLES, CANDIDATE_USER_ROLES } from 'src/constants/users.ts';
 import { useFilters } from 'src/hooks';

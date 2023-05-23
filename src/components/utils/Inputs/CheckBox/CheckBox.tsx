@@ -1,6 +1,16 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { StyledCheckbox } from 'src/components/utils/Inputs/CheckBox/CheckBox.styles';
+
+interface CBType {
+  id: string;
+  name: string;
+  handleClick: () => void;
+  disabled?: boolean;
+  removeMargin?: boolean;
+  hidden?: boolean;
+  value?: boolean;
+  title?: string;
+}
 
 export function CheckBox({
   handleClick,
@@ -11,7 +21,7 @@ export function CheckBox({
   name,
   id,
   removeMargin,
-}) {
+}: CBType) {
   if (hidden) {
     return null;
   }
@@ -41,17 +51,6 @@ export function CheckBox({
     </StyledCheckbox>
   );
 }
-
-CheckBox.propTypes = {
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  handleClick: PropTypes.func.isRequired,
-  disabled: PropTypes.bool,
-  removeMargin: PropTypes.bool,
-  hidden: PropTypes.bool,
-  value: PropTypes.string,
-  title: PropTypes.string,
-};
 
 CheckBox.defaultProps = {
   disabled: false,

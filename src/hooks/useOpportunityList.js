@@ -145,6 +145,7 @@ export function useCandidateOpportunities(
         if (offers.length < LIMIT) {
           setHasFetchedAll(true);
         }
+        setHasError(false);
         setLoading(false);
       } catch (err) {
         console.error(err);

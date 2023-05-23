@@ -1,3 +1,3 @@
-import CandidateOpportunityDetailsCTAs from './CandidateOpportunityDetailsCTAs';
+import CandidateOpportunityDetailsCTAs from './CandidateOpportunityDetailsCTAs.tsx';
 
 export default CandidateOpportunityDetailsCTAs;

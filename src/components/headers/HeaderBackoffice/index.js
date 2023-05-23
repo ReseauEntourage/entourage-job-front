@@ -1,3 +1,3 @@
-import HeaderBackoffice from './HeaderBackoffice';
+import HeaderBackoffice from './HeaderBackoffice.tsx';
 
 export default HeaderBackoffice;

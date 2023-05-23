@@ -4,7 +4,7 @@ import FiltersMobile from 'src/components/filters/FiltersMobile';
 import FiltersSideBar from 'src/components/filters/FiltersSideBar';
 import FiltersCheckboxes from 'src/components/filters/FiltersCheckboxes';
 import FiltersOptions from 'src/components/filters/FiltersOptions';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import { gaEvent } from 'src/lib/gtag.ts';
 import FiltersDropdowns from 'src/components/filters/FiltersDropdowns';
 

@@ -1,3 +1,3 @@
-import CandidateOpportunityItem from './CandidateOpportunityItem';
+import CandidateOpportunityItem from './CandidateOpportunityItem.tsx';
 
 export default CandidateOpportunityItem;

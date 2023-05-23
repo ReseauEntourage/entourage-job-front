@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 
 import PropTypes from 'prop-types';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import { gaEvent } from 'src/lib/gtag.ts';
 import { Button } from 'src/components/utils';
 import { v4 as uuid } from 'uuid';

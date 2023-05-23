@@ -2,7 +2,7 @@ import {
   COMPANY_APPROACHES_FILTERS,
   COMPANY_CONTACT_ZONES_FILTERS,
   HEARD_ABOUT_FILTERS,
-} from 'src/constants';
+} from 'src/constants/index.ts';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 
 export default {

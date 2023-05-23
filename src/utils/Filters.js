@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users.ts';
-import { MEMBER_FILTERS_DATA } from 'src/constants';
+import { MEMBER_FILTERS_DATA } from 'src/constants/index.ts';
 import { isRoleIncluded } from './Finding.ts';
 
 const filterMemberTypeConstantsByRole = (roles) => {

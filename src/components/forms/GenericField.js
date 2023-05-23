@@ -11,7 +11,7 @@ import Checkbox from 'src/components/forms/fields/Checkbox';
 import Input from 'src/components/forms/fields/Input';
 import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
 import { SimpleLink } from 'src/components/utils';
-import { EXTERNAL_LINKS } from 'src/constants';
+import { EXTERNAL_LINKS } from 'src/constants/index.ts';
 import PhoneInput from 'src/components/forms/fields/PhoneInput';
 
 import {

@@ -2,8 +2,9 @@ import React, { createContext, useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { Api } from 'src/api/index.ts';
-import { STORAGE_KEYS } from 'src/constants';
+import { STORAGE_KEYS } from 'src/constants/index.ts';
 import { USER_ROLES } from 'src/constants/users.ts';
+import { getDefaultUrl } from 'src/utils/Redirects.ts';
 
 export const UserContext = createContext();
 
@@ -41,10 +42,11 @@ const UserProvider = ({ children }) => {
           !pathname.includes('/backoffice/admin/offres') &&
           role !== USER_ROLES.ADMIN) ||
         (pathname.includes('/backoffice/candidat') &&
-          !pathname.includes('/backoffice/candidat/offres') &&
+          !pathname.includes('/offres') &&
           role === USER_ROLES.ADMIN)
       ) {
-        await replace('/login');
+        const path = getDefaultUrl(role.replace(' ', '_').toLowerCase());
+        await replace(path);
       }
     },
     [pathname, replace]

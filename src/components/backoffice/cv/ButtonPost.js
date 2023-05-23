@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 
 const ButtonPost = ({ text, icon, action, style, disabled, dataTestId }) => {
   const [loading, setLoading] = useState(false);

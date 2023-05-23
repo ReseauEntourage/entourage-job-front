@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel';
 import { useCopyToClipboard } from 'src/hooks';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 
 function translateCategory(isPublic, isRecommended, isExternal) {
   if (!isPublic) {
