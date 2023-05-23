@@ -79,14 +79,16 @@ export function ParametersMemberTab({
   const pluralForm = relatedUser && relatedUser.length > 1 ? 's' : '';
   const externalCoachTitle = `des candidat${pluralForm} externe${pluralForm}`;
 
-  const relatedMembers = relatedUser?.map((member) => {
-    return {
-      ...member,
-      candidat: user.coaches.find(({ candidat: { id } }) => member.id === id),
-      coaches: [user.candidat],
-      organization: user.organization,
-    };
-  });
+  const relatedMembers = useMemo(() => {
+    return relatedUser?.map((member) => {
+      return {
+        ...member,
+        candidat: user.coaches.find(({ candidat: { id } }) => member.id === id),
+        coaches: user.candidat ? [user.candidat] : [],
+        organization: user.organization,
+      };
+    });
+  }, [relatedUser, user.candidat, user.coaches, user.organization]);
 
   const relatedMemberList = useMemo(() => {
     return relatedMembers?.map((member, key) => {

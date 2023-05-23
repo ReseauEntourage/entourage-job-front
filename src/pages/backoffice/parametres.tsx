@@ -191,7 +191,7 @@ const Parametres = () => {
           title="Mes paramètres"
           description="Ici, vous pouvez gérer les données qui sont liées à votre compte sur LinkedOut. Vous pouvez aussi changer votre mail et votre mot de passe."
         />
-        {user && (
+        {user && userData && (
           <Grid childWidths={['1-2@m']}>
             <Grid childWidths={['1-1']}>
               {/* Preferences du CV */}
