@@ -22,12 +22,16 @@ export const StyledRow = styled.tr`
       `
     );
   }}
+
   td {
     border-top: 1px solid ${COLORS.lightgray};
     border-bottom: 1px solid ${COLORS.lightgray};
     padding: 15px;
     &:last-child {
       border-right: 1px solid ${COLORS.lightgray};
+    }
+    &:first-child {
+      border-left: 1px solid ${COLORS.lightgray};
     }
     .bold {
       font-weight: 700;
@@ -42,10 +46,6 @@ export const StyledRow = styled.tr`
     }
     &.name-cell {
       padding-left: 24px;
-      border-left: solid 3px
-        ${(props) => {
-          return COLORS.cvStatus[props.cvStatus]?.border || COLORS.white;
-        }};
 
       a {
         display: flex;
@@ -55,27 +55,7 @@ export const StyledRow = styled.tr`
         margin-right: 15px;
       }
     }
-    & > .cv-status-cell {
-      padding-left: 24px;
-      color: ${COLORS.black};
-      position: relative;
-      &::before {
-        content: '';
-        height: 10px;
-        width: 10px;
-        position: absolute;
-        left: 0;
-        top: calc(50% - 6px);
-        border-radius: 12px;
-        background-color: ${(props) => {
-          return COLORS.cvStatus[props.cvStatus]?.background || COLORS.white;
-        }};
-        border: 2px solid
-          ${(props) => {
-            return COLORS.cvStatus[props.cvStatus]?.border || COLORS.white;
-          }};
-      }
-    }
+
     &.hiddenCV-cell {
       color: ${COLORS.black};
       .eye-hidden {
@@ -98,7 +78,7 @@ export const StyledRow = styled.tr`
   }
 `;
 
-export const StyledMobileMember = styled.tr`
+export const StyledMobileOrganization = styled.tr`
   border: 1px solid ${COLORS.gray};
   font-size: 14px;
   .bold {
@@ -133,10 +113,6 @@ export const StyledMobileMember = styled.tr`
     align-items: center;
     border: 1px solid ${COLORS.gray};
     border-radius: 5px 5px 0 0;
-    border-left: solid 3px
-      ${(props) => {
-        return COLORS.cvStatus[props.cvStatus]?.border || COLORS.white;
-      }};
     a {
       color: ${COLORS.black};
       display: flex;
@@ -154,10 +130,7 @@ export const StyledMobileMember = styled.tr`
   .zone-date,
   .phone-sex,
   .work-cv {
-    border-left: solid 3px
-      ${(props) => {
-        return COLORS.cvStatus[props.cvStatus]?.border || COLORS.white;
-      }};
+    border-left: solid 1px ${COLORS.gray};
     border-right: 1px solid ${COLORS.gray};
     padding: 8px;
   }

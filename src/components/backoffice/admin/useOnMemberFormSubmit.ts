@@ -5,10 +5,12 @@ import { Api } from 'src/api';
 import { UserDto } from 'src/api/types';
 import { CREATE_NEW_ORGANIZATION_VALUE } from 'src/components/forms/schema/formAddUser';
 import { USER_ROLES } from 'src/constants/users';
+import { Action, ActionsLabels } from 'src/constants/utils';
 import { usePrevious } from 'src/hooks/utils';
 
 export function useOnMemberFormSubmit(
-  apiCall: (user: UserDto) => Promise<AxiosResponse>
+  apiCall: (user: UserDto) => Promise<AxiosResponse>,
+  action: Action
 ) {
   const [filledUserFields, setFilledUserFields] = useState({});
 
@@ -38,14 +40,14 @@ export function useOnMemberFormSubmit(
 
           try {
             ({
-              data: { id: organizationId, name },
+              data: { id: organizationId },
             } = await Api.postOrganization(organizationFields));
 
-            UIkit.notification('La structure a bien été créé', 'success');
+            UIkit.notification(`La structure a bien été créé`, 'success');
           } catch (error) {
             console.error(error);
             UIkit.notification(
-              "Une erreur s'est produite lors de la création de la structure",
+              `Une erreur s'est produite lors de la création de la structure`,
               'danger'
             );
           }
@@ -69,6 +71,10 @@ export function useOnMemberFormSubmit(
         const { data } = await apiCall(userFields);
         setFilledUserFields({});
         closeModal();
+        UIkit.notification(
+          `Le membre a bien été ${ActionsLabels[action].VERB}`,
+          'success'
+        );
         return data;
       } catch (error) {
         console.error(error);
@@ -76,7 +82,7 @@ export function useOnMemberFormSubmit(
           UIkit.notification('Cette adresse email est déjà utilisée', 'danger');
         } else {
           UIkit.notification(
-            "Une erreur s'est produite lors de la création du membre",
+            `Une erreur s'est produite lors de la ${ActionsLabels[action].NAME} du membre`,
             'danger'
           );
         }
@@ -92,7 +98,7 @@ export function useOnMemberFormSubmit(
         }
       }
     },
-    [apiCall]
+    [action, apiCall]
   );
 
   return {

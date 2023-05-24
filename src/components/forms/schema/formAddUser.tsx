@@ -155,11 +155,14 @@ export const formAddUser = {
             return !isRoleIncluded(EXTERNAL_USER_ROLES, getValue('role'));
           },
           loadOptions: async (inputValue, callback) => {
-            const { data: organizations } = await Api.getAllOrganizations({
-              params: {
-                search: inputValue,
-              },
-            });
+
+              const { data: organizations } = await Api.getAllOrganizations({
+                params: {
+                  search: inputValue,
+                  limit: 50,
+                  offset: 0,
+                },
+              });
 
             callback([
               CREATE_NEW_ORGANIZATION_OPTION,

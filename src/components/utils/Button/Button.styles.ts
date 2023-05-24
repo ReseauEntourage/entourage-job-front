@@ -141,11 +141,6 @@ export const StyledButton = styled.button`
       return COLORS[props.color] || COLORS.primaryOrange;
     }} !important;
 
-    path {
-      fill: ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
-      }} !important;
-    }
     background-color: transparent;
 
     &:hover {

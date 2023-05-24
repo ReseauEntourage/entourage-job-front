@@ -1,16 +1,19 @@
+import _ from 'lodash';
+import { useRouter } from 'next/router';
 import { useCallback } from 'react';
+import { gaEvent } from 'src/lib/gtag';
 import {
   filtersToQueryParams,
   getFiltersObjectsFromQueryParamsFront,
 } from 'src/utils';
-import { useRouter } from 'next/router';
-import _ from 'lodash';
-import { gaEvent } from 'src/lib/gtag.ts';
 
-export function useFilters(filtersData, path, otherPathParams, resetTag) {
+export function useFilters(filtersData, path, otherPathParams?, resetTag?) {
   const { push, query: originalQuery } = useRouter();
 
-  const { search, ...params } = otherPathParams
+  const {
+    search,
+    ...params
+  }: { search?: string; [key: string]: string | string[] } = otherPathParams
     ? _.omit(originalQuery, otherPathParams)
     : originalQuery;
 

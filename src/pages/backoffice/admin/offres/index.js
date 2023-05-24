@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from 'src/store/UserProvider';
-import { useFilters, useTabFilters } from 'src/hooks';
+import { useFilters } from 'src/hooks/useFilters.ts';
 import {
   ADMIN_ZONES,
   DEPARTMENTS_FILTERS,
@@ -16,6 +16,7 @@ import {
 import { USER_ROLES } from 'src/constants/users.ts';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { GA_TAGS } from 'src/constants/tags';
+import { useTabFilters } from 'src/hooks';
 
 const adminQueryFilters = OPPORTUNITY_FILTERS_DATA.slice(0, -1);
 

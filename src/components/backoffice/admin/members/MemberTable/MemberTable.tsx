@@ -11,7 +11,7 @@ import { StyledTable } from './MemberTable.styles';
 interface MemberTableProps {
   columns: MemberColumn[];
   members: React.ReactNode;
-  role: UserRole;
+  role: UserRole | UserRole[];
 }
 export function MemberTable({ columns, members, role }: MemberTableProps) {
   return (

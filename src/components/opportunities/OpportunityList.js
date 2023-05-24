@@ -28,7 +28,7 @@ import { usePrevious } from 'src/hooks/utils';
 import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { useBulkActions } from 'src/hooks/useBulkActions';
-import { SEARCH_MAX_WIDTH } from 'src/constants/utils';
+import { SEARCH_MAX_WIDTH } from 'src/constants/utils.ts';
 import { GA_TAGS } from 'src/constants/tags';
 import moment from 'moment';
 import { ModalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer';

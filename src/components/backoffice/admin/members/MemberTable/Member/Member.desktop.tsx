@@ -32,14 +32,14 @@ const tooltipId = 'contract-tooltip';
 export function MemberDesktop({
   member,
   role,
-  callback,
+  selectionCallback,
   columns,
   isEditable,
   setMember,
   disableLink,
 }: MemberProps) {
   const cvStatus = renderCVStatus(member);
-  const { checked, handleCheckBox } = useCheckBox(callback, member.id);
+  const { checked, handleCheckBox } = useCheckBox(selectionCallback, member.id);
   const relatedUser = getRelatedUser(member);
 
   const userCandidate = getUserCandidateFromCoachOrCandidate(member);
@@ -52,10 +52,7 @@ export function MemberDesktop({
     : null;
 
   return (
-    <StyledRow
-      cvStatus={cvStatus.toLowerCase()}
-      className={checked ? 'selected' : ''}
-    >
+    <StyledRow cvStatus={cvStatus.toLowerCase()} selected={checked}>
       <td className="name-cell">
         <MemberInfo
           id={member.id}
@@ -106,8 +103,8 @@ export function MemberDesktop({
       )}
       {columns.includes('zone') && (
         <td>
-          <span className="uk-text-nowrap uk-visible@m">
-            {member?.zone
+          <span className="uk-text-nowrap">
+            {member.zone
               ? member.zone.charAt(0).toUpperCase() +
                 member.zone.slice(1).toLowerCase()
               : ADMIN_ZONES.HZ.charAt(0).toUpperCase() +
@@ -189,20 +186,16 @@ export function MemberDesktop({
                     <Icon
                       name="eye-hidden"
                       ratio={1.2}
-                      className="uk-visible@m eye-hidden"
+                      className="eye-hidden"
                     />
                   ) : (
-                    <Icon
-                      name="eye-visible"
-                      ratio={1.2}
-                      className="uk-visible@m"
-                    />
+                    <Icon name="eye-visible" ratio={1.2} />
                   )}
                 </>
               )}
             </td>
           )}
-          {columns.includes('selection') && callback && (
+          {columns.includes('selection') && selectionCallback && (
             <td className="checkbox-cell">
               <CheckBox
                 removeMargin

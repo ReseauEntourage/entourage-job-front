@@ -34,14 +34,14 @@ const tooltipId = 'contract-tooltip';
 export function MemberMobile({
   member,
   role,
-  callback,
+  selectionCallback,
   columns,
   setMember,
   isEditable,
   disableLink,
 }: MemberProps) {
   const cvStatus = renderCVStatus(member);
-  const { checked, handleCheckBox } = useCheckBox(callback, member.id);
+  const { checked, handleCheckBox } = useCheckBox(selectionCallback, member.id);
   const relatedUser = getRelatedUser(member);
 
   const userCandidate = getUserCandidateFromCoachOrCandidate(member);
@@ -54,10 +54,7 @@ export function MemberMobile({
     : null;
 
   return (
-    <StyledMobileMember
-      cvStatus={cvStatus.toLowerCase()}
-      className={checked ? 'selected' : ''}
-    >
+    <StyledMobileMember cvStatus={cvStatus.toLowerCase()} selected={checked}>
       <div className="line member-head">
         <ImgProfile user={member} size={29} />
         <MemberInfo
@@ -73,18 +70,16 @@ export function MemberMobile({
           disableLink={disableLink}
         />
         {columns.includes('selection') &&
-          callback &&
+          selectionCallback &&
           !isRoleIncluded(COACH_USER_ROLES, role) && (
-            <div className="checkbox-container">
-              <CheckBox
-                id={`member-${member.id}-check`}
-                name={`member-${member.id}-check`}
-                value={checked}
-                handleClick={handleCheckBox}
-                removeMargin
-                disabled={userCandidate?.hidden}
-              />
-            </div>
+            <CheckBox
+              id={`member-${member.id}-check`}
+              name={`member-${member.id}-check`}
+              value={checked}
+              handleClick={handleCheckBox}
+              removeMargin
+              disabled={userCandidate?.hidden}
+            />
           )}
       </div>
       {columns.includes('associatedUser') && (
@@ -138,7 +133,7 @@ export function MemberMobile({
           <div className="cell">
             <span className="title">Zone</span>
             <span>
-              {member?.zone
+              {member.zone
                 ? member.zone.charAt(0).toUpperCase() +
                   member.zone.slice(1).toLowerCase()
                 : ADMIN_ZONES.HZ.charAt(0).toUpperCase() +

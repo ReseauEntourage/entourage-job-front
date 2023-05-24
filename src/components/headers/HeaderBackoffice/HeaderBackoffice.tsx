@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyledHeaderBackOffice } from 'src/components/headers/HeaderBackoffice/HeaderBackoffice.styles';
 import { Grid } from 'src/components/utils';
-import { BACKOFFICE_PAGES } from 'src/constants';
 import { usePendingMembers } from './usePendingMembers';
 
 interface HeaderBackofficeProps {
@@ -9,7 +8,7 @@ interface HeaderBackofficeProps {
   description: React.ReactNode;
   children?: React.ReactNode;
   childrenBottom?: boolean;
-  page?: (typeof BACKOFFICE_PAGES)[keyof typeof BACKOFFICE_PAGES];
+  shouldDisplayAdminNotifications?: boolean,
   noSeparator?: boolean;
 }
 
@@ -18,7 +17,7 @@ const HeaderBackoffice = ({
   description,
   children,
   childrenBottom,
-  page,
+  shouldDisplayAdminNotifications,
   noSeparator,
 }: HeaderBackofficeProps) => {
   const { pendingMembersCount } = usePendingMembers();
@@ -35,7 +34,7 @@ const HeaderBackoffice = ({
         </div>
         <div>{children}</div>
       </Grid>
-      {page === BACKOFFICE_PAGES.CANDIDATES ? (
+      {shouldDisplayAdminNotifications ? (
         <div className="notif-container">
           <p>
             <div className="uk-badge uk-margin-small-left">
@@ -54,7 +53,7 @@ const HeaderBackoffice = ({
 HeaderBackoffice.defaultProps = {
   children: undefined,
   childrenBottom: false,
-  page: '',
+  shouldDisplayAdminNotifications: false,
   noSeparator: false,
 };
 export default HeaderBackoffice;

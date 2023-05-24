@@ -1,19 +1,22 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useMemo } from 'react';
-import UIkit from 'uikit';
+import { useOnOrganizationFormSubmit } from '../useOnOrganizationFormSubmit';
 import { Api } from 'src/api';
-import { UserDto } from 'src/api/types';
-import { useOnMemberFormSubmit } from 'src/components/backoffice/admin/members/useOnMemberFormSubmit';
+import { OrganizationDto, UserDto } from 'src/api/types';
+import { useOnMemberFormSubmit } from 'src/components/backoffice/admin/useOnMemberFormSubmit';
 import { formAddOrganization } from 'src/components/forms/schema/formAddOrganization';
 import { formAddUser } from 'src/components/forms/schema/formAddUser';
 import { openModal } from 'src/components/modals/Modal';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { ButtonMultiple } from 'src/components/utils';
 import Icon from 'src/components/utils/Icon';
+import { Actions } from 'src/constants/utils';
 import { useIsDesktop } from 'src/hooks/utils';
 
-export function MemberCreationButtons({ fetchMembers }) {
+interface CreationButtonsProps {
+  refreshList: () => void;
+}
+export function CreationButtons({ refreshList }: CreationButtonsProps) {
   const isDesktop = useIsDesktop();
 
   const {
@@ -23,36 +26,27 @@ export function MemberCreationButtons({ fetchMembers }) {
     setFilledUserFields,
   } = useOnMemberFormSubmit(async (userToCreate: UserDto) => {
     return Api.postUser(userToCreate);
-  });
+  }, Actions.CREATE);
+
+  const { onSubmit: handleOrganizationCreationSubmit } =
+    useOnOrganizationFormSubmit(
+      async (organizationToCreate: OrganizationDto) => {
+        return Api.postOrganization(organizationToCreate);
+      },
+      Actions.CREATE
+    );
 
   const handleMemberCreationSubmit = useCallback(
     async (fields, closeModal) => {
       await onSubmit(fields, closeModal);
-      UIkit.notification('Le membre a bien été créé', 'success');
-      await fetchMembers();
+      await refreshList();
     },
-    [fetchMembers, onSubmit]
-  );
-
-  const handleOrganizationCreationSubmit = useCallback(
-    async (fields, closeModal) => {
-      try {
-        await Api.postOrganization(fields);
-        closeModal();
-        UIkit.notification('La structure a bien été créé', 'success');
-      } catch (error) {
-        console.error(error);
-        UIkit.notification(
-          "Une erreur s'est produite lors de la création de la structure",
-          'danger'
-        );
-      }
-    },
-    []
+    [refreshList, onSubmit]
   );
 
   const addUserModalProps = useMemo(() => {
     return {
+      formId: formAddUser.id,
       formSchema: formAddUser,
       title: 'Ajouter un nouveau membre',
       description:
@@ -111,7 +105,3 @@ export function MemberCreationButtons({ fetchMembers }) {
     </ButtonMultiple>
   );
 }
-
-MemberCreationButtons.propTypes = {
-  fetchMembers: PropTypes.func.isRequired,
-};

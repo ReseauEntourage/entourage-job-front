@@ -49,6 +49,14 @@ export const renderLinks = (user, logout, candidateId) => {
         ],
       },
       {
+        href: '/backoffice/admin/structures',
+        queryParams: `?${user?.zone ? `zone=${user?.zone}` : ''}`,
+        name: 'Les structures partenaires',
+        icon: 'home',
+        badge: '',
+        tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_ORGANIZATIONS_CLIC,
+      },
+      {
         href: '/backoffice/admin/offres',
         name: 'Les opportunités',
         icon: 'list',

@@ -20,7 +20,7 @@ export interface MemberProps {
   columns: MemberColumn[];
   member: UserWithUserCandidate;
   role: UserRole | UserRole[];
-  callback?: (memberId: string) => void;
+  selectionCallback?: (memberId: string) => void;
   isEditable?: boolean;
 
   setMember?: (user: UserWithUserCandidate) => void;

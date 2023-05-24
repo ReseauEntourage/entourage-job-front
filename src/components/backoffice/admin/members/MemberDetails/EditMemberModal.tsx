@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import UIkit from 'uikit';
-import { useOnMemberFormSubmit } from '../useOnMemberFormSubmit';
+import { Actions } from '../../../../../constants/utils';
+import { useOnMemberFormSubmit } from '../../useOnMemberFormSubmit';
 import { Api } from 'src/api';
 import { User, UserDto } from 'src/api/types';
 import { formAddUser } from 'src/components/forms/schema/formAddUser';
@@ -48,12 +49,11 @@ export function EditMemberModal({ user, setUser }: EditMemberModal) {
     setFilledUserFields,
   } = useOnMemberFormSubmit(async (userToUpdate: UserDto) => {
     return Api.putUser(user.id, userToUpdate);
-  });
+  }, Actions.UPDATE);
 
   const handleMemberUpdateSubmit = useCallback(
     async (fields, closeModal) => {
       const updatedUser = await onSubmit(fields, closeModal);
-      UIkit.notification('Le membre a bien été mis à jour', 'success');
       try {
         const { data: updatedUserWithLinkedMember } = await Api.putLinkUser(
           user.id,
@@ -75,6 +75,7 @@ export function EditMemberModal({ user, setUser }: EditMemberModal) {
 
   const updateUserModalProps = useMemo(() => {
     return {
+      formId: formAddUser.id,
       formSchema: formAddUser,
       title: "Edition d'un membre",
       description:
