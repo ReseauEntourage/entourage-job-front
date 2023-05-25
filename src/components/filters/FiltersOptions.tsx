@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Button } from 'src/components/utils/Button';
 
-const FiltersOptions = ({ resetFilters }) => {
+const FiltersOptions = ({ resetFilters }: { resetFilters: () => void }) => {
   return (
     <div className="uk-flex uk-flex-middle uk-flex-right uk-flex-1">
       <div className="uk-flex uk-flex-middle uk-flex-right">
@@ -23,10 +22,6 @@ const FiltersOptions = ({ resetFilters }) => {
       </div>
     </div>
   );
-};
-
-FiltersOptions.propTypes = {
-  resetFilters: PropTypes.func.isRequired,
 };
 
 export default FiltersOptions;

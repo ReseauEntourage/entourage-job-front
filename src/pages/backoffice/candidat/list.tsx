@@ -7,8 +7,6 @@ import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
 import { Section } from 'src/components/utils';
 
 const List = () => {
-  // faire la redirection vers les bonnes pages en cas d'atterrissage sur celle-ci pour un autre rôle
-
   return (
     <LayoutBackOffice title="Liste des candidats" isEmpty>
       <Section container="large">

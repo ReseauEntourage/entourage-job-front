@@ -73,9 +73,7 @@ const ModalGeneric = ({
 };
 
 ModalGeneric.defaultProps = {
-  onClose: () => {
-    // do nothing.
-  },
+  onClose: null,
   className: '',
   fullWidth: false,
   removePadding: false,

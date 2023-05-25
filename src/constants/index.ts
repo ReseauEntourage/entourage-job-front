@@ -363,7 +363,9 @@ export const MEMBER_FILTERS_DATA = [
     title: 'Statut du CV',
     tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_STATUT_CV_CLIC,
   },
-];
+] as const;
+
+export type MEMBER_FILTERS_CONSTANT = (typeof MEMBER_FILTERS_DATA)[number];
 
 export const EXTERNAL_OFFERS_ORIGINS = [
   {

@@ -1,12 +1,31 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import FiltersMobile from 'src/components/filters/FiltersMobile';
-import FiltersSideBar from 'src/components/filters/FiltersSideBar';
 import FiltersCheckboxes from 'src/components/filters/FiltersCheckboxes';
-import FiltersOptions from 'src/components/filters/FiltersOptions';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
-import { gaEvent } from 'src/lib/gtag.ts';
 import FiltersDropdowns from 'src/components/filters/FiltersDropdowns';
+import FiltersMobile from 'src/components/filters/FiltersMobile';
+import FiltersOptions from 'src/components/filters/FiltersOptions';
+import FiltersSideBar from 'src/components/filters/FiltersSideBar';
+import { IconNoSSR } from 'src/components/utils/Icon';
+import { MEMBER_FILTERS_DATA, OPPORTUNITY_FILTERS_DATA } from 'src/constants';
+import { gaEvent } from 'src/lib/gtag';
+
+// to be typed
+
+interface SearchBarType {
+  filtersConstants:
+    | Partial<typeof MEMBER_FILTERS_DATA>
+    | Partial<typeof OPPORTUNITY_FILTERS_DATA>; // to be typed properly
+  filters: any; // to be typed
+  setFilters: () => void;
+  search?: string;
+  setSearch: (arg1?: string) => void;
+  // numberOfResults: number,
+  resetFilters: () => void;
+  smallSelectors?: boolean;
+  placeholder?: string;
+  startSearchEvent?: {
+    action: string;
+  };
+}
 
 const SearchBar = ({
   filtersConstants,
@@ -14,12 +33,12 @@ const SearchBar = ({
   setFilters,
   search,
   setSearch,
-  numberOfResults,
+  // numberOfResults,
   resetFilters,
   placeholder,
   startSearchEvent,
   smallSelectors,
-}) => {
+}: SearchBarType) => {
   const [searchBuffer, setSearchBuffer] = useState(search || '');
 
   useEffect(() => {
@@ -35,13 +54,13 @@ const SearchBar = ({
     }
   }, [searchBuffer, setSearch, startSearchEvent]);
 
-  const [numberOfFilters, setNumberOfFilters] = useState(0);
+  const [numberOfFilters, setNumberOfFilters] = useState<number>(0);
 
   useEffect(() => {
     setNumberOfFilters(
-      Object.values(filters).reduce((acc, curr) => {
+      Object.values(filters).reduce((acc: number, curr: string) => {
         return acc + curr.length;
-      }, 0)
+      }, 0) as number
     );
   }, [filters]);
 
@@ -68,7 +87,10 @@ const SearchBar = ({
             }}
           />
         </form>
-        <FiltersMobile filters={filters} numberOfFilters={numberOfFilters} />
+        <FiltersMobile
+          // filters={filters}
+          numberOfFilters={numberOfFilters}
+        />
         <FiltersDropdowns
           hideOnMobile
           filterData={filtersConstants}
@@ -97,9 +119,9 @@ const SearchBar = ({
         />
         {hasFilters && (
           <FiltersOptions
-            numberOfResults={numberOfResults}
-            filters={filters}
-            search={search}
+            // numberOfResults={numberOfResults}
+            // filters={filters}
+            // search={search}
             resetFilters={() => {
               resetFilters();
               setSearchBuffer('');
@@ -109,21 +131,6 @@ const SearchBar = ({
       </div>
     </div>
   );
-};
-
-SearchBar.propTypes = {
-  filtersConstants: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  filters: PropTypes.shape({}).isRequired,
-  setFilters: PropTypes.func.isRequired,
-  search: PropTypes.string,
-  setSearch: PropTypes.func.isRequired,
-  numberOfResults: PropTypes.number.isRequired,
-  resetFilters: PropTypes.func.isRequired,
-  smallSelectors: PropTypes.bool,
-  placeholder: PropTypes.string,
-  startSearchEvent: PropTypes.shape({
-    action: PropTypes.string.isRequired,
-  }),
 };
 
 SearchBar.defaultProps = {

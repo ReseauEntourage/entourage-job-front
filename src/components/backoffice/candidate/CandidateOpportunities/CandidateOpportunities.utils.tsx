@@ -1,6 +1,6 @@
 import React from 'react';
-import { USER_ROLES } from 'src/constants/users.ts';
-import { OPPORTUNITY_FILTERS_DATA } from 'src/constants/index.ts';
+import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
+import { USER_ROLES } from 'src/constants/users';
 
 export const textVariables = {
   title: {
@@ -48,7 +48,7 @@ export const textVariables = {
       ),
     },
   },
-};
+} as const;
 
 export const candidateSearchFilters = OPPORTUNITY_FILTERS_DATA.filter((el) => {
   return el.key !== 'status';

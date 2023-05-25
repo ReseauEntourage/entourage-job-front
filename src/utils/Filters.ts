@@ -1,17 +1,24 @@
 import _ from 'lodash';
-import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users.ts';
-import { MEMBER_FILTERS_DATA } from 'src/constants/index.ts';
-import { isRoleIncluded } from './Finding.ts';
+import { MEMBER_FILTERS_DATA, MEMBER_FILTERS_CONSTANT } from 'src/constants';
+import {
+  CANDIDATE_USER_ROLES,
+  COACH_USER_ROLES,
+  UserRole,
+} from 'src/constants/users';
+import { isRoleIncluded } from './Finding';
 
-const filterMemberTypeConstantsByRole = (roles) => {
+const filterMemberTypeConstantsByRole = (
+  roles: typeof CANDIDATE_USER_ROLES | typeof COACH_USER_ROLES
+): MEMBER_FILTERS_CONSTANT => {
   return {
     ...MEMBER_FILTERS_DATA[0],
-    constants: MEMBER_FILTERS_DATA[0].constants.filter((roleConstants) => {
-      return isRoleIncluded(roles, roleConstants.value);
-    }),
-  };
+    constants: MEMBER_FILTERS_DATA[0].constants.filter(({ value }) => {
+      return isRoleIncluded(roles, value);
+    }) as MEMBER_FILTERS_CONSTANT['constants'],
+  } as MEMBER_FILTERS_CONSTANT;
 };
-export const mutateTypeFilterDependingOnRole = (role) => {
+
+export const mutateTypeFilterDependingOnRole = (role: UserRole) => {
   if (isRoleIncluded(COACH_USER_ROLES, role)) {
     return [
       filterMemberTypeConstantsByRole(COACH_USER_ROLES),

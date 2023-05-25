@@ -22,7 +22,7 @@ import {
   OPPORTUNITY_FILTERS_DATA,
 } from 'src/constants/index.ts';
 import FiltersTabs from 'src/components/utils/FiltersTabs';
-import SearchBar from 'src/components/filters/SearchBar';
+import SearchBar from 'src/components/filters/SearchBar.tsx';
 import { openModal } from 'src/components/modals/Modal';
 import { usePrevious } from 'src/hooks/utils';
 import { IconNoSSR } from 'src/components/utils/Icon.tsx';

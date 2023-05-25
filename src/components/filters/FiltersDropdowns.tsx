@@ -1,12 +1,22 @@
+import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 
-import PropTypes from 'prop-types';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
-import { gaEvent } from 'src/lib/gtag.ts';
-import { Button } from 'src/components/utils';
 import { v4 as uuid } from 'uuid';
+import { Button } from 'src/components/utils';
+import { IconNoSSR } from 'src/components/utils/Icon';
+import { gaEvent } from 'src/lib/gtag';
 
 const uuidValue = uuid();
+
+interface FiltersDropdownType {
+  filters: any; // to be typed
+  setFilters: (arg1) => void; // to be typed
+  filterData: any; // to be typed
+  hideOnMobile?: boolean;
+  fullWidth?: boolean;
+  smallSelectors?: boolean;
+  showSeparator?: boolean;
+}
 
 const FiltersDropdowns = ({
   filterData,
@@ -16,15 +26,18 @@ const FiltersDropdowns = ({
   fullWidth,
   showSeparator,
   smallSelectors,
-}) => {
+}: FiltersDropdownType) => {
   const renderFilters = useCallback(
     (filterConstants, key, tag, mandatory, index) => {
-      const reducedFilters = Object.values(filterConstants);
+      const reducedFilters: { value: string; label: string }[] =
+        Object.values(filterConstants); // to be typed properly
 
       return reducedFilters.map((filterConst, i) => {
-        const indexInSelectedFilters = filters[key].findIndex((filter) => {
-          return filter && filter.value === filterConst.value;
-        });
+        const indexInSelectedFilters = filters[key].findIndex(
+          (filter: { value: string }) => {
+            return filter && filter.value === filterConst.value;
+          }
+        );
 
         const isFilterSelected = indexInSelectedFilters > -1;
 
@@ -166,16 +179,6 @@ const FiltersDropdowns = ({
       )}
     </div>
   );
-};
-
-FiltersDropdowns.propTypes = {
-  filters: PropTypes.shape({}).isRequired,
-  setFilters: PropTypes.func.isRequired,
-  filterData: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  hideOnMobile: PropTypes.bool,
-  fullWidth: PropTypes.bool,
-  smallSelectors: PropTypes.bool,
-  showSeparator: PropTypes.bool,
 };
 
 FiltersDropdowns.defaultProps = {

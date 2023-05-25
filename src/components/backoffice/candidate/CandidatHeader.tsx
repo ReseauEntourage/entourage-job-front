@@ -1,11 +1,15 @@
 import _ from 'lodash';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { UserWithUserCandidate } from 'src/api/types';
 import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
 import { Grid, SimpleLink } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
-import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
+import {
+  CANDIDATE_USER_ROLES,
+  USER_ROLES,
+  COACH_USER_ROLES,
+} from 'src/constants/users';
 import { UserContext } from 'src/store/UserProvider';
 import {
   isRoleIncluded,
@@ -24,9 +28,28 @@ const CandidatHeader = ({
 
   const candidateId = useCandidateId();
 
-  if (!user || !connectedUser) return null;
-
   const relatedUser = getRelatedUser(user);
+
+  const [candidate, setCandidate] = useState<UserWithUserCandidate>();
+  const [candidateCVUrl, setCandidateCVUrl] = useState<string>();
+
+  useEffect(() => {
+    if (candidateId && user) {
+      if (isRoleIncluded(COACH_USER_ROLES, user.role)) {
+        const candidatesList: UserWithUserCandidate[] = getRelatedUser(user);
+        const currentCandidate: UserWithUserCandidate = candidatesList.filter(
+          (cand) => (cand.id = candidateId)
+        )[0];
+        setCandidateCVUrl(getUserCandidateFromCoach(user, candidateId).url);
+        setCandidate(currentCandidate);
+      } else if (isRoleIncluded(CANDIDATE_USER_ROLES, user.role)) {
+        setCandidate(user);
+        setCandidateCVUrl(user.candidat.url);
+      }
+    }
+  }, [user, candidateId]);
+
+  if (!user || !connectedUser) return null;
 
   return (
     <Grid row gap="small">
@@ -46,53 +69,28 @@ const CandidatHeader = ({
           </Grid>
         )}
         <>
-          {candidateId &&
-            relatedUser &&
-            relatedUser.map(({ firstName, lastName, id }) => {
-              const cvUrl = isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
-                ? user.candidat.url
-                : getUserCandidateFromCoach(user, id).url;
-
-              const nameLinkComponent =
-                connectedUser.role === USER_ROLES.ADMIN ? (
-                  <SimpleLink
-                    className="uk-link-text uk-margin-small-top"
-                    href={`/backoffice/admin/membres/${id}`}
-                  >
-                    <span className="uk-text-italic">
-                      {firstName} {lastName}
-                    </span>
-                  </SimpleLink>
-                ) : (
-                  <span className="uk-text-italic">
-                    {firstName} {lastName}
+          {candidate && (
+            <>
+              <Grid row gap="small" middle className="uk-margin-small-top">
+                <IconNoSSR name="user" style={{ width: 20 }} />
+                <span className="uk-text-italic">
+                  {candidate.firstName} {candidate.lastName}
+                </span>
+              </Grid>
+              <Grid row gap="small" middle className="uk-margin-small-top">
+                <IconNoSSR name="link" style={{ width: 20 }} />
+                <SimpleLink
+                  className="uk-link-text uk-margin-small-top"
+                  target="_blank"
+                  href={`/cv/${candidateCVUrl}`}
+                >
+                  <span>
+                    {process.env.SERVER_URL}/cv/{candidateCVUrl}
                   </span>
-                );
-              if (candidateId !== id) {
-                return null;
-              }
-
-              return (
-                <>
-                  <Grid row gap="small" middle className="uk-margin-small-top">
-                    <IconNoSSR name="user" style={{ width: 20 }} />
-                    {nameLinkComponent}
-                  </Grid>
-                  <Grid row gap="small" middle className="uk-margin-small-top">
-                    <IconNoSSR name="link" style={{ width: 20 }} />
-                    <SimpleLink
-                      className="uk-link-text uk-margin-small-top"
-                      target="_blank"
-                      href={`/cv/${cvUrl}`}
-                    >
-                      <span>
-                        {process.env.SERVER_URL}/cv/{cvUrl}
-                      </span>
-                    </SimpleLink>
-                  </Grid>
-                </>
-              );
-            })}
+                </SimpleLink>
+              </Grid>
+            </>
+          )}
         </>
         {showZone && (
           <Grid row gap="small" middle className="uk-margin-small-top">
@@ -109,35 +107,5 @@ const CandidatHeader = ({
 CandidatHeader.defaultProps = {
   showZone: false,
 };
-
-// CandidatHeader.propTypes = {
-//   user: PropTypes.shape({
-//     firstName: PropTypes.string,
-//     lastName: PropTypes.string,
-//     urlImg: PropTypes.string,
-//     role: PropTypes.string,
-//     candidat: PropTypes.shape({
-//       url: PropTypes.string,
-//       coach: PropTypes.shape({
-//         firstName: PropTypes.string,
-//         lastName: PropTypes.string,
-//       }),
-//     }),
-//     coaches: PropTypes.arrayOf(
-//       PropTypes.shape({
-//         url: PropTypes.string,
-//         candidat: PropTypes.shape({
-//           firstName: PropTypes.string,
-//           lastName: PropTypes.string,
-//         }),
-//       })
-//     ),
-//     zone: PropTypes.string,
-//     organization: PropTypes.shape({
-//       name: PropTypes.string.isRequired,
-//     }),
-//   }).isRequired,
-//   showZone: PropTypes.bool,
-// };
 
 export default CandidatHeader;

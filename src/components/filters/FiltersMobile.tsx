@@ -1,13 +1,12 @@
+import React, { useEffect, useState } from 'react';
 import UIkit from 'uikit';
 
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { Button } from 'src/components/utils';
-import { gaEvent } from 'src/lib/gtag.ts';
+import { IconNoSSR } from 'src/components/utils/Icon';
 import { GA_TAGS } from 'src/constants/tags';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
+import { gaEvent } from 'src/lib/gtag';
 
-const FiltersMobile = ({ numberOfFilters }) => {
+const FiltersMobile = ({ numberOfFilters }: { numberOfFilters?: number }) => {
   const [filterMenuOpened, setFilterMenuOpened] = useState(false);
 
   const onFilterMenuToggle = (opened) => {
@@ -54,10 +53,6 @@ const FiltersMobile = ({ numberOfFilters }) => {
       </Button>
     </div>
   );
-};
-
-FiltersMobile.propTypes = {
-  numberOfFilters: PropTypes.number,
 };
 
 FiltersMobile.defaultProps = {

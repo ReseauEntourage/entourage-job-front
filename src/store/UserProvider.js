@@ -37,7 +37,9 @@ const UserProvider = ({ children }) => {
 
   const restrictAccessByRole = useCallback(
     async (role) => {
+      // restriction conditions
       if (
+        (pathname.includes('/list') && role !== USER_ROLES.COACH_EXTERNAL) ||
         (pathname.includes('/backoffice/admin') &&
           !pathname.includes('/backoffice/admin/offres') &&
           role !== USER_ROLES.ADMIN) ||

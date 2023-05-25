@@ -383,9 +383,7 @@ FormWithValidation.defaultProps = {
   defaultValues: {},
   onCancel: undefined,
   enterToSubmit: false,
-  onError: () => {
-    // do nothing.
-  },
+  onError: null,
   formId: '',
 };
 

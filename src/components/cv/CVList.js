@@ -12,7 +12,7 @@ import {
 import SimpleLink from 'src/components/utils/SimpleLink';
 import { usePrevious } from 'src/hooks/utils';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import SearchBar from 'src/components/filters/SearchBar';
+import SearchBar from 'src/components/filters/SearchBar.tsx';
 import { openModal } from 'src/components/modals/Modal';
 import usePostPublicOfferModal from 'src/components/modals/usePostPublicOfferModal';
 import { IconNoSSR } from 'src/components/utils/Icon.tsx';

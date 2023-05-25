@@ -1,7 +1,13 @@
 import React from 'react';
+import { gaEvent } from 'src/lib/gtag';
 
-import PropTypes from 'prop-types';
-import { gaEvent } from 'src/lib/gtag.ts';
+interface FiltersCheckboxesType {
+  filters: any; // to be typed
+  setFilters: (arg1) => void; // to be typed
+  filterData: any; // to be typed
+  hideOnMobile?: boolean;
+  fullWidth?: boolean;
+}
 
 const FiltersCheckboxes = ({
   filterData,
@@ -9,7 +15,7 @@ const FiltersCheckboxes = ({
   setFilters,
   hideOnMobile,
   fullWidth,
-}) => {
+}: FiltersCheckboxesType) => {
   return (
     <div
       className={`uk-flex uk-flex-middle ${
@@ -54,14 +60,6 @@ const FiltersCheckboxes = ({
       })}
     </div>
   );
-};
-
-FiltersCheckboxes.propTypes = {
-  filters: PropTypes.shape({}).isRequired,
-  setFilters: PropTypes.func.isRequired,
-  filterData: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  hideOnMobile: PropTypes.bool,
-  fullWidth: PropTypes.bool,
 };
 
 FiltersCheckboxes.defaultProps = {

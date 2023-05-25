@@ -25,9 +25,7 @@ export const HeaderConnectedMainItemDefaultProps = {
   tag: null,
   queryParams: '',
   subMenu: null,
-  onClick: () => {
-    // do nothing.
-  },
+  onClick: null,
   disabled: false,
 };
 

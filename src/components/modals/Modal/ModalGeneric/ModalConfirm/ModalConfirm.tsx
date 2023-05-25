@@ -7,7 +7,7 @@ import { Button } from 'src/components/utils';
 interface ModalConfirmType {
   onConfirm: () => void;
   text: string | JSX.Element | JSX.Element[];
-  title: string;
+  title?: string;
   buttonText: string;
   children?: JSX.Element | JSX.Element[];
 }
@@ -47,6 +47,7 @@ const ModalConfirm = ({
 };
 
 ModalConfirm.defaultProps = {
+  title: '',
   children: <></>,
 };
 

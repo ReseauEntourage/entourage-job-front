@@ -428,8 +428,8 @@ const Parametres = () => {
                   </Grid>
                 ) : undefined}
               </div>
-              {(userData.role === USER_ROLES.ADMIN ||
-                userData.role === USER_ROLES.COACH_EXTERNAL) && (
+              {(userData.role === USER_ROLES.COACH ||
+                userData.role === USER_ROLES.CANDIDATE) && (
                 <UserInformationCard
                   user={userData}
                   // onChange={(data) => {

@@ -21,6 +21,7 @@ const Login = () => {
 
   useEffect(() => {
     let path: string;
+
     if (Array.isArray(requestedPath)) {
       [path] = requestedPath;
     } else {
@@ -29,23 +30,11 @@ const Login = () => {
 
     if (user) {
       if (user.role === USER_ROLES.ADMIN) {
-        replace(
-          { pathname: path || '/backoffice/admin/offres' },
-          undefined,
-          {}
-        );
+        replace(path || '/backoffice/admin/offres');
       } else if (user.role === USER_ROLES.COACH_EXTERNAL) {
-        replace(
-          { pathname: path || '/backoffice/admin/offres' },
-          undefined,
-          {}
-        );
+        replace(path || '/backoffice/candidat/list');
       } else {
-        replace(
-          { pathname: path || '/backoffice/admin/offres' },
-          undefined,
-          {}
-        );
+        replace(path || '/backoffice/candidat/cv');
       }
     }
   }, [replace, requestedPath, user]);

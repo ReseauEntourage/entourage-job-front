@@ -1,11 +1,19 @@
 import React from 'react';
-
-import PropTypes from 'prop-types';
-import FiltersDropdowns from 'src/components/filters/FiltersDropdowns';
 import FiltersCheckboxes from 'src/components/filters/FiltersCheckboxes';
-import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas.tsx';
+import FiltersDropdowns from 'src/components/filters/FiltersDropdowns';
+import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas';
 
-const FiltersSideBar = ({ filterData, filters, setFilters }) => {
+interface FilterSideBarType {
+  filterData: any; // to be typed
+  filters: any; // to be typed
+  setFilters: (arg1) => void; // to be typed
+}
+
+const FiltersSideBar = ({
+  filterData,
+  filters,
+  setFilters,
+}: FilterSideBarType) => {
   return (
     <OffcanvasNoSSR
       id="toggle-filter-menu"
@@ -31,12 +39,6 @@ const FiltersSideBar = ({ filterData, filters, setFilters }) => {
       </div>
     </OffcanvasNoSSR>
   );
-};
-
-FiltersSideBar.propTypes = {
-  filters: PropTypes.shape({}).isRequired,
-  setFilters: PropTypes.func.isRequired,
-  filterData: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 export default FiltersSideBar;

@@ -62,7 +62,7 @@ describe('Admin', () => {
       }
     ).as('getExternalCandidates');
 
-    cy.intercept('get', '/organization?search=Entourage', {
+    cy.intercept('get', '/organization?search=*', {
       fixture: 'organization-search-res',
     }).as('getOrganizations');
   });

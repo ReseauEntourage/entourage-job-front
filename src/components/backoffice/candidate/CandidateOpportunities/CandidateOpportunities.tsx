@@ -312,15 +312,9 @@ const CandidateOpportunities = ({
 CandidateOpportunities.defaultProps = {
   isMobile: false,
   search: undefined,
-  setFilters: () => {
-    // do nothing.
-  },
-  setSearch: () => {
-    // do nothing.
-  },
-  resetFilters: () => {
-    // do nothing.
-  },
+  setFilters: null,
+  setSearch: null,
+  resetFilters: null,
 };
 
 export default CandidateOpportunities;

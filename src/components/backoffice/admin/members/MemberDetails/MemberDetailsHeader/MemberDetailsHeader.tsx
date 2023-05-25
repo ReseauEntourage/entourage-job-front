@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import React, { useContext } from 'react';
-import { User } from 'src/api/types';
+import { UserWithUserCandidate } from 'src/api/types';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
+import { SimpleLink } from 'src/components/utils';
 import Icon from 'src/components/utils/Icon';
 import { USER_ROLES } from 'src/constants/users';
 import { UserContext } from 'src/store/UserProvider';
@@ -15,7 +16,7 @@ import {
 } from './MemberDetailsHeader.styles';
 
 interface MemberDetailsHeaderProps {
-  user: User;
+  user: UserWithUserCandidate;
 }
 
 export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
@@ -53,6 +54,18 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
             <span className="bold">{`${_.capitalize(user.role)}`}</span>
             {` de ${relatedUserText}`}
           </StyledRole>
+        </StyledRoleContainer>
+        <StyledRoleContainer>
+          <Icon name="link" style={{ width: 20 }} />
+          <SimpleLink
+            className="uk-link-text uk-margin-small-top"
+            target="_blank"
+            href={`/cv/${user.candidat.url}`}
+          >
+            <span>
+              {process.env.SERVER_URL}/cv/{user.candidat.url}
+            </span>
+          </SimpleLink>
         </StyledRoleContainer>
       </StyledInfoContainer>
     </StyledContainer>
