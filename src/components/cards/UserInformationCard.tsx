@@ -106,7 +106,9 @@ const UserInformationCard = ({
                 >
                   <Grid row gap="small">
                     <IconNoSSR name="mail" />
-                    <span>{singleLinkedUser.email}</span>
+                    <span data-testid="linkeduser-email-span">
+                      {singleLinkedUser.email}
+                    </span>
                   </Grid>
                 </SimpleLink>
                 {singleLinkedUser.phone ? (
