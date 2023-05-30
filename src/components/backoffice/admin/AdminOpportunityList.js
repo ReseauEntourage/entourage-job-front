@@ -19,7 +19,7 @@ import { ButtonMultiple } from 'src/components/utils';
 import { Icon } from 'src/components/utils/Icon';
 import { usePostOpportunity } from 'src/hooks';
 import { useIsDesktop } from 'src/hooks/utils';
-import { mutateFormSchema } from 'src/utils';
+import { PostOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal/PostOpportunityModal.tsx';
 
 export const AdminOpportunityList = ({
   search,
@@ -81,7 +81,7 @@ export const AdminOpportunityList = ({
 
   const opportunityListRef = useRef();
 
-  const { PostOpportunityModal } = usePostOpportunity({
+  const opportunityModalProps = {
     defaultValues: {
       isPublic: true,
     },
@@ -89,7 +89,7 @@ export const AdminOpportunityList = ({
     callback: opportunityListRef?.current?.fetchData,
     modalTitle: 'Ajouter une nouvelle offre',
     schema: mutatedOfferSchema,
-  });
+  };
 
   return (
     <>
@@ -105,7 +105,7 @@ export const AdminOpportunityList = ({
           buttons={[
             {
               onClick: () => {
-                openModal(<PostOpportunityModal />);
+                openModal(<PostOpportunityModal {...opportunityModalProps} />);
               },
               label: 'Nouvelle offre',
             },

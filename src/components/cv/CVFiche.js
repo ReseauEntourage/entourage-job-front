@@ -19,7 +19,7 @@ import { Button } from 'src/components/utils/Button';
 import { CONTRACTS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { usePostOpportunity, useUpdateSharesCount } from 'src/hooks';
+import { useUpdateSharesCount } from 'src/hooks';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
 import {
@@ -29,6 +29,7 @@ import {
   sortByOrder,
 } from 'src/utils';
 import { CVShape } from './CV.shape';
+import { PostOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 
 /**
  * Le cv en public et en preview
@@ -36,7 +37,7 @@ import { CVShape } from './CV.shape';
 export const CVFiche = ({ cv, actionDisabled }) => {
   const updateSharesCount = useUpdateSharesCount();
 
-  const { PostOpportunityModal } = usePostOpportunity({
+  const opportunityModalProps = {
     modalTitle: 'Proposer une opportunité à un candidat',
     modalDesc: (
       <div className="uk-text-normal">
@@ -63,7 +64,7 @@ export const CVFiche = ({ cv, actionDisabled }) => {
       },
       isPublic: false,
     },
-  });
+  };
 
   const { asPath } = useRouter();
   const hostname = process.env.SERVER_URL;
@@ -209,7 +210,7 @@ export const CVFiche = ({ cv, actionDisabled }) => {
           onClick={() => {
             gaEvent(GA_TAGS.PAGE_CV_PROPOSER_OFFRE_CLIC);
             fbEvent(FB_TAGS.COMPANY_CV_OFFER_OPEN);
-            openModal(<PostOpportunityModal />);
+            openModal(<PostOpportunityModal {...opportunityModalProps} />);
           }}
         >
           Me proposer une offre <Icon name="chevron-right" />

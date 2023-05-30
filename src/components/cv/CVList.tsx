@@ -14,6 +14,7 @@ import { usePrevious } from 'src/hooks/utils';
 import { fbEvent } from 'src/lib/fb';
 import { filtersToQueryParams } from 'src/utils/Filters';
 import { AnyToFix } from 'src/utils/Types';
+import { PostPublicOfferModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 
 const NoCVInThisArea = () => {
   return (
@@ -210,7 +211,7 @@ export const CVList = ({
                 className="uk-link-text"
                 onClick={() => {
                   fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER_OPEN);
-                  openModal(<PublicOfferModal />);
+                  openModal(<PostPublicOfferModal />);
                 }}
               >
                 Publier une offre d’emploi
