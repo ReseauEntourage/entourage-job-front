@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { openModal } from 'src/components/modals/Modal';
 import ModalInterestLinkedOut from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
@@ -12,7 +11,48 @@ import { EXTERNAL_LINKS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 
-const pages = [
+
+interface pageProps {
+  title?: string;
+  children?: childrenProps[];
+}
+
+interface childrenProps {
+  component?: React.ReactNode;
+  title?: string;
+  path?: string;
+  props?: {
+    isExternal?: boolean;
+    newTab?: boolean;
+    onClick?: () => void;
+    target?: string;
+  }
+  children?: {
+    component?: React.ReactNode;
+    title?: string;
+    path?: string;
+    children?: {
+      component?: React.ReactNode;
+      title?: string;
+      path?: string;
+      props?: {
+        isExternal?: boolean;
+        newTab?: boolean;
+        onClick?: () => void;
+        target?: string;
+      }
+    }[];
+    props?: {
+      isExternal?: boolean;
+      newTab?: boolean;
+      onClick?: () => void;
+      target?: string;
+    }
+  }[];
+}
+
+
+const pages: pageProps[] = [
   {
     title: 'Notre mission',
     children: [
@@ -215,7 +255,8 @@ const pages = [
   },
 ];
 
-const SiteMap = ({ isMobile }) => {
+
+const SiteMap = ({ isMobile }: { isMobile: boolean}) => {
   return (
     <Grid
       row
@@ -224,7 +265,7 @@ const SiteMap = ({ isMobile }) => {
       childWidths={['1-3@m']}
       className={isMobile ? 'uk-hidden@m' : 'uk-visible@m'}
     >
-      {pages.map(({ title, children }, index) => {
+      {pages.map(({ title, children }: pageProps, index: number) => {
         return (
           <div
             key={title + index}
@@ -247,8 +288,8 @@ const SiteMap = ({ isMobile }) => {
                       path: childrenPath,
                       children: childrenChildren,
                       props: childrenProps = {},
-                    }: any,
-                    childrenIndex: any
+                    } : childrenProps,
+                    childrenIndex: number
                   ) => {
                     if (childrenComponent) {
                       return (
@@ -280,8 +321,8 @@ const SiteMap = ({ isMobile }) => {
                                 title: childrenChildrenTitle,
                                 path: childrenChildrenPath,
                                 props: childrenChildrenProps = {},
-                              }: any,
-                              childrenChildrenIndex: any
+                              }: childrenProps,
+                              childrenChildrenIndex: number
                             ) => {
                               return (
                                 <SimpleLink
@@ -311,9 +352,6 @@ const SiteMap = ({ isMobile }) => {
   );
 };
 
-SiteMap.propTypes = {
-  isMobile: PropTypes.bool.isRequired,
-};
 
 const Footer = () => {
   const { pathname } = useRouter();

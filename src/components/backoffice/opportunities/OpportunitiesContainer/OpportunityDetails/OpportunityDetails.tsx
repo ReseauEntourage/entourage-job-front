@@ -10,7 +10,7 @@ const OpportunityDetails = ({
   details,
 }: {
   isLoading?: boolean;
-  details?: JSX.Element;
+  details?: React.ReactNode;
 }) => {
   return (
     <StyledContainer>

@@ -13,16 +13,17 @@ import FieldGroup from 'src/components/forms/fields/FieldGroup';
 import InputsContainer from 'src/components/forms/fields/InputsContainer/index';
 import MultipleFields from 'src/components/forms/fields/MultipleFields';
 import { getValueFromFormField } from 'src/utils/Finding';
+import { AnyToFix } from 'src/utils/Types';
 
-interface FormWithValidationType {
-  defaultValues?: any;
+interface FormWithValidationProps {
+  defaultValues?: AnyToFix; // to be typed
   onCancel?: () => void;
-  onSubmit: (arg1: any, arg2: any) => void;
+  onSubmit: (arg1: AnyToFix, arg2: AnyToFix) => void; // to be typed
   onError?: (any) => void;
   formSchema: {
     id: string;
-    fields: any;
-    rules: any;
+    fields: AnyToFix; // to be typed
+    rules: AnyToFix; // to be typed
   };
   submitText?: string;
   cancelText?: string;
@@ -47,7 +48,7 @@ const FormWithValidation = forwardRef(
       enterToSubmit,
       onError,
       formId,
-    }: FormWithValidationType,
+    }: FormWithValidationProps,
     ref
   ) => {
     const validator = useMemo(() => {

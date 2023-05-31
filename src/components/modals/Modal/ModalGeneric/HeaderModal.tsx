@@ -5,8 +5,8 @@ const HeaderModal = ({
   title,
   description,
 }: {
-  title: string | JSX.Element | JSX.Element[];
-  description?: string | JSX.Element | JSX.Element[];
+  title: React.ReactNode;
+  description?: React.ReactNode;
 }) => {
   return (
     <StyledHeaderModal>

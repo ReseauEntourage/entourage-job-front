@@ -22,7 +22,7 @@ import { usePrevious } from 'src/hooks/utils';
 
 const uuidValue = uuid();
 
-interface CandidateOpportunitiesListType {
+interface CandidateOpportunitiesListProps {
   opportunities: Partial<OpportunityWithOpportunityUsers>[];
   fetchOpportunities: () => void;
   // setOffset: ((prevOffset) => number);
@@ -37,7 +37,7 @@ const CandidateOpportunitiesList = ({
   setOffset,
   hasFetchedAll,
   candidateId,
-}: CandidateOpportunitiesListType) => {
+}: CandidateOpportunitiesListProps) => {
   const queryParamsOpportunities = useQueryParamsOpportunities();
   const opportunityId = useOpportunityId();
   const opportunityType = useOpportunityType();

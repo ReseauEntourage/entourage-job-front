@@ -60,10 +60,10 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
           <SimpleLink
             className="uk-link-text uk-margin-small-top"
             target="_blank"
-            href={`/cv/${user.candidat.url}`}
+            href={`/cv/${user?.candidat?.url}`}
           >
             <span>
-              {process.env.SERVER_URL}/cv/{user.candidat.url}
+              {process.env.SERVER_URL}/cv/{user?.candidat?.url}
             </span>
           </SimpleLink>
         </StyledRoleContainer>

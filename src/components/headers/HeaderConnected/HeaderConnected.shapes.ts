@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-export interface HeaderConnectedItemType {
+export interface HeaderConnectedItemProps {
   href: string;
   badge?: string;
   icon?: string;
@@ -14,8 +14,8 @@ export interface HeaderConnectedItemType {
   };
 }
 
-export interface HeaderConnectedMainItemType extends HeaderConnectedItemType {
-  subMenu?: HeaderConnectedItemType[];
+export interface HeaderConnectedMainItemProps extends HeaderConnectedItemProps {
+  subMenu?: HeaderConnectedItemProps[];
 }
 
 export const HeaderConnectedMainItemDefaultProps = {

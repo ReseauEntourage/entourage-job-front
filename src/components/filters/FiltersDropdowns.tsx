@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
+import { AnyToFix } from 'src/utils/Types';
 
 import { v4 as uuid } from 'uuid';
 import { Button } from 'src/components/utils';
@@ -8,10 +9,10 @@ import { gaEvent } from 'src/lib/gtag';
 
 const uuidValue = uuid();
 
-interface FiltersDropdownType {
-  filters: any; // to be typed
-  setFilters: (arg1) => void; // to be typed
-  filterData: any; // to be typed
+interface FiltersDropdownProps {
+  filters: AnyToFix; // to be typed
+  setFilters: (arg1:AnyToFix) => void; // to be typed
+  filterData: AnyToFix; // to be typed
   hideOnMobile?: boolean;
   fullWidth?: boolean;
   smallSelectors?: boolean;
@@ -26,7 +27,7 @@ const FiltersDropdowns = ({
   fullWidth,
   showSeparator,
   smallSelectors,
-}: FiltersDropdownType) => {
+}: FiltersDropdownProps) => {
   const renderFilters = useCallback(
     (filterConstants, key, tag, mandatory, index) => {
       const reducedFilters: { value: string; label: string }[] =

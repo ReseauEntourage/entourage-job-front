@@ -7,14 +7,15 @@ import FiltersSideBar from 'src/components/filters/FiltersSideBar';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { MEMBER_FILTERS_DATA, OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 import { gaEvent } from 'src/lib/gtag';
+import { AnyToFix } from 'src/utils/Types';
 
 // to be typed
 
-interface SearchBarType {
+interface SearchBarProps {
   filtersConstants:
     | Partial<typeof MEMBER_FILTERS_DATA>
     | Partial<typeof OPPORTUNITY_FILTERS_DATA>; // to be typed properly
-  filters: any; // to be typed
+  filters: AnyToFix; // to be typed
   setFilters: () => void;
   search?: string;
   setSearch: (arg1?: string) => void;
@@ -38,7 +39,7 @@ const SearchBar = ({
   placeholder,
   startSearchEvent,
   smallSelectors,
-}: SearchBarType) => {
+}: SearchBarProps) => {
   const [searchBuffer, setSearchBuffer] = useState(search || '');
 
   useEffect(() => {

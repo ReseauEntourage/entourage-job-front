@@ -3,9 +3,9 @@ import React from 'react';
 
 import CloseButton from 'src/components/utils/CloseButton';
 
-interface OffcanvasType {
+interface OffcanvasProps {
   id: string;
-  children: JSX.Element[] | JSX.Element;
+  children: React.ReactNode;
   container?: boolean;
   flip?: boolean;
   className?: string;
@@ -17,7 +17,7 @@ const Offcanvas = ({
   container,
   flip,
   className,
-}: OffcanvasType) => {
+}: OffcanvasProps) => {
   return (
     <div
       data-uk-offcanvas={`overlay: true; flip: ${flip}; ${

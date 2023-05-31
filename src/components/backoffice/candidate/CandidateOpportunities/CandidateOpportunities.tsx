@@ -6,7 +6,7 @@ import CandidateOpportunitiesList from 'src/components/backoffice//opportunities
 import CandidateOffersTab from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab';
 import {
   candidateSearchFilters,
-  textVariables,
+  TextVariables,
 } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOpportunities.utils';
 import { OpportunitiesContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer';
 import NoOpportunities from 'src/components/backoffice/opportunities/OpportunitiesContainer/NoOpportunities';
@@ -53,7 +53,6 @@ interface CandidateOpportunitiesType {
       label: string;
       color: string;
       public: string;
-      recommanded: string;
     }[];
   };
   setFilters?: () => void;
@@ -188,14 +187,14 @@ const CandidateOpportunities = ({
           <Section className="custom-header">
             <HeaderBackoffice
               title={
-                textVariables.title[
+                TextVariables.title[
                   isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
                     ? USER_ROLES.CANDIDATE
                     : USER_ROLES.COACH
                 ][isPublic ? 'all' : 'mine']
               }
               description={
-                textVariables.description[
+                TextVariables.description[
                   isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
                     ? USER_ROLES.CANDIDATE
                     : USER_ROLES.COACH

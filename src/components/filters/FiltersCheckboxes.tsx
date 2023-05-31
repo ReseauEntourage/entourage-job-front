@@ -1,10 +1,11 @@
 import React from 'react';
 import { gaEvent } from 'src/lib/gtag';
+import { AnyToFix } from 'src/utils/Types';
 
-interface FiltersCheckboxesType {
-  filters: any; // to be typed
-  setFilters: (arg1) => void; // to be typed
-  filterData: any; // to be typed
+interface FiltersCheckboxesProps {
+  filters: AnyToFix; // to be typed
+  setFilters: (arg1: AnyToFix) => void; // to be typed
+  filterData: AnyToFix; // to be typed
   hideOnMobile?: boolean;
   fullWidth?: boolean;
 }
@@ -15,7 +16,7 @@ const FiltersCheckboxes = ({
   setFilters,
   hideOnMobile,
   fullWidth,
-}: FiltersCheckboxesType) => {
+}: FiltersCheckboxesProps) => {
   return (
     <div
       className={`uk-flex uk-flex-middle ${

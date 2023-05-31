@@ -9,7 +9,7 @@ import HeaderPublic from 'src/components/headers/HeaderPublic/HeaderPublic';
 import { addPrefix } from 'src/utils';
 
 interface LayoutProps extends WithRouterProps {
-  children: JSX.Element | JSX.Element[];
+  children: React.ReactNode;
   title?: string;
   metaTitle?: string;
   metaImage?: string;

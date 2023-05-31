@@ -28,6 +28,7 @@ const Opportunities = () => {
   const { replace } = useRouter();
 
   const candidateId = useCandidateId();
+  const prevCandidatId = usePrevious(candidateId);
 
   const opportunityId = useOpportunityId();
 
@@ -105,12 +106,13 @@ const Opportunities = () => {
 
   useDeepCompareEffect(() => {
     if (
-      user &&
+      user && 
       candidateId &&
       (user !== prevUser ||
         opportunityType !== prevOpportunityType ||
         hasLoadedDefaultFilters !== prevHasLoadedDefaultFilters ||
-        queryParamsOpportunities.status !== prevStatus)
+        queryParamsOpportunities.status !== prevStatus ||
+        candidateId !== prevCandidatId)
     ) {
       // Si changement de page et donc potentiel premier chargement
       if (opportunityType !== prevOpportunityType) {
@@ -201,6 +203,7 @@ const Opportunities = () => {
     prevUser,
     opportunityType,
     prevOpportunityType,
+    prevCandidatId,
   ]);
 
   let content;

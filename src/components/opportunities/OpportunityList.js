@@ -516,7 +516,7 @@ const OpportunityList = forwardRef(
             <SearchBar
               filtersConstants={filtersConst}
               filters={filters}
-              numberOfResults={numberOfResults}
+              // numberOfResults={numberOfResults}
               resetFilters={resetFilters}
               search={search}
               setSearch={setSearch}
@@ -530,7 +530,7 @@ const OpportunityList = forwardRef(
             <SearchBar
               filtersConstants={filtersConst}
               filters={filters}
-              numberOfResults={numberOfResults}
+              // numberOfResults={numberOfResults}
               resetFilters={resetFilters}
               search={search}
               setSearch={setSearch}

@@ -21,9 +21,11 @@ export const tabs = [
   },
 ];
 
-export const tabsLabels = tabs.map(({ text }) => {
+export const TabsLabels = tabs.map(({ text }) => {
   return text;
 });
+
+export type TabsLabelsType = (typeof TabsLabels)[keyof typeof TabsLabels];
 
 export const tabsStatus = tabs.map(({ status }) => {
   return status;

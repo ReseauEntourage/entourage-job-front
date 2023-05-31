@@ -4,12 +4,12 @@ import { useModalContext } from 'src/components/modals/Modal';
 import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
 import { Button } from 'src/components/utils';
 
-interface ModalConfirmType {
+interface ModalConfirmProps {
   onConfirm: () => void;
-  text: string | JSX.Element | JSX.Element[];
+  text: React.ReactNode;
   title?: string;
   buttonText: string;
-  children?: JSX.Element | JSX.Element[];
+  children?: React.ReactNode;
 }
 
 const ModalConfirm = ({
@@ -18,7 +18,7 @@ const ModalConfirm = ({
   title,
   buttonText,
   children,
-}: ModalConfirmType) => {
+}: ModalConfirmProps) => {
   const { onClose } = useModalContext();
   return (
     <ModalGeneric description={text} title={title}>

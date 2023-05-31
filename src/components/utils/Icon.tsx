@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import React from 'react';
 
-interface IconType {
+interface IconProps {
   name: string;
   ratio?: number | string;
   flip?: boolean;
@@ -10,7 +10,7 @@ interface IconType {
   style?: React.CSSProperties;
 }
 
-const Icon = ({ name, ratio, flip, className, id, style }: IconType) => {
+const Icon = ({ name, ratio, flip, className, id, style }: IconProps) => {
   return (
     <span
       id={id}

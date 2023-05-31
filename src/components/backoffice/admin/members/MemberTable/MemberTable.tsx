@@ -10,7 +10,7 @@ import { StyledTable } from './MemberTable.styles';
 
 interface MemberTableProps {
   columns: MemberColumn[];
-  members: JSX.Element[];
+  members: React.ReactNode;
   role: UserRole;
 }
 export function MemberTable({ columns, members, role }: MemberTableProps) {

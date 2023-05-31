@@ -2,7 +2,7 @@ import React from 'react';
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 import { USER_ROLES } from 'src/constants/users';
 
-export const textVariables = {
+export const TextVariables = {
   title: {
     [USER_ROLES.CANDIDATE]: {
       all: 'Consulter toutes les offres',

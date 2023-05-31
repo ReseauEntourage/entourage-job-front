@@ -6,7 +6,7 @@ const LayoutBackOffice = ({
   title,
   isEmpty,
 }: {
-  children: JSX.Element | JSX.Element[];
+  children: React.ReactNode;
   title?: string;
   isEmpty?: boolean;
 }) => {

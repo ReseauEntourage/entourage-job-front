@@ -3,7 +3,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 import { StyledHeaderDesktop } from 'src/components/headers/Header.styles';
 import {
-  HeaderConnectedMainItemType,
+  HeaderConnectedMainItemProps,
   HeaderConnectedMainItemDefaultProps,
 } from 'src/components/headers/HeaderConnected/HeaderConnected.shapes';
 import { StyledConnectedItem } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/HeaderConnectedContent.styles';
@@ -26,13 +26,13 @@ import { isRoleIncluded } from 'src/utils/Finding';
 
 const uuidValue = uuid();
 
-interface HeaderConnectedContentDesktopType {
+interface HeaderConnectedContentDesktopProps {
   links?: {
-    admin: HeaderConnectedMainItemType[];
-    dropdown: HeaderConnectedMainItemType[];
-    candidat: HeaderConnectedMainItemType[];
-    coach: HeaderConnectedMainItemType[];
-    coach_externe: HeaderConnectedMainItemType[];
+    admin: HeaderConnectedMainItemProps[];
+    dropdown: HeaderConnectedMainItemProps[];
+    candidat: HeaderConnectedMainItemProps[];
+    coach: HeaderConnectedMainItemProps[];
+    coach_externe: HeaderConnectedMainItemProps[];
   };
   badges?: {
     offers: number;
@@ -47,17 +47,17 @@ const HeaderConnectedContentDesktop = ({
   badges,
   links,
   isEmpty,
-}: HeaderConnectedContentDesktopType) => {
+}: HeaderConnectedContentDesktopProps) => {
   const { user } = useContext(UserContext);
 
   const { push, asPath } = useRouter();
 
-  const [logoLink, setLogoLink] = useState<HeaderConnectedMainItemType>({
+  const [logoLink, setLogoLink] = useState<HeaderConnectedMainItemProps>({
     href: '/',
   });
 
   const [actualLinks, setActualLinks] = useState<
-    HeaderConnectedMainItemType[] | []
+    HeaderConnectedMainItemProps[] | []
   >([]);
 
   const rightItems = [

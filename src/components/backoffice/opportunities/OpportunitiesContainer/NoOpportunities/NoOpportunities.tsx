@@ -3,7 +3,7 @@ import React from 'react';
 import {
   formatPlural,
   tabs,
-  tabsLabels,
+  TabsLabelsType,
 } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab/CandidateOffersTab.utils';
 import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
 import { openModal } from 'src/components/modals/Modal';
@@ -18,7 +18,7 @@ import {
 } from './NoOpportunities.styles';
 
 interface NoOpportunities {
-  status: (typeof tabsLabels)[keyof typeof tabsLabels];
+  status: TabsLabelsType;
   fetchOpportunities: () => void;
 }
 
@@ -58,7 +58,7 @@ const NoOpportunities = ({ status, fetchOpportunities }) => {
         <Button
           style="custom-primary"
           dataTestId="candidat-find-offer"
-          href={`/backoffice/candidat${candidateId}/offres/public`}
+          href={`/backoffice/candidat/${candidateId}/offres/public`}
           shallow
         >
           <IconNoSSR

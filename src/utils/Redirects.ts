@@ -1,10 +1,13 @@
+import { USER_ROLES, UserRole } from 'src/constants/users';
+
+
 const defaultPages = {
-  admin: '/backoffice/admin/offres',
-  candidat: '/backoffice/candidat/cv',
-  candidat_externe: '/backoffice/candidat/cv',
-  coach: '/backoffice/candidat/cv',
-  coach_externe: '/backoffice/candidat/list',
-};
+  [USER_ROLES.ADMIN]: '/backoffice/admin/offres',
+  [USER_ROLES.CANDIDATE]: '/backoffice/candidat/cv',
+  [USER_ROLES.CANDIDATE_EXTERNAL]: '/backoffice/candidat/cv',
+  [USER_ROLES.COACH]: '/backoffice/candidat/cv',
+  [USER_ROLES.COACH_EXTERNAL]: '/backoffice/candidat/list',
+} as const;
 
 // export const redirectBackOfficeToDefault: (
 //   currentRole: string,
@@ -14,6 +17,6 @@ const defaultPages = {
 //   return defaultPages[currentRole];
 // };
 
-export const getDefaultUrl = (currentRole: string): string => {
+export const getDefaultUrl = (currentRole: UserRole): string => {
   return defaultPages[currentRole];
 };

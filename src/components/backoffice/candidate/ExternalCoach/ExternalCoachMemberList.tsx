@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect, useContext } from 'react';
-import { MemberTable } from '../../admin/members/MemberTable';
-import { Member } from '../../admin/members/MemberTable/Member';
-import { MemberColumn } from '../../admin/members/MemberTable/Member/Member.types';
+import { MemberTable } from 'src/components/backoffice/admin/members/MemberTable';
+import { Member } from 'src/components/backoffice/admin/members/MemberTable/Member';
+import { MemberColumn } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.types';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { UserContext } from 'src/store/UserProvider';
 import { getRelatedUser } from 'src/utils/Finding';

@@ -18,7 +18,6 @@ interface CandidateOffersTabType {
     label: string;
     color: string;
     public: string;
-    recommanded: string;
   }[];
   tabCounts: {
     status: number;

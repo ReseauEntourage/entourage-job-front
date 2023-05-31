@@ -32,7 +32,7 @@ import { HEIGHTS } from 'src/constants/styles';
 import { findConstantFromValue } from 'src/utils/Finding';
 import { mapEventDateFromStatus } from './CandidateOpportunityDetails.utils';
 
-interface CandidateOpportunityDetailsType
+interface CandidateOpportunityDetailsProps
   extends Partial<OpportunityWithOpportunityUsers> {
   fetchOpportunities: () => void;
   candidateId: string;
@@ -60,7 +60,7 @@ const CandidateOpportunityDetails = ({
   createdAt,
   oppRefreshCallback,
   candidateId,
-}: CandidateOpportunityDetailsType) => {
+}: CandidateOpportunityDetailsProps) => {
   const ref = useRef();
   const windowHeight = useWindowHeight();
 

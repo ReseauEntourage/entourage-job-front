@@ -4,10 +4,10 @@ import { Grid } from 'src/components/utils';
 import { BACKOFFICE_PAGES } from 'src/constants';
 import { usePendingMembers } from './usePendingMembers';
 
-interface HeaderBackofficeType {
-  title: string | JSX.Element[] | JSX.Element;
-  description: string | JSX.Element[] | JSX.Element;
-  children?: JSX.Element[] | JSX.Element;
+interface HeaderBackofficeProps {
+  title: React.ReactNode;
+  description: React.ReactNode;
+  children?: React.ReactNode;
   childrenBottom?: boolean;
   page?: (typeof BACKOFFICE_PAGES)[keyof typeof BACKOFFICE_PAGES];
   noSeparator?: boolean;
@@ -20,7 +20,7 @@ const HeaderBackoffice = ({
   childrenBottom,
   page,
   noSeparator,
-}: HeaderBackofficeType) => {
+}: HeaderBackofficeProps) => {
   const { pendingMembersCount } = usePendingMembers();
   return (
     <StyledHeaderBackOffice>

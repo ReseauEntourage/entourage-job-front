@@ -4,10 +4,10 @@ import { StyledModalContent } from 'src/components/modals/Modal/Modals.styles';
 import { CloseButton, Button } from 'src/components/utils';
 import HeaderModal from './HeaderModal';
 
-interface ModalGenericType {
-  children: JSX.Element | JSX.Element[];
-  title: string | JSX.Element | JSX.Element[];
-  description?: string | JSX.Element | JSX.Element[];
+interface ModalGenericProps {
+  children: React.ReactNode;
+  title: React.ReactNode;
+  description?: React.ReactNode;
   onClose?: (arg1?: () => void) => void;
   className?: string;
   fullWidth?: boolean;
@@ -24,7 +24,7 @@ const ModalGeneric = ({
   fullWidth,
   removePadding,
   withCloseButton,
-}: ModalGenericType) => {
+}: ModalGenericProps) => {
   const { onClose } = useModalContext();
 
   return (

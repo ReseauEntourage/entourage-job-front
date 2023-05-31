@@ -2,18 +2,19 @@ import React from 'react';
 import FiltersCheckboxes from 'src/components/filters/FiltersCheckboxes';
 import FiltersDropdowns from 'src/components/filters/FiltersDropdowns';
 import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas';
+import { AnyToFix } from 'src/utils/Types';
 
-interface FilterSideBarType {
-  filterData: any; // to be typed
-  filters: any; // to be typed
-  setFilters: (arg1) => void; // to be typed
+interface FilterSideBarProps {
+  filterData: AnyToFix; // to be typed
+  filters: AnyToFix; // to be typed
+  setFilters: (arg1: AnyToFix) => void; // to be typed
 }
 
 const FiltersSideBar = ({
   filterData,
   filters,
   setFilters,
-}: FilterSideBarType) => {
+}: FilterSideBarProps) => {
   return (
     <OffcanvasNoSSR
       id="toggle-filter-menu"

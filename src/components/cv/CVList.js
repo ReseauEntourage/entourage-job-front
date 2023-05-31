@@ -248,7 +248,7 @@ const CVList = ({
         <SearchBar
           filtersConstants={CV_FILTERS_DATA}
           filters={filters}
-          numberOfResults={numberOfResults}
+          // numberOfResults={numberOfResults}
           resetFilters={resetFilters}
           search={search}
           setSearch={setSearch}

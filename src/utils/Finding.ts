@@ -71,7 +71,7 @@ export function getValueFromFormField(fieldValue: FormValue | FormValue[]) {
 
 export function isRoleIncluded(
   superset: readonly UserRole[],
-  subset: UserRole | UserRole[] | string
+  subset: UserRole | UserRole[],
 ) {
   if (!Array.isArray(subset)) {
     return _.difference([subset], superset).length === 0;

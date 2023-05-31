@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyledCheckbox } from 'src/components/utils/Inputs/CheckBox/CheckBox.styles';
 
-interface CBType {
+interface CBProps {
   id: string;
   name: string;
   handleClick: () => void;
@@ -21,7 +21,7 @@ export function CheckBox({
   name,
   id,
   removeMargin,
-}: CBType) {
+}: CBProps) {
   if (hidden) {
     return null;
   }

@@ -4,7 +4,7 @@ import UIkit from 'uikit';
 import { v4 as uuid } from 'uuid';
 import { StyledHeaderMobile } from '../../Header.styles';
 import {
-  HeaderConnectedMainItemType,
+  HeaderConnectedMainItemProps,
   HeaderConnectedMainItemDefaultProps,
 } from 'src/components/headers/HeaderConnected/HeaderConnected.shapes';
 import { StyledConnectedItemMobile } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/HeaderConnectedContent.styles';
@@ -20,13 +20,13 @@ import { UserContext } from 'src/store/UserProvider';
 
 const uuidValue = uuid();
 
-interface HeaderConnectedContentMobileType {
+interface HeaderConnectedContentMobileProps {
   links?: {
-    admin: HeaderConnectedMainItemType[];
-    dropdown: HeaderConnectedMainItemType[];
-    candidat: HeaderConnectedMainItemType[];
-    coach: HeaderConnectedMainItemType[];
-    coach_externe: HeaderConnectedMainItemType[];
+    admin: HeaderConnectedMainItemProps[];
+    dropdown: HeaderConnectedMainItemProps[];
+    candidat: HeaderConnectedMainItemProps[];
+    coach: HeaderConnectedMainItemProps[];
+    coach_externe: HeaderConnectedMainItemProps[];
   };
   badges?: {
     offers: number;
@@ -41,7 +41,7 @@ const HeaderConnectedContentMobile = ({
   badges,
   links,
   isEmpty,
-}: HeaderConnectedContentMobileType) => {
+}: HeaderConnectedContentMobileProps) => {
   const { user } = useContext(UserContext);
 
   const { push, asPath } = useRouter();
