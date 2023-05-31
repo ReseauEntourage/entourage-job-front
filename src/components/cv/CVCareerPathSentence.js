@@ -8,7 +8,7 @@ import {
 import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants/index.ts';
 import PropTypes from 'prop-types';
 
-const CVCareerPathSentence = ({ businessLines, ambitions }) => {
+export const CVCareerPathSentence = ({ businessLines, ambitions }) => {
   const sortedAmbitions =
     ambitions && ambitions.length > 0 ? sortByOrder(ambitions) : null;
 
@@ -175,5 +175,3 @@ CVCareerPathSentence.propTypes = {
     PropTypes.string,
   ]).isRequired,
 };
-
-export default CVCareerPathSentence;

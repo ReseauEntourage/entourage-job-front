@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'src/components/utils';
+import { Grid, ButtonIcon } from 'src/components/utils';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import schemaformEditPassions from 'src/components/forms/schema/formEditPassions.json';
-import ButtonIcon from 'src/components/utils/ButtonIcon';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
+import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
 
-const PassionsCard = ({ list, onChange }) => {
+export const PassionsCard = ({ list, onChange }) => {
   return (
     <div className="uk-card uk-card-default uk-card-body">
       <Grid gap="small" between eachWidths={['expand', 'auto']}>
@@ -81,4 +80,3 @@ PassionsCard.defaultProps = {
   list: [],
   onChange: null,
 };
-export default PassionsCard;

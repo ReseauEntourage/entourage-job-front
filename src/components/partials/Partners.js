@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { Background, Section } from 'src/components/utils';
 import PARTNERS from 'src/constants/partners';
 import { Button } from 'src/components/utils/Button';
-import LogoList from 'src/components/partials/LogoList';
 import { IconNoSSR } from 'src/components/utils/Icon.tsx';
+import { LogoList } from 'src/components/partials/LogoList';
 
-const Partners = ({ showOrientationPartners }) => {
+export const Partners = ({ showOrientationPartners }) => {
   return (
     <Background
       blend={{ colorHex: showOrientationPartners ? 'white' : '#484848' }}
@@ -65,5 +65,3 @@ const Partners = ({ showOrientationPartners }) => {
 Partners.propTypes = { showOrientationPartners: PropTypes.bool };
 
 Partners.defaultProps = { showOrientationPartners: false };
-
-export default Partners;

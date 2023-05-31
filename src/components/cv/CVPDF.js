@@ -11,12 +11,12 @@ import {
   sortByName,
   findConstantFromValue,
 } from 'src/utils';
-import CVCareerPathSentence from 'src/components/cv/CVCareerPathSentence';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
-import { CONTRACTS } from 'src/constants/index.ts';
+import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { CONTRACTS } from 'src/constants';
 import { CVShape } from './CV.shape';
 
-const CVPDF = ({ cv, page }) => {
+export const CVPDF = ({ cv, page }) => {
   const experiences =
     cv.experiences && cv.experiences.length > 0
       ? sortByOrder(cv.experiences)
@@ -470,5 +470,3 @@ CVPDF.propTypes = {
 CVPDF.defaultProps = {
   page: null,
 };
-
-export default CVPDF;

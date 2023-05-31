@@ -1,7 +1,7 @@
 import React from 'react';
 import { Section } from 'src/components/utils';
 
-const OpportunityError = () => {
+export const OpportunityError = () => {
   return (
     <Section className="uk-width-1-1">
       <div className=" uk-text-center uk-flex uk-flex-center">
@@ -19,5 +19,3 @@ const OpportunityError = () => {
     </Section>
   );
 };
-
-export default OpportunityError;

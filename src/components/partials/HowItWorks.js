@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { Section } from 'src/components/utils';
-import MultipleCTA from 'src/components/partials/MultipleCTA';
+import { MultipleCTA } from 'src/components/partials/MultipleCTA';
 
-const HowItWorks = ({ style }) => {
+export const HowItWorks = ({ style }) => {
   const content = [
     {
       img: '/static/img/illustrations/how1.png',
@@ -64,5 +63,3 @@ const HowItWorks = ({ style }) => {
 HowItWorks.propTypes = { style: PropTypes.string };
 
 HowItWorks.defaultProps = { style: 'muted' };
-
-export default HowItWorks;

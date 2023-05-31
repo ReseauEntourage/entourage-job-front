@@ -7,7 +7,7 @@ import { Button } from 'src/components/utils/Button';
 import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 
-const DiscoverPartial = ({ style }) => {
+export const DiscoverPartial = ({ style }) => {
   const [cvs, setCVs] = useState(undefined);
   const [error, setError] = useState(null);
 
@@ -80,5 +80,3 @@ DiscoverPartial.propTypes = {
 DiscoverPartial.defaultProps = {
   style: 'default',
 };
-
-export default DiscoverPartial;

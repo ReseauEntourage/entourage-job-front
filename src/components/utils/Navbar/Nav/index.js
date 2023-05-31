@@ -1,3 +1,1 @@
-import Nav from './Nav';
-
-export default Nav;
+export { Nav } from 'src/components/utils/Navbar/Nav/Nav.tsx';

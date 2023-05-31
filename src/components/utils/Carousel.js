@@ -5,7 +5,7 @@ import { gaEvent } from 'src/lib/gtag.ts';
 import { GA_TAGS } from 'src/constants/tags';
 import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 
-const Carousel = ({
+export const Carousel = ({
   style,
   children,
   containerClasses,
@@ -129,5 +129,3 @@ Carousel.defaultProps = {
   pagination: true,
   padding: false,
 };
-
-export default Carousel;

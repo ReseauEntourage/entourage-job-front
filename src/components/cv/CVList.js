@@ -2,14 +2,13 @@ import _ from 'lodash';
 import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { filtersToQueryParams } from 'src/utils';
-import { Button, Grid } from 'src/components/utils';
+import { Button, Grid, SimpleLink } from 'src/components/utils';
 import { CandidatCard } from 'src/components/cards';
 import { Api } from 'src/api/index.ts';
 import {
   CV_FILTERS_DATA,
   INITIAL_NB_OF_CV_TO_DISPLAY,
 } from 'src/constants/index.ts';
-import SimpleLink from 'src/components/utils/SimpleLink';
 import { usePrevious } from 'src/hooks/utils';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import SearchBar from 'src/components/filters/SearchBar.tsx';
@@ -38,7 +37,7 @@ const NoCVInThisArea = () => {
   );
 };
 
-const CVList = ({
+export const CVList = ({
   hideSearchBar,
   nb,
   search,
@@ -253,7 +252,10 @@ const CVList = ({
 CVList.propTypes = {
   hideSearchBar: PropTypes.bool,
   nb: PropTypes.number,
-  search: PropTypes.string,
+  search: PropTypes.oneOf([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
   filters: PropTypes.shape({}),
   setFilters: PropTypes.func,
   setSearch: PropTypes.func,
@@ -269,4 +271,3 @@ CVList.defaultProps = {
   setSearch: () => {},
   resetFilters: () => {},
 };
-export default CVList;

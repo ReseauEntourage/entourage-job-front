@@ -1,8 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import ButtonIcon from 'src/components/utils/ButtonIcon';
-import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel';
+import { ButtonIcon } from 'src/components/utils';
+import ContractLabel from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
 import { useCopyToClipboard } from 'src/hooks';
 import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 

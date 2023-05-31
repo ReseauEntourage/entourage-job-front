@@ -1,6 +1,6 @@
 import React from 'react';
 import { Section } from 'src/components/utils';
-import MultipleCTA from 'src/components/partials/MultipleCTA';
+import { MultipleCTA } from 'src/components/partials/MultipleCTA';
 import { FB_TAGS, GA_TAGS, LINK_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag.ts';
 import CompanyContactModal from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
@@ -8,7 +8,7 @@ import { openModal } from 'src/components/modals/Modal/openModal';
 import { fbEvent } from 'src/lib/fb.ts';
 import { linkEvent } from 'src/lib/lintrk.ts';
 
-const HowToCommitDifferently = () => {
+export const HowToCommitDifferently = () => {
   return (
     <Section container="large" style="muted">
       <h2 className="uk-text-center uk-text-bold uk-margin-medium-bottom">
@@ -66,5 +66,3 @@ const HowToCommitDifferently = () => {
     </Section>
   );
 };
-
-export default HowToCommitDifferently;

@@ -1,8 +1,7 @@
 import React from 'react';
 import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
-import { Button } from 'src/components/utils';
+import { Button, Img } from 'src/components/utils';
 import Icon from 'src/components/utils/Icon';
-import Img from 'src/components/utils/Img';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { addPrefix } from 'src/utils';
 
@@ -57,7 +56,5 @@ const SailInfoModal = () => {
     </ModalGeneric>
   );
 };
-
-SailInfoModal.propTypes = {};
 
 export default SailInfoModal;

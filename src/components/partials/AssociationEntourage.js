@@ -6,7 +6,7 @@ import { gaEvent } from 'src/lib/gtag.ts';
 import { GA_TAGS } from 'src/constants/tags';
 import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 
-const AssociationEntourage = () => {
+export const AssociationEntourage = () => {
   return (
     <Background blend={{ colorHex: '#484848' }}>
       <Section className="uk-padding-remove-top">
@@ -61,4 +61,3 @@ const AssociationEntourage = () => {
     </Background>
   );
 };
-export default AssociationEntourage;

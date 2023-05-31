@@ -2,9 +2,9 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import { ImgNoSSR } from 'src/components/utils/Img';
+import { ImgNoSSR } from 'src/components/utils/Img.tsx';
 
-const SplashScreen = () => {
+const SplashScreenContent = () => {
   return (
     <div
       style={{
@@ -27,11 +27,7 @@ const SplashScreen = () => {
   );
 };
 
-SplashScreen.propTypes = {};
-
-SplashScreen.defaultProps = {};
-
-const SplashScreenContainer = ({ loading, fading }) => {
+export const SplashScreen = ({ loading, fading }) => {
   const { asPath } = useRouter();
 
   return !asPath.includes('/pdf/') ? (
@@ -44,23 +40,21 @@ const SplashScreenContainer = ({ loading, fading }) => {
         fading ? 'uk-animation-fade uk-animation-reverse' : ''
       } uk-position-cover uk-background-default`}
     >
-      <SplashScreen />
+      <SplashScreenContent />
     </div>
   ) : null;
 };
 
-SplashScreenContainer.propTypes = {
+SplashScreen.propTypes = {
   loading: PropTypes.bool.isRequired,
   fading: PropTypes.bool.isRequired,
 };
 
-SplashScreenContainer.defaultProps = {};
-
-export default SplashScreenContainer;
-
 export const SplashScreenNoSSR = dynamic(
   () => {
-    return import('src/components/SplashScreen');
+    return import('src/components/SplashScreen').then((mod) => {
+      return mod.SplashScreenContainer;
+    });
   },
   {
     ssr: false,

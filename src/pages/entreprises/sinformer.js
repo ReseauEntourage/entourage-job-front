@@ -1,13 +1,15 @@
 import React from 'react';
 import Layout from 'src/components/Layout.tsx';
 import { Section } from 'src/components/utils';
-import ImageTitle from 'src/components/partials/ImageTitle';
-import { CONTACT_INFO, EXTERNAL_LINKS } from 'src/constants/index.ts';
-import MultipleCTA from 'src/components/partials/MultipleCTA';
-import HowToBeInclusive from 'src/components/partials/HowToBeInclusive';
-import CandidateTestimonies from 'src/components/partials/CandidateTestimonies';
-import CompanyTestimonies from 'src/components/partials/CompanyTestimonies';
-import { NewsletterPartial } from 'src/components/partials';
+import { ImageTitle } from 'src/components/partials/ImageTitle';
+import { CONTACT_INFO, EXTERNAL_LINKS } from 'src/constants';
+import {
+  MultipleCTA,
+  CandidateTestimonies,
+  CompanyTestimonies,
+  NewsletterPartial,
+  HowToBeInclusive,
+} from 'src/components/partials';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag.ts';

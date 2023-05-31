@@ -1,3 +1,1 @@
-import ImageTitle from './container';
-
-export default ImageTitle;
+export { ImageTitle } from './ImageTitleContainer';

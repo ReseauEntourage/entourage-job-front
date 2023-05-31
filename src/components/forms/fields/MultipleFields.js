@@ -1,8 +1,7 @@
 import React, { memo, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Button } from 'src/components/utils';
-import ButtonIcon from 'src/components/utils/ButtonIcon';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
+import { Grid, Button, ButtonIcon } from 'src/components/utils';
+import { IconNoSSR } from 'src/components/utils/Icon';
 import GenericField from 'src/components/forms/GenericField';
 import { usePrevious } from 'src/hooks/utils';
 

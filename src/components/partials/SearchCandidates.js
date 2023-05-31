@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CVList from 'src/components/cv/CVList';
+import { CVList } from 'src/components/cv';
 import { Grid, Section } from 'src/components/utils';
 import { CV_FILTERS_DATA } from 'src/constants/index.ts';
 import { useFilters } from 'src/hooks';
 
 const cvFiltersWithoutGender = CV_FILTERS_DATA.slice(0, -1);
-const SearchCandidates = ({ style }) => {
+
+export const SearchCandidates = ({ style }) => {
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
     cvFiltersWithoutGender,
     '/candidats'
@@ -44,11 +45,9 @@ const SearchCandidates = ({ style }) => {
 };
 
 SearchCandidates.propTypes = {
-  style: PropTypes.oneOf(['default', 'muted']),
+  style: PropTypes.string,
 };
 
 SearchCandidates.defaultProps = {
   style: 'default',
 };
-
-export default SearchCandidates;

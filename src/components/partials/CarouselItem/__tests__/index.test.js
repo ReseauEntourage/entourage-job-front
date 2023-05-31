@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import CarouselItem from '..';
+import { CarouselItem } from '..';
 import '@testing-library/jest-dom';
 
 describe('Carousel Item', () => {

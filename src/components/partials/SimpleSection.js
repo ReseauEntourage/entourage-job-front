@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Section } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 
-const SimpleSection = ({
+export const SimpleSection = ({
   id,
   style,
   container,
@@ -74,5 +74,3 @@ SimpleSection.defaultProps = {
   children: undefined,
   fontSize: 'large',
 };
-
-export default SimpleSection;

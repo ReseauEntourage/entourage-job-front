@@ -26,7 +26,7 @@ import {
 import { fbEvent } from 'src/lib/fb.ts';
 import _ from 'lodash';
 
-const CandidatCard = ({
+export const CandidatCard = ({
   url,
   imgSrc,
   imgAlt,
@@ -431,4 +431,3 @@ CandidatCard.defaultProps = {
   endOfContract: undefined,
   catchphrase: "cherche un job pour s'en sortir",
 };
-export default CandidatCard;

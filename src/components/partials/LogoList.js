@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Grid from 'src/components/utils/Grid';
-import Carousel from 'src/components/utils/Carousel';
-import { Logo } from 'src/components/utils/Logo';
+import { Grid, Carousel, Logo } from 'src/components/utils';
 
-const LogoList = ({ logos, carousel, padding, background }) => {
+export const LogoList = ({ logos, carousel, padding, background }) => {
   const logosPerLine = Math.floor(logos.length / 3 + 1);
 
   if (carousel) {
@@ -65,5 +63,3 @@ LogoList.defaultProps = {
   padding: false,
   background: false,
 };
-
-export default LogoList;

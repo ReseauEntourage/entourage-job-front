@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import React from 'react';
 
-import CloseButton from 'src/components/utils/CloseButton';
+import { CloseButton } from 'src/components/utils/CloseButton.tsx';
 
 interface OffcanvasProps {
   id: string;

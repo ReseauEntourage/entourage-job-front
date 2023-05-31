@@ -1,20 +1,21 @@
 import React from 'react';
 import Layout from 'src/components/Layout.tsx';
-import { Section } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
-import ImageTitle from 'src/components/partials/ImageTitle';
 import { IconNoSSR } from 'src/components/utils/Icon.tsx';
+import { Section, AnimatedList } from 'src/components/utils';
+import { ImageTitle } from 'src/components/partials/ImageTitle';
 import { gaEvent } from 'src/lib/gtag.ts';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { openModal } from 'src/components/modals/Modal';
 import ModalInterestLinkedOut from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
-import MultipleCTA from 'src/components/partials/MultipleCTA';
-import { Chapter } from 'src/components/partials/Chapter';
-import AnimatedList from 'src/components/utils/AnimatedList';
-import Reviews from 'src/components/partials/Reviews';
-import LogoList from 'src/components/partials/LogoList';
+import {
+  MultipleCTA,
+  Chapter,
+  LogoList,
+  NumberGrid,
+  Reviews,
+} from 'src/components/partials';
 import PARTNERS from 'src/constants/partners';
-import NumberGrid from 'src/components/partials/NumberGrid';
 import { fbEvent } from 'src/lib/fb.ts';
 import CandidateContactModal from 'src/components/modals/Modal/ModalGeneric/CandidateContactModal';
 

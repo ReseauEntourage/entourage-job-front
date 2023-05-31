@@ -1,9 +1,9 @@
 import React from 'react';
-import Grid from 'src/components/utils/Grid';
+import { Grid } from 'src/components/utils/Grid';
 
 interface CardProps {
   children: React.ReactNode;
-  badge?: JSX.Element;
+  badge?: React.ReactNode;
   style?: 'default' | 'primary' | 'secondary';
   title?: React.ReactNode;
   body?: boolean;

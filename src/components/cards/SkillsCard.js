@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'src/components/utils';
+import { Grid, ButtonIcon } from 'src/components/utils';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import schemaformEditSkills from 'src/components/forms/schema/formEditSkills.json';
-import ButtonIcon from 'src/components/utils/ButtonIcon';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
+import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
 
-const SkillCard = ({ list, onChange }) => {
+export const SkillsCard = ({ list, onChange }) => {
   return (
     <div className="uk-card uk-card-secondary uk-card-body">
       <Grid gap="small" between eachWidths={['expand', 'auto']}>
@@ -68,7 +67,7 @@ const SkillCard = ({ list, onChange }) => {
     </div>
   );
 };
-SkillCard.propTypes = {
+SkillsCard.propTypes = {
   list: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
@@ -77,9 +76,7 @@ SkillCard.propTypes = {
   onChange: PropTypes.func,
 };
 
-SkillCard.defaultProps = {
+SkillsCard.defaultProps = {
   list: [],
   onChange: null,
 };
-
-export default SkillCard;

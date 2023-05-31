@@ -2,14 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import schemaCareerPath from 'src/components/forms/schema/formEditCareerPath';
-import ButtonIcon from 'src/components/utils/ButtonIcon';
-import { Grid } from 'src/components/utils';
+import { ButtonIcon, Grid } from 'src/components/utils';
 import { openModal } from 'src/components/modals/Modal';
 import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants/index.ts';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
-import CVCareerPathSentence from 'src/components/cv/CVCareerPathSentence';
+import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
 
-const CVEditCareerPath = ({ ambitions, businessLines, onChange }) => {
+export const CVEditCareerPath = ({ ambitions, businessLines, onChange }) => {
   const sortedAmbitions =
     ambitions && ambitions.length > 0 ? sortByOrder(ambitions) : null;
 
@@ -147,4 +146,3 @@ CVEditCareerPath.propTypes = {
 CVEditCareerPath.defaultProps = {
   onChange: null,
 };
-export default CVEditCareerPath;

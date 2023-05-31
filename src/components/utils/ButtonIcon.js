@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 
-const ButtonIcon = ({
+export const ButtonIcon = ({
   name,
   onClick,
   className,
@@ -50,5 +50,3 @@ ButtonIcon.defaultProps = {
   onClick: () => {},
   dataTestId: '',
 };
-
-export default ButtonIcon;

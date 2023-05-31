@@ -5,8 +5,7 @@ import arrayMove from 'array-move';
 
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import schemaformEditExperience from 'src/components/forms/schema/formEditExperience.json';
-import { Grid } from 'src/components/utils';
-import ButtonIcon from 'src/components/utils/ButtonIcon';
+import { Grid, ButtonIcon } from 'src/components/utils';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { formatParagraph, sortByOrder } from 'src/utils';
 import { openModal } from 'src/components/modals/Modal';
@@ -125,7 +124,7 @@ const ExperienceList = SortableContainer(({ items, onChange, updateOrder }) => {
   );
 });
 
-const ExperiencesProfileCard = ({ experiences, onChange }) => {
+export const ExperiencesProfileCard = ({ experiences, onChange }) => {
   const sortedExperiences = sortByOrder(experiences);
 
   const updateExperiencesOrder = (reorderedExperiences) => {
@@ -218,5 +217,3 @@ ExperiencesProfileCard.defaultProps = {
   experiences: [],
   onChange: null,
 };
-
-export default ExperiencesProfileCard;

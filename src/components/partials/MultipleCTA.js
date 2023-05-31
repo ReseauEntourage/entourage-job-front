@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'src/components/utils';
-import Grid from 'src/components/utils/Grid';
-import Img from 'src/components/utils/Img';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
+import { Button, Img, Grid } from 'src/components/utils';
+import { IconNoSSR } from 'src/components/utils/Icon';
 
-const MultipleCTA = ({
+export const MultipleCTA = ({
   showNumbers,
   showHorizontalDividers,
   showVerticalDividers,
@@ -150,5 +148,3 @@ MultipleCTA.defaultProps = {
   className: '',
   animate: false,
 };
-
-export default MultipleCTA;

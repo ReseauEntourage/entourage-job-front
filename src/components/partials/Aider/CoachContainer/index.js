@@ -3,7 +3,7 @@ import { StyledCoachContainer } from 'src/components/partials/Aider/CoachContain
 import TitleSection from 'src/components/partials/Aider/H2';
 import AiderAccompagnerCoachImg from 'public/static/img/aider-accompagner-coach.jpg';
 import AiderAccompagnerCoachImgMobile from 'public/static/img/aider-accompagner-coach-mobile.jpg';
-import BackgroundImage from 'src/components/utils/BackgroundImage';
+import { BackgroundImage } from 'src/components/utils';
 import { COLORS } from 'src/constants/styles';
 import { Button } from 'src/components/utils/Button';
 import { IconNoSSR } from 'src/components/utils/Icon.tsx';
