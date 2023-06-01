@@ -1,6 +1,5 @@
 import { USER_ROLES, UserRole } from 'src/constants/users';
 
-
 const defaultPages = {
   [USER_ROLES.ADMIN]: '/backoffice/admin/offres',
   [USER_ROLES.CANDIDATE]: '/backoffice/candidat/cv',

@@ -428,15 +428,14 @@ const Parametres = () => {
                   </Grid>
                 ) : undefined}
               </div>
-              {(userData.role === USER_ROLES.COACH ||
-                userData.role === USER_ROLES.CANDIDATE) && (
-                <UserInformationCard
-                  user={userData}
-                  // onChange={(data) => {
-                  //   setUserData(data);
-                  // }}
-                />
-              )}
+              {isRoleIncluded(
+                [
+                  USER_ROLES.COACH,
+                  USER_ROLES.CANDIDATE,
+                  USER_ROLES.CANDIDATE_EXTERNAL,
+                ],
+                userData.role
+              ) && <UserInformationCard user={userData} />}
             </Grid>
 
             {/* Changement de mot de passe */}

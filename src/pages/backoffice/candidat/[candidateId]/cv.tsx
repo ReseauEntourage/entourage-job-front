@@ -41,7 +41,7 @@ const Edit = () => {
   } else if (error) {
     return <ErrorMessage error={error} />;
   } else if (
-    isRoleIncluded(COACH_USER_ROLES, userCompleteData.role) &&
+    isRoleIncluded(COACH_USER_ROLES, user.role) &&
     !getRelatedUser(userCompleteData)
   ) {
     content = (

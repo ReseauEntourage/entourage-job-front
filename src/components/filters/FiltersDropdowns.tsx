@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
-import { AnyToFix } from 'src/utils/Types';
 
 import { v4 as uuid } from 'uuid';
 import { Button } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { gaEvent } from 'src/lib/gtag';
+import { AnyToFix } from 'src/utils/Types';
 
 const uuidValue = uuid();
 
 interface FiltersDropdownProps {
   filters: AnyToFix; // to be typed
-  setFilters: (arg1:AnyToFix) => void; // to be typed
+  setFilters: (arg1: AnyToFix) => void; // to be typed
   filterData: AnyToFix; // to be typed
   hideOnMobile?: boolean;
   fullWidth?: boolean;

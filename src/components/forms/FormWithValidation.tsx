@@ -228,7 +228,6 @@ const FormWithValidation = forwardRef(
                 return (
                   <li key={i} hidden={!!value.hidden}>
                     <FieldGroup
-                      // id={childrenId}
                       title={title}
                       childWidths={childWidths}
                       fields={childrenFields.map((field) => {
@@ -271,12 +270,6 @@ const FormWithValidation = forwardRef(
                   !shouldHide && (
                     <li key={i}>
                       <InputsContainer
-                        // id={childrenId}
-                        // title={title}
-                        // childWidths={childWidths}
-                        // getValue={(name) => {
-                        // return fieldValues[name];
-                        // }}
                         fields={childrenFields.map((field) => {
                           const shouldHideField = field.hide
                             ? field.hide((name) => {
@@ -319,7 +312,6 @@ const FormWithValidation = forwardRef(
                   <li key={i} hidden={!!value.hidden}>
                     <MultipleFields
                       action={action}
-                      // id={childrenId}
                       name={childrenName}
                       title={title}
                       childWidths={childWidths}

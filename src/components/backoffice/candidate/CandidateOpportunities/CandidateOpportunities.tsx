@@ -82,7 +82,6 @@ const CandidateOpportunities = ({
 
   const isPublic = opportunityType === 'public';
 
-  // const [numberOfResults, setNumberOfResults] = useState(0);
   const [offset, setOffset] = useState<number>(0);
   const [hasFetchedAll, setHasFetchedAll] = useState(false);
 
@@ -97,7 +96,6 @@ const CandidateOpportunities = ({
 
   const fetchData = useCandidateOpportunities(
     setOffers,
-    // setNumberOfResults,
     setLoading,
     setHasError,
     setHasFetchedAll
@@ -228,7 +226,6 @@ const CandidateOpportunities = ({
               <SearchBar
                 filtersConstants={candidateSearchFilters}
                 filters={filters}
-                // numberOfResults={numberOfResults}
                 resetFilters={resetFilters}
                 search={search}
                 setSearch={setSearch}

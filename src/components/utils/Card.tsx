@@ -8,11 +8,19 @@ interface CardType {
   title?: string | JSX.Element | JSX.Element[];
   body?: boolean;
   hover?: boolean;
-  size: 'small' | 'large';
+  size?: 'small' | 'large' | 'default';
 }
 
 // todo create a card component with each class parameters
-export const Card = ({ title, style, body, hover, size, children, badge }: CardType) => {
+export const Card = ({
+  title,
+  style,
+  body,
+  hover,
+  size,
+  children,
+  badge,
+}: CardType) => {
   let classBuffer = 'uk-card';
   if (style) classBuffer += ` uk-card-${style}`;
   if (body) classBuffer += ` uk-card-body`;

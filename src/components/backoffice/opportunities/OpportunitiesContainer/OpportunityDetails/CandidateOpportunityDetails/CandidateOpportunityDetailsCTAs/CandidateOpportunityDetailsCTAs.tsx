@@ -211,7 +211,7 @@ const CandidateOpportunityDetailsCTAs = ({
           formId="abandon-offer-reason"
           submitText="Abandonner l'offre"
           onSubmit={async (selectedReason, closeModal) => {
-            const queryParams: {archived?: boolean; status?: number;} = {};
+            const queryParams: { archived?: boolean; status?: number } = {};
             if (selectedReason.status === 'archived') {
               queryParams.archived = true;
             } else {

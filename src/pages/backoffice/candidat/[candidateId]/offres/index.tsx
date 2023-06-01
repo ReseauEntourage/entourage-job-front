@@ -106,7 +106,7 @@ const Opportunities = () => {
 
   useDeepCompareEffect(() => {
     if (
-      user && 
+      user &&
       candidateId &&
       (user !== prevUser ||
         opportunityType !== prevOpportunityType ||

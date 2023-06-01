@@ -3,9 +3,9 @@ import Head from 'next/head';
 import { withRouter } from 'next/router';
 import Script from 'next/script';
 import React from 'react';
-import Footer from 'src/components/Footer';
 import HeaderConnected from 'src/components/headers/HeaderConnected';
 import HeaderPublic from 'src/components/headers/HeaderPublic/HeaderPublic';
+import { Footer } from 'src/components/partials/Footer';
 import { addPrefix } from 'src/utils';
 
 interface LayoutProps extends WithRouterProps {

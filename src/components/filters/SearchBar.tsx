@@ -19,7 +19,6 @@ interface SearchBarProps {
   setFilters: () => void;
   search?: string;
   setSearch: (arg1?: string) => void;
-  // numberOfResults: number,
   resetFilters: () => void;
   smallSelectors?: boolean;
   placeholder?: string;
@@ -34,7 +33,6 @@ const SearchBar = ({
   setFilters,
   search,
   setSearch,
-  // numberOfResults,
   resetFilters,
   placeholder,
   startSearchEvent,
@@ -88,10 +86,7 @@ const SearchBar = ({
             }}
           />
         </form>
-        <FiltersMobile
-          // filters={filters}
-          numberOfFilters={numberOfFilters}
-        />
+        <FiltersMobile numberOfFilters={numberOfFilters} />
         <FiltersDropdowns
           hideOnMobile
           filterData={filtersConstants}
@@ -120,9 +115,6 @@ const SearchBar = ({
         />
         {hasFilters && (
           <FiltersOptions
-            // numberOfResults={numberOfResults}
-            // filters={filters}
-            // search={search}
             resetFilters={() => {
               resetFilters();
               setSearchBuffer('');

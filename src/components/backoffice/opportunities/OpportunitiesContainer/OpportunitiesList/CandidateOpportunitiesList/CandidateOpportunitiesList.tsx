@@ -25,7 +25,6 @@ const uuidValue = uuid();
 interface CandidateOpportunitiesListProps {
   opportunities: Partial<OpportunityWithOpportunityUsers>[];
   fetchOpportunities: () => void;
-  // setOffset: ((prevOffset) => number);
   setOffset: Dispatch<SetStateAction<number>>;
   hasFetchedAll: boolean;
   candidateId: string;

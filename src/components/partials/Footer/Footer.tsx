@@ -3,6 +3,10 @@ import React from 'react';
 import { openModal } from 'src/components/modals/Modal';
 import ModalInterestLinkedOut from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import AssociationEntourage from 'src/components/partials/AssociationEntourage';
+import {
+  PageType,
+  ChildrenType,
+} from 'src/components/partials/Footer/Footer.type';
 import Partners from 'src/components/partials/Partners';
 import { Grid, Section, SimpleLink } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
@@ -11,48 +15,7 @@ import { EXTERNAL_LINKS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 
-
-interface pageProps {
-  title?: string;
-  children?: childrenProps[];
-}
-
-interface childrenProps {
-  component?: React.ReactNode;
-  title?: string;
-  path?: string;
-  props?: {
-    isExternal?: boolean;
-    newTab?: boolean;
-    onClick?: () => void;
-    target?: string;
-  }
-  children?: {
-    component?: React.ReactNode;
-    title?: string;
-    path?: string;
-    children?: {
-      component?: React.ReactNode;
-      title?: string;
-      path?: string;
-      props?: {
-        isExternal?: boolean;
-        newTab?: boolean;
-        onClick?: () => void;
-        target?: string;
-      }
-    }[];
-    props?: {
-      isExternal?: boolean;
-      newTab?: boolean;
-      onClick?: () => void;
-      target?: string;
-    }
-  }[];
-}
-
-
-const pages: pageProps[] = [
+const pages: PageType[] = [
   {
     title: 'Notre mission',
     children: [
@@ -255,8 +218,7 @@ const pages: pageProps[] = [
   },
 ];
 
-
-const SiteMap = ({ isMobile }: { isMobile: boolean}) => {
+const SiteMap = ({ isMobile }: { isMobile: boolean }) => {
   return (
     <Grid
       row
@@ -265,7 +227,7 @@ const SiteMap = ({ isMobile }: { isMobile: boolean}) => {
       childWidths={['1-3@m']}
       className={isMobile ? 'uk-hidden@m' : 'uk-visible@m'}
     >
-      {pages.map(({ title, children }: pageProps, index: number) => {
+      {pages.map(({ title, children }: PageType, index: number) => {
         return (
           <div
             key={title + index}
@@ -287,8 +249,8 @@ const SiteMap = ({ isMobile }: { isMobile: boolean}) => {
                       title: childrenTitle,
                       path: childrenPath,
                       children: childrenChildren,
-                      props: childrenProps = {},
-                    } : childrenProps,
+                      props: childrenType = {},
+                    }: ChildrenType,
                     childrenIndex: number
                   ) => {
                     if (childrenComponent) {
@@ -310,7 +272,7 @@ const SiteMap = ({ isMobile }: { isMobile: boolean}) => {
                               ? 'uk-text-muted uk-margin-small-top'
                               : 'uk-text-bold ent-site-map'
                           }
-                          {...childrenProps}
+                          {...childrenType}
                         >
                           {childrenTitle}
                         </SimpleLink>
@@ -321,7 +283,7 @@ const SiteMap = ({ isMobile }: { isMobile: boolean}) => {
                                 title: childrenChildrenTitle,
                                 path: childrenChildrenPath,
                                 props: childrenChildrenProps = {},
-                              }: childrenProps,
+                              }: ChildrenType,
                               childrenChildrenIndex: number
                             ) => {
                               return (
@@ -352,8 +314,7 @@ const SiteMap = ({ isMobile }: { isMobile: boolean}) => {
   );
 };
 
-
-const Footer = () => {
+export const Footer = () => {
   const { pathname } = useRouter();
 
   const showAssociationEntourage = !pathname.includes('/entreprises');
@@ -401,5 +362,3 @@ const Footer = () => {
     </footer>
   );
 };
-
-export default Footer;

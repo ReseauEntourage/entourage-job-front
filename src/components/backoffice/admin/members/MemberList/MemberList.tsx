@@ -41,8 +41,6 @@ export function MemberList({
   const [filtersConst, setFiltersConst] =
     useState<typeof MEMBER_FILTERS_DATA>(MEMBER_FILTERS_DATA);
 
-  const [numberOfResults, setNumberOfResults] = useState(0);
-
   const [members, setMembers] = useState([]);
   const [hasError, setHasError] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -68,7 +66,6 @@ export function MemberList({
         .then(({ data }) => {
           if (doReset) {
             setMembers(data);
-            setNumberOfResults(data.length);
             setOffset(LIMIT);
             setAllLoaded(false);
           } else {
@@ -77,9 +74,6 @@ export function MemberList({
             });
             setOffset((prevOffset) => {
               return prevOffset + LIMIT;
-            });
-            setNumberOfResults((prevNumberOfResults) => {
-              return prevNumberOfResults + data.length;
             });
           }
 
