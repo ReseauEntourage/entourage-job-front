@@ -1,80 +1,13 @@
 import styled, { css } from 'styled-components';
+import { Td } from 'src/components/utils/Table';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledRow = styled.tr`
-  height: 70px;
-  box-sizing: border-box;
-  &:nth-child(odd) {
-    background-color: #f9f9f9;
-  }
-  ${({ selected }) => {
-    return (
-      selected &&
-      css`
-        background-color: ${COLORS.hoverOrange} !important;
-        td {
-          border-top: 1px solid ${COLORS.primaryOrange};
-          border-bottom: 1px solid ${COLORS.primaryOrange};
-          &:last-child {
-            border-right: 1px solid ${COLORS.primaryOrange};
-          }
-        }
-      `
-    );
-  }}
+export const StyledNameCellContainer = styled(Td)`
+  padding-left: 24px !important;
 
-  td {
-    border-top: 1px solid ${COLORS.lightgray};
-    border-bottom: 1px solid ${COLORS.lightgray};
-    padding: 15px;
-    &:last-child {
-      border-right: 1px solid ${COLORS.lightgray};
-    }
-    &:first-child {
-      border-left: 1px solid ${COLORS.lightgray};
-    }
-    .bold {
-      font-weight: 700;
-    }
-    a {
-      color: ${COLORS.black};
-      &:hover {
-        .bold {
-          color: ${COLORS.primaryOrange};
-        }
-      }
-    }
-    &.name-cell {
-      padding-left: 24px;
-
-      a {
-        display: flex;
-        align-items: center;
-      }
-      .profileImage {
-        margin-right: 15px;
-      }
-    }
-
-    &.hiddenCV-cell {
-      color: ${COLORS.black};
-      .eye-hidden {
-        color: ${COLORS.darkGray};
-      }
-    }
-    &.checkbox-cell {
-      > * {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-    }
-    .yes {
-      color: ${COLORS.yesGreen};
-    }
-    .no {
-      color: ${COLORS.noRed};
-    }
+  a {
+    display: flex;
+    align-items: center;
   }
 `;
 

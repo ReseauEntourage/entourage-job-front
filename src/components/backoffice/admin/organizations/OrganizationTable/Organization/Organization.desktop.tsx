@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { StyledRow } from 'src/components/backoffice/admin/organizations/OrganizationTable/Organization/Organization.styles';
 import { openModal } from 'src/components/modals/Modal';
 import { Button, Icon } from 'src/components/utils';
+import { Row, Td } from 'src/components/utils/Table';
 import { EditOrganizationModal } from './EditOrganizationModal';
+import { StyledNameCellContainer } from './Organization.styles';
 import { OrganizationProps } from './Organization.types';
 import { OrganizationInfo } from './OrganizationInfo';
 
@@ -12,37 +13,38 @@ export function OrganizationDesktop({
   refreshOrganizations,
 }: OrganizationProps) {
   return (
-    <StyledRow>
-      <td className="name-cell">
+    <Row>
+      <StyledNameCellContainer>
         <OrganizationInfo
           name={organization.name}
           address={organization.address}
         />
-      </td>
-      <td>
+      </StyledNameCellContainer>
+
+      <Td>
         <span>
           {`${organization.organizationReferent.referentFirstName} ${organization.organizationReferent.referentLastName}`}
         </span>
-      </td>
-      <td>
+      </Td>
+      <Td>
         <span>{organization.organizationReferent.referentMail}</span>
-      </td>
-      <td>
+      </Td>
+      <Td>
         <span>{organization.organizationReferent.referentPhone}</span>
-      </td>
-      <td>
+      </Td>
+      <Td>
         <span>
           {organization.zone.charAt(0).toUpperCase() +
             organization.zone.slice(1).toLowerCase()}
         </span>
-      </td>
-      <td>
+      </Td>
+      <Td>
         <span>{organization.candidatesCount}</span>
-      </td>
-      <td>
+      </Td>
+      <Td>
         <span>{organization.coachesCount}</span>
-      </td>
-      <td>
+      </Td>
+      <Td>
         <span>
           <Button
             style="custom-text"
@@ -58,7 +60,7 @@ export function OrganizationDesktop({
             <Icon name="pencil" />
           </Button>
         </span>
-      </td>
-    </StyledRow>
+      </Td>
+    </Row>
   );
 }

@@ -1,101 +1,76 @@
 import styled, { css } from 'styled-components';
+import { Td } from 'src/components/utils/Table';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledRow = styled.tr`
-  height: 70px;
-  box-sizing: border-box;
-  &:nth-child(odd) {
-    background-color: #f9f9f9;
-  }
-  ${({ selected }) => {
-    return (
-      selected &&
-      css`
-        background-color: ${COLORS.hoverOrange} !important;
-        td {
-          border-top: 1px solid ${COLORS.primaryOrange};
-          border-bottom: 1px solid ${COLORS.primaryOrange};
-          &:last-child {
-            border-right: 1px solid ${COLORS.primaryOrange};
-          }
-        }
-      `
-    );
-  }}
-  td {
-    border-top: 1px solid ${COLORS.lightgray};
-    border-bottom: 1px solid ${COLORS.lightgray};
-    padding: 15px;
-    &:last-child {
-      border-right: 1px solid ${COLORS.lightgray};
-    }
-    .bold {
-      font-weight: 700;
-    }
-    a {
-      color: ${COLORS.black};
-      &:hover {
-        .bold {
-          color: ${COLORS.primaryOrange};
-        }
-      }
-    }
-    &.name-cell {
-      padding-left: 24px;
-      border-left: solid 3px
-        ${(props) => {
-          return COLORS.cvStatus[props.cvStatus]?.border || COLORS.white;
-        }};
+export const StyledNameCell = styled(Td)`
+  padding-left: 24px !important;
 
-      a {
-        display: flex;
-        align-items: center;
-      }
-      .profileImage {
-        margin-right: 15px;
-      }
-    }
-    & > .cv-status-cell {
-      padding-left: 24px;
-      color: ${COLORS.black};
-      position: relative;
-      &::before {
-        content: '';
-        height: 10px;
-        width: 10px;
-        position: absolute;
-        left: 0;
-        top: calc(50% - 6px);
-        border-radius: 12px;
-        background-color: ${(props) => {
-          return COLORS.cvStatus[props.cvStatus]?.background || COLORS.white;
-        }};
-        border: 2px solid
-          ${(props) => {
-            return COLORS.cvStatus[props.cvStatus]?.border || COLORS.white;
-          }};
-      }
-    }
-    &.hiddenCV-cell {
-      color: ${COLORS.black};
-      .eye-hidden {
-        color: ${COLORS.darkGray};
-      }
-    }
-    &.checkbox-cell {
-      > * {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-    }
-    .yes {
-      color: ${COLORS.yesGreen};
-    }
-    .no {
-      color: ${COLORS.noRed};
-    }
+  border-left: solid 3px
+    ${(props) => {
+      return COLORS.cvStatus[props.cvStatus]?.border || COLORS.white;
+    }} !important;
+
+  a {
+    display: flex;
+    align-items: center;
   }
+  .profileImage {
+    margin-right: 15px;
+  }
+`;
+
+export const StyledCVStatusCellContent = styled.div`
+  padding-left: 24px;
+  color: ${COLORS.black};
+  position: relative;
+  &::before {
+    content: '';
+    height: 10px;
+    width: 10px;
+    position: absolute;
+    left: 0;
+    top: calc(50% - 6px);
+    border-radius: 12px;
+    background-color: ${(props) => {
+      return COLORS.cvStatus[props.cvStatus]?.background || COLORS.white;
+    }};
+    border: 2px solid
+      ${(props) => {
+        return COLORS.cvStatus[props.cvStatus]?.border || COLORS.white;
+      }};
+  }
+
+  > span {
+    white-space: nowrap;
+  }
+`;
+
+export const StyledNoWrapCellContent = styled.div`
+  > span {
+    white-space: nowrap;
+  }
+`;
+
+export const StyledEmployedCellContent = styled.div`
+  .yes {
+    color: ${COLORS.yesGreen};
+  }
+  .no {
+    color: ${COLORS.noRed};
+  }
+`;
+
+export const StyledHiddenCVCellContent = styled.div`
+  color: ${COLORS.black};
+  .eye-hidden {
+    color: ${COLORS.darkGray};
+  }
+`;
+
+export const StyledCheckBoxCellContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const StyledMobileMember = styled.tr`
@@ -204,7 +179,7 @@ export const StyledMobileMember = styled.tr`
     display: flex;
     flex-direction: column;
     color: ${COLORS.black};
-    span.title {
+    > span > title {
       overflow-wrap: normal;
       margin-bottom: 4px;
       color: ${COLORS.darkGray};
@@ -216,5 +191,23 @@ export const StyledMobileMember = styled.tr`
     .eye-hidden {
       color: ${COLORS.darkGray};
     }
+  }
+`;
+
+export const StyledMobileCell = styled.div`
+  display: flex;
+  flex-direction: column;
+  color: ${COLORS.black};
+  > span > title {
+    overflow-wrap: normal;
+    margin-bottom: 4px;
+    color: ${COLORS.darkGray};
+    font-size: 12px;
+  }
+  a {
+    color: ${COLORS.black};
+  }
+  .eye-hidden {
+    color: ${COLORS.darkGray};
   }
 `;

@@ -1,25 +1,29 @@
-import React from 'react';
-import { StyledTable } from './OrganizationTable.styles';
+import React, { useMemo } from 'react';
+import { Table } from 'src/components/utils/Table/Table';
+import { Th } from 'src/components/utils/Table/Th';
 
 interface OrganizationTableProps {
   organizations: JSX.Element[];
 }
 export function OrganizationTable({ organizations }: OrganizationTableProps) {
+  const columnsHeaders = useMemo<JSX.Element[]>(() => {
+    return [
+      <Th>Structure partenaire</Th>,
+      <Th>Contact</Th>,
+      <Th>Mail</Th>,
+      <Th>Téléphone</Th>,
+      <Th>Zone</Th>,
+      <Th>Nombre de candidats</Th>,
+      <Th>Nombre de coachs</Th>,
+      <Th>Édition</Th>,
+    ];
+  }, []);
+
   return (
-    <StyledTable>
-      <thead>
-        <tr>
-          <th className="uk-text-nowrap">Structure partenaire</th>
-          <th className="uk-text-nowrap">Contact</th>
-          <th className="uk-text-nowrap">Mail</th>
-          <th className="uk-text-nowrap">Téléphone</th>
-          <th className="uk-text-nowrap">Zone</th>
-          <th className="uk-text-nowrap">Nombre de candidats</th>
-          <th className="uk-text-nowrap">Nombre de coachs</th>
-          <th className="uk-text-nowrap">Édition</th>
-        </tr>
-      </thead>
-      <tbody data-testid="member-list">{organizations}</tbody>
-    </StyledTable>
+    <Table
+      columns={columnsHeaders}
+      dataTestId="organization-list"
+      body={organizations}
+    />
   );
 }

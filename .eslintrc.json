@@ -56,6 +56,8 @@
     "react/forbid-prop-types": "warn",
     "react/jsx-props-no-spreading": "off",
     "react/jsx-wrap-multilines": "off",
+    // with TypeScript, no default props
+    "react/require-default-props": 0,
     "react/static-property-placement": ["warn", "static getter"],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",

@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { Table } from 'src/components/utils/Table';
+import { Th } from 'src/components/utils/Table/Th';
 import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
@@ -6,75 +8,84 @@ import {
 } from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils/Finding';
 import { MemberColumn } from './Member/Member.types';
-import { StyledTable } from './MemberTable.styles';
 
 interface MemberTableProps {
   columns: MemberColumn[];
   members: React.ReactNode;
   role: UserRole | UserRole[];
 }
+
 export function MemberTable({ columns, members, role }: MemberTableProps) {
+  const columnsHeaders = useMemo<JSX.Element[]>(() => {
+    let columnsArray = [];
+
+    if (isRoleIncluded(CANDIDATE_USER_ROLES, role)) {
+      columnsArray = [<Th>Candidat</Th>];
+    }
+    if (isRoleIncluded(COACH_USER_ROLES, role)) {
+      columnsArray = [<Th>Coach</Th>];
+    }
+
+    if (
+      columns.includes('associatedUser') &&
+      isRoleIncluded(CANDIDATE_USER_ROLES, role)
+    ) {
+      columnsArray = [...columnsArray, <Th>Coach</Th>];
+    }
+    if (
+      columns.includes('associatedUser') &&
+      isRoleIncluded(COACH_USER_ROLES, role)
+    ) {
+      columnsArray = [...columnsArray, <Th>Candidat</Th>];
+    }
+    if (columns.includes('type')) {
+      columnsArray = [...columnsArray, <Th>Type</Th>];
+    }
+
+    if (columns.includes('phone')) {
+      columnsArray = [...columnsArray, <Th>Téléphone</Th>];
+    }
+
+    if (columns.includes('gender')) {
+      columnsArray = [...columnsArray, <Th>Sexe</Th>];
+    }
+
+    if (columns.includes('address')) {
+      columnsArray = [...columnsArray, <Th>Adresse</Th>];
+    }
+
+    if (columns.includes('zone')) {
+      columnsArray = [...columnsArray, <Th>Zone</Th>];
+    }
+    if (columns.includes('organization')) {
+      columnsArray = [...columnsArray, <Th>Structure</Th>];
+    }
+    if (columns.includes('lastConnection')) {
+      columnsArray = [...columnsArray, <Th>Dernière connexion</Th>];
+    }
+
+    if (isRoleIncluded(CANDIDATE_USER_ROLES, role)) {
+      if (columns.includes('cvUrl')) {
+        columnsArray = [...columnsArray, <Th>Lien CV</Th>];
+      }
+      if (columns.includes('employed')) {
+        columnsArray = [...columnsArray, <Th>En emploi</Th>];
+      }
+      if (columns.includes('cvStatus')) {
+        columnsArray = [...columnsArray, <Th>Statut CV</Th>];
+      }
+      if (columns.includes('cvHidden')) {
+        columnsArray = [...columnsArray, <Th>CV masqué</Th>];
+      }
+      if (columns.includes('selection')) {
+        columnsArray = [...columnsArray, <Th>Sélection</Th>];
+      }
+    }
+
+    return columnsArray;
+  }, [columns, role]);
+
   return (
-    <StyledTable>
-      <thead>
-        <tr>
-          {isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
-            <th className="uk-text-nowrap">Candidat</th>
-          )}
-          {isRoleIncluded(COACH_USER_ROLES, role) && (
-            <th className="uk-text-nowrap">Coach</th>
-          )}
-          {columns.includes('associatedUser') &&
-            isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
-              <th className="uk-text-nowrap">Coach</th>
-            )}
-          {columns.includes('associatedUser') &&
-            isRoleIncluded(COACH_USER_ROLES, role) && (
-              <th className="uk-text-nowrap">Candidat</th>
-            )}
-          {columns.includes('type') && <th className="uk-text-nowrap">Type</th>}
-
-          {columns.includes('phone') && (
-            <th className="uk-text-nowrap">Téléphone</th>
-          )}
-
-          {columns.includes('gender') && (
-            <th className="uk-text-nowrap">Sexe</th>
-          )}
-
-          {columns.includes('address') && (
-            <th className="uk-text-nowrap">Adresse</th>
-          )}
-
-          {columns.includes('zone') && <th className="uk-text-nowrap">Zone</th>}
-          {columns.includes('organization') && (
-            <th className="uk-text-nowrap">Structure</th>
-          )}
-          {columns.includes('lastConnection') && (
-            <th className="uk-text-nowrap">Dernière connexion</th>
-          )}
-          {isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
-            <>
-              {columns.includes('cvUrl') && (
-                <th className="uk-text-nowrap">Lien CV</th>
-              )}
-              {columns.includes('employed') && (
-                <th className="uk-text-nowrap">En emploi</th>
-              )}
-              {columns.includes('cvStatus') && (
-                <th className="uk-text-nowrap">Statut CV</th>
-              )}
-              {columns.includes('cvHidden') && (
-                <th className="uk-text-nowrap">CV masqué</th>
-              )}
-              {columns.includes('selection') && (
-                <th className="uk-text-nowrap">Sélection</th>
-              )}
-            </>
-          )}
-        </tr>
-      </thead>
-      <tbody data-testid="member-list">{members}</tbody>
-    </StyledTable>
+    <Table columns={columnsHeaders} dataTestId="member-list" body={members} />
   );
 }
