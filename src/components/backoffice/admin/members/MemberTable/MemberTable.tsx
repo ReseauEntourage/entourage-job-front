@@ -10,7 +10,7 @@ import { MemberColumn } from './Member/Member.types';
 
 interface MemberTableProps {
   columns: MemberColumn[];
-  members: React.ReactNode;
+  members: JSX.Element[];
   role: UserRole | UserRole[];
 }
 

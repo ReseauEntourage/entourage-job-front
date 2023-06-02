@@ -21,6 +21,7 @@ export function OrganizationMobile({
           />
           <Button
             style="custom-text"
+            dataTestId={`button-edit-organization-${organization.id}`}
             onClick={() => {
               openModal(
                 <EditOrganizationModal

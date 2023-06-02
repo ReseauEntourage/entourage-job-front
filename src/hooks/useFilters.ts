@@ -5,7 +5,7 @@ import { gaEvent } from 'src/lib/gtag';
 import {
   filtersToQueryParams,
   getFiltersObjectsFromQueryParamsFront,
-} from 'src/utils';
+} from 'src/utils/Filters';
 
 export function useFilters(filtersData, path, otherPathParams?, resetTag?) {
   const { push, query: originalQuery } = useRouter();

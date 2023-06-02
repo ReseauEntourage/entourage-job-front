@@ -46,6 +46,7 @@ export function OrganizationDesktop({
       <TdDesktop>
         <span>
           <Button
+            dataTestId={`button-edit-organization-${organization.id}`}
             style="custom-text"
             onClick={() => {
               openModal(

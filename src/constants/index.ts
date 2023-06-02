@@ -854,9 +854,9 @@ export const EVENT_TYPES_FILTERS = [
 ];
 
 const ADDRESSES = {
-  PARIS: '174 Rue Championnet 75018, Paris',
-  LYON: '17 Avenue Lacassagne 69003, Lyon',
-  LILLE: '21 Rue Maracci 59000, Lille',
+  PARIS: '174 Rue Championnet, 75018 Paris',
+  LYON: '40 Cours de la République, 69100 Villeurbanne',
+  LILLE: '21 Rue Maracci, 59000 Lille',
   RENNES: '',
   LORIENT: '',
 };

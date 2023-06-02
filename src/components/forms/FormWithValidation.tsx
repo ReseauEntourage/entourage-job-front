@@ -219,12 +219,7 @@ const FormWithValidation = forwardRef(
           <fieldset className="uk-fieldset">
             {fields.map((value, i) => {
               if (value.component === 'fieldgroup') {
-                const {
-                  fields: childrenFields,
-                  title,
-                  id: childrenId,
-                  childWidths,
-                } = value;
+                const { fields: childrenFields, title, childWidths } = value;
                 return (
                   <li key={i} hidden={!!value.hidden}>
                     <FieldGroup
@@ -253,12 +248,7 @@ const FormWithValidation = forwardRef(
                 );
               }
               if (value.component === 'fieldgroup-new') {
-                const {
-                  fields: childrenFields,
-                  title,
-                  id: childrenId,
-                  childWidths,
-                } = value;
+                const { fields: childrenFields } = value;
 
                 const shouldHide = value.hide
                   ? value.hide((name) => {
@@ -304,7 +294,6 @@ const FormWithValidation = forwardRef(
                   fields: childrenFields,
                   title,
                   action,
-                  id: childrenId,
                   name: childrenName,
                   childWidths,
                 } = value;

@@ -13,7 +13,7 @@ import { Section } from 'src/components/utils';
 import BackToTop from 'src/components/utils/BackToTop';
 import { Button } from 'src/components/utils/Button';
 import { ORGANIZATION_FILTERS_DATA } from 'src/constants';
-import { filtersToQueryParams } from 'src/utils';
+import { filtersToQueryParams } from 'src/utils/Filters';
 
 const LIMIT = 50;
 
@@ -24,8 +24,6 @@ export function OrganizationList({
   setSearch,
   resetFilters,
 }) {
-  const [numberOfResults, setNumberOfResults] = useState(0);
-
   const [organizations, setOrganizations] = useState([]);
   const [hasError, setHasError] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -51,7 +49,6 @@ export function OrganizationList({
 
         if (doReset) {
           setOrganizations(organizationsData);
-          setNumberOfResults(organizationsData.length);
           setOffset(LIMIT);
           setAllLoaded(false);
         } else {
@@ -60,9 +57,6 @@ export function OrganizationList({
           });
           setOffset((prevOffset) => {
             return prevOffset + LIMIT;
-          });
-          setNumberOfResults((prevNumberOfResults) => {
-            return prevNumberOfResults + organizationsData.length;
           });
         }
 
@@ -124,7 +118,6 @@ export function OrganizationList({
           <SearchBar
             filtersConstants={ORGANIZATION_FILTERS_DATA}
             filters={filters}
-            numberOfResults={numberOfResults}
             resetFilters={resetFilters}
             search={search}
             setSearch={setSearch}

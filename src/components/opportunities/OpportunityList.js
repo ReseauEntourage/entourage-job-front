@@ -180,7 +180,6 @@ const OpportunityList = forwardRef(
     const prevTag = usePrevious(restQuery.tag);
 
     const [filtersConst, setFiltersConst] = useState(OPPORTUNITY_FILTERS_DATA);
-    const [numberOfResults, setNumberOfResults] = useState(0);
 
     const [bookmarkedOffers, setBookmarkedOffers] = useState(undefined);
     const [offers, setOffers] = useState(undefined);
@@ -214,7 +213,6 @@ const OpportunityList = forwardRef(
       setOffers,
       setOtherOffers,
       setBookmarkedOffers,
-      setNumberOfResults,
       setLoading,
       setHasError
     );
@@ -516,7 +514,6 @@ const OpportunityList = forwardRef(
             <SearchBar
               filtersConstants={filtersConst}
               filters={filters}
-              // numberOfResults={numberOfResults}
               resetFilters={resetFilters}
               search={search}
               setSearch={setSearch}
@@ -530,7 +527,6 @@ const OpportunityList = forwardRef(
             <SearchBar
               filtersConstants={filtersConst}
               filters={filters}
-              // numberOfResults={numberOfResults}
               resetFilters={resetFilters}
               search={search}
               setSearch={setSearch}

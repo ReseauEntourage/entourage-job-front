@@ -7,6 +7,9 @@ describe('Parcours travailler', () => {
     cy.intercept('POST', 'contact/candidateInscription', {
       statusCode: 201,
     }).as('postInscription');
+
+    cy.intercept('GET', '/cv/shares', { total: 184222 });
+
   });
 
   it("Ouvrir la page et le formulaire d'inscription", () => {
@@ -36,7 +39,7 @@ describe('Parcours travailler', () => {
     cy.get('[data-testid="select-option-LinkedIn"]').click();
     cy.get('[data-testid="form-candidate-inscription-infoCoSubtitle"]').should(
       'include.text',
-      '174 Rue Championnet 75018, Paris'
+      '174 Rue Championnet, 75018 Paris'
     );
     cy.get('[data-testid="infoco-radio-5"]').click();
     cy.get('button').contains('Valider').should('be.visible').click();

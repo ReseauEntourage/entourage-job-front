@@ -16,7 +16,7 @@ import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 import { ADMIN_ZONES, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { GA_TAGS } from 'src/constants/tags';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
-import { useFilters } from 'src/hooks';
+import { useFilters } from 'src/hooks/useFilters';
 import { usePrevious } from 'src/hooks/utils';
 import { UserContext } from 'src/store/UserProvider';
 import { isRoleIncluded, getCandidateFromCoach } from 'src/utils/Finding';

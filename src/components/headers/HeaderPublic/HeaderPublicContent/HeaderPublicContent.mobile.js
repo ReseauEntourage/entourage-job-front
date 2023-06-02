@@ -1,4 +1,3 @@
-import UIkit from 'uikit';
 import React from 'react';
 import { useRouter } from 'next/router';
 import { Hamburger, Navbar } from 'src/components/utils';

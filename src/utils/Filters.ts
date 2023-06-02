@@ -18,7 +18,9 @@ const filterMemberTypeConstantsByRole = (
   } as MEMBER_FILTERS_CONSTANT;
 };
 
-export const mutateTypeFilterDependingOnRole = (role: UserRole) => {
+export const mutateTypeFilterDependingOnRole = (
+  role: UserRole | UserRole[]
+) => {
   if (isRoleIncluded(COACH_USER_ROLES, role)) {
     return [
       filterMemberTypeConstantsByRole(COACH_USER_ROLES),

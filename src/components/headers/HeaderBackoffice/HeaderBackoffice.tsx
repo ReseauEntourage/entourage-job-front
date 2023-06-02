@@ -8,7 +8,7 @@ interface HeaderBackofficeProps {
   description: React.ReactNode;
   children?: React.ReactNode;
   childrenBottom?: boolean;
-  shouldDisplayAdminNotifications?: boolean,
+  shouldDisplayAdminNotifications?: boolean;
   noSeparator?: boolean;
 }
 

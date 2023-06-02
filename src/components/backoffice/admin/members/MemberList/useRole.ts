@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { UserRole } from 'src/constants/users';
 
-export function useRole(): UserRole {
+export function useRole() {
   const {
     query: { role },
   } = useRouter();

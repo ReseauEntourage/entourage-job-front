@@ -9,7 +9,7 @@ import { ALL_USER_ROLES, CANDIDATE_USER_ROLES } from 'src/constants/users';
 import { useFilters } from 'src/hooks/useFilters';
 import { usePrevious } from 'src/hooks/utils';
 import { UserContext } from 'src/store/UserProvider';
-import { mutateTypeFilterDependingOnRole } from 'src/utils';
+import { mutateTypeFilterDependingOnRole } from 'src/utils/Filters';
 import { isRoleIncluded } from 'src/utils/Finding';
 
 const MembersAdmin = () => {
