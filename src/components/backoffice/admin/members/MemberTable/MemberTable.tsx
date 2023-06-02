@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
-import { Table } from 'src/components/utils/Table';
-import { Th } from 'src/components/utils/Table/Th';
+import { Table, Th } from 'src/components/utils/Table';
 import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,

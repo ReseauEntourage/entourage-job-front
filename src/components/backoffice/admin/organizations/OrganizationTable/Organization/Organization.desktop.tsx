@@ -2,9 +2,8 @@ import React from 'react';
 
 import { openModal } from 'src/components/modals/Modal';
 import { Button, Icon } from 'src/components/utils';
-import { Row, Td } from 'src/components/utils/Table';
+import { TrDesktop, TdDesktop } from 'src/components/utils/Table';
 import { EditOrganizationModal } from './EditOrganizationModal';
-import { StyledNameCellContainer } from './Organization.styles';
 import { OrganizationProps } from './Organization.types';
 import { OrganizationInfo } from './OrganizationInfo';
 
@@ -13,38 +12,38 @@ export function OrganizationDesktop({
   refreshOrganizations,
 }: OrganizationProps) {
   return (
-    <Row>
-      <StyledNameCellContainer>
+    <TrDesktop>
+      <TdDesktop>
         <OrganizationInfo
           name={organization.name}
           address={organization.address}
         />
-      </StyledNameCellContainer>
+      </TdDesktop>
 
-      <Td>
+      <TdDesktop>
         <span>
           {`${organization.organizationReferent.referentFirstName} ${organization.organizationReferent.referentLastName}`}
         </span>
-      </Td>
-      <Td>
+      </TdDesktop>
+      <TdDesktop>
         <span>{organization.organizationReferent.referentMail}</span>
-      </Td>
-      <Td>
+      </TdDesktop>
+      <TdDesktop>
         <span>{organization.organizationReferent.referentPhone}</span>
-      </Td>
-      <Td>
+      </TdDesktop>
+      <TdDesktop>
         <span>
           {organization.zone.charAt(0).toUpperCase() +
             organization.zone.slice(1).toLowerCase()}
         </span>
-      </Td>
-      <Td>
+      </TdDesktop>
+      <TdDesktop>
         <span>{organization.candidatesCount}</span>
-      </Td>
-      <Td>
+      </TdDesktop>
+      <TdDesktop>
         <span>{organization.coachesCount}</span>
-      </Td>
-      <Td>
+      </TdDesktop>
+      <TdDesktop>
         <span>
           <Button
             style="custom-text"
@@ -60,7 +59,7 @@ export function OrganizationDesktop({
             <Icon name="pencil" />
           </Button>
         </span>
-      </Td>
-    </Row>
+      </TdDesktop>
+    </TrDesktop>
   );
 }

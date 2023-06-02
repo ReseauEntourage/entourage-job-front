@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { StyledMobileOrganization } from 'src/components/backoffice/admin/organizations/OrganizationTable/Organization/Organization.styles';
 import { openModal } from 'src/components/modals/Modal';
 import { Button, Icon } from 'src/components/utils';
+import { TdMobile, TrMobile } from 'src/components/utils/Table';
 import { EditOrganizationModal } from './EditOrganizationModal';
 import { OrganizationProps } from './Organization.types';
 import { OrganizationInfo } from './OrganizationInfo';
@@ -12,60 +12,58 @@ export function OrganizationMobile({
   refreshOrganizations,
 }: OrganizationProps) {
   return (
-    <StyledMobileOrganization>
-      <div className="line member-head">
-        <OrganizationInfo
-          name={organization.name}
-          address={organization.address}
-        />
-        <Button
-          style="custom-text"
-          onClick={() => {
-            openModal(
-              <EditOrganizationModal
-                organization={organization}
-                refreshOrganizations={refreshOrganizations}
-              />
-            );
-          }}
-        >
-          <Icon name="pencil" />
-        </Button>
+    <TrMobile>
+      <div className="line">
+        <TdMobile>
+          <OrganizationInfo
+            name={organization.name}
+            address={organization.address}
+          />
+          <Button
+            style="custom-text"
+            onClick={() => {
+              openModal(
+                <EditOrganizationModal
+                  organization={organization}
+                  refreshOrganizations={refreshOrganizations}
+                />
+              );
+            }}
+          >
+            <Icon name="pencil" />
+          </Button>
+        </TdMobile>
       </div>
-      <div className="line phone-sex">
-        <div className="cell">
-          <span className="title">Contact</span>
+      <div className="line">
+        <TdMobile title="Contact">
           <span>
             {`${organization.organizationReferent.referentFirstName} ${organization.organizationReferent.referentLastName}`}
           </span>
-        </div>
-        <div className="cell">
-          <span className="title">Mail</span>
-          <span>{organization.organizationReferent.referentMail}</span>
-        </div>
-        <div className="cell">
-          <span className="title">Téléphone</span>
-          <span>{organization.organizationReferent.referentPhone}</span>
-        </div>
-      </div>
-
-      <div className="line zone-date">
-        <div className="cell">
-          <span className="title">Zone</span>
+        </TdMobile>
+        <TdMobile title="Zone">
           <span>
             {organization.zone.charAt(0).toUpperCase() +
               organization.zone.slice(1).toLowerCase()}
           </span>
-        </div>
-        <div className="cell">
-          <span className="title">Nb. de candidats</span>
-          <span>{organization.candidatesCount}</span>
-        </div>
-        <div className="cell">
-          <span className="title">Nb. de coachs</span>
-          <span>{organization.coachesCount}</span>
-        </div>
+        </TdMobile>
       </div>
-    </StyledMobileOrganization>
+      <div className="line">
+        <TdMobile title="Mail">
+          <span>{organization.organizationReferent.referentMail}</span>
+        </TdMobile>
+        <TdMobile title="Téléphone">
+          <span>{organization.organizationReferent.referentPhone}</span>
+        </TdMobile>
+      </div>
+
+      <div className="line">
+        <TdMobile title="Nb. de candidats">
+          <span>{organization.candidatesCount}</span>
+        </TdMobile>
+        <TdMobile title="Nb. de coachs">
+          <span>{organization.coachesCount}</span>
+        </TdMobile>
+      </div>
+    </TrMobile>
   );
 }

@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyledTd } from './Table.styles';
+import { StyledTd } from './Td.styles';
 
-export function Td({
+export function TdDesktop({
   children,
   className,
 }: {

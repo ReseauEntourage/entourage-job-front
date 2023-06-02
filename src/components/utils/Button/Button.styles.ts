@@ -145,7 +145,7 @@ export const StyledButton = styled.button`
 
     &:hover {
       cursor: pointer;
-      background-color: ${COLORS.hoverOrange};
+      opacity: 0.6 !important;
     }
   }
 

@@ -8,7 +8,7 @@ import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedCo
 import { SimpleLink } from 'src/components/utils';
 import Icon from 'src/components/utils/Icon';
 import { CheckBox, useCheckBox } from 'src/components/utils/Inputs/CheckBox';
-import { Row, Td } from 'src/components/utils/Table';
+import { TrDesktop, TdDesktop } from 'src/components/utils/Table';
 import { ADMIN_ZONES } from 'src/constants/departements';
 import {
   CANDIDATE_USER_ROLES,
@@ -60,7 +60,7 @@ export function MemberDesktop({
     : null;
 
   return (
-    <Row selected={checked}>
+    <TrDesktop selected={checked}>
       <StyledNameCell cvStatus={cvStatus.toLowerCase()}>
         <MemberInfo
           id={member.id}
@@ -80,12 +80,12 @@ export function MemberDesktop({
       </StyledNameCell>
 
       {columns.includes('associatedUser') && (
-        <Td>
+        <TdDesktop>
           <RelatedMemberInfo relatedUser={relatedUser} role={member.role} />
-        </Td>
+        </TdDesktop>
       )}
       {columns.includes('type') && (
-        <Td>
+        <TdDesktop>
           <StyledNoWrapCellContent>
             <span>
               {isRoleIncluded(EXTERNAL_USER_ROLES, member.role)
@@ -93,29 +93,29 @@ export function MemberDesktop({
                 : 'LKO'}
             </span>
           </StyledNoWrapCellContent>
-        </Td>
+        </TdDesktop>
       )}
       {columns.includes('phone') && (
-        <Td>
+        <TdDesktop>
           <span>{member.phone || '-'}</span>
-        </Td>
+        </TdDesktop>
       )}
       {columns.includes('gender') && (
-        <Td>
+        <TdDesktop>
           <StyledNoWrapCellContent>
             <span>
               {findConstantFromValue(member.gender, GENDERS_FILTERS).label}
             </span>
           </StyledNoWrapCellContent>
-        </Td>
+        </TdDesktop>
       )}
       {columns.includes('address') && (
-        <Td>
+        <TdDesktop>
           <span>{member.address || '-'}</span>
-        </Td>
+        </TdDesktop>
       )}
       {columns.includes('zone') && (
-        <Td>
+        <TdDesktop>
           <StyledNoWrapCellContent>
             <span>
               {member.zone
@@ -125,28 +125,28 @@ export function MemberDesktop({
                   ADMIN_ZONES.HZ.slice(1).toLowerCase()}
             </span>
           </StyledNoWrapCellContent>
-        </Td>
+        </TdDesktop>
       )}
       {columns.includes('organization') && (
-        <Td>
+        <TdDesktop>
           <StyledNoWrapCellContent>
             <span>{member.organization?.name || '-'}</span>
           </StyledNoWrapCellContent>
-        </Td>
+        </TdDesktop>
       )}
       {columns.includes('lastConnection') && (
-        <Td>
+        <TdDesktop>
           {member.lastConnection ? (
             moment(member.lastConnection).format('DD/MM/YYYY')
           ) : (
             <span>Aucune connexion</span>
           )}
-        </Td>
+        </TdDesktop>
       )}
       {isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
         <>
           {columns.includes('cvUrl') && (
-            <Td>
+            <TdDesktop>
               <span>
                 <SimpleLink
                   href={`/cv/${userCandidate?.url}`}
@@ -156,10 +156,10 @@ export function MemberDesktop({
                   <Icon name="link" style={{ width: 20 }} />
                 </SimpleLink>
               </span>
-            </Td>
+            </TdDesktop>
           )}
           {columns.includes('employed') && (
-            <Td>
+            <TdDesktop>
               <StyledEmployedCellContent>
                 {isEditable ? (
                   <MemberEmployedToggle setMember={setMember} member={member} />
@@ -178,10 +178,10 @@ export function MemberDesktop({
                   </span>
                 )}
               </StyledEmployedCellContent>
-            </Td>
+            </TdDesktop>
           )}
           {columns.includes('cvStatus') && (
-            <Td>
+            <TdDesktop>
               <StyledCVStatusCellContent cvStatus={cvStatus.toLowerCase()}>
                 {cvStatus === 'none' ? (
                   <span>Aucun</span>
@@ -189,10 +189,10 @@ export function MemberDesktop({
                   <span>{translateStatusCV(cvStatus)}</span>
                 )}
               </StyledCVStatusCellContent>
-            </Td>
+            </TdDesktop>
           )}
           {columns.includes('cvHidden') && (
-            <Td>
+            <TdDesktop>
               <StyledHiddenCVCellContent>
                 {isEditable ? (
                   <MemberHiddenToggle setMember={setMember} member={member} />
@@ -210,10 +210,10 @@ export function MemberDesktop({
                   </>
                 )}
               </StyledHiddenCVCellContent>
-            </Td>
+            </TdDesktop>
           )}
           {columns.includes('selection') && selectionCallback && (
-            <Td>
+            <TdDesktop>
               <StyledCheckBoxCellContent>
                 <CheckBox
                   removeMargin
@@ -224,10 +224,10 @@ export function MemberDesktop({
                   disabled={userCandidate?.hidden}
                 />
               </StyledCheckBoxCellContent>
-            </Td>
+            </TdDesktop>
           )}
         </>
       )}
-    </Row>
+    </TrDesktop>
   );
 }

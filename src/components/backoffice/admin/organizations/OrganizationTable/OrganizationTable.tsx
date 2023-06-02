@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
-import { Table } from 'src/components/utils/Table/Table';
-import { Th } from 'src/components/utils/Table/Th';
+import { Table, Th } from 'src/components/utils/Table';
 
 interface OrganizationTableProps {
   organizations: JSX.Element[];

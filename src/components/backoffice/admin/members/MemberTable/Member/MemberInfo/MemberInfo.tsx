@@ -3,6 +3,7 @@ import React, { useMemo, useContext } from 'react';
 import { USER_ROLES } from 'src/constants/users';
 import { UserContext } from 'src/store/UserProvider';
 import {
+  StyledMemberInfoLink,
   StyledMemberInfoContainer,
   StyledMemberInfoNameContainer,
 } from './MemberInfo.styles';
@@ -57,7 +58,7 @@ export function MemberInfo({
               : `/backoffice/candidat/${id}/cv`
           }
         >
-          <a>{content}</a>
+          <StyledMemberInfoLink>{content}</StyledMemberInfoLink>
         </Link>
       );
 }
