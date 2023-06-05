@@ -21,6 +21,8 @@ export default class FormValidator {
           fieldValues[rule.field] ? fieldValues[rule.field] : ''
         );
 
+        console.log(fieldValue);
+
         const args = rule.args || [];
         const validationMethod =
           typeof rule.method === 'string'

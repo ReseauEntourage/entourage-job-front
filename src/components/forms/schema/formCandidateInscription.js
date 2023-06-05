@@ -422,5 +422,15 @@ export default {
       message:
         'Vous devez être majeur pour participer au programme. En attendant, vous pouvez contacter la Mission locale dont dépend votre commune.',
     },
+    {
+      field: 'birthdate',
+      method: (value) => {
+        const maxBirtdate = new Date('1900-01-01');
+        const realBirthdate = new Date(value);
+        return maxBirtdate < realBirthdate;
+      },
+      validWhen: true,
+      message: 'Veuillez entrer une date valide.',
+    },
   ],
 };
