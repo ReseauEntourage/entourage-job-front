@@ -1,3 +1,3 @@
-import ModalConfirm from './ModalConfirm';
+import ModalConfirm from './ModalConfirm.tsx';
 
 export default ModalConfirm;

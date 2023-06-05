@@ -9,7 +9,7 @@ import formEditExternalOpportunitySchema, {
 } from 'src/components/forms/schema/formEditExternalOpportunity';
 import { ButtonMultiple } from 'src/components/utils';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import OpportunityList from 'src/components/opportunities/OpportunityList';
 import PropTypes from 'prop-types';
 import { openModal } from 'src/components/modals/Modal';

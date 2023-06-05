@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
-import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
+import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities.ts';
+import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId.ts';
 
 import {
   StyledLinkCard,

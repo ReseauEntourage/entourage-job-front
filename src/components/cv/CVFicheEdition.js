@@ -14,7 +14,7 @@ import CVEditReviews from 'src/components/cv/CVEditReviews';
 import CVEditPicture from 'src/components/cv/CVEditPicture';
 import CVEditCareerPath from 'src/components/cv/CVEditCareerPath';
 
-import { CV_STATUS } from 'src/constants';
+import { CV_STATUS } from 'src/constants/index.ts';
 import { CVShape } from './CV.shape';
 
 const CVFicheEdition = ({

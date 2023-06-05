@@ -1,4 +1,4 @@
-import { BUSINESS_LINES } from 'src/constants';
+import { BUSINESS_LINES } from 'src/constants/index.ts';
 
 export default {
   id: 'form-career-path',

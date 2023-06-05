@@ -1,3 +1,3 @@
-import OpportunityDetails from './OpportunityDetails';
+import OpportunityDetails from './OpportunityDetails.tsx';
 
 export default OpportunityDetails;

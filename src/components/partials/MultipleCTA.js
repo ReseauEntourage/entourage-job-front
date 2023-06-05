@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button } from 'src/components/utils';
 import Grid from 'src/components/utils/Grid';
 import Img from 'src/components/utils/Img';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 
 const MultipleCTA = ({
   showNumbers,

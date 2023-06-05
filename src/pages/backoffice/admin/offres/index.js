@@ -5,14 +5,14 @@ import {
   ADMIN_ZONES,
   DEPARTMENTS_FILTERS,
 } from 'src/constants/departements.ts';
-import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
+import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice.tsx';
 import { Section } from 'src/components/utils';
 import AdminOpportunityList from 'src/components/backoffice/admin/AdminOpportunityList';
 import { useRouter } from 'next/router';
 import {
   OFFER_ADMIN_FILTERS_DATA,
   OPPORTUNITY_FILTERS_DATA,
-} from 'src/constants';
+} from 'src/constants/index.ts';
 import { USER_ROLES } from 'src/constants/users.ts';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { GA_TAGS } from 'src/constants/tags';

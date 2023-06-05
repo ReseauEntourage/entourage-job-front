@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Grid } from 'src/components/utils';
-import { CV_STATUS } from 'src/constants';
+import { CV_STATUS } from 'src/constants/index.ts';
 import { Api } from 'src/api/index.ts';
 import {
   isRoleIncluded,

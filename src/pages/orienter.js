@@ -3,7 +3,7 @@ import Layout from 'src/components/Layout.tsx';
 import { Section } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import ImageTitle from 'src/components/partials/ImageTitle';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import { gaEvent } from 'src/lib/gtag.ts';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { openModal } from 'src/components/modals/Modal';

@@ -20,12 +20,12 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import {
   OFFER_ADMIN_FILTERS_DATA,
   OPPORTUNITY_FILTERS_DATA,
-} from 'src/constants';
+} from 'src/constants/index.ts';
 import FiltersTabs from 'src/components/utils/FiltersTabs';
-import SearchBar from 'src/components/filters/SearchBar';
+import SearchBar from 'src/components/filters/SearchBar.tsx';
 import { openModal } from 'src/components/modals/Modal';
 import { usePrevious } from 'src/hooks/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { useBulkActions } from 'src/hooks/useBulkActions';
 import { SEARCH_MAX_WIDTH } from 'src/constants/utils';
@@ -516,7 +516,7 @@ const OpportunityList = forwardRef(
             <SearchBar
               filtersConstants={filtersConst}
               filters={filters}
-              numberOfResults={numberOfResults}
+              // numberOfResults={numberOfResults}
               resetFilters={resetFilters}
               search={search}
               setSearch={setSearch}
@@ -530,7 +530,7 @@ const OpportunityList = forwardRef(
             <SearchBar
               filtersConstants={filtersConst}
               filters={filters}
-              numberOfResults={numberOfResults}
+              // numberOfResults={numberOfResults}
               resetFilters={resetFilters}
               search={search}
               setSearch={setSearch}

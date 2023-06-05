@@ -1,0 +1,69 @@
+{
+    "id": "3a8ea26c-197c-4528-ab55-aa081e53343f",
+    "OrganizationId": "99aca0a7-3154-4fbe-b149-700a9de44871",
+    "firstName": "Sonia",
+    "lastName": "Lamani",
+    "email": "ss.lamani@mmail.com",
+    "phone": "+33698754321",
+    "address": null,
+    "role": "Coach externe",
+    "adminRole": null,
+    "zone": "PARIS",
+    "gender": 1,
+    "lastConnection": "2023-05-26T09:32:48.902Z",
+    "candidat": null,
+    "coaches": [
+        {
+            "employed": false,
+            "hidden": false,
+            "note": null,
+            "url": "john-1cd4e535",
+            "contract": null,
+            "endOfContract": null,
+            "lastModifiedBy": null,
+            "candidat": {
+                "id": "1cd4e535-9c18-4b67-8896-e0652b5b3fc9",
+                "OrganizationId": "99aca0a7-3154-4fbe-b149-700a9de44871",
+                "firstName": "John",
+                "lastName": "Doeexterne",
+                "email": "qsdfds@linkedout.fr",
+                "phone": "+33698754321",
+                "address": null,
+                "role": "Candidat externe",
+                "adminRole": null,
+                "zone": "PARIS",
+                "gender": 0,
+                "lastConnection": null
+            }
+        },
+        {
+            "employed": false,
+            "hidden": false,
+            "note": "top top",
+            "url": "arnold-be521222",
+            "contract": null,
+            "endOfContract": null,
+            "lastModifiedBy": "3a8ea26c-197c-4528-ab55-aa081e53343f",
+            "candidat": {
+                "id": "be521222-7f46-42fb-805d-96676e65fe13",
+                "OrganizationId": "99aca0a7-3154-4fbe-b149-700a9de44871",
+                "firstName": "Arnold",
+                "lastName": "Schwarziexterne",
+                "email": "paqdfqdsful@entourage.social",
+                "phone": "+33698754321",
+                "address": null,
+                "role": "Candidat externe",
+                "adminRole": null,
+                "zone": "PARIS",
+                "gender": 0,
+                "lastConnection": null
+            }
+        }
+    ],
+    "organization": {
+        "name": "première en test",
+        "address": "panam",
+        "zone": "PARIS",
+        "id": "99aca0a7-3154-4fbe-b149-700a9de44871"
+    }
+}

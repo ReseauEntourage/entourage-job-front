@@ -59,6 +59,11 @@
     "react/static-property-placement": ["warn", "static getter"],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",
+    "import/no-self-import": "off",
+    "jsx-a11y/aria-role": [ 2, {
+      "allowedInvalidRoles": ["Candidat"],
+      "ignoreNonDOM": true
+    }],
     "react/jsx-filename-extension": [
       "warn",
       {

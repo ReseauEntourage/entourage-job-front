@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useMount } from 'src/hooks/utils';
 import { Radio } from './Radio';
-import { RadioAsyncComponentType } from './Radio.types';
+import { RadioAsyncComponentProps } from './Radio.types';
 
 export function RadioAsync({
   loadOptions,
@@ -13,7 +13,7 @@ export function RadioAsync({
   errorMessage,
   hidden,
   value,
-}: RadioAsyncComponentType) {
+}: RadioAsyncComponentProps) {
   const [options, setOptions] = useState([]);
 
   useMount(async () => {

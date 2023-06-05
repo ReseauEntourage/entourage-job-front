@@ -2,7 +2,7 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
-import FormWithValidation from 'src/components/forms/FormWithValidation';
+import FormWithValidation from 'src/components/forms/FormWithValidation.tsx';
 
 import { useModalContext } from 'src/components/modals/Modal';
 

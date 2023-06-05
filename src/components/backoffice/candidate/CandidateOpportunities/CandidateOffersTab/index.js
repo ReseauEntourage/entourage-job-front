@@ -1,3 +1,3 @@
-import CandidateOffersTab from './CandidateOffersTab';
+import CandidateOffersTab from './CandidateOffersTab.tsx';
 
 export default CandidateOffersTab;

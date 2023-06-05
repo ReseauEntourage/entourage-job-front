@@ -15,9 +15,9 @@ import { SharesCountContext } from 'src/store/SharesCountProvider';
 import { gaEvent } from 'src/lib/gtag.ts';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import moment from 'moment';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import { openModal } from 'src/components/modals/Modal';
-import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants';
+import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants/index.ts';
 import {
   buildBusinessLineForSentence,
   findConstantFromValue,
