@@ -1,4 +1,4 @@
-import { OFFER_STATUS } from 'src/constants';
+import { OFFER_STATUS } from 'src/constants/index.ts';
 import { findOfferStatus } from 'src/utils/Finding.ts';
 
 const updateField = (fieldToUpdate, props, i) => {

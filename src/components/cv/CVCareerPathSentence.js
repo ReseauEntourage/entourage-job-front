@@ -5,7 +5,7 @@ import {
   getAmbitionsLinkingSentence,
   sortByOrder,
 } from 'src/utils';
-import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants';
+import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants/index.ts';
 import PropTypes from 'prop-types';
 
 const CVCareerPathSentence = ({ businessLines, ambitions }) => {

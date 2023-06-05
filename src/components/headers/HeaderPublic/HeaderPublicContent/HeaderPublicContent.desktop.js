@@ -6,7 +6,7 @@ import { Navbar } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { gaEvent } from 'src/lib/gtag.ts';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import { fbEvent } from 'src/lib/fb.ts';
 import PropTypes from 'prop-types';
 import NavbarLogo from 'src/components/utils/Navbar/NavbarLogo';

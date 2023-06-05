@@ -6,7 +6,7 @@ export interface RadioTypes {
   filterData?: string;
 }
 
-export interface RadioAsyncComponentType {
+export interface RadioAsyncComponentProps {
   loadOptions: () => RadioTypes[];
   id: string;
   legend: string;
@@ -18,7 +18,7 @@ export interface RadioAsyncComponentType {
   value: string;
 }
 
-export interface RadioComponentType {
+export interface RadioComponentProps {
   options: RadioTypes[];
   id: string;
   legend: string;

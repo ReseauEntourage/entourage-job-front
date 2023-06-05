@@ -10,7 +10,7 @@ import { openModal } from 'src/components/modals/Modal';
 import defaultSchema from 'src/components/forms/schema/formEditOpportunity';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { findConstantFromValue, getValueFromFormField } from 'src/utils';
-import { BUSINESS_LINES } from 'src/constants';
+import { BUSINESS_LINES } from 'src/constants/index.ts';
 import { fbEvent } from 'src/lib/fb.ts';
 import moment from 'moment';
 import { useNewsletterTracking } from 'src/hooks/useNewsletterTracking';

@@ -6,7 +6,7 @@ import { Api } from 'src/api/index.ts';
 import PropTypes from 'prop-types';
 import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
 import { findConstantFromValue } from 'src/utils';
-import { CONTRACTS } from 'src/constants';
+import { CONTRACTS } from 'src/constants/index.ts';
 
 const CandidateEmployedToggle = ({
   candidateId,

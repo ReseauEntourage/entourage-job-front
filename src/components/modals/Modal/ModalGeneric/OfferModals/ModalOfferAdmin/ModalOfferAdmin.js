@@ -4,10 +4,10 @@ import { Api } from 'src/api/index.ts';
 import schema, {
   adminMutations,
 } from 'src/components/forms/schema/formEditOpportunity';
-import FormWithValidation from 'src/components/forms/FormWithValidation';
+import FormWithValidation from 'src/components/forms/FormWithValidation.tsx';
 import { Button, Grid, SimpleLink } from 'src/components/utils';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 
 import {
   findConstantFromValue,
@@ -21,7 +21,7 @@ import {
   BUSINESS_LINES,
   EXTERNAL_OFFERS_ORIGINS,
   OFFER_STATUS,
-} from 'src/constants';
+} from 'src/constants/index.ts';
 import ModalOfferInfo from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/ModalOfferInfo';
 import { useModalContext } from 'src/components/modals/Modal';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';

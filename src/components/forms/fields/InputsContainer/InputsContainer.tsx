@@ -6,7 +6,7 @@ import { StyledInputsContainer } from './InputsContainer.styles';
 
 const uuidValue = uuid();
 
-interface ContainerTypes {
+interface InputsContainerProps {
   fields: React.ReactNode[];
   /*  title: string;
   childWidths: number; */
@@ -14,7 +14,7 @@ interface ContainerTypes {
 
 const InputsContainer = ({
   fields /* title, childWidths */,
-}: ContainerTypes) => {
+}: InputsContainerProps) => {
   const firstFieldNotHiddenIndex = fields.findIndex((field) => {
     return !!field;
   });

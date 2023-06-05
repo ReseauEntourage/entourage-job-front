@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { User, UserWithUserCandidate } from 'src/api/types';
+import { UserWithUserCandidate } from 'src/api/types';
 import { OFFER_STATUS } from 'src/constants';
 import {
   CANDIDATE_USER_ROLES,
@@ -92,7 +92,9 @@ export function getUserCandidateFromCoachOrCandidate(member) {
   return null;
 }
 
-export function getRelatedUser(member: UserWithUserCandidate): User[] {
+export function getRelatedUser(
+  member: UserWithUserCandidate
+): UserWithUserCandidate[] {
   if (member) {
     if (member.candidat && member.candidat.coach) {
       return [member.candidat.coach];

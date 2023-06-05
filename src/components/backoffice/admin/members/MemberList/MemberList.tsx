@@ -21,7 +21,7 @@ import { usePrevious } from 'src/hooks/utils';
 import {
   filtersToQueryParams,
   mutateTypeFilterDependingOnRole,
-} from 'src/utils';
+} from 'src/utils/Filters';
 import { isRoleIncluded } from 'src/utils/Finding';
 import { MemberCreationButtons } from './MemberCreationButtons';
 import { useRole } from './useRole';
@@ -39,9 +39,7 @@ export function MemberList({
 
   const prevRole = usePrevious(role);
   const [filtersConst, setFiltersConst] =
-    useState<Partial<typeof MEMBER_FILTERS_DATA>>(MEMBER_FILTERS_DATA);
-
-  const [numberOfResults, setNumberOfResults] = useState(0);
+    useState<typeof MEMBER_FILTERS_DATA>(MEMBER_FILTERS_DATA);
 
   const [members, setMembers] = useState([]);
   const [hasError, setHasError] = useState(false);
@@ -68,7 +66,6 @@ export function MemberList({
         .then(({ data }) => {
           if (doReset) {
             setMembers(data);
-            setNumberOfResults(data.length);
             setOffset(LIMIT);
             setAllLoaded(false);
           } else {
@@ -77,9 +74,6 @@ export function MemberList({
             });
             setOffset((prevOffset) => {
               return prevOffset + LIMIT;
-            });
-            setNumberOfResults((prevNumberOfResults) => {
-              return prevNumberOfResults + data.length;
             });
           }
 
@@ -112,7 +106,9 @@ export function MemberList({
 
   useEffect(() => {
     if (role !== prevRole) {
-      setFiltersConst(mutateTypeFilterDependingOnRole(role));
+      setFiltersConst(
+        mutateTypeFilterDependingOnRole(role) as typeof MEMBER_FILTERS_DATA
+      );
     }
   }, [prevRole, role]);
 
@@ -192,7 +188,7 @@ export function MemberList({
           <SearchBar
             filtersConstants={filtersConst}
             filters={filters}
-            numberOfResults={numberOfResults}
+            // numberOfResults={numberOfResults}
             resetFilters={resetFilters}
             search={search}
             setSearch={setSearch}

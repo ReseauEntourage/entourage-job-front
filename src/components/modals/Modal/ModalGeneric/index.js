@@ -1,3 +1,3 @@
-import ModalGeneric from './ModalGeneric';
+import ModalGeneric from './ModalGeneric.tsx';
 
 export default ModalGeneric;

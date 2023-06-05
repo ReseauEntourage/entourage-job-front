@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { v4 as uuid } from 'uuid';
 import { StyledRadioContainer } from './Radio.styles';
-import { RadioComponentType } from './Radio.types';
+import { RadioComponentProps } from './Radio.types';
 
 const uuidValue = uuid();
 
@@ -15,7 +15,7 @@ export function Radio({
   errorMessage,
   hidden,
   value: valueProp,
-}: RadioComponentType) {
+}: RadioComponentProps) {
   const [checkedRadio, setCheckedRadio] = useState<number>();
 
   useEffect(() => {

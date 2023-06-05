@@ -1,7 +1,7 @@
 import React from 'react';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import PlusFilledIcon from 'assets/custom/icons/plus-filled.svg';
-import { Api } from 'src/api/index';
+import { Api } from 'src/api';
 import { ADMIN_ZONES_FILTERS } from 'src/constants/departements';
 import { COLORS } from 'src/constants/styles';
 import {
@@ -154,26 +154,22 @@ export const formAddUser = {
           hide: (getValue) => {
             return !isRoleIncluded(EXTERNAL_USER_ROLES, getValue('role'));
           },
-          defaultOptions: [CREATE_NEW_ORGANIZATION_OPTION],
           loadOptions: async (inputValue, callback) => {
-            if (inputValue.length > 0) {
-              const { data: organizations } = await Api.getAllOrganizations({
-                params: {
-                  search: inputValue,
-                },
-              });
+            const { data: organizations } = await Api.getAllOrganizations({
+              params: {
+                search: inputValue,
+              },
+            });
 
-              callback([
-                CREATE_NEW_ORGANIZATION_OPTION,
-                ...organizations.map((u) => {
-                  return {
-                    value: u.id,
-                    label: `${u.name}`,
-                  };
-                }),
-              ]);
-            }
-            callback([CREATE_NEW_ORGANIZATION_OPTION]);
+            callback([
+              CREATE_NEW_ORGANIZATION_OPTION,
+              ...organizations.map((u) => {
+                return {
+                  value: u.id,
+                  label: `${u.name}`,
+                };
+              }),
+            ]);
           },
           title: 'Structure partenaire *',
           fieldsToReset: ['userToLinkId', ...organizationFieldsNames],
@@ -197,29 +193,26 @@ export const formAddUser = {
             );
           },
           loadOptions: async (inputValue, callback, getValue) => {
-            if (inputValue.length > 0) {
-              const role = RELATED_ROLES[getValue('role')];
+            const role = RELATED_ROLES[getValue('role')];
 
-              const organizationId = getValue('organizationId')?.value;
+            const organizationId = getValue('organizationId')?.value;
 
-              const { data: users } = await Api.getUsersSearch({
-                params: {
-                  query: inputValue,
-                  role,
-                  organizationId,
-                },
-              });
+            const { data: users } = await Api.getUsersSearch({
+              params: {
+                query: inputValue,
+                role,
+                organizationId,
+              },
+            });
 
-              callback(
-                users.map((u) => {
-                  return {
-                    value: u.id,
-                    label: `${u.firstName} ${u.lastName}`,
-                  };
-                })
-              );
-            }
-            callback([]);
+            callback(
+              users.map((u) => {
+                return {
+                  value: u.id,
+                  label: `${u.firstName} ${u.lastName}`,
+                };
+              })
+            );
           },
           title: 'Nom du coach ou candidat lié',
         },

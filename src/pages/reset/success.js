@@ -2,7 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import Layout from 'src/components/Layout.tsx';
 import { Button, Section } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 
 const ResetSuccessPage = () => {
   const {

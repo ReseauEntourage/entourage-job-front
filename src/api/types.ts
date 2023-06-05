@@ -40,6 +40,7 @@ export type Organization = {
 };
 
 export type User = {
+  coach: User;
   id: string;
   firstName: string;
   lastName: string;
@@ -57,9 +58,11 @@ export type User = {
   zone: AdminZone;
   userToCoach: string;
   organization: Organization;
+  deletedAt?: string;
 };
 
 export interface UserCandidateWithUsers extends UserCandidate {
+  email: string;
   candidat?: User;
   coach?: User;
 }
@@ -80,6 +83,7 @@ export type UserDto = {
   email: string;
   adminRole?: AdminRole;
   OrganizationId?: string;
+  id?: string;
 };
 
 export type PutCandidate = {
@@ -93,6 +97,7 @@ export type PutCandidate = {
 };
 
 export type Opportunity = {
+  id?: string;
   title: string;
   isPublic: boolean;
   isValidated: boolean;
@@ -107,7 +112,7 @@ export type Opportunity = {
   contactMail: string;
   recruiterPosition: string;
   recruiterPhone: string;
-  date: Date;
+  date: string;
   address: string;
   description: string;
   companyDescription: string;
@@ -115,8 +120,8 @@ export type Opportunity = {
   prerequisites: string;
   department: string;
   contract: string;
-  startOfContract: Date;
-  endOfContract: Date;
+  startOfContract: string;
+  endOfContract: string;
   isPartTime: boolean;
   numberOfPositions: number;
   beContacted: boolean;
@@ -134,7 +139,96 @@ export type Opportunity = {
   visit: string;
   visitor: string;
   urlParams: object;
+  createdAt: string;
 };
+
+type CVEntity = {
+  name: string;
+  order?: number;
+};
+
+export type CV = {
+  id: string;
+  UserId: string;
+  urlImg: string;
+  intro: string;
+  story: string;
+  availability: string;
+  transport: string;
+  catchphrase: string;
+  status: string;
+  version: number;
+  lastModifiedBy: string;
+  user: User;
+  businessLines: CVEntity[];
+  locations: CVEntity[];
+  ambitions: CVEntity[];
+  contracts: CVEntity[];
+  languages: CVEntity[];
+  passions: CVEntity[];
+  skills: CVEntity[];
+  experiences: {
+    id: string;
+    description: string;
+    order: string;
+    skills: CVEntity[];
+  }[];
+
+  reviews: CVEntity[];
+};
+
+export type Skill = {
+  id: string;
+  name: string;
+  CVs: CV[];
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type Contract = {
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type Event = {
+  id: string;
+  OpportunityUserId: string;
+  ContractId: string;
+  type: string;
+  startDate: string;
+  endDate: string;
+  createdAt: string;
+  updatedAt: string;
+  contract: Contract;
+};
+
+export interface OpportunityWithOpportunityUsers extends Opportunity {
+  opportunityUsers: {
+    OpportunityId: string;
+    UserId: string;
+    archived: boolean;
+    bookmarked: boolean;
+    createdAt: string;
+    events: Event[];
+    id: string;
+    note: [];
+    recommended: boolean;
+    seen: boolean;
+    status: number;
+    updatedAt: string;
+    user: UserCandidateWithUsers | UserCandidateWithUsers[];
+    otherInfo: string;
+    prerequisites: string;
+    recruiterFirstName: string;
+    recruiterMail: string;
+    recruiterName: string;
+    recruiterPosition: string;
+    salary: string;
+    skills: Skill[];
+  };
+}
 
 export type ExternalOpportunity = {
   title: string;
@@ -180,41 +274,6 @@ export type ContactContactUs = {
   message: string;
   heardAbout: object;
   cgu: boolean;
-};
-
-type CVEntity = {
-  name: string;
-  order?: number;
-};
-
-export type CV = {
-  id: string;
-  UserId: string;
-  urlImg: string;
-  intro: string;
-  story: string;
-  availability: string;
-  transport: string;
-  catchphrase: string;
-  status: string;
-  version: number;
-  lastModifiedBy: string;
-  user: User;
-  businessLines: CVEntity[];
-  locations: CVEntity[];
-  ambitions: CVEntity[];
-  contracts: CVEntity[];
-  languages: CVEntity[];
-  passions: CVEntity[];
-  skills: CVEntity[];
-  experiences: {
-    id: string;
-    description: string;
-    order: string;
-    skills: CVEntity[];
-  }[];
-
-  reviews: CVEntity[];
 };
 
 export type ContactCompany = {

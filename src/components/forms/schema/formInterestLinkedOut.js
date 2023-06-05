@@ -1,4 +1,4 @@
-import { HEARD_ABOUT_FILTERS } from 'src/constants';
+import { HEARD_ABOUT_FILTERS } from 'src/constants/index.ts';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 
 export default {
