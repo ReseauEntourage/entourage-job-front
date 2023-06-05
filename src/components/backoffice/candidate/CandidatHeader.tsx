@@ -1,12 +1,11 @@
 import _ from 'lodash';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { UserWithUserCandidate } from 'src/api/types';
 import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
 import { Grid, SimpleLink } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
-import { UserContext } from 'src/store/UserProvider';
 import { isRoleIncluded } from 'src/utils/Finding';
 
 const CandidatHeader = ({
@@ -16,8 +15,6 @@ const CandidatHeader = ({
   user: UserWithUserCandidate;
   showZone?: boolean;
 }) => {
-  const { user: connectedUser } = useContext(UserContext);
-
   const candidateId = useCandidateId();
 
   const [relatedUser, setRelatedUser] = useState<UserWithUserCandidate>();
@@ -39,7 +36,7 @@ const CandidatHeader = ({
     }
   }, [user, candidateId]);
 
-  if (!user || !connectedUser) return null;
+  if (!user) return null;
 
   return (
     <Grid row gap="small">

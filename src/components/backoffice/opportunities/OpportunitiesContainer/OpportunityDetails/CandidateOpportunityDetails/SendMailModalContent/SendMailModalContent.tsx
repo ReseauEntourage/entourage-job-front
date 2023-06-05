@@ -9,7 +9,7 @@ import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm'
 import { TextArea } from 'src/components/utils/Inputs/TextArea';
 import { UserContext } from 'src/store/UserProvider';
 
-interface SendMailModalContentType {
+interface SendMailModalContentProps {
   OpportunityId: string;
   relance?: boolean;
   onSubmit: () => void;
@@ -23,7 +23,7 @@ const SendMailModalContent = ({
   onSubmit,
   fetchOpportunities,
   candidateId,
-}: SendMailModalContentType) => {
+}: SendMailModalContentProps) => {
   const { user } = useContext(UserContext);
 
   const { opportunity } = useFetchOpportunity(
