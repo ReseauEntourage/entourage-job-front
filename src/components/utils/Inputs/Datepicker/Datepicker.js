@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
+import moment from 'moment';
 import { StyledDatePickerContainer } from './DatePicker.styles';
 
 const DatePicker = ({
@@ -17,6 +18,8 @@ const DatePicker = ({
 }) => {
   // const [emptyValue, setEmptyValue] = useState(true);
   const [value, setValue] = useState();
+  if (!min) min = '1900-01-01';
+  if (!max) max = moment().format('YYYY-MM-DD');
   return (
     <StyledDatePickerContainer className={`${hidden ? 'uk-hidden' : ''}`}>
       {title ? (
