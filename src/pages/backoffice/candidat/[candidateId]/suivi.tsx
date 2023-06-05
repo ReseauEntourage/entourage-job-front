@@ -30,7 +30,7 @@ const Suivi = () => {
   const title =
     user && isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
       ? 'Suivez votre progression'
-      : `Suivi du candidat ${`${userCandidat?.candidat?.firstName} ${userCandidat?.candidat?.lastName}`}`;
+      : `Suivi du candidat - ${`${userCandidat?.candidat?.firstName} ${userCandidat?.candidat?.lastName}`}`;
   const description =
     user && isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
       ? "Ici, vous pouvez prendre des notes sur la progression de vos recherches, noter vos différents rendez-vous, etc. et échanger avec votre coach. Profitez de cet espace d'écriture libre qui vous est dédié !"

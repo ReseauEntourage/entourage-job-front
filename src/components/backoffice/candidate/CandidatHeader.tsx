@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
-import { UserWithUserCandidate } from 'src/api/types';
+import { UserWithUserCandidate, UserCandidateWithUsers } from 'src/api/types';
 import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
 import { Grid, SimpleLink } from 'src/components/utils';
@@ -28,24 +28,22 @@ const CandidatHeader = ({
 
   const candidateId = useCandidateId();
 
-  const relatedUser = getRelatedUser(user);
-
-  const [candidate, setCandidate] = useState<UserWithUserCandidate>();
-  const [candidateCVUrl, setCandidateCVUrl] = useState<string>();
+  const [relatedUser, setRelatedUser] = useState<UserWithUserCandidate>();
+  const [candidateCVUrl, setCandidateCVUrl] = useState<string>('');
 
   useEffect(() => {
-    if (candidateId && user) {
-      if (isRoleIncluded(COACH_USER_ROLES, user.role)) {
-        const candidatesList: UserWithUserCandidate[] = getRelatedUser(user);
-        const currentCandidate: UserWithUserCandidate = candidatesList.filter(
-          (cand) => (cand.id = candidateId)
-        )[0];
-        setCandidateCVUrl(getUserCandidateFromCoach(user, candidateId).url);
-        setCandidate(currentCandidate);
-      } else if (isRoleIncluded(CANDIDATE_USER_ROLES, user.role)) {
-        setCandidate(user);
-        setCandidateCVUrl(user.candidat.url);
-      }
+    if (!user) {
+      return;
+    }
+    if (isRoleIncluded(COACH_USER_ROLES, user.role)) {
+      const cand = user.coaches?.find(
+        ({ candidat }) => candidat.id === candidateId
+      );
+      setRelatedUser(cand?.candidat);
+      setCandidateCVUrl(cand?.url);
+    } else {
+      setRelatedUser(user.candidat?.coach);
+      setCandidateCVUrl(user.candidat?.url);
     }
   }, [user, candidateId]);
 
@@ -62,19 +60,19 @@ const CandidatHeader = ({
         {USER_ROLES.COACH_EXTERNAL !== user.role && (
           <Grid row gap="small" middle className="uk-margin-small-top">
             <>{`${_.capitalize(user.role)} de ${
-              !relatedUser || relatedUser.length === 0
+              !relatedUser
                 ? 'personne'
-                : `${relatedUser[0].firstName} ${relatedUser[0].lastName}`
+                : `${relatedUser.firstName} ${relatedUser.lastName}`
             }`}</>
           </Grid>
         )}
         <>
-          {candidate && (
+          {relatedUser && (
             <>
               <Grid row gap="small" middle className="uk-margin-small-top">
                 <IconNoSSR name="user" style={{ width: 20 }} />
                 <span className="uk-text-italic">
-                  {candidate.firstName} {candidate.lastName}
+                  {relatedUser.firstName} {relatedUser.lastName}
                 </span>
               </Grid>
               <Grid row gap="small" middle className="uk-margin-small-top">

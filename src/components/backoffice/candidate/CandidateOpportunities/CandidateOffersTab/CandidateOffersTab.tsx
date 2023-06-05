@@ -12,7 +12,7 @@ import { isSSR } from 'src/utils/isSSR';
 
 const uuidValue = uuid();
 
-interface CandidateOffersTabType {
+interface CandidateOffersTabProps {
   activeStatus: {
     value: number;
     label: string;
@@ -30,7 +30,7 @@ const CandidateOffersTab = ({
   activeStatus,
   tabCounts,
   candidateId,
-}: CandidateOffersTabType) => {
+}: CandidateOffersTabProps) => {
   const basePath = `/backoffice/candidat/${candidateId}/offres/private`;
 
   let isDesktop = true;

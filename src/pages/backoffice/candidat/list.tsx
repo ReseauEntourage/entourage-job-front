@@ -11,7 +11,7 @@ const List = () => {
     <LayoutBackOffice title="Liste des candidats" isEmpty>
       <Section container="large">
         <HeaderBackoffice
-          title="Consulter la liste des mes candidats"
+          title="Consulter la liste de mes candidats"
           description="Retrouvez ici tous les candidats"
         />
         <ExternalCoachMemberList />

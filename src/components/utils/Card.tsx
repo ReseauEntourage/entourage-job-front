@@ -1,11 +1,11 @@
 import React from 'react';
 import Grid from 'src/components/utils/Grid';
 
-interface CardType {
-  children: JSX.Element | JSX.Element[];
+interface CardProps {
+  children: React.ReactNode;
   badge?: JSX.Element;
   style?: 'default' | 'primary' | 'secondary';
-  title?: string | JSX.Element | JSX.Element[];
+  title?: React.ReactNode;
   body?: boolean;
   hover?: boolean;
   size?: 'small' | 'large' | 'default';
@@ -20,7 +20,7 @@ export const Card = ({
   size,
   children,
   badge,
-}: CardType) => {
+}: CardProps) => {
   let classBuffer = 'uk-card';
   if (style) classBuffer += ` uk-card-${style}`;
   if (body) classBuffer += ` uk-card-body`;

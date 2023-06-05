@@ -16,6 +16,7 @@ import { isRoleIncluded, getRelatedUser } from 'src/utils/Finding';
 
 const Edit = () => {
   const { user } = useContext(UserContext);
+
   const [userCompleteData, setUserCompleteData] =
     useState<UserWithUserCandidate>();
 
@@ -36,6 +37,7 @@ const Edit = () => {
   const { cv, setCV, error, loading } = useFetchCV(candidateId);
 
   let content;
+
   if (loading || !user || !userCompleteData) {
     content = <LoadingScreen />;
   } else if (error) {
@@ -59,7 +61,7 @@ const Edit = () => {
   } else {
     content = (
       <>
-        <CVEditWelcome user={userCompleteData} />
+        <CVEditWelcome user={user} />
         <CVPageContent cv={cv} setCV={setCV} candidateId={candidateId} />
       </>
     );

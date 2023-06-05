@@ -25,7 +25,7 @@ import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useCandidateOpportunities } from 'src/hooks/useOpportunityList';
 import { usePrevious } from 'src/hooks/utils';
 import { UserContext } from 'src/store/UserProvider';
-import { isRoleIncluded } from 'src/utils/Finding';
+import { getUserCandidateFromCoach, isRoleIncluded } from 'src/utils/Finding';
 import { tabs } from './CandidateOffersTab/CandidateOffersTab.utils';
 import { useTabsCount } from './useTabsCount';
 import { useUpdateOpportunityStatus } from './useUpdateOpportunityStatus';
@@ -184,13 +184,22 @@ const CandidateOpportunities = ({
         <>
           <Section className="custom-header">
             <HeaderBackoffice
-              title={
+              title={`${
                 TextVariables.title[
                   isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
                     ? USER_ROLES.CANDIDATE
                     : USER_ROLES.COACH
                 ][isPublic ? 'all' : 'mine']
-              }
+              } ${
+                USER_ROLES.COACH_EXTERNAL &&
+                `- ${
+                  getUserCandidateFromCoach(user, candidateId)?.candidat
+                    ?.firstName
+                } ${
+                  getUserCandidateFromCoach(user, candidateId)?.candidat
+                    ?.lastName
+                }`
+              }`}
               description={
                 TextVariables.description[
                   isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
