@@ -38,6 +38,10 @@ describe('Admin', () => {
       fixture: 'user-res',
     }).as('postUser');
 
+    cy.intercept('GET', '/user/search?query=&role=', {
+      fixture: 'user-admin-coaches-search-res',
+    }).as('getNormalCoaches');
+
     cy.intercept('GET', '/user/search?query=Jane&role=Coach', {
       fixture: 'user-admin-coaches-search-res',
     }).as('getNormalCoaches');
