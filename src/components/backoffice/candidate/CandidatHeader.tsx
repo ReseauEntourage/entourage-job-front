@@ -1,21 +1,13 @@
 import _ from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
-import { UserWithUserCandidate, UserCandidateWithUsers } from 'src/api/types';
+import { UserWithUserCandidate } from 'src/api/types';
 import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
 import { Grid, SimpleLink } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
-import {
-  CANDIDATE_USER_ROLES,
-  USER_ROLES,
-  COACH_USER_ROLES,
-} from 'src/constants/users';
+import { USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
 import { UserContext } from 'src/store/UserProvider';
-import {
-  isRoleIncluded,
-  getRelatedUser,
-  getUserCandidateFromCoach,
-} from 'src/utils/Finding';
+import { isRoleIncluded } from 'src/utils/Finding';
 
 const CandidatHeader = ({
   user,
