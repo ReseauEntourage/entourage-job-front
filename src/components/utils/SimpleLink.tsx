@@ -48,7 +48,7 @@ export const SimpleLink = ({
   return isExternal ? (
     <a
       onClick={onClick}
-      href={typeof href === 'string' ? href : href.pathname}
+      href={typeof href === 'string' ? href : href?.pathname}
       target={target ? '_blank' : ''}
       className={classBuffer}
       rel={target ? 'noopener' : ''}
