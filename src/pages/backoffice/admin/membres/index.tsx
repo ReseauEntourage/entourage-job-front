@@ -32,7 +32,7 @@ const MembersAdmin = () => {
         const params = {
           ...query,
           role: CANDIDATE_USER_ROLES,
-          ...(user?.zone ? { zone: user.zone } : {}),
+          ...(user.zone ? { zone: user.zone } : {}),
         };
         replace(
           {

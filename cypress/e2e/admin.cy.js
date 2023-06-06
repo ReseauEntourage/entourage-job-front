@@ -60,11 +60,15 @@ describe('Admin', () => {
 
     cy.intercept('GET', '/organization?limit=50&offset=0&zone[]=LYON', {
       fixture: 'organization-search-res'
-    }).as('organizations');
+    }).as('organizationListPage');
 
     cy.intercept('GET', '/organization?search=Entourage&limit=50&offset=0', {
       fixture: 'organization-search-res'
-    }).as('searchOrganizations');
+    }).as('searchOrganizationsListUpdateCreate');
+
+    cy.intercept('GET', '/organization?search=&limit=50&offset=0', {
+      fixture: 'organization-search-res'
+    }).as('getOrganizationListUpdateCreate');
   });
 
   describe("Offers", () => {
@@ -266,7 +270,7 @@ describe('Admin', () => {
             .scrollIntoView()
             .type('Entourage');
 
-          cy.wait('@searchOrganizations');
+          cy.wait('@searchOrganizationsListUpdateCreate');
 
           cy.get('#form-add-user-organizationId').find('.Select__menu')
             .should('be.visible')
@@ -304,12 +308,12 @@ describe('Admin', () => {
             .scrollIntoView()
             .type('Entourage');
 
-          cy.wait('@searchOrganizations');
+          cy.wait('@searchOrganizationsListUpdateCreate');
 
           cy.get('#form-add-user-organizationId').find('.Select__menu')
             .should('be.visible')
             .scrollIntoView()
-            .get('.Select__option').contains('Entourage').click()
+            .find('.Select__option').contains('Entourage').click()
 
           cy.get('#form-add-user-userToLinkId')
             .should('be.visible')
@@ -337,7 +341,10 @@ describe('Admin', () => {
             .should('be.visible')
             .scrollIntoView()
             .click()
-            .find('.Select__menu')
+
+          cy.wait('@getOrganizationListUpdateCreate');
+
+          cy.get('#form-add-user-organizationId').find('.Select__menu')
             .should('be.visible')
             .scrollIntoView()
             .find('.Select__option').contains('Ajouter une nouvelle structure').click()
@@ -419,7 +426,7 @@ describe('Admin', () => {
           window.localStorage.setItem('access-token', '1234');
         },
       });
-      cy.wait('@organizations');
+      cy.wait('@organizationListPage');
       // test if all organizations are in the table
       cy.fixture('organization-search-res').then((organizations) => {
         cy.get('[data-testid="organization-list"]')

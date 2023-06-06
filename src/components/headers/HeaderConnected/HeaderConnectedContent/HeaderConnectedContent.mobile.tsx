@@ -89,41 +89,39 @@ const HeaderConnectedContentMobile = ({
                         return asPath.includes(subMenuHref);
                       }));
                   return (
-                    <>
-                      <StyledConnectedItemMobile
-                        key={`${index}-items-${uuidValue}`}
-                        className={`${subMenu ? 'hasSubMenu ' : ''} ${
-                          isActiveOrChildActive ? 'active' : ''
-                        }`}
+                    <StyledConnectedItemMobile
+                      key={`${index}-items-${uuidValue}`}
+                      className={`${subMenu ? 'hasSubMenu ' : ''} ${
+                        isActiveOrChildActive ? 'active' : ''
+                      }`}
+                    >
+                      <a
+                        aria-hidden="true"
+                        onClick={() => {
+                          if (tag) gaEvent(tag);
+                          if (href) {
+                            push(href + (queryParams || ''));
+                          }
+                        }}
                       >
-                        <a
-                          aria-hidden="true"
-                          onClick={() => {
-                            if (tag) gaEvent(tag);
-                            if (href) {
-                              push(href + (queryParams || ''));
-                            }
-                          }}
-                        >
-                          <span>
-                            <IconNoSSR
-                              name={icon}
-                              className="uk-margin-small-right"
-                            />
-                            {name}
-                          </span>
-                        </a>
-                        {badges[badge] > 0 && (
-                          <div>
-                            &nbsp;
-                            <div className="uk-badge">{badges[badge]}</div>
-                          </div>
-                        )}
-                        {subMenu?.length > 0 && (
-                          <SubMenu items={subMenu} badges={badges} />
-                        )}
-                      </StyledConnectedItemMobile>
-                    </>
+                        <span>
+                          <IconNoSSR
+                            name={icon}
+                            className="uk-margin-small-right"
+                          />
+                          {name}
+                        </span>
+                      </a>
+                      {badges[badge] > 0 && (
+                        <div>
+                          &nbsp;
+                          <div className="uk-badge">{badges[badge]}</div>
+                        </div>
+                      )}
+                      {subMenu?.length > 0 && (
+                        <SubMenu items={subMenu} badges={badges} />
+                      )}
+                    </StyledConnectedItemMobile>
                   );
                 }
               )}

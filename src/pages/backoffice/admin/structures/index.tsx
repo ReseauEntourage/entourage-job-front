@@ -23,7 +23,7 @@ const OrganizationsAdmin = () => {
   useEffect(() => {
     if (user && user !== prevUser) {
       if (!zone || (Array.isArray(zone) && zone.length === 0)) {
-        const params = { ...query, zone: user.zone };
+        const params = { ...query, ...(user.zone ? { zone: user.zone } : {}) };
         replace(
           {
             pathname: '/backoffice/admin/structures',

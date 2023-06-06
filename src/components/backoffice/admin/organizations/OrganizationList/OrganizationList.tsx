@@ -67,6 +67,7 @@ export function OrganizationList({
         console.error(err);
         setHasError(true);
       }
+
       setLoading(false);
     },
     []

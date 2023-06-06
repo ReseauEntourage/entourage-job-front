@@ -7,14 +7,14 @@ interface OrganizationTableProps {
 export function OrganizationTable({ organizations }: OrganizationTableProps) {
   const columnsHeaders = useMemo<JSX.Element[]>(() => {
     return [
-      <Th>Structure partenaire</Th>,
-      <Th>Contact</Th>,
-      <Th>Mail</Th>,
-      <Th>Téléphone</Th>,
-      <Th>Zone</Th>,
-      <Th>Nombre de candidats</Th>,
-      <Th>Nombre de coachs</Th>,
-      <Th>Édition</Th>,
+      <Th key="organizationName">Structure partenaire</Th>,
+      <Th key="organizationReferentName">Contact</Th>,
+      <Th key="organizationReferentMail">Mail</Th>,
+      <Th key="organizationReferentPhone">Téléphone</Th>,
+      <Th key="organizationZone">Zone</Th>,
+      <Th key="organizationNbCandidates">Nombre de candidats</Th>,
+      <Th key="organizationNbCoach">Nombre de coachs</Th>,
+      <Th key="organizationEdition">Édition</Th>,
     ];
   }, []);
 

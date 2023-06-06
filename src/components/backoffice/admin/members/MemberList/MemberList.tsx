@@ -185,7 +185,6 @@ export function MemberList({
           <SearchBar
             filtersConstants={filtersConst}
             filters={filters}
-            // numberOfResults={numberOfResults}
             resetFilters={resetFilters}
             search={search}
             setSearch={setSearch}

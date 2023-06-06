@@ -8,7 +8,6 @@ export function useOpportunityList(
   setOffers,
   setOtherOffers,
   setBookmarkedOffers,
-  setNumberOfResults,
   setLoading,
   setHasError
 ) {
@@ -41,7 +40,6 @@ export function useOpportunityList(
             setOffers(restOffers);
             setOtherOffers(undefined);
             setBookmarkedOffers(bookmarkedOffers);
-            setNumberOfResults(offers.length);
             break;
           }
           case 'admin': {
@@ -60,7 +58,6 @@ export function useOpportunityList(
             setOffers(sortedOffers);
             setOtherOffers(undefined);
             setBookmarkedOffers(undefined);
-            setNumberOfResults(sortedOffers.length);
 
             break;
           }
@@ -92,7 +89,6 @@ export function useOpportunityList(
             setOffers(restOffers);
             setOtherOffers(otherOffers);
             setBookmarkedOffers(bookmarkedOffers);
-            setNumberOfResults(offers.length);
 
             break;
           }
@@ -104,14 +100,7 @@ export function useOpportunityList(
         setHasError(true);
       }
     },
-    [
-      setBookmarkedOffers,
-      setHasError,
-      setLoading,
-      setNumberOfResults,
-      setOffers,
-      setOtherOffers,
-    ]
+    [setBookmarkedOffers, setHasError, setLoading, setOffers, setOtherOffers]
   );
 }
 
