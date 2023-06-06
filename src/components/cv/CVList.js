@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { filtersToQueryParams } from 'src/utils';
 import { Button, Grid } from 'src/components/utils';
@@ -49,8 +49,6 @@ const CVList = ({
 }) => {
   const PublicOfferModal = usePostPublicOfferModal();
 
-  const [numberOfResults, setNumberOfResults] = useState(0);
-
   const [cvs, setCVs] = useState(undefined);
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -60,9 +58,6 @@ const CVList = ({
   const defaultNbOfCVs = nb || INITIAL_NB_OF_CV_TO_DISPLAY;
   const [nbOfCVToDisplay, setNbOfCVToDisplay] = useState(defaultNbOfCVs);
   const prevNbOfCVToDisplay = usePrevious(nbOfCVToDisplay);
-
-  const cvsLength = cvs?.length;
-  const prevCVsLength = usePrevious(cvsLength);
 
   const fetchData = useCallback(
     (searchValue, filtersValue, nbOfCVToDisplayValue, isPagination) => {
@@ -118,12 +113,6 @@ const CVList = ({
       fetchData(search, filters, nbOfCVToDisplay);
     }
   }, [fetchData, search, filters, nbOfCVToDisplay]);
-
-  useEffect(() => {
-    if (cvsLength !== prevCVsLength) {
-      setNumberOfResults(cvsLength);
-    }
-  }, [cvsLength, prevCVsLength, setNumberOfResults]);
 
   const renderCvList = (items) => {
     return (

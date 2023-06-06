@@ -4,6 +4,7 @@ import axios, {
   AxiosResponse,
 } from 'axios';
 import _ from 'lodash';
+import { AdminZone } from '../constants/departements';
 import { addAxiosInterceptors } from './interceptor';
 import {
   APIRoute,
@@ -19,8 +20,8 @@ import {
   Route,
   SocialMedia,
   CandidateInscription,
-  Organization,
   UserDto,
+  OrganizationDto,
 } from './types';
 
 class APIHandler {
@@ -233,14 +234,27 @@ class APIHandler {
 
   // get
   getAllOrganizations(params: {
-    params: { search: string };
+    params: {
+      limit: number;
+      offset: number;
+      search?: string;
+      zone?: AdminZone | AdminZone[];
+    };
   }): Promise<AxiosResponse> {
     return this.get('/organization', params);
   }
 
   // post
-  postOrganization(params: Organization): Promise<AxiosResponse> {
+  postOrganization(params: OrganizationDto): Promise<AxiosResponse> {
     return this.post('/organization', params);
+  }
+
+  // put
+  putOrganization(
+    organizationId: string,
+    params: OrganizationDto
+  ): Promise<AxiosResponse> {
+    return this.put(`/organization/${organizationId}`, params);
   }
 
   /// //////

@@ -8,7 +8,7 @@ import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpp
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice.tsx';
 import { Grid, Section, SimpleLink } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon.tsx';
-import { MemberDetails } from 'src/components/backoffice/admin/members/MemberDetails';
+import { MemberDetails } from 'src/components/backoffice/admin/members/MemberDetails/index.ts';
 import { MEMBER_TABS } from 'src/constants/index.ts';
 import { useTab } from 'src/components/backoffice/admin/members/MemberDetails/useTab.ts';
 import { useMemberId } from 'src/components/backoffice/admin/members/MemberDetails/useMemberId.ts';

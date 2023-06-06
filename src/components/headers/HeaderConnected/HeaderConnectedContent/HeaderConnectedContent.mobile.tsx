@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import React, { useContext } from 'react';
-import UIkit from 'uikit';
 import { v4 as uuid } from 'uuid';
 import { StyledHeaderMobile } from '../../Header.styles';
 import {
@@ -78,15 +77,18 @@ const HeaderConnectedContentMobile = ({
               .filter(({ href }) => {
                 return href !== '#';
               })
-              .map(({ href, icon, name, badge, tag, subMenu }, index) => {
-                const isActiveOrChildActive =
-                  asPath.includes(href) ||
-                  (subMenu &&
-                    subMenu.some(({ href: subMenuHref }) => {
-                      return asPath.includes(subMenuHref);
-                    }));
-                return (
-                  <>
+              .map(
+                (
+                  { href, icon, name, badge, tag, subMenu, queryParams },
+                  index
+                ) => {
+                  const isActiveOrChildActive =
+                    asPath.includes(href) ||
+                    (subMenu &&
+                      subMenu.some(({ href: subMenuHref }) => {
+                        return asPath.includes(subMenuHref);
+                      }));
+                  return (
                     <StyledConnectedItemMobile
                       key={`${index}-items-${uuidValue}`}
                       className={`${subMenu ? 'hasSubMenu ' : ''} ${
@@ -97,8 +99,9 @@ const HeaderConnectedContentMobile = ({
                         aria-hidden="true"
                         onClick={() => {
                           if (tag) gaEvent(tag);
-                          UIkit.offcanvas(`#${OFFCANVAS_LOGGED}`).hide();
-                          push(href);
+                          if (href) {
+                            push(href + (queryParams || ''));
+                          }
                         }}
                       >
                         <span>
@@ -119,9 +122,9 @@ const HeaderConnectedContentMobile = ({
                         <SubMenu items={subMenu} badges={badges} />
                       )}
                     </StyledConnectedItemMobile>
-                  </>
-                );
-              })}
+                  );
+                }
+              )}
           <hr style={{ opacity: '.5' }} />
           {links.dropdown.map(({ href, icon, name, onClick, tag }, index) => {
             return (
@@ -130,7 +133,6 @@ const HeaderConnectedContentMobile = ({
                   aria-hidden="true"
                   onClick={() => {
                     if (tag) gaEvent(tag);
-                    UIkit.offcanvas(`#${OFFCANVAS_LOGGED}`).hide();
                     if (href) {
                       push(href);
                     }

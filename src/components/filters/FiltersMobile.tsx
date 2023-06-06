@@ -35,7 +35,7 @@ const FiltersMobile = ({ numberOfFilters }: { numberOfFilters?: number }) => {
   return (
     <div className="uk-flex uk-flex-middle uk-flex-center uk-hidden@m">
       <Button
-        style={undefined}
+        style=""
         className="ent-filter-button-search"
         toggle="target: #toggle-filter-menu;"
       >

@@ -158,6 +158,8 @@ export const formAddUser = {
             const { data: organizations } = await Api.getAllOrganizations({
               params: {
                 search: inputValue,
+                limit: 50,
+                offset: 0,
               },
             });
 

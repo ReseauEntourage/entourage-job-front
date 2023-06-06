@@ -305,6 +305,15 @@ export const OPPORTUNITY_FILTERS_DATA = [
   },
 ];
 
+export const ORGANIZATION_FILTERS_DATA = [
+  {
+    key: 'zone',
+    constants: ADMIN_ZONES_FILTERS,
+    title: 'Zone',
+    tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_ZONE_CLIC,
+  },
+];
+
 export const MEMBER_FILTERS_DATA = [
   {
     key: 'role',
@@ -844,16 +853,10 @@ export const EVENT_TYPES_FILTERS = [
   },
 ];
 
-export const BACKOFFICE_PAGES = {
-  CANDIDATES: 'candidates',
-  COACHES: 'coaches',
-  OPPORTUNITIES: 'opportunities',
-} as const;
-
 const ADDRESSES = {
-  PARIS: '174 Rue Championnet 75018, Paris',
-  LYON: '17 Avenue Lacassagne 69003, Lyon',
-  LILLE: '21 Rue Maracci 59000, Lille',
+  PARIS: '174 Rue Championnet, 75018 Paris',
+  LYON: '40 Cours de la République, 69100 Villeurbanne',
+  LILLE: '21 Rue Maracci, 59000 Lille',
   RENNES: '',
   LORIENT: '',
 };

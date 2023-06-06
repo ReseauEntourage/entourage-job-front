@@ -31,6 +31,21 @@ export type UserCandidate = {
 export type Organization = {
   id?: string;
   name: string;
+  address?: string;
+  organizationReferent: {
+    referentFirstName: string;
+    referentLastName: string;
+    referentMail: string;
+    referentPhone: string;
+  };
+  zone: AdminZone;
+  candidatesCount: number;
+  coachesCount: number;
+};
+
+export type OrganizationDto = {
+  id?: string;
+  name: string;
   address: string;
   referentFirstName: string;
   referentLastName: string;

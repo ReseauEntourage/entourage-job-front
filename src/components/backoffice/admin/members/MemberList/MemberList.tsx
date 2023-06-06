@@ -6,6 +6,7 @@ import { Member } from '../MemberTable/Member';
 import { MemberColumn } from '../MemberTable/Member/Member.types';
 import { Api } from 'src/api';
 
+import { AdminCreationButtons } from 'src/components/backoffice/admin/AdminCreationButtons';
 import { StyledActionsContainer } from 'src/components/backoffice/admin/members/MemberList/MemberList.styles';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import SearchBar from 'src/components/filters/SearchBar';
@@ -23,7 +24,6 @@ import {
   mutateTypeFilterDependingOnRole,
 } from 'src/utils/Filters';
 import { isRoleIncluded } from 'src/utils/Finding';
-import { MemberCreationButtons } from './MemberCreationButtons';
 import { useRole } from './useRole';
 
 const LIMIT = 50;
@@ -48,46 +48,45 @@ export function MemberList({
   const [offset, setOffset] = useState(0);
 
   const fetchData = useCallback(
-    (searchValue, filtersValue, roleValue, offsetValue, doReset) => {
+    async (searchValue, filtersValue, roleValue, offsetValue, doReset) => {
       setHasError(false);
       if (doReset) {
         setLoading(true);
         setMembers([]);
       }
-      Api.getUsersMembers({
-        params: {
-          limit: LIMIT,
-          offset: doReset ? 0 : offsetValue,
-          role: roleValue,
-          query: searchValue,
-          ...filtersToQueryParams(filtersValue),
-        },
-      })
-        .then(({ data }) => {
-          if (doReset) {
-            setMembers(data);
-            setOffset(LIMIT);
-            setAllLoaded(false);
-          } else {
-            setMembers((prevMembers) => {
-              return [...prevMembers, ...data];
-            });
-            setOffset((prevOffset) => {
-              return prevOffset + LIMIT;
-            });
-          }
-
-          if (data.length < LIMIT) {
-            setAllLoaded(true);
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-          setHasError(true);
-        })
-        .finally(() => {
-          setLoading(false);
+      try {
+        const { data: membersData } = await Api.getUsersMembers({
+          params: {
+            limit: LIMIT,
+            offset: doReset ? 0 : offsetValue,
+            role: roleValue,
+            query: searchValue,
+            ...filtersToQueryParams(filtersValue),
+          },
         });
+
+        if (doReset) {
+          setMembers(membersData);
+          setOffset(LIMIT);
+          setAllLoaded(false);
+        } else {
+          setMembers((prevMembers) => {
+            return [...prevMembers, ...membersData];
+          });
+          setOffset((prevOffset) => {
+            return prevOffset + LIMIT;
+          });
+        }
+
+        if (membersData.length < LIMIT) {
+          setAllLoaded(true);
+        }
+      } catch (err) {
+        console.error(err);
+        setHasError(true);
+      }
+
+      setLoading(false);
     },
     []
   );
@@ -111,11 +110,6 @@ export function MemberList({
       );
     }
   }, [prevRole, role]);
-
-  const roleToPage = {
-    Candidat: 'candidates',
-    Coach: 'coachs',
-  };
 
   const handleSelectedMembers = useCallback(
     (memberId) => {
@@ -150,7 +144,7 @@ export function MemberList({
           role={role}
           member={member}
           key={key}
-          callback={handleSelectedMembers}
+          selectionCallback={handleSelectedMembers}
         />
       );
     });
@@ -162,10 +156,13 @@ export function MemberList({
       <HeaderBackoffice
         title={`Gestion des ${roleToDisplay}`}
         description={`Ici vous pouvez accéder à tous les profils des ${roleToDisplay} afin d'effectuer un suivi individuel de leur avancée.`}
-        page={roleToPage[role]}
+        shouldDisplayAdminNotifications={isRoleIncluded(
+          CANDIDATE_USER_ROLES,
+          role
+        )}
       >
-        <MemberCreationButtons
-          fetchMembers={() => fetchData(search, filters, role, offset, true)}
+        <AdminCreationButtons
+          refreshList={() => fetchData(search, filters, role, offset, true)}
         />
       </HeaderBackoffice>
       {hasError ? (
@@ -188,7 +185,6 @@ export function MemberList({
           <SearchBar
             filtersConstants={filtersConst}
             filters={filters}
-            // numberOfResults={numberOfResults}
             resetFilters={resetFilters}
             search={search}
             setSearch={setSearch}
@@ -230,9 +226,7 @@ export function MemberList({
               <Button
                 style="custom-secondary"
                 color="primaryOrange"
-                onClick={async () => {
-                  await fetchData(search, filters, role, offset, false);
-                }}
+                onClick={() => fetchData(search, filters, role, offset, false)}
               >
                 Voir tous les {roleToDisplay}
               </Button>

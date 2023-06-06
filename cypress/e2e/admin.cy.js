@@ -1,8 +1,6 @@
-import organizations from '../fixtures/organization-search-res.json';
+import organizations from '../fixtures/organization-search-res.json'
 
-const entourageOrganizationId = organizations.find(
-  ({ name }) => name === 'Entourage'
-).id;
+const entourageOrganizationId = organizations.find(({name}) => name === 'Entourage').id
 
 describe('Admin', () => {
   beforeEach(() => {
@@ -30,149 +28,421 @@ describe('Admin', () => {
 
     cy.intercept('POST', '/organization', {
       statusCode: 201,
-      fixture: 'organization-res',
+      fixture: 'organization-res'
     }).as('postOrganization');
+
+    cy.intercept('PUT', `/organization/${entourageOrganizationId}`, {
+      statusCode: 201,
+      fixture: 'organization-res'
+    }).as('putOrganization');
 
     cy.intercept('POST', '/user', {
       statusCode: 201,
-      fixture: 'user-res',
+      fixture: 'user-res'
     }).as('postUser');
 
-    cy.intercept('GET', '/user/search?query=&role=', {
-      fixture: 'user-admin-coaches-search-res',
-    }).as('getNormalCoaches');
-
     cy.intercept('GET', '/user/search?query=Jane&role=Coach', {
-      fixture: 'user-admin-coaches-search-res',
+      fixture: 'user-admin-coaches-search-res'
     }).as('getNormalCoaches');
 
     cy.intercept('GET', '/user/search?query=Jane&role=Candidat', {
-      fixture: 'user-admin-candidates-search-res',
+      fixture: 'user-admin-candidates-search-res'
     }).as('getNormalCandidates');
 
-    cy.intercept(
-      'GET',
-      `/user/search?query=Jane&role=Coach+externe&organizationId=${entourageOrganizationId}`,
-      {
-        fixture: 'user-admin-coaches-search-res',
-      }
-    ).as('getExternalCoaches');
 
-    cy.intercept(
-      'GET',
-      `/user/search?query=Jane&role=Candidat+externe&organizationId=${entourageOrganizationId}`,
-      {
-        fixture: 'user-admin-candidates-search-res',
-      }
-    ).as('getExternalCandidates');
+    cy.intercept('GET', `/user/search?query=Jane&role=Coach+externe&organizationId=${entourageOrganizationId}`, {
+      fixture: 'user-admin-coaches-search-res'
+    }).as('getExternalCoaches');
 
-    cy.intercept('get', '/organization?search=*', {
-      fixture: 'organization-search-res',
-    }).as('getOrganizations');
+    cy.intercept('GET', `/user/search?query=Jane&role=Candidat+externe&organizationId=${entourageOrganizationId}`, {
+      fixture: 'user-admin-candidates-search-res'
+    }).as('getExternalCandidates');
+
+    cy.intercept('GET', '/organization?limit=50&offset=0&zone[]=LYON', {
+      fixture: 'organization-search-res'
+    }).as('organizationListPage');
+
+    cy.intercept('GET', '/organization?search=Entourage&limit=50&offset=0', {
+      fixture: 'organization-search-res'
+    }).as('searchOrganizationsListUpdateCreate');
+
+    cy.intercept('GET', '/organization?search=&limit=50&offset=0', {
+      fixture: 'organization-search-res'
+    }).as('getOrganizationListUpdateCreate');
   });
 
-  it('Should open backoffice offers', () => {
-    cy.visit('/backoffice/admin/offres', {
-      onBeforeLoad: function async(window) {
-        window.localStorage.setItem('access-token', '1234');
-      },
-    });
-    cy.wait('@offers');
-    // test if all offer are in the table
-    cy.fixture('opportunity-admin-res').then((offers) => {
-      cy.get('[data-testid="offer-list"]')
-        .find('li')
-        .should('have.length', offers.length);
-    });
+  describe("Offers", () => {
+    it('Should open backoffice offers', () => {
+      cy.visit('/backoffice/admin/offres', {
+        onBeforeLoad: function async (window) {
+          window.localStorage.setItem('access-token', "1234");
+        }
+      })
+      cy.wait('@offers');
+      // test if all offer are in the table
+      cy.fixture('opportunity-admin-res').then((offers) => {
+        cy.get('[data-testid="offer-list"]')
+          .find('li')
+          .should('have.length', offers.length);
+      });
+    })
   });
 
-  it('Should open backoffice members', () => {
-    cy.visit('/backoffice/admin/membres?role=Candidat&zone=LYON', {
-      onBeforeLoad: function async(window) {
-        window.localStorage.setItem('access-token', '1234');
-      },
-    });
-    cy.wait('@members');
-    // test if all members are in the table
-    cy.fixture('user-members-res').then((members) => {
-      cy.get('[data-testid="member-list"]')
-        .find('tr')
-        .should('have.length', members.length);
+  describe("Members", () => {
+    it('Should open backoffice members', () => {
+      cy.visit('/backoffice/admin/membres?role=Candidat&zone=LYON', {
+        onBeforeLoad: function async(window) {
+          window.localStorage.setItem('access-token', '1234');
+        },
+      });
+      cy.wait('@members');
+      // test if all members are in the table
+      cy.fixture('user-members-res').then((members) => {
+        cy.get('[data-testid="member-list"]')
+          .find('tr')
+          .should('have.length', members.length);
+      });
+    })
+
+    describe("Remplir le formulaire de création d'un membre, envoyer et fermer", () => {
+
+      beforeEach(() => {
+        cy.get('[data-testid="button-admin-create"]')
+          .should('be.visible')
+          .first()
+          .scrollIntoView()
+          .click();
+
+        cy.get('[data-testid="button-create-user"]')
+          .should('be.visible')
+          .first()
+          .scrollIntoView()
+          .click();
+
+        cy.get('.ReactModalPortal div').first().should('be.visible');
+
+        cy.get('#form-add-user-userToLinkId')
+          .should('not.exist')
+
+        cy.get('#form-add-user-firstName')
+          .should('be.visible')
+          .scrollIntoView()
+          .type('John');
+
+        cy.get('#form-add-user-lastName')
+          .should('be.visible')
+          .scrollIntoView()
+          .type('Doe');
+
+        cy.get('#form-add-user-gender-container')
+          .should('be.visible')
+          .scrollIntoView()
+          .click()
+          .get('button').contains('Homme').click()
+
+        cy.get('#form-add-user-zone-container')
+          .should('be.visible')
+          .scrollIntoView()
+          .click()
+          .find('button').contains('Paris').click()
+
+        cy.get('#form-add-user-phone')
+          .should('be.visible')
+          .scrollIntoView()
+          .type('0698754321');
+
+        cy.get('#form-add-user-email')
+          .should('be.visible')
+          .scrollIntoView()
+          .type('johndoe@gmail.com');
+
+      })
+
+      describe('Creation d\'un user sans créer de structure',() => {
+        afterEach(() => {
+          cy.get('button').contains('Ajouter').should('be.visible').scrollIntoView().click();
+
+          cy.wait('@postUser');
+
+          cy.get('.ReactModalPortal div').should('not.exist');
+        })
+
+        it('Créer un admin', () => {
+          cy.get('#form-add-user-role-container')
+            .should('be.visible')
+            .scrollIntoView()
+            .click()
+            .find('button').contains('Admin').click()
+
+          cy.get('#form-add-user-organizationId')
+            .should('not.exist')
+
+          cy.get('#form-add-user-userToLinkId')
+            .should('not.exist')
+
+          cy.get('[id$=Organization]')
+            .should('not.exist')
+
+          cy.get('#form-add-user-adminRole-container')
+            .should('be.visible')
+            .scrollIntoView()
+            .click()
+            .find('button').contains('Candidats').click()
+
+        })
+
+        it('Créer un candidat normal', () => {
+          cy.get('#form-add-user-role-container')
+            .should('be.visible')
+            .scrollIntoView()
+            .click()
+            .find('button').contains('Candidat LKO').click()
+
+          cy.get('#form-add-user-organizationId')
+            .should('not.exist')
+
+          cy.get('#form-add-user-adminRole-container')
+            .should('not.exist')
+
+          cy.get('[id$=Organization]')
+            .should('not.exist')
+
+          cy.get('#form-add-user-userToLinkId')
+            .should('be.visible')
+            .scrollIntoView()
+            .type('Jane');
+
+          cy.wait('@getNormalCoaches');
+
+          cy.get('#form-add-user-userToLinkId').find('.Select__menu')
+            .should('be.visible')
+            .scrollIntoView()
+            .find('.Select__option').contains('Jane Doe').click()
+        })
+
+        it('Créer un coach normal', () => {
+          cy.get('#form-add-user-role-container')
+            .should('be.visible')
+            .scrollIntoView()
+            .click()
+            .find('button').contains('Coach LKO').click()
+
+          cy.get('#form-add-user-organizationId')
+            .should('not.exist')
+
+          cy.get('#form-add-user-adminRole-container')
+            .should('not.exist')
+
+          cy.get('[id$=Organization]')
+            .should('not.exist')
+
+          cy.get('#form-add-user-userToLinkId')
+            .should('be.visible')
+            .scrollIntoView()
+            .type('Jane');
+
+          cy.wait('@getNormalCandidates');
+
+          cy.get('#form-add-user-userToLinkId').find('.Select__menu')
+            .should('be.visible')
+            .scrollIntoView()
+            .find('.Select__option').contains('Jane Doe').click()
+        })
+
+        it('Créer un candidat externe', () => {
+          cy.get('#form-add-user-role-container')
+            .should('be.visible')
+            .scrollIntoView()
+            .click()
+            .find('button').contains('Candidat externe').click()
+
+          cy.get('#form-add-user-adminRole-container')
+            .should('not.exist')
+
+          cy.get('#form-add-user-userToLinkId')
+            .should('not.exist')
+
+          cy.get('[id$=Organization]')
+            .should('not.exist')
+
+          cy.get('#form-add-user-organizationId')
+            .should('be.visible')
+            .scrollIntoView()
+            .type('Entourage');
+
+          cy.wait('@searchOrganizationsListUpdateCreate');
+
+          cy.get('#form-add-user-organizationId').find('.Select__menu')
+            .should('be.visible')
+            .scrollIntoView()
+            .find('.Select__option').contains('Entourage').click()
+
+          cy.get('#form-add-user-userToLinkId')
+            .should('be.visible')
+            .scrollIntoView()
+            .type('Jane');
+
+          cy.wait('@getExternalCoaches');
+
+          cy.get('#form-add-user-userToLinkId').find('.Select__menu')
+            .should('be.visible')
+            .scrollIntoView()
+            .find('.Select__option').contains('Jane Doe').click()
+        })
+
+        it('Créer un coach externe', () => {
+          cy.get('#form-add-user-role-container')
+            .should('be.visible')
+            .scrollIntoView()
+            .click()
+            .find('button').contains('Coach externe').click()
+
+          cy.get('#form-add-user-userToLinkId')
+            .should('not.exist')
+
+          cy.get('#form-add-user-adminRole-container')
+            .should('not.exist')
+
+          cy.get('#form-add-user-organizationId')
+            .should('be.visible')
+            .scrollIntoView()
+            .type('Entourage');
+
+          cy.wait('@searchOrganizationsListUpdateCreate');
+
+          cy.get('#form-add-user-organizationId').find('.Select__menu')
+            .should('be.visible')
+            .scrollIntoView()
+            .find('.Select__option').contains('Entourage').click()
+
+          cy.get('#form-add-user-userToLinkId')
+            .should('be.visible')
+            .scrollIntoView()
+            .type('Jane');
+
+          cy.wait('@getExternalCandidates');
+
+          cy.get('#form-add-user-userToLinkId').find('.Select__menu')
+            .should('be.visible')
+            .scrollIntoView()
+            .find('.Select__option').contains('Jane Doe').click()
+        })
+      })
+
+      describe('Creation d\'un user et d\'une structure',() => {
+        afterEach(() => {
+          cy.get('#form-add-user-adminRole-container')
+            .should('not.exist')
+
+          cy.get('#form-add-user-userToLinkId')
+            .should('not.exist')
+
+          cy.get('#form-add-user-organizationId')
+            .should('be.visible')
+            .scrollIntoView()
+            .click()
+
+          cy.wait('@getOrganizationListUpdateCreate');
+
+          cy.get('#form-add-user-organizationId').find('.Select__menu')
+            .should('be.visible')
+            .scrollIntoView()
+            .find('.Select__option').contains('Ajouter une nouvelle structure').click()
+
+          cy.get('#form-add-user-userToLinkId')
+            .should('not.exist')
+
+          cy.get('[id$=Organization]')
+            .should('be.visible')
+
+          cy.get('#form-add-user-nameOrganization')
+            .should('be.visible')
+            .scrollIntoView()
+            .type('Entourage');
+
+          cy.get('#form-add-user-addressOrganization')
+            .should('be.visible')
+            .scrollIntoView()
+            .type('174 rue Championnet, 75015 Paris');
+
+          cy.get('#form-add-user-zoneOrganization-container')
+            .should('be.visible')
+            .scrollIntoView()
+            .click()
+            .find('button').contains('Paris').click()
+
+          cy.get('#form-add-user-referentFirstNameOrganization')
+            .should('be.visible')
+            .scrollIntoView()
+            .type('Bruce');
+
+          cy.get('#form-add-user-referentLastNameOrganization')
+            .should('be.visible')
+            .scrollIntoView()
+            .type('Wayne');
+
+          cy.get('#form-add-user-referentPhoneOrganization')
+            .should('be.visible')
+            .scrollIntoView()
+            .type('0665756521');
+
+          cy.get('#form-add-user-referentMailOrganization')
+            .should('be.visible')
+            .scrollIntoView()
+            .type('brucewayne@gmail.com');
+
+          cy.get('button').contains('Ajouter').should('be.visible').scrollIntoView().click();
+
+          cy.wait('@postOrganization');
+
+          cy.wait('@postUser');
+
+          cy.get('.ReactModalPortal div').should('not.exist');
+        })
+
+        it('Créer un candidat externe et une structure', () => {
+          cy.get('#form-add-user-role-container')
+            .should('be.visible')
+            .scrollIntoView()
+            .click()
+            .find('button').contains('Candidat externe').click()
+        })
+
+        it('Créer un coach externe et une structure', () => {
+          cy.get('#form-add-user-role-container')
+            .should('be.visible')
+            .scrollIntoView()
+            .click()
+            .find('button').contains('Coach externe').click()
+        })
+
+      })
     });
   });
+  describe("Organizations", () => {
+    it('Should open backoffice organizations', () => {
+      cy.visit('/backoffice/admin/structures?zone=LYON', {
+        onBeforeLoad: function async(window) {
+          window.localStorage.setItem('access-token', '1234');
+        },
+      });
+      cy.wait('@organizationListPage');
+      // test if all organizations are in the table
+      cy.fixture('organization-search-res').then((organizations) => {
+        cy.get('[data-testid="organization-list"]')
+          .find('tr')
+          .should('have.length', organizations.length);
+      });
+    })
 
-  it("Remplir le formulaire de création d'une structure, envoyer et fermer", () => {
-    cy.get('[data-testid="button-admin-create"]')
-      .should('be.visible')
-      .first()
-      .scrollIntoView()
-      .click();
-
-    cy.get('[data-testid="button-create-organization"]')
-      .should('be.visible')
-      .first()
-      .scrollIntoView()
-      .click();
-
-    cy.get('.ReactModalPortal div').first().should('be.visible');
-
-    cy.get('#form-add-organization-name')
-      .should('be.visible')
-      .scrollIntoView()
-      .type('Entourage');
-
-    cy.get('#form-add-organization-address')
-      .should('be.visible')
-      .scrollIntoView()
-      .type('174 rue Championnet, 75015 Paris');
-
-    cy.get('#form-add-organization-zone-container')
-      .should('be.visible')
-      .scrollIntoView()
-      .click()
-      .find('button')
-      .contains('Paris')
-      .click();
-
-    cy.get('#form-add-organization-referentFirstName')
-      .should('be.visible')
-      .scrollIntoView()
-      .type('John');
-
-    cy.get('#form-add-organization-referentLastName')
-      .should('be.visible')
-      .scrollIntoView()
-      .type('Doe');
-
-    cy.get('#form-add-organization-referentPhone')
-      .should('be.visible')
-      .scrollIntoView()
-      .type('0698754321');
-
-    cy.get('#form-add-organization-referentMail')
-      .should('be.visible')
-      .scrollIntoView()
-      .type('johndoe@gmail.com');
-
-    cy.get('button')
-      .contains('Créer la structure')
-      .should('be.visible')
-      .click();
-
-    cy.wait('@postOrganization');
-
-    cy.get('.ReactModalPortal div').should('not.exist');
-  });
-
-  describe("Remplir le formulaire de création d'un membre, envoyer et fermer", () => {
-    beforeEach(() => {
+    it("Remplir le formulaire de création d'une structure, envoyer et fermer", () => {
       cy.get('[data-testid="button-admin-create"]')
         .should('be.visible')
         .first()
         .scrollIntoView()
         .click();
 
-      cy.get('[data-testid="button-create-user"]')
+      cy.get('[data-testid="button-create-organization"]')
         .should('be.visible')
         .first()
         .scrollIntoView()
@@ -180,326 +450,105 @@ describe('Admin', () => {
 
       cy.get('.ReactModalPortal div').first().should('be.visible');
 
-      cy.get('#form-add-user-userToLinkId').should('not.exist');
+      cy.get('#form-add-organization-name')
+        .should('be.visible')
+        .scrollIntoView()
+        .type('Entourage');
 
-      cy.get('#form-add-user-firstName')
+      cy.get('#form-add-organization-address')
+        .should('be.visible')
+        .scrollIntoView()
+        .type('174 rue Championnet, 75015 Paris');
+
+      cy.get('#form-add-organization-zone-container')
+        .should('be.visible')
+        .scrollIntoView()
+        .click()
+        .find('button').contains('Paris').click()
+
+      cy.get('#form-add-organization-referentFirstName')
         .should('be.visible')
         .scrollIntoView()
         .type('John');
 
-      cy.get('#form-add-user-lastName')
+      cy.get('#form-add-organization-referentLastName')
         .should('be.visible')
         .scrollIntoView()
         .type('Doe');
 
-      cy.get('#form-add-user-gender-container')
-        .should('be.visible')
-        .scrollIntoView()
-        .click()
-        .get('button')
-        .contains('Homme')
-        .click();
-
-      cy.get('#form-add-user-zone-container')
-        .should('be.visible')
-        .scrollIntoView()
-        .click()
-        .find('button')
-        .contains('Paris')
-        .click();
-
-      cy.get('#form-add-user-phone')
+      cy.get('#form-add-organization-referentPhone')
         .should('be.visible')
         .scrollIntoView()
         .type('0698754321');
 
-      cy.get('#form-add-user-email')
+      cy.get('#form-add-organization-referentMail')
         .should('be.visible')
         .scrollIntoView()
         .type('johndoe@gmail.com');
+
+      cy.get('button').contains('Créer la structure').should('be.visible').click();
+
+      cy.wait('@postOrganization');
+
+      cy.get('.ReactModalPortal div').should('not.exist');
     });
 
-    describe("Creation d'un user sans créer de structure", () => {
-      afterEach(() => {
-        cy.get('button')
-          .contains('Ajouter')
-          .should('be.visible')
-          .scrollIntoView()
-          .click();
+    it("Remplir le formulaire d'édition d'une structure, envoyer et fermer", () => {
+      cy.get(`[data-testid="button-edit-organization-${entourageOrganizationId}"]`)
+        .should('be.visible')
+        .first()
+        .scrollIntoView()
+        .click();
 
-        cy.wait('@postUser');
+      cy.get('.ReactModalPortal div').first().should('be.visible');
 
-        cy.get('.ReactModalPortal div').should('not.exist');
-      });
+      cy.get('#form-add-organization-name')
+        .should('be.visible')
+        .scrollIntoView()
+        .clear()
+        .type('LinkedOut');
 
-      it('Créer un admin', () => {
-        cy.get('#form-add-user-role-container')
-          .should('be.visible')
-          .scrollIntoView()
-          .click()
-          .find('button')
-          .contains('Admin')
-          .click();
+      cy.get('#form-add-organization-address')
+        .should('be.visible')
+        .scrollIntoView()
+        .clear()
+        .type('15 Avenue Lacassagne, 69003 Lyon');
 
-        cy.get('#form-add-user-organizationId').should('not.exist');
+      cy.get('#form-add-organization-zone-container')
+        .should('be.visible')
+        .scrollIntoView()
+        .click()
+        .find('button').contains('Lyon').click()
 
-        cy.get('#form-add-user-userToLinkId').should('not.exist');
+      cy.get('#form-add-organization-referentFirstName')
+        .should('be.visible')
+        .scrollIntoView()
+        .clear()
+        .type('Jane');
 
-        cy.get('[id$=Organization]').should('not.exist');
+      cy.get('#form-add-organization-referentLastName')
+        .should('be.visible')
+        .scrollIntoView()
+        .clear()
+        .type('Fonda');
 
-        cy.get('#form-add-user-adminRole-container')
-          .should('be.visible')
-          .scrollIntoView()
-          .click()
-          .find('button')
-          .contains('Candidats')
-          .click();
-      });
+      cy.get('#form-add-organization-referentPhone')
+        .should('be.visible')
+        .scrollIntoView()
+        .clear()
+        .type('0666059439');
 
-      it('Créer un candidat normal', () => {
-        cy.get('#form-add-user-role-container')
-          .should('be.visible')
-          .scrollIntoView()
-          .click()
-          .find('button')
-          .contains('Candidat LKO')
-          .click();
+      cy.get('#form-add-organization-referentMail')
+        .should('be.visible')
+        .scrollIntoView()
+        .clear()
+        .type('janefonda@gmail.com');
 
-        cy.get('#form-add-user-organizationId').should('not.exist');
+      cy.get('button').contains('Modifier la structure').should('be.visible').click();
 
-        cy.get('#form-add-user-adminRole-container').should('not.exist');
+      cy.wait('@putOrganization');
 
-        cy.get('[id$=Organization]').should('not.exist');
-
-        cy.get('#form-add-user-userToLinkId')
-          .should('be.visible')
-          .scrollIntoView()
-          .type('Jane');
-
-        cy.wait('@getNormalCoaches');
-
-        cy.get('#form-add-user-userToLinkId')
-          .find('.Select__menu')
-          .should('be.visible')
-          .scrollIntoView()
-          .find('.Select__option')
-          .contains('Jane Doe')
-          .click();
-      });
-
-      it('Créer un coach normal', () => {
-        cy.get('#form-add-user-role-container')
-          .should('be.visible')
-          .scrollIntoView()
-          .click()
-          .find('button')
-          .contains('Coach LKO')
-          .click();
-
-        cy.get('#form-add-user-organizationId').should('not.exist');
-
-        cy.get('#form-add-user-adminRole-container').should('not.exist');
-
-        cy.get('[id$=Organization]').should('not.exist');
-
-        cy.get('#form-add-user-userToLinkId')
-          .should('be.visible')
-          .scrollIntoView()
-          .type('Jane');
-
-        cy.wait('@getNormalCandidates');
-
-        cy.get('#form-add-user-userToLinkId')
-          .find('.Select__menu')
-          .should('be.visible')
-          .scrollIntoView()
-          .find('.Select__option')
-          .contains('Jane Doe')
-          .click();
-      });
-
-      it('Créer un candidat externe', () => {
-        cy.get('#form-add-user-role-container')
-          .should('be.visible')
-          .scrollIntoView()
-          .click()
-          .find('button')
-          .contains('Candidat externe')
-          .click();
-
-        cy.get('#form-add-user-adminRole-container').should('not.exist');
-
-        cy.get('#form-add-user-userToLinkId').should('not.exist');
-
-        cy.get('[id$=Organization]').should('not.exist');
-
-        cy.get('#form-add-user-organizationId')
-          .should('be.visible')
-          .scrollIntoView()
-          .type('Entourage');
-
-        cy.wait('@getOrganizations');
-
-        cy.get('#form-add-user-organizationId')
-          .find('.Select__menu')
-          .should('be.visible')
-          .scrollIntoView()
-          .find('.Select__option')
-          .contains('Entourage')
-          .click();
-
-        cy.get('#form-add-user-userToLinkId')
-          .should('be.visible')
-          .scrollIntoView()
-          .type('Jane');
-
-        cy.wait('@getExternalCoaches');
-
-        cy.get('#form-add-user-userToLinkId')
-          .find('.Select__menu')
-          .should('be.visible')
-          .scrollIntoView()
-          .find('.Select__option')
-          .contains('Jane Doe')
-          .click();
-      });
-
-      it('Créer un coach externe', () => {
-        cy.get('#form-add-user-role-container')
-          .should('be.visible')
-          .scrollIntoView()
-          .click()
-          .find('button')
-          .contains('Coach externe')
-          .click();
-
-        cy.get('#form-add-user-userToLinkId').should('not.exist');
-
-        cy.get('#form-add-user-adminRole-container').should('not.exist');
-
-        cy.get('#form-add-user-organizationId')
-          .should('be.visible')
-          .scrollIntoView()
-          .type('Entourage');
-
-        cy.wait('@getOrganizations');
-
-        cy.get('#form-add-user-organizationId')
-          .find('.Select__menu')
-          .should('be.visible')
-          .scrollIntoView()
-          .get('.Select__option')
-          .contains('Entourage')
-          .click();
-
-        cy.get('#form-add-user-userToLinkId')
-          .should('be.visible')
-          .scrollIntoView()
-          .type('Jane');
-
-        cy.wait('@getExternalCandidates');
-
-        cy.get('#form-add-user-userToLinkId')
-          .find('.Select__menu')
-          .should('be.visible')
-          .scrollIntoView()
-          .find('.Select__option')
-          .contains('Jane Doe')
-          .click();
-      });
+      cy.get('.ReactModalPortal div').should('not.exist');
     });
-
-    describe("Creation d'un user et d'une structure", () => {
-      afterEach(() => {
-        cy.get('#form-add-user-adminRole-container').should('not.exist');
-
-        cy.get('#form-add-user-userToLinkId').should('not.exist');
-
-        cy.get('#form-add-user-organizationId')
-          .should('be.visible')
-          .scrollIntoView()
-          .click()
-          .find('.Select__menu')
-          .should('be.visible')
-          .scrollIntoView()
-          .find('.Select__option')
-          .contains('Ajouter une nouvelle structure')
-          .click();
-
-        cy.get('#form-add-user-userToLinkId').should('not.exist');
-
-        cy.get('[id$=Organization]').should('be.visible');
-
-        cy.get('#form-add-user-nameOrganization')
-          .should('be.visible')
-          .scrollIntoView()
-          .type('Entourage');
-
-        cy.get('#form-add-user-addressOrganization')
-          .should('be.visible')
-          .scrollIntoView()
-          .type('174 rue Championnet, 75015 Paris');
-
-        cy.get('#form-add-user-zoneOrganization-container')
-          .should('be.visible')
-          .scrollIntoView()
-          .click()
-          .find('button')
-          .contains('Paris')
-          .click();
-
-        cy.get('#form-add-user-referentFirstNameOrganization')
-          .should('be.visible')
-          .scrollIntoView()
-          .type('Bruce');
-
-        cy.get('#form-add-user-referentLastNameOrganization')
-          .should('be.visible')
-          .scrollIntoView()
-          .type('Wayne');
-
-        cy.get('#form-add-user-referentPhoneOrganization')
-          .should('be.visible')
-          .scrollIntoView()
-          .type('0665756521');
-
-        cy.get('#form-add-user-referentMailOrganization')
-          .should('be.visible')
-          .scrollIntoView()
-          .type('brucewayne@gmail.com');
-
-        cy.get('button')
-          .contains('Ajouter')
-          .should('be.visible')
-          .scrollIntoView()
-          .click();
-
-        cy.wait('@postOrganization');
-
-        cy.wait('@postUser');
-
-        cy.get('.ReactModalPortal div').should('not.exist');
-      });
-
-      it('Créer un candidat externe et une structure', () => {
-        cy.get('#form-add-user-role-container')
-          .should('be.visible')
-          .scrollIntoView()
-          .click()
-          .find('button')
-          .contains('Candidat externe')
-          .click();
-      });
-
-      it('Créer un coach externe et une structure', () => {
-        cy.get('#form-add-user-role-container')
-          .should('be.visible')
-          .scrollIntoView()
-          .click()
-          .find('button')
-          .contains('Coach externe')
-          .click();
-      });
-    });
-  });
+  })
 });

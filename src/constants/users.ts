@@ -34,28 +34,19 @@ export const ADMIN_ROLES = {
 
 export type AdminRole = (typeof ADMIN_ROLES)[keyof typeof ADMIN_ROLES];
 
-export const NORMAL_USER_ROLES = [
-  USER_ROLES.CANDIDATE,
-  USER_ROLES.COACH,
-] as const;
+export const NORMAL_USER_ROLES = [USER_ROLES.CANDIDATE, USER_ROLES.COACH];
 export const EXTERNAL_USER_ROLES = [
   USER_ROLES.CANDIDATE_EXTERNAL,
   USER_ROLES.COACH_EXTERNAL,
-] as const;
+];
 
 export const CANDIDATE_USER_ROLES = [
   USER_ROLES.CANDIDATE,
   USER_ROLES.CANDIDATE_EXTERNAL,
-] as const;
-export const COACH_USER_ROLES = [
-  USER_ROLES.COACH,
-  USER_ROLES.COACH_EXTERNAL,
-] as const;
+];
+export const COACH_USER_ROLES = [USER_ROLES.COACH, USER_ROLES.COACH_EXTERNAL];
 
-export const ALL_USER_ROLES = [
-  ...CANDIDATE_USER_ROLES,
-  ...COACH_USER_ROLES,
-] as const;
+export const ALL_USER_ROLES = [...CANDIDATE_USER_ROLES, ...COACH_USER_ROLES];
 
 export const GENDERS = {
   MALE: 0,

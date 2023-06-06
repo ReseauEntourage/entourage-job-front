@@ -25,7 +25,7 @@ import * as gtag from 'src/lib/gtag.ts';
 import SplashScreen from 'src/components/SplashScreen';
 import { useMount } from 'src/hooks/utils';
 import { ModalsListener } from 'src/components/modals/Modal';
-import { OFFCANVAS_GUEST, OFFCANVAS_LOGGED } from 'src/constants/utils';
+import { OFFCANVAS_GUEST, OFFCANVAS_LOGGED } from 'src/constants/utils.ts';
 
 UIkit.use(Icons);
 

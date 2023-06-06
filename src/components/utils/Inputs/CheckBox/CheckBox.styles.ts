@@ -4,6 +4,7 @@ import { COLORS } from 'src/constants/styles';
 export const StyledCheckbox = styled.div`
   height: 100%;
   display: flex;
+  align-items: center;
   margin-bottom: ${({ removeMargin }) => {
     return removeMargin ? 0 : 30;
   }}px;

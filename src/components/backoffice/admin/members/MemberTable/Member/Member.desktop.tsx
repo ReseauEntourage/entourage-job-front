@@ -3,12 +3,12 @@ import React from 'react';
 
 import { Tooltip } from 'react-tooltip';
 import { translateStatusCV } from 'src/components/backoffice/admin/members/MemberList/MemberList.utils';
-import { StyledRow } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.styles';
 import { renderCVStatus } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.utils';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
 import { SimpleLink } from 'src/components/utils';
 import Icon from 'src/components/utils/Icon';
 import { CheckBox, useCheckBox } from 'src/components/utils/Inputs/CheckBox';
+import { TrDesktop, TdDesktop } from 'src/components/utils/Table';
 import { ADMIN_ZONES } from 'src/constants/departements';
 import {
   CANDIDATE_USER_ROLES,
@@ -22,6 +22,14 @@ import {
   findConstantFromValue,
 } from 'src/utils/Finding';
 import { buildContractLabel } from 'src/utils/Formatting';
+import {
+  StyledCheckBoxCellContent,
+  StyledCVStatusCellContent,
+  StyledEmployedCellContent,
+  StyledHiddenCVCellContent,
+  StyledNameCell,
+  StyledNoWrapCellContent,
+} from './Member.styles';
 import { MemberProps } from './Member.types';
 import { MemberInfo, RelatedMemberInfo } from './MemberInfo';
 import { MemberEmployedToggle } from './MemberToggle/MemberEmployedToggle';
@@ -32,14 +40,14 @@ const tooltipId = 'contract-tooltip';
 export function MemberDesktop({
   member,
   role,
-  callback,
+  selectionCallback,
   columns,
   isEditable,
   setMember,
   disableLink,
 }: MemberProps) {
   const cvStatus = renderCVStatus(member);
-  const { checked, handleCheckBox } = useCheckBox(callback, member.id);
+  const { checked, handleCheckBox } = useCheckBox(selectionCallback, member.id);
   const relatedUser = getRelatedUser(member);
 
   const userCandidate = getUserCandidateFromCoachOrCandidate(member);
@@ -52,11 +60,8 @@ export function MemberDesktop({
     : null;
 
   return (
-    <StyledRow
-      cvStatus={cvStatus.toLowerCase()}
-      className={checked ? 'selected' : ''}
-    >
-      <td className="name-cell">
+    <TrDesktop selected={checked}>
+      <StyledNameCell cvStatus={cvStatus.toLowerCase()}>
         <MemberInfo
           id={member.id}
           firstName={member.firstName}
@@ -72,69 +77,76 @@ export function MemberDesktop({
         >
           <ImgProfile user={member} size={36} />
         </MemberInfo>
-      </td>
+      </StyledNameCell>
+
       {columns.includes('associatedUser') && (
-        <td className="associated-user-cell">
+        <TdDesktop>
           <RelatedMemberInfo relatedUser={relatedUser} role={member.role} />
-        </td>
+        </TdDesktop>
       )}
       {columns.includes('type') && (
-        <td>
-          <span className="uk-text-nowrap uk-visible@m">
-            {isRoleIncluded(EXTERNAL_USER_ROLES, member.role)
-              ? 'Externe'
-              : 'LKO'}
-          </span>
-        </td>
+        <TdDesktop>
+          <StyledNoWrapCellContent>
+            <span>
+              {isRoleIncluded(EXTERNAL_USER_ROLES, member.role)
+                ? 'Externe'
+                : 'LKO'}
+            </span>
+          </StyledNoWrapCellContent>
+        </TdDesktop>
       )}
       {columns.includes('phone') && (
-        <td>
+        <TdDesktop>
           <span>{member.phone || '-'}</span>
-        </td>
+        </TdDesktop>
       )}
       {columns.includes('gender') && (
-        <td>
-          <span className="uk-text-nowrap">
-            {findConstantFromValue(member.gender, GENDERS_FILTERS).label}
-          </span>
-        </td>
+        <TdDesktop>
+          <StyledNoWrapCellContent>
+            <span>
+              {findConstantFromValue(member.gender, GENDERS_FILTERS).label}
+            </span>
+          </StyledNoWrapCellContent>
+        </TdDesktop>
       )}
       {columns.includes('address') && (
-        <td>
+        <TdDesktop>
           <span>{member.address || '-'}</span>
-        </td>
+        </TdDesktop>
       )}
       {columns.includes('zone') && (
-        <td>
-          <span className="uk-text-nowrap uk-visible@m">
-            {member?.zone
-              ? member.zone.charAt(0).toUpperCase() +
-                member.zone.slice(1).toLowerCase()
-              : ADMIN_ZONES.HZ.charAt(0).toUpperCase() +
-                ADMIN_ZONES.HZ.slice(1).toLowerCase()}
-          </span>
-        </td>
+        <TdDesktop>
+          <StyledNoWrapCellContent>
+            <span>
+              {member.zone
+                ? member.zone.charAt(0).toUpperCase() +
+                  member.zone.slice(1).toLowerCase()
+                : ADMIN_ZONES.HZ.charAt(0).toUpperCase() +
+                  ADMIN_ZONES.HZ.slice(1).toLowerCase()}
+            </span>
+          </StyledNoWrapCellContent>
+        </TdDesktop>
       )}
       {columns.includes('organization') && (
-        <td>
-          <span className="uk-text-nowrap">
-            {member.organization?.name || '-'}
-          </span>
-        </td>
+        <TdDesktop>
+          <StyledNoWrapCellContent>
+            <span>{member.organization?.name || '-'}</span>
+          </StyledNoWrapCellContent>
+        </TdDesktop>
       )}
       {columns.includes('lastConnection') && (
-        <td>
+        <TdDesktop>
           {member.lastConnection ? (
             moment(member.lastConnection).format('DD/MM/YYYY')
           ) : (
             <span>Aucune connexion</span>
           )}
-        </td>
+        </TdDesktop>
       )}
       {isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
         <>
           {columns.includes('cvUrl') && (
-            <td>
+            <TdDesktop>
               <span>
                 <SimpleLink
                   href={`/cv/${userCandidate?.url}`}
@@ -144,78 +156,78 @@ export function MemberDesktop({
                   <Icon name="link" style={{ width: 20 }} />
                 </SimpleLink>
               </span>
-            </td>
+            </TdDesktop>
           )}
           {columns.includes('employed') && (
-            <td>
-              {isEditable ? (
-                <MemberEmployedToggle setMember={setMember} member={member} />
-              ) : (
-                <span
-                  data-tooltip-id={tooltipId}
-                  data-tooltip-content={contractLabel}
-                  data-tooltip-place="bottom"
-                >
-                  {userCandidate?.employed ? (
-                    <span className="yes">Oui</span>
-                  ) : (
-                    <span className="no">Non</span>
-                  )}
-                  <Tooltip id={tooltipId} />
-                </span>
-              )}
-            </td>
-          )}
-          {columns.includes('cvStatus') && (
-            <td>
-              <div className="cv-status-cell">
-                {cvStatus === 'none' ? (
-                  <span className="uk-text-info uk-text-nowrap">Aucun</span>
+            <TdDesktop>
+              <StyledEmployedCellContent>
+                {isEditable ? (
+                  <MemberEmployedToggle setMember={setMember} member={member} />
                 ) : (
-                  <span className="uk-text-nowrap">
-                    {translateStatusCV(cvStatus)}
+                  <span
+                    data-tooltip-id={tooltipId}
+                    data-tooltip-content={contractLabel}
+                    data-tooltip-place="bottom"
+                  >
+                    {userCandidate?.employed ? (
+                      <span className="yes">Oui</span>
+                    ) : (
+                      <span className="no">Non</span>
+                    )}
+                    <Tooltip id={tooltipId} />
                   </span>
                 )}
-              </div>
-            </td>
+              </StyledEmployedCellContent>
+            </TdDesktop>
+          )}
+          {columns.includes('cvStatus') && (
+            <TdDesktop>
+              <StyledCVStatusCellContent cvStatus={cvStatus.toLowerCase()}>
+                {cvStatus === 'none' ? (
+                  <span>Aucun</span>
+                ) : (
+                  <span>{translateStatusCV(cvStatus)}</span>
+                )}
+              </StyledCVStatusCellContent>
+            </TdDesktop>
           )}
           {columns.includes('cvHidden') && (
-            <td className="hiddenCV-cell">
-              {isEditable ? (
-                <MemberHiddenToggle setMember={setMember} member={member} />
-              ) : (
-                <>
-                  {userCandidate?.hidden ? (
-                    <Icon
-                      name="eye-hidden"
-                      ratio={1.2}
-                      className="uk-visible@m eye-hidden"
-                    />
-                  ) : (
-                    <Icon
-                      name="eye-visible"
-                      ratio={1.2}
-                      className="uk-visible@m"
-                    />
-                  )}
-                </>
-              )}
-            </td>
+            <TdDesktop>
+              <StyledHiddenCVCellContent>
+                {isEditable ? (
+                  <MemberHiddenToggle setMember={setMember} member={member} />
+                ) : (
+                  <>
+                    {userCandidate?.hidden ? (
+                      <Icon
+                        name="eye-hidden"
+                        ratio={1.2}
+                        className="eye-hidden"
+                      />
+                    ) : (
+                      <Icon name="eye-visible" ratio={1.2} />
+                    )}
+                  </>
+                )}
+              </StyledHiddenCVCellContent>
+            </TdDesktop>
           )}
-          {columns.includes('selection') && callback && (
-            <td className="checkbox-cell">
-              <CheckBox
-                removeMargin
-                id={`member-${member.id}-check`}
-                name={`member-${member.id}-check`}
-                value={checked}
-                handleClick={handleCheckBox}
-                disabled={userCandidate?.hidden}
-              />
-            </td>
+          {columns.includes('selection') && selectionCallback && (
+            <TdDesktop>
+              <StyledCheckBoxCellContent>
+                <CheckBox
+                  removeMargin
+                  id={`member-${member.id}-check`}
+                  name={`member-${member.id}-check`}
+                  value={checked}
+                  handleClick={handleCheckBox}
+                  disabled={userCandidate?.hidden}
+                />
+              </StyledCheckBoxCellContent>
+            </TdDesktop>
           )}
         </>
       )}
-    </StyledRow>
+    </TrDesktop>
   );
 }

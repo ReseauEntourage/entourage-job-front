@@ -6,6 +6,11 @@ export const StyledMemberInfoNameContainer = styled.div`
 `;
 
 export const StyledMemberInfoContainer = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: row;
+`;
+
+export const StyledMemberInfoLink = styled.a`
+  flex: 1;
 `;
