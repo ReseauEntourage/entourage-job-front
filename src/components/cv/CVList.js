@@ -1,18 +1,21 @@
 import _ from 'lodash';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { filtersToQueryParams } from 'src/utils';
 import { Button, Grid } from 'src/components/utils';
 import { CandidatCard } from 'src/components/cards';
 import { Api } from 'src/api/index.ts';
-import { CV_FILTERS_DATA, INITIAL_NB_OF_CV_TO_DISPLAY } from 'src/constants';
+import {
+  CV_FILTERS_DATA,
+  INITIAL_NB_OF_CV_TO_DISPLAY,
+} from 'src/constants/index.ts';
 import SimpleLink from 'src/components/utils/SimpleLink';
 import { usePrevious } from 'src/hooks/utils';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import SearchBar from 'src/components/filters/SearchBar';
+import SearchBar from 'src/components/filters/SearchBar.tsx';
 import { openModal } from 'src/components/modals/Modal';
 import usePostPublicOfferModal from 'src/components/modals/usePostPublicOfferModal';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { fbEvent } from 'src/lib/fb.ts';
 import { FB_TAGS } from 'src/constants/tags';
@@ -46,8 +49,6 @@ const CVList = ({
 }) => {
   const PublicOfferModal = usePostPublicOfferModal();
 
-  const [numberOfResults, setNumberOfResults] = useState(0);
-
   const [cvs, setCVs] = useState(undefined);
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -57,9 +58,6 @@ const CVList = ({
   const defaultNbOfCVs = nb || INITIAL_NB_OF_CV_TO_DISPLAY;
   const [nbOfCVToDisplay, setNbOfCVToDisplay] = useState(defaultNbOfCVs);
   const prevNbOfCVToDisplay = usePrevious(nbOfCVToDisplay);
-
-  const cvsLength = cvs?.length;
-  const prevCVsLength = usePrevious(cvsLength);
 
   const fetchData = useCallback(
     (searchValue, filtersValue, nbOfCVToDisplayValue, isPagination) => {
@@ -115,12 +113,6 @@ const CVList = ({
       fetchData(search, filters, nbOfCVToDisplay);
     }
   }, [fetchData, search, filters, nbOfCVToDisplay]);
-
-  useEffect(() => {
-    if (cvsLength !== prevCVsLength) {
-      setNumberOfResults(cvsLength);
-    }
-  }, [cvsLength, prevCVsLength, setNumberOfResults]);
 
   const renderCvList = (items) => {
     return (
@@ -245,7 +237,7 @@ const CVList = ({
         <SearchBar
           filtersConstants={CV_FILTERS_DATA}
           filters={filters}
-          numberOfResults={numberOfResults}
+          // numberOfResults={numberOfResults}
           resetFilters={resetFilters}
           search={search}
           setSearch={setSearch}

@@ -6,9 +6,9 @@ import validator from 'validator';
 import { Api } from 'src/api/index';
 import { StyledNLForm } from 'src/components/partials/NewsletterPartial/NewsletterPartial.styles';
 import { Section } from 'src/components/utils';
-import Button from 'src/components/utils/Button';
-import Checkbox from 'src/components/utils/Inputs/Checkbox';
-import TextInput from 'src/components/utils/Inputs/TextInput';
+import { Button } from 'src/components/utils/Button';
+import { CheckBox } from 'src/components/utils/Inputs/CheckBox';
+import { TextInput } from 'src/components/utils/Inputs/TextInput';
 import { NEWSLETTER_TAGS } from 'src/constants';
 import { useNewsletterTracking } from 'src/hooks';
 import { gaEvent } from 'src/lib/gtag';
@@ -83,7 +83,9 @@ export const NewsletterPartial = ({
               return (
                 <div className="input-label" key={`${key}-status-${uuidValue}`}>
                   <div>
-                    <Checkbox
+                    <CheckBox
+                      id={tagConst}
+                      name={tagConst}
                       value={tagConst === status}
                       handleClick={() => {
                         if (status === tagConst) {
@@ -107,7 +109,9 @@ export const NewsletterPartial = ({
               return (
                 <div className="input-label" key={`${key}-zone-${uuidValue}`}>
                   <div>
-                    <Checkbox
+                    <CheckBox
+                      id={tagConst}
+                      name={tagConst}
                       value={tagConst === zone}
                       handleClick={() => {
                         if (zone === tagConst) {

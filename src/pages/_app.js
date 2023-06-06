@@ -11,6 +11,7 @@ import 'src/components/backoffice/Toggle.less';
 import 'src/components/modals/Modal/Modal.less';
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 import 'react-phone-number-input/style.css';
+import 'react-tooltip/dist/react-tooltip.css';
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -24,7 +25,7 @@ import * as gtag from 'src/lib/gtag.ts';
 import SplashScreen from 'src/components/SplashScreen';
 import { useMount } from 'src/hooks/utils';
 import { ModalsListener } from 'src/components/modals/Modal';
-import { OFFCANVAS_GUEST, OFFCANVAS_LOGGED } from 'src/constants/utils';
+import { OFFCANVAS_GUEST, OFFCANVAS_LOGGED } from 'src/constants/utils.ts';
 
 UIkit.use(Icons);
 

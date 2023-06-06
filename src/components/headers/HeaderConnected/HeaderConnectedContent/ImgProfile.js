@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { UserContext } from 'src/store/UserProvider';
 import { Img } from 'src/components/utils';
-import { USER_ROLES } from 'src/constants';
+import { CANDIDATE_USER_ROLES } from 'src/constants/users.ts';
+import { isRoleIncluded } from 'src/utils/Finding.ts';
 
 const ImgProfile = ({ user, size }) => {
   const userFromContext = useContext(UserContext).user;
@@ -11,7 +12,11 @@ const ImgProfile = ({ user, size }) => {
   const [urlImg, setUrlImg] = useState(null);
 
   useEffect(() => {
-    if (role === USER_ROLES.CANDIDAT && candidat && candidat.cvs) {
+    if (
+      isRoleIncluded(CANDIDATE_USER_ROLES, role) &&
+      candidat &&
+      candidat.cvs
+    ) {
       const latestCV = candidat.cvs.reduce(
         (acc, curr) => {
           return acc.version < curr.version ? curr : acc;
@@ -24,7 +29,7 @@ const ImgProfile = ({ user, size }) => {
 
   return (
     <div
-      className="uk-background-primary uk-border-circle uk-position-relative"
+      className="profileImage uk-background-primary uk-border-circle uk-position-relative"
       style={{
         width: `${size}px`,
         height: `${size}px`,

@@ -3231,6 +3231,7 @@ select.uk-form-width-xsmall {
   text-transform: uppercase;
   white-space: normal;
   margin-top: 5px;
+  border-radius: 5px;
 }
 /* Color modifiers
  ========================================================================== */

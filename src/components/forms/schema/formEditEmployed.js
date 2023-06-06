@@ -1,4 +1,4 @@
-import { CONTRACTS } from 'src/constants';
+import { CONTRACTS } from 'src/constants/index.ts';
 import moment from 'moment';
 import { findConstantFromValue } from 'src/utils';
 

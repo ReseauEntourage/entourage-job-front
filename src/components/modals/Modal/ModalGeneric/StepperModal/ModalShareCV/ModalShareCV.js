@@ -3,14 +3,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import StepperModal from 'src/components/modals/Modal/ModalGeneric/StepperModal';
-import FormWithValidation from 'src/components/forms/FormWithValidation';
+import FormWithValidation from 'src/components/forms/FormWithValidation.tsx';
 import schemaGetEmail from 'src/components/forms/schema/formGetEmail.json';
 import { Api } from 'src/api/index.ts';
 import { Button, Img } from 'src/components/utils';
-import { EXTERNAL_LINKS } from 'src/constants';
+import { EXTERNAL_LINKS } from 'src/constants/index.ts';
 import { gaEvent } from 'src/lib/gtag.ts';
 import { GA_TAGS } from 'src/constants/tags';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import { useNewsletterTracking } from 'src/hooks';
 
 const ModalShareCV = ({ firstName }) => {

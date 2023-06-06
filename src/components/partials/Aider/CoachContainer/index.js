@@ -5,8 +5,8 @@ import AiderAccompagnerCoachImg from 'public/static/img/aider-accompagner-coach.
 import AiderAccompagnerCoachImgMobile from 'public/static/img/aider-accompagner-coach-mobile.jpg';
 import BackgroundImage from 'src/components/utils/BackgroundImage';
 import { COLORS } from 'src/constants/styles';
-import Button from 'src/components/utils/Button';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { Button } from 'src/components/utils/Button';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import CoachTestimony from 'src/components/partials/Aider/CoachContainer/CoachTestimony';
 import WelcomeIcon from 'public/static/img/icons/aider-welcome.svg';
 import ReseauIcon from 'public/static/img/icons/aider-reseau.svg';

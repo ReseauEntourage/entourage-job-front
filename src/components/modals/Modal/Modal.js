@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
-import { useModalContext } from 'src/components/modals/Modal/ModalContext';
+import { useModalContext } from 'src/components/modals/Modal/ModalContext.tsx';
 
 Modal.setAppElement('#__next');
 const CustomModal = ({ children, closeOnNextRender, className, fullWidth }) => {

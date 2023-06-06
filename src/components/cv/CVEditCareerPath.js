@@ -5,7 +5,7 @@ import schemaCareerPath from 'src/components/forms/schema/formEditCareerPath';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
 import { Grid } from 'src/components/utils';
 import { openModal } from 'src/components/modals/Modal';
-import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants';
+import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants/index.ts';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
 import CVCareerPathSentence from 'src/components/cv/CVCareerPathSentence';
 

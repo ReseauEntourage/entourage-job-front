@@ -4,6 +4,7 @@ import axios, {
   AxiosResponse,
 } from 'axios';
 import _ from 'lodash';
+import { AdminZone } from '../constants/departements';
 import { addAxiosInterceptors } from './interceptor';
 import {
   APIRoute,
@@ -18,8 +19,9 @@ import {
   PutCandidate,
   Route,
   SocialMedia,
-  User,
   CandidateInscription,
+  UserDto,
+  OrganizationDto,
 } from './types';
 
 class APIHandler {
@@ -92,7 +94,7 @@ class APIHandler {
     return this.get('/cv/shares');
   }
 
-  getCVByCandidateId(candidateId, headers): Promise<AxiosResponse> {
+  getCVByCandidateId(candidateId, headers?): Promise<AxiosResponse> {
     return this.get(`/cv/${candidateId}`, {}, headers);
   }
 
@@ -112,8 +114,8 @@ class APIHandler {
     return this.get('/cv/published');
   }
 
-  getCheckUpdate(): Promise<AxiosResponse> {
-    return this.get('/cv/checkUpdate');
+  getCheckUpdate(candidateId: string): Promise<AxiosResponse> {
+    return this.get(`/cv/checkUpdate/${candidateId}`);
   }
 
   getCVByUrl(url: string): Promise<AxiosResponse> {
@@ -175,19 +177,19 @@ class APIHandler {
     return this.get(`/user/${userId}`);
   }
 
-  getCandidateCheckUpdate(): Promise<AxiosResponse> {
-    return this.get(`/user/candidate/checkUpdate`);
+  getCandidateCheckUpdate(candidateId: string): Promise<AxiosResponse> {
+    return this.get(`/user/candidate/checkUpdate/${candidateId}`);
   }
 
   // post
 
-  postUser(params: User): Promise<AxiosResponse> {
+  postUser(params: UserDto): Promise<AxiosResponse> {
     return this.post('/user', params);
   }
 
   // put
 
-  putUser(userId: string, params: object): Promise<AxiosResponse> {
+  putUser(userId: string, params: UserDto): Promise<AxiosResponse> {
     return this.put(`/user/${userId}`, params);
   }
 
@@ -204,7 +206,7 @@ class APIHandler {
 
   putCandidate(
     candidateId: string,
-    params: PutCandidate
+    params: Partial<PutCandidate>
   ): Promise<AxiosResponse> {
     return this.put(`/user/candidate/${candidateId}`, params);
   }
@@ -213,10 +215,46 @@ class APIHandler {
     return this.put(`/user/candidate/read/${candidateId}`);
   }
 
+  putLinkUser(
+    userId: string,
+    userToLinkId?: string | string[]
+  ): Promise<AxiosResponse> {
+    return this.put(`/user/linkUser/${userId}`, { userToLinkId });
+  }
+
   // delete
 
   deleteUser(userId: string): Promise<AxiosResponse> {
     return this.delete(`/user/${userId}`);
+  }
+
+  /// ///////////// ///
+  /// organization  ///
+  /// //////////// ///
+
+  // get
+  getAllOrganizations(params: {
+    params: {
+      limit: number;
+      offset: number;
+      search?: string;
+      zone?: AdminZone | AdminZone[];
+    };
+  }): Promise<AxiosResponse> {
+    return this.get('/organization', params);
+  }
+
+  // post
+  postOrganization(params: OrganizationDto): Promise<AxiosResponse> {
+    return this.post('/organization', params);
+  }
+
+  // put
+  putOrganization(
+    organizationId: string,
+    params: OrganizationDto
+  ): Promise<AxiosResponse> {
+    return this.put(`/organization/${organizationId}`, params);
   }
 
   /// //////

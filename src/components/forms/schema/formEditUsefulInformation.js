@@ -1,5 +1,5 @@
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import { CONTRACTS } from 'src/constants';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
+import { CONTRACTS } from 'src/constants/index.ts';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 
 export default {

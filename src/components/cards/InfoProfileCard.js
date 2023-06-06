@@ -4,13 +4,13 @@ import { Grid } from 'src/components/utils';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import schemaUsefulInformation from 'src/components/forms/schema/formEditUsefulInformation';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 
 import { findConstantFromValue, mutateFormSchema } from 'src/utils';
 
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
 import { openModal } from 'src/components/modals/Modal';
-import { CONTRACTS } from 'src/constants';
+import { CONTRACTS } from 'src/constants/index.ts';
 
 const InfoProfileCard = ({
   contracts,

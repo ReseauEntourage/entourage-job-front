@@ -1,4 +1,2 @@
-import Radio from './Radio.tsx';
-import RadioAsync from './RadioAsync.tsx';
-
-export { Radio, RadioAsync };
+export { Radio } from './Radio.tsx';
+export { RadioAsync } from './RadioAsync.tsx';

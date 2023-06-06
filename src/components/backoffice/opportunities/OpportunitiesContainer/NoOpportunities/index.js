@@ -1,3 +1,3 @@
-import NoOpportunities from './NoOpportunities';
+import NoOpportunities from './NoOpportunities.tsx';
 
 export default NoOpportunities;

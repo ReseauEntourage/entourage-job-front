@@ -19,6 +19,8 @@ describe('Parcours CV', () => {
     cy.intercept('GET', '/user/search/candidates*', {
       fixture: 'user-search-candidates-res',
     }).as('getCandidats');
+
+    cy.intercept('GET', '/cv/shares', { total: 184222 }).as('cvShares');
   });
 
   it('Ouvrir les filtres et checker Paris', () => {
@@ -46,7 +48,7 @@ describe('Parcours CV', () => {
   it('Contacter un candidat', () => {
     cy.contains('Contactez-moi').scrollIntoView().click();
 
-    cy.wait('@getCandidats');
+    // cy.wait('@getCandidats');
 
     cy.get('#form-offer-isPublic').scrollIntoView().click();
     cy.get('#form-offer-title').scrollIntoView().type('Form test');
@@ -91,6 +93,7 @@ describe('Parcours CV', () => {
     cy.get('.SocialMediaShareButton--linkedin')
       .first()
       .should('be.visible')
+      .scrollIntoView()
       .click();
 
     cy.get('@popup').should('be.called');

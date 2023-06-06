@@ -17,14 +17,18 @@ export function PhoneInput({
   showLabel,
   placeholder,
 }) {
-  const update = (eventValue) => {
-    if (onChange) onChange(eventValue);
-  };
+  if (hidden) {
+    return null;
+  }
 
   return (
     <>
-      <StyledPhoneInput hidden={hidden}>
-        {showLabel && <label htmlFor={`form-input-${name}`}>{title}</label>}
+      <StyledPhoneInput>
+        {showLabel && title && (
+          <label htmlFor={id} className="label-top">
+            {title}
+          </label>
+        )}
         <PhoneInputWithCountry
           defaultCountry="FR"
           title={title}
@@ -33,9 +37,7 @@ export function PhoneInput({
           data-testid={id}
           value={value || ''}
           placeholder={placeholder || title}
-          onChange={(event) => {
-            return update(event);
-          }}
+          onChange={onChange}
           disabled={disabled}
           autoComplete={autocomplete}
         />
@@ -48,7 +50,7 @@ export function PhoneInput({
 PhoneInput.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
-  onChange: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
   title: PropTypes.string,
   valid: PropTypes.shape({
     isInvalid: PropTypes.bool,
@@ -70,7 +72,6 @@ PhoneInput.defaultProps = {
   hidden: false,
   autocomplete: 'tel',
   title: '',
-  onChange: undefined,
   name: '',
   showLabel: false,
   placeholder: '',

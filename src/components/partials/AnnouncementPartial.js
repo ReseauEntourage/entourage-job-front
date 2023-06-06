@@ -1,6 +1,6 @@
 import React from 'react';
 import SimpleLink from 'src/components/utils/SimpleLink';
-import { EXTERNAL_LINKS } from 'src/constants';
+import { EXTERNAL_LINKS } from 'src/constants/index.ts';
 import Img from 'src/components/utils/Img';
 import { Section } from 'src/components/utils';
 

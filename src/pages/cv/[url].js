@@ -12,10 +12,10 @@ import { Api } from 'src/api/index.ts';
 import { Grid, Section, SimpleLink } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';
 import { useUpdateSharesCount } from 'src/hooks';
-import Button from 'src/components/utils/Button';
-import { CV_FILTERS_DATA } from 'src/constants';
+import { Button } from 'src/components/utils/Button';
+import { CV_FILTERS_DATA } from 'src/constants/index.ts';
 import CVList from 'src/components/cv/CVList';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import { CVShape } from 'src/components/cv/CV.shape';
 
 const CVPage = ({ cv, exists, router, hideShareOptions }) => {

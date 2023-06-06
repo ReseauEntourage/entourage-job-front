@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Background, Section } from 'src/components/utils';
 import PARTNERS from 'src/constants/partners';
-import Button from 'src/components/utils/Button';
+import { Button } from 'src/components/utils/Button';
 import LogoList from 'src/components/partials/LogoList';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 
 const Partners = ({ showOrientationPartners }) => {
   return (

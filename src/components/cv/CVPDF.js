@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Grid, SimpleLink } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 
 import {
   addPrefix,
@@ -12,8 +12,8 @@ import {
   findConstantFromValue,
 } from 'src/utils';
 import CVCareerPathSentence from 'src/components/cv/CVCareerPathSentence';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import { CONTRACTS } from 'src/constants';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
+import { CONTRACTS } from 'src/constants/index.ts';
 import { CVShape } from './CV.shape';
 
 const CVPDF = ({ cv, page }) => {
