@@ -14,7 +14,7 @@ export function useOnOrganizationFormSubmit(
         const { data } = await apiCall(fields);
         closeModal();
         UIkit.notification(
-          `La structure a bien été ${ActionsLabels[action].VERB}`,
+          `La structure a bien été ${ActionsLabels[action].VERB}e`,
           'success'
         );
         return data;

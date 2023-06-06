@@ -6,7 +6,7 @@ import { Member } from '../MemberTable/Member';
 import { MemberColumn } from '../MemberTable/Member/Member.types';
 import { Api } from 'src/api';
 
-import { CreationButtons } from 'src/components/backoffice/admin/CreationButtons';
+import { AdminCreationButtons } from 'src/components/backoffice/admin/AdminCreationButtons';
 import { StyledActionsContainer } from 'src/components/backoffice/admin/members/MemberList/MemberList.styles';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import SearchBar from 'src/components/filters/SearchBar';
@@ -161,7 +161,7 @@ export function MemberList({
           role
         )}
       >
-        <CreationButtons
+        <AdminCreationButtons
           refreshList={() => fetchData(search, filters, role, offset, true)}
         />
       </HeaderBackoffice>

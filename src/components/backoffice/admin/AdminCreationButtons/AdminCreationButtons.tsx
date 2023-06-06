@@ -13,10 +13,12 @@ import Icon from 'src/components/utils/Icon';
 import { Actions } from 'src/constants/utils';
 import { useIsDesktop } from 'src/hooks/utils';
 
-interface CreationButtonsProps {
+interface AdminCreationButtonsProps {
   refreshList: () => void;
 }
-export function CreationButtons({ refreshList }: CreationButtonsProps) {
+export function AdminCreationButtons({
+  refreshList,
+}: AdminCreationButtonsProps) {
   const isDesktop = useIsDesktop();
 
   const {

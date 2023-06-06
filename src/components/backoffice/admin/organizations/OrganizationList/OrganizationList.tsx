@@ -5,7 +5,7 @@ import { OrganizationTable } from '../OrganizationTable';
 import { Organization } from '../OrganizationTable/Organization';
 import { Api } from 'src/api';
 
-import { CreationButtons } from 'src/components/backoffice/admin/CreationButtons';
+import { AdminCreationButtons } from 'src/components/backoffice/admin/AdminCreationButtons';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import SearchBar from 'src/components/filters/SearchBar';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
@@ -95,7 +95,7 @@ export function OrganizationList({
         title="Gestion des structures"
         description="Ici vous pouvez accéder à toutes les informations sur les structures"
       >
-        <CreationButtons
+        <AdminCreationButtons
           refreshList={() => fetchData(search, filters, offset, true)}
         />
       </HeaderBackoffice>

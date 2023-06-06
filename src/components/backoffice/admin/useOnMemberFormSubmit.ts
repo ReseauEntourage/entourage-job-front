@@ -43,7 +43,7 @@ export function useOnMemberFormSubmit(
               data: { id: organizationId },
             } = await Api.postOrganization(organizationFields));
 
-            UIkit.notification(`La structure a bien été créé`, 'success');
+            UIkit.notification(`La structure a bien été créée`, 'success');
           } catch (error) {
             console.error(error);
             UIkit.notification(

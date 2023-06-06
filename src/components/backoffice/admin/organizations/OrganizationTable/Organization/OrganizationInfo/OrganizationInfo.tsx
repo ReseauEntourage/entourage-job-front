@@ -23,8 +23,3 @@ export function OrganizationInfo({ name, address, children }: MemberInfoProps) {
     </StyledOrganizationInfoContainer>
   );
 }
-
-OrganizationInfo.defaultProps = {
-  address: null,
-  children: undefined,
-};
