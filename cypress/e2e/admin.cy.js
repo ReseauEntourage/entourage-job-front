@@ -41,18 +41,34 @@ describe('Admin', () => {
       fixture: 'user-res'
     }).as('postUser');
 
+    cy.intercept('GET', '/user/search?query=&role=Coach', {
+      fixture: 'user-admin-coaches-search-res'
+    })
+
     cy.intercept('GET', '/user/search?query=Jane&role=Coach', {
       fixture: 'user-admin-coaches-search-res'
     }).as('getNormalCoaches');
+
+    cy.intercept('GET', '/user/search?query=&role=Candidat', {
+      fixture: 'user-admin-coaches-search-res'
+    })
 
     cy.intercept('GET', '/user/search?query=Jane&role=Candidat', {
       fixture: 'user-admin-candidates-search-res'
     }).as('getNormalCandidates');
 
 
+    cy.intercept('GET', `/user/search?query=&role=Coach+externe&organizationId=${entourageOrganizationId}`, {
+      fixture: 'user-admin-coaches-search-res'
+    })
+
     cy.intercept('GET', `/user/search?query=Jane&role=Coach+externe&organizationId=${entourageOrganizationId}`, {
       fixture: 'user-admin-coaches-search-res'
     }).as('getExternalCoaches');
+
+    cy.intercept('GET', `/user/search?query=&role=Candidat+externe&organizationId=${entourageOrganizationId}`, {
+      fixture: 'user-admin-coaches-search-res'
+    })
 
     cy.intercept('GET', `/user/search?query=Jane&role=Candidat+externe&organizationId=${entourageOrganizationId}`, {
       fixture: 'user-admin-candidates-search-res'
