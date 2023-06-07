@@ -1,10 +1,9 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { Button } from 'src/components/utils/Button';
-import { Hamburger, Navbar, NavbarLogo } from 'src/components/utils';
+import { Hamburger, Navbar, NavbarLogo, IconNoSSR } from 'src/components/utils';
 import { gaEvent } from 'src/lib/gtag.ts';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas.tsx';
 import { fbEvent } from 'src/lib/fb.ts';
 import { OFFCANVAS_GUEST } from 'src/constants/utils.ts';

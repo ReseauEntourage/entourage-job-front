@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, ButtonIcon } from 'src/components/utils';
+import { Grid, ButtonIcon, IconNoSSR } from 'src/components/utils';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import schemaTestimonial from 'src/components/forms/schema/formEditTestimonial.json';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { formatParagraph, sortByName } from 'src/utils';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import { openModal } from 'src/components/modals/Modal';
 
 export const CVEditReviews = ({ reviews, onChange }) => {

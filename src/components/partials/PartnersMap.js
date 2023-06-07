@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
 import { GoogleApiWrapper, InfoWindow, Map, Marker } from 'google-maps-react';
-import { SimpleLink } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { SimpleLink, IconNoSSR } from 'src/components/utils';
 
 const partnersPlaces = [
   {

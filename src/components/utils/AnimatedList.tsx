@@ -1,11 +1,6 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
-export const AnimatedList = ({
-  items,
-}: {
-  items: (string | JSX.Element | JSX.Element[])[];
-}) => {
+export const AnimatedList = ({ items }: { items: React.ReactNode[] }) => {
   return (
     <ul
       data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;"

@@ -1,14 +1,14 @@
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { StyledBackground } from 'src/components/utils/BackgroundImage/BackgroundImage.styles';
 import { BREAKPOINTS } from 'src/constants/styles';
 import useWindowSize from 'src/hooks/useWindowSize';
 
 interface BackgroundImageProps {
-  img: string;
+  img: string | StaticImageData;
   alt: string;
   children: React.ReactNode;
-  imgMobile: string;
+  imgMobile: string | StaticImageData;
   mobileHeight?: number;
   isHero?: boolean;
   hasCta?: boolean;

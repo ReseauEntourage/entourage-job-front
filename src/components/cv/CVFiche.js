@@ -7,9 +7,7 @@ import {
   TwitterShareButton,
   WhatsappShareButton,
 } from 'react-share';
-
-import { Grid, Img, SimpleLink } from 'src/components/utils';
-
+import { Grid, Img, SimpleLink, IconNoSSR } from 'src/components/utils';
 import ModalShareCV from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
 import { Button } from 'src/components/utils/Button';
 import {
@@ -21,11 +19,10 @@ import {
 import { gaEvent } from 'src/lib/gtag.ts';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { usePostOpportunity, useUpdateSharesCount } from 'src/hooks';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import { openModal } from 'src/components/modals/Modal';
 import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
-import { CONTRACTS } from 'src/constants';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { CONTRACTS } from 'src/constants/index.ts';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
 import { fbEvent } from 'src/lib/fb.ts';
 import { CVShape } from './CV.shape';
 

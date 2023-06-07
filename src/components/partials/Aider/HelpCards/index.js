@@ -7,7 +7,7 @@ import HelpProject from 'public/static/img/aider-financement-projet.jpg';
 import HelpReseau from 'public/static/img/aider-reseau.jpg';
 import TitleSection from 'src/components/partials/Aider/H2';
 import { COLORS } from 'src/constants/styles';
-import { Container } from 'src/components/utils/containers';
+import { Container } from 'src/components/utils';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { v4 as uuid } from 'uuid';
 

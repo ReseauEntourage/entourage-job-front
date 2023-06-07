@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Img } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
+import { Img, IconNoSSR } from 'src/components/utils';
 
 export const CommentProfileCard = ({ name, title, description, imgSrc }) => {
   return (

@@ -4,7 +4,7 @@ import FiltersDropdowns from 'src/components/filters/FiltersDropdowns';
 import FiltersMobile from 'src/components/filters/FiltersMobile';
 import FiltersOptions from 'src/components/filters/FiltersOptions';
 import FiltersSideBar from 'src/components/filters/FiltersSideBar';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils';
 import {
   MEMBER_FILTERS_DATA,
   OPPORTUNITY_FILTERS_DATA,

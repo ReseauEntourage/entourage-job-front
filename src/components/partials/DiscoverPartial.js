@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Section } from 'src/components/utils';
+import { Grid, Section, IconNoSSR } from 'src/components/utils';
 import { CandidatCard } from 'src/components/cards';
 import { Api } from 'src/api/index.ts';
 import { Button } from 'src/components/utils/Button';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 
 export const DiscoverPartial = ({ style }) => {

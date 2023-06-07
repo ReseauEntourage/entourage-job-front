@@ -4,9 +4,14 @@ import { Api } from 'src/api/index.ts';
 import schema, {
   adminMutations,
 } from 'src/components/forms/schema/formEditOpportunity';
-import FormWithValidation from 'src/components/forms/FormWithValidation';
-import { Button, Grid, SimpleLink, ButtonIcon } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import FormWithValidation from 'src/components/forms/FormWithValidation.tsx';
+import {
+  Button,
+  Grid,
+  SimpleLink,
+  ButtonIcon,
+  IconNoSSR,
+} from 'src/components/utils';
 
 import {
   findConstantFromValue,

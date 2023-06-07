@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Img, Grid } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { Button, Img, Grid, IconNoSSR } from 'src/components/utils';
 
 export const MultipleCTA = ({
   showNumbers,

@@ -1,16 +1,20 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import { Grid, Section, SimpleLink } from 'src/components/utils';
-import { AssociationEntourage, Partners } from 'src/components/partials';
-import { EXTERNAL_LINKS } from 'src/constants';
-import { IconNoSSR } from 'src/components/utils/Icon';
-import ModalInterestLinkedOut from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import { openModal } from 'src/components/modals/Modal';
+import ModalInterestLinkedOut from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
+import { AssociationEntourage, Partners } from 'src/components/partials';
 import {
   PageType,
   ChildrenType,
 } from 'src/components/partials/Footer/Footer.type';
-import { Button } from 'src/components/utils/Button';
+import {
+  Grid,
+  Section,
+  SimpleLink,
+  IconNoSSR,
+  Button,
+} from 'src/components/utils';
+import { EXTERNAL_LINKS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 

@@ -1,4 +1,4 @@
-export const UIKIT_SCREENS = ['s', 'm', 'l', 'xl'];
+export const UIKIT_SCREENS = ['s', 'm', 'l', 'xl'] as const;
 // export const UIKIT_WIDTH = [
 //   'auto',
 //   'expand',

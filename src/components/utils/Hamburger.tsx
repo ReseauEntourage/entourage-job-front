@@ -5,8 +5,8 @@ import { ButtonIcon } from 'src/components/utils/ButtonIcon';
 import { UIKIT_SCREENS } from 'src/components/variables';
 
 interface HamburgerProps {
-  hidden?: typeof UIKIT_SCREENS;
-  visible?: typeof UIKIT_SCREENS;
+  hidden?: (typeof UIKIT_SCREENS)[keyof typeof UIKIT_SCREENS];
+  visible?: (typeof UIKIT_SCREENS)[keyof typeof UIKIT_SCREENS];
   targetId: string;
   light?: boolean;
 }

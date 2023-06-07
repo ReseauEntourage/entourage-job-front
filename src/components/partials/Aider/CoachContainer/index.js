@@ -3,16 +3,18 @@ import { StyledCoachContainer } from 'src/components/partials/Aider/CoachContain
 import TitleSection from 'src/components/partials/Aider/H2';
 import AiderAccompagnerCoachImg from 'public/static/img/aider-accompagner-coach.jpg';
 import AiderAccompagnerCoachImgMobile from 'public/static/img/aider-accompagner-coach-mobile.jpg';
-import { BackgroundImage } from 'src/components/utils';
+import {
+  BackgroundImage,
+  Button,
+  IconNoSSR,
+  Container,
+} from 'src/components/utils';
 import { COLORS } from 'src/constants/styles';
-import { Button } from 'src/components/utils/Button';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import CoachTestimony from 'src/components/partials/Aider/CoachContainer/CoachTestimony';
 import WelcomeIcon from 'public/static/img/icons/aider-welcome.svg';
 import ReseauIcon from 'public/static/img/icons/aider-reseau.svg';
 import InterviewIcon from 'public/static/img/icons/aider-interview.svg';
 import BoiteOutilsIcon from 'public/static/img/icons/aider-boite-outils.svg';
-import { Container } from 'src/components/utils/containers';
 import { v4 as uuid } from 'uuid';
 import { fbEvent } from 'src/lib/fb.ts';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';

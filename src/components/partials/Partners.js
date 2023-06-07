@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Background, Section } from 'src/components/utils';
+import { Background, Section, IconNoSSR } from 'src/components/utils';
 import PARTNERS from 'src/constants/partners';
 import { Button } from 'src/components/utils/Button';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import { LogoList } from 'src/components/partials/LogoList';
 
 export const Partners = ({ showOrientationPartners }) => {

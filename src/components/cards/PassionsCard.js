@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, ButtonIcon } from 'src/components/utils';
+import { Grid, ButtonIcon, IconNoSSR } from 'src/components/utils';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import schemaformEditPassions from 'src/components/forms/schema/formEditPassions.json';
-import { IconNoSSR } from 'src/components/utils/Icon';
 import { openModal } from 'src/components/modals/Modal';
 
 export const PassionsCard = ({ list, onChange }) => {

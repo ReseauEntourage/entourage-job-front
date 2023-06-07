@@ -2,8 +2,7 @@ import React from 'react';
 import { v4 as uuid } from 'uuid';
 import PropTypes from 'prop-types';
 import { StyledSubMenu } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/SubMenu/SubMenu.styles';
-import { SimpleLink } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { SimpleLink, IconNoSSR } from 'src/components/utils';
 import {
   HeaderSubItemDefaultProps,
   HeaderSubItemShape,

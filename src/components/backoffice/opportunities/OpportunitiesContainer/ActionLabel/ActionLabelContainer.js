@@ -1,5 +1,5 @@
 import ActionLabel from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel/ActionLabel';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
+import { IconNoSSR } from 'src/components/utils';
 import EntourageIcon from 'assets/custom/icons/entourage.svg';
 import React from 'react';
 import PropTypes from 'prop-types';

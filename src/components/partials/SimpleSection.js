@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Section } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
+import { Button, Section, IconNoSSR } from 'src/components/utils';
 
 export const SimpleSection = ({
   id,

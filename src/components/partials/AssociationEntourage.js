@@ -1,10 +1,15 @@
 import React from 'react';
-import { Background, Grid, Img, Section } from 'src/components/utils';
-import { Button } from 'src/components/utils/Button';
+import {
+  Background,
+  Grid,
+  Img,
+  Section,
+  Button,
+  IconNoSSR,
+} from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants/index.ts';
 import { gaEvent } from 'src/lib/gtag.ts';
 import { GA_TAGS } from 'src/constants/tags';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 
 export const AssociationEntourage = () => {
   return (

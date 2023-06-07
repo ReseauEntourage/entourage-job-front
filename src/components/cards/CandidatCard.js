@@ -8,14 +8,13 @@ import {
 } from 'react-share';
 import { useRouter } from 'next/router';
 
-import { Grid, Img, SimpleLink } from 'src/components/utils';
+import { Grid, Img, SimpleLink, IconNoSSR } from 'src/components/utils';
 import ModalShareCV from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
 import { Api } from 'src/api/index.ts';
 import { SharesCountContext } from 'src/store/SharesCountProvider';
 import { gaEvent } from 'src/lib/gtag.ts';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import moment from 'moment';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import { openModal } from 'src/components/modals/Modal';
 import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants/index.ts';
 import {

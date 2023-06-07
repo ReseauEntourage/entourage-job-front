@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { filtersToQueryParams } from 'src/utils';
-import { Button, Grid, SimpleLink } from 'src/components/utils';
+import { Button, Grid, SimpleLink, IconNoSSR } from 'src/components/utils';
 import { CandidatCard } from 'src/components/cards';
 import { Api } from 'src/api/index.ts';
 import {
@@ -14,7 +14,6 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import SearchBar from 'src/components/filters/SearchBar.tsx';
 import { openModal } from 'src/components/modals/Modal';
 import usePostPublicOfferModal from 'src/components/modals/usePostPublicOfferModal';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { fbEvent } from 'src/lib/fb.ts';
 import { FB_TAGS } from 'src/constants/tags';

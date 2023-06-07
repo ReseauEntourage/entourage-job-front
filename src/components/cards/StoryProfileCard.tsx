@@ -3,7 +3,7 @@ import schemaStory from 'src/components/forms/schema/formEditStory.json';
 import { openModal } from 'src/components/modals/Modal';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Grid, ButtonIcon } from 'src/components/utils';
-import { formatParagraph } from 'src/utils';
+import { formatParagraph } from 'src/utils/Formatting';
 
 export const StoryProfileCard = ({
   description,

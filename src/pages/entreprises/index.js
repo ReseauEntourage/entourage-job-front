@@ -8,13 +8,12 @@ import {
   Timeline,
 } from 'src/components/partials';
 import Layout from 'src/components/Layout.tsx';
-import { Button, Section, AnimatedList } from 'src/components/utils';
+import { Button, Section, AnimatedList, IconNoSSR } from 'src/components/utils';
 import { ImageTitle } from 'src/components/partials/ImageTitle';
 import { NewsletterPartial } from 'src/components/partials/NewsletterPartial';
 import PARTNERS from 'src/constants/partners';
-import { IconNoSSR } from 'src/components/utils/Icon';
 import { CVList } from 'src/components/cv';
-import { CV_FILTERS_DATA, STORAGE_KEYS } from 'src/constants';
+import { CV_FILTERS_DATA, STORAGE_KEYS } from 'src/constants/index.ts';
 import { Api } from 'src/api/index.ts';
 import PropTypes from 'prop-types';
 import TextLoop from 'react-text-loop';

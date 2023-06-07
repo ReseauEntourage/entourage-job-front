@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { addPrefix } from 'src/utils';
-import { Button } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
+import { Button, IconNoSSR } from 'src/components/utils';
 
 export const ImageTitleContent = ({ title, text, img, cta }) => {
   return (

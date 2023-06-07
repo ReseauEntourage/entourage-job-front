@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
+import { Button, IconNoSSR } from 'src/components/utils';
 
 const SuccessModalContent = ({ text, closeModal }) => {
   return (

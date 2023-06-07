@@ -1,8 +1,13 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Grid, SimpleLink, ButtonIcon } from 'src/components/utils';
+import {
+  Button,
+  Grid,
+  SimpleLink,
+  ButtonIcon,
+  IconNoSSR,
+} from 'src/components/utils';
 import Select from 'src/components/forms/fields/Select';
-import { IconNoSSR } from 'src/components/utils/Icon';
 
 import { Api } from 'src/api/index.ts';
 import {

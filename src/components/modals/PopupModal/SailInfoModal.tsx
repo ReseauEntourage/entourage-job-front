@@ -1,7 +1,6 @@
 import React from 'react';
 import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
-import { Button, Img } from 'src/components/utils';
-import Icon from 'src/components/utils/Icon';
+import { Button, Img, Icon } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { addPrefix } from 'src/utils';
 

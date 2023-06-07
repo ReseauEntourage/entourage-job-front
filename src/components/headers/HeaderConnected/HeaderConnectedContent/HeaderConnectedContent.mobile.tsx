@@ -8,10 +8,13 @@ import {
 } from 'src/components/headers/HeaderConnected/HeaderConnected.shapes';
 import { StyledConnectedItemMobile } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/HeaderConnectedContent.styles';
 import SubMenu from 'src/components/headers/HeaderConnected/HeaderConnectedContent/SubMenu';
-import { Navbar, SimpleLink } from 'src/components/utils';
-import Hamburger from 'src/components/utils/Hamburger';
-import { IconNoSSR } from 'src/components/utils/Icon';
-import NavbarLogo from 'src/components/utils/Navbar/NavbarLogo';
+import {
+  Navbar,
+  SimpleLink,
+  Hamburger,
+  NavbarLogo,
+  IconNoSSR,
+} from 'src/components/utils';
 import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas';
 import { OFFCANVAS_LOGGED } from 'src/constants/utils';
 import { gaEvent } from 'src/lib/gtag';

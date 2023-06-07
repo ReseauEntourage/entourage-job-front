@@ -1,8 +1,7 @@
 import React from 'react';
 import Layout from 'src/components/Layout.tsx';
 import { Button } from 'src/components/utils/Button';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
-import { Section, AnimatedList } from 'src/components/utils';
+import { Section, AnimatedList, IconNoSSR } from 'src/components/utils';
 import { ImageTitle } from 'src/components/partials/ImageTitle';
 import { gaEvent } from 'src/lib/gtag.ts';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
