@@ -1,22 +1,22 @@
 import _ from 'lodash';
 import React, { useCallback, useMemo, useState } from 'react';
-import PropTypes from 'prop-types';
-import { filtersToQueryParams } from 'src/utils';
-import { Button, Grid, SimpleLink, IconNoSSR } from 'src/components/utils';
+import useDeepCompareEffect from 'use-deep-compare-effect';
+import { Api } from 'src/api/index';
+import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { CandidatCard } from 'src/components/cards';
-import { Api } from 'src/api/index.ts';
+import SearchBar from 'src/components/filters/SearchBar';
+import { openModal } from 'src/components/modals/Modal';
+import usePostPublicOfferModal from 'src/components/modals/usePostPublicOfferModal';
+import { Button, Grid, SimpleLink, IconNoSSR } from 'src/components/utils';
 import {
   CV_FILTERS_DATA,
   INITIAL_NB_OF_CV_TO_DISPLAY,
-} from 'src/constants/index.ts';
-import { usePrevious } from 'src/hooks/utils';
-import useDeepCompareEffect from 'use-deep-compare-effect';
-import SearchBar from 'src/components/filters/SearchBar.tsx';
-import { openModal } from 'src/components/modals/Modal';
-import usePostPublicOfferModal from 'src/components/modals/usePostPublicOfferModal';
-import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
-import { fbEvent } from 'src/lib/fb.ts';
+} from 'src/constants/index';
 import { FB_TAGS } from 'src/constants/tags';
+import { usePrevious } from 'src/hooks/utils';
+import { fbEvent } from 'src/lib/fb';
+import { filtersToQueryParams } from 'src/utils/Filters';
+import { AnyToFix } from 'src/utils/Types';
 
 const NoCVInThisArea = () => {
   return (
@@ -36,6 +36,16 @@ const NoCVInThisArea = () => {
   );
 };
 
+interface CVListProps {
+  hideSearchBar?: boolean;
+  nb?: number;
+  search?: string;
+  filters?: AnyToFix; // to be typed
+  setFilters?: (updatedFilters?: any) => void; // to be typed
+  setSearch?: (updatedSearch?: any) => void; // to be typed
+  resetFilters?: () => void;
+}
+
 export const CVList = ({
   hideSearchBar,
   nb,
@@ -44,7 +54,7 @@ export const CVList = ({
   setFilters,
   setSearch,
   resetFilters,
-}) => {
+}: CVListProps) => {
   const PublicOfferModal = usePostPublicOfferModal();
 
   const [cvs, setCVs] = useState(undefined);
@@ -58,7 +68,7 @@ export const CVList = ({
   const prevNbOfCVToDisplay = usePrevious(nbOfCVToDisplay);
 
   const fetchData = useCallback(
-    (searchValue, filtersValue, nbOfCVToDisplayValue, isPagination) => {
+    (searchValue, filtersValue, nbOfCVToDisplayValue, isPagination = false) => {
       setError(undefined);
 
       if (isPagination) {
@@ -79,9 +89,14 @@ export const CVList = ({
             setCVs((prevCVs = []) => {
               return [
                 ...prevCVs,
-                ..._.differenceWith(data.cvs, prevCVs, (cv1, cv2) => {
-                  return cv1.id === cv2.id;
-                }),
+                ..._.differenceWith(
+                  data.cvs,
+                  prevCVs,
+                  (cv1: AnyToFix, cv2: AnyToFix) => {
+                    // to be typed
+                    return cv1.id === cv2.id;
+                  }
+                ),
               ];
             });
           } else {
@@ -132,7 +147,6 @@ export const CVList = ({
                   }
                   imgAlt={cv.user.candidat.firstName}
                   firstName={cv.user.candidat.firstName}
-                  gender={cv.user.candidat.gender}
                   ambitions={cv.ambitions}
                   locations={cv.locations}
                   skills={cv.skills}
@@ -227,7 +241,15 @@ export const CVList = ({
       }
       return renderCvList(cvs);
     }
-  }, [cvs, error, filters, hasSuggestions, loading, renderCvList]);
+  }, [
+    cvs,
+    error,
+    filters,
+    hasSuggestions,
+    loading,
+    renderCvList,
+    PublicOfferModal,
+  ]);
 
   return (
     <div data-uk-scrollspy="cls:uk-animation-slide-bottom-small; target: .uk-card; delay: 200">
@@ -235,7 +257,6 @@ export const CVList = ({
         <SearchBar
           filtersConstants={CV_FILTERS_DATA}
           filters={filters}
-          // numberOfResults={numberOfResults}
           resetFilters={resetFilters}
           search={search}
           setSearch={setSearch}
@@ -248,25 +269,12 @@ export const CVList = ({
   );
 };
 
-CVList.propTypes = {
-  hideSearchBar: PropTypes.bool,
-  nb: PropTypes.number,
-  search: PropTypes.oneOf([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
-  ]),
-  filters: PropTypes.shape({}),
-  setFilters: PropTypes.func,
-  setSearch: PropTypes.func,
-  resetFilters: PropTypes.func,
-};
-
 CVList.defaultProps = {
   nb: undefined,
   search: undefined,
   filters: {},
   hideSearchBar: false,
-  setFilters: () => {},
-  setSearch: () => {},
-  resetFilters: () => {},
+  setFilters: null,
+  setSearch: null,
+  resetFilters: null,
 };

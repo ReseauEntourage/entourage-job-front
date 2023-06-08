@@ -3,7 +3,7 @@ import React from 'react';
 import { Img } from 'src/components/utils';
 import { addPrefix } from 'src/utils';
 
-interface CVBackgroundType {
+interface CVBackgroundProps {
   url?: string;
   employed?: boolean;
   endOfContract?: string;
@@ -13,7 +13,7 @@ export const CVBackground = ({
   url,
   employed,
   endOfContract,
-}: CVBackgroundType) => {
+}: CVBackgroundProps) => {
   const employedBadgeContent = (
     <>
       <div className="uk-flex uk-flex-center uk-flex-middle uk-margin-small-right">

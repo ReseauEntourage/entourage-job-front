@@ -68,15 +68,3 @@ export const SimpleLink = ({
     </Link>
   );
 };
-
-SimpleLink.defaultProps = {
-  href: null,
-  className: '',
-  visible: null,
-  target: null,
-  isExternal: false,
-  scroll: true,
-  onClick: null,
-  toggle: null,
-  shallow: false,
-};

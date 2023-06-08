@@ -4,12 +4,11 @@ import PARTNERS from 'src/constants/partners';
 import { Img, Section, SimpleLink, Grid } from 'src/components/utils';
 import { addPrefix, formatParagraph } from 'src/utils';
 import ModalInterestLinkedOut from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
-import { SimpleSection } from 'src/components/partials/SimpleSection';
 import { gaEvent } from 'src/lib/gtag.ts';
 import { GA_TAGS } from 'src/constants/tags';
 import { openModal } from 'src/components/modals/Modal';
 import PropTypes from 'prop-types';
-import { LogoList } from 'src/components/partials';
+import { LogoList, SimpleSection } from 'src/components/partials';
 
 const viewportHeightWithoutHeader = 'calc(100vh - 80px)';
 const viewportHeightWithoutHeaderAndPadding = 'calc(100vh - 220px)';

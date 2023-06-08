@@ -3,7 +3,7 @@ import Resizer from 'react-image-file-resizer';
 import UIkit from 'uikit';
 import { addPrefix } from 'src/utils';
 
-interface CVEditPictureType {
+interface CVEditPictureProps {
   urlImg?: string;
   onChange: ({
     profileImage,
@@ -21,7 +21,7 @@ export const CVEditPicture = ({
   onChange,
   disablePicture,
   imageUploading,
-}: CVEditPictureType) => {
+}: CVEditPictureProps) => {
   const [url, setUrl] = useState(urlImg);
 
   useEffect(() => {

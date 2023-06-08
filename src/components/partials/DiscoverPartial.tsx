@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Section, IconNoSSR } from 'src/components/utils';
-import { CandidatCard } from 'src/components/cards';
-import { Api } from 'src/api/index.ts';
-import { Button } from 'src/components/utils/Button';
+import React, { useEffect, useState } from 'react';
+import { Api } from 'src/api/index';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
+import { CandidatCard } from 'src/components/cards';
+import { Grid, Section, IconNoSSR } from 'src/components/utils';
+import { Button } from 'src/components/utils/Button';
 
-export const DiscoverPartial = ({ style }) => {
+export const DiscoverPartial = ({ style }: { style: string }) => {
   const [cvs, setCVs] = useState(undefined);
   const [error, setError] = useState(null);
 
@@ -39,7 +39,6 @@ export const DiscoverPartial = ({ style }) => {
               }
               imgAlt={cv.user && cv.user.candidat.firstName}
               firstName={cv.user && cv.user.candidat.firstName}
-              gender={cv.user && cv.user.candidat.gender}
               ambitions={cv.ambitions}
               skills={cv.skills}
               catchphrase={cv.catchphrase}

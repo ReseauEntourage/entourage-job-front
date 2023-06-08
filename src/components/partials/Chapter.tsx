@@ -3,13 +3,13 @@ import React from 'react';
 import { Grid, Section, Img } from 'src/components/utils';
 
 interface ChapterProps {
-  title: JSX.Element | JSX.Element[];
-  content: JSX.Element | JSX.Element[];
+  title: React.ReactNode;
+  content: React.ReactNode;
   imgSrc?: string;
   style: 'muted' | 'default';
   direction: 'left' | 'right' | 'column';
   animate: boolean;
-  cta?: JSX.Element | JSX.Element[];
+  cta?: React.ReactNode;
   smallTitle?: boolean;
 }
 

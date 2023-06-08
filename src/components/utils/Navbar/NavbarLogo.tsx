@@ -23,8 +23,3 @@ export const NavbarLogo = ({ href, src, alt, style }: NavbarLogoProps) => {
     </Link>
   );
 };
-
-NavbarLogo.defaultProps = {
-  alt: 'navbar logo',
-  style: {},
-};

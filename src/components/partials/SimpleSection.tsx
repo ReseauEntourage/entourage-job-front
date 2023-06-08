@@ -1,6 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Button, Section, IconNoSSR } from 'src/components/utils';
+
+interface SimpleSectionProps {
+  id: string;
+  style?: string;
+  container?: 'small' | 'large';
+  title: React.ReactNode;
+  button?: {
+    label: string;
+    href?: string;
+    external?: boolean;
+    modal?: string;
+    onClick?: () => void;
+  };
+  text: React.ReactNode;
+  children?: React.ReactNode;
+  fontSize?: 'small' | 'large';
+}
 
 export const SimpleSection = ({
   id,
@@ -11,7 +27,7 @@ export const SimpleSection = ({
   button,
   children,
   fontSize,
-}) => {
+}: SimpleSectionProps) => {
   return (
     <Section container={container} style={style}>
       {/* Fix so that the anchor scroll to the right height */}
@@ -49,27 +65,10 @@ export const SimpleSection = ({
   );
 };
 
-SimpleSection.propTypes = {
-  id: PropTypes.string.isRequired,
-  style: PropTypes.string,
-  container: PropTypes.oneOf(['small', 'large']),
-  title: PropTypes.element.isRequired,
-  button: PropTypes.shape({
-    label: PropTypes.string.isRequired,
-    href: PropTypes.string,
-    external: PropTypes.bool,
-    modal: PropTypes.string,
-    onClick: PropTypes.func,
-  }),
-  text: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
-  children: PropTypes.element,
-  fontSize: PropTypes.oneOf(['small', 'large']),
-};
-
 SimpleSection.defaultProps = {
   style: 'default',
   container: 'small',
-  button: undefined,
-  children: undefined,
+  button: null,
+  children: null,
   fontSize: 'large',
 };

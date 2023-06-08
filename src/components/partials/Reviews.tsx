@@ -1,7 +1,7 @@
 import React from 'react';
 import { Img, Section, Grid } from 'src/components/utils';
 
-interface ReviewsType {
+interface ReviewsProps {
   reviews: {
     author: string;
     authorStatus: string;
@@ -14,7 +14,7 @@ interface ReviewsType {
   title: string | JSX.Element | JSX.Element[];
 }
 
-export const Reviews = ({ reviews, title }: ReviewsType) => {
+export const Reviews = ({ reviews, title }: ReviewsProps) => {
   return (
     <Section id="reviews" style="default" container="small">
       <h2 className="uk-text-bold uk-text-center uk-margin-medium-bottom uk-margin-remove-top">

@@ -6,6 +6,7 @@ import FiltersOptions from 'src/components/filters/FiltersOptions';
 import FiltersSideBar from 'src/components/filters/FiltersSideBar';
 import { IconNoSSR } from 'src/components/utils';
 import {
+  CV_FILTERS_DATA,
   MEMBER_FILTERS_DATA,
   OPPORTUNITY_FILTERS_DATA,
   ORGANIZATION_FILTERS_DATA,
@@ -17,6 +18,7 @@ import { AnyToFix } from 'src/utils/Types';
 
 interface SearchBarProps {
   filtersConstants:
+    | Partial<typeof CV_FILTERS_DATA>
     | Partial<typeof MEMBER_FILTERS_DATA>
     | Partial<typeof OPPORTUNITY_FILTERS_DATA>
     | Partial<typeof ORGANIZATION_FILTERS_DATA>; // to be typed properly

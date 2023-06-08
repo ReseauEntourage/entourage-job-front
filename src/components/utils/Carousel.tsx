@@ -1,9 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
-import { gaEvent } from 'src/lib/gtag.ts';
+import React from 'react';
+import { IconNoSSR } from 'src/components/utils/Icon';
 import { GA_TAGS } from 'src/constants/tags';
-import { IconNoSSR } from 'src/components/utils';
+import { gaEvent } from 'src/lib/gtag';
+
+interface CarouselProps {
+  style?: string;
+  children: React.ReactNode;
+  containerClasses: string;
+  pagination?: boolean;
+  padding?: boolean;
+}
 
 export const Carousel = ({
   style,
@@ -11,7 +18,7 @@ export const Carousel = ({
   containerClasses,
   pagination,
   padding,
-}) => {
+}: CarouselProps) => {
   const { asPath } = useRouter();
 
   let tag;
@@ -117,13 +124,6 @@ export const Carousel = ({
   );
 };
 
-Carousel.propTypes = {
-  style: PropTypes.string,
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
-  containerClasses: PropTypes.string.isRequired,
-  pagination: PropTypes.bool,
-  padding: PropTypes.bool,
-};
 Carousel.defaultProps = {
   style: 'default',
   pagination: true,

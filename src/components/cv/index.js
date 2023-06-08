@@ -6,5 +6,5 @@ export { CVEditPicture } from 'src/components/cv/CVEditPicture.tsx';
 export { CVEditReviews } from 'src/components/cv/CVEditReviews';
 export { CVFiche } from 'src/components/cv/CVFiche';
 export { CVFicheEdition } from 'src/components/cv/CVFicheEdition';
-export { CVList } from 'src/components/cv/CVList';
+export { CVList } from 'src/components/cv/CVList.tsx';
 export { CVPDF } from 'src/components/cv/CVPDF';

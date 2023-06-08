@@ -1,12 +1,12 @@
 import React from 'react';
-import { Section } from 'src/components/utils';
-import { MultipleCTA } from 'src/components/partials/MultipleCTA';
-import { FB_TAGS, GA_TAGS, LINK_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag.ts';
 import CompanyContactModal from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
 import { openModal } from 'src/components/modals/Modal/openModal';
-import { fbEvent } from 'src/lib/fb.ts';
-import { linkEvent } from 'src/lib/lintrk.ts';
+import { MultipleCTA } from 'src/components/partials/MultipleCTA';
+import { Section } from 'src/components/utils';
+import { FB_TAGS, GA_TAGS, LINK_TAGS } from 'src/constants/tags';
+import { fbEvent } from 'src/lib/fb';
+import { gaEvent } from 'src/lib/gtag';
+import { linkEvent } from 'src/lib/lintrk';
 
 export const HowToCommitDifferently = () => {
   return (
@@ -27,9 +27,9 @@ export const HowToCommitDifferently = () => {
               label: 'Faire un don',
               href: process.env.DONATION_LINK,
               external: true,
-            },
-            onClick: () => {
-              gaEvent(GA_TAGS.PAGE_ENTREPRISES_DON_CLIC);
+              onClick: () => {
+                gaEvent(GA_TAGS.PAGE_ENTREPRISES_DON_CLIC);
+              },
             },
           },
           {

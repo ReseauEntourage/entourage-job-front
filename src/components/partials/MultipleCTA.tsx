@@ -1,6 +1,27 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Button, Img, Grid, IconNoSSR } from 'src/components/utils';
+
+interface MultipleCTAProps {
+  showNumbers?: boolean;
+  showHorizontalDividers?: boolean;
+  showVerticalDividers?: boolean;
+  spacing?: 'small' | 'medium' | 'large';
+  className?: string;
+  data: {
+    title?: string;
+    text?: React.ReactNode;
+    img?: string;
+    button?: {
+      label: string;
+      href?: string;
+      external?: boolean;
+      modal?: string;
+      onClick?: () => void;
+      size?: string;
+    };
+  }[];
+  animate?: boolean;
+}
 
 export const MultipleCTA = ({
   showNumbers,
@@ -10,7 +31,7 @@ export const MultipleCTA = ({
   spacing,
   className,
   animate,
-}) => {
+}: MultipleCTAProps) => {
   return (
     <div data-uk-height-match="target : h4, .text" className={className}>
       <Grid
@@ -114,29 +135,6 @@ export const MultipleCTA = ({
       />
     </div>
   );
-};
-
-MultipleCTA.propTypes = {
-  showNumbers: PropTypes.bool,
-  showHorizontalDividers: PropTypes.bool,
-  showVerticalDividers: PropTypes.bool,
-  spacing: PropTypes.oneOf(['small', 'medium', 'large']),
-  className: PropTypes.string,
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string,
-      text: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-      img: PropTypes.string,
-      button: PropTypes.shape({
-        label: PropTypes.string,
-        href: PropTypes.string,
-        external: PropTypes.bool,
-        modal: PropTypes.string,
-        onClick: PropTypes.func,
-      }),
-    })
-  ).isRequired,
-  animate: PropTypes.bool,
 };
 
 MultipleCTA.defaultProps = {

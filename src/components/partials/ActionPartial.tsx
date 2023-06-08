@@ -1,9 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Grid, Section } from 'src/components/utils';
-import { SharePartial } from 'src/components/partials/SharePartial';
-import { NewsletterPartial } from 'src/components/partials/NewsletterPartial';
 import { MultipleCTA } from 'src/components/partials/MultipleCTA';
+import { NewsletterPartial } from 'src/components/partials/NewsletterPartial';
+import { SharePartial } from 'src/components/partials/SharePartial';
+import { Grid, Section } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';
 
 const datas = [
@@ -36,7 +35,8 @@ const datas = [
     title: 'Vous cherchez du travail',
   },
 ];
-export const ActionPartial = ({ style }) => {
+
+export const ActionPartial = ({ style }: { style?: 'default' | 'muted' }) => {
   return (
     <Section style={style} id="actions">
       <Grid gap="large" column center>
@@ -64,10 +64,6 @@ export const ActionPartial = ({ style }) => {
       </Grid>
     </Section>
   );
-};
-
-ActionPartial.propTypes = {
-  style: PropTypes.string,
 };
 
 ActionPartial.defaultProps = {

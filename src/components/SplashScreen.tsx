@@ -1,8 +1,8 @@
-import React from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import { ImgNoSSR } from 'src/components/utils/Img.tsx';
+import React from 'react';
+import { ImgNoSSR } from 'src/components/utils';
 
 const SplashScreenContent = () => {
   return (
@@ -53,7 +53,7 @@ SplashScreen.propTypes = {
 export const SplashScreenNoSSR = dynamic(
   () => {
     return import('src/components/SplashScreen').then((mod) => {
-      return mod.SplashScreenContainer;
+      return mod.SplashScreen;
     });
   },
   {

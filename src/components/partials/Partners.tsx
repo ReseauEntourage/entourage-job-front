@@ -1,11 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Background, Section, IconNoSSR } from 'src/components/utils';
-import PARTNERS from 'src/constants/partners';
-import { Button } from 'src/components/utils/Button';
 import { LogoList } from 'src/components/partials/LogoList';
+import { Background, Section, IconNoSSR } from 'src/components/utils';
+import { Button } from 'src/components/utils/Button';
+import PARTNERS from 'src/constants/partners';
 
-export const Partners = ({ showOrientationPartners }) => {
+export const Partners = ({
+  showOrientationPartners,
+}: {
+  showOrientationPartners?: boolean;
+}) => {
   return (
     <Background
       blend={{ colorHex: showOrientationPartners ? 'white' : '#484848' }}
@@ -60,7 +63,5 @@ export const Partners = ({ showOrientationPartners }) => {
     </Background>
   );
 };
-
-Partners.propTypes = { showOrientationPartners: PropTypes.bool };
 
 Partners.defaultProps = { showOrientationPartners: false };

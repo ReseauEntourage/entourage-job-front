@@ -1,8 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Grid, Carousel, Logo } from 'src/components/utils';
 
-export const LogoList = ({ logos, carousel, padding, background }) => {
+interface LogoListProps {
+  logos: {
+    key: string;
+    link: string;
+    bis?: boolean;
+  }[];
+  carousel?: boolean;
+  padding?: boolean;
+  background?: boolean;
+}
+
+export const LogoList = ({
+  logos,
+  carousel,
+  padding,
+  background,
+}: LogoListProps) => {
   const logosPerLine = Math.floor(logos.length / 3 + 1);
 
   if (carousel) {
@@ -43,19 +58,6 @@ export const LogoList = ({ logos, carousel, padding, background }) => {
       />
     </div>
   );
-};
-
-LogoList.propTypes = {
-  logos: PropTypes.arrayOf(
-    PropTypes.shape({
-      key: PropTypes.string.isRequired,
-      link: PropTypes.string.isRequired,
-      bis: PropTypes.bool,
-    })
-  ).isRequired,
-  carousel: PropTypes.bool,
-  padding: PropTypes.bool,
-  background: PropTypes.bool,
 };
 
 LogoList.defaultProps = {

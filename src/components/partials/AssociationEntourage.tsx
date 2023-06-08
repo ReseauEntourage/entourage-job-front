@@ -7,9 +7,9 @@ import {
   Button,
   IconNoSSR,
 } from 'src/components/utils';
-import { EXTERNAL_LINKS } from 'src/constants/index.ts';
-import { gaEvent } from 'src/lib/gtag.ts';
+import { EXTERNAL_LINKS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
 
 export const AssociationEntourage = () => {
   return (

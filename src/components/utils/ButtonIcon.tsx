@@ -1,6 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
+import { IconNoSSR } from 'src/components/utils/Icon';
+
+interface ButtonIconProps {
+  name: string;
+  tooltip?: string;
+  onClick?: () => void;
+  className?: string;
+  href?: string;
+  ratio?: number;
+  style?: React.CSSProperties;
+  dataTestId?: string;
+}
 
 export const ButtonIcon = ({
   name,
@@ -11,7 +21,7 @@ export const ButtonIcon = ({
   tooltip,
   style,
   dataTestId,
-}) => {
+}: ButtonIconProps) => {
   return (
     <a
       className="uk-text-emphasis uk-flex uk-flex-middle"
@@ -30,23 +40,12 @@ export const ButtonIcon = ({
   );
 };
 
-ButtonIcon.propTypes = {
-  name: PropTypes.string.isRequired,
-  tooltip: PropTypes.string,
-  onClick: PropTypes.func,
-  className: PropTypes.string,
-  href: PropTypes.string,
-  ratio: PropTypes.number,
-  style: PropTypes.shape({}),
-  dataTestId: PropTypes.string,
-};
-
 ButtonIcon.defaultProps = {
-  href: undefined,
-  tooltip: undefined,
-  className: undefined,
+  href: null,
+  tooltip: null,
+  className: null,
   style: {},
   ratio: 1.5,
-  onClick: () => {},
+  onClick: null,
   dataTestId: '',
 };
