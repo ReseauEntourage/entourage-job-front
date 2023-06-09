@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { filtersToQueryParams } from 'src/utils';
 import { Button, Grid } from 'src/components/utils';
@@ -114,70 +114,70 @@ const CVList = ({
     }
   }, [fetchData, search, filters, nbOfCVToDisplay]);
 
-  const renderCvList = (items) => {
-    return (
-      <div
-        className="cv-list"
-        data-uk-scrollspy="cls:uk-animation-slide-bottom-small; target: .uk-card; delay: 200"
-      >
-        <Grid
-          childWidths={['1-1', '1-2@s', '1-3@m']}
-          gap="small"
-          row
-          center
-          items={items.slice(0, nbOfCVToDisplay).map((cv) => {
-            return (
-              <CandidatCard
-                businessLines={cv.businessLines}
-                url={cv.user.url}
-                imgSrc={
-                  (cv.urlImg && process.env.AWSS3_CDN_URL + cv.urlImg) ||
-                  undefined
-                }
-                imgAlt={cv.user.candidat.firstName}
-                firstName={cv.user.candidat.firstName}
-                gender={cv.user.candidat.gender}
-                ambitions={cv.ambitions}
-                locations={cv.locations}
-                skills={cv.skills}
-                catchphrase={cv.catchphrase}
-                employed={cv.user.employed}
-                endOfContract={cv.user.endOfContract}
-                id={cv.user.candidat.id}
-              />
-            );
-          })}
-        />
-        {!nb && (
-          <div className="uk-flex uk-flex-center uk-margin-top">
-            <Button
-              style="primary"
-              onClick={() => {
-                setNbOfCVToDisplay((prevNbOfCV) => {
-                  return prevNbOfCV + INITIAL_NB_OF_CV_TO_DISPLAY;
-                });
-              }}
-            >
-              Voir plus
-              {loadingMore ? (
-                <div
-                  className="uk-margin-small-left"
-                  data-uk-spinner="ratio: .6"
+  const renderCvList = useCallback(
+    (items) => {
+      return (
+        <div className="cv-list">
+          <Grid
+            childWidths={['1-1', '1-2@s', '1-3@m']}
+            gap="small"
+            row
+            center
+            items={items.slice(0, nbOfCVToDisplay).map((cv) => {
+              return (
+                <CandidatCard
+                  businessLines={cv.businessLines}
+                  url={cv.user.url}
+                  imgSrc={
+                    (cv.urlImg && process.env.AWSS3_CDN_URL + cv.urlImg) ||
+                    undefined
+                  }
+                  imgAlt={cv.user.candidat.firstName}
+                  firstName={cv.user.candidat.firstName}
+                  gender={cv.user.candidat.gender}
+                  ambitions={cv.ambitions}
+                  locations={cv.locations}
+                  skills={cv.skills}
+                  catchphrase={cv.catchphrase}
+                  employed={cv.user.employed}
+                  endOfContract={cv.user.endOfContract}
+                  id={cv.user.candidat.id}
                 />
-              ) : (
-                <IconNoSSR
-                  className="uk-margin-small-left"
-                  name="plus-circle"
-                />
-              )}
-            </Button>
-          </div>
-        )}
-      </div>
-    );
-  };
+              );
+            })}
+          />
+          {!nb && (
+            <div className="uk-flex uk-flex-center uk-margin-top">
+              <Button
+                style="primary"
+                onClick={() => {
+                  setNbOfCVToDisplay((prevNbOfCV) => {
+                    return prevNbOfCV + INITIAL_NB_OF_CV_TO_DISPLAY;
+                  });
+                }}
+              >
+                Voir plus
+                {loadingMore ? (
+                  <div
+                    className="uk-margin-small-left"
+                    data-uk-spinner="ratio: .6"
+                  />
+                ) : (
+                  <IconNoSSR
+                    className="uk-margin-small-left"
+                    name="plus-circle"
+                  />
+                )}
+              </Button>
+            </div>
+          )}
+        </div>
+      );
+    },
+    [loadingMore, nb, nbOfCVToDisplay]
+  );
 
-  const getContent = () => {
+  const content = useMemo(() => {
     if (loading) {
       return <LoadingScreen />;
     }
@@ -229,10 +229,10 @@ const CVList = ({
       }
       return renderCvList(cvs);
     }
-  };
+  }, [cvs, error, filters, hasSuggestions, loading, renderCvList]);
 
   return (
-    <>
+    <div data-uk-scrollspy="cls:uk-animation-slide-bottom-small; target: .uk-card; delay: 200">
       {!hideSearchBar && (
         <SearchBar
           filtersConstants={CV_FILTERS_DATA}
@@ -245,9 +245,8 @@ const CVList = ({
           placeholder="Chercher un secteur d’activité, une compétence, un profil..."
         />
       )}
-
-      {getContent()}
-    </>
+      {content}
+    </div>
   );
 };
 

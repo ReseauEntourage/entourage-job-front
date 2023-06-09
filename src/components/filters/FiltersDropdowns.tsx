@@ -6,7 +6,8 @@ import { IconNoSSR } from 'src/components/utils/Icon';
 import { gaEvent } from 'src/lib/gtag';
 import { AnyToFix } from 'src/utils/Types';
 
-const uuidValue = uuid();
+const uuidValue1 = uuid();
+const uuidValue2 = uuid();
 
 interface FiltersDropdownProps {
   filters: AnyToFix; // to be typed
@@ -28,7 +29,7 @@ const FiltersDropdowns = ({
   smallSelectors,
 }: FiltersDropdownProps) => {
   const renderFilters = useCallback(
-    (filterConstants, key, tag, mandatory, index) => {
+    (filterConstants, key, tag, mandatory, uuidValue) => {
       const reducedFilters: { value: string; label: string }[] =
         Object.values(filterConstants); // to be typed properly
 
@@ -63,7 +64,7 @@ const FiltersDropdowns = ({
           }
         };
 
-        const id = `${key}-${index}-${i}-${uuidValue}`;
+        const id = `${key}-${i}-${uuidValue}`;
 
         return (
           <label
@@ -149,7 +150,13 @@ const FiltersDropdowns = ({
                     >
                       {priority && priority.length > 0 ? (
                         <>
-                          {renderFilters(priority, key, tag, mandatory, index)}
+                          {renderFilters(
+                            priority,
+                            key,
+                            tag,
+                            mandatory,
+                            `${index}-${uuidValue1}`
+                          )}
                           <hr />
                           {renderFilters(
                             constants.filter((filterConst) => {
@@ -162,11 +169,17 @@ const FiltersDropdowns = ({
                             key,
                             tag,
                             mandatory,
-                            index
+                            `${index}-${uuidValue2}`
                           )}
                         </>
                       ) : (
-                        renderFilters(constants, key, tag, mandatory, index)
+                        renderFilters(
+                          constants,
+                          key,
+                          tag,
+                          mandatory,
+                          `${index}-${uuidValue1}`
+                        )
                       )}
                     </div>
                   </div>
