@@ -19,65 +19,89 @@ export function MemberTable({ columns, members, role }: MemberTableProps) {
     let columnsArray = [];
 
     if (isRoleIncluded(CANDIDATE_USER_ROLES, role)) {
-      columnsArray = [<Th>Candidat</Th>];
+      columnsArray = [<Th key="memberRole">Candidat</Th>];
     }
     if (isRoleIncluded(COACH_USER_ROLES, role)) {
-      columnsArray = [<Th>Coach</Th>];
+      columnsArray = [<Th key="memberRole">Coach</Th>];
     }
 
     if (
       columns.includes('associatedUser') &&
       isRoleIncluded(CANDIDATE_USER_ROLES, role)
     ) {
-      columnsArray = [...columnsArray, <Th>Coach</Th>];
+      columnsArray = [
+        ...columnsArray,
+        <Th key="memberAssociatedRole">Coach</Th>,
+      ];
     }
     if (
       columns.includes('associatedUser') &&
       isRoleIncluded(COACH_USER_ROLES, role)
     ) {
-      columnsArray = [...columnsArray, <Th>Candidat</Th>];
+      columnsArray = [
+        ...columnsArray,
+        <Th key="memberAssociatedRole">Candidat</Th>,
+      ];
     }
     if (columns.includes('type')) {
-      columnsArray = [...columnsArray, <Th>Type</Th>];
+      columnsArray = [...columnsArray, <Th key="memberType">Type</Th>];
     }
 
     if (columns.includes('phone')) {
-      columnsArray = [...columnsArray, <Th>Téléphone</Th>];
+      columnsArray = [...columnsArray, <Th key="memberPhone">Téléphone</Th>];
     }
 
     if (columns.includes('gender')) {
-      columnsArray = [...columnsArray, <Th>Sexe</Th>];
+      columnsArray = [...columnsArray, <Th key="memberGender">Sexe</Th>];
     }
 
     if (columns.includes('address')) {
-      columnsArray = [...columnsArray, <Th>Adresse</Th>];
+      columnsArray = [...columnsArray, <Th key="memberAddress">Adresse</Th>];
     }
 
     if (columns.includes('zone')) {
-      columnsArray = [...columnsArray, <Th>Zone</Th>];
+      columnsArray = [...columnsArray, <Th key="memberZone">Zone</Th>];
     }
     if (columns.includes('organization')) {
-      columnsArray = [...columnsArray, <Th>Structure</Th>];
+      columnsArray = [
+        ...columnsArray,
+        <Th key="memberOrganization">Structure</Th>,
+      ];
     }
     if (columns.includes('lastConnection')) {
-      columnsArray = [...columnsArray, <Th>Dernière connexion</Th>];
+      columnsArray = [
+        ...columnsArray,
+        <Th key="memberLastConnexion">Dernière connexion</Th>,
+      ];
     }
 
     if (isRoleIncluded(CANDIDATE_USER_ROLES, role)) {
       if (columns.includes('cvUrl')) {
-        columnsArray = [...columnsArray, <Th>Lien CV</Th>];
+        columnsArray = [...columnsArray, <Th key="memberCVLink">Lien CV</Th>];
       }
       if (columns.includes('employed')) {
-        columnsArray = [...columnsArray, <Th>En emploi</Th>];
+        columnsArray = [
+          ...columnsArray,
+          <Th key="memberEmployed">En emploi</Th>,
+        ];
       }
       if (columns.includes('cvStatus')) {
-        columnsArray = [...columnsArray, <Th>Statut CV</Th>];
+        columnsArray = [
+          ...columnsArray,
+          <Th key="memberCVStatus">Statut CV</Th>,
+        ];
       }
       if (columns.includes('cvHidden')) {
-        columnsArray = [...columnsArray, <Th>CV masqué</Th>];
+        columnsArray = [
+          ...columnsArray,
+          <Th key="memberCVHidden">CV masqué</Th>,
+        ];
       }
       if (columns.includes('selection')) {
-        columnsArray = [...columnsArray, <Th>Sélection</Th>];
+        columnsArray = [
+          ...columnsArray,
+          <Th key="memberSelected">Sélection</Th>,
+        ];
       }
     }
 

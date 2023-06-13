@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { components } from 'react-select';
 import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
 import Icon from 'src/components/utils/Icon';
+import { AnyToFix } from 'src/utils/Types';
 import {
   StyledAsyncSelect,
   StyledAsyncSelectContainer,
@@ -23,8 +24,35 @@ export function SelectAsync({
   onChange,
   openMenuOnClick,
   valid,
-  defaultOptions,
+  defaultOptions: defaultOptionsProps,
 }) {
+  const [defaultOptions, setDefaultOptions] =
+    useState<{ label: string; value: AnyToFix }[]>(defaultOptionsProps);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const debouncedLoadOptions = useCallback(
+    (inputValue, callback) => {
+      setIsLoading(true);
+      clearTimeout(debounceTimeoutId);
+      debounceTimeoutId = setTimeout(() => {
+        loadOptions(inputValue, (options) => {
+          callback(options);
+          setIsLoading(false);
+        });
+      }, 1000);
+    },
+    [loadOptions]
+  );
+
+  const onFocus = useCallback(() => {
+    setDefaultOptions([]);
+    setIsLoading(true);
+    loadOptions('', (options) => {
+      setDefaultOptions(options);
+      setIsLoading(false);
+    });
+  }, [loadOptions]);
+
   const DropdownIndicator = (props) => {
     return (
       <components.DropdownIndicator {...props}>
@@ -57,12 +85,14 @@ export function SelectAsync({
     <StyledAsyncSelectContainer>
       <StyledAsyncSelect
         id={id}
+        onFocus={onFocus}
         components={{ ClearIndicator, DropdownIndicator, MultiValueRemove }}
         classNamePrefix="Select"
         cacheOptions={!!cacheOptions}
         isClearable
+        isLoading={isLoading}
         defaultOptions={defaultOptions}
-        value={value}
+        value={value || null}
         isMulti={isMulti}
         placeholder={placeholder || 'Sélectionnez...'}
         noOptionsMessage={
@@ -72,12 +102,7 @@ export function SelectAsync({
           })
         }
         loadingMessage={loadingMessage}
-        loadOptions={(inputValue, callback) => {
-          clearTimeout(debounceTimeoutId);
-          debounceTimeoutId = setTimeout(() => {
-            return loadOptions(inputValue, callback);
-          }, 1000);
-        }}
+        loadOptions={debouncedLoadOptions}
         isDisabled={isDisabled}
         isHidden={isHidden}
         onChange={onChange}
