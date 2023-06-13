@@ -64,7 +64,7 @@ export const Steps = ({ cta }: { cta: (label: string) => void }) => {
       </StyledSteps>
       <Button
         onClick={() => {
-          cta('P2_Envie_Rejoindre');
+          cta('P3_Etapes');
         }}
         style="custom-secondary-inverted"
       >
