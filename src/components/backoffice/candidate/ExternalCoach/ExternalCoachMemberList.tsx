@@ -28,8 +28,7 @@ export const ExternalCoachMemberList = () => {
 
   useEffect(() => {
     if (user) {
-      let relatedUsers = user.coaches;
-      relatedUsers = relatedUsers.map((relatedUser) => {
+      const relatedUsers = user.coaches.map((relatedUser) => {
         const { candidat, ...relatedUserWithoutCandidate } = relatedUser;
         return {
           ...candidat,
