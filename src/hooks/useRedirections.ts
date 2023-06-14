@@ -8,6 +8,7 @@ import {
   isRoleIncluded,
 } from 'src/utils/Finding';
 
+// only used for coaches and candidates
 export const useCandidateAndCoachRedirections = () => {
   const [isUrlChecked, setIsUrlChecked] = useState(false);
 
@@ -20,6 +21,8 @@ export const useCandidateAndCoachRedirections = () => {
       !isUrlChecked &&
       // wait for user and router to be loaded
       user &&
+      // doesn't apply if role is admin
+      user.role !== USER_ROLES.ADMIN &&
       router
     ) {
       // if external coach, redirect to list
@@ -37,7 +40,7 @@ export const useCandidateAndCoachRedirections = () => {
       } else {
         const candidateId = isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
           ? user.id
-          : getCandidateIdFromCoachOrCandidate(user)[0];
+          : getCandidateIdFromCoachOrCandidate(user)?.[0];
 
         const newRoute = router.asPath.replace(
           '/candidat',

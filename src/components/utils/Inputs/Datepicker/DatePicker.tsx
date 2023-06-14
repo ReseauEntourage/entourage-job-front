@@ -1,4 +1,3 @@
-import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
@@ -21,7 +20,6 @@ export function DatePicker({
   }
 
   if (!min) min = '1900-01-01';
-  if (!max) max = moment().format('YYYY-MM-DD');
 
   return (
     <StyledDatePickerContainer

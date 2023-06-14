@@ -191,14 +191,15 @@ const CandidateOpportunities = ({
                     : USER_ROLES.COACH
                 ][isPublic ? 'all' : 'mine']
               } ${
-                USER_ROLES.COACH_EXTERNAL &&
-                `- ${
-                  getUserCandidateFromCoach(user, candidateId)?.candidat
-                    ?.firstName
-                } ${
-                  getUserCandidateFromCoach(user, candidateId)?.candidat
-                    ?.lastName
-                }`
+                USER_ROLES.COACH_EXTERNAL === user.role
+                  ? `- ${
+                      getUserCandidateFromCoach(user, candidateId)?.candidat
+                        ?.firstName
+                    } ${
+                      getUserCandidateFromCoach(user, candidateId)?.candidat
+                        ?.lastName
+                    }`
+                  : ''
               }`}
               description={
                 TextVariables.description[

@@ -14,7 +14,7 @@ export function useCandidateId() {
   } = useRouter();
 
   if (user && USER_ROLES.COACH === user.role && !candidateId) {
-    return getCandidateIdFromCoachOrCandidate(user)[0] as string;
+    return getCandidateIdFromCoachOrCandidate(user)?.[0] as string;
   }
 
   return (

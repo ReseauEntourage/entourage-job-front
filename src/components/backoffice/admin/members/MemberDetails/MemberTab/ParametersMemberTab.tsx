@@ -98,11 +98,10 @@ export function ParametersMemberTab({
           role={RELATED_ROLES[user.role]}
           member={member}
           key={key}
-          setMember={setUser}
         />
       );
     });
-  }, [memberColumns, relatedMembers, setUser, user.role]);
+  }, [memberColumns, relatedMembers, user.role]);
 
   return (
     <>

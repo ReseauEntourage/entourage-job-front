@@ -47,7 +47,7 @@ const UserProvider = ({ children }) => {
           !pathname.includes('/offres') &&
           role === USER_ROLES.ADMIN)
       ) {
-        const path = getDefaultUrl(role.replace(' ', '_').toLowerCase());
+        const path = getDefaultUrl(role);
         await replace(path);
       }
     },

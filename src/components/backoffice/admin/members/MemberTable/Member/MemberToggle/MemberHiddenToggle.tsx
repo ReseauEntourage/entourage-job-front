@@ -6,8 +6,7 @@ import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithCon
 
 interface MemberHiddenToggleProps {
   member: UserWithUserCandidate;
-
-  setMember: (user: UserWithUserCandidate) => void;
+  setMember?: (user: UserWithUserCandidate) => void;
 }
 export function MemberHiddenToggle({
   member,
@@ -15,7 +14,7 @@ export function MemberHiddenToggle({
 }: MemberHiddenToggleProps) {
   return (
     <ToggleWithConfirmationModal
-      id="hidden"
+      id={`hidden-${member.id}`}
       modalTitle="Changer la visibilité du CV en ligne ?"
       modalConfirmation="Oui, masquer le CV"
       defaultValue={member.candidat.hidden}
@@ -25,13 +24,15 @@ export function MemberHiddenToggle({
             hidden,
           });
 
-          setMember({
-            ...member,
-            candidat: {
-              ...member.candidat,
-              hidden,
-            },
-          });
+          if (setMember) {
+            setMember({
+              ...member,
+              candidat: {
+                ...member.candidat,
+                hidden,
+              },
+            });
+          }
           UIkit.notification(
             hidden
               ? 'Le CV est désormais masqué'
