@@ -11,12 +11,12 @@ import { MemberDetailsHeader } from './MemberDetailsHeader';
 import { CVMemberTab, OffersMemberTab, ParametersMemberTab } from './MemberTab';
 import { RecommendedOffersButton } from './RecommendedOffersButton';
 
-interface MemberDetails {
+interface MemberDetailsProps {
   user: User;
   setUser: () => void;
 }
 
-export function MemberDetails({ user, setUser }: MemberDetails) {
+export function MemberDetails({ user, setUser }: MemberDetailsProps) {
   const tab = useTab();
 
   return (

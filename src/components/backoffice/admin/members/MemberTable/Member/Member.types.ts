@@ -22,7 +22,6 @@ export interface MemberProps {
   role: UserRole | UserRole[];
   selectionCallback?: (memberId: string) => void;
   isEditable?: boolean;
-
   setMember?: (user: UserWithUserCandidate) => void;
   disableLink?: boolean;
 }

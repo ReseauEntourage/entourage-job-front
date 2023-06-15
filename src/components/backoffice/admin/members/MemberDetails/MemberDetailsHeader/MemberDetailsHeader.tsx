@@ -4,9 +4,9 @@ import { UserWithUserCandidate } from 'src/api/types';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
 import { SimpleLink } from 'src/components/utils';
 import Icon from 'src/components/utils/Icon';
-import { USER_ROLES } from 'src/constants/users';
+import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { UserContext } from 'src/store/UserProvider';
-import { getRelatedUser } from 'src/utils/Finding';
+import { getRelatedUser, isRoleIncluded } from 'src/utils/Finding';
 import {
   StyledContainer,
   StyledInfoContainer,
@@ -55,18 +55,20 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
             {` de ${relatedUserText}`}
           </StyledRole>
         </StyledRoleContainer>
-        <StyledRoleContainer>
-          <Icon name="link" style={{ width: 20 }} />
-          <SimpleLink
-            className="uk-link-text uk-margin-small-top"
-            target="_blank"
-            href={`/cv/${user?.candidat?.url}`}
-          >
-            <span>
-              {process.env.SERVER_URL}/cv/{user?.candidat?.url}
-            </span>
-          </SimpleLink>
-        </StyledRoleContainer>
+        {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) && (
+          <StyledRoleContainer>
+            <Icon name="link" style={{ width: 20 }} />
+            <SimpleLink
+              className="uk-link-text uk-margin-small-top"
+              target="_blank"
+              href={`/cv/${user?.candidat?.url}`}
+            >
+              <span>
+                {process.env.SERVER_URL}/cv/{user?.candidat?.url}
+              </span>
+            </SimpleLink>
+          </StyledRoleContainer>
+        )}
       </StyledInfoContainer>
     </StyledContainer>
   );

@@ -1,42 +1,72 @@
-import React, { useState, useMemo, useEffect, useContext } from 'react';
+import React, {
+  useState,
+  useMemo,
+  useEffect,
+  useContext,
+  useCallback,
+} from 'react';
+import { v4 as uuid } from 'uuid';
+import { UserWithUserCandidate } from 'src/api/types';
 import { MemberTable } from 'src/components/backoffice/admin/members/MemberTable';
 import { Member } from 'src/components/backoffice/admin/members/MemberTable/Member';
 import { MemberColumn } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.types';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { UserContext } from 'src/store/UserProvider';
-import { getRelatedUser } from 'src/utils/Finding';
+
+const uuidValue = uuid();
 
 export const ExternalCoachMemberList = () => {
   const { user } = useContext(UserContext);
 
   const [loading, setLoading] = useState(true);
-  const [members, setMembers] = useState([]);
+  const [members, setMembers] = useState<UserWithUserCandidate[]>([]);
 
   const memberColumns: MemberColumn[] = useMemo(
-    () => ['employed', 'cvStatus'],
+    () => ['employed', 'cvStatus', 'employed', 'cvHidden'],
     []
   );
 
   useEffect(() => {
     if (user) {
-      const relatedUsers = getRelatedUser(user);
+      const relatedUsers = user.coaches.map((relatedUser) => {
+        const { candidat, ...relatedUserWithoutCandidate } = relatedUser;
+        return {
+          ...candidat,
+          candidat: relatedUserWithoutCandidate,
+        };
+      });
       setMembers(relatedUsers);
       setLoading(false);
     }
   }, [user]);
 
+  const updateMembers = useCallback(
+    (newUser: UserWithUserCandidate) => {
+      const newList = members.map((userCandidate) => {
+        if (userCandidate.id === newUser.id) {
+          return newUser;
+        }
+        return userCandidate;
+      });
+      setMembers(newList);
+    },
+    [members, setMembers]
+  );
+
   const memberList = useMemo(() => {
-    return members?.map((member, key) => {
+    return members?.map((member, k) => {
       return (
         <Member
           columns={memberColumns}
           role="Candidat"
-          member={{ ...member, role: 'Candidat' }}
-          key={key}
+          member={member}
+          key={`${k}-${uuidValue}`}
+          isEditable
+          setMember={updateMembers}
         />
       );
     });
-  }, [memberColumns, members]);
+  }, [memberColumns, members, updateMembers]);
 
   return (
     <div>
