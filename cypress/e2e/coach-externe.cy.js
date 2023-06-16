@@ -4,6 +4,11 @@ describe('Coach externe', () => {
             fixture: 'auth-current-coach-externe-res',
           }).as('authCheck');
 
+
+    cy.intercept('GET', '/cv/*', {
+        fixture: 'cv-for-candidat'
+      }).as('cvForCandidat')
+
           cy.fixture('auth-current-coach-externe-res').then((user) => {
             cy.intercept('GET', '/user/' + user.id, {
                 fixture: 'auth-current-coach-externe-res',

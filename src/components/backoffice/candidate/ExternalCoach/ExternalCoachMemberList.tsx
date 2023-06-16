@@ -6,6 +6,7 @@ import React, {
   useCallback,
 } from 'react';
 import { v4 as uuid } from 'uuid';
+import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
 import { MemberTable } from 'src/components/backoffice/admin/members/MemberTable';
 import { Member } from 'src/components/backoffice/admin/members/MemberTable/Member';
@@ -28,15 +29,27 @@ export const ExternalCoachMemberList = () => {
 
   useEffect(() => {
     if (user) {
-      const relatedUsers = user.coaches.map((relatedUser) => {
-        const { candidat, ...relatedUserWithoutCandidate } = relatedUser;
-        return {
-          ...candidat,
-          candidat: relatedUserWithoutCandidate,
-        };
-      });
-      setMembers(relatedUsers);
-      setLoading(false);
+      const getRelatedUsers = async () => {
+        const relatedUsersPromises = user.coaches.map(async (relatedUser) => {
+          const { candidat, ...relatedUserWithoutCandidate } = relatedUser;
+          try {
+            const response = await Api.getCVByCandidateId(candidat.id);
+            return {
+              ...candidat,
+              candidat: {
+                ...relatedUserWithoutCandidate,
+                cvs: [response.data],
+              },
+            };
+          } catch (err) {
+            console.log(err);
+          }
+        });
+        const membersData = await Promise.all(relatedUsersPromises);
+        setMembers(membersData);
+        setLoading(false);
+      };
+      getRelatedUsers();
     }
   }, [user]);
 
