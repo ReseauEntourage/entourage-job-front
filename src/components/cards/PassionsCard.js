@@ -4,7 +4,7 @@ import { Grid } from 'src/components/utils';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import schemaformEditPassions from 'src/components/forms/schema/formEditPassions.json';
 import ButtonIcon from 'src/components/utils/ButtonIcon';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import { openModal } from 'src/components/modals/Modal';
 
 const PassionsCard = ({ list, onChange }) => {

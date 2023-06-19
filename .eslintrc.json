@@ -41,7 +41,6 @@
     "no-param-reassign": "off",
     "consistent-return": "off",
     "no-underscore-dangle": "off",
-    "arrow-body-style": ["error", "always"],
     "jsx-a11y/anchor-is-valid": "off",
     "jsx-a11y/anchor-has-content": "off",
     "jsx-a11y/click-events-have-key-events": "off",
@@ -57,9 +56,16 @@
     "react/forbid-prop-types": "warn",
     "react/jsx-props-no-spreading": "off",
     "react/jsx-wrap-multilines": "off",
+    // with TypeScript, no default props
+    "react/require-default-props": 0,
     "react/static-property-placement": ["warn", "static getter"],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",
+    "import/no-self-import": "off",
+    "jsx-a11y/aria-role": [ 2, {
+      "allowedInvalidRoles": ["Candidat"],
+      "ignoreNonDOM": true
+    }],
     "react/jsx-filename-extension": [
       "warn",
       {

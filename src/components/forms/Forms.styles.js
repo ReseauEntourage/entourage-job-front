@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS, BREAKPOINTS } from 'src/constants/styles';
+import { COLORS } from 'src/constants/styles';
 
 export const StyledFooterForm = styled.div`
   .cta-container {
@@ -18,17 +18,6 @@ export const StyledFooterForm = styled.div`
         margin-left: 20px;
       }
     }
-  }
-`;
-
-export const StyledFormHeading = styled.div`
-  width: 100%;
-  font-size: 16px;
-  margin: 28px 0 24px;
-  padding-bottom: 4px;
-  border-bottom: 1px solid ${COLORS.primaryOrange};
-  @media screen and (max-width: ${BREAKPOINTS.desktop - 1}px) {
-    font-size: 14px;
   }
 `;
 

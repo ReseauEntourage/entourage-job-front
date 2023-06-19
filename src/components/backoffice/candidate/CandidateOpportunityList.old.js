@@ -1,14 +1,15 @@
 import React, { useContext, useRef } from 'react';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
-import { USER_ROLES } from 'src/constants';
+import { CANDIDATE_USER_ROLES } from 'src/constants/users.ts';
 import OpportunityList from 'src/components/opportunities/OpportunityList';
 import PropTypes from 'prop-types';
 
 import { UserContext } from 'src/store/UserProvider';
 import { openModal } from 'src/components/modals/Modal';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import { Button } from 'src/components/utils';
-import ModalExternalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
+import ModalExternalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer.tsx';
+import { isRoleIncluded } from 'src/utils/Finding.ts';
 
 const CandidateOpportunityList = ({
   search,
@@ -27,12 +28,12 @@ const CandidateOpportunityList = ({
     <>
       <HeaderBackoffice
         title={
-          user.role === USER_ROLES.CANDIDAT
+          isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
             ? 'Consultez toutes les opportunités de travail'
             : 'Consultez les opportunités de travail du candidat'
         }
         description={
-          user.role === USER_ROLES.CANDIDAT
+          isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
             ? 'Parcourez les offres qui vous sont directement adressées ainsi que celles communes aux différents candidats du parcours LinkedOut.'
             : 'Parcourez les offres qui ont été adressées à votre candidat ainsi que celles communes aux différents candidats du parcours LinkedOut.'
         }

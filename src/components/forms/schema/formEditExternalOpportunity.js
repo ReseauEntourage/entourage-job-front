@@ -5,11 +5,11 @@ import {
   CONTRACTS,
   EXTERNAL_OFFERS_ORIGINS,
   OFFER_STATUS,
-  USER_ROLES,
-} from 'src/constants';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+} from 'src/constants/index.ts';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
 import { Api } from 'src/api/index.ts';
 import { findConstantFromValue } from 'src/utils';
+import { CANDIDATE_USER_ROLES } from 'src/constants/users.ts';
 
 export default {
   id: 'form-offer-external',
@@ -225,7 +225,7 @@ export const adminMutations = [
           Api.getUsersSearch({
             params: {
               query: inputValue,
-              role: USER_ROLES.CANDIDAT,
+              role: CANDIDATE_USER_ROLES,
             },
           })
             .then(({ data }) => {

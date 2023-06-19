@@ -113,6 +113,9 @@ const GA_TAGS = {
   PAGE_GALERIE_FILTRE_GEOGRAPHIQUE_CLIC: {
     action: 'Page_Galerie_Filtre_Géographique_Clic',
   },
+  PAGE_GALERIE_FILTRE_EMPLOYE_CLIC: {
+    action: 'Page_Galerie_Filtre_Employe_Clic',
+  },
   PAGE_AIDER_PARTAGER_CV_CLIC: {
     action: 'Page_Aider_Partager_Cv_Clic',
   },
@@ -239,6 +242,9 @@ const GA_TAGS = {
   PAGE_TRAVAILLER_DEPOSER_CANDIDATURE_CLIC: {
     action: 'Page_Travailler_Deposer_Candidature_Clic',
   },
+  PAGE_TRAVAILLER_ENVOYER_DEPOSER_CANDIDATURE_CLIC: {
+    action: 'Page_Travailler_Envoyer_Deposer_Candidature_Clic',
+  },
   PAGE_ORIENTER_CARROUSEL_CLIC: {
     action: 'Page_Orienter_Carrousel_Clic',
   },
@@ -275,6 +281,9 @@ const GA_TAGS = {
   BACKOFFICE_CANDIDAT_SUPPRIMER_FILTRES_CLIC: {
     action: 'Backoffice_Candidat_Supprimer_Filtres_Clic',
   },
+  BACKOFFICE_ORGANIZATIONS_FILTRE_ZONE_CLIC: {
+    action: 'Backoffice_Organizations_Filtre_Zone_Clic',
+  },
   BACKOFFICE_OFFRES_FILTRE_PUBLIQUE_CLIC: {
     action: 'Backoffice_Offres_Filtre_Publique_Clic',
   },
@@ -289,6 +298,9 @@ const GA_TAGS = {
   },
   BACKOFFICE_OFFRES_FILTRE_CONTRAT_CLIC: {
     action: 'Backoffice_Offres_Filtre_Contrat_Clic',
+  },
+  BACKOFFICE_MEMBERS_FILTRE_TYPE_CLIC: {
+    action: 'Backoffice_Members_Filtre_Type_Clic',
   },
   BACKOFFICE_MEMBERS_FILTRE_ZONE_CLIC: {
     action: 'Backoffice_Members_Filtre_Zone_Clic',
@@ -337,6 +349,9 @@ const GA_TAGS = {
   },
   BACKOFFICE_ADMIN_HEADER_MEMBERS_CLIC: {
     action: 'Backoffice_Admin_Header_Members_Clic',
+  },
+  BACKOFFICE_ADMIN_HEADER_ORGANIZATIONS_CLIC: {
+    action: 'Backoffice_Admin_Header_Organizations_Clic',
   },
   BACKOFFICE_ADMIN_HEADER_CANDIDATS_CLIC: {
     action: 'Backoffice_Admin_Header_Candidats_Clic',

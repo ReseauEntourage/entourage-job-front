@@ -3,13 +3,13 @@ import Head from 'next/head';
 import { withRouter } from 'next/router';
 import Script from 'next/script';
 import React from 'react';
-import Footer from 'src/components/Footer';
 import HeaderConnected from 'src/components/headers/HeaderConnected';
 import HeaderPublic from 'src/components/headers/HeaderPublic/HeaderPublic';
+import { Footer } from 'src/components/partials/Footer';
 import { addPrefix } from 'src/utils';
 
 interface LayoutProps extends WithRouterProps {
-  children: JSX.Element | JSX.Element[];
+  children: React.ReactNode;
   title?: string;
   metaTitle?: string;
   metaImage?: string;
@@ -18,6 +18,7 @@ interface LayoutProps extends WithRouterProps {
   metaType?: string;
   noIndex?: boolean;
   isBackoffice?: boolean;
+  isEmpty?: boolean;
 }
 
 const Layout = ({
@@ -30,6 +31,7 @@ const Layout = ({
   metaType,
   router,
   noIndex,
+  isEmpty,
   isBackoffice,
 }: LayoutProps) => {
   const isPDF = router.pathname.includes('/pdf/');
@@ -74,7 +76,15 @@ const Layout = ({
           content={process.env.FB_DOMAIN_VERIFICATION}
         />
       </Head>
-      {!isPDF && <>{isBackoffice ? <HeaderConnected /> : <HeaderPublic />}</>}
+      {!isPDF && (
+        <>
+          {isBackoffice ? (
+            <HeaderConnected isEmpty={isEmpty} />
+          ) : (
+            <HeaderPublic />
+          )}
+        </>
+      )}
       {children}
       {!isPDF && !isBackoffice && <Footer />}
       {!isPDF && (
@@ -97,5 +107,6 @@ Layout.defaultProps = {
   metaType: 'website',
   noIndex: false,
   isBackoffice: false,
+  isEmpty: false,
 };
 export default withRouter<LayoutProps>(Layout);

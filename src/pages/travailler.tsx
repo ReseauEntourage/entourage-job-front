@@ -39,6 +39,10 @@ const Travailler = () => {
   });
 
   const openModalInscription = (gTagLabel: string) => {
+    gaEvent({
+      ...GA_TAGS.PAGE_TRAVAILLER_DEPOSER_CANDIDATURE_CLIC,
+      label: gTagLabel,
+    });
     fbEvent(FB_TAGS.CANDIDATE_REGISTRATION_OPEN);
     openModal(
       <ModalEdit
@@ -49,7 +53,7 @@ const Travailler = () => {
         formId="candidate-inscription-form"
         onSubmit={async (fields, closeModal) => {
           gaEvent({
-            ...GA_TAGS.PAGE_TRAVAILLER_DEPOSER_CANDIDATURE_CLIC,
+            ...GA_TAGS.PAGE_TRAVAILLER_ENVOYER_DEPOSER_CANDIDATURE_CLIC,
             label: gTagLabel,
           });
           fbEvent(FB_TAGS.CANDIDATE_REGISTRATION_SEND);

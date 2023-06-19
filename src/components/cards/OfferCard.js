@@ -4,8 +4,8 @@ import moment from 'moment';
 
 import { Grid } from 'src/components/utils';
 import { findOfferStatus } from 'src/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
-import { OFFER_STATUS } from 'src/constants';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
+import { OFFER_STATUS } from 'src/constants/index.ts';
 
 const OfferCard = ({
   title,

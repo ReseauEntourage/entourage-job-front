@@ -1,5 +1,5 @@
 import { Grid } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import PropTypes from 'prop-types';
 import React from 'react';
 

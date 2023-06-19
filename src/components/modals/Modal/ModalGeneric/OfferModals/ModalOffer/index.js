@@ -1,4 +1,4 @@
 import ModalOffer from './ModalOffer';
-import ModalExternalOffer from './ModalExternalOffer';
+import ModalExternalOffer from './ModalExternalOffer.tsx';
 
 export { ModalOffer, ModalExternalOffer };

@@ -20,15 +20,15 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import {
   OFFER_ADMIN_FILTERS_DATA,
   OPPORTUNITY_FILTERS_DATA,
-} from 'src/constants';
+} from 'src/constants/index.ts';
 import FiltersTabs from 'src/components/utils/FiltersTabs';
-import SearchBar from 'src/components/filters/SearchBar';
+import SearchBar from 'src/components/filters/SearchBar.tsx';
 import { openModal } from 'src/components/modals/Modal';
 import { usePrevious } from 'src/hooks/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { useBulkActions } from 'src/hooks/useBulkActions';
-import { SEARCH_MAX_WIDTH } from 'src/constants/utils';
+import { SEARCH_MAX_WIDTH } from 'src/constants/utils.ts';
 import { GA_TAGS } from 'src/constants/tags';
 import moment from 'moment';
 import { ModalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer';
@@ -45,7 +45,12 @@ const OfferList = ({
   query,
 }) => {
   return (
-    <Grid childWidths={['1-4@l', '1-3@m', '1-2@s']} left top>
+    <Grid
+      childWidths={['1-4@l', '1-3@m', '1-2@s']}
+      left
+      top
+      dataTestId="offer-list"
+    >
       {offers.map((offer, i) => {
         const opportunityUsers =
           role === 'candidateAsAdmin'
@@ -175,7 +180,6 @@ const OpportunityList = forwardRef(
     const prevTag = usePrevious(restQuery.tag);
 
     const [filtersConst, setFiltersConst] = useState(OPPORTUNITY_FILTERS_DATA);
-    const [numberOfResults, setNumberOfResults] = useState(0);
 
     const [bookmarkedOffers, setBookmarkedOffers] = useState(undefined);
     const [offers, setOffers] = useState(undefined);
@@ -209,7 +213,6 @@ const OpportunityList = forwardRef(
       setOffers,
       setOtherOffers,
       setBookmarkedOffers,
-      setNumberOfResults,
       setLoading,
       setHasError
     );
@@ -511,7 +514,6 @@ const OpportunityList = forwardRef(
             <SearchBar
               filtersConstants={filtersConst}
               filters={filters}
-              numberOfResults={numberOfResults}
               resetFilters={resetFilters}
               search={search}
               setSearch={setSearch}
@@ -525,7 +527,6 @@ const OpportunityList = forwardRef(
             <SearchBar
               filtersConstants={filtersConst}
               filters={filters}
-              numberOfResults={numberOfResults}
               resetFilters={resetFilters}
               search={search}
               setSearch={setSearch}

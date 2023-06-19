@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useMount } from 'src/hooks/utils';
-import Radio from './Radio';
-import { RadioAsyncComponentType } from './Radio.type';
+import { Radio } from './Radio';
+import { RadioAsyncComponentProps } from './Radio.types';
 
-const RadioAsync = ({
+export function RadioAsync({
   loadOptions,
   id,
   legend,
@@ -12,7 +12,8 @@ const RadioAsync = ({
   filter,
   errorMessage,
   hidden,
-}: RadioAsyncComponentType) => {
+  value,
+}: RadioAsyncComponentProps) {
   const [options, setOptions] = useState([]);
 
   useMount(async () => {
@@ -32,10 +33,9 @@ const RadioAsync = ({
           options={options}
           hidden={hidden}
           errorMessage={errorMessage}
+          value={value}
         />
       )}
     </>
   );
-};
-
-export default RadioAsync;
+}

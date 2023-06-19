@@ -2,7 +2,7 @@
 import React, { createContext, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Api } from 'src/api/index.ts';
-import { VALUES } from 'src/constants';
+import { VALUES } from 'src/constants/index.ts';
 import { useMount } from 'src/hooks/utils';
 
 export const SharesCountContext = createContext({ totalShares: 0 });

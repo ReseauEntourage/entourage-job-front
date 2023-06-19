@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import { StyledBackToTop } from 'src/components/utils/BackToTop/styles';
 import { isSSR } from 'src/utils/isSSR';
 

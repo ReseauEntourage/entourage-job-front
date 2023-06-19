@@ -5,8 +5,8 @@ import AiderAccompagnerCoachImg from 'public/static/img/aider-accompagner-coach.
 import AiderAccompagnerCoachImgMobile from 'public/static/img/aider-accompagner-coach-mobile.jpg';
 import BackgroundImage from 'src/components/utils/BackgroundImage';
 import { COLORS } from 'src/constants/styles';
-import Button from 'src/components/utils/Button';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { Button } from 'src/components/utils/Button';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import CoachTestimony from 'src/components/partials/Aider/CoachContainer/CoachTestimony';
 import WelcomeIcon from 'public/static/img/icons/aider-welcome.svg';
 import ReseauIcon from 'public/static/img/icons/aider-reseau.svg';
@@ -15,7 +15,8 @@ import BoiteOutilsIcon from 'public/static/img/icons/aider-boite-outils.svg';
 import { Container } from 'src/components/utils/containers';
 import { v4 as uuid } from 'uuid';
 import { fbEvent } from 'src/lib/fb.ts';
-import { FB_TAGS } from 'src/constants/tags';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag.ts';
 
 const uuidValue = uuid();
 
@@ -87,6 +88,7 @@ const CoachContainer = () => {
             newTab
             isExternal
             onClick={() => {
+              gaEvent(GA_TAGS.PAGE_AIDER_INSCRIPTION_COACH_CLIC);
               fbEvent(FB_TAGS.COACH_REGISTRATION_OPEN);
             }}
             style="primary"

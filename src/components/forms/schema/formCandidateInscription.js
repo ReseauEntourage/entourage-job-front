@@ -2,7 +2,7 @@ import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { Api } from 'src/api/index.ts';
 import moment from 'moment';
 import 'moment/locale/fr';
-import { ANTENNE_INFO } from 'src/constants';
+import { ANTENNE_INFO } from 'src/constants/index.ts';
 import _ from 'lodash';
 
 export default {
@@ -112,6 +112,11 @@ export default {
           placeholder: 'Ecrivez votre nom',
           showLabel: true,
         },
+      ],
+    },
+    {
+      component: 'fieldgroup-new',
+      fields: [
         {
           id: 'phone',
           name: 'phone',
@@ -120,22 +125,24 @@ export default {
           placeholder: 'Ecrivez votre numéro de téléphone',
           showLabel: true,
         },
+        {
+          id: 'email',
+          name: 'email',
+          title: 'Adresse mail *',
+          component: 'text-input',
+          placeholder: 'Ecrivez votre adresse email',
+          showLabel: true,
+        },
       ],
     },
-    {
-      id: 'email',
-      name: 'email',
-      title: 'Adresse mail *',
-      component: 'text-input',
-      placeholder: 'Ecrivez votre adresse email',
-      showLabel: true,
-    },
+
     {
       id: 'heardAbout',
       name: 'heardAbout',
       title: 'Comment avez-vous connu LinkedOut ? *',
       component: 'select-new',
       showLabel: true,
+      // TODO use already existing heard about
       options: [
         {
           label: 'LinkedIn',
@@ -252,7 +259,7 @@ export default {
             return options.length ? [...options, noChoice] : [];
           })
           .catch((err) => {
-            console.log(err);
+            console.error(err);
             return [];
           });
       },
@@ -421,6 +428,16 @@ export default {
       validWhen: true,
       message:
         'Vous devez être majeur pour participer au programme. En attendant, vous pouvez contacter la Mission locale dont dépend votre commune.',
+    },
+    {
+      field: 'birthdate',
+      method: (value) => {
+        const maxBirtdate = new Date('1900-01-01');
+        const realBirthdate = new Date(value);
+        return maxBirtdate < realBirthdate;
+      },
+      validWhen: true,
+      message: 'Veuillez entrer une date valide.',
     },
   ],
 };

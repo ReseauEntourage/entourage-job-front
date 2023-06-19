@@ -1,3 +1,3 @@
-import CandidateOpportunitiesList from './CandidateOpportunitiesList';
+import CandidateOpportunitiesList from './CandidateOpportunitiesList.tsx';
 
 export default CandidateOpportunitiesList;

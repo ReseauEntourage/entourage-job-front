@@ -3,6 +3,12 @@ describe('Parcours Entreprises', () => {
     cy.intercept('POST', '/contact/company', {
       statusCode: 201,
     }).as('postContactCompany');
+
+    cy.intercept('GET', '/cv/cards/random*', {
+      fixture: 'cv-cards-random-res',
+    })
+
+    cy.intercept('GET', '/cv/shares', { total: 184222 });
   });
 
   it('Ouvrir la popup du formulaire', () => {

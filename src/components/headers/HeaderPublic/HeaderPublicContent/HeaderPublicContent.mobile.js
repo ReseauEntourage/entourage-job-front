@@ -1,14 +1,13 @@
-import UIkit from 'uikit';
 import React from 'react';
 import { useRouter } from 'next/router';
 import { Hamburger, Navbar } from 'src/components/utils';
-import Button from 'src/components/utils/Button';
+import { Button } from 'src/components/utils/Button';
 import { gaEvent } from 'src/lib/gtag.ts';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { IconNoSSR } from 'src/components/utils/Icon';
-import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
+import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas.tsx';
 import { fbEvent } from 'src/lib/fb.ts';
-import { OFFCANVAS_GUEST } from 'src/constants/utils';
+import { OFFCANVAS_GUEST } from 'src/constants/utils.ts';
 import PropTypes from 'prop-types';
 import NavbarLogo from 'src/components/utils/Navbar/NavbarLogo';
 import { StyledHeaderMobile } from '../../Header.styles';
@@ -45,7 +44,6 @@ const HeaderPublicMobile = ({ links }) => {
               className="uk-flex uk-flex-middle"
               style={{ color: 'white' }}
               onClick={() => {
-                UIkit.offcanvas(`#${OFFCANVAS_GUEST}`).hide();
                 push('/');
               }}
             >
@@ -76,7 +74,6 @@ const HeaderPublicMobile = ({ links }) => {
                         aria-hidden="true"
                         className="uk-text-center"
                         onClick={() => {
-                          UIkit.offcanvas(`#${OFFCANVAS_GUEST}`).hide();
                           gaEvent(tag);
                           push(href);
                         }}
@@ -98,7 +95,6 @@ const HeaderPublicMobile = ({ links }) => {
                       aria-hidden="true"
                       className="uk-text-center"
                       onClick={() => {
-                        UIkit.offcanvas(`#${OFFCANVAS_GUEST}`).hide();
                         gaEvent(tag);
                         push(href);
                       }}
@@ -112,9 +108,6 @@ const HeaderPublicMobile = ({ links }) => {
           <li className="uk-margin-small-top uk-flex uk-flex-center uk-padding-small">
             <Button
               href={{ pathname: '/candidats', query: { employed: false } }}
-              onClick={() => {
-                UIkit.offcanvas(`#${OFFCANVAS_GUEST}`).hide();
-              }}
               style="primary"
             >
               Découvrir les CV&nbsp;
@@ -127,7 +120,6 @@ const HeaderPublicMobile = ({ links }) => {
               isExternal
               newTab
               onClick={() => {
-                UIkit.offcanvas(`#${OFFCANVAS_GUEST}`).hide();
                 gaEvent(GA_TAGS.HEADER_DON_CLIC);
                 fbEvent(FB_TAGS.DONATION);
               }}

@@ -6,7 +6,7 @@ import schemaTestimonial from 'src/components/forms/schema/formEditTestimonial.j
 import ButtonIcon from 'src/components/utils/ButtonIcon';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { formatParagraph, sortByName } from 'src/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import { openModal } from 'src/components/modals/Modal';
 
 const CVEditReviews = ({ reviews, onChange }) => {
