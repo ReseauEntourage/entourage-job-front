@@ -6,10 +6,10 @@ import {
   CandidatListPartial,
   LandingPagePartial,
   NumberPartial,
+  AnnouncementPartial,
+  LinkedInPartial,
+  HowItWorks,
 } from 'src/components/partials';
-import HowItWorks from 'src/components/partials/HowItWorks';
-import AnnouncementPartial from 'src/components/partials/AnnouncementPartial';
-import LinkedInPartial from 'src/components/partials/LinkedInPartial';
 
 const Index = () => {
   return (

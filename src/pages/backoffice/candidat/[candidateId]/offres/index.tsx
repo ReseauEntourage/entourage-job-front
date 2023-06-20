@@ -11,7 +11,7 @@ import { useCandidateId } from 'src/components/backoffice/opportunities/useCandi
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { useOpportunityType } from 'src/components/backoffice/opportunities/useOpportunityType';
 import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
-import OpportunityError from 'src/components/opportunities/OpportunityError';
+import { OpportunityError } from 'src/components/opportunities/OpportunityError';
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 import { ADMIN_ZONES, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { GA_TAGS } from 'src/constants/tags';

@@ -8,7 +8,7 @@ import PictoFaciliterInte from 'public/static/img/icons/picto-faciliter-integrat
 import PictoRechercheCV from 'public/static/img/icons/picto-recherche-cv.svg';
 import AiderInformationsMissions from 'public/static/img/aider-informations-mission.jpg';
 import AiderImgFullWidth from 'public/static/img/aider-img-full-width.jpg';
-import { Container } from 'src/components/utils/containers';
+import { Container } from 'src/components/utils';
 import { isSSR } from 'src/utils/isSSR';
 import { v4 as uuid } from 'uuid';
 

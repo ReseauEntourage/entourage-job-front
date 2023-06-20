@@ -6,7 +6,7 @@ import { useFilters } from 'src/hooks/useFilters.ts';
 
 const adminQueryFilters = OPPORTUNITY_FILTERS_DATA.slice(0, -1);
 
-const AdminCandidateOpportunities = ({ candidateId }) => {
+export const AdminCandidateOpportunities = ({ candidateId }) => {
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
     adminQueryFilters,
     `/backoffice/admin/membres/${candidateId}/offres`,
@@ -31,7 +31,3 @@ const AdminCandidateOpportunities = ({ candidateId }) => {
 AdminCandidateOpportunities.propTypes = {
   candidateId: PropTypes.string.isRequired,
 };
-
-AdminCandidateOpportunities.defaultProps = {};
-
-export default AdminCandidateOpportunities;

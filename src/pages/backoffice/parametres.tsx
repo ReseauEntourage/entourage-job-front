@@ -1,10 +1,9 @@
 import _ from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import UIkit from 'uikit';
-
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
-import PasswordCriterias from 'src/components/PasswordCriterias';
+import { PasswordCriterias } from 'src/components/PasswordCriterias';
 import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
 import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
 import CandidateEmployedToggle from 'src/components/backoffice/candidate/CandidateEmployedToggle';
@@ -16,14 +15,13 @@ import schemaPersonalData from 'src/components/forms/schema/formPersonalData';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
 import { openModal } from 'src/components/modals/Modal';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { Card, Grid, Section } from 'src/components/utils';
-import ButtonIcon from 'src/components/utils/ButtonIcon';
+import { Card, Grid, Section, ButtonIcon } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useResetForm } from 'src/hooks/utils/useResetForm';
 import { UserContext } from 'src/store/UserProvider';
+import { mutateFormSchema } from 'src/utils';
 import { isRoleIncluded } from 'src/utils/Finding';
-import { mutateFormSchema } from 'src/utils/Mutating';
 
 const Parametres = () => {
   const { user, setUser } = useContext(UserContext);

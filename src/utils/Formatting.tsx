@@ -3,7 +3,7 @@ import React from 'react';
 import { CONTRACTS } from 'src/constants';
 import { findConstantFromValue } from './Finding';
 
-export function formatParagraph(text, condense) {
+export function formatParagraph(text: string, condense?: boolean) {
   if (text) {
     let formattedText = text;
     if (condense) formattedText = text.replace(/\n\n/g, '\n');

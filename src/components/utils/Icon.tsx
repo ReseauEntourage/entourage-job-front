@@ -31,9 +31,9 @@ Icon.defaultProps = {
 
 export const IconNoSSR = dynamic(
   () => {
-    return import('src/components/utils/Icon');
+    return import('src/components/utils/Icon').then((mod) => mod.Icon);
   },
   { ssr: false }
 );
 
-export { Icon as default };
+export { Icon };

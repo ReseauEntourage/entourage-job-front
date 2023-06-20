@@ -5,8 +5,7 @@ import { UserWithUserCandidate } from 'src/api/types';
 import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
 import CandidateEmployedToggle from 'src/components/backoffice/candidate/CandidateEmployedToggle';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
-import { Card, Grid, SimpleLink } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { Card, Grid, SimpleLink, IconNoSSR } from 'src/components/utils';
 import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
 import {
   getRelatedUser,

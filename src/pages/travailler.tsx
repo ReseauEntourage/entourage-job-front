@@ -11,8 +11,11 @@ import { openModal } from 'src/components/modals/Modal';
 import ModalGeneric from 'src/components/modals/Modal/ModalGeneric/';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { StyledModalContent } from 'src/components/modals/Modal/Modals.styles';
-import { NewsletterPartial, SharePartial } from 'src/components/partials';
-import CandidateTestimoniesOrientation from 'src/components/partials/CandidateTestimoniesOrientation';
+import {
+  NewsletterPartial,
+  SharePartial,
+  CandidateTestimoniesOrientation,
+} from 'src/components/partials';
 import { ImageTitle } from 'src/components/partials/ImageTitleNew';
 import { Partners } from 'src/components/partials/PartnersNew';
 import { Participer } from 'src/components/partials/Travailler/Participer';

@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Grid, SimpleLink } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
+import { Grid, SimpleLink, IconNoSSR } from 'src/components/utils';
 
 import {
   addPrefix,
@@ -11,12 +10,12 @@ import {
   sortByName,
   findConstantFromValue,
 } from 'src/utils';
-import CVCareerPathSentence from 'src/components/cv/CVCareerPathSentence';
+import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
 import { CONTRACTS } from 'src/constants/index.ts';
 import { CVShape } from './CV.shape';
 
-const CVPDF = ({ cv, page }) => {
+export const CVPDF = ({ cv, page }) => {
   const experiences =
     cv.experiences && cv.experiences.length > 0
       ? sortByOrder(cv.experiences)
@@ -470,5 +469,3 @@ CVPDF.propTypes = {
 CVPDF.defaultProps = {
   page: null,
 };
-
-export default CVPDF;

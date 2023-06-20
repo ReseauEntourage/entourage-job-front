@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import { Grid } from 'src/components/utils';
+import { Grid, IconNoSSR } from 'src/components/utils';
 import { findOfferStatus } from 'src/utils';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import { OFFER_STATUS } from 'src/constants/index.ts';
 
-const OfferCard = ({
+export const OfferCard = ({
   title,
   from,
   shortDescription,
@@ -236,4 +235,3 @@ OfferCard.defaultProps = {
   department: undefined,
   isSelected: false,
 };
-export default OfferCard;

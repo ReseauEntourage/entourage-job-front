@@ -1,12 +1,11 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import Layout from 'src/components/Layout.tsx';
-import { Button, Section } from 'src/components/utils';
+import { Button, Section, IconNoSSR } from 'src/components/utils';
 import schema from 'src/components/forms/schema/formResetPassword';
 import { Api } from 'src/api/index.ts';
 import FormWithValidation from 'src/components/forms/FormWithValidation.tsx';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
-import PasswordCriterias from 'src/components/PasswordCriterias';
+import { PasswordCriterias } from 'src/components/PasswordCriterias.tsx';
 import PropTypes from 'prop-types';
 
 const ResetPasswordPage = ({ valid, id, token, isCreation }) => {

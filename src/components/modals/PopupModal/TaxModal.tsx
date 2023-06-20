@@ -1,7 +1,6 @@
 import React from 'react';
 import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
-import { SimpleLink } from 'src/components/utils';
-import Img from 'src/components/utils/Img';
+import { Img, SimpleLink } from 'src/components/utils';
 import { EXTERNAL_LINKS, STORAGE_KEYS } from 'src/constants';
 import { Container } from './PopupModal.styles';
 

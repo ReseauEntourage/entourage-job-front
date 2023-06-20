@@ -129,6 +129,7 @@ ButtonMultiple.propTypes = {
       newTab: PropTypes.bool,
       onClick: PropTypes.func,
       toggle: PropTypes.string,
+      label: PropTypes.string,
       dataTestId: PropTypes.string,
       shallow: PropTypes.bool,
       scroll: PropTypes.bool,

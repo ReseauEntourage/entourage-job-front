@@ -1,15 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'src/components/utils';
+import { Grid, ButtonIcon, IconNoSSR } from 'src/components/utils';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import schemaTestimonial from 'src/components/forms/schema/formEditTestimonial.json';
-import ButtonIcon from 'src/components/utils/ButtonIcon';
 import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { formatParagraph, sortByName } from 'src/utils';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import { openModal } from 'src/components/modals/Modal';
 
-const CVEditReviews = ({ reviews, onChange }) => {
+export const CVEditReviews = ({ reviews, onChange }) => {
   const MAX_REVIEWS = 3;
 
   const sortedReviews = sortByName(reviews);
@@ -122,4 +120,3 @@ CVEditReviews.defaultProps = {
   reviews: [],
   onChange: null,
 };
-export default CVEditReviews;

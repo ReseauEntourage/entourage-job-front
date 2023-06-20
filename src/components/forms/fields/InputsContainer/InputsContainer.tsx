@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { useIsDesktop } from 'src/hooks/utils';
@@ -39,12 +38,6 @@ const InputsContainer = ({
       {fields.length === 1 && <div className="field-container" />}
     </StyledInputsContainer>
   );
-};
-
-InputsContainer.propTypes = {
-  fields: PropTypes.arrayOf(PropTypes.element).isRequired,
-  /* title: PropTypes.string,
-  childWidths: PropTypes.arrayOf(PropTypes.string), */
 };
 
 InputsContainer.defaultProps = {

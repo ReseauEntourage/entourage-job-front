@@ -4,7 +4,7 @@ import { withRouter } from 'next/router';
 import Layout from 'src/components/Layout.tsx';
 import { Api } from 'src/api/index.ts';
 import { Section } from 'src/components/utils';
-import CVPDF from 'src/components/cv/CVPDF';
+import { CVPDF } from 'src/components/cv';
 import { CVShape } from 'src/components/cv/CV.shape';
 
 const CVPDFPage = ({ cv, page, router }) => {

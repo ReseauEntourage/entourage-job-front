@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
-import Icon from 'src/components/utils/Icon';
+import { Icon } from 'src/components/utils/Icon';
 import { useCloseOnClickOutsideComponent } from 'src/hooks/useCloseOnClickOutsideComponent';
 import { StyledSelectContainer } from './Select.styles';
 

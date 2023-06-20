@@ -18,7 +18,7 @@ import SearchBar from 'src/components/filters/SearchBar';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer';
-import OpportunityError from 'src/components/opportunities/OpportunityError';
+import { OpportunityError } from 'src/components/opportunities/OpportunityError';
 import { Button, Section } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';

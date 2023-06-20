@@ -8,7 +8,7 @@ import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpp
 import PropTypes from 'prop-types';
 import OpportunitiesList from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList';
 import Link from 'next/link';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
+import { IconNoSSR } from 'src/components/utils';
 
 const OpportunitiesContainerMobile = ({
   list,

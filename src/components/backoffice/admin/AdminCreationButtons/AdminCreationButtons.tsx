@@ -9,7 +9,7 @@ import { formAddUser } from 'src/components/forms/schema/formAddUser';
 import { openModal } from 'src/components/modals/Modal';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { ButtonMultiple } from 'src/components/utils';
-import Icon from 'src/components/utils/Icon';
+import { Icon } from 'src/components/utils/Icon';
 import { Actions } from 'src/constants/utils';
 import { useIsDesktop } from 'src/hooks/utils';
 

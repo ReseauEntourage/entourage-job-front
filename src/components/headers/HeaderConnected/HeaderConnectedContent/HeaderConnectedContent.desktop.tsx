@@ -9,12 +9,15 @@ import {
 import { StyledConnectedItem } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/HeaderConnectedContent.styles';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
 import SubMenu from 'src/components/headers/HeaderConnected/HeaderConnectedContent/SubMenu';
-import { Navbar, SimpleLink } from 'src/components/utils';
-import Dropdown from 'src/components/utils/Dropdown';
-import { IconNoSSR } from 'src/components/utils/Icon';
-import Nav from 'src/components/utils/Navbar/Nav';
+import {
+  Navbar,
+  SimpleLink,
+  Nav,
+  Dropdown,
+  NavbarLogo,
+  IconNoSSR,
+} from 'src/components/utils';
 import { StyledNav } from 'src/components/utils/Navbar/Nav/Nav.styles';
-import NavbarLogo from 'src/components/utils/Navbar/NavbarLogo';
 import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,

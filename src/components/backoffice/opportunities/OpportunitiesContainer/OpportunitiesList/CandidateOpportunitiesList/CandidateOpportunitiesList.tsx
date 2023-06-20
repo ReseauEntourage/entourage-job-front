@@ -16,8 +16,7 @@ import { useOpportunityType } from 'src/components/backoffice/opportunities/useO
 import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
 import { openModal } from 'src/components/modals/Modal';
 import ModalExternalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
-import { Button } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { Button, IconNoSSR } from 'src/components/utils';
 import { usePrevious } from 'src/hooks/utils';
 
 const uuidValue = uuid();

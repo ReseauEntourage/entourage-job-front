@@ -9,9 +9,7 @@ import { AdminCreationButtons } from 'src/components/backoffice/admin/AdminCreat
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import SearchBar from 'src/components/filters/SearchBar';
 import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
-import { Section } from 'src/components/utils';
-import BackToTop from 'src/components/utils/BackToTop';
-import { Button } from 'src/components/utils/Button';
+import { Section, Button, BackToTop } from 'src/components/utils';
 import { ORGANIZATION_FILTERS_DATA } from 'src/constants';
 import { filtersToQueryParams } from 'src/utils/Filters';
 

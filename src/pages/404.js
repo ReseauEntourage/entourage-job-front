@@ -1,9 +1,14 @@
 import React from 'react';
 import Layout from 'src/components/Layout.tsx';
-import { Button, Grid, Section, SimpleLink } from 'src/components/utils';
-import CVList from 'src/components/cv/CVList';
+import {
+  Button,
+  Grid,
+  Section,
+  SimpleLink,
+  IconNoSSR,
+} from 'src/components/utils';
+import { CVList } from 'src/components/cv';
 import { CV_FILTERS_DATA } from 'src/constants/index.ts';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import { NewsletterPartial } from 'src/components/partials';
 import { GA_TAGS } from 'src/constants/tags';
 

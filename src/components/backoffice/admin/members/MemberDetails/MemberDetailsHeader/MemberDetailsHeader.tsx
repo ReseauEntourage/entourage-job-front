@@ -2,9 +2,8 @@ import _ from 'lodash';
 import React, { useContext } from 'react';
 import { UserWithUserCandidate } from 'src/api/types';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
-import { SimpleLink } from 'src/components/utils';
-import Icon from 'src/components/utils/Icon';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
+import { SimpleLink, Icon } from 'src/components/utils';
 import { UserContext } from 'src/store/UserProvider';
 import { getRelatedUser, isRoleIncluded } from 'src/utils/Finding';
 import {

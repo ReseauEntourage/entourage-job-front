@@ -2,7 +2,7 @@ import React from 'react';
 import { StyledCoachTestimony } from 'src/components/partials/Aider/CoachContainer/CoachTestimony/styles';
 import TitleSection from 'src/components/partials/Aider/H2';
 import { COLORS } from 'src/constants/styles';
-import { Container } from 'src/components/utils/containers';
+import { Container } from 'src/components/utils';
 import { v4 as uuid } from 'uuid';
 
 const uuidValue = uuid();

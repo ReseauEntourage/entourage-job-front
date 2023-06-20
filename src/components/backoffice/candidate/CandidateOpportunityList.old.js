@@ -6,8 +6,7 @@ import PropTypes from 'prop-types';
 
 import { UserContext } from 'src/store/UserProvider';
 import { openModal } from 'src/components/modals/Modal';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
-import { Button } from 'src/components/utils';
+import { Button, IconNoSSR } from 'src/components/utils';
 import ModalExternalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer.tsx';
 import { isRoleIncluded } from 'src/utils/Finding.ts';
 

@@ -1,19 +1,19 @@
 import React from 'react';
-import LogoList from 'src/components/partials/LogoList';
+import {
+  LogoList,
+  HowToCommitDifferently,
+  Chapter,
+  NumberGrid,
+  Reviews,
+  Timeline,
+} from 'src/components/partials';
 import Layout from 'src/components/Layout.tsx';
-import { Button, Section } from 'src/components/utils';
-import ImageTitle from 'src/components/partials/ImageTitle';
-import Reviews from 'src/components/partials/Reviews';
-import HowToCommitDifferently from 'src/components/partials/HowToCommitDifferently';
+import { Button, Section, AnimatedList, IconNoSSR } from 'src/components/utils';
+import { ImageTitle } from 'src/components/partials/ImageTitle';
 import { NewsletterPartial } from 'src/components/partials/NewsletterPartial';
 import PARTNERS from 'src/constants/partners';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
-import { Chapter } from 'src/components/partials/Chapter';
-import CVList from 'src/components/cv/CVList';
+import { CVList } from 'src/components/cv';
 import { CV_FILTERS_DATA, STORAGE_KEYS } from 'src/constants/index.ts';
-import Timeline from 'src/components/partials/Timeline';
-import NumberGrid from 'src/components/partials/NumberGrid';
-import AnimatedList from 'src/components/utils/AnimatedList';
 import { Api } from 'src/api/index.ts';
 import PropTypes from 'prop-types';
 import TextLoop from 'react-text-loop';

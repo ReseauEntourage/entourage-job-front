@@ -9,15 +9,15 @@ import {
   SkillsCard,
   StoryProfileCard,
 } from 'src/components/cards';
-import CVEditCatchphrase from 'src/components/cv/CVEditCatchphrase';
-import CVEditReviews from 'src/components/cv/CVEditReviews';
-import CVEditPicture from 'src/components/cv/CVEditPicture';
-import CVEditCareerPath from 'src/components/cv/CVEditCareerPath';
+import { CVEditCareerPath } from 'src/components/cv/CVEditCareerPath';
+import { CVEditCatchphrase } from 'src/components/cv/CVEditCatchphrase.tsx';
+import { CVEditReviews } from 'src/components/cv/CVEditReviews';
+import { CVEditPicture } from 'src/components/cv/CVEditPicture.tsx';
 
 import { CV_STATUS } from 'src/constants/index.ts';
 import { CVShape } from './CV.shape';
 
-const CVFicheEdition = ({
+export const CVFicheEdition = ({
   cv,
   onChange,
   disablePicture,
@@ -172,5 +172,3 @@ CVFicheEdition.defaultProps = {
   address: undefined,
   userZone: undefined,
 };
-
-export default CVFicheEdition;
