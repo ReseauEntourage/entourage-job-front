@@ -1,11 +1,11 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
-import { Api } from 'src/api/index.ts';
 import UIkit from 'uikit';
+import { Api } from 'src/api';
+import { openModal } from 'src/components/modals/Modal';
+import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { Button, IconNoSSR } from 'src/components/utils';
 import { usePrevious } from 'src/hooks/utils';
-import { openModal } from 'src/components/modals/Modal';
-import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
-import { gaEvent } from 'src/lib/gtag.ts';
+import { gaEvent } from 'src/lib/gtag';
 
 export function useBulkActions(apiRoute, refreshElementsCallback, tag) {
   const [selectedIds, setSelectedIds] = useState([]);

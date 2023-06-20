@@ -24,7 +24,7 @@ import {
   OrganizationDto,
 } from './types';
 
-class APIHandler {
+export class APIHandler {
   private name: string;
 
   private api: AxiosInstance;
@@ -349,7 +349,7 @@ class APIHandler {
     );
   }
 
-  putJoinOpportunity(params: OpportunityJoin): Promise<AxiosResponse> {
+  putJoinOpportunity(params: Partial<OpportunityJoin>): Promise<AxiosResponse> {
     const filteredParams = _.pick(params, [
       'status',
       'seen',
@@ -445,5 +445,3 @@ class APIHandler {
     return this.post('/contact/candidateInscription', params);
   }
 }
-
-export default APIHandler;

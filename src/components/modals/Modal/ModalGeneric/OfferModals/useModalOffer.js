@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-function useModalOffer(currentOffer) {
+export function useModalOffer(currentOffer) {
   const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -23,5 +23,3 @@ function useModalOffer(currentOffer) {
     setOffer,
   };
 }
-
-export default useModalOffer;

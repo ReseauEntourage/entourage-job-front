@@ -1,17 +1,17 @@
-import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { usePrevious } from 'src/hooks/utils';
-import { Api } from 'src/api/index.ts';
-import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users.ts';
-import { isRoleIncluded } from 'src/utils/Finding.ts';
-import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId.ts';
-import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice.tsx';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Api } from 'src/api';
+import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
+import { MemberDetails } from 'src/components/backoffice/admin/members/MemberDetails';
+import { useMemberId } from 'src/components/backoffice/admin/members/MemberDetails/useMemberId';
+import { useTab } from 'src/components/backoffice/admin/members/MemberDetails/useTab';
+import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { Grid, Section, SimpleLink } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
-import { MemberDetails } from 'src/components/backoffice/admin/members/MemberDetails/index.ts';
-import { MEMBER_TABS } from 'src/constants/index.ts';
-import { useTab } from 'src/components/backoffice/admin/members/MemberDetails/useTab.ts';
-import { useMemberId } from 'src/components/backoffice/admin/members/MemberDetails/useMemberId.ts';
+import { IconNoSSR } from 'src/components/utils/Icon';
+import { MEMBER_TABS } from 'src/constants';
+import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
+import { usePrevious } from 'src/hooks/utils';
+import { isRoleIncluded } from 'src/utils/Finding';
 
 const User = () => {
   const [user, setUser] = useState();

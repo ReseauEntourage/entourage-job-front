@@ -1,42 +1,51 @@
 {
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "tsconfig.json",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react", "react-hooks", "prettier",
+    "@typescript-eslint/eslint-plugin",
+    "@typescript-eslint",
+    "typescript-sort-keys",
+    "import"
+  ],
+  "extends": [
+    "airbnb",
+    "prettier",
+    "eslint:recommended",
+    "plugin:import/recommended",
+    "plugin:@next/next/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended" // should always be the last element in the array
+  ],
   "env": {
     "browser": true,
     "commonjs": true,
-    "node": true,
     "mocha": true,
-    "es6": true,
-    "jest": true
+    "node": true,
+    "jest": true,
+    "es6": true
   },
-  "globals": {
-    "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
-  },
-  "parser": "@babel/eslint-parser",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "babelOptions": {
-      "presets": ["@babel/preset-react"]
-    },
-    "ecmaVersion": 2018,
-    "sourceType": "module",
-    "allowImportExportEverywhere": false,
-    "codeFrame": false,
-    "requireConfigFile": false
-  },
-  "plugins": ["react", "react-hooks", "prettier"],
-  "root": true,
   "rules": {
+    // Plain JavaScript Rules
+    "arrow-body-style": 0,
+    "no-console": [1, { "allow": ["warn", "error"] }],
+    "no-multiple-empty-lines": [2, { "max": 1 }], // prettier like
+    // max-len is enought
+    "object-curly-newline": 0,
+    // disable due to TypeScript params. More infos here: https://kendaleiv.com/typescript-constructor-assignment-public-and-private-keywords
+    "no-useless-constructor": 0,
+    "class-methods-use-this": 0,
+    "max-classes-per-file": 0,
     "camelcase": "off",
     "curly": "warn",
     "strict": ["error", "global"],
     "prefer-promise-reject-errors": "off",
-    "import/prefer-default-export": "off",
-    "import/no-extraneous-dependencies": ["error"],
     "no-return-assign": "off",
     "no-case-declarations": "off",
-    "no-console": "off",
     "no-unused-vars": "warn",
     "no-param-reassign": "off",
     "consistent-return": "off",
@@ -56,12 +65,12 @@
     "react/forbid-prop-types": "warn",
     "react/jsx-props-no-spreading": "off",
     "react/jsx-wrap-multilines": "off",
+
     // with TypeScript, no default props
     "react/require-default-props": 0,
     "react/static-property-placement": ["warn", "static getter"],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",
-    "import/no-self-import": "off",
     "jsx-a11y/aria-role": [ 2, {
       "allowedInvalidRoles": ["Candidat"],
       "ignoreNonDOM": true
@@ -78,133 +87,108 @@
       {
         "usePrettierrc": true
       }
+    ],
+
+    // TypeScript Rules
+    "@typescript-eslint/no-unused-vars": [
+      1,
+      { "ignoreRestSiblings": true }
+    ],
+    "@typescript-eslint/member-delimiter-style": [
+      1,
+      {
+        "multiline": {
+          "delimiter": "semi",
+          "requireLast": true
+        },
+        "singleline": {
+          "delimiter": "semi",
+          "requireLast": false
+        }
+      }
+    ],
+    "@typescript-eslint/no-empty-interface": 0,
+    // TODO remove when all TS
+    "@typescript-eslint/no-empty-function": 0,
+    // many times, typing will bring duplication
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "@typescript-eslint/ban-ts-ignore": 0,
+    "@typescript-eslint/interface-name-prefix": 0,
+
+    // Import Rules
+    // TODO put ts: never and tsx: never when all files have been transformed
+    "import/extensions": [
+      2,
+      "always",
+      { "ts": "never", "tsx": "never", "js": "never", "jsx": "never" }
+    ],
+    "import/prefer-default-export": 0,
+    "import/no-default-export": 2,
+    // allow to use devDeps in test files.
+    // See options: https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-extraneous-dependencies.md#options
+    "import/no-extraneous-dependencies": [
+      "error",
+      { "devDependencies": ["tests/**/*", "**/*.spec.ts"] }
+    ],
+    // 'sort-imports': 2,
+    "import/order": [
+      1,
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index"
+        ],
+        "alphabetize": {
+          "order": "asc"
+        },
+        "pathGroups": [
+          {
+            "pattern": "src/**",
+            "group": "parent"
+          },
+          {
+            "pattern": "tests/**",
+            "group": "parent"
+          }
+        ]
+      }
     ]
   },
-  "extends": [
-    "airbnb",
-    "prettier",
-    "eslint:recommended",
-    "plugin:@next/next/recommended",
-    "plugin:prettier/recommended" // should always be the last element in the array
-  ],
   "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
     "import/resolver": {
+      "typescript": {
+        "project": "./tsconfig.json"
+      },
       "node": {
         "paths": ["."]
       }
     }
   },
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "root": true,
   "overrides": [
     {
-      "files": ["**/*.{ts,tsx}"],
-      "parser": "@typescript-eslint/parser",
-      "parserOptions": {
-        "project": "tsconfig.json",
-        "sourceType": "module"
-      },
-      "plugins": [
-        "@typescript-eslint/eslint-plugin",
-        "@typescript-eslint",
-        "typescript-sort-keys",
-        "import"
-      ],
-      "extends": [
-        "plugin:import/recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:prettier/recommended"
-      ],
-      "env": {
-        "node": true,
-        "jest": true,
-        "es6": true
-      },
+      // storybook use both default export and named exports
+      "files": ["src/**/*.stories.tsx"],
       "rules": {
-        // TypeScript Rules
-        "@typescript-eslint/no-unused-vars": [
-          1,
-          { "ignoreRestSiblings": true }
-        ],
-        "@typescript-eslint/member-delimiter-style": [
-          1,
-          {
-            "multiline": {
-              "delimiter": "semi",
-              "requireLast": true
-            },
-            "singleline": {
-              "delimiter": "semi",
-              "requireLast": false
-            }
-          }
-        ],
-        "@typescript-eslint/no-empty-interface": 0,
-        // many times, typing will bring duplication
-        "@typescript-eslint/explicit-function-return-type": 0,
-        "@typescript-eslint/ban-ts-ignore": 0,
-        "@typescript-eslint/interface-name-prefix": 0,
-
-        // Import Rules
-        "import/extensions": [
-          2,
-          "always",
-          { "ts": "never", "tsx": "never", "js": "never" }
-        ],
-        "import/prefer-default-export": 0,
-        // allow to use devDeps in test files.
-        // See options: https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-extraneous-dependencies.md#options
-        "import/no-extraneous-dependencies": [
-          "error",
-          { "devDependencies": ["tests/**/*", "**/*.spec.ts"] }
-        ],
-        // 'sort-imports': 2,
-        "import/order": [
-          1,
-          {
-            "groups": [
-              "builtin",
-              "external",
-              "internal",
-              "parent",
-              "sibling",
-              "index"
-            ],
-            "alphabetize": {
-              "order": "asc"
-            },
-            "pathGroups": [
-              {
-                "pattern": "src/**",
-                "group": "parent"
-              },
-              {
-                "pattern": "tests/**",
-                "group": "parent"
-              }
-            ]
-          }
-        ],
-
-        // Plain JavaScript Rules
-        "arrow-body-style": 0,
-        "no-console": [1, { "allow": ["warn", "error"] }],
-        "no-multiple-empty-lines": [2, { "max": 1 }], // prettier like
-        // max-len is enought
-        "object-curly-newline": 0,
-        // disable due to TypeScript params. More infos here: https://kendaleiv.com/typescript-constructor-assignment-public-and-private-keywords
-        "no-useless-constructor": 0,
-        "class-methods-use-this": 0,
-        "max-classes-per-file": 0
-      },
-      "settings": {
-        "import/parsers": {
-          "@typescript-eslint/parser": [".ts", ".tsx"]
-        },
-        "import/resolver": {
-          "typescript": {
-            "project": "./tsconfig.json"
-          }
-        }
+        "import/no-default-export": 0
+      }
+    },
+    {
+      "files": ["src/pages/**"],
+      "rules": {
+        "import/no-default-export": 0,
+        "import/prefer-default-export": 2
       }
     }
   ]

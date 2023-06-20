@@ -1,29 +1,29 @@
-import React, { useContext } from 'react';
+import _ from 'lodash';
+import moment from 'moment';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 
 import {
   FacebookShareButton,
   LinkedinShareButton,
   TwitterShareButton,
 } from 'react-share';
-import { useRouter } from 'next/router';
 
-import { Grid, Img, SimpleLink, IconNoSSR } from 'src/components/utils';
-import ModalShareCV from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
-import { Api } from 'src/api/index.ts';
-import { SharesCountContext } from 'src/store/SharesCountProvider';
-import { gaEvent } from 'src/lib/gtag.ts';
-import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import moment from 'moment';
+import { Api } from 'src/api';
 import { openModal } from 'src/components/modals/Modal';
-import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants/index.ts';
+import { ModalShareCV } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
+import { Grid, Img, SimpleLink, IconNoSSR } from 'src/components/utils';
+import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { fbEvent } from 'src/lib/fb';
+import { gaEvent } from 'src/lib/gtag';
+import { SharesCountContext } from 'src/store/SharesCountProvider';
 import {
   buildBusinessLineForSentence,
   findConstantFromValue,
   sortByOrder,
 } from 'src/utils';
-import { fbEvent } from 'src/lib/fb.ts';
-import _ from 'lodash';
 
 export const CandidatCard = ({
   url,

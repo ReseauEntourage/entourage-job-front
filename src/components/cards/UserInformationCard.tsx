@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
-import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
+import { ToggleWithConfirmationModal } from 'src/components/backoffice/ToggleWithConfirmationModal';
 import CandidateEmployedToggle from 'src/components/backoffice/candidate/CandidateEmployedToggle';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
 import { Card, Grid, SimpleLink, IconNoSSR } from 'src/components/utils';

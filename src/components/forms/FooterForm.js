@@ -1,8 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'src/components/utils/Button';
+import React from 'react';
 import ButtonPost from 'src/components/backoffice/cv/ButtonPost';
 import { StyledFooterForm } from 'src/components/forms/Forms.styles';
+import { Button } from 'src/components/utils/Button';
 
 const FooterForm = ({
   error,

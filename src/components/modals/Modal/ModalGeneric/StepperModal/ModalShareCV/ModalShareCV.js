@@ -1,18 +1,18 @@
-import UIkit from 'uikit';
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+import UIkit from 'uikit';
 
-import StepperModal from 'src/components/modals/Modal/ModalGeneric/StepperModal';
-import FormWithValidation from 'src/components/forms/FormWithValidation.tsx';
+import { Api } from 'src/api';
+import FormWithValidation from 'src/components/forms/FormWithValidation';
 import schemaGetEmail from 'src/components/forms/schema/formGetEmail.json';
-import { Api } from 'src/api/index.ts';
+import { StepperModal } from 'src/components/modals/Modal/ModalGeneric/StepperModal';
 import { Button, Img, IconNoSSR } from 'src/components/utils';
-import { EXTERNAL_LINKS } from 'src/constants/index.ts';
-import { gaEvent } from 'src/lib/gtag.ts';
+import { EXTERNAL_LINKS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { useNewsletterTracking } from 'src/hooks';
+import { gaEvent } from 'src/lib/gtag';
 
-const ModalShareCV = ({ firstName }) => {
+export const ModalShareCV = ({ firstName }) => {
   const newsletterParams = useNewsletterTracking();
 
   return (
@@ -98,10 +98,11 @@ const ModalShareCV = ({ firstName }) => {
     />
   );
 };
+
 ModalShareCV.propTypes = {
   firstName: PropTypes.string,
 };
+
 ModalShareCV.defaultProps = {
   firstName: undefined,
 };
-export default ModalShareCV;

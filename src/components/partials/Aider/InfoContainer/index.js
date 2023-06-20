@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { StyledInfoContainer } from 'src/components/partials/Aider/InfoContainer/styles';
-import TitleSection from 'src/components/partials/Aider/H2';
-import { COLORS, BREAKPOINTS } from 'src/constants/styles';
 import Image from 'next/image';
+import React, { useState, useEffect } from 'react';
+import { v4 as uuid } from 'uuid';
+import AiderImgFullWidth from 'public/static/img/aider-img-full-width.jpg';
+import AiderInformationsMissions from 'public/static/img/aider-informations-mission.jpg';
 import PictoCreationOpp from 'public/static/img/icons/picto-creation-opportunite.svg';
 import PictoFaciliterInte from 'public/static/img/icons/picto-faciliter-integration.svg';
 import PictoRechercheCV from 'public/static/img/icons/picto-recherche-cv.svg';
-import AiderInformationsMissions from 'public/static/img/aider-informations-mission.jpg';
-import AiderImgFullWidth from 'public/static/img/aider-img-full-width.jpg';
+import TitleSection from 'src/components/partials/Aider/H2';
+import { StyledInfoContainer } from 'src/components/partials/Aider/InfoContainer/styles';
 import { Container } from 'src/components/utils';
+import { COLORS, BREAKPOINTS } from 'src/constants/styles';
 import { isSSR } from 'src/utils/isSSR';
-import { v4 as uuid } from 'uuid';
 
 const uuidValue = uuid();
 
@@ -45,7 +45,7 @@ const infoContent = [
   },
 ];
 
-const InfoContainer = () => {
+export const InfoContainer = () => {
   const [imagePosition, setImagePosition] = useState('top');
   useEffect(() => {
     if (!isSSR) {
@@ -118,5 +118,3 @@ const InfoContainer = () => {
     </StyledInfoContainer>
   );
 };
-
-export default InfoContainer;

@@ -1,15 +1,15 @@
-import React from 'react';
 import { useRouter } from 'next/router';
-import { Button } from 'src/components/utils/Button';
-import { Hamburger, Navbar, NavbarLogo, IconNoSSR } from 'src/components/utils';
-import { gaEvent } from 'src/lib/gtag.ts';
-import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas.tsx';
-import { fbEvent } from 'src/lib/fb.ts';
-import { OFFCANVAS_GUEST } from 'src/constants/utils.ts';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { StyledHeaderMobile } from '../../Header.styles';
 import { HeaderPublicItemShape } from '../HeaderPublic.shapes';
+import { Hamburger, Navbar, NavbarLogo, IconNoSSR } from 'src/components/utils';
+import { Button } from 'src/components/utils/Button';
+import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { OFFCANVAS_GUEST } from 'src/constants/utils';
+import { fbEvent } from 'src/lib/fb';
+import { gaEvent } from 'src/lib/gtag';
 
 const HeaderPublicMobile = ({ links }) => {
   const { asPath, push } = useRouter();

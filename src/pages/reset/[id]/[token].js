@@ -1,12 +1,12 @@
-import React from 'react';
 import { useRouter } from 'next/router';
-import Layout from 'src/components/Layout.tsx';
-import { Button, Section, IconNoSSR } from 'src/components/utils';
-import schema from 'src/components/forms/schema/formResetPassword';
-import { Api } from 'src/api/index.ts';
-import FormWithValidation from 'src/components/forms/FormWithValidation.tsx';
-import { PasswordCriterias } from 'src/components/PasswordCriterias.tsx';
 import PropTypes from 'prop-types';
+import React from 'react';
+import { Api } from 'src/api';
+import { Layout } from 'src/components/Layout';
+import { PasswordCriterias } from 'src/components/PasswordCriterias';
+import FormWithValidation from 'src/components/forms/FormWithValidation';
+import schema from 'src/components/forms/schema/formResetPassword';
+import { Button, Section, IconNoSSR } from 'src/components/utils';
 
 const ResetPasswordPage = ({ valid, id, token, isCreation }) => {
   const { push } = useRouter();

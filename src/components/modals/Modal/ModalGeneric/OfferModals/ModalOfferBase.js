@@ -1,9 +1,9 @@
-import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
+import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 
-const ModalOfferBase = ({
+export const ModalOfferBase = ({
   isArchived,
   isExternal,
   children,
@@ -55,5 +55,3 @@ ModalOfferBase.propTypes = {
   isEditing: PropTypes.bool.isRequired,
   setIsEditing: PropTypes.func.isRequired,
 };
-
-export default ModalOfferBase;

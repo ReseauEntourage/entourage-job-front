@@ -1,5 +1,19 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import UIkit from 'uikit';
+import { Api } from 'src/api';
+import FormWithValidation from 'src/components/forms/FormWithValidation';
+import Select from 'src/components/forms/fields/Select';
+import formEditExternalOpportunitySchema from 'src/components/forms/schema/formEditExternalOpportunity';
+import { openModal } from 'src/components/modals/Modal';
+import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
+import { ModalOfferBase } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOfferBase';
+import { ModalOfferInfo } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/ModalOfferInfo';
+import { List } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/NavList';
+import { OfferContent } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferContent';
+import { OfferInfoContainer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferInfoContainer';
+import { useModalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/useModalOffer';
 import {
   Button,
   Grid,
@@ -7,9 +21,13 @@ import {
   ButtonIcon,
   IconNoSSR,
 } from 'src/components/utils';
-import Select from 'src/components/forms/fields/Select';
 
-import { Api } from 'src/api/index.ts';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { EXTERNAL_OFFERS_ORIGINS, OFFER_STATUS } from 'src/constants';
+import { GA_TAGS } from 'src/constants/tags';
+import { usePrevious } from 'src/hooks/utils';
+import { gaEvent } from 'src/lib/gtag';
+import { UserContext } from 'src/store/UserProvider';
 import {
   findConstantFromValue,
   formatParagraph,
@@ -17,24 +35,6 @@ import {
   mutateDefaultOfferStatus,
   mutateFormSchema,
 } from 'src/utils';
-import ModalOfferInfo from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/ModalOfferInfo';
-import FormWithValidation from 'src/components/forms/FormWithValidation.tsx';
-import { UserContext } from 'src/store/UserProvider';
-import { EXTERNAL_OFFERS_ORIGINS, OFFER_STATUS } from 'src/constants/index.ts';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
-import { openModal } from 'src/components/modals/Modal';
-import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
-import { OfferInfoContainer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferInfoContainer';
-import { List } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/NavList';
-import ModalOfferBase from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOfferBase';
-import useModalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/useModalOffer';
-import OfferContent from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferContent';
-import UIkit from 'uikit';
-import { useRouter } from 'next/router';
-import { usePrevious } from 'src/hooks/utils';
-import { gaEvent } from 'src/lib/gtag.ts';
-import { GA_TAGS } from 'src/constants/tags';
-import formEditExternalOpportunitySchema from 'src/components/forms/schema/formEditExternalOpportunity';
 
 const AfterContactItem = ({ isPublic }) => {
   return (
@@ -99,7 +99,7 @@ PrivateOfferSentence.propTypes = {
   lastName: PropTypes.string.isRequired,
 };
 
-const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
+export const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
   const {
     replace,
     pathname,
@@ -652,5 +652,3 @@ ModalOffer.propTypes = {
 ModalOffer.defaultProps = {
   currentOffer: { opportunityUsers: {}, businessLines: [] },
 };
-
-export default ModalOffer;

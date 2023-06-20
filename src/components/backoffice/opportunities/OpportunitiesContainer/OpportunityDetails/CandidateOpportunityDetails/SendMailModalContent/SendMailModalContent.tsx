@@ -5,7 +5,7 @@ import { StyledSendMailContent } from 'src/components/backoffice/opportunities/O
 import { useFetchOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/useFetchOpportunity';
 import FooterForm from 'src/components/forms/FooterForm';
 import { useModalContext, openModal } from 'src/components/modals/Modal';
-import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
+import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { TextArea } from 'src/components/utils/Inputs/TextArea';
 import { UserContext } from 'src/store/UserProvider';
 
@@ -17,9 +17,9 @@ interface SendMailModalContentProps {
   candidateId: string;
 }
 
-const SendMailModalContent = ({
+export const SendMailModalContent = ({
   OpportunityId,
-  relance,
+  relance = false,
   onSubmit,
   fetchOpportunities,
   candidateId,
@@ -193,8 +193,3 @@ const SendMailModalContent = ({
     </StyledSendMailContent>
   );
 };
-
-SendMailModalContent.defaultProps = {
-  relance: false,
-};
-export default SendMailModalContent;

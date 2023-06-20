@@ -1,8 +1,8 @@
-import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import React from 'react';
+import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
 import { ButtonIcon, IconNoSSR } from 'src/components/utils';
-import ContractLabel from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel.tsx';
 import { useCopyToClipboard } from 'src/hooks';
 
 function translateCategory(isPublic, isRecommended, isExternal) {
@@ -31,7 +31,7 @@ function translateCategory(isPublic, isRecommended, isExternal) {
   return 'Offre inconnue';
 }
 
-const ModalOfferInfo = ({
+export const ModalOfferInfo = ({
   offerId,
   title,
   isPublic,
@@ -154,5 +154,3 @@ ModalOfferInfo.defaultProps = {
   driversLicense: undefined,
   workingHours: undefined,
 };
-
-export default ModalOfferInfo;

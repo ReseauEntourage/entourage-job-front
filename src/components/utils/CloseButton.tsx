@@ -29,14 +29,3 @@ CloseButton.defaultProps = {
   onClick: null,
   dataTestId: '',
 };
-
-export const CloseButtonNoSSR = dynamic(
-  () => {
-    return import('src/components/utils/CloseButton').then(
-      (mod) => mod.CloseButton
-    );
-  },
-  {
-    ssr: false,
-  }
-);

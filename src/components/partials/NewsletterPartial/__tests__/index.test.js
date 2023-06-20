@@ -1,8 +1,8 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { NewsletterPartial } from '../NewsletterPartial';
 import { BREAKPOINTS } from 'src/constants/styles';
-import { NewsletterPartial } from '../NewsletterPartial.tsx';
 
 jest.mock('react-modal');
 jest.mock('cookies-next');
@@ -37,16 +37,16 @@ jest.mock('src/hooks', () => {
   };
 });
 
-jest.mock('src/lib/gtag.ts', () => {
-  const gtag = jest.requireActual('src/lib/gtag.ts');
+jest.mock('src/lib/gtag', () => {
+  const gtag = jest.requireActual('src/lib/gtag');
   return {
     ...gtag,
     gaEvent: () => {},
   };
 });
 
-jest.mock('src/api/index.ts', () => {
-  const ActualApi = jest.requireActual('src/api/index.ts');
+jest.mock('src/api/index', () => {
+  const ActualApi = jest.requireActual('src/api/index');
   return {
     Api: {
       ...ActualApi.Api,

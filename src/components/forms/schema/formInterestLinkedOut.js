@@ -1,5 +1,5 @@
-import { HEARD_ABOUT_FILTERS } from 'src/constants/index.ts';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
+import { HEARD_ABOUT_FILTERS } from 'src/constants';
 
 export default {
   id: 'form-interest',

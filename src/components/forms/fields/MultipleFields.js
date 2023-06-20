@@ -1,7 +1,7 @@
-import React, { memo, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Button, ButtonIcon, IconNoSSR } from 'src/components/utils';
+import React, { memo, useCallback, useMemo } from 'react';
 import GenericField from 'src/components/forms/GenericField';
+import { Grid, Button, ButtonIcon, IconNoSSR } from 'src/components/utils';
 import { usePrevious } from 'src/hooks/utils';
 
 const FieldGroup = memo(

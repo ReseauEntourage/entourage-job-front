@@ -8,7 +8,7 @@ import {
 } from 'src/components/headers/HeaderConnected/HeaderConnected.shapes';
 import { StyledConnectedItem } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/HeaderConnectedContent.styles';
 import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
-import SubMenu from 'src/components/headers/HeaderConnected/HeaderConnectedContent/SubMenu';
+import { SubMenu } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/SubMenu';
 import {
   Navbar,
   SimpleLink,

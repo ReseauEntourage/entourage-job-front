@@ -1,19 +1,19 @@
+import _ from 'lodash';
+import moment from 'moment';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import UIkit from 'uikit';
 
-import React, { memo, useCallback, useEffect, useState } from 'react';
-import { Api } from 'src/api/index.ts';
-import _ from 'lodash';
-import { usePrevious } from 'src/hooks/utils';
-import { gaEvent } from 'src/lib/gtag.ts';
-import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { openModal } from 'src/components/modals/Modal';
+import { Api } from 'src/api';
 import defaultSchema from 'src/components/forms/schema/formEditOpportunity';
-import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { findConstantFromValue, getValueFromFormField } from 'src/utils';
-import { BUSINESS_LINES } from 'src/constants/index.ts';
-import { fbEvent } from 'src/lib/fb.ts';
-import moment from 'moment';
+import { openModal } from 'src/components/modals/Modal';
+import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { BUSINESS_LINES } from 'src/constants';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { useNewsletterTracking } from 'src/hooks/useNewsletterTracking';
+import { usePrevious } from 'src/hooks/utils';
+import { fbEvent } from 'src/lib/fb';
+import { gaEvent } from 'src/lib/gtag';
+import { findConstantFromValue, getValueFromFormField } from 'src/utils';
 
 export function usePostOpportunity({
   modalTitle,

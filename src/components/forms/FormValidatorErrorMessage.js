@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { StyledErrorMessage } from 'src/components/forms/Forms.styles';
 
 const FormValidatorErrorMessage = ({ validObj, newInput }) => {

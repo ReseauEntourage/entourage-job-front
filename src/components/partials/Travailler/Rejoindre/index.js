@@ -1,1 +1,1 @@
-export { Rejoindre } from './Rejoindre.tsx';
+export { Rejoindre } from './Rejoindre';

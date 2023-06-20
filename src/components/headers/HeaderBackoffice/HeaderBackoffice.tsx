@@ -12,13 +12,13 @@ interface HeaderBackofficeProps {
   noSeparator?: boolean;
 }
 
-const HeaderBackoffice = ({
+export const HeaderBackoffice = ({
   title,
   description,
   children,
-  childrenBottom,
-  shouldDisplayAdminNotifications,
-  noSeparator,
+  childrenBottom = false,
+  shouldDisplayAdminNotifications = false,
+  noSeparator= false,
 }: HeaderBackofficeProps) => {
   const { pendingMembersCount } = usePendingMembers();
   return (
@@ -49,11 +49,3 @@ const HeaderBackoffice = ({
     </StyledHeaderBackOffice>
   );
 };
-
-HeaderBackoffice.defaultProps = {
-  children: undefined,
-  childrenBottom: false,
-  shouldDisplayAdminNotifications: false,
-  noSeparator: false,
-};
-export default HeaderBackoffice;

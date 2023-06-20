@@ -1,9 +1,9 @@
+import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import {
   COMPANY_APPROACHES_FILTERS,
   COMPANY_CONTACT_ZONES_FILTERS,
   HEARD_ABOUT_FILTERS,
-} from 'src/constants/index.ts';
-import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
+} from 'src/constants';
 
 export default {
   id: 'form-company-contact',

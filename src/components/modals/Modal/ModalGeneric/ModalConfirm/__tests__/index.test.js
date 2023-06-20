@@ -5,8 +5,8 @@ import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 
 import { render, screen, fireEvent } from '@testing-library/react';
+import ModalConfirm from '../ModalConfirm';
 import { ModalsListener, openModal } from 'src/components/modals/Modal';
-import ModalConfirm from '../ModalConfirm.tsx';
 
 jest.mock('react-modal');
 

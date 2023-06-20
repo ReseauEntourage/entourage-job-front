@@ -1,15 +1,15 @@
-import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { useModalContext } from 'src/components/modals/Modal';
-import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
+import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 
 /**
  * Ce composant fournit une modal à contenu variable selon l'index ou l'on s'y trouve
  * composers est un tableau de functions attendant 3 fonctions (action: close, next, previous) et retournant un composant
  * cela permet de gérer le flux/ la modale depuis ses composant internes
  */
-const StepperModal = ({ composers, title }) => {
+export const StepperModal = ({ composers, title }) => {
   const [index, setIndex] = useState(0);
   const [wrappedComponents, setWrappedComponents] = useState();
 
@@ -61,5 +61,3 @@ StepperModal.propTypes = {
 };
 
 StepperModal.defaultProps = {};
-
-export default StepperModal;

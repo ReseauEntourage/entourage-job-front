@@ -1,5 +1,6 @@
-import UIkit from 'uikit';
-
+import moment from 'moment';
+import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
 import React, {
   forwardRef,
   useCallback,
@@ -7,10 +8,17 @@ import React, {
   useImperativeHandle,
   useState,
 } from 'react';
-import PropTypes from 'prop-types';
-import { useRouter } from 'next/router';
-import { getOpportunityUserFromOffer } from 'src/utils';
-import { Api } from 'src/api/index.ts';
+import UIkit from 'uikit';
+
+import useDeepCompareEffect from 'use-deep-compare-effect';
+import { Api } from 'src/api';
+import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
+import { OfferCard } from 'src/components/cards';
+import SearchBar from 'src/components/filters/SearchBar';
+import { openModal } from 'src/components/modals/Modal';
+import { ModalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer';
+import { ModalOfferAdmin } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOfferAdmin';
+import { OpportunityError } from 'src/components/opportunities/OpportunityError';
 import {
   Button,
   Grid,
@@ -18,24 +26,16 @@ import {
   FiltersTabs,
   IconNoSSR,
 } from 'src/components/utils';
-import { OfferCard } from 'src/components/cards';
-import ModalOfferAdmin from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOfferAdmin';
-import { OpportunityError } from 'src/components/opportunities/OpportunityError';
-import { useOpportunityList } from 'src/hooks/useOpportunityList';
-import useDeepCompareEffect from 'use-deep-compare-effect';
 import {
   OFFER_ADMIN_FILTERS_DATA,
   OPPORTUNITY_FILTERS_DATA,
-} from 'src/constants/index.ts';
-import SearchBar from 'src/components/filters/SearchBar.tsx';
-import { openModal } from 'src/components/modals/Modal';
-import { usePrevious } from 'src/hooks/utils';
-import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
-import { useBulkActions } from 'src/hooks/useBulkActions';
-import { SEARCH_MAX_WIDTH } from 'src/constants/utils.ts';
+} from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
-import moment from 'moment';
-import { ModalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer';
+import { SEARCH_MAX_WIDTH } from 'src/constants/utils';
+import { useBulkActions } from 'src/hooks/useBulkActions';
+import { useOpportunityList } from 'src/hooks/useOpportunityList';
+import { usePrevious } from 'src/hooks/utils';
+import { getOpportunityUserFromOffer } from 'src/utils';
 
 const OfferList = ({
   selectionModeActivated,
@@ -155,7 +155,7 @@ OfferList.defaultProps = {
   candidateId: undefined,
 };
 
-const OpportunityList = forwardRef(
+export const OpportunityList = forwardRef(
   (
     {
       candidateId,
@@ -568,5 +568,3 @@ OpportunityList.defaultProps = {
   resetFilters: () => {},
   setTabFilters: () => {},
 };
-
-export default OpportunityList;

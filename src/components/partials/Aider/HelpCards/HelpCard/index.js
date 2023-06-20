@@ -1,13 +1,13 @@
-import React from 'react';
 import Image from 'next/image';
-import { Button, IconNoSSR } from 'src/components/utils';
-import { gaEvent } from 'src/lib/gtag.ts';
-import PropTypes from 'prop-types';
 import Link from 'next/link';
-import { fbEvent } from 'src/lib/fb.ts';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Button, IconNoSSR } from 'src/components/utils';
+import { fbEvent } from 'src/lib/fb';
+import { gaEvent } from 'src/lib/gtag';
 import { StyledHelpCard, StyledLink } from './styles';
 
-const HelpCard = ({ cardContent, keyMap }) => {
+export const HelpCard = ({ cardContent, keyMap }) => {
   const { title, img, text, cta, href, alt, newTab, gaTag, fbTag } =
     cardContent;
   const card = (
@@ -77,5 +77,3 @@ HelpCard.propTypes = {
   }).isRequired,
   keyMap: PropTypes.string.isRequired,
 };
-
-export default HelpCard;

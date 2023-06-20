@@ -1,29 +1,28 @@
-import UIkit from 'uikit';
-
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import Router from 'next/router';
+import PropTypes from 'prop-types';
 import Pusher from 'pusher-js';
-import { Api } from 'src/api/index.ts';
-import { Button, Grid } from 'src/components/utils';
-import { CVBackground, CVFiche, CVFicheEdition } from 'src/components/cv';
-import { UserContext } from 'src/store/UserProvider';
-import ButtonPost from 'src/components/backoffice/cv/ButtonPost';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import UIkit from 'uikit';
+import { Api } from 'src/api';
 
+import ButtonDownload from 'src/components/backoffice/cv/ButtonDownload';
+import ButtonPost from 'src/components/backoffice/cv/ButtonPost';
+import NoCV from 'src/components/backoffice/cv/NoCV';
+import { CVBackground, CVFiche, CVFicheEdition } from 'src/components/cv';
+import { CVShape } from 'src/components/cv/CV.shape';
+import { openModal, useModalContext } from 'src/components/modals/Modal';
+import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
+import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
+import { Button, Grid } from 'src/components/utils';
+import { CV_STATUS, SOCKETS } from 'src/constants';
 import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
   USER_ROLES,
-} from 'src/constants/users.ts';
-import NoCV from 'src/components/backoffice/cv/NoCV';
-import ButtonDownload from 'src/components/backoffice/cv/ButtonDownload';
-import { openModal, useModalContext } from 'src/components/modals/Modal';
-import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
+} from 'src/constants/users';
 import { usePrevious } from 'src/hooks/utils';
-import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
-import { CVShape } from 'src/components/cv/CV.shape';
-import { isRoleIncluded } from 'src/utils/Finding.ts';
-import { CV_STATUS, SOCKETS } from 'src/constants/index.ts';
+import { UserContext } from 'src/store/UserProvider';
+import { isRoleIncluded } from 'src/utils/Finding';
 
 const pusher = new Pusher(process.env.PUSHER_API_KEY, {
   cluster: 'eu',

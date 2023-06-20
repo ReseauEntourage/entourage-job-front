@@ -1,1 +1,1 @@
-export { Partners } from './Partners.tsx';
+export { Partners } from './Partners';

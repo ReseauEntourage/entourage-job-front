@@ -1,9 +1,9 @@
-import React, { createContext, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { createContext, useCallback, useState } from 'react';
 
 export const DataContext = createContext({});
 
-const DataProvider = ({ children }) => {
+export const DataProvider = ({ children }) => {
   const [data, setData] = useState(true);
 
   const storeData = useCallback((key, value, storeInStorage) => {
@@ -47,4 +47,3 @@ const DataProvider = ({ children }) => {
 DataProvider.propTypes = {
   children: PropTypes.element.isRequired,
 };
-export default DataProvider;

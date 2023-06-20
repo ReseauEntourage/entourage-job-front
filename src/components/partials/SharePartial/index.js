@@ -1,1 +1,1 @@
-export { SharePartial } from './SharePartial.tsx';
+export { SharePartial } from './SharePartial';

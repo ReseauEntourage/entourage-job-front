@@ -1,8 +1,8 @@
 import schema from 'src/components/forms/schema/formEditOpportunity';
-import { mutateFormSchema } from 'src/utils';
 import { usePostOpportunity } from 'src/hooks';
+import { mutateFormSchema } from 'src/utils';
 
-function usePostPublicOfferModal() {
+export function usePostPublicOfferModal() {
   const mutatedSchema = mutateFormSchema(
     schema,
     [
@@ -61,5 +61,3 @@ function usePostPublicOfferModal() {
 
   return PostOpportunityModal;
 }
-
-export default usePostPublicOfferModal;

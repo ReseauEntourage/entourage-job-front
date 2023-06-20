@@ -1,3 +1,5 @@
+import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
+import { isEmail } from 'validator';
 import {
   BUSINESS_LINES,
   CANDIDATE_ACCOMMODATIONS_FILTERS,
@@ -8,9 +10,7 @@ import {
   CANDIDATE_RESOURCES_FILTERS,
   CANDIDATE_YES_NO_FILTERS,
   HEARD_ABOUT_FILTERS,
-} from 'src/constants/index.ts';
-import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
-import { isEmail } from 'validator';
+} from 'src/constants';
 
 export default {
   id: 'form-candidate-contact',

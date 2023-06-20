@@ -1,8 +1,14 @@
 import React from 'react';
-import { StyledCoachContainer } from 'src/components/partials/Aider/CoachContainer/styles';
-import TitleSection from 'src/components/partials/Aider/H2';
-import AiderAccompagnerCoachImg from 'public/static/img/aider-accompagner-coach.jpg';
+import { v4 as uuid } from 'uuid';
 import AiderAccompagnerCoachImgMobile from 'public/static/img/aider-accompagner-coach-mobile.jpg';
+import AiderAccompagnerCoachImg from 'public/static/img/aider-accompagner-coach.jpg';
+import BoiteOutilsIcon from 'public/static/img/icons/aider-boite-outils.svg';
+import InterviewIcon from 'public/static/img/icons/aider-interview.svg';
+import ReseauIcon from 'public/static/img/icons/aider-reseau.svg';
+import WelcomeIcon from 'public/static/img/icons/aider-welcome.svg';
+import { CoachTestimony } from 'src/components/partials/Aider/CoachContainer/CoachTestimony';
+import { StyledCoachContainer } from 'src/components/partials/Aider/CoachContainer/styles';
+import { TitleSection } from 'src/components/partials/Aider/H2';
 import {
   BackgroundImage,
   Button,
@@ -10,15 +16,9 @@ import {
   Container,
 } from 'src/components/utils';
 import { COLORS } from 'src/constants/styles';
-import CoachTestimony from 'src/components/partials/Aider/CoachContainer/CoachTestimony';
-import WelcomeIcon from 'public/static/img/icons/aider-welcome.svg';
-import ReseauIcon from 'public/static/img/icons/aider-reseau.svg';
-import InterviewIcon from 'public/static/img/icons/aider-interview.svg';
-import BoiteOutilsIcon from 'public/static/img/icons/aider-boite-outils.svg';
-import { v4 as uuid } from 'uuid';
-import { fbEvent } from 'src/lib/fb.ts';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag.ts';
+import { fbEvent } from 'src/lib/fb';
+import { gaEvent } from 'src/lib/gtag';
 
 const uuidValue = uuid();
 
@@ -45,7 +45,7 @@ const pictoContent = [
   },
 ];
 
-const CoachContainer = () => {
+export const CoachContainer = () => {
   return (
     <StyledCoachContainer>
       <BackgroundImage
@@ -105,5 +105,3 @@ const CoachContainer = () => {
     </StyledCoachContainer>
   );
 };
-
-export default CoachContainer;

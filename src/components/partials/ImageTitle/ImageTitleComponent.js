@@ -1,7 +1,7 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { addPrefix } from 'src/utils';
+import React from 'react';
 import { Button, IconNoSSR } from 'src/components/utils';
+import { addPrefix } from 'src/utils';
 
 export const ImageTitleContent = ({ title, text, img, cta }) => {
   return (

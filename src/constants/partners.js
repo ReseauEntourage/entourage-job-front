@@ -433,13 +433,13 @@ const SPORTS = [
   },
 ].sort(sortByTitleOrKey);
 
-export default {
-  STRATEGY,
-  ASSOCIATIONS,
+export const PARTNERS = {
   SPORTS,
   HIRED,
-  ORIENTATION,
+  ALL_FINANCE,
   MAIN_FINANCE,
   YOUNG_FINANCE,
-  ALL_FINANCE,
+  ASSOCIATIONS,
+  ORIENTATION,
+  STRATEGY,
 };

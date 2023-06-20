@@ -2,7 +2,7 @@ import React from 'react';
 import { LogoList } from 'src/components/partials/LogoList';
 import { Background, Section, IconNoSSR } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
-import PARTNERS from 'src/constants/partners';
+import { PARTNERS } from 'src/constants/partners';
 
 export const Partners = ({
   showOrientationPartners,

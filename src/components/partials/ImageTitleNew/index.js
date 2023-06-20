@@ -1,1 +1,1 @@
-export { ImageTitle } from './ImageTitle.tsx';
+export { ImageTitle } from './ImageTitle';

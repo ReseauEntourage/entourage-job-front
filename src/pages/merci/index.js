@@ -1,10 +1,10 @@
+import { useRouter } from 'next/router';
 import React from 'react';
-import Layout from 'src/components/Layout.tsx';
+import { Layout } from 'src/components/Layout';
+import { NewsletterPartial } from 'src/components/partials';
 import { Grid, Section } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { GA_TAGS } from 'src/constants/tags';
-import { NewsletterPartial } from 'src/components/partials';
-import { useRouter } from 'next/router';
 
 const thankYouMessages = {
   coach: (

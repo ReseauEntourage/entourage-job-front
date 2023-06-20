@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { UserWithUserCandidate } from 'src/api/types';
-import CandidatHeader from 'src/components/backoffice/candidate/CandidatHeader';
-import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
+import { CandidatHeader } from 'src/components/backoffice/candidate/CandidatHeader';
+import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,

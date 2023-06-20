@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
-import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
+import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import CVPageContent from 'src/components/backoffice/cv/CVPageContent';
 import ErrorMessage from 'src/components/backoffice/cv/ErrorMessage';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';

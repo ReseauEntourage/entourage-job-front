@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { AMBITIONS_PREFIXES } from 'src/constants/index.ts';
+import { AMBITIONS_PREFIXES } from 'src/constants';
 
 export const CVShape = PropTypes.exact({
   user: PropTypes.shape({

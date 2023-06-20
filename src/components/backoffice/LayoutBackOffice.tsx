@@ -1,7 +1,7 @@
 import React from 'react';
-import Layout from 'src/components/Layout';
+import { Layout } from 'src/components/Layout';
 
-const LayoutBackOffice = ({
+export const LayoutBackOffice = ({
   children,
   title,
   isEmpty,
@@ -26,4 +26,3 @@ LayoutBackOffice.defaultProps = {
   title: 'Espace perso',
   isEmpty: false,
 };
-export default LayoutBackOffice;

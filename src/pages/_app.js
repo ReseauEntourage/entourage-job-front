@@ -13,19 +13,18 @@ import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 import 'react-phone-number-input/style.css';
 import 'react-tooltip/dist/react-tooltip.css';
 
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import * as Sentry from '@sentry/react';
-import UserProvider from 'src/store/UserProvider';
-import DataProvider from 'src/store/DataProvider';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 
-import SharesCountProvider from 'src/store/SharesCountProvider';
-
-import * as gtag from 'src/lib/gtag.ts';
-import { SplashScreen } from 'src/components/SplashScreen.tsx';
-import { useMount } from 'src/hooks/utils';
+import { SplashScreen } from 'src/components/SplashScreen';
 import { ModalsListener } from 'src/components/modals/Modal';
-import { OFFCANVAS_GUEST, OFFCANVAS_LOGGED } from 'src/constants/utils.ts';
+import { OFFCANVAS_GUEST, OFFCANVAS_LOGGED } from 'src/constants/utils';
+import { useMount } from 'src/hooks/utils';
+import * as gtag from 'src/lib/gtag';
+import { DataProvider } from 'src/store/DataProvider';
+import SharesCountProvider from 'src/store/SharesCountProvider';
+import { UserProvider } from 'src/store/UserProvider';
 
 UIkit.use(Icons);
 

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { openModal } from 'src/components/modals/Modal';
-import ModalInterestLinkedOut from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
+import { ModalInterestLinkedOut}  from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import { AssociationEntourage, Partners } from 'src/components/partials';
 import {
   PageType,

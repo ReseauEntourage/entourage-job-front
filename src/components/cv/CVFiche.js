@@ -1,29 +1,29 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
+import React from 'react';
 import {
   FacebookShareButton,
   LinkedinShareButton,
   TwitterShareButton,
   WhatsappShareButton,
 } from 'react-share';
+import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
+import { openModal } from 'src/components/modals/Modal';
+import { ModalShareCV } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
 import { Grid, Img, SimpleLink, IconNoSSR } from 'src/components/utils';
-import ModalShareCV from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
 import { Button } from 'src/components/utils/Button';
+import { CONTRACTS } from 'src/constants';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { usePostOpportunity, useUpdateSharesCount } from 'src/hooks';
+import { fbEvent } from 'src/lib/fb';
+import { gaEvent } from 'src/lib/gtag';
 import {
   findConstantFromValue,
   formatParagraph,
   sortByName,
   sortByOrder,
 } from 'src/utils';
-import { gaEvent } from 'src/lib/gtag.ts';
-import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { usePostOpportunity, useUpdateSharesCount } from 'src/hooks';
-import { openModal } from 'src/components/modals/Modal';
-import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
-import { CONTRACTS } from 'src/constants/index.ts';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
-import { fbEvent } from 'src/lib/fb.ts';
 import { CVShape } from './CV.shape';
 
 /**

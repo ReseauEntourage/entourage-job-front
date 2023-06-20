@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import moment from 'moment';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import { Grid, IconNoSSR } from 'src/components/utils';
+import { OFFER_STATUS } from 'src/constants';
 import { findOfferStatus } from 'src/utils';
-import { OFFER_STATUS } from 'src/constants/index.ts';
 
 export const OfferCard = ({
   title,

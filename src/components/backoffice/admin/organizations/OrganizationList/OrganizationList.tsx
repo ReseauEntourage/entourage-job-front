@@ -8,7 +8,7 @@ import { Api } from 'src/api';
 import { AdminCreationButtons } from 'src/components/backoffice/admin/AdminCreationButtons';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import SearchBar from 'src/components/filters/SearchBar';
-import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
+import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { Section, Button, BackToTop } from 'src/components/utils';
 import { ORGANIZATION_FILTERS_DATA } from 'src/constants';
 import { filtersToQueryParams } from 'src/utils/Filters';

@@ -29,9 +29,8 @@ export const HeaderConnectedMainItemDefaultProps = {
   disabled: false,
 };
 
-export const NotifBadgesShape = PropTypes.shape({
-  cv: PropTypes.number.isRequired,
-  members: PropTypes.number.isRequired,
-  note: PropTypes.number.isRequired,
-  offers: PropTypes.number.isRequired,
-});
+export interface NotifBadgesProps {
+  cv: number;
+  note: number;
+  offers: number;
+}

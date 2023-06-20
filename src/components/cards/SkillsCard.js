@@ -1,9 +1,9 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, ButtonIcon, IconNoSSR } from 'src/components/utils';
-import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import React from 'react';
 import schemaformEditSkills from 'src/components/forms/schema/formEditSkills.json';
 import { openModal } from 'src/components/modals/Modal';
+import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { Grid, ButtonIcon, IconNoSSR } from 'src/components/utils';
 
 export const SkillsCard = ({ list, onChange }) => {
   return (

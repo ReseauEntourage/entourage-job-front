@@ -7,7 +7,7 @@ import {
   HeaderConnectedMainItemDefaultProps,
 } from 'src/components/headers/HeaderConnected/HeaderConnected.shapes';
 import { StyledConnectedItemMobile } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/HeaderConnectedContent.styles';
-import SubMenu from 'src/components/headers/HeaderConnected/HeaderConnectedContent/SubMenu';
+import { SubMenu } from './SubMenu';
 import {
   Navbar,
   SimpleLink,

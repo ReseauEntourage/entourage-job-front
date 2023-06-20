@@ -1,6 +1,6 @@
-import { Grid, IconNoSSR } from 'src/components/utils';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Grid, IconNoSSR } from 'src/components/utils';
 
 export const OfferInfoContainer = ({ icon, title, children }) => {
   if (!children) {

@@ -1,5 +1,5 @@
-import { CONTRACTS } from 'src/constants/index.ts';
 import moment from 'moment';
+import { CONTRACTS } from 'src/constants';
 import { findConstantFromValue } from 'src/utils';
 
 export default {

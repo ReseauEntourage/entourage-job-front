@@ -6,24 +6,21 @@ import FiltersOptions from 'src/components/filters/FiltersOptions';
 import FiltersSideBar from 'src/components/filters/FiltersSideBar';
 import { IconNoSSR } from 'src/components/utils';
 import {
+  CandidateOpportunityFilter,
   CV_FILTERS_DATA,
   MEMBER_FILTERS_DATA,
   OPPORTUNITY_FILTERS_DATA,
-  ORGANIZATION_FILTERS_DATA,
-} from 'src/constants';
+  ORGANIZATION_FILTERS_DATA
+} from "src/constants";
 import { gaEvent } from 'src/lib/gtag';
 import { AnyToFix } from 'src/utils/Types';
 
 // to be typed
 
 interface SearchBarProps {
-  filtersConstants:
-    | Partial<typeof CV_FILTERS_DATA>
-    | Partial<typeof MEMBER_FILTERS_DATA>
-    | Partial<typeof OPPORTUNITY_FILTERS_DATA>
-    | Partial<typeof ORGANIZATION_FILTERS_DATA>; // to be typed properly
+  filtersConstants:CandidateOpportunityFilter[] // to be typed properly
   filters: AnyToFix; // to be typed
-  setFilters: () => void;
+  setFilters: (updatedFilters: AnyToFix) => void;
   search?: string;
   setSearch: (arg1?: string) => void;
   resetFilters: () => void;

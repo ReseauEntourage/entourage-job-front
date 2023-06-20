@@ -78,5 +78,3 @@ export const SharePartial = ({ padding }: { padding?: boolean }) => {
 SharePartial.defaultProps = {
   padding: false,
 };
-
-export default SharePartial;

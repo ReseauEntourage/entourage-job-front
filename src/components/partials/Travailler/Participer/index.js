@@ -1,1 +1,1 @@
-export { Participer } from './Participer.tsx';
+export { Participer } from './Participer';

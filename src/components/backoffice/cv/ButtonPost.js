@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { Button, IconNoSSR } from 'src/components/utils';
 
 const ButtonPost = ({ text, icon, action, style, disabled, dataTestId }) => {

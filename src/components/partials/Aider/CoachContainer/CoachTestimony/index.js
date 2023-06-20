@@ -1,9 +1,9 @@
 import React from 'react';
+import { v4 as uuid } from 'uuid';
 import { StyledCoachTestimony } from 'src/components/partials/Aider/CoachContainer/CoachTestimony/styles';
 import TitleSection from 'src/components/partials/Aider/H2';
-import { COLORS } from 'src/constants/styles';
 import { Container } from 'src/components/utils';
-import { v4 as uuid } from 'uuid';
+import { COLORS } from 'src/constants/styles';
 
 const uuidValue = uuid();
 
@@ -49,7 +49,7 @@ const testimonyContent = [
   },
 ];
 
-const CoachTestimony = () => {
+export const CoachTestimony = () => {
   return (
     <StyledCoachTestimony>
       <Container>
@@ -81,5 +81,3 @@ const CoachTestimony = () => {
     </StyledCoachTestimony>
   );
 };
-
-export default CoachTestimony;

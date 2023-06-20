@@ -1,6 +1,6 @@
 import { plateform } from 'src/utils/Device';
-import HeaderPublicContentMobile from './HeaderPublicContent.mobile';
 import HeaderPublicContentDesktop from './HeaderPublicContent.desktop';
+import HeaderPublicContentMobile from './HeaderPublicContent.mobile';
 
 export const HeaderPublicContent = plateform({
   Desktop: HeaderPublicContentDesktop,

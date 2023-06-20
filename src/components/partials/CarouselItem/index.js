@@ -1,1 +1,1 @@
-export { CarouselItem } from 'src/components/partials/CarouselItem/CarouselItem.tsx';
+export { CarouselItem } from 'src/components/partials/CarouselItem/CarouselItem';

@@ -1,8 +1,8 @@
 import { useWindowWidth } from '@react-hook/window-size';
 import MobileDetect from 'mobile-detect';
+import { useEffect, useState } from 'react';
 import { BREAKPOINTS } from 'src/constants/styles';
 import { isSSR } from 'src/utils/isSSR';
-import { useEffect, useState } from 'react';
 import { useSSRDataContext } from './useSSRDataContext';
 
 export function useIsDesktop() {

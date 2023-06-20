@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import dynamic from 'next/dynamic';
 import { GoogleApiWrapper, InfoWindow, Map, Marker } from 'google-maps-react';
+import dynamic from 'next/dynamic';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { SimpleLink, IconNoSSR } from 'src/components/utils';
 
 const partnersPlaces = [
@@ -380,7 +380,7 @@ const buildEmailLink = (email) => {
 
 const FRANCE_CENTER_COORDINATES = { lat: 46.71109, lng: 1.7191036 };
 
-const PartnersMap = ({ google }) => {
+const PartnersMapContent = ({ google }) => {
   const [clickedMarker, setClickedMarker] = useState(null);
 
   const getPartnerPlaceInfo = (infoKey) => {
@@ -472,19 +472,10 @@ const PartnersMap = ({ google }) => {
   );
 };
 
-PartnersMap.propTypes = {
+PartnersMapContent.propTypes = {
   google: PropTypes.shape({}).isRequired,
 };
 
-export default GoogleApiWrapper({
+export const PartnersMap = GoogleApiWrapper({
   apiKey: process.env.GOOGLE_MAPS_API_KEY,
-})(PartnersMap);
-
-export const PartnersMapNoSSR = dynamic(
-  () => {
-    return import('src/components/partials/PartnersMap');
-  },
-  {
-    ssr: false,
-  }
-);
+})(PartnersMapContent);

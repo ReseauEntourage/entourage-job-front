@@ -1,11 +1,11 @@
 export { CandidatCard } from 'src/components/cards/CandidatCard';
 export { CommentProfileCard } from 'src/components/cards/CommentProfileCard';
 export { ExperiencesProfileCard } from 'src/components/cards/ExperiencesProfileCard';
-export { HelpingCard } from 'src/components/cards/HelpingCard.tsx';
+export { HelpingCard } from 'src/components/cards/HelpingCard';
 export { InfoProfileCard } from 'src/components/cards/InfoProfileCard';
-export { NumberCard } from 'src/components/cards/NumberCard.tsx';
+export { NumberCard } from 'src/components/cards/NumberCard';
 export { OfferCard } from 'src/components/cards/OfferCard';
 export { PassionsCard } from 'src/components/cards/PassionsCard';
-export { PresentationCard } from 'src/components/cards/PresentationCard.tsx';
+export { PresentationCard } from 'src/components/cards/PresentationCard';
 export { SkillsCard } from 'src/components/cards/SkillsCard';
-export { StoryProfileCard } from 'src/components/cards/StoryProfileCard.tsx';
+export { StoryProfileCard } from 'src/components/cards/StoryProfileCard';

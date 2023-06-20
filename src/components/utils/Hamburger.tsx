@@ -43,14 +43,3 @@ Hamburger.defaultProps = {
   visible: undefined,
   light: false,
 };
-
-export const HamburgerNoSSR = dynamic(
-  () => {
-    return import('src/components/utils/Hamburger').then(
-      (mode) => mode.Hamburger
-    );
-  },
-  {
-    ssr: false,
-  }
-);

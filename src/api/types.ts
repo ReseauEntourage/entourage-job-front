@@ -218,31 +218,31 @@ export type Event = {
   updatedAt: string;
   contract: Contract;
 };
-
+export interface OpportunityUser {
+  OpportunityId: string;
+  UserId: string;
+  archived: boolean;
+  bookmarked: boolean;
+  createdAt: string;
+  events: Event[];
+  id: string;
+  note: [];
+  recommended: boolean;
+  seen: boolean;
+  status: number;
+  updatedAt: string;
+  user: UserCandidateWithUsers | UserCandidateWithUsers[];
+  otherInfo: string;
+  prerequisites: string;
+  recruiterFirstName: string;
+  recruiterMail: string;
+  recruiterName: string;
+  recruiterPosition: string;
+  salary: string;
+  skills: Skill[];
+}
 export interface OpportunityWithOpportunityUsers extends Opportunity {
-  opportunityUsers: {
-    OpportunityId: string;
-    UserId: string;
-    archived: boolean;
-    bookmarked: boolean;
-    createdAt: string;
-    events: Event[];
-    id: string;
-    note: [];
-    recommended: boolean;
-    seen: boolean;
-    status: number;
-    updatedAt: string;
-    user: UserCandidateWithUsers | UserCandidateWithUsers[];
-    otherInfo: string;
-    prerequisites: string;
-    recruiterFirstName: string;
-    recruiterMail: string;
-    recruiterName: string;
-    recruiterPosition: string;
-    salary: string;
-    skills: Skill[];
-  };
+  opportunityUsers: OpportunityUser;
 }
 
 export type ExternalOpportunity = {
@@ -264,7 +264,7 @@ export type ExternalOpportunity = {
 
 export type OpportunityUserEvent = {
   startDate: Date;
-  endDate: Date;
+  endDate?: Date;
   type: string;
   contract: { name: string };
 };

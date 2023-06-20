@@ -1,5 +1,5 @@
 import React from 'react';
-import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
+import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import CVPageContent from 'src/components/backoffice/cv/CVPageContent';
 import ErrorMessage from 'src/components/backoffice/cv/ErrorMessage';
 import { Section } from 'src/components/utils';

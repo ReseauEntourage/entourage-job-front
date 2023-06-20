@@ -1,17 +1,17 @@
 import _ from 'lodash';
 import React, { useCallback, useMemo, useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import { Api } from 'src/api/index';
+import { Api } from 'src/api';
 import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
 import { CandidatCard } from 'src/components/cards';
 import SearchBar from 'src/components/filters/SearchBar';
 import { openModal } from 'src/components/modals/Modal';
-import usePostPublicOfferModal from 'src/components/modals/usePostPublicOfferModal';
+import { usePostPublicOfferModal } from 'src/components/modals/usePostPublicOfferModal';
 import { Button, Grid, SimpleLink, IconNoSSR } from 'src/components/utils';
 import {
   CV_FILTERS_DATA,
   INITIAL_NB_OF_CV_TO_DISPLAY,
-} from 'src/constants/index';
+} from 'src/constants';
 import { FB_TAGS } from 'src/constants/tags';
 import { usePrevious } from 'src/hooks/utils';
 import { fbEvent } from 'src/lib/fb';

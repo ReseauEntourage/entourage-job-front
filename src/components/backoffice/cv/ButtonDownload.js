@@ -1,8 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Api } from 'src/api/index.ts';
+import React from 'react';
+import { Api } from 'src/api';
 import ButtonPost from 'src/components/backoffice/cv/ButtonPost';
-import { gaEvent } from 'src/lib/gtag.ts';
+import { gaEvent } from 'src/lib/gtag';
 
 const ButtonDownload = ({
   disabled,

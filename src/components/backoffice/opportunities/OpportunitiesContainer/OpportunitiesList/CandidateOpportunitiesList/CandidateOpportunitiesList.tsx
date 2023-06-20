@@ -10,12 +10,12 @@ import {
   StyledListItemContainer,
 } from '../OpportunitiesList.styles';
 import { OpportunityWithOpportunityUsers } from 'src/api/types';
-import CandidateOpportunityItem from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/CandidateOpportunitiesList/CandidateOpportunityItem';
+import { CandidateOpportunityItem } from './CandidateOpportunityItem';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { useOpportunityType } from 'src/components/backoffice/opportunities/useOpportunityType';
 import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
 import { openModal } from 'src/components/modals/Modal';
-import ModalExternalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
+import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
 import { Button, IconNoSSR } from 'src/components/utils';
 import { usePrevious } from 'src/hooks/utils';
 
@@ -29,7 +29,7 @@ interface CandidateOpportunitiesListProps {
   candidateId: string;
 }
 
-const CandidateOpportunitiesList = ({
+export const CandidateOpportunitiesList = ({
   opportunities,
   fetchOpportunities,
   setOffset,
@@ -145,5 +145,3 @@ const CandidateOpportunitiesList = ({
     </StyledListContent>
   );
 };
-
-export default CandidateOpportunitiesList;

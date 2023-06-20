@@ -1,8 +1,8 @@
-import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
-import { Api } from 'src/api/index.ts';
 import moment from 'moment';
+import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
+import { Api } from 'src/api';
 import 'moment/locale/fr';
-import { ANTENNE_INFO } from 'src/constants/index.ts';
+import { ANTENNE_INFO } from 'src/constants';
 import _ from 'lodash';
 
 export default {

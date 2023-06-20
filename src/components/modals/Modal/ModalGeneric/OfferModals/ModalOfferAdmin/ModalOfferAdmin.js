@@ -1,10 +1,19 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Api } from 'src/api/index.ts';
+import React from 'react';
+import UIkit from 'uikit';
+import { Api } from 'src/api';
+import FormWithValidation from 'src/components/forms/FormWithValidation';
+import formEditExternalOpportunitySchema from 'src/components/forms/schema/formEditExternalOpportunity';
 import schema, {
   adminMutations,
 } from 'src/components/forms/schema/formEditOpportunity';
-import FormWithValidation from 'src/components/forms/FormWithValidation.tsx';
+import { useModalContext } from 'src/components/modals/Modal';
+import { ModalOfferBase } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOfferBase';
+import { ModalOfferInfo } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/ModalOfferInfo';
+import { List } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/NavList';
+import { OfferContent } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferContent';
+import { OfferInfoContainer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferInfoContainer';
+import { useModalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/useModalOffer';
 import {
   Button,
   Grid,
@@ -13,6 +22,12 @@ import {
   IconNoSSR,
 } from 'src/components/utils';
 
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import {
+  BUSINESS_LINES,
+  EXTERNAL_OFFERS_ORIGINS,
+  OFFER_STATUS,
+} from 'src/constants';
 import {
   findConstantFromValue,
   findOfferStatus,
@@ -21,21 +36,6 @@ import {
   mutateFormSchema,
   sortByOrder,
 } from 'src/utils';
-import {
-  BUSINESS_LINES,
-  EXTERNAL_OFFERS_ORIGINS,
-  OFFER_STATUS,
-} from 'src/constants/index.ts';
-import ModalOfferInfo from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/ModalOfferInfo';
-import { useModalContext } from 'src/components/modals/Modal';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
-import formEditExternalOpportunitySchema from 'src/components/forms/schema/formEditExternalOpportunity';
-import { List } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/NavList';
-import { OfferInfoContainer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferInfoContainer';
-import ModalOfferBase from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOfferBase';
-import useModalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/useModalOffer';
-import OfferContent from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferContent';
-import UIkit from 'uikit';
 
 const getCandidatesToShowInInput = (offer) => {
   if (offer.opportunityUsers && offer.opportunityUsers.length > 0) {
@@ -61,7 +61,7 @@ const getCandidatesToShowInInput = (offer) => {
   return undefined;
 };
 
-const ModalOfferAdmin = ({
+export const ModalOfferAdmin = ({
   currentOffer,
   onOfferUpdated,
   duplicateOffer,
@@ -689,5 +689,3 @@ ModalOfferAdmin.propTypes = {
 ModalOfferAdmin.defaultProps = {
   currentOffer: { opportunityUsers: {}, businessLines: [] },
 };
-
-export default ModalOfferAdmin;

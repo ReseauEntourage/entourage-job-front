@@ -9,12 +9,12 @@ import {
   allCTAs,
   CTAsByTab,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/CandidateOpportunityDetailsCTAs/CandidateOpportunityDetailsCTAs.utils';
-import SendMailModalContent from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/SendMailModalContent';
+import { SendMailModalContent } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/SendMailModalContent';
 import renderSimpleSelectField from 'src/components/forms/schema/formSimpleSelectField';
 import { openModal } from 'src/components/modals/Modal';
-import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
-import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import ModalGeneric from 'src/components/modals/Modal/ModalGeneric/ModalGeneric';
+import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
+import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { Button } from 'src/components/utils/Button';
 import { EVENT_TYPES, OFFER_STATUS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
@@ -22,7 +22,7 @@ import { gaEvent } from 'src/lib/gtag';
 
 const uuidValue = uuid();
 
-const CandidateOpportunityDetailsCTAs = ({
+export const CandidateOpportunityDetailsCTAs = ({
   tab,
   event,
   OpportunityId,
@@ -313,9 +313,3 @@ const CandidateOpportunityDetailsCTAs = ({
     </StyledOppCTAsContainer>
   );
 };
-
-CandidateOpportunityDetailsCTAs.defaultProps = {
-  event: null,
-};
-
-export default CandidateOpportunityDetailsCTAs;

@@ -1,13 +1,12 @@
-// store/SharesCount.js
-import React, { createContext, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Api } from 'src/api/index.ts';
-import { VALUES } from 'src/constants/index.ts';
+import React, { createContext, useCallback, useState } from 'react';
+import { Api } from 'src/api';
+import { VALUES } from 'src/constants';
 import { useMount } from 'src/hooks/utils';
 
-export const SharesCountContext = createContext({ totalShares: 0 });
+export const SharesCountContext = createContext({ totalShares: 0, incrementSharesCount: () => {} });
 
-const SharesCountProvider = ({ children }) => {
+export const SharesCountProvider = ({ children }) => {
   const [totalShares, setTotalShares] = useState(0);
 
   const incrementSharesCount = useCallback(() => {
@@ -37,4 +36,3 @@ const SharesCountProvider = ({ children }) => {
 SharesCountProvider.propTypes = {
   children: PropTypes.element.isRequired,
 };
-export default SharesCountProvider;

@@ -1,6 +1,7 @@
 import { GA_TAGS } from 'src/constants/tags';
 import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils/Finding';
+import { AnyToFix } from "../../../../utils/Types";
 
 const rolesToParams = (roles) => {
   return `${roles
@@ -13,7 +14,7 @@ const rolesToParams = (roles) => {
 const candidateRolesParams = rolesToParams(CANDIDATE_USER_ROLES);
 const coachRolesParams = rolesToParams(COACH_USER_ROLES);
 
-export const renderLinks = (user, logout, candidateId) => {
+export const renderLinks = (user, logout, candidateId): AnyToFix => {
   return {
     admin: [
       {

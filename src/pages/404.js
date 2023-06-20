@@ -1,5 +1,7 @@
 import React from 'react';
-import Layout from 'src/components/Layout.tsx';
+import { Layout } from 'src/components/Layout';
+import { CVList } from 'src/components/cv';
+import { NewsletterPartial } from 'src/components/partials';
 import {
   Button,
   Grid,
@@ -7,9 +9,7 @@ import {
   SimpleLink,
   IconNoSSR,
 } from 'src/components/utils';
-import { CVList } from 'src/components/cv';
-import { CV_FILTERS_DATA } from 'src/constants/index.ts';
-import { NewsletterPartial } from 'src/components/partials';
+import { CV_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 
 const Custom404 = () => {

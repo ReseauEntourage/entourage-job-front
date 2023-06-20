@@ -7,7 +7,7 @@ import { Grid, SimpleLink, IconNoSSR } from 'src/components/utils';
 import { USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils/Finding';
 
-const CandidatHeader = ({
+export const CandidatHeader = ({
   user,
   showZone,
 }: {
@@ -93,5 +93,3 @@ const CandidatHeader = ({
 CandidatHeader.defaultProps = {
   showZone: false,
 };
-
-export default CandidatHeader;

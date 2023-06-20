@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useModalContext } from 'src/components/modals/Modal';
-import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
+import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { Button } from 'src/components/utils';
 
 interface ModalConfirmProps {
@@ -12,7 +12,7 @@ interface ModalConfirmProps {
   children?: React.ReactNode;
 }
 
-const ModalConfirm = ({
+export const ModalConfirm = ({
   onConfirm,
   text,
   title,
@@ -50,5 +50,3 @@ ModalConfirm.defaultProps = {
   title: '',
   children: <></>,
 };
-
-export default ModalConfirm;

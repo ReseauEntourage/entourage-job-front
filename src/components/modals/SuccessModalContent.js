@@ -1,8 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { Button, IconNoSSR } from 'src/components/utils';
 
-const SuccessModalContent = ({ text, closeModal }) => {
+export const SuccessModalContent = ({ text, closeModal }) => {
   return (
     <>
       <div
@@ -24,8 +24,8 @@ const SuccessModalContent = ({ text, closeModal }) => {
     </>
   );
 };
+
 SuccessModalContent.propTypes = {
   text: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired,
 };
-export default SuccessModalContent;

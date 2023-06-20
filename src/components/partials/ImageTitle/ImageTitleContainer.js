@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { ImageTitleContent } from './ImageTitleComponent';
 
 export const ImageTitle = ({ id, title, text, img, cta }) => {

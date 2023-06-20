@@ -7,7 +7,7 @@ import {
 } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab/CandidateOffersTab.utils';
 import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
 import { openModal } from 'src/components/modals/Modal';
-import ModalExternalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
+import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
 import { Button } from 'src/components/utils';
 import { IconNoSSR } from 'src/components/utils/Icon';
 import {
@@ -17,17 +17,17 @@ import {
   StyledTitle,
 } from './NoOpportunities.styles';
 
-interface NoOpportunities {
+interface NoOpportunitiesProps {
   status: TabsLabelsType;
   fetchOpportunities: () => void;
 }
 
-const NoOpportunities = ({ status, fetchOpportunities }) => {
+export const NoOpportunities = ({ status = tabs[0].text, fetchOpportunities }:NoOpportunitiesProps) => {
   const candidateId = useCandidateId();
   return (
     <StyledContainer>
       <StyledTitle>
-        Vous n&apos;avez aucune {formatPlural(status.toLowerCase(), 0)}.
+        Vous n&apos;avez aucune {formatPlural((status as string).toLowerCase(), 0)}.
       </StyledTitle>
       <StyledDescription>
         Vous pouvez chercher des offres qui vous correspondent sur le site
@@ -72,18 +72,3 @@ const NoOpportunities = ({ status, fetchOpportunities }) => {
     </StyledContainer>
   );
 };
-
-NoOpportunities.propTypes = {
-  status: PropTypes.oneOf(
-    tabs.map(({ text }) => {
-      return text;
-    })
-  ),
-  fetchOpportunities: PropTypes.func.isRequired,
-};
-
-NoOpportunities.defaultProps = {
-  status: tabs[0].text,
-};
-
-export default NoOpportunities;

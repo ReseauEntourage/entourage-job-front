@@ -10,7 +10,7 @@ import FooterForm from 'src/components/forms/FooterForm';
 import FormValidator from 'src/components/forms/FormValidator';
 import GenericField from 'src/components/forms/GenericField';
 import FieldGroup from 'src/components/forms/fields/FieldGroup';
-import InputsContainer from 'src/components/forms/fields/InputsContainer/index';
+import InputsContainer from 'src/components/forms/fields/InputsContainer';
 import MultipleFields from 'src/components/forms/fields/MultipleFields';
 import { getValueFromFormField } from 'src/utils/Finding';
 import { AnyToFix } from 'src/utils/Types';

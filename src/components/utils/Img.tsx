@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import dynamic from 'next/dynamic';
 import React from 'react';
 import { addPrefix } from 'src/utils';
 
@@ -51,10 +50,3 @@ Img.defaultProps = {
   className: undefined,
   cover: false,
 };
-
-export const ImgNoSSR = dynamic(
-  () => {
-    return import('src/components/utils/Img').then((mod) => mod.Img);
-  },
-  { ssr: false }
-);

@@ -1,12 +1,8 @@
 import React from 'react';
-import Layout from 'src/components/Layout.tsx';
-import { Button } from 'src/components/utils/Button';
-import { Section, AnimatedList, IconNoSSR } from 'src/components/utils';
-import { ImageTitle } from 'src/components/partials/ImageTitle';
-import { gaEvent } from 'src/lib/gtag.ts';
-import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { Layout } from 'src/components/Layout';
 import { openModal } from 'src/components/modals/Modal';
-import ModalInterestLinkedOut from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
+import CandidateContactModal from 'src/components/modals/Modal/ModalGeneric/CandidateContactModal';
+import { ModalInterestLinkedOut}  from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import {
   MultipleCTA,
   Chapter,
@@ -14,9 +10,13 @@ import {
   NumberGrid,
   Reviews,
 } from 'src/components/partials';
-import PARTNERS from 'src/constants/partners';
-import { fbEvent } from 'src/lib/fb.ts';
-import CandidateContactModal from 'src/components/modals/Modal/ModalGeneric/CandidateContactModal';
+import { ImageTitle } from 'src/components/partials/ImageTitle';
+import { Section, AnimatedList, IconNoSSR } from 'src/components/utils';
+import { Button } from 'src/components/utils/Button';
+import { PARTNERS } from 'src/constants/partners';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { fbEvent } from 'src/lib/fb';
+import { gaEvent } from 'src/lib/gtag';
 
 const reviews = [
   {

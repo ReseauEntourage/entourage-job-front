@@ -1,18 +1,17 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, ButtonIcon, IconNoSSR } from 'src/components/utils';
-import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import React from 'react';
 import schemaUsefulInformation from 'src/components/forms/schema/formEditUsefulInformation';
 
+import { openModal } from 'src/components/modals/Modal';
+import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { Grid, ButtonIcon, IconNoSSR } from 'src/components/utils';
+import { CONTRACTS } from 'src/constants';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import {
   findConstantFromValue,
   mutateFormSchema,
   sortByOrder,
 } from 'src/utils';
-
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
-import { openModal } from 'src/components/modals/Modal';
-import { CONTRACTS } from 'src/constants/index.ts';
 
 export const InfoProfileCard = ({
   contracts,

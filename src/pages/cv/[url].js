@@ -1,14 +1,15 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { withRouter } from 'next/router';
+import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
+import { Api } from 'src/api';
+import { Layout } from 'src/components/Layout';
+import { CVBackground, CVFiche, CVList } from 'src/components/cv';
+import { CVShape } from 'src/components/cv/CV.shape';
 import {
   ActionPartial,
   DiscoverPartial,
   NewsletterPartial,
 } from 'src/components/partials';
-import { CVBackground, CVFiche, CVList } from 'src/components/cv';
-import Layout from 'src/components/Layout.tsx';
-import { Api } from 'src/api/index.ts';
 import {
   Grid,
   Section,
@@ -16,10 +17,9 @@ import {
   IconNoSSR,
   Button,
 } from 'src/components/utils';
+import { CV_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { useUpdateSharesCount } from 'src/hooks';
-import { CV_FILTERS_DATA } from 'src/constants/index.ts';
-import { CVShape } from 'src/components/cv/CV.shape';
 
 const CVPage = ({ cv, exists, router, hideShareOptions }) => {
   const updateSharesCount = useUpdateSharesCount();

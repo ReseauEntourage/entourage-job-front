@@ -1,1 +1,1 @@
-export { NewsletterPartial } from './NewsletterPartial.tsx';
+export { NewsletterPartial } from './NewsletterPartial';

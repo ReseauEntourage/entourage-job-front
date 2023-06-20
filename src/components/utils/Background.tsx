@@ -7,9 +7,9 @@ interface BackgroundProps {
   src?: string;
   position?: string;
   blend?: {
-    color?: typeof UIKIT_STYLES;
+    color?: (typeof UIKIT_STYLES)[number];
     colorHex?: string;
-    mode?: typeof UIKIT_BLENDS;
+    mode?: (typeof UIKIT_BLENDS)[number];
   };
   fixed?: boolean;
 }

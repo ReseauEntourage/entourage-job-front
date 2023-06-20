@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyledHeaderModal } from 'src/components/modals/Modal/Modals.styles';
 
-const HeaderModal = ({
+export const HeaderModal = ({
   title,
   description,
 }: {
-  title: React.ReactNode;
+  title?: React.ReactNode;
   description?: React.ReactNode;
 }) => {
   return (
@@ -25,8 +25,7 @@ const HeaderModal = ({
     </StyledHeaderModal>
   );
 };
+
 HeaderModal.defaultProps = {
   description: '',
 };
-
-export default HeaderModal;
