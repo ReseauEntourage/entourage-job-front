@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import PhoneInputWithCountry from 'react-phone-number-input/mobile';
-import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
+import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
 
 export const PhoneInput = ({
   id,

@@ -76,6 +76,41 @@ export type User = {
   deletedAt?: string;
 };
 
+type CVEntity = {
+  name: string;
+  order?: number;
+};
+
+export type CV = {
+  id: string;
+  UserId: string;
+  urlImg: string;
+  intro: string;
+  story: string;
+  availability: string;
+  transport: string;
+  catchphrase: string;
+  status: string;
+  version: number;
+  lastModifiedBy: string;
+  user: User;
+  businessLines: CVEntity[];
+  locations: CVEntity[];
+  ambitions: CVEntity[];
+  contracts: CVEntity[];
+  languages: CVEntity[];
+  passions: CVEntity[];
+  skills: CVEntity[];
+  experiences: {
+    id: string;
+    description: string;
+    order: string;
+    skills: CVEntity[];
+  }[];
+
+  reviews: CVEntity[];
+};
+
 export interface UserCandidateWithUsers extends UserCandidate {
   email: string;
   candidat?: User;
@@ -156,41 +191,6 @@ export type Opportunity = {
   visitor: string;
   urlParams: object;
   createdAt: string;
-};
-
-type CVEntity = {
-  name: string;
-  order?: number;
-};
-
-export type CV = {
-  id: string;
-  UserId: string;
-  urlImg: string;
-  intro: string;
-  story: string;
-  availability: string;
-  transport: string;
-  catchphrase: string;
-  status: string;
-  version: number;
-  lastModifiedBy: string;
-  user: User;
-  businessLines: CVEntity[];
-  locations: CVEntity[];
-  ambitions: CVEntity[];
-  contracts: CVEntity[];
-  languages: CVEntity[];
-  passions: CVEntity[];
-  skills: CVEntity[];
-  experiences: {
-    id: string;
-    description: string;
-    order: string;
-    skills: CVEntity[];
-  }[];
-
-  reviews: CVEntity[];
 };
 
 export type Skill = {

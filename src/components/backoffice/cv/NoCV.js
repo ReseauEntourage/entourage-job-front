@@ -9,7 +9,7 @@ import {
   getUserCandidateFromCoachOrCandidate,
 } from 'src/utils';
 
-const NoCV = ({ candidateId, user, setCV }) => {
+export const NoCV = ({ candidateId, user, setCV }) => {
   const candidate = getUserCandidateFromCoachOrCandidate(user);
   return (
     <Grid column middle>
@@ -63,5 +63,3 @@ NoCV.propTypes = {
   }).isRequired,
   setCV: PropTypes.func.isRequired,
 };
-
-export default NoCV;

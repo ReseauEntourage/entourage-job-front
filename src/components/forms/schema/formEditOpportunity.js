@@ -7,7 +7,7 @@ import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { USER_ROLES } from 'src/constants/users';
 import { findConstantFromValue, getValueFromFormField } from 'src/utils';
 
-export default {
+export const formEditOpportunity = {
   id: 'form-offer',
   fields: [
     {

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import {
   StyledContainer,
@@ -6,16 +5,27 @@ import {
   StyledLabelContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel/ActionLabel.styles';
 
+interface ActionLabelProps {
+  color: 'yellow' | 'primaryOrange';
+  icon: JSX.Element;
+  label: string;
+  disabled?: boolean;
+  hoverAnimation?: boolean;
+  fill?: boolean;
+  onClick?: () => void;
+  id?: string;
+}
+
 export const ActionLabel = ({
   color,
   label,
   icon,
-  disabled,
-  hoverAnimation,
-  fill,
   onClick,
-  id,
-}: {}) => {
+  id = '',
+  disabled = false,
+  hoverAnimation = false,
+  fill = false,
+}: ActionLabelProps) => {
   return (
     <StyledContainer
       fill={fill}
@@ -24,7 +34,7 @@ export const ActionLabel = ({
       hoverAnimation={hoverAnimation}
       onClick={(event) => {
         event.preventDefault();
-        onClick();
+        if (onClick) onClick();
       }}
       data-testid={id}
     >
@@ -34,23 +44,4 @@ export const ActionLabel = ({
       </StyledLabelContainer>
     </StyledContainer>
   );
-};
-
-ActionLabel.defaultProps = {
-  disabled: false,
-  hoverAnimation: false,
-  fill: false,
-  onClick: () => {},
-  id: '',
-};
-
-ActionLabel.propTypes = {
-  color: PropTypes.oneOf(['yellow', 'primaryOrange']).isRequired,
-  icon: PropTypes.element.isRequired,
-  label: PropTypes.string.isRequired,
-  disabled: PropTypes.bool,
-  hoverAnimation: PropTypes.bool,
-  fill: PropTypes.bool,
-  onClick: PropTypes.func,
-  id: PropTypes.string,
 };

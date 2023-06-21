@@ -4,7 +4,7 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import ModalInterestLinkedOut from '../ModalInterestLinkedOut';
+import { ModalInterestLinkedOut } from '../ModalInterestLinkedOut';
 import { Api } from 'src/api';
 import { ModalsListener, openModal } from 'src/components/modals/Modal';
 import { BREAKPOINTS } from 'src/constants/styles';

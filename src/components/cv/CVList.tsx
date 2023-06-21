@@ -4,7 +4,7 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import { Api } from 'src/api';
 import { LoadingScreen } from 'src/components/backoffice/cv/LoadingScreen';
 import { CandidatCard } from 'src/components/cards';
-import SearchBar from 'src/components/filters/SearchBar';
+import { SearchBar } from 'src/components/filters/SearchBar';
 import { openModal } from 'src/components/modals/Modal';
 import { usePostPublicOfferModal } from 'src/components/modals/usePostPublicOfferModal';
 import { Button, Grid, SimpleLink, IconNoSSR } from 'src/components/utils';

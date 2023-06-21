@@ -1,18 +1,5 @@
 /* eslint-disable react/prop-types */
 
-// use modified version of UIkit because of bug where we can't touch scroll on Offcanvas
-import UIkit from 'src/styles/dist/js/uikit-fixed';
-import Icons from 'src/styles/dist/js/uikit-icons';
-
-import 'src/styles/dist/css/uikit.entourage.min.css';
-import 'src/styles/styles.less';
-import 'src/components/forms/Forms.less';
-import 'src/components/backoffice/Toggle.less';
-import 'src/components/modals/Modal/Modal.less';
-import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
-import 'react-phone-number-input/style.css';
-import 'react-tooltip/dist/react-tooltip.css';
-
 import * as Sentry from '@sentry/react';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -25,6 +12,19 @@ import * as gtag from 'src/lib/gtag';
 import { DataProvider } from 'src/store/DataProvider';
 import { SharesCountProvider } from 'src/store/SharesCountProvider';
 import { UserProvider } from 'src/store/UserProvider';
+
+// use modified version of UIkit because of bug where we can't touch scroll on Offcanvas
+import UIkit from 'src/styles/dist/js/uikit-fixed';
+import Icons from 'src/styles/dist/js/uikit-icons';
+
+import 'src/styles/dist/css/uikit.entourage.min.css';
+import 'src/styles/styles.less';
+import 'src/components/forms/Forms.less';
+import 'src/components/backoffice/Toggle.less';
+import 'src/components/modals/Modal/Modal.less';
+import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
+import 'react-phone-number-input/style.css';
+import 'react-tooltip/dist/react-tooltip.css';
 
 UIkit.use(Icons);
 

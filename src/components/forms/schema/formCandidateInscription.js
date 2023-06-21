@@ -1,11 +1,11 @@
+import _ from 'lodash';
 import moment from 'moment';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { Api } from 'src/api';
 import 'moment/locale/fr';
 import { ANTENNE_INFO } from 'src/constants';
-import _ from 'lodash';
 
-export default {
+export const formCandidateInscription = {
   id: 'form-candidate-inscription',
   fields: [
     {

@@ -12,7 +12,7 @@ import {
   HEARD_ABOUT_FILTERS,
 } from 'src/constants';
 
-export default {
+export const formCandidateContact = {
   id: 'form-candidate-contact',
   fields: [
     {

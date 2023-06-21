@@ -1,6 +1,6 @@
 import { passwordStrength } from 'check-password-strength';
 
-export default {
+export const formChangePassword = {
   id: 'form-change-pwd',
   fields: [
     {

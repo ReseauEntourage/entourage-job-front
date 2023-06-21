@@ -5,9 +5,9 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
 
-import ButtonDownload from 'src/components/backoffice/cv/ButtonDownload';
-import ButtonPost from 'src/components/backoffice/cv/ButtonPost';
-import NoCV from 'src/components/backoffice/cv/NoCV';
+import { ButtonDownload } from 'src/components/backoffice/cv/ButtonDownload';
+import { ButtonPost } from 'src/components/backoffice/cv/ButtonPost';
+import { NoCV } from 'src/components/backoffice/cv/NoCV';
 import { CVBackground, CVFiche, CVFicheEdition } from 'src/components/cv';
 import { CVShape } from 'src/components/cv/CV.shape';
 import { openModal, useModalContext } from 'src/components/modals/Modal';
@@ -68,7 +68,7 @@ export const CVPageContent = ({ candidateId, cv, setCV }) => {
     if (user && user.role !== USER_ROLES.ADMIN && candidateId) {
       Api.putCVRead(candidateId)
         .then(() => {
-          console.log('Note has been read');
+          // console.log('Note has been read');
         })
         .catch((err) => {
           console.error(err);

@@ -2,7 +2,7 @@ import moment from 'moment';
 import { CONTRACTS } from 'src/constants';
 import { findConstantFromValue } from 'src/utils';
 
-export default {
+export const formEditEmployed = {
   id: 'form-edit-employed',
   fields: [
     {

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { memo, useCallback, useMemo } from 'react';
-import GenericField from 'src/components/forms/GenericField';
+import { GenericField } from 'src/components/forms/GenericField';
 import { Grid, Button, ButtonIcon, IconNoSSR } from 'src/components/utils';
 import { usePrevious } from 'src/hooks/utils';
 

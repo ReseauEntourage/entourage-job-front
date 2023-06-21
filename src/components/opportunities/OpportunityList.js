@@ -14,7 +14,7 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import { Api } from 'src/api';
 import { LoadingScreen } from 'src/components/backoffice/cv/LoadingScreen';
 import { OfferCard } from 'src/components/cards';
-import SearchBar from 'src/components/filters/SearchBar';
+import { SearchBar } from 'src/components/filters/SearchBar';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer';
 import { ModalOfferAdmin } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOfferAdmin';

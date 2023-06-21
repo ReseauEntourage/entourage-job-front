@@ -8,7 +8,7 @@ import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { ToggleWithConfirmationModal } from 'src/components/backoffice/ToggleWithConfirmationModal';
 import { CandidateEmployedToggle } from 'src/components/backoffice/candidate/CandidateEmployedToggle';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
-import UserInformationCard from 'src/components/cards/UserInformationCard';
+import { UserInformationCard } from 'src/components/cards/UserInformationCard';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import schemaChangePassword from 'src/components/forms/schema/formChangePassword';
 import schemaPersonalData from 'src/components/forms/schema/formPersonalData';

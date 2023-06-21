@@ -1,7 +1,7 @@
 import React from 'react';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { CVPageContent } from 'src/components/backoffice/cv/CVPageContent';
-import ErrorMessage from 'src/components/backoffice/cv/ErrorMessage';
+import { ErrorMessage } from 'src/components/backoffice/cv/ErrorMessage';
 import { Section } from 'src/components/utils';
 import { OverlayLoader } from 'src/components/utils/OverlayLoader';
 import { useFetchCV } from 'src/hooks/useFetchCV';

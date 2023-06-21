@@ -2,7 +2,7 @@ import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { CONTRACTS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 
-export default {
+export const formEditUsefulInformation = {
   id: 'form-usefullinformation',
   fields: [
     {

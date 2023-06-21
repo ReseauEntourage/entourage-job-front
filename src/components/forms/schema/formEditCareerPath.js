@@ -1,6 +1,6 @@
 import { BUSINESS_LINES } from 'src/constants';
 
-export default {
+export const formEditCareerPath = {
   id: 'form-career-path',
   fields: [
     {

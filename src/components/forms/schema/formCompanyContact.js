@@ -5,7 +5,7 @@ import {
   HEARD_ABOUT_FILTERS,
 } from 'src/constants';
 
-export default {
+export const formCompanyContact = {
   id: 'form-company-contact',
   fields: [
     {

@@ -29,7 +29,6 @@ export const SubMenu = ({
             icon = '',
             external = false,
             queryParams = '',
-            disabled = false,
           },
           key
         ) => {

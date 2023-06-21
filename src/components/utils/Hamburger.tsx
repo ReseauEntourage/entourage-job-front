@@ -1,4 +1,3 @@
-import dynamic from 'next/dynamic';
 import React from 'react';
 import UIkit from 'uikit';
 import { ButtonIcon } from 'src/components/utils/ButtonIcon';

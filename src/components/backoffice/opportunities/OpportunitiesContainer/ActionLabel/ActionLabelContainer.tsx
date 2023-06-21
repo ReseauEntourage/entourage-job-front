@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import EntourageIcon from 'assets/custom/icons/entourage.svg';
-import ActionLabel from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel/ActionLabel';
+import { ActionLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel/ActionLabel';
 import { IconNoSSR } from 'src/components/utils';
 
 export const ActionLabelContainer = ({

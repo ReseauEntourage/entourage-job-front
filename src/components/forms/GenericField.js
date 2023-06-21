@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import ReactSelect, { components } from 'react-select';
 import AsyncSelect from 'react-select/async';
 import CreatableSelect from 'react-select/creatable';
-import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
+import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
 import { Checkbox } from 'src/components/forms/fields/Checkbox';
 import { DatePicker } from 'src/components/forms/fields/DatePicker';
 import { Input } from 'src/components/forms/fields/Input';

@@ -11,7 +11,7 @@ import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 import { findConstantFromValue } from 'src/utils';
 
-export default {
+export const formEditExternalOpportunity = {
   id: 'form-offer-external',
   fields: [
     {

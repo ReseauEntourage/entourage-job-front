@@ -1,7 +1,7 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { HEARD_ABOUT_FILTERS } from 'src/constants';
 
-export default {
+export const formInterestLinkedOut = {
   id: 'form-interest',
   fields: [
     {
