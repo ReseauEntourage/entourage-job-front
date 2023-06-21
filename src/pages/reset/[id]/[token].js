@@ -4,7 +4,7 @@ import React from 'react';
 import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
 import { PasswordCriterias } from 'src/components/PasswordCriterias';
-import FormWithValidation from 'src/components/forms/FormWithValidation';
+import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import schema from 'src/components/forms/schema/formResetPassword';
 import { Button, Section, IconNoSSR } from 'src/components/utils';
 

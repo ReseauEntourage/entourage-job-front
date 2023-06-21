@@ -1,1 +1,1 @@
-export * from './HeaderBackoffice'
+export * from './HeaderBackoffice';

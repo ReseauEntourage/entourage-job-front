@@ -4,7 +4,10 @@ import { Api } from 'src/api';
 import { VALUES } from 'src/constants';
 import { useMount } from 'src/hooks/utils';
 
-export const SharesCountContext = createContext({ totalShares: 0, incrementSharesCount: () => {} });
+export const SharesCountContext = createContext({
+  totalShares: 0,
+  incrementSharesCount: () => {},
+});
 
 export const SharesCountProvider = ({ children }) => {
   const [totalShares, setTotalShares] = useState(0);

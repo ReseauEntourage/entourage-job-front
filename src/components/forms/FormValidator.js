@@ -1,7 +1,7 @@
 import validator from 'validator';
 import { getValueFromFormField } from 'src/utils';
 
-export default class FormValidator {
+export class FormValidator {
   constructor(validations) {
     // validations is an array of rules specific to a form
     this.validations = validations;
@@ -64,7 +64,7 @@ export default class FormValidator {
             validationMethod(fieldValue, ...args, fieldValues) !==
             rule.validWhen;
         } catch (e) {
-          console.log(`Stringify validation fallback, reason: '${e.message}'`);
+          // console.log(`Stringify validation fallback, reason: '${e.message}'`);
           isValid =
             validationMethod(fieldValue.toString(), ...args, fieldValues) !==
             rule.validWhen;

@@ -4,12 +4,12 @@ import ReactSelect, { components } from 'react-select';
 import AsyncSelect from 'react-select/async';
 import CreatableSelect from 'react-select/creatable';
 import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
-import Checkbox from 'src/components/forms/fields/Checkbox';
-import DatePicker from 'src/components/forms/fields/DatePicker';
-import Input from 'src/components/forms/fields/Input';
-import PhoneInput from 'src/components/forms/fields/PhoneInput';
-import Select from 'src/components/forms/fields/Select';
-import Textarea from 'src/components/forms/fields/Textarea';
+import { Checkbox } from 'src/components/forms/fields/Checkbox';
+import { DatePicker } from 'src/components/forms/fields/DatePicker';
+import { Input } from 'src/components/forms/fields/Input';
+import { PhoneInput } from 'src/components/forms/fields/PhoneInput';
+import { Select } from 'src/components/forms/fields/Select';
+import { Textarea } from 'src/components/forms/fields/Textarea';
 import { SimpleLink } from 'src/components/utils';
 
 import {
@@ -31,7 +31,7 @@ import { EXTERNAL_LINKS } from 'src/constants';
 
 let debounceTimeoutId;
 
-const GenericField = ({
+export const GenericField = ({
   data,
   formId,
   value,
@@ -636,5 +636,3 @@ GenericField.defaultProps = {
     return null;
   },
 };
-
-export default GenericField;

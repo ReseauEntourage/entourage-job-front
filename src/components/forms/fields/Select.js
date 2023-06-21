@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
 
-const Select = ({
+export const Select = ({
   id,
   name,
   title,
@@ -107,4 +107,3 @@ Select.propTypes = {
   ).isRequired,
   hidden: PropTypes.bool,
 };
-export default Select;

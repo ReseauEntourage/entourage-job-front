@@ -1,1 +1,1 @@
-export * from './SendMailModalContent'
+export * from './SendMailModalContent';

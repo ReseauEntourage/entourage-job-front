@@ -1,8 +1,8 @@
 import React from 'react';
 import { Layout } from 'src/components/Layout';
 import { openModal } from 'src/components/modals/Modal';
-import CandidateContactModal from 'src/components/modals/Modal/ModalGeneric/CandidateContactModal';
-import { ModalInterestLinkedOut}  from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
+import { CandidateContactModal } from 'src/components/modals/Modal/ModalGeneric/CandidateContactModal';
+import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import {
   MultipleCTA,
   Chapter,

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import UIkit from 'uikit';
 
@@ -8,7 +7,22 @@ import schemaEditEmployed from 'src/components/forms/schema/formEditEmployed';
 import { CONTRACTS } from 'src/constants';
 import { findConstantFromValue } from 'src/utils';
 
-const CandidateEmployedToggle = ({
+interface CandidateEmployedToggleProps {
+  candidateId: string;
+  title?: string;
+  subtitle: JSX.Element | string;
+  modalTitle: string;
+  modalConfirmation: string;
+  notificationMessage: string;
+  defaultValue: boolean;
+  setData: (updatedData: {
+    contract: string;
+    endOfContract: string;
+    employed: boolean;
+  }) => void;
+}
+
+export const CandidateEmployedToggle = ({
   candidateId,
   title,
   subtitle,
@@ -17,7 +31,7 @@ const CandidateEmployedToggle = ({
   notificationMessage,
   defaultValue,
   setData,
-}) => {
+}: CandidateEmployedToggleProps) => {
   return (
     <ToggleWithConfirmationModal
       id="employedToggle"
@@ -56,21 +70,3 @@ const CandidateEmployedToggle = ({
     />
   );
 };
-
-CandidateEmployedToggle.propTypes = {
-  candidateId: PropTypes.string.isRequired,
-  title: PropTypes.string,
-  subtitle: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-  modalTitle: PropTypes.string.isRequired,
-  modalConfirmation: PropTypes.string.isRequired,
-  notificationMessage: PropTypes.string.isRequired,
-  defaultValue: PropTypes.bool.isRequired,
-  setData: PropTypes.func.isRequired,
-};
-
-CandidateEmployedToggle.defaultProps = {
-  subtitle: undefined,
-  title: undefined,
-};
-
-export default CandidateEmployedToggle;

@@ -1,24 +1,38 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
+import {
+  HeaderConnectedItemProps,
+  NotifBadgesProps,
+} from '../../HeaderConnected.types';
 import { StyledSubMenu } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/SubMenu/SubMenu.styles';
 import { SimpleLink, IconNoSSR } from 'src/components/utils';
 import { gaEvent } from 'src/lib/gtag';
-import {
-  HeaderConnectedItemProps,
-  NotifBadgesProps
-} from "../../HeaderConnected.shapes";
 
 const uuidValue = uuid();
 
-export const SubMenu = ({ items, badges }: {items: HeaderConnectedItemProps[], badges: NotifBadgesProps}) => {
+export const SubMenu = ({
+  items,
+  badges,
+}: {
+  items: HeaderConnectedItemProps[];
+  badges: NotifBadgesProps;
+}) => {
   return (
     <StyledSubMenu className="subMenu-container">
       {items.map(
-        ({ href, name, tag, badge= '',
-           icon= '',
-           external= false,
-           queryParams= '',
-           disabled= false, }, key) => {
+        (
+          {
+            href,
+            name,
+            tag,
+            badge = '',
+            icon = '',
+            external = false,
+            queryParams = '',
+            disabled = false,
+          },
+          key
+        ) => {
           return (
             <SimpleLink
               href={href + (queryParams || '')}

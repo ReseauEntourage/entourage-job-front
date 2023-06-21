@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { useRouter } from 'next/router';
 import React, { useContext, useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import { CandidateOpportunitiesList } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/CandidateOpportunitiesList';
+import { OPPORTUNITY_FILTERS_DATA } from '../../../../constants';
 import { CandidateOffersTab } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab';
 import {
   candidateSearchFilters,
@@ -10,6 +10,7 @@ import {
 } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOpportunities.utils';
 import { OpportunitiesContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer';
 import { NoOpportunities } from 'src/components/backoffice/opportunities/OpportunitiesContainer/NoOpportunities';
+import { CandidateOpportunitiesList } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/CandidateOpportunitiesList';
 import { CandidateOpportunityDetailsContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { useOpportunityType } from 'src/components/backoffice/opportunities/useOpportunityType';
@@ -27,37 +28,14 @@ import { usePrevious } from 'src/hooks/utils';
 import { UserContext } from 'src/store/UserProvider';
 import { getUserCandidateFromCoach, isRoleIncluded } from 'src/utils/Finding';
 import { tabs } from './CandidateOffersTab/CandidateOffersTab.utils';
+import { CandidateOpportunitiesFilters } from './CandidateOpportunitiesFilters.types';
 import { useTabsCount } from './useTabsCount';
 import { useUpdateOpportunityStatus } from './useUpdateOpportunityStatus';
-import { OPPORTUNITY_FILTERS_DATA, CandidateOpportunityFilter } from "../../../../constants";
 
-interface CandidateOpportunitiesFilters {
-  businessLines: {
-    label: string;
-    value: string;
-    prefix: string[];
-  }[];
-  contracts: {
-    label: string;
-    value: string;
-    end: boolean;
-  }[];
-  department: {
-    value: string;
-    label: string;
-    zone: string;
-  }[];
-  status: {
-    value: number;
-    label: string;
-    color: string;
-    public: string;
-  }[];
-}
 interface CandidateOpportunitiesProps {
   search?: string;
-  filters: CandidateOpportunityFilter[];
-  setFilters?: (updatedFilters: CandidateOpportunityFilter[]) => void;
+  filters: CandidateOpportunitiesFilters;
+  setFilters?: (updatedFilters: CandidateOpportunitiesFilters) => void;
   resetFilters?: () => void;
   setSearch?: (updatedSearch: string) => void;
   candidateId: string;
@@ -236,7 +214,9 @@ export const CandidateOpportunities = ({
           {isPublic ? (
             <Section className="custom-mobile-darkBG custom-fixed">
               <SearchBar
-                filtersConstants={candidateSearchFilters}
+                filtersConstants={
+                  candidateSearchFilters as typeof OPPORTUNITY_FILTERS_DATA
+                }
                 filters={filters}
                 resetFilters={resetFilters}
                 search={search}

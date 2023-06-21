@@ -1,4 +1,4 @@
-export default function renderSimpleDatePickerField(title) {
+export function renderSimpleDatePickerField(title) {
   return {
     id: 'simple-date-picker',
     fields: [

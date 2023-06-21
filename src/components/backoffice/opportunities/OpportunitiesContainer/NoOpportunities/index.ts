@@ -1,1 +1,1 @@
-export * from './NoOpportunities'
+export * from './NoOpportunities';

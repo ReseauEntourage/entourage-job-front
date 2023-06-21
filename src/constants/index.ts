@@ -303,17 +303,8 @@ export const OPPORTUNITY_FILTERS_DATA = [
     title: 'Type de contrat',
     tag: GA_TAGS.BACKOFFICE_OFFRES_FILTRE_CONTRAT_CLIC,
   },
-] as const;
+];
 
-type FilterObject =
-
-export type CandidateOpportunityFilterConstant =
-  (typeof OPPORTUNITY_FILTERS_DATA)[keyof typeof OPPORTUNITY_FILTERS_DATA];
-
-export type CandidateOpportunityFilter = {[CandidateOpportunityFilterConstant.key]: {
-
-  }}
-  (typeof OPPORTUNITY_FILTERS_DATA)[keyof typeof OPPORTUNITY_FILTERS_DATA];
 export const ORGANIZATION_FILTERS_DATA = [
   {
     key: 'zone',

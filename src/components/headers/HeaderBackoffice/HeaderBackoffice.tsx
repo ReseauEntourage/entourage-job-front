@@ -18,7 +18,7 @@ export const HeaderBackoffice = ({
   children,
   childrenBottom = false,
   shouldDisplayAdminNotifications = false,
-  noSeparator= false,
+  noSeparator = false,
 }: HeaderBackofficeProps) => {
   const { pendingMembersCount } = usePendingMembers();
   return (

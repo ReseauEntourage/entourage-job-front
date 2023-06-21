@@ -1,5 +1,4 @@
 import { GoogleApiWrapper, InfoWindow, Map, Marker } from 'google-maps-react';
-import dynamic from 'next/dynamic';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { SimpleLink, IconNoSSR } from 'src/components/utils';

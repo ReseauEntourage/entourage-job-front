@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
-import FormWithValidation from 'src/components/forms/FormWithValidation';
-import Select from 'src/components/forms/fields/Select';
+import { FormWithValidation } from 'src/components/forms/FormWithValidation';
+import { Select } from 'src/components/forms/fields/Select';
 import formEditExternalOpportunitySchema from 'src/components/forms/schema/formEditExternalOpportunity';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
@@ -22,8 +22,8 @@ import {
   IconNoSSR,
 } from 'src/components/utils';
 
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { EXTERNAL_OFFERS_ORIGINS, OFFER_STATUS } from 'src/constants';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { GA_TAGS } from 'src/constants/tags';
 import { usePrevious } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
@@ -99,7 +99,11 @@ PrivateOfferSentence.propTypes = {
   lastName: PropTypes.string.isRequired,
 };
 
-export const ModalOffer = ({ currentOffer, onOfferUpdated, navigateBackToList }) => {
+export const ModalOffer = ({
+  currentOffer,
+  onOfferUpdated,
+  navigateBackToList,
+}) => {
   const {
     replace,
     pathname,

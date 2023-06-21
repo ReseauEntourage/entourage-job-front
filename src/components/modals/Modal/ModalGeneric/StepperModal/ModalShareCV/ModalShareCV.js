@@ -3,7 +3,7 @@ import React from 'react';
 import UIkit from 'uikit';
 
 import { Api } from 'src/api';
-import FormWithValidation from 'src/components/forms/FormWithValidation';
+import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import schemaGetEmail from 'src/components/forms/schema/formGetEmail.json';
 import { StepperModal } from 'src/components/modals/Modal/ModalGeneric/StepperModal';
 import { Button, Img, IconNoSSR } from 'src/components/utils';

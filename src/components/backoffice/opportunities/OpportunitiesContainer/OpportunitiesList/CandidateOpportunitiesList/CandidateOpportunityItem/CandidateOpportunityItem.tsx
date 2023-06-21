@@ -7,7 +7,6 @@ import {
   InfoText,
   SubtitleText,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
-import { ProgressBarStatus } from './ProgressBarStatus';
 import { useBookmarkOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/useBookmarkOpportunity';
 import { BUSINESS_LINES } from 'src/constants';
 import { findConstantFromValue } from 'src/utils/Finding';
@@ -20,6 +19,7 @@ import {
   StyledTitleContainer,
   StyledTopContainer,
 } from './CandidateOpportunityItem.styles';
+import { ProgressBarStatus } from './ProgressBarStatus';
 
 export const CandidateOpportunityItem = ({
   id,

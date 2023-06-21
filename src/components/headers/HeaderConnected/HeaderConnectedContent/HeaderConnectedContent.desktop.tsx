@@ -5,9 +5,9 @@ import { StyledHeaderDesktop } from 'src/components/headers/Header.styles';
 import {
   HeaderConnectedMainItemProps,
   HeaderConnectedMainItemDefaultProps,
-} from 'src/components/headers/HeaderConnected/HeaderConnected.shapes';
+} from 'src/components/headers/HeaderConnected/HeaderConnected.types';
 import { StyledConnectedItem } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/HeaderConnectedContent.styles';
-import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
+import { ImgProfile } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
 import { SubMenu } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/SubMenu';
 import {
   Navbar,
@@ -26,31 +26,21 @@ import {
 import { gaEvent } from 'src/lib/gtag';
 import { UserContext } from 'src/store/UserProvider';
 import { isRoleIncluded } from 'src/utils/Finding';
+import { HeaderConnectedContentProps } from './HeaderConnectedContent.types';
 
 const uuidValue = uuid();
 
-interface HeaderConnectedContentDesktopProps {
-  links?: {
-    admin: HeaderConnectedMainItemProps[];
-    dropdown: HeaderConnectedMainItemProps[];
-    candidat: HeaderConnectedMainItemProps[];
-    coach: HeaderConnectedMainItemProps[];
-    coach_externe: HeaderConnectedMainItemProps[];
-  };
-  badges?: {
-    offers: number;
-    note: number;
-    cv: number;
-    members: number;
-  };
-  isEmpty?: boolean;
-}
-
-const HeaderConnectedContentDesktop = ({
+export const HeaderConnectedContentDesktop = ({
   badges,
-  links,
-  isEmpty,
-}: HeaderConnectedContentDesktopProps) => {
+  links = {
+    admin: [HeaderConnectedMainItemDefaultProps],
+    dropdown: [HeaderConnectedMainItemDefaultProps],
+    candidat: [HeaderConnectedMainItemDefaultProps],
+    coach: [HeaderConnectedMainItemDefaultProps],
+    coach_externe: [HeaderConnectedMainItemDefaultProps],
+  },
+  isEmpty = false,
+}: HeaderConnectedContentProps) => {
   const { user } = useContext(UserContext);
 
   const { push, asPath } = useRouter();
@@ -224,16 +214,3 @@ const HeaderConnectedContentDesktop = ({
     </StyledHeaderDesktop>
   );
 };
-
-HeaderConnectedContentDesktop.defaultProps = {
-  links: {
-    admin: HeaderConnectedMainItemDefaultProps,
-    dropdown: HeaderConnectedMainItemDefaultProps,
-    candidat: HeaderConnectedMainItemDefaultProps,
-    coach: HeaderConnectedMainItemDefaultProps,
-  },
-  badges: null,
-  isEmpty: false,
-};
-
-export default HeaderConnectedContentDesktop;

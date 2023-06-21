@@ -10,7 +10,7 @@ import {
 } from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils/Finding';
 
-const CVEditWelcome = ({ user }: { user: UserWithUserCandidate }) => {
+export const CVEditWelcome = ({ user }: { user: UserWithUserCandidate }) => {
   if (user === null) {
     return null;
   }
@@ -40,8 +40,7 @@ CVEditWelcome.propTypes = {
     firstName: PropTypes.string,
   }),
 };
+
 CVEditWelcome.defaultProps = {
   user: undefined,
 };
-
-export default CVEditWelcome;

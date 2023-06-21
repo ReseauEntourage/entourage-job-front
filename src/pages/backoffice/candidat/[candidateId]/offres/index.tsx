@@ -6,7 +6,8 @@ import { validate as uuidValidate } from 'uuid';
 import { Api } from 'src/api';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { CandidateOpportunities } from 'src/components/backoffice/candidate/CandidateOpportunities';
-import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
+import { CandidateOpportunitiesFilters } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOpportunitiesFilters.types';
+import { LoadingScreen } from 'src/components/backoffice/cv/LoadingScreen';
 import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { useOpportunityType } from 'src/components/backoffice/opportunities/useOpportunityType';
@@ -232,7 +233,7 @@ const Opportunities = () => {
     content = (
       <CandidateOpportunities
         search={search}
-        filters={filters as CandidateOpportunityFilters}
+        filters={filters as CandidateOpportunitiesFilters}
         resetFilters={resetFilters}
         setSearch={setSearch}
         setFilters={setFilters}

@@ -2,13 +2,13 @@ import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { AdminOpportunityList } from 'src/components/backoffice/admin/AdminOpportunityList';
-import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
+import { LoadingScreen } from 'src/components/backoffice/cv/LoadingScreen';
 import { Section } from 'src/components/utils';
-import { ADMIN_ZONES, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import {
   OFFER_ADMIN_FILTERS_DATA,
   OPPORTUNITY_FILTERS_DATA,
 } from 'src/constants';
+import { ADMIN_ZONES, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { GA_TAGS } from 'src/constants/tags';
 import { USER_ROLES } from 'src/constants/users';
 import { useTabFilters } from 'src/hooks';

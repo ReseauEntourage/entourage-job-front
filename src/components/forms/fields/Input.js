@@ -11,7 +11,7 @@ const showPasswordButtonStyle = {
   top: 32.5,
 };
 
-const Input = ({
+export const Input = ({
   id,
   name,
   placeholder,
@@ -125,4 +125,3 @@ Input.defaultProps = {
   min: undefined,
   max: undefined,
 };
-export default Input;

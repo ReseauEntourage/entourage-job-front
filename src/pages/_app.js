@@ -23,7 +23,7 @@ import { OFFCANVAS_GUEST, OFFCANVAS_LOGGED } from 'src/constants/utils';
 import { useMount } from 'src/hooks/utils';
 import * as gtag from 'src/lib/gtag';
 import { DataProvider } from 'src/store/DataProvider';
-import SharesCountProvider from 'src/store/SharesCountProvider';
+import { SharesCountProvider } from 'src/store/SharesCountProvider';
 import { UserProvider } from 'src/store/UserProvider';
 
 UIkit.use(Icons);

@@ -16,7 +16,7 @@ import { usePrevious } from 'src/hooks/utils';
 //   return true;
 // }
 
-const Textarea = ({
+export const Textarea = ({
   id,
   name,
   placeholder,
@@ -111,4 +111,3 @@ Textarea.defaultProps = {
   disabled: false,
   hidden: false,
 };
-export default Textarea;

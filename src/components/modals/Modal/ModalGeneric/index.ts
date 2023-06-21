@@ -1,1 +1,1 @@
-export * from './ModalGeneric'
+export * from './ModalGeneric';

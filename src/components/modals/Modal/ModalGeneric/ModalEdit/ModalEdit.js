@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import FormWithValidation from 'src/components/forms/FormWithValidation';
+import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 
 import { useModalContext } from 'src/components/modals/Modal';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';

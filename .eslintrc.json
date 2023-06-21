@@ -32,6 +32,7 @@
   "rules": {
     // Plain JavaScript Rules
     "arrow-body-style": 0,
+
     "no-console": [1, { "allow": ["warn", "error"] }],
     "no-multiple-empty-lines": [2, { "max": 1 }], // prettier like
     // max-len is enought
@@ -46,7 +47,6 @@
     "prefer-promise-reject-errors": "off",
     "no-return-assign": "off",
     "no-case-declarations": "off",
-    "no-unused-vars": "warn",
     "no-param-reassign": "off",
     "consistent-return": "off",
     "no-underscore-dangle": "off",

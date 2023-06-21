@@ -4,7 +4,7 @@ import React from 'react';
 import { Tooltip } from 'react-tooltip';
 import { translateStatusCV } from 'src/components/backoffice/admin/members/MemberList/MemberList.utils';
 import { renderCVStatus } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.utils';
-import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
+import { ImgProfile } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
 import { SimpleLink, Icon } from 'src/components/utils';
 import { CheckBox, useCheckBox } from 'src/components/utils/Inputs/CheckBox';
 import { TrDesktop, TdDesktop } from 'src/components/utils/Table';

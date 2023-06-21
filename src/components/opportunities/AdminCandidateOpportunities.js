@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import OpportunityList from 'src/components/opportunities/OpportunityList';
+import { OpportunityList } from 'src/components/opportunities/OpportunityList';
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 import { useFilters } from 'src/hooks/useFilters';
 

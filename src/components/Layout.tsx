@@ -3,8 +3,8 @@ import Head from 'next/head';
 import { withRouter } from 'next/router';
 import Script from 'next/script';
 import React from 'react';
-import HeaderConnected from 'src/components/headers/HeaderConnected';
-import HeaderPublic from 'src/components/headers/HeaderPublic/HeaderPublic';
+import { HeaderConnected } from 'src/components/headers/HeaderConnected';
+import { HeaderPublic } from 'src/components/headers/HeaderPublic/HeaderPublic';
 import { Footer } from 'src/components/partials/Footer';
 import { addPrefix } from 'src/utils';
 
@@ -27,16 +27,15 @@ export const Layout = withRouter<LayoutProps>(
 
     router,
 
-     title= 'LinkedOut\xa0= partagez votre réseau avec ceux qui n’en ont pas',
-     metaTitle= 'LinkedOut\xa0= partagez votre réseau avec ceux qui n’en ont pas',
-     metaImage= `${process.env.SERVER_URL}/static/img/linkedout-preview-new.jpg`,
-  metaDescription=
-    "Lorsque l'on est exclu, les chances de trouver du travail sont proches de zéro. Avec LinkedOut, faites don de votre visibilité. Un partage peut tout changer.",
-  metaUrl= process.env.SERVER_URL,
-  metaType= 'website',
-  noIndex= false,
-  isBackoffice= false,
-  isEmpty= false,
+    title = 'LinkedOut\xa0= partagez votre réseau avec ceux qui n’en ont pas',
+    metaTitle = 'LinkedOut\xa0= partagez votre réseau avec ceux qui n’en ont pas',
+    metaImage = `${process.env.SERVER_URL}/static/img/linkedout-preview-new.jpg`,
+    metaDescription = "Lorsque l'on est exclu, les chances de trouver du travail sont proches de zéro. Avec LinkedOut, faites don de votre visibilité. Un partage peut tout changer.",
+    metaUrl = process.env.SERVER_URL,
+    metaType = 'website',
+    noIndex = false,
+    isBackoffice = false,
+    isEmpty = false,
   }: LayoutProps) => {
     const isPDF = router.pathname.includes('/pdf/');
     const domain = process.env.SERVER_URL.replace(/https:\/\/|http:\/\//g, '');

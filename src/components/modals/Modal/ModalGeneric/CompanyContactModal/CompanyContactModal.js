@@ -8,7 +8,7 @@ import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
 import { linkEvent } from 'src/lib/lintrk';
 
-const CompanyContactModal = () => {
+export const CompanyContactModal = () => {
   return (
     <ModalEdit
       submitText="Envoyer"
@@ -37,5 +37,3 @@ const CompanyContactModal = () => {
     />
   );
 };
-
-export default CompanyContactModal;

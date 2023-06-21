@@ -1,4 +1,4 @@
-export default function renderSimpleSelectField(placeholder, options, id) {
+export function renderSimpleSelectField(placeholder, options, id) {
   if (placeholder) {
     options.unshift({
       value: '',

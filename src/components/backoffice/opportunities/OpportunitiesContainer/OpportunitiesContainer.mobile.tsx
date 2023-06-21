@@ -5,10 +5,10 @@ import {
   StyledContainer,
   StyledDetailsContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
-import { OpportunitiesList } from './OpportunitiesList';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { IconNoSSR } from 'src/components/utils';
-import { OpportunitiesContainerProps } from "./OpportunitiesContainer.types";
+import { OpportunitiesContainerProps } from './OpportunitiesContainer.types';
+import { OpportunitiesList } from './OpportunitiesList';
 
 export const OpportunitiesContainerMobile = ({
   list,

@@ -5,7 +5,7 @@ import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
 import { CVList } from 'src/components/cv';
 import { openModal } from 'src/components/modals/Modal';
-import CompanyContactModal from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
+import { CompanyContactModal } from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
 import { TaxModal } from 'src/components/modals/PopupModal/TaxModal';
 import {
   LogoList,

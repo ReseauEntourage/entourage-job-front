@@ -6,7 +6,7 @@ import AiderInformationsMissions from 'public/static/img/aider-informations-miss
 import PictoCreationOpp from 'public/static/img/icons/picto-creation-opportunite.svg';
 import PictoFaciliterInte from 'public/static/img/icons/picto-faciliter-integration.svg';
 import PictoRechercheCV from 'public/static/img/icons/picto-recherche-cv.svg';
-import TitleSection from 'src/components/partials/Aider/H2';
+import { TitleSection } from 'src/components/partials/Aider/H2';
 import { StyledInfoContainer } from 'src/components/partials/Aider/InfoContainer/styles';
 import { Container } from 'src/components/utils';
 import { COLORS, BREAKPOINTS } from 'src/constants/styles';

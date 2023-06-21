@@ -1,1 +1,1 @@
-export * from './CandidateOpportunityItem'
+export * from './CandidateOpportunityItem';

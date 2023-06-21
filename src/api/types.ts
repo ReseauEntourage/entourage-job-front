@@ -80,6 +80,7 @@ export interface UserCandidateWithUsers extends UserCandidate {
   email: string;
   candidat?: User;
   coach?: User;
+  cvs?: CV[];
 }
 
 export interface UserWithUserCandidate extends User {

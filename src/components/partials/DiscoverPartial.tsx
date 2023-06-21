@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Api } from 'src/api';
-import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
+import { LoadingScreen } from 'src/components/backoffice/cv/LoadingScreen';
 import { CandidatCard } from 'src/components/cards';
 import { Grid, Section, IconNoSSR } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';

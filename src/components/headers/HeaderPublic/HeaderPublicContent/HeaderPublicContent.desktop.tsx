@@ -1,17 +1,18 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { StyledHeaderDesktop } from '../../Header.styles';
-import { HeaderPublicItemShape } from '../HeaderPublic.shapes';
 import { Navbar, NavbarLogo, IconNoSSR, Nav } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledPublicItem } from './HeaderPublicContent.styles';
+import { HeaderPublicContentProps } from './HeaderPublicContent.types';
 
-const HeaderPublicDesktop = ({ links }) => {
+export const HeaderPublicContentDesktop = ({
+  links,
+}: HeaderPublicContentProps) => {
   const { asPath } = useRouter();
 
   const rightItems = [
@@ -85,8 +86,3 @@ const HeaderPublicDesktop = ({ links }) => {
     </StyledHeaderDesktop>
   );
 };
-
-HeaderPublicDesktop.propTypes = {
-  links: PropTypes.arrayOf(HeaderPublicItemShape).isRequired,
-};
-export default HeaderPublicDesktop;

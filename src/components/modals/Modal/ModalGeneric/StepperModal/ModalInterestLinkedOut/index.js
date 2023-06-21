@@ -1,1 +1,1 @@
-export * from './ModalInterestLinkedOut'
+export * from './ModalInterestLinkedOut';

@@ -97,7 +97,7 @@ FieldGroup.propTypes = {
   getValue: PropTypes.func.isRequired,
 };
 
-const MultipleFields = ({
+export const MultipleFields = ({
   name,
   title,
   fields,
@@ -246,5 +246,3 @@ MultipleFields.defaultProps = {
   childWidths: undefined,
   action: 'Ajouter',
 };
-
-export default MultipleFields;

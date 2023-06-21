@@ -15,7 +15,7 @@ const updateField = (fieldToUpdate, props, i) => {
   return field;
 };
 
-const mutateFormSchema = (schema, fields, id?) => {
+export const mutateFormSchema = (schema, fields, id?) => {
   const newSchema = {
     id: id ? schema.id + id : schema.id,
     fields: [...schema.fields],
@@ -78,7 +78,7 @@ const getAlternateDefaultOfferStatus = (
   ).label;
 };
 
-const mutateDefaultOfferStatus = (offer, opportunityUser) => {
+export const mutateDefaultOfferStatus = (offer, opportunityUser) => {
   return [
     {
       ...OFFER_STATUS[0],
@@ -87,5 +87,3 @@ const mutateDefaultOfferStatus = (offer, opportunityUser) => {
     ...OFFER_STATUS.slice(1),
   ];
 };
-
-export { mutateFormSchema, mutateDefaultOfferStatus };

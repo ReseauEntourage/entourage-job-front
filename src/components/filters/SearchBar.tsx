@@ -1,24 +1,27 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import FiltersCheckboxes from 'src/components/filters/FiltersCheckboxes';
-import FiltersDropdowns from 'src/components/filters/FiltersDropdowns';
-import FiltersMobile from 'src/components/filters/FiltersMobile';
-import FiltersOptions from 'src/components/filters/FiltersOptions';
-import FiltersSideBar from 'src/components/filters/FiltersSideBar';
+import { FiltersCheckboxes } from 'src/components/filters/FiltersCheckboxes';
+import { FiltersDropdowns } from 'src/components/filters/FiltersDropdowns';
+import { FiltersMobile } from 'src/components/filters/FiltersMobile';
+import { FiltersOptions } from 'src/components/filters/FiltersOptions';
+import { FiltersSideBar } from 'src/components/filters/FiltersSideBar';
 import { IconNoSSR } from 'src/components/utils';
 import {
-  CandidateOpportunityFilter,
   CV_FILTERS_DATA,
   MEMBER_FILTERS_DATA,
   OPPORTUNITY_FILTERS_DATA,
-  ORGANIZATION_FILTERS_DATA
-} from "src/constants";
+  ORGANIZATION_FILTERS_DATA,
+} from 'src/constants';
 import { gaEvent } from 'src/lib/gtag';
 import { AnyToFix } from 'src/utils/Types';
 
 // to be typed
 
 interface SearchBarProps {
-  filtersConstants:CandidateOpportunityFilter[] // to be typed properly
+  filtersConstants:
+    | typeof CV_FILTERS_DATA
+    | typeof MEMBER_FILTERS_DATA
+    | typeof OPPORTUNITY_FILTERS_DATA
+    | typeof ORGANIZATION_FILTERS_DATA; // to be typed properly
   filters: AnyToFix; // to be typed
   setFilters: (updatedFilters: AnyToFix) => void;
   search?: string;
@@ -31,7 +34,7 @@ interface SearchBarProps {
   };
 }
 
-const SearchBar = ({
+export const SearchBar = ({
   filtersConstants,
   filters,
   setFilters,
@@ -136,5 +139,3 @@ SearchBar.defaultProps = {
   search: undefined,
   smallSelectors: false,
 };
-
-export default SearchBar;

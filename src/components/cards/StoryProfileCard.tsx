@@ -10,7 +10,7 @@ export const StoryProfileCard = ({
   onChange,
 }: {
   description?: string;
-  onChange?: (arg1: any) => void; // to be typed
+  onChange?: (arg1: { story: string }) => void; // to be typed
 }) => {
   return (
     <div className="uk-card uk-card-default uk-card-body">
@@ -48,9 +48,3 @@ export const StoryProfileCard = ({
     </div>
   );
 };
-
-StoryProfileCard.defaultProps = {
-  description: '',
-  onChange: null,
-};
-export default StoryProfileCard;

@@ -1,7 +1,7 @@
 import { GA_TAGS } from 'src/constants/tags';
 import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils/Finding';
-import { AnyToFix } from "../../../../utils/Types";
+import { AnyToFix } from 'src/utils/Types';
 
 const rolesToParams = (roles) => {
   return `${roles

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
 
-const DatePicker = ({
+export const DatePicker = ({
   id,
   name,
   title,
@@ -85,5 +85,3 @@ DatePicker.defaultProps = {
   disabled: false,
   hidden: false,
 };
-
-export default DatePicker;

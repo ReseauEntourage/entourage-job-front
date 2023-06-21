@@ -7,11 +7,11 @@ import React, {
   useState,
 } from 'react';
 import FooterForm from 'src/components/forms/FooterForm';
-import FormValidator from 'src/components/forms/FormValidator';
-import GenericField from 'src/components/forms/GenericField';
-import FieldGroup from 'src/components/forms/fields/FieldGroup';
-import InputsContainer from 'src/components/forms/fields/InputsContainer';
-import MultipleFields from 'src/components/forms/fields/MultipleFields';
+import { FormValidator } from 'src/components/forms/FormValidator';
+import { GenericField } from 'src/components/forms/GenericField';
+import { FieldGroup } from 'src/components/forms/fields/FieldGroup';
+import { InputsContainer } from 'src/components/forms/fields/InputsContainer';
+import { MultipleFields } from 'src/components/forms/fields/MultipleFields';
 import { getValueFromFormField } from 'src/utils/Finding';
 import { AnyToFix } from 'src/utils/Types';
 
@@ -36,7 +36,7 @@ interface FormWithValidationProps {
  * Regroupe les deux composants du fichier formWithValidationOld en stateless
  * - Plus lisible
  */
-const FormWithValidation = forwardRef(
+export const FormWithValidation = forwardRef(
   (
     {
       formSchema: { id, rules, fields },
@@ -368,5 +368,3 @@ FormWithValidation.defaultProps = {
   onError: null,
   formId: '',
 };
-
-export default FormWithValidation;

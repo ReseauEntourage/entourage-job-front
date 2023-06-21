@@ -21,8 +21,6 @@ const LINKS = [
   },
 ];
 
-const HeaderPublic = () => {
+export const HeaderPublic = () => {
   return <HeaderPublicContent links={LINKS} />;
 };
-
-export default HeaderPublic;

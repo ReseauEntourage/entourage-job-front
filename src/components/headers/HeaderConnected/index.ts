@@ -1,3 +1,1 @@
-import HeaderConnected from './HeaderConnected';
-
-export default HeaderConnected;
+export * from './HeaderConnected';

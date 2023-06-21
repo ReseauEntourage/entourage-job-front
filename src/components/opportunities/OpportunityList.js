@@ -12,7 +12,7 @@ import UIkit from 'uikit';
 
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { Api } from 'src/api';
-import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
+import { LoadingScreen } from 'src/components/backoffice/cv/LoadingScreen';
 import { OfferCard } from 'src/components/cards';
 import SearchBar from 'src/components/filters/SearchBar';
 import { openModal } from 'src/components/modals/Modal';

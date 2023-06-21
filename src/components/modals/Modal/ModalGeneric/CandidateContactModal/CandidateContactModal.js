@@ -7,7 +7,7 @@ import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
 
-const CandidateContactModal = () => {
+export const CandidateContactModal = () => {
   return (
     <ModalEdit
       submitText="J'envoie ma pré-inscription !"
@@ -70,5 +70,3 @@ const CandidateContactModal = () => {
     />
   );
 };
-
-export default CandidateContactModal;

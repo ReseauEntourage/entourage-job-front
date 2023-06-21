@@ -1,1 +1,1 @@
-export * from './DetailsProgressBar'
+export * from './DetailsProgressBar';

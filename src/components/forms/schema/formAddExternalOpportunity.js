@@ -1,5 +1,5 @@
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { CONTRACTS } from 'src/constants';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 
 export const formAddExternalOpportunityCandidate = {
   id: 'form-offer-external',

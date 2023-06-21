@@ -18,7 +18,7 @@ interface FiltersDropdownProps {
   showSeparator?: boolean;
 }
 
-const FiltersDropdowns = ({
+export const FiltersDropdowns = ({
   filterData,
   filters,
   setFilters,
@@ -199,5 +199,3 @@ FiltersDropdowns.defaultProps = {
   showSeparator: false,
   smallSelectors: false,
 };
-
-export default FiltersDropdowns;

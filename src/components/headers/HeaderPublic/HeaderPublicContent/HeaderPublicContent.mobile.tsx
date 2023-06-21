@@ -1,17 +1,18 @@
 import { useRouter } from 'next/router';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { StyledHeaderMobile } from '../../Header.styles';
-import { HeaderPublicItemShape } from '../HeaderPublic.shapes';
 import { Hamburger, Navbar, NavbarLogo, IconNoSSR } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
-import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas';
+import { Offcanvas } from 'src/components/utils/Offcanvas';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { OFFCANVAS_GUEST } from 'src/constants/utils';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
+import { HeaderPublicContentProps } from './HeaderPublicContent.types';
 
-const HeaderPublicMobile = ({ links }) => {
+export const HeaderPublicContentMobile = ({
+  links,
+}: HeaderPublicContentProps) => {
   const { asPath, push } = useRouter();
 
   return (
@@ -34,7 +35,7 @@ const HeaderPublicMobile = ({ links }) => {
           </div>
         }
       />
-      <OffcanvasNoSSR id={OFFCANVAS_GUEST}>
+      <Offcanvas id={OFFCANVAS_GUEST}>
         <ul className="uk-nav uk-nav-default uk-margin-medium-top">
           <li className="uk-flex uk-flex-center uk-flex-middle">
             <a
@@ -128,13 +129,7 @@ const HeaderPublicMobile = ({ links }) => {
             </Button>
           </li>
         </ul>
-      </OffcanvasNoSSR>
+      </Offcanvas>
     </StyledHeaderMobile>
   );
 };
-
-HeaderPublicMobile.propTypes = {
-  links: PropTypes.arrayOf(HeaderPublicItemShape).isRequired,
-};
-
-export default HeaderPublicMobile;

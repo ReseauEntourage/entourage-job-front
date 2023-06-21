@@ -1,1 +1,1 @@
-export * from './CandidateOpportunitiesList'
+export * from './CandidateOpportunitiesList';

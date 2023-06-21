@@ -13,8 +13,6 @@ import {
   StyledTitleText,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
 import { renderTabFromStatus } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.utils';
-import { CandidateOpportunityDetailsCTAs } from './CandidateOpportunityDetailsCTAs';
-import { CTAsByTab } from './CandidateOpportunityDetailsCTAs/CandidateOpportunityDetailsCTAs.utils';
 import { DetailsProgressBar } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/DetailsProgressBar';
 import {
   StyledCTAContainer,
@@ -31,6 +29,8 @@ import { BUSINESS_LINES } from 'src/constants';
 import { HEIGHTS } from 'src/constants/styles';
 import { findConstantFromValue } from 'src/utils/Finding';
 import { mapEventDateFromStatus } from './CandidateOpportunityDetails.utils';
+import { CandidateOpportunityDetailsCTAs } from './CandidateOpportunityDetailsCTAs';
+import { CTAsByTab } from './CandidateOpportunityDetailsCTAs/CandidateOpportunityDetailsCTAs.utils';
 
 interface CandidateOpportunityDetailsProps
   extends Partial<OpportunityWithOpportunityUsers> {
@@ -41,7 +41,7 @@ interface CandidateOpportunityDetailsProps
   createdAt: string;
 }
 
-const CandidateOpportunityDetails = ({
+export const CandidateOpportunityDetails = ({
   id,
   title,
   company,
@@ -56,7 +56,7 @@ const CandidateOpportunityDetails = ({
   isPublic,
   isExternal,
   fetchOpportunities,
-  events,
+  events = [],
   createdAt,
   oppRefreshCallback,
   candidateId,
@@ -226,9 +226,3 @@ const CandidateOpportunityDetails = ({
     /> */
   );
 };
-
-CandidateOpportunityDetails.defaultProps = {
-  events: [],
-};
-
-export default CandidateOpportunityDetails;

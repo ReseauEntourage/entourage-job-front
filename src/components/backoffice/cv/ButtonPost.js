@@ -2,7 +2,14 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Button, IconNoSSR } from 'src/components/utils';
 
-const ButtonPost = ({ text, icon, action, style, disabled, dataTestId }) => {
+export const ButtonPost = ({
+  text,
+  icon,
+  action,
+  style,
+  disabled,
+  dataTestId,
+}) => {
   const [loading, setLoading] = useState(false);
   return (
     <Button
@@ -43,6 +50,7 @@ ButtonPost.propTypes = {
   disabled: PropTypes.bool,
   dataTestId: PropTypes.string,
 };
+
 ButtonPost.defaultProps = {
   action: undefined,
   style: undefined,
@@ -50,4 +58,3 @@ ButtonPost.defaultProps = {
   disabled: false,
   dataTestId: '',
 };
-export default ButtonPost;

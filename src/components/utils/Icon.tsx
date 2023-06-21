@@ -10,7 +10,14 @@ interface IconProps {
   style?: React.CSSProperties;
 }
 
-const Icon = ({ name, ratio, flip, className, id, style }: IconProps) => {
+export const Icon = ({
+  name,
+  ratio,
+  flip,
+  className,
+  id,
+  style,
+}: IconProps) => {
   return (
     <span
       id={id}
@@ -35,5 +42,3 @@ export const IconNoSSR = dynamic(
   },
   { ssr: false }
 );
-
-export { Icon };

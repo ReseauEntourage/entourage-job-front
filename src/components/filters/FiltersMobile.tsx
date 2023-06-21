@@ -5,7 +5,11 @@ import { Button, IconNoSSR } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 
-const FiltersMobile = ({ numberOfFilters }: { numberOfFilters?: number }) => {
+export const FiltersMobile = ({
+  numberOfFilters,
+}: {
+  numberOfFilters?: number;
+}) => {
   const [filterMenuOpened, setFilterMenuOpened] = useState(false);
 
   const onFilterMenuToggle = (opened) => {
@@ -57,5 +61,3 @@ const FiltersMobile = ({ numberOfFilters }: { numberOfFilters?: number }) => {
 FiltersMobile.defaultProps = {
   numberOfFilters: 0,
 };
-
-export default FiltersMobile;

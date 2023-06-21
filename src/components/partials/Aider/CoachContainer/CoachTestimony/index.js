@@ -1,7 +1,7 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { StyledCoachTestimony } from 'src/components/partials/Aider/CoachContainer/CoachTestimony/styles';
-import TitleSection from 'src/components/partials/Aider/H2';
+import { TitleSection } from 'src/components/partials/Aider/H2';
 import { Container } from 'src/components/utils';
 import { COLORS } from 'src/constants/styles';
 

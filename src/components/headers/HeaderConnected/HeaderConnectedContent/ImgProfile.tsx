@@ -1,11 +1,24 @@
-import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
 import { Img } from 'src/components/utils';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 import { UserContext } from 'src/store/UserProvider';
 import { isRoleIncluded } from 'src/utils/Finding';
 
-const ImgProfile = ({ user, size }) => {
+interface ImgProfileProps {
+  user?: {
+    id: string;
+    firstName: string;
+    candidat?: {
+      cvs?: {
+        version: number;
+        urlImg: string;
+      }[];
+    };
+  };
+  size?: number;
+}
+
+export const ImgProfile = ({ user, size = 40 }: ImgProfileProps) => {
   const userFromContext = useContext(UserContext).user;
 
   const { firstName, role, candidat } = user || userFromContext;
@@ -58,25 +71,3 @@ const ImgProfile = ({ user, size }) => {
     </div>
   );
 };
-
-ImgProfile.propTypes = {
-  user: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    firstName: PropTypes.string.isRequired,
-    candidat: PropTypes.shape({
-      cvs: PropTypes.arrayOf(
-        PropTypes.shape({
-          version: PropTypes.number,
-          urlImg: PropTypes.string,
-        })
-      ),
-    }),
-  }),
-  size: PropTypes.number,
-};
-ImgProfile.defaultProps = {
-  user: null,
-  size: 40,
-};
-
-export default ImgProfile;

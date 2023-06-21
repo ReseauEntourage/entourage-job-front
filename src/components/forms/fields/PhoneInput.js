@@ -3,7 +3,7 @@ import React from 'react';
 import PhoneInputWithCountry from 'react-phone-number-input/mobile';
 import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
 
-const PhoneInput = ({
+export const PhoneInput = ({
   id,
   name,
   placeholder,
@@ -78,5 +78,3 @@ PhoneInput.defaultProps = {
   hidden: false,
   autocomplete: 'tel',
 };
-
-export default PhoneInput;

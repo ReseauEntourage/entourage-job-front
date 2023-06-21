@@ -6,9 +6,16 @@ import { useIsDesktop } from 'src/hooks/utils/usePlatforms';
 
 const uuidValue = uuid();
 
-export const DetailsProgressBar = ({ tab, noProcess }: {tab: number, noProcess:boolean}) => {
+export const DetailsProgressBar = ({
+  tab,
+  noProcess,
+}: {
+  tab: number;
+  noProcess: boolean;
+}) => {
   const isDesktop = useIsDesktop();
-  const [steps, setSteps] = useState< { text: string, className: string, mobile: string } []>();
+  const [steps, setSteps] =
+    useState<{ text: string; className: string; mobile: string }[]>();
   const renderClassNames = (className, index, array) => {
     for (let i = 0; i <= index; i += 1) {
       array[i].className = className;

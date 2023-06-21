@@ -1,3 +1,3 @@
-export  * from './CheckBox';
+export * from './CheckBox';
 
-export  * from './useCheckBox';
+export * from './useCheckBox';

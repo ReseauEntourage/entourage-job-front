@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import {
   formatPlural,
@@ -22,12 +21,16 @@ interface NoOpportunitiesProps {
   fetchOpportunities: () => void;
 }
 
-export const NoOpportunities = ({ status = tabs[0].text, fetchOpportunities }:NoOpportunitiesProps) => {
+export const NoOpportunities = ({
+  status = tabs[0].text,
+  fetchOpportunities,
+}: NoOpportunitiesProps) => {
   const candidateId = useCandidateId();
   return (
     <StyledContainer>
       <StyledTitle>
-        Vous n&apos;avez aucune {formatPlural((status as string).toLowerCase(), 0)}.
+        Vous n&apos;avez aucune{' '}
+        {formatPlural((status as string).toLowerCase(), 0)}.
       </StyledTitle>
       <StyledDescription>
         Vous pouvez chercher des offres qui vous correspondent sur le site

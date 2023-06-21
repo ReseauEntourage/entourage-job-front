@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
-import FormWithValidation from 'src/components/forms/FormWithValidation';
+import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import formEditExternalOpportunitySchema from 'src/components/forms/schema/formEditExternalOpportunity';
 import schema, {
   adminMutations,
@@ -22,12 +22,12 @@ import {
   IconNoSSR,
 } from 'src/components/utils';
 
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import {
   BUSINESS_LINES,
   EXTERNAL_OFFERS_ORIGINS,
   OFFER_STATUS,
 } from 'src/constants';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import {
   findConstantFromValue,
   findOfferStatus,

@@ -1,3 +1,1 @@
-import CompanyContactModal from './CompanyContactModal';
-
-export default CompanyContactModal;
+export * from './CompanyContactModal';

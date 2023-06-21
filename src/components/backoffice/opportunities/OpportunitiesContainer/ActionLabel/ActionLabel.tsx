@@ -6,7 +6,7 @@ import {
   StyledLabelContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel/ActionLabel.styles';
 
-const ActionLabel = ({
+export const ActionLabel = ({
   color,
   label,
   icon,
@@ -15,7 +15,7 @@ const ActionLabel = ({
   fill,
   onClick,
   id,
-}) => {
+}: {}) => {
   return (
     <StyledContainer
       fill={fill}
@@ -54,5 +54,3 @@ ActionLabel.propTypes = {
   onClick: PropTypes.func,
   id: PropTypes.string,
 };
-
-export default ActionLabel;

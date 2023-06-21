@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { UserWithUserCandidate } from 'src/api/types';
 import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
-import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
+import { ImgProfile } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
 import { Grid, SimpleLink, IconNoSSR } from 'src/components/utils';
 import { USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils/Finding';

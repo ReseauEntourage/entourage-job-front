@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import React, { useContext, useEffect } from 'react';
 import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
-import FormWithValidation from 'src/components/forms/FormWithValidation';
+import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import schemaLogin from 'src/components/forms/schema/formLogin.json';
 import schemaLostPwd from 'src/components/forms/schema/formLostPwd.json';
 import { openModal } from 'src/components/modals/Modal';

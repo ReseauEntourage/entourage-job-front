@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 export interface HeaderConnectedItemProps {
   href: string;
   badge?: string;
@@ -27,6 +25,7 @@ export const HeaderConnectedMainItemDefaultProps = {
   subMenu: null,
   onClick: null,
   disabled: false,
+  href: '',
 };
 
 export interface NotifBadgesProps {

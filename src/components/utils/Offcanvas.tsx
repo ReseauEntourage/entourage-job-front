@@ -11,12 +11,12 @@ interface OffcanvasProps {
   className?: string;
 }
 
-const Offcanvas = ({
+export const Offcanvas = ({
   id,
   children,
   container,
-  flip,
-  className,
+  flip = true,
+  className = '',
 }: OffcanvasProps) => {
   return (
     <div
@@ -32,20 +32,3 @@ const Offcanvas = ({
     </div>
   );
 };
-
-Offcanvas.defaultProps = {
-  container: undefined,
-  flip: true,
-  className: '',
-};
-
-export const OffcanvasNoSSR = dynamic(
-  () => {
-    return import('src/components/utils/Offcanvas');
-  },
-  {
-    ssr: false,
-  }
-);
-
-export default Offcanvas;

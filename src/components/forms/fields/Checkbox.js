@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
+import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
 
-const Checkbox = ({
+export const Checkbox = ({
   id,
   name,
   value,
@@ -64,6 +64,7 @@ Checkbox.propTypes = {
     message: PropTypes.string,
   }),
 };
+
 Checkbox.defaultProps = {
   valid: undefined,
   value: false,
@@ -71,5 +72,3 @@ Checkbox.defaultProps = {
   hidden: false,
   removePadding: false,
 };
-
-export default Checkbox;

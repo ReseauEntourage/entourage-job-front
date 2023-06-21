@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Api } from 'src/api';
-import ButtonPost from 'src/components/backoffice/cv/ButtonPost';
+import { ButtonPost } from 'src/components/backoffice/cv/ButtonPost';
 import { gaEvent } from 'src/lib/gtag';
 
-const ButtonDownload = ({
+export const ButtonDownload = ({
   disabled,
   candidateId,
   firstName,
@@ -47,9 +47,9 @@ ButtonDownload.propTypes = {
   tag: PropTypes.string,
   pdfGenerating: PropTypes.bool,
 };
+
 ButtonDownload.defaultProps = {
   disabled: false,
   tag: undefined,
   pdfGenerating: false,
 };
-export default ButtonDownload;

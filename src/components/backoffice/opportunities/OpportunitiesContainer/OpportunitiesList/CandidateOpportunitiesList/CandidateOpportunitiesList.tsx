@@ -10,7 +10,6 @@ import {
   StyledListItemContainer,
 } from '../OpportunitiesList.styles';
 import { OpportunityWithOpportunityUsers } from 'src/api/types';
-import { CandidateOpportunityItem } from './CandidateOpportunityItem';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { useOpportunityType } from 'src/components/backoffice/opportunities/useOpportunityType';
 import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
@@ -18,6 +17,7 @@ import { openModal } from 'src/components/modals/Modal';
 import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
 import { Button, IconNoSSR } from 'src/components/utils';
 import { usePrevious } from 'src/hooks/utils';
+import { CandidateOpportunityItem } from './CandidateOpportunityItem';
 
 const uuidValue = uuid();
 

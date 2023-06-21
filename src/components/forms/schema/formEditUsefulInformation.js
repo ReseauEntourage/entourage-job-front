@@ -1,6 +1,6 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { CONTRACTS } from 'src/constants';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 
 export default {
   id: 'form-usefullinformation',

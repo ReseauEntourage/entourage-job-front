@@ -2,7 +2,7 @@ import React from 'react';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import { Layout } from 'src/components/Layout';
 import { openModal } from 'src/components/modals/Modal';
-import CompanyContactModal from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
+import { CompanyContactModal } from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
 import {
   MultipleCTA,
   CandidateTestimonies,

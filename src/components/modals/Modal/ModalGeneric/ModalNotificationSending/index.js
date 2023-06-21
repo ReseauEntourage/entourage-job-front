@@ -1,3 +1,1 @@
-import ModalNotificationSending from './ModalNotificationSending';
-
-export default ModalNotificationSending;
+export * from './ModalNotificationSending';

@@ -54,7 +54,7 @@ ModalPreview.propTypes = {
   imageUrl: PropTypes.string.isRequired,
 };
 
-const CVPageContent = ({ candidateId, cv, setCV }) => {
+export const CVPageContent = ({ candidateId, cv, setCV }) => {
   const [cvVersion, setCvVersion] = useState(undefined);
   const [imageUrl, setImageUrl] = useState(undefined);
   const [previewGenerating, setPreviewGenerating] = useState(false);
@@ -275,11 +275,11 @@ const CVPageContent = ({ candidateId, cv, setCV }) => {
           return Api.postCV(tempCV.UserId, formData, true);
         })
         .then(({ data }) => {
-          console.log('Auto-save succeeded.');
+          // console.log('Auto-save succeeded.');
           setCvVersion(data.version);
         })
         .catch(() => {
-          console.log('Auto-save failed.');
+          // console.log('Auto-save failed.');
         });
     }, true);
   };
@@ -391,5 +391,3 @@ CVPageContent.propTypes = {
 CVPageContent.defaultProps = {
   cv: undefined,
 };
-
-export default CVPageContent;

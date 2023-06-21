@@ -1,3 +1,1 @@
-import CandidateContactModal from './CandidateContactModal';
-
-export default CandidateContactModal;
+export * from './CandidateContactModal';

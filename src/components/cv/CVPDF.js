@@ -3,8 +3,8 @@ import React from 'react';
 
 import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
 import { Grid, SimpleLink, IconNoSSR } from 'src/components/utils';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { CONTRACTS } from 'src/constants';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import {
   addPrefix,
   formatParagraph,

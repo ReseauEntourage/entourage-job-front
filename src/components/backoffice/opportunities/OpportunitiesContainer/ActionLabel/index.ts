@@ -1,1 +1,1 @@
-export * from './ActionLabelContainer'
+export * from './ActionLabelContainer';
