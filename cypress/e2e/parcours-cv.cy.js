@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 describe('Parcours CV', () => {
   beforeEach(() => {
     cy.intercept('GET', '/cv/cards/random*', {
@@ -7,7 +8,7 @@ describe('Parcours CV', () => {
     cy.fixture('cv-url-res').then((cv) => {
       cy.intercept(
         'GET',
-        '/cv/url/' + cv.cv.user.candidat.firstName.toLowerCase() + '*',
+        `/cv/url/${cv.cv.user.candidat.firstName.toLowerCase()}*`,
         cv
       ).as('getCV');
     });
@@ -40,7 +41,7 @@ describe('Parcours CV', () => {
       ).click();
       cy.url().should(
         'include',
-        '/cv/' + cvs.cvs[0].user.candidat.firstName.toLowerCase()
+        `/cv/${cvs.cvs[0].user.candidat.firstName.toLowerCase()}`
       );
     });
   });

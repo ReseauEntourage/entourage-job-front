@@ -18,6 +18,10 @@ const UserProvider = ({ children }) => {
     async (requestedPath) => {
       setIsFirstLoad(false);
       localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
+      localStorage.setItem(
+        STORAGE_KEYS.RELEASE_VERSION,
+        process.env.HEROKU_RELEASE_VERSION
+      );
       setUser(null);
       if (!requestedPath || requestedPath.includes('/backoffice')) {
         await push(
@@ -69,8 +73,12 @@ const UserProvider = ({ children }) => {
 
   useEffect(() => {
     if (isReady && isFirstLoad) {
+      const releaseVersion = localStorage.getItem(STORAGE_KEYS.RELEASE_VERSION);
       const accessToken = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
-      if (accessToken) {
+      if (
+        accessToken &&
+        releaseVersion === process.env.HEROKU_RELEASE_VERSION
+      ) {
         Api.getAuthCurrent()
           .then(({ data: currentUser }) => {
             setUser(currentUser);

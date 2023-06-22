@@ -45,7 +45,18 @@ export function ParametersMemberTab({
           await Api.deleteUser(memberId);
           closeModal();
           UIkit.notification("L'utilisateur a bien été supprimé", 'success');
-          replace('/backoffice/admin/membres');
+          replace(
+            {
+              pathname: '/backoffice/admin/membres',
+              query: {
+                role: user.role,
+              },
+            },
+            undefined,
+            {
+              shallow: true,
+            }
+          );
         } else {
           UIkit.notification('Erreur de confirmation', 'danger');
         }
@@ -53,7 +64,7 @@ export function ParametersMemberTab({
         UIkit.notification('Une erreur est survenue', 'danger');
       }
     },
-    [memberId, replace]
+    [memberId, replace, user.role]
   );
 
   const memberColumns: MemberColumn[] = useMemo(() => {

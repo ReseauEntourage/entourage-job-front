@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 describe('Parcours Entreprises', () => {
   beforeEach(() => {
     cy.intercept('POST', '/contact/company', {
@@ -6,7 +7,7 @@ describe('Parcours Entreprises', () => {
 
     cy.intercept('GET', '/cv/cards/random*', {
       fixture: 'cv-cards-random-res',
-    })
+    });
 
     cy.intercept('GET', '/cv/shares', { total: 184222 });
   });

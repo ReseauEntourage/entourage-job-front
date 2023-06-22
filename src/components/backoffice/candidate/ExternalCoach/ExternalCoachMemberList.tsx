@@ -42,7 +42,7 @@ export const ExternalCoachMemberList = () => {
               },
             };
           } catch (err) {
-            console.log(err);
+            console.error(err);
           }
         });
         const membersData = await Promise.all(relatedUsersPromises);
