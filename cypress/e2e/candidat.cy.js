@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 describe('Candidat', () => {
   beforeEach(() => {
     cy.intercept('GET', '/cv/shares', { total: 184222 }).as('cvShares');
@@ -5,52 +6,50 @@ describe('Candidat', () => {
       fixture: 'auth-current-candidat-res',
     }).as('authCheck');
     cy.fixture('auth-current-candidat-res').then((user) => {
-      cy.intercept('GET', '/opportunity/candidate/count/' + user.id, {
+      cy.intercept('GET', `/opportunity/candidate/count/${user.id}`, {
         unseenOpportunities: 0,
       }).as('userCount');
-      cy.intercept('GET', '/cv/' + user.id, {
+      cy.intercept('GET', `/cv/${user.id}`, {
         fixture: 'cv-for-candidat',
       }).as('cvCandidat');
-      cy.intercept('POST', '/cv/' + user.id, {
+      cy.intercept('POST', `/cv/${user.id}`, {
         fixture: 'cv-for-candidat',
       }).as('postCvCandidat');
       cy.intercept(
         'GET',
-        '/opportunity/candidate/all/' +
-          user.id +
-          '?type=private&offset=0&limit=25&status[]=-1',
+        `/opportunity/candidate/all/${user.id}?type=private&offset=0&limit=25&status[]=-1`,
         {
           fixture: 'user-opportunity-all-res',
         }
       ).as('allOpportunities');
-      cy.intercept('GET', 'opportunity/candidate/tabCount/' + user.id, {
+      cy.intercept('GET', `opportunity/candidate/tabCount/${user.id}`, {
         fixture: 'tabCount-res',
       }).as('tabCount');
-      cy.intercept('GET', '/cv/read/' + user.id, {
+      cy.intercept('GET', `/cv/read/${user.id}`, {
         fixture: 'cv-read-res',
       }).as('cvCandidatDetails');
-      cy.intercept('GET', '/user/' + user.id, {
+      cy.intercept('GET', `/user/${user.id}`, {
         fixture: 'auth-current-candidat-res',
       });
-      cy.intercept('PUT', '/cv/read/' + user.id, {
+      cy.intercept('PUT', `/cv/read/${user.id}`, {
         fixture: 'cv-read-res',
       }).as('putCVCandidat');
-      cy.intercept('PUT', '/user/candidate/' + user.id, {
+      cy.intercept('PUT', `/user/candidate/${user.id}`, {
         fixture: 'put-candidate-res',
       }).as('putCandidatParams');
-      cy.intercept('GET', '/cv/lastVersion/' + user.id, {
+      cy.intercept('GET', `/cv/lastVersion/${user.id}`, {
         fixture: 'cv-for-candidat',
       });
       cy.fixture('user-opportunity-all-res').then((offersRes) => {
         cy.intercept(
-          'opportunity/' + offersRes.offers[0].id,
+          `opportunity/${offersRes.offers[0].id}`,
           offersRes.offers[0]
         ).as('getOneOffer');
-        let opportunityToModify = offersRes.offers[0];
+        const opportunityToModify = offersRes.offers[0];
         opportunityToModify.bookmarked = false;
         cy.intercept(
           'PUT',
-          'opportunity/join/' + offersRes.offers[0].id + '/' + user.id,
+          `opportunity/join/${offersRes.offers[0].id}/${user.id}`,
           opportunityToModify
         ).as('putOffer');
       });
@@ -70,6 +69,7 @@ describe('Candidat', () => {
     cy.visit('/backoffice/candidat/offres', {
       onBeforeLoad: function async(window) {
         window.localStorage.setItem('access-token', '1234');
+        window.localStorage.setItem('release-version', 'v100');
       },
     });
 
@@ -88,17 +88,15 @@ describe('Candidat', () => {
 
     // bookmark/unbookmark an offer from the list
     cy.fixture('user-opportunity-all-res').then((offersRes) => {
-      let bookmarked = offersRes.offers[0].opportunityUsers.bookmarked;
-      let cta1 = bookmarked ? 'cta-unbookmark' : 'cta-bookmark';
-      let cta2 = !bookmarked ? 'cta-unbookmark' : 'cta-bookmark';
-      cy.get('[data-testid="' + cta1 + '"]')
+      const { bookmarked } = offersRes.offers[0].opportunityUsers;
+      const cta1 = bookmarked ? 'cta-unbookmark' : 'cta-bookmark';
+      const cta2 = !bookmarked ? 'cta-unbookmark' : 'cta-bookmark';
+      cy.get(`[data-testid="${cta1}"]`)
         .first()
         .should(bookmarked ? 'contain' : 'not.contain', 'Favoris');
-      cy.get('[data-testid="' + cta1 + '"]')
-        .first()
-        .click();
+      cy.get(`[data-testid="${cta1}"]`).first().click();
       cy.wait('@putOffer');
-      cy.get('[data-testid="' + cta2 + '"]')
+      cy.get(`[data-testid="${cta2}"]`)
         .first()
         .should(!bookmarked ? 'contain' : 'not.contain', 'Favoris');
     });
@@ -108,6 +106,7 @@ describe('Candidat', () => {
     cy.visit('/backoffice/candidat/offres', {
       onBeforeLoad: function async(window) {
         window.localStorage.setItem('access-token', '1234');
+        window.localStorage.setItem('release-version', 'v100');
       },
     });
     // check if the right opportunity is open
@@ -146,7 +145,7 @@ describe('Candidat', () => {
     cy.get('button').contains('Envoyer').click();
     cy.wait('@postExternal');
 
-    //modal should be closed
+    // modal should be closed
     cy.get('.uk-modal-body').should('not.exist');
   });
 
@@ -154,6 +153,7 @@ describe('Candidat', () => {
     cy.visit('/backoffice/candidat/cv', {
       onBeforeLoad: function async(window) {
         window.localStorage.setItem('access-token', '1234');
+        window.localStorage.setItem('release-version', 'v100');
       },
     });
     cy.get(`[data-testid="test-catchphrase-edit-icon"]`).click({ force: true });
@@ -170,6 +170,7 @@ describe('Candidat', () => {
     cy.visit('/backoffice/parametres', {
       onBeforeLoad: function async(window) {
         window.localStorage.setItem('access-token', '1234');
+        window.localStorage.setItem('release-version', 'v100');
       },
     });
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // unstable test, need to identify the issue
 
 describe('Navigation', () => {

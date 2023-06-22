@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 describe('Parcours travailler', () => {
   beforeEach(() => {
     cy.intercept('GET', 'contact/campaigns', {
@@ -9,7 +10,6 @@ describe('Parcours travailler', () => {
     }).as('postInscription');
 
     cy.intercept('GET', '/cv/shares', { total: 184222 });
-
   });
 
   it("Ouvrir la page et le formulaire d'inscription", () => {

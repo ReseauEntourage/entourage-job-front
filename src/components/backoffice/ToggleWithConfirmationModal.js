@@ -76,7 +76,7 @@ const ToggleWithConfirmationModal = ({
             <label htmlFor={`ent-toggle-${id}`}>
               <input
                 id={`ent-toggle-${id}`}
-                data-testId={`test-toggle-${id}`}
+                data-testid={`test-toggle-${id}`}
                 type="checkbox"
                 checked={toggle}
                 onChange={() => {
