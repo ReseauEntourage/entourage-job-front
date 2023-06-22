@@ -14,7 +14,7 @@ import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { OpportunityList } from 'src/components/opportunities/OpportunityList';
 import { ButtonMultiple } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { Icon } from 'src/components/utils/Icon';
 import { usePostOpportunity } from 'src/hooks';
 import { useIsDesktop } from 'src/hooks/utils';
 import { mutateFormSchema } from 'src/utils';
@@ -154,11 +154,7 @@ export const AdminOpportunityList = ({
             },
           ]}
         >
-          <IconNoSSR
-            name="plus"
-            ratio={0.8}
-            className="uk-margin-small-right"
-          />
+          <Icon name="plus" ratio={0.8} className="uk-margin-small-right" />
           Créer
         </ButtonMultiple>
       </HeaderBackoffice>

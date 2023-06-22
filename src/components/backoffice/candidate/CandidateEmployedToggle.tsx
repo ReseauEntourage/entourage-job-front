@@ -3,7 +3,7 @@ import UIkit from 'uikit';
 
 import { Api } from 'src/api';
 import { ToggleWithConfirmationModal } from 'src/components/backoffice/ToggleWithConfirmationModal';
-import schemaEditEmployed from 'src/components/forms/schema/formEditEmployed';
+import { formEditEmployed } from 'src/components/forms/schema/formEditEmployed';
 import { CONTRACTS } from 'src/constants';
 import { findConstantFromValue } from 'src/utils';
 
@@ -39,7 +39,7 @@ export const CandidateEmployedToggle = ({
       modalTitle={modalTitle}
       modalConfirmation={modalConfirmation}
       defaultValue={defaultValue}
-      formSchema={schemaEditEmployed}
+      formSchema={formEditEmployed}
       subtitle={subtitle}
       onToggle={(employed, fields = {}) => {
         const contract = findConstantFromValue(fields.contract, CONTRACTS);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Section, IconNoSSR } from 'src/components/utils';
+import { Button, Section, Icon } from 'src/components/utils';
 
 interface SimpleSectionProps {
   id: string;
@@ -56,7 +56,7 @@ export const SimpleSection = ({
             toggle={button.modal}
             onClick={button.onClick}
           >
-            {button.label} <IconNoSSR name="chevron-right" />
+            {button.label} <Icon name="chevron-right" />
           </Button>
         )}
         {children}

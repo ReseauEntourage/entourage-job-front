@@ -6,7 +6,7 @@ import { Api } from 'src/api';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import schemaGetEmail from 'src/components/forms/schema/formGetEmail.json';
 import { StepperModal } from 'src/components/modals/Modal/ModalGeneric/StepperModal';
-import { Button, Img, IconNoSSR } from 'src/components/utils';
+import { Button, Img, Icon } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { useNewsletterTracking } from 'src/hooks';
@@ -77,7 +77,7 @@ export const ModalShareCV = ({ firstName }) => {
                   style="primary"
                 >
                   En savoir plus&nbsp;
-                  <IconNoSSR name="chevron-right" />
+                  <Icon name="chevron-right" />
                 </Button>
               </div>
 

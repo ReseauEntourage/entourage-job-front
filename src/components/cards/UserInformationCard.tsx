@@ -5,7 +5,7 @@ import { UserWithUserCandidate } from 'src/api/types';
 import { ToggleWithConfirmationModal } from 'src/components/backoffice/ToggleWithConfirmationModal';
 import { CandidateEmployedToggle } from 'src/components/backoffice/candidate/CandidateEmployedToggle';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
-import { Card, Grid, SimpleLink, IconNoSSR } from 'src/components/utils';
+import { Card, Grid, SimpleLink, Icon } from 'src/components/utils';
 import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
 import {
   getRelatedUser,
@@ -92,7 +92,7 @@ export const UserInformationCard = ({
         const cardContent = (
           <Grid column gap="small">
             <Grid row gap="small">
-              <IconNoSSR name="user" />
+              <Icon name="user" />
               <span>{`${singleLinkedUser.firstName} ${singleLinkedUser.lastName}`}</span>
             </Grid>
             {!singleLinkedUser.deletedAt && (
@@ -104,7 +104,7 @@ export const UserInformationCard = ({
                   target="_blank"
                 >
                   <Grid row gap="small">
-                    <IconNoSSR name="mail" />
+                    <Icon name="mail" />
                     <span data-testid="linkeduser-email-span">
                       {singleLinkedUser.email}
                     </span>
@@ -117,13 +117,13 @@ export const UserInformationCard = ({
                     isExternal
                   >
                     <Grid row gap="small">
-                      <IconNoSSR name="phone" />
+                      <Icon name="phone" />
                       <span>{singleLinkedUser.phone}</span>
                     </Grid>
                   </SimpleLink>
                 ) : (
                   <Grid row gap="small">
-                    <IconNoSSR name="phone" />
+                    <Icon name="phone" />
                     <span className="uk-text-italic">
                       Numéro de téléphone non renseigné
                     </span>
@@ -132,12 +132,12 @@ export const UserInformationCard = ({
                 {isRoleIncluded(COACH_USER_ROLES, user.role) &&
                   (singleLinkedUser.address ? (
                     <Grid row gap="small">
-                      <IconNoSSR name="home" />
+                      <Icon name="home" />
                       <span>{singleLinkedUser.address}</span>
                     </Grid>
                   ) : (
                     <Grid row gap="small">
-                      <IconNoSSR name="home" />
+                      <Icon name="home" />
                       <span className="uk-text-italic">
                         Adresse postale non renseignée
                       </span>
@@ -151,7 +151,7 @@ export const UserInformationCard = ({
                       href={`/cv/${userCandidat.url}`}
                     >
                       <Grid row gap="small">
-                        <IconNoSSR name="link" />
+                        <Icon name="link" />
                         <span className="uk-text-italic">
                           {userCandidat.url}
                         </span>

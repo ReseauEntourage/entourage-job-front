@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { Layout } from 'src/components/Layout';
 import { Button, Section } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { Icon } from 'src/components/utils/Icon';
 
 const ResetSuccessPage = () => {
   const {
@@ -19,7 +19,7 @@ const ResetSuccessPage = () => {
       <Section size="large" style="muted">
         <div className="uk-flex uk-flex-center">
           <div className="uk-card uk-card-body uk-text-center">
-            <IconNoSSR name="check" ratio={4} className="uk-text-primary" />
+            <Icon name="check" ratio={4} className="uk-text-primary" />
             <p className="uk-text-lead">
               Votre mot de passe a bien été{' '}
               {isCreation ? 'crée' : 'réinitialisé'}.

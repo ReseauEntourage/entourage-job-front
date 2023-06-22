@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import UIkit from 'uikit';
 
-import { Button, IconNoSSR } from 'src/components/utils';
+import { Button, Icon } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 
@@ -43,7 +43,7 @@ export const FiltersMobile = ({
         toggle="target: #toggle-filter-menu;"
       >
         <div className="uk-position-relative">
-          <IconNoSSR
+          <Icon
             style={{ width: 18, height: 18 }}
             name={`filter${filterMenuOpened ? '' : '-empty'}`}
           />

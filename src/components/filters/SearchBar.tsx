@@ -4,7 +4,7 @@ import { FiltersDropdowns } from 'src/components/filters/FiltersDropdowns';
 import { FiltersMobile } from 'src/components/filters/FiltersMobile';
 import { FiltersOptions } from 'src/components/filters/FiltersOptions';
 import { FiltersSideBar } from 'src/components/filters/FiltersSideBar';
-import { IconNoSSR } from 'src/components/utils';
+import { Icon } from 'src/components/utils';
 import {
   CV_FILTERS_DATA,
   MEMBER_FILTERS_DATA,
@@ -105,7 +105,7 @@ export const SearchBar = ({
           className="ent-search-icon uk-background-primary uk-light"
           onClick={startSearch}
         >
-          <IconNoSSR name="search" className="uk-text-secondary" />
+          <Icon name="search" className="uk-text-secondary" />
         </a>
       </div>
       <FiltersSideBar

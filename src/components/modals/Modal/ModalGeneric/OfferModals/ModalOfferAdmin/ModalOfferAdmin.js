@@ -19,7 +19,7 @@ import {
   Grid,
   SimpleLink,
   ButtonIcon,
-  IconNoSSR,
+  Icon,
 } from 'src/components/utils';
 
 import {
@@ -448,7 +448,7 @@ export const ModalOfferAdmin = ({
                       {offer.recruiterMail}
                       &nbsp;
                     </span>
-                    <IconNoSSR name="mail" ratio={0.8} />
+                    <Icon name="mail" ratio={0.8} />
                   </SimpleLink>
                 )}
                 {offer.recruiterPhone && (
@@ -462,7 +462,7 @@ export const ModalOfferAdmin = ({
                       {offer.recruiterPhone}
                       &nbsp;
                     </span>
-                    <IconNoSSR name="phone" ratio={0.8} />
+                    <Icon name="phone" ratio={0.8} />
                   </SimpleLink>
                 )}
               </OfferInfoContainer>
@@ -528,21 +528,21 @@ export const ModalOfferAdmin = ({
                               </span>
                               <div className="uk-flex-right">
                                 {oppUser.bookmarked && (
-                                  <IconNoSSR
+                                  <Icon
                                     name="star"
                                     ratio={0.8}
                                     className="ent-color-amber"
                                   />
                                 )}
                                 {oppUser.archived && (
-                                  <IconNoSSR
+                                  <Icon
                                     name="archive"
                                     ratio={0.8}
                                     className="ent-color-amber"
                                   />
                                 )}
                                 {offer.isPublic && oppUser.recommended && (
-                                  <IconNoSSR
+                                  <Icon
                                     name="bolt"
                                     ratio={0.8}
                                     className="ent-color-amber"
@@ -580,7 +580,7 @@ export const ModalOfferAdmin = ({
                                 >
                                   {offerStatus.label}
                                 </span>
-                                <IconNoSSR
+                                <Icon
                                   ratio={0.8}
                                   className="uk-margin-small-left uk-text-muted"
                                   name="triangle-down"

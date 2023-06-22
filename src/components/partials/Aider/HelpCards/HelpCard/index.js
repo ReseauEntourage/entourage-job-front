@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button, IconNoSSR } from 'src/components/utils';
+import { Button, Icon } from 'src/components/utils';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledHelpCard, StyledLink } from './styles';
@@ -28,7 +28,7 @@ export const HelpCard = ({ cardContent, keyMap }) => {
         }}
       >
         {cta}&nbsp;
-        <IconNoSSR name="chevron-right" />
+        <Icon name="chevron-right" />
       </Button>
     </div>
   );

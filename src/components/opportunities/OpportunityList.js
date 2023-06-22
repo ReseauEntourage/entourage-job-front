@@ -24,7 +24,7 @@ import {
   Grid,
   SimpleLink,
   FiltersTabs,
-  IconNoSSR,
+  Icon,
 } from 'src/components/utils';
 import {
   OFFER_ADMIN_FILTERS_DATA,
@@ -416,7 +416,7 @@ export const OpportunityList = forwardRef(
                     }}
                   >
                     Archiver&nbsp;
-                    <IconNoSSR name="archive" />
+                    <Icon name="archive" />
                   </Button>
                 )}
               </div>
@@ -431,7 +431,7 @@ export const OpportunityList = forwardRef(
               <>
                 <p className="uk-text-center uk-text-italic uk-padding-small uk-flex uk-flex-middle uk-flex-center">
                   Opportunités favorites&nbsp;
-                  <IconNoSSR
+                  <Icon
                     name="star"
                     className="ent-color-amber uk-margin-small-left"
                     ratio={0.8}

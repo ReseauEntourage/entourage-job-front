@@ -124,11 +124,19 @@
     ],
     "import/prefer-default-export": 0,
     "import/no-default-export": 2,
+    "import/no-named-as-default": 2,
     // allow to use devDeps in test files.
     // See options: https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-extraneous-dependencies.md#options
     "import/no-extraneous-dependencies": [
       "error",
-      { "devDependencies": ["tests/**/*", "**/*.spec.ts"] }
+      {
+        "devDependencies": [
+          "tests/**/*",
+          "**/__tests__/**",
+          "**/__mocks__/**",
+          "**/*{.,_}{test,spec}.{js,jsx,ts,tsx}"
+        ]
+      }
     ],
     // 'sort-imports': 2,
     "import/order": [

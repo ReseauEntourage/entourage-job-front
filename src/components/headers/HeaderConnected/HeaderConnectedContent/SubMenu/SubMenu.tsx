@@ -5,7 +5,7 @@ import {
   NotifBadgesProps,
 } from '../../HeaderConnected.types';
 import { StyledSubMenu } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/SubMenu/SubMenu.styles';
-import { SimpleLink, IconNoSSR } from 'src/components/utils';
+import { SimpleLink, Icon } from 'src/components/utils';
 import { gaEvent } from 'src/lib/gtag';
 
 const uuidValue = uuid();
@@ -43,7 +43,7 @@ export const SubMenu = ({
               target={external ? '_blank' : '_self'}
             >
               <span>
-                <IconNoSSR name={icon} />
+                <Icon name={icon} />
                 {name}
               </span>
               {badges[badge] > 0 && (

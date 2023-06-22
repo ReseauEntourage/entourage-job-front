@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { StyledHeaderDesktop } from '../../Header.styles';
-import { Navbar, NavbarLogo, IconNoSSR, Nav } from 'src/components/utils';
+import { Navbar, NavbarLogo, Icon, Nav } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
@@ -48,7 +48,7 @@ export const HeaderPublicContentDesktop = ({
         style="primary"
       >
         Découvrir les CV&nbsp;
-        <IconNoSSR name="chevron-right" />
+        <Icon name="chevron-right" />
       </Button>
     </div>,
   ];
@@ -76,7 +76,7 @@ export const HeaderPublicContentDesktop = ({
                 style="default"
               >
                 Faire un don&nbsp;
-                <IconNoSSR name="chevron-right" />
+                <Icon name="chevron-right" />
               </Button>
             </div>
           </div>

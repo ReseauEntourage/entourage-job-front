@@ -17,7 +17,7 @@ import {
 } from 'src/components/partials';
 import { ImageTitle } from 'src/components/partials/ImageTitle';
 import { NewsletterPartial } from 'src/components/partials/NewsletterPartial';
-import { Button, Section, AnimatedList, IconNoSSR } from 'src/components/utils';
+import { Button, Section, AnimatedList, Icon } from 'src/components/utils';
 import { CV_FILTERS_DATA, STORAGE_KEYS } from 'src/constants';
 import { PARTNERS } from 'src/constants/partners';
 import { FB_TAGS, GA_TAGS, LINK_TAGS } from 'src/constants/tags';
@@ -283,7 +283,7 @@ const Entreprises = ({ nbPublishedCVs }) => {
             style="secondary"
           >
             Contactez-nous&nbsp;
-            <IconNoSSR name="chevron-right" />
+            <Icon name="chevron-right" />
           </Button>
         }
       />
@@ -375,7 +375,7 @@ const Entreprises = ({ nbPublishedCVs }) => {
             href={{ pathname: '/entreprises/cvs', query: { employed: false } }}
             style="secondary"
           >
-            Découvrir nos candidats <IconNoSSR name="chevron-right" />
+            Découvrir nos candidats <Icon name="chevron-right" />
           </Button>
         </div>
       </Section>
@@ -432,7 +432,7 @@ const Entreprises = ({ nbPublishedCVs }) => {
             className="uk-margin-small-top"
           >
             Contactez-nous&nbsp;
-            <IconNoSSR name="chevron-right" />
+            <Icon name="chevron-right" />
           </Button>
         </div>
       </Section>

@@ -8,7 +8,7 @@ import { useCandidateId } from 'src/components/backoffice/opportunities/useCandi
 import { openModal } from 'src/components/modals/Modal';
 import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
 import { Button } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { Icon } from 'src/components/utils/Icon';
 import {
   StyledButtonContainer,
   StyledContainer,
@@ -51,11 +51,7 @@ export const NoOpportunities = ({
             );
           }}
         >
-          <IconNoSSR
-            name="plus"
-            ratio="0.8"
-            className="uk-margin-small-right"
-          />
+          <Icon name="plus" ratio="0.8" className="uk-margin-small-right" />
           Ajouter une offre externe
         </Button>
         <Button
@@ -64,11 +60,7 @@ export const NoOpportunities = ({
           href={`/backoffice/candidat/${candidateId}/offres/public`}
           shallow
         >
-          <IconNoSSR
-            name="search"
-            ratio="0.8"
-            className="uk-margin-small-right"
-          />
+          <Icon name="search" ratio="0.8" className="uk-margin-small-right" />
           Trouver des offres LinkedOut
         </Button>
       </StyledButtonContainer>

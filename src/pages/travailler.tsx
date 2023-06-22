@@ -6,7 +6,7 @@ import UIkit from 'uikit';
 import MainImg from 'public/static/img/travailler-banner.jpg';
 import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
-import formCandidateInscription from 'src/components/forms/schema/formCandidateInscription';
+import { formCandidateInscription } from 'src/components/forms/schema/formCandidateInscription';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';

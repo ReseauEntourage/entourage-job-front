@@ -7,7 +7,7 @@ import { CandidatCard } from 'src/components/cards';
 import { SearchBar } from 'src/components/filters/SearchBar';
 import { openModal } from 'src/components/modals/Modal';
 import { usePostPublicOfferModal } from 'src/components/modals/usePostPublicOfferModal';
-import { Button, Grid, SimpleLink, IconNoSSR } from 'src/components/utils';
+import { Button, Grid, SimpleLink, Icon } from 'src/components/utils';
 import { CV_FILTERS_DATA, INITIAL_NB_OF_CV_TO_DISPLAY } from 'src/constants';
 import { FB_TAGS } from 'src/constants/tags';
 import { usePrevious } from 'src/hooks/utils';
@@ -172,10 +172,7 @@ export const CVList = ({
                     data-uk-spinner="ratio: .6"
                   />
                 ) : (
-                  <IconNoSSR
-                    className="uk-margin-small-left"
-                    name="plus-circle"
-                  />
+                  <Icon className="uk-margin-small-left" name="plus-circle" />
                 )}
               </Button>
             </div>

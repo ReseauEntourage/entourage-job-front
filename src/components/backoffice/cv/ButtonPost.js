@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { Button, IconNoSSR } from 'src/components/utils';
+import { Button, Icon } from 'src/components/utils';
 
 export const ButtonPost = ({
   text,
@@ -31,11 +31,7 @@ export const ButtonPost = ({
           <div className="uk-margin-small-left" data-uk-spinner="ratio: .5" />
         ) : (
           icon && (
-            <IconNoSSR
-              className="uk-margin-small-left"
-              name={icon}
-              ratio={0.8}
-            />
+            <Icon className="uk-margin-small-left" name={icon} ratio={0.8} />
           )
         )}
       </div>

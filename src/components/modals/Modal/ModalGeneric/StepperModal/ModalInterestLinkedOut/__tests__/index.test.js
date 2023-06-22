@@ -1,9 +1,9 @@
 /* eslint react/destructuring-assignment: 0 */
 /* eslint react/prop-types: 0 */
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { ModalInterestLinkedOut } from '../ModalInterestLinkedOut';
 import { Api } from 'src/api';
 import { ModalsListener, openModal } from 'src/components/modals/Modal';

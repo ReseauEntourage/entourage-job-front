@@ -9,7 +9,7 @@ import {
   SimpleLink,
   Hamburger,
   NavbarLogo,
-  IconNoSSR,
+  Icon,
 } from 'src/components/utils';
 import { Offcanvas } from 'src/components/utils/Offcanvas';
 import { OFFCANVAS_LOGGED } from 'src/constants/utils';
@@ -58,7 +58,7 @@ export const HeaderConnectedContentMobile = ({
         <ul className="uk-nav uk-nav-default uk-margin-medium-top">
           <li>
             <SimpleLink href="/">
-              <IconNoSSR name="home" className="uk-margin-small-right" />
+              <Icon name="home" className="uk-margin-small-right" />
               Accueil
             </SimpleLink>
           </li>
@@ -95,10 +95,7 @@ export const HeaderConnectedContentMobile = ({
                         }}
                       >
                         <span>
-                          <IconNoSSR
-                            name={icon}
-                            className="uk-margin-small-right"
-                          />
+                          <Icon name={icon} className="uk-margin-small-right" />
                           {name}
                         </span>
                       </a>
@@ -132,7 +129,7 @@ export const HeaderConnectedContentMobile = ({
                   }}
                 >
                   <span>
-                    <IconNoSSR name={icon} className="uk-margin-small-right" />
+                    <Icon name={icon} className="uk-margin-small-right" />
                     {name}
                   </span>
                 </a>

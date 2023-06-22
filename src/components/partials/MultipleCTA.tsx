@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Img, Grid, IconNoSSR } from 'src/components/utils';
+import { Button, Img, Grid, Icon } from 'src/components/utils';
 
 interface MultipleCTAProps {
   showNumbers?: boolean;
@@ -123,7 +123,7 @@ export const MultipleCTA = ({
                       >
                         {item.button.label}
                         &nbsp;
-                        <IconNoSSR name="chevron-right" />
+                        <Icon name="chevron-right" />
                       </Button>
                     </div>
                   )}

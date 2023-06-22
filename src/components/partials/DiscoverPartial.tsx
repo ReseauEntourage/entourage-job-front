@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Api } from 'src/api';
 import { LoadingScreen } from 'src/components/backoffice/cv/LoadingScreen';
 import { CandidatCard } from 'src/components/cards';
-import { Grid, Section, IconNoSSR } from 'src/components/utils';
+import { Grid, Section, Icon } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 
 export const DiscoverPartial = ({ style }: { style: string }) => {
@@ -64,7 +64,7 @@ export const DiscoverPartial = ({ style }: { style: string }) => {
           href={{ pathname: '/candidats', query: { employed: false } }}
           className="uk-margin-large-top"
         >
-          Voir tous les candidats <IconNoSSR name="chevron-right" />
+          Voir tous les candidats <Icon name="chevron-right" />
         </Button>
       </div>
     </Section>

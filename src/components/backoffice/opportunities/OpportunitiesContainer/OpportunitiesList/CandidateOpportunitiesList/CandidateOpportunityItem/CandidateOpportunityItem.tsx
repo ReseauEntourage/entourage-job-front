@@ -45,7 +45,7 @@ export const CandidateOpportunityItem = ({
       <StyledTopContainer>
         {/*
           <Icon>
-            <IconNoSSR name="home" ratio={1.5} />
+            <Icon name="home" ratio={1.5} />
           </Icon>
         */}
         <StyledTitleContainer>

@@ -15,7 +15,7 @@ import {
   Nav,
   Dropdown,
   NavbarLogo,
-  IconNoSSR,
+  Icon,
 } from 'src/components/utils';
 import { StyledNav } from 'src/components/utils/Navbar/Nav/Nav.styles';
 import {
@@ -73,7 +73,7 @@ export const HeaderConnectedContentDesktop = ({
       >
         <ImgProfile />
         <span className="uk-margin-small-left">Bonjour {user.firstName}</span>
-        <IconNoSSR name="triangle-down" />
+        <Icon name="triangle-down" />
       </a>
       <Dropdown
         dividers={[2]}
@@ -187,7 +187,7 @@ export const HeaderConnectedContentDesktop = ({
                           className="uk-flex uk-flex-middle menu-link"
                         >
                           <span className="uk-margin-small-right icon-span">
-                            <IconNoSSR name={icon} />
+                            <Icon name={icon} />
                           </span>
                           <span className="name-span">{name}</span>
                           {badges[badge] > 0 && (

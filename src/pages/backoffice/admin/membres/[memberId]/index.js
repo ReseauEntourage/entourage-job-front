@@ -7,7 +7,7 @@ import { useMemberId } from 'src/components/backoffice/admin/members/MemberDetai
 import { useTab } from 'src/components/backoffice/admin/members/MemberDetails/useTab';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { Grid, Section, SimpleLink } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { Icon } from 'src/components/utils/Icon';
 import { MEMBER_TABS } from 'src/constants';
 import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
 import { usePrevious } from 'src/hooks/utils';
@@ -84,7 +84,7 @@ const User = () => {
               href="/backoffice/admin/membres"
               className="uk-link-reset uk-flex uk-flex-middle"
             >
-              <IconNoSSR name="chevron-left" />
+              <Icon name="chevron-left" />
               Retour à la liste
             </SimpleLink>
             <div>
@@ -106,7 +106,7 @@ const User = () => {
               href="/backoffice/admin/membres"
               className="uk-link-reset uk-flex uk-flex-middle"
             >
-              <IconNoSSR name="chevron-left" />
+              <Icon name="chevron-left" />
               Retour à la liste
             </SimpleLink>
             <div>

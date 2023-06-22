@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import EntourageIcon from 'assets/custom/icons/entourage.svg';
 import { ActionLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel/ActionLabel';
-import { IconNoSSR } from 'src/components/utils';
+import { Icon } from 'src/components/utils';
 
 export const ActionLabelContainer = ({
   isPublic,
@@ -19,7 +19,7 @@ export const ActionLabelContainer = ({
           fill
           color="yellow"
           label="À traiter rapidement"
-          icon={<IconNoSSR name="star" ratio={0.8} />}
+          icon={<Icon name="star" ratio={0.8} />}
         />
       )}
       {isPublic && isRecommended && (
@@ -38,7 +38,7 @@ export const ActionLabelContainer = ({
           label="Favoris"
           onClick={bookmarkOpportunity}
           id="cta-unbookmark"
-          icon={<IconNoSSR name="heart" ratio={0.8} />}
+          icon={<Icon name="heart" ratio={0.8} />}
         />
       )}
       {isExternal && (
@@ -47,7 +47,7 @@ export const ActionLabelContainer = ({
           fill
           color="primaryOrange"
           label="Perso"
-          icon={<IconNoSSR name="heart" ratio={0.8} />}
+          icon={<Icon name="heart" ratio={0.8} />}
         />
       )}
       {isPublic && !isRecommended && !isBookmarked && (
@@ -57,7 +57,7 @@ export const ActionLabelContainer = ({
           label="Ajouter aux favoris"
           onClick={bookmarkOpportunity}
           id="cta-bookmark"
-          icon={<IconNoSSR name="heart" ratio={0.8} />}
+          icon={<Icon name="heart" ratio={0.8} />}
         />
       )}
     </>

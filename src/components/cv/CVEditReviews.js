@@ -4,7 +4,7 @@ import schemaTestimonial from 'src/components/forms/schema/formEditTestimonial.j
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { Grid, ButtonIcon, IconNoSSR } from 'src/components/utils';
+import { Grid, ButtonIcon, Icon } from 'src/components/utils';
 import { formatParagraph, sortByName } from 'src/utils';
 
 export const CVEditReviews = ({ reviews, onChange }) => {
@@ -47,7 +47,7 @@ export const CVEditReviews = ({ reviews, onChange }) => {
                   eachWidths={['auto', 'expand']}
                   className="uk-padding-small uk-padding-remove-horizontal"
                 >
-                  <IconNoSSR name="quote-right" />
+                  <Icon name="quote-right" />
                   <>
                     <p className="uk-text-small uk-margin-small">
                       {formatParagraph(review.text)}

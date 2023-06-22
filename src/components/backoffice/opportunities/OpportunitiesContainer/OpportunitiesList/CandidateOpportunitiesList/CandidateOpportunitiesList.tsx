@@ -15,7 +15,7 @@ import { useOpportunityType } from 'src/components/backoffice/opportunities/useO
 import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
-import { Button, IconNoSSR } from 'src/components/utils';
+import { Button, Icon } from 'src/components/utils';
 import { usePrevious } from 'src/hooks/utils';
 import { CandidateOpportunityItem } from './CandidateOpportunityItem';
 
@@ -134,11 +134,7 @@ export const CandidateOpportunitiesList = ({
             );
           }}
         >
-          <IconNoSSR
-            name="plus"
-            ratio="0.8"
-            className="uk-margin-small-right"
-          />
+          <Icon name="plus" ratio="0.8" className="uk-margin-small-right" />
           Ajouter une offre externe
         </Button>
       )}

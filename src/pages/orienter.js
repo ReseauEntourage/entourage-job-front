@@ -11,7 +11,7 @@ import {
   Reviews,
 } from 'src/components/partials';
 import { ImageTitle } from 'src/components/partials/ImageTitle';
-import { Section, AnimatedList, IconNoSSR } from 'src/components/utils';
+import { Section, AnimatedList, Icon } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { PARTNERS } from 'src/constants/partners';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
@@ -167,7 +167,7 @@ const Orienter = () => {
             }}
           >
             Inscrire un candidat&nbsp;
-            <IconNoSSR name="chevron-right" />
+            <Icon name="chevron-right" />
           </Button>
           <div className="uk-light">
             <Button
@@ -180,7 +180,7 @@ const Orienter = () => {
               }}
             >
               Nous contacter&nbsp;
-              <IconNoSSR name="chevron-right" />
+              <Icon name="chevron-right" />
             </Button>
           </div>
         </div>
@@ -241,7 +241,7 @@ const Orienter = () => {
             }}
           >
             Inscrire un candidat&nbsp;
-            <IconNoSSR name="chevron-right" />
+            <Icon name="chevron-right" />
           </Button>
         }
       />
@@ -289,7 +289,7 @@ const Orienter = () => {
             }}
           >
             Nous contacter&nbsp;
-            <IconNoSSR name="chevron-right" />
+            <Icon name="chevron-right" />
           </Button>
           <div className="uk-light">
             <Button
@@ -303,7 +303,7 @@ const Orienter = () => {
               }}
             >
               Télécharger la brochure&nbsp;
-              <IconNoSSR name="chevron-right" />
+              <Icon name="chevron-right" />
             </Button>
           </div>
           {/*
@@ -318,7 +318,7 @@ const Orienter = () => {
               }}
             >
               Prendre rendez-vous&nbsp;
-              <IconNoSSR name="chevron-right" />
+              <Icon name="chevron-right" />
             </Button>
           */}
         </div>

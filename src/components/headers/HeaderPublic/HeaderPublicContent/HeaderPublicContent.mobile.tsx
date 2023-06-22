@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { StyledHeaderMobile } from '../../Header.styles';
-import { Hamburger, Navbar, NavbarLogo, IconNoSSR } from 'src/components/utils';
+import { Hamburger, Navbar, NavbarLogo, Icon } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { Offcanvas } from 'src/components/utils/Offcanvas';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
@@ -47,11 +47,7 @@ export const HeaderPublicContentMobile = ({
               }}
             >
               <div className="uk-flex">
-                <IconNoSSR
-                  name="home"
-                  ratio={1}
-                  className="uk-margin-small-right"
-                />
+                <Icon name="home" ratio={1} className="uk-margin-small-right" />
                 <span>Accueil</span>
               </div>
             </a>
@@ -110,7 +106,7 @@ export const HeaderPublicContentMobile = ({
               style="primary"
             >
               Découvrir les CV&nbsp;
-              <IconNoSSR name="chevron-right" />
+              <Icon name="chevron-right" />
             </Button>
           </li>
           <li className="uk-flex uk-flex-center uk-padding-small">
@@ -125,7 +121,7 @@ export const HeaderPublicContentMobile = ({
               style="default"
             >
               Faire un don&nbsp;
-              <IconNoSSR name="chevron-right" />
+              <Icon name="chevron-right" />
             </Button>
           </li>
         </ul>

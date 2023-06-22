@@ -6,7 +6,7 @@ import { CorporateContact, SearchCandidates } from 'src/components/partials';
 import { ImageTitle } from 'src/components/partials/ImageTitle';
 import { NewsletterPartial } from 'src/components/partials/NewsletterPartial';
 import { Button, Grid, Img, Section } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { Icon } from 'src/components/utils/Icon';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
@@ -70,7 +70,7 @@ const CVEntreprises = () => {
                 openModal(<PublicOfferModal />);
               }}
             >
-              Déposez votre offre <IconNoSSR name="chevron-right" />
+              Déposez votre offre <Icon name="chevron-right" />
             </Button>
           </Grid>
         </div>
@@ -93,7 +93,7 @@ const CVEntreprises = () => {
               href="/entreprises/recruter-hors-linkedout"
             >
               Voir les partenaires&nbsp;
-              <IconNoSSR name="chevron-right" />
+              <Icon name="chevron-right" />
             </Button>
           </Grid>
         </div>

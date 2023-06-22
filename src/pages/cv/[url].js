@@ -10,13 +10,7 @@ import {
   DiscoverPartial,
   NewsletterPartial,
 } from 'src/components/partials';
-import {
-  Grid,
-  Section,
-  SimpleLink,
-  IconNoSSR,
-  Button,
-} from 'src/components/utils';
+import { Grid, Section, SimpleLink, Icon, Button } from 'src/components/utils';
 import { CV_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { useUpdateSharesCount } from 'src/hooks';
@@ -81,7 +75,7 @@ const CVPage = ({ cv, exists, router, hideShareOptions }) => {
                 style="secondary"
                 className="uk-margin-large-top"
               >
-                Voir tous les candidats <IconNoSSR name="chevron-right" />
+                Voir tous les candidats <Icon name="chevron-right" />
               </Button>
             </Grid>
           </Section>

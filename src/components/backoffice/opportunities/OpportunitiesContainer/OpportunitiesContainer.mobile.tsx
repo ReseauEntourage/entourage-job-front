@@ -6,7 +6,7 @@ import {
   StyledDetailsContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
-import { IconNoSSR } from 'src/components/utils';
+import { Icon } from 'src/components/utils';
 import { OpportunitiesContainerProps } from './OpportunitiesContainer.types';
 import { OpportunitiesList } from './OpportunitiesList';
 
@@ -27,7 +27,7 @@ export const OpportunitiesContainerMobile = ({
             <StyledDetailsContainer>
               <Link href={backButtonHref} scroll={false} shallow passHref>
                 <StyledBackLink>
-                  <IconNoSSR name="chevron-left" />
+                  <Icon name="chevron-left" />
                   Retour à la liste
                 </StyledBackLink>
               </Link>

@@ -1,6 +1,7 @@
+import { render, screen, fireEvent } from '@testing-library/react';
+
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, screen, fireEvent } from '@testing-library/react';
 import { NewsletterPartial } from '../NewsletterPartial';
 import { BREAKPOINTS } from 'src/constants/styles';
 

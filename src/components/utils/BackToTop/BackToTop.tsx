@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyledBackToTop } from 'src/components/utils/BackToTop/BackToTop.styles';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { Icon } from 'src/components/utils/Icon';
 import { isSSR } from 'src/utils/isSSR';
 
 export const BackToTop = () => {
@@ -33,7 +33,7 @@ export const BackToTop = () => {
   };
   return (
     <StyledBackToTop className={iconClass} onClick={handleClick}>
-      <IconNoSSR name="chevron-white" style={{ height: 20 }} />
+      <Icon name="chevron-white" style={{ height: 20 }} />
     </StyledBackToTop>
   );
 };

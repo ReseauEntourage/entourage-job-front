@@ -19,7 +19,7 @@ import {
   Grid,
   SimpleLink,
   ButtonIcon,
-  IconNoSSR,
+  Icon,
 } from 'src/components/utils';
 
 import { EXTERNAL_OFFERS_ORIGINS, OFFER_STATUS } from 'src/constants';
@@ -574,7 +574,7 @@ export const ModalOffer = ({
                         {offer.recruiterMail}
                         &nbsp;
                       </span>
-                      <IconNoSSR name="mail" ratio={0.8} />
+                      <Icon name="mail" ratio={0.8} />
                     </SimpleLink>
                   )}
                 </OfferInfoContainer>

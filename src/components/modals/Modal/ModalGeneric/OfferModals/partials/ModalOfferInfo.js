@@ -2,7 +2,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
-import { ButtonIcon, IconNoSSR } from 'src/components/utils';
+import { ButtonIcon, Icon } from 'src/components/utils';
 import { useCopyToClipboard } from 'src/hooks';
 
 function translateCategory(isPublic, isRecommended, isExternal) {
@@ -20,7 +20,7 @@ function translateCategory(isPublic, isRecommended, isExternal) {
           <>
             {' '}
             recommandée&nbsp;
-            <IconNoSSR name="bolt" ratio={0.8} className="ent-color-amber" />
+            <Icon name="bolt" ratio={0.8} className="ent-color-amber" />
           </>
         ) : (
           ''
@@ -99,17 +99,14 @@ export const ModalOfferInfo = ({
             <div className="uk-flex uk-flex-column uk-flex-center">
               {salary && (
                 <div className="uk-flex uk-flex-middle">
-                  <IconNoSSR
-                    name="credit-card"
-                    className="uk-margin-small-right"
-                  />
+                  <Icon name="credit-card" className="uk-margin-small-right" />
                   {salary}
                 </div>
               )}
 
               {driversLicense && (
                 <div className="uk-flex uk-flex-middle">
-                  <IconNoSSR
+                  <Icon
                     style={{ width: 20 }}
                     name="car"
                     className="uk-margin-small-right"

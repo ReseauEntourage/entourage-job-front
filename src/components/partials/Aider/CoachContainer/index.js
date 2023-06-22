@@ -9,12 +9,7 @@ import WelcomeIcon from 'public/static/img/icons/aider-welcome.svg';
 import { CoachTestimony } from 'src/components/partials/Aider/CoachContainer/CoachTestimony';
 import { StyledCoachContainer } from 'src/components/partials/Aider/CoachContainer/styles';
 import { TitleSection } from 'src/components/partials/Aider/H2';
-import {
-  BackgroundImage,
-  Button,
-  IconNoSSR,
-  Container,
-} from 'src/components/utils';
+import { BackgroundImage, Button, Icon, Container } from 'src/components/utils';
 import { COLORS } from 'src/constants/styles';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
@@ -96,7 +91,7 @@ export const CoachContainer = () => {
             style="primary"
           >
             Devenir Coach LinkedOut&nbsp;
-            <IconNoSSR name="chevron-right" />
+            <Icon name="chevron-right" />
           </Button>
         </div>
       </Container>

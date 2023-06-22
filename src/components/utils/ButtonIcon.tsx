@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { Icon } from 'src/components/utils/Icon';
 
 interface ButtonIconProps {
   name: string;
@@ -30,12 +30,7 @@ export const ButtonIcon = ({
       onClick={onClick}
       data-testid={dataTestId}
     >
-      <IconNoSSR
-        name={name}
-        className={className}
-        ratio={ratio}
-        style={style}
-      />
+      <Icon name={name} className={className} ratio={ratio} style={style} />
     </a>
   );
 };

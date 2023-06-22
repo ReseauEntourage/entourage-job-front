@@ -6,7 +6,7 @@ import { Layout } from 'src/components/Layout';
 import { PasswordCriterias } from 'src/components/PasswordCriterias';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import schema from 'src/components/forms/schema/formResetPassword';
-import { Button, Section, IconNoSSR } from 'src/components/utils';
+import { Button, Section, Icon } from 'src/components/utils';
 
 const ResetPasswordPage = ({ valid, id, token, isCreation }) => {
   const { push } = useRouter();
@@ -47,7 +47,7 @@ const ResetPasswordPage = ({ valid, id, token, isCreation }) => {
               </div>
             ) : (
               <div className="uk-card uk-card-body uk-text-center">
-                <IconNoSSR name="ban" ratio={4} className="uk-text-primary" />
+                <Icon name="ban" ratio={4} className="uk-text-primary" />
                 <p className="uk-text-lead">
                   Ce lien ne semble pas valide. Veuillez contacter l&apos;équipe
                   LinkedOut.

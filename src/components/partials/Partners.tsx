@@ -1,6 +1,6 @@
 import React from 'react';
 import { LogoList } from 'src/components/partials/LogoList';
-import { Background, Section, IconNoSSR } from 'src/components/utils';
+import { Background, Section, Icon } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { PARTNERS } from 'src/constants/partners';
 
@@ -54,7 +54,7 @@ export const Partners = ({
             <div className="uk-flex uk-flex-center uk-flex-middle uk-margin-large-top">
               <Button style="primary" href="/partenaires">
                 En savoir plus&nbsp;
-                <IconNoSSR name="arrow-right" />
+                <Icon name="arrow-right" />
               </Button>
             </div>
           </div>

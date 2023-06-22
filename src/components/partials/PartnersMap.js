@@ -1,7 +1,7 @@
 import { GoogleApiWrapper, InfoWindow, Map, Marker } from 'google-maps-react';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { SimpleLink, IconNoSSR } from 'src/components/utils';
+import { SimpleLink, Icon } from 'src/components/utils';
 
 const partnersPlaces = [
   {
@@ -433,20 +433,20 @@ const PartnersMapContent = ({ google }) => {
             </SimpleLink>
           </h4>
           <p>
-            <IconNoSSR name="user" className="uk-margin-small-right" />
+            <Icon name="user" className="uk-margin-small-right" />
             <span>
               {getPartnerPlaceInfo('contactName')},&nbsp;
               {getPartnerPlaceInfo('contactFunction').toLowerCase()}
             </span>
           </p>
           <p>
-            <IconNoSSR name="phone" className="uk-margin-small-right" />
+            <Icon name="phone" className="uk-margin-small-right" />
             <a href={`tel:${getPartnerPlaceInfo('contactNumber')}`}>
               {getPartnerPlaceInfo('contactNumber')}
             </a>
           </p>
           <p>
-            <IconNoSSR name="mail" className="uk-margin-small-right" />
+            <Icon name="mail" className="uk-margin-small-right" />
             <a
               href={buildEmailLink(getPartnerPlaceInfo('contactMail'))}
               target="_blank"
@@ -456,7 +456,7 @@ const PartnersMapContent = ({ google }) => {
             </a>
           </p>
           <p>
-            <IconNoSSR name="location" className="uk-margin-small-right" />
+            <Icon name="location" className="uk-margin-small-right" />
             <a
               href={buildGMapsLink(getPartnerPlaceInfo('address'))}
               target="_blank"

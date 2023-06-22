@@ -1,7 +1,7 @@
 import React from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
-import formCompanyContact from 'src/components/forms/schema/formCompanyContact';
+import { formCompanyContact } from 'src/components/forms/schema/formCompanyContact';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { FB_TAGS, GA_TAGS, LINK_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';

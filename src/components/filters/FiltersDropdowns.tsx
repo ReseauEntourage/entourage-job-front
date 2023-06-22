@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 
 import { v4 as uuid } from 'uuid';
-import { Button, IconNoSSR } from 'src/components/utils';
+import { Button, Icon } from 'src/components/utils';
 import { gaEvent } from 'src/lib/gtag';
 import { AnyToFix } from 'src/utils/Types';
 
@@ -126,7 +126,7 @@ export const FiltersDropdowns = ({
                       }`}
                     >
                       {/* {icon && (
-                  <IconNoSSR
+                  <Icon
                     name={icon}
                     ratio={0.7}
                     className="uk-margin-small-right"
@@ -141,7 +141,7 @@ export const FiltersDropdowns = ({
                           <div className="uk-badge">{filters[key].length}</div>
                         </div>
                       )}
-                      <IconNoSSR name="triangle-down" />
+                      <Icon name="triangle-down" />
                     </Button>
                     <div
                       data-uk-dropdown="mode: click;"

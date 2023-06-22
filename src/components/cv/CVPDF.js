@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
-import { Grid, SimpleLink, IconNoSSR } from 'src/components/utils';
+import { Grid, SimpleLink, Icon } from 'src/components/utils';
 import { CONTRACTS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import {
@@ -96,7 +96,7 @@ export const CVPDF = ({ cv, page }) => {
               {cv.catchphrase && (
                 <div className="uk-width-xlarge uk-text-center uk-flex uk-flex-center uk-flex-middle">
                   <p className="uk-text-small uk-position-relative">
-                    <IconNoSSR
+                    <Icon
                       className="uk-text-primary ent-quote-after"
                       name="quote-right"
                       ratio={1}
@@ -105,7 +105,7 @@ export const CVPDF = ({ cv, page }) => {
                     <span className="uk-margin-small-left uk-margin-small-right uk-text-italic">
                       {cv.catchphrase}
                     </span>
-                    <IconNoSSR
+                    <Icon
                       className="uk-text-primary ent-quote-before"
                       name="quote-right"
                       ratio={0.8}
@@ -174,7 +174,7 @@ export const CVPDF = ({ cv, page }) => {
                       {cv.user.candidat.address &&
                         cv.user.candidat.address.length > 0 && (
                           <li className="uk-flex uk-flex-middle">
-                            <IconNoSSR
+                            <Icon
                               className="uk-text-primary uk-margin-small-right"
                               name="home"
                               style={{ width: 20 }}
@@ -187,7 +187,7 @@ export const CVPDF = ({ cv, page }) => {
                       {cv.user.candidat.email &&
                         cv.user.candidat.email.length > 0 && (
                           <li className="uk-flex uk-flex-middle">
-                            <IconNoSSR
+                            <Icon
                               className="uk-text-primary uk-margin-small-right"
                               name="mail"
                               style={{ width: 20 }}
@@ -200,7 +200,7 @@ export const CVPDF = ({ cv, page }) => {
                       {cv.user.candidat.phone &&
                         cv.user.candidat.phone.length > 0 && (
                           <li className="uk-flex uk-flex-middle">
-                            <IconNoSSR
+                            <Icon
                               className="uk-text-primary uk-margin-small-right"
                               name="phone"
                               style={{ width: 20 }}
@@ -212,7 +212,7 @@ export const CVPDF = ({ cv, page }) => {
                         )}
                       {cv.contracts && cv.contracts.length > 0 && (
                         <li className="uk-flex uk-flex-middle">
-                          <IconNoSSR
+                          <Icon
                             className="uk-text-primary uk-margin-small-right"
                             name="file-text"
                             style={{ width: 20 }}
@@ -229,7 +229,7 @@ export const CVPDF = ({ cv, page }) => {
                       )}
                       {locations && locations.length > 0 && (
                         <li className="uk-flex uk-flex-middle">
-                          <IconNoSSR
+                          <Icon
                             className="uk-text-primary uk-margin-small-right"
                             name="location"
                             style={{ width: 20 }}
@@ -248,7 +248,7 @@ export const CVPDF = ({ cv, page }) => {
                       )}
                       {cv.availability && cv.availability.length > 0 && (
                         <li className="uk-flex uk-flex-middle">
-                          <IconNoSSR
+                          <Icon
                             className="uk-text-primary uk-margin-small-right"
                             name="calendar"
                             style={{ width: 20 }}
@@ -258,7 +258,7 @@ export const CVPDF = ({ cv, page }) => {
                       )}
                       {cv.languages && cv.languages.length > 0 && (
                         <li className="uk-flex uk-flex-middle">
-                          <IconNoSSR
+                          <Icon
                             className="uk-text-primary uk-margin-small-right"
                             name="users"
                             style={{ width: 20 }}
@@ -274,7 +274,7 @@ export const CVPDF = ({ cv, page }) => {
                       )}
                       {cv.transport && cv.transport.length > 0 && (
                         <li className="uk-flex uk-flex-middle">
-                          <IconNoSSR
+                          <Icon
                             className="uk-text-primary uk-margin-small-right"
                             name="car"
                             style={{ width: 20 }}
@@ -369,7 +369,7 @@ export const CVPDF = ({ cv, page }) => {
                       {sortByName(cv.reviews).map((review, i) => {
                         return (
                           <li key={i}>
-                            <IconNoSSR
+                            <Icon
                               flip
                               className="uk-text-primary uk-margin-small-bottom"
                               name="quote-right"
@@ -390,7 +390,7 @@ export const CVPDF = ({ cv, page }) => {
                                 </span>
                                 , {review.status}
                               </p>
-                              <IconNoSSR
+                              <Icon
                                 className="uk-text-muted uk-width-1-1 uk-text-right"
                                 name="quote-right"
                                 ratio={0.8}
