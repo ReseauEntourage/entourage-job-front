@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import React, { useRef } from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
-import formEditExternalOpportunitySchema, {
+import {
+  formEditExternalOpportunity,
   adminMutations as externalOpportunityAdminMutations,
 } from 'src/components/forms/schema/formEditExternalOpportunity';
-import formEditOpportunitySchema, {
+import {
+  formEditOpportunity,
   adminMutations as opportunityAdminMutations,
 } from 'src/components/forms/schema/formEditOpportunity';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
@@ -31,7 +33,7 @@ export const AdminOpportunityList = ({
   const isDesktop = useIsDesktop();
 
   // desactivation du champ de disclaimer
-  const mutatedOfferSchema = mutateFormSchema(formEditOpportunitySchema, [
+  const mutatedOfferSchema = mutateFormSchema(formEditOpportunity, [
     {
       fieldId: 'disclaimer',
       props: [
@@ -58,7 +60,7 @@ export const AdminOpportunityList = ({
   ]);
 
   const mutatedExternalOfferSchema = mutateFormSchema(
-    formEditExternalOpportunitySchema,
+    formEditExternalOpportunity,
     [
       ...externalOpportunityAdminMutations,
       {

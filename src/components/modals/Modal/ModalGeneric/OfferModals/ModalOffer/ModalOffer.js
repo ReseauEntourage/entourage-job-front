@@ -5,7 +5,7 @@ import UIkit from 'uikit';
 import { Api } from 'src/api';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { Select } from 'src/components/forms/fields/Select';
-import formEditExternalOpportunitySchema from 'src/components/forms/schema/formEditExternalOpportunity';
+import { formEditExternalOpportunity } from 'src/components/forms/schema/formEditExternalOpportunity';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { ModalOfferBase } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOfferBase';
@@ -186,7 +186,7 @@ export const ModalOffer = ({
   );
 
   const mutatedExternalOfferSchema = mutateFormSchema(
-    formEditExternalOpportunitySchema,
+    formEditExternalOpportunity,
     [
       {
         fieldId: 'candidateStatus',

@@ -1,4 +1,18 @@
-/* eslint-disable react/prop-types */
+// use modified version of UIkit because of bug where we can't touch scroll on Offcanvas
+
+// eslint-disable-next-line import/order
+import UIkit from 'src/styles/dist/js/uikit-fixed';
+// eslint-disable-next-line import/order
+import Icons from 'src/styles/dist/js/uikit-icons';
+
+import 'src/styles/dist/css/uikit.entourage.min.css';
+import 'src/styles/styles.less';
+import 'src/components/forms/Forms.less';
+import 'src/components/backoffice/Toggle.less';
+import 'src/components/modals/Modal/Modal.less';
+import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
+import 'react-phone-number-input/style.css';
+import 'react-tooltip/dist/react-tooltip.css';
 
 import * as Sentry from '@sentry/react';
 import { useRouter } from 'next/router';
@@ -13,19 +27,6 @@ import { DataProvider } from 'src/store/DataProvider';
 import { SharesCountProvider } from 'src/store/SharesCountProvider';
 import { UserProvider } from 'src/store/UserProvider';
 
-// use modified version of UIkit because of bug where we can't touch scroll on Offcanvas
-import UIkit from 'src/styles/dist/js/uikit-fixed';
-import Icons from 'src/styles/dist/js/uikit-icons';
-
-import 'src/styles/dist/css/uikit.entourage.min.css';
-import 'src/styles/styles.less';
-import 'src/components/forms/Forms.less';
-import 'src/components/backoffice/Toggle.less';
-import 'src/components/modals/Modal/Modal.less';
-import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
-import 'react-phone-number-input/style.css';
-import 'react-tooltip/dist/react-tooltip.css';
-
 UIkit.use(Icons);
 
 Sentry.init({
@@ -33,6 +34,7 @@ Sentry.init({
   dsn: process.env.SENTRY_DSN,
 });
 
+// eslint-disable-next-line react/prop-types
 const Container = ({ Component, pageProps, err }) => {
   const [loading, setLoading] = useState(true);
   const [fading, setFading] = useState(false);
@@ -71,6 +73,7 @@ const Container = ({ Component, pageProps, err }) => {
   );
 };
 
+// eslint-disable-next-line react/prop-types
 const EntourageApp = ({ Component, pageProps, err }) => {
   const [shouldScrollToTop, setShouldScrollToTop] = useState(true);
   const { events, beforePopState } = useRouter();

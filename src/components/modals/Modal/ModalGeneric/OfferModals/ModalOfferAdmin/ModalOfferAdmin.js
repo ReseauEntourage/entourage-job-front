@@ -3,8 +3,9 @@ import React from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
-import formEditExternalOpportunitySchema from 'src/components/forms/schema/formEditExternalOpportunity';
-import schema, {
+import { formEditExternalOpportunity } from 'src/components/forms/schema/formEditExternalOpportunity';
+import {
+  formEditOpportunity,
   adminMutations,
 } from 'src/components/forms/schema/formEditOpportunity';
 import { useModalContext } from 'src/components/modals/Modal';
@@ -72,7 +73,7 @@ export const ModalOfferAdmin = ({
     useModalOffer(currentOffer);
 
   // desactivation du champ de disclaimer
-  const mutatedSchema = mutateFormSchema(schema, [
+  const mutatedSchema = mutateFormSchema(formEditOpportunity, [
     {
       fieldId: 'shouldSendNotifications',
       props: [
@@ -134,7 +135,7 @@ export const ModalOfferAdmin = ({
   ]);
 
   const mutatedExternalOfferSchema = mutateFormSchema(
-    formEditExternalOpportunitySchema,
+    formEditExternalOpportunity,
     [
       {
         fieldId: 'businessLines',

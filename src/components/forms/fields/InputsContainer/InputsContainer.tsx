@@ -9,9 +9,7 @@ interface InputsContainerProps {
   fields: React.ReactNode[];
 }
 
-export const InputsContainer = ({
-  fields /* title, childWidths */,
-}: InputsContainerProps) => {
+export const InputsContainer = ({ fields }: InputsContainerProps) => {
   const firstFieldNotHiddenIndex = fields.findIndex((field) => {
     return !!field;
   });

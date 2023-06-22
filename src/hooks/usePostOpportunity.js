@@ -4,7 +4,7 @@ import React, { memo, useCallback, useEffect, useState } from 'react';
 import UIkit from 'uikit';
 
 import { Api } from 'src/api';
-import defaultSchema from 'src/components/forms/schema/formEditOpportunity';
+import { formEditOpportunity } from 'src/components/forms/schema/formEditOpportunity';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { BUSINESS_LINES } from 'src/constants';
@@ -22,7 +22,7 @@ export function usePostOpportunity({
   candidateId,
   callback,
   defaultValues = {},
-  schema = defaultSchema,
+  schema = formEditOpportunity,
 }) {
   const [lastFilledForm, setLastFilledForm] = useState({});
 

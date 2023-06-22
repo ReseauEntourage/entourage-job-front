@@ -435,7 +435,7 @@ export const formEditOpportunity = {
                 }) ||
                 Object.keys(fields).some((key) => {
                   const value = getValueFromFormField(fields[key]);
-                  return !value?.trim();
+                  return !(value as string)?.trim();
                 })
               );
             }))

@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 import React from 'react';
 
 interface IconProps {
@@ -10,12 +11,12 @@ interface IconProps {
 }
 
 export const Icon = ({
-  name,
-  ratio,
-  flip,
-  className,
   id,
-  style,
+  name,
+  className = '',
+  ratio = 1,
+  flip = false,
+  style = {},
 }: IconProps) => {
   return (
     <span
@@ -25,12 +26,4 @@ export const Icon = ({
       style={{ transform: flip ? 'scale(-1, 1)' : undefined, ...style }}
     />
   );
-};
-
-Icon.defaultProps = {
-  className: '',
-  ratio: 1,
-  flip: false,
-  id: undefined,
-  style: {},
 };
