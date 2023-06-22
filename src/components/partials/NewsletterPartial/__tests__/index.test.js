@@ -1,10 +1,4 @@
-import {
-  render,
-  screen,
-  fireEvent,
-  waitFor,
-  cleanup,
-} from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
@@ -68,23 +62,27 @@ jest.mock('src/api/index', () => {
 });
 
 describe('Newsletter Partial', () => {
-  const setup = () => {
+  let setup = {};
+
+  beforeEach(() => {
     const utils = render(<NewsletterPartial />);
     const emailInput = screen.queryByTestId('nl-email-input');
     const submitBtn = screen.queryByTestId('nl-submit-btn');
-    return {
+    setup = {
       emailInput,
       submitBtn,
       ...utils,
     };
-  };
+  });
+
   it('should render anyway', () => {
-    const { container } = setup();
+    const { container } = setup;
     expect(container).toBeDefined();
   });
+
   it('should send the NL if only mail is given', async () => {
     await waitFor(async () => {
-      const { emailInput, submitBtn } = setup();
+      const { emailInput, submitBtn } = setup;
       fireEvent.change(emailInput, { target: { value: 'test@gmail.com' } });
       expect(emailInput.value).toBe('test@gmail.com');
       await fireEvent.click(submitBtn);
@@ -92,9 +90,10 @@ describe('Newsletter Partial', () => {
       expect(emailInput.value).toEqual('');
     });
   });
+
   it('should send error if email is wrong', async () => {
     await waitFor(async () => {
-      const { emailInput, submitBtn } = setup();
+      const { emailInput, submitBtn } = setup;
       fireEvent.change(emailInput, { target: { value: 'test' } });
       expect(emailInput.value).toBe('test');
       await fireEvent.click(submitBtn);

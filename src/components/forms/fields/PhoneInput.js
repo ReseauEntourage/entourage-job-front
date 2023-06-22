@@ -8,7 +8,6 @@ export const PhoneInput = ({
   name,
   placeholder,
   title,
-  type,
   valid,
   value,
   onChange,
@@ -35,7 +34,6 @@ export const PhoneInput = ({
         defaultCountry="FR"
         title={title}
         name={name}
-        type={type}
         id={id}
         value={value || ''}
         placeholder={placeholder || 'Tapez votre numéro'}
@@ -56,7 +54,6 @@ export const PhoneInput = ({
 PhoneInput.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,

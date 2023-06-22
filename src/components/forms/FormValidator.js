@@ -1,7 +1,8 @@
 import validator from 'validator';
 import { getValueFromFormField } from 'src/utils';
 
-export class FormValidator {
+// eslint-disable-next-line import/no-default-export
+export default class FormValidator {
   constructor(validations) {
     // validations is an array of rules specific to a form
     this.validations = validations;

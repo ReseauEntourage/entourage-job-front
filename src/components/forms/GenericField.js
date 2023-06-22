@@ -609,6 +609,7 @@ GenericField.propTypes = {
       PropTypes.string,
       PropTypes.bool,
       PropTypes.func,
+      PropTypes.number,
     ])
   ).isRequired,
   formId: PropTypes.string.isRequired,

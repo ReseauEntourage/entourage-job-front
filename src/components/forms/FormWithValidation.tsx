@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react';
 import { FooterForm } from 'src/components/forms/FooterForm';
-import { FormValidator } from 'src/components/forms/FormValidator';
+import FormValidator from 'src/components/forms/FormValidator';
 import { GenericField } from 'src/components/forms/GenericField';
 import { FieldGroup } from 'src/components/forms/fields/FieldGroup';
 import { InputsContainer } from 'src/components/forms/fields/InputsContainer';
