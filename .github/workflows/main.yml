@@ -22,7 +22,7 @@ env:
   PORT: 3000
   CYPRESS_IO_PROJECT_ID: ${{ secrets.CYPRESS_IO_PROJECT_ID }}
   PUSHER_API_KEY: ${{ secrets.PUSHER_API_KEY }}
-
+  HEROKU_RELEASE_VERSION: 'v100'
 jobs:
   test:
     runs-on: ubuntu-latest

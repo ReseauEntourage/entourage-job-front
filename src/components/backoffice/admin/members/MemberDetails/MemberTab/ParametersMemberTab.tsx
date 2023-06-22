@@ -64,7 +64,7 @@ export function ParametersMemberTab({
         UIkit.notification('Une erreur est survenue', 'danger');
       }
     },
-    [memberId, replace]
+    [memberId, replace, user.role]
   );
 
   const memberColumns: MemberColumn[] = useMemo(() => {
