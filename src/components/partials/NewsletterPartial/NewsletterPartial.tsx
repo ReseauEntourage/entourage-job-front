@@ -16,8 +16,8 @@ import { gaEvent } from 'src/lib/gtag';
 const uuidValue = uuid();
 
 export const NewsletterPartial = ({
-  style,
-  padding,
+  style = 'default',
+  padding = false,
   tag,
 }: {
   style?: 'default' | 'muted';
@@ -162,10 +162,4 @@ export const NewsletterPartial = ({
       </StyledNLForm>
     </Section>
   );
-};
-
-NewsletterPartial.defaultProps = {
-  style: 'default',
-  padding: false,
-  tag: null,
 };

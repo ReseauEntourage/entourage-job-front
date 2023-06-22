@@ -1,6 +1,6 @@
 import { StaticImageData } from 'next/image';
 import React from 'react';
-import { StyledImageTitle } from 'src/components/partials/ImageTitleNew/styles';
+import { StyledImageTitle } from 'src/components/partials/ImageTitleNew/ImageTitle.styles';
 import { Container, Button, BackgroundImage } from 'src/components/utils';
 import { H1 } from 'src/components/utils/Headings';
 

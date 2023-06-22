@@ -1,4 +1,10 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+  cleanup,
+} from '@testing-library/react';
 
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
@@ -77,22 +83,26 @@ describe('Newsletter Partial', () => {
     expect(container).toBeDefined();
   });
   it('should send the NL if only mail is given', async () => {
-    const { emailInput, submitBtn } = setup();
-    fireEvent.change(emailInput, { target: { value: 'test@gmail.com' } });
-    expect(emailInput.value).toBe('test@gmail.com');
-    await fireEvent.click(submitBtn);
-    // check if email input is reset to empty => the request has been sent
-    expect(emailInput.value).toEqual('');
+    await waitFor(async () => {
+      const { emailInput, submitBtn } = setup();
+      fireEvent.change(emailInput, { target: { value: 'test@gmail.com' } });
+      expect(emailInput.value).toBe('test@gmail.com');
+      await fireEvent.click(submitBtn);
+      // check if email input is reset to empty => the request has been sent
+      expect(emailInput.value).toEqual('');
+    });
   });
   it('should send error if email is wrong', async () => {
-    const { emailInput, submitBtn } = setup();
-    fireEvent.change(emailInput, { target: { value: 'test' } });
-    expect(emailInput.value).toBe('test');
-    await fireEvent.click(submitBtn);
-    // check if email input still has same value => the request has not been sent
-    expect(emailInput.value).toEqual('test');
-    // check if email error message has been displayed
-    const errorMsg = screen.queryByTestId('nl-error-msg');
-    expect(errorMsg).toBeDefined();
+    await waitFor(async () => {
+      const { emailInput, submitBtn } = setup();
+      fireEvent.change(emailInput, { target: { value: 'test' } });
+      expect(emailInput.value).toBe('test');
+      await fireEvent.click(submitBtn);
+      // check if email input still has same value => the request has not been sent
+      expect(emailInput.value).toEqual('test');
+      // check if email error message has been displayed
+      const errorMsg = screen.queryByTestId('nl-error-msg');
+      expect(errorMsg).toBeDefined();
+    });
   });
 });

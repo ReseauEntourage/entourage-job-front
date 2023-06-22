@@ -1,1 +1,0 @@
-export { SharePartial } from './SharePartial';

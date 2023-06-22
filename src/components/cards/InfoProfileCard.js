@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import schemaUsefulInformation from 'src/components/forms/schema/formEditUsefulInformation';
+import { formEditUsefulInformation } from 'src/components/forms/schema/formEditUsefulInformation';
 
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
@@ -25,7 +25,7 @@ export const InfoProfileCard = ({
   onChange,
   userZone,
 }) => {
-  const mutatedSchema = mutateFormSchema(schemaUsefulInformation, [
+  const mutatedSchema = mutateFormSchema(formEditUsefulInformation, [
     {
       fieldId: 'email',
       props: [

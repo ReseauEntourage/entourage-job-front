@@ -5,7 +5,7 @@ import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
 import { PasswordCriterias } from 'src/components/PasswordCriterias';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
-import schema from 'src/components/forms/schema/formResetPassword';
+import { formResetPassword } from 'src/components/forms/schema/formResetPassword';
 import { Button, Section, Icon } from 'src/components/utils';
 
 const ResetPasswordPage = ({ valid, id, token, isCreation }) => {
@@ -27,7 +27,7 @@ const ResetPasswordPage = ({ valid, id, token, isCreation }) => {
                 </h1>
                 <PasswordCriterias />
                 <FormWithValidation
-                  formSchema={schema}
+                  formSchema={formResetPassword}
                   onSubmit={({ newPassword, confirmPassword }, setError) => {
                     return Api.postResetUserToken(id, token, {
                       newPassword,

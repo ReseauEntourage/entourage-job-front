@@ -1,7 +1,7 @@
 import React from 'react';
 import { Api } from 'src/api';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
-import interestLinkedOutSchema from 'src/components/forms/schema/formInterestLinkedOut';
+import { formInterestLinkedOut } from 'src/components/forms/schema/formInterestLinkedOut';
 import { StepperModal } from 'src/components/modals/Modal/ModalGeneric/StepperModal';
 import { SuccessModalContent } from 'src/components/modals/SuccessModalContent';
 
@@ -14,7 +14,7 @@ export const ModalInterestLinkedOut = () => {
           return (
             <FormWithValidation
               submitText="Envoyer"
-              formSchema={interestLinkedOutSchema}
+              formSchema={formInterestLinkedOut}
               onCancel={closeModal}
               onSubmit={(fields, setError) => {
                 return Api.postContactContactUs(fields)

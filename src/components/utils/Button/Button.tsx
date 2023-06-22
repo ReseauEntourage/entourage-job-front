@@ -96,6 +96,7 @@ Button.propTypes = {
     'custom-primary',
     'custom-primary-inverted',
     'custom-secondary',
+    'custom-secondary-inverted',
     'custom-text',
     ...UIKIT_BUTTON_STYLES_SPEC,
   ]),

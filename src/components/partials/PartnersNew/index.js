@@ -1,1 +1,0 @@
-export { Partners } from './Partners';
