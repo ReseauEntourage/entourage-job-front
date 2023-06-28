@@ -23,6 +23,7 @@ env:
   CYPRESS_IO_PROJECT_ID: ${{ secrets.CYPRESS_IO_PROJECT_ID }}
   PUSHER_API_KEY: ${{ secrets.PUSHER_API_KEY }}
   ADRESSE_LOCAUX_PARIS: "174 Rue Championnet 75018, Paris"
+  HEROKU_RELEASE_VERSION: 'v100'
 
 jobs:
   test:
