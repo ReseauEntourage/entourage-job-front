@@ -82,6 +82,9 @@ export const CandidatCard = ({
   const sortedAmbitions =
     ambitions && ambitions.length > 0 ? sortByOrder(ambitions) : null;
 
+  const sortedLocations =
+    locations && locations.length > 0 ? sortByOrder(locations) : null;
+
   const sortedBusinessLines =
     businessLines && businessLines.length > 0
       ? sortByOrder(businessLines)
@@ -243,14 +246,14 @@ export const CandidatCard = ({
                   </Grid>
                 </div>
               )}
-              {locations && locations.length > 0 && (
+              {sortedLocations && sortedLocations.length > 0 && (
                 <Grid
                   column
                   gap="collapse"
                   childWidths={['1-1']}
                   style={{ marginTop: 10 }}
                 >
-                  {locations.slice(0, 2).map(({ name }, index) => {
+                  {sortedLocations.slice(0, 2).map(({ name }, index) => {
                     return (
                       <div
                         key={name + index}

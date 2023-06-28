@@ -21,6 +21,9 @@ export const CVPDF = ({ cv, page }) => {
       ? sortByOrder(cv.experiences)
       : [];
 
+  const locations =
+    cv.locations && cv.locations.length > 0 ? sortByOrder(cv.locations) : [];
+
   const showCareerPathSentence =
     (cv.ambitions && cv.ambitions.length > 0) ||
     (cv.businessLines && cv.businessLines.length > 0);
@@ -159,7 +162,7 @@ export const CVPDF = ({ cv, page }) => {
               </Grid>
               <Grid column gap="medium">
                 {(cv.contracts ||
-                  cv.locations ||
+                  locations ||
                   cv.availability ||
                   cv.languages ||
                   cv.transport) && (
@@ -225,7 +228,7 @@ export const CVPDF = ({ cv, page }) => {
                           </span>
                         </li>
                       )}
-                      {cv.locations && cv.locations.length > 0 && (
+                      {locations && locations.length > 0 && (
                         <li className="uk-flex uk-flex-middle">
                           <IconNoSSR
                             className="uk-text-primary uk-margin-small-right"
@@ -233,7 +236,7 @@ export const CVPDF = ({ cv, page }) => {
                             style={{ width: 20 }}
                           />{' '}
                           <span className="uk-flex-1">
-                            {cv.locations
+                            {locations
                               .map(({ name }) => {
                                 return findConstantFromValue(
                                   name,

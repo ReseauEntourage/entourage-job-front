@@ -4,7 +4,11 @@ import { Grid, ButtonIcon, IconNoSSR } from 'src/components/utils';
 import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import schemaUsefulInformation from 'src/components/forms/schema/formEditUsefulInformation';
 
-import { findConstantFromValue, mutateFormSchema } from 'src/utils';
+import {
+  findConstantFromValue,
+  mutateFormSchema,
+  sortByOrder,
+} from 'src/utils';
 
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
 import { openModal } from 'src/components/modals/Modal';
@@ -45,6 +49,9 @@ export const InfoProfileCard = ({
     },
   ]);
 
+  const sortedLocations =
+    locations && locations.length > 0 ? sortByOrder(locations) : [];
+
   return (
     <div className="uk-card uk-card-primary uk-card-body">
       <Grid between gap="small" eachWidths={['expand', 'auto']}>
@@ -76,7 +83,7 @@ export const InfoProfileCard = ({
                     languages: languages.map(({ name }) => {
                       return name;
                     }),
-                    locations: locations.map(({ name }) => {
+                    locations: sortByOrder(locations).map(({ name }) => {
                       return findConstantFromValue(name, DEPARTMENTS_FILTERS);
                     }),
                   }}
@@ -94,9 +101,10 @@ export const InfoProfileCard = ({
                           name: language,
                         };
                       }),
-                      locations: fields.locations.map((location) => {
+                      locations: fields.locations.map((location, index) => {
                         return {
                           name: location,
+                          order: index,
                         };
                       }),
                     });
@@ -132,8 +140,8 @@ export const InfoProfileCard = ({
         </Grid>
         <Grid row gap="small" middle>
           <IconNoSSR name="location" style={{ width: 20 }} />
-          {locations && locations.length > 0
-            ? locations
+          {sortedLocations && sortedLocations.length > 0
+            ? sortedLocations
                 .map(({ name }) => {
                   return findConstantFromValue(name, DEPARTMENTS_FILTERS).label;
                 })
