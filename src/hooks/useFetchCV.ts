@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
-import { CV } from '../api/types';
 import { Api } from 'src/api';
+import { CV } from 'src/api/types';
 
 export function useFetchCV(candidateId) {
   const [error, setError] = useState<string>(null);

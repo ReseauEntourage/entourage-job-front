@@ -1,15 +1,22 @@
 import _ from 'lodash';
-import PropTypes from 'prop-types';
 import React from 'react';
+import { OfferStatus } from 'src/constants';
 import { StyledContainer, StyledStep } from './ProgressBarStatus.styles';
 
+interface ProgressBarStatusProps {
+  status: OfferStatus;
+  archived: boolean;
+  isBookmarked: bigint;
+  isRecommended: boolean;
+  isPublic: boolean;
+}
 export const ProgressBarStatus = ({
   status,
-  archived,
+  archived = false,
   isBookmarked,
   isRecommended,
   isPublic,
-}) => {
+}: ProgressBarStatusProps) => {
   const abandonned = archived || status === 3 || status === 4;
   const hired = !archived && status === 2;
   const noStatus = _.isNil(status);
@@ -49,17 +56,4 @@ export const ProgressBarStatus = ({
       />
     </StyledContainer>
   );
-};
-
-ProgressBarStatus.defaultProps = {
-  status: null,
-  archived: false,
-};
-
-ProgressBarStatus.propTypes = {
-  status: PropTypes.number,
-  archived: PropTypes.bool,
-  isBookmarked: PropTypes.bool.isRequired,
-  isRecommended: PropTypes.bool.isRequired,
-  isPublic: PropTypes.bool.isRequired,
 };

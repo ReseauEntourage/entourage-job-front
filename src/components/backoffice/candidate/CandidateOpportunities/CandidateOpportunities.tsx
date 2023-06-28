@@ -2,7 +2,6 @@ import _ from 'lodash';
 import { useRouter } from 'next/router';
 import React, { useContext, useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import { OPPORTUNITY_FILTERS_DATA } from '../../../../constants';
 import { CandidateOffersTab } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab';
 import {
   candidateSearchFilters,
@@ -22,6 +21,7 @@ import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/Off
 import { OpportunityError } from 'src/components/opportunities/OpportunityError';
 import { Button, Section } from 'src/components/utils';
 import { Icon } from 'src/components/utils/Icon';
+import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useCandidateOpportunities } from 'src/hooks/useOpportunityList';
 import { usePrevious } from 'src/hooks/utils';

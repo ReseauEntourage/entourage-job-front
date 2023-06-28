@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import { StyledHeaderMobile } from '../../Header.styles';
+import { StyledHeaderMobile } from 'src/components/headers/Header.styles';
 import { Hamburger, Navbar, NavbarLogo, Icon } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { Offcanvas } from 'src/components/utils/Offcanvas';

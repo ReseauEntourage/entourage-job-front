@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { StyledHeaderDesktop } from '../../Header.styles';
+import { StyledHeaderDesktop } from 'src/components/headers/Header.styles';
 import { Navbar, NavbarLogo, Icon, Nav } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';

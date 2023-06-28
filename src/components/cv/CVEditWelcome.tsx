@@ -1,13 +1,8 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { UserWithUserCandidate } from 'src/api/types';
 import { CandidatHeader } from 'src/components/backoffice/candidate/CandidatHeader';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
-import {
-  CANDIDATE_USER_ROLES,
-  COACH_USER_ROLES,
-  USER_ROLES,
-} from 'src/constants/users';
+import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils/Finding';
 
 export const CVEditWelcome = ({ user }: { user: UserWithUserCandidate }) => {
@@ -29,18 +24,4 @@ export const CVEditWelcome = ({ user }: { user: UserWithUserCandidate }) => {
       <CandidatHeader user={user} />
     </HeaderBackoffice>
   );
-};
-CVEditWelcome.propTypes = {
-  user: PropTypes.shape({
-    role: PropTypes.oneOf([
-      USER_ROLES.CANDIDATE,
-      USER_ROLES.COACH,
-      USER_ROLES.ADMIN,
-    ]),
-    firstName: PropTypes.string,
-  }),
-};
-
-CVEditWelcome.defaultProps = {
-  user: undefined,
 };

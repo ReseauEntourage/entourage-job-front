@@ -3,10 +3,10 @@ import { v4 as uuid } from 'uuid';
 import {
   HeaderConnectedItemProps,
   NotifBadgesProps,
-} from '../../HeaderConnected.types';
-import { StyledSubMenu } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/SubMenu/SubMenu.styles';
+} from 'src/components/headers/HeaderConnected/HeaderConnected.types';
 import { SimpleLink, Icon } from 'src/components/utils';
 import { gaEvent } from 'src/lib/gtag';
+import { StyledSubMenu } from './SubMenu.styles';
 
 const uuidValue = uuid();
 

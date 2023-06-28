@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import {
   StyledContainer,
@@ -26,15 +25,4 @@ export const OpportunitiesContainerDesktop = ({
       )}
     </StyledContainer>
   );
-};
-
-OpportunitiesContainerDesktop.defaultProps = {
-  list: null,
-};
-
-OpportunitiesContainerDesktop.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  list: PropTypes.element,
-  details: PropTypes.element.isRequired,
-  noContent: PropTypes.element.isRequired,
 };

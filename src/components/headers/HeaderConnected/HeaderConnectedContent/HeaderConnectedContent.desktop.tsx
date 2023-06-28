@@ -1,14 +1,11 @@
 import { useRouter } from 'next/router';
 import React, { useContext, useState, useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
-import { StyledHeaderDesktop } from 'src/components/headers/Header.styles';
 import {
   HeaderConnectedMainItemProps,
   HeaderConnectedMainItemDefaultProps,
-} from 'src/components/headers/HeaderConnected/HeaderConnected.types';
-import { StyledConnectedItem } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/HeaderConnectedContent.styles';
-import { ImgProfile } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
-import { SubMenu } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/SubMenu';
+} from '../HeaderConnected.types';
+import { StyledHeaderDesktop } from 'src/components/headers/Header.styles';
 import {
   Navbar,
   SimpleLink,
@@ -26,7 +23,10 @@ import {
 import { gaEvent } from 'src/lib/gtag';
 import { UserContext } from 'src/store/UserProvider';
 import { isRoleIncluded } from 'src/utils/Finding';
+import { StyledConnectedItem } from './HeaderConnectedContent.styles';
 import { HeaderConnectedContentProps } from './HeaderConnectedContent.types';
+import { ImgProfile } from './ImgProfile';
+import { SubMenu } from './SubMenu';
 
 const uuidValue = uuid();
 

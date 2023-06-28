@@ -1,9 +1,8 @@
 import { useRouter } from 'next/router';
 import React, { useContext } from 'react';
 import { v4 as uuid } from 'uuid';
-import { StyledHeaderMobile } from '../../Header.styles';
-import { HeaderConnectedMainItemDefaultProps } from 'src/components/headers/HeaderConnected/HeaderConnected.types';
-import { StyledConnectedItemMobile } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/HeaderConnectedContent.styles';
+import { HeaderConnectedMainItemDefaultProps } from '../HeaderConnected.types';
+import { StyledHeaderMobile } from 'src/components/headers/Header.styles';
 import {
   Navbar,
   SimpleLink,
@@ -15,6 +14,7 @@ import { Offcanvas } from 'src/components/utils/Offcanvas';
 import { OFFCANVAS_LOGGED } from 'src/constants/utils';
 import { gaEvent } from 'src/lib/gtag';
 import { UserContext } from 'src/store/UserProvider';
+import { StyledConnectedItemMobile } from './HeaderConnectedContent.styles';
 import { HeaderConnectedContentProps } from './HeaderConnectedContent.types';
 import { SubMenu } from './SubMenu';
 
