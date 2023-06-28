@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { StyledDetailsProgressBar } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/DetailsProgressBar/DetailsProgressBar.styles';
@@ -71,9 +70,4 @@ export const DetailsProgressBar = ({
         })}
     </StyledDetailsProgressBar>
   );
-};
-
-DetailsProgressBar.propTypes = {
-  tab: PropTypes.number.isRequired,
-  noProcess: PropTypes.bool.isRequired,
 };

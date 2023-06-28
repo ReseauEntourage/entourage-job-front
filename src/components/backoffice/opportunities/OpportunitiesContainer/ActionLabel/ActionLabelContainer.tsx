@@ -1,16 +1,22 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import EntourageIcon from 'assets/custom/icons/entourage.svg';
 import { ActionLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel/ActionLabel';
 import { Icon } from 'src/components/utils';
 
+interface ActionLabelContainerProps {
+  isPublic: boolean;
+  isRecommended: boolean;
+  isBookmarked: boolean;
+  isExternal: boolean;
+  bookmarkOpportunity: () => void;
+}
 export const ActionLabelContainer = ({
   isPublic,
   isRecommended,
   isBookmarked,
   isExternal,
   bookmarkOpportunity,
-}) => {
+}: ActionLabelContainerProps) => {
   return (
     <>
       {!isPublic && !isExternal && (
@@ -62,12 +68,4 @@ export const ActionLabelContainer = ({
       )}
     </>
   );
-};
-
-ActionLabelContainer.propTypes = {
-  isPublic: PropTypes.bool.isRequired,
-  isRecommended: PropTypes.bool.isRequired,
-  isBookmarked: PropTypes.bool.isRequired,
-  isExternal: PropTypes.bool.isRequired,
-  bookmarkOpportunity: PropTypes.func.isRequired,
 };

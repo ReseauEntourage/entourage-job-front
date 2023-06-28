@@ -1,8 +1,9 @@
 import React from 'react';
 import { MultipleCTA } from 'src/components/partials/MultipleCTA';
 import { Section } from 'src/components/utils';
+import { UIKIT_STYLES } from 'src/components/variables';
 
-export const HowItWorks = ({ style }: { style?: string }) => {
+export const HowItWorks = ({ style }: { style?: UIKIT_STYLES }) => {
   const content = [
     {
       img: '/static/img/illustrations/how1.png',

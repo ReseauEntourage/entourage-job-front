@@ -16,7 +16,7 @@ import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Button } from 'src/components/utils/Button';
-import { EVENT_TYPES, OFFER_STATUS } from 'src/constants';
+import { Contract, EVENT_TYPES, OFFER_STATUS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 
@@ -39,7 +39,7 @@ export const CandidateOpportunityDetailsCTAs = ({
     date: string;
   };
   OpportunityId: string;
-  contract: string;
+  contract: Contract;
   isExternal: boolean;
   fetchOpportunities: () => void;
   oppRefreshCallback: () => void;

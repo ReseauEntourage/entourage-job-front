@@ -1,9 +1,11 @@
 import React from 'react';
 import { Button, Section, Icon } from 'src/components/utils';
+import { UIKIT_STYLES } from 'src/components/variables';
 
 interface SimpleSectionProps {
   id: string;
-  style?: string;
+  style?: UIKIT_STYLES;
+
   container?: 'small' | 'large';
   title: React.ReactNode;
   button?: {

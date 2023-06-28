@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { useCallback, useMemo, useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { OrganizationTable } from '../OrganizationTable';
@@ -12,16 +11,24 @@ import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { Section, Button, BackToTop } from 'src/components/utils';
 import { ORGANIZATION_FILTERS_DATA } from 'src/constants';
 import { filtersToQueryParams } from 'src/utils/Filters';
+import { AnyToFix } from 'src/utils/Types';
 
 const LIMIT = 50;
 
+interface OrganizationListProps {
+  filters: AnyToFix; // to be typed
+  setFilters: (updatedFilters: AnyToFix) => void;
+  search?: string;
+  setSearch: (search?: string) => void;
+  resetFilters: () => void;
+}
 export function OrganizationList({
   search,
-  filters,
+  filters = {},
   setFilters,
   setSearch,
   resetFilters,
-}) {
+}: OrganizationListProps) {
   const [organizations, setOrganizations] = useState([]);
   const [hasError, setHasError] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -155,19 +162,3 @@ export function OrganizationList({
     </>
   );
 }
-
-OrganizationList.propTypes = {
-  search: PropTypes.string,
-  filters: PropTypes.shape({}),
-  setFilters: PropTypes.func,
-  setSearch: PropTypes.func,
-  resetFilters: PropTypes.func,
-};
-
-OrganizationList.defaultProps = {
-  search: undefined,
-  filters: {},
-  setFilters: () => null,
-  setSearch: () => null,
-  resetFilters: () => null,
-};

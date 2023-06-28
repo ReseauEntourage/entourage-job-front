@@ -1,4 +1,5 @@
 import React from 'react';
+import { UIKIT_BUTTON_SIZES } from '../variables';
 import { Button, Img, Grid, Icon } from 'src/components/utils';
 
 interface MultipleCTAProps {
@@ -17,7 +18,7 @@ interface MultipleCTAProps {
       external?: boolean;
       modal?: string;
       onClick?: () => void;
-      size?: string;
+      size?: UIKIT_BUTTON_SIZES;
     };
   }[];
   animate?: boolean;

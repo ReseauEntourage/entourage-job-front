@@ -25,7 +25,7 @@ interface SearchBarProps {
   filters: AnyToFix; // to be typed
   setFilters: (updatedFilters: AnyToFix) => void;
   search?: string;
-  setSearch: (arg1?: string) => void;
+  setSearch: (search?: string) => void;
   resetFilters: () => void;
   smallSelectors?: boolean;
   placeholder?: string;

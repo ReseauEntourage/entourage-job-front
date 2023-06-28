@@ -1,5 +1,6 @@
 import { CookieValueTypes } from 'cookies-next';
 
+import { Contract as ContractValue } from 'src/constants';
 import { AdminZone } from 'src/constants/departements';
 import { AdminRole, UserRole } from 'src/constants/users';
 
@@ -20,7 +21,7 @@ export type Route<T extends APIRoute> = `/${T}/${string}` | `/${T}`;
 
 export type UserCandidate = {
   employed: boolean;
-  contract: string;
+  contract: ContractValue;
   endOfContract: string;
   hidden: boolean;
   note: string;
@@ -139,7 +140,7 @@ export type UserDto = {
 
 export type PutCandidate = {
   employed: boolean;
-  contract: string;
+  contract: ContractValue;
   endOfContract: Date;
   hidden: boolean;
   note: string;
@@ -170,7 +171,7 @@ export type Opportunity = {
   skills: string;
   prerequisites: string;
   department: string;
-  contract: string;
+  contract: ContractValue;
   startOfContract: string;
   endOfContract: string;
   isPartTime: boolean;
@@ -203,7 +204,7 @@ export type Skill = {
 
 export type Contract = {
   id: string;
-  name: string;
+  name: ContractValue;
   createdAt: string;
   updatedAt: string;
 };
@@ -249,7 +250,7 @@ export interface OpportunityWithOpportunityUsers extends Opportunity {
 export type ExternalOpportunity = {
   title: string;
   company: string;
-  contract: string;
+  contract: ContractValue;
   startOfContract: string;
   endOfContract: string;
   isPartTime: string;
@@ -267,7 +268,7 @@ export type OpportunityUserEvent = {
   startDate: Date;
   endDate?: Date;
   type: string;
-  contract: { name: string };
+  contract: { name: ContractValue };
 };
 
 export type OpportunityJoin = {

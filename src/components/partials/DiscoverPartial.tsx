@@ -1,12 +1,16 @@
-import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Api } from 'src/api';
 import { LoadingScreen } from 'src/components/backoffice/cv/LoadingScreen';
 import { CandidatCard } from 'src/components/cards';
 import { Grid, Section, Icon } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
+import { UIKIT_STYLES } from 'src/components/variables';
 
-export const DiscoverPartial = ({ style }: { style: string }) => {
+export const DiscoverPartial = ({
+  style = 'default',
+}: {
+  style: UIKIT_STYLES;
+}) => {
   const [cvs, setCVs] = useState(undefined);
   const [error, setError] = useState(null);
 
@@ -69,12 +73,4 @@ export const DiscoverPartial = ({ style }: { style: string }) => {
       </div>
     </Section>
   );
-};
-
-DiscoverPartial.propTypes = {
-  style: PropTypes.string,
-};
-
-DiscoverPartial.defaultProps = {
-  style: 'default',
 };

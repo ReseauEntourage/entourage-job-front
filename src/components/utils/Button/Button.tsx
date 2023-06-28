@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-no-target-blank */
 import Link from 'next/link';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { StyledButton } from 'src/components/utils/Button/Button.styles';
 import {
@@ -8,25 +7,46 @@ import {
   UIKIT_BUTTON_STYLES_SPEC,
   UIKIT_SCREENS,
 } from 'src/components/variables';
+import { AnyToFix } from 'src/utils/Types';
+
+interface ButtonProps {
+  children: React.ReactNode;
+  href?: string | { pathname: string; query: AnyToFix };
+  disabled?: boolean;
+  visible?: UIKIT_SCREENS;
+  style?: UIKIT_BUTTON_STYLES_SPEC | '';
+
+  size?: UIKIT_BUTTON_SIZES;
+  widths?: string[];
+  isExternal?: boolean;
+  newTab?: boolean;
+  className?: string;
+  onClick?: () => void;
+  toggle?: string;
+  shallow?: boolean;
+  scroll?: boolean;
+  dataTestId?: string;
+  color?: string;
+}
 
 export function Button({
   visible,
-  style,
-  size,
   href,
-  disabled,
-  widths,
   children,
   className,
-  isExternal,
-  newTab,
   onClick,
   toggle,
-  shallow,
-  scroll,
-  dataTestId,
-  color,
-}) {
+  disabled = false,
+  shallow = false,
+  style = 'custom-primary',
+  size = 'large',
+  widths = [],
+  isExternal = false,
+  newTab = false,
+  scroll = true,
+  dataTestId = '',
+  color = 'primaryOrange',
+}: ButtonProps) {
   let classBuffer = 'uk-button';
   if (visible) classBuffer += ` uk-visible@${visible}`;
   if (style && style.includes('custom')) {
@@ -64,7 +84,7 @@ export function Button({
     </StyledButton>
   );
   if (href) {
-    return isExternal ? (
+    return isExternal && typeof href === 'string' ? (
       <a
         href={href}
         target={newTab ? '_blank' : ''}
@@ -80,53 +100,3 @@ export function Button({
   }
   return buttonComponent;
 }
-
-Button.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
-  href: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.shape({ pathname: PropTypes.string, query: PropTypes.shape({}) }),
-  ]),
-  disabled: PropTypes.bool,
-  visible: PropTypes.oneOf(UIKIT_SCREENS),
-  style: PropTypes.oneOf([
-    'custom-primary',
-    'custom-primary-inverted',
-    'custom-secondary',
-    'custom-secondary-inverted',
-    'custom-text',
-    ...UIKIT_BUTTON_STYLES_SPEC,
-  ]),
-  size: PropTypes.oneOf(UIKIT_BUTTON_SIZES),
-  widths: PropTypes.arrayOf(PropTypes.string), // UIKIT_WIDTH_SCREENS
-  isExternal: PropTypes.bool,
-  newTab: PropTypes.bool,
-  className: PropTypes.string,
-  onClick: PropTypes.func,
-  toggle: PropTypes.string,
-  shallow: PropTypes.bool,
-  scroll: PropTypes.bool,
-  dataTestId: PropTypes.string,
-  color: PropTypes.string,
-};
-
-Button.defaultProps = {
-  disabled: false,
-  shallow: false,
-  visible: undefined,
-  style: 'custom-primary',
-  size: 'large',
-  href: undefined,
-  widths: [],
-  isExternal: false,
-  newTab: false,
-  className: undefined,
-  onClick: undefined,
-  toggle: undefined,
-  scroll: true,
-  dataTestId: '',
-  color: 'primaryOrange',
-};

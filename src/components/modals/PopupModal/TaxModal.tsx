@@ -21,5 +21,3 @@ export function TaxModal() {
     </ModalGeneric>
   );
 }
-
-TaxModal.propTypes = {};

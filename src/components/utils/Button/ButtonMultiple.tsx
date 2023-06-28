@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-no-target-blank */
-import PropTypes from 'prop-types';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import {
@@ -8,6 +7,7 @@ import {
   UIKIT_SCREENS,
 } from 'src/components/variables';
 import { useCloseOnClickOutsideComponent } from 'src/hooks/useCloseOnClickOutsideComponent';
+import { AnyToFix } from 'src/utils/Types';
 import { Button } from './Button';
 import {
   StyledButtonContainer,
@@ -16,20 +16,47 @@ import {
 
 const uuidValue = uuid();
 
+interface ButtonMultipleProps {
+  id: string;
+  children: React.ReactNode;
+  disabled?: boolean;
+  visible?: UIKIT_SCREENS;
+  style?: UIKIT_BUTTON_STYLES_SPEC;
+  size?: UIKIT_BUTTON_SIZES;
+  widths?: string[];
+  className?: string;
+  dataTestId?: string;
+  color?: string;
+  align?: 'left' | 'right';
+  buttons: {
+    href?: string | { pathname: string; query: AnyToFix };
+
+    newTab?: boolean;
+    onClick?: () => void;
+    toggle?: string;
+    label?: string;
+    dataTestId?: string;
+    shallow?: boolean;
+    scroll?: boolean;
+    isExternal?: boolean;
+    children?: React.ReactNode;
+  }[];
+}
+
 export function ButtonMultiple({
   id,
   visible,
-  style,
-  size,
-  disabled,
-  widths,
   children,
   className,
-  dataTestId,
-  color,
   buttons,
-  align,
-}) {
+  align = 'left',
+  disabled = false,
+  style = 'custom-primary',
+  size = 'large',
+  widths = [],
+  dataTestId = '',
+  color = 'primaryOrange',
+}: ButtonMultipleProps) {
   const { componentId, isOpen, setIsOpen } =
     useCloseOnClickOutsideComponent(id);
 
@@ -96,58 +123,3 @@ export function ButtonMultiple({
     </StyledButtonContainer>
   );
 }
-
-ButtonMultiple.propTypes = {
-  id: PropTypes.string.isRequired,
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
-  disabled: PropTypes.bool,
-  visible: PropTypes.oneOf(UIKIT_SCREENS),
-  style: PropTypes.oneOf([
-    'custom-secondary',
-    'custom-primary',
-    'custom-primary-inverted',
-    ...UIKIT_BUTTON_STYLES_SPEC,
-  ]),
-  size: PropTypes.oneOf(UIKIT_BUTTON_SIZES),
-  widths: PropTypes.arrayOf(PropTypes.string), // UIKIT_WIDTH_SCREENS
-  className: PropTypes.string,
-  dataTestId: PropTypes.string,
-  color: PropTypes.string,
-  align: PropTypes.oneOf(['left', 'right']),
-  buttons: PropTypes.arrayOf(
-    PropTypes.shape({
-      href: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.shape({
-          pathname: PropTypes.string,
-          query: PropTypes.shape({}),
-        }),
-      ]),
-      newTab: PropTypes.bool,
-      onClick: PropTypes.func,
-      toggle: PropTypes.string,
-      label: PropTypes.string,
-      dataTestId: PropTypes.string,
-      shallow: PropTypes.bool,
-      scroll: PropTypes.bool,
-      isExternal: PropTypes.bool,
-      children: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
-        .isRequired,
-    }).isRequired
-  ).isRequired,
-};
-
-ButtonMultiple.defaultProps = {
-  align: 'left',
-  disabled: false,
-  visible: undefined,
-  style: 'custom-primary',
-  size: 'large',
-  widths: [],
-  className: undefined,
-  dataTestId: '',
-  color: 'primaryOrange',
-};

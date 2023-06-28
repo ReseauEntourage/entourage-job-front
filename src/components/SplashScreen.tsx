@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { Img } from 'src/components/utils';
 
@@ -26,7 +25,13 @@ const SplashScreenContent = () => {
   );
 };
 
-export const SplashScreen = ({ loading, fading }) => {
+export const SplashScreen = ({
+  loading,
+  fading,
+}: {
+  loading: boolean;
+  fading: boolean;
+}) => {
   const { asPath } = useRouter();
 
   return !asPath.includes('/pdf/') ? (
@@ -42,9 +47,4 @@ export const SplashScreen = ({ loading, fading }) => {
       <SplashScreenContent />
     </div>
   ) : null;
-};
-
-SplashScreen.propTypes = {
-  loading: PropTypes.bool.isRequired,
-  fading: PropTypes.bool.isRequired,
 };

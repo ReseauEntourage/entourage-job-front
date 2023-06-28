@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { MemberTable } from '../MemberTable';
@@ -22,17 +21,25 @@ import {
   mutateTypeFilterDependingOnRole,
 } from 'src/utils/Filters';
 import { isRoleIncluded } from 'src/utils/Finding';
+import { AnyToFix } from 'src/utils/Types';
 import { useRole } from './useRole';
 
 const LIMIT = 50;
+interface MemberListProps {
+  filters: AnyToFix; // to be typed
+  setFilters: (updatedFilters: AnyToFix) => void;
+  search?: string;
+  setSearch: (search?: string) => void;
+  resetFilters: () => void;
+}
 
 export function MemberList({
   search,
-  filters,
+  filters = {},
   setFilters,
   setSearch,
   resetFilters,
-}) {
+}: MemberListProps) {
   const role = useRole();
 
   const prevRole = usePrevious(role);
@@ -240,19 +247,3 @@ export function MemberList({
     </>
   );
 }
-
-MemberList.propTypes = {
-  search: PropTypes.string,
-  filters: PropTypes.shape({}),
-  setFilters: PropTypes.func,
-  setSearch: PropTypes.func,
-  resetFilters: PropTypes.func,
-};
-
-MemberList.defaultProps = {
-  search: undefined,
-  filters: {},
-  setFilters: () => null,
-  setSearch: () => null,
-  resetFilters: () => null,
-};

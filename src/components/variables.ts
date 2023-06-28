@@ -1,4 +1,5 @@
-export const UIKIT_SCREENS = ['s', 'm', 'l', 'xl'] as const;
+export type UIKIT_SCREENS = 's' | 'm' | 'l' | 'xl';
+
 // export const UIKIT_WIDTH = [
 //   'auto',
 //   'expand',
@@ -23,23 +24,37 @@ export const UIKIT_SCREENS = ['s', 'm', 'l', 'xl'] as const;
 //   ).flat(),
 // ];
 
-export const UIKIT_SECTION_SIZES = [
-  'xsmall',
-  'small',
-  'medium',
-  'large',
-  'xlarge',
-];
-export const UIKIT_STYLES = ['default', 'primary', 'secondary', 'muted'];
-export const UIKIT_BUTTON_STYLES_SPEC = [
-  'default',
-  'primary',
-  'secondary',
-  'danger',
-  'text',
-  'link',
-];
-export const UIKIT_BUTTON_SIZES = ['small', 'large'];
+export type UIKIT_SECTION_SIZES =
+  | 'xsmall'
+  | 'small'
+  | 'medium'
+  | 'large'
+  | 'xlarge';
+
+export type UIKIT_STYLES =
+  | 'default'
+  | 'primary'
+  | 'secondary'
+  | 'muted'
+  | 'custom-header'
+  | 'custom-primary'
+  | 'custom-mobile-darkBG'
+  | 'custom-fixed';
+
+export type UIKIT_BUTTON_STYLES_SPEC =
+  | 'default'
+  | 'primary'
+  | 'secondary'
+  | 'danger'
+  | 'text'
+  | 'link'
+  | 'custom-secondary'
+  | 'custom-secondary-inverted'
+  | 'custom-primary'
+  | 'custom-primary-inverted'
+  | 'custom-text';
+
+export type UIKIT_BUTTON_SIZES = 'small' | 'large';
 export const UIKIT_COLORS = [
   'muted',
   'emphasis',
@@ -54,20 +69,19 @@ export const UIKIT_TRANSFORM = ['uppercase', 'capitalize', 'lowercase'];
 
 export const UIKIT_TEXT_TAG = ['span', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
-export const UIKIT_BLENDS = [
-  'multiply',
-  'screen',
-  'overlay',
-  'darken',
-  'lighten',
-  'color-dodge',
-  'color-burn',
-  'hard-light',
-  'soft-light',
-  'difference',
-  'exclusion',
-  'hue',
-  'saturation',
-  'color',
-  'luminosity',
-];
+export type UIKIT_BLENDS =
+  | 'multiply'
+  | 'screen'
+  | 'overlay'
+  | 'darken'
+  | 'lighten'
+  | 'color-dodge'
+  | 'color-burn'
+  | 'hard-light'
+  | 'soft-light'
+  | 'difference'
+  | 'exclusion'
+  | 'hue'
+  | 'saturation'
+  | 'color'
+  | 'luminosity';

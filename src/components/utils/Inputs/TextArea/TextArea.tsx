@@ -1,11 +1,10 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { StyledTextAreaContainer } from './TextArea.styles';
 
-interface TextAreaTypes {
+interface TextAreaProps {
   title: string;
   name: string;
-  id: string;
+  id?: string;
   onChange: (event) => void;
   value: string;
   hidden?: boolean;
@@ -18,7 +17,7 @@ export function TextArea({
   onChange,
   value,
   hidden,
-}: TextAreaTypes) {
+}: TextAreaProps) {
   if (hidden) {
     return null;
   }
@@ -36,21 +35,3 @@ export function TextArea({
     </StyledTextAreaContainer>
   );
 }
-
-TextArea.propTypes = {
-  title: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  id: PropTypes.string,
-  value: PropTypes.string,
-  onChange: PropTypes.func,
-  hidden: PropTypes.bool,
-};
-
-TextArea.defaultProps = {
-  onChange: () => {
-    return null;
-  },
-  id: '',
-  value: '',
-  hidden: false,
-};

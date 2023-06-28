@@ -1,8 +1,18 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { StyledSection } from 'src/components/utils/Section/Section.styles';
 import { UIKIT_SECTION_SIZES, UIKIT_STYLES } from 'src/components/variables';
 
+interface SectionProps {
+  style?: UIKIT_STYLES;
+
+  size?: UIKIT_SECTION_SIZES;
+  id?: string;
+  children: JSX.Element | JSX.Element[];
+  container?: 'small' | 'large';
+  className?: string;
+  preserveColor?: boolean;
+  display?: string;
+}
 export const Section = ({
   style,
   size,
@@ -10,9 +20,9 @@ export const Section = ({
   container,
   children,
   className,
-  preserveColor,
-  display,
-}) => {
+  preserveColor = false,
+  display = '',
+}: SectionProps) => {
   let custom = false;
   let classBuffer = 'uk-section';
   let classBuffer2 = 'uk-container';
@@ -36,32 +46,4 @@ export const Section = ({
       <div className={classBuffer2}>{children}</div>
     </div>
   );
-};
-Section.propTypes = {
-  style: PropTypes.oneOf([
-    ...UIKIT_STYLES,
-    'custom-header',
-    'custom-primary',
-    'custom-mobile-darkBG',
-    'custom-fixed',
-  ]),
-  size: PropTypes.oneOf(UIKIT_SECTION_SIZES),
-  id: PropTypes.string,
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
-  ]).isRequired,
-  container: PropTypes.oneOf(['small', 'large']),
-  className: PropTypes.string,
-  preserveColor: PropTypes.bool,
-  display: PropTypes.string,
-};
-Section.defaultProps = {
-  style: undefined,
-  size: undefined,
-  id: undefined,
-  container: undefined,
-  className: undefined,
-  preserveColor: false,
-  display: '',
 };

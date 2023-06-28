@@ -11,7 +11,7 @@ interface SimpleLinkProps {
         pathname: string;
         query: AnyCantFix; // query can be an object with any key-value
       };
-  visible?: typeof UIKIT_SCREENS;
+  visible?: UIKIT_SCREENS;
   children: React.ReactNode;
   className?: string;
   target?: string;
