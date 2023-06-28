@@ -38,7 +38,7 @@ const cardsContent = [
   {
     title: 'Activez votre réseau pour un candidat',
     img: HelpReseau,
-    text: 'Une mission souple et ponctuelle pour apporter un coup de pouce et des mises en relation aux candidats et leurs coachs tout au long de leur parcours LinkedOut ! Mission disponible à Paris et Lyon pour le moment !',
+    text: 'Une mission souple et ponctuelle pour apporter un coup de pouce et des mises en relation aux candidats et leurs coachs tout au long de leur parcours LinkedOut !',
     cta: 'Rejoindre les connecteurs',
     href: process.env.CONNECTEUR_INSCRIPTION_URL,
     alt: 'Des connecteurs LinkedOut',
