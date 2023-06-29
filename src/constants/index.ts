@@ -855,11 +855,11 @@ export const EVENT_TYPES_FILTERS = [
 ];
 
 const ADDRESSES = {
-  PARIS: '174 Rue Championnet, 75018 Paris',
-  LYON: '40 Cours de la République, 69100 Villeurbanne',
-  LILLE: '21 Rue Maracci, 59000 Lille',
-  RENNES: '',
-  LORIENT: '',
+  PARIS: process.env.ADRESSE_LOCAUX_PARIS,
+  LYON: process.env.ADRESSE_LOCAUX_LYON,
+  LILLE: process.env.ADRESSE_LOCAUX_LILLE,
+  RENNES: process.env.ADRESSE_LOCAUX_LORIENT,
+  LORIENT: process.env.ADRESSE_LOCAUX_RENNES,
 };
 
 export const ANTENNE_INFO = [
@@ -885,14 +885,14 @@ export const ANTENNE_INFO = [
     address: ADDRESSES.PARIS,
   },
   {
-    dpt: '35',
+    dpt: '56',
     mailCoordo: process.env.ADMIN_CANDIDATES_RENNES,
     mailEntreprise: process.env.ADMIN_COMPANIES_RENNES,
     city: 'Lorient',
     address: ADDRESSES.LORIENT,
   },
   {
-    dpt: '56',
+    dpt: '35',
     mailCoordo: process.env.ADMIN_CANDIDATES_LORIENT,
     mailEntreprise: process.env.ADMIN_COMPANIES_LORIENT,
     city: 'Rennes',

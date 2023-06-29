@@ -20,7 +20,7 @@ describe('Parcours travailler', () => {
   });
 
   it('Remplir le formulaire, envoyer et fermer', () => {
-    cy.get('[data-testid="form-candidate-inscription-location"]').click();
+    cy.get('[data-testid="form-candidate-inscription-location"]').scrollIntoView().click();
     cy.get('[data-testid="select-option-93"]').click();
     cy.get('[data-testid="form-candidate-inscription-birthdate"]').type(
       '1994-02-22'
@@ -39,7 +39,7 @@ describe('Parcours travailler', () => {
     cy.get('[data-testid="select-option-LinkedIn"]').click();
     cy.get('[data-testid="form-candidate-inscription-infoCoSubtitle"]').should(
       'include.text',
-      '174 Rue Championnet, 75018 Paris'
+      Cypress.env('adresseLocauxParis')
     );
     cy.get('[data-testid="infoco-radio-5"]').click();
     cy.get('button').contains('Valider').should('be.visible').click();
