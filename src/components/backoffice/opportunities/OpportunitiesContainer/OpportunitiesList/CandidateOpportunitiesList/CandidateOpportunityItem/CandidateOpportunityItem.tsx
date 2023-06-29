@@ -1,13 +1,12 @@
 import React from 'react';
 import { OpportunityWithOpportunityUsers } from 'src/api/types';
-import ActionLabels from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel';
+import { ActionLabelContainer as ActionLabels } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
 import {
   DescriptionText,
   InfoText,
   SubtitleText,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
-import ProgressBarStatus from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/CandidateOpportunitiesList/CandidateOpportunityItem/ProgressBarStatus/ProgressBarStatus';
 import { useBookmarkOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/useBookmarkOpportunity';
 import { BUSINESS_LINES } from 'src/constants';
 import { findConstantFromValue } from 'src/utils/Finding';
@@ -20,8 +19,9 @@ import {
   StyledTitleContainer,
   StyledTopContainer,
 } from './CandidateOpportunityItem.styles';
+import { ProgressBarStatus } from './ProgressBarStatus';
 
-const CandidateOpportunityItem = ({
+export const CandidateOpportunityItem = ({
   id,
   title,
   company,
@@ -45,7 +45,7 @@ const CandidateOpportunityItem = ({
       <StyledTopContainer>
         {/*
           <Icon>
-            <IconNoSSR name="home" ratio={1.5} />
+            <Icon name="home" ratio={1.5} />
           </Icon>
         */}
         <StyledTitleContainer>
@@ -100,15 +100,3 @@ const CandidateOpportunityItem = ({
     </StyledContainer>
   );
 };
-
-CandidateOpportunityItem.defaultProps = {
-  isPublic: undefined,
-  isExternal: undefined,
-  opportunityUsers: undefined,
-  department: undefined,
-  contract: undefined,
-  endOfContract: undefined,
-  startOfContract: undefined,
-  businessLines: undefined,
-};
-export default CandidateOpportunityItem;

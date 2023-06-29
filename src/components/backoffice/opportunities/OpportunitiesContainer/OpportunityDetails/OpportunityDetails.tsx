@@ -5,8 +5,8 @@ import {
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunityDetails.styles';
 import { OverlayLoader } from 'src/components/utils/OverlayLoader';
 
-const OpportunityDetails = ({
-  isLoading,
+export const OpportunityDetails = ({
+  isLoading = false,
   details,
 }: {
   isLoading?: boolean;
@@ -21,10 +21,3 @@ const OpportunityDetails = ({
     </StyledContainer>
   );
 };
-
-OpportunityDetails.defaultProps = {
-  details: null,
-  isLoading: false,
-};
-
-export default OpportunityDetails;

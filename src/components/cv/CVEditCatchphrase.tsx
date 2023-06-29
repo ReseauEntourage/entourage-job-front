@@ -1,7 +1,7 @@
 import React from 'react';
 import schemaCatchphrase from 'src/components/forms/schema/formEditCatchphrase.json';
 import { openModal } from 'src/components/modals/Modal';
-import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Grid, ButtonIcon } from 'src/components/utils';
 
 export const CVEditCatchphrase = ({
@@ -9,7 +9,7 @@ export const CVEditCatchphrase = ({
   onChange,
 }: {
   catchphrase: string;
-  onChange?: (arg1: any) => void; // to be typed
+  onChange?: (arg1: { catchphrase: string }) => void; // to be typed
 }) => {
   return (
     <div className="uk-card uk-card-default uk-card-body">

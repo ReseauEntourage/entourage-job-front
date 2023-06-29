@@ -1,20 +1,35 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
+import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
 import { StyledDatePickerContainer } from './DatePicker.styles';
+
+interface DatePickerProps {
+  id: string;
+  name: string;
+  onChange: () => void;
+  title: string;
+  valid?: {
+    isInvalid: boolean;
+    message: string;
+  };
+  value?: string;
+  disabled?: boolean;
+  hidden?: boolean;
+  min?: string;
+  max?: string;
+}
 
 export function DatePicker({
   id,
   name,
   title,
   valid,
-  hidden,
+  hidden = false,
   onChange,
-  disabled,
-  value,
+  disabled = false,
+  value = '',
   min,
   max,
-}) {
+}: DatePickerProps) {
   if (hidden) {
     return null;
   }
@@ -50,28 +65,3 @@ export function DatePicker({
     </StyledDatePickerContainer>
   );
 }
-
-DatePicker.propTypes = {
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
-  valid: PropTypes.shape({
-    isInvalid: PropTypes.bool,
-    message: PropTypes.string,
-  }),
-  value: PropTypes.string,
-  disabled: PropTypes.bool,
-  hidden: PropTypes.bool,
-  min: PropTypes.string,
-  max: PropTypes.string,
-};
-
-DatePicker.defaultProps = {
-  valid: undefined,
-  value: '',
-  min: undefined,
-  max: undefined,
-  disabled: false,
-  hidden: false,
-};

@@ -2,11 +2,11 @@ import React from 'react';
 
 import MainImg from 'public/static/img/aider-banner-desktop.jpg';
 import MainImgMobile from 'public/static/img/aider-banner-mobile.jpg';
-import Layout from 'src/components/Layout';
+import { Layout } from 'src/components/Layout';
 import { NewsletterPartial, SharePartial } from 'src/components/partials';
-import CoachContainer from 'src/components/partials/Aider/CoachContainer';
-import HelpCards from 'src/components/partials/Aider/HelpCards';
-import InfoContainer from 'src/components/partials/Aider/InfoContainer';
+import { CoachContainer } from 'src/components/partials/Aider/CoachContainer';
+import { HelpCards } from 'src/components/partials/Aider/HelpCards';
+import { InfoContainer } from 'src/components/partials/Aider/InfoContainer';
 import { ImageTitle } from 'src/components/partials/ImageTitleNew';
 import { Grid, Section } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';

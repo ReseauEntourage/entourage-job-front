@@ -1,8 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
-import NextErrorComponent from 'next/error';
 import * as Sentry from '@sentry/node';
+import NextErrorComponent from 'next/error';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 const CustomError = ({ statusCode, hasGetInitialPropsRun, err }) => {
   if (!hasGetInitialPropsRun && err) {

@@ -1,19 +1,13 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { openModal } from 'src/components/modals/Modal';
-import ModalInterestLinkedOut from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
+import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import { AssociationEntourage, Partners } from 'src/components/partials';
 import {
   PageType,
   ChildrenType,
 } from 'src/components/partials/Footer/Footer.type';
-import {
-  Grid,
-  Section,
-  SimpleLink,
-  IconNoSSR,
-  Button,
-} from 'src/components/utils';
+import { Grid, Section, SimpleLink, Icon, Button } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
@@ -213,7 +207,7 @@ const pages: PageType[] = [
             style="primary"
             className="uk-margin-medium-top"
           >
-            Espace coach & candidat <IconNoSSR name="chevron-right" />
+            Espace coach & candidat <Icon name="chevron-right" />
           </Button>
         ),
       },

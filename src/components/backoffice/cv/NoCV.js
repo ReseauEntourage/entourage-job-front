@@ -1,15 +1,15 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+import { Api } from 'src/api';
 import { Button, Grid } from 'src/components/utils';
-import { CV_STATUS } from 'src/constants/index.ts';
-import { Api } from 'src/api/index.ts';
+import { CV_STATUS } from 'src/constants';
+import { COACH_USER_ROLES } from 'src/constants/users';
 import {
   isRoleIncluded,
   getUserCandidateFromCoachOrCandidate,
 } from 'src/utils';
-import { COACH_USER_ROLES } from 'src/constants/users.ts';
 
-const NoCV = ({ candidateId, user, setCV }) => {
+export const NoCV = ({ candidateId, user, setCV }) => {
   const candidate = getUserCandidateFromCoachOrCandidate(user);
   return (
     <Grid column middle>
@@ -63,5 +63,3 @@ NoCV.propTypes = {
   }).isRequired,
   setCV: PropTypes.func.isRequired,
 };
-
-export default NoCV;

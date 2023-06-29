@@ -1,5 +1,5 @@
 import React from 'react';
-import CompanyContactModal from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
+import { CompanyContactModal } from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
 import { openModal } from 'src/components/modals/Modal/openModal';
 import { MultipleCTA } from 'src/components/partials/MultipleCTA';
 import { Section } from 'src/components/utils';

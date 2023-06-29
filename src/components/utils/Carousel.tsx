@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { Icon } from 'src/components/utils/Icon';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 
@@ -63,7 +63,7 @@ export const Carousel = ({
             }
           }}
         >
-          <IconNoSSR
+          <Icon
             className="uk-icon-button uk-overlay-default"
             name="chevron-left"
             ratio={2}
@@ -79,7 +79,7 @@ export const Carousel = ({
             }
           }}
         >
-          <IconNoSSR
+          <Icon
             className="uk-icon-button uk-overlay-default"
             name="chevron-right"
             ratio={2}
@@ -97,11 +97,7 @@ export const Carousel = ({
             }
           }}
         >
-          <IconNoSSR
-            className="uk-text-primary"
-            name="chevron-left"
-            ratio={3}
-          />
+          <Icon className="uk-text-primary" name="chevron-left" ratio={3} />
         </a>
         <a
           href="#"
@@ -113,11 +109,7 @@ export const Carousel = ({
             }
           }}
         >
-          <IconNoSSR
-            className="uk-text-primary"
-            name="chevron-right"
-            ratio={3}
-          />
+          <Icon className="uk-text-primary" name="chevron-right" ratio={3} />
         </a>
       </div>
     </div>

@@ -1,11 +1,11 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
-import { Api } from 'src/api/index.ts';
 import UIkit from 'uikit';
-import { Button, IconNoSSR } from 'src/components/utils';
-import { usePrevious } from 'src/hooks/utils';
+import { Api } from 'src/api';
 import { openModal } from 'src/components/modals/Modal';
-import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
-import { gaEvent } from 'src/lib/gtag.ts';
+import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
+import { Button, Icon } from 'src/components/utils';
+import { usePrevious } from 'src/hooks/utils';
+import { gaEvent } from 'src/lib/gtag';
 
 export function useBulkActions(apiRoute, refreshElementsCallback, tag) {
   const [selectedIds, setSelectedIds] = useState([]);
@@ -112,12 +112,12 @@ export function useBulkActions(apiRoute, refreshElementsCallback, tag) {
         {selectionModeActivated ? (
           <>
             Quitter le mode sélection&nbsp;
-            <IconNoSSR name="close" ratio={0.8} />
+            <Icon name="close" ratio={0.8} />
           </>
         ) : (
           <>
             Mode sélection&nbsp;
-            <IconNoSSR name="pencil" ratio={0.8} />
+            <Icon name="pencil" ratio={0.8} />
           </>
         )}
       </Button>

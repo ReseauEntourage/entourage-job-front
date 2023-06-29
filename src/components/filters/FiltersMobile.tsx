@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import UIkit from 'uikit';
 
-import { Button, IconNoSSR } from 'src/components/utils';
+import { Button, Icon } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 
-const FiltersMobile = ({ numberOfFilters }: { numberOfFilters?: number }) => {
+export const FiltersMobile = ({
+  numberOfFilters,
+}: {
+  numberOfFilters?: number;
+}) => {
   const [filterMenuOpened, setFilterMenuOpened] = useState(false);
 
   const onFilterMenuToggle = (opened) => {
@@ -39,7 +43,7 @@ const FiltersMobile = ({ numberOfFilters }: { numberOfFilters?: number }) => {
         toggle="target: #toggle-filter-menu;"
       >
         <div className="uk-position-relative">
-          <IconNoSSR
+          <Icon
             style={{ width: 18, height: 18 }}
             name={`filter${filterMenuOpened ? '' : '-empty'}`}
           />
@@ -57,5 +61,3 @@ const FiltersMobile = ({ numberOfFilters }: { numberOfFilters?: number }) => {
 FiltersMobile.defaultProps = {
   numberOfFilters: 0,
 };
-
-export default FiltersMobile;

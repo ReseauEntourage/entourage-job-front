@@ -1,7 +1,8 @@
-/* eslint-disable react/prop-types */
-
 // use modified version of UIkit because of bug where we can't touch scroll on Offcanvas
+
+// eslint-disable-next-line import/order
 import UIkit from 'src/styles/dist/js/uikit-fixed';
+// eslint-disable-next-line import/order
 import Icons from 'src/styles/dist/js/uikit-icons';
 
 import 'src/styles/dist/css/uikit.entourage.min.css';
@@ -13,19 +14,18 @@ import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 import 'react-phone-number-input/style.css';
 import 'react-tooltip/dist/react-tooltip.css';
 
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import * as Sentry from '@sentry/react';
-import UserProvider from 'src/store/UserProvider';
-import DataProvider from 'src/store/DataProvider';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 
-import SharesCountProvider from 'src/store/SharesCountProvider';
-
-import * as gtag from 'src/lib/gtag.ts';
-import { SplashScreen } from 'src/components/SplashScreen.tsx';
-import { useMount } from 'src/hooks/utils';
+import { SplashScreen } from 'src/components/SplashScreen';
 import { ModalsListener } from 'src/components/modals/Modal';
-import { OFFCANVAS_GUEST, OFFCANVAS_LOGGED } from 'src/constants/utils.ts';
+import { OFFCANVAS_GUEST, OFFCANVAS_LOGGED } from 'src/constants/utils';
+import { useMount } from 'src/hooks/utils';
+import * as gtag from 'src/lib/gtag';
+import { DataProvider } from 'src/store/DataProvider';
+import { SharesCountProvider } from 'src/store/SharesCountProvider';
+import { UserProvider } from 'src/store/UserProvider';
 
 UIkit.use(Icons);
 
@@ -34,6 +34,7 @@ Sentry.init({
   dsn: process.env.SENTRY_DSN,
 });
 
+// eslint-disable-next-line react/prop-types
 const Container = ({ Component, pageProps, err }) => {
   const [loading, setLoading] = useState(true);
   const [fading, setFading] = useState(false);
@@ -72,6 +73,7 @@ const Container = ({ Component, pageProps, err }) => {
   );
 };
 
+// eslint-disable-next-line react/prop-types
 const EntourageApp = ({ Component, pageProps, err }) => {
   const [shouldScrollToTop, setShouldScrollToTop] = useState(true);
   const { events, beforePopState } = useRouter();

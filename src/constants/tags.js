@@ -1,4 +1,4 @@
-const GA_TAGS = {
+export const GA_TAGS = {
   HOME_CV_CLIC: {
     action: 'Home_CV_Clic',
   },
@@ -373,7 +373,7 @@ const GA_TAGS = {
   },
 };
 
-const FB_TAGS = {
+export const FB_TAGS = {
   CANDIDATE_REGISTRATION_OPEN: {
     action: 'Pré-Prospect 1',
     options: { content_category: '1' },
@@ -432,7 +432,7 @@ const FB_TAGS = {
   },
 };
 
-const LINK_TAGS = {
+export const LINK_TAGS = {
   COMPANY_CONTACT_OPEN: {
     conversionId: 11224572,
   },
@@ -440,5 +440,3 @@ const LINK_TAGS = {
     conversionId: 11224580,
   },
 };
-
-export { GA_TAGS, FB_TAGS, LINK_TAGS };

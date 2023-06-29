@@ -1,14 +1,14 @@
 import React from 'react';
-import formCompanyContact from 'src/components/forms/schema/formCompanyContact';
-import { Api } from 'src/api/index.ts';
-import { gaEvent } from 'src/lib/gtag.ts';
-import { FB_TAGS, GA_TAGS, LINK_TAGS } from 'src/constants/tags';
 import UIkit from 'uikit';
-import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { fbEvent } from 'src/lib/fb.ts';
-import { linkEvent } from 'src/lib/lintrk.ts';
+import { Api } from 'src/api';
+import { formCompanyContact } from 'src/components/forms/schema/formCompanyContact';
+import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { FB_TAGS, GA_TAGS, LINK_TAGS } from 'src/constants/tags';
+import { fbEvent } from 'src/lib/fb';
+import { gaEvent } from 'src/lib/gtag';
+import { linkEvent } from 'src/lib/lintrk';
 
-const CompanyContactModal = () => {
+export const CompanyContactModal = () => {
   return (
     <ModalEdit
       submitText="Envoyer"
@@ -37,5 +37,3 @@ const CompanyContactModal = () => {
     />
   );
 };
-
-export default CompanyContactModal;

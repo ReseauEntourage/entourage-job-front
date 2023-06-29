@@ -1,7 +1,7 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+import { Button, Icon } from 'src/components/utils';
 import { addPrefix } from 'src/utils';
-import { Button, IconNoSSR } from 'src/components/utils';
 
 export const ImageTitleContent = ({ title, text, img, cta }) => {
   return (
@@ -42,7 +42,7 @@ export const ImageTitleContent = ({ title, text, img, cta }) => {
                   dataTestId={cta.dataTest}
                 >
                   {cta.label}&nbsp;
-                  <IconNoSSR name="chevron-right" />
+                  <Icon name="chevron-right" />
                 </Button>
               </div>
             )}

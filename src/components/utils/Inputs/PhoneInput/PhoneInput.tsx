@@ -1,22 +1,37 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import PhoneInputWithCountry from 'react-phone-number-input/mobile';
-import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
+import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
 import { StyledPhoneInput } from './PhoneInput.styles';
 
+interface PhoneInputProps {
+  id: string;
+  name: string;
+  onChange: () => void;
+  title: string;
+  valid: {
+    isInvalid: boolean;
+    message: string;
+  };
+  value: string;
+  disabled: boolean;
+  hidden: boolean;
+  autocomplete: string;
+  showLabel: boolean;
+  placeholder: string;
+}
 export function PhoneInput({
-  id,
-  name,
-  title,
   valid,
-  value,
   onChange,
-  disabled,
-  hidden,
-  autocomplete,
-  showLabel,
-  placeholder,
-}) {
+  id = '',
+  value = '',
+  disabled = false,
+  hidden = false,
+  autocomplete = 'tel',
+  title = '',
+  name = '',
+  showLabel = false,
+  placeholder = '',
+}: PhoneInputProps) {
   if (hidden) {
     return null;
   }
@@ -46,33 +61,3 @@ export function PhoneInput({
     </>
   );
 }
-
-PhoneInput.propTypes = {
-  id: PropTypes.string,
-  name: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  title: PropTypes.string,
-  valid: PropTypes.shape({
-    isInvalid: PropTypes.bool,
-    message: PropTypes.string,
-  }),
-  value: PropTypes.string,
-  disabled: PropTypes.bool,
-  hidden: PropTypes.bool,
-  autocomplete: PropTypes.string,
-  showLabel: PropTypes.bool,
-  placeholder: PropTypes.string,
-};
-
-PhoneInput.defaultProps = {
-  id: '',
-  valid: undefined,
-  value: '',
-  disabled: false,
-  hidden: false,
-  autocomplete: 'tel',
-  title: '',
-  name: '',
-  showLabel: false,
-  placeholder: '',
-};

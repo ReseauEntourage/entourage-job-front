@@ -1,12 +1,13 @@
 import React from 'react';
 import { CVList } from 'src/components/cv';
 import { Grid, Section } from 'src/components/utils';
-import { CV_FILTERS_DATA } from 'src/constants/index';
+import { UIKIT_STYLES } from 'src/components/variables';
+import { CV_FILTERS_DATA } from 'src/constants';
 import { useFilters } from 'src/hooks/useFilters';
 
 const cvFiltersWithoutGender = CV_FILTERS_DATA.slice(0, -1);
 
-export const SearchCandidates = ({ style }: { style?: string }) => {
+export const SearchCandidates = ({ style }: { style?: UIKIT_STYLES }) => {
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
     cvFiltersWithoutGender,
     '/candidats'

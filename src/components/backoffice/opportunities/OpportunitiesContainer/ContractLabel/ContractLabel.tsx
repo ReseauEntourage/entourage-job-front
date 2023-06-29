@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyledContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel.styles';
 import { InfoText } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
+import { Contract } from 'src/constants';
 import { buildContractLabel } from 'src/utils/Formatting';
 
 interface ContractLabelProps {
-  contract: string;
+  contract: Contract;
   endOfContract?: string;
   startOfContract?: string;
   textWrap?: boolean;

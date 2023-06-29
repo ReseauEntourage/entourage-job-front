@@ -1,7 +1,7 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
-const ErrorMessage = ({ error }) => {
+export const ErrorMessage = ({ error }) => {
   return (
     <div className="uk-width-1-1 uk-text-center">
       <div className="ukuk-width-xlarge">
@@ -15,10 +15,11 @@ const ErrorMessage = ({ error }) => {
     </div>
   );
 };
+
 ErrorMessage.propTypes = {
   error: PropTypes.string,
 };
+
 ErrorMessage.defaultProps = {
   error: undefined,
 };
-export default ErrorMessage;

@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import FiltersCheckboxes from 'src/components/filters/FiltersCheckboxes';
-import FiltersDropdowns from 'src/components/filters/FiltersDropdowns';
-import FiltersMobile from 'src/components/filters/FiltersMobile';
-import FiltersOptions from 'src/components/filters/FiltersOptions';
-import FiltersSideBar from 'src/components/filters/FiltersSideBar';
-import { IconNoSSR } from 'src/components/utils';
+import { FiltersCheckboxes } from 'src/components/filters/FiltersCheckboxes';
+import { FiltersDropdowns } from 'src/components/filters/FiltersDropdowns';
+import { FiltersMobile } from 'src/components/filters/FiltersMobile';
+import { FiltersOptions } from 'src/components/filters/FiltersOptions';
+import { FiltersSideBar } from 'src/components/filters/FiltersSideBar';
+import { Icon } from 'src/components/utils';
 import {
   CV_FILTERS_DATA,
   MEMBER_FILTERS_DATA,
@@ -18,14 +18,14 @@ import { AnyToFix } from 'src/utils/Types';
 
 interface SearchBarProps {
   filtersConstants:
-    | Partial<typeof CV_FILTERS_DATA>
-    | Partial<typeof MEMBER_FILTERS_DATA>
-    | Partial<typeof OPPORTUNITY_FILTERS_DATA>
-    | Partial<typeof ORGANIZATION_FILTERS_DATA>; // to be typed properly
+    | typeof CV_FILTERS_DATA
+    | typeof MEMBER_FILTERS_DATA
+    | typeof OPPORTUNITY_FILTERS_DATA
+    | typeof ORGANIZATION_FILTERS_DATA; // to be typed properly
   filters: AnyToFix; // to be typed
-  setFilters: () => void;
+  setFilters: (updatedFilters: AnyToFix) => void;
   search?: string;
-  setSearch: (arg1?: string) => void;
+  setSearch: (search?: string) => void;
   resetFilters: () => void;
   smallSelectors?: boolean;
   placeholder?: string;
@@ -34,7 +34,7 @@ interface SearchBarProps {
   };
 }
 
-const SearchBar = ({
+export const SearchBar = ({
   filtersConstants,
   filters,
   setFilters,
@@ -105,7 +105,7 @@ const SearchBar = ({
           className="ent-search-icon uk-background-primary uk-light"
           onClick={startSearch}
         >
-          <IconNoSSR name="search" className="uk-text-secondary" />
+          <Icon name="search" className="uk-text-secondary" />
         </a>
       </div>
       <FiltersSideBar
@@ -139,5 +139,3 @@ SearchBar.defaultProps = {
   search: undefined,
   smallSelectors: false,
 };
-
-export default SearchBar;

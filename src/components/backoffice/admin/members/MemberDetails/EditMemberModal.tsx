@@ -1,15 +1,15 @@
 import _ from 'lodash';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import UIkit from 'uikit';
-import { Actions } from '../../../../../constants/utils';
-import { useOnMemberFormSubmit } from '../../useOnMemberFormSubmit';
 import { Api } from 'src/api';
 import { User, UserDto } from 'src/api/types';
+import { useOnMemberFormSubmit } from 'src/components/backoffice/admin/useOnMemberFormSubmit';
 import { formAddUser } from 'src/components/forms/schema/formAddUser';
 import { openModal } from 'src/components/modals/Modal';
-import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
-import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
+import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { EXTERNAL_USER_ROLES, USER_ROLES } from 'src/constants/users';
+import { Actions } from 'src/constants/utils';
 import { getRelatedUser, isRoleIncluded } from 'src/utils/Finding';
 
 interface EditMemberModal {

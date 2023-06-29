@@ -26,7 +26,7 @@ interface CandidateOffersTabProps {
   candidateId: string;
 }
 
-const CandidateOffersTab = ({
+export const CandidateOffersTab = ({
   activeStatus,
   tabCounts,
   candidateId,
@@ -87,5 +87,3 @@ const CandidateOffersTab = ({
     </div>
   );
 };
-
-export default CandidateOffersTab;

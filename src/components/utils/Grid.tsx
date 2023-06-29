@@ -1,4 +1,3 @@
-import dynamic from 'next/dynamic';
 import React from 'react';
 
 interface GridProps {
@@ -133,10 +132,3 @@ Grid.defaultProps = {
   children: null,
   dataTestId: '',
 };
-
-export const GridNoSSR = dynamic(
-  () => {
-    return import('src/components/utils/Grid').then((mod) => mod.Grid);
-  },
-  { ssr: false }
-);

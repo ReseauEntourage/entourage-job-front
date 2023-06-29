@@ -1,17 +1,14 @@
 import _ from 'lodash';
 import React, { useCallback, useMemo, useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import { Api } from 'src/api/index';
-import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
+import { Api } from 'src/api';
+import { LoadingScreen } from 'src/components/backoffice/cv/LoadingScreen';
 import { CandidatCard } from 'src/components/cards';
-import SearchBar from 'src/components/filters/SearchBar';
+import { SearchBar } from 'src/components/filters/SearchBar';
 import { openModal } from 'src/components/modals/Modal';
-import usePostPublicOfferModal from 'src/components/modals/usePostPublicOfferModal';
-import { Button, Grid, SimpleLink, IconNoSSR } from 'src/components/utils';
-import {
-  CV_FILTERS_DATA,
-  INITIAL_NB_OF_CV_TO_DISPLAY,
-} from 'src/constants/index';
+import { usePostPublicOfferModal } from 'src/components/modals/usePostPublicOfferModal';
+import { Button, Grid, SimpleLink, Icon } from 'src/components/utils';
+import { CV_FILTERS_DATA, INITIAL_NB_OF_CV_TO_DISPLAY } from 'src/constants';
 import { FB_TAGS } from 'src/constants/tags';
 import { usePrevious } from 'src/hooks/utils';
 import { fbEvent } from 'src/lib/fb';
@@ -41,8 +38,8 @@ interface CVListProps {
   nb?: number;
   search?: string;
   filters?: AnyToFix; // to be typed
-  setFilters?: (updatedFilters?: any) => void; // to be typed
-  setSearch?: (updatedSearch?: any) => void; // to be typed
+  setFilters?: (updatedFilters?: AnyToFix) => void; // to be typed
+  setSearch?: (updatedSearch?: AnyToFix) => void; // to be typed
   resetFilters?: () => void;
 }
 
@@ -175,10 +172,7 @@ export const CVList = ({
                     data-uk-spinner="ratio: .6"
                   />
                 ) : (
-                  <IconNoSSR
-                    className="uk-margin-small-left"
-                    name="plus-circle"
-                  />
+                  <Icon className="uk-margin-small-left" name="plus-circle" />
                 )}
               </Button>
             </div>

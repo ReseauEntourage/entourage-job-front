@@ -2,12 +2,12 @@ import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { UserWithUserCandidate } from 'src/api/types';
 import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
-import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
-import { Grid, SimpleLink, IconNoSSR } from 'src/components/utils';
+import { ImgProfile } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
+import { Grid, SimpleLink, Icon } from 'src/components/utils';
 import { USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils/Finding';
 
-const CandidatHeader = ({
+export const CandidatHeader = ({
   user,
   showZone,
 }: {
@@ -58,13 +58,13 @@ const CandidatHeader = ({
           {relatedUser && (
             <>
               <Grid row gap="small" middle className="uk-margin-small-top">
-                <IconNoSSR name="user" style={{ width: 20 }} />
+                <Icon name="user" style={{ width: 20 }} />
                 <span className="uk-text-italic">
                   {relatedUser.firstName} {relatedUser.lastName}
                 </span>
               </Grid>
               <Grid row gap="small" middle className="uk-margin-small-top">
-                <IconNoSSR name="link" style={{ width: 20 }} />
+                <Icon name="link" style={{ width: 20 }} />
                 <SimpleLink
                   className="uk-link-text uk-margin-small-top"
                   target="_blank"
@@ -93,5 +93,3 @@ const CandidatHeader = ({
 CandidatHeader.defaultProps = {
   showZone: false,
 };
-
-export default CandidatHeader;

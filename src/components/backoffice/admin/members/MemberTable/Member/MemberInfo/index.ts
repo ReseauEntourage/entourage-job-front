@@ -1,2 +1,2 @@
-export { MemberInfo } from './MemberInfo';
-export { RelatedMemberInfo } from './RelatedMemberInfo';
+export * from './MemberInfo';
+export * from './RelatedMemberInfo';

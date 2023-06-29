@@ -9,7 +9,17 @@ import { GA_TAGS } from 'src/constants/tags';
 
 import { GENDERS_FILTERS, USER_ROLES_FILTERS } from './users';
 
-export const OFFER_STATUS = [
+export type FilterConstant<
+  T extends string | number | boolean = string | number | boolean
+> = { value: T; label: string };
+
+export type OfferStatus = -1 | 0 | 1 | 2 | 3 | 4;
+
+export const OFFER_STATUS: (FilterConstant<OfferStatus> & {
+  color: string;
+  public?: string;
+  recommended?: string;
+})[] = [
   {
     value: -1,
     label: 'Offre à traiter',
@@ -168,7 +178,22 @@ export const AMBITIONS_PREFIXES = [
   },
 ];
 
-export const CONTRACTS = [
+export type Contract =
+  | 'cdi'
+  | 'cdd'
+  | 'cdd+6'
+  | 'cdd-6'
+  | 'cddi'
+  | 'alt'
+  | 'inte'
+  | 'stage'
+  | 'form'
+  | 'pmsmp'
+  | 'other';
+
+export const CONTRACTS: (FilterConstant<Contract> & {
+  end: boolean;
+})[] = [
   {
     label: 'CDI',
     value: 'cdi',

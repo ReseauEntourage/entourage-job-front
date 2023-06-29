@@ -48,7 +48,7 @@ export const LandingPagePartial = () => {
                     href="#header"
                     data-uk-scroll="offset: -1"
                   >
-                    <IconNoSSR name="chevron-down" ratio="2.5" />
+                    <Icon name="chevron-down" ratio="2.5" />
                   </a>
                 </div> */}
             </Grid>

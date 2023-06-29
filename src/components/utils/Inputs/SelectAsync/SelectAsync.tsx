@@ -1,33 +1,56 @@
-import PropTypes from 'prop-types';
 import React, { useCallback, useState } from 'react';
 import { components } from 'react-select';
-import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
-import { AnyToFix } from 'src/utils/Types';
+import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
 import { Icon } from 'src/components/utils/Icon';
+import { FilterConstant } from 'src/constants';
 import {
   StyledAsyncSelect,
   StyledAsyncSelectContainer,
 } from './SelectAsync.styles';
 
 let debounceTimeoutId;
+
+interface SelectAsyncProps {
+  id: string;
+  cacheOptions: boolean;
+  value: FilterConstant | FilterConstant[];
+  defaultOptions: FilterConstant | FilterConstant[] | boolean;
+  isMulti: boolean;
+  placeholder: string;
+  noOptionsMessage: () => void;
+  loadingMessage: () => void;
+  loadOptions: (
+    inputValue: string,
+    callback: (options: FilterConstant[]) => void
+  ) => void;
+  isDisabled: boolean;
+  isHidden: boolean;
+  onChange: () => void;
+  openMenuOnClick: boolean;
+  valid: {
+    isInvalid: boolean;
+    message: string;
+  };
+}
 export function SelectAsync({
   id,
-  cacheOptions,
   value,
-  isMulti,
   placeholder,
-  noOptionsMessage,
-  loadingMessage,
-  loadOptions,
-  isDisabled,
-  isHidden,
-  onChange,
-  openMenuOnClick,
   valid,
-  defaultOptions: defaultOptionsProps,
-}) {
-  const [defaultOptions, setDefaultOptions] =
-    useState<{ label: string; value: AnyToFix }[]>(defaultOptionsProps);
+  defaultOptions: defaultOptionsProps = true,
+  cacheOptions = false,
+  isMulti = false,
+  noOptionsMessage = () => null,
+  loadingMessage = () => null,
+  loadOptions = () => null,
+  isDisabled = false,
+  isHidden = false,
+  onChange = () => null,
+  openMenuOnClick = false,
+}: SelectAsyncProps) {
+  const [defaultOptions, setDefaultOptions] = useState<
+    FilterConstant[] | FilterConstant
+  >(typeof defaultOptionsProps !== 'boolean' ? defaultOptionsProps : null);
   const [isLoading, setIsLoading] = useState(false);
 
   const debouncedLoadOptions = useCallback(
@@ -112,65 +135,3 @@ export function SelectAsync({
     </StyledAsyncSelectContainer>
   );
 }
-
-SelectAsync.propTypes = {
-  id: PropTypes.string,
-  cacheOptions: PropTypes.bool,
-  value: PropTypes.oneOfType([
-    PropTypes.shape({
-      label: PropTypes.string,
-      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    }),
-    PropTypes.arrayOf(
-      PropTypes.shape({
-        label: PropTypes.string,
-        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-      })
-    ),
-  ]),
-  defaultOptions: PropTypes.oneOfType([
-    PropTypes.oneOfType([
-      PropTypes.shape({
-        label: PropTypes.string,
-        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-      }),
-      PropTypes.arrayOf(
-        PropTypes.shape({
-          label: PropTypes.string,
-          value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-        })
-      ),
-    ]),
-    PropTypes.bool,
-  ]),
-  isMulti: PropTypes.bool,
-  placeholder: PropTypes.string,
-  noOptionsMessage: PropTypes.func,
-  loadingMessage: PropTypes.func,
-  loadOptions: PropTypes.func,
-  isDisabled: PropTypes.bool,
-  isHidden: PropTypes.bool,
-  onChange: PropTypes.func,
-  openMenuOnClick: PropTypes.bool,
-  valid: PropTypes.shape({
-    isInvalid: PropTypes.bool,
-    message: PropTypes.string,
-  }),
-};
-
-SelectAsync.defaultProps = {
-  id: undefined,
-  cacheOptions: false,
-  value: undefined,
-  isMulti: false,
-  placeholder: undefined,
-  noOptionsMessage: () => null,
-  loadingMessage: () => null,
-  loadOptions: () => null,
-  isDisabled: false,
-  isHidden: false,
-  onChange: () => null,
-  openMenuOnClick: false,
-  defaultOptions: true,
-  valid: undefined,
-};

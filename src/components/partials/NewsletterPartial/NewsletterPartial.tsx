@@ -3,7 +3,7 @@ import UIkit from 'uikit';
 
 import { v4 as uuid } from 'uuid';
 import validator from 'validator';
-import { Api } from 'src/api/index';
+import { Api } from 'src/api';
 import { StyledNLForm } from 'src/components/partials/NewsletterPartial/NewsletterPartial.styles';
 import { Section } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
@@ -16,8 +16,8 @@ import { gaEvent } from 'src/lib/gtag';
 const uuidValue = uuid();
 
 export const NewsletterPartial = ({
-  style,
-  padding,
+  style = 'default',
+  padding = false,
   tag,
 }: {
   style?: 'default' | 'muted';
@@ -162,10 +162,4 @@ export const NewsletterPartial = ({
       </StyledNLForm>
     </Section>
   );
-};
-
-NewsletterPartial.defaultProps = {
-  style: 'default',
-  padding: false,
-  tag: null,
 };

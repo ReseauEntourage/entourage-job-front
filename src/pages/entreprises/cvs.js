@@ -1,16 +1,16 @@
 import React from 'react';
-import { gaEvent } from 'src/lib/gtag.ts';
-import { Button, Grid, Img, Section } from 'src/components/utils';
-import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import Layout from 'src/components/Layout.tsx';
-import { ImageTitle } from 'src/components/partials/ImageTitle';
-import { CorporateContact, SearchCandidates } from 'src/components/partials';
-import { NewsletterPartial } from 'src/components/partials/NewsletterPartial';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
+import { Layout } from 'src/components/Layout';
 import { openModal } from 'src/components/modals/Modal';
-import usePostPublicOfferModal from 'src/components/modals/usePostPublicOfferModal';
+import { usePostPublicOfferModal } from 'src/components/modals/usePostPublicOfferModal';
+import { CorporateContact, SearchCandidates } from 'src/components/partials';
+import { ImageTitle } from 'src/components/partials/ImageTitle';
+import { NewsletterPartial } from 'src/components/partials/NewsletterPartial';
+import { Button, Grid, Img, Section } from 'src/components/utils';
+import { Icon } from 'src/components/utils/Icon';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { fbEvent } from 'src/lib/fb';
+import { gaEvent } from 'src/lib/gtag';
 import { isSSR } from 'src/utils/isSSR';
-import { fbEvent } from 'src/lib/fb.ts';
 
 const CVEntreprises = () => {
   const PublicOfferModal = usePostPublicOfferModal();
@@ -70,7 +70,7 @@ const CVEntreprises = () => {
                 openModal(<PublicOfferModal />);
               }}
             >
-              Déposez votre offre <IconNoSSR name="chevron-right" />
+              Déposez votre offre <Icon name="chevron-right" />
             </Button>
           </Grid>
         </div>
@@ -93,7 +93,7 @@ const CVEntreprises = () => {
               href="/entreprises/recruter-hors-linkedout"
             >
               Voir les partenaires&nbsp;
-              <IconNoSSR name="chevron-right" />
+              <Icon name="chevron-right" />
             </Button>
           </Grid>
         </div>

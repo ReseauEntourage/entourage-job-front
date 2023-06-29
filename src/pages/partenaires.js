@@ -1,14 +1,14 @@
-import React from 'react';
-import Layout from 'src/components/Layout.tsx';
-import PARTNERS from 'src/constants/partners';
-import { Img, Section, SimpleLink, Grid } from 'src/components/utils';
-import { addPrefix, formatParagraph } from 'src/utils';
-import ModalInterestLinkedOut from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
-import { gaEvent } from 'src/lib/gtag.ts';
-import { GA_TAGS } from 'src/constants/tags';
-import { openModal } from 'src/components/modals/Modal';
 import PropTypes from 'prop-types';
+import React from 'react';
+import { Layout } from 'src/components/Layout';
+import { openModal } from 'src/components/modals/Modal';
+import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import { LogoList, SimpleSection } from 'src/components/partials';
+import { Img, Section, SimpleLink, Grid } from 'src/components/utils';
+import { PARTNERS } from 'src/constants/partners';
+import { GA_TAGS } from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
+import { addPrefix, formatParagraph } from 'src/utils';
 
 const viewportHeightWithoutHeader = 'calc(100vh - 80px)';
 const viewportHeightWithoutHeaderAndPadding = 'calc(100vh - 220px)';

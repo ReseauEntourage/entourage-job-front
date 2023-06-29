@@ -1,6 +1,6 @@
 import React from 'react';
 import { User } from 'src/api/types';
-import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
+import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { useTab } from 'src/components/backoffice/admin/members/MemberDetails/useTab';
 import { Grid, Icon, Section, SimpleLink } from 'src/components/utils';
 import { MEMBER_TABS } from 'src/constants';

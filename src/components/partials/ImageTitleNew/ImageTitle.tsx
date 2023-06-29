@@ -1,8 +1,9 @@
 import { StaticImageData } from 'next/image';
 import React from 'react';
-import { StyledImageTitle } from 'src/components/partials/ImageTitleNew/styles';
+import { StyledImageTitle } from 'src/components/partials/ImageTitleNew/ImageTitle.styles';
 import { Container, Button, BackgroundImage } from 'src/components/utils';
 import { H1 } from 'src/components/utils/Headings';
+import { UIKIT_BUTTON_STYLES_SPEC } from 'src/components/variables';
 
 export const ImageTitle = ({
   title,
@@ -21,7 +22,7 @@ export const ImageTitle = ({
     onClick: () => void;
     label: string;
     href: string;
-    className: string;
+    className: UIKIT_BUTTON_STYLES_SPEC;
     isExternal: boolean;
     newTab: boolean;
     dataTest: string;

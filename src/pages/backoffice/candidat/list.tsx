@@ -1,9 +1,9 @@
 // page uniquement utilisée pour les coachs externes: liste des candidats qui lui sont rattachés
 
 import React from 'react';
-import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
+import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { ExternalCoachMemberList } from 'src/components/backoffice/candidate/ExternalCoach/ExternalCoachMemberList';
-import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
+import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { Section } from 'src/components/utils';
 
 const List = () => {

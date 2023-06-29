@@ -6,7 +6,7 @@ import InstaIcon from 'public/static/img/icons/instagram.svg';
 import LinkedInIcon from 'public/static/img/icons/linked-in.svg';
 import TwitterIcon from 'public/static/img/icons/twitter.svg';
 import YoutubeIcon from 'public/static/img/icons/youtube.svg';
-import { StyledShareButton } from 'src/components/partials/SharePartial/styles';
+import { StyledShareButton } from 'src/components/partials/SharePartial/SharePartial.styles';
 import { Grid } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
@@ -78,5 +78,3 @@ export const SharePartial = ({ padding }: { padding?: boolean }) => {
 SharePartial.defaultProps = {
   padding: false,
 };
-
-export default SharePartial;

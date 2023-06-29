@@ -1,3 +1,1 @@
-import StepperModal from './StepperModal';
-
-export default StepperModal;
+export * from './StepperModal';

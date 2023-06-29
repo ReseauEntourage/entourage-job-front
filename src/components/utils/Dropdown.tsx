@@ -10,12 +10,12 @@ interface DropdownProps {
 }
 
 export const Dropdown = ({
+  id = 'dropdown',
   children,
-  headers,
-  dividers,
   active,
-  id,
   boundaryId,
+  headers = [],
+  dividers = [],
 }: DropdownProps) => {
   return (
     <div
@@ -41,13 +41,3 @@ export const Dropdown = ({
     </div>
   );
 };
-
-Dropdown.defaultProps = {
-  headers: [],
-  dividers: [],
-  active: undefined,
-  id: 'dropdown',
-  boundaryId: undefined,
-};
-
-export const DropdownNoSSR = Dropdown;

@@ -1,11 +1,11 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, ButtonIcon, IconNoSSR } from 'src/components/utils';
-import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import React from 'react';
 import schemaTestimonial from 'src/components/forms/schema/formEditTestimonial.json';
-import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
-import { formatParagraph, sortByName } from 'src/utils';
 import { openModal } from 'src/components/modals/Modal';
+import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
+import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { Grid, ButtonIcon, Icon } from 'src/components/utils';
+import { formatParagraph, sortByName } from 'src/utils';
 
 export const CVEditReviews = ({ reviews, onChange }) => {
   const MAX_REVIEWS = 3;
@@ -47,7 +47,7 @@ export const CVEditReviews = ({ reviews, onChange }) => {
                   eachWidths={['auto', 'expand']}
                   className="uk-padding-small uk-padding-remove-horizontal"
                 >
-                  <IconNoSSR name="quote-right" />
+                  <Icon name="quote-right" />
                   <>
                     <p className="uk-text-small uk-margin-small">
                       {formatParagraph(review.text)}

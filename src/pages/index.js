@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from 'src/components/Layout.tsx';
+import { Layout } from 'src/components/Layout';
 
 import {
   ActionPartial,

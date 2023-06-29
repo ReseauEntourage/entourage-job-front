@@ -1,4 +1,3 @@
-import dynamic from 'next/dynamic';
 import React from 'react';
 
 interface CloseButtonProps {
@@ -29,14 +28,3 @@ CloseButton.defaultProps = {
   onClick: null,
   dataTestId: '',
 };
-
-export const CloseButtonNoSSR = dynamic(
-  () => {
-    return import('src/components/utils/CloseButton').then(
-      (mod) => mod.CloseButton
-    );
-  },
-  {
-    ssr: false,
-  }
-);

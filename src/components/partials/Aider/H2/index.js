@@ -1,9 +1,9 @@
-import React from 'react';
-import { StyledTitleSection } from 'src/components/partials/Aider/H2/styles';
-import DoubleCarresIcon from 'public/static/img/icons/double-carres.svg';
 import PropTypes from 'prop-types';
+import React from 'react';
+import DoubleCarresIcon from 'public/static/img/icons/double-carres.svg';
+import { StyledTitleSection } from 'src/components/partials/Aider/H2/styles';
 
-const TitleSection = ({ title, titleColor, svgStroke, svgColor }) => {
+export const TitleSection = ({ title, titleColor, svgStroke, svgColor }) => {
   return (
     <StyledTitleSection
       titleColor={titleColor}
@@ -29,5 +29,3 @@ TitleSection.propTypes = {
 TitleSection.defaultProps = {
   svgStroke: 'white',
 };
-
-export default TitleSection;

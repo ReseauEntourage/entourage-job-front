@@ -1,3 +1,3 @@
-import APIHandler from './api';
+import { APIHandler } from './api';
 
 export const Api = new APIHandler();

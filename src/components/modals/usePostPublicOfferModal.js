@@ -1,10 +1,10 @@
-import schema from 'src/components/forms/schema/formEditOpportunity';
-import { mutateFormSchema } from 'src/utils';
+import { formEditOpportunity } from 'src/components/forms/schema/formEditOpportunity';
 import { usePostOpportunity } from 'src/hooks';
+import { mutateFormSchema } from 'src/utils';
 
-function usePostPublicOfferModal() {
+export function usePostPublicOfferModal() {
   const mutatedSchema = mutateFormSchema(
-    schema,
+    formEditOpportunity,
     [
       {
         fieldId: 'candidatesIds',
@@ -61,5 +61,3 @@ function usePostPublicOfferModal() {
 
   return PostOpportunityModal;
 }
-
-export default usePostPublicOfferModal;

@@ -4,7 +4,7 @@ import {
   EVENT_TYPES,
   EVENT_TYPES_FILTERS,
   OFFER_STATUS,
-} from 'src/constants/index';
+} from 'src/constants';
 
 export function mapEventObject(events, eventType) {
   if (eventType) {

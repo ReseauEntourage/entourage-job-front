@@ -1,13 +1,13 @@
 /* eslint react/destructuring-assignment: 0 */
 /* eslint react/prop-types: 0 */
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { ModalInterestLinkedOut } from '../ModalInterestLinkedOut';
+import { Api } from 'src/api';
 import { ModalsListener, openModal } from 'src/components/modals/Modal';
-import { Api } from 'src/api/index.ts';
 import { BREAKPOINTS } from 'src/constants/styles';
-import ModalInterestLinkedOut from '../ModalInterestLinkedOut';
 
 jest.mock('@react-hook/window-size', () => {
   return jest.fn(() => {
@@ -17,7 +17,7 @@ jest.mock('@react-hook/window-size', () => {
   });
 });
 jest.mock('react-modal');
-jest.mock('src/api/index.ts');
+jest.mock('src/api/index');
 jest.mock('src/components/modals/Modal', () => {
   const modalModule = jest.requireActual('src/components/modals/Modal');
   return {

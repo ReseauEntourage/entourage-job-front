@@ -1,9 +1,11 @@
 import React from 'react';
-import { Button, Section, IconNoSSR } from 'src/components/utils';
+import { Button, Section, Icon } from 'src/components/utils';
+import { UIKIT_STYLES } from 'src/components/variables';
 
 interface SimpleSectionProps {
   id: string;
-  style?: string;
+  style?: UIKIT_STYLES;
+
   container?: 'small' | 'large';
   title: React.ReactNode;
   button?: {
@@ -56,7 +58,7 @@ export const SimpleSection = ({
             toggle={button.modal}
             onClick={button.onClick}
           >
-            {button.label} <IconNoSSR name="chevron-right" />
+            {button.label} <Icon name="chevron-right" />
           </Button>
         )}
         {children}

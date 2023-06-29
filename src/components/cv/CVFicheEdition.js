@@ -1,7 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useMount, usePrevious } from 'src/hooks/utils';
-import { Grid, Img } from 'src/components/utils';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   ExperiencesProfileCard,
   InfoProfileCard,
@@ -10,11 +8,13 @@ import {
   StoryProfileCard,
 } from 'src/components/cards';
 import { CVEditCareerPath } from 'src/components/cv/CVEditCareerPath';
-import { CVEditCatchphrase } from 'src/components/cv/CVEditCatchphrase.tsx';
+import { CVEditCatchphrase } from 'src/components/cv/CVEditCatchphrase';
+import { CVEditPicture } from 'src/components/cv/CVEditPicture';
 import { CVEditReviews } from 'src/components/cv/CVEditReviews';
-import { CVEditPicture } from 'src/components/cv/CVEditPicture.tsx';
+import { Grid, Img } from 'src/components/utils';
 
-import { CV_STATUS } from 'src/constants/index.ts';
+import { CV_STATUS } from 'src/constants';
+import { useMount, usePrevious } from 'src/hooks/utils';
 import { CVShape } from './CV.shape';
 
 export const CVFicheEdition = ({
@@ -164,9 +164,7 @@ CVFicheEdition.propTypes = {
 };
 
 CVFicheEdition.defaultProps = {
-  onChange: () => {
-    console.log('Aucune fonction de modification associé');
-  },
+  onChange: () => {},
   disablePicture: false,
   phone: undefined,
   address: undefined,

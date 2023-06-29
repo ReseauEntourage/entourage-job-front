@@ -1,7 +1,7 @@
+import _ from 'lodash';
+import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import { getFiltersTagsFromQueryParamsFront } from 'src/utils';
-import { useRouter } from 'next/router';
-import _ from 'lodash';
 
 export function useTabFilters(filtersData, path, otherPathParams) {
   const { push, query: originalQuery } = useRouter();

@@ -7,13 +7,9 @@ const uuidValue = uuid();
 
 interface InputsContainerProps {
   fields: React.ReactNode[];
-  /*  title: string;
-  childWidths: number; */
 }
 
-const InputsContainer = ({
-  fields /* title, childWidths */,
-}: InputsContainerProps) => {
+export const InputsContainer = ({ fields }: InputsContainerProps) => {
   const firstFieldNotHiddenIndex = fields.findIndex((field) => {
     return !!field;
   });
@@ -39,9 +35,3 @@ const InputsContainer = ({
     </StyledInputsContainer>
   );
 };
-
-InputsContainer.defaultProps = {
-  /* title: undefined,
-  childWidths: undefined, */
-};
-export default InputsContainer;

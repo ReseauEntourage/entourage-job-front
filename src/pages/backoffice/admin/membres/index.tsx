@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
-import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
+import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { MemberList } from 'src/components/backoffice/admin/members/MemberList';
 import { useRole } from 'src/components/backoffice/admin/members/MemberList/useRole';
-import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
+import { LoadingScreen } from 'src/components/backoffice/cv/LoadingScreen';
 import { Section } from 'src/components/utils';
 import { ALL_USER_ROLES, CANDIDATE_USER_ROLES } from 'src/constants/users';
 import { useFilters } from 'src/hooks/useFilters';

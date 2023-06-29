@@ -3,9 +3,9 @@ import React from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
 import { formAddExternalOpportunityCandidate } from 'src/components/forms/schema/formAddExternalOpportunity';
-import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 
-const ModalExternalOffer = ({
+export const ModalExternalOffer = ({
   fetchOpportunities,
   candidateId,
 }: {
@@ -44,5 +44,3 @@ const ModalExternalOffer = ({
     />
   );
 };
-
-export default ModalExternalOffer;

@@ -1,25 +1,27 @@
+import moment from 'moment';
+import PropTypes from 'prop-types';
 import React, { useRef } from 'react';
-import { usePostOpportunity } from 'src/hooks';
-import { mutateFormSchema } from 'src/utils';
-import formEditOpportunitySchema, {
-  adminMutations as opportunityAdminMutations,
-} from 'src/components/forms/schema/formEditOpportunity';
-import formEditExternalOpportunitySchema, {
+import UIkit from 'uikit';
+import { Api } from 'src/api';
+import {
+  formEditExternalOpportunity,
   adminMutations as externalOpportunityAdminMutations,
 } from 'src/components/forms/schema/formEditExternalOpportunity';
-import { ButtonMultiple } from 'src/components/utils';
-import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
-import OpportunityList from 'src/components/opportunities/OpportunityList';
-import PropTypes from 'prop-types';
+import {
+  formEditOpportunity,
+  adminMutations as opportunityAdminMutations,
+} from 'src/components/forms/schema/formEditOpportunity';
+import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { openModal } from 'src/components/modals/Modal';
-import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { Api } from 'src/api/index.ts';
-import UIkit from 'uikit';
-import moment from 'moment';
+import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { OpportunityList } from 'src/components/opportunities/OpportunityList';
+import { ButtonMultiple } from 'src/components/utils';
+import { Icon } from 'src/components/utils/Icon';
+import { usePostOpportunity } from 'src/hooks';
 import { useIsDesktop } from 'src/hooks/utils';
+import { mutateFormSchema } from 'src/utils';
 
-const AdminOpportunityList = ({
+export const AdminOpportunityList = ({
   search,
   filters,
   setFilters,
@@ -31,7 +33,7 @@ const AdminOpportunityList = ({
   const isDesktop = useIsDesktop();
 
   // desactivation du champ de disclaimer
-  const mutatedOfferSchema = mutateFormSchema(formEditOpportunitySchema, [
+  const mutatedOfferSchema = mutateFormSchema(formEditOpportunity, [
     {
       fieldId: 'disclaimer',
       props: [
@@ -58,7 +60,7 @@ const AdminOpportunityList = ({
   ]);
 
   const mutatedExternalOfferSchema = mutateFormSchema(
-    formEditExternalOpportunitySchema,
+    formEditExternalOpportunity,
     [
       ...externalOpportunityAdminMutations,
       {
@@ -154,11 +156,7 @@ const AdminOpportunityList = ({
             },
           ]}
         >
-          <IconNoSSR
-            name="plus"
-            ratio={0.8}
-            className="uk-margin-small-right"
-          />
+          <Icon name="plus" ratio={0.8} className="uk-margin-small-right" />
           Créer
         </ButtonMultiple>
       </HeaderBackoffice>
@@ -196,5 +194,3 @@ AdminOpportunityList.defaultProps = {
   setSearch: () => {},
   resetFilters: () => {},
 };
-
-export default AdminOpportunityList;

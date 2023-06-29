@@ -1,11 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { withRouter } from 'next/router';
-import Layout from 'src/components/Layout.tsx';
-import { Api } from 'src/api/index.ts';
-import { Section } from 'src/components/utils';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Api } from 'src/api';
+import { Layout } from 'src/components/Layout';
 import { CVPDF } from 'src/components/cv';
 import { CVShape } from 'src/components/cv/CV.shape';
+import { Section } from 'src/components/utils';
 
 const CVPDFPage = ({ cv, page, router }) => {
   if (!cv) {
@@ -58,7 +58,6 @@ CVPDFPage.getInitialProps = async ({ query }) => {
         return { cv: null };
       });
   }
-  console.log('No token provided');
   return { cv: null };
 };
 

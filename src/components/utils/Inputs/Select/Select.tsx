@@ -1,9 +1,37 @@
-import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
-import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
 import { Icon } from 'src/components/utils/Icon';
 import { useCloseOnClickOutsideComponent } from 'src/hooks/useCloseOnClickOutsideComponent';
 import { StyledSelectContainer } from './Select.styles';
+
+interface SelectProps {
+  id: string;
+  name: string;
+  title?: string;
+  showLabel?: boolean;
+  onChange: (
+    e: ChangeEvent<HTMLSelectElement> & {
+      target: ChangeEvent<HTMLSelectElement>['target'] & { checked: number };
+    } /* {
+    target: {
+      name: string;
+      type: 'select';
+      value: string | number;
+      checked: 0;
+    };
+  } */
+  ) => void;
+  valid?: {
+    isInvalid: boolean;
+    message: string;
+  };
+  value?: string | number;
+  options: {
+    value: string;
+    label?: string;
+  }[];
+  hidden?: boolean;
+}
 
 export function Select({
   id,
@@ -12,10 +40,10 @@ export function Select({
   valid,
   options,
   onChange,
-  showLabel,
-  hidden,
+  showLabel = false,
+  hidden = false,
   value,
-}) {
+}: SelectProps) {
   const [selectedOption, setSelectedOption] = useState<{
     value: string | number;
     label?: string;
@@ -105,6 +133,10 @@ export function Select({
                           value: option.value,
                           checked: 0,
                         },
+                      } as ChangeEvent<HTMLSelectElement> & {
+                        target: ChangeEvent<HTMLSelectElement>['target'] & {
+                          checked: number;
+                        };
                       });
                     }}
                   >
@@ -120,40 +152,3 @@ export function Select({
     </StyledSelectContainer>
   );
 }
-
-Select.defaultProps = {
-  valid: undefined,
-  value: undefined,
-  // disabled: false,
-  onChange: () => {
-    return null;
-  },
-  hidden: false,
-  title: undefined,
-  showLabel: false,
-};
-
-Select.propTypes = {
-  // disabled: PropTypes.bool,
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  onChange: PropTypes.func,
-  title: PropTypes.string,
-  showLabel: PropTypes.bool,
-  valid: PropTypes.shape({
-    isInvalid: PropTypes.bool,
-    message: PropTypes.string,
-  }),
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  options: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-        PropTypes.bool,
-      ]),
-      label: PropTypes.string,
-    })
-  ).isRequired,
-  hidden: PropTypes.bool,
-};

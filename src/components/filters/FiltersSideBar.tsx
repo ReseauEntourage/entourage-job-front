@@ -1,7 +1,7 @@
 import React from 'react';
-import FiltersCheckboxes from 'src/components/filters/FiltersCheckboxes';
-import FiltersDropdowns from 'src/components/filters/FiltersDropdowns';
-import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas';
+import { FiltersCheckboxes } from 'src/components/filters/FiltersCheckboxes';
+import { FiltersDropdowns } from 'src/components/filters/FiltersDropdowns';
+import { Offcanvas } from 'src/components/utils/Offcanvas';
 import { AnyToFix } from 'src/utils/Types';
 
 interface FilterSideBarProps {
@@ -10,13 +10,13 @@ interface FilterSideBarProps {
   setFilters: (arg1: AnyToFix) => void; // to be typed
 }
 
-const FiltersSideBar = ({
+export const FiltersSideBar = ({
   filterData,
   filters,
   setFilters,
 }: FilterSideBarProps) => {
   return (
-    <OffcanvasNoSSR
+    <Offcanvas
       id="toggle-filter-menu"
       className="ent-filter-menu uk-padding-medium-top uk-preserve-color"
       flip={false}
@@ -38,8 +38,6 @@ const FiltersSideBar = ({
           fullWidth
         />
       </div>
-    </OffcanvasNoSSR>
+    </Offcanvas>
   );
 };
-
-export default FiltersSideBar;

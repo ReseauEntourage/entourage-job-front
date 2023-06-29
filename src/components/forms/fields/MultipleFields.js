@@ -1,7 +1,7 @@
-import React, { memo, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Button, ButtonIcon, IconNoSSR } from 'src/components/utils';
-import GenericField from 'src/components/forms/GenericField';
+import React, { memo, useCallback, useMemo } from 'react';
+import { GenericField } from 'src/components/forms/GenericField';
+import { Grid, Button, ButtonIcon, Icon } from 'src/components/utils';
 import { usePrevious } from 'src/hooks/utils';
 
 const FieldGroup = memo(
@@ -97,7 +97,7 @@ FieldGroup.propTypes = {
   getValue: PropTypes.func.isRequired,
 };
 
-const MultipleFields = ({
+export const MultipleFields = ({
   name,
   title,
   fields,
@@ -221,7 +221,7 @@ const MultipleFields = ({
           }}
         >
           <span className="uk-margin-small-right">{action}</span>
-          <IconNoSSR name="plus" ratio={0.8} />
+          <Icon name="plus" ratio={0.8} />
         </Button>
       </div>
     </div>
@@ -246,5 +246,3 @@ MultipleFields.defaultProps = {
   childWidths: undefined,
   action: 'Ajouter',
 };
-
-export default MultipleFields;

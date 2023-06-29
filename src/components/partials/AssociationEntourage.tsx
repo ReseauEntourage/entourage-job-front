@@ -5,7 +5,7 @@ import {
   Img,
   Section,
   Button,
-  IconNoSSR,
+  Icon,
 } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
@@ -48,7 +48,7 @@ export const AssociationEntourage = () => {
                     }}
                     newTab
                   >
-                    Voir le site <IconNoSSR name="chevron-right" />
+                    Voir le site <Icon name="chevron-right" />
                   </Button>
                 </div>
               </div>

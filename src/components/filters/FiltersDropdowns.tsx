@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 
 import { v4 as uuid } from 'uuid';
-import { Button, IconNoSSR } from 'src/components/utils';
+import { Button, Icon } from 'src/components/utils';
 import { gaEvent } from 'src/lib/gtag';
 import { AnyToFix } from 'src/utils/Types';
 
@@ -18,7 +18,7 @@ interface FiltersDropdownProps {
   showSeparator?: boolean;
 }
 
-const FiltersDropdowns = ({
+export const FiltersDropdowns = ({
   filterData,
   filters,
   setFilters,
@@ -126,7 +126,7 @@ const FiltersDropdowns = ({
                       }`}
                     >
                       {/* {icon && (
-                  <IconNoSSR
+                  <Icon
                     name={icon}
                     ratio={0.7}
                     className="uk-margin-small-right"
@@ -141,7 +141,7 @@ const FiltersDropdowns = ({
                           <div className="uk-badge">{filters[key].length}</div>
                         </div>
                       )}
-                      <IconNoSSR name="triangle-down" />
+                      <Icon name="triangle-down" />
                     </Button>
                     <div
                       data-uk-dropdown="mode: click;"
@@ -199,5 +199,3 @@ FiltersDropdowns.defaultProps = {
   showSeparator: false,
   smallSelectors: false,
 };
-
-export default FiltersDropdowns;

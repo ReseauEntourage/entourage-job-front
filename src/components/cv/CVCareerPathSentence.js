@@ -1,12 +1,12 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants';
 import {
   buildBusinessLineForSentence,
   findConstantFromValue,
   getAmbitionsLinkingSentence,
   sortByOrder,
 } from 'src/utils';
-import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants/index.ts';
-import PropTypes from 'prop-types';
 
 export const CVCareerPathSentence = ({ businessLines, ambitions }) => {
   const sortedAmbitions =

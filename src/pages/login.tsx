@@ -1,13 +1,13 @@
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect } from 'react';
 import { Api } from 'src/api';
-import Layout from 'src/components/Layout';
-import FormWithValidation from 'src/components/forms/FormWithValidation';
+import { Layout } from 'src/components/Layout';
+import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import schemaLogin from 'src/components/forms/schema/formLogin.json';
 import schemaLostPwd from 'src/components/forms/schema/formLostPwd.json';
 import { openModal } from 'src/components/modals/Modal';
-import StepperModal from 'src/components/modals/Modal/ModalGeneric/StepperModal';
-import SuccessModalContent from 'src/components/modals/SuccessModalContent';
+import { StepperModal } from 'src/components/modals/Modal/ModalGeneric/StepperModal';
+import { SuccessModalContent } from 'src/components/modals/SuccessModalContent';
 import { Section, SimpleLink } from 'src/components/utils';
 import { USER_ROLES } from 'src/constants/users';
 import { UserContext } from 'src/store/UserProvider';

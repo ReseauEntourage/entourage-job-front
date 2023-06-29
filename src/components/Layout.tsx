@@ -3,8 +3,8 @@ import Head from 'next/head';
 import { withRouter } from 'next/router';
 import Script from 'next/script';
 import React from 'react';
-import HeaderConnected from 'src/components/headers/HeaderConnected';
-import HeaderPublic from 'src/components/headers/HeaderPublic/HeaderPublic';
+import { HeaderConnected } from 'src/components/headers/HeaderConnected';
+import { HeaderPublic } from 'src/components/headers/HeaderPublic/HeaderPublic';
 import { Footer } from 'src/components/partials/Footer';
 import { addPrefix } from 'src/utils';
 
@@ -21,92 +21,82 @@ interface LayoutProps extends WithRouterProps {
   isEmpty?: boolean;
 }
 
-const Layout = ({
-  children,
-  title,
-  metaTitle,
-  metaImage,
-  metaDescription,
-  metaUrl,
-  metaType,
-  router,
-  noIndex,
-  isEmpty,
-  isBackoffice,
-}: LayoutProps) => {
-  const isPDF = router.pathname.includes('/pdf/');
-  const domain = process.env.SERVER_URL.replace(/https:\/\/|http:\/\//g, '');
+export const Layout = withRouter<LayoutProps>(
+  ({
+    children,
 
-  return (
-    <>
-      <Head>
-        <title>{title}</title>
-        <link
-          rel="icon"
-          type="image/png"
-          href={addPrefix('/static/img/fav.png')}
-        />
-        <link rel="canonical" href="https://www.linkedout.fr/" />
-        {isPDF && (
-          // eslint-disable-next-line @next/next/no-css-tags
+    router,
+
+    title = 'LinkedOut\xa0= partagez votre réseau avec ceux qui n’en ont pas',
+    metaTitle = 'LinkedOut\xa0= partagez votre réseau avec ceux qui n’en ont pas',
+    metaImage = `${process.env.SERVER_URL}/static/img/linkedout-preview-new.jpg`,
+    metaDescription = "Lorsque l'on est exclu, les chances de trouver du travail sont proches de zéro. Avec LinkedOut, faites don de votre visibilité. Un partage peut tout changer.",
+    metaUrl = process.env.SERVER_URL,
+    metaType = 'website',
+    noIndex = false,
+    isBackoffice = false,
+    isEmpty = false,
+  }: LayoutProps) => {
+    const isPDF = router.pathname.includes('/pdf/');
+    const domain = process.env.SERVER_URL.replace(/https:\/\/|http:\/\//g, '');
+
+    return (
+      <>
+        <Head>
+          <title>{title}</title>
           <link
-            rel="stylesheet"
-            type="text/css"
-            href="/static/css/uikit.entourage.print.min.css"
-            media="print"
+            rel="icon"
+            type="image/png"
+            href={addPrefix('/static/img/fav.png')}
+          />
+          <link rel="canonical" href="https://www.linkedout.fr/" />
+          {isPDF && (
+            // eslint-disable-next-line @next/next/no-css-tags
+            <link
+              rel="stylesheet"
+              type="text/css"
+              href="/static/css/uikit.entourage.print.min.css"
+              media="print"
+            />
+          )}
+          {noIndex && <meta name="robots" content="noindex" />}
+          <meta property="og:site_name" content="LinkedOut" />
+          <meta property="og:description" content={metaDescription} />
+          <meta name="description" content={metaDescription} />
+          <meta property="og:image" content={metaImage} />
+          <meta name="image" content={metaImage} />
+          <meta property="og:type" content={metaType} />
+          <meta property="og:title" content={title} />
+          <meta property="og:url" content={metaUrl} />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={metaTitle} />
+          <meta name="twitter:description" content={metaDescription} />
+          <meta name="twitter:site" content="@R_Entourage" />
+          <meta name="twitter:image" content={metaImage} />
+          <meta name="fb:app_id" content={process.env.FB_APP_ID} />
+          <meta
+            name="facebook-domain-verification"
+            content={process.env.FB_DOMAIN_VERIFICATION}
+          />
+        </Head>
+        {!isPDF && (
+          <>
+            {isBackoffice ? (
+              <HeaderConnected isEmpty={isEmpty} />
+            ) : (
+              <HeaderPublic />
+            )}
+          </>
+        )}
+        {children}
+        {!isPDF && !isBackoffice && <Footer />}
+        {!isPDF && (
+          <Script
+            src={`https://tarteaucitron.io/load.js?domain=${domain}&uuid=${process.env.TARTEAUCITRON_UUID}`}
+            strategy="afterInteractive"
           />
         )}
-        {noIndex && <meta name="robots" content="noindex" />}
-        <meta property="og:site_name" content="LinkedOut" />
-        <meta property="og:description" content={metaDescription} />
-        <meta name="description" content={metaDescription} />
-        <meta property="og:image" content={metaImage} />
-        <meta name="image" content={metaImage} />
-        <meta property="og:type" content={metaType} />
-        <meta property="og:title" content={title} />
-        <meta property="og:url" content={metaUrl} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={metaTitle} />
-        <meta name="twitter:description" content={metaDescription} />
-        <meta name="twitter:site" content="@R_Entourage" />
-        <meta name="twitter:image" content={metaImage} />
-        <meta name="fb:app_id" content={process.env.FB_APP_ID} />
-        <meta
-          name="facebook-domain-verification"
-          content={process.env.FB_DOMAIN_VERIFICATION}
-        />
-      </Head>
-      {!isPDF && (
-        <>
-          {isBackoffice ? (
-            <HeaderConnected isEmpty={isEmpty} />
-          ) : (
-            <HeaderPublic />
-          )}
-        </>
-      )}
-      {children}
-      {!isPDF && !isBackoffice && <Footer />}
-      {!isPDF && (
-        <Script
-          src={`https://tarteaucitron.io/load.js?domain=${domain}&uuid=${process.env.TARTEAUCITRON_UUID}`}
-          strategy="afterInteractive"
-        />
-      )}
-    </>
-  );
-};
-
-Layout.defaultProps = {
-  title: 'LinkedOut\xa0: partagez votre réseau avec ceux qui n’en ont pas',
-  metaTitle: 'LinkedOut\xa0: partagez votre réseau avec ceux qui n’en ont pas',
-  metaImage: `${process.env.SERVER_URL}/static/img/linkedout-preview-new.jpg`,
-  metaDescription:
-    "Lorsque l'on est exclu, les chances de trouver du travail sont proches de zéro. Avec LinkedOut, faites don de votre visibilité. Un partage peut tout changer.",
-  metaUrl: process.env.SERVER_URL,
-  metaType: 'website',
-  noIndex: false,
-  isBackoffice: false,
-  isEmpty: false,
-};
-export default withRouter<LayoutProps>(Layout);
+      </>
+    );
+  }
+);

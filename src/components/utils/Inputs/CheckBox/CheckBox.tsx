@@ -14,13 +14,13 @@ interface CBProps {
 
 export function CheckBox({
   handleClick,
-  disabled,
-  hidden,
-  value,
+  disabled = false,
+  hidden = false,
+  value = false,
   title,
   name,
   id,
-  removeMargin,
+  removeMargin = false,
 }: CBProps) {
   if (hidden) {
     return null;
@@ -51,11 +51,3 @@ export function CheckBox({
     </StyledCheckbox>
   );
 }
-
-CheckBox.defaultProps = {
-  disabled: false,
-  hidden: false,
-  removeMargin: false,
-  value: false,
-  title: '',
-};

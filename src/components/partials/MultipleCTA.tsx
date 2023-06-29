@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Img, Grid, IconNoSSR } from 'src/components/utils';
+import { UIKIT_BUTTON_SIZES } from '../variables';
+import { Button, Img, Grid, Icon } from 'src/components/utils';
 
 interface MultipleCTAProps {
   showNumbers?: boolean;
@@ -17,7 +18,7 @@ interface MultipleCTAProps {
       external?: boolean;
       modal?: string;
       onClick?: () => void;
-      size?: string;
+      size?: UIKIT_BUTTON_SIZES;
     };
   }[];
   animate?: boolean;
@@ -123,7 +124,7 @@ export const MultipleCTA = ({
                       >
                         {item.button.label}
                         &nbsp;
-                        <IconNoSSR name="chevron-right" />
+                        <Icon name="chevron-right" />
                       </Button>
                     </div>
                   )}

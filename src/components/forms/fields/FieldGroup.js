@@ -1,8 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { Grid } from 'src/components/utils';
 
-const FieldGroup = ({ title, fields, childWidths }) => {
+export const FieldGroup = ({ title, fields, childWidths }) => {
   return (
     <div>
       {title ? (
@@ -50,5 +50,3 @@ FieldGroup.defaultProps = {
   title: undefined,
   childWidths: undefined,
 };
-
-export default FieldGroup;

@@ -5,7 +5,7 @@ import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import { OpportunityWithOpportunityUsers, Event } from 'src/api/types';
 import { tabs } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab/CandidateOffersTab.utils';
-import ActionLabels from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel';
+import { ActionLabelContainer as ActionLabels } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
 import {
   InfoText,
@@ -13,9 +13,7 @@ import {
   StyledTitleText,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
 import { renderTabFromStatus } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.utils';
-import CandidateOpportunityDetailsCTAs from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/CandidateOpportunityDetailsCTAs';
-import { CTAsByTab } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/CandidateOpportunityDetailsCTAs/CandidateOpportunityDetailsCTAs.utils';
-import DetailsProgressBar from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/DetailsProgressBar';
+import { DetailsProgressBar } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/DetailsProgressBar';
 import {
   StyledCTAContainer,
   StyledDetailsContainer,
@@ -25,12 +23,14 @@ import {
   StyledTitleContainer,
   StyledTopContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunityDetails.styles';
-import OpportunitySection from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunitySection';
+import { OpportunitySection } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunitySection';
 import { useBookmarkOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/useBookmarkOpportunity';
 import { BUSINESS_LINES } from 'src/constants';
 import { HEIGHTS } from 'src/constants/styles';
 import { findConstantFromValue } from 'src/utils/Finding';
 import { mapEventDateFromStatus } from './CandidateOpportunityDetails.utils';
+import { CandidateOpportunityDetailsCTAs } from './CandidateOpportunityDetailsCTAs';
+import { CTAsByTab } from './CandidateOpportunityDetailsCTAs/CandidateOpportunityDetailsCTAs.utils';
 
 interface CandidateOpportunityDetailsProps
   extends Partial<OpportunityWithOpportunityUsers> {
@@ -41,7 +41,7 @@ interface CandidateOpportunityDetailsProps
   createdAt: string;
 }
 
-const CandidateOpportunityDetails = ({
+export const CandidateOpportunityDetails = ({
   id,
   title,
   company,
@@ -56,7 +56,7 @@ const CandidateOpportunityDetails = ({
   isPublic,
   isExternal,
   fetchOpportunities,
-  events,
+  events = [],
   createdAt,
   oppRefreshCallback,
   candidateId,
@@ -226,9 +226,3 @@ const CandidateOpportunityDetails = ({
     /> */
   );
 };
-
-CandidateOpportunityDetails.defaultProps = {
-  events: [],
-};
-
-export default CandidateOpportunityDetails;

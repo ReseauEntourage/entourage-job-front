@@ -1,29 +1,29 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
+import React from 'react';
 import {
   FacebookShareButton,
   LinkedinShareButton,
   TwitterShareButton,
   WhatsappShareButton,
 } from 'react-share';
-import { Grid, Img, SimpleLink, IconNoSSR } from 'src/components/utils';
-import ModalShareCV from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
+import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
+import { openModal } from 'src/components/modals/Modal';
+import { ModalShareCV } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
+import { Grid, Img, SimpleLink, Icon } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
+import { CONTRACTS } from 'src/constants';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { usePostOpportunity, useUpdateSharesCount } from 'src/hooks';
+import { fbEvent } from 'src/lib/fb';
+import { gaEvent } from 'src/lib/gtag';
 import {
   findConstantFromValue,
   formatParagraph,
   sortByName,
   sortByOrder,
 } from 'src/utils';
-import { gaEvent } from 'src/lib/gtag.ts';
-import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { usePostOpportunity, useUpdateSharesCount } from 'src/hooks';
-import { openModal } from 'src/components/modals/Modal';
-import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
-import { CONTRACTS } from 'src/constants/index.ts';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
-import { fbEvent } from 'src/lib/fb.ts';
 import { CVShape } from './CV.shape';
 
 /**
@@ -111,7 +111,7 @@ export const CVFiche = ({ cv, actionDisabled }) => {
           summary={sharedDescription}
           className="uk-icon-button"
         >
-          <IconNoSSR
+          <Icon
             className={!actionDisabled ? 'ent-text-white' : undefined}
             name="linkedin"
             ratio={1.2}
@@ -130,7 +130,7 @@ export const CVFiche = ({ cv, actionDisabled }) => {
           hashtags={hashtags}
           className="uk-icon-button"
         >
-          <IconNoSSR
+          <Icon
             className={!actionDisabled ? 'ent-text-white' : undefined}
             name="facebook"
             ratio={1.2}
@@ -150,7 +150,7 @@ export const CVFiche = ({ cv, actionDisabled }) => {
           via="R_Entourage"
           className="uk-icon-button"
         >
-          <IconNoSSR
+          <Icon
             className={!actionDisabled ? 'ent-text-white' : undefined}
             name="twitter"
             ratio={1.2}
@@ -168,7 +168,7 @@ export const CVFiche = ({ cv, actionDisabled }) => {
           title={sharedDescription}
           className="uk-icon-button"
         >
-          <IconNoSSR
+          <Icon
             className={!actionDisabled ? 'ent-text-white' : undefined}
             name="whatsapp"
             ratio={1.2}
@@ -196,7 +196,7 @@ export const CVFiche = ({ cv, actionDisabled }) => {
             openModal(<PostOpportunityModal />);
           }}
         >
-          Contactez-moi <IconNoSSR name="chevron-right" />
+          Contactez-moi <Icon name="chevron-right" />
         </Button>
       </div>
     </div>
@@ -219,7 +219,7 @@ export const CVFiche = ({ cv, actionDisabled }) => {
                     marginBottom: '8px',
                   }}
                 >
-                  <IconNoSSR
+                  <Icon
                     className="uk-text-primary ent-quote-after"
                     name="quote-right"
                     ratio={1.2}
@@ -228,7 +228,7 @@ export const CVFiche = ({ cv, actionDisabled }) => {
                   <span className="uk-margin-small-left uk-margin-small-right">
                     {cv.catchphrase}
                   </span>
-                  <IconNoSSR
+                  <Icon
                     className="uk-text-primary ent-quote-before"
                     name="quote-right"
                     ratio={0.8}
@@ -255,7 +255,7 @@ export const CVFiche = ({ cv, actionDisabled }) => {
                   data-uk-scroll="offset: 80"
                   className={actionDisabled ? 'uk-disabled' : undefined}
                 >
-                  <IconNoSSR
+                  <Icon
                     name="triangle-down"
                     className={
                       actionDisabled ? 'uk-text-muted' : 'uk-text-primary'
@@ -328,7 +328,7 @@ export const CVFiche = ({ cv, actionDisabled }) => {
                         <div key={i}>
                           <Grid gap="small" column>
                             <div>
-                              <IconNoSSR
+                              <Icon
                                 flip
                                 className="uk-text-primary uk-margin-small-bottom"
                                 name="quote-right"
@@ -349,7 +349,7 @@ export const CVFiche = ({ cv, actionDisabled }) => {
                                   </span>
                                   , {review.status}
                                 </p>
-                                <IconNoSSR
+                                <Icon
                                   className="uk-text-muted uk-width-1-1 uk-text-right"
                                   name="quote-right"
                                   ratio={0.8}
@@ -378,7 +378,7 @@ export const CVFiche = ({ cv, actionDisabled }) => {
                   <ul className="uk-list">
                     {cv.contracts && cv.contracts.length > 0 && (
                       <li className="uk-flex uk-flex-middle">
-                        <IconNoSSR
+                        <Icon
                           className="uk-text-primary uk-margin-small-right"
                           name="file-text"
                           style={{ width: 20 }}
@@ -395,7 +395,7 @@ export const CVFiche = ({ cv, actionDisabled }) => {
                     )}
                     {locations && locations.length > 0 && (
                       <li className="uk-flex uk-flex-middle">
-                        <IconNoSSR
+                        <Icon
                           className="uk-text-primary uk-margin-small-right"
                           name="location"
                           style={{ width: 20 }}
@@ -414,7 +414,7 @@ export const CVFiche = ({ cv, actionDisabled }) => {
                     )}
                     {cv.availability && cv.availability.length > 0 && (
                       <li className="uk-flex uk-flex-middle">
-                        <IconNoSSR
+                        <Icon
                           className="uk-text-primary uk-margin-small-right"
                           name="calendar"
                           style={{ width: 20 }}
@@ -424,7 +424,7 @@ export const CVFiche = ({ cv, actionDisabled }) => {
                     )}
                     {cv.languages && cv.languages.length > 0 && (
                       <li className="uk-flex uk-flex-middle">
-                        <IconNoSSR
+                        <Icon
                           className="uk-text-primary uk-margin-small-right"
                           name="users"
                           style={{ width: 20 }}
@@ -440,7 +440,7 @@ export const CVFiche = ({ cv, actionDisabled }) => {
                     )}
                     {cv.transport && cv.transport.length > 0 && (
                       <li className="uk-flex uk-flex-middle">
-                        <IconNoSSR
+                        <Icon
                           className="uk-text-primary uk-margin-small-right"
                           name="car"
                           style={{ width: 20 }}

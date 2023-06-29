@@ -1,18 +1,17 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, ButtonIcon, IconNoSSR } from 'src/components/utils';
-import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import schemaUsefulInformation from 'src/components/forms/schema/formEditUsefulInformation';
+import React from 'react';
+import { formEditUsefulInformation } from 'src/components/forms/schema/formEditUsefulInformation';
 
+import { openModal } from 'src/components/modals/Modal';
+import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { Grid, ButtonIcon, Icon } from 'src/components/utils';
+import { CONTRACTS } from 'src/constants';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import {
   findConstantFromValue,
   mutateFormSchema,
   sortByOrder,
 } from 'src/utils';
-
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
-import { openModal } from 'src/components/modals/Modal';
-import { CONTRACTS } from 'src/constants/index.ts';
 
 export const InfoProfileCard = ({
   contracts,
@@ -26,7 +25,7 @@ export const InfoProfileCard = ({
   onChange,
   userZone,
 }) => {
-  const mutatedSchema = mutateFormSchema(schemaUsefulInformation, [
+  const mutatedSchema = mutateFormSchema(formEditUsefulInformation, [
     {
       fieldId: 'email',
       props: [
@@ -58,7 +57,7 @@ export const InfoProfileCard = ({
         <h3 className="uk-card-title">
           {!onChange && (
             <span className="uk-margin-small-right">
-              <IconNoSSR name="info" />
+              <Icon name="info" />
             </span>
           )}
           Infos pratiques
@@ -117,19 +116,19 @@ export const InfoProfileCard = ({
       </Grid>
       <Grid column gap="small">
         <Grid row gap="small" middle>
-          <IconNoSSR name="mail" style={{ width: 20 }} />
+          <Icon name="mail" style={{ width: 20 }} />
           {email || 'Adresse mail non renseigné'}
         </Grid>
         <Grid row gap="small" middle>
-          <IconNoSSR name="phone" style={{ width: 20 }} />
+          <Icon name="phone" style={{ width: 20 }} />
           {phone || 'Numéro de téléphone non renseigné'}
         </Grid>
         <Grid row gap="small" middle>
-          <IconNoSSR name="home" style={{ width: 20 }} />
+          <Icon name="home" style={{ width: 20 }} />
           {address || 'Adresse postale non renseignée'}
         </Grid>
         <Grid row gap="small" middle>
-          <IconNoSSR name="file-text" style={{ width: 20 }} />
+          <Icon name="file-text" style={{ width: 20 }} />
           {contracts && contracts.length > 0
             ? contracts
                 .map(({ name }) => {
@@ -139,7 +138,7 @@ export const InfoProfileCard = ({
             : 'Type de contrat recherché non renseigné'}
         </Grid>
         <Grid row gap="small" middle>
-          <IconNoSSR name="location" style={{ width: 20 }} />
+          <Icon name="location" style={{ width: 20 }} />
           {sortedLocations && sortedLocations.length > 0
             ? sortedLocations
                 .map(({ name }) => {
@@ -149,13 +148,13 @@ export const InfoProfileCard = ({
             : 'Localisations non renseignées'}
         </Grid>
         <Grid row gap="small" middle>
-          <IconNoSSR name="calendar" style={{ width: 20 }} />
+          <Icon name="calendar" style={{ width: 20 }} />
           {availability && availability !== ''
             ? availability
             : 'Disponibilités non renseignée'}
         </Grid>
         <Grid row gap="small" middle>
-          <IconNoSSR name="users" style={{ width: 20 }} />
+          <Icon name="users" style={{ width: 20 }} />
           {languages && languages.length > 0
             ? languages
                 .map(({ name }) => {
@@ -165,7 +164,7 @@ export const InfoProfileCard = ({
             : 'Langues apprises non renseignées'}
         </Grid>
         <Grid row gap="small" middle>
-          <IconNoSSR name="car" style={{ width: 20 }} />
+          <Icon name="car" style={{ width: 20 }} />
           {transport && transport !== ''
             ? transport
             : 'Moyen de transport non renseigné'}

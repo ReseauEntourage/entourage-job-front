@@ -2,10 +2,10 @@ import React, { useCallback, useEffect, useState } from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
-import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
-import CandidateEmployedToggle from 'src/components/backoffice/candidate/CandidateEmployedToggle';
+import { ToggleWithConfirmationModal } from 'src/components/backoffice/ToggleWithConfirmationModal';
+import { CandidateEmployedToggle } from 'src/components/backoffice/candidate/CandidateEmployedToggle';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
-import { Card, Grid, SimpleLink, IconNoSSR } from 'src/components/utils';
+import { Card, Grid, SimpleLink, Icon } from 'src/components/utils';
 import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
 import {
   getRelatedUser,
@@ -13,8 +13,8 @@ import {
   getUserCandidateFromCoach,
 } from 'src/utils/Finding';
 
-const UserInformationCard = ({
-  isAdmin,
+export const UserInformationCard = ({
+  isAdmin = false,
   user,
 }: {
   isAdmin?: boolean;
@@ -92,7 +92,7 @@ const UserInformationCard = ({
         const cardContent = (
           <Grid column gap="small">
             <Grid row gap="small">
-              <IconNoSSR name="user" />
+              <Icon name="user" />
               <span>{`${singleLinkedUser.firstName} ${singleLinkedUser.lastName}`}</span>
             </Grid>
             {!singleLinkedUser.deletedAt && (
@@ -104,7 +104,7 @@ const UserInformationCard = ({
                   target="_blank"
                 >
                   <Grid row gap="small">
-                    <IconNoSSR name="mail" />
+                    <Icon name="mail" />
                     <span data-testid="linkeduser-email-span">
                       {singleLinkedUser.email}
                     </span>
@@ -117,13 +117,13 @@ const UserInformationCard = ({
                     isExternal
                   >
                     <Grid row gap="small">
-                      <IconNoSSR name="phone" />
+                      <Icon name="phone" />
                       <span>{singleLinkedUser.phone}</span>
                     </Grid>
                   </SimpleLink>
                 ) : (
                   <Grid row gap="small">
-                    <IconNoSSR name="phone" />
+                    <Icon name="phone" />
                     <span className="uk-text-italic">
                       Numéro de téléphone non renseigné
                     </span>
@@ -132,12 +132,12 @@ const UserInformationCard = ({
                 {isRoleIncluded(COACH_USER_ROLES, user.role) &&
                   (singleLinkedUser.address ? (
                     <Grid row gap="small">
-                      <IconNoSSR name="home" />
+                      <Icon name="home" />
                       <span>{singleLinkedUser.address}</span>
                     </Grid>
                   ) : (
                     <Grid row gap="small">
-                      <IconNoSSR name="home" />
+                      <Icon name="home" />
                       <span className="uk-text-italic">
                         Adresse postale non renseignée
                       </span>
@@ -151,7 +151,7 @@ const UserInformationCard = ({
                       href={`/cv/${userCandidat.url}`}
                     >
                       <Grid row gap="small">
-                        <IconNoSSR name="link" />
+                        <Icon name="link" />
                         <span className="uk-text-italic">
                           {userCandidat.url}
                         </span>
@@ -246,9 +246,3 @@ const UserInformationCard = ({
     </>
   );
 };
-
-UserInformationCard.defaultProps = {
-  isAdmin: false,
-};
-
-export default UserInformationCard;

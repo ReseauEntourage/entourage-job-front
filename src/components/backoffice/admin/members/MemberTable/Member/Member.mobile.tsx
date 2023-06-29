@@ -10,7 +10,7 @@ import {
   StyledNameCellMobile,
 } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.styles';
 import { renderCVStatus } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.utils';
-import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
+import { ImgProfile } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
 import { SimpleLink, Icon } from 'src/components/utils';
 import { CheckBox, useCheckBox } from 'src/components/utils/Inputs/CheckBox';
 import { TdMobile } from 'src/components/utils/Table';

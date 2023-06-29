@@ -1,4 +1,3 @@
-import dynamic from 'next/dynamic';
 import React from 'react';
 
 interface IconProps {
@@ -10,7 +9,14 @@ interface IconProps {
   style?: React.CSSProperties;
 }
 
-const Icon = ({ name, ratio, flip, className, id, style }: IconProps) => {
+export const Icon = ({
+  id,
+  name,
+  className = '',
+  ratio = 1,
+  flip = false,
+  style = {},
+}: IconProps) => {
   return (
     <span
       id={id}
@@ -20,20 +26,3 @@ const Icon = ({ name, ratio, flip, className, id, style }: IconProps) => {
     />
   );
 };
-
-Icon.defaultProps = {
-  className: '',
-  ratio: 1,
-  flip: false,
-  id: undefined,
-  style: {},
-};
-
-export const IconNoSSR = dynamic(
-  () => {
-    return import('src/components/utils/Icon').then((mod) => mod.Icon);
-  },
-  { ssr: false }
-);
-
-export { Icon };

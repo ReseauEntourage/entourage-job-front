@@ -1,11 +1,11 @@
-import { OfferInfoContainer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferInfoContainer';
-import { findConstantFromValue, formatParagraph } from 'src/utils';
-import { Button, Grid, SimpleLink } from 'src/components/utils';
-import { BUSINESS_LINES } from 'src/constants/index.ts';
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+import { OfferInfoContainer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferInfoContainer';
+import { Button, Grid, SimpleLink } from 'src/components/utils';
+import { BUSINESS_LINES } from 'src/constants';
+import { findConstantFromValue, formatParagraph } from 'src/utils';
 
-const OfferContent = ({ offer }) => {
+export const OfferContent = ({ offer }) => {
   return (
     <Grid gap="medium" childWidths={['1-1']}>
       {offer.companyDescription && (
@@ -77,5 +77,3 @@ OfferContent.propTypes = {
     link: PropTypes.string,
   }).isRequired,
 };
-
-export default OfferContent;
