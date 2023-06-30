@@ -1,6 +1,6 @@
 import { CookieValueTypes } from 'cookies-next';
 
-import { ContactType, Contract as ContractValue } from 'src/constants';
+import { MessageContactType, Contract as ContractValue } from 'src/constants';
 import { AdminZone } from 'src/constants/departements';
 import { AdminRole, UserRole } from 'src/constants/users';
 
@@ -382,5 +382,5 @@ export type Message = {
 
   message: string;
 
-  type: ContactType;
+  type: MessageContactType;
 };

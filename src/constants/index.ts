@@ -945,25 +945,32 @@ export const MEMBER_TABS = {
   OFFERS: 'offres',
 };
 
-export const ContactTypes = {
+export const MessageContactTypes = {
   INDIVIDUAL: 'individual',
   COMPANY: 'company',
+  COACH_CONNECTOR: 'coach_connector',
 } as const;
 
-export type ContactType = (typeof ContactTypes)[keyof typeof ContactTypes];
+export type MessageContactType =
+  (typeof MessageContactTypes)[keyof typeof MessageContactTypes];
 
-export const CONTACT_TYPE_FILTERS: FilterConstant<ContactType>[] = [
-  {
-    label: 'Un particulier',
-    value: ContactTypes.INDIVIDUAL,
-  },
-  {
-    label: 'Une entreprise',
-    value: ContactTypes.COMPANY,
-  },
-];
+export const MESSAGE_CONTACT_TYPE_FILTERS: FilterConstant<MessageContactType>[] =
+  [
+    {
+      label: 'Un particulier',
+      value: MessageContactTypes.INDIVIDUAL,
+    },
+    {
+      label: 'Une entreprise',
+      value: MessageContactTypes.COMPANY,
+    },
+    {
+      label: 'Un coach/connecteur',
+      value: MessageContactTypes.COACH_CONNECTOR,
+    },
+  ];
 
-export const ContactSubjects = {
+export const MessageSubjects = {
   HIRING: 'hiring',
   HELP: 'help',
   RELATION: 'relation',
@@ -972,32 +979,32 @@ export const ContactSubjects = {
   OTHER: 'other',
 } as const;
 
-export type ContactSubject =
-  (typeof ContactSubjects)[keyof typeof ContactSubjects];
+export type MessageSubject =
+  (typeof MessageSubjects)[keyof typeof MessageSubjects];
 
-export const CONTACT_SUBJECT_FILTERS: FilterConstant<ContactSubject>[] = [
+export const MESSAGE_SUBJECT_FILTERS: FilterConstant<MessageSubject>[] = [
   {
     label: "Proposition d'embauche",
-    value: ContactSubjects.HIRING,
+    value: MessageSubjects.HIRING,
   },
   {
     label: 'Coup de pouce',
-    value: ContactSubjects.HELP,
+    value: MessageSubjects.HELP,
   },
   {
     label: 'Mise en relation',
-    value: ContactSubjects.RELATION,
+    value: MessageSubjects.RELATION,
   },
   {
     label: 'Conseils',
-    value: ContactSubjects.ADVICE,
+    value: MessageSubjects.ADVICE,
   },
   {
     label: 'Encouragements',
-    value: ContactSubjects.CHEERING,
+    value: MessageSubjects.CHEERING,
   },
   {
     label: 'Autre',
-    value: ContactSubjects.OTHER,
+    value: MessageSubjects.OTHER,
   },
 ];
