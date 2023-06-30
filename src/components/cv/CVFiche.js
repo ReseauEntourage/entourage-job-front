@@ -7,6 +7,7 @@ import {
   TwitterShareButton,
   WhatsappShareButton,
 } from 'react-share';
+import UIkit from 'uikit';
 import { Api } from 'src/api';
 import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
 import { formSendMessage } from 'src/components/forms/schema/formSendMessage';
@@ -28,6 +29,7 @@ import {
   sortByOrder,
 } from 'src/utils';
 import { CVShape } from './CV.shape';
+
 /**
  * Le cv en public et en preview
  */
@@ -217,11 +219,21 @@ export const CVFiche = ({ cv, actionDisabled }) => {
                 formSchema={formSendMessage}
                 onSubmit={async ({ optIn, ...fields }, closeModal) => {
                   gaEvent(GA_TAGS.PAGE_CV_ENVOYER_CONTACTEZ_MOI_CLIC);
-                  await Api.postMessage({
-                    UserId: cv.UserId,
-                    ...fields,
-                  });
-                  closeModal();
+                  try {
+                    await Api.postMessage({
+                      UserId: cv.UserId,
+                      ...fields,
+                    });
+                    UIkit.notification(
+                      'Le message a bien été envoyé',
+                      'success'
+                    );
+
+                    closeModal();
+                  } catch (err) {
+                    UIkit.notification("Une erreur s'est produite", 'danger');
+                    console.error(err);
+                  }
                 }}
               />
             );

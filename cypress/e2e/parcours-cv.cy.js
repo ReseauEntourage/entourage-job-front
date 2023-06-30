@@ -17,6 +17,8 @@ describe('Parcours CV', () => {
       fixture: 'opportunity-res',
     }).as('postOpportunity');
 
+    cy.intercept('POST', '/message').as('postMessage');
+
     cy.intercept('GET', '/user/search/candidates*', {
       fixture: 'user-search-candidates-res',
     }).as('getCandidats');
@@ -33,7 +35,6 @@ describe('Parcours CV', () => {
 
     cy.wait('@getAllCV');
   });
-
   it("Ouvrir la page d'un CV", () => {
     cy.fixture('cv-cards-random-res').then((cvs) => {
       cy.get(
@@ -46,8 +47,8 @@ describe('Parcours CV', () => {
     });
   });
 
-  it('Contacter un candidat', () => {
-    cy.contains('Contactez-moi').scrollIntoView().click();
+  it('Proposer une offre à un candidat', () => {
+    cy.contains('Me proposer une offre').scrollIntoView().click();
 
     // cy.wait('@getCandidats');
 
@@ -82,6 +83,39 @@ describe('Parcours CV', () => {
     cy.get('button').contains('Envoyer').click();
 
     cy.wait('@postOpportunity');
+  });
+
+  it('Contacter un candidat', () => {
+    cy.contains("M'envoyer un message").scrollIntoView().click();
+
+    cy.get('#form-send-message-firstName').scrollIntoView().type('John');
+    cy.get('#form-send-message-lastName').scrollIntoView().type('Doe');
+    cy.get('#form-send-message-email')
+      .scrollIntoView()
+      .type('johndoe@gmail.com');
+    cy.get('#form-send-message-phone').scrollIntoView().type('0698754321');
+
+    cy.get('#form-send-message-type-container')
+      .should('be.visible')
+      .scrollIntoView()
+      .click()
+      .find('button')
+      .contains('Connecteur')
+      .click();
+
+    cy.get('#form-send-message-subject')
+      .scrollIntoView()
+      .type('Random subject');
+
+    cy.get('#form-send-message-message')
+      .scrollIntoView()
+      .type('Random message');
+
+    cy.get('label[for="form-send-message-optIn"]').scrollIntoView().click();
+
+    cy.get('button').contains('Envoyer').click();
+
+    cy.wait('@postMessage');
   });
 
   it('Partager sur LinkedIn', () => {
