@@ -946,14 +946,19 @@ export const MEMBER_TABS = {
 };
 
 export const ContactTypes = {
-  CONNECTOR: 'connector',
+  INDIVIDUAL: 'individual',
+  COMPANY: 'company',
 } as const;
 
 export type ContactType = (typeof ContactTypes)[keyof typeof ContactTypes];
 
 export const CONTACT_TYPE_FILTERS: FilterConstant<ContactType>[] = [
   {
-    label: 'Connecteur',
-    value: ContactTypes.CONNECTOR,
+    label: 'Un particulier',
+    value: ContactTypes.INDIVIDUAL,
+  },
+  {
+    label: 'Une entreprise',
+    value: ContactTypes.COMPANY,
   },
 ];

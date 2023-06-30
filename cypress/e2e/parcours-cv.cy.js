@@ -100,7 +100,7 @@ describe('Parcours CV', () => {
       .scrollIntoView()
       .click()
       .find('button')
-      .contains('Connecteur')
+      .contains('Une entreprise')
       .click();
 
     cy.get('#form-send-message-subject')

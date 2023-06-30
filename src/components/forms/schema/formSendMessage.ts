@@ -42,7 +42,7 @@ export const formSendMessage = {
           name: 'type',
           component: 'select-new',
           options: CONTACT_TYPE_FILTERS,
-          title: 'Type de profil',
+          title: 'Vous êtes ?',
         },
       ],
     },
