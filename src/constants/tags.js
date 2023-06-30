@@ -83,6 +83,12 @@ export const GA_TAGS = {
   PAGE_CV_CONTACTEZ_MOI_CLIC: {
     action: 'Page_CV_Contactez_Moi_Clic',
   },
+  PAGE_CV_ENVOYER_CONTACTEZ_MOI_CLIC: {
+    action: 'Page_CV_Envoyer_Contactez_Moi_Clic',
+  },
+  PAGE_CV_PROPOSER_OFFRE_CLIC: {
+    action: 'Page_CV_Proposer_Offre_Clic',
+  },
   POPUP_OFFRE_ENVOYER_OFFRE_UNIQUE_CLIC: {
     action: 'Popup_Offre_Envoyer_Offre_Unique_Clic',
   },

@@ -86,7 +86,9 @@ export const NewsletterPartial = ({
                     <CheckBox
                       id={tagConst}
                       name={tagConst}
+                      removeMargin
                       value={tagConst === status}
+                      title={label}
                       handleClick={() => {
                         if (status === tagConst) {
                           setStatus(null);
@@ -96,7 +98,6 @@ export const NewsletterPartial = ({
                       }}
                     />
                   </div>
-                  <span className="label">{label}</span>
                 </div>
               );
             })}
@@ -112,7 +113,9 @@ export const NewsletterPartial = ({
                     <CheckBox
                       id={tagConst}
                       name={tagConst}
+                      removeMargin
                       value={tagConst === zone}
+                      title={label}
                       handleClick={() => {
                         if (zone === tagConst) {
                           setZone(null);
@@ -122,7 +125,6 @@ export const NewsletterPartial = ({
                       }}
                     />
                   </div>
-                  <span className="label">{label}</span>
                 </div>
               );
             })}

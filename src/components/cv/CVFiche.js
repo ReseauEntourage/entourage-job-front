@@ -7,8 +7,11 @@ import {
   TwitterShareButton,
   WhatsappShareButton,
 } from 'react-share';
+import { Api } from 'src/api';
 import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
+import { formSendMessage } from 'src/components/forms/schema/formSendMessage';
 import { openModal } from 'src/components/modals/Modal';
+import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { ModalShareCV } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
 import { Grid, Img, SimpleLink, Icon } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
@@ -25,7 +28,6 @@ import {
   sortByOrder,
 } from 'src/utils';
 import { CVShape } from './CV.shape';
-
 /**
  * Le cv en public et en preview
  */
@@ -189,14 +191,43 @@ export const CVFiche = ({ cv, actionDisabled }) => {
       <div className="uk-flex uk-flex-center">
         <Button
           disabled={actionDisabled}
-          style="secondary"
+          style="custom-primary"
           onClick={() => {
-            gaEvent(GA_TAGS.PAGE_CV_CONTACTEZ_MOI_CLIC);
+            gaEvent(GA_TAGS.PAGE_CV_PROPOSER_OFFRE_CLIC);
             fbEvent(FB_TAGS.COMPANY_CV_OFFER_OPEN);
             openModal(<PostOpportunityModal />);
           }}
         >
-          Contactez-moi <Icon name="chevron-right" />
+          Me proposer une offre <Icon name="chevron-right" />
+        </Button>
+        <Button
+          disabled={actionDisabled}
+          style="custom-primary-inverted"
+          onClick={() => {
+            gaEvent(GA_TAGS.PAGE_CV_CONTACTEZ_MOI_CLIC);
+            openModal(
+              <ModalEdit
+                title={`Envoyer un message à ${cv.user.candidat.firstName}`}
+                description={`Vous pouvez envoyer un message à ${
+                  cv.user.candidat.firstName
+                } pour l'aider et ${
+                  cv.user.candidat.gender === 0 ? 'le' : 'la'
+                } conseiller dans sa recherche d'emploi`}
+                submitText="Envoyer"
+                formSchema={formSendMessage}
+                onSubmit={async ({ optIn, ...fields }, closeModal) => {
+                  gaEvent(GA_TAGS.PAGE_CV_ENVOYER_CONTACTEZ_MOI_CLIC);
+                  await Api.postMessage({
+                    UserId: cv.UserId,
+                    ...fields,
+                  });
+                  closeModal();
+                }}
+              />
+            );
+          }}
+        >
+          M&apos;envoyer un message <Icon name="chevron-right" />
         </Button>
       </div>
     </div>

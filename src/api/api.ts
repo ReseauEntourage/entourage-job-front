@@ -22,6 +22,7 @@ import {
   CandidateInscription,
   UserDto,
   OrganizationDto,
+  Message,
 } from './types';
 
 export class APIHandler {
@@ -443,5 +444,12 @@ export class APIHandler {
     params: CandidateInscription
   ): Promise<AxiosResponse> {
     return this.post('/contact/candidateInscription', params);
+  }
+
+  /// // //////
+  // message /
+  /// // //////
+  postMessage(params: Message): Promise<AxiosResponse> {
+    return this.post('/message', params);
   }
 }

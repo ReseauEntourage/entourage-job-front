@@ -242,6 +242,7 @@ export const GenericField = ({
           name={data.name}
           onChange={onChangeCustom}
           value={value}
+          valid={getValid(data.name)}
           title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
         />
       );
@@ -267,6 +268,7 @@ export const GenericField = ({
     case 'checkbox-new': {
       return (
         <CheckBoxNew
+          valid={getValid(data.name)}
           handleClick={() => {
             handleCheckBox();
             onChangeCustom({

@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
 import { StyledTextAreaContainer } from './TextArea.styles';
 
 interface TextAreaProps {
@@ -8,6 +9,10 @@ interface TextAreaProps {
   onChange: (event) => void;
   value: string;
   hidden?: boolean;
+  valid?: {
+    isInvalid: boolean;
+    message: string;
+  };
 }
 
 export function TextArea({
@@ -17,6 +22,7 @@ export function TextArea({
   onChange,
   value,
   hidden,
+  valid,
 }: TextAreaProps) {
   if (hidden) {
     return null;
@@ -32,6 +38,7 @@ export function TextArea({
         onChange={onChange}
         value={value}
       />
+      <FormValidatorErrorMessage validObj={valid} newInput />
     </StyledTextAreaContainer>
   );
 }

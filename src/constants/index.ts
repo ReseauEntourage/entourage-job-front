@@ -944,3 +944,16 @@ export const MEMBER_TABS = {
   PARAMETERS: 'parametres',
   OFFERS: 'offres',
 };
+
+export const ContactTypes = {
+  CONNECTOR: 'connector',
+} as const;
+
+export type ContactType = (typeof ContactTypes)[keyof typeof ContactTypes];
+
+export const CONTACT_TYPE_FILTERS: FilterConstant<ContactType>[] = [
+  {
+    label: 'Connecteur',
+    value: ContactTypes.CONNECTOR,
+  },
+];

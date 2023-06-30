@@ -1,6 +1,6 @@
 import { CookieValueTypes } from 'cookies-next';
 
-import { Contract as ContractValue } from 'src/constants';
+import { ContactType, Contract as ContractValue } from 'src/constants';
 import { AdminZone } from 'src/constants/departements';
 import { AdminRole, UserRole } from 'src/constants/users';
 
@@ -13,6 +13,7 @@ export const APIRoutes = {
   CONTACTS: 'contact',
   CVS: 'cv',
   ORGANIZATION: 'organization',
+  MESSAGE: 'message',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -364,4 +365,22 @@ export type CandidateInscription = {
   location: string;
   phone: string;
   workingRight: string;
+};
+
+export type Message = {
+  UserId: string;
+
+  firstName: string;
+
+  lastName: string;
+
+  email: string;
+
+  phone: string;
+
+  subject: string;
+
+  message: string;
+
+  type: ContactType;
 };
