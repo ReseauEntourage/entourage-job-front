@@ -1,5 +1,5 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
-import { CONTACT_TYPE_FILTERS } from 'src/constants';
+import { CONTACT_SUBJECT_FILTERS, CONTACT_TYPE_FILTERS } from 'src/constants';
 
 export const formSendMessage = {
   id: 'form-send-message',
@@ -49,8 +49,9 @@ export const formSendMessage = {
     {
       id: 'subject',
       name: 'subject',
-      component: 'text-input',
+      component: 'select-new',
       title: 'Objet *',
+      options: CONTACT_SUBJECT_FILTERS,
     },
     {
       id: 'message',

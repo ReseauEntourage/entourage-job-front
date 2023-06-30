@@ -962,3 +962,42 @@ export const CONTACT_TYPE_FILTERS: FilterConstant<ContactType>[] = [
     value: ContactTypes.COMPANY,
   },
 ];
+
+export const ContactSubjects = {
+  HIRING: 'hiring',
+  HELP: 'help',
+  RELATION: 'relation',
+  ADVICE: 'advice',
+  CHEERING: 'cheering',
+  OTHER: 'other',
+} as const;
+
+export type ContactSubject =
+  (typeof ContactSubjects)[keyof typeof ContactSubjects];
+
+export const CONTACT_SUBJECT_FILTERS: FilterConstant<ContactSubject>[] = [
+  {
+    label: "Proposition d'embauche",
+    value: ContactSubjects.HIRING,
+  },
+  {
+    label: 'Coup de pouce',
+    value: ContactSubjects.HELP,
+  },
+  {
+    label: 'Mise en relation',
+    value: ContactSubjects.RELATION,
+  },
+  {
+    label: 'Conseils',
+    value: ContactSubjects.ADVICE,
+  },
+  {
+    label: 'Encouragements',
+    value: ContactSubjects.CHEERING,
+  },
+  {
+    label: 'Autre',
+    value: ContactSubjects.OTHER,
+  },
+];

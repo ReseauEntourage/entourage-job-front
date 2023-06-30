@@ -103,9 +103,13 @@ describe('Parcours CV', () => {
       .contains('Une entreprise')
       .click();
 
-    cy.get('#form-send-message-subject')
+    cy.get('#form-send-message-subject-container')
+      .should('be.visible')
       .scrollIntoView()
-      .type('Random subject');
+      .click()
+      .find('button')
+      .contains('Coup de pouce')
+      .click();
 
     cy.get('#form-send-message-message')
       .scrollIntoView()
