@@ -1,6 +1,9 @@
 import { CookieValueTypes } from 'cookies-next';
 
-import { MessageContactType, Contract as ContractValue } from 'src/constants';
+import {
+  ExternalMessageContactType,
+  Contract as ContractValue,
+} from 'src/constants';
 import { AdminZone } from 'src/constants/departements';
 import { AdminRole, UserRole } from 'src/constants/users';
 
@@ -12,8 +15,8 @@ export const APIRoutes = {
   OPPORTUNITIES: 'opportunity',
   CONTACTS: 'contact',
   CVS: 'cv',
-  ORGANIZATION: 'organization',
-  MESSAGE: 'message',
+  ORGANIZATIONS: 'organization',
+  EXTERNAL_MESSAGES: 'externalMessage',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -367,20 +370,20 @@ export type CandidateInscription = {
   workingRight: string;
 };
 
-export type Message = {
+export type ExternalMessage = {
   UserId: string;
 
-  firstName: string;
+  senderFirstName: string;
 
-  lastName: string;
+  senderLastName: string;
 
-  email: string;
+  senderEmail: string;
 
-  phone: string;
+  senderPhone: string;
 
   subject: string;
 
   message: string;
 
-  type: MessageContactType;
+  type: ExternalMessageContactType;
 };

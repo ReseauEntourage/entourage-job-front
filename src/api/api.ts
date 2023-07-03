@@ -4,7 +4,7 @@ import axios, {
   AxiosResponse,
 } from 'axios';
 import _ from 'lodash';
-import { AdminZone } from '../constants/departements';
+import { AdminZone } from 'src/constants/departements';
 import { addAxiosInterceptors } from './interceptor';
 import {
   APIRoute,
@@ -22,7 +22,7 @@ import {
   CandidateInscription,
   UserDto,
   OrganizationDto,
-  Message,
+  ExternalMessage,
 } from './types';
 
 export class APIHandler {
@@ -449,7 +449,7 @@ export class APIHandler {
   /// // //////
   // message /
   /// // //////
-  postMessage(params: Message): Promise<AxiosResponse> {
-    return this.post('/message', params);
+  postExternalMessage(params: ExternalMessage): Promise<AxiosResponse> {
+    return this.post('/externalMessage', params);
   }
 }

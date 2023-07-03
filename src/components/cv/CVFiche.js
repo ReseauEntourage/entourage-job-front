@@ -10,7 +10,7 @@ import {
 import UIkit from 'uikit';
 import { Api } from 'src/api';
 import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
-import { formSendMessage } from 'src/components/forms/schema/formSendMessage';
+import { formSendExternalMessage } from 'src/components/forms/schema/formSendExternalMessage';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { ModalShareCV } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
@@ -229,12 +229,12 @@ export const CVFiche = ({ cv, actionDisabled }) => {
                   cv.user.candidat.gender === 0 ? 'le' : 'la'
                 } conseiller dans sa recherche d'emploi`}
                 submitText="Envoyer"
-                formSchema={formSendMessage}
+                formSchema={formSendExternalMessage}
                 onSubmit={async ({ optIn, ...fields }, closeModal) => {
                   gaEvent(GA_TAGS.PAGE_CV_ENVOYER_CONTACTEZ_MOI_CLIC);
                   fbEvent(FB_TAGS.MESSAGE_SEND);
                   try {
-                    await Api.postMessage({
+                    await Api.postExternalMessage({
                       UserId: cv.UserId,
                       ...fields,
                     });

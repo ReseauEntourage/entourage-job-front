@@ -19,9 +19,9 @@ describe('Parcours CV', () => {
 
     cy.intercept('POST', '/cv/count').as('postCVCount');
 
-    cy.intercept('POST', '/message', { fixture: 'post-message-res' }).as(
-      'postMessage'
-    );
+    cy.intercept('POST', '/externalMessage', {
+      fixture: 'post-external-message-res',
+    }).as('postMessage');
 
     cy.intercept('GET', '/user/search/candidates*', {
       fixture: 'user-search-candidates-res',
@@ -94,14 +94,20 @@ describe('Parcours CV', () => {
   it('Contacter un candidat', () => {
     cy.contains("M'envoyer un message").scrollIntoView().click();
 
-    cy.get('#form-send-message-firstName').scrollIntoView().type('John');
-    cy.get('#form-send-message-lastName').scrollIntoView().type('Doe');
-    cy.get('#form-send-message-email')
+    cy.get('#form-send-external-message-senderFirstName')
+      .scrollIntoView()
+      .type('John');
+    cy.get('#form-send-external-message-senderLastName')
+      .scrollIntoView()
+      .type('Doe');
+    cy.get('#form-send-external-message-senderEmail')
       .scrollIntoView()
       .type('johndoe@gmail.com');
-    cy.get('#form-send-message-phone').scrollIntoView().type('0698754321');
+    cy.get('#form-send-external-message-senderPhone')
+      .scrollIntoView()
+      .type('0698754321');
 
-    cy.get('#form-send-message-type-container')
+    cy.get('#form-send-external-message-type-container')
       .should('be.visible')
       .scrollIntoView()
       .click()
@@ -109,7 +115,7 @@ describe('Parcours CV', () => {
       .contains('Une entreprise')
       .click();
 
-    cy.get('#form-send-message-subject-container')
+    cy.get('#form-send-external-message-subject-container')
       .should('be.visible')
       .scrollIntoView()
       .click()
@@ -117,11 +123,13 @@ describe('Parcours CV', () => {
       .contains('Coup de pouce')
       .click();
 
-    cy.get('#form-send-message-message')
+    cy.get('#form-send-external-message-message')
       .scrollIntoView()
       .type('Random message');
 
-    cy.get('label[for="form-send-message-optIn"]').scrollIntoView().click();
+    cy.get('label[for="form-send-external-message-optIn"]')
+      .scrollIntoView()
+      .click();
 
     cy.get('button').contains('Envoyer').click();
 

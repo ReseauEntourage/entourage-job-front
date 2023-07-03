@@ -1,32 +1,32 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import {
-  MESSAGE_SUBJECT_FILTERS,
-  MESSAGE_CONTACT_TYPE_FILTERS,
+  EXTERNAL_MESSAGE_SUBJECT_FILTERS,
+  EXTERNAL_MESSAGE_CONTACT_TYPE_FILTERS,
 } from 'src/constants';
 
-export const formSendMessage = {
-  id: 'form-send-message',
+export const formSendExternalMessage = {
+  id: 'form-send-external-message',
   fields: [
     {
       component: 'fieldgroup-new',
       fields: [
         {
-          id: 'firstName',
-          name: 'firstName',
+          id: 'senderFirstName',
+          name: 'senderFirstName',
           component: 'text-input',
           title: 'Prénom *',
         },
         {
-          id: 'lastName',
-          name: 'lastName',
+          id: 'senderLastName',
+          name: 'senderLastName',
           component: 'text-input',
           title: 'Nom *',
         },
       ],
     },
     {
-      id: 'email',
-      name: 'email',
+      id: 'senderEmail',
+      name: 'senderEmail',
       type: 'mail',
       component: 'text-input',
       title: 'Adresse mail *',
@@ -35,8 +35,8 @@ export const formSendMessage = {
       component: 'fieldgroup-new',
       fields: [
         {
-          id: 'phone',
-          name: 'phone',
+          id: 'senderPhone',
+          name: 'senderPhone',
           component: 'tel-input',
           title: 'Numéro de téléphone',
         },
@@ -44,7 +44,7 @@ export const formSendMessage = {
           id: 'type',
           name: 'type',
           component: 'select-new',
-          options: MESSAGE_CONTACT_TYPE_FILTERS,
+          options: EXTERNAL_MESSAGE_CONTACT_TYPE_FILTERS,
           title: 'Vous êtes ?',
         },
       ],
@@ -54,7 +54,7 @@ export const formSendMessage = {
       name: 'subject',
       component: 'select-new',
       title: 'Objet *',
-      options: MESSAGE_SUBJECT_FILTERS,
+      options: EXTERNAL_MESSAGE_SUBJECT_FILTERS,
     },
     {
       id: 'message',
@@ -72,7 +72,7 @@ export const formSendMessage = {
   ],
   rules: [
     {
-      field: 'firstName',
+      field: 'senderFirstName',
       method: 'isEmpty',
       args: [
         {
@@ -83,7 +83,7 @@ export const formSendMessage = {
       message: 'Obligatoire',
     },
     {
-      field: 'lastName',
+      field: 'senderLastName',
       method: 'isEmpty',
       args: [
         {
@@ -94,7 +94,7 @@ export const formSendMessage = {
       message: 'Obligatoire',
     },
     {
-      field: 'email',
+      field: 'senderEmail',
       method: 'isEmpty',
       args: [
         {
@@ -105,7 +105,7 @@ export const formSendMessage = {
       message: 'Obligatoire',
     },
     {
-      field: 'phone',
+      field: 'senderPhone',
       method: (fieldValue) => {
         return (
           !fieldValue ||
@@ -140,7 +140,7 @@ export const formSendMessage = {
       message: 'Obligatoire',
     },
     {
-      field: 'email',
+      field: 'senderEmail',
       method: 'isEmpty',
       args: [
         {

@@ -945,32 +945,32 @@ export const MEMBER_TABS = {
   OFFERS: 'offres',
 };
 
-export const MessageContactTypes = {
+export const ExternalMessageContactTypes = {
   INDIVIDUAL: 'individual',
   COMPANY: 'company',
   COACH_CONNECTOR: 'coach_connector',
 } as const;
 
-export type MessageContactType =
-  (typeof MessageContactTypes)[keyof typeof MessageContactTypes];
+export type ExternalMessageContactType =
+  (typeof ExternalMessageContactTypes)[keyof typeof ExternalMessageContactTypes];
 
-export const MESSAGE_CONTACT_TYPE_FILTERS: FilterConstant<MessageContactType>[] =
+export const EXTERNAL_MESSAGE_CONTACT_TYPE_FILTERS: FilterConstant<ExternalMessageContactType>[] =
   [
     {
       label: 'Un particulier',
-      value: MessageContactTypes.INDIVIDUAL,
+      value: ExternalMessageContactTypes.INDIVIDUAL,
     },
     {
       label: 'Une entreprise',
-      value: MessageContactTypes.COMPANY,
+      value: ExternalMessageContactTypes.COMPANY,
     },
     {
       label: 'Un coach/connecteur',
-      value: MessageContactTypes.COACH_CONNECTOR,
+      value: ExternalMessageContactTypes.COACH_CONNECTOR,
     },
   ];
 
-export const MessageSubjects = {
+export const ExternalMessageSubjects = {
   HIRING: 'hiring',
   HELP: 'help',
   RELATION: 'relation',
@@ -979,32 +979,33 @@ export const MessageSubjects = {
   OTHER: 'other',
 } as const;
 
-export type MessageSubject =
-  (typeof MessageSubjects)[keyof typeof MessageSubjects];
+export type ExternalMessageSubject =
+  (typeof ExternalMessageSubjects)[keyof typeof ExternalMessageSubjects];
 
-export const MESSAGE_SUBJECT_FILTERS: FilterConstant<MessageSubject>[] = [
-  {
-    label: "Proposition d'embauche",
-    value: MessageSubjects.HIRING,
-  },
-  {
-    label: 'Coup de pouce',
-    value: MessageSubjects.HELP,
-  },
-  {
-    label: 'Mise en relation',
-    value: MessageSubjects.RELATION,
-  },
-  {
-    label: 'Conseils',
-    value: MessageSubjects.ADVICE,
-  },
-  {
-    label: 'Encouragements',
-    value: MessageSubjects.CHEERING,
-  },
-  {
-    label: 'Autre',
-    value: MessageSubjects.OTHER,
-  },
-];
+export const EXTERNAL_MESSAGE_SUBJECT_FILTERS: FilterConstant<ExternalMessageSubject>[] =
+  [
+    {
+      label: "Proposition d'embauche",
+      value: ExternalMessageSubjects.HIRING,
+    },
+    {
+      label: 'Coup de pouce',
+      value: ExternalMessageSubjects.HELP,
+    },
+    {
+      label: 'Mise en relation',
+      value: ExternalMessageSubjects.RELATION,
+    },
+    {
+      label: 'Conseils',
+      value: ExternalMessageSubjects.ADVICE,
+    },
+    {
+      label: 'Encouragements',
+      value: ExternalMessageSubjects.CHEERING,
+    },
+    {
+      label: 'Autre',
+      value: ExternalMessageSubjects.OTHER,
+    },
+  ];
