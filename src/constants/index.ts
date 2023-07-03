@@ -944,3 +944,68 @@ export const MEMBER_TABS = {
   PARAMETERS: 'parametres',
   OFFERS: 'offres',
 };
+
+export const ExternalMessageContactTypes = {
+  INDIVIDUAL: 'individual',
+  COMPANY: 'company',
+  COACH_CONNECTOR: 'coach_connector',
+} as const;
+
+export type ExternalMessageContactType =
+  (typeof ExternalMessageContactTypes)[keyof typeof ExternalMessageContactTypes];
+
+export const EXTERNAL_MESSAGE_CONTACT_TYPE_FILTERS: FilterConstant<ExternalMessageContactType>[] =
+  [
+    {
+      label: 'Un particulier',
+      value: ExternalMessageContactTypes.INDIVIDUAL,
+    },
+    {
+      label: 'Une entreprise',
+      value: ExternalMessageContactTypes.COMPANY,
+    },
+    {
+      label: 'Un coach/connecteur',
+      value: ExternalMessageContactTypes.COACH_CONNECTOR,
+    },
+  ];
+
+export const ExternalMessageSubjects = {
+  HIRING: 'hiring',
+  HELP: 'help',
+  RELATION: 'relation',
+  ADVICE: 'advice',
+  CHEERING: 'cheering',
+  OTHER: 'other',
+} as const;
+
+export type ExternalMessageSubject =
+  (typeof ExternalMessageSubjects)[keyof typeof ExternalMessageSubjects];
+
+export const EXTERNAL_MESSAGE_SUBJECT_FILTERS: FilterConstant<ExternalMessageSubject>[] =
+  [
+    {
+      label: "Proposition d'embauche",
+      value: ExternalMessageSubjects.HIRING,
+    },
+    {
+      label: 'Coup de pouce',
+      value: ExternalMessageSubjects.HELP,
+    },
+    {
+      label: 'Mise en relation',
+      value: ExternalMessageSubjects.RELATION,
+    },
+    {
+      label: 'Conseils',
+      value: ExternalMessageSubjects.ADVICE,
+    },
+    {
+      label: 'Encouragements',
+      value: ExternalMessageSubjects.CHEERING,
+    },
+    {
+      label: 'Autre',
+      value: ExternalMessageSubjects.OTHER,
+    },
+  ];

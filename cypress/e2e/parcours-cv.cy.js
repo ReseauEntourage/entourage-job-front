@@ -17,6 +17,12 @@ describe('Parcours CV', () => {
       fixture: 'opportunity-res',
     }).as('postOpportunity');
 
+    cy.intercept('POST', '/cv/count').as('postCVCount');
+
+    cy.intercept('POST', '/externalMessage', {
+      fixture: 'post-external-message-res',
+    }).as('postMessage');
+
     cy.intercept('GET', '/user/search/candidates*', {
       fixture: 'user-search-candidates-res',
     }).as('getCandidats');
@@ -33,7 +39,6 @@ describe('Parcours CV', () => {
 
     cy.wait('@getAllCV');
   });
-
   it("Ouvrir la page d'un CV", () => {
     cy.fixture('cv-cards-random-res').then((cvs) => {
       cy.get(
@@ -46,8 +51,8 @@ describe('Parcours CV', () => {
     });
   });
 
-  it('Contacter un candidat', () => {
-    cy.contains('Contactez-moi').scrollIntoView().click();
+  it('Proposer une offre à un candidat', () => {
+    cy.contains('Me proposer une offre').scrollIntoView().click();
 
     // cy.wait('@getCandidats');
 
@@ -82,6 +87,55 @@ describe('Parcours CV', () => {
     cy.get('button').contains('Envoyer').click();
 
     cy.wait('@postOpportunity');
+
+    cy.get('.ReactModalPortal div').should('not.exist');
+  });
+
+  it('Contacter un candidat', () => {
+    cy.contains("M'envoyer un message").scrollIntoView().click();
+
+    cy.get('#form-send-external-message-senderFirstName')
+      .scrollIntoView()
+      .type('John');
+    cy.get('#form-send-external-message-senderLastName')
+      .scrollIntoView()
+      .type('Doe');
+    cy.get('#form-send-external-message-senderEmail')
+      .scrollIntoView()
+      .type('johndoe@gmail.com');
+    cy.get('#form-send-external-message-senderPhone')
+      .scrollIntoView()
+      .type('0698754321');
+
+    cy.get('#form-send-external-message-type-container')
+      .should('be.visible')
+      .scrollIntoView()
+      .click()
+      .find('button')
+      .contains('Une entreprise')
+      .click();
+
+    cy.get('#form-send-external-message-subject-container')
+      .should('be.visible')
+      .scrollIntoView()
+      .click()
+      .find('button')
+      .contains('Coup de pouce')
+      .click();
+
+    cy.get('#form-send-external-message-message')
+      .scrollIntoView()
+      .type('Random message');
+
+    cy.get('label[for="form-send-external-message-optIn"]')
+      .scrollIntoView()
+      .click();
+
+    cy.get('button').contains('Envoyer').click();
+
+    cy.wait('@postMessage');
+
+    cy.get('.ReactModalPortal div').should('not.exist');
   });
 
   it('Partager sur LinkedIn', () => {

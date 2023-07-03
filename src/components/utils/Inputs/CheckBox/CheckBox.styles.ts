@@ -4,11 +4,14 @@ import { COLORS } from 'src/constants/styles';
 export const StyledCheckbox = styled.div`
   height: 100%;
   display: flex;
-  align-items: center;
-  margin-bottom: ${({ removeMargin }) => {
-    return removeMargin ? 0 : 30;
-  }}px;
+  justify-content: center;
+
+  flex-direction: column;
   .checkbox-label {
+    margin-bottom: ${({ removeMargin }) => {
+      return removeMargin ? 0 : 30;
+    }}px;
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -77,7 +80,8 @@ export const StyledCheckbox = styled.div`
       display: block;
     }
   }
+
   .label {
-    margin-left: 16px;
+    margin-left: 8px;
   }
 `;

@@ -7,8 +7,12 @@ import {
   TwitterShareButton,
   WhatsappShareButton,
 } from 'react-share';
+import UIkit from 'uikit';
+import { Api } from 'src/api';
 import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
+import { formSendExternalMessage } from 'src/components/forms/schema/formSendExternalMessage';
 import { openModal } from 'src/components/modals/Modal';
+import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { ModalShareCV } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
 import { Grid, Img, SimpleLink, Icon } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
@@ -102,9 +106,12 @@ export const CVFiche = ({ cv, actionDisabled }) => {
           disabled={actionDisabled}
           onShareWindowClose={() => {
             gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_LINKEDIN_CLIC);
-            fbEvent(FB_TAGS.SHARE_CV);
+            fbEvent(FB_TAGS.SHARE_CV_SEND);
             updateSharesCount(cv.UserId, 'linkedin');
             openNewsletterModal();
+          }}
+          onClick={() => {
+            fbEvent(FB_TAGS.SHARE_CV_OPEN);
           }}
           url={link}
           title={title}
@@ -121,9 +128,12 @@ export const CVFiche = ({ cv, actionDisabled }) => {
           disabled={actionDisabled}
           onShareWindowClose={() => {
             gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_FACEBOOK_CLIC);
-            fbEvent(FB_TAGS.SHARE_CV);
+            fbEvent(FB_TAGS.SHARE_CV_SEND);
             updateSharesCount(cv.UserId, 'facebook');
             openNewsletterModal();
+          }}
+          onClick={() => {
+            fbEvent(FB_TAGS.SHARE_CV_OPEN);
           }}
           url={link}
           quote={sharedDescription}
@@ -140,9 +150,12 @@ export const CVFiche = ({ cv, actionDisabled }) => {
           disabled={actionDisabled}
           onShareWindowClose={() => {
             gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_TWITTER_CLIC);
-            fbEvent(FB_TAGS.SHARE_CV);
+            fbEvent(FB_TAGS.SHARE_CV_SEND);
             updateSharesCount(cv.UserId, 'twitter');
             openNewsletterModal();
+          }}
+          onClick={() => {
+            fbEvent(FB_TAGS.SHARE_CV_OPEN);
           }}
           url={link}
           title={sharedDescription}
@@ -160,9 +173,12 @@ export const CVFiche = ({ cv, actionDisabled }) => {
           disabled={actionDisabled}
           onShareWindowClose={() => {
             gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_WHATSAPP_CLIC);
-            fbEvent(FB_TAGS.SHARE_CV);
+            fbEvent(FB_TAGS.SHARE_CV_SEND);
             updateSharesCount(cv.UserId, 'whatsapp');
             openNewsletterModal();
+          }}
+          onClick={() => {
+            fbEvent(FB_TAGS.SHARE_CV_OPEN);
           }}
           url={link}
           title={sharedDescription}
@@ -189,14 +205,55 @@ export const CVFiche = ({ cv, actionDisabled }) => {
       <div className="uk-flex uk-flex-center">
         <Button
           disabled={actionDisabled}
-          style="secondary"
+          style="custom-primary"
           onClick={() => {
-            gaEvent(GA_TAGS.PAGE_CV_CONTACTEZ_MOI_CLIC);
+            gaEvent(GA_TAGS.PAGE_CV_PROPOSER_OFFRE_CLIC);
             fbEvent(FB_TAGS.COMPANY_CV_OFFER_OPEN);
             openModal(<PostOpportunityModal />);
           }}
         >
-          Contactez-moi <Icon name="chevron-right" />
+          Me proposer une offre <Icon name="chevron-right" />
+        </Button>
+        <Button
+          disabled={actionDisabled}
+          style="custom-primary-inverted"
+          onClick={() => {
+            gaEvent(GA_TAGS.PAGE_CV_CONTACTEZ_MOI_CLIC);
+            fbEvent(FB_TAGS.MESSAGE_OPEN);
+            openModal(
+              <ModalEdit
+                title={`Envoyer un message à ${cv.user.candidat.firstName}`}
+                description={`Vous pouvez envoyer un message à ${
+                  cv.user.candidat.firstName
+                } pour l'aider et ${
+                  cv.user.candidat.gender === 0 ? 'le' : 'la'
+                } conseiller dans sa recherche d'emploi`}
+                submitText="Envoyer"
+                formSchema={formSendExternalMessage}
+                onSubmit={async ({ optIn, ...fields }, closeModal) => {
+                  gaEvent(GA_TAGS.PAGE_CV_ENVOYER_CONTACTEZ_MOI_CLIC);
+                  fbEvent(FB_TAGS.MESSAGE_SEND);
+                  try {
+                    await Api.postExternalMessage({
+                      UserId: cv.UserId,
+                      ...fields,
+                    });
+                    UIkit.notification(
+                      'Le message a bien été envoyé',
+                      'success'
+                    );
+
+                    closeModal();
+                  } catch (err) {
+                    UIkit.notification("Une erreur s'est produite", 'danger');
+                    console.error(err);
+                  }
+                }}
+              />
+            );
+          }}
+        >
+          M&apos;envoyer un message <Icon name="chevron-right" />
         </Button>
       </div>
     </div>
