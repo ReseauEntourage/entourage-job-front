@@ -1,11 +1,11 @@
 import React from 'react';
-import schema from 'src/components/forms/schema/formEditOpportunity';
+import { formEditOpportunity as defaultSchema } from 'src/components/forms/schema/formEditOpportunity';
 import { mutateFormSchema } from 'src/utils';
 import { PostOpportunityModal } from './PostOpportunityModal';
 
 export const PostPublicOfferModal = () => {
   const mutatedSchema = mutateFormSchema(
-    schema,
+    defaultSchema,
     [
       {
         fieldId: 'candidatesIds',
@@ -50,7 +50,7 @@ export const PostPublicOfferModal = () => {
     'post-job-ad'
   );
 
-  const ModalProps = {
+  const PostPublicOfferModalProps = {
     defaultValues: {
       isPublic: true,
     },
@@ -60,7 +60,5 @@ export const PostPublicOfferModal = () => {
     schema: mutatedSchema,
   };
 
-  return <PostOpportunityModal {...ModalProps} />;
+  return <PostOpportunityModal {...PostPublicOfferModalProps} />;
 };
-
-export default PostPublicOfferModal;

@@ -14,12 +14,12 @@ import {
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { PostOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal/PostOpportunityModal';
 import { OpportunityList } from 'src/components/opportunities/OpportunityList';
 import { ButtonMultiple } from 'src/components/utils';
 import { Icon } from 'src/components/utils/Icon';
-import { usePostOpportunity } from 'src/hooks';
 import { useIsDesktop } from 'src/hooks/utils';
-import { PostOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal/PostOpportunityModal.tsx';
+import { mutateFormSchema } from 'src/utils';
 
 export const AdminOpportunityList = ({
   search,

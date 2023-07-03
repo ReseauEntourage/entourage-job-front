@@ -7,25 +7,24 @@ import React, {
 import UIkit from 'uikit';
 
 import { Api } from 'src/api';
-// import { usePrevious } from 'src/hooks/utils';
-import defaultSchema from 'src/components/forms/schema/formEditOpportunity';
-import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { formEditOpportunity as defaultSchema } from 'src/components/forms/schema/formEditOpportunity';
+import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { BUSINESS_LINES } from 'src/constants';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { useNewsletterTracking } from 'src/hooks/useNewsletterTracking';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
-// import { openModal } from 'src/components/modals/Modal';
 import { findConstantFromValue, getValueFromFormField } from 'src/utils';
+import { AnyToFix } from 'src/utils/Types';
 
-interface PostOpportunityModalType {
+interface PostOpportunityModalProps {
   modalTitle: string;
   modalDesc: string | JSX.Element | JSX.Element[];
   isAdmin?: boolean;
   candidateId?: string;
   callback?: () => void;
-  defaultValues: any; // to be typed
-  schema: any; // to be typed
+  defaultValues: AnyToFix; // to be typed
+  schema: AnyToFix; // to be typed
 }
 
 export const PostOpportunityModal = ({
@@ -36,7 +35,7 @@ export const PostOpportunityModal = ({
   callback,
   defaultValues = {},
   schema = defaultSchema,
-}: PostOpportunityModalType) => {
+}: PostOpportunityModalProps) => {
   const [lastFilledForm, setLastFilledForm] = useState({});
   // const prevLastFilledForm = usePrevious(lastFilledForm);
   const newsletterParams = useNewsletterTracking();

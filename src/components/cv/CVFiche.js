@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   FacebookShareButton,
   LinkedinShareButton,
@@ -13,6 +13,7 @@ import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
 import { formSendExternalMessage } from 'src/components/forms/schema/formSendExternalMessage';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { PostOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { ModalShareCV } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
 import { Grid, Img, SimpleLink, Icon } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
@@ -29,7 +30,6 @@ import {
   sortByOrder,
 } from 'src/utils';
 import { CVShape } from './CV.shape';
-import { PostOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 
 /**
  * Le cv en public et en preview
@@ -37,34 +37,36 @@ import { PostOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/P
 export const CVFiche = ({ cv, actionDisabled }) => {
   const updateSharesCount = useUpdateSharesCount();
 
-  const opportunityModalProps = {
-    modalTitle: 'Proposer une opportunité à un candidat',
-    modalDesc: (
-      <div className="uk-text-normal">
-        Contactez ici le candidat et son coach LinkedOut afin de solliciter un
-        échange.
-        <br />
-        <br />
-        Si vous souhaitez échanger avec le coach bénévole qui accompagne le
-        candidat dans sa recherche d&apos;emploi, précisez-le dans votre
-        message.
-        <br />
-        <br />
-        <span className="uk-text-meta uk-text-italic">
-          LinkedOut est susceptible de transmettre cette opportunité à
-          d&apos;autres candidats dont le profil correspond à votre besoin.
-        </span>
-      </div>
-    ),
-    candidateId: cv.UserId,
-    defaultValues: {
-      candidat: {
-        firstName: cv.user.candidat.firstName,
-        lastName: cv.user.candidat.lastName,
+  const opportunityModalProps = useMemo(() => {
+    return {
+      modalTitle: 'Proposer une opportunité à un candidat',
+      modalDesc: (
+        <div className="uk-text-normal">
+          Contactez ici le candidat et son coach LinkedOut afin de solliciter un
+          échange.
+          <br />
+          <br />
+          Si vous souhaitez échanger avec le coach bénévole qui accompagne le
+          candidat dans sa recherche d&apos;emploi, précisez-le dans votre
+          message.
+          <br />
+          <br />
+          <span className="uk-text-meta uk-text-italic">
+            LinkedOut est susceptible de transmettre cette opportunité à
+            d&apos;autres candidats dont le profil correspond à votre besoin.
+          </span>
+        </div>
+      ),
+      candidateId: cv.UserId,
+      defaultValues: {
+        candidat: {
+          firstName: cv.user.candidat.firstName,
+          lastName: cv.user.candidat.lastName,
+        },
+        isPublic: false,
       },
-      isPublic: false,
-    },
-  };
+    };
+  }, [cv]);
 
   const { asPath } = useRouter();
   const hostname = process.env.SERVER_URL;

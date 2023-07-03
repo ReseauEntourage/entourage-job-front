@@ -5,7 +5,9 @@
     "sourceType": "module"
   },
   "plugins": [
-    "react", "react-hooks", "prettier",
+    "react",
+    "react-hooks",
+    "prettier",
     "@typescript-eslint/eslint-plugin",
     "@typescript-eslint",
     "typescript-sort-keys",
@@ -71,10 +73,13 @@
     "react/static-property-placement": ["warn", "static getter"],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",
-    "jsx-a11y/aria-role": [ 2, {
-      "allowedInvalidRoles": ["Candidat"],
-      "ignoreNonDOM": true
-    }],
+    "jsx-a11y/aria-role": [
+      2,
+      {
+        "allowedInvalidRoles": ["Candidat"],
+        "ignoreNonDOM": true
+      }
+    ],
     "react/jsx-filename-extension": [
       "warn",
       {
@@ -90,10 +95,7 @@
     ],
 
     // TypeScript Rules
-    "@typescript-eslint/no-unused-vars": [
-      1,
-      { "ignoreRestSiblings": true }
-    ],
+    "@typescript-eslint/no-unused-vars": [1, { "ignoreRestSiblings": true }],
     "@typescript-eslint/member-delimiter-style": [
       1,
       {

@@ -20,7 +20,9 @@ describe('Parcours travailler', () => {
   });
 
   it('Remplir le formulaire, envoyer et fermer', () => {
-    cy.get('[data-testid="form-candidate-inscription-location"]').scrollIntoView().click();
+    cy.get('[data-testid="form-candidate-inscription-location"]')
+      .scrollIntoView()
+      .click();
     cy.get('[data-testid="select-option-93"]').click();
     cy.get('[data-testid="form-candidate-inscription-birthdate"]').type(
       '1994-02-22'
