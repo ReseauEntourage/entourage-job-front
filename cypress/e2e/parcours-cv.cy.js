@@ -17,7 +17,11 @@ describe('Parcours CV', () => {
       fixture: 'opportunity-res',
     }).as('postOpportunity');
 
-    cy.intercept('POST', '/message').as('postMessage');
+    cy.intercept('POST', '/cv/count').as('postCVCount');
+
+    cy.intercept('POST', '/message', { fixture: 'post-message-res' }).as(
+      'postMessage'
+    );
 
     cy.intercept('GET', '/user/search/candidates*', {
       fixture: 'user-search-candidates-res',
@@ -83,6 +87,8 @@ describe('Parcours CV', () => {
     cy.get('button').contains('Envoyer').click();
 
     cy.wait('@postOpportunity');
+
+    cy.get('.ReactModalPortal div').should('not.exist');
   });
 
   it('Contacter un candidat', () => {
@@ -120,6 +126,8 @@ describe('Parcours CV', () => {
     cy.get('button').contains('Envoyer').click();
 
     cy.wait('@postMessage');
+
+    cy.get('.ReactModalPortal div').should('not.exist');
   });
 
   it('Partager sur LinkedIn', () => {
