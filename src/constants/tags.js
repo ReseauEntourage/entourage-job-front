@@ -428,9 +428,21 @@ export const FB_TAGS = {
     action: 'Prospect 4',
     options: { content_category: '4' },
   },
-  SHARE_CV: {
+  SHARE_CV_OPEN: {
+    action: 'Pré-Prospect 5',
+    options: { content_category: '5' },
+  },
+  SHARE_CV_SEND: {
     action: 'Prospect 5',
     options: { content_category: '5' },
+  },
+  MESSAGE_OPEN: {
+    action: 'Pré-Prospect 6',
+    options: { content_category: '6' },
+  },
+  MESSAGE_SEND: {
+    action: 'Prospect 6',
+    options: { content_category: '6' },
   },
   DONATION: {
     type: 'track',

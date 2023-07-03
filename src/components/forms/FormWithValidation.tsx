@@ -132,7 +132,7 @@ export const FormWithValidation = forwardRef(
           });
           setFieldValidations(tmpFieldValidations);
           setError('Un ou plusieurs champs sont invalides');
-          await onError(fieldValues);
+          if (onError) await onError(fieldValues);
         }
       },
       [fieldValidations, fieldValues, fields, onError, onSubmit, validator]

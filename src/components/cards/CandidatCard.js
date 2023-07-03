@@ -301,9 +301,12 @@ export const CandidatCard = ({
                         ? GA_TAGS.PAGE_GALERIE_PARTAGE_CV_LINKEDIN_CLIC
                         : GA_TAGS.HOME_PARTAGE_CV_LINKEDIN_CLIC
                     );
-                    fbEvent(FB_TAGS.SHARE_CV);
+                    fbEvent(FB_TAGS.SHARE_CV_SEND);
                     updateShareCount(id, 'linkedin');
                     openNewsletterModal();
+                  }}
+                  onClick={() => {
+                    fbEvent(FB_TAGS.SHARE_CV_OPEN);
                   }}
                   url={link}
                   title={title}
@@ -326,9 +329,12 @@ export const CandidatCard = ({
                         ? GA_TAGS.PAGE_GALERIE_PARTAGE_CV_FACEBOOK_CLIC
                         : GA_TAGS.HOME_PARTAGE_CV_FACEBOOK_CLIC
                     );
-                    fbEvent(FB_TAGS.SHARE_CV);
+                    fbEvent(FB_TAGS.SHARE_CV_SEND);
                     updateShareCount(id, 'facebook');
                     openNewsletterModal();
+                  }}
+                  onClick={() => {
+                    fbEvent(FB_TAGS.SHARE_CV_OPEN);
                   }}
                   url={link}
                   quote={sharedDescription}
@@ -351,10 +357,12 @@ export const CandidatCard = ({
                         ? GA_TAGS.PAGE_GALERIE_PARTAGE_CV_TWITTER_CLIC
                         : GA_TAGS.HOME_PARTAGE_CV_TWITTER_CLIC
                     );
-                    fbEvent(FB_TAGS.SHARE_CV);
-
+                    fbEvent(FB_TAGS.SHARE_CV_SEND);
                     updateShareCount(id, 'twitter');
                     openNewsletterModal();
+                  }}
+                  onClick={() => {
+                    fbEvent(FB_TAGS.SHARE_CV_OPEN);
                   }}
                   url={link}
                   title={title}

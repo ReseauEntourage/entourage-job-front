@@ -106,9 +106,12 @@ export const CVFiche = ({ cv, actionDisabled }) => {
           disabled={actionDisabled}
           onShareWindowClose={() => {
             gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_LINKEDIN_CLIC);
-            fbEvent(FB_TAGS.SHARE_CV);
+            fbEvent(FB_TAGS.SHARE_CV_SEND);
             updateSharesCount(cv.UserId, 'linkedin');
             openNewsletterModal();
+          }}
+          onClick={() => {
+            fbEvent(FB_TAGS.SHARE_CV_OPEN);
           }}
           url={link}
           title={title}
@@ -125,9 +128,12 @@ export const CVFiche = ({ cv, actionDisabled }) => {
           disabled={actionDisabled}
           onShareWindowClose={() => {
             gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_FACEBOOK_CLIC);
-            fbEvent(FB_TAGS.SHARE_CV);
+            fbEvent(FB_TAGS.SHARE_CV_SEND);
             updateSharesCount(cv.UserId, 'facebook');
             openNewsletterModal();
+          }}
+          onClick={() => {
+            fbEvent(FB_TAGS.SHARE_CV_OPEN);
           }}
           url={link}
           quote={sharedDescription}
@@ -144,9 +150,12 @@ export const CVFiche = ({ cv, actionDisabled }) => {
           disabled={actionDisabled}
           onShareWindowClose={() => {
             gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_TWITTER_CLIC);
-            fbEvent(FB_TAGS.SHARE_CV);
+            fbEvent(FB_TAGS.SHARE_CV_SEND);
             updateSharesCount(cv.UserId, 'twitter');
             openNewsletterModal();
+          }}
+          onClick={() => {
+            fbEvent(FB_TAGS.SHARE_CV_OPEN);
           }}
           url={link}
           title={sharedDescription}
@@ -164,9 +173,12 @@ export const CVFiche = ({ cv, actionDisabled }) => {
           disabled={actionDisabled}
           onShareWindowClose={() => {
             gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_WHATSAPP_CLIC);
-            fbEvent(FB_TAGS.SHARE_CV);
+            fbEvent(FB_TAGS.SHARE_CV_SEND);
             updateSharesCount(cv.UserId, 'whatsapp');
             openNewsletterModal();
+          }}
+          onClick={() => {
+            fbEvent(FB_TAGS.SHARE_CV_OPEN);
           }}
           url={link}
           title={sharedDescription}
@@ -207,6 +219,7 @@ export const CVFiche = ({ cv, actionDisabled }) => {
           style="custom-primary-inverted"
           onClick={() => {
             gaEvent(GA_TAGS.PAGE_CV_CONTACTEZ_MOI_CLIC);
+            fbEvent(FB_TAGS.MESSAGE_OPEN);
             openModal(
               <ModalEdit
                 title={`Envoyer un message à ${cv.user.candidat.firstName}`}
@@ -219,6 +232,7 @@ export const CVFiche = ({ cv, actionDisabled }) => {
                 formSchema={formSendMessage}
                 onSubmit={async ({ optIn, ...fields }, closeModal) => {
                   gaEvent(GA_TAGS.PAGE_CV_ENVOYER_CONTACTEZ_MOI_CLIC);
+                  fbEvent(FB_TAGS.MESSAGE_SEND);
                   try {
                     await Api.postMessage({
                       UserId: cv.UserId,
