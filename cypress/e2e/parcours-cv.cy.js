@@ -52,7 +52,7 @@ describe('Parcours CV', () => {
   });
 
   it('Proposer une offre à un candidat', () => {
-    cy.contains('Me proposer une offre').scrollIntoView().click();
+    cy.contains('Proposer une offre').scrollIntoView().click();
 
     // cy.wait('@getCandidats');
 
@@ -92,7 +92,7 @@ describe('Parcours CV', () => {
   });
 
   it('Contacter un candidat', () => {
-    cy.contains("M'envoyer un message").scrollIntoView().click();
+    cy.contains('Envoyer un message').scrollIntoView().click();
 
     cy.get('#form-send-external-message-senderFirstName')
       .scrollIntoView()
