@@ -50,7 +50,7 @@ export const PostPublicOfferModal = () => {
     'post-job-ad'
   );
 
-  const PostPublicOfferModalProps = {
+  const postPublicOfferModalProps = {
     defaultValues: {
       isPublic: true,
     },
@@ -60,5 +60,5 @@ export const PostPublicOfferModal = () => {
     schema: mutatedSchema,
   };
 
-  return <PostOpportunityModal {...PostPublicOfferModalProps} />;
+  return <PostOpportunityModal {...postPublicOfferModalProps} />;
 };

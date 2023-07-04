@@ -30,7 +30,7 @@ interface PostOpportunityModalProps {
 export const PostOpportunityModal = ({
   modalTitle,
   modalDesc,
-  isAdmin,
+  isAdmin = false,
   candidateId,
   callback,
   defaultValues = {},
@@ -177,10 +177,4 @@ export const PostOpportunityModal = ({
       }}
     />
   );
-};
-
-PostOpportunityModal.defaultProps = {
-  isAdmin: false,
-  candidateId: null,
-  callback: null,
 };
