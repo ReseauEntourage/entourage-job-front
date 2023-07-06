@@ -52,14 +52,13 @@ export const StyledBackground = styled.section`
         return props.mobileHeight ? `${props.mobileHeight}px` : '199px';
       }};
       &.hasCta {
-        max-height: 260px;
-        height: 260px;
+        max-height: 300px;
+        height: 300px;
         .banner {
-          height: 260px;
-          max-height: 260px;
+          height: 300px;
+          max-height: 300px;
         }
       }
-
       .banner {
         height: ${(props) => {
           return props.mobileHeight ? `${props.mobileHeight}px` : '199px';
@@ -67,14 +66,6 @@ export const StyledBackground = styled.section`
         max-height: ${(props) => {
           return props.mobileHeight ? `${props.mobileHeight}px` : '199px';
         }};
-      }
-      @media screen and (min-width: ${BREAKPOINTS.desktop}px) {
-        height: 360px;
-        max-height: 360px;
-        .banner {
-          height: 360px;
-          max-height: 360px;
-        }
       }
     }
   }

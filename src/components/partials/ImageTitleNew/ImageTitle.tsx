@@ -4,6 +4,7 @@ import { StyledImageTitle } from 'src/components/partials/ImageTitleNew/ImageTit
 import { Container, Button, BackgroundImage } from 'src/components/utils';
 import { H1 } from 'src/components/utils/Headings';
 import { UIKIT_BUTTON_STYLES_SPEC } from 'src/components/variables';
+import { useIsDesktop } from 'src/hooks/utils';
 
 export const ImageTitle = ({
   title,
@@ -28,6 +29,8 @@ export const ImageTitle = ({
     dataTest: string;
   };
 }) => {
+  const isDesktop = useIsDesktop();
+
   return (
     <BackgroundImage
       img={img}
@@ -37,7 +40,7 @@ export const ImageTitle = ({
       hasCta={!!cta}
     >
       <Container>
-        <StyledImageTitle>
+        <StyledImageTitle className={`${isDesktop ? 'desktop' : ''}`}>
           <H1
             title={title}
             color="white"
