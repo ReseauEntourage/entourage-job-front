@@ -57,7 +57,11 @@ ModalEdit.propTypes = {
       PropTypes.string,
     ])
   ),
-  description: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+  description: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.string,
+  ]),
   submitText: PropTypes.string,
   cancelText: PropTypes.string,
   formId: PropTypes.string,

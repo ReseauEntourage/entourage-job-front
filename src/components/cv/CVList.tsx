@@ -6,7 +6,7 @@ import { LoadingScreen } from 'src/components/backoffice/cv/LoadingScreen';
 import { CandidatCard } from 'src/components/cards';
 import { SearchBar } from 'src/components/filters/SearchBar';
 import { openModal } from 'src/components/modals/Modal';
-import { usePostPublicOfferModal } from 'src/components/modals/usePostPublicOfferModal';
+import { PostPublicOfferModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { Button, Grid, SimpleLink, Icon } from 'src/components/utils';
 import { CV_FILTERS_DATA, INITIAL_NB_OF_CV_TO_DISPLAY } from 'src/constants';
 import { FB_TAGS } from 'src/constants/tags';
@@ -52,8 +52,6 @@ export const CVList = ({
   setSearch,
   resetFilters,
 }: CVListProps) => {
-  const PublicOfferModal = usePostPublicOfferModal();
-
   const [cvs, setCVs] = useState(undefined);
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -210,7 +208,7 @@ export const CVList = ({
                 className="uk-link-text"
                 onClick={() => {
                   fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER_OPEN);
-                  openModal(<PublicOfferModal />);
+                  openModal(<PostPublicOfferModal />);
                 }}
               >
                 Publier une offre d’emploi
@@ -235,15 +233,7 @@ export const CVList = ({
       }
       return renderCvList(cvs);
     }
-  }, [
-    cvs,
-    error,
-    filters,
-    hasSuggestions,
-    loading,
-    renderCvList,
-    PublicOfferModal,
-  ]);
+  }, [cvs, error, filters, hasSuggestions, loading, renderCvList]);
 
   return (
     <div data-uk-scrollspy="cls:uk-animation-slide-bottom-small; target: .uk-card; delay: 200">
