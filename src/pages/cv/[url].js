@@ -14,6 +14,7 @@ import { Grid, Section, SimpleLink, Icon, Button } from 'src/components/utils';
 import { CV_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { useUpdateSharesCount } from 'src/hooks';
+import { PageCVContent } from 'src/components/partials/CV/PageCvContent';
 
 const CVPage = ({ cv, exists, router, hideShareOptions }) => {
   const updateSharesCount = useUpdateSharesCount();
@@ -104,6 +105,7 @@ const CVPage = ({ cv, exists, router, hideShareOptions }) => {
     );
   }
 
+
   return (
     <Layout
       title={title}
@@ -121,7 +123,7 @@ const CVPage = ({ cv, exists, router, hideShareOptions }) => {
       metaType="profile"
     >
       <div className="uk-background-muted">
-        {cv.urlImg && (
+        {/* {cv.urlImg && (
           <CVBackground
             endOfContract={cv?.user?.endOfContract}
             employed={cv.user ? cv.user.employed : false}
@@ -129,7 +131,8 @@ const CVPage = ({ cv, exists, router, hideShareOptions }) => {
           />
         )}
         <CVFiche cv={cv} hideShareOptions={hideShareOptions} />
-        <ActionPartial style="muted" />
+        <ActionPartial style="muted" /> */}
+        <PageCVContent cv={cv} />
       </div>
     </Layout>
   );

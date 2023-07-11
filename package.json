@@ -81,6 +81,7 @@
     "rxjs": "^7.4.0",
     "sharp": "^0.30.5",
     "styled-components": "^5.3.6",
+    "swiper": "^10.0.4",
     "uikit": "3.6.22",
     "use-deep-compare-effect": "^1.8.1",
     "uuid": "^8.3.2",

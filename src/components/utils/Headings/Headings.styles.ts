@@ -21,7 +21,15 @@ export const StyledH1 = styled.h1`
 export const StyledH2 = styled.h2`
   font-size: 28px;
   font-weight: 700;
-  color: ${COLORS.primaryOrange};
+  color: ${(props) => {
+    if (COLORS[props.color]) {
+      return COLORS[props.color];
+    }
+    if (props.color) {
+      return props.color;
+    }
+    return `${COLORS.primaryOrange}`;
+  }};
   &.big {
     color: ${COLORS.darkGrayFont};
     font-weight: 400;
@@ -29,6 +37,9 @@ export const StyledH2 = styled.h2`
   }
   &.light {
     font-weight: 400;
+  }
+  &.center {
+    text-align: center;
   }
   @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
     font-size: 20px;

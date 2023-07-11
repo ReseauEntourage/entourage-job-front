@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyledH2 } from './Headings.styles';
 
-export const H2 = ({ title, type = '' }: { title: string; type?: string }) => {
-  return <StyledH2 className={type}>{title}</StyledH2>;
+export const H2 = ({ title, type='', color, center=false}: { title: string; type?: string; color?: string; center?: boolean}) => {
+  return <StyledH2 className={`${type} ${center ? 'center' : ''}`} color={color}>{title}</StyledH2>;
 };
