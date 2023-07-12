@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   FacebookShareButton,
   LinkedinShareButton,
@@ -44,9 +44,9 @@ export const CVCallToActions = ({
 }: CVCallToActionsProps) => {
   const isDesktop = useIsDesktop();
 
-  const openNewsletterModal = () => {
+  const openNewsletterModal = useCallback(() => {
     openModal(<ModalShareCV firstName={cv.user.candidat.firstName} />);
-  };
+  }, [cv.user.candidat.firstName]);
 
   const opportunityModalProps = useMemo(() => {
     return {
