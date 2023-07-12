@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { BREAKPOINTS } from 'src/constants/styles';
 
 export const StyledImageTitle = styled.section`
   width: 100%;
@@ -18,7 +17,7 @@ export const StyledImageTitle = styled.section`
     padding-right: 40px;
     margin-top: 16px;
   }
-  @media screen and (min-width: ${BREAKPOINTS.desktop}px) {
+  &.desktop {
     padding: 40px 55% 40px 40px;
     h1 {
       font-size: 32px;
