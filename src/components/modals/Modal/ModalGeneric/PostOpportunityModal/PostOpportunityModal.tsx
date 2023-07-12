@@ -24,7 +24,7 @@ interface PostOpportunityModalProps {
   candidateId?: string;
   callback?: () => void;
   defaultValues: AnyToFix; // to be typed
-  schema: AnyToFix; // to be typed
+  schema?: AnyToFix; // to be typed
 }
 
 export const PostOpportunityModal = ({

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledH1 } from 'src/components/utils/Headings/Headings.styles';
+import { StyledH1 } from './Headings.styles';
 
 export const H1 = ({
   title,

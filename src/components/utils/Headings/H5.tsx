@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyledH6 } from './Headings.styles';
+import { StyledH5 } from './Headings.styles';
 
-export const H6 = ({
+export const H5 = ({
   title,
   effect = '',
   center = false,
@@ -13,12 +13,12 @@ export const H6 = ({
   color?: string;
 }) => {
   return (
-    <StyledH6
+    <StyledH5
       color={color}
       className={`${center ? 'center' : ''}`}
       data-uk-scrollspy={effect}
     >
       {title}
-    </StyledH6>
+    </StyledH5>
   );
 };

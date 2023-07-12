@@ -1,28 +1,10 @@
-import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import React, { useMemo } from 'react';
-import {
-  FacebookShareButton,
-  LinkedinShareButton,
-  TwitterShareButton,
-  WhatsappShareButton,
-} from 'react-share';
-import UIkit from 'uikit';
-import { Api } from 'src/api';
+import React from 'react';
 import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
-import { formSendExternalMessage } from 'src/components/forms/schema/formSendExternalMessage';
-import { openModal } from 'src/components/modals/Modal';
-import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { PostOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
-import { ModalShareCV } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
 import { Grid, Img, SimpleLink, Icon } from 'src/components/utils';
-import { Button } from 'src/components/utils/Button';
 import { CONTRACTS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { useUpdateSharesCount } from 'src/hooks';
-import { fbEvent } from 'src/lib/fb';
-import { gaEvent } from 'src/lib/gtag';
 import {
   findConstantFromValue,
   formatParagraph,
@@ -30,62 +12,13 @@ import {
   sortByOrder,
 } from 'src/utils';
 import { CVShape } from './CV.shape';
+import { CVCallToActions } from './CVCallToActions';
 
 /**
  * Le cv en public et en preview
  */
 export const CVFiche = ({ cv, actionDisabled }) => {
   const updateSharesCount = useUpdateSharesCount();
-
-  const opportunityModalProps = useMemo(() => {
-    return {
-      modalTitle: 'Proposer une opportunité à un candidat',
-      modalDesc: (
-        <div className="uk-text-normal">
-          Contactez ici le candidat et son coach LinkedOut afin de solliciter un
-          échange.
-          <br />
-          <br />
-          Si vous souhaitez échanger avec le coach bénévole qui accompagne le
-          candidat dans sa recherche d&apos;emploi, précisez-le dans votre
-          message.
-          <br />
-          <br />
-          <span className="uk-text-meta uk-text-italic">
-            LinkedOut est susceptible de transmettre cette opportunité à
-            d&apos;autres candidats dont le profil correspond à votre besoin.
-          </span>
-        </div>
-      ),
-      candidateId: cv.UserId,
-      defaultValues: {
-        candidat: {
-          firstName: cv.user.candidat.firstName,
-          lastName: cv.user.candidat.lastName,
-        },
-        isPublic: false,
-      },
-    };
-  }, [cv]);
-
-  const { asPath } = useRouter();
-  const hostname = process.env.SERVER_URL;
-  const path = asPath.includes('?')
-    ? asPath.slice(0, asPath.indexOf('?'))
-    : asPath;
-  const link = `${hostname}${path}`;
-  const hashtags = ['LinkedOut'];
-  const candidateExists = cv && cv.user && cv.user.candidat;
-  const sharedDescription = candidateExists
-    ? `La précarité n'exclut pas les compétences\xa0! Avec LinkedOut, aidons ${cv.user.candidat.firstName} à retrouver un emploi en lui proposant un job ou en diffusant son CV\xa0!`
-    : '';
-  const title = candidateExists
-    ? `LinkedOut\xa0: Aidez ${cv.user.candidat.firstName} à retrouver un emploi`
-    : '';
-
-  const openNewsletterModal = () => {
-    openModal(<ModalShareCV firstName={cv.user.candidat.firstName} />);
-  };
 
   const experiences =
     cv.experiences && cv.experiences.length > 0
@@ -98,169 +31,6 @@ export const CVFiche = ({ cv, actionDisabled }) => {
   const showCareerPathSentence =
     (cv.ambitions && cv.ambitions.length > 0) ||
     (cv.businessLines && cv.businessLines.length > 0);
-
-  const shareSection = (
-    <div className="uk-flex uk-flex-column uk-flex-middle">
-      <p className="uk-margin-small-bottom uk-text-center uk-text-muted">
-        Partager mon CV
-      </p>
-      <Grid row gap="small" center middle>
-        <LinkedinShareButton
-          disabled={actionDisabled}
-          onShareWindowClose={() => {
-            gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_LINKEDIN_CLIC);
-            fbEvent(FB_TAGS.SHARE_CV_SEND);
-            updateSharesCount(cv.UserId, 'linkedin');
-            openNewsletterModal();
-          }}
-          onClick={() => {
-            fbEvent(FB_TAGS.SHARE_CV_OPEN);
-          }}
-          url={link}
-          title={title}
-          summary={sharedDescription}
-          className="uk-icon-button"
-        >
-          <Icon
-            className={!actionDisabled ? 'ent-text-white' : undefined}
-            name="linkedin"
-            ratio={1.2}
-          />
-        </LinkedinShareButton>
-        <FacebookShareButton
-          disabled={actionDisabled}
-          onShareWindowClose={() => {
-            gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_FACEBOOK_CLIC);
-            fbEvent(FB_TAGS.SHARE_CV_SEND);
-            updateSharesCount(cv.UserId, 'facebook');
-            openNewsletterModal();
-          }}
-          onClick={() => {
-            fbEvent(FB_TAGS.SHARE_CV_OPEN);
-          }}
-          url={link}
-          quote={sharedDescription}
-          hashtags={hashtags}
-          className="uk-icon-button"
-        >
-          <Icon
-            className={!actionDisabled ? 'ent-text-white' : undefined}
-            name="facebook"
-            ratio={1.2}
-          />
-        </FacebookShareButton>
-        <TwitterShareButton
-          disabled={actionDisabled}
-          onShareWindowClose={() => {
-            gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_TWITTER_CLIC);
-            fbEvent(FB_TAGS.SHARE_CV_SEND);
-            updateSharesCount(cv.UserId, 'twitter');
-            openNewsletterModal();
-          }}
-          onClick={() => {
-            fbEvent(FB_TAGS.SHARE_CV_OPEN);
-          }}
-          url={link}
-          title={sharedDescription}
-          hashtags={hashtags}
-          via="R_Entourage"
-          className="uk-icon-button"
-        >
-          <Icon
-            className={!actionDisabled ? 'ent-text-white' : undefined}
-            name="twitter"
-            ratio={1.2}
-          />
-        </TwitterShareButton>
-        <WhatsappShareButton
-          disabled={actionDisabled}
-          onShareWindowClose={() => {
-            gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_WHATSAPP_CLIC);
-            fbEvent(FB_TAGS.SHARE_CV_SEND);
-            updateSharesCount(cv.UserId, 'whatsapp');
-            openNewsletterModal();
-          }}
-          onClick={() => {
-            fbEvent(FB_TAGS.SHARE_CV_OPEN);
-          }}
-          url={link}
-          title={sharedDescription}
-          className="uk-icon-button"
-        >
-          <Icon
-            className={!actionDisabled ? 'ent-text-white' : undefined}
-            name="whatsapp"
-            ratio={1.2}
-          />
-        </WhatsappShareButton>
-      </Grid>
-    </div>
-  );
-
-  const contactSection = (
-    <div className="uk-text-center">
-      <h3 className="uk-text-bold">
-        <span className="uk-text-primary">
-          Vous avez une offre d&rsquo;emploi
-        </span>{' '}
-        à me proposer ?
-      </h3>
-      <div className="uk-flex uk-flex-center">
-        <Button
-          disabled={actionDisabled}
-          style="custom-primary"
-          onClick={() => {
-            gaEvent(GA_TAGS.PAGE_CV_PROPOSER_OFFRE_CLIC);
-            fbEvent(FB_TAGS.COMPANY_CV_OFFER_OPEN);
-            openModal(<PostOpportunityModal {...opportunityModalProps} />);
-          }}
-        >
-          Me proposer une offre <Icon name="chevron-right" />
-        </Button>
-        <Button
-          disabled={actionDisabled}
-          style="custom-primary-inverted"
-          onClick={() => {
-            gaEvent(GA_TAGS.PAGE_CV_CONTACTEZ_MOI_CLIC);
-            fbEvent(FB_TAGS.MESSAGE_OPEN);
-            openModal(
-              <ModalEdit
-                title={`Envoyer un message à ${cv.user.candidat.firstName}`}
-                description={`Vous pouvez envoyer un message à ${
-                  cv.user.candidat.firstName
-                } pour l'aider et ${
-                  cv.user.candidat.gender === 0 ? 'le' : 'la'
-                } conseiller dans sa recherche d'emploi`}
-                submitText="Envoyer"
-                formSchema={formSendExternalMessage}
-                onSubmit={async ({ optIn, ...fields }, closeModal) => {
-                  gaEvent(GA_TAGS.PAGE_CV_ENVOYER_CONTACTEZ_MOI_CLIC);
-                  fbEvent(FB_TAGS.MESSAGE_SEND);
-                  try {
-                    await Api.postExternalMessage({
-                      UserId: cv.UserId,
-                      ...fields,
-                    });
-                    UIkit.notification(
-                      'Le message a bien été envoyé',
-                      'success'
-                    );
-
-                    closeModal();
-                  } catch (err) {
-                    UIkit.notification("Une erreur s'est produite", 'danger');
-                    console.error(err);
-                  }
-                }}
-              />
-            );
-          }}
-        >
-          M&apos;envoyer un message <Icon name="chevron-right" />
-        </Button>
-      </div>
-    </div>
-  );
 
   return (
     <div id="cv-fiche" className="uk-container uk-position-relative">
@@ -324,10 +94,7 @@ export const CVFiche = ({ cv, actionDisabled }) => {
                   />
                 </a>
               </div>
-              <Grid childWidths={['1-1']}>
-                {contactSection}
-                {shareSection}
-              </Grid>
+              <Grid childWidths={['1-1']}>{/* {shareSection} */}</Grid>
             </div>
           </div>
           <Grid gap="large" eachWidths={['expand', '1-3@m']}>
@@ -544,8 +311,12 @@ export const CVFiche = ({ cv, actionDisabled }) => {
             </Grid>
           </Grid>
           <hr />
-          {contactSection}
-          {shareSection}
+          <CVCallToActions
+            cv={cv}
+            updateSharesCount={updateSharesCount}
+            actionDisabled={actionDisabled}
+          />
+          {/* {shareSection} */}
         </Grid>
       </div>
       <Grid column middle>
