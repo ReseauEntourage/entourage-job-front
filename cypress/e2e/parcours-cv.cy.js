@@ -17,7 +17,7 @@ describe('Parcours CV', () => {
       fixture: 'opportunity-res',
     }).as('postOpportunity');
 
-    cy.intercept('POST', '/cv/count').as('postCVCount');
+    cy.intercept('POST', '/cv/count', {}).as('postCVCount');
 
     cy.intercept('POST', '/externalMessage', {
       fixture: 'post-external-message-res',
@@ -28,6 +28,9 @@ describe('Parcours CV', () => {
     }).as('getCandidats');
 
     cy.intercept('GET', '/cv/shares', { total: 184222 }).as('cvShares');
+    cy.intercept('GET', '/cv/published', { nbPublishedCVs: 2 }).as(
+      'cvPublished'
+    );
   });
 
   it('Ouvrir les filtres et checker Paris', () => {
