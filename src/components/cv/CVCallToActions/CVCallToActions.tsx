@@ -186,7 +186,7 @@ export const CVCallToActions = ({
           order={1}
         >
           <H5
-            title="Contactez-le pour lui apporter des conseils !"
+            title="Contactez-le pour lui apporter un coup de pouce !"
             center
             color="darkGrayFont"
           />
@@ -254,7 +254,7 @@ export const CVCallToActions = ({
               openModal(<PostOpportunityModal {...opportunityModalProps} />);
             }}
           >
-            Proposer une offre de poste
+            Proposer une offre
           </Button>
         </StyledCVCTAContainer>
       </StyledCVCTA>
