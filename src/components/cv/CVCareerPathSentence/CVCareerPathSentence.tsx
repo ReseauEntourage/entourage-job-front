@@ -1,6 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { AMBITIONS_PREFIXES, BUSINESS_LINES, AmbitionsPrefixesType } from 'src/constants';
+import {
+  AMBITIONS_PREFIXES,
+  BUSINESS_LINES,
+  AmbitionsPrefixesType,
+} from 'src/constants';
 import {
   buildBusinessLineForSentence,
   findConstantFromValue,
@@ -8,25 +12,35 @@ import {
   sortByOrder,
 } from 'src/utils';
 
-
 interface CVCareerPathSentenceProps {
-  ambitions: {
-    name: string;
-    order: number;
-    prefix: AmbitionsPrefixesType;
-  }[] | string;
-  businessLines: {
-    name: string;
-    order: number;
-  }[] | string;
+  ambitions:
+    | {
+        name: string;
+        order: number;
+        prefix: AmbitionsPrefixesType;
+      }[]
+    | string;
+  businessLines:
+    | {
+        name: string;
+        order: number;
+      }[]
+    | string;
 }
 
-export const CVCareerPathSentence = ({ businessLines, ambitions }: CVCareerPathSentenceProps) => {
+export const CVCareerPathSentence = ({
+  businessLines,
+  ambitions,
+}: CVCareerPathSentenceProps) => {
   const sortedAmbitions =
-    ambitions && typeof ambitions === 'object' && ambitions.length > 0 ? sortByOrder(ambitions) : null;
+    ambitions && typeof ambitions === 'object' && ambitions.length > 0
+      ? sortByOrder(ambitions)
+      : null;
 
   const sortedBusinessLines =
-    businessLines && businessLines.length > 0 && typeof businessLines === 'object' 
+    businessLines &&
+    businessLines.length > 0 &&
+    typeof businessLines === 'object'
       ? sortByOrder(businessLines)
       : null;
 
@@ -162,4 +176,3 @@ export const CVCareerPathSentence = ({ businessLines, ambitions }: CVCareerPathS
   }
   return null;
 };
-

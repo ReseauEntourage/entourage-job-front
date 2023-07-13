@@ -1,5 +1,9 @@
 import React from 'react';
-import { AMBITIONS_PREFIXES, BUSINESS_LINES, AmbitionsPrefixesType } from 'src/constants';
+import {
+  AMBITIONS_PREFIXES,
+  BUSINESS_LINES,
+  AmbitionsPrefixesType,
+} from 'src/constants';
 import {
   buildBusinessLineForSentence,
   findConstantFromValue,
@@ -9,23 +13,34 @@ import {
 import { StyledCareerPathSentenceContainer } from './CVCareerPathSentence.styles';
 
 interface CVCareerPathSentenceNewProps {
-  ambitions: {
-    name: string;
-    order: number;
-    prefix: AmbitionsPrefixesType;
-  }[] | string;
-  businessLines: {
-    name: string;
-    order: number;
-  }[] | string;
+  ambitions:
+    | {
+        name: string;
+        order: number;
+        prefix: AmbitionsPrefixesType;
+      }[]
+    | string;
+  businessLines:
+    | {
+        name: string;
+        order: number;
+      }[]
+    | string;
 }
 
-export const CVCareerPathSentenceNew = ({ businessLines, ambitions }: CVCareerPathSentenceNewProps) => {
+export const CVCareerPathSentenceNew = ({
+  businessLines,
+  ambitions,
+}: CVCareerPathSentenceNewProps) => {
   const sortedAmbitions =
-    ambitions && typeof ambitions === 'object' && ambitions.length > 0 ? sortByOrder(ambitions) : null;
+    ambitions && typeof ambitions === 'object' && ambitions.length > 0
+      ? sortByOrder(ambitions)
+      : null;
 
   const sortedBusinessLines =
-    businessLines && businessLines.length > 0 && typeof businessLines === 'object' 
+    businessLines &&
+    businessLines.length > 0 &&
+    typeof businessLines === 'object'
       ? sortByOrder(businessLines)
       : null;
 
@@ -96,9 +111,7 @@ export const CVCareerPathSentenceNew = ({ businessLines, ambitions }: CVCareerPa
           <>
             {' '}
             {AMBITIONS_PREFIXES[1].label}{' '}
-            <span className="orange">
-              {careerPaths[index].ambition}
-            </span>
+            <span className="orange">{careerPaths[index].ambition}</span>
           </>
         );
       }
@@ -115,21 +128,20 @@ export const CVCareerPathSentenceNew = ({ businessLines, ambitions }: CVCareerPa
     return (
       <StyledCareerPathSentenceContainer>
         J&apos;aimerais travailler {AMBITIONS_PREFIXES[0].label}{' '}
-        <span>
-          {careerPaths[0].businessLine.label}
-        </span>
+        <span>{careerPaths[0].businessLine.label}</span>
         {getAmbitionIfExists(0)}
         {hasSecondPart && (
           <>
             {hasSameBusinessLine ? (
-              <> ou {getAmbitionIfExists(1)}</>
+              <>
+                <br /> ou {getAmbitionIfExists(1)}
+              </>
             ) : (
               <>
                 {' '}
+                <br />
                 ou {AMBITIONS_PREFIXES[0].label}{' '}
-                <span>
-                  {careerPaths[1].businessLine.label}
-                </span>
+                <span>{careerPaths[1].businessLine.label}</span>
                 {getAmbitionIfExists(1)}
               </>
             )}
@@ -140,4 +152,3 @@ export const CVCareerPathSentenceNew = ({ businessLines, ambitions }: CVCareerPa
   }
   return null;
 };
-

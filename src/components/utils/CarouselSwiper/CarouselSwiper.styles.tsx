@@ -5,19 +5,19 @@ import 'swiper/css/pagination';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledSwiperSlide = styled(SwiperSlide)`
-    padding-bottom: 50px;
+  padding-bottom: 50px;
 `;
 
 export const StyledSwiperContainer = styled.div`
-    .swiper-pagination-bullet-active {
-        background-color: ${COLORS.primaryOrange};
-        height: 15px;
-        width: 15px;
-        opacity: 100%;
-    }
-    .swiper-pagination-bullet {
-        background-color: ${COLORS.primaryOrange};
-        height: 15px;
-        width: 15px;
-    }
+  .swiper-pagination-bullet-active {
+    background-color: ${COLORS.primaryOrange};
+    height: 15px;
+    width: 15px;
+    opacity: 100%;
+  }
+  .swiper-pagination-bullet {
+    background-color: ${COLORS.primaryOrange};
+    height: 15px;
+    width: 15px;
+  }
 `;

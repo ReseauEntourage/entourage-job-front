@@ -105,7 +105,6 @@ const CVPage = ({ cv, exists, router, hideShareOptions }) => {
     );
   }
 
-
   return (
     <Layout
       title={title}

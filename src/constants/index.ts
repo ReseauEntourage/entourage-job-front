@@ -178,7 +178,7 @@ export const AMBITIONS_PREFIXES = [
   },
 ];
 
-export type AmbitionsPrefixesType = [ 'dans' | 'comme' ];
+export type AmbitionsPrefixesType = ['dans' | 'comme'];
 
 export type Contract =
   | 'cdi'

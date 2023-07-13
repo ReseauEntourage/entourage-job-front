@@ -13,6 +13,9 @@ export const StyledH1 = styled.h1`
     }
     return 'black';
   }};
+  &.center {
+    text-align: center;
+  }
   @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
     font-size: 24px;
   }
@@ -54,6 +57,15 @@ export const StyledH3 = styled.h3`
   font-weight: 700;
   line-height: 36px;
   color: black;
+  color: ${(props) => {
+    if (COLORS[props.color]) {
+      return COLORS[props.color];
+    }
+    if (props.color) {
+      return props.color;
+    }
+    return 'black';
+  }};
   &.center {
     text-align: center;
   }

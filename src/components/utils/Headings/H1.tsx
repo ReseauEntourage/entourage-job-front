@@ -5,13 +5,19 @@ export const H1 = ({
   title,
   effect,
   color,
+  center = false,
 }: {
   title: string;
   effect?: string;
   color: string;
+  center?: boolean;
 }) => {
   return (
-    <StyledH1 color={color} data-uk-scrollspy={effect}>
+    <StyledH1
+      className={`${center ? 'center' : ''}`}
+      color={color}
+      data-uk-scrollspy={effect}
+    >
       {title}
     </StyledH1>
   );

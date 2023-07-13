@@ -4,9 +4,15 @@ import { StyledH3 } from './Headings.styles';
 export const H3 = ({
   title,
   center = false,
+  color,
 }: {
   title: string;
   center?: boolean;
+  color?: string;
 }) => {
-  return <StyledH3 className={`${center ? 'center' : ''}`}>{title}</StyledH3>;
+  return (
+    <StyledH3 className={`${center ? 'center' : ''}`} color={color}>
+      {title}
+    </StyledH3>
+  );
 };
