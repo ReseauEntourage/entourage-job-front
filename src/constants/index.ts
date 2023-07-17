@@ -965,7 +965,7 @@ export const EXTERNAL_MESSAGE_CONTACT_TYPE_FILTERS: FilterConstant<ExternalMessa
       value: ExternalMessageContactTypes.COMPANY,
     },
     {
-      label: 'Un coach/connecteur',
+      label: 'Coach/connecteur LinkedOut',
       value: ExternalMessageContactTypes.COACH_CONNECTOR,
     },
   ];
@@ -985,7 +985,7 @@ export type ExternalMessageSubject =
 export const EXTERNAL_MESSAGE_SUBJECT_FILTERS: FilterConstant<ExternalMessageSubject>[] =
   [
     {
-      label: "Proposition d'embauche",
+      label: "Offre d'emploi",
       value: ExternalMessageSubjects.HIRING,
     },
     {
