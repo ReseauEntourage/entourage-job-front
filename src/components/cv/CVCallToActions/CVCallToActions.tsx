@@ -205,9 +205,9 @@ export const CVCallToActions = ({
                   title={`Envoyer un message à ${cv.user.candidat.firstName}`}
                   description={`Vous pouvez envoyer un message à ${
                     cv.user.candidat.firstName
-                  } pour l'aider et ${
+                  } pour ${
                     cv.user.candidat.gender === 0 ? 'le' : 'la'
-                  } conseiller dans sa recherche d'emploi`}
+                  } soutenir dans sa recherche d'emploi`}
                   submitText="Envoyer"
                   formSchema={formSendExternalMessage}
                   onSubmit={async ({ optIn, ...fields }, closeModal) => {
