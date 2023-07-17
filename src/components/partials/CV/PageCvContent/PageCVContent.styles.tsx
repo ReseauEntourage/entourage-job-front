@@ -1,5 +1,17 @@
 import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
+import { Icon } from 'src/components/utils';
+
+export const StyledChevronIcon = styled(Icon)`
+    position: absolute;
+    top: 28px;
+    right: 30px;
+    svg {
+        height: 20px;
+        width: 20px;
+        color: ${COLORS.primaryOrange};
+    }
+`;
 
 export const CV_COLORS = {
   titleGray: '#484848',
@@ -48,6 +60,8 @@ export const StyledCVPageContentHeader = styled(BasicDivContainer)`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
   background-color: #ffffffe5;
   border-radius: 30px;
   padding: 30px;
@@ -58,6 +72,8 @@ export const StyledCVPageContentHeader = styled(BasicDivContainer)`
   #header-details {
     padding-left: 55px;
     line-height: 24px;
+    width: calc(100% - 355px);
+    box-sizing: border-box;
     #quote {
       span.uk-icon {
         color: ${COLORS.primaryOrange};
@@ -76,6 +92,9 @@ export const StyledCVPageContentHeader = styled(BasicDivContainer)`
       }
     }
   }
+  #header-picture-share {
+    max-width: 355px;
+  }
   &.mobile {
     #header-picture-share {
       width: 100%;
@@ -87,6 +106,7 @@ export const StyledCVPageContentHeader = styled(BasicDivContainer)`
     #header-details {
       padding-left: 0;
       text-align: center;
+      width: 100%;
     }
     .skill-tags {
       margin-bottom: 50px;
@@ -138,21 +158,25 @@ export const StyledCVProfilePicture = styled.div`
     background-image: ${(props) => {
       return `url('${props.imgSrc}')`;
     }};
-    background-position: center;
+    background-position: 66% 39%;
     position: absolute;
     z-index: 2;
-    left: 30px;
+    background-size: cover;
+    left: 50%;
+    transform: translateX(-50%);
     top: 25px;
   }
   .pseudo {
     background-color: #f55f241a;
     height: 450px;
     width: 300px;
-    left: 30px;
+    /* left: 30px; */
+    left: 50%;
+    transform: translateX(-50%) rotate(7.94deg);
     top: 0;
     position: absolute;
     /* transform: rotate(-83.94deg); */
-    transform: rotate(7.94deg);
+    /* transform: rotate(7.94deg); */
     border-radius: 859px 909px 729px 909px;
     z-index: 1;
   }
@@ -160,14 +184,23 @@ export const StyledCVProfilePicture = styled.div`
     max-width: 100%;
     /* width: fit-content; */
     /* overflow-y: hidden; */
+    height: 300px;
     margin-bottom: 30px;
     .picture {
+      width: 190px;
+      height: 270px;
       /* max-width: 100%; */
       /* left: 35px; */
-        /* max-height: 261px; */
-        /* max-width: 174px; */
+      left: 50%;
+      transform: translateX(-50%);
+      /* max-height: 261px; */
+      /* max-width: 174px; */
     }
     .pseudo {
+      height: 300px;
+      width: 200px;
+      left: 50%;
+      transform: translateX(-50%) rotate(7.94deg);
       /* left: -48px; */
       /* max-width: 289px; */
       /* max-height: 194px; */
@@ -177,7 +210,7 @@ export const StyledCVProfilePicture = styled.div`
 
 export const StyledShareContainer = styled.div`
   margin-top: 30px;
-  width: 355px;
+  /* width: 355px; */
   box-sizing: border-box;
   padding: 0 25px;
   text-align: center;
@@ -187,6 +220,9 @@ export const StyledShareContainer = styled.div`
 export const StyledCVPageContentDetailsContainer = styled(BasicDivContainer)`
   display: flex;
   flex-direction: row;
+  &.mobile {
+    flex-direction: column;
+  }
 `;
 
 export const StyledCVPageContentInformations = styled.div`
@@ -197,6 +233,11 @@ export const StyledCVPageContentInformations = styled.div`
   margin-bottom: 30px;
   border-radius: 30px;
   margin-right: 30px;
+  box-sizing: border-box;
+  position: relative;
+  h6 {
+    margin-block-start: 0;
+  }
   .subtitle {
     color: ${COLORS.primaryOrange};
     margin-bottom: 0;
@@ -209,6 +250,15 @@ export const StyledCVPageContentInformations = styled.div`
     padding-left: 30px;
     margin-top: 5px;
   }
+  &.mobile {
+    width: 100%;
+    max-width: none;
+  }
+  &.close {
+    ul {
+        display: none;
+    }
+  }
 `;
 
 export const StyledCVPageContentPassions = styled.div`
@@ -219,6 +269,12 @@ export const StyledCVPageContentPassions = styled.div`
   margin-bottom: 30px;
   border-radius: 30px;
   margin-right: 30px;
+  box-sizing: border-box;
+  position: relative;
+  &.mobile {
+    width: 100%;
+    max-width: none;
+  }
 `;
 
 export const StyledCVPageContentExperience = styled.div`
@@ -227,6 +283,7 @@ export const StyledCVPageContentExperience = styled.div`
   display: block;
   margin-bottom: 30px;
   border-radius: 30px;
+  position: relative;
 `;
 
 export const StyledSkillTag = styled.div`

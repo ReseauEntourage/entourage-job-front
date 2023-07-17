@@ -15,6 +15,7 @@ import {
   StyledCVPageContentExperience,
   StyledCVPageContentPassions,
   StyledCVPageContentCarousel,
+  StyledChevronIcon,
 } from './PageCVContent.styles';
 import Link from 'next/link';
 import { H1, H2, H6 } from 'src/components/utils/Headings';
@@ -36,13 +37,29 @@ import { Api } from 'src/api';
 import UIkit from 'uikit';
 import { useIsDesktop } from 'src/hooks/utils';
 
+
+interface openedPanelType {
+    informations: boolean;
+    experiences: boolean;
+    formations: boolean;
+    passions: boolean;
+  }
+
 export const PageCVContent = ({ cv, actionDisabled }) => {
   const locations =
     cv.locations && cv.locations.length > 0 ? sortByOrder(cv.locations) : [];
 
   const isDesktop = useIsDesktop();
 
-  const [isStoryHidden, setIsStoryHidden] = useState(true);
+  const [isStoryHidden, setIsStoryHidden] = useState<boolean>(true);
+
+
+  const [ openedPanel, setOpenedPanel ] = useState<openedPanelType>({
+    informations: true,
+    experiences: false,
+    formations: false,
+    passions: false,
+  })
 
   return (
     <StyledCVPageContent>
@@ -53,6 +70,7 @@ export const PageCVContent = ({ cv, actionDisabled }) => {
         <div id="header-picture-share">
           <StyledCVProfilePicture
             className={!isDesktop ? 'mobile' : ''}
+            // imgSrc="https://d33bu863opcyg0.cloudfront.net/images/d96a5ac9-0a3c-4970-bc77-bb52e17b32c1.Published.jpg"
             imgSrc={process.env.AWSS3_CDN_URL + addPrefix(cv.urlImg)}
           >
             <div className="picture"></div>
@@ -176,9 +194,10 @@ export const PageCVContent = ({ cv, actionDisabled }) => {
           )}
         </div>
       </StyledCVPageContentHeader>
-      <StyledCVPageContentDetailsContainer>
+      <StyledCVPageContentDetailsContainer className={!isDesktop ? 'mobile' : ''}>
         <div>
-          <StyledCVPageContentInformations>
+          <StyledCVPageContentInformations className={`${openedPanel.informations ? '' : 'close'} ${!isDesktop ? 'mobile' : ''}`}>
+                <StyledChevronIcon name="chevron-down" onClick={() => {setOpenedPanel({...openedPanel, informations: !openedPanel.informations})}}/>
             <H6 title="Informations" color={CV_COLORS.titleGray} />
             <ul>
               {cv.contracts && cv.contracts.length > 0 && (
@@ -254,7 +273,7 @@ export const PageCVContent = ({ cv, actionDisabled }) => {
               )}
             </ul>
           </StyledCVPageContentInformations>
-          {cv.passions.length > 0 && (
+          {cv.passions.length > 0 && isDesktop && (
             <StyledCVPageContentPassions>
               <H6 title="Mes Passions" color={CV_COLORS.titleGray} />
               <ul>
@@ -290,6 +309,16 @@ export const PageCVContent = ({ cv, actionDisabled }) => {
           {/* <StyledCVPageContentExperience>
                     <H2 title="Formation" color="black"/>
                 </StyledCVPageContentExperience> */}
+        {cv.passions.length > 0 && !isDesktop && (
+            <StyledCVPageContentPassions className={!isDesktop ? 'mobile' : ''}>
+              <H6 title="Mes Passions" color={CV_COLORS.titleGray} />
+              <ul>
+                {cv?.passions?.map(({ name }) => {
+                  return <p>{name}</p>;
+                })}
+              </ul>
+            </StyledCVPageContentPassions>
+          )}
         </div>
       </StyledCVPageContentDetailsContainer>
       {cv.reviews.length > 0 && (
