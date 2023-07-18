@@ -1,15 +1,15 @@
 import React from 'react';
-import { StyledHelpCards } from 'src/components/partials/Aider/HelpCards/styles';
-import HelpCard from 'src/components/partials/Aider/HelpCards/HelpCard';
+import { v4 as uuid } from 'uuid';
 import HelpCoach from 'public/static/img/aider-coach.jpg';
 import HelpCV from 'public/static/img/aider-cv.jpg';
 import HelpProject from 'public/static/img/aider-financement-projet.jpg';
 import HelpReseau from 'public/static/img/aider-reseau.jpg';
-import TitleSection from 'src/components/partials/Aider/H2';
+import { TitleSection } from 'src/components/partials/Aider/H2';
+import { HelpCard } from 'src/components/partials/Aider/HelpCards/HelpCard';
+import { StyledHelpCards } from 'src/components/partials/Aider/HelpCards/styles';
+import { Container } from 'src/components/utils';
 import { COLORS } from 'src/constants/styles';
-import { Container } from 'src/components/utils/containers';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { v4 as uuid } from 'uuid';
 
 const uuidValue = uuid();
 
@@ -38,7 +38,7 @@ const cardsContent = [
   {
     title: 'Activez votre réseau pour un candidat',
     img: HelpReseau,
-    text: 'Une mission souple et ponctuelle pour apporter un coup de pouce et des mises en relation aux candidats et leurs coachs tout au long de leur parcours LinkedOut ! Mission disponible à Paris et Lyon pour le moment !',
+    text: 'Une mission souple et ponctuelle pour apporter un coup de pouce et des mises en relation aux candidats et leurs coachs tout au long de leur parcours LinkedOut !',
     cta: 'Rejoindre les connecteurs',
     href: process.env.CONNECTEUR_INSCRIPTION_URL,
     alt: 'Des connecteurs LinkedOut',
@@ -57,7 +57,7 @@ const cardsContent = [
   },
 ];
 
-const HelpCards = () => {
+export const HelpCards = () => {
   return (
     <StyledHelpCards>
       <Container>
@@ -85,5 +85,3 @@ const HelpCards = () => {
     </StyledHelpCards>
   );
 };
-
-export default HelpCards;

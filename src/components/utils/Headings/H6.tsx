@@ -1,10 +1,24 @@
 import React from 'react';
-import { StyledH6 } from 'src/components/utils/Headings/Headings.styles';
+import { StyledH6 } from './Headings.styles';
 
-export const H6 = ({ title, effect }: { title: string; effect?: string }) => {
-  return <StyledH6 data-uk-scrollspy={effect}>{title}</StyledH6>;
-};
-
-H6.defaultProps = {
-  effect: '',
+export const H6 = ({
+  title,
+  effect = '',
+  center = false,
+  color,
+}: {
+  title: string;
+  effect?: string;
+  center?: boolean;
+  color?: string;
+}) => {
+  return (
+    <StyledH6
+      color={color}
+      className={`${center ? 'center' : ''}`}
+      data-uk-scrollspy={effect}
+    >
+      {title}
+    </StyledH6>
+  );
 };

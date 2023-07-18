@@ -1,20 +1,20 @@
 import { useRouter } from 'next/router';
 import React, { useContext, useState, useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
-import { StyledHeaderDesktop } from 'src/components/headers/Header.styles';
 import {
   HeaderConnectedMainItemProps,
   HeaderConnectedMainItemDefaultProps,
-} from 'src/components/headers/HeaderConnected/HeaderConnected.shapes';
-import { StyledConnectedItem } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/HeaderConnectedContent.styles';
-import ImgProfile from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
-import SubMenu from 'src/components/headers/HeaderConnected/HeaderConnectedContent/SubMenu';
-import { Navbar, SimpleLink } from 'src/components/utils';
-import Dropdown from 'src/components/utils/Dropdown';
-import { IconNoSSR } from 'src/components/utils/Icon';
-import Nav from 'src/components/utils/Navbar/Nav';
+} from '../HeaderConnected.types';
+import { StyledHeaderDesktop } from 'src/components/headers/Header.styles';
+import {
+  Navbar,
+  SimpleLink,
+  Nav,
+  Dropdown,
+  NavbarLogo,
+  Icon,
+} from 'src/components/utils';
 import { StyledNav } from 'src/components/utils/Navbar/Nav/Nav.styles';
-import NavbarLogo from 'src/components/utils/Navbar/NavbarLogo';
 import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
@@ -23,31 +23,24 @@ import {
 import { gaEvent } from 'src/lib/gtag';
 import { UserContext } from 'src/store/UserProvider';
 import { isRoleIncluded } from 'src/utils/Finding';
+import { StyledConnectedItem } from './HeaderConnectedContent.styles';
+import { HeaderConnectedContentProps } from './HeaderConnectedContent.types';
+import { ImgProfile } from './ImgProfile';
+import { SubMenu } from './SubMenu';
 
 const uuidValue = uuid();
 
-interface HeaderConnectedContentDesktopProps {
-  links?: {
-    admin: HeaderConnectedMainItemProps[];
-    dropdown: HeaderConnectedMainItemProps[];
-    candidat: HeaderConnectedMainItemProps[];
-    coach: HeaderConnectedMainItemProps[];
-    coach_externe: HeaderConnectedMainItemProps[];
-  };
-  badges?: {
-    offers: number;
-    note: number;
-    cv: number;
-    members: number;
-  };
-  isEmpty?: boolean;
-}
-
-const HeaderConnectedContentDesktop = ({
+export const HeaderConnectedContentDesktop = ({
   badges,
-  links,
-  isEmpty,
-}: HeaderConnectedContentDesktopProps) => {
+  links = {
+    admin: [HeaderConnectedMainItemDefaultProps],
+    dropdown: [HeaderConnectedMainItemDefaultProps],
+    candidat: [HeaderConnectedMainItemDefaultProps],
+    coach: [HeaderConnectedMainItemDefaultProps],
+    coach_externe: [HeaderConnectedMainItemDefaultProps],
+  },
+  isEmpty = false,
+}: HeaderConnectedContentProps) => {
   const { user } = useContext(UserContext);
 
   const { push, asPath } = useRouter();
@@ -80,7 +73,7 @@ const HeaderConnectedContentDesktop = ({
       >
         <ImgProfile />
         <span className="uk-margin-small-left">Bonjour {user.firstName}</span>
-        <IconNoSSR name="triangle-down" />
+        <Icon name="triangle-down" />
       </a>
       <Dropdown
         dividers={[2]}
@@ -194,7 +187,7 @@ const HeaderConnectedContentDesktop = ({
                           className="uk-flex uk-flex-middle menu-link"
                         >
                           <span className="uk-margin-small-right icon-span">
-                            <IconNoSSR name={icon} />
+                            <Icon name={icon} />
                           </span>
                           <span className="name-span">{name}</span>
                           {badges[badge] > 0 && (
@@ -221,16 +214,3 @@ const HeaderConnectedContentDesktop = ({
     </StyledHeaderDesktop>
   );
 };
-
-HeaderConnectedContentDesktop.defaultProps = {
-  links: {
-    admin: HeaderConnectedMainItemDefaultProps,
-    dropdown: HeaderConnectedMainItemDefaultProps,
-    candidat: HeaderConnectedMainItemDefaultProps,
-    coach: HeaderConnectedMainItemDefaultProps,
-  },
-  badges: null,
-  isEmpty: false,
-};
-
-export default HeaderConnectedContentDesktop;

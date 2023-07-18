@@ -1,13 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import moment from 'moment';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import { Grid } from 'src/components/utils';
+import { Grid, Icon } from 'src/components/utils';
+import { OFFER_STATUS } from 'src/constants';
 import { findOfferStatus } from 'src/utils';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
-import { OFFER_STATUS } from 'src/constants/index.ts';
 
-const OfferCard = ({
+export const OfferCard = ({
   title,
   from,
   shortDescription,
@@ -73,7 +72,7 @@ const OfferCard = ({
           {shouldShowRecommandationBadge ? (
             <>
               R e c o&nbsp;
-              <IconNoSSR name="bolt" ratio={0.5} className="ent-color-amber" />
+              <Icon name="bolt" ratio={0.5} className="ent-color-amber" />
             </>
           ) : (
             ''
@@ -90,14 +89,14 @@ const OfferCard = ({
           <div className="uk-flex uk-flex-right uk-flex-top">
             {' '}
             {(specificOpportunityUser?.bookmarked || bookmarked) && (
-              <IconNoSSR
+              <Icon
                 name="star"
                 className="ent-color-amber uk-margin-small-left"
                 ratio={0.8}
               />
             )}
             {(specificOpportunityUser?.archived || (!isAdmin && archived)) && (
-              <IconNoSSR
+              <Icon
                 name="archive"
                 className="ent-color-amber uk-margin-small-left"
                 ratio={0.8}
@@ -106,24 +105,24 @@ const OfferCard = ({
           </div>
         </div>
         <Grid gap="small" middle eachWidths={['auto', 'expand']}>
-          <IconNoSSR name="world" />
+          <Icon name="world" />
           <p>{shortDescription}</p>
         </Grid>
         {department && (
           <Grid gap="small" middle eachWidths={['auto', 'expand']}>
-            <IconNoSSR name="location" />
+            <Icon name="location" />
             <p>{department}</p>
           </Grid>
         )}
         {isAdmin && from && (
           <Grid gap="small" middle eachWidths={['auto', 'expand']}>
-            <IconNoSSR name="user" />
+            <Icon name="user" />
             <p>{from}</p>
           </Grid>
         )}
 
         <Grid gap="small" middle eachWidths={['auto', 'expand']}>
-          <IconNoSSR name="info" />
+          <Icon name="info" />
           <div>
             {isPublic ? (
               <div>
@@ -172,7 +171,7 @@ const OfferCard = ({
         </Grid>
         {date && (
           <Grid gap="small" middle eachWidths={['auto', 'expand']}>
-            <IconNoSSR name="calendar" />
+            <Icon name="calendar" />
             <p>{moment(date).format('DD/MM/YYYY')}</p>
           </Grid>
         )}
@@ -184,7 +183,7 @@ const OfferCard = ({
               (isValidated ? (
                 <div className="uk-flex uk-flex-middle">
                   Publiée&nbsp;
-                  <IconNoSSR name="check" />
+                  <Icon name="check" />
                 </div>
               ) : (
                 <div className="uk-flex uk-flex-middle uk-text-warning">
@@ -236,4 +235,3 @@ OfferCard.defaultProps = {
   department: undefined,
   isSelected: false,
 };
-export default OfferCard;

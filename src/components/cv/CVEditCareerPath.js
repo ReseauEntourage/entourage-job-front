@@ -1,15 +1,14 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import schemaCareerPath from 'src/components/forms/schema/formEditCareerPath';
-import ButtonIcon from 'src/components/utils/ButtonIcon';
-import { Grid } from 'src/components/utils';
+import React from 'react';
+import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
+import { formEditCareerPath } from 'src/components/forms/schema/formEditCareerPath';
 import { openModal } from 'src/components/modals/Modal';
-import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants/index.ts';
+import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { ButtonIcon, Grid } from 'src/components/utils';
+import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
-import CVCareerPathSentence from 'src/components/cv/CVCareerPathSentence';
 
-const CVEditCareerPath = ({ ambitions, businessLines, onChange }) => {
+export const CVEditCareerPath = ({ ambitions, businessLines, onChange }) => {
   const sortedAmbitions =
     ambitions && ambitions.length > 0 ? sortByOrder(ambitions) : null;
 
@@ -50,7 +49,7 @@ const CVEditCareerPath = ({ ambitions, businessLines, onChange }) => {
                 <ModalEdit
                   title="Édition - Projet professionnel"
                   description="J'aimerais travailler dans ..."
-                  formSchema={schemaCareerPath}
+                  formSchema={formEditCareerPath}
                   defaultValues={defaultValues}
                   onSubmit={async (
                     { ambition0, businessLine0, ambition1, businessLine1 },
@@ -147,4 +146,3 @@ CVEditCareerPath.propTypes = {
 CVEditCareerPath.defaultProps = {
   onChange: null,
 };
-export default CVEditCareerPath;

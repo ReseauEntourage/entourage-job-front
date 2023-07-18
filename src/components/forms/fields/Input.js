@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
-import ButtonIcon from 'src/components/utils/ButtonIcon';
-import { gaEvent } from 'src/lib/gtag.ts';
+import React, { useEffect, useState } from 'react';
+import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
+import { ButtonIcon } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
 
 const showPasswordButtonStyle = {
   position: 'absolute',
@@ -11,7 +11,7 @@ const showPasswordButtonStyle = {
   top: 32.5,
 };
 
-const Input = ({
+export const Input = ({
   id,
   name,
   placeholder,
@@ -125,4 +125,3 @@ Input.defaultProps = {
   min: undefined,
   max: undefined,
 };
-export default Input;

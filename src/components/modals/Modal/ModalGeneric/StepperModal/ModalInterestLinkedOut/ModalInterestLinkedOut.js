@@ -1,11 +1,11 @@
 import React from 'react';
-import SuccessModalContent from 'src/components/modals/SuccessModalContent';
-import StepperModal from 'src/components/modals/Modal/ModalGeneric/StepperModal';
-import FormWithValidation from 'src/components/forms/FormWithValidation.tsx';
-import interestLinkedOutSchema from 'src/components/forms/schema/formInterestLinkedOut';
-import { Api } from 'src/api/index.ts';
+import { Api } from 'src/api';
+import { FormWithValidation } from 'src/components/forms/FormWithValidation';
+import { formInterestLinkedOut } from 'src/components/forms/schema/formInterestLinkedOut';
+import { StepperModal } from 'src/components/modals/Modal/ModalGeneric/StepperModal';
+import { SuccessModalContent } from 'src/components/modals/SuccessModalContent';
 
-const ModalInterestLinkedOut = () => {
+export const ModalInterestLinkedOut = () => {
   return (
     <StepperModal
       title="Formulaire de contact"
@@ -14,7 +14,7 @@ const ModalInterestLinkedOut = () => {
           return (
             <FormWithValidation
               submitText="Envoyer"
-              formSchema={interestLinkedOutSchema}
+              formSchema={formInterestLinkedOut}
               onCancel={closeModal}
               onSubmit={(fields, setError) => {
                 return Api.postContactContactUs(fields)
@@ -40,5 +40,3 @@ const ModalInterestLinkedOut = () => {
     />
   );
 };
-
-export default ModalInterestLinkedOut;

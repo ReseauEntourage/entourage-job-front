@@ -4,7 +4,7 @@ import axios, {
   AxiosResponse,
 } from 'axios';
 import _ from 'lodash';
-import { AdminZone } from '../constants/departements';
+import { AdminZone } from 'src/constants/departements';
 import { addAxiosInterceptors } from './interceptor';
 import {
   APIRoute,
@@ -22,9 +22,10 @@ import {
   CandidateInscription,
   UserDto,
   OrganizationDto,
+  ExternalMessage,
 } from './types';
 
-class APIHandler {
+export class APIHandler {
   private name: string;
 
   private api: AxiosInstance;
@@ -349,7 +350,7 @@ class APIHandler {
     );
   }
 
-  putJoinOpportunity(params: OpportunityJoin): Promise<AxiosResponse> {
+  putJoinOpportunity(params: Partial<OpportunityJoin>): Promise<AxiosResponse> {
     const filteredParams = _.pick(params, [
       'status',
       'seen',
@@ -444,6 +445,11 @@ class APIHandler {
   ): Promise<AxiosResponse> {
     return this.post('/contact/candidateInscription', params);
   }
-}
 
-export default APIHandler;
+  /// // //////
+  // message /
+  /// // //////
+  postExternalMessage(params: ExternalMessage): Promise<AxiosResponse> {
+    return this.post('/externalMessage', params);
+  }
+}

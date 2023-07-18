@@ -1,10 +1,10 @@
 import { StaticImageData } from 'next/image';
 import React from 'react';
-import { StyledImageTitle } from 'src/components/partials/ImageTitleNew/styles';
-import { Button } from 'src/components/utils';
-import BackgroundImage from 'src/components/utils/BackgroundImage';
+import { StyledImageTitle } from 'src/components/partials/ImageTitleNew/ImageTitle.styles';
+import { Container, Button, BackgroundImage } from 'src/components/utils';
 import { H1 } from 'src/components/utils/Headings';
-import { Container } from 'src/components/utils/containers';
+import { UIKIT_BUTTON_STYLES_SPEC } from 'src/components/variables';
+import { useIsDesktop } from 'src/hooks/utils';
 
 export const ImageTitle = ({
   title,
@@ -23,12 +23,14 @@ export const ImageTitle = ({
     onClick: () => void;
     label: string;
     href: string;
-    className: string;
+    className: UIKIT_BUTTON_STYLES_SPEC;
     isExternal: boolean;
     newTab: boolean;
     dataTest: string;
   };
 }) => {
+  const isDesktop = useIsDesktop();
+
   return (
     <BackgroundImage
       img={img}
@@ -38,7 +40,7 @@ export const ImageTitle = ({
       hasCta={!!cta}
     >
       <Container>
-        <StyledImageTitle>
+        <StyledImageTitle className={`${isDesktop ? 'desktop' : ''}`}>
           <H1
             title={title}
             color="white"

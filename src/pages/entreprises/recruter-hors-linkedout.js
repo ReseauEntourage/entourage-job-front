@@ -1,10 +1,10 @@
 import React from 'react';
-import Layout from 'src/components/Layout.tsx';
-import { Section } from 'src/components/utils';
-import PartnersMap from 'src/components/partials/PartnersMap';
-import MultipleCTA from 'src/components/partials/MultipleCTA';
-import { EXTERNAL_LINKS } from 'src/constants/index.ts';
+import { Layout } from 'src/components/Layout';
+import { MultipleCTA } from 'src/components/partials';
 import { NewsletterPartial } from 'src/components/partials/NewsletterPartial';
+import { PartnersMap } from 'src/components/partials/PartnersMap';
+import { Section } from 'src/components/utils';
+import { EXTERNAL_LINKS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 
 const RecruterHorsLinkedOut = () => {

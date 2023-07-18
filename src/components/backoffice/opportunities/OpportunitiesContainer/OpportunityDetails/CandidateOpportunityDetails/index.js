@@ -1,3 +1,0 @@
-import CandidateOpportunityDetailsContainer from './CandidateOpportunityDetailsContainer.tsx';
-
-export default CandidateOpportunityDetailsContainer;

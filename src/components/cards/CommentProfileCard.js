@@ -1,14 +1,13 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Img } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
+import React from 'react';
+import { Img, Icon } from 'src/components/utils';
 
-const CommentProfileCard = ({ name, title, description, imgSrc }) => {
+export const CommentProfileCard = ({ name, title, description, imgSrc }) => {
   return (
     <article className="uk-comment uk-comment-primary">
       <div className="uk-grid-match" data-uk-grid>
         <div className="uk-text-primary">
-          <IconNoSSR name="quote-right" ratio={1.4} />
+          <Icon name="quote-right" ratio={1.4} />
         </div>
         <div className="uk-width-expand">
           <div className="uk-comment-body uk-margin-bottom">
@@ -42,4 +41,3 @@ CommentProfileCard.propTypes = {
   title: PropTypes.string.isRequired,
   imgSrc: PropTypes.string.isRequired,
 };
-export default CommentProfileCard;

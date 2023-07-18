@@ -1,10 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import Layout from 'src/components/Layout.tsx';
-import { Section, SimpleLink } from 'src/components/utils';
-import Grid from 'src/components/utils/Grid';
-import { Chapter } from 'src/components/partials/Chapter';
-import AnimatedList from 'src/components/utils/AnimatedList';
+import React from 'react';
+import { Layout } from 'src/components/Layout';
+import { Chapter } from 'src/components/partials';
+import { Section, SimpleLink, AnimatedList, Grid } from 'src/components/utils';
 
 const Card = ({ text, number }) => {
   return (

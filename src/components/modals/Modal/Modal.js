@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 import Modal from 'react-modal';
-import { useModalContext } from 'src/components/modals/Modal/ModalContext.tsx';
+import { useModalContext } from 'src/components/modals/Modal/ModalContext';
 
 Modal.setAppElement('#__next');
+
 const CustomModal = ({ children, closeOnNextRender, className, fullWidth }) => {
   const { onClose } = useModalContext();
 

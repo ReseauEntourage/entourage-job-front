@@ -1,12 +1,11 @@
-import React from 'react';
-
 import PropTypes from 'prop-types';
-import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
-import FormWithValidation from 'src/components/forms/FormWithValidation.tsx';
+import React from 'react';
+import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 
 import { useModalContext } from 'src/components/modals/Modal';
+import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 
-const ModalEdit = ({
+export const ModalEdit = ({
   title,
   description,
   formSchema,
@@ -58,11 +57,16 @@ ModalEdit.propTypes = {
       PropTypes.string,
     ])
   ),
-  description: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+  description: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.string,
+  ]),
   submitText: PropTypes.string,
   cancelText: PropTypes.string,
   formId: PropTypes.string,
 };
+
 ModalEdit.defaultProps = {
   defaultValues: {},
   description: undefined,
@@ -72,5 +76,3 @@ ModalEdit.defaultProps = {
   onError: () => {},
   onCancel: () => {},
 };
-
-export default ModalEdit;

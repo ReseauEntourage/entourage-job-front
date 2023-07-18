@@ -35,12 +35,6 @@ export const StyledNLForm = styled.div`
         flex-direction: row;
         flex-grow: 1;
         margin-bottom: 16px;
-        > div > div {
-          margin-bottom: 0 !important;
-        }
-        .label {
-          padding-left: 10px;
-        }
       }
     }
     @media screen and (min-width: ${BREAKPOINTS.desktop}px) {

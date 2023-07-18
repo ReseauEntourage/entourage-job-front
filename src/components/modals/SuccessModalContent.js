@@ -1,16 +1,15 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
+import React from 'react';
+import { Button, Icon } from 'src/components/utils';
 
-const SuccessModalContent = ({ text, closeModal }) => {
+export const SuccessModalContent = ({ text, closeModal }) => {
   return (
     <>
       <div
         className="uk-text-center uk-flex uk-flex-column uk-flex-center"
         data-testid="success-modal-content"
       >
-        <IconNoSSR name="check" ratio={4} className="uk-text-primary" />
+        <Icon name="check" ratio={4} className="uk-text-primary" />
         {text}
       </div>
       <div className="uk-modal-footer uk-padding-remove-horizontal uk-padding-remove-bottom uk-margin-medium-top">
@@ -25,8 +24,8 @@ const SuccessModalContent = ({ text, closeModal }) => {
     </>
   );
 };
+
 SuccessModalContent.propTypes = {
   text: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired,
 };
-export default SuccessModalContent;

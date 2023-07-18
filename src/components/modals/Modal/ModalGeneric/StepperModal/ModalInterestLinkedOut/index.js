@@ -1,3 +1,1 @@
-import ModalInterestLinkedOut from './ModalInterestLinkedOut';
-
-export default ModalInterestLinkedOut;
+export * from './ModalInterestLinkedOut';

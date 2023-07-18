@@ -1,5 +1,5 @@
 import React from 'react';
-import AdminCandidateOpportunities from 'src/components/opportunities/AdminCandidateOpportunities';
+import { AdminCandidateOpportunities } from 'src/components/opportunities/AdminCandidateOpportunities';
 
 interface OffersMemberTabProps {
   candidateId: string;

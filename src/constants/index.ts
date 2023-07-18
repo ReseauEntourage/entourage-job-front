@@ -9,7 +9,17 @@ import { GA_TAGS } from 'src/constants/tags';
 
 import { GENDERS_FILTERS, USER_ROLES_FILTERS } from './users';
 
-export const OFFER_STATUS = [
+export type FilterConstant<
+  T extends string | number | boolean = string | number | boolean
+> = { value: T; label: string };
+
+export type OfferStatus = -1 | 0 | 1 | 2 | 3 | 4;
+
+export const OFFER_STATUS: (FilterConstant<OfferStatus> & {
+  color: string;
+  public?: string;
+  recommended?: string;
+})[] = [
   {
     value: -1,
     label: 'Offre à traiter',
@@ -168,7 +178,22 @@ export const AMBITIONS_PREFIXES = [
   },
 ];
 
-export const CONTRACTS = [
+export type Contract =
+  | 'cdi'
+  | 'cdd'
+  | 'cdd+6'
+  | 'cdd-6'
+  | 'cddi'
+  | 'alt'
+  | 'inte'
+  | 'stage'
+  | 'form'
+  | 'pmsmp'
+  | 'other';
+
+export const CONTRACTS: (FilterConstant<Contract> & {
+  end: boolean;
+})[] = [
   {
     label: 'CDI',
     value: 'cdi',
@@ -855,11 +880,11 @@ export const EVENT_TYPES_FILTERS = [
 ];
 
 const ADDRESSES = {
-  PARIS: '174 Rue Championnet, 75018 Paris',
-  LYON: '40 Cours de la République, 69100 Villeurbanne',
-  LILLE: '21 Rue Maracci, 59000 Lille',
-  RENNES: '',
-  LORIENT: '',
+  PARIS: process.env.ADRESSE_LOCAUX_PARIS,
+  LYON: process.env.ADRESSE_LOCAUX_LYON,
+  LILLE: process.env.ADRESSE_LOCAUX_LILLE,
+  RENNES: process.env.ADRESSE_LOCAUX_RENNES,
+  LORIENT: process.env.ADRESSE_LOCAUX_LORIENT,
 };
 
 export const ANTENNE_INFO = [
@@ -885,14 +910,14 @@ export const ANTENNE_INFO = [
     address: ADDRESSES.PARIS,
   },
   {
-    dpt: '35',
+    dpt: '56',
     mailCoordo: process.env.ADMIN_CANDIDATES_RENNES,
     mailEntreprise: process.env.ADMIN_COMPANIES_RENNES,
     city: 'Lorient',
     address: ADDRESSES.LORIENT,
   },
   {
-    dpt: '56',
+    dpt: '35',
     mailCoordo: process.env.ADMIN_CANDIDATES_LORIENT,
     mailEntreprise: process.env.ADMIN_COMPANIES_LORIENT,
     city: 'Rennes',
@@ -919,3 +944,68 @@ export const MEMBER_TABS = {
   PARAMETERS: 'parametres',
   OFFERS: 'offres',
 };
+
+export const ExternalMessageContactTypes = {
+  INDIVIDUAL: 'individual',
+  COMPANY: 'company',
+  COACH_CONNECTOR: 'coach_connector',
+} as const;
+
+export type ExternalMessageContactType =
+  (typeof ExternalMessageContactTypes)[keyof typeof ExternalMessageContactTypes];
+
+export const EXTERNAL_MESSAGE_CONTACT_TYPE_FILTERS: FilterConstant<ExternalMessageContactType>[] =
+  [
+    {
+      label: 'Un particulier',
+      value: ExternalMessageContactTypes.INDIVIDUAL,
+    },
+    {
+      label: 'Une entreprise',
+      value: ExternalMessageContactTypes.COMPANY,
+    },
+    {
+      label: 'Coach/connecteur LinkedOut',
+      value: ExternalMessageContactTypes.COACH_CONNECTOR,
+    },
+  ];
+
+export const ExternalMessageSubjects = {
+  HIRING: 'hiring',
+  HELP: 'help',
+  RELATION: 'relation',
+  ADVICE: 'advice',
+  CHEERING: 'cheering',
+  OTHER: 'other',
+} as const;
+
+export type ExternalMessageSubject =
+  (typeof ExternalMessageSubjects)[keyof typeof ExternalMessageSubjects];
+
+export const EXTERNAL_MESSAGE_SUBJECT_FILTERS: FilterConstant<ExternalMessageSubject>[] =
+  [
+    {
+      label: "Offre d'emploi",
+      value: ExternalMessageSubjects.HIRING,
+    },
+    {
+      label: 'Coup de pouce',
+      value: ExternalMessageSubjects.HELP,
+    },
+    {
+      label: 'Mise en relation',
+      value: ExternalMessageSubjects.RELATION,
+    },
+    {
+      label: 'Conseils',
+      value: ExternalMessageSubjects.ADVICE,
+    },
+    {
+      label: 'Encouragements',
+      value: ExternalMessageSubjects.CHEERING,
+    },
+    {
+      label: 'Autre',
+      value: ExternalMessageSubjects.OTHER,
+    },
+  ];

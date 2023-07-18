@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
 import { StyledCheckbox } from 'src/components/utils/Inputs/CheckBox/CheckBox.styles';
 
 interface CBProps {
@@ -10,17 +11,22 @@ interface CBProps {
   hidden?: boolean;
   value?: boolean;
   title?: string;
+  valid?: {
+    isInvalid: boolean;
+    message: string;
+  };
 }
 
 export function CheckBox({
   handleClick,
-  disabled,
-  hidden,
-  value,
+  disabled = false,
+  hidden = false,
+  value = false,
   title,
   name,
   id,
-  removeMargin,
+  removeMargin = false,
+  valid,
 }: CBProps) {
   if (hidden) {
     return null;
@@ -48,14 +54,7 @@ export function CheckBox({
         <span className="checkmark" />
         {title && <span className="label">{title}</span>}
       </label>
+      <FormValidatorErrorMessage validObj={valid} newInput />
     </StyledCheckbox>
   );
 }
-
-CheckBox.defaultProps = {
-  disabled: false,
-  hidden: false,
-  removeMargin: false,
-  value: false,
-  title: '',
-};

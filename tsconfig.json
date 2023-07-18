@@ -16,12 +16,6 @@
     "jsx": "preserve",
     "baseUrl": "./"
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "src/api/interceptor.ts",
-    "src/api/api.ts"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
   "exclude": ["node_modules"]
 }

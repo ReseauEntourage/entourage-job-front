@@ -1,37 +1,37 @@
+import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import ReactSelect, { components } from 'react-select';
-import { SelectAsync as AsyncSelectNew } from 'src/components/utils/Inputs/SelectAsync';
 import AsyncSelect from 'react-select/async';
-import PropTypes from 'prop-types';
 import CreatableSelect from 'react-select/creatable';
-import DatePicker from 'src/components/forms/fields/DatePicker';
-import Select from 'src/components/forms/fields/Select';
-import Textarea from 'src/components/forms/fields/Textarea';
-import Checkbox from 'src/components/forms/fields/Checkbox';
-import Input from 'src/components/forms/fields/Input';
-import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
+import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
+import { Checkbox } from 'src/components/forms/fields/Checkbox';
+import { DatePicker } from 'src/components/forms/fields/DatePicker';
+import { Input } from 'src/components/forms/fields/Input';
+import { PhoneInput } from 'src/components/forms/fields/PhoneInput';
+import { Select } from 'src/components/forms/fields/Select';
+import { Textarea } from 'src/components/forms/fields/Textarea';
 import { SimpleLink } from 'src/components/utils';
-import { EXTERNAL_LINKS } from 'src/constants/index.ts';
-import PhoneInput from 'src/components/forms/fields/PhoneInput';
 
 import {
   CheckBox as CheckBoxNew,
   useCheckBox,
 } from 'src/components/utils/Inputs/CheckBox';
-import { Select as SelectNew } from 'src/components/utils/Inputs/Select';
-import { TextArea as TextAreaNew } from 'src/components/utils/Inputs/TextArea';
-import { TextInput as TextInputNew } from 'src/components/utils/Inputs/TextInput';
 import { DatePicker as DatePickerNew } from 'src/components/utils/Inputs/Datepicker';
+import { Heading } from 'src/components/utils/Inputs/Heading';
+import { PhoneInput as PhoneInputNew } from 'src/components/utils/Inputs/PhoneInput';
 import {
   Radio as RadioNew,
   RadioAsync as RadioAsyncNew,
 } from 'src/components/utils/Inputs/Radio';
-import { PhoneInput as PhoneInputNew } from 'src/components/utils/Inputs/PhoneInput';
-import { Heading } from 'src/components/utils/Inputs/Heading/index.ts';
+import { Select as SelectNew } from 'src/components/utils/Inputs/Select';
+import { SelectAsync as AsyncSelectNew } from 'src/components/utils/Inputs/SelectAsync';
+import { TextArea as TextAreaNew } from 'src/components/utils/Inputs/TextArea';
+import { TextInput as TextInputNew } from 'src/components/utils/Inputs/TextInput';
+import { EXTERNAL_LINKS } from 'src/constants';
 
 let debounceTimeoutId;
 
-const GenericField = ({
+export const GenericField = ({
   data,
   formId,
   value,
@@ -242,6 +242,7 @@ const GenericField = ({
           name={data.name}
           onChange={onChangeCustom}
           value={value}
+          valid={getValid(data.name)}
           title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
         />
       );
@@ -267,6 +268,7 @@ const GenericField = ({
     case 'checkbox-new': {
       return (
         <CheckBoxNew
+          valid={getValid(data.name)}
           handleClick={() => {
             handleCheckBox();
             onChangeCustom({
@@ -609,6 +611,7 @@ GenericField.propTypes = {
       PropTypes.string,
       PropTypes.bool,
       PropTypes.func,
+      PropTypes.number,
     ])
   ).isRequired,
   formId: PropTypes.string.isRequired,
@@ -636,5 +639,3 @@ GenericField.defaultProps = {
     return null;
   },
 };
-
-export default GenericField;

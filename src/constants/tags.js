@@ -1,4 +1,4 @@
-const GA_TAGS = {
+export const GA_TAGS = {
   HOME_CV_CLIC: {
     action: 'Home_CV_Clic',
   },
@@ -82,6 +82,12 @@ const GA_TAGS = {
   },
   PAGE_CV_CONTACTEZ_MOI_CLIC: {
     action: 'Page_CV_Contactez_Moi_Clic',
+  },
+  PAGE_CV_ENVOYER_CONTACTEZ_MOI_CLIC: {
+    action: 'Page_CV_Envoyer_Contactez_Moi_Clic',
+  },
+  PAGE_CV_PROPOSER_OFFRE_CLIC: {
+    action: 'Page_CV_Proposer_Offre_Clic',
   },
   POPUP_OFFRE_ENVOYER_OFFRE_UNIQUE_CLIC: {
     action: 'Popup_Offre_Envoyer_Offre_Unique_Clic',
@@ -373,7 +379,7 @@ const GA_TAGS = {
   },
 };
 
-const FB_TAGS = {
+export const FB_TAGS = {
   CANDIDATE_REGISTRATION_OPEN: {
     action: 'Pré-Prospect 1',
     options: { content_category: '1' },
@@ -422,9 +428,21 @@ const FB_TAGS = {
     action: 'Prospect 4',
     options: { content_category: '4' },
   },
-  SHARE_CV: {
+  SHARE_CV_OPEN: {
+    action: 'Pré-Prospect 5',
+    options: { content_category: '5' },
+  },
+  SHARE_CV_SEND: {
     action: 'Prospect 5',
     options: { content_category: '5' },
+  },
+  MESSAGE_OPEN: {
+    action: 'Pré-Prospect 6',
+    options: { content_category: '6' },
+  },
+  MESSAGE_SEND: {
+    action: 'Prospect 6',
+    options: { content_category: '6' },
   },
   DONATION: {
     type: 'track',
@@ -432,7 +450,7 @@ const FB_TAGS = {
   },
 };
 
-const LINK_TAGS = {
+export const LINK_TAGS = {
   COMPANY_CONTACT_OPEN: {
     conversionId: 11224572,
   },
@@ -440,5 +458,3 @@ const LINK_TAGS = {
     conversionId: 11224580,
   },
 };
-
-export { GA_TAGS, FB_TAGS, LINK_TAGS };

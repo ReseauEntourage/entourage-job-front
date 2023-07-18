@@ -7,7 +7,7 @@ import { usePrevious } from 'src/hooks/utils';
 import { UserContext } from 'src/store/UserProvider';
 import { HeaderConnectedContent } from './HeaderConnectedContent';
 
-const HeaderConnected = ({ isEmpty }: { isEmpty?: boolean }) => {
+export const HeaderConnected = ({ isEmpty = false }: { isEmpty?: boolean }) => {
   const { user, logout } = useContext(UserContext);
   const { asPath } = useRouter();
   const candidateId = useCandidateId();
@@ -35,9 +35,3 @@ const HeaderConnected = ({ isEmpty }: { isEmpty?: boolean }) => {
     />
   );
 };
-
-HeaderConnected.defaultProps = {
-  isEmpty: false,
-};
-
-export default HeaderConnected;

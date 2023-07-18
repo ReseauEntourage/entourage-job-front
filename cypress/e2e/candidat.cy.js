@@ -2,44 +2,60 @@
 describe('Candidat', () => {
   beforeEach(() => {
     cy.intercept('GET', '/cv/shares', { total: 184222 }).as('cvShares');
+
     cy.intercept('GET', '/auth/current', {
       fixture: 'auth-current-candidat-res',
     }).as('authCheck');
+
     cy.fixture('auth-current-candidat-res').then((user) => {
       cy.intercept('GET', `/opportunity/candidate/count/${user.id}`, {
         unseenOpportunities: 0,
       }).as('userCount');
+
       cy.intercept('GET', `/cv/${user.id}`, {
         fixture: 'cv-for-candidat',
       }).as('cvCandidat');
+
       cy.intercept('POST', `/cv/${user.id}`, {
         fixture: 'cv-for-candidat',
       }).as('postCvCandidat');
-      cy.intercept(
-        'GET',
-        `/opportunity/candidate/all/${user.id}?type=private&offset=0&limit=25&status[]=-1`,
-        {
-          fixture: 'user-opportunity-all-res',
-        }
-      ).as('allOpportunities');
+
+      cy.intercept('GET', `/opportunity/candidate/all/${user.id}*`, {
+        fixture: 'user-opportunity-all-res',
+      }).as('allOpportunities');
+
       cy.intercept('GET', `opportunity/candidate/tabCount/${user.id}`, {
         fixture: 'tabCount-res',
       }).as('tabCount');
+
       cy.intercept('GET', `/cv/read/${user.id}`, {
         fixture: 'cv-read-res',
       }).as('cvCandidatDetails');
+
       cy.intercept('GET', `/user/${user.id}`, {
         fixture: 'auth-current-candidat-res',
       });
+
       cy.intercept('PUT', `/cv/read/${user.id}`, {
         fixture: 'cv-read-res',
       }).as('putCVCandidat');
+
       cy.intercept('PUT', `/user/candidate/${user.id}`, {
         fixture: 'put-candidate-res',
       }).as('putCandidatParams');
+
       cy.intercept('GET', `/cv/lastVersion/${user.id}`, {
         fixture: 'cv-for-candidat',
       });
+
+      cy.intercept('GET', `/user/candidate/checkUpdate/${user.id}`, {
+        noteHasBeenModified: true,
+      }).as('candidatCheckUpdate');
+
+      cy.intercept('GET', `/cv/checkUpdate/${user.id}`, {
+        cvHasBeenModified: true,
+      }).as('cvCheckUpdate');
+
       cy.fixture('user-opportunity-all-res').then((offersRes) => {
         cy.intercept(
           `opportunity/${offersRes.offers[0].id}`,
@@ -54,14 +70,11 @@ describe('Candidat', () => {
         ).as('putOffer');
       });
     });
-    cy.intercept('GET', '/user/candidate/checkUpdate', {
-      noteHasBeenModified: true,
-    }).as('candidatCheckUpdate');
-    cy.intercept('GET', '/cv/checkUpdate', { cvHasBeenModified: true }).as(
-      'cvCheckUpdate'
-    );
+
     cy.intercept('GET', `https://tarteaucitron.io/load.js*`, {});
+
     cy.intercept('POST', '/opportunity/external', {}).as('postExternal');
+
     cy.intercept('PUT', '/user/changePwd', {}).as('changePwd');
   });
 
@@ -164,6 +177,7 @@ describe('Candidat', () => {
       'contain',
       catchPhrase
     );
+    cy.contains('Sauvegarder').scrollIntoView().click();
   });
 
   it('should open backoffice candidate parameters', () => {

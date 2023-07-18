@@ -10,15 +10,14 @@ import {
   StyledListItemContainer,
 } from '../OpportunitiesList.styles';
 import { OpportunityWithOpportunityUsers } from 'src/api/types';
-import CandidateOpportunityItem from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/CandidateOpportunitiesList/CandidateOpportunityItem';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { useOpportunityType } from 'src/components/backoffice/opportunities/useOpportunityType';
 import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
 import { openModal } from 'src/components/modals/Modal';
-import ModalExternalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
-import { Button } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
+import { Button, Icon } from 'src/components/utils';
 import { usePrevious } from 'src/hooks/utils';
+import { CandidateOpportunityItem } from './CandidateOpportunityItem';
 
 const uuidValue = uuid();
 
@@ -30,7 +29,7 @@ interface CandidateOpportunitiesListProps {
   candidateId: string;
 }
 
-const CandidateOpportunitiesList = ({
+export const CandidateOpportunitiesList = ({
   opportunities,
   fetchOpportunities,
   setOffset,
@@ -135,16 +134,10 @@ const CandidateOpportunitiesList = ({
             );
           }}
         >
-          <IconNoSSR
-            name="plus"
-            ratio="0.8"
-            className="uk-margin-small-right"
-          />
+          <Icon name="plus" ratio="0.8" className="uk-margin-small-right" />
           Ajouter une offre externe
         </Button>
       )}
     </StyledListContent>
   );
 };
-
-export default CandidateOpportunitiesList;

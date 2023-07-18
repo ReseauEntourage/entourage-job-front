@@ -1,22 +1,22 @@
 import React from 'react';
-import Layout from 'src/components/Layout.tsx';
-import { Section } from 'src/components/utils';
-import { Button } from 'src/components/utils/Button';
-import ImageTitle from 'src/components/partials/ImageTitle';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
-import { gaEvent } from 'src/lib/gtag.ts';
-import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { Layout } from 'src/components/Layout';
 import { openModal } from 'src/components/modals/Modal';
-import ModalInterestLinkedOut from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
-import MultipleCTA from 'src/components/partials/MultipleCTA';
-import { Chapter } from 'src/components/partials/Chapter';
-import AnimatedList from 'src/components/utils/AnimatedList';
-import Reviews from 'src/components/partials/Reviews';
-import LogoList from 'src/components/partials/LogoList';
-import PARTNERS from 'src/constants/partners';
-import NumberGrid from 'src/components/partials/NumberGrid';
-import { fbEvent } from 'src/lib/fb.ts';
-import CandidateContactModal from 'src/components/modals/Modal/ModalGeneric/CandidateContactModal';
+import { CandidateContactModal } from 'src/components/modals/Modal/ModalGeneric/CandidateContactModal';
+import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
+import {
+  MultipleCTA,
+  Chapter,
+  LogoList,
+  NumberGrid,
+  Reviews,
+} from 'src/components/partials';
+import { ImageTitle } from 'src/components/partials/ImageTitle';
+import { Section, AnimatedList, Icon } from 'src/components/utils';
+import { Button } from 'src/components/utils/Button';
+import { PARTNERS } from 'src/constants/partners';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { fbEvent } from 'src/lib/fb';
+import { gaEvent } from 'src/lib/gtag';
 
 const reviews = [
   {
@@ -167,7 +167,7 @@ const Orienter = () => {
             }}
           >
             Inscrire un candidat&nbsp;
-            <IconNoSSR name="chevron-right" />
+            <Icon name="chevron-right" />
           </Button>
           <div className="uk-light">
             <Button
@@ -180,7 +180,7 @@ const Orienter = () => {
               }}
             >
               Nous contacter&nbsp;
-              <IconNoSSR name="chevron-right" />
+              <Icon name="chevron-right" />
             </Button>
           </div>
         </div>
@@ -241,7 +241,7 @@ const Orienter = () => {
             }}
           >
             Inscrire un candidat&nbsp;
-            <IconNoSSR name="chevron-right" />
+            <Icon name="chevron-right" />
           </Button>
         }
       />
@@ -289,7 +289,7 @@ const Orienter = () => {
             }}
           >
             Nous contacter&nbsp;
-            <IconNoSSR name="chevron-right" />
+            <Icon name="chevron-right" />
           </Button>
           <div className="uk-light">
             <Button
@@ -303,7 +303,7 @@ const Orienter = () => {
               }}
             >
               Télécharger la brochure&nbsp;
-              <IconNoSSR name="chevron-right" />
+              <Icon name="chevron-right" />
             </Button>
           </div>
           {/*
@@ -318,7 +318,7 @@ const Orienter = () => {
               }}
             >
               Prendre rendez-vous&nbsp;
-              <IconNoSSR name="chevron-right" />
+              <Icon name="chevron-right" />
             </Button>
           */}
         </div>

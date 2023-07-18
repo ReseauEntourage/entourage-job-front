@@ -1,29 +1,27 @@
 import _ from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import UIkit from 'uikit';
-
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
-import PasswordCriterias from 'src/components/PasswordCriterias';
-import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
-import ToggleWithConfirmationModal from 'src/components/backoffice/ToggleWithConfirmationModal';
-import CandidateEmployedToggle from 'src/components/backoffice/candidate/CandidateEmployedToggle';
+import { PasswordCriterias } from 'src/components/PasswordCriterias';
+import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
+import { ToggleWithConfirmationModal } from 'src/components/backoffice/ToggleWithConfirmationModal';
+import { CandidateEmployedToggle } from 'src/components/backoffice/candidate/CandidateEmployedToggle';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
-import UserInformationCard from 'src/components/cards/UserInformationCard';
-import FormWithValidation from 'src/components/forms/FormWithValidation';
-import schemaChangePassword from 'src/components/forms/schema/formChangePassword';
-import schemaPersonalData from 'src/components/forms/schema/formPersonalData';
-import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
+import { UserInformationCard } from 'src/components/cards/UserInformationCard';
+import { FormWithValidation } from 'src/components/forms/FormWithValidation';
+import { formChangePassword } from 'src/components/forms/schema/formChangePassword';
+import { formPersonalData } from 'src/components/forms/schema/formPersonalData';
+import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { openModal } from 'src/components/modals/Modal';
-import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { Card, Grid, Section } from 'src/components/utils';
-import ButtonIcon from 'src/components/utils/ButtonIcon';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { Card, Grid, Section, ButtonIcon } from 'src/components/utils';
+import { Icon } from 'src/components/utils/Icon';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useResetForm } from 'src/hooks/utils/useResetForm';
 import { UserContext } from 'src/store/UserProvider';
+import { mutateFormSchema } from 'src/utils';
 import { isRoleIncluded } from 'src/utils/Finding';
-import { mutateFormSchema } from 'src/utils/Mutating';
 
 const Parametres = () => {
   const { user, setUser } = useContext(UserContext);
@@ -32,7 +30,7 @@ const Parametres = () => {
   const [loadingPassword, setLoadingPassword] = useState(false);
   const [form, resetForm] = useResetForm();
 
-  let mutatedSchema = schemaPersonalData;
+  let mutatedSchema = formPersonalData;
 
   if (userData) {
     mutatedSchema = mutateFormSchema(mutatedSchema, [
@@ -372,24 +370,24 @@ const Parametres = () => {
                 {userData ? (
                   <Grid column gap="small">
                     <Grid row gap="small">
-                      <IconNoSSR name="user" style={{ width: 20 }} />
+                      <Icon name="user" style={{ width: 20 }} />
                       <span>{`${userData.firstName} ${userData.lastName}`}</span>
                     </Grid>
                     {userData.role !== USER_ROLES.ADMIN && (
                       <Grid row gap="small">
-                        <IconNoSSR name="gender" style={{ width: 20 }} />
+                        <Icon name="gender" style={{ width: 20 }} />
                         <span>
                           {`${userData.gender === 0 ? 'Homme' : 'Femme'}`}
                         </span>
                       </Grid>
                     )}
                     <Grid row gap="small">
-                      <IconNoSSR name="mail" style={{ width: 20 }} />
+                      <Icon name="mail" style={{ width: 20 }} />
                       <span>{userData.email}</span>
                     </Grid>
                     {userData.role !== USER_ROLES.ADMIN && (
                       <Grid row gap="small">
-                        <IconNoSSR name="phone" style={{ width: 20 }} />
+                        <Icon name="phone" style={{ width: 20 }} />
                         {userData.phone ? (
                           <span>{userData.phone}</span>
                         ) : (
@@ -401,7 +399,7 @@ const Parametres = () => {
                     )}
                     {isRoleIncluded(CANDIDATE_USER_ROLES, [userData.role]) && (
                       <Grid row gap="small">
-                        <IconNoSSR name="home" style={{ width: 20 }} />
+                        <Icon name="home" style={{ width: 20 }} />
                         {userData.address ? (
                           <span>{userData.address}</span>
                         ) : (
@@ -448,7 +446,7 @@ const Parametres = () => {
               <FormWithValidation
                 ref={form}
                 submitText="Modifier"
-                formSchema={schemaChangePassword}
+                formSchema={formChangePassword}
                 onSubmit={async (
                   { newPassword, oldPassword, confirmPassword },
                   setError

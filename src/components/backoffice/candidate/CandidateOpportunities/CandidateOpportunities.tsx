@@ -2,75 +2,55 @@ import _ from 'lodash';
 import { useRouter } from 'next/router';
 import React, { useContext, useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import CandidateOpportunitiesList from 'src/components/backoffice//opportunities/OpportunitiesContainer/OpportunitiesList/CandidateOpportunitiesList';
-import CandidateOffersTab from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab';
+import { CandidateOffersTab } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab';
 import {
   candidateSearchFilters,
   TextVariables,
 } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOpportunities.utils';
 import { OpportunitiesContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer';
-import NoOpportunities from 'src/components/backoffice/opportunities/OpportunitiesContainer/NoOpportunities';
-import CandidateOpportunityDetailsContainer from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails';
+import { NoOpportunities } from 'src/components/backoffice/opportunities/OpportunitiesContainer/NoOpportunities';
+import { CandidateOpportunitiesList } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/CandidateOpportunitiesList';
+import { CandidateOpportunityDetailsContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { useOpportunityType } from 'src/components/backoffice/opportunities/useOpportunityType';
 import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
-import SearchBar from 'src/components/filters/SearchBar';
-import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
+import { SearchBar } from 'src/components/filters/SearchBar';
+import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer';
-import OpportunityError from 'src/components/opportunities/OpportunityError';
+import { OpportunityError } from 'src/components/opportunities/OpportunityError';
 import { Button, Section } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { Icon } from 'src/components/utils/Icon';
+import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useCandidateOpportunities } from 'src/hooks/useOpportunityList';
 import { usePrevious } from 'src/hooks/utils';
 import { UserContext } from 'src/store/UserProvider';
 import { getUserCandidateFromCoach, isRoleIncluded } from 'src/utils/Finding';
 import { tabs } from './CandidateOffersTab/CandidateOffersTab.utils';
+import { CandidateOpportunitiesFilters } from './CandidateOpportunitiesFilters.types';
 import { useTabsCount } from './useTabsCount';
 import { useUpdateOpportunityStatus } from './useUpdateOpportunityStatus';
 
-interface CandidateOpportunitiesType {
+interface CandidateOpportunitiesProps {
   search?: string;
-  filters: {
-    businessLines: {
-      label: string;
-      value: string;
-      prefix: string[];
-    }[];
-    contracts: {
-      label: string;
-      value: string;
-      end: boolean;
-    }[];
-    department: {
-      value: string;
-      label: string;
-      zone: string;
-    }[];
-    status: {
-      value: number;
-      label: string;
-      color: string;
-      public: string;
-    }[];
-  };
-  setFilters?: () => void;
+  filters: CandidateOpportunitiesFilters;
+  setFilters?: (updatedFilters: CandidateOpportunitiesFilters) => void;
   resetFilters?: () => void;
-  setSearch?: () => void;
+  setSearch?: (updatedSearch: string) => void;
   candidateId: string;
   isMobile?: boolean;
 }
 
-const CandidateOpportunities = ({
+export const CandidateOpportunities = ({
   search,
   filters,
   setFilters,
   setSearch,
   resetFilters,
   candidateId,
-  isMobile,
-}: CandidateOpportunitiesType) => {
+  isMobile = false,
+}: CandidateOpportunitiesProps) => {
   const { replace } = useRouter();
 
   const { user } = useContext(UserContext);
@@ -222,7 +202,7 @@ const CandidateOpportunities = ({
                   );
                 }}
               >
-                <IconNoSSR
+                <Icon
                   name="plus"
                   ratio="0.8"
                   className="uk-margin-small-right"
@@ -234,7 +214,9 @@ const CandidateOpportunities = ({
           {isPublic ? (
             <Section className="custom-mobile-darkBG custom-fixed">
               <SearchBar
-                filtersConstants={candidateSearchFilters}
+                filtersConstants={
+                  candidateSearchFilters as typeof OPPORTUNITY_FILTERS_DATA
+                }
                 filters={filters}
                 resetFilters={resetFilters}
                 search={search}
@@ -314,13 +296,3 @@ const CandidateOpportunities = ({
     </>
   );
 };
-
-CandidateOpportunities.defaultProps = {
-  isMobile: false,
-  search: undefined,
-  setFilters: null,
-  setSearch: null,
-  resetFilters: null,
-};
-
-export default CandidateOpportunities;

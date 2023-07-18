@@ -1,13 +1,12 @@
+import React from 'react';
 import UIkit from 'uikit';
 
-import React from 'react';
-import Layout from 'src/components/Layout.tsx';
-import interestLinkedOutSchema from 'src/components/forms/schema/formInterestLinkedOut';
-import { Section } from 'src/components/utils';
-import { Api } from 'src/api/index.ts';
-import FormWithValidation from 'src/components/forms/FormWithValidation.tsx';
+import { Api } from 'src/api';
+import { Layout } from 'src/components/Layout';
+import { FormWithValidation } from 'src/components/forms/FormWithValidation';
+import { formInterestLinkedOut } from 'src/components/forms/schema/formInterestLinkedOut';
+import { Section, SimpleLink } from 'src/components/utils';
 import { useResetForm } from 'src/hooks/utils';
-import SimpleLink from 'src/components/utils/SimpleLink';
 
 const Contact = () => {
   const [form, resetForm] = useResetForm();
@@ -34,7 +33,7 @@ const Contact = () => {
         <FormWithValidation
           ref={form}
           submitText="Envoyer"
-          formSchema={interestLinkedOutSchema}
+          formSchema={formInterestLinkedOut}
           onSubmit={(fields) => {
             return Api.postContactContactUs(fields)
               .then(() => {

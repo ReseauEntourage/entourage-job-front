@@ -38,9 +38,50 @@ export const StyledH2 = styled.h2`
   }
 `;
 
+export const StyledH3 = styled.h3`
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 36px;
+  color: black;
+  &.center {
+    text-align: center;
+  }
+`;
+
+export const StyledH5 = styled.h5`
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  /* margin-bottom: 24px; */
+  color: ${(props) => {
+    if (COLORS[props.color]) {
+      return COLORS[props.color];
+    }
+    if (props.color) {
+      return props.color;
+    }
+    return 'black';
+  }};
+  &.center {
+    text-align: center;
+  }
+`;
+
 export const StyledH6 = styled.h6`
   font-size: 14px;
   font-weight: 700;
   line-height: 14px;
   margin-bottom: 24px;
+  color: ${(props) => {
+    if (COLORS[props.color]) {
+      return COLORS[props.color];
+    }
+    if (props.color) {
+      return props.color;
+    }
+    return 'black';
+  }};
+  &.center {
+    text-align: center;
+  }
 `;

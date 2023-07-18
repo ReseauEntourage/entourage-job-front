@@ -1,14 +1,18 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
 import { StyledTextAreaContainer } from './TextArea.styles';
 
-interface TextAreaTypes {
+interface TextAreaProps {
   title: string;
   name: string;
-  id: string;
+  id?: string;
   onChange: (event) => void;
   value: string;
   hidden?: boolean;
+  valid?: {
+    isInvalid: boolean;
+    message: string;
+  };
 }
 
 export function TextArea({
@@ -18,7 +22,8 @@ export function TextArea({
   onChange,
   value,
   hidden,
-}: TextAreaTypes) {
+  valid,
+}: TextAreaProps) {
   if (hidden) {
     return null;
   }
@@ -33,24 +38,7 @@ export function TextArea({
         onChange={onChange}
         value={value}
       />
+      <FormValidatorErrorMessage validObj={valid} newInput />
     </StyledTextAreaContainer>
   );
 }
-
-TextArea.propTypes = {
-  title: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  id: PropTypes.string,
-  value: PropTypes.string,
-  onChange: PropTypes.func,
-  hidden: PropTypes.bool,
-};
-
-TextArea.defaultProps = {
-  onChange: () => {
-    return null;
-  },
-  id: '',
-  value: '',
-  hidden: false,
-};

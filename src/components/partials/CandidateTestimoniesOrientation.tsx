@@ -1,9 +1,7 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
-import { Img, Section } from 'src/components/utils';
-import Carousel from 'src/components/utils/Carousel';
-import CarouselItem from './CarouselItem';
+import { CarouselItem } from 'src/components/partials/CarouselItem';
+import { Img, Section, Carousel } from 'src/components/utils';
 
 const testimonies = [
   {
@@ -32,7 +30,17 @@ const testimonies = [
   },
 ];
 
-const CandidateTestimoniesOrientation = ({ style, noVideo, noTitle }) => {
+interface CandidateTestimoniesOrientationProps {
+  style: 'muted' | 'default';
+  noTitle?: boolean;
+  noVideo?: boolean;
+}
+
+export const CandidateTestimoniesOrientation = ({
+  style,
+  noVideo,
+  noTitle,
+}: CandidateTestimoniesOrientationProps) => {
   return (
     <Section style={style} container="small">
       {!noTitle && (
@@ -97,15 +105,7 @@ const CandidateTestimoniesOrientation = ({ style, noVideo, noTitle }) => {
   );
 };
 
-CandidateTestimoniesOrientation.propTypes = {
-  style: PropTypes.oneOf(['muted', 'default']).isRequired,
-  noTitle: PropTypes.bool,
-  noVideo: PropTypes.bool,
-};
-
 CandidateTestimoniesOrientation.defaultProps = {
   noTitle: false,
   noVideo: false,
 };
-
-export default CandidateTestimoniesOrientation;

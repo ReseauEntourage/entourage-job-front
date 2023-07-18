@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
+import React, { useEffect, useState } from 'react';
+import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
 import { usePrevious } from 'src/hooks/utils';
 
 // function inputIsEmpty(id) {
@@ -16,7 +16,7 @@ import { usePrevious } from 'src/hooks/utils';
 //   return true;
 // }
 
-const Textarea = ({
+export const Textarea = ({
   id,
   name,
   placeholder,
@@ -111,4 +111,3 @@ Textarea.defaultProps = {
   disabled: false,
   hidden: false,
 };
-export default Textarea;

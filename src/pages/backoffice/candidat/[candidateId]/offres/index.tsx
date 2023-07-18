@@ -4,14 +4,15 @@ import React, { useCallback, useContext, useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { validate as uuidValidate } from 'uuid';
 import { Api } from 'src/api';
-import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
+import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { CandidateOpportunities } from 'src/components/backoffice/candidate/CandidateOpportunities';
-import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
+import { CandidateOpportunitiesFilters } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOpportunitiesFilters.types';
+import { LoadingScreen } from 'src/components/backoffice/cv/LoadingScreen';
 import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { useOpportunityType } from 'src/components/backoffice/opportunities/useOpportunityType';
 import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
-import OpportunityError from 'src/components/opportunities/OpportunityError';
+import { OpportunityError } from 'src/components/opportunities/OpportunityError';
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 import { ADMIN_ZONES, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { GA_TAGS } from 'src/constants/tags';
@@ -232,7 +233,7 @@ const Opportunities = () => {
     content = (
       <CandidateOpportunities
         search={search}
-        filters={filters}
+        filters={filters as CandidateOpportunitiesFilters}
         resetFilters={resetFilters}
         setSearch={setSearch}
         setFilters={setFilters}

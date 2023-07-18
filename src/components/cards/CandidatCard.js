@@ -1,32 +1,31 @@
-import React, { useContext } from 'react';
+import _ from 'lodash';
+import moment from 'moment';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 
 import {
   FacebookShareButton,
   LinkedinShareButton,
   TwitterShareButton,
 } from 'react-share';
-import { useRouter } from 'next/router';
 
-import { Grid, Img, SimpleLink } from 'src/components/utils';
-import ModalShareCV from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
-import { Api } from 'src/api/index.ts';
-import { SharesCountContext } from 'src/store/SharesCountProvider';
-import { gaEvent } from 'src/lib/gtag.ts';
-import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import moment from 'moment';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
+import { Api } from 'src/api';
 import { openModal } from 'src/components/modals/Modal';
-import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants/index.ts';
+import { ModalShareCV } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
+import { Grid, Img, SimpleLink, Icon } from 'src/components/utils';
+import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { fbEvent } from 'src/lib/fb';
+import { gaEvent } from 'src/lib/gtag';
+import { SharesCountContext } from 'src/store/SharesCountProvider';
 import {
   buildBusinessLineForSentence,
   findConstantFromValue,
   sortByOrder,
 } from 'src/utils';
-import { fbEvent } from 'src/lib/fb.ts';
-import _ from 'lodash';
 
-const CandidatCard = ({
+export const CandidatCard = ({
   url,
   imgSrc,
   imgAlt,
@@ -82,6 +81,9 @@ const CandidatCard = ({
 
   const sortedAmbitions =
     ambitions && ambitions.length > 0 ? sortByOrder(ambitions) : null;
+
+  const sortedLocations =
+    locations && locations.length > 0 ? sortByOrder(locations) : null;
 
   const sortedBusinessLines =
     businessLines && businessLines.length > 0
@@ -244,20 +246,20 @@ const CandidatCard = ({
                   </Grid>
                 </div>
               )}
-              {locations && locations.length > 0 && (
+              {sortedLocations && sortedLocations.length > 0 && (
                 <Grid
                   column
                   gap="collapse"
                   childWidths={['1-1']}
                   style={{ marginTop: 10 }}
                 >
-                  {locations.slice(0, 2).map(({ name }, index) => {
+                  {sortedLocations.slice(0, 2).map(({ name }, index) => {
                     return (
                       <div
                         key={name + index}
                         className="uk-flex uk-flex-middle"
                       >
-                        <IconNoSSR name="location" ratio={0.6} />
+                        <Icon name="location" ratio={0.6} />
                         &nbsp;
                         <span
                           className="uk-text-meta uk-flex-1"
@@ -299,9 +301,12 @@ const CandidatCard = ({
                         ? GA_TAGS.PAGE_GALERIE_PARTAGE_CV_LINKEDIN_CLIC
                         : GA_TAGS.HOME_PARTAGE_CV_LINKEDIN_CLIC
                     );
-                    fbEvent(FB_TAGS.SHARE_CV);
+                    fbEvent(FB_TAGS.SHARE_CV_SEND);
                     updateShareCount(id, 'linkedin');
                     openNewsletterModal();
+                  }}
+                  onClick={() => {
+                    fbEvent(FB_TAGS.SHARE_CV_OPEN);
                   }}
                   url={link}
                   title={title}
@@ -309,7 +314,7 @@ const CandidatCard = ({
                   style={{ cursor: 'pointer' }}
                   className="uk-icon-button light-icon-button"
                 >
-                  <IconNoSSR
+                  <Icon
                     name="linkedin"
                     ratio={0.9}
                     className={`share-linkedin-${firstName}`}
@@ -324,9 +329,12 @@ const CandidatCard = ({
                         ? GA_TAGS.PAGE_GALERIE_PARTAGE_CV_FACEBOOK_CLIC
                         : GA_TAGS.HOME_PARTAGE_CV_FACEBOOK_CLIC
                     );
-                    fbEvent(FB_TAGS.SHARE_CV);
+                    fbEvent(FB_TAGS.SHARE_CV_SEND);
                     updateShareCount(id, 'facebook');
                     openNewsletterModal();
+                  }}
+                  onClick={() => {
+                    fbEvent(FB_TAGS.SHARE_CV_OPEN);
                   }}
                   url={link}
                   quote={sharedDescription}
@@ -334,7 +342,7 @@ const CandidatCard = ({
                   style={{ cursor: 'pointer' }}
                   className="uk-icon-button light-icon-button"
                 >
-                  <IconNoSSR
+                  <Icon
                     name="facebook"
                     ratio={0.9}
                     className={`share-facebook-${firstName}`}
@@ -349,10 +357,12 @@ const CandidatCard = ({
                         ? GA_TAGS.PAGE_GALERIE_PARTAGE_CV_TWITTER_CLIC
                         : GA_TAGS.HOME_PARTAGE_CV_TWITTER_CLIC
                     );
-                    fbEvent(FB_TAGS.SHARE_CV);
-
+                    fbEvent(FB_TAGS.SHARE_CV_SEND);
                     updateShareCount(id, 'twitter');
                     openNewsletterModal();
+                  }}
+                  onClick={() => {
+                    fbEvent(FB_TAGS.SHARE_CV_OPEN);
                   }}
                   url={link}
                   title={title}
@@ -361,7 +371,7 @@ const CandidatCard = ({
                   style={{ cursor: 'pointer' }}
                   className="uk-icon-button light-icon-button"
                 >
-                  <IconNoSSR
+                  <Icon
                     name="twitter"
                     ratio={0.9}
                     className={`share-twitter-${firstName}`}
@@ -431,4 +441,3 @@ CandidatCard.defaultProps = {
   endOfContract: undefined,
   catchphrase: "cherche un job pour s'en sortir",
 };
-export default CandidatCard;

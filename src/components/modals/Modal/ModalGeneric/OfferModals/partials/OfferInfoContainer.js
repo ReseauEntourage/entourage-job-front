@@ -1,7 +1,6 @@
-import { Grid } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Grid, Icon } from 'src/components/utils';
 
 export const OfferInfoContainer = ({ icon, title, children }) => {
   if (!children) {
@@ -12,7 +11,7 @@ export const OfferInfoContainer = ({ icon, title, children }) => {
 
   return (
     <Grid gap="small" eachWidths={['auto', 'expand']}>
-      {icon ? <IconNoSSR name={icon} /> : <div className="uk-margin-left" />}
+      {icon ? <Icon name={icon} /> : <div className="uk-margin-left" />}
       <div>
         {title ? <span className="uk-text-bold">{title}</span> : undefined}
         <Grid gap="collapse" childWidths={['1-1']}>

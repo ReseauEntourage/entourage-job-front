@@ -1,3 +1,1 @@
-import ModalOfferAdmin from './ModalOfferAdmin';
-
-export default ModalOfferAdmin;
+export * from './ModalOfferAdmin';

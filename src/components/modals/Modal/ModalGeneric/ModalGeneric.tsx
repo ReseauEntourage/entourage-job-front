@@ -2,11 +2,11 @@ import React from 'react';
 import { Modal, useModalContext } from 'src/components/modals/Modal';
 import { StyledModalContent } from 'src/components/modals/Modal/Modals.styles';
 import { CloseButton, Button } from 'src/components/utils';
-import HeaderModal from './HeaderModal';
+import { HeaderModal } from './HeaderModal';
 
 interface ModalGenericProps {
   children: React.ReactNode;
-  title: React.ReactNode;
+  title?: React.ReactNode;
   description?: React.ReactNode;
   onClose?: (arg1?: () => void) => void;
   className?: string;
@@ -15,7 +15,7 @@ interface ModalGenericProps {
   withCloseButton?: boolean;
 }
 
-const ModalGeneric = ({
+export const ModalGeneric = ({
   title,
   description,
   children,
@@ -80,5 +80,3 @@ ModalGeneric.defaultProps = {
   withCloseButton: false,
   description: '',
 };
-
-export default ModalGeneric;

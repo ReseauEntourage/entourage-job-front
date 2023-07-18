@@ -1,14 +1,13 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import FormValidatorErrorMessage from 'src/components/forms/FormValidatorErrorMessage';
+import React from 'react';
 import PhoneInputWithCountry from 'react-phone-number-input/mobile';
+import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
 
-const PhoneInput = ({
+export const PhoneInput = ({
   id,
   name,
   placeholder,
   title,
-  type,
   valid,
   value,
   onChange,
@@ -35,7 +34,6 @@ const PhoneInput = ({
         defaultCountry="FR"
         title={title}
         name={name}
-        type={type}
         id={id}
         value={value || ''}
         placeholder={placeholder || 'Tapez votre numéro'}
@@ -56,7 +54,6 @@ const PhoneInput = ({
 PhoneInput.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
@@ -78,5 +75,3 @@ PhoneInput.defaultProps = {
   hidden: false,
   autocomplete: 'tel',
 };
-
-export default PhoneInput;

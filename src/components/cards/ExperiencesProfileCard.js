@@ -1,15 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import arrayMove from 'array-move';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
-import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import schemaformEditExperience from 'src/components/forms/schema/formEditExperience.json';
-import { Grid } from 'src/components/utils';
-import ButtonIcon from 'src/components/utils/ButtonIcon';
-import ModalConfirm from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
-import { formatParagraph, sortByOrder } from 'src/utils';
 import { openModal } from 'src/components/modals/Modal';
+import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
+import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { Grid, ButtonIcon } from 'src/components/utils';
+import { formatParagraph, sortByOrder } from 'src/utils';
 
 const Experience = SortableElement(
   ({ value, sortIndex, items, onChange, updateOrder }) => {
@@ -125,7 +124,7 @@ const ExperienceList = SortableContainer(({ items, onChange, updateOrder }) => {
   );
 });
 
-const ExperiencesProfileCard = ({ experiences, onChange }) => {
+export const ExperiencesProfileCard = ({ experiences, onChange }) => {
   const sortedExperiences = sortByOrder(experiences);
 
   const updateExperiencesOrder = (reorderedExperiences) => {
@@ -218,5 +217,3 @@ ExperiencesProfileCard.defaultProps = {
   experiences: [],
   onChange: null,
 };
-
-export default ExperiencesProfileCard;

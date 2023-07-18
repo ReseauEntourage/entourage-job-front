@@ -1,12 +1,10 @@
 import React from 'react';
-import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
-import { Button } from 'src/components/utils';
-import Icon from 'src/components/utils/Icon';
-import Img from 'src/components/utils/Img';
+import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
+import { Button, Img, Icon } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { addPrefix } from 'src/utils';
 
-const SailInfoModal = () => {
+export const SailInfoModal = () => {
   const modalContent = (
     <>
       <div className="uk-light uk-flex uk-flex-column uk-flex-middle">
@@ -31,7 +29,7 @@ const SailInfoModal = () => {
   );
 
   return (
-    <ModalGeneric>
+    <ModalGeneric title="">
       <div className="uk-inline uk-visible@m">
         <Img
           src="/static/img/boat-tjv.jpg"
@@ -57,7 +55,3 @@ const SailInfoModal = () => {
     </ModalGeneric>
   );
 };
-
-SailInfoModal.propTypes = {};
-
-export default SailInfoModal;

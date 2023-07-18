@@ -1,14 +1,34 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Api } from 'src/api/index.ts';
-import schema, {
+import React from 'react';
+import UIkit from 'uikit';
+import { Api } from 'src/api';
+import { FormWithValidation } from 'src/components/forms/FormWithValidation';
+import { formEditExternalOpportunity } from 'src/components/forms/schema/formEditExternalOpportunity';
+import {
+  formEditOpportunity,
   adminMutations,
 } from 'src/components/forms/schema/formEditOpportunity';
-import FormWithValidation from 'src/components/forms/FormWithValidation.tsx';
-import { Button, Grid, SimpleLink } from 'src/components/utils';
-import ButtonIcon from 'src/components/utils/ButtonIcon';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
+import { useModalContext } from 'src/components/modals/Modal';
+import { ModalOfferBase } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOfferBase';
+import { ModalOfferInfo } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/ModalOfferInfo';
+import { List } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/NavList';
+import { OfferContent } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferContent';
+import { OfferInfoContainer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferInfoContainer';
+import { useModalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/useModalOffer';
+import {
+  Button,
+  Grid,
+  SimpleLink,
+  ButtonIcon,
+  Icon,
+} from 'src/components/utils';
 
+import {
+  BUSINESS_LINES,
+  EXTERNAL_OFFERS_ORIGINS,
+  OFFER_STATUS,
+} from 'src/constants';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import {
   findConstantFromValue,
   findOfferStatus,
@@ -17,21 +37,6 @@ import {
   mutateFormSchema,
   sortByOrder,
 } from 'src/utils';
-import {
-  BUSINESS_LINES,
-  EXTERNAL_OFFERS_ORIGINS,
-  OFFER_STATUS,
-} from 'src/constants/index.ts';
-import ModalOfferInfo from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/ModalOfferInfo';
-import { useModalContext } from 'src/components/modals/Modal';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements.ts';
-import formEditExternalOpportunitySchema from 'src/components/forms/schema/formEditExternalOpportunity';
-import { List } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/NavList';
-import { OfferInfoContainer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferInfoContainer';
-import ModalOfferBase from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOfferBase';
-import useModalOffer from 'src/components/modals/Modal/ModalGeneric/OfferModals/useModalOffer';
-import OfferContent from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferContent';
-import UIkit from 'uikit';
 
 const getCandidatesToShowInInput = (offer) => {
   if (offer.opportunityUsers && offer.opportunityUsers.length > 0) {
@@ -57,7 +62,7 @@ const getCandidatesToShowInInput = (offer) => {
   return undefined;
 };
 
-const ModalOfferAdmin = ({
+export const ModalOfferAdmin = ({
   currentOffer,
   onOfferUpdated,
   duplicateOffer,
@@ -68,7 +73,7 @@ const ModalOfferAdmin = ({
     useModalOffer(currentOffer);
 
   // desactivation du champ de disclaimer
-  const mutatedSchema = mutateFormSchema(schema, [
+  const mutatedSchema = mutateFormSchema(formEditOpportunity, [
     {
       fieldId: 'shouldSendNotifications',
       props: [
@@ -130,7 +135,7 @@ const ModalOfferAdmin = ({
   ]);
 
   const mutatedExternalOfferSchema = mutateFormSchema(
-    formEditExternalOpportunitySchema,
+    formEditExternalOpportunity,
     [
       {
         fieldId: 'businessLines',
@@ -444,7 +449,7 @@ const ModalOfferAdmin = ({
                       {offer.recruiterMail}
                       &nbsp;
                     </span>
-                    <IconNoSSR name="mail" ratio={0.8} />
+                    <Icon name="mail" ratio={0.8} />
                   </SimpleLink>
                 )}
                 {offer.recruiterPhone && (
@@ -458,7 +463,7 @@ const ModalOfferAdmin = ({
                       {offer.recruiterPhone}
                       &nbsp;
                     </span>
-                    <IconNoSSR name="phone" ratio={0.8} />
+                    <Icon name="phone" ratio={0.8} />
                   </SimpleLink>
                 )}
               </OfferInfoContainer>
@@ -524,21 +529,21 @@ const ModalOfferAdmin = ({
                               </span>
                               <div className="uk-flex-right">
                                 {oppUser.bookmarked && (
-                                  <IconNoSSR
+                                  <Icon
                                     name="star"
                                     ratio={0.8}
                                     className="ent-color-amber"
                                   />
                                 )}
                                 {oppUser.archived && (
-                                  <IconNoSSR
+                                  <Icon
                                     name="archive"
                                     ratio={0.8}
                                     className="ent-color-amber"
                                   />
                                 )}
                                 {offer.isPublic && oppUser.recommended && (
-                                  <IconNoSSR
+                                  <Icon
                                     name="bolt"
                                     ratio={0.8}
                                     className="ent-color-amber"
@@ -576,7 +581,7 @@ const ModalOfferAdmin = ({
                                 >
                                   {offerStatus.label}
                                 </span>
-                                <IconNoSSR
+                                <Icon
                                   ratio={0.8}
                                   className="uk-margin-small-left uk-text-muted"
                                   name="triangle-down"
@@ -685,5 +690,3 @@ ModalOfferAdmin.propTypes = {
 ModalOfferAdmin.defaultProps = {
   currentOffer: { opportunityUsers: {}, businessLines: [] },
 };
-
-export default ModalOfferAdmin;

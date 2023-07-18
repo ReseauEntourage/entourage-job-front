@@ -1,8 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { StyledErrorMessage } from 'src/components/forms/Forms.styles';
 
-const FormValidatorErrorMessage = ({ validObj, newInput }) => {
+export const FormValidatorErrorMessage = ({ validObj, newInput }) => {
   if (validObj !== undefined && validObj.message) {
     return newInput ? (
       <StyledErrorMessage>{validObj.message}</StyledErrorMessage>
@@ -24,5 +24,3 @@ FormValidatorErrorMessage.defaultProps = {
   validObj: undefined,
   newInput: false,
 };
-
-export default FormValidatorErrorMessage;

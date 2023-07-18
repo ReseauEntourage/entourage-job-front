@@ -1,14 +1,14 @@
-import React, { createContext, useCallback, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
-import { Api } from 'src/api/index.ts';
-import { STORAGE_KEYS } from 'src/constants/index.ts';
-import { USER_ROLES } from 'src/constants/users.ts';
-import { getDefaultUrl } from 'src/utils/Redirects.ts';
+import PropTypes from 'prop-types';
+import React, { createContext, useCallback, useEffect, useState } from 'react';
+import { Api } from 'src/api';
+import { STORAGE_KEYS } from 'src/constants';
+import { USER_ROLES } from 'src/constants/users';
+import { getDefaultUrl } from 'src/utils/Redirects';
 
 export const UserContext = createContext();
 
-const UserProvider = ({ children }) => {
+export const UserProvider = ({ children }) => {
   const { isReady, replace, push, pathname, asPath } = useRouter();
 
   const [user, setUser] = useState(null);
@@ -105,4 +105,3 @@ const UserProvider = ({ children }) => {
 UserProvider.propTypes = {
   children: PropTypes.element.isRequired,
 };
-export default UserProvider;

@@ -10,7 +10,7 @@ interface FiltersCheckboxesProps {
   fullWidth?: boolean;
 }
 
-const FiltersCheckboxes = ({
+export const FiltersCheckboxes = ({
   filterData,
   filters,
   setFilters,
@@ -67,5 +67,3 @@ FiltersCheckboxes.defaultProps = {
   hideOnMobile: false,
   fullWidth: false,
 };
-
-export default FiltersCheckboxes;

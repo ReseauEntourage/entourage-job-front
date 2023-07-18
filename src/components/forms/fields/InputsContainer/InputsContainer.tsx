@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { useIsDesktop } from 'src/hooks/utils';
@@ -8,13 +7,9 @@ const uuidValue = uuid();
 
 interface InputsContainerProps {
   fields: React.ReactNode[];
-  /*  title: string;
-  childWidths: number; */
 }
 
-const InputsContainer = ({
-  fields /* title, childWidths */,
-}: InputsContainerProps) => {
+export const InputsContainer = ({ fields }: InputsContainerProps) => {
   const firstFieldNotHiddenIndex = fields.findIndex((field) => {
     return !!field;
   });
@@ -40,15 +35,3 @@ const InputsContainer = ({
     </StyledInputsContainer>
   );
 };
-
-InputsContainer.propTypes = {
-  fields: PropTypes.arrayOf(PropTypes.element).isRequired,
-  /* title: PropTypes.string,
-  childWidths: PropTypes.arrayOf(PropTypes.string), */
-};
-
-InputsContainer.defaultProps = {
-  /* title: undefined,
-  childWidths: undefined, */
-};
-export default InputsContainer;

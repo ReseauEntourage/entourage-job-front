@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
+import React, { useState } from 'react';
+import { Button, Icon } from 'src/components/utils';
 
-const ButtonPost = ({ text, icon, action, style, disabled, dataTestId }) => {
+export const ButtonPost = ({
+  text,
+  icon,
+  action,
+  style,
+  disabled,
+  dataTestId,
+}) => {
   const [loading, setLoading] = useState(false);
   return (
     <Button
@@ -25,11 +31,7 @@ const ButtonPost = ({ text, icon, action, style, disabled, dataTestId }) => {
           <div className="uk-margin-small-left" data-uk-spinner="ratio: .5" />
         ) : (
           icon && (
-            <IconNoSSR
-              className="uk-margin-small-left"
-              name={icon}
-              ratio={0.8}
-            />
+            <Icon className="uk-margin-small-left" name={icon} ratio={0.8} />
           )
         )}
       </div>
@@ -44,6 +46,7 @@ ButtonPost.propTypes = {
   disabled: PropTypes.bool,
   dataTestId: PropTypes.string,
 };
+
 ButtonPost.defaultProps = {
   action: undefined,
   style: undefined,
@@ -51,4 +54,3 @@ ButtonPost.defaultProps = {
   disabled: false,
   dataTestId: '',
 };
-export default ButtonPost;

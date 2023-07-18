@@ -1,46 +1,36 @@
 import { useRouter } from 'next/router';
 import React, { useContext } from 'react';
 import { v4 as uuid } from 'uuid';
-import { StyledHeaderMobile } from '../../Header.styles';
+import { HeaderConnectedMainItemDefaultProps } from '../HeaderConnected.types';
+import { StyledHeaderMobile } from 'src/components/headers/Header.styles';
 import {
-  HeaderConnectedMainItemProps,
-  HeaderConnectedMainItemDefaultProps,
-} from 'src/components/headers/HeaderConnected/HeaderConnected.shapes';
-import { StyledConnectedItemMobile } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/HeaderConnectedContent.styles';
-import SubMenu from 'src/components/headers/HeaderConnected/HeaderConnectedContent/SubMenu';
-import { Navbar, SimpleLink } from 'src/components/utils';
-import Hamburger from 'src/components/utils/Hamburger';
-import { IconNoSSR } from 'src/components/utils/Icon';
-import NavbarLogo from 'src/components/utils/Navbar/NavbarLogo';
-import { OffcanvasNoSSR } from 'src/components/utils/Offcanvas';
+  Navbar,
+  SimpleLink,
+  Hamburger,
+  NavbarLogo,
+  Icon,
+} from 'src/components/utils';
+import { Offcanvas } from 'src/components/utils/Offcanvas';
 import { OFFCANVAS_LOGGED } from 'src/constants/utils';
 import { gaEvent } from 'src/lib/gtag';
 import { UserContext } from 'src/store/UserProvider';
+import { StyledConnectedItemMobile } from './HeaderConnectedContent.styles';
+import { HeaderConnectedContentProps } from './HeaderConnectedContent.types';
+import { SubMenu } from './SubMenu';
 
 const uuidValue = uuid();
 
-interface HeaderConnectedContentMobileProps {
-  links?: {
-    admin: HeaderConnectedMainItemProps[];
-    dropdown: HeaderConnectedMainItemProps[];
-    candidat: HeaderConnectedMainItemProps[];
-    coach: HeaderConnectedMainItemProps[];
-    coach_externe: HeaderConnectedMainItemProps[];
-  };
-  badges?: {
-    offers: number;
-    note: number;
-    cv: number;
-    members: number;
-  };
-  isEmpty?: boolean;
-}
-
-const HeaderConnectedContentMobile = ({
+export const HeaderConnectedContentMobile = ({
   badges,
-  links,
-  isEmpty,
-}: HeaderConnectedContentMobileProps) => {
+  links = {
+    admin: [HeaderConnectedMainItemDefaultProps],
+    dropdown: [HeaderConnectedMainItemDefaultProps],
+    candidat: [HeaderConnectedMainItemDefaultProps],
+    coach: [HeaderConnectedMainItemDefaultProps],
+    coach_externe: [HeaderConnectedMainItemDefaultProps],
+  },
+  isEmpty = false,
+}: HeaderConnectedContentProps) => {
   const { user } = useContext(UserContext);
 
   const { push, asPath } = useRouter();
@@ -64,11 +54,11 @@ const HeaderConnectedContentMobile = ({
           </div>
         }
       />
-      <OffcanvasNoSSR id={OFFCANVAS_LOGGED}>
+      <Offcanvas id={OFFCANVAS_LOGGED}>
         <ul className="uk-nav uk-nav-default uk-margin-medium-top">
           <li>
             <SimpleLink href="/">
-              <IconNoSSR name="home" className="uk-margin-small-right" />
+              <Icon name="home" className="uk-margin-small-right" />
               Accueil
             </SimpleLink>
           </li>
@@ -105,10 +95,7 @@ const HeaderConnectedContentMobile = ({
                         }}
                       >
                         <span>
-                          <IconNoSSR
-                            name={icon}
-                            className="uk-margin-small-right"
-                          />
+                          <Icon name={icon} className="uk-margin-small-right" />
                           {name}
                         </span>
                       </a>
@@ -142,7 +129,7 @@ const HeaderConnectedContentMobile = ({
                   }}
                 >
                   <span>
-                    <IconNoSSR name={icon} className="uk-margin-small-right" />
+                    <Icon name={icon} className="uk-margin-small-right" />
                     {name}
                   </span>
                 </a>
@@ -150,21 +137,7 @@ const HeaderConnectedContentMobile = ({
             );
           })}
         </ul>
-      </OffcanvasNoSSR>
+      </Offcanvas>
     </StyledHeaderMobile>
   );
 };
-
-HeaderConnectedContentMobile.defaultProps = {
-  links: {
-    admin: HeaderConnectedMainItemDefaultProps,
-    dropdown: HeaderConnectedMainItemDefaultProps,
-    candidat: HeaderConnectedMainItemDefaultProps,
-    coach: HeaderConnectedMainItemDefaultProps,
-    coach_externe: HeaderConnectedMainItemDefaultProps,
-  },
-  badges: null,
-  isEmpty: false,
-};
-
-export default HeaderConnectedContentMobile;

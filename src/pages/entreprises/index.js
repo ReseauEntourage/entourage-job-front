@@ -1,30 +1,30 @@
-import React from 'react';
-import LogoList from 'src/components/partials/LogoList';
-import Layout from 'src/components/Layout.tsx';
-import { Button, Section } from 'src/components/utils';
-import ImageTitle from 'src/components/partials/ImageTitle';
-import Reviews from 'src/components/partials/Reviews';
-import HowToCommitDifferently from 'src/components/partials/HowToCommitDifferently';
-import { NewsletterPartial } from 'src/components/partials/NewsletterPartial';
-import PARTNERS from 'src/constants/partners';
-import { IconNoSSR } from 'src/components/utils/Icon.tsx';
-import { Chapter } from 'src/components/partials/Chapter';
-import CVList from 'src/components/cv/CVList';
-import { CV_FILTERS_DATA, STORAGE_KEYS } from 'src/constants/index.ts';
-import Timeline from 'src/components/partials/Timeline';
-import NumberGrid from 'src/components/partials/NumberGrid';
-import AnimatedList from 'src/components/utils/AnimatedList';
-import { Api } from 'src/api/index.ts';
 import PropTypes from 'prop-types';
+import React from 'react';
 import TextLoop from 'react-text-loop';
-import { FB_TAGS, GA_TAGS, LINK_TAGS } from 'src/constants/tags';
-import { gaEvent } from 'src/lib/gtag.ts';
-import CompanyContactModal from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
+import { Api } from 'src/api';
+import { Layout } from 'src/components/Layout';
+import { CVList } from 'src/components/cv';
 import { openModal } from 'src/components/modals/Modal';
-import { fbEvent } from 'src/lib/fb.ts';
+import { CompanyContactModal } from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
+import { TaxModal } from 'src/components/modals/PopupModal/TaxModal';
+import {
+  LogoList,
+  HowToCommitDifferently,
+  Chapter,
+  NumberGrid,
+  Reviews,
+  Timeline,
+} from 'src/components/partials';
+import { ImageTitle } from 'src/components/partials/ImageTitle';
+import { NewsletterPartial } from 'src/components/partials/NewsletterPartial';
+import { Button, Section, AnimatedList, Icon } from 'src/components/utils';
+import { CV_FILTERS_DATA, STORAGE_KEYS } from 'src/constants';
+import { PARTNERS } from 'src/constants/partners';
+import { FB_TAGS, GA_TAGS, LINK_TAGS } from 'src/constants/tags';
 import { useMount } from 'src/hooks/utils';
-import { TaxModal } from 'src/components/modals/PopupModal/TaxModal.tsx';
-import { linkEvent } from 'src/lib/lintrk.ts';
+import { fbEvent } from 'src/lib/fb';
+import { gaEvent } from 'src/lib/gtag';
+import { linkEvent } from 'src/lib/lintrk';
 
 const timeline = [
   {
@@ -283,7 +283,7 @@ const Entreprises = ({ nbPublishedCVs }) => {
             style="secondary"
           >
             Contactez-nous&nbsp;
-            <IconNoSSR name="chevron-right" />
+            <Icon name="chevron-right" />
           </Button>
         }
       />
@@ -375,7 +375,7 @@ const Entreprises = ({ nbPublishedCVs }) => {
             href={{ pathname: '/entreprises/cvs', query: { employed: false } }}
             style="secondary"
           >
-            Découvrir nos candidats <IconNoSSR name="chevron-right" />
+            Découvrir nos candidats <Icon name="chevron-right" />
           </Button>
         </div>
       </Section>
@@ -432,7 +432,7 @@ const Entreprises = ({ nbPublishedCVs }) => {
             className="uk-margin-small-top"
           >
             Contactez-nous&nbsp;
-            <IconNoSSR name="chevron-right" />
+            <Icon name="chevron-right" />
           </Button>
         </div>
       </Section>

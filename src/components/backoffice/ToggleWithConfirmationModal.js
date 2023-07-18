@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Grid } from 'src/components/utils';
-import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
-import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import React, { useEffect, useState } from 'react';
 import { openModal, useModalContext } from 'src/components/modals/Modal';
+import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
+import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { Button, Grid } from 'src/components/utils';
 
 const ModalToggle = ({
   modalTitle,
@@ -52,7 +52,7 @@ ModalToggle.defaultProps = {
   modalConfirmation: 'Oui',
 };
 
-const ToggleWithConfirmationModal = ({
+export const ToggleWithConfirmationModal = ({
   id,
   title,
   subtitle,
@@ -152,5 +152,3 @@ ToggleWithConfirmationModal.defaultProps = {
   modalConfirmation: 'Oui',
   formSchema: undefined,
 };
-
-export default ToggleWithConfirmationModal;

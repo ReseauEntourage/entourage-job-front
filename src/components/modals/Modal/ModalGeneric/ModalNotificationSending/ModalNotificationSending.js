@@ -1,11 +1,11 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
-import ModalGeneric from 'src/components/modals/Modal/ModalGeneric';
-import { Button } from 'src/components/utils';
 import { useModalContext } from 'src/components/modals/Modal';
-import PropTypes from 'prop-types';
+import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
+import { Button } from 'src/components/utils';
 
-const ModalNotificationSending = ({ callback }) => {
+export const ModalNotificationSending = ({ callback }) => {
   const { onClose } = useModalContext();
 
   return (
@@ -48,5 +48,3 @@ const ModalNotificationSending = ({ callback }) => {
 ModalNotificationSending.propTypes = {
   callback: PropTypes.func.isRequired,
 };
-
-export default ModalNotificationSending;

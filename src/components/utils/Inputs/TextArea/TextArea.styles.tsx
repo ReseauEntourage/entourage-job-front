@@ -22,7 +22,7 @@ export const StyledTextAreaContainer = styled.div`
     border: none;
     resize: vertical;
     border-bottom: solid 2px ${COLORS.gray};
-    margin-bottom: 18px;
+    margin-bottom: 30px;
     font-family: Poppins, sans-serif;
     &::placeholder {
       font-style: italic;

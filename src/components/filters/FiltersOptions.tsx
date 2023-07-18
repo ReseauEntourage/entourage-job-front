@@ -1,7 +1,11 @@
 import React from 'react';
 import { Button } from 'src/components/utils/Button';
 
-const FiltersOptions = ({ resetFilters }: { resetFilters: () => void }) => {
+export const FiltersOptions = ({
+  resetFilters,
+}: {
+  resetFilters: () => void;
+}) => {
   return (
     <div className="uk-flex uk-flex-middle uk-flex-right uk-flex-1">
       <div className="uk-flex uk-flex-middle uk-flex-right">
@@ -23,5 +27,3 @@ const FiltersOptions = ({ resetFilters }: { resetFilters: () => void }) => {
     </div>
   );
 };
-
-export default FiltersOptions;

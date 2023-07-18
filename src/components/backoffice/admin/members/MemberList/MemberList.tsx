@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { MemberTable } from '../MemberTable';
@@ -8,12 +7,10 @@ import { Api } from 'src/api';
 
 import { AdminCreationButtons } from 'src/components/backoffice/admin/AdminCreationButtons';
 import { StyledActionsContainer } from 'src/components/backoffice/admin/members/MemberList/MemberList.styles';
-import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
-import SearchBar from 'src/components/filters/SearchBar';
-import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
-import { Section } from 'src/components/utils';
-import BackToTop from 'src/components/utils/BackToTop';
-import { Button } from 'src/components/utils/Button';
+import { LoadingScreen } from 'src/components/backoffice/cv/LoadingScreen';
+import { SearchBar } from 'src/components/filters/SearchBar';
+import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
+import { Section, Button, BackToTop } from 'src/components/utils';
 import { MEMBER_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
@@ -24,17 +21,25 @@ import {
   mutateTypeFilterDependingOnRole,
 } from 'src/utils/Filters';
 import { isRoleIncluded } from 'src/utils/Finding';
+import { AnyToFix } from 'src/utils/Types';
 import { useRole } from './useRole';
 
 const LIMIT = 50;
+interface MemberListProps {
+  filters: AnyToFix; // to be typed
+  setFilters: (updatedFilters: AnyToFix) => void;
+  search?: string;
+  setSearch: (search?: string) => void;
+  resetFilters: () => void;
+}
 
 export function MemberList({
   search,
-  filters,
+  filters = {},
   setFilters,
   setSearch,
   resetFilters,
-}) {
+}: MemberListProps) {
   const role = useRole();
 
   const prevRole = usePrevious(role);
@@ -242,19 +247,3 @@ export function MemberList({
     </>
   );
 }
-
-MemberList.propTypes = {
-  search: PropTypes.string,
-  filters: PropTypes.shape({}),
-  setFilters: PropTypes.func,
-  setSearch: PropTypes.func,
-  resetFilters: PropTypes.func,
-};
-
-MemberList.defaultProps = {
-  search: undefined,
-  filters: {},
-  setFilters: () => null,
-  setSearch: () => null,
-  resetFilters: () => null,
-};

@@ -2,12 +2,12 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import UIkit from 'uikit';
 
 import { Api } from 'src/api';
-import LayoutBackOffice from 'src/components/backoffice/LayoutBackOffice';
-import LoadingScreen from 'src/components/backoffice/cv/LoadingScreen';
+import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
+import { LoadingScreen } from 'src/components/backoffice/cv/LoadingScreen';
 import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
-import HeaderBackoffice from 'src/components/headers/HeaderBackoffice';
+import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { Button, Grid, Section } from 'src/components/utils';
-import { IconNoSSR } from 'src/components/utils/Icon';
+import { Icon } from 'src/components/utils/Icon';
 import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
@@ -140,7 +140,7 @@ const Suivi = () => {
             }}
             disabled={value === userCandidat.note}
           >
-            <IconNoSSR name="history" />
+            <Icon name="history" />
           </Button>
           <Button
             style="default"

@@ -10,7 +10,7 @@ import { Member } from 'src/components/backoffice/admin/members/MemberTable/Memb
 import { MemberColumn } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.types';
 import schemaDeleteUser from 'src/components/forms/schema/formDeleteUser.json';
 import { openModal } from 'src/components/modals/Modal';
-import ModalEdit from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Button, Icon } from 'src/components/utils';
 import { Heading } from 'src/components/utils/Inputs/Heading';
 import {
