@@ -16,6 +16,7 @@ const CustomModal = ({ children, closeOnNextRender, className, fullWidth }) => {
 
   return (
     <Modal
+      id="modal-screen"
       closeTimeoutMS={200}
       style={{
         overlay: {

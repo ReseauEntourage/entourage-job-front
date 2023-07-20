@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { BREAKPOINTS } from 'src/constants/styles';
 
 export const StyledBackground = styled.section`
   &.top-banner {

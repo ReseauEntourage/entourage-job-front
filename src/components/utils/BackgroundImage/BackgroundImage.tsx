@@ -1,8 +1,7 @@
 import Image, { StaticImageData } from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { StyledBackground } from 'src/components/utils/BackgroundImage/BackgroundImage.styles';
-import { BREAKPOINTS } from 'src/constants/styles';
-import { useWindowSize } from 'src/hooks/useWindowSize';
+import { useIsDesktop } from 'src/hooks/utils';
 
 interface BackgroundImageProps {
   img: string | StaticImageData;
@@ -23,12 +22,7 @@ export const BackgroundImage = ({
   isHero,
   hasCta,
 }: BackgroundImageProps) => {
-  const { width } = useWindowSize();
-  const [isDesktop, setIsDesktop] = useState(true);
-
-  useEffect(() => {
-    setIsDesktop(width >= BREAKPOINTS.desktop);
-  }, [imgMobile, width]);
+  const isDesktop = useIsDesktop();
 
   return (
     <StyledBackground
