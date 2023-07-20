@@ -136,10 +136,3 @@ export const StyledH6 = styled.h6`
     text-align: center;
   }
 `;
-
-/*
-
-28px: Expériences => 20 mobile
-24px: carousel, CTA main => 18 mobile
-20px: informations, Passions
-16px: Partagez, coup de pouce, sous-cta => 14 mobile */

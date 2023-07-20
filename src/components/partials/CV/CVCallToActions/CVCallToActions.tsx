@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { CVType } from '../CV.type';
-import { CV_COLORS } from '../PageCvContent/PageCVContent.styles';
+import { CV_COLORS } from '../PageCVContent/PageCVContent.styles';
 import { openModal } from 'src/components/modals/Modal';
 import { PostOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { Button } from 'src/components/utils';
@@ -71,13 +71,12 @@ export const CVCallToActions = ({
       <StyledCVCTAContainer>
         <StyledCVCTACard className={`${!isDesktop ? 'mobile' : ''}`} order={3}>
           <H5
-            title="Partagez son CV sur vos réseaux sociaux."
+            title="Partagez son CV sur vos réseaux sociaux :"
             center
             color="darkGrayFont"
           />
           <p>
-            En le rendant visible vous pouvez créer les rencontres qui peuvent
-            tout changer
+            En augmentant sa visibilité, vous pouvez générer des rencontres qui peuvent tout changer&#8217;!
           </p>
           <CVShareButtons cv={cv} actionDisabled={actionDisabled} />
         </StyledCVCTACard>

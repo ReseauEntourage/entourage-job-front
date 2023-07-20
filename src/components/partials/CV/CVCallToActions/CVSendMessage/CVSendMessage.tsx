@@ -26,7 +26,7 @@ export const CVSendMessage = ({
   return (
     <StyledCVCTACard className={`${!isDesktop ? 'mobile' : ''}`} order={1}>
       <H5
-        title="Contactez-le pour lui apporter un coup de pouce&nbsp;!"
+        title={`Echangez avec ${cv.user.candidat.firstName}`}
         center
         color="darkGrayFont"
       />

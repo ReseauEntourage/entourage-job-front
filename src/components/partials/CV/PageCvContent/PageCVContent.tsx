@@ -88,8 +88,7 @@ export const PageCVContent = ({
               <StyledShareContainer>
                 <H5 title="Partagez son CV" color={CV_COLORS.titleGray} />
                 <p>
-                  En le rendant visible vous pouvez créer les rencontres qui
-                  peuvent tout changer
+                  En augmentant sa visibilité, vous pouvez générer des rencontres qui peuvent tout changer&#8217;!
                 </p>
               </StyledShareContainer>
               <CVShareButtons cv={cv} actionDisabled={actionDisabled} />
@@ -194,8 +193,7 @@ export const PageCVContent = ({
               <StyledShareContainer>
                 <H5 title="Partagez son CV" color={CV_COLORS.titleGray} />
                 <p>
-                  En le rendant visible vous pouvez créer les rencontres qui
-                  peuvent tout changer
+                  En augmentant sa visibilité, vous pouvez générer des rencontres qui peuvent tout changer&#8217;!
                 </p>
               </StyledShareContainer>
               <CVShareButtons cv={cv} actionDisabled={actionDisabled} />
@@ -386,20 +384,6 @@ export const PageCVContent = ({
           <H3 title="Ils me recommandent" color={CV_COLORS.titleGray} center />
           <CarouselSwiper
             slides={[
-              ...cv.reviews.map(({ text, id, name, status }) => {
-                return (
-                  <StyledCVPageContentSlide key={id}>
-                    <Icon name="quote-right" />
-                    <div>
-                      <span>{text}</span>{' '}
-                      <span className="name">
-                        {name}, {status}
-                      </span>
-                    </div>
-                    <Icon name="quote-right" />
-                  </StyledCVPageContentSlide>
-                );
-              }),
               ...cv.reviews.map(({ text, id, name, status }) => {
                 return (
                   <StyledCVPageContentSlide key={id}>

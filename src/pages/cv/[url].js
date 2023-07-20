@@ -6,7 +6,7 @@ import { Layout } from 'src/components/Layout';
 import { CVList } from 'src/components/cv';
 import { CVShape } from 'src/components/cv/CV.shape';
 import { DiscoverPartial, NewsletterPartial } from 'src/components/partials';
-import { PageCVContent } from 'src/components/partials/CV/PageCvContent';
+import { PageCVContent } from 'src/components/partials/CV/PageCVContent';
 import { Grid, Section, SimpleLink, Icon, Button } from 'src/components/utils';
 import { CV_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
