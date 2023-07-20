@@ -1,6 +1,7 @@
+/* eslint import/no-unresolved: "off" */
 import React from 'react';
-import { Swiper } from 'swiper/react';
 import { Pagination, Autoplay, Navigation } from 'swiper/modules';
+import { Swiper } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import {
@@ -21,8 +22,8 @@ export const CarouselSwiper = ({ slides }: CarouselSwiperProps) => {
       <Swiper
         modules={[Pagination, Autoplay, Navigation]}
         threshold={2}
-        navigation={true}
-        autoplay={true}
+        navigation
+        autoplay
         pagination={{
           clickable: true,
         }}

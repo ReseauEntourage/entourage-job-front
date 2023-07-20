@@ -1,9 +1,7 @@
 import React, { useMemo } from 'react';
-import UIkit from 'uikit';
-import { Api } from 'src/api';
-import { formSendExternalMessage } from 'src/components/forms/schema/formSendExternalMessage';
+import { CVType } from '../CV.type';
+import { CV_COLORS } from '../PageCvContent/PageCVContent.styles';
 import { openModal } from 'src/components/modals/Modal';
-import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { PostOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { Button } from 'src/components/utils';
 import { H3, H5 } from 'src/components/utils/Headings';
@@ -11,17 +9,16 @@ import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { useIsDesktop } from 'src/hooks/utils';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
-import { AnyToFix } from 'src/utils/Types';
 import {
   StyledCVCTA,
   StyledCVCTAContainer,
   StyledCVCTACard,
 } from './CVCallToActions.styles';
-import { CVShareButtons } from 'src/components/partials/CV/CVShareButtons';
-import { CV_COLORS } from '../PageCvContent/PageCVContent.styles';
+import { CVSendMessage } from './CVSendMessage';
+import { CVShareButtons } from './CVShareButtons';
 
 interface CVCallToActionsProps {
-  cv: AnyToFix; // finish typing
+  cv: CVType;
   actionDisabled?: boolean;
 }
 
@@ -65,7 +62,9 @@ export const CVCallToActions = ({
   return (
     <StyledCVCTA>
       <H3
-        title={`Donnez un coup de pouce à ${cv?.user?.candidat?.firstName} !`}
+        title={`Donnez un coup de pouce à ${
+          cv?.user?.candidat?.firstName
+        }${' '}!`}
         center
         color={CV_COLORS.titleGray}
       />
@@ -82,63 +81,16 @@ export const CVCallToActions = ({
           </p>
           <CVShareButtons cv={cv} actionDisabled={actionDisabled} />
         </StyledCVCTACard>
-        <StyledCVCTACard className={`${!isDesktop ? 'mobile' : ''}`} order={1}>
+        <CVSendMessage cv={cv} actionDisabled={actionDisabled} />
+        <StyledCVCTACard className={`${!isDesktop ? 'mobile' : ''}`} order={2}>
           <H5
-            title="Contactez-le pour lui apporter un coup de pouce !"
+            title="Vous êtes recruteurs&nbsp;! "
             center
             color="darkGrayFont"
           />
           <p>
-            Informations sur le secteur d&apos;activité, retour
-            d&apos;expérience, mise en contact&nbsp;...
-          </p>
-          <Button
-            style="custom-secondary-inverted"
-            disabled={actionDisabled}
-            onClick={() => {
-              gaEvent(GA_TAGS.PAGE_CV_CONTACTEZ_MOI_CLIC);
-              fbEvent(FB_TAGS.MESSAGE_OPEN);
-              openModal(
-                <ModalEdit
-                  title={`Envoyer un message à ${cv.user.candidat.firstName}`}
-                  description={`Vous pouvez envoyer un message à ${
-                    cv.user.candidat.firstName
-                  } pour ${
-                    cv.user.candidat.gender === 0 ? 'le' : 'la'
-                  } soutenir dans sa recherche d'emploi`}
-                  submitText="Envoyer"
-                  formSchema={formSendExternalMessage}
-                  onSubmit={async (fields, closeModal) => {
-                    gaEvent(GA_TAGS.PAGE_CV_ENVOYER_CONTACTEZ_MOI_CLIC);
-                    fbEvent(FB_TAGS.MESSAGE_SEND);
-                    try {
-                      await Api.postExternalMessage({
-                        UserId: cv.UserId,
-                        ...fields,
-                      });
-                      UIkit.notification(
-                        'Le message a bien été envoyé',
-                        'success'
-                      );
-
-                      closeModal();
-                    } catch (err) {
-                      UIkit.notification("Une erreur s'est produite", 'danger');
-                      console.error(err);
-                    }
-                  }}
-                />
-              );
-            }}
-          >
-            Envoyer un message
-          </Button>
-        </StyledCVCTACard>
-        <StyledCVCTACard className={`${!isDesktop ? 'mobile' : ''}`} order={2}>
-          <H5 title="Vous êtes recruteurs ! " center color="darkGrayFont" />
-          <p>
-            Donnez-vous la chance de rencontrer {cv?.user?.candidat?.firstName}{' '}
-            !
+            Donnez-vous la chance de rencontrer {cv?.user?.candidat?.firstName}
+            &nbsp;!
           </p>
           <Button
             style="custom-secondary"

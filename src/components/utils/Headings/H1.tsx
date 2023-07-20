@@ -1,4 +1,5 @@
 import React from 'react';
+import { useIsDesktop } from 'src/hooks/utils';
 import { StyledH1 } from './Headings.styles';
 
 export const H1 = ({
@@ -12,9 +13,10 @@ export const H1 = ({
   color: string;
   center?: boolean;
 }) => {
+  const isDesktop = useIsDesktop();
   return (
     <StyledH1
-      className={`${center ? 'center' : ''}`}
+      className={`${center ? 'center' : ''} ${isDesktop ? '' : 'mobile'}`}
       color={color}
       data-uk-scrollspy={effect}
     >

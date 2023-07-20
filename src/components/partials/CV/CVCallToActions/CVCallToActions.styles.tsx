@@ -3,7 +3,7 @@ import { COLORS } from 'src/constants/styles';
 
 export const StyledCVCTA = styled.div`
   background-color: #ffffffe5;
-  margin-bottom: 30px;
+  margin: 0 15px 30px;
   border-radius: 30px;
   padding: 30px;
 `;
@@ -24,6 +24,7 @@ export const StyledCVCTACard = styled.div`
   padding: 12px;
   width: 26%;
   min-width: 200px;
+  box-sizing: border-box;
   p {
     text-align: center;
     color: ${COLORS.darkGrayFont};

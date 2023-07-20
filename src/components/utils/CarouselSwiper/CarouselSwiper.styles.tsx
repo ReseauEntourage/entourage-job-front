@@ -1,5 +1,6 @@
+/* eslint import/no-unresolved: "off" */
 import styled from 'styled-components';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { COLORS } from 'src/constants/styles';

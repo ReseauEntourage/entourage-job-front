@@ -1,8 +1,5 @@
+import { useRouter } from 'next/router';
 import React, { useCallback } from 'react';
-import {
-  StyledCVShareBUtton,
-  StyledCVShareButtonsContainer,
-} from './CVShareButtons.styles';
 import {
   FacebookShareButton,
   LinkedinShareButton,
@@ -13,17 +10,20 @@ import FacebookIcon from 'public/static/img/icons/facebook.svg';
 import LinkedInIcon from 'public/static/img/icons/linked-in.svg';
 import TwitterIcon from 'public/static/img/icons/twitter.svg';
 import WhatsappIcon from 'public/static/img/icons/whatsapp.svg';
+import { CVType } from '../../CV.type';
+import { openModal } from 'src/components/modals/Modal';
+import { ModalShareCV } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { useUpdateSharesCount } from 'src/hooks';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
-import { AnyToFix } from 'src/utils/Types';
-import { ModalShareCV } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
-import { openModal } from 'src/components/modals/Modal';
-import { useRouter } from 'next/router';
-import { useUpdateSharesCount } from 'src/hooks';
+import {
+  StyledCVShareBUtton,
+  StyledCVShareButtonsContainer,
+} from './CVShareButtons.styles';
 
 interface CVCallToActionsProps {
-  cv: AnyToFix; // finish typing
+  cv: CVType;
   actionDisabled?: boolean;
 }
 

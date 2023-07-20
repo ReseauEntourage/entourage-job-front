@@ -1,21 +1,11 @@
 import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
 import { Icon } from 'src/components/utils';
-
-export const StyledChevronIcon = styled(Icon)`
-    position: absolute;
-    top: 28px;
-    right: 30px;
-    svg {
-        height: 20px;
-        width: 20px;
-        color: ${COLORS.primaryOrange};
-    }
-`;
+import { COLORS } from 'src/constants/styles';
 
 export const CV_COLORS = {
   titleGray: '#484848',
   parGray: '#6D6C6C',
+  nameGray: '#979797',
 };
 
 export const StyledCVPageContent = styled.div`
@@ -49,14 +39,22 @@ export const StyledCVPageContent = styled.div`
     padding-left: 0;
     list-style: none;
   }
+  .mobile {
+    .close {
+      h2 {
+        margin-bottom: 0;
+      }
+      svg {
+        transform: rotate(180deg);
+      }
+      ul {
+        display: none;
+      }
+    }
+  }
 `;
 
-const BasicDivContainer = styled.div`
-  margin: 26px 15px 0;
-  box-sizing: border-box;
-`;
-
-export const StyledCVPageContentHeader = styled(BasicDivContainer)`
+export const StyledCVPageContentHeader = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -66,6 +64,7 @@ export const StyledCVPageContentHeader = styled(BasicDivContainer)`
   border-radius: 30px;
   padding: 30px;
   box-sizing: border-box;
+  margin: 26px 15px 0;
   h1 {
     text-transform: uppercase;
   }
@@ -114,6 +113,55 @@ export const StyledCVPageContentHeader = styled(BasicDivContainer)`
   }
 `;
 
+export const StyledCVProfilePicture = styled.div`
+  height: 450px;
+  width: 355px;
+  position: relative;
+  .picture {
+    height: 400px;
+    width: 270px;
+    border-radius: 859px 909px 729px 909px;
+    background-image: ${(props) => {
+      return `url('${props.imgSrc}')`;
+    }};
+    background-position: 66% 39%;
+    position: absolute;
+    z-index: 2;
+    background-size: cover;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 25px;
+  }
+  .pseudo {
+    background-color: #f55f241a;
+    height: 450px;
+    width: 300px;
+    left: 50%;
+    transform: translateX(-50%) rotate(7.94deg);
+    top: 0;
+    position: absolute;
+    border-radius: 859px 909px 729px 909px;
+    z-index: 1;
+  }
+  &.mobile {
+    max-width: 100%;
+    height: 300px;
+    margin-bottom: 30px;
+    .picture {
+      width: 190px;
+      height: 270px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .pseudo {
+      height: 300px;
+      width: 200px;
+      left: 50%;
+      transform: translateX(-50%) rotate(7.94deg);
+    }
+  }
+`;
+
 export const StyledCVPageContentStory = styled.div`
   margin-bottom: 20px;
   position: relative;
@@ -147,67 +195,6 @@ export const StyledCVPageContentStory = styled.div`
   }
 `;
 
-export const StyledCVProfilePicture = styled.div`
-  height: 450px;
-  width: 355px;
-  position: relative;
-  .picture {
-    height: 400px;
-    width: 270px;
-    border-radius: 859px 909px 729px 909px;
-    background-image: ${(props) => {
-      return `url('${props.imgSrc}')`;
-    }};
-    background-position: 66% 39%;
-    position: absolute;
-    z-index: 2;
-    background-size: cover;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 25px;
-  }
-  .pseudo {
-    background-color: #f55f241a;
-    height: 450px;
-    width: 300px;
-    /* left: 30px; */
-    left: 50%;
-    transform: translateX(-50%) rotate(7.94deg);
-    top: 0;
-    position: absolute;
-    /* transform: rotate(-83.94deg); */
-    /* transform: rotate(7.94deg); */
-    border-radius: 859px 909px 729px 909px;
-    z-index: 1;
-  }
-  &.mobile {
-    max-width: 100%;
-    /* width: fit-content; */
-    /* overflow-y: hidden; */
-    height: 300px;
-    margin-bottom: 30px;
-    .picture {
-      width: 190px;
-      height: 270px;
-      /* max-width: 100%; */
-      /* left: 35px; */
-      left: 50%;
-      transform: translateX(-50%);
-      /* max-height: 261px; */
-      /* max-width: 174px; */
-    }
-    .pseudo {
-      height: 300px;
-      width: 200px;
-      left: 50%;
-      transform: translateX(-50%) rotate(7.94deg);
-      /* left: -48px; */
-      /* max-width: 289px; */
-      /* max-height: 194px; */
-    }
-  }
-`;
-
 export const StyledShareContainer = styled.div`
   margin-top: 30px;
   /* width: 355px; */
@@ -217,9 +204,14 @@ export const StyledShareContainer = styled.div`
   max-width: 100%;
 `;
 
-export const StyledCVPageContentDetailsContainer = styled(BasicDivContainer)`
+export const StyledCVPageContentDetailsContainer = styled.div`
   display: flex;
   flex-direction: row;
+  margin: 26px 15px 0;
+  box-sizing: border-box;
+  > div {
+    flex-grow: 1;
+  }
   &.mobile {
     flex-direction: column;
   }
@@ -253,11 +245,6 @@ export const StyledCVPageContentInformations = styled.div`
   &.mobile {
     width: 100%;
     max-width: none;
-  }
-  &.close {
-    ul {
-        display: none;
-    }
   }
 `;
 
@@ -295,7 +282,9 @@ export const StyledSkillTag = styled.div`
   border: #f55f241a 1px solid;
   color: ${COLORS.primaryOrange};
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 400;
+  margin-bottom: 20px;
+  /* font-family: Nunito Sans */
 `;
 
 export const StyledCVExperienceLi = styled.div`
@@ -324,6 +313,10 @@ export const StyledCVPageContentCarousel = styled.div`
   margin: 30px auto;
   width: 100%;
   box-sizing: border-box;
+  span.name {
+    /* font-weight: 600; */
+    color: ${CV_COLORS.nameGray};
+  }
 `;
 
 export const StyledCVPageContentSlide = styled.div`
@@ -365,5 +358,26 @@ export const StyledCVPageContentFooter = styled.div`
   a {
     color: ${COLORS.primaryOrange};
     text-decoration: underline;
+  }
+`;
+
+export const StyledChevronIcon = styled(Icon)`
+  position: absolute;
+  top: 28px;
+  right: 30px;
+  svg {
+    height: 20px;
+    width: 20px;
+    color: ${COLORS.primaryOrange};
+  }
+`;
+
+export const StyledCVMessageContainer = styled.div`
+  &.mobile {
+    button {
+      margin: auto;
+      display: block;
+    }
+    margin-bottom: 50px;
   }
 `;
