@@ -11,14 +11,15 @@ import {
 
 interface CarouselSwiperProps {
   slides: React.ReactNode[];
+  backgroundColor?: string;
 }
 
-export const CarouselSwiper = ({ slides }: CarouselSwiperProps) => {
+export const CarouselSwiper = ({ slides, backgroundColor }: CarouselSwiperProps) => {
   if (slides.length === 0) {
     return null;
   }
   return (
-    <StyledSwiperContainer>
+    <StyledSwiperContainer backgroundColor={backgroundColor}>
       <Swiper
         modules={[Pagination, Autoplay, Navigation]}
         threshold={2}
