@@ -11,23 +11,23 @@ export const formCompanyContact = {
     {
       id: 'firstName',
       name: 'firstName',
-      type: 'text',
-      component: 'input',
-      placeholder: 'Tapez votre texte',
+
+      component: 'text-input',
+
       title: 'Votre prénom*',
     },
     {
       id: 'lastName',
       name: 'lastName',
-      type: 'text',
-      component: 'input',
-      placeholder: 'Tapez votre texte',
+
+      component: 'text-input',
+
       title: 'Votre nom*',
     },
     {
       id: 'approach',
       name: 'approach',
-      component: 'select',
+      component: 'select-new',
       options: [
         { value: -1, label: 'Choisissez votre démarche' },
         ...COMPANY_APPROACHES_FILTERS,
@@ -38,46 +38,46 @@ export const formCompanyContact = {
       id: 'email',
       name: 'email',
       type: 'email',
-      component: 'input',
-      placeholder: 'Tapez votre adresse mail',
+      component: 'text-input',
+
       title: 'Votre adresse mail*',
     },
     {
       id: 'phone',
       name: 'phone',
-      component: 'tel',
-      placeholder: 'Tapez votre numéro de téléphone portable',
+      component: 'tel-input',
+
       title: 'Votre numéro de téléphone portable*',
     },
     {
       id: 'company',
       name: 'company',
-      type: 'text',
-      component: 'input',
-      placeholder: 'Tapez le nom de votre entreprise',
+
+      component: 'text-input',
+
       title: 'Nom de votre entreprise*',
     },
     {
       id: 'position',
       name: 'position',
-      type: 'text',
-      component: 'input',
-      placeholder: 'Tapez le nom de votre poste',
+
+      component: 'text-input',
+
       title: 'Votre poste*',
     },
     {
       id: 'zone',
       name: 'zone',
       component: 'select-request',
-      placeholder: 'Choisissez votre région',
+
       options: COMPANY_CONTACT_ZONES_FILTERS,
       title: 'Dans quelle région êtes-vous présent ?*',
     },
     {
       id: 'heardAbout',
       name: 'heardAbout',
-      component: 'select',
-      placeholder: 'Tapez votre texte',
+      component: 'select-new',
+
       options: [
         { value: -1, label: 'Choisissez comment vous avez connu LinkedOut' },
         ...HEARD_ABOUT_FILTERS,

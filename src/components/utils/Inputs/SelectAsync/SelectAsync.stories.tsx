@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import { FilterConstant } from 'src/constants';
 import { asyncTimeout } from 'src/utils/asyncTimeout';
 import { SelectAsync } from './SelectAsync';
 
@@ -60,7 +61,7 @@ const meta = {
   ],
 };
 const Template = (args) => {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState<FilterConstant>();
 
   return (
     <SelectAsync

@@ -5,7 +5,7 @@ export const formEditCareerPath = {
   fields: [
     {
       id: 'carreerPath0',
-      component: 'fieldgroup',
+      component: 'fieldgroup-new',
       childWidths: ['1-2@m', 'auto', 'expand'],
       fields: [
         {
@@ -19,21 +19,21 @@ export const formEditCareerPath = {
         {
           id: 'linkWord0',
           name: 'linkWord0',
-          component: 'text',
+          component: 'text-new',
           title: 'comme',
         },
         {
           id: 'ambition0',
           name: 'ambition0',
-          component: 'input',
-          type: 'text',
+          component: 'text-input',
+
           title: 'Métier 1',
         },
       ],
     },
     {
       id: 'carreerPath1',
-      component: 'fieldgroup',
+      component: 'fieldgroup-new',
       childWidths: ['1-2@m', 'auto', 'expand'],
       fields: [
         {
@@ -47,14 +47,14 @@ export const formEditCareerPath = {
         {
           id: 'linkWord1',
           name: 'linkWord1',
-          component: 'text',
+          component: 'text-new',
           title: 'comme',
         },
         {
           id: 'ambition1',
           name: 'ambition1',
-          component: 'input',
-          type: 'text',
+          component: 'text-input',
+
           title: 'Métier 2',
         },
       ],

@@ -1,9 +1,17 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, { FormEvent } from 'react';
 import { ButtonPost } from 'src/components/backoffice/cv/ButtonPost';
 import { StyledFooterForm } from 'src/components/forms/Forms.styles';
 import { Button } from 'src/components/utils/Button';
 
+interface FooterFormProps {
+  error: string;
+  onCancel?: () => void;
+  onSubmit: (event: FormEvent) => void;
+  submitText: string;
+  cancelText: string;
+  formId: string;
+  noCompulsory: boolean;
+}
 export const FooterForm = ({
   error,
   onSubmit,
@@ -12,7 +20,7 @@ export const FooterForm = ({
   cancelText,
   formId,
   noCompulsory,
-}) => {
+}: FooterFormProps) => {
   return (
     <StyledFooterForm className="uk-flex uk-flex-column uk-flex-left">
       {error && (
@@ -50,23 +58,4 @@ export const FooterForm = ({
       </div>
     </StyledFooterForm>
   );
-};
-
-FooterForm.propTypes = {
-  error: PropTypes.string,
-  onCancel: PropTypes.func,
-  onSubmit: PropTypes.func.isRequired,
-  submitText: PropTypes.string,
-  cancelText: PropTypes.string,
-  formId: PropTypes.string,
-  noCompulsory: PropTypes.bool,
-};
-
-FooterForm.defaultProps = {
-  error: undefined,
-  onCancel: undefined,
-  submitText: undefined,
-  cancelText: undefined,
-  formId: '',
-  noCompulsory: false,
 };

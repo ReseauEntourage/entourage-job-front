@@ -1,4 +1,5 @@
 import React from 'react';
+import { Value } from 'react-phone-number-input';
 import PhoneInputWithCountry from 'react-phone-number-input/mobile';
 import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
 import { StyledPhoneInput } from './PhoneInput.styles';
@@ -6,7 +7,7 @@ import { StyledPhoneInput } from './PhoneInput.styles';
 interface PhoneInputProps {
   id: string;
   name: string;
-  onChange: () => void;
+  onChange: (value: Value) => void;
   title: string;
   valid: {
     isInvalid: boolean;
@@ -57,7 +58,7 @@ export function PhoneInput({
           autoComplete={autocomplete}
         />
       </StyledPhoneInput>
-      <FormValidatorErrorMessage validObj={valid} newInput />
+      <FormValidatorErrorMessage validObj={valid} />
     </>
   );
 }

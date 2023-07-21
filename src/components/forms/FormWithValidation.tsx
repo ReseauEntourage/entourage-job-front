@@ -9,7 +9,6 @@ import React, {
 import { FooterForm } from 'src/components/forms/FooterForm';
 import FormValidator from 'src/components/forms/FormValidator';
 import { GenericField } from 'src/components/forms/GenericField';
-import { FieldGroup } from 'src/components/forms/fields/FieldGroup';
 import { InputsContainer } from 'src/components/forms/fields/InputsContainer';
 import { MultipleFields } from 'src/components/forms/fields/MultipleFields';
 import { getValueFromFormField } from 'src/utils/Finding';
@@ -148,10 +147,7 @@ export const FormWithValidation = forwardRef(
     const initializeForm = useCallback(() => {
       // on extrait les nom des champs
       const fieldsId = fields.reduce((acc, curr) => {
-        if (
-          curr.component === 'fieldgroup' ||
-          curr.component === 'fieldgroup-new'
-        ) {
+        if (curr.component === 'fieldgroup-new') {
           return [
             ...acc,
             ...curr.fields.map((field) => {
@@ -218,35 +214,6 @@ export const FormWithValidation = forwardRef(
         >
           <fieldset className="uk-fieldset">
             {fields.map((value, i) => {
-              if (value.component === 'fieldgroup') {
-                const { fields: childrenFields, title, childWidths } = value;
-                return (
-                  <li key={i} hidden={!!value.hidden}>
-                    <FieldGroup
-                      title={title}
-                      childWidths={childWidths}
-                      fields={childrenFields.map((field) => {
-                        return !field.hidden ? (
-                          <GenericField
-                            data={field}
-                            formId={id}
-                            fieldOptions={fieldOptions}
-                            value={fieldValues[field.id]}
-                            onChange={updateForm}
-                            updateFieldOptions={updateFieldOptions}
-                            getValid={(name) => {
-                              return fieldValidations[`valid_${name}`];
-                            }}
-                            getValue={(name) => {
-                              return fieldValues[name];
-                            }}
-                          />
-                        ) : null;
-                      })}
-                    />
-                  </li>
-                );
-              }
               if (value.component === 'fieldgroup-new') {
                 const { fields: childrenFields } = value;
 

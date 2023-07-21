@@ -81,7 +81,7 @@ export function MemberMobile({
                 id={`member-${member.id}-check`}
                 name={`member-${member.id}-check`}
                 value={checked}
-                handleClick={handleCheckBox}
+                onChange={handleCheckBox}
                 removeMargin
                 disabled={userCandidate?.hidden}
               />

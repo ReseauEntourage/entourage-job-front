@@ -25,7 +25,7 @@ interface SelectAsyncProps {
   ) => void;
   isDisabled: boolean;
   isHidden: boolean;
-  onChange: () => void;
+  onChange: (event: FilterConstant) => void;
   openMenuOnClick: boolean;
   valid: {
     isInvalid: boolean;
@@ -131,7 +131,7 @@ export function SelectAsync({
         onChange={onChange}
         openMenuOnClick={openMenuOnClick}
       />
-      <FormValidatorErrorMessage validObj={valid} newInput />
+      <FormValidatorErrorMessage validObj={valid} />
     </StyledAsyncSelectContainer>
   );
 }

@@ -8,24 +8,24 @@ export const formPersonalData = {
     {
       id: 'firstName',
       name: 'firstName',
-      type: 'text',
-      component: 'input',
-      placeholder: 'Tapez le prénom',
+
+      component: 'text-input',
+
       title: 'Prénom*',
     },
     {
       id: 'lastName',
       name: 'lastName',
-      type: 'text',
-      component: 'input',
-      placeholder: 'Tapez le nom',
+
+      component: 'text-input',
+
       title: 'Nom*',
     },
     {
       id: 'zone',
       title: 'Zone*',
       name: 'zone',
-      component: 'select',
+      component: 'select-new',
       options: [
         { value: -1, label: 'Choisissez une zone' },
         ...ADMIN_ZONES_FILTERS,
@@ -35,7 +35,7 @@ export const formPersonalData = {
       id: 'adminRole',
       title: 'Responsabilité',
       name: 'adminRole',
-      component: 'select',
+      component: 'select-new',
       options: [
         { value: -1, label: 'Choisissez une responsabilité' },
         { value: ADMIN_ROLES.CANDIDATES, label: ADMIN_ROLES.CANDIDATES },
@@ -46,7 +46,7 @@ export const formPersonalData = {
       id: 'gender',
       title: 'Genre*',
       name: 'gender',
-      component: 'select',
+      component: 'select-new',
       options: [
         { value: -1, label: 'Choisissez un genre' },
         { value: 0, label: 'Homme' },
@@ -57,25 +57,24 @@ export const formPersonalData = {
     {
       id: 'oldEmail',
       name: 'oldEmail',
-      component: 'input',
+      component: 'text-input',
       type: 'email',
       title: 'Ancien email',
-      placeholder: 'Tapez votre ancien email',
     },
     {
       id: 'newEmail0',
       name: 'newEmail0',
-      component: 'input',
+      component: 'text-input',
       type: 'email',
-      placeholder: 'Tapez votre nouvel email',
+
       title: 'Nouvel email',
     },
     {
       id: 'newEmail1',
       name: 'newEmail1',
-      component: 'input',
+      component: 'text-input',
       type: 'email',
-      placeholder: 'Vérifiez votre nouvel email',
+
       title: 'Confirmation nouvel email',
     },
     {
@@ -86,8 +85,8 @@ export const formPersonalData = {
     {
       id: 'phone',
       name: 'phone',
-      component: 'tel',
-      placeholder: 'Tapez votre numéro de telephone portable',
+      component: 'tel-input',
+
       title: 'Numéro de telephone portable*',
     },
     {
@@ -98,8 +97,8 @@ export const formPersonalData = {
     {
       id: 'address',
       name: 'address',
-      component: 'input',
-      type: 'text',
+      component: 'text-input',
+
       title: 'Tapez votre adresse postale',
     },
   ],

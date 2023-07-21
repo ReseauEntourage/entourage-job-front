@@ -4,8 +4,7 @@
     {
       "id": "catchphrase",
       "name": "catchphrase",
-      "component": "input",
-      "type": "text",
+       "component": "text-input",
       "title": "Ce que vous pouvez apporter*"
     }
   ],

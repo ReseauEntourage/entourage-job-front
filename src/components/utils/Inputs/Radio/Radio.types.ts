@@ -7,7 +7,7 @@ export interface RadioTypes {
 }
 
 export interface RadioAsyncComponentProps {
-  loadOptions: () => RadioTypes[];
+  loadOptions: () => Promise<RadioTypes[]>;
   id: string;
   legend: string;
   name: string;

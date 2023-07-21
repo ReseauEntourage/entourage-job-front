@@ -4,9 +4,7 @@
     {
       "id": "story",
       "name": "story",
-      "component": "textarea",
-      "type": "text",
-      "placeholder": "Tapez votre texte",
+      "component": "textarea-new",
       "title": "Mon histoire",
       "rows": 14,
       "maxLength": 1500

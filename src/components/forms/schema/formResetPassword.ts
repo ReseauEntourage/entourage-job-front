@@ -7,16 +7,16 @@ export const formResetPassword = {
       id: 'newPassword',
       name: 'newPassword',
       type: 'password',
-      component: 'input',
-      placeholder: 'Tapez votre nouveau mot de passe',
+      component: 'text-input',
+
       title: 'Nouveau mot de passe*',
     },
     {
       id: 'confirmPassword',
       name: 'confirmPassword',
       type: 'password',
-      component: 'input',
-      placeholder: 'Confirmez votre nouveau mot de passe',
+      component: 'text-input',
+
       title: 'Confirmation du mot de passe*',
     },
   ],

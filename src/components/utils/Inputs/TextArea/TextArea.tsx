@@ -14,7 +14,7 @@ interface TextAreaProps {
   title: string;
   name: string;
   id?: string;
-  onChange: (event) => void;
+  onChange: (e) => void;
   value: string;
   hidden?: boolean;
   valid?: {
@@ -72,7 +72,7 @@ export function TextArea({
       </StyledTextAreaScrollContainer>
       <StyledAnnotations>
         <div>
-          <FormValidatorErrorMessage validObj={valid} newInput />
+          <FormValidatorErrorMessage validObj={valid} />
         </div>
         {maxLines && (
           <StyledLineLimit warning={remainingLines === 0}>

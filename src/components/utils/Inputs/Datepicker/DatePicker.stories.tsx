@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { DatePicker } from './DatePicker';
 
 const meta = {
@@ -26,12 +26,12 @@ const meta = {
 };
 
 const Template = (args) => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState<string>('');
 
   return (
     <DatePicker
       {...args}
-      onChange={(event) => {
+      onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
         setValue(event.target.value);
       }}
       value={value}

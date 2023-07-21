@@ -5,12 +5,12 @@ import { StyledCheckbox } from 'src/components/utils/Inputs/CheckBox/CheckBox.st
 interface CBProps {
   id: string;
   name: string;
-  handleClick: () => void;
+  onChange: () => void;
   disabled?: boolean;
   removeMargin?: boolean;
   hidden?: boolean;
   value?: boolean;
-  title?: string;
+  title?: string | JSX.Element;
   valid?: {
     isInvalid: boolean;
     message: string;
@@ -18,7 +18,7 @@ interface CBProps {
 }
 
 export function CheckBox({
-  handleClick,
+  onChange,
   disabled = false,
   hidden = false,
   value = false,
@@ -46,7 +46,7 @@ export function CheckBox({
         <input
           type="checkbox"
           id={id}
-          onChange={handleClick}
+          onChange={onChange}
           disabled={disabled}
           checked={value}
           name={name}
@@ -54,7 +54,7 @@ export function CheckBox({
         <span className="checkmark" />
         {title && <span className="label">{title}</span>}
       </label>
-      <FormValidatorErrorMessage validObj={valid} newInput />
+      <FormValidatorErrorMessage validObj={valid} />
     </StyledCheckbox>
   );
 }

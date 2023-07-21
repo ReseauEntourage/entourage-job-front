@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
 import { StyledDatePickerContainer } from './DatePicker.styles';
 
 interface DatePickerProps {
   id: string;
   name: string;
-  onChange: () => void;
+  onChange: (e: ChangeEvent) => void;
   title: string;
   valid?: {
     isInvalid: boolean;
@@ -61,7 +61,7 @@ export function DatePicker({
         disabled={disabled}
         hidden={hidden}
       />
-      <FormValidatorErrorMessage validObj={valid} newInput />
+      <FormValidatorErrorMessage validObj={valid} />
     </StyledDatePickerContainer>
   );
 }

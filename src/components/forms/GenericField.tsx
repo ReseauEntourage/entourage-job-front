@@ -1,15 +1,7 @@
-import PropTypes from 'prop-types';
-import React, { useCallback } from 'react';
+import React, { ChangeEvent, useCallback } from 'react';
 import ReactSelect, { components } from 'react-select';
-import AsyncSelect from 'react-select/async';
 import CreatableSelect from 'react-select/creatable';
 import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
-import { Checkbox } from 'src/components/forms/fields/Checkbox';
-import { DatePicker } from 'src/components/forms/fields/DatePicker';
-import { Input } from 'src/components/forms/fields/Input';
-import { PhoneInput } from 'src/components/forms/fields/PhoneInput';
-import { Select } from 'src/components/forms/fields/Select';
-import { Textarea } from 'src/components/forms/fields/Textarea';
 import { SimpleLink } from 'src/components/utils';
 
 import {
@@ -28,8 +20,23 @@ import { SelectAsync as AsyncSelectNew } from 'src/components/utils/Inputs/Selec
 import { TextArea as TextAreaNew } from 'src/components/utils/Inputs/TextArea';
 import { TextInput as TextInputNew } from 'src/components/utils/Inputs/TextInput';
 import { EXTERNAL_LINKS } from 'src/constants';
+import { AnyToFix } from 'src/utils/Types';
 
-let debounceTimeoutId;
+interface GenericFieldProps {
+  data: AnyToFix;
+  formId: string;
+  value: AnyToFix;
+  onChange: (e: ChangeEvent | ChangeEvent[]) => void;
+  getValid: (name: string) =>
+    | {
+        isInvalid: boolean;
+        message: string;
+      }
+    | undefined;
+  getValue: (name: string) => AnyToFix;
+  fieldOptions?: AnyToFix;
+  updateFieldOptions?: (newFieldOption?: { [K in string]: AnyToFix }) => void;
+}
 
 export const GenericField = ({
   data,
@@ -38,9 +45,11 @@ export const GenericField = ({
   onChange,
   getValid,
   getValue,
-  updateFieldOptions,
-  fieldOptions,
-}) => {
+  updateFieldOptions = () => {
+    return null;
+  },
+  fieldOptions = {},
+}: GenericFieldProps) => {
   const onChangeCustom = useCallback(
     (event) => {
       let events = [event];
@@ -76,58 +85,6 @@ export const GenericField = ({
   );
 
   switch (data.component) {
-    case 'input': {
-      return (
-        <Input
-          id={`${formId}-${data.id}`}
-          placeholder={data.placeholder}
-          name={data.name}
-          title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
-          value={value}
-          type={data.type}
-          valid={getValid(data.name)}
-          onChange={onChangeCustom}
-          disabled={data.disable ? data.disable(getValue) : data.disabled}
-          hidden={data.hide ? data.hide(getValue) : data.hidden}
-          autocomplete={data.autocomplete}
-          min={data.min}
-          max={data.max}
-        />
-      );
-    }
-    case 'tel': {
-      return (
-        <PhoneInput
-          id={`${formId}-${data.id}`}
-          placeholder={data.placeholder}
-          name={data.name}
-          title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
-          value={value}
-          type={data.type}
-          valid={getValid(data.name)}
-          onChange={parseValueToReturnSelect}
-          disabled={data.disable ? data.disable(getValue) : data.disabled}
-          hidden={data.hide ? data.hide(getValue) : data.hidden}
-          autocomplete={data.autocomplete}
-        />
-      );
-    }
-    case 'datepicker': {
-      return (
-        <DatePicker
-          id={`${formId}-${data.id}`}
-          name={data.name}
-          title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
-          value={value}
-          valid={getValid(data.name)}
-          onChange={onChangeCustom}
-          min={data.min}
-          max={data.max}
-          disabled={data.disable ? data.disable(getValue) : data.disabled}
-          hidden={data.hide ? data.hide(getValue) : data.hidden}
-        />
-      );
-    }
     case 'datepicker-new': {
       return (
         <DatePickerNew
@@ -179,7 +136,6 @@ export const GenericField = ({
     }
 
     case 'select-new':
-    case 'select': {
       let { options } = data;
       if (data.generate) {
         const { max, min, type, placeholder } = data.generate;
@@ -201,28 +157,10 @@ export const GenericField = ({
         }
       }
 
-      if (data.component === 'select') {
-        let valueToUse = value;
-        if (!valueToUse && valueToUse !== 0) valueToUse = options[0].value;
-        return (
-          <Select
-            id={`${formId}-${data.id}`}
-            placeholder={data.placeholder}
-            name={data.name}
-            title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
-            value={valueToUse}
-            options={options}
-            valid={getValid(data.name)}
-            onChange={onChangeCustom}
-            disabled={data.disable ? data.disable(getValue) : data.disabled}
-            hidden={data.hide ? data.hide(getValue) : data.hidden}
-          />
-        );
-      }
       return (
         <SelectNew
           id={`${formId}-${data.id}`}
-          placeholder={data.placeholder}
+          // placeholder={data.placeholder}
           name={data.name}
           title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
           value={value}
@@ -234,7 +172,7 @@ export const GenericField = ({
           hidden={data.hide ? data.hide(getValue) : data.hidden}
         />
       );
-    }
+
     case 'textarea-new': {
       return (
         <TextAreaNew
@@ -248,29 +186,11 @@ export const GenericField = ({
         />
       );
     }
-    case 'textarea': {
-      return (
-        <Textarea
-          id={`${formId}-${data.id}`}
-          name={data.name}
-          row={data.row}
-          title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
-          type={data.type}
-          value={value}
-          placeholder={data.placeholder}
-          valid={getValid(data.name)}
-          onChange={onChangeCustom}
-          disabled={data.disable ? data.disable(getValue) : data.disabled}
-          hidden={data.hide ? data.hide(getValue) : data.hidden}
-          maxLength={data.maxLength}
-        />
-      );
-    }
     case 'checkbox-new': {
       return (
         <CheckBoxNew
           valid={getValid(data.name)}
-          handleClick={() => {
+          onChange={() => {
             handleCheckBox();
             onChangeCustom({
               target: {
@@ -289,23 +209,9 @@ export const GenericField = ({
         />
       );
     }
-    case 'checkbox': {
-      return (
-        <Checkbox
-          id={`${formId}-${data.id}`}
-          name={data.name}
-          title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
-          value={value}
-          valid={getValid(data.name)}
-          onChange={onChangeCustom}
-          disabled={data.disable ? data.disable(getValue) : data.disabled}
-          hidden={data.hide ? data.hide(getValue) : data.hidden}
-        />
-      );
-    }
     case 'cgu': {
       return (
-        <Checkbox
+        <CheckBoxNew
           id={`${formId}-${data.id}`}
           name={data.name}
           title={
@@ -322,75 +228,20 @@ export const GenericField = ({
           }
           value={value}
           valid={getValid(data.name)}
-          onChange={onChangeCustom}
           disabled={data.disable ? data.disable(getValue) : data.disabled}
           hidden={data.hide ? data.hide(getValue) : data.hidden}
+          onChange={() => {
+            handleCheckBox();
+            onChangeCustom({
+              target: {
+                name: data.name,
+                type: 'checkbox',
+                value: !checked, // opposite of the previous value
+                checked: !checked,
+              },
+            });
+          }}
         />
-      );
-    }
-    case 'select-request-async': {
-      const isMultiDefined = data.isMulti || false;
-
-      const isMulti =
-        typeof isMultiDefined === 'function'
-          ? isMultiDefined(getValue)
-          : isMultiDefined;
-
-      let valueToUse = null;
-      if (value) {
-        if (isMulti) {
-          valueToUse = value.every((v) => {
-            return typeof v === 'object';
-          })
-            ? value
-            : getValue(value);
-        } else {
-          valueToUse = typeof value === 'string' ? getValue(value) : value;
-        }
-      }
-
-      const shouldHide = data.hide ? data.hide(getValue) : data.hidden;
-
-      return (
-        <div
-          className={`uk-padding-small ${
-            getValid(data.name) !== undefined ? 'uk-padding-remove-bottom' : ''
-          } uk-padding-remove-left uk-padding-remove-right ${
-            shouldHide ? ' uk-hidden' : ''
-          }`}
-        >
-          {(data.title || data.dynamicTitle) && (
-            <label className="uk-form-label" htmlFor={`${formId}-${data.id}`}>
-              {data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
-            </label>
-          )}
-          <AsyncSelect
-            id={`${formId}-${data.id}`}
-            cacheOptions={
-              data.cacheOptions === undefined ? true : data.cacheOptions
-            }
-            value={valueToUse}
-            isMulti={isMulti}
-            placeholder={data.placeholder || 'Sélectionnez...'}
-            noOptionsMessage={
-              data.noOptionsMessage ||
-              (() => {
-                return `Aucun résultat`;
-              })
-            }
-            loadOptions={(inputValue, callback) => {
-              clearTimeout(debounceTimeoutId);
-              debounceTimeoutId = setTimeout(() => {
-                return data.loadOptions(inputValue, callback, getValue);
-              }, 1000);
-            }}
-            isDisabled={data.disable ? data.disable(getValue) : false}
-            isHidden={data.hide ? data.hide(getValue) : false}
-            onChange={parseValueToReturnSelect}
-            openMenuOnClick={data.openMenuOnClick || true}
-          />
-          <FormValidatorErrorMessage validObj={getValid(data.name)} />
-        </div>
       );
     }
     case 'select-request-async-new': {
@@ -410,8 +261,11 @@ export const GenericField = ({
           defaultOptions={data.defaultOptions}
           value={value}
           isMulti={isMulti}
-          placeholder={data.title}
+          placeholder={
+            data.dynamicTitle ? data.dynamicTitle(getValue) : data.title
+          }
           noOptionsMessage={data.noOptionsMessage}
+          loadingMessage={data.loadingMessage}
           loadOptions={
             data.loadOptions
               ? (inputValue, callback) =>
@@ -487,9 +341,9 @@ export const GenericField = ({
         <RadioAsyncNew
           limit={data.limit}
           loadOptions={async () => {
-            const options = await data.loadOptions();
-            updateFieldOptions({ [data.id]: options });
-            return options;
+            const radioOptions = await data.loadOptions();
+            updateFieldOptions({ [data.id]: radioOptions });
+            return radioOptions;
           }}
           id={`${formId}-${data.id}`}
           name={data.name}
@@ -566,20 +420,6 @@ export const GenericField = ({
       }
       return <Heading id={`${formId}-${data.id}`} title={data.title} />;
     }
-    case 'text': {
-      if (data.hide && data.hide(getValue, fieldOptions)) {
-        return null;
-      }
-      return (
-        <p
-          className="uk-margin-top uk-text-bold uk-text-italic"
-          id={`${formId}-${data.id}`}
-          data-testid={`${formId}-${data.id}`}
-        >
-          {data.title}
-        </p>
-      );
-    }
     case 'text-new': {
       if (data.hide && data.hide(getValue, fieldOptions)) {
         return null;
@@ -601,44 +441,6 @@ export const GenericField = ({
       );
     }
     default:
-      throw `component ${data.component} does not exist`; // eslint-disable-line no-throw-literal
+      throw `Component ${data.component} does not exist`; // eslint-disable-line no-throw-literal
   }
-};
-
-GenericField.propTypes = {
-  data: PropTypes.objectOf(
-    PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.shape({})),
-      PropTypes.arrayOf(PropTypes.string),
-      PropTypes.shape({}),
-      PropTypes.string,
-      PropTypes.bool,
-      PropTypes.func,
-      PropTypes.number,
-    ])
-  ).isRequired,
-  formId: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.arrayOf(PropTypes.string),
-    PropTypes.shape({
-      label: PropTypes.string,
-      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    }),
-  ]),
-  onChange: PropTypes.func.isRequired,
-  getValid: PropTypes.func.isRequired,
-  getValue: PropTypes.func.isRequired,
-  fieldOptions: PropTypes.shape({}),
-  updateFieldOptions: PropTypes.func,
-};
-
-GenericField.defaultProps = {
-  value: undefined,
-  fieldOptions: undefined,
-  updateFieldOptions: () => {
-    return null;
-  },
 };

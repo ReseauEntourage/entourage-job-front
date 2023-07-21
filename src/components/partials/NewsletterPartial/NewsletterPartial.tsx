@@ -89,7 +89,7 @@ export const NewsletterPartial = ({
                       removeMargin
                       value={tagConst === status}
                       title={label}
-                      handleClick={() => {
+                      onChange={() => {
                         if (status === tagConst) {
                           setStatus(null);
                         } else {
@@ -116,7 +116,7 @@ export const NewsletterPartial = ({
                       removeMargin
                       value={tagConst === zone}
                       title={label}
-                      handleClick={() => {
+                      onChange={() => {
                         if (zone === tagConst) {
                           setZone(null);
                         } else {

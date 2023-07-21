@@ -16,7 +16,7 @@ interface TextInputProps {
     message: string;
   };
   hidden?: boolean;
-  style: string;
+  style?: string;
 }
 
 export function TextInput({
@@ -49,7 +49,7 @@ export function TextInput({
         id={id}
         data-testid={id}
       />
-      <FormValidatorErrorMessage validObj={valid} newInput />
+      <FormValidatorErrorMessage validObj={valid} />
     </StyledTextInputContainer>
   );
 }

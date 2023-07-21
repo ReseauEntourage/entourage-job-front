@@ -148,7 +148,7 @@ export function Select({
           </ul>
         )}
       </div>
-      <FormValidatorErrorMessage validObj={valid} newInput />
+      <FormValidatorErrorMessage validObj={valid} />
     </StyledSelectContainer>
   );
 }

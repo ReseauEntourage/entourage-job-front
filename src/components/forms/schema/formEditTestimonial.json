@@ -4,22 +4,19 @@
     {
       "id": "name",
       "name": "name",
-      "component": "input",
-      "type": "text",
+       "component": "text-input",
       "title": "Nom *"
     },
     {
       "id": "status",
       "name": "status",
-      "component": "input",
-      "type": "text",
+       "component": "text-input",
       "title": "Statut *"
     },
     {
       "id": "text",
       "name": "text",
-      "component": "textarea",
-      "type": "text",
+      "component": "textarea-new",
       "title": "Votre recommandation*"
     }
   ],

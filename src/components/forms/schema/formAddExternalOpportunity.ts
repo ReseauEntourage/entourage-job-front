@@ -28,7 +28,6 @@ export const formAddExternalOpportunityCandidate = {
           id: 'department',
           name: 'department',
           title: 'Localisation *',
-          placeholder: 'Localisation',
           component: 'select-new',
           options: DEPARTMENTS_FILTERS,
         },

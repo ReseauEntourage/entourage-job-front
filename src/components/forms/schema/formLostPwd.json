@@ -5,9 +5,10 @@
       "id": "email",
       "name": "email",
       "type": "email",
-      "component": "input",
+       "component": "text-input",
       "placeholder": "Tapez votre adresse mail",
-      "title": "Adresse mail*"
+      "title": "Adresse mail*",
+      "showLabel": true
     }
   ],
   "rules": [

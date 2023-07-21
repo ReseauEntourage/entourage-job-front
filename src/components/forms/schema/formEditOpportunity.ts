@@ -13,21 +13,19 @@ export const formEditOpportunity = {
     {
       id: 'isPublic',
       name: 'isPublic',
-      component: 'checkbox',
+      component: 'checkbox-new',
       title: 'Adresser cette offre à tous les candidats',
     },
     {
       id: 'candidatesIds',
       name: 'candidatesIds',
       isMulti: true,
-      type: 'text',
       dynamicTitle: (getValue) => {
         return getValue('isPublic') === true
           ? "Souhaitez-vous suggérer l'offre à certains candidats ?"
           : "Renseignez le(s) candidat(s) à qui adresser l'offre*";
       },
-      placeholder: 'Tapez un candidat',
-      component: 'select-request-async',
+      component: 'select-request-async-new',
       openMenuOnClick: false,
       disable: (getValue) => {
         return getValue('isPublic') === true;
@@ -55,7 +53,7 @@ export const formEditOpportunity = {
     {
       id: 'shouldSendNotifications',
       name: 'shouldSendNotifications',
-      component: 'checkbox',
+      component: 'checkbox-new',
       hidden: true,
       disabled: true,
       title: 'Envoyer une notification au(x) binôme(s)',
@@ -63,8 +61,8 @@ export const formEditOpportunity = {
     {
       id: 'message',
       name: 'message',
-      component: 'textarea',
-      type: 'text',
+      component: 'textarea-new',
+
       title: 'Message personnalisé pour le(s) candidat(s)',
       disable: (getValue) => {
         return getValue('isPublic') === true;
@@ -76,58 +74,57 @@ export const formEditOpportunity = {
     {
       id: 'title',
       name: 'title',
-      component: 'input',
-      type: 'text',
+      component: 'text-input',
+
       title: 'Intitulé du poste proposé*',
     },
     {
       id: 'company',
       name: 'company',
-      component: 'input',
-      type: 'text',
+      component: 'text-input',
+
       title: 'Nom de votre entreprise*',
     },
     {
       id: 'recruiterFirstName',
       name: 'recruiterFirstName',
-      component: 'input',
-      type: 'text',
+      component: 'text-input',
+
       title: 'Votre prénom*',
     },
     {
       id: 'recruiterName',
       name: 'recruiterName',
-      component: 'input',
-      type: 'text',
+      component: 'text-input',
+
       title: 'Votre nom*',
     },
     {
       id: 'recruiterPosition',
       name: 'recruiterPosition',
-      component: 'input',
-      type: 'text',
+      component: 'text-input',
+
       title: 'Votre fonction*',
     },
     {
       id: 'recruiterMail',
       name: 'recruiterMail',
-      component: 'input',
+      component: 'text-input',
       type: 'email',
       title: 'Votre adresse mail*',
     },
     {
       id: 'recruiterPhone',
       name: 'recruiterPhone',
-      component: 'tel',
+      component: 'tel-input',
       title: 'Votre téléphone portable',
-      placeholder: 'Tapez votre numéro de téléphone portable',
     },
     {
       id: 'contactMail',
       name: 'contactMail',
       hidden: true,
       disabled: true,
-      component: 'input',
+      component: 'text-input',
       type: 'email',
       title: 'Adresse mail du recruteur si intermédiaire',
     },
@@ -135,7 +132,7 @@ export const formEditOpportunity = {
       id: 'businessLines',
       name: 'businessLines',
       title: 'Familles de métiers',
-      placeholder: 'Sélectionnez les familles de métiers',
+
       component: 'select-request',
       isMulti: true,
       options: BUSINESS_LINES,
@@ -153,7 +150,7 @@ export const formEditOpportunity = {
           id: 'department',
           name: 'department',
           title: 'Département du lieu de travail*',
-          placeholder: 'Tapez le département',
+
           openMenuOnClick: false,
           component: 'select-request',
           options: DEPARTMENTS_FILTERS,
@@ -162,23 +159,22 @@ export const formEditOpportunity = {
           id: 'address',
           name: 'address',
           title: 'Adresse du lieu de travail*',
-          component: 'input',
-          type: 'text',
+          component: 'text-input',
         },
       ],
     },
     {
       id: 'companyDescription',
       name: 'companyDescription',
-      component: 'textarea',
-      type: 'text',
+      component: 'textarea-new',
+
       title: "Si vous le souhaitez, présentez l'entreprise en quelques mots",
     },
     {
       id: 'description',
       name: 'description',
-      component: 'textarea',
-      type: 'text',
+      component: 'textarea-new',
+
       title: 'Descriptif des missions proposées*',
     },
     {
@@ -189,14 +185,14 @@ export const formEditOpportunity = {
     {
       id: 'contract',
       name: 'contract',
-      component: 'select',
+      component: 'select-new',
       options: [{ value: -1, label: 'Choisissez un contrat' }, ...CONTRACTS],
       title: 'Type de contrat*',
       fieldsToReset: ['endOfContract'],
     },
     {
       id: 'startEndContract',
-      component: 'fieldgroup',
+      component: 'fieldgroup-new',
       childWidths: ['expand', 'expand', '1-4@m'],
       hidden: true,
       disabled: true,
@@ -205,13 +201,13 @@ export const formEditOpportunity = {
           id: 'startOfContract',
           name: 'startOfContract',
           title: 'Date de début de contrat',
-          component: 'datepicker',
+          component: 'datepicker-new',
         },
         {
           id: 'endOfContract',
           name: 'endOfContract',
           title: 'Date de fin de contrat',
-          component: 'datepicker',
+          component: 'datepicker-new',
           disable: (getValue) => {
             const contract = findConstantFromValue(
               getValue('contract'),
@@ -224,42 +220,42 @@ export const formEditOpportunity = {
     },
     {
       id: 'info1',
-      component: 'fieldgroup',
+      component: 'fieldgroup-new',
       childWidths: ['expand', '1-3@m'],
       fields: [
         {
           id: 'workingHours',
           name: 'workingHours',
-          component: 'input',
-          type: 'text',
+          component: 'text-input',
+
           title: 'Jours et horaires de travail',
           maxLength: 255,
         },
         {
           id: 'isPartTime',
           name: 'isPartTime',
-          component: 'checkbox',
+          component: 'checkbox-new',
           title: 'Temps partiel',
         },
       ],
     },
     {
       id: 'info2',
-      component: 'fieldgroup',
+      component: 'fieldgroup-new',
       childWidths: ['expand', '1-3@m'],
       fields: [
         {
           id: 'salary',
           name: 'salary',
-          component: 'input',
-          type: 'text',
+          component: 'text-input',
+
           title: 'Salaire et compléments',
           maxLength: 255,
         },
         {
           id: 'driversLicense',
           name: 'driversLicense',
-          component: 'checkbox',
+          component: 'checkbox-new',
           title: 'Permis de conduire',
         },
       ],
@@ -267,15 +263,15 @@ export const formEditOpportunity = {
     {
       id: 'otherInfo',
       name: 'otherInfo',
-      component: 'textarea',
-      type: 'text',
+      component: 'textarea-new',
+
       title: 'Autres précisions sur votre besoin',
     },
     /*
       {
         id: 'numberOfPositions',
         name: 'numberOfPositions',
-        component: 'input',
+        component: 'text-input',
         type: 'number',
         min: 1,
         title: 'Nombre de postes disponibles sur cette offre',
@@ -283,7 +279,7 @@ export const formEditOpportunity = {
       {
         id: 'beContacted',
         name: 'beContacted',
-        component: 'checkbox',
+        component: 'checkbox-new',
         title:
           "Souhaitez-vous qu'un référent LinkedOut échange avec vous sur votre projet de recrutement inclusif\xa0?",
       },
@@ -291,14 +287,14 @@ export const formEditOpportunity = {
     {
       id: 'disclaimer',
       name: 'disclaimer',
-      component: 'text',
+      component: 'text-new',
       title:
         "Les offres font l'objet d'une validation par LinkedOut avant d'être transmises aux candidats",
     },
     {
       id: 'openNewForm',
       name: 'openNewForm',
-      component: 'checkbox',
+      component: 'checkbox-new',
       title:
         'Vous avez un autre poste à proposer ? Dupliquez cette offre pour la publier plus rapidement',
     },

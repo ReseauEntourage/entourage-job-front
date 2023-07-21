@@ -4,7 +4,6 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
-import { Select } from 'src/components/forms/fields/Select';
 import { formEditExternalOpportunity } from 'src/components/forms/schema/formEditExternalOpportunity';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
@@ -21,6 +20,7 @@ import {
   ButtonIcon,
   Icon,
 } from 'src/components/utils';
+import { Select } from 'src/components/utils/Inputs/Select';
 
 import { EXTERNAL_OFFERS_ORIGINS, OFFER_STATUS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';

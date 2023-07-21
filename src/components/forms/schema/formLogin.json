@@ -5,17 +5,19 @@
       "id": "email",
       "name": "email",
       "type": "email",
-      "component": "input",
+      "component": "text-input",
       "placeholder": "Tapez votre adresse mail",
-      "title": "Adresse mail*"
+      "title": "Adresse mail*",
+      "showLabel": true
     },
     {
       "id": "password",
       "name": "password",
       "type": "password",
-      "component": "input",
+      "component": "text-input",
       "placeholder": "Tapez votre mot de passe",
-      "title": "Mot de passe*"
+      "title": "Mot de passe*",
+      "showLabel": true
     }
   ],
   "rules": [

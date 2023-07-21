@@ -4,8 +4,7 @@
     {
       "id": "confirmation",
       "name": "confirmation",
-      "component": "input",
-      "type": "text",
+       "component": "text-input",
       "title": "Tapez le mot \"SUPPRIMER\" pour confirmer la suppression de l'utilisateur*",
       "placeholder": "Tapez le mot \"SUPPRIMER\"",
       "autocomplete": "off"

@@ -9,29 +9,28 @@ export const formEditUsefulInformation = {
       id: 'email',
       name: 'email',
       type: 'email',
-      component: 'input',
-      placeholder: "Tapez l'adresse mail",
+      component: 'text-input',
+
       title: 'Adresse mail',
     },
     {
       id: 'phone',
       name: 'phone',
-      component: 'tel',
-      placeholder: 'Tapez le numéro de téléphone portable',
+      component: 'tel-input',
+
       title: 'Numéro de téléphone portable*',
     },
     {
       id: 'address',
       name: 'address',
-      component: 'input',
-      type: 'text',
-      placeholder: "Tapez l'adresse postale",
+      component: 'text-input',
+
       title: 'Adresse postale',
     },
     {
       id: 'private',
       name: 'private',
-      component: 'text',
+      component: 'text-new',
       title:
         "L'adresse mail, le numéro de téléphone et l'adresse postale ne seront visibles que sur la version PDF du CV",
     },
@@ -55,8 +54,8 @@ export const formEditUsefulInformation = {
     {
       id: 'availability',
       name: 'availability',
-      component: 'input',
-      type: 'text',
+      component: 'text-input',
+
       title: 'Disponibilités de travail possibles',
     },
     {
@@ -69,8 +68,8 @@ export const formEditUsefulInformation = {
     {
       id: 'transport',
       name: 'transport',
-      component: 'input',
-      type: 'text',
+      component: 'text-input',
+
       title: 'Permis de conduire',
     },
   ],

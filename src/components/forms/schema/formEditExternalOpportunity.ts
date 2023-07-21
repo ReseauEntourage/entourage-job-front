@@ -16,7 +16,7 @@ export const formEditExternalOpportunity = {
   fields: [
     {
       id: 'candidateStatus',
-      component: 'fieldgroup',
+      component: 'fieldgroup-new',
       childWidths: ['expand', 'expand'],
       fields: [
         {
@@ -24,8 +24,8 @@ export const formEditExternalOpportunity = {
           name: 'candidateId',
           isMulti: false,
           title: 'Renseignez le candidat concerné*',
-          placeholder: 'Tapez un candidat',
-          component: 'select-request-async',
+
+          component: 'select-request-async-new',
           openMenuOnClick: false,
           hidden: true,
           disabled: true,
@@ -37,7 +37,7 @@ export const formEditExternalOpportunity = {
           id: 'status',
           name: 'status',
           title: 'Statut',
-          component: 'select',
+          component: 'select-new',
           options: OFFER_STATUS.slice(1),
         },
       ],
@@ -45,41 +45,41 @@ export const formEditExternalOpportunity = {
     {
       id: 'title',
       name: 'title',
-      component: 'input',
-      type: 'text',
+      component: 'text-input',
+
       title: "Titre de l'offre*",
     },
     {
       id: 'company',
       name: 'company',
-      component: 'input',
-      type: 'text',
+      component: 'text-input',
+
       title: "Nom de l'entreprise*",
     },
     {
       id: 'contract',
       name: 'contract',
-      component: 'select',
+      component: 'select-new',
       options: [{ value: -1, label: 'Choisissez un contrat' }, ...CONTRACTS],
       title: 'Type de contrat*',
       fieldsToReset: ['endOfContract'],
     },
     {
       id: 'startEndContract',
-      component: 'fieldgroup',
+      component: 'fieldgroup-new',
       childWidths: ['expand', 'expand', '1-4@m'],
       fields: [
         {
           id: 'startOfContract',
           name: 'startOfContract',
           title: 'Date de début de contrat',
-          component: 'datepicker',
+          component: 'datepicker-new',
         },
         {
           id: 'endOfContract',
           name: 'endOfContract',
           title: 'Date de fin de contrat',
-          component: 'datepicker',
+          component: 'datepicker-new',
           disable: (getValue) => {
             const contract = findConstantFromValue(
               getValue('contract'),
@@ -91,7 +91,7 @@ export const formEditExternalOpportunity = {
         {
           id: 'isPartTime',
           name: 'isPartTime',
-          component: 'checkbox',
+          component: 'checkbox-new',
           title: 'Temps partiel',
         },
       ],
@@ -100,7 +100,7 @@ export const formEditExternalOpportunity = {
       id: 'businessLines',
       name: 'businessLines',
       title: 'Familles de métiers',
-      placeholder: 'Sélectionnez les familles de métiers',
+
       component: 'select-request',
       isMulti: true,
       options: BUSINESS_LINES,
@@ -111,7 +111,7 @@ export const formEditExternalOpportunity = {
       id: 'department',
       name: 'department',
       title: 'Département*',
-      placeholder: 'Tapez le département',
+
       openMenuOnClick: false,
       component: 'select-request',
       options: DEPARTMENTS_FILTERS,
@@ -119,21 +119,21 @@ export const formEditExternalOpportunity = {
     {
       id: 'link',
       name: 'link',
-      component: 'input',
-      type: 'text',
+      component: 'text-input',
+
       title: "Lien de l'offre",
     },
     {
       id: 'description',
       name: 'description',
-      component: 'textarea',
-      type: 'text',
+      component: 'textarea-new',
+
       title: "Description de l'offre",
     },
     {
       id: 'externalOrigin',
       name: 'externalOrigin',
-      component: 'select',
+      component: 'select-new',
       options: [
         { value: -1, label: 'Choisissez une origine' },
         ...EXTERNAL_OFFERS_ORIGINS,

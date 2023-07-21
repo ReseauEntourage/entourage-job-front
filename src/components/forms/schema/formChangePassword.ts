@@ -7,24 +7,24 @@ export const formChangePassword = {
       id: 'oldPassword',
       name: 'oldPassword',
       type: 'password',
-      component: 'input',
-      placeholder: 'Tapez votre ancien mot de passe',
+      component: 'text-input',
+
       title: 'Ancien mot de passe*',
     },
     {
       id: 'newPassword',
       name: 'newPassword',
       type: 'password',
-      component: 'input',
-      placeholder: 'Tapez votre nouveau mot de passe',
+      component: 'text-input',
+
       title: 'Nouveau mot de passe*',
     },
     {
       id: 'confirmPassword',
       name: 'confirmPassword',
       type: 'password',
-      component: 'input',
-      placeholder: 'Confirmez votre nouveau mot de passe',
+      component: 'text-input',
+
       title: 'Confirmation du mot de passe*',
     },
   ],

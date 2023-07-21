@@ -4,43 +4,37 @@
     {
       "id": "skill1",
       "name": "skill1",
-      "component": "input",
-      "type": "text",
+       "component": "text-input",
       "title": "Atout 1"
     },
     {
       "id": "skill2",
       "name": "skill2",
-      "component": "input",
-      "type": "text",
+       "component": "text-input",
       "title": "Atout 2"
     },
     {
       "id": "skill3",
       "name": "skill3",
-      "component": "input",
-      "type": "text",
+       "component": "text-input",
       "title": "Atout 3"
     },
     {
       "id": "skill4",
       "name": "skill4",
-      "component": "input",
-      "type": "text",
+       "component": "text-input",
       "title": "Atout 4"
     },
     {
       "id": "skill5",
       "name": "skill5",
-      "component": "input",
-      "type": "text",
+       "component": "text-input",
       "title": "Atout 5"
     },
     {
       "id": "skill6",
       "name": "skill6",
-      "component": "input",
-      "type": "text",
+       "component": "text-input",
       "title": "Atout 6"
     }
   ],

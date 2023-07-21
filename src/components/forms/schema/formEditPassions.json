@@ -4,43 +4,37 @@
     {
       "id": "passion1",
       "name": "passion1",
-      "component": "input",
-      "type": "text",
+       "component": "text-input",
       "title": "Passion 1"
     },
     {
       "id": "passion2",
       "name": "passion2",
-      "component": "input",
-      "type": "text",
+       "component": "text-input",
       "title": "Passion 2"
     },
     {
       "id": "passion3",
       "name": "passion3",
-      "component": "input",
-      "type": "text",
+       "component": "text-input",
       "title": "Passion 3"
     },
     {
       "id": "passion4",
       "name": "passion4",
-      "component": "input",
-      "type": "text",
+       "component": "text-input",
       "title": "Passion 4"
     },
     {
       "id": "passion5",
       "name": "passion5",
-      "component": "input",
-      "type": "text",
+       "component": "text-input",
       "title": "Passion 5"
     },
     {
       "id": "passion6",
       "name": "passion6",
-      "component": "input",
-      "type": "text",
+       "component": "text-input",
       "title": "Passion 6"
     }
   ],

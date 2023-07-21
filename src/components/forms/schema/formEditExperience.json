@@ -4,8 +4,7 @@
     {
       "id": "description",
       "name": "description",
-      "component": "textarea",
-      "type": "text",
+      "component": "textarea-new",
       "title": "Description"
     },
     {
