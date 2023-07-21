@@ -31,11 +31,7 @@ export const CVCareerPathSentenceNew = ({
   const sortedAmbitions = ambitions?.length > 0 ? sortByOrder(ambitions) : null;
 
   const sortedBusinessLines =
-    businessLines &&
-    businessLines?.length > 0 &&
-    typeof businessLines === 'object'
-      ? sortByOrder(businessLines)
-      : null;
+    businessLines?.length > 0 ? sortByOrder(businessLines) : null;
 
   const isNewCareerPath = sortedBusinessLines?.every(({ order }) => {
     return order > -1;

@@ -86,7 +86,10 @@ export const PageCVContent = ({
           {isDesktop && (
             <>
               <StyledShareContainer>
-                <H5 title="Partagez son CV" color={CV_COLORS.titleGray} />
+                <H5
+                  title="Partagez son CV sur vos réseaux sociaux"
+                  color={CV_COLORS.titleGray}
+                />
                 <p>
                   En augmentant sa visibilité, vous pouvez générer des
                   rencontres qui peuvent tout changer&#8217;!
@@ -192,7 +195,10 @@ export const PageCVContent = ({
           {!isDesktop && (
             <>
               <StyledShareContainer>
-                <H5 title="Partagez son CV" color={CV_COLORS.titleGray} />
+                <H5
+                  title="Partagez son CV sur vos réseaux sociaux"
+                  color={CV_COLORS.titleGray}
+                />
                 <p>
                   En augmentant sa visibilité, vous pouvez générer des
                   rencontres qui peuvent tout changer&#8217;!

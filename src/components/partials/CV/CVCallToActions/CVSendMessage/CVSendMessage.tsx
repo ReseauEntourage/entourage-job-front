@@ -31,8 +31,8 @@ export const CVSendMessage = ({
         color="darkGrayFont"
       />
       <p>
-        Informations sur le secteur d&apos;activité, retour d&apos;expérience,
-        mise en contact&nbsp;...
+        Conseils, informations sur le secteur d&#8217;activité, mise en
+        relation&nbsp;...
       </p>
       <Button
         style="custom-secondary-inverted"
