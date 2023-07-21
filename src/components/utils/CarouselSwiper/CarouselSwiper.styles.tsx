@@ -10,9 +10,9 @@ export const StyledSwiperSlide = styled(SwiperSlide)`
 `;
 
 export const StyledSwiperContainer = styled.div`
-background-color: ${(props) => {
-  return props.backgroundColor;
-}};
+  background-color: ${(props) => {
+    return props.backgroundColor;
+  }};
   .swiper-pagination-bullet-active {
     background-color: ${COLORS.primaryOrange};
     height: 15px;

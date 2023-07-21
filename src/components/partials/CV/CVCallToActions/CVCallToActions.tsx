@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
-import { CVType } from '../CV.type';
 import { CV_COLORS } from '../PageCVContent/PageCVContent.styles';
+import { CV } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
 import { PostOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { Button } from 'src/components/utils';
@@ -18,7 +18,7 @@ import { CVSendMessage } from './CVSendMessage';
 import { CVShareButtons } from './CVShareButtons';
 
 interface CVCallToActionsProps {
-  cv: CVType;
+  cv: CV;
   actionDisabled?: boolean;
 }
 
@@ -76,7 +76,8 @@ export const CVCallToActions = ({
             color="darkGrayFont"
           />
           <p>
-            En augmentant sa visibilité, vous pouvez générer des rencontres qui peuvent tout changer&#8217;!
+            En augmentant sa visibilité, vous pouvez générer des rencontres qui
+            peuvent tout changer&#8217;!
           </p>
           <CVShareButtons cv={cv} actionDisabled={actionDisabled} />
         </StyledCVCTACard>

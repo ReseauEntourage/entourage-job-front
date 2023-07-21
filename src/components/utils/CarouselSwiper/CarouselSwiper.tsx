@@ -14,7 +14,10 @@ interface CarouselSwiperProps {
   backgroundColor?: string;
 }
 
-export const CarouselSwiper = ({ slides, backgroundColor }: CarouselSwiperProps) => {
+export const CarouselSwiper = ({
+  slides,
+  backgroundColor,
+}: CarouselSwiperProps) => {
   if (slides.length === 0) {
     return null;
   }

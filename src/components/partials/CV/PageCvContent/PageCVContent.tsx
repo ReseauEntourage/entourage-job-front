@@ -1,24 +1,14 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 import UIkit from 'uikit';
-import { CVType } from '../CV.type';
 import { CVCallToActions } from '../CVCallToActions';
 import { CVShareButtons } from '../CVCallToActions/CVShareButtons';
 import { Api } from 'src/api';
+import { CV } from 'src/api/types';
 import { CVCareerPathSentenceNew as CVCareerPathSentence } from 'src/components/cv';
 import { formSendExternalMessage } from 'src/components/forms/schema/formSendExternalMessage';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { Button, Icon } from 'src/components/utils';
-import { CarouselSwiper } from 'src/components/utils/CarouselSwiper';
-import { H1, H2, H3, H4, H5, H6 } from 'src/components/utils/Headings';
-import { CONTRACTS } from 'src/constants';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { useIsDesktop } from 'src/hooks/utils';
-import { fbEvent } from 'src/lib/fb';
-import { gaEvent } from 'src/lib/gtag';
-import { addPrefix, findConstantFromValue, sortByOrder } from 'src/utils';
 import {
   StyledCVPageContent,
   CV_COLORS,
@@ -37,7 +27,17 @@ import {
   StyledCVPageContentCarousel,
   StyledChevronIcon,
   StyledCVMessageContainer,
-} from './PageCVContent.styles';
+} from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
+import { Button, Icon } from 'src/components/utils';
+import { CarouselSwiper } from 'src/components/utils/CarouselSwiper';
+import { H1, H2, H3, H4, H5, H6 } from 'src/components/utils/Headings';
+import { CONTRACTS } from 'src/constants';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { useIsDesktop } from 'src/hooks/utils';
+import { fbEvent } from 'src/lib/fb';
+import { gaEvent } from 'src/lib/gtag';
+import { addPrefix, findConstantFromValue, sortByOrder } from 'src/utils';
 
 interface openedPanelType {
   informations: boolean;
@@ -47,7 +47,7 @@ interface openedPanelType {
 }
 
 interface PageCVContentProps {
-  cv: CVType;
+  cv: CV;
   actionDisabled?: boolean;
 }
 
@@ -88,7 +88,8 @@ export const PageCVContent = ({
               <StyledShareContainer>
                 <H5 title="Partagez son CV" color={CV_COLORS.titleGray} />
                 <p>
-                  En augmentant sa visibilité, vous pouvez générer des rencontres qui peuvent tout changer&#8217;!
+                  En augmentant sa visibilité, vous pouvez générer des
+                  rencontres qui peuvent tout changer&#8217;!
                 </p>
               </StyledShareContainer>
               <CVShareButtons cv={cv} actionDisabled={actionDisabled} />
@@ -193,7 +194,8 @@ export const PageCVContent = ({
               <StyledShareContainer>
                 <H5 title="Partagez son CV" color={CV_COLORS.titleGray} />
                 <p>
-                  En augmentant sa visibilité, vous pouvez générer des rencontres qui peuvent tout changer&#8217;!
+                  En augmentant sa visibilité, vous pouvez générer des
+                  rencontres qui peuvent tout changer&#8217;!
                 </p>
               </StyledShareContainer>
               <CVShareButtons cv={cv} actionDisabled={actionDisabled} />

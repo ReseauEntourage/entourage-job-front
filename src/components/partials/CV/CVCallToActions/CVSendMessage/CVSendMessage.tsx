@@ -1,8 +1,8 @@
 import React from 'react';
 import UIkit from 'uikit';
-import { CVType } from '../../CV.type';
 import { StyledCVCTACard } from '../CVCallToActions.styles';
 import { Api } from 'src/api';
+import { CV } from 'src/api/types';
 import { formSendExternalMessage } from 'src/components/forms/schema/formSendExternalMessage';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
@@ -14,7 +14,7 @@ import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
 
 interface CVCallToActionsProps {
-  cv: CVType;
+  cv: CV;
   actionDisabled?: boolean;
 }
 

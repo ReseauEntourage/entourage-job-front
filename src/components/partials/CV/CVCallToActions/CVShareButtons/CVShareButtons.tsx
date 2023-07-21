@@ -10,7 +10,7 @@ import FacebookIcon from 'public/static/img/icons/facebook.svg';
 import LinkedInIcon from 'public/static/img/icons/linked-in.svg';
 import TwitterIcon from 'public/static/img/icons/twitter.svg';
 import WhatsappIcon from 'public/static/img/icons/whatsapp.svg';
-import { CVType } from '../../CV.type';
+import { CV } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalShareCV } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
@@ -23,7 +23,7 @@ import {
 } from './CVShareButtons.styles';
 
 interface CVCallToActionsProps {
-  cv: CVType;
+  cv: CV;
   actionDisabled?: boolean;
 }
 

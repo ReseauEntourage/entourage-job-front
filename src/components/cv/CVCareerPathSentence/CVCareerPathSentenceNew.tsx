@@ -13,33 +13,26 @@ import {
 import { StyledCareerPathSentenceContainer } from './CVCareerPathSentence.styles';
 
 interface CVCareerPathSentenceNewProps {
-  ambitions:
-    | {
-        name: string;
-        order: number;
-        prefix: AmbitionsPrefixesType;
-      }[]
-    | string;
-  businessLines:
-    | {
-        name: string;
-        order: number;
-      }[]
-    | string;
+  ambitions: {
+    name: string;
+    order: number;
+    prefix: AmbitionsPrefixesType;
+  }[];
+  businessLines: {
+    name: string;
+    order: number;
+  }[];
 }
 
 export const CVCareerPathSentenceNew = ({
   businessLines,
   ambitions,
 }: CVCareerPathSentenceNewProps) => {
-  const sortedAmbitions =
-    ambitions && typeof ambitions === 'object' && ambitions.length > 0
-      ? sortByOrder(ambitions)
-      : null;
+  const sortedAmbitions = ambitions?.length > 0 ? sortByOrder(ambitions) : null;
 
   const sortedBusinessLines =
     businessLines &&
-    businessLines.length > 0 &&
+    businessLines?.length > 0 &&
     typeof businessLines === 'object'
       ? sortByOrder(businessLines)
       : null;
