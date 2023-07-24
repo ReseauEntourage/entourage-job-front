@@ -17,7 +17,6 @@ export const formCandidateContact = {
     {
       id: 'workerFirstName',
       name: 'workerFirstName',
-
       component: 'text-input',
       title: 'Votre prénom*',
     },
@@ -36,7 +35,6 @@ export const formCandidateContact = {
     {
       id: 'workerPosition',
       name: 'workerPosition',
-
       component: 'text-input',
       title: 'Votre fonction',
     },
@@ -45,45 +43,38 @@ export const formCandidateContact = {
       name: 'workerEmail',
       type: 'email',
       component: 'text-input',
-
       title: 'Votre adresse mail*',
     },
     {
       id: 'workerPhone',
       name: 'workerPhone',
       component: 'tel-input',
-
       title: 'Votre numéro de téléphone portable*',
     },
     {
       id: 'firstName',
       name: 'firstName',
-
       component: 'text-input',
-
       title: 'Prénom de la personne que vous souhaitez orienter*',
     },
     {
       id: 'lastName',
       name: 'lastName',
-
       component: 'text-input',
-
       title: 'Son nom*',
     },
     {
       id: 'helpWith',
       name: 'helpWith',
-      component: 'select-request',
+      component: 'select',
       isMulti: true,
       options: CANDIDATE_HELP_WITH_FILTERS,
-
       title: "Dans quel(s) domaine(s) l'accompagnez-vous ?*",
     },
     {
       id: 'gender',
       name: 'gender',
-      component: 'select-new',
+      component: 'select-simple',
       options: [
         { value: -1, label: 'Choisissez le sexe' },
         ...CANDIDATE_GENDERS_FILTERS,
@@ -93,7 +84,7 @@ export const formCandidateContact = {
     {
       id: 'birthDate',
       name: 'birthDate',
-      component: 'datepicker-new',
+      component: 'datepicker',
       title:
         'Sa date de naissance (la personne doit avoir plus de 18 ans pour rejoindre LinkedOut)',
     },
@@ -101,7 +92,6 @@ export const formCandidateContact = {
       id: 'address',
       name: 'address',
       component: 'text-input',
-
       title: 'Son adresse',
     },
     {
@@ -116,14 +106,12 @@ export const formCandidateContact = {
       id: 'city',
       name: 'city',
       component: 'text-input',
-
       title: 'Sa ville*',
     },
     {
       id: 'phone',
       name: 'phone',
       component: 'tel-input',
-
       title:
         "Son téléphone portable (nous inviterons la personne à une réunion d'information)*",
     },
@@ -132,13 +120,12 @@ export const formCandidateContact = {
       name: 'email',
       type: 'email',
       component: 'text-input',
-
       title: 'Son adresse mail',
     },
     {
       id: 'registeredUnemploymentOffice',
       name: 'registeredUnemploymentOffice',
-      component: 'select-new',
+      component: 'select-simple',
       options: [
         { value: -1, label: 'Choisissez si oui ou non' },
         ...CANDIDATE_YES_NO_FILTERS,
@@ -149,7 +136,7 @@ export const formCandidateContact = {
     {
       id: 'administrativeSituation',
       name: 'administrativeSituation',
-      component: 'select-new',
+      component: 'select-simple',
       options: [
         { value: -1, label: 'Choisissez les papiers de la personne' },
         ...CANDIDATE_ADMINISTRATIVE_SITUATIONS_FILTERS,
@@ -159,7 +146,7 @@ export const formCandidateContact = {
     {
       id: 'workingRight',
       name: 'workingRight',
-      component: 'select-new',
+      component: 'select-simple',
       options: [
         { value: -1, label: 'Choisissez si oui ou non' },
         ...CANDIDATE_YES_NO_FILTERS,
@@ -170,7 +157,7 @@ export const formCandidateContact = {
     {
       id: 'accommodation',
       name: 'accommodation',
-      component: 'select-new',
+      component: 'select-simple',
       options: [
         { value: -1, label: "Choisissez l'hébergement de la personne" },
         ...CANDIDATE_ACCOMMODATIONS_FILTERS,
@@ -180,7 +167,7 @@ export const formCandidateContact = {
     {
       id: 'professionalSituation',
       name: 'professionalSituation',
-      component: 'select-new',
+      component: 'select-simple',
       options: [
         {
           value: -1,
@@ -193,7 +180,7 @@ export const formCandidateContact = {
     {
       id: 'resources',
       name: 'resources',
-      component: 'select-new',
+      component: 'select-simple',
       options: [
         { value: -1, label: 'Choisissez les ressources de la personne' },
         ...CANDIDATE_RESOURCES_FILTERS,
@@ -203,7 +190,7 @@ export const formCandidateContact = {
     {
       id: 'domiciliation',
       name: 'domiciliation',
-      component: 'select-new',
+      component: 'select-simple',
       options: [
         { value: -1, label: 'Choisissez si oui ou non' },
         ...CANDIDATE_YES_NO_FILTERS,
@@ -214,7 +201,7 @@ export const formCandidateContact = {
     {
       id: 'socialSecurity',
       name: 'socialSecurity',
-      component: 'select-new',
+      component: 'select-simple',
       options: [
         { value: -1, label: 'Choisissez si oui ou non' },
         ...CANDIDATE_YES_NO_FILTERS,
@@ -225,7 +212,7 @@ export const formCandidateContact = {
     {
       id: 'handicapped',
       name: 'handicapped',
-      component: 'select-new',
+      component: 'select-simple',
       options: [
         { value: -1, label: 'Choisissez si oui ou non' },
         ...CANDIDATE_YES_NO_FILTERS,
@@ -236,7 +223,7 @@ export const formCandidateContact = {
     {
       id: 'bankAccount',
       name: 'bankAccount',
-      component: 'select-new',
+      component: 'select-simple',
       options: [
         { value: -1, label: 'Choisissez si oui ou non' },
         ...CANDIDATE_YES_NO_FILTERS,
@@ -247,8 +234,7 @@ export const formCandidateContact = {
       id: 'businessLines',
       name: 'businessLines',
       title: 'Dans quel secteur professionnel souhaite-t-elle travailler ?',
-
-      component: 'select-request',
+      component: 'select',
       isMulti: true,
       options: BUSINESS_LINES,
     },
@@ -261,13 +247,13 @@ export const formCandidateContact = {
     {
       id: 'description',
       name: 'description',
-      component: 'textarea-new',
+      component: 'textarea',
       title: 'Présentation*',
     },
     {
       id: 'heardAbout',
       name: 'heardAbout',
-      component: 'select-new',
+      component: 'select-simple',
       options: [
         { value: -1, label: 'Choisissez comment vous avez connu LinkedOut' },
         ...HEARD_ABOUT_FILTERS,
@@ -283,13 +269,13 @@ export const formCandidateContact = {
     {
       id: 'diagnostic',
       name: 'diagnostic',
-      component: 'textarea-new',
+      component: 'textarea',
       title: 'Diagnostic',
     },
     {
       id: 'contactWithCoach',
       name: 'contactWithCoach',
-      component: 'checkbox-new',
+      component: 'checkbox',
       title:
         'Souhaitez-vous être mis en relation avec le/la Coach LinkedOut si besoin et avec l’accord de la personne ?',
     },

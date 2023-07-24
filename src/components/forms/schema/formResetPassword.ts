@@ -8,7 +8,6 @@ export const formResetPassword = {
       name: 'newPassword',
       type: 'password',
       component: 'text-input',
-
       title: 'Nouveau mot de passe*',
     },
     {
@@ -16,7 +15,6 @@ export const formResetPassword = {
       name: 'confirmPassword',
       type: 'password',
       component: 'text-input',
-
       title: 'Confirmation du mot de passe*',
     },
   ],

@@ -20,7 +20,7 @@ import {
   ButtonIcon,
   Icon,
 } from 'src/components/utils';
-import { Select } from 'src/components/utils/Inputs/Select';
+import { SelectSimple } from 'src/components/utils/Inputs/SelectSimple';
 
 import { EXTERNAL_OFFERS_ORIGINS, OFFER_STATUS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
@@ -452,7 +452,7 @@ export const ModalOffer = ({
                         data-uk-spinner=""
                       />
                     )}
-                    <Select
+                    <SelectSimple
                       id="modal-offer-status"
                       title="Statut"
                       name="status"

@@ -9,7 +9,7 @@ export const formEditEmployed = {
       id: 'contract',
       title: 'Contrat*',
       name: 'contract',
-      component: 'select-new',
+      component: 'select-simple',
       options: [{ value: -1, label: 'Choisissez un contrat' }, ...CONTRACTS],
       fieldsToReset: ['endOfContract'],
     },
@@ -17,7 +17,7 @@ export const formEditEmployed = {
       id: 'endOfContract',
       title: 'Date de fin de contrat',
       name: 'endOfContract',
-      component: 'datepicker-new',
+      component: 'datepicker',
       min: moment().format('YYYY-MM-DD'),
       disable: (getValue) => {
         const contract = findConstantFromValue(getValue('contract'), CONTRACTS);

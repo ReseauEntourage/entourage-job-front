@@ -1,13 +1,12 @@
-import AsyncSelect from 'react-select/async';
 import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledAsyncSelectContainer = styled.div`
+export const StyledSelectContainer = styled.div`
   min-width: 300px;
   width: 100%;
   max-width: 100%;
 `;
-export const StyledAsyncSelect = styled(AsyncSelect)`
+export const StyledSelect = styled.div`
   margin-bottom: 30px;
   font-family: Poppins, Arial, sans-serif !important;
   & .Select__control--is-disabled {

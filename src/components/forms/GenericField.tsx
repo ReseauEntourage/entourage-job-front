@@ -1,31 +1,28 @@
 import React, { ChangeEvent, useCallback } from 'react';
-import ReactSelect, { components } from 'react-select';
-import CreatableSelect from 'react-select/creatable';
-import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
 import { SimpleLink } from 'src/components/utils';
-
 import {
-  CheckBox as CheckBoxNew,
+  CheckBox,
   useCheckBox,
-} from 'src/components/utils/Inputs/CheckBox';
-import { DatePicker as DatePickerNew } from 'src/components/utils/Inputs/Datepicker';
-import { Heading } from 'src/components/utils/Inputs/Heading';
-import { PhoneInput as PhoneInputNew } from 'src/components/utils/Inputs/PhoneInput';
-import {
-  Radio as RadioNew,
-  RadioAsync as RadioAsyncNew,
-} from 'src/components/utils/Inputs/Radio';
-import { Select as SelectNew } from 'src/components/utils/Inputs/Select';
-import { SelectAsync as AsyncSelectNew } from 'src/components/utils/Inputs/SelectAsync';
-import { TextArea as TextAreaNew } from 'src/components/utils/Inputs/TextArea';
-import { TextInput as TextInputNew } from 'src/components/utils/Inputs/TextInput';
-import { EXTERNAL_LINKS } from 'src/constants';
+  DatePicker,
+  Heading,
+  PhoneInput,
+  Radio,
+  RadioAsync,
+  SelectSimple,
+  Select,
+  SelectAsync,
+  TextArea,
+  SelectCreatable,
+  TextInput,
+} from 'src/components/utils/Inputs';
+
+import { EXTERNAL_LINKS, FilterConstant } from 'src/constants';
 import { AnyToFix } from 'src/utils/Types';
 
 interface GenericFieldProps {
   data: AnyToFix;
   formId: string;
-  value: AnyToFix;
+  value: FilterConstant | FilterConstant[] | string | boolean | number;
   onChange: (e: ChangeEvent | ChangeEvent[]) => void;
   getValid: (name: string) =>
     | {
@@ -33,7 +30,9 @@ interface GenericFieldProps {
         message: string;
       }
     | undefined;
-  getValue: (name: string) => AnyToFix;
+  getValue: (
+    name: string
+  ) => FilterConstant | FilterConstant[] | string | boolean;
   fieldOptions?: AnyToFix;
   updateFieldOptions?: (newFieldOption?: { [K in string]: AnyToFix }) => void;
 }
@@ -84,14 +83,25 @@ export const GenericField = ({
     [data.name, data.type, onChangeCustom]
   );
 
+  // For Select Components
+
+  const isMultiDefined = data.isMulti || false;
+
+  const isMulti =
+    typeof isMultiDefined === 'function'
+      ? isMultiDefined(getValue)
+      : isMultiDefined;
+
+  const shouldHide = data.hide ? data.hide(getValue) : data.hidden;
+
   switch (data.component) {
-    case 'datepicker-new': {
+    case 'datepicker': {
       return (
-        <DatePickerNew
+        <DatePicker
           id={`${formId}-${data.id}`}
           name={data.name}
           title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
-          value={value}
+          value={value as string}
           valid={getValid(data.name)}
           onChange={onChangeCustom}
           min={data.min}
@@ -103,14 +113,14 @@ export const GenericField = ({
     }
     case 'text-input': {
       return (
-        <TextInputNew
+        <TextInput
           id={`${formId}-${data.id}`}
           valid={getValid(data.name)}
           title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
           onChange={onChangeCustom}
           type={data.type}
           name={data.name}
-          value={value}
+          value={value as string}
           placeholder={data.placeholder}
           showLabel={data.showLabel}
           hidden={data.hide ? data.hide(getValue) : data.hidden}
@@ -119,11 +129,11 @@ export const GenericField = ({
     }
     case 'tel-input': {
       return (
-        <PhoneInputNew
+        <PhoneInput
           id={`${formId}-${data.id}`}
           name={data.name}
           title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
-          value={value}
+          value={value as string}
           valid={getValid(data.name)}
           onChange={parseValueToReturnSelect}
           disabled={data.disable ? data.disable(getValue) : data.disabled}
@@ -135,7 +145,7 @@ export const GenericField = ({
       );
     }
 
-    case 'select-new':
+    case 'select-simple':
       let { options } = data;
       if (data.generate) {
         const { max, min, type, placeholder } = data.generate;
@@ -158,12 +168,12 @@ export const GenericField = ({
       }
 
       return (
-        <SelectNew
+        <SelectSimple
           id={`${formId}-${data.id}`}
           // placeholder={data.placeholder}
           name={data.name}
           title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
-          value={value}
+          value={value as string | number}
           options={options}
           valid={getValid(data.name)}
           onChange={onChangeCustom}
@@ -173,22 +183,22 @@ export const GenericField = ({
         />
       );
 
-    case 'textarea-new': {
+    case 'textarea': {
       return (
-        <TextAreaNew
+        <TextArea
           id={`${formId}-${data.id}`}
           name={data.name}
           maxLines={data.maxLines}
           onChange={onChangeCustom}
-          value={value}
+          value={value as string}
           valid={getValid(data.name)}
           title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
         />
       );
     }
-    case 'checkbox-new': {
+    case 'checkbox': {
       return (
-        <CheckBoxNew
+        <CheckBox
           valid={getValid(data.name)}
           onChange={() => {
             handleCheckBox();
@@ -211,7 +221,7 @@ export const GenericField = ({
     }
     case 'cgu': {
       return (
-        <CheckBoxNew
+        <CheckBox
           id={`${formId}-${data.id}`}
           name={data.name}
           title={
@@ -226,7 +236,7 @@ export const GenericField = ({
               </SimpleLink>
             </span>
           }
-          value={value}
+          value={value as boolean}
           valid={getValid(data.name)}
           disabled={data.disable ? data.disable(getValue) : data.disabled}
           hidden={data.hide ? data.hide(getValue) : data.hidden}
@@ -244,22 +254,52 @@ export const GenericField = ({
         />
       );
     }
-    case 'select-request-async-new': {
-      const isMultiDefined = data.isMulti || false;
 
-      const isMulti =
-        typeof isMultiDefined === 'function'
-          ? isMultiDefined(getValue)
-          : isMultiDefined;
-
-      const shouldHide = data.hide ? data.hide(getValue) : data.hidden;
-
+    // Select Components
+    case 'select': {
       return (
-        <AsyncSelectNew
+        <Select
+          id={`${formId}-${data.id}`}
+          isMulti={isMulti}
+          value={value as FilterConstant | FilterConstant[]}
+          options={data.options}
+          placeholder={
+            data.dynamicTitle ? data.dynamicTitle(getValue) : data.title
+          }
+          onChange={parseValueToReturnSelect}
+          isDisabled={data.disable ? data.disable(getValue) : false}
+          isHidden={shouldHide}
+          valid={getValid(data.name)}
+          openMenuOnClick={data.openMenuOnClick || true}
+        />
+      );
+    }
+
+    case 'select-creatable': {
+      return (
+        <SelectCreatable
+          id={`${formId}-${data.id}`}
+          isMulti={isMulti}
+          value={value as FilterConstant | FilterConstant[]}
+          options={data.options}
+          placeholder={
+            data.dynamicTitle ? data.dynamicTitle(getValue) : data.title
+          }
+          onChange={parseValueToReturnSelect}
+          isDisabled={data.disable ? data.disable(getValue) : false}
+          isHidden={shouldHide}
+          valid={getValid(data.name)}
+          openMenuOnClick={data.openMenuOnClick || true}
+        />
+      );
+    }
+    case 'select-async': {
+      return (
+        <SelectAsync
           id={`${formId}-${data.id}`}
           cacheOptions={data.cacheOptions}
           defaultOptions={data.defaultOptions}
-          value={value}
+          value={value as FilterConstant | FilterConstant[]}
           isMulti={isMulti}
           placeholder={
             data.dynamicTitle ? data.dynamicTitle(getValue) : data.title
@@ -280,50 +320,10 @@ export const GenericField = ({
         />
       );
     }
-    case 'select-request': {
-      const shouldHide = data.hide ? data.hide(getValue) : data.hidden;
+
+    case 'radio': {
       return (
-        <div
-          className={`uk-padding-small ${
-            getValid(data.name) !== undefined ? 'uk-padding-remove-bottom' : ''
-          } uk-padding-remove-left uk-padding-remove-right ${
-            shouldHide ? ' uk-hidden' : ''
-          }`}
-          style={{ marginBottom: 8 }}
-        >
-          {(data.title || data.dynamicTitle) && (
-            <label className="uk-form-label" htmlFor={`${formId}-${data.id}`}>
-              {data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
-            </label>
-          )}
-          <ReactSelect
-            id={`${formId}-${data.id}`}
-            isMulti={data.isMulti}
-            name={data.name}
-            value={value}
-            options={data.options}
-            className="basic-multi-select"
-            isClearable
-            classNamePrefix="select"
-            placeholder={data.placeholder || 'Sélectionnez...'}
-            noOptionsMessage={
-              data.noOptionsMessage ||
-              (() => {
-                return `Aucun résultat`;
-              })
-            }
-            onChange={parseValueToReturnSelect}
-            isDisabled={data.disable ? data.disable(getValue) : false}
-            isHidden={data.hide ? data.hide(getValue) : false}
-            openMenuOnClick={data.openMenuOnClick || true}
-          />
-          <FormValidatorErrorMessage validObj={getValid(data.name)} />
-        </div>
-      );
-    }
-    case 'radio-new': {
-      return (
-        <RadioNew
+        <Radio
           limit={data.limit}
           options={data.options}
           id={`${formId}-${data.id}`}
@@ -332,13 +332,13 @@ export const GenericField = ({
           onChange={onChangeCustom}
           filter={data.dynamicFilter(getValue)}
           hidden={data.hide ? data.hide(getValue, fieldOptions) : data.hidden}
-          value={value}
+          value={value as string}
         />
       );
     }
-    case 'radio-async-new': {
+    case 'radio-async': {
       return (
-        <RadioAsyncNew
+        <RadioAsync
           limit={data.limit}
           loadOptions={async () => {
             const radioOptions = await data.loadOptions();
@@ -352,65 +352,8 @@ export const GenericField = ({
           filter={data.dynamicFilter(getValue)}
           errorMessage={data.errorMessage}
           hidden={data.hide ? data.hide(getValue, fieldOptions) : data.hidden}
-          value={value}
+          value={value as string}
         />
-      );
-    }
-    case 'select-request-creatable': {
-      const hasOptions = data.options && data.options.length > 0;
-
-      const DropdownIndicator = (props) => {
-        return <components.DropdownIndicator {...props} />;
-      };
-
-      const customComponents = {
-        DropdownIndicator: hasOptions ? DropdownIndicator : null,
-      };
-      const shouldHide = data.hide ? data.hide(getValue) : data.hidden;
-
-      return (
-        <div
-          className={`uk-padding-small ${
-            getValid(data.name) !== undefined ? 'uk-padding-remove-bottom' : ''
-          } uk-padding-remove-left uk-padding-remove-right ${
-            shouldHide ? ' uk-hidden' : ''
-          }`}
-        >
-          {(data.title || data.dynamicTitle) && (
-            <label className="uk-form-label" htmlFor={`${formId}-${data.id}`}>
-              {data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
-            </label>
-          )}
-          <CreatableSelect
-            id={`${formId}-${data.id}`}
-            components={customComponents}
-            formatCreateLabel={(userInput) => {
-              return `Créer "${userInput}"`;
-            }}
-            isClearable
-            isMulti={data.isMulti}
-            name={data.name}
-            value={value}
-            options={data.options}
-            className="basic-multi-select"
-            classNamePrefix="select"
-            placeholder={
-              data.placeholder ||
-              (hasOptions ? 'Sélectionnez...' : 'Saisissez...')
-            }
-            noOptionsMessage={
-              data.noOptionsMessage ||
-              (() => {
-                return hasOptions ? `Aucun résultat` : 'Saisissez un élement';
-              })
-            }
-            onChange={parseValueToReturnSelect}
-            isDisabled={data.disable ? data.disable(getValue) : false}
-            isHidden={data.hide ? data.hide(getValue) : false}
-            openMenuOnClick={data.openMenuOnClick || true}
-          />
-          <FormValidatorErrorMessage validObj={getValid(data.name)} />
-        </div>
       );
     }
 
@@ -420,7 +363,7 @@ export const GenericField = ({
       }
       return <Heading id={`${formId}-${data.id}`} title={data.title} />;
     }
-    case 'text-new': {
+    case 'text': {
       if (data.hide && data.hide(getValue, fieldOptions)) {
         return null;
       }

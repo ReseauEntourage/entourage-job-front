@@ -4,7 +4,7 @@
     {
       "id": "story",
       "name": "story",
-      "component": "textarea-new",
+      "component": "textarea",
       "title": "Mon histoire",
       "rows": 14,
       "maxLength": 1500

@@ -4,13 +4,13 @@ import { StyledFooterForm } from 'src/components/forms/Forms.styles';
 import { Button } from 'src/components/utils/Button';
 
 interface FooterFormProps {
-  error: string;
+  error?: string;
   onCancel?: () => void;
   onSubmit: (event: FormEvent) => void;
   submitText: string;
-  cancelText: string;
+  cancelText?: string;
   formId: string;
-  noCompulsory: boolean;
+  noCompulsory?: boolean;
 }
 export const FooterForm = ({
   error,
@@ -19,7 +19,7 @@ export const FooterForm = ({
   submitText,
   cancelText,
   formId,
-  noCompulsory,
+  noCompulsory = false,
 }: FooterFormProps) => {
   return (
     <StyledFooterForm className="uk-flex uk-flex-column uk-flex-left">

@@ -14,7 +14,7 @@ export function renderSimpleSelectField(placeholder, options, id) {
         id,
         name: id,
         // type: 'password',
-        component: 'select-new',
+        component: 'select-simple',
         placeholder,
         options,
         // title: 'Ancien mot de passe*',

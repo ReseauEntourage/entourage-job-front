@@ -23,6 +23,7 @@ export const StyledTextArea = styled.textarea`
     // Hard code the width in case the width of the modal changes
     return hasLineLimit ? `${width}px` : '100%';
   }};
+  font-size: 14px;
   padding-bottom: 12px;
   box-sizing: border-box;
   border: none;

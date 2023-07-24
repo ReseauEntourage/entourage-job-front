@@ -10,27 +10,24 @@ export const formEditUsefulInformation = {
       name: 'email',
       type: 'email',
       component: 'text-input',
-
       title: 'Adresse mail',
     },
     {
       id: 'phone',
       name: 'phone',
       component: 'tel-input',
-
       title: 'Numéro de téléphone portable*',
     },
     {
       id: 'address',
       name: 'address',
       component: 'text-input',
-
       title: 'Adresse postale',
     },
     {
       id: 'private',
       name: 'private',
-      component: 'text-new',
+      component: 'text',
       title:
         "L'adresse mail, le numéro de téléphone et l'adresse postale ne seront visibles que sur la version PDF du CV",
     },
@@ -38,7 +35,7 @@ export const formEditUsefulInformation = {
       id: 'contracts',
       name: 'contracts',
       title: 'Type de contrat recherché',
-      component: 'select-request',
+      component: 'select',
       options: CONTRACTS,
       isMulti: true,
     },
@@ -46,7 +43,7 @@ export const formEditUsefulInformation = {
       id: 'locations',
       name: 'locations',
       title: 'Départements de travail souhaités',
-      component: 'select-request',
+      component: 'select',
       openMenuOnClick: false,
       options: DEPARTMENTS_FILTERS,
       isMulti: true,
@@ -55,21 +52,19 @@ export const formEditUsefulInformation = {
       id: 'availability',
       name: 'availability',
       component: 'text-input',
-
       title: 'Disponibilités de travail possibles',
     },
     {
       id: 'languages',
       name: 'languages',
       title: 'Langues parlées',
-      component: 'select-request-creatable',
+      component: 'select-creatable',
       isMulti: true,
     },
     {
       id: 'transport',
       name: 'transport',
       component: 'text-input',
-
       title: 'Permis de conduire',
     },
   ],

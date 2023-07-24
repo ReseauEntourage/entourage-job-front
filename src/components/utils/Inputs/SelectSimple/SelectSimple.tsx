@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
 import { Icon } from 'src/components/utils/Icon';
 import { useCloseOnClickOutsideComponent } from 'src/hooks/useCloseOnClickOutsideComponent';
-import { StyledSelectContainer } from './Select.styles';
+import { StyledSelectContainer } from './SelectSimple.styles';
 
 interface SelectProps {
   id: string;
@@ -33,7 +33,7 @@ interface SelectProps {
   hidden?: boolean;
 }
 
-export function Select({
+export function SelectSimple({
   id,
   name,
   title,

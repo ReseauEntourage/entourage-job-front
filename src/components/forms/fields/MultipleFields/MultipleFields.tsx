@@ -1,16 +1,21 @@
 import React, { useCallback } from 'react';
+import { GenericField } from '../../GenericField';
+import { InputsContainer } from '../InputsContainer';
 import { Button, ButtonIcon, Icon } from 'src/components/utils';
 import { usePrevious } from 'src/hooks/utils';
 import { AnyToFix } from 'src/utils/Types';
-import { FieldGroup } from './FieldGroup';
+import {
+  StyledMultipleFieldAddButtonContainer,
+  StyledMultipleFieldButtonLabel,
+  StyledMultipleFieldContainer,
+  StyledTrashButtonContainer,
+} from './MultipleFields.styles';
 
 interface MultipleFieldsProps {
   formId: string;
-  title: string;
   action?: string;
   values: AnyToFix[];
   fields: AnyToFix[];
-  childWidths: string[];
   name: string;
   onChange: (e: {
     target: {
@@ -28,9 +33,7 @@ interface MultipleFieldsProps {
 
 export const MultipleFields = ({
   name,
-  title,
   fields,
-  childWidths,
   getValid,
   getValue,
   values,
@@ -73,50 +76,56 @@ export const MultipleFields = ({
 
   return (
     <div>
-      {title ? (
-        <p
-          className="uk-form-label"
-          style={{
-            paddingLeft: '0px',
-            color: '#f66b28',
-            opacity: '.8',
-            fontSize: '0.8rem',
-            transform: 'translateY(-26px)',
-            transition: '0.8s',
-          }}
-        >
-          {title}
-        </p>
-      ) : null}
       {values.map((item, index) => {
         return (
-          <div key={index} className="uk-flex uk-flex-between@m uk-flex-middle">
-            <div className="uk-flex-1">
-              <FieldGroup
-                index={index}
-                values={item}
-                onFieldChange={onFieldChange}
-                fields={fields}
-                childWidths={childWidths}
-                getValid={(fieldName) => {
+          <StyledMultipleFieldContainer key={index}>
+            <InputsContainer
+              fields={fields.map((field) => {
+                const getValidChild = (fieldName) => {
                   if (
                     prevLength &&
-                    (values.length === prevLength ||
-                      values.length < prevLength ||
-                      index < values.length - 1)
+                    (item.length === prevLength ||
+                      item.length < prevLength ||
+                      index < item.length - 1)
                   ) {
                     return getValid(fieldName);
                   }
-                }}
-                getValue={getValue}
-                formId={formId}
-                parentName={name}
-              />
-            </div>
-            <div style={{ width: 26, marginRight: -26 }}>
+                };
+                const nbString = index !== 0 ? ` n°${index + 1}*` : '*';
+                const numberedField = {
+                  ...field,
+                  id: field.id + index,
+                  title:
+                    field.title.indexOf('*') > -1
+                      ? field.title.replace('*', nbString)
+                      : (field.title += nbString),
+                };
+                return (
+                  <GenericField
+                    data={numberedField}
+                    formId={formId}
+                    value={item[numberedField.name]}
+                    onChange={(event) => {
+                      return onFieldChange(event, index);
+                    }}
+                    getValid={(childName) => {
+                      // TODO make generic for different kinds of validation
+                      const validObj = getValidChild(name);
+                      if (validObj) {
+                        return !item[childName] ? validObj : undefined;
+                      }
+                      return validObj;
+                    }}
+                    getValue={() => {
+                      return getValue(name);
+                    }}
+                  />
+                );
+              })}
+            />
+            <StyledTrashButtonContainer>
               {index === values.length - 1 && index !== 0 && (
                 <ButtonIcon
-                  className="uk-margin-small-left"
                   name="trash"
                   ratio={0.8}
                   onClick={() => {
@@ -132,14 +141,13 @@ export const MultipleFields = ({
                   }}
                 />
               )}
-            </div>
-          </div>
+            </StyledTrashButtonContainer>
+          </StyledMultipleFieldContainer>
         );
       })}
-      <div className="uk-flex uk-flex-right">
+      <StyledMultipleFieldAddButtonContainer>
         <Button
-          className="uk-margin-small-left uk-margin-small-bottom"
-          style="text"
+          style="custom-text"
           onClick={() => {
             onChange({
               target: {
@@ -150,10 +158,12 @@ export const MultipleFields = ({
             });
           }}
         >
-          <span className="uk-margin-small-right">{action}</span>
+          <StyledMultipleFieldButtonLabel>
+            {action}
+          </StyledMultipleFieldButtonLabel>
           <Icon name="plus" ratio={0.8} />
         </Button>
-      </div>
+      </StyledMultipleFieldAddButtonContainer>
     </div>
   );
 };

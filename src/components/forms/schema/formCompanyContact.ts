@@ -11,23 +11,19 @@ export const formCompanyContact = {
     {
       id: 'firstName',
       name: 'firstName',
-
       component: 'text-input',
-
       title: 'Votre prénom*',
     },
     {
       id: 'lastName',
       name: 'lastName',
-
       component: 'text-input',
-
       title: 'Votre nom*',
     },
     {
       id: 'approach',
       name: 'approach',
-      component: 'select-new',
+      component: 'select-simple',
       options: [
         { value: -1, label: 'Choisissez votre démarche' },
         ...COMPANY_APPROACHES_FILTERS,
@@ -39,45 +35,37 @@ export const formCompanyContact = {
       name: 'email',
       type: 'email',
       component: 'text-input',
-
       title: 'Votre adresse mail*',
     },
     {
       id: 'phone',
       name: 'phone',
       component: 'tel-input',
-
       title: 'Votre numéro de téléphone portable*',
     },
     {
       id: 'company',
       name: 'company',
-
       component: 'text-input',
-
       title: 'Nom de votre entreprise*',
     },
     {
       id: 'position',
       name: 'position',
-
       component: 'text-input',
-
       title: 'Votre poste*',
     },
     {
       id: 'zone',
       name: 'zone',
-      component: 'select-request',
-
+      component: 'select',
       options: COMPANY_CONTACT_ZONES_FILTERS,
       title: 'Dans quelle région êtes-vous présent ?*',
     },
     {
       id: 'heardAbout',
       name: 'heardAbout',
-      component: 'select-new',
-
+      component: 'select-simple',
       options: [
         { value: -1, label: 'Choisissez comment vous avez connu LinkedOut' },
         ...HEARD_ABOUT_FILTERS,

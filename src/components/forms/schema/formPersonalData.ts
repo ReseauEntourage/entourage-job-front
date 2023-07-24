@@ -8,24 +8,20 @@ export const formPersonalData = {
     {
       id: 'firstName',
       name: 'firstName',
-
       component: 'text-input',
-
       title: 'Prénom*',
     },
     {
       id: 'lastName',
       name: 'lastName',
-
       component: 'text-input',
-
       title: 'Nom*',
     },
     {
       id: 'zone',
       title: 'Zone*',
       name: 'zone',
-      component: 'select-new',
+      component: 'select-simple',
       options: [
         { value: -1, label: 'Choisissez une zone' },
         ...ADMIN_ZONES_FILTERS,
@@ -35,7 +31,7 @@ export const formPersonalData = {
       id: 'adminRole',
       title: 'Responsabilité',
       name: 'adminRole',
-      component: 'select-new',
+      component: 'select-simple',
       options: [
         { value: -1, label: 'Choisissez une responsabilité' },
         { value: ADMIN_ROLES.CANDIDATES, label: ADMIN_ROLES.CANDIDATES },
@@ -46,7 +42,7 @@ export const formPersonalData = {
       id: 'gender',
       title: 'Genre*',
       name: 'gender',
-      component: 'select-new',
+      component: 'select-simple',
       options: [
         { value: -1, label: 'Choisissez un genre' },
         { value: 0, label: 'Homme' },
@@ -66,7 +62,6 @@ export const formPersonalData = {
       name: 'newEmail0',
       component: 'text-input',
       type: 'email',
-
       title: 'Nouvel email',
     },
     {
@@ -74,7 +69,6 @@ export const formPersonalData = {
       name: 'newEmail1',
       component: 'text-input',
       type: 'email',
-
       title: 'Confirmation nouvel email',
     },
     {
@@ -86,7 +80,6 @@ export const formPersonalData = {
       id: 'phone',
       name: 'phone',
       component: 'tel-input',
-
       title: 'Numéro de telephone portable*',
     },
     {
@@ -98,7 +91,6 @@ export const formPersonalData = {
       id: 'address',
       name: 'address',
       component: 'text-input',
-
       title: 'Tapez votre adresse postale',
     },
   ],

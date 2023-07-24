@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Select } from './Select';
+import { SelectSimple } from './SelectSimple';
 
 const meta = {
-  title: 'Select',
-  component: Select,
+  title: 'SelectSimple',
+  component: SelectSimple,
   parameters: {
     controls: {
       exclude: /.*/g,
@@ -55,7 +55,7 @@ const Template = (args) => {
   const [value, setValue] = useState('');
 
   return (
-    <Select
+    <SelectSimple
       {...args}
       onChange={(event) => {
         setValue(event.target.value);

@@ -1,12 +1,13 @@
 import React, { useCallback, useState } from 'react';
-import { components } from 'react-select';
-import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
-import { Icon } from 'src/components/utils/Icon';
-import { FilterConstant } from 'src/constants';
+import AsyncSelect from 'react-select/async';
 import {
-  StyledAsyncSelect,
-  StyledAsyncSelectContainer,
-} from './SelectAsync.styles';
+  ClearIndicator,
+  DropdownIndicator,
+  MultiValueRemove,
+} from '../Selects';
+import { StyledSelect, StyledSelectContainer } from '../Selects.styles';
+import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
+import { FilterConstant } from 'src/constants';
 
 let debounceTimeoutId;
 
@@ -76,62 +77,40 @@ export function SelectAsync({
     });
   }, [loadOptions]);
 
-  const DropdownIndicator = (props) => {
-    return (
-      <components.DropdownIndicator {...props}>
-        <Icon name="chevron-down" ratio={0.9} />
-      </components.DropdownIndicator>
-    );
-  };
-
-  const ClearIndicator = (props) => {
-    return (
-      <components.ClearIndicator {...props}>
-        <Icon name="close" ratio={0.8} />
-      </components.ClearIndicator>
-    );
-  };
-
-  const MultiValueRemove = (props) => {
-    return (
-      <components.MultiValueRemove {...props}>
-        <Icon name="close" ratio={0.6} />
-      </components.MultiValueRemove>
-    );
-  };
-
   if (isHidden) {
     return null;
   }
 
   return (
-    <StyledAsyncSelectContainer>
-      <StyledAsyncSelect
-        id={id}
-        onFocus={onFocus}
-        components={{ ClearIndicator, DropdownIndicator, MultiValueRemove }}
-        classNamePrefix="Select"
-        cacheOptions={!!cacheOptions}
-        isClearable
-        isLoading={isLoading}
-        defaultOptions={defaultOptions}
-        value={value || null}
-        isMulti={isMulti}
-        placeholder={placeholder || 'Sélectionnez...'}
-        noOptionsMessage={
-          noOptionsMessage ||
-          (() => {
-            return `Aucun résultat`;
-          })
-        }
-        loadingMessage={loadingMessage}
-        loadOptions={debouncedLoadOptions}
-        isDisabled={isDisabled}
-        isHidden={isHidden}
-        onChange={onChange}
-        openMenuOnClick={openMenuOnClick}
-      />
+    <StyledSelectContainer>
+      <StyledSelect>
+        <AsyncSelect
+          id={id}
+          onFocus={onFocus}
+          components={{ ClearIndicator, DropdownIndicator, MultiValueRemove }}
+          classNamePrefix="Select"
+          cacheOptions={!!cacheOptions}
+          isClearable
+          isLoading={isLoading}
+          defaultOptions={defaultOptions}
+          value={value || null}
+          isMulti={isMulti}
+          placeholder={placeholder || 'Sélectionnez...'}
+          noOptionsMessage={
+            noOptionsMessage ||
+            (() => {
+              return `Aucun résultat`;
+            })
+          }
+          loadingMessage={loadingMessage}
+          loadOptions={debouncedLoadOptions}
+          isDisabled={isDisabled}
+          isHidden={isHidden}
+          onChange={onChange}
+          openMenuOnClick={openMenuOnClick}
+        />
+      </StyledSelect>
       <FormValidatorErrorMessage validObj={valid} />
-    </StyledAsyncSelectContainer>
+    </StyledSelectContainer>
   );
 }

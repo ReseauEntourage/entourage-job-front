@@ -16,7 +16,7 @@ export const formCandidateInscription = {
     {
       id: 'location',
       name: 'location',
-      component: 'select-new',
+      component: 'select-simple',
       showLabel: true,
       title:
         'Êtes-vous domicilié dans l’une des villes / départements suivants? *',
@@ -57,19 +57,19 @@ export const formCandidateInscription = {
       fieldsToReset: ['infoCo'],
     },
     {
-      component: 'fieldgroup-new',
+      component: 'fieldgroup',
       fields: [
         {
           id: 'birthdate',
           name: 'birthdate',
-          component: 'datepicker-new',
+          component: 'datepicker',
           title: 'Quelle est votre date de naissance? *',
         },
         {
           id: 'workingRight',
           name: 'workingRight',
           title: 'Avez-vous le droit de travailler en France? *',
-          component: 'select-new',
+          component: 'select-simple',
           showLabel: true,
           options: [
             {
@@ -94,7 +94,7 @@ export const formCandidateInscription = {
       component: 'heading',
     },
     {
-      component: 'fieldgroup-new',
+      component: 'fieldgroup',
       fields: [
         {
           id: 'firstName',
@@ -115,7 +115,7 @@ export const formCandidateInscription = {
       ],
     },
     {
-      component: 'fieldgroup-new',
+      component: 'fieldgroup',
       fields: [
         {
           id: 'phone',
@@ -135,12 +135,11 @@ export const formCandidateInscription = {
         },
       ],
     },
-
     {
       id: 'heardAbout',
       name: 'heardAbout',
       title: 'Comment avez-vous connu LinkedOut ? *',
-      component: 'select-new',
+      component: 'select-simple',
       showLabel: true,
       // TODO use already existing heard about
       options: [
@@ -220,7 +219,7 @@ export const formCandidateInscription = {
       name: 'infoCo',
       title:
         'Selectionnez la date de la prochaine réunion d’information à laquelle vous souhaitez participer :',
-      component: 'radio-async-new',
+      component: 'radio-async',
       limit: 7,
       dynamicFilter: (getValue) => {
         return ANTENNE_INFO.find((antenne) => {

@@ -25,23 +25,21 @@ const meta = {
   args: {
     id: 'select-async-stories',
     loadOptions: async (inputValue, callback) => {
-      if (inputValue.length > 0) {
-        await asyncTimeout(2000);
-        callback([
-          {
-            value: '1',
-            label: 'Emile Bex',
-          },
-          {
-            value: '2',
-            label: 'Paul Carillon',
-          },
-          {
-            value: '3',
-            label: 'Alice Bertaut',
-          },
-        ]);
-      }
+      await asyncTimeout(2000);
+      callback([
+        {
+          value: '1',
+          label: 'Emile Bex',
+        },
+        {
+          value: '2',
+          label: 'Paul Carillon',
+        },
+        {
+          value: '3',
+          label: 'Alice Bertaut',
+        },
+      ]);
       callback([]);
     },
   },

@@ -7,17 +7,13 @@ export const formInterestLinkedOut = {
     {
       id: 'lastName',
       name: 'lastName',
-
       component: 'text-input',
-
       title: 'Nom*',
     },
     {
       id: 'firstName',
       name: 'firstName',
-
       component: 'text-input',
-
       title: 'Prénom*',
     },
     {
@@ -25,37 +21,31 @@ export const formInterestLinkedOut = {
       name: 'email',
       type: 'email',
       component: 'text-input',
-
       title: 'Adresse mail*',
     },
     {
       id: 'phone',
       name: 'phone',
       component: 'tel-input',
-
       title: 'Téléphone portable',
     },
     {
       id: 'structure',
       name: 'structure',
-
       component: 'text-input',
-
       title: 'Structure',
     },
     {
       id: 'message',
       name: 'message',
-      component: 'textarea-new',
-
+      component: 'textarea',
       title: 'Votre message*',
       rows: 7,
     },
     {
       id: 'heardAbout',
       name: 'heardAbout',
-      component: 'select-new',
-
+      component: 'select-simple',
       options: [
         { value: -1, label: 'Choisissez comment vous avez connu LinkedOut' },
         ...HEARD_ABOUT_FILTERS,

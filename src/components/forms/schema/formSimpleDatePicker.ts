@@ -5,7 +5,7 @@ export function renderSimpleDatePickerField(title) {
       {
         id: 'datepicker',
         name: 'datepicker',
-        component: 'datepicker-new',
+        component: 'datepicker',
         title,
       },
     ],

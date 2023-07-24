@@ -16,7 +16,7 @@ export const formAddExternalOpportunityCandidate = {
       title: 'Intitulé du poste *',
     },
     {
-      component: 'fieldgroup-new',
+      component: 'fieldgroup',
       fields: [
         {
           id: 'company',
@@ -28,7 +28,7 @@ export const formAddExternalOpportunityCandidate = {
           id: 'department',
           name: 'department',
           title: 'Localisation *',
-          component: 'select-new',
+          component: 'select-simple',
           options: DEPARTMENTS_FILTERS,
         },
       ],
@@ -36,7 +36,7 @@ export const formAddExternalOpportunityCandidate = {
     {
       id: 'contract',
       name: 'contract',
-      component: 'select-new',
+      component: 'select-simple',
       options: CONTRACTS,
       title: 'Type de contrat*',
     },
@@ -46,7 +46,7 @@ export const formAddExternalOpportunityCandidate = {
       component: 'heading',
     },
     {
-      component: 'fieldgroup-new',
+      component: 'fieldgroup',
       fields: [
         {
           id: 'recruiterFirstName',
@@ -77,7 +77,7 @@ export const formAddExternalOpportunityCandidate = {
     {
       id: 'description',
       name: 'description',
-      component: 'textarea-new',
+      component: 'textarea',
       title:
         'Ecrire ou copier le detail de l’offre pour faciliter le suivi de votre candidature',
     },
@@ -91,7 +91,7 @@ export const formAddExternalOpportunityCandidate = {
     {
       id: 'coachNotification',
       name: 'coachNotification',
-      component: 'checkbox-new',
+      component: 'checkbox',
       checked: true,
       disable: false,
       title: "Envoyer un mail à votre coach pour l'informer",

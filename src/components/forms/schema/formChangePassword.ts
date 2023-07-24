@@ -8,7 +8,6 @@ export const formChangePassword = {
       name: 'oldPassword',
       type: 'password',
       component: 'text-input',
-
       title: 'Ancien mot de passe*',
     },
     {
@@ -16,7 +15,6 @@ export const formChangePassword = {
       name: 'newPassword',
       type: 'password',
       component: 'text-input',
-
       title: 'Nouveau mot de passe*',
     },
     {
@@ -24,7 +22,6 @@ export const formChangePassword = {
       name: 'confirmPassword',
       type: 'password',
       component: 'text-input',
-
       title: 'Confirmation du mot de passe*',
     },
   ],

@@ -76,7 +76,7 @@ export const formAddUser = {
       component: 'heading',
     },
     {
-      component: 'fieldgroup-new',
+      component: 'fieldgroup',
       fields: [
         {
           id: 'firstName',
@@ -93,13 +93,13 @@ export const formAddUser = {
       ],
     },
     {
-      component: 'fieldgroup-new',
+      component: 'fieldgroup',
       fields: [
         {
           id: 'gender',
           name: 'gender',
           title: 'Genre *',
-          component: 'select-new',
+          component: 'select-simple',
           options: [
             { value: 0, label: 'Homme' },
             { value: 1, label: 'Femme' },
@@ -109,13 +109,13 @@ export const formAddUser = {
           id: 'zone',
           name: 'zone',
           title: 'Zone *',
-          component: 'select-new',
+          component: 'select-simple',
           options: ADMIN_ZONES_FILTERS,
         },
       ],
     },
     {
-      component: 'fieldgroup-new',
+      component: 'fieldgroup',
       fields: [
         {
           id: 'phone',
@@ -127,7 +127,7 @@ export const formAddUser = {
           id: 'role',
           title: 'Role*',
           name: 'role',
-          component: 'select-new',
+          component: 'select-simple',
           options: USER_ROLES_FILTERS,
           fieldsToReset: ['adminRole', 'userToLinkId', 'organizationId'],
         },
@@ -140,7 +140,7 @@ export const formAddUser = {
       title: 'Adresse mail *',
     },
     {
-      component: 'fieldgroup-new',
+      component: 'fieldgroup',
       hide: (getValue) => {
         const role = getValue('role');
         return !role || role === USER_ROLES.ADMIN;
@@ -149,7 +149,7 @@ export const formAddUser = {
         {
           id: 'organizationId',
           name: 'organizationId',
-          component: 'select-request-async-new',
+          component: 'select-async',
           cacheOptions: false,
           hide: (getValue) => {
             return !isRoleIncluded(EXTERNAL_USER_ROLES, getValue('role'));
@@ -179,7 +179,7 @@ export const formAddUser = {
         {
           id: 'userToLinkId',
           name: 'userToLinkId',
-          component: 'select-request-async-new',
+          component: 'select-async',
           cacheOptions: false,
           isMulti: (getValue) => {
             const role = getValue('role');
@@ -221,7 +221,7 @@ export const formAddUser = {
       ],
     },
     {
-      component: 'fieldgroup-new',
+      component: 'fieldgroup',
       hide: (getValue) => {
         const role = getValue('role');
         return role !== USER_ROLES.ADMIN;
@@ -230,7 +230,7 @@ export const formAddUser = {
         {
           id: 'adminRole',
           name: 'adminRole',
-          component: 'select-new',
+          component: 'select-simple',
           title: 'Responsabilité *',
           options: [
             { value: ADMIN_ROLES.CANDIDATES, label: ADMIN_ROLES.CANDIDATES },

@@ -16,7 +16,7 @@
     {
       "id": "text",
       "name": "text",
-      "component": "textarea-new",
+      "component": "textarea",
       "title": "Votre recommandation*"
     }
   ],

@@ -10,7 +10,7 @@ import { FooterForm } from 'src/components/forms/FooterForm';
 import FormValidator from 'src/components/forms/FormValidator';
 import { GenericField } from 'src/components/forms/GenericField';
 import { InputsContainer } from 'src/components/forms/fields/InputsContainer';
-import { MultipleFields } from 'src/components/forms/fields/MultipleFields';
+import { MultipleFields } from 'src/components/forms/fields/MultipleFields/MultipleFields';
 import { getValueFromFormField } from 'src/utils/Finding';
 import { AnyToFix } from 'src/utils/Types';
 
@@ -147,7 +147,7 @@ export const FormWithValidation = forwardRef(
     const initializeForm = useCallback(() => {
       // on extrait les nom des champs
       const fieldsId = fields.reduce((acc, curr) => {
-        if (curr.component === 'fieldgroup-new') {
+        if (curr.component === 'fieldgroup') {
           return [
             ...acc,
             ...curr.fields.map((field) => {
@@ -214,7 +214,7 @@ export const FormWithValidation = forwardRef(
         >
           <fieldset className="uk-fieldset">
             {fields.map((value, i) => {
-              if (value.component === 'fieldgroup-new') {
+              if (value.component === 'fieldgroup') {
                 const { fields: childrenFields } = value;
 
                 const shouldHide = value.hide
@@ -259,18 +259,14 @@ export const FormWithValidation = forwardRef(
               if (value.component === 'multiple-fields') {
                 const {
                   fields: childrenFields,
-                  title,
                   action,
                   name: childrenName,
-                  childWidths,
                 } = value;
                 return (
                   <li key={i} hidden={!!value.hidden}>
                     <MultipleFields
                       action={action}
                       name={childrenName}
-                      title={title}
-                      childWidths={childWidths}
                       formId={id}
                       values={fieldValues[childrenName] || [{}]}
                       getValid={(name) => {

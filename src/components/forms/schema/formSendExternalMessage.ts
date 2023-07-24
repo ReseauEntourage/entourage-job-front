@@ -8,7 +8,7 @@ export const formSendExternalMessage = {
   id: 'form-send-external-message',
   fields: [
     {
-      component: 'fieldgroup-new',
+      component: 'fieldgroup',
       fields: [
         {
           id: 'senderFirstName',
@@ -32,7 +32,7 @@ export const formSendExternalMessage = {
       title: 'Adresse mail *',
     },
     {
-      component: 'fieldgroup-new',
+      component: 'fieldgroup',
       fields: [
         {
           id: 'senderPhone',
@@ -43,7 +43,7 @@ export const formSendExternalMessage = {
         {
           id: 'type',
           name: 'type',
-          component: 'select-new',
+          component: 'select-simple',
           options: EXTERNAL_MESSAGE_CONTACT_TYPE_FILTERS,
           title: 'Vous êtes ?',
         },
@@ -52,27 +52,27 @@ export const formSendExternalMessage = {
     {
       id: 'subject',
       name: 'subject',
-      component: 'select-new',
+      component: 'select-simple',
       title: 'Objet *',
       options: EXTERNAL_MESSAGE_SUBJECT_FILTERS,
     },
     {
       id: 'message',
       name: 'message',
-      component: 'textarea-new',
+      component: 'textarea',
       title: 'Écrire votre message *',
     },
     {
       id: 'optInContact',
       name: 'optInContact',
-      component: 'checkbox-new',
+      component: 'checkbox',
       title:
         "En cochant cette case, vous acceptez qu'un membre de l'équipe vous recontacte *",
     },
     {
       id: 'optInNewsletter',
       name: 'optInNewsletter',
-      component: 'checkbox-new',
+      component: 'checkbox',
       title: 'Je souhaite être tenu au courant des actualités du projet',
     },
   ],

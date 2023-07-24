@@ -4,14 +4,14 @@
     {
       "id": "description",
       "name": "description",
-      "component": "textarea-new",
+      "component": "textarea",
       "title": "Description"
     },
     {
       "id": "skills",
       "name": "skills",
       "title": "Compétences",
-      "component": "select-request-creatable",
+      "component": "select-creatable",
       "isMulti": true
     }
   ],

@@ -24,7 +24,7 @@ export const formAddOrganization = {
     {
       id: 'zone',
       name: 'zone',
-      component: 'select-new',
+      component: 'select-simple',
       title: 'Zone de la structure *',
       options: ADMIN_ZONES_FILTERS,
     },
@@ -34,7 +34,7 @@ export const formAddOrganization = {
       component: 'heading',
     },
     {
-      component: 'fieldgroup-new',
+      component: 'fieldgroup',
       fields: [
         {
           id: 'referentFirstName',
@@ -50,7 +50,6 @@ export const formAddOrganization = {
         },
       ],
     },
-
     {
       id: 'referentPhone',
       name: 'referentPhone',
