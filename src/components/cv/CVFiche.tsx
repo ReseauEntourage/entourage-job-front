@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
+import { CVCallToActions } from 'src/components/partials/CV/CVCallToActions';
 import { Grid, Img, SimpleLink, Icon } from 'src/components/utils';
 import { CONTRACTS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
@@ -12,7 +13,6 @@ import {
   sortByOrder,
 } from 'src/utils';
 import { CVShape } from './CV.shape';
-import { CVCallToActions } from './CVCallToActions';
 
 /**
  * Le cv en public et en preview
@@ -311,11 +311,11 @@ export const CVFiche = ({ cv, actionDisabled }) => {
             </Grid>
           </Grid>
           <hr />
-          <CVCallToActions
+          {/* <CVCallToActions
             cv={cv}
             updateSharesCount={updateSharesCount}
             actionDisabled={actionDisabled}
-          />
+          /> */}
           {/* {shareSection} */}
         </Grid>
       </div>

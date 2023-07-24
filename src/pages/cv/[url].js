@@ -3,13 +3,10 @@ import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
-import { CVBackground, CVFiche, CVList } from 'src/components/cv';
+import { CVList } from 'src/components/cv';
 import { CVShape } from 'src/components/cv/CV.shape';
-import {
-  ActionPartial,
-  DiscoverPartial,
-  NewsletterPartial,
-} from 'src/components/partials';
+import { DiscoverPartial, NewsletterPartial } from 'src/components/partials';
+import { PageCVContent } from 'src/components/partials/CV/PageCvContent';
 import { Grid, Section, SimpleLink, Icon, Button } from 'src/components/utils';
 import { CV_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
@@ -121,15 +118,7 @@ const CVPage = ({ cv, exists, router, hideShareOptions }) => {
       metaType="profile"
     >
       <div className="uk-background-muted">
-        {cv.urlImg && (
-          <CVBackground
-            endOfContract={cv?.user?.endOfContract}
-            employed={cv.user ? cv.user.employed : false}
-            url={process.env.AWSS3_CDN_URL + cv.urlImg || undefined}
-          />
-        )}
-        <CVFiche cv={cv} hideShareOptions={hideShareOptions} />
-        <ActionPartial style="muted" />
+        <PageCVContent cv={cv} />
       </div>
     </Layout>
   );

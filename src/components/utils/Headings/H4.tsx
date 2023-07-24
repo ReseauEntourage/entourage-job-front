@@ -1,26 +1,23 @@
 import React from 'react';
 import { useIsDesktop } from 'src/hooks/utils';
-import { StyledH6 } from './Headings.styles';
+import { StyledH4 } from './Headings.styles';
 
-export const H6 = ({
+export const H4 = ({
   title,
-  effect = '',
   center = false,
   color,
 }: {
   title: string;
-  effect?: string;
   center?: boolean;
   color?: string;
 }) => {
   const isDesktop = useIsDesktop();
   return (
-    <StyledH6
-      color={color}
+    <StyledH4
       className={`${center ? 'center' : ''} ${isDesktop ? '' : 'mobile'}`}
-      data-uk-scrollspy={effect}
+      color={color}
     >
       {title}
-    </StyledH6>
+    </StyledH4>
   );
 };

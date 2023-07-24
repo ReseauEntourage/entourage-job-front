@@ -1,42 +1,13 @@
 import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledCVCTA = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: stretch;
-  flex-wrap: wrap;
-`;
-
-export const StyledCVCTAContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px;
-  width: 26%;
-  min-width: 200px;
-  p {
-    text-align: center;
-    color: ${COLORS.darkGrayFont};
-  }
-  &.mobile {
-    width: 100%;
-    margin: 14px 0;
-    order: ${(props) => {
-      return props.order;
-    }};
-  }
-`;
-
 export const StyledCVShareButtonsContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   box-sizing: border-box;
   width: 100%;
-  padding: 0 20px;
+  gap: 20px;
 `;
 
 export const StyledCVShareBUtton = styled.div`

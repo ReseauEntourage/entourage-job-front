@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS, BREAKPOINTS } from 'src/constants/styles';
+import { COLORS } from 'src/constants/styles';
 
 export const StyledH1 = styled.h1`
   font-size: 32px;
@@ -13,7 +13,10 @@ export const StyledH1 = styled.h1`
     }
     return 'black';
   }};
-  @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
+  &.center {
+    text-align: center;
+  }
+  &.mobile {
     font-size: 24px;
   }
 `;
@@ -21,7 +24,15 @@ export const StyledH1 = styled.h1`
 export const StyledH2 = styled.h2`
   font-size: 28px;
   font-weight: 700;
-  color: ${COLORS.primaryOrange};
+  color: ${(props) => {
+    if (COLORS[props.color]) {
+      return COLORS[props.color];
+    }
+    if (props.color) {
+      return props.color;
+    }
+    return `${COLORS.primaryOrange}`;
+  }};
   &.big {
     color: ${COLORS.darkGrayFont};
     font-weight: 400;
@@ -30,7 +41,10 @@ export const StyledH2 = styled.h2`
   &.light {
     font-weight: 400;
   }
-  @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
+  &.center {
+    text-align: center;
+  }
+  &.mobile {
     font-size: 20px;
     &.big {
       font-size: 24px;
@@ -43,8 +57,42 @@ export const StyledH3 = styled.h3`
   font-weight: 700;
   line-height: 36px;
   color: black;
+  color: ${(props) => {
+    if (COLORS[props.color]) {
+      return COLORS[props.color];
+    }
+    if (props.color) {
+      return props.color;
+    }
+    return 'black';
+  }};
   &.center {
     text-align: center;
+  }
+  &.mobile {
+    font-size: 18px;
+  }
+`;
+
+export const StyledH4 = styled.h4`
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  color: black;
+  color: ${(props) => {
+    if (COLORS[props.color]) {
+      return COLORS[props.color];
+    }
+    if (props.color) {
+      return props.color;
+    }
+    return 'black';
+  }};
+  &.center {
+    text-align: center;
+  }
+  &.mobile {
+    font-size: 16px;
   }
 `;
 
@@ -64,6 +112,9 @@ export const StyledH5 = styled.h5`
   }};
   &.center {
     text-align: center;
+  }
+  &.mobile {
+    font-size: 14px;
   }
 `;
 

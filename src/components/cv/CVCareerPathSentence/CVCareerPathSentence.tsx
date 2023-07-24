@@ -1,6 +1,9 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants';
+import {
+  AMBITIONS_PREFIXES,
+  BUSINESS_LINES,
+  AmbitionsPrefixesType,
+} from 'src/constants';
 import {
   buildBusinessLineForSentence,
   findConstantFromValue,
@@ -8,14 +11,26 @@ import {
   sortByOrder,
 } from 'src/utils';
 
-export const CVCareerPathSentence = ({ businessLines, ambitions }) => {
-  const sortedAmbitions =
-    ambitions && ambitions.length > 0 ? sortByOrder(ambitions) : null;
+interface CVCareerPathSentenceProps {
+  ambitions: {
+    name: string;
+    order: number;
+    prefix: AmbitionsPrefixesType;
+  }[];
+  businessLines: {
+    name: string;
+    order: number;
+  }[];
+}
+
+export const CVCareerPathSentence = ({
+  businessLines,
+  ambitions,
+}: CVCareerPathSentenceProps) => {
+  const sortedAmbitions = ambitions?.length > 0 ? sortByOrder(ambitions) : null;
 
   const sortedBusinessLines =
-    businessLines && businessLines.length > 0
-      ? sortByOrder(businessLines)
-      : null;
+    businessLines?.length > 0 ? sortByOrder(businessLines) : null;
 
   const isNewCareerPath = sortedBusinessLines?.every(({ order }) => {
     return order > -1;
@@ -148,30 +163,4 @@ export const CVCareerPathSentence = ({ businessLines, ambitions }) => {
     );
   }
   return null;
-};
-
-CVCareerPathSentence.propTypes = {
-  ambitions: PropTypes.oneOfType([
-    PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        order: PropTypes.number.isRequired,
-        prefix: PropTypes.oneOf(
-          AMBITIONS_PREFIXES.map(({ value }) => {
-            return value;
-          })
-        ),
-      })
-    ),
-    PropTypes.string,
-  ]).isRequired,
-  businessLines: PropTypes.oneOfType([
-    PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        order: PropTypes.number.isRequired,
-      })
-    ),
-    PropTypes.string,
-  ]).isRequired,
 };

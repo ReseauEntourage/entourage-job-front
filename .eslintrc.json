@@ -121,7 +121,7 @@
     // TODO put ts: never and tsx: never when all files have been transformed
     "import/extensions": [
       2,
-      "always",
+      "ignorePackages",
       { "ts": "never", "tsx": "never", "js": "never", "jsx": "never" }
     ],
     "import/prefer-default-export": 0,
