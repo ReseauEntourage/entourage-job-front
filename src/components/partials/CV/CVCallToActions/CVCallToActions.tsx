@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { CV_COLORS } from '../PageCVContent/PageCVContent.styles';
+import { CV_COLORS } from '../PageCvContent/PageCVContent.styles';
 import { CV } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
 import { PostOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';

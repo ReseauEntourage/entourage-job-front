@@ -27,7 +27,7 @@ import {
   StyledCVPageContentCarousel,
   StyledChevronIcon,
   StyledCVMessageContainer,
-} from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
+} from 'src/components/partials/CV/PageCvContent/PageCVContent.styles';
 import { Button, Icon } from 'src/components/utils';
 import { CarouselSwiper } from 'src/components/utils/CarouselSwiper';
 import { H1, H2, H3, H4, H5, H6 } from 'src/components/utils/Headings';
