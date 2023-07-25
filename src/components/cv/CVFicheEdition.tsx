@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { CV } from 'src/api/types';
 import {
-  ExperiencesProfileCard,
+  // ExperiencesProfileCard,
   InfoProfileCard,
   PassionsCard,
   SkillsCard,
@@ -27,6 +27,8 @@ interface CVFicheEditionProps {
   address: string;
   userZone: AdminZone;
 }
+import { ExperiencesProfileCard } from '../backoffice/cv/TimelineCard/ExperiencesProfileCard';
+import { FormationsProfileCard } from '../backoffice/cv/TimelineCard/FormationsProfileCard';
 
 export const CVFicheEdition = ({
   cv,
@@ -60,6 +62,8 @@ export const CVFicheEdition = ({
       updateImage();
     }
   }, [prevPreviewGenerating, previewGenerating, updateImage]);
+
+  console.log(cv);
 
   return (
     <Grid childWidths={['1-1']}>
@@ -151,6 +155,7 @@ export const CVFicheEdition = ({
         <Grid childWidths={['1-1']}>
           <StoryProfileCard description={cv.story} onChange={onChange} />
           <CVEditReviews reviews={cv.reviews} onChange={onChange} />
+          <FormationsProfileCard formations={cv.formations} onChange={onChange} />
         </Grid>
         <Grid childWidths={['1-1']}>
           <ExperiencesProfileCard

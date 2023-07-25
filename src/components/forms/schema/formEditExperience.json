@@ -1,0 +1,65 @@
+{
+  "id": "form-experience",
+  "fields": [
+    {
+      "id": "title",
+      "name": "title",
+      "component": "text-input",
+      "type": "text",
+      "title": "Intitulé du poste" 
+    },
+    {
+      "id": "location",
+      "name": "location",
+      "component": "text-input",
+      "type": "text",
+      "title": "Lieu de travail" 
+    },
+    {
+      "id": "description",
+      "name": "description",
+      "component": "textarea",
+      "type": "text",
+      "title": "Description"
+    },
+    {
+      "id": "company",
+      "name": "company",
+      "component": "text-input",
+      "type": "text",
+      "title": "Entreprise"
+    },
+    {
+      "id": "dateStart",
+      "name": "dateStart",
+      "component": "datepicker-new",
+      "title": "Date de départ"
+    },
+    {
+      "id": "dateEnd",
+      "name": "dateEnd",
+      "component": "datepicker-new",
+      "title": "Date de fin"
+    },
+    {
+      "id": "skills",
+      "name": "skills",
+      "title": "Compétences",
+      "component": "select-request-creatable",
+      "isMulti": true
+    }
+  ],
+  "rules": [
+    {
+      "field": "description",
+      "method": "isLength",
+      "args": [
+        {
+          "max": 2000
+        }
+      ],
+      "validWhen": true,
+      "message": "2000 caractères maximum"
+    }
+  ]
+}

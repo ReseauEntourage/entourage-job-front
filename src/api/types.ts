@@ -146,9 +146,26 @@ export interface CV {
     text: string;
     status: string;
   }[];
-  experiences: {
+  formations?: {
     description: string;
-    order: number;
+    title: string;
+    dateStart?: Date;
+    dateEnd?: Date;
+    institution: string;
+    location: string;
+    skills: {
+      id: string;
+      name: string;
+      order: number;
+    }[];
+  }[];
+  experiences?: {
+    description: string;
+    title: string;
+    dateStart?: Date;
+    dateEnd?: Date;
+    company: string;
+    location: string;
     skills: {
       id?: string;
       name: string;
