@@ -8,7 +8,7 @@ const uuidValue = uuid();
 export function Radio({
   options,
   id,
-  legend,
+  title,
   name,
   filter,
   onChange,
@@ -52,7 +52,7 @@ export function Radio({
         <legend>{errorMessage}</legend>
       ) : (
         <>
-          <legend>{legend}</legend>
+          <legend>{title}</legend>
           <div className="inputs-container">
             {options
               .filter(({ filterData }) => {

@@ -25,7 +25,7 @@ const meta = {
 };
 
 const Template = (args) => {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState(false);
 
   return (
     <CheckBox

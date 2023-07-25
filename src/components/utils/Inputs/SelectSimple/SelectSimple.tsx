@@ -1,43 +1,24 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
+import { StyledInputLabel } from '../Inputs.styles';
+import { CommonInputProps } from '../Inputs.types';
 import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
 import { Icon } from 'src/components/utils/Icon';
 import { useCloseOnClickOutsideComponent } from 'src/hooks/useCloseOnClickOutsideComponent';
 import { StyledSelectContainer } from './SelectSimple.styles';
 
-interface SelectProps {
-  id: string;
-  name: string;
-  title?: string;
-  showLabel?: boolean;
-  onChange: (
-    e: ChangeEvent<HTMLSelectElement> & {
-      target: ChangeEvent<HTMLSelectElement>['target'] & { checked: number };
-    } /* {
-    target: {
-      name: string;
-      type: 'select';
-      value: string | number;
-      checked: 0;
-    };
-  } */
-  ) => void;
-  valid?: {
-    isInvalid: boolean;
-    message: string;
-  };
-  value?: string | number;
+interface SelectProps
+  extends CommonInputProps<string | number, HTMLSelectElement> {
   options: {
     value: string;
     label?: string;
   }[];
-  hidden?: boolean;
 }
 
 export function SelectSimple({
   id,
   name,
   title,
-  valid,
+  error,
   options,
   onChange,
   showLabel = false,
@@ -68,10 +49,10 @@ export function SelectSimple({
 
   return (
     <StyledSelectContainer id={selectId}>
-      {showLabel && title && (
-        <label htmlFor={id} className="label-top">
+      {showLabel && (
+        <StyledInputLabel htmlFor={`form-input-${name}`}>
           {title}
-        </label>
+        </StyledInputLabel>
       )}
       <input type="hidden" value={selectedOption.value} name={name} id={id} />
       <div className="select">
@@ -148,7 +129,7 @@ export function SelectSimple({
           </ul>
         )}
       </div>
-      <FormValidatorErrorMessage validObj={valid} />
+      <FormValidatorErrorMessage error={error} />
     </StyledSelectContainer>
   );
 }

@@ -1,36 +1,28 @@
 import React, { ChangeEvent } from 'react';
+import { StyledInputLabel } from '../Inputs.styles';
+import { CommonInputProps } from '../Inputs.types';
 import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
 import { StyledTextInputContainer } from './TextInput.styles';
 
-interface TextInputProps {
-  id: string;
-  title?: string;
-  value: string;
+interface TextInputProps extends CommonInputProps<string, HTMLInputElement> {
   type?: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  name?: string;
-  placeholder: string;
-  showLabel?: boolean;
-  valid?: {
-    isInvalid: boolean;
-    message: string;
-  };
-  hidden?: boolean;
-  style?: string;
+  style?: 'secondary';
 }
 
 export function TextInput({
+  id,
+  name,
+  title,
+  placeholder,
+  value,
   onChange,
-  valid,
-  title = '',
-  id = '',
-  value = '',
+  onBlur,
   type = 'text',
-  name = '',
-  placeholder = '',
+  style,
   showLabel = false,
   hidden = false,
-  style = '',
+  inputRef,
+  error,
 }: TextInputProps) {
   if (hidden) {
     return null;
@@ -38,18 +30,24 @@ export function TextInput({
 
   return (
     <StyledTextInputContainer>
-      {showLabel && <label htmlFor={`form-input-${name}`}>{title}</label>}
+      {showLabel && (
+        <StyledInputLabel htmlFor={`form-input-${name}`}>
+          {title}
+        </StyledInputLabel>
+      )}
       <input
+        ref={inputRef}
         value={value}
-        className={`${value ? '' : 'empty-value'} ${style}`}
+        className={`${value ? '' : 'empty-value'} ${style || ''}`}
         onChange={onChange}
+        onBlur={onBlur}
         type={type || 'text'}
         placeholder={placeholder || title}
         name={name}
         id={id}
         data-testid={id}
       />
-      <FormValidatorErrorMessage validObj={valid} />
+      <FormValidatorErrorMessage error={error} />
     </StyledTextInputContainer>
   );
 }

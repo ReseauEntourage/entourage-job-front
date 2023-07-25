@@ -132,6 +132,7 @@ export const NewsletterPartial = ({
         </div>
         <div className="form-group text-input-container">
           <TextInput
+            title="Renseignez votre adresse email"
             type="email"
             style="secondary"
             onChange={(e) => {
@@ -139,7 +140,7 @@ export const NewsletterPartial = ({
             }}
             value={email}
             id="nl-email-input"
-            placeholder="Renseignez votre adresse email"
+            name="nl-email-input"
           />
         </div>
         {!isMailValid && (

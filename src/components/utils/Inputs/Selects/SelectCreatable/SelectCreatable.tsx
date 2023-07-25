@@ -1,5 +1,7 @@
 import React from 'react';
+import { FieldError } from 'react-hook-form';
 import CreatableSelect from 'react-select/creatable';
+import { CommonInputProps } from '../../Inputs.types';
 import {
   ClearIndicator,
   DropdownIndicator,
@@ -9,34 +11,29 @@ import { StyledSelect, StyledSelectContainer } from '../Selects.styles';
 import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
 import { FilterConstant } from 'src/constants';
 
-interface SelectAsyncProps {
-  id: string;
-  value: FilterConstant | FilterConstant[];
+interface SelectAsyncProps
+  extends CommonInputProps<
+    FilterConstant | FilterConstant[],
+    HTMLSelectElement,
+    FilterConstant | FilterConstant[]
+  > {
   options: FilterConstant[];
-  isMulti: boolean;
-  placeholder: string;
-  isDisabled: boolean;
-  isHidden: boolean;
-  onChange: (event: FilterConstant) => void;
-  openMenuOnClick: boolean;
-  valid: {
-    isInvalid: boolean;
-    message: string;
-  };
+  isMulti?: boolean;
+  openMenuOnClick?: boolean;
 }
 export function SelectCreatable({
   id,
   value,
   placeholder,
-  valid,
+  error,
   options,
   isMulti = false,
-  isDisabled = false,
-  isHidden = false,
-  onChange = () => null,
+  disabled = false,
+  hidden = false,
+  onChange,
   openMenuOnClick = false,
 }: SelectAsyncProps) {
-  if (isHidden) {
+  if (hidden) {
     return null;
   }
 
@@ -52,8 +49,8 @@ export function SelectCreatable({
           value={value || null}
           isMulti={isMulti}
           placeholder={placeholder || 'Sélectionnez...'}
-          isDisabled={isDisabled}
-          isHidden={isHidden}
+          isDisabled={disabled}
+          isHidden={hidden}
           onChange={onChange}
           openMenuOnClick={openMenuOnClick}
           formatCreateLabel={(userInput) => {
@@ -61,7 +58,7 @@ export function SelectCreatable({
           }}
         />
       </StyledSelect>
-      <FormValidatorErrorMessage validObj={valid} />
+      <FormValidatorErrorMessage error={error} />
     </StyledSelectContainer>
   );
 }

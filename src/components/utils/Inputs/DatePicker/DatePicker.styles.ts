@@ -6,16 +6,9 @@ export const StyledDatePickerContainer = styled.div`
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  input,
-  label {
-    width: 100%;
-  }
-  label {
-    padding: 4px 0;
-    font-size: 14px;
-    line-height: 17px;
-  }
   input {
+    width: 100%;
+
     border: 0.5px solid white;
     border-bottom: solid 2px ${COLORS.gray};
     padding: 4px 0;

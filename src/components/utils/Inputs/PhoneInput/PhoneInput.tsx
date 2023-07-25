@@ -1,37 +1,28 @@
 import React from 'react';
 import { Value } from 'react-phone-number-input';
 import PhoneInputWithCountry from 'react-phone-number-input/mobile';
+import { StyledInputLabel } from '../Inputs.styles';
+import { CommonInputProps } from '../Inputs.types';
 import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
 import { StyledPhoneInput } from './PhoneInput.styles';
 
-interface PhoneInputProps {
-  id: string;
-  name: string;
-  onChange: (value: Value) => void;
+interface PhoneInputProps
+  extends CommonInputProps<string, HTMLInputElement, Value> {
   title: string;
-  valid: {
-    isInvalid: boolean;
-    message: string;
-  };
-  value: string;
-  disabled: boolean;
-  hidden: boolean;
   autocomplete: string;
-  showLabel: boolean;
-  placeholder: string;
 }
 export function PhoneInput({
-  valid,
+  id,
+  name,
+  title,
+  value,
+  error,
   onChange,
-  id = '',
-  value = '',
   disabled = false,
   hidden = false,
   autocomplete = 'tel',
-  title = '',
-  name = '',
   showLabel = false,
-  placeholder = '',
+  placeholder,
 }: PhoneInputProps) {
   if (hidden) {
     return null;
@@ -40,10 +31,10 @@ export function PhoneInput({
   return (
     <>
       <StyledPhoneInput>
-        {showLabel && title && (
-          <label htmlFor={id} className="label-top">
+        {showLabel && (
+          <StyledInputLabel htmlFor={`form-input-${name}`}>
             {title}
-          </label>
+          </StyledInputLabel>
         )}
         <PhoneInputWithCountry
           defaultCountry="FR"
@@ -58,7 +49,7 @@ export function PhoneInput({
           autoComplete={autocomplete}
         />
       </StyledPhoneInput>
-      <FormValidatorErrorMessage validObj={valid} />
+      <FormValidatorErrorMessage error={error} />
     </>
   );
 }

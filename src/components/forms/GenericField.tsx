@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useCallback } from 'react';
+import { Control, Controller, useController } from 'react-hook-form';
 import { SimpleLink } from 'src/components/utils';
 import {
   CheckBox,
@@ -22,33 +23,33 @@ import { AnyToFix } from 'src/utils/Types';
 interface GenericFieldProps {
   data: AnyToFix;
   formId: string;
-  value: FilterConstant | FilterConstant[] | string | boolean | number;
-  onChange: (e: ChangeEvent | ChangeEvent[]) => void;
-  getValid: (name: string) =>
-    | {
-        isInvalid: boolean;
-        message: string;
-      }
-    | undefined;
   getValue: (
     name: string
   ) => FilterConstant | FilterConstant[] | string | boolean;
   fieldOptions?: AnyToFix;
   updateFieldOptions?: (newFieldOption?: { [K in string]: AnyToFix }) => void;
+  control: Control;
 }
 
 export const GenericField = ({
   data,
   formId,
-  value,
-  onChange,
-  getValid,
   getValue,
   updateFieldOptions = () => {
     return null;
   },
   fieldOptions = {},
+  control,
 }: GenericFieldProps) => {
+  const {
+    field: { onChange, onBlur, value, name, ref },
+    fieldState: { error },
+  } = useController({
+    name: data.name,
+    control,
+    rules: { required: true },
+  });
+
   const onChangeCustom = useCallback(
     (event) => {
       let events = [event];
@@ -102,7 +103,7 @@ export const GenericField = ({
           name={data.name}
           title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
           value={value as string}
-          valid={getValid(data.name)}
+          error={error}
           onChange={onChangeCustom}
           min={data.min}
           max={data.max}
@@ -114,13 +115,15 @@ export const GenericField = ({
     case 'text-input': {
       return (
         <TextInput
+          onChange={onChange}
+          onBlur={onBlur}
+          value={value}
+          name={name}
+          inputRef={ref}
           id={`${formId}-${data.id}`}
-          valid={getValid(data.name)}
+          error={error}
           title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
-          onChange={onChangeCustom}
           type={data.type}
-          name={data.name}
-          value={value as string}
           placeholder={data.placeholder}
           showLabel={data.showLabel}
           hidden={data.hide ? data.hide(getValue) : data.hidden}
@@ -134,7 +137,7 @@ export const GenericField = ({
           name={data.name}
           title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
           value={value as string}
-          valid={getValid(data.name)}
+          error={error}
           onChange={parseValueToReturnSelect}
           disabled={data.disable ? data.disable(getValue) : data.disabled}
           hidden={data.hide ? data.hide(getValue) : data.hidden}
@@ -175,7 +178,7 @@ export const GenericField = ({
           title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
           value={value as string | number}
           options={options}
-          valid={getValid(data.name)}
+          error={error}
           onChange={onChangeCustom}
           showLabel={data.showLabel}
           // disabled={data.disable ? data.disable(getValue) : data.disabled}
@@ -191,7 +194,7 @@ export const GenericField = ({
           maxLines={data.maxLines}
           onChange={onChangeCustom}
           value={value as string}
-          valid={getValid(data.name)}
+          error={error}
           title={data.dynamicTitle ? data.dynamicTitle(getValue) : data.title}
         />
       );
@@ -199,7 +202,7 @@ export const GenericField = ({
     case 'checkbox': {
       return (
         <CheckBox
-          valid={getValid(data.name)}
+          error={error}
           onChange={() => {
             handleCheckBox();
             onChangeCustom({
@@ -237,7 +240,7 @@ export const GenericField = ({
             </span>
           }
           value={value as boolean}
-          valid={getValid(data.name)}
+          error={error}
           disabled={data.disable ? data.disable(getValue) : data.disabled}
           hidden={data.hide ? data.hide(getValue) : data.hidden}
           onChange={() => {
@@ -269,7 +272,7 @@ export const GenericField = ({
           onChange={parseValueToReturnSelect}
           isDisabled={data.disable ? data.disable(getValue) : false}
           isHidden={shouldHide}
-          valid={getValid(data.name)}
+          error={error}
           openMenuOnClick={data.openMenuOnClick || true}
         />
       );
@@ -288,7 +291,7 @@ export const GenericField = ({
           onChange={parseValueToReturnSelect}
           isDisabled={data.disable ? data.disable(getValue) : false}
           isHidden={shouldHide}
-          valid={getValid(data.name)}
+          error={error}
           openMenuOnClick={data.openMenuOnClick || true}
         />
       );
@@ -315,7 +318,7 @@ export const GenericField = ({
           isDisabled={data.disable ? data.disable(getValue) : false}
           isHidden={shouldHide}
           onChange={parseValueToReturnSelect}
-          valid={getValid(data.name)}
+          error={error}
           openMenuOnClick={data.openMenuOnClick || true}
         />
       );
@@ -328,7 +331,7 @@ export const GenericField = ({
           options={data.options}
           id={`${formId}-${data.id}`}
           name={data.name}
-          legend={data.title}
+          title={data.title}
           onChange={onChangeCustom}
           filter={data.dynamicFilter(getValue)}
           hidden={data.hide ? data.hide(getValue, fieldOptions) : data.hidden}
@@ -347,7 +350,7 @@ export const GenericField = ({
           }}
           id={`${formId}-${data.id}`}
           name={data.name}
-          legend={data.title}
+          title={data.title}
           onChange={onChangeCustom}
           filter={data.dynamicFilter(getValue)}
           errorMessage={data.errorMessage}
@@ -357,32 +360,6 @@ export const GenericField = ({
       );
     }
 
-    case 'heading': {
-      if (data.hide && data.hide(getValue, fieldOptions)) {
-        return null;
-      }
-      return <Heading id={`${formId}-${data.id}`} title={data.title} />;
-    }
-    case 'text': {
-      if (data.hide && data.hide(getValue, fieldOptions)) {
-        return null;
-      }
-      return (
-        <p id={`${formId}-${data.id}`} data-testid={`${formId}-${data.id}`}>
-          {data.title}
-        </p>
-      );
-    }
-    case 'dynamic-text': {
-      if (data.hide && data.hide(getValue, fieldOptions)) {
-        return null;
-      }
-      return (
-        <p id={`${formId}-${data.id}`} data-testid={`${formId}-${data.id}`}>
-          {data.title(getValue)}
-        </p>
-      );
-    }
     default:
       throw `Component ${data.component} does not exist`; // eslint-disable-line no-throw-literal
   }

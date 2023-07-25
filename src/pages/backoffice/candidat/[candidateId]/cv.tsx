@@ -26,7 +26,7 @@ const Edit = () => {
     if (user) {
       Api.getUserById(user.id)
         .then(({ data }) => {
-          return setUserCompleteData(data);
+          setUserCompleteData(data);
         })
         .catch(() => {
           UIkit.notification('Erreur lors du chargement du suivi', 'danger');

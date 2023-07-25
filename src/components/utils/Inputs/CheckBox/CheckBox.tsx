@@ -1,33 +1,23 @@
 import React from 'react';
+import { CommonInputProps } from '../Inputs.types';
 import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
 import { StyledCheckbox } from 'src/components/utils/Inputs/CheckBox/CheckBox.styles';
 
-interface CBProps {
-  id: string;
-  name: string;
-  onChange: () => void;
-  disabled?: boolean;
+interface CheckBoxProps extends CommonInputProps<boolean, HTMLInputElement> {
   removeMargin?: boolean;
-  hidden?: boolean;
-  value?: boolean;
-  title?: string | JSX.Element;
-  valid?: {
-    isInvalid: boolean;
-    message: string;
-  };
 }
 
 export function CheckBox({
+  id,
+  name,
+  title,
   onChange,
   disabled = false,
   hidden = false,
   value = false,
-  title,
-  name,
-  id,
   removeMargin = false,
-  valid,
-}: CBProps) {
+  error,
+}: CheckBoxProps) {
   if (hidden) {
     return null;
   }
@@ -54,7 +44,7 @@ export function CheckBox({
         <span className="checkmark" />
         {title && <span className="label">{title}</span>}
       </label>
-      <FormValidatorErrorMessage validObj={valid} />
+      <FormValidatorErrorMessage error={error} />
     </StyledCheckbox>
   );
 }

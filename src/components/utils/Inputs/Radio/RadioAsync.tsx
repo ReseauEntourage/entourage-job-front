@@ -6,7 +6,7 @@ import { RadioAsyncComponentProps } from './Radio.types';
 export function RadioAsync({
   loadOptions,
   id,
-  legend,
+  title,
   name,
   onChange,
   filter,
@@ -27,7 +27,7 @@ export function RadioAsync({
       {options?.length > 0 && (
         <Radio
           id={id}
-          legend={legend}
+          title={title}
           name={name}
           onChange={onChange}
           filter={filter}

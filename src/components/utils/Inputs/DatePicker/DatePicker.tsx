@@ -1,19 +1,10 @@
-import React, { ChangeEvent } from 'react';
+import React from 'react';
+import { StyledInputLabel } from '../Inputs.styles';
+import { CommonInputProps } from '../Inputs.types';
 import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
 import { StyledDatePickerContainer } from './DatePicker.styles';
 
-interface DatePickerProps {
-  id: string;
-  name: string;
-  onChange: (e: ChangeEvent) => void;
-  title: string;
-  valid?: {
-    isInvalid: boolean;
-    message: string;
-  };
-  value?: string;
-  disabled?: boolean;
-  hidden?: boolean;
+interface DatePickerProps extends CommonInputProps<string, HTMLInputElement> {
   min?: string;
   max?: string;
 }
@@ -21,12 +12,12 @@ interface DatePickerProps {
 export function DatePicker({
   id,
   name,
+  value,
   title,
-  valid,
-  hidden = false,
+  error,
   onChange,
   disabled = false,
-  value = '',
+  hidden = false,
   min,
   max,
 }: DatePickerProps) {
@@ -43,11 +34,7 @@ export function DatePicker({
         e.stopPropagation();
       }}
     >
-      {title ? (
-        <label className="" htmlFor={id}>
-          {title}
-        </label>
-      ) : null}
+      <StyledInputLabel htmlFor={id}>{title}</StyledInputLabel>
       <input
         id={id}
         data-testid={id}
@@ -61,7 +48,7 @@ export function DatePicker({
         disabled={disabled}
         hidden={hidden}
       />
-      <FormValidatorErrorMessage validObj={valid} />
+      <FormValidatorErrorMessage error={error} />
     </StyledDatePickerContainer>
   );
 }

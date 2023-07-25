@@ -1,3 +1,5 @@
+import { CommonInputProps } from '../Inputs.types';
+
 export interface RadioTypes {
   inputId: string;
   label: string;
@@ -6,29 +8,18 @@ export interface RadioTypes {
   filterData?: string;
 }
 
-export interface RadioAsyncComponentProps {
+export interface RadioAsyncComponentProps
+  extends CommonInputProps<string, HTMLInputElement> {
   loadOptions: () => Promise<RadioTypes[]>;
-  id: string;
-  legend: string;
-  name: string;
   filter?: string;
   errorMessage?: string;
-  hidden?: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  value: string;
   limit?: number;
 }
 
-export interface RadioComponentProps {
+export interface RadioComponentProps
+  extends CommonInputProps<string, HTMLInputElement> {
   options: RadioTypes[];
-  id: string;
-  legend: string;
-  name: string;
   filter?: string;
   errorMessage?: string;
-  hidden?: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-
-  value: string;
   limit?: number;
 }

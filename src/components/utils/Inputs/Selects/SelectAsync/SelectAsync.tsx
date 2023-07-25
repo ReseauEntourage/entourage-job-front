@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import AsyncSelect from 'react-select/async';
+import { CommonInputProps } from '../../Inputs.types';
 import {
   ClearIndicator,
   DropdownIndicator,
@@ -11,42 +12,38 @@ import { FilterConstant } from 'src/constants';
 
 let debounceTimeoutId;
 
-interface SelectAsyncProps {
-  id: string;
-  cacheOptions: boolean;
-  value: FilterConstant | FilterConstant[];
-  defaultOptions: FilterConstant | FilterConstant[] | boolean;
-  isMulti: boolean;
-  placeholder: string;
-  noOptionsMessage: () => void;
-  loadingMessage: () => void;
+interface SelectAsyncProps
+  extends CommonInputProps<
+    FilterConstant | FilterConstant[],
+    HTMLSelectElement,
+    FilterConstant | FilterConstant[]
+  > {
   loadOptions: (
     inputValue: string,
     callback: (options: FilterConstant[]) => void
   ) => void;
-  isDisabled: boolean;
-  isHidden: boolean;
-  onChange: (event: FilterConstant) => void;
-  openMenuOnClick: boolean;
-  valid: {
-    isInvalid: boolean;
-    message: string;
-  };
+  cacheOptions?: boolean;
+  defaultOptions?: FilterConstant | FilterConstant[] | boolean;
+  isMulti?: boolean;
+  noOptionsMessage?: () => void;
+  loadingMessage?: () => void;
+
+  openMenuOnClick?: boolean;
 }
 export function SelectAsync({
   id,
   value,
   placeholder,
-  valid,
+  error,
+  onChange,
   defaultOptions: defaultOptionsProps = true,
   cacheOptions = false,
   isMulti = false,
   noOptionsMessage = () => null,
   loadingMessage = () => null,
-  loadOptions = () => null,
-  isDisabled = false,
-  isHidden = false,
-  onChange = () => null,
+  loadOptions,
+  disabled = false,
+  hidden = false,
   openMenuOnClick = false,
 }: SelectAsyncProps) {
   const [defaultOptions, setDefaultOptions] = useState<
@@ -77,7 +74,7 @@ export function SelectAsync({
     });
   }, [loadOptions]);
 
-  if (isHidden) {
+  if (hidden) {
     return null;
   }
 
@@ -104,13 +101,13 @@ export function SelectAsync({
           }
           loadingMessage={loadingMessage}
           loadOptions={debouncedLoadOptions}
-          isDisabled={isDisabled}
-          isHidden={isHidden}
+          isDisabled={disabled}
+          isHidden={hidden}
           onChange={onChange}
           openMenuOnClick={openMenuOnClick}
         />
       </StyledSelect>
-      <FormValidatorErrorMessage validObj={valid} />
+      <FormValidatorErrorMessage error={error} />
     </StyledSelectContainer>
   );
 }

@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
+import { StyledInputLabel } from '../Inputs.styles';
+import { CommonInputProps } from '../Inputs.types';
 import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
 import { useIsMobile } from 'src/hooks/utils';
 import {
@@ -10,17 +12,7 @@ import {
 } from './TextArea.styles';
 import { useLineLimit } from './useLineLimit';
 
-interface TextAreaProps {
-  title: string;
-  name: string;
-  id?: string;
-  onChange: (e) => void;
-  value: string;
-  hidden?: boolean;
-  valid?: {
-    isInvalid: boolean;
-    message: string;
-  };
+interface TextAreaProps extends CommonInputProps<string, HTMLTextAreaElement> {
   maxLines?: { lines: number; width: number };
 }
 
@@ -31,8 +23,9 @@ export function TextArea({
   onChange,
   value,
   hidden,
-  valid,
+  error,
   maxLines,
+  showLabel,
 }: TextAreaProps) {
   const isMobile = useIsMobile();
 
@@ -51,6 +44,11 @@ export function TextArea({
 
   return (
     <StyledTextAreaContainer>
+      {showLabel && (
+        <StyledInputLabel htmlFor={`form-input-${name}`}>
+          {title}
+        </StyledInputLabel>
+      )}
       <StyledTextAreaScrollContainer
         textAreaWidth={textAreaWidth}
         isMobile={isMobile}
@@ -72,7 +70,7 @@ export function TextArea({
       </StyledTextAreaScrollContainer>
       <StyledAnnotations>
         <div>
-          <FormValidatorErrorMessage validObj={valid} />
+          <FormValidatorErrorMessage error={error} />
         </div>
         {maxLines && (
           <StyledLineLimit warning={remainingLines === 0}>

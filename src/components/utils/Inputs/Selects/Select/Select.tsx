@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactSelect from 'react-select';
+import { CommonInputProps } from '../../Inputs.types';
 import {
   ClearIndicator,
   DropdownIndicator,
@@ -10,34 +11,29 @@ import { StyledSelect, StyledSelectContainer } from '../Selects.styles';
 import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
 import { FilterConstant } from 'src/constants';
 
-interface SelectProps {
-  id: string;
-  value: FilterConstant | FilterConstant[];
-  placeholder: string;
-  isMulti: boolean;
+interface SelectProps
+  extends CommonInputProps<
+    FilterConstant | FilterConstant[],
+    HTMLSelectElement,
+    FilterConstant | FilterConstant[]
+  > {
+  isMulti?: boolean;
   options: FilterConstant[];
-  isDisabled: boolean;
-  isHidden: boolean;
-  onChange: (event: FilterConstant) => void;
-  openMenuOnClick: boolean;
-  valid: {
-    isInvalid: boolean;
-    message: string;
-  };
+  openMenuOnClick?: boolean;
 }
 export function Select({
   id,
   value,
+  onChange,
   placeholder,
-  valid,
+  error,
   options,
-  isDisabled = false,
+  disabled = false,
   isMulti = false,
-  isHidden = false,
-  onChange = () => null,
+  hidden = false,
   openMenuOnClick = false,
 }: SelectProps) {
-  if (isHidden) {
+  if (hidden) {
     return null;
   }
 
@@ -53,13 +49,13 @@ export function Select({
           value={value || null}
           isMulti={isMulti}
           placeholder={placeholder || 'Sélectionnez...'}
-          isDisabled={isDisabled}
-          isHidden={isHidden}
+          isDisabled={disabled}
+          isHidden={hidden}
           onChange={onChange}
           openMenuOnClick={openMenuOnClick}
         />
       </StyledSelect>
-      <FormValidatorErrorMessage validObj={valid} />
+      <FormValidatorErrorMessage error={error} />
     </StyledSelectContainer>
   );
 }

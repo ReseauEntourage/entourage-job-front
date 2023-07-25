@@ -5,13 +5,6 @@ export const StyledSelectContainer = styled.div`
   min-width: 300px;
   width: 100%;
   max-width: 100%;
-  .label-top {
-    font-size: 14px;
-    padding: 4px 0;
-    display: inline-block;
-    line-height: 17px;
-    font-family: Poppins, sans-serif;
-  }
   &.hidden {
     display: none;
   }
