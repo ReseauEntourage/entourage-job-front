@@ -65,6 +65,8 @@ export const CVFicheEdition = ({
     }
   }, [prevPreviewGenerating, previewGenerating, updateImage]);
 
+  console.log(cv);
+
   return (
     <Grid childWidths={['1-1']}>
       <Grid childWidths={['1-1']} match>
