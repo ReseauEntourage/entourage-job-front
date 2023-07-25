@@ -175,8 +175,15 @@ export interface CV {
     text: string;
     status: string;
   }[];
-  formations?: CVFormation[];
-  experiences?: CVExperience[];
+  experiences: {
+    description: string;
+    order: number;
+    skills: {
+      id?: string;
+      name: string;
+      order: number;
+    }[];
+  }[];
   status: string;
   UserId: string;
 }
