@@ -190,7 +190,7 @@ export class APIHandler {
 
   // put
 
-  putUser(userId: string, params: UserDto): Promise<AxiosResponse> {
+  putUser(userId: string, params: Partial<UserDto>): Promise<AxiosResponse> {
     return this.put(`/user/${userId}`, params);
   }
 

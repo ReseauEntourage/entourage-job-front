@@ -5,10 +5,31 @@ import { formEditCareerPath } from 'src/components/forms/schema/formEditCareerPa
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { ButtonIcon, Grid } from 'src/components/utils';
-import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants';
+import {
+  AMBITIONS_PREFIXES,
+  AmbitionsPrefixesType,
+  BUSINESS_LINES,
+} from 'src/constants';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
 
-export const CVEditCareerPath = ({ ambitions, businessLines, onChange }) => {
+interface CVEditCareerPath {
+  ambitions: {
+    order: number;
+    name: string;
+    prefix: AmbitionsPrefixesType;
+  }[];
+  businessLines: {
+    order: number;
+    name: string;
+  }[];
+  onChange: (arg1: any) => void;
+}
+
+export const CVEditCareerPath = ({
+  ambitions,
+  businessLines,
+  onChange,
+}: CVEditCareerPath) => {
   const sortedAmbitions =
     ambitions && ambitions.length > 0 ? sortByOrder(ambitions) : null;
 
