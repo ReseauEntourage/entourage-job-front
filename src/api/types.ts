@@ -83,6 +83,10 @@ export type User = {
 };
 
 export interface CV {
+  id?: string;
+  version: string;
+  profileImage: string;
+  profileImageObjectUrl: string;
   user: {
     candidat: {
       firstName: string;
@@ -136,6 +140,7 @@ export interface CV {
   }[];
   experiences: {
     description: string;
+    order: number;
     skills: {
       id: string;
       name: string;

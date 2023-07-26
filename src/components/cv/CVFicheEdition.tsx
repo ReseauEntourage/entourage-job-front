@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useState } from 'react';
+import { CV } from 'src/api/types';
 import {
   ExperiencesProfileCard,
   InfoProfileCard,
@@ -15,7 +16,17 @@ import { Grid, Img } from 'src/components/utils';
 
 import { CV_STATUS } from 'src/constants';
 import { useMount, usePrevious } from 'src/hooks/utils';
-import { CVShape } from './CV.shape';
+
+interface VFicheEditionProps {
+  cv: CV;
+  onChange?: (arg1: any) => void;
+  disablePicture?: boolean;
+  email: string;
+  phone?: string;
+  previewGenerating: boolean;
+  address: string;
+  userZone: string;
+}
 
 export const CVFicheEdition = ({
   cv,
@@ -26,7 +37,7 @@ export const CVFicheEdition = ({
   phone,
   address,
   userZone,
-}) => {
+}: VFicheEditionProps) => {
   const [previewUrl, setPreviewUrl] = useState(undefined);
   const [imageUrl, setImageUrl] = useState(undefined);
 
@@ -150,23 +161,4 @@ export const CVFicheEdition = ({
       </Grid>
     </Grid>
   );
-};
-
-CVFicheEdition.propTypes = {
-  cv: CVShape.isRequired,
-  onChange: PropTypes.func,
-  disablePicture: PropTypes.bool,
-  email: PropTypes.string.isRequired,
-  phone: PropTypes.string,
-  address: PropTypes.string,
-  previewGenerating: PropTypes.bool.isRequired,
-  userZone: PropTypes.string,
-};
-
-CVFicheEdition.defaultProps = {
-  onChange: () => {},
-  disablePicture: false,
-  phone: undefined,
-  address: undefined,
-  userZone: undefined,
 };
