@@ -1,13 +1,24 @@
-import React from 'react';
-import { Value } from 'react-phone-number-input';
+import React, { Component } from 'react';
+import {
+  DefaultInputComponentProps,
+  Props,
+  State,
+  Value,
+} from 'react-phone-number-input';
 import PhoneInputWithCountry from 'react-phone-number-input/mobile';
 import { StyledInputLabel } from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
-import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
+import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { StyledPhoneInput } from './PhoneInput.styles';
 
 interface PhoneInputProps
-  extends CommonInputProps<string, HTMLInputElement, Value> {
+  extends CommonInputProps<
+    Value,
+    Component<
+      Props<DefaultInputComponentProps>,
+      State<Props<DefaultInputComponentProps>>
+    >
+  > {
   title: string;
   autocomplete: string;
 }
@@ -23,6 +34,7 @@ export function PhoneInput({
   autocomplete = 'tel',
   showLabel = false,
   placeholder,
+  inputRef,
 }: PhoneInputProps) {
   if (hidden) {
     return null;
@@ -42,14 +54,15 @@ export function PhoneInput({
           name={name}
           id={id}
           data-testid={id}
-          value={value || ''}
+          value={value}
           placeholder={placeholder || title}
           onChange={onChange}
           disabled={disabled}
           autoComplete={autocomplete}
+          ref={inputRef}
         />
       </StyledPhoneInput>
-      <FormValidatorErrorMessage error={error} />
+      <FieldErrorMessage error={error} />
     </>
   );
 }

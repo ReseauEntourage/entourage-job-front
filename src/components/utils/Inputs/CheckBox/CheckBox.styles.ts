@@ -15,7 +15,6 @@ export const StyledCheckbox = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    height: 16px;
     position: relative;
     cursor: pointer;
     -webkit-user-select: none;
@@ -45,6 +44,9 @@ export const StyledCheckbox = styled.div`
     .checkmark {
       position: absolute;
       top: 0;
+      bottom: 0;
+      margin-top: auto;
+      margin-bottom: auto;
       left: 0;
       height: 16px;
       width: 16px;

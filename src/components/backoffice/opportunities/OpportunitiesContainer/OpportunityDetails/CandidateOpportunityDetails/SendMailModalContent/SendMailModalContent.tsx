@@ -3,7 +3,7 @@ import UIkit from 'uikit';
 import { Api } from 'src/api';
 import { StyledSendMailContent } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/SendMailModalContent/SendMailContent.styles';
 import { useFetchOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/useFetchOpportunity';
-import { FooterForm } from 'src/components/forms/FooterForm';
+import { FormFooter } from 'src/components/forms/FormFooter/FormFooter';
 import { useModalContext, openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { TextArea } from 'src/components/utils/Inputs/TextArea';
@@ -154,7 +154,7 @@ export const SendMailModalContent = ({
             name="contact-description"
           />
         </div>
-        <FooterForm
+        <FormFooter
           noCompulsory
           onSubmit={async () => {
             await Api.postOpportunityContactEmployer({

@@ -30,8 +30,8 @@ const Template = (args) => {
   return (
     <PhoneInput
       {...args}
-      onChange={(newValue) => {
-        setValue(newValue);
+      onChange={(updatedValue) => {
+        setValue(updatedValue);
       }}
       value={value}
     />

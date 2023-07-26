@@ -6,12 +6,10 @@ import React, {
 } from 'react';
 import { useForm } from 'react-hook-form';
 import { Heading } from '../utils/Inputs';
-import { FooterForm } from 'src/components/forms/FooterForm';
-import FormValidator from 'src/components/forms/FormValidator';
-import { GenericField } from 'src/components/forms/GenericField';
+import { FormFooter } from 'src/components/forms/FormFooter/FormFooter';
+import { GenericField } from 'src/components/forms/fields/GenericField';
 import { InputsContainer } from 'src/components/forms/fields/InputsContainer';
 import { MultipleFields } from 'src/components/forms/fields/MultipleFields/MultipleFields';
-import { getValueFromFormField } from 'src/utils/Finding';
 import { AnyToFix } from 'src/utils/Types';
 
 interface FormWithValidationProps {
@@ -100,18 +98,22 @@ export const FormWithValidation = forwardRef(
         >
           <fieldset className="uk-fieldset">
             {fields.map((value, i) => {
+              const shouldHide = value.hide
+                ? value.hide((name) => {
+                    return getValues(name);
+                  })
+                : value.hidden;
+
+              if (shouldHide) {
+                return null;
+              }
+
               if (value.component === 'heading') {
-                if (value.hide && value.hide(getValue, fieldOptions)) {
-                  return null;
-                }
                 return (
                   <Heading id={`${formId}-${value.id}`} title={value.title} />
                 );
               }
               if (value.component === 'text') {
-                if (value.hide && value.hide(getValue, fieldOptions)) {
-                  return null;
-                }
                 return (
                   <p
                     id={`${formId}-${value.id}`}
@@ -122,9 +124,6 @@ export const FormWithValidation = forwardRef(
                 );
               }
               if (value.component === 'dynamic-text') {
-                if (value.hide && value.hide(getValue, fieldOptions)) {
-                  return null;
-                }
                 return (
                   <p
                     id={`${formId}-${value.id}`}
@@ -135,13 +134,7 @@ export const FormWithValidation = forwardRef(
                 );
               }
               if (value.component === 'fieldgroup') {
-                /*  const { fields: childrenFields } = value;
-
-                const shouldHide = value.hide
-                  ? value.hide((name) => {
-                      return fieldValues[name];
-                    })
-                  : value.hidden;
+                const { fields: childrenFields } = value;
 
                 return (
                   !shouldHide && (
@@ -150,23 +143,19 @@ export const FormWithValidation = forwardRef(
                         fields={childrenFields.map((field) => {
                           const shouldHideField = field.hide
                             ? field.hide((name) => {
-                                return fieldValues[name];
+                                return getValues(name);
                               })
                             : field.hidden;
 
                           return !shouldHideField ? (
                             <GenericField
+                              control={control}
                               data={field}
                               formId={id}
-                              value={fieldValues[field.id]}
-                              onChange={updateForm}
                               fieldOptions={fieldOptions}
                               updateFieldOptions={updateFieldOptions}
-                              getValid={(name) => {
-                                return fieldValidations[`valid_${name}`];
-                              }}
                               getValue={(name) => {
-                                return fieldValues[name];
+                                return getValues(name);
                               }}
                             />
                           ) : null;
@@ -174,44 +163,38 @@ export const FormWithValidation = forwardRef(
                       />
                     </li>
                   )
-                ); */
-                return null;
+                );
               }
               if (value.component === 'multiple-fields') {
-                /*  const {
-                  fields: childrenFields,
+                const {
+                  fields: multipleFields,
                   action,
-                  name: childrenName,
+                  name: multipleFieldsName,
                 } = value;
                 return (
-                  <li key={i} hidden={!!value.hidden}>
+                  <li key={i}>
                     <MultipleFields
+                      control={control}
                       action={action}
-                      name={childrenName}
+                      name={multipleFieldsName}
                       formId={id}
-                      values={fieldValues[childrenName] || [{}]}
-                      getValid={(name) => {
-                        return fieldValidations[`valid_${name}`];
-                      }}
                       getValue={(name) => {
-                        return fieldValues[name];
+                        return getValues(name);
                       }}
-                      onChange={updateForm}
-                      fields={childrenFields}
+                      fields={multipleFields}
                     />
                   </li>
-                ); */
-                return null;
+                );
               }
 
               return (
-                <li key={i} hidden={!!value.hidden}>
+                <li key={i}>
                   <GenericField
                     control={control}
                     data={value}
                     formId={id}
-                    // updateFieldOptions={updateFieldOptions}
-                    //   fieldOptions={fieldOptions}
+                    updateFieldOptions={updateFieldOptions}
+                    fieldOptions={fieldOptions}
                     getValue={(name) => {
                       return getValues(name);
                     }}
@@ -221,7 +204,7 @@ export const FormWithValidation = forwardRef(
             })}
           </fieldset>
         </form>
-        <FooterForm
+        <FormFooter
           error={error}
           submitText={submitText}
           cancelText={cancelText}

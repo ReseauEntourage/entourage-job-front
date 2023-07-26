@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactSelect from 'react-select';
+import { StyledInputLabel } from '../../Inputs.styles';
 import { CommonInputProps } from '../../Inputs.types';
 import {
   ClearIndicator,
@@ -8,14 +9,13 @@ import {
 } from '../Selects';
 
 import { StyledSelect, StyledSelectContainer } from '../Selects.styles';
-import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
+import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { FilterConstant } from 'src/constants';
 
 interface SelectProps
   extends CommonInputProps<
     FilterConstant | FilterConstant[],
-    HTMLSelectElement,
-    FilterConstant | FilterConstant[]
+    HTMLSelectElement
   > {
   isMulti?: boolean;
   options: FilterConstant[];
@@ -23,6 +23,8 @@ interface SelectProps
 }
 export function Select({
   id,
+  name,
+  title,
   value,
   onChange,
   placeholder,
@@ -31,7 +33,9 @@ export function Select({
   disabled = false,
   isMulti = false,
   hidden = false,
-  openMenuOnClick = false,
+  openMenuOnClick = true,
+  showLabel = false,
+  inputRef,
 }: SelectProps) {
   if (hidden) {
     return null;
@@ -39,6 +43,11 @@ export function Select({
 
   return (
     <StyledSelectContainer>
+      {showLabel && (
+        <StyledInputLabel htmlFor={`form-input-${name}`}>
+          {title}
+        </StyledInputLabel>
+      )}
       <StyledSelect>
         <ReactSelect
           id={id}
@@ -48,14 +57,15 @@ export function Select({
           isClearable
           value={value || null}
           isMulti={isMulti}
-          placeholder={placeholder || 'Sélectionnez...'}
+          placeholder={placeholder || title}
           isDisabled={disabled}
           isHidden={hidden}
           onChange={onChange}
           openMenuOnClick={openMenuOnClick}
+          ref={inputRef}
         />
       </StyledSelect>
-      <FormValidatorErrorMessage error={error} />
+      <FieldErrorMessage error={error} />
     </StyledSelectContainer>
   );
 }

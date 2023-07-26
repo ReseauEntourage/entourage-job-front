@@ -1,7 +1,7 @@
 import React, { FormEvent } from 'react';
 import { ButtonPost } from 'src/components/backoffice/cv/ButtonPost';
-import { StyledFooterForm } from 'src/components/forms/Forms.styles';
 import { Button } from 'src/components/utils/Button';
+import { StyledFooterForm } from './FormFooter.styles';
 
 interface FooterFormProps {
   error?: string;
@@ -12,7 +12,7 @@ interface FooterFormProps {
   formId: string;
   noCompulsory?: boolean;
 }
-export const FooterForm = ({
+export const FormFooter = ({
   error,
   onSubmit,
   onCancel,

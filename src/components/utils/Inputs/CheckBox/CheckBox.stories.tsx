@@ -30,8 +30,8 @@ const Template = (args) => {
   return (
     <CheckBox
       {...args}
-      onChange={(event) => {
-        setValue(event.target.checked);
+      onChange={(updatedValue) => {
+        setValue(updatedValue);
       }}
       value={value}
     />

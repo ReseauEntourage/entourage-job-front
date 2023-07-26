@@ -5,9 +5,6 @@ export const StyledSelectContainer = styled.div`
   min-width: 300px;
   width: 100%;
   max-width: 100%;
-  &.hidden {
-    display: none;
-  }
   .select {
     width: 100%;
     border: none;

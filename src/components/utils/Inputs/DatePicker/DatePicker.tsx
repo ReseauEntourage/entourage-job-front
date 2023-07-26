@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { StyledInputLabel } from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
-import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
+import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { StyledDatePickerContainer } from './DatePicker.styles';
 
 interface DatePickerProps extends CommonInputProps<string, HTMLInputElement> {
@@ -20,6 +20,7 @@ export function DatePicker({
   hidden = false,
   min,
   max,
+  inputRef,
 }: DatePickerProps) {
   if (hidden) {
     return null;
@@ -44,11 +45,14 @@ export function DatePicker({
         min={min}
         max={max}
         type="date"
-        onChange={onChange}
+        onChange={(event: ChangeEvent<HTMLInputElement>) =>
+          onChange(event.target.value)
+        }
         disabled={disabled}
         hidden={hidden}
+        ref={inputRef}
       />
-      <FormValidatorErrorMessage error={error} />
+      <FieldErrorMessage error={error} />
     </StyledDatePickerContainer>
   );
 }

@@ -52,13 +52,13 @@ const options = [
 ];
 
 const Template = (args) => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState<string | number>('');
 
   return (
     <SelectSimple
       {...args}
-      onChange={(event) => {
-        setValue(event.target.value);
+      onChange={(updatedValue) => {
+        setValue(updatedValue);
       }}
       value={value}
     />

@@ -1,6 +1,6 @@
 import React from 'react';
-import { FieldError } from 'react-hook-form';
 import CreatableSelect from 'react-select/creatable';
+import { StyledInputLabel } from '../../Inputs.styles';
 import { CommonInputProps } from '../../Inputs.types';
 import {
   ClearIndicator,
@@ -8,14 +8,13 @@ import {
   MultiValueRemove,
 } from '../Selects';
 import { StyledSelect, StyledSelectContainer } from '../Selects.styles';
-import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
+import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { FilterConstant } from 'src/constants';
 
 interface SelectAsyncProps
   extends CommonInputProps<
     FilterConstant | FilterConstant[],
-    HTMLSelectElement,
-    FilterConstant | FilterConstant[]
+    HTMLSelectElement
   > {
   options: FilterConstant[];
   isMulti?: boolean;
@@ -23,6 +22,8 @@ interface SelectAsyncProps
 }
 export function SelectCreatable({
   id,
+  name,
+  title,
   value,
   placeholder,
   error,
@@ -32,6 +33,8 @@ export function SelectCreatable({
   hidden = false,
   onChange,
   openMenuOnClick = false,
+  showLabel = false,
+  inputRef,
 }: SelectAsyncProps) {
   if (hidden) {
     return null;
@@ -39,6 +42,11 @@ export function SelectCreatable({
 
   return (
     <StyledSelectContainer>
+      {showLabel && (
+        <StyledInputLabel htmlFor={`form-input-${name}`}>
+          {title}
+        </StyledInputLabel>
+      )}
       <StyledSelect>
         <CreatableSelect
           id={id}
@@ -48,7 +56,7 @@ export function SelectCreatable({
           isClearable
           value={value || null}
           isMulti={isMulti}
-          placeholder={placeholder || 'Sélectionnez...'}
+          placeholder={placeholder || title}
           isDisabled={disabled}
           isHidden={hidden}
           onChange={onChange}
@@ -56,9 +64,10 @@ export function SelectCreatable({
           formatCreateLabel={(userInput) => {
             return `Créer "${userInput}"`;
           }}
+          ref={inputRef}
         />
       </StyledSelect>
-      <FormValidatorErrorMessage error={error} />
+      <FieldErrorMessage error={error} />
     </StyledSelectContainer>
   );
 }

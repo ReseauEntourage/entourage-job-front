@@ -1,14 +1,12 @@
 import React from 'react';
 import { FieldError } from 'react-hook-form';
-import { StyledErrorMessage } from 'src/components/forms/Forms.styles';
+import { StyledErrorMessage } from './FormErrorMessage.styles';
 
-interface FormValidatorErrorMessageProps {
+interface FieldErrorMessageProps {
   error?: FieldError;
 }
 
-export const FormValidatorErrorMessage = ({
-  error,
-}: FormValidatorErrorMessageProps) => {
+export const FieldErrorMessage = ({ error }: FieldErrorMessageProps) => {
   if (error?.message) {
     return <StyledErrorMessage>{error.message}</StyledErrorMessage>;
   }

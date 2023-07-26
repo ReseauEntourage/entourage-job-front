@@ -1,15 +1,15 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyledInputLabel } from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
-import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
+import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { Icon } from 'src/components/utils/Icon';
 import { useCloseOnClickOutsideComponent } from 'src/hooks/useCloseOnClickOutsideComponent';
 import { StyledSelectContainer } from './SelectSimple.styles';
 
 interface SelectProps
-  extends CommonInputProps<string | number, HTMLSelectElement> {
+  extends CommonInputProps<string | number, HTMLInputElement> {
   options: {
-    value: string;
+    value: string | number;
     label?: string;
   }[];
 }
@@ -24,6 +24,7 @@ export function SelectSimple({
   showLabel = false,
   hidden = false,
   value,
+  inputRef,
 }: SelectProps) {
   const [selectedOption, setSelectedOption] = useState<{
     value: string | number;
@@ -54,7 +55,13 @@ export function SelectSimple({
           {title}
         </StyledInputLabel>
       )}
-      <input type="hidden" value={selectedOption.value} name={name} id={id} />
+      <input
+        type="hidden"
+        value={selectedOption.value}
+        name={name}
+        id={id}
+        ref={inputRef}
+      />
       <div className="select">
         {(!selectedOption.value && selectedOption.value !== 0) ||
         (selectedOption.value && optionsOpen) ? (
@@ -107,18 +114,7 @@ export function SelectSimple({
                     id={optionId}
                     onClick={() => {
                       setOptionsOpen(!optionsOpen);
-                      onChange({
-                        target: {
-                          name,
-                          type: 'select',
-                          value: option.value,
-                          checked: 0,
-                        },
-                      } as ChangeEvent<HTMLSelectElement> & {
-                        target: ChangeEvent<HTMLSelectElement>['target'] & {
-                          checked: number;
-                        };
-                      });
+                      onChange(option.value);
                     }}
                   >
                     {option.label}
@@ -129,7 +125,7 @@ export function SelectSimple({
           </ul>
         )}
       </div>
-      <FormValidatorErrorMessage error={error} />
+      <FieldErrorMessage error={error} />
     </StyledSelectContainer>
   );
 }

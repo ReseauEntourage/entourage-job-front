@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import { StyledInputLabel } from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
-import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
+import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { StyledTextInputContainer } from './TextInput.styles';
 
 interface TextInputProps extends CommonInputProps<string, HTMLInputElement> {
@@ -39,7 +39,9 @@ export function TextInput({
         ref={inputRef}
         value={value}
         className={`${value ? '' : 'empty-value'} ${style || ''}`}
-        onChange={onChange}
+        onChange={(event: ChangeEvent<HTMLInputElement>) =>
+          onChange(event.target.value)
+        }
         onBlur={onBlur}
         type={type || 'text'}
         placeholder={placeholder || title}
@@ -47,7 +49,7 @@ export function TextInput({
         id={id}
         data-testid={id}
       />
-      <FormValidatorErrorMessage error={error} />
+      <FieldErrorMessage error={error} />
     </StyledTextInputContainer>
   );
 }

@@ -54,13 +54,13 @@ const meta = {
   ],
 };
 const Template = (args) => {
-  const [value, setValue] = useState<FilterConstant>();
+  const [value, setValue] = useState<FilterConstant | FilterConstant[]>();
 
   return (
     <SelectCreatable
       {...args}
-      onChange={(newValue) => {
-        setValue(newValue);
+      onChange={(updatedValue) => {
+        setValue(updatedValue);
       }}
       value={value}
     />

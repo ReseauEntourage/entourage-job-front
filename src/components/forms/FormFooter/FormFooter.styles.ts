@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
 
 export const StyledFooterForm = styled.div`
   .cta-container {

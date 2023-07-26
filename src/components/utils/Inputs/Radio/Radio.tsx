@@ -16,6 +16,7 @@ export function Radio({
   hidden,
   value: valueProp,
   limit = options.length,
+  inputRef,
 }: RadioComponentProps) {
   const [checkedRadio, setCheckedRadio] = useState<number>();
 
@@ -30,7 +31,7 @@ export function Radio({
   const onHandleRadio = useCallback(
     (i: number, e: React.ChangeEvent<HTMLInputElement>) => {
       setCheckedRadio(i);
-      onChange(e);
+      onChange(e.target.value);
     },
     [onChange]
   );
@@ -78,6 +79,7 @@ export function Radio({
                       onChange={(e) => {
                         onHandleRadio(i, e);
                       }}
+                      ref={inputRef}
                     />
                     {label}
                   </label>

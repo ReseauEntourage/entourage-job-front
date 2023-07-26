@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { CommonInputProps } from '../Inputs.types';
-import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
+import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { StyledCheckbox } from 'src/components/utils/Inputs/CheckBox/CheckBox.styles';
 
 interface CheckBoxProps extends CommonInputProps<boolean, HTMLInputElement> {
@@ -17,7 +17,8 @@ export function CheckBox({
   value = false,
   removeMargin = false,
   error,
-}: CheckBoxProps) {
+  inputRef,
+}: Omit<CheckBoxProps, 'title'> & { title: string | JSX.Element }) {
   if (hidden) {
     return null;
   }
@@ -36,15 +37,18 @@ export function CheckBox({
         <input
           type="checkbox"
           id={id}
-          onChange={onChange}
+          onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            onChange(event.target.checked)
+          }
           disabled={disabled}
           checked={value}
           name={name}
+          ref={inputRef}
         />
         <span className="checkmark" />
         {title && <span className="label">{title}</span>}
       </label>
-      <FormValidatorErrorMessage error={error} />
+      <FieldErrorMessage error={error} />
     </StyledCheckbox>
   );
 }

@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import { StyledInputLabel } from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
-import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
+import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { useIsMobile } from 'src/hooks/utils';
 import {
   StyledAnnotations,
@@ -26,6 +26,7 @@ export function TextArea({
   error,
   maxLines,
   showLabel,
+  inputRef,
 }: TextAreaProps) {
   const isMobile = useIsMobile();
 
@@ -64,13 +65,16 @@ export function TextArea({
           id={id}
           rows={5}
           placeholder={title}
-          onChange={onChange}
+          onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
+            onChange(event.target.value)
+          }
           value={value}
+          ref={inputRef}
         />
       </StyledTextAreaScrollContainer>
       <StyledAnnotations>
         <div>
-          <FormValidatorErrorMessage error={error} />
+          <FieldErrorMessage error={error} />
         </div>
         {maxLines && (
           <StyledLineLimit warning={remainingLines === 0}>

@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import AsyncSelect from 'react-select/async';
+import { StyledInputLabel } from '../../Inputs.styles';
 import { CommonInputProps } from '../../Inputs.types';
 import {
   ClearIndicator,
@@ -7,7 +8,7 @@ import {
   MultiValueRemove,
 } from '../Selects';
 import { StyledSelect, StyledSelectContainer } from '../Selects.styles';
-import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
+import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { FilterConstant } from 'src/constants';
 
 let debounceTimeoutId;
@@ -15,8 +16,7 @@ let debounceTimeoutId;
 interface SelectAsyncProps
   extends CommonInputProps<
     FilterConstant | FilterConstant[],
-    HTMLSelectElement,
-    FilterConstant | FilterConstant[]
+    HTMLSelectElement
   > {
   loadOptions: (
     inputValue: string,
@@ -32,6 +32,8 @@ interface SelectAsyncProps
 }
 export function SelectAsync({
   id,
+  name,
+  title,
   value,
   placeholder,
   error,
@@ -45,6 +47,8 @@ export function SelectAsync({
   disabled = false,
   hidden = false,
   openMenuOnClick = false,
+  showLabel = false,
+  inputRef,
 }: SelectAsyncProps) {
   const [defaultOptions, setDefaultOptions] = useState<
     FilterConstant[] | FilterConstant
@@ -80,6 +84,11 @@ export function SelectAsync({
 
   return (
     <StyledSelectContainer>
+      {showLabel && (
+        <StyledInputLabel htmlFor={`form-input-${name}`}>
+          {title}
+        </StyledInputLabel>
+      )}
       <StyledSelect>
         <AsyncSelect
           id={id}
@@ -92,7 +101,7 @@ export function SelectAsync({
           defaultOptions={defaultOptions}
           value={value || null}
           isMulti={isMulti}
-          placeholder={placeholder || 'Sélectionnez...'}
+          placeholder={placeholder || title}
           noOptionsMessage={
             noOptionsMessage ||
             (() => {
@@ -105,9 +114,10 @@ export function SelectAsync({
           isHidden={hidden}
           onChange={onChange}
           openMenuOnClick={openMenuOnClick}
+          ref={inputRef}
         />
       </StyledSelect>
-      <FormValidatorErrorMessage error={error} />
+      <FieldErrorMessage error={error} />
     </StyledSelectContainer>
   );
 }

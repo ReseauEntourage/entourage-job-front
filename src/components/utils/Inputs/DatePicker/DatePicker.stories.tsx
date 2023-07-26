@@ -31,8 +31,8 @@ const Template = (args) => {
   return (
     <DatePicker
       {...args}
-      onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
-        setValue(event.target.value);
+      onChange={(updatedValue) => {
+        setValue(updatedValue);
       }}
       value={value}
     />
