@@ -17,7 +17,7 @@ import { Grid, Img } from 'src/components/utils';
 import { CV_STATUS } from 'src/constants';
 import { useMount, usePrevious } from 'src/hooks/utils';
 
-interface VFicheEditionProps {
+interface CVFicheEditionProps {
   cv: CV;
   onChange?: (arg1: any) => void;
   disablePicture?: boolean;
@@ -37,7 +37,7 @@ export const CVFicheEdition = ({
   phone,
   address,
   userZone,
-}: VFicheEditionProps) => {
+}: CVFicheEditionProps) => {
   const [previewUrl, setPreviewUrl] = useState(undefined);
   const [imageUrl, setImageUrl] = useState(undefined);
 

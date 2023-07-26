@@ -13,7 +13,6 @@
     "lint": "npx eslint src --ext js,jsx,ts,tsx",
     "lint:fix": "npx eslint src --ext js,jsx,ts,tsx --fix",
     "ts-check": "tsc -p tsconfig.json --noEmit",
-    "ts-check:hook": "tsc tsconfig.json --noEmit",
     "format": "prettier --write './**/*.{js,jsx,md,json,ts,tsx}' --config .prettierrc.json",
     "build": "next build",
     "uikit-install": "cd ./node_modules/uikit && yarn",
