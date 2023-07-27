@@ -13,6 +13,7 @@ export function RadioAsync({
   errorMessage,
   hidden,
   value,
+  limit,
 }: RadioAsyncComponentProps) {
   const [options, setOptions] = useState([]);
 
@@ -31,6 +32,7 @@ export function RadioAsync({
           onChange={onChange}
           filter={filter}
           options={options}
+          limit={limit}
           hidden={hidden}
           errorMessage={errorMessage}
           value={value}

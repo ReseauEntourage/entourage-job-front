@@ -221,6 +221,7 @@ export const formCandidateInscription = {
       title:
         'Selectionnez la date de la prochaine réunion d’information à laquelle vous souhaitez participer :',
       component: 'radio-async-new',
+      limit: 7,
       dynamicFilter: (getValue) => {
         return ANTENNE_INFO.find((antenne) => {
           return antenne.dpt === getValue('location');
