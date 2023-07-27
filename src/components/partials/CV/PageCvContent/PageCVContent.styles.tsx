@@ -234,9 +234,15 @@ export const StyledCVPageContentDetailsContainer = styled.div`
   flex-direction: row;
   margin: 26px 15px 0;
   box-sizing: border-box;
-  flex-wrap: wrap;
+  > div {
+    flex-grow: 1;
+    min-width: 400px;
+  }
   &.mobile {
     flex-direction: column;
+    > div {
+      min-width: unset;
+    }
   }
 `;
 

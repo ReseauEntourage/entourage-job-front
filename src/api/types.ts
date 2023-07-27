@@ -91,6 +91,36 @@ export type User = {
   deletedAt?: string;
 };
 
+export interface CVExperience {
+  description: string;
+  title: string;
+  dateStart?: Date;
+  dateEnd?: Date;
+  company: string;
+  location: string;
+  order: number;
+  skills: {
+    id: string;
+    name: string;
+    order: number;
+  }[];
+}
+
+export interface CVFormation {
+  description: string;
+  title: string;
+  dateStart?: Date;
+  dateEnd?: Date;
+  institution: string;
+  location: string;
+  order: number;
+  skills: {
+    id: string;
+    name: string;
+    order: number;
+  }[];
+}
+
 export interface CV {
   id?: string;
   version: string;
@@ -146,32 +176,8 @@ export interface CV {
     text: string;
     status: string;
   }[];
-  formations?: {
-    description: string;
-    title: string;
-    dateStart?: Date;
-    dateEnd?: Date;
-    institution: string;
-    location: string;
-    skills: {
-      id: string;
-      name: string;
-      order: number;
-    }[];
-  }[];
-  experiences?: {
-    description: string;
-    title: string;
-    dateStart?: Date;
-    dateEnd?: Date;
-    company: string;
-    location: string;
-    skills: {
-      id?: string;
-      name: string;
-      order: number;
-    }[];
-  }[];
+  formations?: CVFormation[];
+  experiences?: CVExperience[];
   status: string;
   UserId: string;
 }
