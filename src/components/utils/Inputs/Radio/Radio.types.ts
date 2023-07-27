@@ -16,6 +16,7 @@ export interface RadioAsyncComponentProps {
   hidden?: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
+  limit?: number;
 }
 
 export interface RadioComponentProps {
@@ -29,4 +30,5 @@ export interface RadioComponentProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 
   value: string;
+  limit?: number;
 }
