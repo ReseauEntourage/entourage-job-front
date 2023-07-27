@@ -6,14 +6,14 @@
       "name": "title",
       "component": "text-input",
       "type": "text",
-      "title": "Intitulé du poste" 
+      "title": "Intitulé de la formation" 
     },
     {
       "id": "location",
       "name": "location",
       "component": "text-input",
       "type": "text",
-      "title": "Lieu de travail" 
+      "title": "Lieu de formation" 
     },
     {
       "id": "description",
@@ -33,7 +33,7 @@
       "id": "dateStart",
       "name": "dateStart",
       "component": "datepicker-new",
-      "title": "Date de départ"
+      "title": "Date de début"
     },
     {
       "id": "dateEnd",
