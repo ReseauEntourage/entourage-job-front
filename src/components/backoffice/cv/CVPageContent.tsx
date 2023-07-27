@@ -5,6 +5,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
 
+import { CV, User } from 'src/api/types';
 import { ButtonDownload } from 'src/components/backoffice/cv/ButtonDownload';
 import { ButtonPost } from 'src/components/backoffice/cv/ButtonPost';
 import { NoCV } from 'src/components/backoffice/cv/NoCV';
@@ -29,7 +30,12 @@ const pusher = new Pusher(process.env.PUSHER_API_KEY, {
   forceTLS: true,
 });
 
-const ModalPreview = ({ imageUrl, cv }) => {
+interface ModalPreviewProps {
+  imageUrl: string;
+  cv: CV;
+}
+
+const ModalPreview = ({ imageUrl, cv }: ModalPreviewProps) => {
   const { onClose } = useModalContext();
 
   return (
@@ -49,18 +55,23 @@ const ModalPreview = ({ imageUrl, cv }) => {
   );
 };
 
-ModalPreview.propTypes = {
-  cv: CVShape.isRequired,
-  imageUrl: PropTypes.string.isRequired,
-};
+interface CVPageContentProps {
+  cv: CV;
+  candidateId: string;
+  setCV: (arg1: any) => void;
+}
 
-export const CVPageContent = ({ candidateId, cv, setCV }) => {
-  const [cvVersion, setCvVersion] = useState(undefined);
-  const [imageUrl, setImageUrl] = useState(undefined);
+export const CVPageContent = ({
+  candidateId,
+  cv,
+  setCV,
+}: CVPageContentProps) => {
+  const [cvVersion, setCvVersion] = useState<string>();
+  const [imageUrl, setImageUrl] = useState<string>();
   const [previewGenerating, setPreviewGenerating] = useState(false);
   const [pdfGenerating, setPdfGenerating] = useState(false);
 
-  const { user } = useContext(UserContext);
+  const { user } = useContext<{ user: User }>(UserContext);
 
   const prevCV = usePrevious(cv);
 
@@ -155,25 +166,25 @@ export const CVPageContent = ({ candidateId, cv, setCV }) => {
         };
 
         Api.putUser(candidateId, userData)
-          .then(({ newUserData }) => {
-            res(newUserData);
+          .then((data) => {
+            res(data);
           })
           .catch((err) => {
             rej(err);
           });
       } else {
-        res();
+        res(null);
       }
     });
   };
 
   const checkIfLastVersion = useCallback(
-    async (callback, isAutoSave) => {
+    async (callback, isAutoSave = false) => {
       const {
         data: { lastCvVersion },
       } = await Api.getCVLastVersion(candidateId);
 
-      if (lastCvVersion > cvVersion) {
+      if (cvVersion && lastCvVersion > cvVersion) {
         if (!isAutoSave) {
           openModal(
             <ModalConfirm
@@ -268,7 +279,7 @@ export const CVPageContent = ({ candidateId, cv, setCV }) => {
       };
       delete obj.id;
       formData.append('cv', JSON.stringify(obj));
-      formData.append('autoSave', true);
+      formData.append('autoSave', '');
       // post
       return saveUserData(obj)
         .then(() => {
