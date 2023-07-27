@@ -15,6 +15,7 @@ export function Radio({
   errorMessage,
   hidden,
   value: valueProp,
+  limit = options.length,
 }: RadioComponentProps) {
   const [checkedRadio, setCheckedRadio] = useState<number>();
 
@@ -53,31 +54,35 @@ export function Radio({
         <>
           <legend>{legend}</legend>
           <div className="inputs-container">
-            {options.map(({ inputId, label, value, filterData }, i) => {
-              if (filter && filterData && filter !== filterData) return null;
-              if (!inputId) inputId = `radio-${value.replace(/\s+/g, '')}`;
-              return (
-                <label
-                  htmlFor={inputId}
-                  className={i === checkedRadio ? 'checked' : ''}
-                  key={`${i}-${uuidValue}`}
-                  onClick={(event) => event.stopPropagation()}
-                >
-                  <input
-                    type="radio"
-                    value={value}
-                    id={inputId}
-                    data-testid={inputId}
-                    name={name}
-                    checked={i === checkedRadio}
-                    onChange={(e) => {
-                      onHandleRadio(i, e);
-                    }}
-                  />
-                  {label}
-                </label>
-              );
-            })}
+            {options
+              .filter(({ filterData }) => {
+                return !(filter && filterData && filter !== filterData);
+              })
+              .slice(0, limit)
+              .map(({ inputId, label, value }, i) => {
+                if (!inputId) inputId = `radio-${value.replace(/\s+/g, '')}`;
+                return (
+                  <label
+                    htmlFor={inputId}
+                    className={i === checkedRadio ? 'checked' : ''}
+                    key={`${i}-${uuidValue}`}
+                    onClick={(event) => event.stopPropagation()}
+                  >
+                    <input
+                      type="radio"
+                      value={value}
+                      id={inputId}
+                      data-testid={inputId}
+                      name={name}
+                      checked={i === checkedRadio}
+                      onChange={(e) => {
+                        onHandleRadio(i, e);
+                      }}
+                    />
+                    {label}
+                  </label>
+                );
+              })}
           </div>
         </>
       )}

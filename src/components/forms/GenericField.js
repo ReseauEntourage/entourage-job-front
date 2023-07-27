@@ -469,6 +469,7 @@ export const GenericField = ({
     case 'radio-new': {
       return (
         <RadioNew
+          limit={data.limit}
           options={data.options}
           id={`${formId}-${data.id}`}
           name={data.name}
@@ -483,6 +484,7 @@ export const GenericField = ({
     case 'radio-async-new': {
       return (
         <RadioAsyncNew
+          limit={data.limit}
           loadOptions={async () => {
             const options = await data.loadOptions();
             updateFieldOptions({ [data.id]: options });
