@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import UIkit from 'uikit';
 
+import { TextArea } from '../../../../components/utils/Inputs';
 import { Api } from 'src/api';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { LoadingScreen } from 'src/components/backoffice/cv/LoadingScreen';
@@ -119,17 +120,15 @@ const Suivi = () => {
           >
             {title}
           </label>
-          <textarea
+          <TextArea
             id="textarea-suivi"
-            name="text"
+            name="textarea-suivi"
             rows={10}
-            placeholder="Tapez votre texte"
-            // maxLength={maxLength}
             value={value}
-            onChange={(event) => {
-              return updateValue(event.target.value);
+            onChange={(updatedValue) => {
+              return updateValue(updatedValue);
             }}
-            className="uk-textarea uk-form-large"
+            title="Votre suivi"
           />
         </div>
         <Grid match className="uk-flex-right">

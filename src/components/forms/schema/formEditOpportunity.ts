@@ -68,6 +68,7 @@ export const formEditOpportunity = {
       name: 'message',
       component: 'textarea',
       title: 'Message personnalisé pour le(s) candidat(s)',
+      fieldsToWatch: ['isPublic'],
       disable: (getValue) => {
         return getValue('isPublic') === true;
       },

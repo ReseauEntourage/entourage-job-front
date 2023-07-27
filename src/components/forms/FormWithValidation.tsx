@@ -11,6 +11,7 @@ import { GenericField } from 'src/components/forms/fields/GenericField';
 import { InputsContainer } from 'src/components/forms/fields/InputsContainer';
 import { MultipleFields } from 'src/components/forms/fields/MultipleFields/MultipleFields';
 import { AnyToFix } from 'src/utils/Types';
+import { StyledForm } from './Forms.styles';
 
 interface FormWithValidationProps {
   defaultValues?: AnyToFix; // to be typed
@@ -25,24 +26,19 @@ interface FormWithValidationProps {
   submitText?: string;
   cancelText?: string;
   enterToSubmit?: boolean;
-  formId?: string;
+  formId: string;
 }
 
-/**
- * Permet de creer un formulaire avec la generation de ses champs et validations de champs
- * Regroupe les deux composants du fichier formWithValidationOld en stateless
- * - Plus lisible
- */
 export const FormWithValidation = forwardRef(
   (
     {
       formSchema: { id, rules, fields },
-      defaultValues,
+      defaultValues = {},
       submitText,
       cancelText,
       onSubmit,
       onCancel,
-      enterToSubmit,
+      enterToSubmit = false,
       onError,
       formId,
     }: FormWithValidationProps,
@@ -58,7 +54,7 @@ export const FormWithValidation = forwardRef(
       [fieldOptions]
     );
 
-    const { handleSubmit, control, reset, getValues } = useForm({
+    const { handleSubmit, control, reset, getValues, resetField } = useForm({
       defaultValues,
     });
 
@@ -83,10 +79,8 @@ export const FormWithValidation = forwardRef(
 
     return (
       <>
-        <form
+        <StyledForm
           id={id}
-          className="uk-form-stacked uk-grid-small uk-width-1-1 uk-child-width-1-1"
-          data-uk-grid
           data-testid="form-with-validation"
           onKeyDown={(ev) => {
             if (enterToSubmit) {
@@ -96,7 +90,7 @@ export const FormWithValidation = forwardRef(
             }
           }}
         >
-          <fieldset className="uk-fieldset">
+          <fieldset>
             {fields.map((value, i) => {
               const shouldHide = value.hide
                 ? value.hide((name) => {
@@ -149,6 +143,7 @@ export const FormWithValidation = forwardRef(
 
                           return !shouldHideField ? (
                             <GenericField
+                              resetField={resetField}
                               control={control}
                               data={field}
                               formId={id}
@@ -174,6 +169,7 @@ export const FormWithValidation = forwardRef(
                 return (
                   <li key={i}>
                     <MultipleFields
+                      resetField={resetField}
                       control={control}
                       action={action}
                       name={multipleFieldsName}
@@ -190,6 +186,7 @@ export const FormWithValidation = forwardRef(
               return (
                 <li key={i}>
                   <GenericField
+                    resetField={resetField}
                     control={control}
                     data={value}
                     formId={id}
@@ -203,7 +200,7 @@ export const FormWithValidation = forwardRef(
               );
             })}
           </fieldset>
-        </form>
+        </StyledForm>
         <FormFooter
           error={error}
           submitText={submitText}
@@ -222,13 +219,3 @@ export const FormWithValidation = forwardRef(
     );
   }
 );
-
-FormWithValidation.defaultProps = {
-  submitText: undefined,
-  cancelText: undefined,
-  defaultValues: {},
-  onCancel: undefined,
-  enterToSubmit: false,
-  onError: null,
-  formId: '',
-};

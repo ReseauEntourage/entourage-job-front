@@ -1,5 +1,12 @@
-import React, { useCallback, useMemo } from 'react';
-import { Control, useController } from 'react-hook-form';
+import React, { useCallback, useEffect, useMemo } from 'react';
+import {
+  Control,
+  useController,
+  UseFormResetField,
+  UseFormWatch,
+  useWatch,
+  WatchInternal,
+} from 'react-hook-form';
 import { CommonInputProps } from '../../utils/Inputs/Inputs.types';
 import { SimpleLink } from 'src/components/utils';
 import {
@@ -28,6 +35,7 @@ interface GenericFieldProps {
   fieldOptions?: AnyToFix;
   updateFieldOptions?: (newFieldOption?: { [K in string]: AnyToFix }) => void;
   control: Control;
+  resetField: UseFormResetField<AnyToFix>;
 }
 
 export const GenericField = ({
@@ -37,6 +45,7 @@ export const GenericField = ({
   updateFieldOptions = () => {},
   fieldOptions = {},
   control,
+  resetField,
 }: GenericFieldProps) => {
   const {
     field: { onChange, onBlur, value, name, ref },
@@ -47,7 +56,36 @@ export const GenericField = ({
     rules: { required: 'Obligatoire' },
   });
 
-  console.log(error);
+  console.log(name, error);
+  useWatch({
+    control,
+    name: data.fieldsToWatch,
+  });
+
+  /*
+  const fieldsToWatch = data.fieldsToWatch.map((fieldsToWatch) =>
+    watch(fieldsToWatch)
+  );
+/!*
+
+  useEffect(() => {
+    data.hide()
+  }, [fieldsToWatch]);
+*!/
+*/
+
+  // TODO MANAGE RESET OF FIELDS ON CHANGE OTHER FIELDS
+  const onChangeCustom = useCallback(
+    (updatedValue) => {
+      if (data.fieldsToReset) {
+        for (let i = 0; i < data.fieldsToReset.length; i += 1) {
+          resetField(data.fieldsToReset[i]);
+        }
+      }
+      onChange(updatedValue);
+    },
+    [data.fieldsToReset, onChange, resetField]
+  );
 
   const commonProps: CommonInputProps = useMemo(() => {
     return {
@@ -56,7 +94,7 @@ export const GenericField = ({
       title: data.dynamicTitle ? data.dynamicTitle(getValue) : data.title,
       value,
       error,
-      onChange,
+      onChange: onChangeCustom,
       onBlur,
       disabled: data.disable ? data.disable(getValue) : data.disabled,
       hidden: data.hide ? data.hide(getValue) : data.hidden,
@@ -64,27 +102,7 @@ export const GenericField = ({
       placeholder: data.placeholder,
       showLabel: data.showLabel,
     };
-  }, [data, error, formId, getValue, name, onBlur, onChange, ref, value]);
-
-  // TODO MANAGE RESET OF FIELDS ON CHANGE OTHER FIELDS
-  const onChangeCustom = useCallback(
-    (event) => {
-      let events = [event];
-      if (data.fieldsToReset) {
-        events = [
-          ...events,
-          ...data.fieldsToReset.map((field) => {
-            return {
-              target: { name: field, value: undefined },
-              isReset: true,
-            };
-          }),
-        ];
-      }
-      onChange(events);
-    },
-    [data.fieldsToReset, onChange]
-  );
+  }, [data, error, formId, getValue, name, onBlur, onChangeCustom, ref, value]);
 
   // For Select Components
 
@@ -94,6 +112,10 @@ export const GenericField = ({
     typeof isMultiDefined === 'function'
       ? isMultiDefined(getValue)
       : isMultiDefined;
+
+  if (commonProps.hidden) {
+    return null;
+  }
 
   if (data.component === 'datepicker') {
     return <DatePicker {...commonProps} min={data.min} max={data.max} />;

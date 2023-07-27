@@ -14,6 +14,7 @@ import { useLineLimit } from './useLineLimit';
 
 interface TextAreaProps extends CommonInputProps<string, HTMLTextAreaElement> {
   maxLines?: { lines: number; width: number };
+  rows?: number;
 }
 
 export function TextArea({
@@ -27,6 +28,7 @@ export function TextArea({
   maxLines,
   showLabel,
   inputRef,
+  rows,
 }: TextAreaProps) {
   const isMobile = useIsMobile();
 
@@ -63,7 +65,7 @@ export function TextArea({
           ref={textAreaRef}
           name={name}
           id={id}
-          rows={5}
+          rows={rows || 5}
           placeholder={title}
           onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
             onChange(event.target.value)

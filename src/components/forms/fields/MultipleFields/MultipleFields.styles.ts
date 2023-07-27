@@ -8,7 +8,7 @@ export const StyledMultipleFieldContainer = styled.div`
 
 export const StyledTrashButtonContainer = styled.div`
   width: 26px;
-  margin-right: -26px;
+  margin-right: -30px;
   margin-top: -30px;
   margin-left: 4px;
 `;
