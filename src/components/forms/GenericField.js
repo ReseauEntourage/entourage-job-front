@@ -240,6 +240,7 @@ export const GenericField = ({
         <TextAreaNew
           id={`${formId}-${data.id}`}
           name={data.name}
+          maxLines={data.maxLines}
           onChange={onChangeCustom}
           value={value}
           valid={getValid(data.name)}
