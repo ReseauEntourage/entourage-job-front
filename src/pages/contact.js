@@ -34,6 +34,7 @@ const Contact = () => {
           ref={form}
           submitText="Envoyer"
           formSchema={formInterestLinkedOut}
+          formId={formInterestLinkedOut.id}
           onSubmit={(fields) => {
             return Api.postContactContactUs(fields)
               .then(() => {

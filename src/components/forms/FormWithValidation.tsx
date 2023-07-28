@@ -54,9 +54,11 @@ export const FormWithValidation = forwardRef(
       [fieldOptions]
     );
 
-    const { handleSubmit, control, reset, getValues, resetField } = useForm({
-      defaultValues,
-    });
+    const { handleSubmit, control, reset, getValues, resetField, watch } =
+      useForm({
+        defaultValues,
+        shouldUnregister: true,
+      });
 
     useImperativeHandle(ref, () => {
       return {
@@ -113,17 +115,7 @@ export const FormWithValidation = forwardRef(
                     id={`${formId}-${value.id}`}
                     data-testid={`${formId}-${value.id}`}
                   >
-                    {value.title}
-                  </p>
-                );
-              }
-              if (value.component === 'dynamic-text') {
-                return (
-                  <p
-                    id={`${formId}-${value.id}`}
-                    data-testid={`${formId}-${value.id}`}
-                  >
-                    {value.title(getValue)}
+                    {value.dynamicTitle ? value.title(getValue) : value.title}
                   </p>
                 );
               }
@@ -143,6 +135,7 @@ export const FormWithValidation = forwardRef(
 
                           return !shouldHideField ? (
                             <GenericField
+                              watch={watch}
                               resetField={resetField}
                               control={control}
                               data={field}
@@ -169,6 +162,7 @@ export const FormWithValidation = forwardRef(
                 return (
                   <li key={i}>
                     <MultipleFields
+                      watch={watch}
                       resetField={resetField}
                       control={control}
                       action={action}
@@ -186,6 +180,7 @@ export const FormWithValidation = forwardRef(
               return (
                 <li key={i}>
                   <GenericField
+                    watch={watch}
                     resetField={resetField}
                     control={control}
                     data={value}

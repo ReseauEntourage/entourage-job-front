@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import schemaformEditPassions from 'src/components/forms/schema/formEditPassions.json';
+import { formEditPassions } from 'src/components/forms/schema/formEditPassions';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Grid, ButtonIcon, Icon } from 'src/components/utils';
@@ -25,7 +25,7 @@ export const PassionsCard = ({ list, onChange }) => {
                 <ModalEdit
                   id="modal-passions"
                   title="Édition - Mes passions (6 maximum)"
-                  formSchema={schemaformEditPassions}
+                  formSchema={formEditPassions}
                   defaultValues={list.reduce((acc, { name }, i) => {
                     acc[`passion${i + 1}`] = name;
                     return acc;

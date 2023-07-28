@@ -32,7 +32,8 @@ export function SelectCreatable({
   disabled = false,
   hidden = false,
   onChange,
-  openMenuOnClick = false,
+  onBlur,
+  openMenuOnClick = true,
   showLabel = false,
   inputRef,
 }: SelectAsyncProps) {
@@ -58,8 +59,8 @@ export function SelectCreatable({
           isMulti={isMulti}
           placeholder={placeholder || title}
           isDisabled={disabled}
-          isHidden={hidden}
           onChange={onChange}
+          onBlur={onBlur}
           openMenuOnClick={openMenuOnClick}
           formatCreateLabel={(userInput) => {
             return `Créer "${userInput}"`;

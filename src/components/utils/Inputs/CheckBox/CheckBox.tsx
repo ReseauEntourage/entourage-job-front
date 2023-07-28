@@ -12,13 +12,14 @@ export function CheckBox({
   name,
   title,
   onChange,
+  onBlur,
   disabled = false,
   hidden = false,
   value = false,
   removeMargin = false,
   error,
   inputRef,
-}: Omit<CheckBoxProps, 'title'> & { title: string | JSX.Element }) {
+}: Omit<CheckBoxProps, 'title'> & { title?: string | JSX.Element }) {
   if (hidden) {
     return null;
   }
@@ -40,6 +41,7 @@ export function CheckBox({
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             onChange(event.target.checked)
           }
+          onBlur={onBlur}
           disabled={disabled}
           checked={value}
           name={name}

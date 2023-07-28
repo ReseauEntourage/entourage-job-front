@@ -10,8 +10,9 @@ import {
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 import { findConstantFromValue } from 'src/utils';
+import { FormSchema } from './FormSchema.types';
 
-export const formEditExternalOpportunity = {
+export const formEditExternalOpportunity: FormSchema = {
   id: 'form-offer-external',
   fields: [
     {
@@ -56,7 +57,7 @@ export const formEditExternalOpportunity = {
       id: 'contract',
       name: 'contract',
       component: 'select-simple',
-      options: [{ value: -1, label: 'Choisissez un contrat' }, ...CONTRACTS],
+      options: CONTRACTS,
       title: 'Type de contrat*',
       fieldsToReset: ['endOfContract'],
     },
@@ -125,10 +126,7 @@ export const formEditExternalOpportunity = {
       id: 'externalOrigin',
       name: 'externalOrigin',
       component: 'select-simple',
-      options: [
-        { value: -1, label: 'Choisissez une origine' },
-        ...EXTERNAL_OFFERS_ORIGINS,
-      ],
+      options: EXTERNAL_OFFERS_ORIGINS,
       title: 'Offre venant de',
     },
   ],

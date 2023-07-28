@@ -1,19 +1,28 @@
 import { useWindowWidth } from '@react-hook/window-size';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  MutableRefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import UIkit from 'uikit';
 import { usePrevious } from 'src/hooks/utils';
 
 export function useLineLimit(
   value: string,
   name: string,
-  onChange: (arg: { target: { value: string; name: string } }) => void,
+  onChange: (updatedValue: string) => void,
+  inputRef?: MutableRefObject<HTMLTextAreaElement>,
   maxLines?: number
 ) {
   const windowWidth = useWindowWidth();
-  const ref = useRef<HTMLTextAreaElement>();
 
   const [numberOfLines, setNumberOfLines] = useState(0);
   const [textAreaWidth, setTextAreaWidth] = useState(0);
+
+  const ref = useRef<HTMLTextAreaElement>();
+  const refToUse = inputRef || ref;
 
   const prevValue: string = usePrevious(value);
 
@@ -55,8 +64,8 @@ export function useLineLimit(
     maxLines - numberOfLines < 0 ? 0 : maxLines - numberOfLines;
 
   useEffect(() => {
-    if (maxLines && ref && ref.current && value !== prevValue) {
-      const ta = ref.current;
+    if (maxLines && refToUse && refToUse.current && value !== prevValue) {
+      const ta = refToUse.current;
 
       const style = window.getComputedStyle
         ? window.getComputedStyle(ta)
@@ -79,17 +88,20 @@ export function useLineLimit(
           );
         }
 
-        onChange({
-          target: {
-            value: prevValue || '',
-            name,
-          },
-        });
+        onChange(prevValue);
       } else {
         setNumberOfLines(!value ? 0 : nbOfLines);
       }
     }
-  }, [calculateContentHeight, maxLines, name, onChange, prevValue, value]);
+  }, [
+    calculateContentHeight,
+    maxLines,
+    name,
+    onChange,
+    prevValue,
+    refToUse,
+    value,
+  ]);
 
   useEffect(() => {
     const modal = document.getElementById('modal-screen')
@@ -120,5 +132,5 @@ export function useLineLimit(
     }
   }, [windowWidth]);
 
-  return { remainingLines, textAreaRef: ref, textAreaWidth };
+  return { remainingLines, textAreaRef: refToUse, textAreaWidth };
 }

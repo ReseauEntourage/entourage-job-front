@@ -1,14 +1,11 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   Control,
   useController,
   UseFormResetField,
   UseFormWatch,
-  useWatch,
-  WatchInternal,
 } from 'react-hook-form';
-import { CommonInputProps } from '../../utils/Inputs/Inputs.types';
-import { SimpleLink } from 'src/components/utils';
+
 import {
   CheckBox,
   DatePicker,
@@ -22,8 +19,9 @@ import {
   SelectCreatable,
   TextInput,
 } from 'src/components/utils/Inputs';
+import { CommonInputProps } from 'src/components/utils/Inputs/Inputs.types';
 
-import { EXTERNAL_LINKS, FilterConstant } from 'src/constants';
+import { FilterConstant } from 'src/constants';
 import { AnyToFix } from 'src/utils/Types';
 
 interface GenericFieldProps {
@@ -36,6 +34,7 @@ interface GenericFieldProps {
   updateFieldOptions?: (newFieldOption?: { [K in string]: AnyToFix }) => void;
   control: Control;
   resetField: UseFormResetField<AnyToFix>;
+  watch: UseFormWatch<AnyToFix>;
 }
 
 export const GenericField = ({
@@ -46,6 +45,7 @@ export const GenericField = ({
   fieldOptions = {},
   control,
   resetField,
+  watch,
 }: GenericFieldProps) => {
   const {
     field: { onChange, onBlur, value, name, ref },
@@ -56,23 +56,7 @@ export const GenericField = ({
     rules: { required: 'Obligatoire' },
   });
 
-  console.log(name, error);
-  useWatch({
-    control,
-    name: data.fieldsToWatch,
-  });
-
-  /*
-  const fieldsToWatch = data.fieldsToWatch.map((fieldsToWatch) =>
-    watch(fieldsToWatch)
-  );
-/!*
-
-  useEffect(() => {
-    data.hide()
-  }, [fieldsToWatch]);
-*!/
-*/
+  watch();
 
   // TODO MANAGE RESET OF FIELDS ON CHANGE OTHER FIELDS
   const onChangeCustom = useCallback(
@@ -156,32 +140,11 @@ export const GenericField = ({
   }
 
   if (data.component === 'textarea') {
-    return <TextArea {...commonProps} maxLength={data.maxLength} />;
+    return <TextArea {...commonProps} maxLines={data.maxLines} />;
   }
 
   if (data.component === 'checkbox') {
     return <CheckBox {...commonProps} value={value} />;
-  }
-
-  if (data.component === 'cgu') {
-    return (
-      <CheckBox
-        {...commonProps}
-        value={value}
-        title={
-          <span>
-            J&apos;accepte les{' '}
-            <SimpleLink
-              isExternal
-              target="_blank"
-              href={EXTERNAL_LINKS.LEGAL_MENTIONS}
-            >
-              CGU
-            </SimpleLink>
-          </span>
-        }
-      />
-    );
   }
 
   // Select Components

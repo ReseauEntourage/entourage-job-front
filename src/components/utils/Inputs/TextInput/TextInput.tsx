@@ -21,6 +21,7 @@ export function TextInput({
   style,
   showLabel = false,
   hidden = false,
+  disabled = false,
   inputRef,
   error,
 }: TextInputProps) {
@@ -43,6 +44,7 @@ export function TextInput({
           onChange(event.target.value)
         }
         onBlur={onBlur}
+        disabled={disabled}
         type={type || 'text'}
         placeholder={placeholder || title}
         name={name}

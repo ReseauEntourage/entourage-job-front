@@ -10,8 +10,9 @@ import {
   CANDIDATE_YES_NO_FILTERS,
   HEARD_ABOUT_FILTERS,
 } from 'src/constants';
+import { FormSchema } from './FormSchema.types';
 
-export const formCandidateContact = {
+export const formCandidateContact: FormSchema = {
   id: 'form-candidate-contact',
   fields: [
     {
@@ -75,10 +76,7 @@ export const formCandidateContact = {
       id: 'gender',
       name: 'gender',
       component: 'select-simple',
-      options: [
-        { value: -1, label: 'Choisissez le sexe' },
-        ...CANDIDATE_GENDERS_FILTERS,
-      ],
+      options: CANDIDATE_GENDERS_FILTERS,
       title: 'Son sexe*',
     },
     {
@@ -126,10 +124,8 @@ export const formCandidateContact = {
       id: 'registeredUnemploymentOffice',
       name: 'registeredUnemploymentOffice',
       component: 'select-simple',
-      options: [
-        { value: -1, label: 'Choisissez si oui ou non' },
-        ...CANDIDATE_YES_NO_FILTERS,
-      ],
+      options: CANDIDATE_YES_NO_FILTERS,
+
       title:
         'La personne que vous souhaitez orienter est-elle inscrite au Pôle Emploi ?*',
     },
@@ -137,20 +133,14 @@ export const formCandidateContact = {
       id: 'administrativeSituation',
       name: 'administrativeSituation',
       component: 'select-simple',
-      options: [
-        { value: -1, label: 'Choisissez les papiers de la personne' },
-        ...CANDIDATE_ADMINISTRATIVE_SITUATIONS_FILTERS,
-      ],
+      options: CANDIDATE_ADMINISTRATIVE_SITUATIONS_FILTERS,
       title: "De quels papiers d'identité la personne dispose-t-elle ?",
     },
     {
       id: 'workingRight',
       name: 'workingRight',
       component: 'select-simple',
-      options: [
-        { value: -1, label: 'Choisissez si oui ou non' },
-        ...CANDIDATE_YES_NO_FILTERS,
-      ],
+      options: CANDIDATE_YES_NO_FILTERS,
       title:
         "A-t-elle l'autorisation de travailler sur le territoire Français ?*",
     },
@@ -158,43 +148,28 @@ export const formCandidateContact = {
       id: 'accommodation',
       name: 'accommodation',
       component: 'select-simple',
-      options: [
-        { value: -1, label: "Choisissez l'hébergement de la personne" },
-        ...CANDIDATE_ACCOMMODATIONS_FILTERS,
-      ],
+      options: CANDIDATE_ACCOMMODATIONS_FILTERS,
       title: "Quelle est sa situation d'hébergement ?*",
     },
     {
       id: 'professionalSituation',
       name: 'professionalSituation',
       component: 'select-simple',
-      options: [
-        {
-          value: -1,
-          label: 'Choisissez la situation professionnel de la personne',
-        },
-        ...CANDIDATE_PROFESSIONAL_SITUATIONS_FILTERS,
-      ],
+      options: CANDIDATE_PROFESSIONAL_SITUATIONS_FILTERS,
       title: 'Quelle est sa situation professionnelle ?*',
     },
     {
       id: 'resources',
       name: 'resources',
       component: 'select-simple',
-      options: [
-        { value: -1, label: 'Choisissez les ressources de la personne' },
-        ...CANDIDATE_RESOURCES_FILTERS,
-      ],
+      options: CANDIDATE_RESOURCES_FILTERS,
       title: 'Quelle est la nature de ses ressources ?',
     },
     {
       id: 'domiciliation',
       name: 'domiciliation',
       component: 'select-simple',
-      options: [
-        { value: -1, label: 'Choisissez si oui ou non' },
-        ...CANDIDATE_YES_NO_FILTERS,
-      ],
+      options: CANDIDATE_YES_NO_FILTERS,
       title:
         'A-t-elle une adresse de domiciliation ? Si c\'est la même que celle de son logement, choisir "Oui"*',
     },
@@ -202,10 +177,7 @@ export const formCandidateContact = {
       id: 'socialSecurity',
       name: 'socialSecurity',
       component: 'select-simple',
-      options: [
-        { value: -1, label: 'Choisissez si oui ou non' },
-        ...CANDIDATE_YES_NO_FILTERS,
-      ],
+      options: CANDIDATE_YES_NO_FILTERS,
       title:
         'A-t-elle des droits ouverts à la sécurité sociale ? (régime général, CSS, CMU, AME, etc.)*',
     },
@@ -213,10 +185,7 @@ export const formCandidateContact = {
       id: 'handicapped',
       name: 'handicapped',
       component: 'select-simple',
-      options: [
-        { value: -1, label: 'Choisissez si oui ou non' },
-        ...CANDIDATE_YES_NO_FILTERS,
-      ],
+      options: CANDIDATE_YES_NO_FILTERS,
       title:
         'A-t-elle la reconnaissance RQTH ? (Reconnaissance de la qualité de travailleur handicapé)',
     },
@@ -224,10 +193,7 @@ export const formCandidateContact = {
       id: 'bankAccount',
       name: 'bankAccount',
       component: 'select-simple',
-      options: [
-        { value: -1, label: 'Choisissez si oui ou non' },
-        ...CANDIDATE_YES_NO_FILTERS,
-      ],
+      options: CANDIDATE_YES_NO_FILTERS,
       title: 'A-t-elle un compte bancaire ?*',
     },
     {
@@ -254,10 +220,7 @@ export const formCandidateContact = {
       id: 'heardAbout',
       name: 'heardAbout',
       component: 'select-simple',
-      options: [
-        { value: -1, label: 'Choisissez comment vous avez connu LinkedOut' },
-        ...HEARD_ABOUT_FILTERS,
-      ],
+      options: HEARD_ABOUT_FILTERS,
       title: 'Comment avez-vous connu LinkedOut ?*',
     },
     {

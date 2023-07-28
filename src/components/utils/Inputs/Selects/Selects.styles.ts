@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { commonMenuOptionStyles } from '../Inputs.styles';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledSelectContainer = styled.div`
@@ -124,18 +125,7 @@ export const StyledSelect = styled.div`
   & .Select__option,
   .Select__menu-notice--no-options,
   .Select__menu-notice--loading {
-    width: 100%;
-    background-color: white;
-    border: 0.5px solid white;
-    border-bottom: 0.5px solid #f4f3f3;
-    text-align: left;
-    font-size: 14px;
-    line-height: 17px;
-    padding: 16px 12px;
-    transition: 0.2s ease-in-out;
-    font-family: Poppins, sans-serif !important;
-    display: flex;
-    align-items: center;
+    ${() => commonMenuOptionStyles}
     & svg {
       margin-right: 4px !important;
     }

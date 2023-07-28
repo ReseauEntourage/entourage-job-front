@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { commonInputStyles, commonMenuOptionStyles } from '../Inputs.styles';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledSelectContainer = styled.div`
@@ -12,17 +13,7 @@ export const StyledSelectContainer = styled.div`
     margin-bottom: 30px;
     .placeholder,
     .selected-value {
-      font-family: Poppins, Arial, sans-serif;
-      padding: 4px 0;
-      font-size: 14px;
-      color: ${COLORS.black};
-      line-height: 17px;
-      border: 0.5px solid white;
-      border-bottom: solid 2px ${COLORS.gray};
-      background-color: transparent;
-      text-align: left;
-      width: 100%;
-      min-height: 30px;
+      ${() => commonInputStyles}
       &:hover {
         cursor: pointer;
       }
@@ -62,16 +53,8 @@ export const StyledSelectContainer = styled.div`
         margin: 0;
         padding: 0;
         button {
-          width: 100%;
-          background-color: white;
-          border: 0.5px solid white;
-          border-bottom: 0.5px solid #f4f3f3;
-          text-align: left;
-          font-size: 14px;
-          line-height: 17px;
-          padding: 16px 12px;
-          transition: 0.2s ease-in-out;
-          font-family: Poppins, sans-serif !important;
+          ${() => commonMenuOptionStyles}
+
           &:hover {
             border: 0.5px solid ${COLORS.primaryOrange};
             color: ${COLORS.primaryOrange};

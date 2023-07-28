@@ -1,7 +1,8 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { ADMIN_ZONES_FILTERS } from 'src/constants/departements';
+import { FormSchema } from './FormSchema.types';
 
-export const formAddOrganization = {
+export const formAddOrganization: FormSchema = {
   id: 'form-add-organization',
   fields: [
     {
@@ -34,6 +35,7 @@ export const formAddOrganization = {
       component: 'heading',
     },
     {
+      id: 'referentInfo',
       component: 'fieldgroup',
       fields: [
         {
@@ -59,7 +61,7 @@ export const formAddOrganization = {
     {
       id: 'referentMail',
       name: 'referentMail',
-      type: 'mail',
+      type: 'email',
       component: 'text-input',
       title: 'Adresse mail du référent *',
     },

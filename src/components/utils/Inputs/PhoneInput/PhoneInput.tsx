@@ -29,6 +29,7 @@ export function PhoneInput({
   value,
   error,
   onChange,
+  onBlur,
   disabled = false,
   hidden = false,
   autocomplete = 'tel',
@@ -57,6 +58,7 @@ export function PhoneInput({
           value={value}
           placeholder={placeholder || title}
           onChange={onChange}
+          onBlur={onBlur}
           disabled={disabled}
           autoComplete={autocomplete}
           ref={inputRef}

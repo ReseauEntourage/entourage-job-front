@@ -1,7 +1,8 @@
 import { CONTRACTS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { FormSchema } from './FormSchema.types';
 
-export const formAddExternalOpportunityCandidate = {
+export const formAddExternalOpportunityCandidate: FormSchema = {
   id: 'form-offer-external',
   fields: [
     {
@@ -16,6 +17,7 @@ export const formAddExternalOpportunityCandidate = {
       title: 'Intitulé du poste *',
     },
     {
+      id: 'companyDepartment',
       component: 'fieldgroup',
       fields: [
         {
@@ -46,6 +48,7 @@ export const formAddExternalOpportunityCandidate = {
       component: 'heading',
     },
     {
+      id: 'recruiterInfo',
       component: 'fieldgroup',
       fields: [
         {
@@ -92,8 +95,6 @@ export const formAddExternalOpportunityCandidate = {
       id: 'coachNotification',
       name: 'coachNotification',
       component: 'checkbox',
-      checked: true,
-      disable: false,
       title: "Envoyer un mail à votre coach pour l'informer",
     },
   ],

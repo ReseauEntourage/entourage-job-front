@@ -4,7 +4,7 @@ import UIkit from 'uikit';
 
 import { Api } from 'src/api';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
-import schemaGetEmail from 'src/components/forms/schema/formGetEmail.json';
+import { formGetEmail } from 'src/components/forms/schema/formGetEmail';
 import { StepperModal } from 'src/components/modals/Modal/ModalGeneric/StepperModal';
 import { Button, Img, Icon } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
@@ -30,7 +30,7 @@ export const ModalShareCV = ({ firstName }) => {
                 Laissez-nous votre adresse mail :
               </p>
               <FormWithValidation
-                formSchema={schemaGetEmail}
+                formSchema={formGetEmail}
                 submitText="Envoyer"
                 onCancel={close}
                 onSubmit={({ email }) => {

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import schemaformEditSkills from 'src/components/forms/schema/formEditSkills.json';
+import { formEditSkills } from 'src/components/forms/schema/formEditSkills';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Grid, ButtonIcon, Icon } from 'src/components/utils';
@@ -24,7 +24,7 @@ export const SkillsCard = ({ list, onChange }) => {
               openModal(
                 <ModalEdit
                   title="Édition - Mes atouts (6 maximum)"
-                  formSchema={schemaformEditSkills}
+                  formSchema={formEditSkills}
                   defaultValues={list.reduce((acc, { name }, i) => {
                     acc[`skill${i + 1}`] = name;
                     return acc;

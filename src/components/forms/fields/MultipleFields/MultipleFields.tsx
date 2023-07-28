@@ -1,5 +1,10 @@
 import React from 'react';
-import { Control, useFieldArray, UseFormResetField } from "react-hook-form";
+import {
+  Control,
+  useFieldArray,
+  UseFormResetField,
+  UseFormWatch,
+} from 'react-hook-form';
 import { GenericField } from '../GenericField';
 import { InputsContainer } from '../InputsContainer';
 import { Button, ButtonIcon, Icon } from 'src/components/utils';
@@ -19,6 +24,7 @@ interface MultipleFieldsProps {
   getValue: (name: string) => AnyToFix;
   control: Control;
   resetField: UseFormResetField<AnyToFix>;
+  watch: UseFormWatch<AnyToFix>;
 }
 
 export const MultipleFields = ({
@@ -29,6 +35,7 @@ export const MultipleFields = ({
   formId,
   action = 'Ajouter',
   resetField,
+  watch,
 }: MultipleFieldsProps) => {
   const { fields, append, remove } = useFieldArray({ control, name });
 
@@ -51,6 +58,7 @@ export const MultipleFields = ({
                 };
                 return (
                   <GenericField
+                    watch={watch}
                     resetField={resetField}
                     data={numberedField}
                     formId={formId}

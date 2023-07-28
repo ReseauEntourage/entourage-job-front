@@ -1,8 +1,9 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { CONTRACTS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { FormSchema } from './FormSchema.types';
 
-export const formEditUsefulInformation = {
+export const formEditUsefulInformation: FormSchema = {
   id: 'form-usefullinformation',
   fields: [
     {
@@ -26,7 +27,6 @@ export const formEditUsefulInformation = {
     },
     {
       id: 'private',
-      name: 'private',
       component: 'text',
       title:
         "L'adresse mail, le numéro de téléphone et l'adresse postale ne seront visibles que sur la version PDF du CV",

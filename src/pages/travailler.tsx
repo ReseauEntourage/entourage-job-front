@@ -53,7 +53,7 @@ const Travailler = () => {
         description="Pour mieux vous connaitre, nous avons besoins de quelques informations ! Merci de répondre à ces quelques questions, cela prend moins de 5 min !"
         formSchema={formCandidateInscription}
         submitText="Valider"
-        formId="candidate-inscription-form"
+        formId={formCandidateInscription.id}
         onSubmit={async (fields, closeModal) => {
           gaEvent({
             ...GA_TAGS.PAGE_TRAVAILLER_ENVOYER_DEPOSER_CANDIDATURE_CLIC,

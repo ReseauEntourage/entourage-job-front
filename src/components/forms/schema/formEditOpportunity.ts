@@ -6,8 +6,9 @@ import { BUSINESS_LINES, CONTRACTS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { USER_ROLES } from 'src/constants/users';
 import { findConstantFromValue, getValueFromFormField } from 'src/utils';
+import { FormSchema } from './FormSchema.types';
 
-export const formEditOpportunity = {
+export const formEditOpportunity: FormSchema = {
   id: 'form-offer',
   fields: [
     {
@@ -25,6 +26,7 @@ export const formEditOpportunity = {
       id: 'candidatesIds',
       name: 'candidatesIds',
       isMulti: true,
+      title: 'Sélectionnez des candidats',
       dynamicTitle: (getValue) => {
         return getValue('isPublic') === true
           ? "Souhaitez-vous suggérer l'offre à certains candidats ?"
@@ -68,7 +70,6 @@ export const formEditOpportunity = {
       name: 'message',
       component: 'textarea',
       title: 'Message personnalisé pour le(s) candidat(s)',
-      fieldsToWatch: ['isPublic'],
       disable: (getValue) => {
         return getValue('isPublic') === true;
       },
@@ -186,7 +187,7 @@ export const formEditOpportunity = {
       id: 'contract',
       name: 'contract',
       component: 'select-simple',
-      options: [{ value: -1, label: 'Choisissez un contrat' }, ...CONTRACTS],
+      options: CONTRACTS,
       title: 'Type de contrat*',
       fieldsToReset: ['endOfContract'],
     },
@@ -194,7 +195,6 @@ export const formEditOpportunity = {
       id: 'startEndContract',
       component: 'fieldgroup',
       hidden: true,
-      disabled: true,
       fields: [
         {
           id: 'startOfContract',
@@ -280,7 +280,6 @@ export const formEditOpportunity = {
     */
     {
       id: 'disclaimer',
-      name: 'disclaimer',
       component: 'text',
       title:
         "Les offres font l'objet d'une validation par LinkedOut avant d'être transmises aux candidats",

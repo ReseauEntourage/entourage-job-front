@@ -38,6 +38,7 @@ export function SelectAsync({
   placeholder,
   error,
   onChange,
+  onBlur,
   defaultOptions: defaultOptionsProps = true,
   cacheOptions = false,
   isMulti = false,
@@ -46,7 +47,7 @@ export function SelectAsync({
   loadOptions,
   disabled = false,
   hidden = false,
-  openMenuOnClick = false,
+  openMenuOnClick = true,
   showLabel = false,
   inputRef,
 }: SelectAsyncProps) {
@@ -111,8 +112,8 @@ export function SelectAsync({
           loadingMessage={loadingMessage}
           loadOptions={debouncedLoadOptions}
           isDisabled={disabled}
-          isHidden={hidden}
           onChange={onChange}
+          onBlur={onBlur}
           openMenuOnClick={openMenuOnClick}
           ref={inputRef}
         />

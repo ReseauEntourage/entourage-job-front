@@ -1,40 +1,27 @@
 import styled, { css } from 'styled-components';
+import { commonInputStyles } from '../Inputs.styles';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledTextAreaContainer = styled.div`
   max-width: 100%;
   background-color: ${COLORS.white};
-
   border-radius: 5px;
-  /* div.label {
-    border-bottom: solid 2px ${COLORS.gray};
-    text-align: left;
-    font-size: 14px;
-    line-height: 17px;
-    width: 100%;
-    font-style: italic;
-    color: ${COLORS.darkGray};
-    margin-bottom: 8px;
-  } */
 `;
 
 export const StyledTextArea = styled.textarea`
+  ${() => commonInputStyles}
+  width: 100%;
+  padding-bottom: 12px;
+  resize: vertical;
+  margin-bottom: 30px;
   width: ${({ hasLineLimit, width }) => {
     // Hard code the width in case the width of the modal changes
     return hasLineLimit ? `${width}px` : '100%';
   }};
-  font-size: 14px;
-  padding-bottom: 12px;
-  box-sizing: border-box;
-  border: none;
-  resize: none;
-  border-bottom: solid 2px ${COLORS.gray};
-  font-family: Poppins, sans-serif;
-  // need to fix line height to calculate number of lines
-  line-height: 17px;
   &::placeholder {
     font-style: italic;
     color: ${COLORS.darkGray};
+    background-color: ${COLORS.transpare};
     font-family: Poppins, sans-serif;
   }
   :focus-visible {

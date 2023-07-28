@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { CV } from 'src/api/types';
@@ -12,7 +11,6 @@ import {
   sortByName,
   sortByOrder,
 } from 'src/utils';
-import { CVShape } from './CV.shape';
 
 const uuidValue = uuid();
 
@@ -350,13 +348,4 @@ export const CVFiche = ({ cv, actionDisabled }: CVFicheProps) => {
       </Grid>
     </div>
   );
-};
-
-CVFiche.propTypes = {
-  cv: CVShape.isRequired,
-  actionDisabled: PropTypes.bool,
-};
-
-CVFiche.defaultProps = {
-  actionDisabled: false,
 };

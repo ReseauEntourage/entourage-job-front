@@ -5,8 +5,8 @@ export const StyledCheckbox = styled.div`
   height: 100%;
   display: flex;
   justify-content: center;
-
   flex-direction: column;
+
   .checkbox-label {
     margin-bottom: ${({ removeMargin }) => {
       return removeMargin ? 0 : 30;

@@ -4,8 +4,9 @@ import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { Api } from 'src/api';
 import 'moment/locale/fr';
 import { ANTENNE_INFO } from 'src/constants';
+import { FormSchema } from './FormSchema.types';
 
-export const formCandidateInscription = {
+export const formCandidateInscription: FormSchema = {
   id: 'form-candidate-inscription',
   fields: [
     {
@@ -57,6 +58,7 @@ export const formCandidateInscription = {
       fieldsToReset: ['infoCo'],
     },
     {
+      id: 'birthdateWorkingRight',
       component: 'fieldgroup',
       fields: [
         {
@@ -94,6 +96,7 @@ export const formCandidateInscription = {
       component: 'heading',
     },
     {
+      id: 'candidateInfo',
       component: 'fieldgroup',
       fields: [
         {
@@ -115,6 +118,7 @@ export const formCandidateInscription = {
       ],
     },
     {
+      id: 'candidateContact',
       component: 'fieldgroup',
       fields: [
         {
@@ -192,7 +196,9 @@ export const formCandidateInscription = {
     },
     {
       id: 'infoCoSubtitle',
-      title: (getValue) => {
+      title:
+        'Pour bien comprendre votre besoin et vous accompagner au mieux nous vous invitons dans nos bureaux',
+      dynamicTitle: (getValue) => {
         const text =
           'Pour bien comprendre votre besoin et vous accompagner au mieux nous vous invitons dans nos bureaux';
         const address = ANTENNE_INFO.find((antenne) => {
@@ -200,7 +206,7 @@ export const formCandidateInscription = {
         })?.address;
         return `${text}${address ? ` au ${address}` : ''}`;
       },
-      component: 'dynamic-text',
+      component: 'text',
       hide: (getValue, fieldOptions) => {
         const city = ANTENNE_INFO.find((antenne) => {
           return antenne.dpt === getValue('location');

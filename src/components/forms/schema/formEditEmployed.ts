@@ -1,8 +1,9 @@
 import moment from 'moment';
 import { CONTRACTS } from 'src/constants';
 import { findConstantFromValue } from 'src/utils';
+import { FormSchema } from './FormSchema.types';
 
-export const formEditEmployed = {
+export const formEditEmployed: FormSchema = {
   id: 'form-edit-employed',
   fields: [
     {
@@ -10,7 +11,7 @@ export const formEditEmployed = {
       title: 'Contrat*',
       name: 'contract',
       component: 'select-simple',
-      options: [{ value: -1, label: 'Choisissez un contrat' }, ...CONTRACTS],
+      options: CONTRACTS,
       fieldsToReset: ['endOfContract'],
     },
     {

@@ -21,8 +21,10 @@ export function SelectSimple({
   error,
   options,
   onChange,
+  onBlur,
   showLabel = false,
   hidden = false,
+  disabled = false,
   value,
   inputRef,
 }: SelectProps) {
@@ -60,6 +62,7 @@ export function SelectSimple({
         value={selectedOption.value}
         name={name}
         id={id}
+        onBlur={onBlur}
         ref={inputRef}
       />
       <div className="select">
@@ -72,6 +75,7 @@ export function SelectSimple({
               return setOptionsOpen(!optionsOpen);
             }}
             data-testid={id}
+            disabled={disabled}
           >
             {showLabel || !title ? (
               <div>

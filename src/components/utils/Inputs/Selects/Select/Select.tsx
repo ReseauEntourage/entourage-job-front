@@ -27,6 +27,7 @@ export function Select({
   title,
   value,
   onChange,
+  onBlur,
   placeholder,
   error,
   options,
@@ -59,8 +60,8 @@ export function Select({
           isMulti={isMulti}
           placeholder={placeholder || title}
           isDisabled={disabled}
-          isHidden={hidden}
           onChange={onChange}
+          onBlur={onBlur}
           openMenuOnClick={openMenuOnClick}
           ref={inputRef}
         />

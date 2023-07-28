@@ -12,6 +12,7 @@ import {
   EXTERNAL_USER_ROLES,
 } from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils/Finding';
+import { FormSchema } from './FormSchema.types';
 import { formAddOrganization } from './formAddOrganization';
 
 export const CREATE_NEW_ORGANIZATION_VALUE = 'createNewOrganization';
@@ -67,7 +68,7 @@ const organizationFieldsNames = mutatedAddOrganizationForm.fields.map(
   ({ name }) => name
 );
 
-export const formAddUser = {
+export const formAddUser: FormSchema = {
   id: 'form-add-user',
   fields: [
     {

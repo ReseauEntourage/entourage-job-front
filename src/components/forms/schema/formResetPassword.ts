@@ -1,6 +1,7 @@
 import { passwordStrength } from 'check-password-strength';
+import { FormSchema } from './FormSchema.types';
 
-export const formResetPassword = {
+export const formResetPassword: FormSchema = {
   id: 'form-reset-pwd',
   fields: [
     {

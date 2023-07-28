@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
-import schemaformEditExperience from 'src/components/forms/schema/formEditExperience.json';
+import { formEditExperience } from 'src/components/forms/schema/formEditExperience';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
@@ -45,7 +45,7 @@ const Experience = SortableElement(
                   openModal(
                     <ModalEdit
                       title="Édition - Mes expériences et compétences"
-                      formSchema={schemaformEditExperience}
+                      formSchema={formEditExperience}
                       defaultValues={{
                         ...value,
                         skills: value.skills?.map(({ name }) => {
@@ -163,7 +163,7 @@ export const ExperiencesProfileCard = ({ experiences, onChange }) => {
               openModal(
                 <ModalEdit
                   title="Ajout - Mes expériences et compétences"
-                  formSchema={schemaformEditExperience}
+                  formSchema={formEditExperience}
                   onSubmit={async (fields, closeModal) => {
                     closeModal();
                     await onChange({

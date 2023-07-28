@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 // import { commonInputDesignFeatures } from "../Inputs.styles";
+import { commonInputStyles } from '../Inputs.styles';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledPhoneInput = styled.div`
@@ -18,15 +19,8 @@ export const StyledPhoneInput = styled.div`
     margin-left: 5px;
   }
   input {
+    ${() => commonInputStyles}
     border: none;
-    min-width: unset;
-    width: 100%;
-    background-color: white;
-    text-align: left;
-    font-size: 14px;
-    line-height: 17px;
-    padding: 4px 0;
-    font-family: Poppins, sans-serif !important;
     &::placeholder {
       font-style: italic;
       color: ${COLORS.darkGray};

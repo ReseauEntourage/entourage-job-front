@@ -152,6 +152,7 @@ export const SendMailModalContent = ({
             onChange={handleDescription}
             value={textAreaContent}
             name="contact-description"
+            id="contact-description"
           />
         </div>
         <FormFooter

@@ -85,9 +85,8 @@ export type User = {
 export interface CV {
   id?: string;
   version: string;
+  profileImage: Blob;
   profileImageObjectUrl: string;
-
-  profileImage: Blob | string;
   user: {
     candidat: {
       firstName: string;

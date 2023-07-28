@@ -3,11 +3,13 @@ import {
   EXTERNAL_MESSAGE_SUBJECT_FILTERS,
   EXTERNAL_MESSAGE_CONTACT_TYPE_FILTERS,
 } from 'src/constants';
+import { FormSchema } from './FormSchema.types';
 
-export const formSendExternalMessage = {
+export const formSendExternalMessage: FormSchema = {
   id: 'form-send-external-message',
   fields: [
     {
+      id: 'senderInfo',
       component: 'fieldgroup',
       fields: [
         {
@@ -27,11 +29,12 @@ export const formSendExternalMessage = {
     {
       id: 'senderEmail',
       name: 'senderEmail',
-      type: 'mail',
+      type: 'email',
       component: 'text-input',
       title: 'Adresse mail *',
     },
     {
+      id: 'senderPhoneType',
       component: 'fieldgroup',
       fields: [
         {

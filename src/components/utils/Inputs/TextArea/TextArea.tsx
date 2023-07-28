@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, MutableRefObject } from 'react';
 import { StyledInputLabel } from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
@@ -21,9 +21,12 @@ export function TextArea({
   title,
   name,
   id,
+  placeholder,
   onChange,
+  onBlur,
   value,
-  hidden,
+  hidden = false,
+  disabled = false,
   error,
   maxLines,
   showLabel,
@@ -36,6 +39,7 @@ export function TextArea({
     value,
     name,
     onChange,
+    inputRef as MutableRefObject<HTMLTextAreaElement>,
     maxLines?.lines
   );
 
@@ -66,12 +70,13 @@ export function TextArea({
           name={name}
           id={id}
           rows={rows || 5}
-          placeholder={title}
+          placeholder={placeholder || title}
           onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
             onChange(event.target.value)
           }
+          disabled={disabled}
+          onBlur={onBlur}
           value={value}
-          ref={inputRef}
         />
       </StyledTextAreaScrollContainer>
       <StyledAnnotations>

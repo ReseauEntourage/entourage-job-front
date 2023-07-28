@@ -16,6 +16,7 @@ export function DatePicker({
   title,
   error,
   onChange,
+  onBlur,
   disabled = false,
   hidden = false,
   min,
@@ -48,8 +49,8 @@ export function DatePicker({
         onChange={(event: ChangeEvent<HTMLInputElement>) =>
           onChange(event.target.value)
         }
+        onBlur={onBlur}
         disabled={disabled}
-        hidden={hidden}
         ref={inputRef}
       />
       <FieldErrorMessage error={error} />

@@ -9,7 +9,7 @@ import { UIKIT_STYLES } from 'src/components/variables';
 export const DiscoverPartial = ({
   style = 'default',
 }: {
-  style: UIKIT_STYLES;
+  style?: UIKIT_STYLES;
 }) => {
   const [cvs, setCVs] = useState(undefined);
   const [error, setError] = useState(null);

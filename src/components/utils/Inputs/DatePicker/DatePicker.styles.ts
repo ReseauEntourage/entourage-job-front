@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { commonInputStyles } from '../Inputs.styles';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledDatePickerContainer = styled.div`
@@ -7,15 +8,7 @@ export const StyledDatePickerContainer = styled.div`
   display: flex;
   flex-direction: column;
   input {
-    width: 100%;
-
-    border: 0.5px solid white;
-    border-bottom: solid 2px ${COLORS.gray};
-    padding: 4px 0;
-    font-size: 14px;
-    line-height: 17px;
-    margin-bottom: 30px;
-    font-family: Poppins, sans-serif;
+    ${() => commonInputStyles}
     &.empty-value {
       color: ${COLORS.darkGray};
       font-style: italic;

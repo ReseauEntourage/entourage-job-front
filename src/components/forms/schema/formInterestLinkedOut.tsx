@@ -1,7 +1,10 @@
+import React from 'react';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
-import { HEARD_ABOUT_FILTERS } from 'src/constants';
+import { SimpleLink } from '../../utils';
+import { EXTERNAL_LINKS, HEARD_ABOUT_FILTERS } from 'src/constants';
+import { FormSchema } from './FormSchema.types';
 
-export const formInterestLinkedOut = {
+export const formInterestLinkedOut: FormSchema = {
   id: 'form-interest',
   fields: [
     {
@@ -46,16 +49,25 @@ export const formInterestLinkedOut = {
       id: 'heardAbout',
       name: 'heardAbout',
       component: 'select-simple',
-      options: [
-        { value: -1, label: 'Choisissez comment vous avez connu LinkedOut' },
-        ...HEARD_ABOUT_FILTERS,
-      ],
+      options: HEARD_ABOUT_FILTERS,
       title: 'Comment avez-vous connu LinkedOut ?',
     },
     {
       id: 'cgu',
       name: 'cgu',
-      component: 'cgu',
+      component: 'checkbox',
+      title: (
+        <span>
+          J&apos;accepte les{' '}
+          <SimpleLink
+            isExternal
+            target="_blank"
+            href={EXTERNAL_LINKS.LEGAL_MENTIONS}
+          >
+            CGU
+          </SimpleLink>
+        </span>
+      ),
     },
   ],
   rules: [

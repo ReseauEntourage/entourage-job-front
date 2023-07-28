@@ -11,7 +11,8 @@ export function RadioAsync({
   onChange,
   filter,
   errorMessage,
-  hidden,
+  disabled = false,
+  hidden = false,
   value,
   inputRef,
   limit,
@@ -23,6 +24,10 @@ export function RadioAsync({
     setOptions(optionsLoaded);
   });
 
+  if (hidden) {
+    return null;
+  }
+
   return (
     <>
       {options?.length > 0 && (
@@ -33,6 +38,7 @@ export function RadioAsync({
           onChange={onChange}
           filter={filter}
           options={options}
+          disabled={disabled}
           limit={limit}
           hidden={hidden}
           errorMessage={errorMessage}

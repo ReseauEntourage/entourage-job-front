@@ -1,10 +1,9 @@
-import { withRouter } from 'next/router';
-import PropTypes from 'prop-types';
+import { NextRouter, withRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { Api } from 'src/api';
+import { CV } from 'src/api/types';
 import { Layout } from 'src/components/Layout';
 import { CVList } from 'src/components/cv';
-import { CVShape } from 'src/components/cv/CV.shape';
 import { DiscoverPartial, NewsletterPartial } from 'src/components/partials';
 import { PageCVContent } from 'src/components/partials/CV/PageCvContent';
 import { Grid, Section, SimpleLink, Icon, Button } from 'src/components/utils';
@@ -12,7 +11,12 @@ import { CV_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { useUpdateSharesCount } from 'src/hooks';
 
-const CVPage = ({ cv, exists, router }) => {
+interface CVPageProps {
+  cv: CV;
+  router: NextRouter;
+  exists?: boolean;
+}
+const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
   const updateSharesCount = useUpdateSharesCount();
 
   const hostname = process.env.SERVER_URL;
@@ -137,18 +141,5 @@ CVPage.getInitialProps = async ({ query }) => {
       return { cv: null, exists: false };
     });
 };
-CVPage.propTypes = {
-  cv: CVShape,
-  router: PropTypes.shape({ asPath: PropTypes.string }),
-  exists: PropTypes.bool,
-};
 
-CVPage.defaultProps = {
-  cv: null,
-  exists: false,
-  router: {
-    asPath: '',
-  },
-};
-
-export default withRouter(CVPage);
+export default withRouter<CVPageProps>(CVPage);

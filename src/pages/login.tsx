@@ -3,8 +3,8 @@ import React, { useContext, useEffect } from 'react';
 import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
-import schemaLogin from 'src/components/forms/schema/formLogin.json';
-import schemaLostPwd from 'src/components/forms/schema/formLostPwd.json';
+import { formLogin } from 'src/components/forms/schema/formLogin';
+import { formLostPwd } from 'src/components/forms/schema/formLostPwd';
 import { openModal } from 'src/components/modals/Modal';
 import { StepperModal } from 'src/components/modals/Modal/ModalGeneric/StepperModal';
 import { SuccessModalContent } from 'src/components/modals/SuccessModalContent';
@@ -49,7 +49,8 @@ const Login = () => {
           <div className="uk-width-1-2@m uk-card uk-card-default uk-card-body">
             <h1>Connexion</h1>
             <FormWithValidation
-              formSchema={schemaLogin}
+              formId={formLogin.id}
+              formSchema={formLogin}
               submitText="Se connecter"
               enterToSubmit
               onSubmit={({ email, password }, setError) => {
@@ -74,7 +75,8 @@ const Login = () => {
                         return (
                           <FormWithValidation
                             submitText="Envoyer"
-                            formSchema={schemaLostPwd}
+                            formSchema={formLostPwd}
+                            formId={formLostPwd.id}
                             onCancel={closeModal}
                             onSubmit={({ email }, setError) => {
                               return Api.postAuthForgot({

@@ -1,6 +1,7 @@
 import { BUSINESS_LINES } from 'src/constants';
+import { FormSchema } from './FormSchema.types';
 
-export const formEditCareerPath = {
+export const formEditCareerPath: FormSchema = {
   id: 'form-career-path',
   fields: [
     {
@@ -17,7 +18,6 @@ export const formEditCareerPath = {
         },
         {
           id: 'linkWord0',
-          name: 'linkWord0',
           component: 'text',
           title: 'comme',
         },
@@ -43,7 +43,6 @@ export const formEditCareerPath = {
         },
         {
           id: 'linkWord1',
-          name: 'linkWord1',
           component: 'text',
           title: 'comme',
         },

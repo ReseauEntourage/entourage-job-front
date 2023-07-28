@@ -4,8 +4,9 @@ import {
   COMPANY_CONTACT_ZONES_FILTERS,
   HEARD_ABOUT_FILTERS,
 } from 'src/constants';
+import { FormSchema } from './FormSchema.types';
 
-export const formCompanyContact = {
+export const formCompanyContact: FormSchema = {
   id: 'form-company-contact',
   fields: [
     {
@@ -24,10 +25,7 @@ export const formCompanyContact = {
       id: 'approach',
       name: 'approach',
       component: 'select-simple',
-      options: [
-        { value: -1, label: 'Choisissez votre démarche' },
-        ...COMPANY_APPROACHES_FILTERS,
-      ],
+      options: COMPANY_APPROACHES_FILTERS,
       title: 'Quelle est votre démarche ?*',
     },
     {
@@ -66,10 +64,7 @@ export const formCompanyContact = {
       id: 'heardAbout',
       name: 'heardAbout',
       component: 'select-simple',
-      options: [
-        { value: -1, label: 'Choisissez comment vous avez connu LinkedOut' },
-        ...HEARD_ABOUT_FILTERS,
-      ],
+      options: HEARD_ABOUT_FILTERS,
       title: 'Comment avez-vous connu LinkedOut ?',
     },
   ],

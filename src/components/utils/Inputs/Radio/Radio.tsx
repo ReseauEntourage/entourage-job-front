@@ -12,8 +12,10 @@ export function Radio({
   name,
   filter,
   onChange,
+  onBlur,
   errorMessage,
-  hidden,
+  hidden = false,
+  disabled = false,
   value: valueProp,
   limit = options.length,
   inputRef,
@@ -79,6 +81,8 @@ export function Radio({
                       onChange={(e) => {
                         onHandleRadio(i, e);
                       }}
+                      disabled={disabled}
+                      onBlur={onBlur}
                       ref={inputRef}
                     />
                     {label}

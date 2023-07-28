@@ -1,7 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import UIkit from 'uikit';
 
-import { TextArea } from '../../../../components/utils/Inputs';
 import { Api } from 'src/api';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { LoadingScreen } from 'src/components/backoffice/cv/LoadingScreen';
@@ -9,6 +8,7 @@ import { useCandidateId } from 'src/components/backoffice/opportunities/useCandi
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { Button, Grid, Section } from 'src/components/utils';
 import { Icon } from 'src/components/utils/Icon';
+import { TextArea } from 'src/components/utils/Inputs';
 import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
@@ -21,7 +21,6 @@ import { isRoleIncluded } from 'src/utils/Finding';
 const Suivi = () => {
   const { user } = useContext(UserContext);
   const [userCandidat, setUserCandidat] = useState(null);
-  const [labelClass, setLabelClass] = useState('');
   const [loading, setLoading] = useState(true);
   const [value, setValue] = useState();
   const candidateId = useCandidateId();
@@ -38,7 +37,6 @@ const Suivi = () => {
       : "Ici, vous pouvez suivre la progression de votre candidat.e grâce à ses notes, et échanger avec lui/elle. Profitez de cet espace d'échange libre qui vous est dédié !";
 
   const updateValue = (text) => {
-    setLabelClass(text && text.length > 0 && ' stay-small');
     setValue(text || '');
   };
 
@@ -114,12 +112,6 @@ const Suivi = () => {
       <>
         <HeaderBackoffice title={title} description={description} />
         <div className="uk-form-controls uk-padding-small uk-padding-remove-left uk-padding-remove-right">
-          <label
-            className={`uk-form-label ${labelClass}`}
-            htmlFor="textarea-suivi"
-          >
-            {title}
-          </label>
           <TextArea
             id="textarea-suivi"
             name="textarea-suivi"
@@ -128,7 +120,9 @@ const Suivi = () => {
             onChange={(updatedValue) => {
               return updateValue(updatedValue);
             }}
-            title="Votre suivi"
+            showLabel
+            placeholder="Tapez votre texte"
+            title={title}
           />
         </div>
         <Grid match className="uk-flex-right">

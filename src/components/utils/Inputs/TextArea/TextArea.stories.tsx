@@ -29,8 +29,8 @@ const Template = (args) => {
   return (
     <TextArea
       {...args}
-      onChange={(event) => {
-        setValue(event.target.value);
+      onChange={(updatedValue) => {
+        setValue(updatedValue);
       }}
       value={value}
     />

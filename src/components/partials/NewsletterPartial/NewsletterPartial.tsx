@@ -135,8 +135,8 @@ export const NewsletterPartial = ({
             title="Renseignez votre adresse email"
             type="email"
             style="secondary"
-            onChange={(e) => {
-              return setEmail(e.target.value);
+            onChange={(value) => {
+              return setEmail(value);
             }}
             value={email}
             id="nl-email-input"

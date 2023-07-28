@@ -1,8 +1,9 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { ADMIN_ZONES_FILTERS } from 'src/constants/departements';
 import { ADMIN_ROLES } from 'src/constants/users';
+import { FormSchema } from './FormSchema.types';
 
-export const formPersonalData = {
+export const formPersonalData: FormSchema = {
   id: 'form-personal-data',
   fields: [
     {
@@ -22,10 +23,7 @@ export const formPersonalData = {
       title: 'Zone*',
       name: 'zone',
       component: 'select-simple',
-      options: [
-        { value: -1, label: 'Choisissez une zone' },
-        ...ADMIN_ZONES_FILTERS,
-      ],
+      options: ADMIN_ZONES_FILTERS,
     },
     {
       id: 'adminRole',
@@ -33,7 +31,6 @@ export const formPersonalData = {
       name: 'adminRole',
       component: 'select-simple',
       options: [
-        { value: -1, label: 'Choisissez une responsabilité' },
         { value: ADMIN_ROLES.CANDIDATES, label: ADMIN_ROLES.CANDIDATES },
         { value: ADMIN_ROLES.COMPANIES, label: ADMIN_ROLES.COMPANIES },
       ],
@@ -44,7 +41,6 @@ export const formPersonalData = {
       name: 'gender',
       component: 'select-simple',
       options: [
-        { value: -1, label: 'Choisissez un genre' },
         { value: 0, label: 'Homme' },
         { value: 1, label: 'Femme' },
       ],

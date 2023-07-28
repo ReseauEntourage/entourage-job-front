@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import schemaTestimonial from 'src/components/forms/schema/formEditTestimonial.json';
+import { formEditTestimonial } from 'src/components/forms/schema/formEditTestimonial';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
@@ -24,7 +24,7 @@ export const CVEditReviews = ({ reviews, onChange }) => {
               openModal(
                 <ModalEdit
                   title="Ajout - Ils me recommandent"
-                  formSchema={schemaTestimonial}
+                  formSchema={formEditTestimonial}
                   onSubmit={async (fields, closeModal) => {
                     closeModal();
                     await onChange({
@@ -65,7 +65,7 @@ export const CVEditReviews = ({ reviews, onChange }) => {
                           openModal(
                             <ModalEdit
                               title="Édition - Ils me recommandent"
-                              formSchema={schemaTestimonial}
+                              formSchema={formEditTestimonial}
                               defaultValues={{ ...review }}
                               onSubmit={async (fields, closeModal) => {
                                 closeModal();
