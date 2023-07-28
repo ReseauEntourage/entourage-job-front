@@ -298,6 +298,7 @@ export const ModalOfferAdmin = ({
             />
           ) : (
             <FormWithValidation
+              formId={mutatedSchema.id}
               formSchema={mutatedSchema}
               defaultValues={{
                 ...offer,

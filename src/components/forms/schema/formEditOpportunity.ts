@@ -33,7 +33,6 @@ export const formEditOpportunity: FormSchema = {
           : "Renseignez le(s) candidat(s) à qui adresser l'offre*";
       },
       component: 'select-async',
-      openMenuOnClick: false,
       disable: (getValue) => {
         return getValue('isPublic') === true;
       },
@@ -105,7 +104,6 @@ export const formEditOpportunity: FormSchema = {
           id: 'department',
           name: 'department',
           title: 'Département du lieu de travail*',
-          openMenuOnClick: false,
           component: 'select',
           options: DEPARTMENTS_FILTERS,
         },

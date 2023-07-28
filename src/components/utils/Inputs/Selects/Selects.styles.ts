@@ -1,15 +1,15 @@
 import styled from 'styled-components';
-import { commonMenuOptionStyles } from '../Inputs.styles';
+import {
+  commonInputContainerStyles,
+  commonMenuOptionStyles,
+} from '../Inputs.styles';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledSelectContainer = styled.div`
-  min-width: 300px;
-  width: 100%;
-  max-width: 100%;
+  ${() => commonInputContainerStyles}
 `;
 export const StyledSelect = styled.div`
   margin-bottom: 30px;
-  font-family: Poppins, Arial, sans-serif !important;
   & .Select__control--is-disabled {
     background-color: ${COLORS.lightgray} !important;
 
@@ -38,6 +38,7 @@ export const StyledSelect = styled.div`
   }
 
   & .Select__value-container {
+    min-height: 30px;
     padding: 0 !important;
   }
 

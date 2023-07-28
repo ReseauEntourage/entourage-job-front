@@ -78,8 +78,9 @@ interface FormFieldText {
   component: TextComponent;
   hide?: (
     getValue: (name: string) => AnyToFix,
-    fieldOptions: AnyToFix
+    fieldOptions?: AnyToFix
   ) => boolean;
+  hidden?: boolean;
 }
 
 interface FormFieldMultiple {
@@ -88,14 +89,17 @@ interface FormFieldMultiple {
   action: string;
   component: MultipleComponent;
   fields: (FormFieldInput | FormFieldSelect | FormFieldText)[];
+  hide?: (getValue: (name: string) => AnyToFix) => boolean;
+  hidden?: boolean;
 }
 
 interface FormFieldGroup {
   id: string;
-  hidden?: boolean;
   ide?: (getValue: (name: string) => AnyToFix) => boolean;
   component: GroupComponent;
   fields: (FormFieldInput | FormFieldSelect | FormFieldText)[];
+  hide?: (getValue: (name: string) => AnyToFix) => boolean;
+  hidden?: boolean;
 }
 
 type FormField =

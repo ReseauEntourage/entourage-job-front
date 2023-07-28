@@ -1,11 +1,13 @@
 import styled from 'styled-components';
-import { commonInputStyles, commonMenuOptionStyles } from '../Inputs.styles';
+import {
+  commonInputContainerStyles,
+  commonInputStyles,
+  commonMenuOptionStyles,
+} from '../Inputs.styles';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledSelectContainer = styled.div`
-  min-width: 300px;
-  width: 100%;
-  max-width: 100%;
+  ${() => commonInputContainerStyles}
   .select {
     width: 100%;
     border: none;
@@ -14,6 +16,7 @@ export const StyledSelectContainer = styled.div`
     .placeholder,
     .selected-value {
       ${() => commonInputStyles}
+      margin-bottom: 0;
       &:hover {
         cursor: pointer;
       }

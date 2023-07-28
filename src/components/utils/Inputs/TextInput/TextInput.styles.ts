@@ -1,13 +1,14 @@
 import styled from 'styled-components';
-import { commonInputStyles } from '../Inputs.styles';
+import {
+  commonInputContainerStyles,
+  commonInputStyles,
+} from '../Inputs.styles';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledTextInputContainer = styled.div`
-  min-width: 300px;
-  max-width: 100%;
+  ${() => commonInputContainerStyles}
   input {
     ${() => commonInputStyles}
-    margin-bottom: 30px;
     &.secondary {
       padding: 16px 36px;
       border: #d9d9d9 1px solid;

@@ -56,7 +56,7 @@ export const formCompanyContact: FormSchema = {
     {
       id: 'zone',
       name: 'zone',
-      component: 'select',
+      component: 'select-simple',
       options: COMPANY_CONTACT_ZONES_FILTERS,
       title: 'Dans quelle région êtes-vous présent ?*',
     },

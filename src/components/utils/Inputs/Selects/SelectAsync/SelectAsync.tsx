@@ -27,7 +27,6 @@ interface SelectAsyncProps
   isMulti?: boolean;
   noOptionsMessage?: () => void;
   loadingMessage?: () => void;
-
   openMenuOnClick?: boolean;
 }
 export function SelectAsync({

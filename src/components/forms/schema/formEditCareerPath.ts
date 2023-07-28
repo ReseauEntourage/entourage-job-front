@@ -14,7 +14,6 @@ export const formEditCareerPath: FormSchema = {
           title: 'Famille de métier 1*',
           component: 'select',
           options: BUSINESS_LINES,
-          isMulti: false,
         },
         {
           id: 'linkWord0',
@@ -39,7 +38,6 @@ export const formEditCareerPath: FormSchema = {
           title: 'Famille de métier 2',
           component: 'select',
           options: BUSINESS_LINES,
-          isMulti: false,
         },
         {
           id: 'linkWord1',

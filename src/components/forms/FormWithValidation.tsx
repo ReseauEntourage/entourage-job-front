@@ -5,24 +5,21 @@ import React, {
   useState,
 } from 'react';
 import { useForm } from 'react-hook-form';
-import { Heading } from '../utils/Inputs';
 import { FormFooter } from 'src/components/forms/FormFooter/FormFooter';
 import { GenericField } from 'src/components/forms/fields/GenericField';
 import { InputsContainer } from 'src/components/forms/fields/InputsContainer';
 import { MultipleFields } from 'src/components/forms/fields/MultipleFields/MultipleFields';
+import { Heading } from 'src/components/utils/Inputs';
 import { AnyToFix } from 'src/utils/Types';
 import { StyledForm } from './Forms.styles';
+import { FormSchema } from './schema/FormSchema.types';
 
 interface FormWithValidationProps {
   defaultValues?: AnyToFix; // to be typed
   onCancel?: () => void;
   onSubmit: (arg1: AnyToFix, arg2: AnyToFix) => void; // to be typed
   onError?: (any) => void;
-  formSchema: {
-    id: string;
-    fields: AnyToFix; // to be typed
-    rules: AnyToFix; // to be typed
-  };
+  formSchema: FormSchema;
   submitText?: string;
   cancelText?: string;
   enterToSubmit?: boolean;
@@ -68,7 +65,7 @@ export const FormWithValidation = forwardRef(
 
     const onValidForm = useCallback(
       (formValues) => {
-        return onSubmit(formValues, (msg) => {
+        onSubmit(formValues, (msg) => {
           setError(msg);
         });
       },
@@ -76,7 +73,9 @@ export const FormWithValidation = forwardRef(
     );
 
     const onErrorForm = useCallback(() => {
-      return onError(getValues());
+      if (onError) {
+        onError(getValues());
+      }
     }, [getValues, onError]);
 
     return (
@@ -115,7 +114,9 @@ export const FormWithValidation = forwardRef(
                     id={`${formId}-${value.id}`}
                     data-testid={`${formId}-${value.id}`}
                   >
-                    {value.dynamicTitle ? value.title(getValue) : value.title}
+                    {value.dynamicTitle
+                      ? value.dynamicTitle(getValues)
+                      : value.title}
                   </p>
                 );
               }

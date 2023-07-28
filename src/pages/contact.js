@@ -39,8 +39,21 @@ const Contact = () => {
             return Api.postContactContactUs(fields)
               .then(() => {
                 UIkit.notification('Merci pour votre message.', 'success');
-                resetForm();
+                const defaultToResetTo = formInterestLinkedOut.fields.reduce(
+                  (acc, curr) => {
+                    return {
+                      ...acc,
+                      [curr.name]: null,
+                    };
+                  },
+                  {}
+                );
+                console.log(defaultToResetTo);
+
+                console.log(resetForm);
+                resetForm({});
               })
+
               .catch(() => {
                 return UIkit.notification(
                   "Une erreur s'est produite",

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { UserWithUserCandidate } from 'src/api/types';
-import { OFFER_STATUS } from 'src/constants';
+import { FilterConstant, OFFER_STATUS } from 'src/constants';
 import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
@@ -48,11 +48,9 @@ export function findConstantFromValue(valToFind, constantsToFindFrom) {
   );
 }
 
-interface FormValue {
-  value: number | string;
-}
-
-export function getValueFromFormField(fieldValue: FormValue | FormValue[]) {
+export function getValueFromFormField(
+  fieldValue: FilterConstant | FilterConstant[]
+) {
   if (_.isArray(fieldValue)) {
     if (
       _.every(fieldValue, (fieldVal) => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { FieldError } from 'react-hook-form';
-import { StyledErrorMessage } from './FormErrorMessage.styles';
+import { StyledErrorMessage } from './FieldErrorMessage.styles';
 
 interface FieldErrorMessageProps {
   error?: FieldError;

@@ -44,7 +44,6 @@ export const formEditUsefulInformation: FormSchema = {
       name: 'locations',
       title: 'Départements de travail souhaités',
       component: 'select',
-      openMenuOnClick: false,
       options: DEPARTMENTS_FILTERS,
       isMulti: true,
     },

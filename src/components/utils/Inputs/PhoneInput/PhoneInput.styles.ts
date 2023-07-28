@@ -1,18 +1,16 @@
 import styled from 'styled-components';
-// import { commonInputDesignFeatures } from "../Inputs.styles";
-import { commonInputStyles } from '../Inputs.styles';
+import {
+  commonInputContainerStyles,
+  commonInputStyles,
+} from '../Inputs.styles';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledPhoneInput = styled.div`
-  min-width: 300px;
-  max-width: 100%;
-  margin-bottom: 30px;
+  ${() => commonInputContainerStyles}
+
   .PhoneInput {
-    background-color: white;
-    border: 0.5px solid white;
-    border-bottom: solid 2px ${COLORS.gray};
-    padding-top: 0;
-    min-height: 30px;
+    ${() => commonInputStyles}
+    padding: 0 !important;
   }
   .PhoneInputCountry {
     margin-right: 10px;
@@ -20,6 +18,8 @@ export const StyledPhoneInput = styled.div`
   }
   input {
     ${() => commonInputStyles}
+    margin-bottom: 0 !important;
+    min-height: 0;
     border: none;
     &::placeholder {
       font-style: italic;

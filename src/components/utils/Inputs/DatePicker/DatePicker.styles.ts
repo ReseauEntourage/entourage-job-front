@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import { commonInputStyles } from '../Inputs.styles';
+import {
+  commonInputContainerStyles,
+  commonInputStyles,
+} from '../Inputs.styles';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledDatePickerContainer = styled.div`
-  min-width: 300px;
-  max-width: 100%;
-  display: flex;
-  flex-direction: column;
+  ${() => commonInputContainerStyles}
   input {
     ${() => commonInputStyles}
     &.empty-value {

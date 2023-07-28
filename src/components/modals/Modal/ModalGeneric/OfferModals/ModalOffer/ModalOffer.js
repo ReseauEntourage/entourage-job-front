@@ -238,6 +238,7 @@ export const ModalOffer = ({
         <div>
           <h3>Modification de l&apos;offre d&apos;emploi</h3>
           <FormWithValidation
+            formId={mutatedExternalOfferSchema.id}
             formSchema={mutatedExternalOfferSchema}
             defaultValues={{
               ...offer,

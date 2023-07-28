@@ -1,12 +1,9 @@
 import styled from 'styled-components';
+import { commonInputContainerStyles } from '../Inputs.styles';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledCheckbox = styled.div`
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-
+  ${() => commonInputContainerStyles}
   .checkbox-label {
     margin-bottom: ${({ removeMargin }) => {
       return removeMargin ? 0 : 30;

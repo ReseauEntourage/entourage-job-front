@@ -25,7 +25,6 @@ export const formEditExternalOpportunity: FormSchema = {
           isMulti: false,
           title: 'Renseignez le candidat concerné*',
           component: 'select-async',
-          openMenuOnClick: false,
           hidden: true,
           disabled: true,
           loadOptions: (inputValue, callback) => {
@@ -106,7 +105,6 @@ export const formEditExternalOpportunity: FormSchema = {
       id: 'department',
       name: 'department',
       title: 'Département*',
-      openMenuOnClick: false,
       component: 'select',
       options: DEPARTMENTS_FILTERS,
     },

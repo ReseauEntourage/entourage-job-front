@@ -3,7 +3,8 @@ import { COLORS } from 'src/constants/styles';
 
 export const StyledErrorMessage = styled.div`
   color: ${COLORS.darkOrange};
-  /* margin-top: -30px; */
-  transform: translate(0, -30px);
   font-size: 12px;
+  line-height: 12px;
+  position: absolute;
+  bottom: 12px;
 `;

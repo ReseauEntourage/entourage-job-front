@@ -42,29 +42,27 @@ export function PhoneInput({
   }
 
   return (
-    <>
-      <StyledPhoneInput>
-        {showLabel && (
-          <StyledInputLabel htmlFor={`form-input-${name}`}>
-            {title}
-          </StyledInputLabel>
-        )}
-        <PhoneInputWithCountry
-          defaultCountry="FR"
-          title={title}
-          name={name}
-          id={id}
-          data-testid={id}
-          value={value}
-          placeholder={placeholder || title}
-          onChange={onChange}
-          onBlur={onBlur}
-          disabled={disabled}
-          autoComplete={autocomplete}
-          ref={inputRef}
-        />
-      </StyledPhoneInput>
+    <StyledPhoneInput>
+      {showLabel && (
+        <StyledInputLabel htmlFor={`form-input-${name}`}>
+          {title}
+        </StyledInputLabel>
+      )}
+      <PhoneInputWithCountry
+        defaultCountry="FR"
+        title={title}
+        name={name}
+        id={id}
+        data-testid={id}
+        value={value}
+        placeholder={placeholder || title}
+        onChange={onChange}
+        onBlur={onBlur}
+        disabled={disabled}
+        autoComplete={autocomplete}
+        ref={inputRef}
+      />
       <FieldErrorMessage error={error} />
-    </>
+    </StyledPhoneInput>
   );
 }

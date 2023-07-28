@@ -1,19 +1,19 @@
 import styled, { css } from 'styled-components';
-import { commonInputStyles } from '../Inputs.styles';
+import {
+  commonInputContainerStyles,
+  commonInputStyles,
+} from '../Inputs.styles';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledTextAreaContainer = styled.div`
-  max-width: 100%;
-  background-color: ${COLORS.white};
-  border-radius: 5px;
+  ${() => commonInputContainerStyles}
 `;
 
 export const StyledTextArea = styled.textarea`
   ${() => commonInputStyles}
   width: 100%;
   padding-bottom: 12px;
-  resize: vertical;
-  margin-bottom: 30px;
+  resize: none;
   width: ${({ hasLineLimit, width }) => {
     // Hard code the width in case the width of the modal changes
     return hasLineLimit ? `${width}px` : '100%';
@@ -42,7 +42,6 @@ export const StyledTextAreaScrollContainer = styled.div`
           max-width: 100%;
         `;
   }};
-  margin-bottom: 30px;
   min-width: 300px;
 `;
 
