@@ -12,12 +12,17 @@ const AnimatedNumber = ({ value }: { value: number | string }) => {
         }
         return (
           <div style={{ minHeight: 1 }}>
-            {isVisible && typeof value === 'number' ? (
-              <CountUp duration={5} end={value} preserveValue />
+            {isVisible ? (
+              <>
+                {typeof value === 'number' ? (
+                  <CountUp duration={5} end={value} preserveValue />
+                ) : (
+                  <>{value}</>
+                )}
+              </>
             ) : (
               0
             )}
-            {isVisible && typeof value !== 'number' ? <>{value}</> : 0}
           </div>
         );
       }}
