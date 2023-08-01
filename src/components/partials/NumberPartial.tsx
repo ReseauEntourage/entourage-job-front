@@ -4,12 +4,16 @@ import { NumberGrid } from 'src/components/partials/NumberGrid';
 import { Section } from 'src/components/utils';
 
 const staticNumbers = [
-  { value: 400, description: 'candidats accompagnés', animated: true },
+  { value: 400, description: 'candidats accompagnés', animate: true },
   {
     value: '72%',
     description: 'de sorties positives en 2022',
   },
-  { value: 700, description: "entreprises mobilisées dans l'inclusion" },
+  {
+    value: 700,
+    description: "entreprises mobilisées dans l'inclusion",
+    animate: true,
+  },
 ];
 
 export const NumberPartial = () => {
