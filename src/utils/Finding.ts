@@ -37,14 +37,18 @@ export function findOfferStatus(status, isPublic, isRecommended) {
   return { label: 'Non défini', color: 'muted' };
 }
 
-export function findConstantFromValue(valToFind, constantsToFindFrom) {
+export function findConstantFromValue<T extends FilterConstant>(
+  valToFind: string | boolean | number,
+  constantsToFindFrom: readonly T[]
+): T {
   return (
     constantsToFindFrom.find(({ value }) => {
       return value === valToFind;
-    }) || {
+    }) ||
+    ({
       label: valToFind,
       value: valToFind,
-    }
+    } as T)
   );
 }
 

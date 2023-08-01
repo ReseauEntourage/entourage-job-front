@@ -4,6 +4,7 @@ import { COLORS } from 'src/constants/styles';
 
 export const StyledCheckbox = styled.div`
   ${() => commonInputContainerStyles}
+  justify-content: center;
   .checkbox-label {
     margin-bottom: ${({ removeMargin }) => {
       return removeMargin ? 0 : 30;
@@ -19,6 +20,8 @@ export const StyledCheckbox = styled.div`
     -ms-user-select: none;
     user-select: none;
     padding-left: 16px;
+    font-size: 14px;
+    line-height: 17px;
 
     input {
       position: absolute;

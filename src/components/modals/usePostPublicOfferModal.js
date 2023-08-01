@@ -1,4 +1,4 @@
-import { formEditOpportunity } from 'src/components/forms/schema/formEditOpportunity';
+import { formEditOpportunity } from 'src/components/forms/schemas/formEditOpportunity';
 import { usePostOpportunity } from 'src/hooks';
 import { mutateFormSchema } from 'src/utils';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { formEditStory } from 'src/components/forms/schema/formEditStory';
+import { formEditStory } from 'src/components/forms/schemas/formEditStory';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Grid, ButtonIcon } from 'src/components/utils';

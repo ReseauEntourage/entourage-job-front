@@ -5,7 +5,7 @@ import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
 import { PasswordCriterias } from 'src/components/PasswordCriterias';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
-import { formResetPassword } from 'src/components/forms/schema/formResetPassword';
+import { formResetPassword } from 'src/components/forms/schemas/formResetPassword';
 import { Button, Section, Icon } from 'src/components/utils';
 
 const ResetPasswordPage = ({ valid, id, token, isCreation }) => {

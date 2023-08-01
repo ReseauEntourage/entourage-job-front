@@ -3,8 +3,8 @@ import React, { useContext, useEffect } from 'react';
 import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
-import { formLogin } from 'src/components/forms/schema/formLogin';
-import { formLostPwd } from 'src/components/forms/schema/formLostPwd';
+import { formLogin } from 'src/components/forms/schemas/formLogin';
+import { formLostPwd } from 'src/components/forms/schemas/formLostPwd';
 import { openModal } from 'src/components/modals/Modal';
 import { StepperModal } from 'src/components/modals/Modal/ModalGeneric/StepperModal';
 import { SuccessModalContent } from 'src/components/modals/SuccessModalContent';
@@ -49,7 +49,6 @@ const Login = () => {
           <div className="uk-width-1-2@m uk-card uk-card-default uk-card-body">
             <h1>Connexion</h1>
             <FormWithValidation
-              formId={formLogin.id}
               formSchema={formLogin}
               submitText="Se connecter"
               enterToSubmit
@@ -76,7 +75,6 @@ const Login = () => {
                           <FormWithValidation
                             submitText="Envoyer"
                             formSchema={formLostPwd}
-                            formId={formLostPwd.id}
                             onCancel={closeModal}
                             onSubmit={({ email }, setError) => {
                               return Api.postAuthForgot({

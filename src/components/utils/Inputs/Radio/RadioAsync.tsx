@@ -20,8 +20,7 @@ export function RadioAsync({
   const [options, setOptions] = useState([]);
 
   useMount(async () => {
-    const optionsLoaded = await loadOptions();
-    setOptions(optionsLoaded);
+    await loadOptions((optionsLoaded) => setOptions(optionsLoaded));
   });
 
   if (hidden) {

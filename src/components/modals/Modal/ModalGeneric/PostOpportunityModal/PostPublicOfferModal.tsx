@@ -1,5 +1,5 @@
 import React from 'react';
-import { formEditOpportunity as defaultSchema } from 'src/components/forms/schema/formEditOpportunity';
+import { formEditOpportunity as defaultSchema } from 'src/components/forms/schemas/formEditOpportunity';
 import { mutateFormSchema } from 'src/utils';
 import { PostOpportunityModal } from './PostOpportunityModal';
 

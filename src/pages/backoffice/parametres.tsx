@@ -10,8 +10,8 @@ import { CandidateEmployedToggle } from 'src/components/backoffice/candidate/Can
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
 import { UserInformationCard } from 'src/components/cards/UserInformationCard';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
-import { formChangePassword } from 'src/components/forms/schema/formChangePassword';
-import { formPersonalData } from 'src/components/forms/schema/formPersonalData';
+import { formChangePassword } from 'src/components/forms/schemas/formChangePassword';
+import { formPersonalData } from 'src/components/forms/schemas/formPersonalData';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
@@ -444,7 +444,6 @@ const Parametres = () => {
               </Grid>
               <PasswordCriterias />
               <FormWithValidation
-                formId={formChangePassword.id}
                 ref={form}
                 submitText="Modifier"
                 formSchema={formChangePassword}

@@ -4,7 +4,7 @@ import UIkit from 'uikit';
 
 import { Api } from 'src/api';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
-import { formGetEmail } from 'src/components/forms/schema/formGetEmail';
+import { formGetEmail } from 'src/components/forms/schemas/formGetEmail';
 import { StepperModal } from 'src/components/modals/Modal/ModalGeneric/StepperModal';
 import { Button, Img, Icon } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';

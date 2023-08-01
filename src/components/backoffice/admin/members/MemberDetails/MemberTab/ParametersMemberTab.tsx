@@ -8,7 +8,7 @@ import { useMemberId } from 'src/components/backoffice/admin/members/MemberDetai
 import { MemberTable } from 'src/components/backoffice/admin/members/MemberTable';
 import { Member } from 'src/components/backoffice/admin/members/MemberTable/Member';
 import { MemberColumn } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.types';
-import { formDeleteUser } from 'src/components/forms/schema/formDeleteUser';
+import { formDeleteUser } from 'src/components/forms/schemas/formDeleteUser';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Button, Icon } from 'src/components/utils';
@@ -123,7 +123,6 @@ export function ParametersMemberTab({
           onClick={() => {
             openModal(
               <ModalEdit
-                formId={formDeleteUser.id}
                 title="Supprimer un membre"
                 description="Attention, si vous supprimer ce membre, toutes les données qui lui sont associées seront définitivement perdues. Êtes-vous sûr de vouloir continuer ?"
                 submitText="Supprimer le membre"

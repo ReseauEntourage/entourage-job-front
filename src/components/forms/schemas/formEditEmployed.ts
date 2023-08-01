@@ -1,0 +1,42 @@
+import moment from 'moment';
+import { FormSchema } from '../FormSchema/FormSchema.types';
+import { CONTRACTS } from 'src/constants';
+import { findConstantFromValue } from 'src/utils';
+
+export const formEditEmployed: FormSchema = {
+  id: 'form-edit-employed',
+  fields: [
+    {
+      id: 'contract',
+      title: 'Contrat*',
+      name: 'contract',
+      component: 'select-simple',
+      options: CONTRACTS,
+      fieldsToReset: ['endOfContract'],
+    },
+    {
+      id: 'endOfContract',
+      title: 'Date de fin de contrat',
+      name: 'endOfContract',
+      component: 'datepicker',
+      min: moment().format('YYYY-MM-DD'),
+      disable: (getValue) => {
+        const contract = findConstantFromValue(getValue('contract'), CONTRACTS);
+        return !contract || !contract.end;
+      },
+    },
+  ],
+  rules: [
+    {
+      field: 'contract',
+      isRequired: true,
+    },
+    {
+      field: 'endOfContract',
+      method: 'isBefore',
+      args: [moment().format('YYYY-MM-DD')],
+      validWhen: false,
+      message: "Date antérieure à aujourd'hui",
+    },
+  ],
+};

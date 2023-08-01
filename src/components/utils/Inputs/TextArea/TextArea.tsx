@@ -76,7 +76,7 @@ export function TextArea({
           }
           disabled={disabled}
           onBlur={onBlur}
-          value={value}
+          value={value || ''}
         />
       </StyledTextAreaScrollContainer>
       <StyledAnnotations>

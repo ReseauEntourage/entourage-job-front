@@ -6,7 +6,7 @@ import React, {
 import UIkit from 'uikit';
 
 import { Api } from 'src/api';
-import { formEditOpportunity as defaultSchema } from 'src/components/forms/schema/formEditOpportunity';
+import { formEditOpportunity as defaultSchema } from 'src/components/forms/schemas/formEditOpportunity';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { BUSINESS_LINES } from 'src/constants';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';

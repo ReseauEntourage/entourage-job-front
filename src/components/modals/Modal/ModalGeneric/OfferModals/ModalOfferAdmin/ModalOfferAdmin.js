@@ -3,11 +3,11 @@ import React from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
-import { formEditExternalOpportunity } from 'src/components/forms/schema/formEditExternalOpportunity';
+import { formEditExternalOpportunity } from 'src/components/forms/schemas/formEditExternalOpportunity';
 import {
   formEditOpportunity,
   adminMutations,
-} from 'src/components/forms/schema/formEditOpportunity';
+} from 'src/components/forms/schemas/formEditOpportunity';
 import { useModalContext } from 'src/components/modals/Modal';
 import { ModalOfferBase } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOfferBase';
 import { ModalOfferInfo } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/ModalOfferInfo';
@@ -298,7 +298,6 @@ export const ModalOfferAdmin = ({
             />
           ) : (
             <FormWithValidation
-              formId={mutatedSchema.id}
               formSchema={mutatedSchema}
               defaultValues={{
                 ...offer,

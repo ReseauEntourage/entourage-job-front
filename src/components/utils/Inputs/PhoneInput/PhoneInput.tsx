@@ -18,10 +18,7 @@ interface PhoneInputProps
       Props<DefaultInputComponentProps>,
       State<Props<DefaultInputComponentProps>>
     >
-  > {
-  title: string;
-  autocomplete: string;
-}
+  > {}
 export function PhoneInput({
   id,
   name,
@@ -32,7 +29,6 @@ export function PhoneInput({
   onBlur,
   disabled = false,
   hidden = false,
-  autocomplete = 'tel',
   showLabel = false,
   placeholder,
   inputRef,
@@ -59,7 +55,7 @@ export function PhoneInput({
         onChange={onChange}
         onBlur={onBlur}
         disabled={disabled}
-        autoComplete={autocomplete}
+        autoComplete="tel"
         ref={inputRef}
       />
       <FieldErrorMessage error={error} />

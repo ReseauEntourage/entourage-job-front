@@ -17,8 +17,7 @@ export const commonMenuOptionStyles = css`
 `;
 
 export const commonInputContainerStyles = css`
-  font-family: Poppins, Arial, sans-serif !important;
-  min-width: 300px;
+  font-family: Poppins, sans-serif !important;
   max-width: 100%;
   background-color: ${COLORS.white};
   display: flex;

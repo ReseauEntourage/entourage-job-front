@@ -4,7 +4,7 @@ import UIkit from 'uikit';
 import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
-import { formInterestLinkedOut } from 'src/components/forms/schema/formInterestLinkedOut';
+import { formInterestLinkedOut } from 'src/components/forms/schemas/formInterestLinkedOut';
 import { Section, SimpleLink } from 'src/components/utils';
 import { useResetForm } from 'src/hooks/utils';
 
@@ -34,26 +34,12 @@ const Contact = () => {
           ref={form}
           submitText="Envoyer"
           formSchema={formInterestLinkedOut}
-          formId={formInterestLinkedOut.id}
           onSubmit={(fields) => {
             return Api.postContactContactUs(fields)
               .then(() => {
                 UIkit.notification('Merci pour votre message.', 'success');
-                const defaultToResetTo = formInterestLinkedOut.fields.reduce(
-                  (acc, curr) => {
-                    return {
-                      ...acc,
-                      [curr.name]: null,
-                    };
-                  },
-                  {}
-                );
-                console.log(defaultToResetTo);
-
-                console.log(resetForm);
-                resetForm({});
+                resetForm();
               })
-
               .catch(() => {
                 return UIkit.notification(
                   "Une erreur s'est produite",

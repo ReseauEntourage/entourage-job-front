@@ -6,11 +6,11 @@ import { Api } from 'src/api';
 import {
   formEditExternalOpportunity,
   adminMutations as externalOpportunityAdminMutations,
-} from 'src/components/forms/schema/formEditExternalOpportunity';
+} from 'src/components/forms/schemas/formEditExternalOpportunity';
 import {
   formEditOpportunity,
   adminMutations as opportunityAdminMutations,
-} from 'src/components/forms/schema/formEditOpportunity';
+} from 'src/components/forms/schemas/formEditOpportunity';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';

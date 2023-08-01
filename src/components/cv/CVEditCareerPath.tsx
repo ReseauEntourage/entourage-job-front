@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
-import { formEditCareerPath } from 'src/components/forms/schema/formEditCareerPath';
+import { formEditCareerPath } from 'src/components/forms/schemas/formEditCareerPath';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { ButtonIcon, Grid } from 'src/components/utils';

@@ -10,7 +10,7 @@ import {
   CTAsByTab,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/CandidateOpportunityDetailsCTAs/CandidateOpportunityDetailsCTAs.utils';
 import { SendMailModalContent } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/SendMailModalContent';
-import { renderSimpleSelectField } from 'src/components/forms/schema/formSimpleSelectField';
+import { renderSimpleSelectField } from 'src/components/forms/schemas/formSimpleSelectField';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
@@ -190,6 +190,7 @@ export const CandidateOpportunityDetailsCTAs = ({
             </>
           }
           formSchema={renderSimpleSelectField(
+            'abandon-offer-reason',
             'Sélectionner un motif dans la liste',
             [
               { value: 'archived', label: 'Je ne suis plus intéressé' },
@@ -208,7 +209,6 @@ export const CandidateOpportunityDetailsCTAs = ({
             'status'
           )}
           defaultValues={{ status: '3' }}
-          formId="abandon-offer-reason"
           submitText="Abandonner l'offre"
           onSubmit={async (selectedReason, closeModal) => {
             const queryParams: { archived?: boolean; status?: number } = {};

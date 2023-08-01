@@ -10,7 +10,9 @@ export interface RadioTypes {
 
 export interface RadioAsyncComponentProps
   extends CommonInputProps<string, HTMLInputElement> {
-  loadOptions: () => Promise<RadioTypes[]>;
+  loadOptions: (
+    callback: (options: RadioTypes[]) => void
+  ) => Promise<void> | void;
   filter?: string;
   errorMessage?: string;
   limit?: number;

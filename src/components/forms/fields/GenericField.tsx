@@ -7,6 +7,15 @@ import {
 } from 'react-hook-form';
 
 import {
+  FormFieldInput,
+  FormFieldSelect,
+} from '../FormSchema/FormSchema.types';
+import {
+  ComponentException,
+  isFormFieldInput,
+  isFormFieldSelect,
+} from '../FormSchema/FormSchema.utils';
+import {
   CheckBox,
   DatePicker,
   PhoneInput,
@@ -25,7 +34,7 @@ import { FilterConstant } from 'src/constants';
 import { AnyToFix } from 'src/utils/Types';
 
 interface GenericFieldProps {
-  data: AnyToFix;
+  field: FormFieldInput | FormFieldSelect;
   formId: string;
   getValue: (
     name: string
@@ -38,7 +47,7 @@ interface GenericFieldProps {
 }
 
 export const GenericField = ({
-  data,
+  field,
   formId,
   getValue,
   updateFieldOptions = () => {},
@@ -51,170 +60,160 @@ export const GenericField = ({
     field: { onChange, onBlur, value, name, ref },
     fieldState: { error },
   } = useController({
-    name: data.name,
+    name: field.name,
     control,
-    rules: { required: 'Obligatoire' },
+    rules: { required: !field.isRequired ? 'Obligatoire' : false },
   });
 
   watch();
 
-  // TODO MANAGE RESET OF FIELDS ON CHANGE OTHER FIELDS
   const onChangeCustom = useCallback(
     (updatedValue) => {
-      if (data.fieldsToReset) {
-        for (let i = 0; i < data.fieldsToReset.length; i += 1) {
-          resetField(data.fieldsToReset[i]);
+      if (isFormFieldSelect(field)) {
+        if (field.fieldsToReset) {
+          for (let i = 0; i < field.fieldsToReset.length; i += 1) {
+            resetField(field.fieldsToReset[i]);
+          }
         }
       }
       onChange(updatedValue);
     },
-    [data.fieldsToReset, onChange, resetField]
+    [field, onChange, resetField]
   );
 
   const commonProps: CommonInputProps = useMemo(() => {
     return {
-      id: `${formId}-${data.id}`,
+      id: `${formId}-${field.id}`,
       name,
-      title: data.dynamicTitle ? data.dynamicTitle(getValue) : data.title,
+      title:
+        typeof field.title === 'function' ? field.title(getValue) : field.title,
       value,
       error,
       onChange: onChangeCustom,
       onBlur,
-      disabled: data.disable ? data.disable(getValue) : data.disabled,
-      hidden: data.hide ? data.hide(getValue) : data.hidden,
+      disabled: field.disable ? field.disable(getValue) : field.disabled,
+      hidden: field.hide ? field.hide(getValue) : field.hidden,
       inputRef: ref,
-      placeholder: data.placeholder,
-      showLabel: data.showLabel,
+      placeholder: field.placeholder,
+      showLabel: field.showLabel,
     };
-  }, [data, error, formId, getValue, name, onBlur, onChangeCustom, ref, value]);
-
-  // For Select Components
-
-  const isMultiDefined = data.isMulti || false;
-
-  const isMulti =
-    typeof isMultiDefined === 'function'
-      ? isMultiDefined(getValue)
-      : isMultiDefined;
+  }, [
+    field,
+    error,
+    formId,
+    getValue,
+    name,
+    onBlur,
+    onChangeCustom,
+    ref,
+    value,
+  ]);
 
   if (commonProps.hidden) {
     return null;
   }
 
-  if (data.component === 'datepicker') {
-    return <DatePicker {...commonProps} min={data.min} max={data.max} />;
-  }
-
-  if (data.component === 'text-input') {
-    return <TextInput {...commonProps} type={data.type} />;
-  }
-
-  if (data.component === 'tel-input') {
-    return <PhoneInput {...commonProps} autocomplete={data.autocomplete} />;
-  }
-
-  if (data.component === 'select-simple') {
-    let { options } = data;
-
-    if (data.generate) {
-      const { max, min, type, placeholder } = data.generate;
-      if (type === 'inc') {
-        options = Array(max - min)
-          .fill(min)
-          .map((_, i) => {
-            if (i === 0) return { value: null, text: placeholder };
-            return { value: min + i, text: min + i };
-          });
-      }
-      if (type === 'dec') {
-        options = Array(max - min)
-          .fill(max)
-          .map((_, i) => {
-            if (i === 0) return { value: null, text: placeholder };
-            return { value: max - i, text: max - i };
-          });
-      }
+  if (isFormFieldInput(field)) {
+    if (field.component === 'datepicker') {
+      return <DatePicker {...commonProps} min={field.min} max={field.max} />;
     }
 
-    return <SelectSimple {...commonProps} options={options} />;
+    if (field.component === 'text-input') {
+      return <TextInput {...commonProps} type={field.type} />;
+    }
+
+    if (field.component === 'tel-input') {
+      return <PhoneInput {...commonProps} />;
+    }
+
+    if (field.component === 'textarea') {
+      return <TextArea {...commonProps} maxLines={field.maxLines} />;
+    }
+
+    if (field.component === 'checkbox') {
+      return <CheckBox {...commonProps} value={value} />;
+    }
   }
 
-  if (data.component === 'textarea') {
-    return <TextArea {...commonProps} maxLines={data.maxLines} />;
+  if (isFormFieldSelect(field)) {
+    const isMultiDefined = field.isMulti || false;
+
+    const isMulti =
+      typeof isMultiDefined === 'function'
+        ? isMultiDefined(getValue)
+        : isMultiDefined;
+
+    if (field.component === 'select-simple') {
+      const { options } = field;
+
+      return <SelectSimple {...commonProps} options={options} />;
+    }
+
+    if (field.component === 'select') {
+      return (
+        <Select
+          {...commonProps}
+          isMulti={isMulti}
+          options={field.options}
+          openMenuOnClick={field.openMenuOnClick}
+        />
+      );
+    }
+
+    if (field.component === 'select-creatable') {
+      return (
+        <SelectCreatable
+          {...commonProps}
+          isMulti={isMulti}
+          options={field.options}
+          openMenuOnClick={field.openMenuOnClick}
+        />
+      );
+    }
+
+    if (field.component === 'select-async') {
+      return (
+        <SelectAsync
+          {...commonProps}
+          isMulti={isMulti}
+          openMenuOnClick={field.openMenuOnClick}
+          loadOptions={(callback, inputValue) =>
+            field.loadOptions(callback, inputValue, getValue)
+          }
+        />
+      );
+    }
+
+    if (field.component === 'radio') {
+      return (
+        <Radio
+          {...commonProps}
+          options={field.options}
+          filter={field.dynamicFilter(getValue)}
+          hidden={
+            field.hide ? field.hide(getValue, fieldOptions) : field.hidden
+          }
+        />
+      );
+    }
+
+    if (field.component === 'radio-async') {
+      return (
+        <RadioAsync
+          {...commonProps}
+          loadOptions={async (callback) => {
+            const radioOptions = await field.loadOptions(callback);
+            updateFieldOptions({ [field.id]: radioOptions });
+            return radioOptions;
+          }}
+          filter={field.dynamicFilter(getValue)}
+          hidden={
+            field.hide ? field.hide(getValue, fieldOptions) : field.hidden
+          }
+        />
+      );
+    }
   }
 
-  if (data.component === 'checkbox') {
-    return <CheckBox {...commonProps} value={value} />;
-  }
-
-  // Select Components
-  if (data.component === 'select') {
-    return (
-      <Select
-        {...commonProps}
-        isMulti={isMulti}
-        options={data.options}
-        openMenuOnClick={data.openMenuOnClick}
-      />
-    );
-  }
-
-  if (data.component === 'select-creatable') {
-    return (
-      <SelectCreatable
-        {...commonProps}
-        isMulti={isMulti}
-        options={data.options}
-        openMenuOnClick={data.openMenuOnClick}
-      />
-    );
-  }
-
-  if (data.component === 'select-async') {
-    return (
-      <SelectAsync
-        {...commonProps}
-        isMulti={isMulti}
-        openMenuOnClick={data.openMenuOnClick}
-        cacheOptions={data.cacheOptions}
-        defaultOptions={data.defaultOptions}
-        noOptionsMessage={data.noOptionsMessage}
-        loadingMessage={data.loadingMessage}
-        loadOptions={
-          data.loadOptions
-            ? (inputValue, callback) =>
-                data.loadOptions(inputValue, callback, getValue)
-            : () => {}
-        }
-      />
-    );
-  }
-
-  if (data.component === 'radio') {
-    return (
-      <Radio
-        {...commonProps}
-        options={data.options}
-        filter={data.dynamicFilter(getValue)}
-        hidden={data.hide ? data.hide(getValue, fieldOptions) : data.hidden}
-      />
-    );
-  }
-
-  if (data.component === 'radio-async') {
-    return (
-      <RadioAsync
-        {...commonProps}
-        loadOptions={async () => {
-          const radioOptions = await data.loadOptions();
-          updateFieldOptions({ [data.id]: radioOptions });
-          return radioOptions;
-        }}
-        filter={data.dynamicFilter(getValue)}
-        hidden={data.hide ? data.hide(getValue, fieldOptions) : data.hidden}
-      />
-    );
-  }
-
-  throw new Error(`Component ${data.component} does not exist`);
+  throw new ComponentException(field.component);
 };

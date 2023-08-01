@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { formEditSkills } from 'src/components/forms/schema/formEditSkills';
+import { formEditSkills } from 'src/components/forms/schemas/formEditSkills';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Grid, ButtonIcon, Icon } from 'src/components/utils';

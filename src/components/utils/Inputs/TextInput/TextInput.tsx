@@ -38,7 +38,7 @@ export function TextInput({
       )}
       <input
         ref={inputRef}
-        value={value}
+        value={value || ''}
         className={`${value ? '' : 'empty-value'} ${style || ''}`}
         onChange={(event: ChangeEvent<HTMLInputElement>) =>
           onChange(event.target.value)
@@ -46,7 +46,7 @@ export function TextInput({
         onBlur={onBlur}
         disabled={disabled}
         type={type || 'text'}
-        placeholder={placeholder || title}
+        placeholder={placeholder || (title as string)}
         name={name}
         id={id}
         data-testid={id}

@@ -7,7 +7,12 @@ import {
 } from 'react-hook-form';
 import { GenericField } from '../GenericField';
 import { InputsContainer } from '../InputsContainer';
+import {
+  FormFieldInput,
+  FormFieldSelect,
+} from 'src/components/forms/FormSchema/FormSchema.types';
 import { Button, ButtonIcon, Icon } from 'src/components/utils';
+import { useMount } from 'src/hooks/utils';
 import { AnyToFix } from 'src/utils/Types';
 import {
   StyledMultipleFieldAddButtonContainer,
@@ -19,7 +24,7 @@ import {
 interface MultipleFieldsProps {
   formId: string;
   action?: string;
-  fields: AnyToFix[];
+  fields: (FormFieldInput | FormFieldSelect)[];
   name: string;
   getValue: (name: string) => AnyToFix;
   control: Control;
@@ -39,6 +44,18 @@ export const MultipleFields = ({
 }: MultipleFieldsProps) => {
   const { fields, append, remove } = useFieldArray({ control, name });
 
+  // To add the first empty one
+  useMount(() =>
+    append(
+      formFields.reduce((acc, curr) => {
+        return {
+          ...acc,
+          [curr.name]: null,
+        };
+      }, {})
+    )
+  );
+
   return (
     <div>
       {fields.map((items, index) => {
@@ -46,21 +63,26 @@ export const MultipleFields = ({
           <StyledMultipleFieldContainer key={items.id}>
             <InputsContainer
               fields={formFields.map((field) => {
-                const nbString = index !== 0 ? ` n°${index + 1}*` : '*';
+                const nbString = index !== 0 ? ` n°${index + 1}` : '';
+                const title =
+                  typeof field.title === 'function'
+                    ? field.title(getValue)
+                    : field.title;
+
                 const numberedField = {
                   ...field,
                   id: `${name}.${index}.${field.id}`,
                   name: `${name}.${index}.${field.name}`,
                   title:
-                    field.title.indexOf('*') > -1
-                      ? field.title.replace('*', nbString)
-                      : (field.title += nbString),
+                    typeof title === 'string' && title.indexOf('*') > -1
+                      ? title.replace('*', `${nbString}*`)
+                      : title + nbString,
                 };
                 return (
                   <GenericField
                     watch={watch}
                     resetField={resetField}
-                    data={numberedField}
+                    field={numberedField}
                     formId={formId}
                     getValue={getValue}
                     control={control}

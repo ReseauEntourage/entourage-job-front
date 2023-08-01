@@ -42,7 +42,7 @@ export function DatePicker({
         data-testid={id}
         className={`${!value ? 'empty-value' : ''}`}
         name={name}
-        value={value}
+        value={value || ''}
         min={min}
         max={max}
         type="date"

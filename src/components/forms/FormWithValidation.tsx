@@ -10,9 +10,20 @@ import { GenericField } from 'src/components/forms/fields/GenericField';
 import { InputsContainer } from 'src/components/forms/fields/InputsContainer';
 import { MultipleFields } from 'src/components/forms/fields/MultipleFields/MultipleFields';
 import { Heading } from 'src/components/utils/Inputs';
+import { Text } from 'src/components/utils/Inputs/Text';
+import { getValueFromFormField } from 'src/utils';
 import { AnyToFix } from 'src/utils/Types';
+import {
+  ComponentException,
+  FormSchema,
+  isFormFieldGroup,
+  isFormFieldInput,
+  isFormFieldMultiple,
+  isFormFieldSelect,
+  isFormFieldText,
+} from './FormSchema';
 import { StyledForm } from './Forms.styles';
-import { FormSchema } from './schema/FormSchema.types';
+import { reformat } from './schemas/script';
 
 interface FormWithValidationProps {
   defaultValues?: AnyToFix; // to be typed
@@ -23,13 +34,15 @@ interface FormWithValidationProps {
   submitText?: string;
   cancelText?: string;
   enterToSubmit?: boolean;
-  formId: string;
 }
 
-export const FormWithValidation = forwardRef(
+export const FormWithValidation = forwardRef<
+  { resetForm: () => void },
+  FormWithValidationProps
+>(
   (
     {
-      formSchema: { id, rules, fields },
+      formSchema,
       defaultValues = {},
       submitText,
       cancelText,
@@ -37,10 +50,11 @@ export const FormWithValidation = forwardRef(
       onCancel,
       enterToSubmit = false,
       onError,
-      formId,
-    }: FormWithValidationProps,
+    },
     ref
   ) => {
+    reformat(formSchema);
+    const { id: formId, rules, fields } = formSchema;
     const [error, setError] = useState<string>();
     const [fieldOptions, setFieldOptions] = useState({});
 
@@ -65,7 +79,16 @@ export const FormWithValidation = forwardRef(
 
     const onValidForm = useCallback(
       (formValues) => {
-        onSubmit(formValues, (msg) => {
+        const mutatedFormValues = Object.keys(formValues).reduce(
+          (acc, curr) => {
+            return {
+              ...acc,
+              [curr]: getValueFromFormField(formValues[curr]),
+            };
+          },
+          {}
+        );
+        onSubmit(mutatedFormValues, (msg) => {
           setError(msg);
         });
       },
@@ -81,7 +104,7 @@ export const FormWithValidation = forwardRef(
     return (
       <>
         <StyledForm
-          id={id}
+          id={formId}
           data-testid="form-with-validation"
           onKeyDown={(ev) => {
             if (enterToSubmit) {
@@ -92,108 +115,141 @@ export const FormWithValidation = forwardRef(
           }}
         >
           <fieldset>
-            {fields.map((value, i) => {
-              const shouldHide = value.hide
-                ? value.hide((name) => {
+            {fields.map((field, i) => {
+              const shouldHide = field.hide
+                ? field.hide((name) => {
                     return getValues(name);
                   })
-                : value.hidden;
+                : field.hidden;
 
               if (shouldHide) {
                 return null;
               }
 
-              if (value.component === 'heading') {
-                return (
-                  <Heading id={`${formId}-${value.id}`} title={value.title} />
-                );
+              if (isFormFieldText(field)) {
+                const title =
+                  typeof field.title === 'function'
+                    ? field.title(getValues)
+                    : field.title;
+                if (field.component === 'heading') {
+                  return (
+                    <Heading
+                      id={`${formId}-${field.id}`}
+                      title={title}
+                      key={i}
+                    />
+                  );
+                }
+                if (field.component === 'text') {
+                  return (
+                    <Text id={`${formId}-${field.id}`} title={title} key={i} />
+                  );
+                }
               }
-              if (value.component === 'text') {
-                return (
-                  <p
-                    id={`${formId}-${value.id}`}
-                    data-testid={`${formId}-${value.id}`}
-                  >
-                    {value.dynamicTitle
-                      ? value.dynamicTitle(getValues)
-                      : value.title}
-                  </p>
-                );
-              }
-              if (value.component === 'fieldgroup') {
-                const { fields: childrenFields } = value;
 
-                return (
-                  !shouldHide && (
+              if (isFormFieldGroup(field)) {
+                if (field.component === 'fieldgroup') {
+                  const { fields: childrenFields } = field;
+
+                  return (
+                    !shouldHide && (
+                      <li key={i}>
+                        <InputsContainer
+                          fields={childrenFields.map((childrenField) => {
+                            const shouldHideField = childrenField.hide
+                              ? childrenField.hide((name) => {
+                                  return getValues(name);
+                                })
+                              : childrenField.hidden;
+
+                            if (isFormFieldText(childrenField)) {
+                              const title =
+                                typeof childrenField.title === 'function'
+                                  ? childrenField.title(getValues)
+                                  : childrenField.title;
+                              if (childrenField.component === 'text') {
+                                return (
+                                  <Text
+                                    id={`${formId}-${childrenField.id}`}
+                                    title={title}
+                                    key={i}
+                                  />
+                                );
+                              }
+                              throw new ComponentException(
+                                childrenField.component,
+                                field.component
+                              );
+                            }
+
+                            return !shouldHideField ? (
+                              <GenericField
+                                watch={watch}
+                                resetField={resetField}
+                                control={control}
+                                field={childrenField}
+                                formId={formId}
+                                fieldOptions={fieldOptions}
+                                updateFieldOptions={updateFieldOptions}
+                                getValue={(name) => {
+                                  return getValues(name);
+                                }}
+                              />
+                            ) : null;
+                          })}
+                        />
+                      </li>
+                    )
+                  );
+                }
+              }
+
+              if (isFormFieldMultiple(field)) {
+                if (field.component === 'multiple-fields') {
+                  const {
+                    fields: multipleFields,
+                    action,
+                    name: multipleFieldsName,
+                  } = field;
+                  return (
                     <li key={i}>
-                      <InputsContainer
-                        fields={childrenFields.map((field) => {
-                          const shouldHideField = field.hide
-                            ? field.hide((name) => {
-                                return getValues(name);
-                              })
-                            : field.hidden;
-
-                          return !shouldHideField ? (
-                            <GenericField
-                              watch={watch}
-                              resetField={resetField}
-                              control={control}
-                              data={field}
-                              formId={id}
-                              fieldOptions={fieldOptions}
-                              updateFieldOptions={updateFieldOptions}
-                              getValue={(name) => {
-                                return getValues(name);
-                              }}
-                            />
-                          ) : null;
-                        })}
+                      <MultipleFields
+                        watch={watch}
+                        resetField={resetField}
+                        control={control}
+                        action={action}
+                        name={multipleFieldsName}
+                        formId={formId}
+                        getValue={(name) => {
+                          return getValues(name);
+                        }}
+                        fields={multipleFields}
                       />
                     </li>
-                  )
-                );
+                  );
+                }
               }
-              if (value.component === 'multiple-fields') {
-                const {
-                  fields: multipleFields,
-                  action,
-                  name: multipleFieldsName,
-                } = value;
+
+              if (isFormFieldInput(field) || isFormFieldSelect(field)) {
                 return (
                   <li key={i}>
-                    <MultipleFields
+                    <GenericField
                       watch={watch}
                       resetField={resetField}
                       control={control}
-                      action={action}
-                      name={multipleFieldsName}
-                      formId={id}
+                      field={field}
+                      formId={formId}
+                      updateFieldOptions={updateFieldOptions}
+                      fieldOptions={fieldOptions}
                       getValue={(name) => {
                         return getValues(name);
                       }}
-                      fields={multipleFields}
                     />
                   </li>
                 );
               }
 
-              return (
-                <li key={i}>
-                  <GenericField
-                    watch={watch}
-                    resetField={resetField}
-                    control={control}
-                    data={value}
-                    formId={id}
-                    updateFieldOptions={updateFieldOptions}
-                    fieldOptions={fieldOptions}
-                    getValue={(name) => {
-                      return getValues(name);
-                    }}
-                  />
-                </li>
-              );
+              throw new ComponentException(field.component);
             })}
           </fieldset>
         </StyledForm>

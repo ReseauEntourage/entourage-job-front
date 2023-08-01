@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { formEditUsefulInformation } from 'src/components/forms/schema/formEditUsefulInformation';
+import { formEditUsefulInformation } from 'src/components/forms/schemas/formEditUsefulInformation';
 
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';

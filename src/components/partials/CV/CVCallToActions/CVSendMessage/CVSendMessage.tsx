@@ -3,7 +3,7 @@ import UIkit from 'uikit';
 import { StyledCVCTACard } from '../CVCallToActions.styles';
 import { Api } from 'src/api';
 import { CV } from 'src/api/types';
-import { formSendExternalMessage } from 'src/components/forms/schema/formSendExternalMessage';
+import { formSendExternalMessage } from 'src/components/forms/schemas/formSendExternalMessage';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Button } from 'src/components/utils';

@@ -2,7 +2,7 @@ import moment from 'moment/moment';
 import React from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
-import { formAddExternalOpportunityCandidate } from 'src/components/forms/schema/formAddExternalOpportunity';
+import { formAddExternalOpportunityCandidate } from 'src/components/forms/schemas/formAddExternalOpportunity';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 
 export const ModalExternalOffer = ({

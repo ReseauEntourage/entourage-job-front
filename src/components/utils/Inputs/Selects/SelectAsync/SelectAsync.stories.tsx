@@ -24,7 +24,7 @@ const meta = {
   },
   args: {
     id: 'select-async-stories',
-    loadOptions: async (inputValue, callback) => {
+    loadOptions: async (callback) => {
       await asyncTimeout(2000);
       callback([
         {

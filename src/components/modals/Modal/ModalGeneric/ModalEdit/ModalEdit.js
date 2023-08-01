@@ -15,7 +15,6 @@ export const ModalEdit = ({
   submitText,
   cancelText,
   onError,
-  formId,
 }) => {
   const { onClose } = useModalContext();
   return (
@@ -32,7 +31,6 @@ export const ModalEdit = ({
           onClose();
         }}
         onError={onError}
-        formId={formId}
         onSubmit={(fields, setError) => onSubmit(fields, onClose, setError)}
       />
     </ModalGeneric>
@@ -64,7 +62,6 @@ ModalEdit.propTypes = {
   ]),
   submitText: PropTypes.string,
   cancelText: PropTypes.string,
-  formId: PropTypes.string,
 };
 
 ModalEdit.defaultProps = {
@@ -72,7 +69,6 @@ ModalEdit.defaultProps = {
   description: undefined,
   submitText: 'Sauvegarder',
   cancelText: 'Annuler',
-  formId: '',
   onError: () => {},
   onCancel: () => {},
 };

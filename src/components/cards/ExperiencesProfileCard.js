@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
-import { formEditExperience } from 'src/components/forms/schema/formEditExperience';
+import { formEditExperience } from 'src/components/forms/schemas/formEditExperience';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';

@@ -19,14 +19,10 @@ interface SelectAsyncProps
     HTMLSelectElement
   > {
   loadOptions: (
-    inputValue: string,
-    callback: (options: FilterConstant[]) => void
+    callback: (options: FilterConstant[]) => void,
+    inputValue: string
   ) => void;
-  cacheOptions?: boolean;
-  defaultOptions?: FilterConstant | FilterConstant[] | boolean;
   isMulti?: boolean;
-  noOptionsMessage?: () => void;
-  loadingMessage?: () => void;
   openMenuOnClick?: boolean;
 }
 export function SelectAsync({
@@ -38,11 +34,7 @@ export function SelectAsync({
   error,
   onChange,
   onBlur,
-  defaultOptions: defaultOptionsProps = true,
-  cacheOptions = false,
   isMulti = false,
-  noOptionsMessage = () => null,
-  loadingMessage = () => null,
   loadOptions,
   disabled = false,
   hidden = false,
@@ -52,7 +44,7 @@ export function SelectAsync({
 }: SelectAsyncProps) {
   const [defaultOptions, setDefaultOptions] = useState<
     FilterConstant[] | FilterConstant
-  >(typeof defaultOptionsProps !== 'boolean' ? defaultOptionsProps : null);
+  >(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const debouncedLoadOptions = useCallback(
@@ -60,10 +52,10 @@ export function SelectAsync({
       setIsLoading(true);
       clearTimeout(debounceTimeoutId);
       debounceTimeoutId = setTimeout(() => {
-        loadOptions(inputValue, (options) => {
+        loadOptions((options) => {
           callback(options);
           setIsLoading(false);
-        });
+        }, inputValue);
       }, 1000);
     },
     [loadOptions]
@@ -72,10 +64,10 @@ export function SelectAsync({
   const onFocus = useCallback(() => {
     setDefaultOptions([]);
     setIsLoading(true);
-    loadOptions('', (options) => {
+    loadOptions((options) => {
       setDefaultOptions(options);
       setIsLoading(false);
-    });
+    }, '');
   }, [loadOptions]);
 
   if (hidden) {
@@ -95,20 +87,19 @@ export function SelectAsync({
           onFocus={onFocus}
           components={{ ClearIndicator, DropdownIndicator, MultiValueRemove }}
           classNamePrefix="Select"
-          cacheOptions={!!cacheOptions}
+          cacheOptions={false}
           isClearable
           isLoading={isLoading}
           defaultOptions={defaultOptions}
           value={value || null}
           isMulti={isMulti}
           placeholder={placeholder || title}
-          noOptionsMessage={
-            noOptionsMessage ||
-            (() => {
-              return `Aucun résultat`;
-            })
-          }
-          loadingMessage={loadingMessage}
+          noOptionsMessage={() => {
+            return `Aucun résultat`;
+          }}
+          loadingMessage={() => {
+            return `Chargement`;
+          }}
           loadOptions={debouncedLoadOptions}
           isDisabled={disabled}
           onChange={onChange}
