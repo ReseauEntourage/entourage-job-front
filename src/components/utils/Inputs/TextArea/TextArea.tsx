@@ -1,6 +1,7 @@
 import React, { ChangeEvent, MutableRefObject } from 'react';
 import { StyledInputLabel } from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
+import { StyledLengthLimit } from '../TextInput/TextInput.styles';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { useIsMobile } from 'src/hooks/utils';
 import {
@@ -14,6 +15,7 @@ import { useLineLimit } from './useLineLimit';
 
 interface TextAreaProps extends CommonInputProps<string, HTMLTextAreaElement> {
   maxLines?: { lines: number; width: number };
+  maxLength?: number;
   rows?: number;
 }
 
@@ -29,6 +31,7 @@ export function TextArea({
   disabled = false,
   error,
   maxLines,
+  maxLength,
   showLabel,
   inputRef,
   rows,
@@ -48,6 +51,8 @@ export function TextArea({
   }
 
   const maxLinesWidth = maxLines?.width || 655;
+
+  const remainingCharacters = (maxLength || 0) - value.length;
 
   return (
     <StyledTextAreaContainer>
@@ -76,6 +81,7 @@ export function TextArea({
           }
           disabled={disabled}
           onBlur={onBlur}
+          maxLength={!maxLines ? maxLength : null}
           value={value || ''}
         />
       </StyledTextAreaScrollContainer>
@@ -87,6 +93,11 @@ export function TextArea({
           <StyledLineLimit warning={remainingLines === 0}>
             {remainingLines} ligne(s) restante(s)
           </StyledLineLimit>
+        )}
+        {!maxLines && maxLength && (
+          <StyledLengthLimit warning={remainingCharacters === 0}>
+            {remainingCharacters} caractère(s) restant(s)
+          </StyledLengthLimit>
         )}
       </StyledAnnotations>
     </StyledTextAreaContainer>

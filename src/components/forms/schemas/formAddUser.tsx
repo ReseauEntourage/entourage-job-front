@@ -1,8 +1,10 @@
 import React from 'react';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
+import validator from 'validator';
 import PlusFilledIcon from 'assets/custom/icons/plus-filled.svg';
-import { FormSchema } from '../FormSchema/FormSchema.types';
+import { FormField, FormSchema } from '../FormSchema';
 import { Api } from 'src/api';
+import { FilterConstant } from 'src/constants';
 import { ADMIN_ZONES_FILTERS } from 'src/constants/departements';
 import { COLORS } from 'src/constants/styles';
 import {
@@ -11,6 +13,7 @@ import {
   USER_ROLES_FILTERS,
   RELATED_ROLES,
   EXTERNAL_USER_ROLES,
+  UserRole,
 } from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils/Finding';
 import { formAddOrganization } from './formAddOrganization';
@@ -54,17 +57,10 @@ const addHideMethodAndSuffixToAllFields = (field) => {
   return fieldToReturn;
 };
 
-const mutatedAddOrganizationForm = {
-  fields: formAddOrganization.fields.map(addHideMethodAndSuffixToAllFields),
-  rules: formAddOrganization.rules.map((rule) => {
-    return {
-      ...rule,
-      field: `${rule.field}Organization`,
-    };
-  }),
-};
+const mutatedAddOrganizationFormFields: FormField[] =
+  formAddOrganization.fields.map(addHideMethodAndSuffixToAllFields);
 
-const organizationFieldsNames = mutatedAddOrganizationForm.fields.map(
+const organizationFieldsNames = mutatedAddOrganizationFormFields.map(
   ({ name }) => name
 );
 
@@ -73,10 +69,13 @@ export const formAddUser: FormSchema = {
   fields: [
     {
       id: 'memberInformation',
+      name: 'memberInformation',
       title: 'Information du membre',
       component: 'heading',
     },
     {
+      id: 'userNames',
+      name: 'userNames',
       component: 'fieldgroup',
       fields: [
         {
@@ -84,16 +83,22 @@ export const formAddUser: FormSchema = {
           name: 'firstName',
           component: 'text-input',
           title: 'Prénom *',
+          isRequired: true,
+          maxLength: 80,
         },
         {
           id: 'lastName',
           name: 'lastName',
           component: 'text-input',
           title: 'Nom *',
+          isRequired: true,
+          maxLength: 80,
         },
       ],
     },
     {
+      id: 'userInfo',
+      name: 'userInfo',
       component: 'fieldgroup',
       fields: [
         {
@@ -105,6 +110,7 @@ export const formAddUser: FormSchema = {
             { value: 0, label: 'Homme' },
             { value: 1, label: 'Femme' },
           ],
+          isRequired: true,
         },
         {
           id: 'zone',
@@ -112,10 +118,13 @@ export const formAddUser: FormSchema = {
           title: 'Zone *',
           component: 'select-simple',
           options: ADMIN_ZONES_FILTERS,
+          isRequired: true,
         },
       ],
     },
     {
+      id: 'userPhoneRole',
+      name: 'userPhoneRole',
       component: 'fieldgroup',
       fields: [
         {
@@ -123,6 +132,13 @@ export const formAddUser: FormSchema = {
           name: 'phone',
           component: 'tel-input',
           title: 'Numéro *',
+          isRequired: true,
+          rules: [
+            {
+              method: (fieldValue) => isValidPhoneNumber(fieldValue, 'FR'),
+              message: 'Numéro de téléphone invalide',
+            },
+          ],
         },
         {
           id: 'role',
@@ -131,6 +147,7 @@ export const formAddUser: FormSchema = {
           component: 'select-simple',
           options: USER_ROLES_FILTERS,
           fieldsToReset: ['adminRole', 'userToLinkId', 'organizationId'],
+          isRequired: true,
         },
       ],
     },
@@ -139,8 +156,18 @@ export const formAddUser: FormSchema = {
       name: 'email',
       component: 'text-input',
       title: 'Adresse mail *',
+      isRequired: true,
+      rules: [
+        {
+          method: (fieldValue) => validator.isEmail(fieldValue),
+
+          message: 'Adresse e-mail invalide',
+        },
+      ],
     },
     {
+      id: 'userOrganization',
+      name: 'userOrganization',
       component: 'fieldgroup',
       hide: (getValue) => {
         const role = getValue('role');
@@ -152,7 +179,10 @@ export const formAddUser: FormSchema = {
           name: 'organizationId',
           component: 'select-async',
           hide: (getValue) => {
-            return !isRoleIncluded(EXTERNAL_USER_ROLES, getValue('role'));
+            return !isRoleIncluded(
+              EXTERNAL_USER_ROLES,
+              getValue('role') as UserRole
+            );
           },
           loadOptions: async (callback, inputValue) => {
             const { data: organizations } = await Api.getAllOrganizations({
@@ -175,18 +205,21 @@ export const formAddUser: FormSchema = {
           },
           title: 'Structure partenaire *',
           fieldsToReset: ['userToLinkId', ...organizationFieldsNames],
+          isRequired: true,
         },
         {
           id: 'userToLinkId',
           name: 'userToLinkId',
           component: 'select-async',
-          isMulti: (getValue) => {
+          /* isMulti: (getValue) => {
             const role = getValue('role');
             return role === USER_ROLES.COACH_EXTERNAL;
-          },
+          }, */
           hide: (getValue) => {
-            const role = getValue('role');
-            const organizationId = getValue('organizationId')?.value;
+            const role = getValue('role') as UserRole;
+            const organizationId = (
+              getValue('organizationId') as FilterConstant
+            )?.value;
             return (
               role === USER_ROLES.ADMIN ||
               (isRoleIncluded(EXTERNAL_USER_ROLES, role) && !organizationId) ||
@@ -194,9 +227,11 @@ export const formAddUser: FormSchema = {
             );
           },
           loadOptions: async (callback, inputValue, getValue) => {
-            const role = RELATED_ROLES[getValue('role')];
+            const role = RELATED_ROLES[getValue('role') as string];
 
-            const organizationId = getValue('organizationId')?.value;
+            const organizationId = (
+              getValue('organizationId') as FilterConstant
+            )?.value;
 
             const { data: users } = await Api.getUsersSearch({
               params: {
@@ -216,10 +251,20 @@ export const formAddUser: FormSchema = {
             );
           },
           title: 'Nom du coach ou candidat lié',
+          rules: [
+            {
+              method: (fieldValue) => {
+                return !!fieldValue;
+              },
+              message: 'error',
+            },
+          ],
         },
       ],
     },
     {
+      id: 'adminRoleGroup',
+      name: 'adminRoleGroup',
       component: 'fieldgroup',
       hide: (getValue) => {
         const role = getValue('role');
@@ -235,67 +280,10 @@ export const formAddUser: FormSchema = {
             { value: ADMIN_ROLES.CANDIDATES, label: ADMIN_ROLES.CANDIDATES },
             { value: ADMIN_ROLES.COMPANIES, label: ADMIN_ROLES.COMPANIES },
           ],
+          isRequired: true,
         },
       ],
     },
-    ...mutatedAddOrganizationForm.fields,
-  ],
-  rules: [
-    {
-      field: 'firstName',
-      isRequired: true,
-    },
-    {
-      field: 'lastName',
-      isRequired: true,
-    },
-    {
-      field: 'gender',
-      isRequired: true,
-    },
-    {
-      field: 'role',
-      isRequired: true,
-    },
-    {
-      field: 'email',
-      method: 'isEmail',
-      validWhen: true,
-      message: 'Adresse e-mail invalide',
-    },
-    {
-      field: 'phone',
-      method: (fieldValue) => {
-        return fieldValue && isValidPhoneNumber(fieldValue, 'FR');
-      },
-      args: [],
-      validWhen: true,
-      message: 'Numéro de téléphone invalide',
-    },
-    {
-      field: 'zone',
-      isRequired: true,
-    },
-    {
-      field: 'adminRole',
-      method: (fieldValue, fieldValues) => {
-        return !fieldValue && fieldValues.role === USER_ROLES.ADMIN;
-      },
-      args: [],
-      validWhen: false,
-      message: 'Obligatoire',
-    },
-    {
-      field: 'organizationId',
-      method: (fieldValue, fieldValues) => {
-        return (
-          !fieldValue && isRoleIncluded(EXTERNAL_USER_ROLES, fieldValues.role)
-        );
-      },
-      args: [],
-      validWhen: false,
-      message: 'Obligatoire',
-    },
-    ...mutatedAddOrganizationForm.rules,
+    ...mutatedAddOrganizationFormFields,
   ],
 };

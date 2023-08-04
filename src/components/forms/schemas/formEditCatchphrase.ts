@@ -1,4 +1,4 @@
-import { FormSchema } from '../FormSchema/FormSchema.types';
+import { FormSchema } from '../FormSchema';
 
 export const formEditCatchphrase: FormSchema = {
   id: 'form-catchphrase',
@@ -8,19 +8,7 @@ export const formEditCatchphrase: FormSchema = {
       name: 'catchphrase',
       component: 'text-input',
       title: 'Ce que vous pouvez apporter*',
-    },
-  ],
-  rules: [
-    {
-      field: 'catchphrase',
-      method: 'isLength',
-      args: [
-        {
-          max: 80,
-        },
-      ],
-      validWhen: true,
-      message: '80 caractères maximum',
+      maxLength: 80,
     },
   ],
 };

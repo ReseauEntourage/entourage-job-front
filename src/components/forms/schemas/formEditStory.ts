@@ -1,4 +1,4 @@
-import { FormSchema } from '../FormSchema/FormSchema.types';
+import { FormSchema } from '../FormSchema';
 
 export const formEditStory: FormSchema = {
   id: 'form-story',
@@ -9,19 +9,7 @@ export const formEditStory: FormSchema = {
       component: 'textarea',
       title: 'Mon histoire',
       rows: 14,
-    },
-  ],
-  rules: [
-    {
-      field: 'story',
-      method: 'isLength',
-      args: [
-        {
-          max: 1500,
-        },
-      ],
-      validWhen: true,
-      message: '1500 caractères maximum',
+      maxLength: 1500,
     },
   ],
 };

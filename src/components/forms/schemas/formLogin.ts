@@ -1,4 +1,5 @@
-import { FormSchema } from '../FormSchema/FormSchema.types';
+import { FormSchema } from '../FormSchema';
+import validator from "validator";
 
 export const formLogin: FormSchema = {
   id: 'form-login',
@@ -11,6 +12,13 @@ export const formLogin: FormSchema = {
       placeholder: 'Tapez votre adresse mail',
       title: 'Adresse mail*',
       showLabel: true,
+      isRequired: true,
+      rules: [
+        {
+          method: (fieldValue) => validator.isEmail(fieldValue),
+          message: 'Adresse e-mail invalide',
+        },
+      ],
     },
     {
       id: 'password',
@@ -20,21 +28,6 @@ export const formLogin: FormSchema = {
       placeholder: 'Tapez votre mot de passe',
       title: 'Mot de passe*',
       showLabel: true,
-    },
-  ],
-  rules: [
-    {
-      field: 'email',
-      isRequired: true,
-    },
-    {
-      field: 'email',
-      method: 'isEmail',
-      validWhen: true,
-      message: 'Adresse e-mail invalide',
-    },
-    {
-      field: 'password',
       isRequired: true,
     },
   ],

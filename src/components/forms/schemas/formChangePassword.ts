@@ -1,5 +1,5 @@
 import { passwordStrength } from 'check-password-strength';
-import { FormSchema } from '../FormSchema/FormSchema.types';
+import { FormSchema } from '../FormSchema';
 
 export const formChangePassword: FormSchema = {
   id: 'form-change-pwd',
@@ -10,6 +10,7 @@ export const formChangePassword: FormSchema = {
       type: 'password',
       component: 'text-input',
       title: 'Ancien mot de passe*',
+      isRequired: true,
     },
     {
       id: 'newPassword',
@@ -17,6 +18,14 @@ export const formChangePassword: FormSchema = {
       type: 'password',
       component: 'text-input',
       title: 'Nouveau mot de passe*',
+      isRequired: true,
+      rules: [
+        {
+          method: (fieldValue) => passwordStrength(fieldValue).id >= 2,
+
+          message: 'Doit répondre aux critères ci-dessus',
+        },
+      ],
     },
     {
       id: 'confirmPassword',
@@ -24,35 +33,18 @@ export const formChangePassword: FormSchema = {
       type: 'password',
       component: 'text-input',
       title: 'Confirmation du mot de passe*',
-    },
-  ],
-  rules: [
-    {
-      field: 'newPassword',
-      method: (fieldValue) => {
-        return passwordStrength(fieldValue).id >= 2;
-      },
-      args: [],
-      validWhen: true,
-      message: 'Doit répondre aux critères ci-dessus',
-    },
-    {
-      field: 'confirmPassword',
-      method: (fieldValue) => {
-        return passwordStrength(fieldValue).id >= 2;
-      },
-      args: [],
-      validWhen: true,
-      message: 'Doit répondre aux critères ci-dessus',
-    },
-    {
-      field: 'confirmPassword',
-      method: (fieldValue, state) => {
-        return state.newPassword === fieldValue;
-      },
-      args: [],
-      validWhen: true,
-      message: 'Les deux mots de passe ne correspondent pas',
+      isRequired: true,
+      rules: [
+        {
+          method: (fieldValue) => passwordStrength(fieldValue).id >= 2,
+          message: 'Doit répondre aux critères ci-dessus',
+        },
+        {
+          method: (fieldValue, fieldValues) =>
+            fieldValues.newPassword === fieldValue,
+          message: 'Les deux mots de passe ne correspondent pas',
+        },
+      ],
     },
   ],
 };

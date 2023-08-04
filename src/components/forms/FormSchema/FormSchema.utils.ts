@@ -1,29 +1,50 @@
 import {
+  CheckBoxComponent,
+  CheckBoxComponents,
   FormComponent,
   FormField,
+  FormFieldCheckBox,
   FormFieldGroup,
-  FormFieldInput,
   FormFieldMultiple,
-  FormFieldSelect,
+  FormFieldSelect, FormFieldSelectRequest,
   FormFieldText,
+  FormFieldTextInput,
   GroupComponent,
   GroupComponents,
-  InputComponent,
-  InputComponents,
   MultipleComponent,
   MultipleComponents,
   SelectComponent,
   SelectComponents,
+  SelectRequestComponent,
+  SelectRequestComponents,
   TextComponent,
   TextComponents,
-} from './FormSchema.types';
+  TextInputComponent,
+  TextInputComponents
+} from "./FormSchema.types";
 
-export function isFormFieldInput(field: FormField): field is FormFieldInput {
-  return InputComponents.includes(field.component as InputComponent);
+export function isFormFieldTextInput(
+  field: FormField
+): field is FormFieldTextInput {
+  return TextInputComponents.includes(field.component as TextInputComponent);
+}
+
+export function isFormFieldCheckbox(
+  field: FormField
+): field is FormFieldCheckBox {
+  return CheckBoxComponents.includes(field.component as CheckBoxComponent);
 }
 
 export function isFormFieldSelect(field: FormField): field is FormFieldSelect {
   return SelectComponents.includes(field.component as SelectComponent);
+}
+
+export function isFormFieldSelectRequest(
+  field: FormField
+): field is FormFieldSelectRequest {
+  return SelectRequestComponents.includes(
+    field.component as SelectRequestComponent
+  );
 }
 
 export function isFormFieldText(field: FormField): field is FormFieldText {

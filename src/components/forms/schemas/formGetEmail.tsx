@@ -1,7 +1,8 @@
 import React from 'react';
-import { EXTERNAL_LINKS } from '../../../constants';
-import { SimpleLink } from '../../utils';
-import { FormSchema } from '../FormSchema/FormSchema.types';
+import { FormSchema } from '../FormSchema';
+import { SimpleLink } from 'src/components/utils';
+import { EXTERNAL_LINKS } from 'src/constants';
+import validator from "validator";
 
 export const formGetEmail: FormSchema = {
   id: 'form-get-email',
@@ -13,6 +14,13 @@ export const formGetEmail: FormSchema = {
       type: 'email',
       placeholder: 'Tapez votre adresse mail',
       title: 'Adresse mail*',
+      isRequired: true,
+      rules: [
+        {
+          method: (fieldValue) => validator.isEmail(fieldValue),
+          message: 'Adresse e-mail invalide',
+        },
+      ],
     },
     {
       id: 'cgu',
@@ -30,25 +38,7 @@ export const formGetEmail: FormSchema = {
           </SimpleLink>
         </span>
       ),
-    },
-  ],
-  rules: [
-    {
-      field: 'email',
       isRequired: true,
-    },
-    {
-      field: 'email',
-      method: 'isEmail',
-      validWhen: true,
-      message: 'Adresse e-mail invalide',
-    },
-    {
-      field: 'cgu',
-      method: 'equals',
-      args: ['true'],
-      validWhen: true,
-      message: 'Obligatoire',
     },
   ],
 };

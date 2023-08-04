@@ -1,4 +1,4 @@
-import { FormSchema } from '../FormSchema/FormSchema.types';
+import { FormSchema } from '../FormSchema';
 import { CONTRACTS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 
@@ -108,5 +108,4 @@ export const formAddExternalOpportunityCandidate: FormSchema = {
       title: "Envoyer un mail à votre coach pour l'informer",
     },
   ],
-  rules: [],
 };

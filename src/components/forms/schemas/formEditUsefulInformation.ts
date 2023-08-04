@@ -1,7 +1,8 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
-import { FormSchema } from '../FormSchema/FormSchema.types';
+import { FormSchema } from '../FormSchema';
 import { CONTRACTS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import validator from "validator";
 
 export const formEditUsefulInformation: FormSchema = {
   id: 'form-usefullinformation',
@@ -12,12 +13,29 @@ export const formEditUsefulInformation: FormSchema = {
       type: 'email',
       component: 'text-input',
       title: 'Adresse mail',
+      rules: [
+        {
+          method: (fieldValue) => validator.isEmail(fieldValue),
+
+          message: 'Adresse e-mail invalide',
+        },
+      ],
     },
     {
       id: 'phone',
       name: 'phone',
       component: 'tel-input',
       title: 'Numéro de téléphone portable*',
+      isRequired: true,
+      rules: [
+        {
+          method: (fieldValue) => {
+            return fieldValue && isValidPhoneNumber(fieldValue, 'FR');
+          },
+
+          message: 'Numéro de téléphone invalide',
+        },
+      ],
     },
     {
       id: 'address',
@@ -53,6 +71,7 @@ export const formEditUsefulInformation: FormSchema = {
       name: 'availability',
       component: 'text-input',
       title: 'Disponibilités de travail possibles',
+      maxLength: 40,
     },
     {
       id: 'languages',
@@ -66,67 +85,8 @@ export const formEditUsefulInformation: FormSchema = {
       name: 'transport',
       component: 'text-input',
       title: 'Permis de conduire',
-    },
-  ],
-  rules: [
-    {
-      field: 'contracts',
-      method: 'isLength',
-      args: [
-        {
-          max: 120,
-        },
-      ],
-      validWhen: true,
-      message: '120 caractères maximum',
-    },
-    {
-      field: 'availability',
-      method: 'isLength',
-      args: [
-        {
-          max: 40,
-        },
-      ],
-      validWhen: true,
-      message: '40 caractères maximum',
-    },
-    {
-      field: 'languages',
-      method: 'isLength',
-      args: [
-        {
-          max: 100,
-        },
-      ],
-      validWhen: true,
-      message: '100 caractères maximum',
-    },
-    {
-      field: 'transport',
-      method: 'isLength',
-      args: [
-        {
-          max: 100,
-        },
-      ],
-      validWhen: true,
-      message: '100 caractères maximum',
-    },
-    {
-      field: 'email',
-      method: 'isEmail',
-      validWhen: true,
-      message: 'Adresse e-mail invalide',
-    },
-    {
-      field: 'phone',
-      method: (fieldValue) => {
-        return fieldValue && isValidPhoneNumber(fieldValue, 'FR');
-      },
-      args: [],
-      validWhen: true,
-      message: 'Numéro de téléphone invalide',
+      maxLength: 100,
+
     },
   ],
 };

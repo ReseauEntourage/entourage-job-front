@@ -1,5 +1,5 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
-import { FormSchema } from '../FormSchema/FormSchema.types';
+import { FormSchema } from '../FormSchema';
 import { ADMIN_ZONES_FILTERS } from 'src/constants/departements';
 import { ADMIN_ROLES } from 'src/constants/users';
 
@@ -11,12 +11,14 @@ export const formPersonalData: FormSchema = {
       name: 'firstName',
       component: 'text-input',
       title: 'Prénom*',
+      isRequired: true,
     },
     {
       id: 'lastName',
       name: 'lastName',
       component: 'text-input',
       title: 'Nom*',
+      isRequired: true,
     },
     {
       id: 'zone',
@@ -24,6 +26,7 @@ export const formPersonalData: FormSchema = {
       name: 'zone',
       component: 'select-simple',
       options: ADMIN_ZONES_FILTERS,
+      isRequired: true,
     },
     {
       id: 'adminRole',
@@ -44,6 +47,7 @@ export const formPersonalData: FormSchema = {
         { value: 0, label: 'Homme' },
         { value: 1, label: 'Femme' },
       ],
+      isRequired: true,
     },
     {
       id: 'mailLabel',
@@ -83,6 +87,16 @@ export const formPersonalData: FormSchema = {
       name: 'phone',
       component: 'tel-input',
       title: 'Numéro de telephone portable*',
+      isRequired: true,
+      rules: [
+        {
+          method: (fieldValue) => {
+            return fieldValue && isValidPhoneNumber(fieldValue, 'FR');
+          },
+
+          message: 'Numéro de téléphone invalide',
+        },
+      ],
     },
     {
       id: 'addressLabel',
@@ -95,33 +109,6 @@ export const formPersonalData: FormSchema = {
       name: 'address',
       component: 'text-input',
       title: 'Tapez votre adresse postale',
-    },
-  ],
-  rules: [
-    {
-      field: 'firstName',
-      isRequired: true,
-    },
-    {
-      field: 'lastName',
-      isRequired: true,
-    },
-    {
-      field: 'gender',
-      isRequired: true,
-    },
-    {
-      field: 'phone',
-      method: (fieldValue) => {
-        return fieldValue && isValidPhoneNumber(fieldValue, 'FR');
-      },
-      args: [],
-      validWhen: true,
-      message: 'Numéro de téléphone invalide',
-    },
-    {
-      field: 'zone',
-      isRequired: true,
     },
   ],
 };

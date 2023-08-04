@@ -1,5 +1,5 @@
 import { passwordStrength } from 'check-password-strength';
-import { FormSchema } from '../FormSchema/FormSchema.types';
+import { FormSchema } from '../FormSchema';
 
 export const formResetPassword: FormSchema = {
   id: 'form-reset-pwd',
@@ -10,6 +10,16 @@ export const formResetPassword: FormSchema = {
       type: 'password',
       component: 'text-input',
       title: 'Nouveau mot de passe*',
+      isRequired: true,
+      rules: [
+        {
+          method: (fieldValue) => {
+            return passwordStrength(fieldValue).id >= 2;
+          },
+
+          message: 'Doit répondre aux critères ci-dessus',
+        },
+      ],
     },
     {
       id: 'confirmPassword',
@@ -17,35 +27,21 @@ export const formResetPassword: FormSchema = {
       type: 'password',
       component: 'text-input',
       title: 'Confirmation du mot de passe*',
-    },
-  ],
-  rules: [
-    {
-      field: 'newPassword',
-      method: (fieldValue) => {
-        return passwordStrength(fieldValue).id >= 2;
-      },
-      args: [],
-      validWhen: true,
-      message: 'Doit répondre aux critères ci-dessus',
-    },
-    {
-      field: 'confirmPassword',
-      method: (fieldValue) => {
-        return passwordStrength(fieldValue).id >= 2;
-      },
-      args: [],
-      validWhen: true,
-      message: 'Doit répondre aux critères ci-dessus',
-    },
-    {
-      field: 'confirmPassword',
-      method: (fieldValue, state) => {
-        return state.newPassword === fieldValue;
-      },
-      args: [],
-      validWhen: true,
-      message: 'Les deux mots de passe ne correspondent pas',
+      isRequired: true,
+      rules: [
+        {
+          method: (fieldValue) =>
+            passwordStrength(fieldValue).id >= 2,
+          message: 'Doit répondre aux critères ci-dessus',
+        },
+        {
+          method: (fieldValue, fieldValues) => {
+            return fieldValues.newPassword === fieldValue;
+          },
+
+          message: 'Les deux mots de passe ne correspondent pas',
+        },
+      ],
     },
   ],
 };

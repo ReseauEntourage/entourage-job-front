@@ -1,12 +1,12 @@
-import moment from 'moment';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
-import { isEmail } from 'validator';
-import { FormSchema } from '../FormSchema/FormSchema.types';
+import isEmail from 'validator/lib/isEmail';
+import { FormSchema } from '../FormSchema';
 import { Api } from 'src/api';
-import { BUSINESS_LINES, CONTRACTS } from 'src/constants';
+import { BUSINESS_LINES, CONTRACTS, FilterConstant } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { USER_ROLES } from 'src/constants/users';
-import { findConstantFromValue, getValueFromFormField } from 'src/utils';
+import { findConstantFromValue } from 'src/utils';
+import validator from "validator";
 
 export const formEditOpportunity: FormSchema = {
   id: 'form-offer',
@@ -55,6 +55,16 @@ export const formEditOpportunity: FormSchema = {
           })
           .then(callback);
       },
+      rules: [
+        {
+          method: (fieldValue, fieldValues) => {
+            return (
+              !!fieldValues.isPublic || (fieldValue && fieldValue.length > 0)
+            );
+          },
+          message: 'Obligatoire si offre privée',
+        },
+      ],
     },
     {
       id: 'shouldSendNotifications',
@@ -81,12 +91,14 @@ export const formEditOpportunity: FormSchema = {
       name: 'title',
       component: 'text-input',
       title: 'Intitulé du poste proposé*',
+      isRequired: true,
     },
     {
       id: 'company',
       name: 'company',
       component: 'text-input',
       title: 'Nom de votre entreprise*',
+      isRequired: true,
     },
     {
       id: 'companyDescription',
@@ -106,12 +118,14 @@ export const formEditOpportunity: FormSchema = {
           title: 'Département du lieu de travail*',
           component: 'select',
           options: DEPARTMENTS_FILTERS,
+          isRequired: true,
         },
         {
           id: 'address',
           name: 'address',
           title: 'Adresse du lieu de travail*',
           component: 'text-input',
+          isRequired: true,
         },
       ],
     },
@@ -126,18 +140,21 @@ export const formEditOpportunity: FormSchema = {
       name: 'recruiterFirstName',
       component: 'text-input',
       title: 'Votre prénom*',
+      isRequired: true,
     },
     {
       id: 'recruiterName',
       name: 'recruiterName',
       component: 'text-input',
       title: 'Votre nom*',
+      isRequired: true,
     },
     {
       id: 'recruiterPosition',
       name: 'recruiterPosition',
       component: 'text-input',
       title: 'Votre fonction*',
+      isRequired: true,
     },
     {
       id: 'recruiterMail',
@@ -145,12 +162,33 @@ export const formEditOpportunity: FormSchema = {
       component: 'text-input',
       type: 'email',
       title: 'Votre adresse mail*',
+      isRequired: true,
+      rules: [
+        {
+          method: (fieldValue) => validator.isEmail(fieldValue),
+
+          message: 'Invalide',
+        },
+      ],
     },
     {
       id: 'recruiterPhone',
       name: 'recruiterPhone',
       component: 'tel-input',
       title: 'Votre téléphone portable',
+      rules: [
+        {
+          method: (fieldValue) => {
+            return (
+              !fieldValue ||
+              fieldValue.length === 0 ||
+              isValidPhoneNumber(fieldValue, 'FR')
+            );
+          },
+
+          message: 'Numéro de téléphone invalide',
+        },
+      ],
     },
     {
       id: 'contactMail',
@@ -160,6 +198,15 @@ export const formEditOpportunity: FormSchema = {
       component: 'text-input',
       type: 'email',
       title: 'Adresse mail du recruteur si intermédiaire',
+      rules: [
+        {
+          // TODO Put trim on all fields
+          method: (fieldValue) => {
+            return !fieldValue.trim() || isEmail(fieldValue);
+          },
+          message: 'Invalide',
+        },
+      ],
     },
     {
       id: 'businessLines',
@@ -182,6 +229,7 @@ export const formEditOpportunity: FormSchema = {
       name: 'description',
       component: 'textarea',
       title: 'Descriptif des missions proposées*',
+      isRequired: true,
     },
     {
       id: 'contract',
@@ -190,6 +238,7 @@ export const formEditOpportunity: FormSchema = {
       options: CONTRACTS,
       title: 'Type de contrat*',
       fieldsToReset: ['endOfContract'],
+      isRequired: true,
     },
     {
       id: 'startEndContract',
@@ -210,7 +259,7 @@ export const formEditOpportunity: FormSchema = {
           component: 'datepicker',
           disable: (getValue) => {
             const contract = findConstantFromValue(
-              getValue('contract'),
+              getValue('contract') as string,
               CONTRACTS
             );
             return !contract || !contract.end;
@@ -228,7 +277,6 @@ export const formEditOpportunity: FormSchema = {
           name: 'workingHours',
           component: 'text-input',
           title: 'Jours et horaires de travail',
-          maxLength: 255,
         },
         {
           id: 'isPartTime',
@@ -248,7 +296,6 @@ export const formEditOpportunity: FormSchema = {
           name: 'salary',
           component: 'text-input',
           title: 'Salaire et compléments',
-          maxLength: 255,
         },
         {
           id: 'driversLicense',
@@ -294,165 +341,6 @@ export const formEditOpportunity: FormSchema = {
       component: 'checkbox',
       title:
         'Vous avez un autre poste à proposer ? Dupliquez cette offre pour la publier plus rapidement',
-    },
-  ],
-  rules: [
-    {
-      field: 'candidatesIds',
-      args: [],
-      method: (fieldValue, state) => {
-        return (
-          (!fieldValue || fieldValue.length === 0) && state.isPublic === false
-        );
-      },
-      validWhen: false,
-      message: 'Obligatoire si offre privée',
-    },
-    {
-      field: 'title',
-      isRequired: true,
-    },
-    {
-      field: 'company',
-      isRequired: true,
-    },
-    {
-      field: 'recruiterFirstName',
-      isRequired: true,
-    },
-    {
-      field: 'recruiterName',
-      isRequired: true,
-    },
-    {
-      field: 'recruiterPosition',
-      isRequired: true,
-    },
-    {
-      field: 'recruiterMail',
-      isRequired: true,
-    },
-    {
-      field: 'recruiterMail',
-      method: 'isEmail',
-      validWhen: true,
-      message: 'Invalide',
-    },
-    {
-      field: 'contactMail',
-      method: (fieldValue) => {
-        return !fieldValue.trim() || isEmail(fieldValue);
-      },
-      validWhen: true,
-      args: [],
-      message: 'Invalide',
-    },
-    {
-      field: 'recruiterPhone',
-      method: (fieldValue) => {
-        return (
-          !fieldValue ||
-          fieldValue.length === 0 ||
-          isValidPhoneNumber(fieldValue, 'FR')
-        );
-      },
-      args: [],
-      validWhen: true,
-      message: 'Numéro de téléphone invalide',
-    },
-    /*
-    {
-      field: 'businessLines',
-      isRequired: true,
-    }, */
-    {
-      field: 'locations',
-      method: (fieldValue, state) => {
-        const keys = ['department', 'address'];
-        return (
-          !keys.every((key) => {
-            return state[key];
-          }) &&
-          (fieldValue.length === 0 ||
-            fieldValue.some((fields) => {
-              return (
-                !keys.every((key) => {
-                  return Object.keys(fields).includes(key);
-                }) ||
-                Object.keys(fields).some((key) => {
-                  const value = getValueFromFormField(fields[key]);
-                  return !(value as string)?.trim();
-                })
-              );
-            }))
-        );
-      },
-      args: [],
-      validWhen: false,
-      message: 'Obligatoire',
-    },
-    {
-      field: 'department',
-      method: (fieldValue, state) => {
-        return !state.locations && !fieldValue?.trim();
-      },
-      args: [],
-      validWhen: false,
-      message: 'Obligatoire',
-    },
-    {
-      field: 'address',
-      method: (fieldValue, state) => {
-        return !state.locations && !fieldValue?.trim();
-      },
-      args: [],
-      validWhen: false,
-      message: 'Obligatoire',
-    },
-    {
-      field: 'description',
-      isRequired: true,
-    },
-    {
-      field: 'contract',
-      isRequired: true,
-    },
-    {
-      field: 'endOfContract',
-      method: (fieldValue, state) => {
-        return (
-          !!fieldValue &&
-          !!state.startOfContract &&
-          moment(fieldValue, 'YYYY-MM-DD').isBefore(
-            moment(state.startOfContract, 'YYYY-MM-DD')
-          )
-        );
-      },
-      args: [],
-      validWhen: false,
-      message: 'Date antérieure à la date de début',
-    },
-    {
-      field: 'salary',
-      method: 'isLength',
-      args: [
-        {
-          max: 255,
-        },
-      ],
-      validWhen: true,
-      message: '255 caractères maximum',
-    },
-    {
-      field: 'workingHours',
-      method: 'isLength',
-      args: [
-        {
-          max: 255,
-        },
-      ],
-      validWhen: true,
-      message: '255 caractères maximum',
     },
   ],
 };

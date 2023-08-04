@@ -3,6 +3,7 @@ import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { FormSchema } from '../FormSchema';
 import { SimpleLink } from 'src/components/utils';
 import { EXTERNAL_LINKS, HEARD_ABOUT_FILTERS } from 'src/constants';
+import validator from "validator";
 
 export const formInterestLinkedOut: FormSchema = {
   id: 'form-interest',
@@ -13,18 +14,8 @@ export const formInterestLinkedOut: FormSchema = {
       component: 'text-input',
       title: 'Nom*',
       isRequired: true,
-      rules: [
-        {
-          method: 'isLength',
-          args: [
-            {
-              max: 80,
-            },
-          ],
-          validWhen: true,
-          message: '80 caractères maximum',
-        },
-      ],
+      maxLength: 80,
+
     },
     {
       id: 'firstName',
@@ -32,18 +23,8 @@ export const formInterestLinkedOut: FormSchema = {
       component: 'text-input',
       title: 'Prénom*',
       isRequired: true,
-      rules: [
-        {
-          method: 'isLength',
-          args: [
-            {
-              max: 80,
-            },
-          ],
-          validWhen: true,
-          message: '80 caractères maximum',
-        },
-      ],
+      maxLength: 80,
+
     },
     {
       id: 'email',
@@ -54,8 +35,8 @@ export const formInterestLinkedOut: FormSchema = {
       isRequired: true,
       rules: [
         {
-          method: 'isEmail',
-          validWhen: true,
+          method: (fieldValue) => validator.isEmail(fieldValue),
+
           message: 'Adresse e-mail invalide',
         },
       ],
@@ -74,8 +55,6 @@ export const formInterestLinkedOut: FormSchema = {
               isValidPhoneNumber(fieldValue, 'FR')
             );
           },
-          args: [],
-          validWhen: true,
           message: 'Numéro de téléphone invalide',
         },
       ],
@@ -85,18 +64,7 @@ export const formInterestLinkedOut: FormSchema = {
       name: 'structure',
       component: 'text-input',
       title: 'Structure',
-      rules: [
-        {
-          method: 'isLength',
-          args: [
-            {
-              max: 60,
-            },
-          ],
-          validWhen: true,
-          message: '60 caractères maximum',
-        },
-      ],
+      maxLength: 60,
     },
     {
       id: 'message',
@@ -105,18 +73,8 @@ export const formInterestLinkedOut: FormSchema = {
       title: 'Votre message*',
       rows: 7,
       isRequired: true,
-      rules: [
-        {
-          method: 'isLength',
-          args: [
-            {
-              max: 4000,
-            },
-          ],
-          validWhen: true,
-          message: '4000 caractères maximum',
-        },
-      ],
+      maxLength: 4000,
+
     },
     {
       id: 'heardAbout',
@@ -142,17 +100,6 @@ export const formInterestLinkedOut: FormSchema = {
         </span>
       ),
       isRequired: true,
-      rules: [
-        {
-          method: 'equals',
-          args: ['true'],
-          validWhen: true,
-          message: 'Obligatoire',
-        },
-      ],
     },
-  ],
-  rules: [
-    // The "rules" array no longer contains "field" properties.
   ],
 };

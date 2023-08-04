@@ -1,5 +1,6 @@
 import moment from 'moment';
-import { FormSchema } from '../FormSchema/FormSchema.types';
+import validator from 'validator';
+import { FormSchema } from '../FormSchema';
 import { CONTRACTS } from 'src/constants';
 import { findConstantFromValue } from 'src/utils';
 
@@ -13,6 +14,7 @@ export const formEditEmployed: FormSchema = {
       component: 'select-simple',
       options: CONTRACTS,
       fieldsToReset: ['endOfContract'],
+      isRequired: true,
     },
     {
       id: 'endOfContract',
@@ -21,22 +23,19 @@ export const formEditEmployed: FormSchema = {
       component: 'datepicker',
       min: moment().format('YYYY-MM-DD'),
       disable: (getValue) => {
-        const contract = findConstantFromValue(getValue('contract'), CONTRACTS);
+        const contract = findConstantFromValue(
+          getValue('contract') as string,
+          CONTRACTS
+        );
         return !contract || !contract.end;
       },
-    },
-  ],
-  rules: [
-    {
-      field: 'contract',
-      isRequired: true,
-    },
-    {
-      field: 'endOfContract',
-      method: 'isBefore',
-      args: [moment().format('YYYY-MM-DD')],
-      validWhen: false,
-      message: "Date antérieure à aujourd'hui",
+      rules: [
+        {
+          method: (fieldValue) =>
+            validator.isAfter(fieldValue, moment().format('YYYY-MM-DD')),
+          message: "Date antérieure à aujourd'hui",
+        },
+      ],
     },
   ],
 };

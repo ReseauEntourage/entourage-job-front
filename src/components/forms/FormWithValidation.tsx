@@ -17,13 +17,12 @@ import {
   ComponentException,
   FormSchema,
   isFormFieldGroup,
-  isFormFieldInput,
+  isFormFieldTextInput,
   isFormFieldMultiple,
   isFormFieldSelect,
   isFormFieldText,
 } from './FormSchema';
 import { StyledForm } from './Forms.styles';
-import { reformat } from './schemas/script';
 
 interface FormWithValidationProps {
   defaultValues?: AnyToFix; // to be typed
@@ -53,8 +52,8 @@ export const FormWithValidation = forwardRef<
     },
     ref
   ) => {
-    reformat(formSchema);
-    const { id: formId, rules, fields } = formSchema;
+    const { id: formId, fields } = formSchema;
+
     const [error, setError] = useState<string>();
     const [fieldOptions, setFieldOptions] = useState({});
 
@@ -167,6 +166,7 @@ export const FormWithValidation = forwardRef<
                                 typeof childrenField.title === 'function'
                                   ? childrenField.title(getValues)
                                   : childrenField.title;
+
                               if (childrenField.component === 'text') {
                                 return (
                                   <Text
@@ -230,7 +230,7 @@ export const FormWithValidation = forwardRef<
                 }
               }
 
-              if (isFormFieldInput(field) || isFormFieldSelect(field)) {
+              if (isFormFieldTextInput(field) || isFormFieldSelect(field)) {
                 return (
                   <li key={i}>
                     <GenericField

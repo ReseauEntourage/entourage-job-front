@@ -1,4 +1,4 @@
-import { FormSchema } from '../FormSchema/FormSchema.types';
+import { FormSchema } from '../FormSchema';
 
 export function renderSimpleDatePickerField(formId, title): FormSchema {
   return {
@@ -9,19 +9,7 @@ export function renderSimpleDatePickerField(formId, title): FormSchema {
         name: 'datepicker',
         component: 'datepicker',
         title,
-      },
-    ],
-    rules: [
-      {
-        field: 'datepicker',
-        method: 'isEmpty',
-        args: [
-          {
-            ignore_whitespace: true,
-          },
-        ],
-        validWhen: false,
-        message: 'Obligatoire',
+        isRequired: true,
       },
     ],
   };

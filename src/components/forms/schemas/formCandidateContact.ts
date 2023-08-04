@@ -1,6 +1,6 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
-import { isEmail } from 'validator';
-import { FormSchema } from '../FormSchema/FormSchema.types';
+import validator from 'validator';
+import { FormSchema } from '../FormSchema';
 import {
   BUSINESS_LINES,
   CANDIDATE_ACCOMMODATIONS_FILTERS,
@@ -21,18 +21,24 @@ export const formCandidateContact: FormSchema = {
       name: 'workerFirstName',
       component: 'text-input',
       title: 'Votre prénom*',
+      isRequired: true,
+      maxLength: 80,
     },
     {
       id: 'workerLastName',
       name: 'workerLastName',
       component: 'text-input',
       title: 'Votre nom*',
+      isRequired: true,
+      maxLength: 80,
     },
     {
       id: 'structure',
       name: 'structure',
       component: 'text-input',
       title: 'Votre structure* (Association, CCAS, EDAS, etc.)',
+      isRequired: true,
+      maxLength: 60,
     },
     {
       id: 'workerPosition',
@@ -46,24 +52,44 @@ export const formCandidateContact: FormSchema = {
       type: 'email',
       component: 'text-input',
       title: 'Votre adresse mail*',
+      isRequired: true,
+      rules: [
+        {
+          method: (fieldValue) => validator.isEmail(fieldValue),
+
+          message: 'Adresse e-mail invalide',
+        },
+      ],
     },
     {
       id: 'workerPhone',
       name: 'workerPhone',
       component: 'tel-input',
       title: 'Votre numéro de téléphone portable*',
+      isRequired: true,
+      rules: [
+        {
+          method: (fieldValue) => isValidPhoneNumber(fieldValue, 'FR'),
+          message: 'Numéro de téléphone invalide',
+        },
+      ],
     },
     {
       id: 'firstName',
       name: 'firstName',
       component: 'text-input',
       title: 'Prénom de la personne que vous souhaitez orienter*',
+      isRequired: true,
+      maxLength: 80,
+
     },
     {
       id: 'lastName',
       name: 'lastName',
       component: 'text-input',
       title: 'Son nom*',
+      isRequired: true,
+      maxLength: 80,
     },
     {
       id: 'helpWith',
@@ -72,6 +98,7 @@ export const formCandidateContact: FormSchema = {
       isMulti: true,
       options: CANDIDATE_HELP_WITH_FILTERS,
       title: "Dans quel(s) domaine(s) l'accompagnez-vous ?*",
+      isRequired: true,
     },
     {
       id: 'gender',
@@ -79,6 +106,7 @@ export const formCandidateContact: FormSchema = {
       component: 'select-simple',
       options: CANDIDATE_GENDERS_FILTERS,
       title: 'Son sexe*',
+      isRequired: true,
     },
     {
       id: 'birthDate',
@@ -100,12 +128,21 @@ export const formCandidateContact: FormSchema = {
       placeholder:
         'La personne doit résider dans les départements 75, 93, 92, 56, 35, 69 ou 59.',
       title: 'Son code postal*',
+      isRequired: true,
+      rules: [
+        {
+          method: (fieldValue) =>
+            validator.isPostalCode(fieldValue, 'FR'),
+          message: 'Code postal non valide',
+        },
+      ],
     },
     {
       id: 'city',
       name: 'city',
       component: 'text-input',
       title: 'Sa ville*',
+      isRequired: true,
     },
     {
       id: 'phone',
@@ -113,6 +150,13 @@ export const formCandidateContact: FormSchema = {
       component: 'tel-input',
       title:
         "Son téléphone portable (nous inviterons la personne à une réunion d'information)*",
+      isRequired: true,
+      rules: [
+        {
+          method: (fieldValue) => isValidPhoneNumber(fieldValue, 'FR'),
+          message: 'Numéro de téléphone invalide',
+        },
+      ],
     },
     {
       id: 'email',
@@ -120,15 +164,28 @@ export const formCandidateContact: FormSchema = {
       type: 'email',
       component: 'text-input',
       title: 'Son adresse mail',
+      rules: [
+        {
+          method: (fieldValue) => {
+            return (
+              !fieldValue ||
+              fieldValue.length === 0 ||
+              validator.isEmail(fieldValue)
+            );
+          },
+
+          message: 'Adresse e-mail invalide',
+        },
+      ],
     },
     {
       id: 'registeredUnemploymentOffice',
       name: 'registeredUnemploymentOffice',
       component: 'select-simple',
       options: CANDIDATE_YES_NO_FILTERS,
-
       title:
         'La personne que vous souhaitez orienter est-elle inscrite au Pôle Emploi ?*',
+      isRequired: true,
     },
     {
       id: 'administrativeSituation',
@@ -144,6 +201,7 @@ export const formCandidateContact: FormSchema = {
       options: CANDIDATE_YES_NO_FILTERS,
       title:
         "A-t-elle l'autorisation de travailler sur le territoire Français ?*",
+      isRequired: true,
     },
     {
       id: 'accommodation',
@@ -151,6 +209,7 @@ export const formCandidateContact: FormSchema = {
       component: 'select-simple',
       options: CANDIDATE_ACCOMMODATIONS_FILTERS,
       title: "Quelle est sa situation d'hébergement ?*",
+      isRequired: true,
     },
     {
       id: 'professionalSituation',
@@ -158,6 +217,7 @@ export const formCandidateContact: FormSchema = {
       component: 'select-simple',
       options: CANDIDATE_PROFESSIONAL_SITUATIONS_FILTERS,
       title: 'Quelle est sa situation professionnelle ?*',
+      isRequired: true,
     },
     {
       id: 'resources',
@@ -173,6 +233,7 @@ export const formCandidateContact: FormSchema = {
       options: CANDIDATE_YES_NO_FILTERS,
       title:
         'A-t-elle une adresse de domiciliation ? Si c\'est la même que celle de son logement, choisir "Oui"*',
+      isRequired: true,
     },
     {
       id: 'socialSecurity',
@@ -181,6 +242,7 @@ export const formCandidateContact: FormSchema = {
       options: CANDIDATE_YES_NO_FILTERS,
       title:
         'A-t-elle des droits ouverts à la sécurité sociale ? (régime général, CSS, CMU, AME, etc.)*',
+      isRequired: true,
     },
     {
       id: 'handicapped',
@@ -196,6 +258,7 @@ export const formCandidateContact: FormSchema = {
       component: 'select-simple',
       options: CANDIDATE_YES_NO_FILTERS,
       title: 'A-t-elle un compte bancaire ?*',
+      isRequired: true,
     },
     {
       id: 'businessLines',
@@ -217,6 +280,7 @@ export const formCandidateContact: FormSchema = {
       name: 'description',
       component: 'textarea',
       title: 'Présentation*',
+      isRequired: true,
     },
     {
       id: 'heardAbout',
@@ -224,6 +288,7 @@ export const formCandidateContact: FormSchema = {
       component: 'select-simple',
       options: HEARD_ABOUT_FILTERS,
       title: 'Comment avez-vous connu LinkedOut ?*',
+      isRequired: true,
     },
     {
       id: 'diagnosticLabel',
@@ -244,194 +309,6 @@ export const formCandidateContact: FormSchema = {
       component: 'checkbox',
       title:
         'Souhaitez-vous être mis en relation avec le/la Coach LinkedOut si besoin et avec l’accord de la personne ?',
-    },
-  ],
-  rules: [
-    {
-      field: 'workerFirstName',
-      isRequired: true,
-    },
-    {
-      field: 'workerFirstName',
-      method: 'isLength',
-      args: [
-        {
-          max: 80,
-        },
-      ],
-      validWhen: true,
-      message: '80 caractères maximum',
-    },
-    {
-      field: 'workerLastName',
-      isRequired: true,
-    },
-    {
-      field: 'workerLastName',
-      method: 'isLength',
-      args: [
-        {
-          max: 80,
-        },
-      ],
-      validWhen: true,
-      message: '80 caractères maximum',
-    },
-    {
-      field: 'structure',
-      method: 'isLength',
-      args: [
-        {
-          max: 60,
-        },
-      ],
-      validWhen: true,
-      message: '60 caractères maximum',
-    },
-    {
-      field: 'structure',
-      isRequired: true,
-    },
-    {
-      field: 'workerEmail',
-      isRequired: true,
-    },
-    {
-      field: 'workerEmail',
-      method: 'isEmail',
-      validWhen: true,
-      message: 'Adresse e-mail invalide',
-    },
-    {
-      field: 'workerPhone',
-      isRequired: true,
-    },
-    {
-      field: 'workerPhone',
-      method: (fieldValue) => {
-        return (
-          !fieldValue ||
-          fieldValue.length === 0 ||
-          isValidPhoneNumber(fieldValue, 'FR')
-        );
-      },
-      args: [],
-      validWhen: true,
-      message: 'Numéro de téléphone invalide',
-    },
-    {
-      field: 'firstName',
-      isRequired: true,
-    },
-    {
-      field: 'firstName',
-      method: 'isLength',
-      args: [
-        {
-          max: 80,
-        },
-      ],
-      validWhen: true,
-      message: '80 caractères maximum',
-    },
-    {
-      field: 'lastName',
-      isRequired: true,
-    },
-    {
-      field: 'lastName',
-      method: 'isLength',
-      args: [
-        {
-          max: 80,
-        },
-      ],
-      validWhen: true,
-      message: '80 caractères maximum',
-    },
-    {
-      field: 'helpWith',
-      isRequired: true,
-    },
-    {
-      field: 'gender',
-      isRequired: true,
-    },
-    {
-      field: 'postalCode',
-      method: 'isPostalCode',
-      args: ['FR'],
-      validWhen: true,
-      message: 'Obligatoire',
-    },
-    {
-      field: 'postalCode',
-      isRequired: true,
-    },
-    {
-      field: 'city',
-      isRequired: true,
-    },
-    {
-      field: 'phone',
-      isRequired: true,
-    },
-    {
-      field: 'phone',
-      method: (fieldValue) => {
-        return (
-          !fieldValue ||
-          fieldValue.length === 0 ||
-          isValidPhoneNumber(fieldValue, 'FR')
-        );
-      },
-      args: [],
-      validWhen: true,
-      message: 'Numéro de téléphone invalide',
-    },
-    {
-      field: 'email',
-      method: (fieldValue) => {
-        return !fieldValue || fieldValue.length === 0 || isEmail(fieldValue);
-      },
-      validWhen: true,
-      message: 'Adresse e-mail invalide',
-    },
-    {
-      field: 'registeredUnemploymentOffice',
-      isRequired: true,
-    },
-    {
-      field: 'workingRight',
-      isRequired: true,
-    },
-    {
-      field: 'accommodation',
-      isRequired: true,
-    },
-    {
-      field: 'professionalSituation',
-      isRequired: true,
-    },
-    {
-      field: 'domiciliation',
-      isRequired: true,
-    },
-    {
-      field: 'socialSecurity',
-      isRequired: true,
-    },
-    {
-      field: 'bankAccount',
-      isRequired: true,
-    },
-    {
-      field: 'description',
-      isRequired: true,
-    },
-    {
-      field: 'heardAbout',
-      isRequired: true,
     },
   ],
 };

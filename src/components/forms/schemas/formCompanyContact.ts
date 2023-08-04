@@ -1,10 +1,11 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
-import { FormSchema } from '../FormSchema/FormSchema.types';
+import { FormSchema } from '../FormSchema';
 import {
   COMPANY_APPROACHES_FILTERS,
   COMPANY_CONTACT_ZONES_FILTERS,
   HEARD_ABOUT_FILTERS,
 } from 'src/constants';
+import validator from "validator";
 
 export const formCompanyContact: FormSchema = {
   id: 'form-company-contact',
@@ -14,12 +15,17 @@ export const formCompanyContact: FormSchema = {
       name: 'firstName',
       component: 'text-input',
       title: 'Votre prénom*',
+      isRequired: true,
+      maxLength: 80,
+
     },
     {
       id: 'lastName',
       name: 'lastName',
       component: 'text-input',
       title: 'Votre nom*',
+      isRequired: true,
+      maxLength: 80,
     },
     {
       id: 'approach',
@@ -27,6 +33,7 @@ export const formCompanyContact: FormSchema = {
       component: 'select-simple',
       options: COMPANY_APPROACHES_FILTERS,
       title: 'Quelle est votre démarche ?*',
+      isRequired: true,
     },
     {
       id: 'email',
@@ -34,24 +41,41 @@ export const formCompanyContact: FormSchema = {
       type: 'email',
       component: 'text-input',
       title: 'Votre adresse mail*',
+      isRequired: true,
+      rules: [
+        {
+          method: (fieldValue) => validator.isEmail(fieldValue),
+
+          message: 'Adresse e-mail invalide',
+        },
+      ],
     },
     {
       id: 'phone',
       name: 'phone',
       component: 'tel-input',
       title: 'Votre numéro de téléphone portable*',
+      isRequired: true,
+      rules: [
+        {
+          method: (fieldValue) => isValidPhoneNumber(fieldValue, 'FR'),
+          message: 'Numéro de téléphone invalide',
+        },
+      ],
     },
     {
       id: 'company',
       name: 'company',
       component: 'text-input',
       title: 'Nom de votre entreprise*',
+      isRequired: true,
     },
     {
       id: 'position',
       name: 'position',
       component: 'text-input',
       title: 'Votre poste*',
+      isRequired: true,
     },
     {
       id: 'zone',
@@ -59,6 +83,7 @@ export const formCompanyContact: FormSchema = {
       component: 'select-simple',
       options: COMPANY_CONTACT_ZONES_FILTERS,
       title: 'Dans quelle région êtes-vous présent ?*',
+      isRequired: true,
     },
     {
       id: 'heardAbout',
@@ -66,77 +91,6 @@ export const formCompanyContact: FormSchema = {
       component: 'select-simple',
       options: HEARD_ABOUT_FILTERS,
       title: 'Comment avez-vous connu LinkedOut ?',
-    },
-  ],
-  rules: [
-    {
-      field: 'lastName',
-      isRequired: true,
-    },
-    {
-      field: 'lastName',
-      method: 'isLength',
-      args: [
-        {
-          max: 80,
-        },
-      ],
-      validWhen: true,
-      message: '80 caractères maximum',
-    },
-    {
-      field: 'firstName',
-      isRequired: true,
-    },
-    {
-      field: 'firstName',
-      method: 'isLength',
-      args: [
-        {
-          max: 80,
-        },
-      ],
-      validWhen: true,
-      message: '80 caractères maximum',
-    },
-    {
-      field: 'email',
-      isRequired: true,
-    },
-    {
-      field: 'email',
-      method: 'isEmail',
-      validWhen: true,
-      message: 'Adresse e-mail invalide',
-    },
-    {
-      field: 'phone',
-      method: (fieldValue) => {
-        return (
-          !fieldValue ||
-          fieldValue.length === 0 ||
-          isValidPhoneNumber(fieldValue, 'FR')
-        );
-      },
-      args: [],
-      validWhen: true,
-      message: 'Numéro de téléphone invalide',
-    },
-    {
-      field: 'company',
-      isRequired: true,
-    },
-    {
-      field: 'position',
-      isRequired: true,
-    },
-    {
-      field: 'approach',
-      isRequired: true,
-    },
-    {
-      field: 'zone',
-      isRequired: true,
     },
   ],
 };

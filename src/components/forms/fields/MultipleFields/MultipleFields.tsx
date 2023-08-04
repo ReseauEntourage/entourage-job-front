@@ -10,6 +10,7 @@ import { InputsContainer } from '../InputsContainer';
 import {
   FormFieldInput,
   FormFieldSelect,
+  GetValueType,
 } from 'src/components/forms/FormSchema/FormSchema.types';
 import { Button, ButtonIcon, Icon } from 'src/components/utils';
 import { useMount } from 'src/hooks/utils';
@@ -26,7 +27,7 @@ interface MultipleFieldsProps {
   action?: string;
   fields: (FormFieldInput | FormFieldSelect)[];
   name: string;
-  getValue: (name: string) => AnyToFix;
+  getValue: GetValueType;
   control: Control;
   resetField: UseFormResetField<AnyToFix>;
   watch: UseFormWatch<AnyToFix>;

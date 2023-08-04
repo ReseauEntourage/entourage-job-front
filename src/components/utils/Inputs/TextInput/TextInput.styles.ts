@@ -26,3 +26,18 @@ export const StyledTextInputContainer = styled.div`
     }
   }
 `;
+
+export const StyledAnnotations = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const StyledLengthLimit = styled.div`
+  color: ${({ warning }) => {
+    return warning ? COLORS.noRed : COLORS.darkGray;
+  }};
+  font-size: 12px;
+  text-align: right;
+  align-self: flex-end;
+  transform: translate(0, -30px);
+`;

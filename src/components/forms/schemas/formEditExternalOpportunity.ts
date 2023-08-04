@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { FormSchema } from '../FormSchema/FormSchema.types';
+import { FormSchema } from '../FormSchema';
 import { Api } from 'src/api';
 import {
   BUSINESS_LINES,
@@ -31,6 +31,7 @@ export const formEditExternalOpportunity: FormSchema = {
           loadOptions: (callback) => {
             callback([]);
           },
+          isRequired: true,
         },
         {
           id: 'status',
@@ -46,12 +47,14 @@ export const formEditExternalOpportunity: FormSchema = {
       name: 'title',
       component: 'text-input',
       title: "Titre de l'offre*",
+      isRequired: true,
     },
     {
       id: 'company',
       name: 'company',
       component: 'text-input',
       title: "Nom de l'entreprise*",
+      isRequired: true,
     },
     {
       id: 'contract',
@@ -60,6 +63,7 @@ export const formEditExternalOpportunity: FormSchema = {
       options: CONTRACTS,
       title: 'Type de contrat*',
       fieldsToReset: ['endOfContract'],
+      isRequired: true,
     },
     {
       id: 'startEndContract',
@@ -79,11 +83,25 @@ export const formEditExternalOpportunity: FormSchema = {
           component: 'datepicker',
           disable: (getValue) => {
             const contract = findConstantFromValue(
-              getValue('contract'),
+              getValue('contract') as string,
               CONTRACTS
             );
             return !contract || !contract.end;
           },
+          rules: [
+            {
+              method: (fieldValue, fieldValues) => {
+                return !(
+                  !!fieldValue &&
+                  !!fieldValues.startOfContract &&
+                  moment(fieldValue, 'YYYY-MM-DD').isBefore(
+                    moment(fieldValues.startOfContract as string, 'YYYY-MM-DD')
+                  )
+                );
+              },
+              message: 'Date antérieure à la date de début',
+            },
+          ],
         },
         {
           id: 'isPartTime',
@@ -109,6 +127,7 @@ export const formEditExternalOpportunity: FormSchema = {
       title: 'Département*',
       component: 'select',
       options: DEPARTMENTS_FILTERS,
+      isRequired: true,
     },
     {
       id: 'link',
@@ -121,6 +140,8 @@ export const formEditExternalOpportunity: FormSchema = {
       name: 'description',
       component: 'textarea',
       title: "Description de l'offre",
+      maxLength: 2000,
+
     },
     {
       id: 'externalOrigin',
@@ -128,43 +149,6 @@ export const formEditExternalOpportunity: FormSchema = {
       component: 'select-simple',
       options: EXTERNAL_OFFERS_ORIGINS,
       title: 'Offre venant de',
-    },
-  ],
-  rules: [
-    {
-      field: 'candidateId',
-      isRequired: true,
-    },
-    {
-      field: 'title',
-      isRequired: true,
-    },
-    {
-      field: 'company',
-      isRequired: true,
-    },
-    {
-      field: 'department',
-      isRequired: true,
-    },
-    {
-      field: 'contract',
-      isRequired: true,
-    },
-    {
-      field: 'endOfContract',
-      method: (fieldValue, state) => {
-        return (
-          !!fieldValue &&
-          !!state.startOfContract &&
-          moment(fieldValue, 'YYYY-MM-DD').isBefore(
-            moment(state.startOfContract, 'YYYY-MM-DD')
-          )
-        );
-      },
-      args: [],
-      validWhen: false,
-      message: 'Date antérieure à la date de début',
     },
   ],
 };

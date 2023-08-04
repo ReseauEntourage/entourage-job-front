@@ -3,8 +3,14 @@ import moment from 'moment';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { Api } from 'src/api';
 import 'moment/locale/fr';
-import { ANTENNE_INFO } from 'src/constants';
+import {
+  ANTENNE_INFO,
+  CANDIDATE_YES_NO,
+  CANDIDATE_YES_NO_FILTERS,
+  HEARD_ABOUT_FILTERS,
+} from 'src/constants';
 import { FormSchema } from '../FormSchema';
+import validator from 'validator';
 
 export const formCandidateInscription: FormSchema = {
   id: 'form-candidate-inscription',
@@ -20,6 +26,7 @@ export const formCandidateInscription: FormSchema = {
       name: 'location',
       component: 'select-simple',
       showLabel: true,
+      isRequired: true,
       title:
         'Êtes-vous domicilié dans l’une des villes / départements suivants? *',
       options: [
@@ -57,6 +64,14 @@ export const formCandidateInscription: FormSchema = {
         },
       ],
       fieldsToReset: ['infoCo'],
+      rules: [
+        {
+          method: (value) => value !== CANDIDATE_YES_NO.NO,
+
+          message:
+            'Vous devez avoir le droit de travailler en France pour participer au programme LinkedOut',
+        },
+      ],
     },
     {
       id: 'birthdateWorkingRight',
@@ -68,6 +83,29 @@ export const formCandidateInscription: FormSchema = {
           name: 'birthdate',
           component: 'datepicker',
           title: 'Quelle est votre date de naissance? *',
+          isRequired: true,
+          rules: [
+            {
+              method: (value: string) => {
+                const minBirthdate = new Date();
+                minBirthdate.setFullYear(minBirthdate.getFullYear() - 18);
+                const realBirthdate = new Date(value);
+                return minBirthdate > realBirthdate;
+              },
+
+              message:
+                'Vous devez être majeur pour participer au programme. En attendant, vous pouvez contacter la Mission locale dont dépend votre commune.',
+            },
+            {
+              method: (value: string) => {
+                const maxBirthdate = new Date('1900-01-01');
+                const realBirthdate = new Date(value);
+                return maxBirthdate < realBirthdate;
+              },
+
+              message: 'Veuillez entrer une date valide.',
+            },
+          ],
         },
         {
           id: 'workingRight',
@@ -75,18 +113,20 @@ export const formCandidateInscription: FormSchema = {
           title: 'Avez-vous le droit de travailler en France? *',
           component: 'select-simple',
           showLabel: true,
+          isRequired: true,
           options: [
-            {
-              label: 'Oui',
-              value: 'yes',
-            },
-            {
-              label: 'Non',
-              value: 'no',
-            },
+            ...CANDIDATE_YES_NO_FILTERS,
             {
               label: 'Je ne sais pas',
               value: 'dont_know',
+            },
+          ],
+          rules: [
+            {
+              method: (value) => value !== CANDIDATE_YES_NO.NO,
+
+              message:
+                'Vous devez avoir le droit de travailler en France pour participer au programme LinkedOut',
             },
           ],
         },
@@ -110,6 +150,8 @@ export const formCandidateInscription: FormSchema = {
           title: 'Votre prénom *',
           placeholder: 'Ecrivez votre prénom',
           showLabel: true,
+          isRequired: true,
+                    maxLength: 80,
         },
         {
           id: 'lastName',
@@ -118,6 +160,8 @@ export const formCandidateInscription: FormSchema = {
           component: 'text-input',
           placeholder: 'Ecrivez votre nom',
           showLabel: true,
+          isRequired: true,
+                    maxLength: 80,
         },
       ],
     },
@@ -133,6 +177,14 @@ export const formCandidateInscription: FormSchema = {
           component: 'tel-input',
           placeholder: 'Ecrivez votre numéro de téléphone',
           showLabel: true,
+          isRequired: true,
+          rules: [
+            {
+              method: (fieldValue) =>
+                isValidPhoneNumber(fieldValue, 'FR'),
+              message: 'Numéro de téléphone invalide',
+            },
+          ],
         },
         {
           id: 'email',
@@ -141,6 +193,13 @@ export const formCandidateInscription: FormSchema = {
           component: 'text-input',
           placeholder: 'Ecrivez votre adresse email',
           showLabel: true,
+          isRequired: true,
+          rules: [
+            {
+              method: (fieldValue) => validator.isEmail(fieldValue),
+              message: 'Adresse e-mail invalide',
+            },
+          ],
         },
       ],
     },
@@ -150,37 +209,8 @@ export const formCandidateInscription: FormSchema = {
       title: 'Comment avez-vous connu LinkedOut ? *',
       component: 'select-simple',
       showLabel: true,
-      // TODO use already existing heard about
-      options: [
-        {
-          label: 'LinkedIn',
-          value: 'LinkedIn',
-        },
-        {
-          label: 'Autres réseaux (facebook, twitter, instagram...)',
-          value: 'socialNetworks',
-        },
-        {
-          label: 'Association / travailleur social',
-          value: 'association',
-        },
-        {
-          label: 'Pôle emploi',
-          value: 'poleEmploi',
-        },
-        {
-          label: 'Le bouche à oreille',
-          value: 'boucheAOreille',
-        },
-        {
-          label: 'Télévision / radio',
-          value: 'medias',
-        },
-        {
-          label: 'Autre',
-          value: 'other',
-        },
-      ],
+      isRequired: true,
+      options: HEARD_ABOUT_FILTERS,
     },
     {
       id: 'infoCoTitle',
@@ -271,123 +301,6 @@ export const formCandidateInscription: FormSchema = {
       },
       errorMessage:
         'Il n’y a pas de réunion d’information organisée dans les prochains temps dans votre ville, nous allons vous recontacter rapidement',
-    },
-  ],
-  rules: [
-    {
-      field: 'firstName',
-      isRequired: true,
-    },
-    {
-      field: 'firstName',
-      method: 'isLength',
-      args: [
-        {
-          max: 80,
-        },
-      ],
-      validWhen: true,
-      message: '80 caractères maximum',
-    },
-    {
-      field: 'lastName',
-      isRequired: true,
-    },
-    {
-      field: 'lastName',
-      method: 'isLength',
-      args: [
-        {
-          max: 80,
-        },
-      ],
-      validWhen: true,
-      message: '80 caractères maximum',
-    },
-    {
-      field: 'email',
-      isRequired: true,
-    },
-    {
-      field: 'email',
-      method: 'isEmail',
-      validWhen: true,
-      message: 'Adresse e-mail invalide',
-    },
-    {
-      field: 'phone',
-      isRequired: true,
-    },
-    {
-      field: 'phone',
-      method: (fieldValue) => {
-        return (
-          !fieldValue ||
-          fieldValue.length === 0 ||
-          isValidPhoneNumber(fieldValue, 'FR')
-        );
-      },
-      args: [],
-      validWhen: true,
-      message: 'Numéro de téléphone invalide',
-    },
-    {
-      field: 'workingRight',
-      isRequired: true,
-    },
-    {
-      field: 'workingRight',
-      method: (value) => {
-        return value !== 'no';
-      },
-      args: [],
-      validWhen: true,
-      message:
-        'Vous devez avoir le droit de travailler en France pour participer au programme LinkedOut',
-    },
-    {
-      field: 'heardAbout',
-      isRequired: true,
-    },
-    {
-      field: 'location',
-      isRequired: true,
-    },
-    {
-      field: 'location',
-      method: (value) => {
-        return value !== 'other';
-      },
-      args: [],
-      validWhen: true,
-      message:
-        'Nous sommes désolée, le programme est disponible uniquement dans les villes /départements indiqués dans la liste.',
-    },
-    {
-      field: 'birthdate',
-      isRequired: true,
-    },
-    {
-      field: 'birthdate',
-      method: (value) => {
-        const minBirtdate = new Date();
-        minBirtdate.setFullYear(minBirtdate.getFullYear() - 18);
-        const realBirthdate = new Date(value);
-        return minBirtdate > realBirthdate;
-      },
-      validWhen: true,
-      message:
-        'Vous devez être majeur pour participer au programme. En attendant, vous pouvez contacter la Mission locale dont dépend votre commune.',
-    },
-    {
-      field: 'birthdate',
-      method: (value) => {
-        const maxBirtdate = new Date('1900-01-01');
-        const realBirthdate = new Date(value);
-        return maxBirtdate < realBirthdate;
-      },
-      validWhen: true,
-      message: 'Veuillez entrer une date valide.',
     },
   ],
 };

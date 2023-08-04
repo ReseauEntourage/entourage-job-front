@@ -2,9 +2,14 @@ import React, { ChangeEvent } from 'react';
 import { StyledInputLabel } from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
-import { StyledTextInputContainer } from './TextInput.styles';
+import {
+  StyledAnnotations,
+  StyledLengthLimit,
+  StyledTextInputContainer,
+} from './TextInput.styles';
 
 interface TextInputProps extends CommonInputProps<string, HTMLInputElement> {
+  maxLength?: number;
   type?: string;
   style?: 'secondary';
 }
@@ -19,6 +24,7 @@ export function TextInput({
   onBlur,
   type = 'text',
   style,
+  maxLength,
   showLabel = false,
   hidden = false,
   disabled = false,
@@ -28,6 +34,8 @@ export function TextInput({
   if (hidden) {
     return null;
   }
+
+  const remainingCharacters = maxLength - value.length;
 
   return (
     <StyledTextInputContainer>
@@ -48,10 +56,20 @@ export function TextInput({
         type={type || 'text'}
         placeholder={placeholder || (title as string)}
         name={name}
+        maxLength={maxLength}
         id={id}
         data-testid={id}
       />
-      <FieldErrorMessage error={error} />
+      <StyledAnnotations>
+        <div>
+          <FieldErrorMessage error={error} />
+        </div>
+        {maxLength && (
+          <StyledLengthLimit warning={remainingCharacters === 0}>
+            {remainingCharacters} caractère(s) restant(s)
+          </StyledLengthLimit>
+        )}
+      </StyledAnnotations>
     </StyledTextInputContainer>
   );
 }

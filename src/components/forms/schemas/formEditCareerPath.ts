@@ -1,4 +1,4 @@
-import { FormSchema } from '../FormSchema/FormSchema.types';
+import { FormSchema } from '../FormSchema';
 import { BUSINESS_LINES } from 'src/constants';
 
 export const formEditCareerPath: FormSchema = {
@@ -15,6 +15,7 @@ export const formEditCareerPath: FormSchema = {
           title: 'Famille de métier 1*',
           component: 'select',
           options: BUSINESS_LINES,
+          isRequired: true,
         },
         {
           id: 'linkWord0',
@@ -41,6 +42,14 @@ export const formEditCareerPath: FormSchema = {
           title: 'Famille de métier 2',
           component: 'select',
           options: BUSINESS_LINES,
+          rules: [
+            {
+              method: (fieldValue, fieldValues) => {
+                return !(!fieldValue && !!fieldValues.ambition1);
+              },
+              message: 'Obligatoire',
+            },
+          ],
         },
         {
           id: 'linkWord1',
@@ -55,21 +64,6 @@ export const formEditCareerPath: FormSchema = {
           title: 'Métier 2',
         },
       ],
-    },
-  ],
-  rules: [
-    {
-      field: 'businessLine0',
-      isRequired: true,
-    },
-    {
-      field: 'businessLine1',
-      method: (fieldValue, state) => {
-        return !fieldValue && !!state.ambition1;
-      },
-      args: [],
-      validWhen: false,
-      message: 'Obligatoire',
     },
   ],
 };

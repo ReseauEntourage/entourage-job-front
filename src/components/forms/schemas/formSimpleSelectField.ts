@@ -1,4 +1,4 @@
-import { FormSchema } from '../FormSchema/FormSchema.types';
+import { FormSchema } from '../FormSchema';
 
 export function renderSimpleSelectField(
   formId,
@@ -15,7 +15,6 @@ export function renderSimpleSelectField(
   }
   return {
     id: formId,
-    rules: [],
     fields: [
       {
         id: inputId,

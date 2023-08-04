@@ -1,4 +1,7 @@
-export const formDeleteUser = {
+import validator from 'validator';
+import { FormSchema } from '../FormSchema';
+
+export const formDeleteUser: FormSchema = {
   id: 'form-delete-user',
   fields: [
     {
@@ -8,16 +11,13 @@ export const formDeleteUser = {
       title:
         'Tapez le mot "SUPPRIMER" pour confirmer la suppression de l\'utilisateur*',
       placeholder: 'Tapez le mot "SUPPRIMER"',
-      autocomplete: 'off',
-    },
-  ],
-  rules: [
-    {
-      field: 'confirmation',
-      method: 'equals',
-      args: ['SUPPRIMER'],
-      validWhen: true,
-      message: 'Obligatoire',
+      isRequired: true,
+      rules: [
+        {
+          method: (fieldValue) => validator.equals(fieldValue, 'SUPPRIMER'),
+          message: 'Confirmation non valide',
+        },
+      ],
     },
   ],
 };

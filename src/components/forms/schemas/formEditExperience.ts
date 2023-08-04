@@ -1,4 +1,4 @@
-import { FormSchema } from '../FormSchema/FormSchema.types';
+import { FormSchema } from '../FormSchema';
 
 export const formEditExperience: FormSchema = {
   id: 'form-experience',
@@ -8,6 +8,7 @@ export const formEditExperience: FormSchema = {
       name: 'description',
       component: 'textarea',
       title: 'Description',
+      maxLength: 2000,
     },
     {
       id: 'skills',
@@ -15,19 +16,6 @@ export const formEditExperience: FormSchema = {
       title: 'Compétences',
       component: 'select-creatable',
       isMulti: true,
-    },
-  ],
-  rules: [
-    {
-      field: 'description',
-      method: 'isLength',
-      args: [
-        {
-          max: 2000,
-        },
-      ],
-      validWhen: true,
-      message: '2000 caractères maximum',
     },
   ],
 };

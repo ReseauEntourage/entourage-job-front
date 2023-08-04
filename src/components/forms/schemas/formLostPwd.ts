@@ -1,4 +1,5 @@
-import { FormSchema } from '../FormSchema/FormSchema.types';
+import { FormSchema } from '../FormSchema';
+import validator from "validator";
 
 export const formLostPwd: FormSchema = {
   id: 'form-lost-pwd',
@@ -11,18 +12,14 @@ export const formLostPwd: FormSchema = {
       placeholder: 'Tapez votre adresse mail',
       title: 'Adresse mail*',
       showLabel: true,
-    },
-  ],
-  rules: [
-    {
-      field: 'email',
       isRequired: true,
-    },
-    {
-      field: 'email',
-      method: 'isEmail',
-      validWhen: true,
-      message: 'Adresse e-mail invalide',
+      rules: [
+        {
+          method: (fieldValue) => validator.isEmail(fieldValue),
+
+          message: 'Adresse e-mail invalide',
+        },
+      ],
     },
   ],
 };
