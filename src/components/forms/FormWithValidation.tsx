@@ -24,12 +24,12 @@ import {
 } from './FormSchema';
 import { StyledForm } from './Forms.styles';
 
-interface FormWithValidationProps {
+interface FormWithValidationProps<S> {
   defaultValues?: AnyToFix; // to be typed
   onCancel?: () => void;
   onSubmit: (arg1: AnyToFix, arg2: AnyToFix) => void; // to be typed
   onError?: (any) => void;
-  formSchema: FormSchema;
+  formSchema: FormSchema<S>;
   submitText?: string;
   cancelText?: string;
   enterToSubmit?: boolean;
@@ -37,7 +37,7 @@ interface FormWithValidationProps {
 
 export const FormWithValidation = forwardRef<
   { resetForm: () => void },
-  FormWithValidationProps
+  FormWithValidationProps<S>
 >(
   (
     {
@@ -49,7 +49,7 @@ export const FormWithValidation = forwardRef<
       onCancel,
       enterToSubmit = false,
       onError,
-    },
+    }: FormWithValidationProps<S>,
     ref
   ) => {
     const { id: formId, fields } = formSchema;
@@ -65,7 +65,7 @@ export const FormWithValidation = forwardRef<
     );
 
     const { handleSubmit, control, reset, getValues, resetField, watch } =
-      useForm({
+      useForm<S>({
         defaultValues,
         shouldUnregister: true,
       });

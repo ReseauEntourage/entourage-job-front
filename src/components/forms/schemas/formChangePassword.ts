@@ -22,7 +22,6 @@ export const formChangePassword: FormSchema = {
       rules: [
         {
           method: (fieldValue) => passwordStrength(fieldValue).id >= 2,
-
           message: 'Doit répondre aux critères ci-dessus',
         },
       ],

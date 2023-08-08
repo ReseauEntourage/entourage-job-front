@@ -1,6 +1,10 @@
 import { passwordStrength } from 'check-password-strength';
 import { FormSchema } from '../FormSchema';
 
+interface Schema {
+  newPassword: string;
+  confirmPassword: string;
+}
 export const formResetPassword: FormSchema = {
   id: 'form-reset-pwd',
   fields: [
@@ -16,7 +20,6 @@ export const formResetPassword: FormSchema = {
           method: (fieldValue) => {
             return passwordStrength(fieldValue).id >= 2;
           },
-
           message: 'Doit répondre aux critères ci-dessus',
         },
       ],
@@ -30,15 +33,13 @@ export const formResetPassword: FormSchema = {
       isRequired: true,
       rules: [
         {
-          method: (fieldValue) =>
-            passwordStrength(fieldValue).id >= 2,
+          method: (fieldValue) => passwordStrength(fieldValue).id >= 2,
           message: 'Doit répondre aux critères ci-dessus',
         },
         {
           method: (fieldValue, fieldValues) => {
             return fieldValues.newPassword === fieldValue;
           },
-
           message: 'Les deux mots de passe ne correspondent pas',
         },
       ],

@@ -31,10 +31,10 @@ import { CommonInputProps } from 'src/components/utils/Inputs/Inputs.types';
 
 import { AnyToFix } from 'src/utils/Types';
 
-interface GenericFieldProps {
-  field: FormFieldInput;
+interface GenericFieldProps<S> {
+  field: FormFieldInput<S>;
   formId: string;
-  getValue: GetValueType;
+  getValue: GetValueType<S>;
   fieldOptions?: AnyToFix;
   updateFieldOptions?: (newFieldOption?: { [K in string]: AnyToFix }) => void;
   control: Control;
@@ -42,7 +42,7 @@ interface GenericFieldProps {
   watch: UseFormWatch<AnyToFix>;
 }
 
-export const GenericField = ({
+export function GenericField<S>({
   field,
   formId,
   getValue,
@@ -51,7 +51,7 @@ export const GenericField = ({
   control,
   resetField,
   watch,
-}: GenericFieldProps) => {
+}: GenericFieldProps<S>) {
   const rules = field.rules?.reduce((acc, curr, index) => {
     return {
       ...acc,

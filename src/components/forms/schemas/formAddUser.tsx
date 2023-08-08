@@ -211,10 +211,10 @@ export const formAddUser: FormSchema = {
           id: 'userToLinkId',
           name: 'userToLinkId',
           component: 'select-async',
-          /* isMulti: (getValue) => {
+          isMulti: (getValue) => {
             const role = getValue('role');
             return role === USER_ROLES.COACH_EXTERNAL;
-          }, */
+          },
           hide: (getValue) => {
             const role = getValue('role') as UserRole;
             const organizationId = (

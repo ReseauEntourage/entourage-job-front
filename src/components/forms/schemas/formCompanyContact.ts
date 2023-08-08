@@ -1,11 +1,11 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
+import validator from 'validator';
 import { FormSchema } from '../FormSchema';
 import {
   COMPANY_APPROACHES_FILTERS,
   COMPANY_CONTACT_ZONES_FILTERS,
   HEARD_ABOUT_FILTERS,
 } from 'src/constants';
-import validator from "validator";
 
 export const formCompanyContact: FormSchema = {
   id: 'form-company-contact',
@@ -17,7 +17,6 @@ export const formCompanyContact: FormSchema = {
       title: 'Votre prénom*',
       isRequired: true,
       maxLength: 80,
-
     },
     {
       id: 'lastName',

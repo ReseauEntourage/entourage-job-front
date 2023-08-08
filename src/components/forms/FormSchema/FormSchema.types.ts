@@ -1,6 +1,6 @@
 import { RadioTypes } from 'src/components/utils/Inputs/Radio/Radio.types';
 import { FilterConstant } from 'src/constants';
-import { AnyCantFix, AnyToFix } from 'src/utils/Types';
+import { AnyToFix } from 'src/utils/Types';
 
 const FormComponents = {
   DATEPICKER: 'datepicker',
@@ -32,7 +32,9 @@ export type FieldValue =
 
 type MultiFilterConstant<M extends boolean> = M extends true
   ? FilterConstant[]
-  : FilterConstant;
+  : M extends false
+  ? FilterConstant
+  : FilterConstant | FilterConstant[];
 
 interface FormComponentValues<M extends boolean>
   extends Record<FormComponent, FieldValue> {
@@ -96,35 +98,30 @@ type InputComponent =
   | SelectComponent
   | SelectRequestComponent;
 
-interface FormFieldCommonProperties {
-  id: string;
-  name: string;
+// export type FormFieldName<S> = keyof S & string;
+
+interface FormFieldCommonProperties<S> {
+  id: S;
+  name: S;
 }
 
-interface FormTypes {
-  test: string;
-}
+// export type GetValueType = (name: FormFieldName<S>) => S[FormFieldName<S>];
 
-export type FormType = keyof FormTypes;
-
-// export type GetValueType<K extends FormType> = (name: K) => FormTypes[K];
 export type GetValueType = (name: string) => AnyToFix;
 
-interface Rule<T extends InputComponent, M extends boolean> {
-  method: (
-    fieldValue: FormComponentValues<M>[T],
-    fieldValues: { [K in FormType]: FormTypes[K] }
-  ) => boolean;
+interface Rule<T extends InputComponent, S, M extends boolean> {
+  method: (fieldValue: FormComponentValues<M>[T], fieldValues: S) => boolean;
   args?: AnyToFix[];
   message: string;
 }
 
 interface FormFieldInputCommonProperties<
   T extends InputComponent,
-  M extends boolean = false
-> extends FormFieldCommonProperties {
+  S,
+  M extends boolean = boolean
+> extends FormFieldCommonProperties<S> {
   isRequired?: boolean;
-  rules?: Rule<T, M>[];
+  rules?: Rule<T, S, M>[];
   title: string | JSX.Element | ((getValue: GetValueType) => string);
   disabled?: boolean;
   disable?: (getValue: GetValueType) => boolean;
@@ -134,8 +131,8 @@ interface FormFieldInputCommonProperties<
   showLabel?: boolean;
 }
 
-export interface FormFieldTextInput
-  extends FormFieldInputCommonProperties<TextInputComponent> {
+export interface FormFieldTextInput<S>
+  extends FormFieldInputCommonProperties<TextInputComponent, S> {
   component: TextInputComponent;
   type?: 'text' | 'email' | 'password';
   rows?: number;
@@ -145,17 +142,17 @@ export interface FormFieldTextInput
   max?: string;
 }
 
-export interface FormFieldCheckBox
-  extends FormFieldInputCommonProperties<CheckBoxComponent> {
+export interface FormFieldCheckBox<S>
+  extends FormFieldInputCommonProperties<CheckBoxComponent, S> {
   component: CheckBoxComponent;
 }
 
-export interface FormFieldSelect<K extends FilterConstant[] = AnyToFix>
-  extends FormFieldInputCommonProperties<SelectComponent> {
+export interface FormFieldSelect<S>
+  extends FormFieldInputCommonProperties<SelectComponent, S> {
   component: SelectComponent;
   dynamicFilter?: (getValue: GetValueType) => string;
   fieldsToReset?: string[];
-  options?: K;
+  options?: FilterConstant[];
   loadOptions?: (
     callback: (options: FilterConstant[] | RadioTypes[]) => void,
     inputValue?: string,
@@ -164,93 +161,81 @@ export interface FormFieldSelect<K extends FilterConstant[] = AnyToFix>
   errorMessage?: string;
   limit?: number;
 }
-export interface FormFieldSelectRequestCommon<
-  K extends FilterConstant[],
-  M extends boolean
-> extends FormFieldInputCommonProperties<SelectRequestComponent, M> {
+export interface FormFieldSelectRequestCommon<S, M extends boolean>
+  extends FormFieldInputCommonProperties<SelectRequestComponent, S, M> {
   component: SelectRequestComponent;
   fieldsToReset?: string[];
-  options?: K;
+  options?: FilterConstant[];
   loadOptions?: (
     callback: (options: FilterConstant[] | RadioTypes[]) => void,
     inputValue?: string,
     getValue?: GetValueType
   ) => Promise<void> | void;
   openMenuOnClick?: boolean;
-  isMulti?: boolean | ((getValue: (name: string) => AnyToFix) => boolean);
 }
 
 // TODO fix type depending on is Multi
-interface FormFieldSelectRequestMulti<K extends FilterConstant[]>
-  extends FormFieldSelectRequestCommon<K, true> {
-  isMulti?: true;
+interface FormFieldSelectRequestMulti<S>
+  extends FormFieldSelectRequestCommon<S, true> {
+  isMulti: true;
 }
 
-interface FormFieldSelectRequestSingle<K extends FilterConstant[]>
-  extends FormFieldSelectRequestCommon<K, false> {
-  isMulti?: false;
+interface FormFieldSelectRequestSingle<S>
+  extends FormFieldSelectRequestCommon<S, false> {
+  isMulti: false;
 }
 
-export type FormFieldSelectRequest<K extends FilterConstant[] = AnyToFix> =
-  | FormFieldSelectRequestMulti<K>
-  | FormFieldSelectRequestSingle<K>
+interface FormFieldSelectRequestMethod<S>
+  extends FormFieldSelectRequestCommon<S, boolean> {
+  isMulti: (getValue: (name: string) => AnyToFix) => boolean;
+}
 
-export type FormFieldInput =
-  | FormFieldTextInput
-  | FormFieldCheckBox
-  | FormFieldSelect
-  | FormFieldSelectRequest;
+type FormFieldSelectRequestOmit<S> = Omit<
+  FormFieldSelectRequestCommon<S, false>,
+  'isMulti'
+>;
 
-export interface FormFieldText extends FormFieldCommonProperties {
-  id: string;
-  name: string;
+export type FormFieldSelectRequest<S> =
+  | FormFieldSelectRequestMulti<S>
+  | FormFieldSelectRequestSingle<S>
+  | FormFieldSelectRequestOmit<S>
+  | FormFieldSelectRequestMethod<S>;
+
+export type FormFieldInput<S> =
+  | FormFieldTextInput<S>
+  | FormFieldCheckBox<S>
+  | FormFieldSelect<S>
+  | FormFieldSelectRequest<S>;
+
+export interface FormFieldText<S> extends FormFieldCommonProperties<S> {
   title: string | ((getValue: GetValueType) => string);
   component: TextComponent;
   hide?: (getValue: GetValueType, fieldOptions?: AnyToFix) => boolean;
   hidden?: boolean;
 }
 
-export interface FormFieldMultiple extends FormFieldCommonProperties {
-  id: string;
-  name: string;
+export interface FormFieldMultiple<S> extends FormFieldCommonProperties<S> {
   action: string;
   component: MultipleComponent;
-  fields: FormFieldInput[];
+  fields: FormFieldInput<S>[];
   hide?: (getValue: GetValueType) => boolean;
   hidden?: boolean;
 }
 
-export interface FormFieldGroup extends FormFieldCommonProperties {
+export interface FormFieldGroup<S> extends FormFieldCommonProperties<S> {
   component: GroupComponent;
-  fields: (FormFieldInput | FormFieldText)[];
+  fields: (FormFieldInput<S> | FormFieldText<S>)[];
   hide?: (getValue: GetValueType) => boolean;
   hidden?: boolean;
 }
 
-export type FormField =
-  | FormFieldInput
-  | FormFieldText
-  | FormFieldMultiple
-  | FormFieldGroup;
+export type FormField<S> =
+  | FormFieldInput<S>
+  | FormFieldText<S>
+  | FormFieldMultiple<S>
+  | FormFieldGroup<S>;
 
 export interface FormSchema {
   id: string;
-  fields: FormField[];
+  fields: FormField<string>[];
 }
-
-const test: FormFieldSelectRequest = {
-  component: undefined,
-  id: '',
-  name: '',
-  options: undefined,
-  title: undefined,
-  isMulti: true,
-  rules: [
-    {
-      method: (fieldValue) => {
-        return true;
-      },
-      message: 'oui',
-    },
-  ],
-};
