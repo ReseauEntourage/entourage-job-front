@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { FilterConstant } from '.';
 
 export const ADMIN_ZONES = {
   PARIS: 'PARIS',
@@ -11,14 +12,14 @@ export const ADMIN_ZONES = {
 
 export type AdminZone = (typeof ADMIN_ZONES)[keyof typeof ADMIN_ZONES];
 
-export const ADMIN_ZONES_FILTERS = [
+export const ADMIN_ZONES_FILTERS: FilterConstant<AdminZone>[] = [
   { value: ADMIN_ZONES.PARIS, label: _.capitalize(ADMIN_ZONES.PARIS) },
   { value: ADMIN_ZONES.LILLE, label: _.capitalize(ADMIN_ZONES.LILLE) },
   { value: ADMIN_ZONES.LYON, label: _.capitalize(ADMIN_ZONES.LYON) },
   { value: ADMIN_ZONES.LORIENT, label: _.capitalize(ADMIN_ZONES.LORIENT) },
   { value: ADMIN_ZONES.RENNES, label: _.capitalize(ADMIN_ZONES.RENNES) },
   { value: ADMIN_ZONES.HZ, label: _.capitalize(ADMIN_ZONES.HZ) },
-] as const;
+];
 
 export const DEPARTMENTS = [
   {

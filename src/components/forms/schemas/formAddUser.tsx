@@ -5,7 +5,7 @@ import PlusFilledIcon from 'assets/custom/icons/plus-filled.svg';
 import { FormField, FormSchema } from '../FormSchema';
 import { Api } from 'src/api';
 import { FilterConstant } from 'src/constants';
-import { ADMIN_ZONES_FILTERS } from 'src/constants/departements';
+import { ADMIN_ZONES_FILTERS, AdminZone } from 'src/constants/departements';
 import { COLORS } from 'src/constants/styles';
 import {
   ADMIN_ROLES,
@@ -13,8 +13,8 @@ import {
   USER_ROLES_FILTERS,
   RELATED_ROLES,
   EXTERNAL_USER_ROLES,
-  UserRole,
-} from 'src/constants/users';
+  UserRole, Gender
+} from "src/constants/users";
 import { isRoleIncluded } from 'src/utils/Finding';
 import { formAddOrganization } from './formAddOrganization';
 
@@ -57,14 +57,23 @@ const addHideMethodAndSuffixToAllFields = (field) => {
   return fieldToReturn;
 };
 
-const mutatedAddOrganizationFormFields: FormField[] =
-  formAddOrganization.fields.map(addHideMethodAndSuffixToAllFields);
+const mutatedAddOrganizationFormFields = formAddOrganization.fields.map(
+  addHideMethodAndSuffixToAllFields
+);
 
 const organizationFieldsNames = mutatedAddOrganizationFormFields.map(
   ({ name }) => name
 );
 
-export const formAddUser: FormSchema = {
+export const formAddUser: FormSchema<{
+  firstName: string;
+  lastName: string;
+  role: UserRole;
+  gender: Gender;
+  zone: AdminZone;
+  phone: string;
+  organizationId: FilterConstant<string>;
+}> = {
   id: 'form-add-user',
   fields: [
     {
@@ -160,7 +169,6 @@ export const formAddUser: FormSchema = {
       rules: [
         {
           method: (fieldValue) => validator.isEmail(fieldValue),
-
           message: 'Adresse e-mail invalide',
         },
       ],
@@ -179,10 +187,7 @@ export const formAddUser: FormSchema = {
           name: 'organizationId',
           component: 'select-async',
           hide: (getValue) => {
-            return !isRoleIncluded(
-              EXTERNAL_USER_ROLES,
-              getValue('role') as UserRole
-            );
+            return !isRoleIncluded(EXTERNAL_USER_ROLES, getValue('role'));
           },
           loadOptions: async (callback, inputValue) => {
             const { data: organizations } = await Api.getAllOrganizations({
@@ -216,10 +221,8 @@ export const formAddUser: FormSchema = {
             return role === USER_ROLES.COACH_EXTERNAL;
           },
           hide: (getValue) => {
-            const role = getValue('role') as UserRole;
-            const organizationId = (
-              getValue('organizationId') as FilterConstant
-            )?.value;
+            const role = getValue('role');
+            const organizationId = getValue('organizationId')?.value;
             return (
               role === USER_ROLES.ADMIN ||
               (isRoleIncluded(EXTERNAL_USER_ROLES, role) && !organizationId) ||
@@ -227,11 +230,9 @@ export const formAddUser: FormSchema = {
             );
           },
           loadOptions: async (callback, inputValue, getValue) => {
-            const role = RELATED_ROLES[getValue('role') as string];
+            const role = RELATED_ROLES[getValue('role')];
 
-            const organizationId = (
-              getValue('organizationId') as FilterConstant
-            )?.value;
+            const organizationId = getValue('organizationId')?.value;
 
             const { data: users } = await Api.getUsersSearch({
               params: {

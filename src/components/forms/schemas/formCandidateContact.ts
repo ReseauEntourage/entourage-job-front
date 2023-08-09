@@ -81,7 +81,6 @@ export const formCandidateContact: FormSchema = {
       title: 'Prénom de la personne que vous souhaitez orienter*',
       isRequired: true,
       maxLength: 80,
-
     },
     {
       id: 'lastName',
@@ -131,8 +130,7 @@ export const formCandidateContact: FormSchema = {
       isRequired: true,
       rules: [
         {
-          method: (fieldValue) =>
-            validator.isPostalCode(fieldValue, 'FR'),
+          method: (fieldValue) => validator.isPostalCode(fieldValue, 'FR'),
           message: 'Code postal non valide',
         },
       ],

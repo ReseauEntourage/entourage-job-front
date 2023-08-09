@@ -4,12 +4,16 @@ import {
   useController,
   UseFormResetField,
   UseFormWatch,
+  UseFormGetValues,
+  Path,
 } from 'react-hook-form';
 
 import {
   ComponentException,
+  ExtractFormSchemaValidation,
   FormFieldInput,
-  GetValueType,
+  FormSchema,
+  isFormFieldRadio,
   isFormFieldSelect,
   isFormFieldSelectRequest,
   isFormFieldTextInput,
@@ -28,23 +32,28 @@ import {
   TextInput,
 } from 'src/components/utils/Inputs';
 import { CommonInputProps } from 'src/components/utils/Inputs/Inputs.types';
+import { RadioTypes } from 'src/components/utils/Inputs/Radio/Radio.types';
 
-import { AnyToFix } from 'src/utils/Types';
+import { AnyCantFix } from 'src/utils/Types';
 
-interface GenericFieldProps<S> {
-  field: FormFieldInput<S>;
-  formId: string;
-  getValue: GetValueType<S>;
-  fieldOptions?: AnyToFix;
-  updateFieldOptions?: (newFieldOption?: { [K in string]: AnyToFix }) => void;
-  control: Control;
-  resetField: UseFormResetField<AnyToFix>;
-  watch: UseFormWatch<AnyToFix>;
+interface GenericFieldProps<S extends FormSchema<AnyCantFix>> {
+  formSchema: S;
+  field: FormFieldInput<ExtractFormSchemaValidation<S>>;
+  getValue: UseFormGetValues<ExtractFormSchemaValidation<S>>;
+  fieldOptions?: {
+    [K in string]: RadioTypes[];
+  };
+  updateFieldOptions?: (newFieldOption?: {
+    [K in string]: RadioTypes[];
+  }) => void;
+  control: Control<ExtractFormSchemaValidation<S>>;
+  resetField: UseFormResetField<ExtractFormSchemaValidation<S>>;
+  watch: UseFormWatch<ExtractFormSchemaValidation<S>>;
 }
 
-export function GenericField<S>({
+export function GenericField<S extends FormSchema<AnyCantFix>>({
   field,
-  formId,
+  formSchema,
   getValue,
   updateFieldOptions = () => {},
   fieldOptions = {},
@@ -52,6 +61,7 @@ export function GenericField<S>({
   resetField,
   watch,
 }: GenericFieldProps<S>) {
+  const { id: formId } = formSchema;
   const rules = field.rules?.reduce((acc, curr, index) => {
     return {
       ...acc,
@@ -90,7 +100,9 @@ export function GenericField<S>({
     [field, onChange, resetField]
   );
 
-  const commonProps: CommonInputProps = useMemo(() => {
+  const commonProps: CommonInputProps<
+    ExtractFormSchemaValidation<S>[Path<ExtractFormSchemaValidation<S>>]
+  > = useMemo(() => {
     return {
       id: `${formId}-${field.id}`,
       name,
@@ -139,7 +151,7 @@ export function GenericField<S>({
   }
 
   if (field.component === 'checkbox') {
-    return <CheckBox {...commonProps} value={value} />;
+    return <CheckBox {...commonProps} />;
   }
 
   if (field.component === 'select-simple') {
@@ -149,12 +161,15 @@ export function GenericField<S>({
   }
 
   if (isFormFieldSelectRequest(field)) {
-    const isMultiDefined = field.isMulti || false;
+    let isMulti: boolean;
+    if ('isMulti' in field) {
+      const isMultiDefined = field.isMulti || false;
 
-    const isMulti =
-      typeof isMultiDefined === 'function'
-        ? isMultiDefined(getValue)
-        : isMultiDefined;
+      isMulti =
+        typeof isMultiDefined === 'function'
+          ? isMultiDefined(getValue)
+          : isMultiDefined;
+    }
 
     if (field.component === 'select') {
       return (
@@ -192,31 +207,38 @@ export function GenericField<S>({
     }
   }
 
-  if (field.component === 'radio') {
-    return (
-      <Radio
-        {...commonProps}
-        options={field.options}
-        filter={field.dynamicFilter(getValue)}
-        hidden={field.hide ? field.hide(getValue, fieldOptions) : field.hidden}
-      />
-    );
-  }
+  if (isFormFieldRadio(field)) {
+    if (field.component === 'radio') {
+      return (
+        <Radio
+          {...commonProps}
+          options={field.options}
+          filter={field.dynamicFilter(getValue)}
+          hidden={
+            field.hide ? field.hide(getValue, fieldOptions) : field.hidden
+          }
+        />
+      );
+    }
 
-  if (field.component === 'radio-async') {
-    return (
-      <RadioAsync
-        {...commonProps}
-        loadOptions={async (callback) => {
-          const radioOptions = await field.loadOptions(callback);
-          updateFieldOptions({ [field.id]: radioOptions });
-          return radioOptions;
-        }}
-        filter={field.dynamicFilter(getValue)}
-        hidden={field.hide ? field.hide(getValue, fieldOptions) : field.hidden}
-      />
-    );
+    if (field.component === 'radio-async') {
+      return (
+        <RadioAsync
+          {...commonProps}
+          loadOptions={async (callback) => {
+            await field.loadOptions((radioOptions) => {
+              updateFieldOptions({ [field.id]: radioOptions });
+              callback(radioOptions);
+            });
+          }}
+          filter={field.dynamicFilter(getValue)}
+          hidden={
+            field.hide ? field.hide(getValue, fieldOptions) : field.hidden
+          }
+        />
+      );
+    }
   }
 
   throw new ComponentException(field.component);
-};
+}

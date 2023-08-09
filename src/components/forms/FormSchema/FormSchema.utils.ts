@@ -6,13 +6,18 @@ import {
   FormFieldCheckBox,
   FormFieldGroup,
   FormFieldMultiple,
-  FormFieldSelect, FormFieldSelectRequest,
+  FormFieldRadio,
+  FormFieldSelect,
+  FormFieldSelectRequest,
   FormFieldText,
   FormFieldTextInput,
+  FormSchemaValidation,
   GroupComponent,
   GroupComponents,
   MultipleComponent,
   MultipleComponents,
+  RadioComponent,
+  RadioComponents,
   SelectComponent,
   SelectComponents,
   SelectRequestComponent,
@@ -20,44 +25,56 @@ import {
   TextComponent,
   TextComponents,
   TextInputComponent,
-  TextInputComponents
-} from "./FormSchema.types";
+  TextInputComponents,
+} from './FormSchema.types';
 
-export function isFormFieldTextInput(
-  field: FormField
-): field is FormFieldTextInput {
+export function isFormFieldTextInput<S extends FormSchemaValidation>(
+  field: FormField<S>
+): field is FormFieldTextInput<S> {
   return TextInputComponents.includes(field.component as TextInputComponent);
 }
 
-export function isFormFieldCheckbox(
-  field: FormField
-): field is FormFieldCheckBox {
+export function isFormFieldCheckbox<S extends FormSchemaValidation>(
+  field: FormField<S>
+): field is FormFieldCheckBox<S> {
   return CheckBoxComponents.includes(field.component as CheckBoxComponent);
 }
 
-export function isFormFieldSelect(field: FormField): field is FormFieldSelect {
+export function isFormFieldSelect<S extends FormSchemaValidation>(
+  field: FormField<S>
+): field is FormFieldSelect<S> {
   return SelectComponents.includes(field.component as SelectComponent);
 }
 
-export function isFormFieldSelectRequest(
-  field: FormField
-): field is FormFieldSelectRequest {
+export function isFormFieldRadio<S extends FormSchemaValidation>(
+  field: FormField<S>
+): field is FormFieldRadio<S> {
+  return RadioComponents.includes(field.component as RadioComponent);
+}
+
+export function isFormFieldSelectRequest<S extends FormSchemaValidation>(
+  field: FormField<S>
+): field is FormFieldSelectRequest<S> {
   return SelectRequestComponents.includes(
     field.component as SelectRequestComponent
   );
 }
 
-export function isFormFieldText(field: FormField): field is FormFieldText {
+export function isFormFieldText<S extends FormSchemaValidation>(
+  field: FormField<S>
+): field is FormFieldText<S> {
   return TextComponents.includes(field.component as TextComponent);
 }
 
-export function isFormFieldGroup(field: FormField): field is FormFieldGroup {
+export function isFormFieldGroup<S extends FormSchemaValidation>(
+  field: FormField<S>
+): field is FormFieldGroup<S> {
   return GroupComponents.includes(field.component as GroupComponent);
 }
 
-export function isFormFieldMultiple(
-  field: FormField
-): field is FormFieldMultiple {
+export function isFormFieldMultiple<S extends FormSchemaValidation>(
+  field: FormField<S>
+): field is FormFieldMultiple<S> {
   return MultipleComponents.includes(field.component as MultipleComponent);
 }
 

@@ -3,15 +3,13 @@ import { StyledInputLabel } from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { Icon } from 'src/components/utils/Icon';
+import { FilterConstant } from 'src/constants';
 import { useCloseOnClickOutsideComponent } from 'src/hooks/useCloseOnClickOutsideComponent';
 import { StyledSelectContainer } from './SelectSimple.styles';
 
 interface SelectProps
   extends CommonInputProps<string | number, HTMLInputElement> {
-  options: {
-    value: string | number;
-    label?: string;
-  }[];
+  options: FilterConstant<string | number>[];
 }
 
 export function SelectSimple({

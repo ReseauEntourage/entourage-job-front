@@ -1,10 +1,10 @@
 import { Component, Ref } from 'react';
 import { FieldError } from 'react-hook-form';
-import { AnyToFix } from 'src/utils/Types';
+import { AnyCantFix } from 'src/utils/Types';
 
 export interface CommonInputProps<
-  T = AnyToFix,
-  K extends HTMLElement | Component = AnyToFix
+  T,
+  K extends HTMLElement | Component = AnyCantFix
 > {
   id: string;
   name: string;

@@ -28,20 +28,21 @@ const ResetPasswordPage = ({ valid, id, token, isCreation }) => {
                 <PasswordCriterias />
                 <FormWithValidation
                   formSchema={formResetPassword}
-                  onSubmit={({ newPassword, confirmPassword }, setError) => {
-                    return Api.postResetUserToken(id, token, {
-                      newPassword,
-                      confirmPassword,
-                    })
-                      .then(() => {
-                        push(`/reset/success?isCreation=${isCreation}`);
-                      })
-                      .catch((err) => {
-                        setError(
-                          err?.response?.data?.error ||
-                            'Une erreur est survenue'
-                        );
+                  onSubmit={async (
+                    { newPassword, confirmPassword },
+                    setError
+                  ) => {
+                    try {
+                      await Api.postResetUserToken(id, token, {
+                        newPassword,
+                        confirmPassword,
                       });
+                      push(`/reset/success?isCreation=${isCreation}`);
+                    } catch (err) {
+                      setError(
+                        err?.response?.data?.error || 'Une erreur est survenue'
+                      );
+                    }
                   }}
                 />
               </div>

@@ -24,7 +24,7 @@ export const formEditEmployed: FormSchema = {
       min: moment().format('YYYY-MM-DD'),
       disable: (getValue) => {
         const contract = findConstantFromValue(
-          getValue('contract') as string,
+          getValue('contract'),
           CONTRACTS
         );
         return !contract || !contract.end;

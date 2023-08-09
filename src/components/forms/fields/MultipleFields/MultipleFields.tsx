@@ -1,7 +1,11 @@
 import React from 'react';
 import {
+  ArrayPath,
   Control,
+  FieldArray,
+  Path,
   useFieldArray,
+  UseFormGetValues,
   UseFormResetField,
   UseFormWatch,
 } from 'react-hook-form';
@@ -9,12 +13,12 @@ import { GenericField } from '../GenericField';
 import { InputsContainer } from '../InputsContainer';
 import {
   FormFieldInput,
-  FormFieldSelect,
-  GetValueType,
+  FormSchema,
+  ExtractFormSchemaValidation,
 } from 'src/components/forms/FormSchema/FormSchema.types';
 import { Button, ButtonIcon, Icon } from 'src/components/utils';
 import { useMount } from 'src/hooks/utils';
-import { AnyToFix } from 'src/utils/Types';
+import { AnyCantFix } from 'src/utils/Types';
 import {
   StyledMultipleFieldAddButtonContainer,
   StyledMultipleFieldButtonLabel,
@@ -22,27 +26,27 @@ import {
   StyledTrashButtonContainer,
 } from './MultipleFields.styles';
 
-interface MultipleFieldsProps {
-  formId: string;
+interface MultipleFieldsProps<S extends FormSchema<AnyCantFix>> {
+  formSchema: S;
   action?: string;
-  fields: (FormFieldInput | FormFieldSelect)[];
-  name: string;
-  getValue: GetValueType;
-  control: Control;
-  resetField: UseFormResetField<AnyToFix>;
-  watch: UseFormWatch<AnyToFix>;
+  fields: FormFieldInput<ExtractFormSchemaValidation<S>>[];
+  name: ArrayPath<ExtractFormSchemaValidation<S>>;
+  getValue: UseFormGetValues<ExtractFormSchemaValidation<S>>;
+  control: Control<ExtractFormSchemaValidation<S>>;
+  resetField: UseFormResetField<ExtractFormSchemaValidation<S>>;
+  watch: UseFormWatch<ExtractFormSchemaValidation<S>>;
 }
 
-export const MultipleFields = ({
+export function MultipleFields<S extends FormSchema<AnyCantFix>>({
   control,
+  formSchema,
   name,
   fields: formFields,
   getValue,
-  formId,
   action = 'Ajouter',
   resetField,
   watch,
-}: MultipleFieldsProps) => {
+}: MultipleFieldsProps<S>) {
   const { fields, append, remove } = useFieldArray({ control, name });
 
   // To add the first empty one
@@ -53,7 +57,10 @@ export const MultipleFields = ({
           ...acc,
           [curr.name]: null,
         };
-      }, {})
+      }, {}) as FieldArray<
+        ExtractFormSchemaValidation<S>,
+        ArrayPath<ExtractFormSchemaValidation<S>>
+      >
     )
   );
 
@@ -72,8 +79,12 @@ export const MultipleFields = ({
 
                 const numberedField = {
                   ...field,
-                  id: `${name}.${index}.${field.id}`,
-                  name: `${name}.${index}.${field.name}`,
+                  id: `${name}.${index}.${field.id}` as Path<
+                    ExtractFormSchemaValidation<S>
+                  >,
+                  name: `${name}.${index}.${field.name}` as Path<
+                    ExtractFormSchemaValidation<S>
+                  >,
                   title:
                     typeof title === 'string' && title.indexOf('*') > -1
                       ? title.replace('*', `${nbString}*`)
@@ -81,10 +92,10 @@ export const MultipleFields = ({
                 };
                 return (
                   <GenericField
+                    formSchema={formSchema}
                     watch={watch}
                     resetField={resetField}
                     field={numberedField}
-                    formId={formId}
                     getValue={getValue}
                     control={control}
                   />
@@ -117,7 +128,10 @@ export const MultipleFields = ({
                   ...acc,
                   [curr.name]: null,
                 };
-              }, {})
+              }, {}) as FieldArray<
+                ExtractFormSchemaValidation<S>,
+                ArrayPath<ExtractFormSchemaValidation<S>>
+              >
             );
           }}
         >
@@ -129,4 +143,4 @@ export const MultipleFields = ({
       </StyledMultipleFieldAddButtonContainer>
     </div>
   );
-};
+}

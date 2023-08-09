@@ -19,8 +19,8 @@ export function RadioAsync({
 }: RadioAsyncComponentProps) {
   const [options, setOptions] = useState([]);
 
-  useMount(async () => {
-    await loadOptions((optionsLoaded) => setOptions(optionsLoaded));
+  useMount(() => {
+    loadOptions((optionsLoaded) => setOptions(optionsLoaded));
   });
 
   if (hidden) {

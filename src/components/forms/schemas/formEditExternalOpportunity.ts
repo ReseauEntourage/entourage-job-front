@@ -83,7 +83,7 @@ export const formEditExternalOpportunity: FormSchema = {
           component: 'datepicker',
           disable: (getValue) => {
             const contract = findConstantFromValue(
-              getValue('contract') as string,
+              getValue('contract'),
               CONTRACTS
             );
             return !contract || !contract.end;

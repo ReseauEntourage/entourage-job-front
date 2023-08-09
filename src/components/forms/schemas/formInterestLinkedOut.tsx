@@ -1,11 +1,14 @@
 import React from 'react';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
+import validator from 'validator';
 import { FormSchema } from '../FormSchema';
 import { SimpleLink } from 'src/components/utils';
 import { EXTERNAL_LINKS, HEARD_ABOUT_FILTERS } from 'src/constants';
-import validator from "validator";
 
-export const formInterestLinkedOut: FormSchema = {
+export const formInterestLinkedOut: FormSchema<{
+  lastName: 'text-input';
+  firstName: 'text-input';
+}> = {
   id: 'form-interest',
   fields: [
     {
@@ -15,7 +18,6 @@ export const formInterestLinkedOut: FormSchema = {
       title: 'Nom*',
       isRequired: true,
       maxLength: 80,
-
     },
     {
       id: 'firstName',
@@ -24,7 +26,6 @@ export const formInterestLinkedOut: FormSchema = {
       title: 'Prénom*',
       isRequired: true,
       maxLength: 80,
-
     },
     {
       id: 'email',
@@ -74,7 +75,6 @@ export const formInterestLinkedOut: FormSchema = {
       rows: 7,
       isRequired: true,
       maxLength: 4000,
-
     },
     {
       id: 'heardAbout',

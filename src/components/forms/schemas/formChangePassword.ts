@@ -1,14 +1,18 @@
 import { passwordStrength } from 'check-password-strength';
 import { FormSchema } from '../FormSchema';
 
-export const formChangePassword: FormSchema = {
+export const formChangePassword: FormSchema<{
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}> = {
   id: 'form-change-pwd',
   fields: [
     {
       id: 'oldPassword',
       name: 'oldPassword',
       type: 'password',
-      component: 'text-input',
+      component: 'checkbox',
       title: 'Ancien mot de passe*',
       isRequired: true,
     },

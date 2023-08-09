@@ -1,7 +1,10 @@
+import validator from 'validator';
 import { FormSchema } from '../FormSchema';
-import validator from "validator";
 
-export const formLogin: FormSchema = {
+export const formLogin: FormSchema<{
+  email: string;
+  password: boolean;
+}> = {
   id: 'form-login',
   fields: [
     {

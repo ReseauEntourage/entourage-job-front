@@ -1,8 +1,9 @@
+import { Path, UseFormGetValues } from 'react-hook-form';
 import { RadioTypes } from 'src/components/utils/Inputs/Radio/Radio.types';
 import { FilterConstant } from 'src/constants';
-import { AnyToFix } from 'src/utils/Types';
+import { AnyCantFix } from 'src/utils/Types';
 
-const FormComponents = {
+export const FormComponents = {
   DATEPICKER: 'datepicker',
   TEXT_INPUT: 'text-input',
   TEL_INPUT: 'tel-input',
@@ -36,8 +37,7 @@ type MultiFilterConstant<M extends boolean> = M extends true
   ? FilterConstant
   : FilterConstant | FilterConstant[];
 
-interface FormComponentValues<M extends boolean>
-  extends Record<FormComponent, FieldValue> {
+export interface FormComponentValues<M extends boolean> {
   [FormComponents.DATEPICKER]: string;
   [FormComponents.TEXT_INPUT]: string;
   [FormComponents.TEL_INPUT]: string;
@@ -49,7 +49,20 @@ interface FormComponentValues<M extends boolean>
   [FormComponents.SELECT_ASYNC]: MultiFilterConstant<M>;
   [FormComponents.RADIO]: string | number;
   [FormComponents.RADIO_ASYNC]: string | number;
+  [FormComponents.HEADING]: never;
+  [FormComponents.TEXT]: never;
+  [FormComponents.FIELDGROUP]: never;
+  [FormComponents.MULTIPLE_FIELDS]: never;
 }
+
+// TODO remove boolean
+// export type FormComponent = keyof FormComponentValues<boolean>;
+
+export type FormSchemaValidation = {
+  [K in string]: FieldValue;
+};
+
+type FormFieldName<V extends FormSchemaValidation> = keyof V & string;
 
 export const TextInputComponents = [
   FormComponents.DATEPICKER,
@@ -79,6 +92,13 @@ export const SelectComponents = [
 
 export type SelectComponent = (typeof SelectComponents)[number];
 
+export const RadioComponents = [
+  FormComponents.RADIO,
+  FormComponents.RADIO_ASYNC,
+] as const;
+
+export type RadioComponent = (typeof RadioComponents)[number];
+
 export const TextComponents = [
   FormComponents.HEADING,
   FormComponents.TEXT,
@@ -98,42 +118,58 @@ type InputComponent =
   | SelectComponent
   | SelectRequestComponent;
 
-// export type FormFieldName<S> = keyof S & string;
+// export type FormFieldName = keyof S & string;
 
-interface FormFieldCommonProperties<S> {
-  id: S;
-  name: S;
+export type GetValueType<V extends FormSchemaValidation> = UseFormGetValues<V>;
+
+interface FormFieldCommonProperties<V extends FormSchemaValidation> {
+  id: Path<V>;
+  name: Path<V>;
+  hidden?: boolean;
+  hide?: (
+    getValue: GetValueType<V>,
+    fieldOptions?: { [x: string]: RadioTypes[] }
+  ) => boolean;
 }
 
-// export type GetValueType = (name: FormFieldName<S>) => S[FormFieldName<S>];
-
-export type GetValueType = (name: string) => AnyToFix;
-
-interface Rule<T extends InputComponent, S, M extends boolean> {
-  method: (fieldValue: FormComponentValues<M>[T], fieldValues: S) => boolean;
-  args?: AnyToFix[];
+interface Rule<
+  V extends FormSchemaValidation,
+  T extends InputComponent,
+  M extends boolean
+> {
+  method: (fieldValue: FormComponentValues<M>[T], fieldValues: V) => boolean;
   message: string;
 }
 
 interface FormFieldInputCommonProperties<
+  V extends FormSchemaValidation,
   T extends InputComponent,
-  S,
   M extends boolean = boolean
-> extends FormFieldCommonProperties<S> {
+> extends FormFieldCommonProperties<V> {
   isRequired?: boolean;
-  rules?: Rule<T, S, M>[];
-  title: string | JSX.Element | ((getValue: GetValueType) => string);
+  rules?: Rule<V, T, M>[];
+  title: string | JSX.Element | ((getValue: GetValueType<V>) => string);
   disabled?: boolean;
-  disable?: (getValue: GetValueType) => boolean;
-  hidden?: boolean;
-  hide?: (getValue: GetValueType, fieldOptions?: AnyToFix) => boolean;
+  disable?: (getValue: GetValueType<V>) => boolean;
   placeholder?: string;
   showLabel?: boolean;
 }
 
-export interface FormFieldTextInput<S>
-  extends FormFieldInputCommonProperties<TextInputComponent, S> {
-  component: TextInputComponent;
+export type CheckIfValueIsCompatible<
+  F,
+  T extends InputComponent
+> = F extends FormComponentValues<boolean>[T] ? T : never;
+/*
+type CanExtend<A, B> = A extends B ? true : false;
+
+type FieldValueCanExtendComponentValue<
+  FieldValue,
+  ComponentValue extends FormComponentValues<boolean>
+> = CanExtend<FieldValue, ComponentValue>; */
+
+export interface FormFieldTextInput<V extends FormSchemaValidation>
+  extends FormFieldInputCommonProperties<V, TextInputComponent> {
+  component: CheckIfValueIsCompatible<V[Path<V>], TextInputComponent>;
   type?: 'text' | 'email' | 'password';
   rows?: number;
   maxLines?: { lines: number; width: number };
@@ -142,100 +178,126 @@ export interface FormFieldTextInput<S>
   max?: string;
 }
 
-export interface FormFieldCheckBox<S>
-  extends FormFieldInputCommonProperties<CheckBoxComponent, S> {
-  component: CheckBoxComponent;
+export interface FormFieldCheckBox<V extends FormSchemaValidation>
+  extends FormFieldInputCommonProperties<V, CheckBoxComponent> {
+  component: CheckIfValueIsCompatible<V[Path<V>], CheckBoxComponent>;
 }
 
-export interface FormFieldSelect<S>
-  extends FormFieldInputCommonProperties<SelectComponent, S> {
-  component: SelectComponent;
-  dynamicFilter?: (getValue: GetValueType) => string;
-  fieldsToReset?: string[];
-  options?: FilterConstant[];
+export interface FormFieldSelect<V extends FormSchemaValidation>
+  extends FormFieldInputCommonProperties<V, SelectComponent> {
+  component: CheckIfValueIsCompatible<V[Path<V>], SelectComponent>;
+  fieldsToReset?: Path<V>[];
+  options?: FilterConstant[] | Readonly<FilterConstant>;
+}
+
+export interface FormFieldRadio<V extends FormSchemaValidation>
+  extends FormFieldInputCommonProperties<V, RadioComponent> {
+  component: CheckIfValueIsCompatible<V[Path<V>], RadioComponent>;
+  dynamicFilter?: (getValue: GetValueType<V>) => string;
+  options?: RadioTypes[];
   loadOptions?: (
-    callback: (options: FilterConstant[] | RadioTypes[]) => void,
+    callback: (options: RadioTypes[]) => void,
     inputValue?: string,
-    getValue?: GetValueType
+    getValue?: GetValueType<V>
   ) => Promise<void> | void;
   errorMessage?: string;
   limit?: number;
 }
-export interface FormFieldSelectRequestCommon<S, M extends boolean>
-  extends FormFieldInputCommonProperties<SelectRequestComponent, S, M> {
-  component: SelectRequestComponent;
-  fieldsToReset?: string[];
+export interface FormFieldSelectRequestCommon<
+  V extends FormSchemaValidation,
+  M extends boolean
+> extends FormFieldInputCommonProperties<V, SelectRequestComponent, M> {
+  component: CheckIfValueIsCompatible<V[Path<V>], SelectRequestComponent>;
+  fieldsToReset?: Path<V>[];
   options?: FilterConstant[];
   loadOptions?: (
-    callback: (options: FilterConstant[] | RadioTypes[]) => void,
+    callback: (options: FilterConstant[]) => void,
     inputValue?: string,
-    getValue?: GetValueType
+    getValue?: GetValueType<V>
   ) => Promise<void> | void;
   openMenuOnClick?: boolean;
 }
 
 // TODO fix type depending on is Multi
-interface FormFieldSelectRequestMulti<S>
-  extends FormFieldSelectRequestCommon<S, true> {
+interface FormFieldSelectRequestMulti<V extends FormSchemaValidation>
+  extends FormFieldSelectRequestCommon<V, true> {
   isMulti: true;
 }
 
-interface FormFieldSelectRequestSingle<S>
-  extends FormFieldSelectRequestCommon<S, false> {
+interface FormFieldSelectRequestSingle<V extends FormSchemaValidation>
+  extends FormFieldSelectRequestCommon<V, false> {
   isMulti: false;
 }
 
-interface FormFieldSelectRequestMethod<S>
-  extends FormFieldSelectRequestCommon<S, boolean> {
-  isMulti: (getValue: (name: string) => AnyToFix) => boolean;
+interface FormFieldSelectRequestMethod<V extends FormSchemaValidation>
+  extends FormFieldSelectRequestCommon<V, boolean> {
+  isMulti: (getValue: GetValueType<V>) => boolean;
 }
 
-type FormFieldSelectRequestOmit<S> = Omit<
-  FormFieldSelectRequestCommon<S, false>,
+type FormFieldSelectRequestOmit<V extends FormSchemaValidation> = Omit<
+  FormFieldSelectRequestCommon<V, false>,
   'isMulti'
 >;
 
-export type FormFieldSelectRequest<S> =
-  | FormFieldSelectRequestMulti<S>
-  | FormFieldSelectRequestSingle<S>
-  | FormFieldSelectRequestOmit<S>
-  | FormFieldSelectRequestMethod<S>;
+export type FormFieldSelectRequest<V extends FormSchemaValidation> =
+  | FormFieldSelectRequestMulti<V>
+  | FormFieldSelectRequestSingle<V>
+  | FormFieldSelectRequestOmit<V>
+  | FormFieldSelectRequestMethod<V>;
 
-export type FormFieldInput<S> =
-  | FormFieldTextInput<S>
-  | FormFieldCheckBox<S>
-  | FormFieldSelect<S>
-  | FormFieldSelectRequest<S>;
+export type FormFieldInput<V extends FormSchemaValidation> =
+  | FormFieldTextInput<V>
+  | FormFieldCheckBox<V>
+  | FormFieldRadio<V>
+  | FormFieldSelect<V>
+  | FormFieldSelectRequest<V>;
 
-export interface FormFieldText<S> extends FormFieldCommonProperties<S> {
-  title: string | ((getValue: GetValueType) => string);
+export interface FormFieldText<V extends FormSchemaValidation>
+  extends FormFieldCommonProperties<V> {
+  title: string | ((getValue: GetValueType<V>) => string);
   component: TextComponent;
-  hide?: (getValue: GetValueType, fieldOptions?: AnyToFix) => boolean;
-  hidden?: boolean;
 }
 
-export interface FormFieldMultiple<S> extends FormFieldCommonProperties<S> {
+export interface FormFieldMultiple<V extends FormSchemaValidation>
+  extends FormFieldCommonProperties<V> {
   action: string;
   component: MultipleComponent;
-  fields: FormFieldInput<S>[];
-  hide?: (getValue: GetValueType) => boolean;
-  hidden?: boolean;
+  fields: FormFieldInput<V>[];
 }
 
-export interface FormFieldGroup<S> extends FormFieldCommonProperties<S> {
+export interface FormFieldGroup<V extends FormSchemaValidation>
+  extends FormFieldCommonProperties<V> {
   component: GroupComponent;
-  fields: (FormFieldInput<S> | FormFieldText<S>)[];
-  hide?: (getValue: GetValueType) => boolean;
-  hidden?: boolean;
+  fields: (FormFieldInput<V> | FormFieldText<V>)[];
 }
 
-export type FormField<S> =
-  | FormFieldInput<S>
-  | FormFieldText<S>
-  | FormFieldMultiple<S>
-  | FormFieldGroup<S>;
+export type FormField<V extends FormSchemaValidation> =
+  | FormFieldInput<V>
+  | FormFieldText<V>
+  | FormFieldMultiple<V>
+  | FormFieldGroup<V>;
 
-export interface FormSchema {
+export interface FormSchema<V extends FormSchemaValidation> {
   id: string;
-  fields: FormField<string>[];
+  fields: FormField<V>[];
 }
+
+export type ExtractFormSchemaValidation<R extends FormSchema<AnyCantFix>> =
+  R extends FormSchema<infer V extends FormSchemaValidation> ? V : never;
+
+/*
+
+export type FormSchemaValidation<V extends FormSchema> = {
+  [K in S['fields'][number]['name']]: FormComponentValues<boolean>[Extract<
+    S['fields'][number],
+    { name: K }
+  >['component']];
+
+};
+*/
+
+/* export type FormSchemaComponent<R> = R extends FormSchema<
+  infer S extends SchemaComponents
+>
+  ? S
+  : never; */

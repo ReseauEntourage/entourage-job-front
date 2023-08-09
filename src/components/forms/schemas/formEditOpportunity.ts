@@ -1,4 +1,5 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
+import validator from 'validator';
 import isEmail from 'validator/lib/isEmail';
 import { FormSchema } from '../FormSchema';
 import { Api } from 'src/api';
@@ -6,9 +7,8 @@ import { BUSINESS_LINES, CONTRACTS, FilterConstant } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { USER_ROLES } from 'src/constants/users';
 import { findConstantFromValue } from 'src/utils';
-import validator from "validator";
 
-export const formEditOpportunity: FormSchema = {
+export const formEditOpportunity: FormSchema<{ isPublic: 'checkbox' }> = {
   id: 'form-offer',
   fields: [
     {
@@ -259,7 +259,7 @@ export const formEditOpportunity: FormSchema = {
           component: 'datepicker',
           disable: (getValue) => {
             const contract = findConstantFromValue(
-              getValue('contract') as string,
+              getValue('contract'),
               CONTRACTS
             );
             return !contract || !contract.end;
