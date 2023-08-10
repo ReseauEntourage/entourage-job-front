@@ -1,7 +1,7 @@
 import validator from 'validator';
 import { FormSchema } from '../FormSchema';
 
-export const formDeleteUser: FormSchema = {
+export const formDeleteUser: FormSchema<{ confirmation: string }> = {
   id: 'form-delete-user',
   fields: [
     {

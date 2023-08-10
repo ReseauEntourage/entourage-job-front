@@ -1,6 +1,6 @@
 import { FormSchema } from '../FormSchema';
 
-export const formEditCatchphrase: FormSchema = {
+export const formEditCatchphrase: FormSchema<{ catchphrase: string }> = {
   id: 'form-catchphrase',
   fields: [
     {

@@ -18,7 +18,7 @@ import { AnyToFix } from 'src/utils/Types';
 
 interface PostOpportunityModalProps {
   modalTitle: string;
-  modalDesc: string | JSX.Element | JSX.Element[];
+  modalDesc: string | JSX.Element;
   isAdmin?: boolean;
   candidateId?: string;
   callback?: () => void;

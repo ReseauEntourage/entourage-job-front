@@ -3,7 +3,7 @@ import { FormSchema } from '../FormSchema';
 
 export const formLogin: FormSchema<{
   email: string;
-  password: boolean;
+  password: string;
 }> = {
   id: 'form-login',
   fields: [

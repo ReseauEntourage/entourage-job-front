@@ -1,6 +1,10 @@
 import { FormSchema } from '../FormSchema';
 
-export const formEditTestimonial: FormSchema = {
+export const formEditTestimonial: FormSchema<{
+  name: string;
+  status: string;
+  text: string;
+}> = {
   id: 'form-testimonial',
   fields: [
     {
@@ -9,7 +13,7 @@ export const formEditTestimonial: FormSchema = {
       component: 'text-input',
       title: 'Nom *',
       isRequired: true,
-                maxLength: 40,
+      maxLength: 40,
     },
     {
       id: 'status',
@@ -18,7 +22,6 @@ export const formEditTestimonial: FormSchema = {
       title: 'Statut *',
       isRequired: true,
       maxLength: 4000,
-
     },
     {
       id: 'text',
@@ -27,7 +30,6 @@ export const formEditTestimonial: FormSchema = {
       title: 'Votre recommandation*',
       isRequired: true,
       maxLength: 80,
-
     },
   ],
 };

@@ -1,10 +1,13 @@
 import moment from 'moment';
 import validator from 'validator';
 import { FormSchema } from '../FormSchema';
-import { CONTRACTS } from 'src/constants';
+import { Contract, CONTRACTS } from 'src/constants';
 import { findConstantFromValue } from 'src/utils';
 
-export const formEditEmployed: FormSchema = {
+export const formEditEmployed: FormSchema<{
+  contract: Contract;
+  endOfContract: string;
+}> = {
   id: 'form-edit-employed',
   fields: [
     {
@@ -23,10 +26,7 @@ export const formEditEmployed: FormSchema = {
       component: 'datepicker',
       min: moment().format('YYYY-MM-DD'),
       disable: (getValue) => {
-        const contract = findConstantFromValue(
-          getValue('contract'),
-          CONTRACTS
-        );
+        const contract = findConstantFromValue(getValue('contract'), CONTRACTS);
         return !contract || !contract.end;
       },
       rules: [

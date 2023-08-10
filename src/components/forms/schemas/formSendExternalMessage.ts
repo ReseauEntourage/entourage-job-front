@@ -4,9 +4,21 @@ import { FormSchema } from '../FormSchema';
 import {
   EXTERNAL_MESSAGE_SUBJECT_FILTERS,
   EXTERNAL_MESSAGE_CONTACT_TYPE_FILTERS,
+  ExternalMessageSubject,
+  ExternalMessageContactType,
 } from 'src/constants';
 
-export const formSendExternalMessage: FormSchema = {
+export const formSendExternalMessage: FormSchema<{
+  senderFirstName: string;
+  senderLastName: string;
+  senderEmail: string;
+  senderPhone: string;
+  type: ExternalMessageContactType;
+  subject: ExternalMessageSubject;
+  message: string;
+  optInContact: boolean;
+  optInNewsletter: boolean;
+}> = {
   id: 'form-send-external-message',
   fields: [
     {

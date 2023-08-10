@@ -1,10 +1,19 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
+import validator from 'validator';
 import { FormSchema } from '../FormSchema';
-import { CONTRACTS } from 'src/constants';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import validator from "validator";
+import { Contract, CONTRACTS, FilterConstant } from 'src/constants';
+import { Department, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 
-export const formEditUsefulInformation: FormSchema = {
+export const formEditUsefulInformation: FormSchema<{
+  email: string;
+  phone: string;
+  address: string;
+  contracts: FilterConstant<Contract>;
+  locations: FilterConstant<Department>;
+  availability: string;
+  languages: FilterConstant<string>;
+  transport: string;
+}> = {
   id: 'form-usefullinformation',
   fields: [
     {
@@ -86,7 +95,6 @@ export const formEditUsefulInformation: FormSchema = {
       component: 'text-input',
       title: 'Permis de conduire',
       maxLength: 100,
-
     },
   ],
 };

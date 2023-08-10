@@ -1,7 +1,6 @@
 import React, { Ref, useCallback, useImperativeHandle, useState } from 'react';
 import { DefaultValues, SubmitHandler, useForm } from 'react-hook-form';
 import { FormFooter } from 'src/components/forms/FormFooter/FormFooter';
-import { GenericField } from 'src/components/forms/fields/GenericField';
 import { InputsContainer } from 'src/components/forms/fields/InputsContainer';
 import { MultipleFields } from 'src/components/forms/fields/MultipleFields/MultipleFields';
 import { Heading } from 'src/components/utils/Inputs';
@@ -16,10 +15,13 @@ import {
   isFormFieldSelect,
   isFormFieldText,
   ExtractFormSchemaValidation,
+  FormField,
 } from './FormSchema';
 import { StyledForm } from './Forms.styles';
+import { GenericField } from './fields/GenericField';
 
 interface FormWithValidationProps<S extends FormSchema<AnyCantFix>> {
+  formSchema: S;
   defaultValues?: DefaultValues<ExtractFormSchemaValidation<S>>;
   onCancel?: () => void;
   onSubmit: (
@@ -27,7 +29,6 @@ interface FormWithValidationProps<S extends FormSchema<AnyCantFix>> {
     requestErrorCallback: (msg: string) => void
   ) => void;
   onError?: (values: ExtractFormSchemaValidation<S>) => void;
-  formSchema: S;
   submitText?: string;
   cancelText?: string;
   enterToSubmit?: boolean;
@@ -108,7 +109,7 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
         }}
       >
         <fieldset>
-          {fields.map((field, i) => {
+          {fields.map((field: FormField<ExtractFormSchemaValidation<S>>, i) => {
             const shouldHide = field.hide
               ? field.hide(getValues)
               : field.hidden;

@@ -1,6 +1,10 @@
 import { FormSchema } from '../FormSchema';
+import { FilterConstant } from 'src/constants';
 
-export const formEditExperience: FormSchema = {
+export const formEditExperience: FormSchema<{
+  description: string;
+  skills: FilterConstant<string>[];
+}> = {
   id: 'form-experience',
   fields: [
     {

@@ -1,6 +1,13 @@
 import { FormSchema } from '../FormSchema';
 
-export const formEditSkills: FormSchema = {
+export const formEditSkills: FormSchema<{
+  skill1: string;
+  skill2: string;
+  skill3: string;
+  skill4: string;
+  skill5: string;
+  skill6: string;
+}> = {
   id: 'form-skills',
   fields: [
     {

@@ -1,8 +1,19 @@
 import { FormSchema } from '../FormSchema';
-import { CONTRACTS } from 'src/constants';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { Contract, CONTRACTS, FilterConstant } from 'src/constants';
+import { Department, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 
-export const formAddExternalOpportunityCandidate: FormSchema = {
+export const formAddExternalOpportunityCandidate: FormSchema<{
+  title: string;
+  company: string;
+  department: FilterConstant<Department>;
+  contract: FilterConstant<Contract>;
+  recruiterFirstName: string;
+  recruiterName: string;
+  recruiterMail: string;
+  description: string;
+  link: string;
+  coachNotification: boolean;
+}> = {
   id: 'form-offer-external',
   fields: [
     {

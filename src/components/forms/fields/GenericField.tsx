@@ -11,12 +11,16 @@ import {
 import {
   ComponentException,
   ExtractFormSchemaValidation,
+  FormComponentValues,
   FormFieldInput,
   FormSchema,
+  isFormFieldCheckbox,
+  isFormFieldInput,
   isFormFieldRadio,
   isFormFieldSelect,
   isFormFieldSelectRequest,
   isFormFieldTextInput,
+  mapFieldRules,
 } from '../FormSchema';
 import {
   CheckBox,
@@ -62,12 +66,8 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
   watch,
 }: GenericFieldProps<S>) {
   const { id: formId } = formSchema;
-  const rules = field.rules?.reduce((acc, curr, index) => {
-    return {
-      ...acc,
-      [`rule${index}`]: curr.method,
-    };
-  }, {});
+
+  const rules = mapFieldRules<S, typeof field.component>(field.rules);
 
   const {
     field: { onChange, onBlur, value, name, ref },

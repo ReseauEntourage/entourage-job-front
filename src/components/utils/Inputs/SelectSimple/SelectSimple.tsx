@@ -8,8 +8,8 @@ import { useCloseOnClickOutsideComponent } from 'src/hooks/useCloseOnClickOutsid
 import { StyledSelectContainer } from './SelectSimple.styles';
 
 interface SelectProps
-  extends CommonInputProps<string | number, HTMLInputElement> {
-  options: FilterConstant<string | number>[];
+  extends CommonInputProps<string | number | boolean, HTMLInputElement> {
+  options: FilterConstant[];
 }
 
 export function SelectSimple({
@@ -27,7 +27,7 @@ export function SelectSimple({
   inputRef,
 }: SelectProps) {
   const [selectedOption, setSelectedOption] = useState<{
-    value: string | number;
+    value: string | number | boolean;
     label?: string;
   }>({ value: '' });
 
@@ -57,7 +57,8 @@ export function SelectSimple({
       )}
       <input
         type="hidden"
-        value={selectedOption.value}
+        // TODO check
+        value={selectedOption.value.toString()}
         name={name}
         id={id}
         onBlur={onBlur}
@@ -109,7 +110,7 @@ export function SelectSimple({
               }`;
 
               return (
-                <li className="option" key={option.value}>
+                <li className="option" key={option.value.toString()}>
                   <button
                     type="button"
                     data-testid={optionId}

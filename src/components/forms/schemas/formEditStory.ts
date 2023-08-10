@@ -1,6 +1,6 @@
 import { FormSchema } from '../FormSchema';
 
-export const formEditStory: FormSchema<{ story: 'textarea' }> = {
+export const formEditStory: FormSchema<{ story: string }> = {
   id: 'form-story',
   fields: [
     {

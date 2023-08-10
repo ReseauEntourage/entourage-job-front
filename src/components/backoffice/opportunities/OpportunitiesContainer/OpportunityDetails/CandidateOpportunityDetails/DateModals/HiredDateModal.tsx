@@ -23,8 +23,9 @@ export const HiredDateModal = ({
     <ModalEdit
       title="Félicitation vous avez décroché un emploi"
       formSchema={renderSimpleDatePickerField(
-        'update-to-hired-datepicker',
-        "Date d'embauche*"
+        'update-to-hired',
+        "Date d'embauche*",
+        'hireDate'
       )}
       submitText="Valider la date d'embauche"
       cancelText="Je n'ai pas encore de date d'embauche"

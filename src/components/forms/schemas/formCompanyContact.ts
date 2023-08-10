@@ -4,10 +4,23 @@ import { FormSchema } from '../FormSchema';
 import {
   COMPANY_APPROACHES_FILTERS,
   COMPANY_CONTACT_ZONES_FILTERS,
+  CompanyApproach,
   HEARD_ABOUT_FILTERS,
+  HeardAboutValue,
 } from 'src/constants';
+import { AdminZone } from 'src/constants/departements';
 
-export const formCompanyContact: FormSchema = {
+export const formCompanyContact: FormSchema<{
+  firstName: string;
+  lastName: string;
+  approach: CompanyApproach;
+  email: string;
+  phone: string;
+  company: string;
+  position: string;
+  zone: AdminZone;
+  heardAbout: HeardAboutValue;
+}> = {
   id: 'form-company-contact',
   fields: [
     {

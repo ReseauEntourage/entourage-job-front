@@ -3,11 +3,21 @@ import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import validator from 'validator';
 import { FormSchema } from '../FormSchema';
 import { SimpleLink } from 'src/components/utils';
-import { EXTERNAL_LINKS, HEARD_ABOUT_FILTERS } from 'src/constants';
+import {
+  EXTERNAL_LINKS,
+  HEARD_ABOUT_FILTERS,
+  HeardAboutValue,
+} from 'src/constants';
 
 export const formInterestLinkedOut: FormSchema<{
-  lastName: 'text-input';
-  firstName: 'text-input';
+  lastName: string;
+  firstName: string;
+  email: string;
+  phone: string;
+  structure: string;
+  message: string;
+  heardAbout: HeardAboutValue;
+  cgu: boolean;
 }> = {
   id: 'form-interest',
   fields: [

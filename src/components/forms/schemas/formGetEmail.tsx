@@ -1,10 +1,13 @@
 import React from 'react';
+import validator from 'validator';
 import { FormSchema } from '../FormSchema';
 import { SimpleLink } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
-import validator from "validator";
 
-export const formGetEmail: FormSchema = {
+export const formGetEmail: FormSchema<{
+  email: string;
+  cgu: boolean;
+}> = {
   id: 'form-get-email',
   fields: [
     {

@@ -1,8 +1,10 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import validator from 'validator';
+import { Gender } from '../../../constants/users';
 import { FormSchema } from '../FormSchema';
 import {
   BUSINESS_LINES,
+  BusinessLineValue,
   CANDIDATE_ACCOMMODATIONS_FILTERS,
   CANDIDATE_ADMINISTRATIVE_SITUATIONS_FILTERS,
   CANDIDATE_GENDERS_FILTERS,
@@ -10,10 +12,46 @@ import {
   CANDIDATE_PROFESSIONAL_SITUATIONS_FILTERS,
   CANDIDATE_RESOURCES_FILTERS,
   CANDIDATE_YES_NO_FILTERS,
+  CandidateHelpWithValue,
+  CandidateYesNoValue,
+  FilterConstant,
   HEARD_ABOUT_FILTERS,
+  HeardAboutValue,
 } from 'src/constants';
 
-export const formCandidateContact: FormSchema = {
+export const formCandidateContact: FormSchema<{
+  workerFirstName: string;
+  workerLastName: string;
+  structure: string;
+  workerPosition: string;
+  workerEmail: string;
+  workerPhone: string;
+  firstName: string;
+  lastName: string;
+  helpWith: FilterConstant<CandidateHelpWithValue>[];
+  gender: Gender;
+  birthDate: string;
+  address: string;
+  postalCode: string;
+  city: string;
+  phone: string;
+  email: string;
+  registeredUnemploymentOffice: CandidateYesNoValue;
+  administrativeSituation;
+  workingRight: CandidateYesNoValue;
+  accommodation;
+  professionalSituation;
+  resources;
+  domiciliation: CandidateYesNoValue;
+  socialSecurity: CandidateYesNoValue;
+  handicapped;
+  bankAccount;
+  businessLines: FilterConstant<BusinessLineValue>;
+  description: string;
+  heardAbout: HeardAboutValue;
+  diagnostic: string;
+  contactWithCoach: boolean;
+}> = {
   id: 'form-candidate-contact',
   fields: [
     {
@@ -56,7 +94,6 @@ export const formCandidateContact: FormSchema = {
       rules: [
         {
           method: (fieldValue) => validator.isEmail(fieldValue),
-
           message: 'Adresse e-mail invalide',
         },
       ],

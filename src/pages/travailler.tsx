@@ -87,7 +87,7 @@ const Travailler = () => {
               openModal(
                 <ModalGeneric
                   title="Merci pour votre inscription !"
-                  onClose={closeModal()}
+                  onClose={closeModal}
                   withCloseButton
                 >
                   <StyledModalContent>

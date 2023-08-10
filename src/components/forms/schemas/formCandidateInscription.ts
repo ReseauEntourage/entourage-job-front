@@ -5,14 +5,16 @@ import { Api } from 'src/api';
 import 'moment/locale/fr';
 import {
   ANTENNE_INFO,
-  CANDIDATE_YES_NO,
+  CandidateYesNo,
   CANDIDATE_YES_NO_FILTERS,
   HEARD_ABOUT_FILTERS,
 } from 'src/constants';
 import { FormSchema } from '../FormSchema';
 import validator from 'validator';
 
-export const formCandidateInscription: FormSchema = {
+export const formCandidateInscription: FormSchema<{
+
+}> = {
   id: 'form-candidate-inscription',
   fields: [
     {
@@ -66,7 +68,7 @@ export const formCandidateInscription: FormSchema = {
       fieldsToReset: ['infoCo'],
       rules: [
         {
-          method: (value) => value !== CANDIDATE_YES_NO.NO,
+          method: (value) => value !== CandidateYesNo.NO,
 
           message:
             'Vous devez avoir le droit de travailler en France pour participer au programme LinkedOut',
@@ -123,7 +125,7 @@ export const formCandidateInscription: FormSchema = {
           ],
           rules: [
             {
-              method: (value) => value !== CANDIDATE_YES_NO.NO,
+              method: (value) => value !== CandidateYesNo.NO,
 
               message:
                 'Vous devez avoir le droit de travailler en France pour participer au programme LinkedOut',
@@ -151,7 +153,7 @@ export const formCandidateInscription: FormSchema = {
           placeholder: 'Ecrivez votre prénom',
           showLabel: true,
           isRequired: true,
-                    maxLength: 80,
+          maxLength: 80,
         },
         {
           id: 'lastName',
@@ -161,7 +163,7 @@ export const formCandidateInscription: FormSchema = {
           placeholder: 'Ecrivez votre nom',
           showLabel: true,
           isRequired: true,
-                    maxLength: 80,
+          maxLength: 80,
         },
       ],
     },
@@ -180,8 +182,7 @@ export const formCandidateInscription: FormSchema = {
           isRequired: true,
           rules: [
             {
-              method: (fieldValue) =>
-                isValidPhoneNumber(fieldValue, 'FR'),
+              method: (fieldValue) => isValidPhoneNumber(fieldValue, 'FR'),
               message: 'Numéro de téléphone invalide',
             },
           ],

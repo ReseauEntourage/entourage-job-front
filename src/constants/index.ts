@@ -34,7 +34,29 @@ export const OFFER_STATUS: (FilterConstant<OfferStatus> & {
   { value: 4, label: 'Refus après entretien', color: 'danger' },
 ];
 
-export const BUSINESS_LINES = [
+export type BusinessLineValue =
+  | 'la'
+  | 'aa'
+  | 'bat'
+  | 'rh'
+  | 'cd'
+  | 'asp'
+  | 'pr'
+  | 'mi'
+  | 'art'
+  | 'tra'
+  | 'id'
+  | 'sec'
+  | 'cm'
+  | 'ca'
+  | 'aev'
+  | 'sa'
+  | 'fjr'
+  | 'sm';
+
+const BUSINESS_LINES_UNSORTED: (FilterConstant<BusinessLineValue> & {
+  prefix: string | string[];
+})[] = [
   {
     label: 'Logistique et approvisionnement',
     value: 'la',
@@ -125,14 +147,13 @@ export const BUSINESS_LINES = [
     value: 'sm',
     prefix: ['la', 'le'],
   },
-  /*  {
-    label: 'Cadre',
-    value: 'cad',
-    prefix: 'le ',
-  }, */
-].sort(({ label: labelA }, { label: labelB }) => {
-  return labelA.localeCompare(labelB);
-});
+];
+
+export const BUSINESS_LINES = BUSINESS_LINES_UNSORTED.sort(
+  ({ label: labelA }, { label: labelB }) => {
+    return labelA.localeCompare(labelB);
+  }
+) as typeof BUSINESS_LINES_UNSORTED;
 
 export const CV_STATUS = {
   Published: {
@@ -514,7 +535,7 @@ export const CONTACT_INFO = {
 
 export const INITIAL_NB_OF_CV_TO_DISPLAY = 9;
 
-export const HEARD_ABOUT = {
+export const HeardAbout = {
   COMPANY: 'company',
   ENTOURAGE: 'entourage',
   PRESS: 'press',
@@ -524,70 +545,75 @@ export const HEARD_ABOUT = {
   VOLUNTEER: 'volunteer',
   CONTACT: 'contact',
   OTHER: 'other',
-};
+} as const;
 
-export const HEARD_ABOUT_FILTERS = [
+export type HeardAboutValue = (typeof HeardAbout)[keyof typeof HeardAbout];
+
+export const HEARD_ABOUT_FILTERS: FilterConstant<HeardAboutValue>[] = [
   {
     label: 'Mon entreprise',
-    value: HEARD_ABOUT.COMPANY,
+    value: HeardAbout.COMPANY,
   },
   {
     label: 'Le réseau Entourage',
-    value: HEARD_ABOUT.ENTOURAGE,
+    value: HeardAbout.ENTOURAGE,
   },
   {
     label: 'Les médias (presse, web, TV)',
-    value: HEARD_ABOUT.PRESS,
+    value: HeardAbout.PRESS,
   },
   {
     label: 'LinkedIn',
-    value: HEARD_ABOUT.LINKEDIN,
+    value: HeardAbout.LINKEDIN,
   },
   {
     label: 'Autres réseaux (Facebook, Twitter, Instagram...)',
-    value: HEARD_ABOUT.SOCIAL,
+    value: HeardAbout.SOCIAL,
   },
   {
     label: 'Un partenariat sportif',
-    value: HEARD_ABOUT.SPORTS,
+    value: HeardAbout.SPORTS,
   },
   {
     label: 'Un site de bénévolat',
-    value: HEARD_ABOUT.VOLUNTEER,
+    value: HeardAbout.VOLUNTEER,
   },
   {
     label: 'Le bouche à oreille',
-    value: HEARD_ABOUT.CONTACT,
+    value: HeardAbout.CONTACT,
   },
   {
     label: 'Autre',
-    value: HEARD_ABOUT.OTHER,
+    value: HeardAbout.OTHER,
   },
 ];
 
-export const COMPANY_APPROACHES = {
+export const CompanyApproaches = {
   RECRUITMENT: 'recruitment',
   INFORMATION: 'information',
   MOBILIZATION: 'mobilization',
   DONATION: 'donation',
-};
+} as const;
 
-export const COMPANY_APPROACHES_FILTERS = [
+export type CompanyApproach =
+  (typeof CompanyApproaches)[keyof typeof CompanyApproaches];
+
+export const COMPANY_APPROACHES_FILTERS: FilterConstant<CompanyApproach>[] = [
   {
     label: 'Recruter inclusif',
-    value: COMPANY_APPROACHES.RECRUITMENT,
+    value: CompanyApproaches.RECRUITMENT,
   },
   {
     label: "Avoir plus d'informations sur LinkedOut",
-    value: COMPANY_APPROACHES.INFORMATION,
+    value: CompanyApproaches.INFORMATION,
   },
   {
     label: 'Mobiliser mes collaborateurs',
-    value: COMPANY_APPROACHES.MOBILIZATION,
+    value: CompanyApproaches.MOBILIZATION,
   },
   {
     label: 'Soutenir le projet (mécénat)',
-    value: COMPANY_APPROACHES.DONATION,
+    value: CompanyApproaches.DONATION,
   },
 ];
 
@@ -601,41 +627,45 @@ export const COMPANY_CONTACT_ZONES_FILTERS = [
   { value: ADMIN_ZONES.HZ, label: 'Autre région' },
 ];
 
-export const CANDIDATE_HELP_WITH = {
+export const CandidateHelpWith = {
   WORK: 'work',
   SOCIAL: 'social',
   ACCOMMODATION: 'accommodation',
   HEALTH: 'health',
   RIGHTS: 'rights',
   OTHER: 'other',
-};
+} as const;
 
-export const CANDIDATE_HELP_WITH_FILTERS = [
-  {
-    label: 'Emploi',
-    value: CANDIDATE_HELP_WITH.WORK,
-  },
-  {
-    label: 'Social',
-    value: CANDIDATE_HELP_WITH.SOCIAL,
-  },
-  {
-    label: 'Logement',
-    value: CANDIDATE_HELP_WITH.ACCOMMODATION,
-  },
-  {
-    label: 'Santé',
-    value: CANDIDATE_HELP_WITH.HEALTH,
-  },
-  {
-    label: 'Accès aux droits',
-    value: CANDIDATE_HELP_WITH.RIGHTS,
-  },
-  {
-    label: 'Autre',
-    value: CANDIDATE_HELP_WITH.OTHER,
-  },
-];
+export type CandidateHelpWithValue =
+  (typeof CandidateHelpWith)[keyof typeof CandidateHelpWith];
+
+export const CANDIDATE_HELP_WITH_FILTERS: FilterConstant<CandidateHelpWithValue>[] =
+  [
+    {
+      label: 'Emploi',
+      value: CandidateHelpWith.WORK,
+    },
+    {
+      label: 'Social',
+      value: CandidateHelpWith.SOCIAL,
+    },
+    {
+      label: 'Logement',
+      value: CandidateHelpWith.ACCOMMODATION,
+    },
+    {
+      label: 'Santé',
+      value: CandidateHelpWith.HEALTH,
+    },
+    {
+      label: 'Accès aux droits',
+      value: CandidateHelpWith.RIGHTS,
+    },
+    {
+      label: 'Autre',
+      value: CandidateHelpWith.OTHER,
+    },
+  ];
 
 export const CANDIDATE_GENDERS = {
   MALE: 'male',
@@ -818,18 +848,20 @@ export const CANDIDATE_RESOURCES_FILTERS = [
   },
 ];
 
-export const CANDIDATE_YES_NO = {
+export const CandidateYesNo = {
   YES: 'yes',
   NO: 'no',
-};
+} as const;
 
-export const CANDIDATE_YES_NO_FILTERS = [
+export type CandidateYesNoValue =
+  (typeof CandidateYesNo)[keyof typeof CandidateYesNo];
+export const CANDIDATE_YES_NO_FILTERS: FilterConstant<CandidateYesNoValue>[] = [
   {
-    value: CANDIDATE_YES_NO.YES,
+    value: CandidateYesNo.YES,
     label: 'Oui',
   },
   {
-    value: CANDIDATE_YES_NO.NO,
+    value: CandidateYesNo.NO,
     label: 'Non',
   },
 ];

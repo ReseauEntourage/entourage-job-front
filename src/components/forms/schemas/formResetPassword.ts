@@ -3,8 +3,7 @@ import { FormSchema } from '../FormSchema';
 
 export const formResetPassword: FormSchema<{
   newPassword: string;
-  confirmPassword: string;
-  test: string;
+  confirmPassword: boolean;
 }> = {
   id: 'form-reset-pwd',
   fields: [

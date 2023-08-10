@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { DefaultValues } from 'react-hook-form';
+import { ExtractFormSchemaValidation } from '../forms/FormSchema';
 import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
 import { formEditCareerPath } from 'src/components/forms/schemas/formEditCareerPath';
 import { openModal } from 'src/components/modals/Modal';
@@ -9,6 +11,7 @@ import {
   AMBITIONS_PREFIXES,
   AmbitionsPrefixesType,
   BUSINESS_LINES,
+  BusinessLineValue,
 } from 'src/constants';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
 
@@ -20,7 +23,7 @@ interface CareerPaths {
   }[];
   businessLines: {
     order: number;
-    name: string;
+    name: BusinessLineValue;
   }[];
 }
 
@@ -41,7 +44,9 @@ export const CVEditCareerPath = ({
       ? sortByOrder(businessLines)
       : null;
 
-  const defaultValues = {
+  const defaultValues: DefaultValues<
+    ExtractFormSchemaValidation<typeof formEditCareerPath>
+  > = {
     ...sortedAmbitions?.reduce((acc, curr) => {
       return {
         ...acc,
@@ -103,15 +108,15 @@ export const CVEditCareerPath = ({
                       ];
                     }
                     const newBusinessLines = [
-                      { name: businessLine0, order: 0 },
+                      { name: businessLine0.value, order: 0 },
                     ];
 
-                    await onChange({
+                    onChange({
                       businessLines: businessLine1
                         ? [
                             ...newBusinessLines,
                             {
-                              name: businessLine1,
+                              name: businessLine1.value,
                               order: 1,
                             },
                           ]

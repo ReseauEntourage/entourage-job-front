@@ -1,9 +1,17 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
+import validator from 'validator';
 import { FormSchema } from '../FormSchema';
 import { ADMIN_ZONES_FILTERS } from 'src/constants/departements';
-import validator from "validator";
 
-export const formAddOrganization: FormSchema = {
+export const formAddOrganization: FormSchema<{
+  name: string;
+  address: string;
+  zone: string;
+  referentFirstName: string;
+  referentLastName: string;
+  referentPhone: string;
+  referentMail: string;
+}> = {
   id: 'form-add-organization',
   fields: [
     {

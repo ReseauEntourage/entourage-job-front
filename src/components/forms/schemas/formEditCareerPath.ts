@@ -1,7 +1,16 @@
 import { FormSchema } from '../FormSchema';
-import { BUSINESS_LINES } from 'src/constants';
+import {
+  BUSINESS_LINES,
+  BusinessLineValue,
+  FilterConstant,
+} from 'src/constants';
 
-export const formEditCareerPath: FormSchema = {
+export const formEditCareerPath: FormSchema<{
+  businessLine0: FilterConstant<BusinessLineValue>;
+  ambition0: string;
+  businessLine1: FilterConstant<BusinessLineValue>;
+  ambition1: string;
+}> = {
   id: 'form-career-path',
   fields: [
     {

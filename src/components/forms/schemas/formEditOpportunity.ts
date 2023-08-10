@@ -3,12 +3,12 @@ import validator from 'validator';
 import isEmail from 'validator/lib/isEmail';
 import { FormSchema } from '../FormSchema';
 import { Api } from 'src/api';
-import { BUSINESS_LINES, CONTRACTS, FilterConstant } from 'src/constants';
+import { BUSINESS_LINES, CONTRACTS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { USER_ROLES } from 'src/constants/users';
 import { findConstantFromValue } from 'src/utils';
 
-export const formEditOpportunity: FormSchema<{ isPublic: 'checkbox' }> = {
+export const formEditOpportunity: FormSchema<{ isPublic: boolean }> = {
   id: 'form-offer',
   fields: [
     {

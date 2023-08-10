@@ -47,7 +47,9 @@ export function MultipleFields<S extends FormSchema<AnyCantFix>>({
   resetField,
   watch,
 }: MultipleFieldsProps<S>) {
-  const { fields, append, remove } = useFieldArray({ control, name });
+  const { fields, append, remove } = useFieldArray<
+    ExtractFormSchemaValidation<S>
+  >({ control, name });
 
   // To add the first empty one
   useMount(() =>

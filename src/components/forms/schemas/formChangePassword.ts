@@ -12,7 +12,7 @@ export const formChangePassword: FormSchema<{
       id: 'oldPassword',
       name: 'oldPassword',
       type: 'password',
-      component: 'checkbox',
+      component: 'text-input',
       title: 'Ancien mot de passe*',
       isRequired: true,
     },

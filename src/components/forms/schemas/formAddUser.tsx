@@ -2,7 +2,17 @@ import React from 'react';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import validator from 'validator';
 import PlusFilledIcon from 'assets/custom/icons/plus-filled.svg';
-import { FormField, FormSchema } from '../FormSchema';
+import {
+  ExtractFormSchemaValidation,
+  FormField,
+  FormSchema,
+  isFormFieldGroup,
+  isFormFieldMultiple,
+  isFormFieldSelectRequest,
+  isFormFieldText,
+  isFormFieldTextInput,
+} from '../FormSchema';
+import { FormWithValidation } from '../FormWithValidation';
 import { Api } from 'src/api';
 import { FilterConstant } from 'src/constants';
 import { ADMIN_ZONES_FILTERS, AdminZone } from 'src/constants/departements';
@@ -13,8 +23,9 @@ import {
   USER_ROLES_FILTERS,
   RELATED_ROLES,
   EXTERNAL_USER_ROLES,
-  UserRole, Gender
-} from "src/constants/users";
+  UserRole,
+  Gender,
+} from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils/Finding';
 import { formAddOrganization } from './formAddOrganization';
 
@@ -38,23 +49,35 @@ const hideMethod = (getValue) => {
     organizationId === CREATE_NEW_ORGANIZATION_VALUE
   );
 };
-
-const addHideMethodAndSuffixToAllFields = (field) => {
+type UpdatedOrganizationSchema = {
+  nameOrganization: string;
+  addressOrganization: string;
+  zoneOrganization: string;
+  referentFirstNameOrganization: string;
+  referentLastNameOrganization: string;
+  referentPhoneOrganization: string;
+  referentMailOrganization: string;
+};
+const addHideMethodAndSuffixToAllFields = (
+  field: FormField<ExtractFormSchemaValidation<typeof formAddOrganization>>
+): FormField<UpdatedOrganizationSchema> => {
   const fieldToReturn = {
     ...field,
-    id: field.id ? `${field.id}Organization` : field.id,
-    name: field.name ? `${field.name}Organization` : field.name,
+    id: `${field.id}Organization`,
+    name: `${field.name}Organization`,
     hide: hideMethod,
   };
 
-  if (field.fields) {
+  if (isFormFieldMultiple(field) || isFormFieldGroup(field)) {
     return {
       ...fieldToReturn,
-      fields: field.fields.map(addHideMethodAndSuffixToAllFields),
+      fields: field.fields.map((childField) =>
+        addHideMethodAndSuffixToAllFields(childField)
+      ),
     };
   }
 
-  return fieldToReturn;
+  return fieldToReturn as FormField<UpdatedOrganizationSchema>;
 };
 
 const mutatedAddOrganizationFormFields = formAddOrganization.fields.map(
@@ -65,15 +88,17 @@ const organizationFieldsNames = mutatedAddOrganizationFormFields.map(
   ({ name }) => name
 );
 
-export const formAddUser: FormSchema<{
-  firstName: string;
-  lastName: string;
-  role: UserRole;
-  gender: Gender;
-  zone: AdminZone;
-  phone: string;
-  organizationId: FilterConstant<string>;
-}> = {
+export const formAddUser: FormSchema<
+  {
+    firstName: string;
+    lastName: string;
+    role: UserRole;
+    gender: Gender;
+    zone: AdminZone;
+    phone: string;
+    organizationId: FilterConstant<string>;
+  } & UpdatedOrganizationSchema
+> = {
   id: 'form-add-user',
   fields: [
     {

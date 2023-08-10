@@ -11,6 +11,8 @@ export const formPersonalData: FormSchema<{
   address: string;
   zone: AdminZone;
   adminRole: AdminRole;
+  newEmail0: string;
+  newEmail1: string;
 }> = {
   id: 'form-personal-data',
   fields: [

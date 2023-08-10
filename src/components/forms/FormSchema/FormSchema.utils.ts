@@ -1,7 +1,13 @@
+import { Path } from 'react-hook-form';
+import { FieldPathValue } from 'react-hook-form/dist/types/path';
+import { Validate } from 'react-hook-form/dist/types/validator';
+import { AnyCantFix } from 'src/utils/Types';
 import {
   CheckBoxComponent,
   CheckBoxComponents,
+  ExtractFormSchemaValidation,
   FormComponent,
+  FormComponentValues,
   FormField,
   FormFieldCheckBox,
   FormFieldGroup,
@@ -11,13 +17,16 @@ import {
   FormFieldSelectRequest,
   FormFieldText,
   FormFieldTextInput,
+  FormSchema,
   FormSchemaValidation,
   GroupComponent,
   GroupComponents,
+  InputComponent,
   MultipleComponent,
   MultipleComponents,
   RadioComponent,
   RadioComponents,
+  Rule,
   SelectComponent,
   SelectComponents,
   SelectRequestComponent,
@@ -27,6 +36,44 @@ import {
   TextInputComponent,
   TextInputComponents,
 } from './FormSchema.types';
+
+export function mapFieldRules<
+  S extends FormSchema<AnyCantFix>,
+  T extends InputComponent
+>(
+  fieldRules: Rule<ExtractFormSchemaValidation<S>, T, boolean>[]
+): Record<
+  string,
+  Validate<
+    FieldPathValue<
+      ExtractFormSchemaValidation<S>,
+      Path<ExtractFormSchemaValidation<S>>
+    >,
+    ExtractFormSchemaValidation<S>
+  >
+> {
+  let rules = {} as Record<
+    string,
+    Validate<
+      FieldPathValue<
+        ExtractFormSchemaValidation<S>,
+        Path<ExtractFormSchemaValidation<S>>
+      >,
+      ExtractFormSchemaValidation<S>
+    >
+  >;
+  for (let i = 0; i <= fieldRules.length; i += 1) {
+    rules = {
+      ...rules,
+      [`rule${i}`]: (
+        fieldValue: FormComponentValues<boolean>[T],
+        fieldValues: ExtractFormSchemaValidation<S>
+      ) =>
+        fieldRules[i].method(fieldValue, fieldValues) || fieldRules[i].message,
+    };
+  }
+  return rules;
+}
 
 export function isFormFieldTextInput<S extends FormSchemaValidation>(
   field: FormField<S>
@@ -57,6 +104,23 @@ export function isFormFieldSelectRequest<S extends FormSchemaValidation>(
 ): field is FormFieldSelectRequest<S> {
   return SelectRequestComponents.includes(
     field.component as SelectRequestComponent
+  );
+}
+
+export function isFormFieldInput<S extends FormSchemaValidation>(
+  field: FormField<S>
+): field is
+  | FormFieldSelectRequest<S>
+  | FormFieldRadio<S>
+  | FormFieldTextInput<S>
+  | FormFieldCheckBox<S>
+  | FormFieldSelect<S> {
+  return (
+    isFormFieldTextInput(field) ||
+    isFormFieldCheckbox(field) ||
+    isFormFieldSelect(field) ||
+    isFormFieldRadio(field) ||
+    isFormFieldSelectRequest(field)
   );
 }
 
