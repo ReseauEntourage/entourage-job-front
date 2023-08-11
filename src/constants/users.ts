@@ -1,3 +1,5 @@
+import { FilterConstant } from "./utils";
+
 export const USER_ROLES = {
   COACH: 'Coach',
   COACH_EXTERNAL: 'Coach externe',
@@ -7,8 +9,7 @@ export const USER_ROLES = {
 } as const;
 
 export type UserRole = (typeof USER_ROLES)[keyof typeof USER_ROLES];
-
-export const USER_ROLES_FILTERS = [
+export const USER_ROLES_FILTERS: FilterConstant<UserRole>[] = [
   { value: USER_ROLES.CANDIDATE, label: `${USER_ROLES.CANDIDATE} LKO` },
   {
     value: USER_ROLES.CANDIDATE_EXTERNAL,
@@ -17,7 +18,7 @@ export const USER_ROLES_FILTERS = [
   { value: USER_ROLES.COACH, label: `${USER_ROLES.COACH} LKO` },
   { value: USER_ROLES.COACH_EXTERNAL, label: USER_ROLES.COACH_EXTERNAL },
   { value: USER_ROLES.ADMIN, label: USER_ROLES.ADMIN },
-] as const;
+];
 
 export const RELATED_ROLES = {
   [USER_ROLES.CANDIDATE]: USER_ROLES.COACH,

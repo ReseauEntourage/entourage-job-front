@@ -2,8 +2,8 @@ import { FormSchema } from '../FormSchema';
 import {
   BUSINESS_LINES,
   BusinessLineValue,
-  FilterConstant,
 } from 'src/constants';
+import { FilterConstant } from 'src/constants/utils';
 
 export const formEditCareerPath: FormSchema<{
   businessLine0: FilterConstant<BusinessLineValue>;

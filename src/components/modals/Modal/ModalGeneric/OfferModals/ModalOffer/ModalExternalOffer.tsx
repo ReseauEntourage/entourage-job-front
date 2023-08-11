@@ -19,15 +19,14 @@ export const ModalExternalOffer = ({
       submitText="Envoyer"
       formSchema={formAddExternalOpportunityCandidate}
       defaultValues={{
-        candidateId,
         coachNotification: true,
       }}
       onSubmit={async (fields, closeModal) => {
         try {
           await Api.postExternalOpportunity({
             ...fields,
-            status: parseInt(fields.status, 10),
             candidateId,
+            department: fields.department.value,
             date: moment().toISOString(),
           });
           closeModal();

@@ -50,7 +50,7 @@ export const CVSendMessage = ({
               } conseiller dans sa recherche d'emploi`}
               submitText="Envoyer"
               formSchema={formSendExternalMessage}
-              onSubmit={async ({ optIn, ...fields }, closeModal) => {
+              onSubmit={async ({ optInContact, ...fields }, closeModal) => {
                 gaEvent(GA_TAGS.PAGE_CV_ENVOYER_CONTACTEZ_MOI_CLIC);
                 fbEvent(FB_TAGS.MESSAGE_SEND);
                 try {

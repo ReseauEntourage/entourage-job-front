@@ -1,5 +1,5 @@
 import { FormSchema } from '../FormSchema';
-import { FilterConstant } from 'src/constants';
+import { FilterConstant } from 'src/constants/utils';
 
 export const formEditExperience: FormSchema<{
   description: string;

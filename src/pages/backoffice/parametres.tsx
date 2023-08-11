@@ -285,7 +285,7 @@ const Parametres = () => {
                             defaultValues={{
                               firstName: userData.firstName,
                               lastName: userData.lastName,
-                              gender: userData && userData.gender.toString(),
+                              gender: userData.gender,
                               phone: userData.phone,
                               address: userData.address,
                               zone: userData.zone,

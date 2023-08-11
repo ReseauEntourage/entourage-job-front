@@ -1,10 +1,11 @@
-import { FormSchema } from '../FormSchema';
+import { Path } from 'react-hook-form';
+import { FormSchema, FormSchemaValidation } from '../FormSchema';
 
-export function renderSimpleDatePickerField<I extends string>(
+export function renderSimpleDatePickerField<V extends FormSchemaValidation>(
   formId: string,
   title: string,
-  inputId: I
-): FormSchema<{ [K in I]: string }> {
+  inputId: Path<V>
+): FormSchema<V> {
   return {
     id: formId,
     fields: [

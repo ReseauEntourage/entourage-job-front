@@ -1,63 +1,63 @@
+import _ from 'lodash';
 import moment from 'moment';
 import React, {
   /* memo, */ useCallback,
+  useEffect,
+  useMemo,
   /* useEffect, */ useState,
 } from 'react';
+import { DefaultValues } from 'react-hook-form';
 import UIkit from 'uikit';
 
 import { Api } from 'src/api';
-import { formEditOpportunity as defaultSchema } from 'src/components/forms/schemas/formEditOpportunity';
+import {
+  ExtractFormSchemaValidation,
+  FormSchema,
+} from 'src/components/forms/FormSchema';
+import {
+  formAddOpportunity,
+  formAddOpportunityAsAdmin,
+} from 'src/components/forms/schemas/formAddOpportunity';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { openModal } from 'src/components/modals/Modal/openModal';
 import { BUSINESS_LINES } from 'src/constants';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { useNewsletterTracking } from 'src/hooks/useNewsletterTracking';
+import { usePrevious } from 'src/hooks/utils';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
 import { findConstantFromValue, getValueFromFormField } from 'src/utils';
-import { AnyToFix } from 'src/utils/Types';
+import { AnyCantFix } from 'src/utils/Types';
 
-interface PostOpportunityModalProps {
+interface PostOpportunityModalProps<S extends FormSchema<AnyCantFix>> {
   modalTitle: string;
   modalDesc: string | JSX.Element;
   isAdmin?: boolean;
-  candidateId?: string;
   callback?: () => void;
-  defaultValues: AnyToFix; // to be typed
-  schema?: AnyToFix; // to be typed
+  formSchema: S;
+  defaultValues?: DefaultValues<ExtractFormSchemaValidation<S>>;
 }
-
-export const PostOpportunityModal = ({
+export function PostOpportunityModal<
+  S extends typeof formAddOpportunity | typeof formAddOpportunityAsAdmin
+>({
   modalTitle,
   modalDesc,
   isAdmin = false,
-  candidateId,
   callback,
-  defaultValues = {},
-  schema = defaultSchema,
-}: PostOpportunityModalProps) => {
+  defaultValues,
+  formSchema,
+}: PostOpportunityModalProps<S>) {
   const [lastFilledForm, setLastFilledForm] = useState({});
-  // const prevLastFilledForm = usePrevious(lastFilledForm);
+  const prevLastFilledForm = usePrevious(lastFilledForm);
   const newsletterParams = useNewsletterTracking();
 
-  const mutatedDefaultValue = {
-    ...defaultValues,
-    candidatesIds: defaultValues.candidat
-      ? [
-          {
-            label: `${defaultValues.candidat.firstName} ${defaultValues.candidat.lastName}`,
-            value: candidateId,
-          },
-        ]
-      : [],
-    businessLines: defaultValues.businessLines
-      ? defaultValues.businessLines.map((businessLine) => {
-          return findConstantFromValue(businessLine, BUSINESS_LINES);
-        })
-      : [],
-  };
-
   const postOpportunity = useCallback(
-    async (fields, closeModal, adminCallback) => {
+    async (
+      fields /* : ExtractFormSchemaValidation<S>, */,
+      closeModal,
+      adminCallback
+    ) => {
+      // TODO Type
       const { openNewForm, ...opportunity } = fields;
       const candidatesIds = opportunity.candidatesIds
         ? opportunity.candidatesIds.map((id) => {
@@ -131,27 +131,18 @@ export const PostOpportunityModal = ({
     [isAdmin, newsletterParams]
   );
 
-  // useEffect(() => {
-  //     if (!_.isEmpty(lastFilledForm) && lastFilledForm !== prevLastFilledForm) {
-  //       setTimeout(() => {
-  //         openModal(<PostOpportunityModal />);
-  //       }, 1000);
-  //     }
-  //   }, [lastFilledForm, PostOpportunityModal, prevLastFilledForm]);
-
-  return (
-    <ModalEdit
-      title={modalTitle}
-      description={modalDesc}
-      submitText={isAdmin ? 'Valider' : 'Envoyer'}
-      defaultValues={{
-        ...mutatedDefaultValue,
+  const modalProps = useMemo(() => {
+    return {
+      title: modalTitle,
+      description: modalDesc,
+      submitText: isAdmin ? 'Valider' : 'Envoyer',
+      defaultValues: {
+        ...defaultValues,
         ...lastFilledForm,
-        candidatesIds: mutatedDefaultValue.candidatesIds,
         shouldSendNotifications: true,
-      }}
-      formSchema={schema}
-      onError={async (fields) => {
+      },
+      formSchema,
+      onError: (fields) => {
         if (!isAdmin) {
           if (fields.isPublic) {
             gaEvent(GA_TAGS.POPUP_OFFRE_ENVOYER_OFFRE_GENERALE_INVALIDE);
@@ -161,8 +152,8 @@ export const PostOpportunityModal = ({
             gaEvent(GA_TAGS.POPUP_OFFRE_ENVOYER_OFFRE_UNIQUE_INVALIDE);
           }
         }
-      }}
-      onSubmit={async (fields, closeModal) => {
+      },
+      onSubmit: async (fields, closeModal) => {
         await postOpportunity(
           isAdmin
             ? {
@@ -173,7 +164,26 @@ export const PostOpportunityModal = ({
           closeModal,
           callback
         );
-      }}
-    />
-  );
-};
+      },
+    };
+  }, [
+    callback,
+    defaultValues,
+    formSchema,
+    isAdmin,
+    lastFilledForm,
+    modalDesc,
+    modalTitle,
+    postOpportunity,
+  ]);
+
+  useEffect(() => {
+    if (!_.isEmpty(lastFilledForm) && lastFilledForm !== prevLastFilledForm) {
+      setTimeout(() => {
+        openModal(<ModalEdit {...modalProps} />);
+      }, 1000);
+    }
+  }, [lastFilledForm, modalProps, prevLastFilledForm]);
+
+  return <ModalEdit {...modalProps} />;
+}

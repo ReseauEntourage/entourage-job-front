@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import { FilterConstant } from 'src/constants';
 import { asyncTimeout } from 'src/utils/asyncTimeout';
 import { SelectAsync } from './SelectAsync';
+import { FilterConstant } from "../../../../../constants/utils";
 
 const meta = {
   title: 'SelectAsync',

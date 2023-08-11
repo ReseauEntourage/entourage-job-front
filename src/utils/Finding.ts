@@ -1,11 +1,12 @@
 import _ from 'lodash';
 import { UserWithUserCandidate } from 'src/api/types';
-import { FilterConstant, OFFER_STATUS } from 'src/constants';
+import { OFFER_STATUS } from 'src/constants';
 import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
   UserRole,
 } from 'src/constants/users';
+import { FilterConstant } from 'src/constants/utils';
 
 export function findOfferStatus(status, isPublic, isRecommended) {
   const currentStatus = OFFER_STATUS.find((oStatus) => {
@@ -52,9 +53,10 @@ export function findConstantFromValue<T extends FilterConstant>(
   );
 }
 
-export function getValueFromFormField(
-  fieldValue: FilterConstant | FilterConstant[]
+export function getValueFromFormField<T extends string | number | boolean>(
+  fieldValue: FilterConstant<T> | FilterConstant<T>[]
 ) {
+  // TODO GENERIC TYPE
   if (_.isArray(fieldValue)) {
     if (
       _.every(fieldValue, (fieldVal) => {

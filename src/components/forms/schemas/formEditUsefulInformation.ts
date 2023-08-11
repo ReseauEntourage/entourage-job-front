@@ -1,8 +1,9 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import validator from 'validator';
 import { FormSchema } from '../FormSchema';
-import { Contract, CONTRACTS, FilterConstant } from 'src/constants';
+import { Contract, CONTRACTS } from 'src/constants';
 import { Department, DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { FilterConstant } from 'src/constants/utils';
 
 export const formEditUsefulInformation: FormSchema<{
   email: string;

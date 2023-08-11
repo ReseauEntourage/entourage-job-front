@@ -4,9 +4,11 @@ import {
   ExternalMessageContactType,
   Contract as ContractValue,
   AmbitionsPrefixesType,
+  BusinessLineValue,
+  ExternalOfferOrigin,
 } from 'src/constants';
-import { AdminZone } from 'src/constants/departements';
-import { AdminRole, UserRole } from 'src/constants/users';
+import { AdminZone, Department } from 'src/constants/departements';
+import { AdminRole, Gender, UserRole } from 'src/constants/users';
 
 export type SocialMedia = 'facebook' | 'linkedin' | 'twitter';
 
@@ -67,10 +69,10 @@ export type User = {
   lastName: string;
   email: string;
   role: UserRole;
-  adminRole: string;
+  adminRole: AdminRole;
   password: string;
   salt: string;
-  gender: number;
+  gender: Gender;
   phone: string;
   address: string;
   lastConnection: Date;
@@ -95,7 +97,7 @@ export interface CV {
       phone: string;
       address: string;
       zone: string;
-      gender: number;
+      gender: Gender;
     };
   };
   catchphrase: string;
@@ -115,7 +117,7 @@ export interface CV {
     prefix: AmbitionsPrefixesType;
   }[];
   businessLines: {
-    name: string;
+    name: BusinessLineValue;
     order: number;
   }[];
   languages: {
@@ -167,7 +169,7 @@ export type UserDto = {
   firstName: string;
   lastName: string;
   role: UserRole;
-  gender: 0 | 1;
+  gender: Gender;
   zone: AdminZone;
   phone: string;
   userToLinkId: string | string[];
@@ -195,7 +197,7 @@ export type Opportunity = {
   isArchived: boolean;
   isExternal: boolean;
   link: string;
-  externalOrigin: string;
+  externalOrigin: ExternalOfferOrigin;
   company: string;
   recruiterName: string;
   recruiterFirstName: string;
@@ -233,6 +235,52 @@ export type Opportunity = {
   createdAt: string;
 };
 
+/*
+type OpportunityDto = {
+  'title': string,
+  'isPublic': boolean,
+  'isValidated',
+  'isArchived',
+  'isExternal',
+  'link',
+  'externalOrigin',
+  'company',
+  'recruiterName',
+  'recruiterFirstName',
+  'recruiterMail',
+  'contactMail',
+  'recruiterPosition',
+  'recruiterPhone',
+  'date',
+  'address',
+  'description',
+  'companyDescription',
+  'skills',
+  'prerequisites',
+  'department',
+  'contract',
+  'startOfContract',
+  'endOfContract',
+  'isPartTime',
+  'numberOfPositions',
+  'beContacted',
+  'message',
+  'driversLicense',
+  'workingHours',
+  'salary',
+  'otherInfo',
+  'businessLines',
+  candidatesIds
+  isAdmin
+  shouldSendNotifications
+  isCopy
+  locations
+  visit
+  visitor
+  urlParams
+}
+*/
+
 export type Skill = {
   id: string;
   name: string;
@@ -267,7 +315,7 @@ export interface OpportunityUser {
   createdAt: string;
   events: Event[];
   id: string;
-  note: [];
+  note: string;
   recommended: boolean;
   seen: boolean;
   status: number;
@@ -290,22 +338,22 @@ export type ExternalOpportunity = {
   title: string;
   company: string;
   contract: ContractValue;
-  startOfContract: string;
-  endOfContract: string;
-  isPartTime: string;
-  businessLines: { name: string; order: string }[];
-  department: string;
+  startOfContract?: string;
+  endOfContract?: string;
+  isPartTime?: string;
+  businessLines?: { name: string; order: string }[];
+  department: Department;
   link: string;
   description: string;
-  externalOrigin: string;
+  externalOrigin?: ExternalOfferOrigin;
   date: string;
   candidateId: string;
-  status: string;
+  status?: string;
 };
 
 export type OpportunityUserEvent = {
-  startDate: Date;
-  endDate?: Date;
+  startDate: string;
+  endDate?: string;
   type: string;
   contract: { name: ContractValue };
 };
@@ -354,7 +402,7 @@ export type ContactCandidate = {
   firstName: string;
   lastName: string;
   helpWith: string[];
-  gender: string;
+  gender: Gender;
   birthDate?: Date;
   address?: string;
   postalCode: string;

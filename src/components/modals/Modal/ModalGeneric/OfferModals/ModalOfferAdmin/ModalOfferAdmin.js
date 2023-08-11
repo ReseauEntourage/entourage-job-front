@@ -3,11 +3,8 @@ import React from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
-import { formEditExternalOpportunity } from 'src/components/forms/schemas/formEditExternalOpportunity';
-import {
-  formEditOpportunity,
-  adminMutations,
-} from 'src/components/forms/schemas/formEditOpportunity';
+import { formEditExternalOpportunityAsAdmin } from 'src/components/forms/schemas/formEditExternalOpportunity';
+import { formEditOpportunity } from 'src/components/forms/schemas/formEditOpportunity';
 import { useModalContext } from 'src/components/modals/Modal';
 import { ModalOfferBase } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOfferBase';
 import { ModalOfferInfo } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/ModalOfferInfo';
@@ -71,100 +68,6 @@ export const ModalOfferAdmin = ({
   const { onClose } = useModalContext();
   const { loading, setLoading, isEditing, setIsEditing, offer, setOffer } =
     useModalOffer(currentOffer);
-
-  // desactivation du champ de disclaimer
-  const mutatedSchema = mutateFormSchema(formEditOpportunity, [
-    {
-      fieldId: 'shouldSendNotifications',
-      props: [
-        {
-          propName: 'hidden',
-          value: !offer.isValidated,
-        },
-        {
-          propName: 'disabled',
-          value: !offer.isValidated,
-        },
-      ],
-    },
-    {
-      fieldId: 'disclaimer',
-      props: [
-        {
-          propName: 'hidden',
-          value: true,
-        },
-      ],
-    },
-    {
-      fieldId: 'openNewForm',
-      props: [
-        {
-          propName: 'hidden',
-          value: true,
-        },
-        {
-          propName: 'disabled',
-          value: true,
-        },
-      ],
-    },
-    {
-      fieldId: 'locations',
-      props: [
-        {
-          propName: 'component',
-          value: 'fieldgroup',
-        },
-      ],
-    },
-    {
-      fieldId: 'startEndContract',
-      props: [
-        {
-          propName: 'hidden',
-          value: false,
-        },
-        {
-          propName: 'disabled',
-          value: false,
-        },
-      ],
-    },
-    ...adminMutations,
-  ]);
-
-  const mutatedExternalOfferSchema = mutateFormSchema(
-    formEditExternalOpportunity,
-    [
-      {
-        fieldId: 'businessLines',
-        props: [
-          {
-            propName: 'hidden',
-            value: false,
-          },
-          {
-            propName: 'disabled',
-            value: false,
-          },
-        ],
-      },
-      {
-        fieldId: 'candidateStatus',
-        props: [
-          {
-            propName: 'hidden',
-            value: true,
-          },
-          {
-            propName: 'disabled',
-            value: true,
-          },
-        ],
-      },
-    ]
-  );
 
   const sortedBusinessLines =
     offer.businessLines && offer.businessLines.length > 0
@@ -263,7 +166,7 @@ export const ModalOfferAdmin = ({
           <h3>Modification de l&apos;offre d&apos;emploi</h3>
           {offer.isExternal ? (
             <FormWithValidation
-              formSchema={mutatedExternalOfferSchema}
+              formSchema={formEditExternalOpportunityAsAdmin}
               defaultValues={{
                 ...offer,
                 candidateId: offer.opportunityUsers[0]?.UserId,
@@ -298,7 +201,7 @@ export const ModalOfferAdmin = ({
             />
           ) : (
             <FormWithValidation
-              formSchema={mutatedSchema}
+              formSchema={formEditOpportunity}
               defaultValues={{
                 ...offer,
                 candidatesIds: getCandidatesToShowInInput(offer),

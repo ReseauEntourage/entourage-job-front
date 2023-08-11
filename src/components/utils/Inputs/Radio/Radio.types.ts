@@ -1,5 +1,5 @@
 import { CommonInputProps } from '../Inputs.types';
-import { FilterConstant } from 'src/constants';
+import { FilterConstant } from 'src/constants/utils';
 
 export interface RadioTypes extends FilterConstant<string> {
   inputId: string;

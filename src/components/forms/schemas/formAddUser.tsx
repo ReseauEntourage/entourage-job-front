@@ -2,19 +2,8 @@ import React from 'react';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import validator from 'validator';
 import PlusFilledIcon from 'assets/custom/icons/plus-filled.svg';
-import {
-  ExtractFormSchemaValidation,
-  FormField,
-  FormSchema,
-  isFormFieldGroup,
-  isFormFieldMultiple,
-  isFormFieldSelectRequest,
-  isFormFieldText,
-  isFormFieldTextInput,
-} from '../FormSchema';
-import { FormWithValidation } from '../FormWithValidation';
+import { FormSchema, GetValueType } from '../FormSchema';
 import { Api } from 'src/api';
-import { FilterConstant } from 'src/constants';
 import { ADMIN_ZONES_FILTERS, AdminZone } from 'src/constants/departements';
 import { COLORS } from 'src/constants/styles';
 import {
@@ -25,9 +14,10 @@ import {
   EXTERNAL_USER_ROLES,
   UserRole,
   Gender,
+  AdminRole,
 } from 'src/constants/users';
+import { FilterConstant } from 'src/constants/utils';
 import { isRoleIncluded } from 'src/utils/Finding';
-import { formAddOrganization } from './formAddOrganization';
 
 export const CREATE_NEW_ORGANIZATION_VALUE = 'createNewOrganization';
 
@@ -41,15 +31,17 @@ const CREATE_NEW_ORGANIZATION_OPTION = {
   ),
 };
 
-const hideMethod = (getValue) => {
-  const role = getValue('role');
-  const organizationId = getValue('organizationId')?.value;
-  return !(
-    isRoleIncluded(EXTERNAL_USER_ROLES, role) &&
-    organizationId === CREATE_NEW_ORGANIZATION_VALUE
-  );
-};
-type UpdatedOrganizationSchema = {
+type FormAddUserSchema = {
+  firstName: string;
+  lastName: string;
+  role: UserRole;
+  gender: Gender;
+  zone: AdminZone;
+  phone: string;
+  email: string;
+  userToLinkId: FilterConstant<string> | FilterConstant<string>[];
+  adminRole: AdminRole;
+  organizationId: FilterConstant<string>;
   nameOrganization: string;
   addressOrganization: string;
   zoneOrganization: string;
@@ -58,47 +50,16 @@ type UpdatedOrganizationSchema = {
   referentPhoneOrganization: string;
   referentMailOrganization: string;
 };
-const addHideMethodAndSuffixToAllFields = (
-  field: FormField<ExtractFormSchemaValidation<typeof formAddOrganization>>
-): FormField<UpdatedOrganizationSchema> => {
-  const fieldToReturn = {
-    ...field,
-    id: `${field.id}Organization`,
-    name: `${field.name}Organization`,
-    hide: hideMethod,
-  };
-
-  if (isFormFieldMultiple(field) || isFormFieldGroup(field)) {
-    return {
-      ...fieldToReturn,
-      fields: field.fields.map((childField) =>
-        addHideMethodAndSuffixToAllFields(childField)
-      ),
-    };
-  }
-
-  return fieldToReturn as FormField<UpdatedOrganizationSchema>;
+const hideMethod = (getValue: GetValueType<FormAddUserSchema>) => {
+  const role = getValue('role');
+  const organizationId = getValue('organizationId')?.value;
+  return !(
+    isRoleIncluded(EXTERNAL_USER_ROLES, role) &&
+    organizationId === CREATE_NEW_ORGANIZATION_VALUE
+  );
 };
 
-const mutatedAddOrganizationFormFields = formAddOrganization.fields.map(
-  addHideMethodAndSuffixToAllFields
-);
-
-const organizationFieldsNames = mutatedAddOrganizationFormFields.map(
-  ({ name }) => name
-);
-
-export const formAddUser: FormSchema<
-  {
-    firstName: string;
-    lastName: string;
-    role: UserRole;
-    gender: Gender;
-    zone: AdminZone;
-    phone: string;
-    organizationId: FilterConstant<string>;
-  } & UpdatedOrganizationSchema
-> = {
+export const formAddUser: FormSchema<FormAddUserSchema> = {
   id: 'form-add-user',
   fields: [
     {
@@ -234,7 +195,16 @@ export const formAddUser: FormSchema<
             ]);
           },
           title: 'Structure partenaire *',
-          fieldsToReset: ['userToLinkId', ...organizationFieldsNames],
+          fieldsToReset: [
+            'userToLinkId',
+            'nameOrganization',
+            'addressOrganization',
+            'zoneOrganization',
+            'referentFirstNameOrganization',
+            'referentLastNameOrganization',
+            'referentPhoneOrganization',
+            'referentMailOrganization',
+          ],
           isRequired: true,
         },
         {
@@ -310,6 +280,103 @@ export const formAddUser: FormSchema<
         },
       ],
     },
-    ...mutatedAddOrganizationFormFields,
+    {
+      id: 'organizationInformation',
+      name: 'organizationInformation',
+      title: 'Information structure partenaire',
+      component: 'heading',
+      hide: hideMethod,
+    },
+    {
+      id: 'nameOrganization',
+      name: 'nameOrganization',
+      component: 'text-input',
+      title: 'Nom de la structure *',
+      isRequired: true,
+      hide: hideMethod,
+    },
+    {
+      id: 'addressOrganization',
+      name: 'addressOrganization',
+      component: 'text-input',
+      title: 'Adresse postale de la structure *',
+      isRequired: true,
+      hide: hideMethod,
+    },
+    {
+      id: 'zoneOrganization',
+      name: 'zoneOrganization',
+      component: 'select-simple',
+      title: 'Zone de la structure *',
+      options: ADMIN_ZONES_FILTERS,
+      isRequired: true,
+      hide: hideMethod,
+    },
+    {
+      id: 'referentInformationOrganization',
+      name: 'referentInformationOrganization',
+      title: 'Coordonnées du référent',
+      component: 'heading',
+      hide: hideMethod,
+    },
+    {
+      id: 'referentInfoOrganization',
+      name: 'referentInfoOrganization',
+      component: 'fieldgroup',
+      hide: hideMethod,
+
+      fields: [
+        {
+          id: 'referentFirstNameOrganization',
+          name: 'referentFirstNameOrganization',
+          component: 'text-input',
+          title: 'Prénom du référent *',
+          isRequired: true,
+          hide: hideMethod,
+        },
+        {
+          id: 'referentLastNameOrganization',
+          name: 'referentLastNameOrganization',
+          component: 'text-input',
+          title: 'Nom du référent *',
+          isRequired: true,
+          hide: hideMethod,
+        },
+      ],
+    },
+    {
+      id: 'referentPhoneOrganization',
+      name: 'referentPhoneOrganization',
+      component: 'tel-input',
+      title: 'Numéro de téléphone portable du référent *',
+      isRequired: true,
+      hide: hideMethod,
+
+      rules: [
+        {
+          method: (fieldValue) => {
+            return fieldValue && isValidPhoneNumber(fieldValue, 'FR');
+          },
+
+          message: 'Numéro de téléphone invalide',
+        },
+      ],
+    },
+    {
+      id: 'referentMailOrganization',
+      name: 'referentMailOrganization',
+      type: 'email',
+      component: 'text-input',
+      title: 'Adresse mail du référent *',
+      isRequired: true,
+      hide: hideMethod,
+
+      rules: [
+        {
+          method: (fieldValue) => validator.isEmail(fieldValue),
+          message: 'Adresse e-mail invalide',
+        },
+      ],
+    },
   ],
 };

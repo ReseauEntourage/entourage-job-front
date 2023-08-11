@@ -306,7 +306,7 @@ export class APIHandler {
     return this.post('/opportunity', params);
   }
 
-  postExternalOpportunity(params: Opportunity): Promise<AxiosResponse> {
+  postExternalOpportunity(params: ExternalOpportunity): Promise<AxiosResponse> {
     return this.post('/opportunity/external', params);
   }
 

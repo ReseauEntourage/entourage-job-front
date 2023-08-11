@@ -3,16 +3,18 @@ import { StyledInputLabel } from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { Icon } from 'src/components/utils/Icon';
-import { FilterConstant } from 'src/constants';
+import { FilterConstant } from 'src/constants/utils';
 import { useCloseOnClickOutsideComponent } from 'src/hooks/useCloseOnClickOutsideComponent';
 import { StyledSelectContainer } from './SelectSimple.styles';
 
-interface SelectProps
-  extends CommonInputProps<string | number | boolean, HTMLInputElement> {
-  options: FilterConstant[];
+interface SelectProps<T extends string | number | boolean>
+  extends CommonInputProps<T, HTMLInputElement> {
+  options: FilterConstant<T>[];
 }
 
-export function SelectSimple({
+type Test = SelectProps<string>;
+type Test2 = Test['onChange'];
+export function SelectSimple<T extends string | number | boolean>({
   id,
   name,
   title,
@@ -25,17 +27,17 @@ export function SelectSimple({
   disabled = false,
   value,
   inputRef,
-}: SelectProps) {
-  const [selectedOption, setSelectedOption] = useState<{
-    value: string | number | boolean;
-    label?: string;
-  }>({ value: '' });
+}: SelectProps<T>) {
+  const [selectedOption, setSelectedOption] = useState<FilterConstant<T>>({
+    label: '',
+    value: null,
+  });
 
   useEffect(() => {
     const optionToSelect = options.find(
       ({ value: optionValue }) => optionValue === value
     );
-    setSelectedOption(optionToSelect || { value: '' });
+    setSelectedOption(optionToSelect || { value: null, label: '' });
   }, [options, value]);
 
   const {
@@ -57,7 +59,6 @@ export function SelectSimple({
       )}
       <input
         type="hidden"
-        // TODO check
         value={selectedOption.value.toString()}
         name={name}
         id={id}

@@ -10,18 +10,15 @@ import {
 
 import { StyledSelect, StyledSelectContainer } from '../Selects.styles';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
-import { FilterConstant } from 'src/constants';
+import { FilterConstant } from 'src/constants/utils';
 
-interface SelectProps
-  extends CommonInputProps<
-    FilterConstant | FilterConstant[],
-    HTMLSelectElement
-  > {
+interface SelectProps<T extends FilterConstant | FilterConstant[]>
+  extends CommonInputProps<T, HTMLSelectElement> {
   isMulti?: boolean;
-  options: FilterConstant[];
+  options: T[];
   openMenuOnClick?: boolean;
 }
-export function Select({
+export function Select<T extends FilterConstant | FilterConstant[]>({
   id,
   name,
   title,
@@ -37,7 +34,7 @@ export function Select({
   openMenuOnClick = true,
   showLabel = false,
   inputRef,
-}: SelectProps) {
+}: SelectProps<T>) {
   if (hidden) {
     return null;
   }

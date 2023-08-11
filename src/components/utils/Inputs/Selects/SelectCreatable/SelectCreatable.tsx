@@ -9,18 +9,15 @@ import {
 } from '../Selects';
 import { StyledSelect, StyledSelectContainer } from '../Selects.styles';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
-import { FilterConstant } from 'src/constants';
+import { FilterConstant } from 'src/constants/utils';
 
-interface SelectAsyncProps
-  extends CommonInputProps<
-    FilterConstant | FilterConstant[],
-    HTMLSelectElement
-  > {
-  options: FilterConstant[];
+interface SelectAsyncProps<T extends FilterConstant | FilterConstant[]>
+  extends CommonInputProps<T, HTMLSelectElement> {
+  options: T[];
   isMulti?: boolean;
   openMenuOnClick?: boolean;
 }
-export function SelectCreatable({
+export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
   id,
   name,
   title,
@@ -36,7 +33,7 @@ export function SelectCreatable({
   openMenuOnClick = true,
   showLabel = false,
   inputRef,
-}: SelectAsyncProps) {
+}: SelectAsyncProps<T>) {
   if (hidden) {
     return null;
   }

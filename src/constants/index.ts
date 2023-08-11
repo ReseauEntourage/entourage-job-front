@@ -8,10 +8,7 @@ import {
 import { GA_TAGS } from 'src/constants/tags';
 
 import { GENDERS_FILTERS, USER_ROLES_FILTERS } from './users';
-
-export type FilterConstant<
-  T extends string | number | boolean = string | number | boolean
-> = { value: T; label: string };
+import { FilterConstant } from './utils';
 
 export type OfferStatus = -1 | 0 | 1 | 2 | 3 | 4;
 
@@ -424,7 +421,9 @@ export const MEMBER_FILTERS_DATA = [
 
 export type MEMBER_FILTERS_CONSTANT = (typeof MEMBER_FILTERS_DATA)[number];
 
-export const EXTERNAL_OFFERS_ORIGINS = [
+export type ExternalOfferOrigin = 'network' | 'internet' | 'counselor';
+
+export const EXTERNAL_OFFERS_ORIGINS: FilterConstant<ExternalOfferOrigin>[] = [
   {
     label: 'Mon réseau',
     value: 'network',
@@ -667,23 +666,26 @@ export const CANDIDATE_HELP_WITH_FILTERS: FilterConstant<CandidateHelpWithValue>
     },
   ];
 
-export const CANDIDATE_GENDERS = {
+export const CandidateGenders = {
   MALE: 'male',
   FEMALE: 'female',
-};
+} as const;
 
-export const CANDIDATE_GENDERS_FILTERS = [
+export type CandidateGender =
+  (typeof CandidateGenders)[keyof typeof CandidateGenders];
+
+export const CANDIDATE_GENDERS_FILTERS: FilterConstant<CandidateGender>[] = [
   {
     label: 'Homme',
-    value: CANDIDATE_GENDERS.MALE,
+    value: CandidateGenders.MALE,
   },
   {
     label: 'Femme',
-    value: CANDIDATE_GENDERS.FEMALE,
+    value: CandidateGenders.FEMALE,
   },
 ];
 
-export const CANDIDATE_ADMINISTRATIVE_SITUATIONS = {
+export const CandidateAdministrativeSituations = {
   ID_CARD_FR: 'id_card_fr',
   PASSPORT: 'passport',
   RESIDENCE_PERMIT: 'residence_permit',
@@ -691,77 +693,85 @@ export const CANDIDATE_ADMINISTRATIVE_SITUATIONS = {
   RESIDENT_CARD: 'resident_card',
   ASYLUM: 'asylum',
   ASYLUM_DISMISSED: 'asylum_dismissed',
-};
+} as const;
 
-export const CANDIDATE_ADMINISTRATIVE_SITUATIONS_FILTERS = [
-  {
-    value: CANDIDATE_ADMINISTRATIVE_SITUATIONS.ID_CARD_FR,
-    label: "Carte nationale d'identité Française",
-  },
-  {
-    value: CANDIDATE_ADMINISTRATIVE_SITUATIONS.PASSPORT,
-    label: 'Passeport',
-  },
-  {
-    value: CANDIDATE_ADMINISTRATIVE_SITUATIONS.ASYLUM,
-    label: "Demande d'asile",
-  },
-  {
-    value: CANDIDATE_ADMINISTRATIVE_SITUATIONS.ASYLUM_DISMISSED,
-    label: "Débouté de droit d'asile",
-  },
-  {
-    value: CANDIDATE_ADMINISTRATIVE_SITUATIONS.RESIDENT_CARD,
-    label: 'Carte de résident',
-  },
-  {
-    value: CANDIDATE_ADMINISTRATIVE_SITUATIONS.RESIDENCE_PERMIT,
-    label: 'Titre de séjour',
-  },
-  {
-    value: CANDIDATE_ADMINISTRATIVE_SITUATIONS.RESIDENCE_PERMIT_RECEIPT,
-    label: 'Récépissé de titre de séjour',
-  },
-];
+export type CandidateAdministrativeSituation =
+  (typeof CandidateAdministrativeSituations)[keyof typeof CandidateAdministrativeSituations];
 
-export const CANDIDATE_ACCOMMODATIONS = {
+export const CANDIDATE_ADMINISTRATIVE_SITUATIONS_FILTERS: FilterConstant<CandidateAdministrativeSituation>[] =
+  [
+    {
+      value: CandidateAdministrativeSituations.ID_CARD_FR,
+      label: "Carte nationale d'identité Française",
+    },
+    {
+      value: CandidateAdministrativeSituations.PASSPORT,
+      label: 'Passeport',
+    },
+    {
+      value: CandidateAdministrativeSituations.ASYLUM,
+      label: "Demande d'asile",
+    },
+    {
+      value: CandidateAdministrativeSituations.ASYLUM_DISMISSED,
+      label: "Débouté de droit d'asile",
+    },
+    {
+      value: CandidateAdministrativeSituations.RESIDENT_CARD,
+      label: 'Carte de résident',
+    },
+    {
+      value: CandidateAdministrativeSituations.RESIDENCE_PERMIT,
+      label: 'Titre de séjour',
+    },
+    {
+      value: CandidateAdministrativeSituations.RESIDENCE_PERMIT_RECEIPT,
+      label: 'Récépissé de titre de séjour',
+    },
+  ];
+
+export const CandidateAccommodations = {
   PERSONAL: 'personal',
   SOMEONE: 'someone',
   URGENCY: 'urgency',
   INSERTION: 'insertion',
   STREET: 'street',
   OTHER: 'other',
-};
+} as const;
 
-export const CANDIDATE_ACCOMMODATIONS_FILTERS = [
-  {
-    value: CANDIDATE_ACCOMMODATIONS.PERSONAL,
-    label: 'Logement personnel',
-  },
-  {
-    value: CANDIDATE_ACCOMMODATIONS.SOMEONE,
-    label: 'Hébergé chez un tiers (famille, amis, etc, ...)',
-  },
-  {
-    value: CANDIDATE_ACCOMMODATIONS.URGENCY,
-    label: "Hébergement d'urgence (CHU, hôtel...)",
-  },
-  {
-    value: CANDIDATE_ACCOMMODATIONS.INSERTION,
-    label:
-      "Hébergement d'insertion (CHRS, FJT, Solibail, Résidence Sociale, Pension, ...)",
-  },
-  {
-    value: CANDIDATE_ACCOMMODATIONS.STREET,
-    label: 'Rue ou abri de fortune (squat, voiture, camping...)',
-  },
-  {
-    value: CANDIDATE_ACCOMMODATIONS.OTHER,
-    label: 'Autre',
-  },
-];
+export type CandidateAccommodation =
+  (typeof CandidateAccommodations)[keyof typeof CandidateAccommodations];
 
-export const CANDIDATE_PROFESSIONAL_SITUATIONS = {
+export const CANDIDATE_ACCOMMODATIONS_FILTERS: FilterConstant<CandidateAccommodation>[] =
+  [
+    {
+      value: CandidateAccommodations.PERSONAL,
+      label: 'Logement personnel',
+    },
+    {
+      value: CandidateAccommodations.SOMEONE,
+      label: 'Hébergé chez un tiers (famille, amis, etc, ...)',
+    },
+    {
+      value: CandidateAccommodations.URGENCY,
+      label: "Hébergement d'urgence (CHU, hôtel...)",
+    },
+    {
+      value: CandidateAccommodations.INSERTION,
+      label:
+        "Hébergement d'insertion (CHRS, FJT, Solibail, Résidence Sociale, Pension, ...)",
+    },
+    {
+      value: CandidateAccommodations.STREET,
+      label: 'Rue ou abri de fortune (squat, voiture, camping...)',
+    },
+    {
+      value: CandidateAccommodations.OTHER,
+      label: 'Autre',
+    },
+  ];
+
+export const CandidateProfessionalSituations = {
   UNEMPLOYED: 'unemployed',
   CDI: 'cdi',
   CDD: 'cdd',
@@ -770,44 +780,48 @@ export const CANDIDATE_PROFESSIONAL_SITUATIONS = {
   STUDENT: 'student',
   CDDI: 'cddi',
   OTHER: 'other',
-};
+} as const;
 
-export const CANDIDATE_PROFESSIONAL_SITUATIONS_FILTERS = [
-  {
-    label: 'Sans emploi',
-    value: CANDIDATE_PROFESSIONAL_SITUATIONS.UNEMPLOYED,
-  },
-  {
-    label: 'CDI',
-    value: CANDIDATE_PROFESSIONAL_SITUATIONS.CDI,
-  },
-  {
-    label: 'CDD',
-    value: CANDIDATE_PROFESSIONAL_SITUATIONS.CDD,
-  },
-  {
-    label: 'Intérim',
-    value: CANDIDATE_PROFESSIONAL_SITUATIONS.INTE,
-  },
-  {
-    label: 'Étudiant',
-    value: CANDIDATE_PROFESSIONAL_SITUATIONS.STUDENT,
-  },
-  {
-    label: 'En formation',
-    value: CANDIDATE_PROFESSIONAL_SITUATIONS.FORM,
-  },
-  {
-    label: "Contrat d'insertion",
-    value: CANDIDATE_PROFESSIONAL_SITUATIONS.CDDI,
-  },
-  {
-    label: 'Autre',
-    value: CANDIDATE_PROFESSIONAL_SITUATIONS.OTHER,
-  },
-];
+export type CandidateProfessionalSituation =
+  (typeof CandidateProfessionalSituations)[keyof typeof CandidateProfessionalSituations];
 
-export const CANDIDATE_RESOURCES = {
+export const CANDIDATE_PROFESSIONAL_SITUATIONS_FILTERS: FilterConstant<CandidateProfessionalSituation>[] =
+  [
+    {
+      label: 'Sans emploi',
+      value: CandidateProfessionalSituations.UNEMPLOYED,
+    },
+    {
+      label: 'CDI',
+      value: CandidateProfessionalSituations.CDI,
+    },
+    {
+      label: 'CDD',
+      value: CandidateProfessionalSituations.CDD,
+    },
+    {
+      label: 'Intérim',
+      value: CandidateProfessionalSituations.INTE,
+    },
+    {
+      label: 'Étudiant',
+      value: CandidateProfessionalSituations.STUDENT,
+    },
+    {
+      label: 'En formation',
+      value: CandidateProfessionalSituations.FORM,
+    },
+    {
+      label: "Contrat d'insertion",
+      value: CandidateProfessionalSituations.CDDI,
+    },
+    {
+      label: 'Autre',
+      value: CandidateProfessionalSituations.OTHER,
+    },
+  ];
+
+export const CandidateResources = {
   SALARY: 'salary',
   UNEMPLOYMENT: 'unemployment',
   AAH: 'aah',
@@ -815,38 +829,42 @@ export const CANDIDATE_RESOURCES = {
   INVALIDITY: 'invalidity',
   OTHER: 'other',
   NONE: 'none',
-};
+} as const;
 
-export const CANDIDATE_RESOURCES_FILTERS = [
-  {
-    label: 'Salaire',
-    value: CANDIDATE_RESOURCES.SALARY,
-  },
-  {
-    label: 'Allocation chômage',
-    value: CANDIDATE_RESOURCES.UNEMPLOYMENT,
-  },
-  {
-    label: 'AAH',
-    value: CANDIDATE_RESOURCES.AAH,
-  },
-  {
-    label: 'RSA',
-    value: CANDIDATE_RESOURCES.RSA,
-  },
-  {
-    label: "Pension d'invalidité",
-    value: CANDIDATE_RESOURCES.INVALIDITY,
-  },
-  {
-    label: 'Autre',
-    value: CANDIDATE_RESOURCES.OTHER,
-  },
-  {
-    label: 'Aucune',
-    value: CANDIDATE_RESOURCES.NONE,
-  },
-];
+export type CandidateResource =
+  (typeof CandidateResources)[keyof typeof CandidateResources];
+
+export const CANDIDATE_RESOURCES_FILTERS: FilterConstant<CandidateResource>[] =
+  [
+    {
+      label: 'Salaire',
+      value: CandidateResources.SALARY,
+    },
+    {
+      label: 'Allocation chômage',
+      value: CandidateResources.UNEMPLOYMENT,
+    },
+    {
+      label: 'AAH',
+      value: CandidateResources.AAH,
+    },
+    {
+      label: 'RSA',
+      value: CandidateResources.RSA,
+    },
+    {
+      label: "Pension d'invalidité",
+      value: CandidateResources.INVALIDITY,
+    },
+    {
+      label: 'Autre',
+      value: CandidateResources.OTHER,
+    },
+    {
+      label: 'Aucune',
+      value: CandidateResources.NONE,
+    },
+  ];
 
 export const CandidateYesNo = {
   YES: 'yes',
@@ -865,6 +883,31 @@ export const CANDIDATE_YES_NO_FILTERS: FilterConstant<CandidateYesNoValue>[] = [
     label: 'Non',
   },
 ];
+
+export const CandidateYesNoNSPP = {
+  YES: 'yes',
+  NO: 'no',
+  NSPP: 'dont_know',
+} as const;
+
+export type CandidateYesNoNSPPValue =
+  (typeof CandidateYesNoNSPP)[keyof typeof CandidateYesNoNSPP];
+
+export const CANDIDATE_YES_NO_NSPP_FILTERS: FilterConstant<CandidateYesNoNSPPValue>[] =
+  [
+    {
+      value: CandidateYesNo.YES,
+      label: 'Oui',
+    },
+    {
+      value: CandidateYesNo.NO,
+      label: 'Non',
+    },
+    {
+      label: 'Je ne sais pas',
+      value: CandidateYesNoNSPP.NSPP,
+    },
+  ];
 
 export const EVENT_TYPES = {
   CONTACT: 'contact',

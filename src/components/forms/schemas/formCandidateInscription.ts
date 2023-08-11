@@ -3,17 +3,45 @@ import moment from 'moment';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { Api } from 'src/api';
 import 'moment/locale/fr';
+import { RadioTypes } from 'src/components/utils/Inputs/Radio/Radio.types';
 import {
   ANTENNE_INFO,
-  CandidateYesNo,
-  CANDIDATE_YES_NO_FILTERS,
   HEARD_ABOUT_FILTERS,
+  HeardAboutValue,
+  CandidateYesNoNSPPValue,
+  CANDIDATE_YES_NO_NSPP_FILTERS,
+  CandidateYesNoNSPP,
 } from 'src/constants';
-import { FormSchema } from '../FormSchema';
+import { FormSchema, GetValueType } from '../FormSchema';
 import validator from 'validator';
+import { Cities, CITIES_FILTERS, City } from 'src/constants/departements';
+import { AnyCantFix } from 'src/utils/Types';
 
+function hideIfNoInfoCo<T extends GetValueType<AnyCantFix>>(
+  getValue: T,
+  fieldOptions: { [p: string]: RadioTypes[] }
+) {
+  const city = ANTENNE_INFO.find((antenne) => {
+    return antenne.dpt === getValue('location');
+  })?.city;
+  const filteredOptions = fieldOptions?.infoCo?.find((fieldOption) => {
+    return fieldOption.filterData === city;
+  });
+  if (!city?.length) {
+    return true;
+  }
+  return !filteredOptions;
+}
 export const formCandidateInscription: FormSchema<{
-
+  location: City;
+  birthdate: string;
+  workingRight: CandidateYesNoNSPPValue;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  heardAbout: HeardAboutValue;
+  infoCo: string;
 }> = {
   id: 'form-candidate-inscription',
   fields: [
@@ -31,47 +59,13 @@ export const formCandidateInscription: FormSchema<{
       isRequired: true,
       title:
         'Êtes-vous domicilié dans l’une des villes / départements suivants? *',
-      options: [
-        {
-          label: 'Seine-Saint-Denis (93)',
-          value: '93',
-        },
-        {
-          label: 'Paris (75)',
-          value: '75',
-        },
-        {
-          label: 'Hauts-De-Seine (92)',
-          value: '92',
-        },
-        {
-          label: 'Rennes et sa région (35)',
-          value: '35',
-        },
-        {
-          label: 'Lorient et sa région (56)',
-          value: '56',
-        },
-        {
-          label: 'Lille et sa région (59)',
-          value: '59',
-        },
-        {
-          label: 'Lyon et sa région (69)',
-          value: '69',
-        },
-        {
-          label: 'Autre',
-          value: 'other',
-        },
-      ],
+      options: CITIES_FILTERS,
       fieldsToReset: ['infoCo'],
       rules: [
         {
-          method: (value) => value !== CandidateYesNo.NO,
-
+          method: (value) => value !== Cities.OTHER,
           message:
-            'Vous devez avoir le droit de travailler en France pour participer au programme LinkedOut',
+            'Nous sommes désolée, le programme est disponible uniquement dans les villes /départements indiqués dans la liste.',
         },
       ],
     },
@@ -94,7 +88,6 @@ export const formCandidateInscription: FormSchema<{
                 const realBirthdate = new Date(value);
                 return minBirthdate > realBirthdate;
               },
-
               message:
                 'Vous devez être majeur pour participer au programme. En attendant, vous pouvez contacter la Mission locale dont dépend votre commune.',
             },
@@ -116,17 +109,10 @@ export const formCandidateInscription: FormSchema<{
           component: 'select-simple',
           showLabel: true,
           isRequired: true,
-          options: [
-            ...CANDIDATE_YES_NO_FILTERS,
-            {
-              label: 'Je ne sais pas',
-              value: 'dont_know',
-            },
-          ],
+          options: CANDIDATE_YES_NO_NSPP_FILTERS,
           rules: [
             {
-              method: (value) => value !== CandidateYesNo.NO,
-
+              method: (value) => value !== CandidateYesNoNSPP.NO,
               message:
                 'Vous devez avoir le droit de travailler en France pour participer au programme LinkedOut',
             },
@@ -218,18 +204,7 @@ export const formCandidateInscription: FormSchema<{
       name: 'infoCoTitle',
       title: 'Prochaine étape : Nous rencontrer',
       component: 'heading',
-      hide: (getValue, fieldOptions) => {
-        const city = ANTENNE_INFO.find((antenne) => {
-          return antenne.dpt === getValue('location');
-        })?.city;
-        const filteredOptions = fieldOptions?.infoCo?.find((fieldOption) => {
-          return fieldOption.filterData === city;
-        });
-        if (!city?.length) {
-          return true;
-        }
-        return !filteredOptions;
-      },
+      hide: (getValue, fieldOptions) => hideIfNoInfoCo(getValue, fieldOptions),
     },
     {
       id: 'infoCoSubtitle',
@@ -243,18 +218,7 @@ export const formCandidateInscription: FormSchema<{
         return `${text}${address ? ` au ${address}` : ''}`;
       },
       component: 'text',
-      hide: (getValue, fieldOptions) => {
-        const city = ANTENNE_INFO.find((antenne) => {
-          return antenne.dpt === getValue('location');
-        })?.city;
-        const filteredOptions = fieldOptions?.infoCo?.find((fieldOption) => {
-          return fieldOption.filterData === city;
-        });
-        if (!city?.length) {
-          return true;
-        }
-        return !filteredOptions;
-      },
+      hide: (getValue, fieldOptions) => hideIfNoInfoCo(getValue, fieldOptions),
     },
     {
       id: 'infoCo',
@@ -268,19 +232,7 @@ export const formCandidateInscription: FormSchema<{
           return antenne.dpt === getValue('location');
         })?.city;
       },
-      hide: (getValue, fieldOptions) => {
-        if (!fieldOptions) {
-          return false;
-        }
-        const city = ANTENNE_INFO.find((antenne) => {
-          return antenne.dpt === getValue('location');
-        })?.city;
-
-        const filteredOptions = fieldOptions?.infoCo?.find((fieldOption) => {
-          return fieldOption.filterData === city;
-        });
-        return !city?.length || !filteredOptions;
-      },
+      hide: (getValue, fieldOptions) => hideIfNoInfoCo(getValue, fieldOptions),
       loadOptions: async (callback) => {
         const { data: campaigns } = await Api.getCampaigns();
         const noChoice = {

@@ -3,14 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useRef } from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
-import {
-  formEditExternalOpportunity,
-  adminMutations as externalOpportunityAdminMutations,
-} from 'src/components/forms/schemas/formEditExternalOpportunity';
-import {
-  formEditOpportunity,
-  adminMutations as opportunityAdminMutations,
-} from 'src/components/forms/schemas/formEditOpportunity';
+import { formEditExternalOpportunityAsAdmin } from 'src/components/forms/schemas/formEditExternalOpportunity';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
@@ -19,7 +12,8 @@ import { OpportunityList } from 'src/components/opportunities/OpportunityList';
 import { ButtonMultiple } from 'src/components/utils';
 import { Icon } from 'src/components/utils/Icon';
 import { useIsDesktop } from 'src/hooks/utils';
-import { mutateFormSchema } from 'src/utils';
+import { formAddOpportunityAsAdmin } from "src/components/forms/schemas/formAddOpportunity";
+import { formAddExternalOpportunityAsAdmin } from "src/components/forms/schemas/formAddExternalOpportunity";
 
 export const AdminOpportunityList = ({
   search,
@@ -32,53 +26,6 @@ export const AdminOpportunityList = ({
 }) => {
   const isDesktop = useIsDesktop();
 
-  // desactivation du champ de disclaimer
-  const mutatedOfferSchema = mutateFormSchema(formEditOpportunity, [
-    {
-      fieldId: 'disclaimer',
-      props: [
-        {
-          propName: 'hidden',
-          value: true,
-        },
-      ],
-    },
-    {
-      fieldId: 'shouldSendNotifications',
-      props: [
-        {
-          propName: 'hidden',
-          value: false,
-        },
-        {
-          propName: 'disabled',
-          value: false,
-        },
-      ],
-    },
-    ...opportunityAdminMutations,
-  ]);
-
-  const mutatedExternalOfferSchema = mutateFormSchema(
-    formEditExternalOpportunity,
-    [
-      ...externalOpportunityAdminMutations,
-      {
-        fieldId: 'startEndContract',
-        props: [
-          {
-            propName: 'hidden',
-            value: true,
-          },
-          {
-            propName: 'disabled',
-            value: true,
-          },
-        ],
-      },
-    ]
-  );
-
   const opportunityListRef = useRef();
 
   const opportunityModalProps = {
@@ -88,7 +35,7 @@ export const AdminOpportunityList = ({
     isAdmin: true,
     callback: opportunityListRef?.current?.fetchData,
     modalTitle: 'Ajouter une nouvelle offre',
-    schema: mutatedOfferSchema,
+    schema: formAddOpportunityAsAdmin,
   };
 
   return (
@@ -115,7 +62,7 @@ export const AdminOpportunityList = ({
                   <ModalEdit
                     title="Ajouter une offre externe"
                     submitText="Envoyer"
-                    formSchema={mutatedExternalOfferSchema}
+                    formSchema={formAddExternalOpportunityAsAdmin}
                     onSubmit={async (fields, closeModal) => {
                       try {
                         await Api.postExternalOpportunity({

@@ -22,19 +22,20 @@ export const InterviewDateModel = ({
   return (
     <ModalEdit
       title="Félicitation vous avez décroché un entretien"
-      formSchema={renderSimpleDatePickerField(
-        'update-to-hired-datepicker',
-        "Date d'entretien*"
+      formSchema={renderSimpleDatePickerField<{ interviewDate: string }>(
+        'update-to-hired',
+        "Date d'entretien*",
+        'interviewDate'
       )}
       submitText="Valider la date d'entretien"
       cancelText="Je n’ai pas encore de date d'entretien"
-      defaultValues={{ datepicker: moment().format('YYYY-MM-DD') }}
-      onSubmit={async ({ datepicker }, closeModal) => {
+      defaultValues={{ interviewDate: moment().format('YYYY-MM-DD') }}
+      onSubmit={async ({ interviewDate }, closeModal) => {
         try {
           await Api.postOpportunityUserEvent(opportunityId, candidateId, {
             type: EVENT_TYPES.INTERVIEW,
-            startDate: datepicker,
-            endDate: datepicker,
+            startDate: interviewDate,
+            endDate: interviewDate,
             contract: { name: contract },
           });
           closeModal();

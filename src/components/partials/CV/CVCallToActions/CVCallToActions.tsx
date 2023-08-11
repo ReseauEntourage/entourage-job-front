@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { formAddOpportunity } from '../../../forms/schemas/formAddOpportunity';
 import { CV_COLORS } from '../PageCvContent/PageCVContent.styles';
 import { CV } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
@@ -48,14 +49,16 @@ export const CVCallToActions = ({
           </span>
         </div>
       ),
-      candidateId: cv.UserId,
       defaultValues: {
-        candidat: {
-          firstName: cv.user.candidat.firstName,
-          lastName: cv.user.candidat.lastName,
-        },
+        candidatesIds: [
+          {
+            label: `${cv.user.candidat.firstName} ${cv.user.candidat.lastName}`,
+            value: cv.UserId,
+          },
+        ],
         isPublic: false,
       },
+      formSchema: formAddOpportunity,
     };
   }, [cv]);
 

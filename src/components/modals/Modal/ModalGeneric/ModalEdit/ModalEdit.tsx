@@ -21,7 +21,7 @@ interface ModalEditProps<S extends FormSchema<AnyCantFix>> {
   ) => void;
   onError?: (values: ExtractFormSchemaValidation<S>) => void;
   defaultValues?: DefaultValues<ExtractFormSchemaValidation<S>>;
-  description: string | JSX.Element;
+  description?: string | JSX.Element;
   submitText?: string;
   cancelText?: string;
 }

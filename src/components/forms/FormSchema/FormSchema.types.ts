@@ -1,6 +1,6 @@
 import { ArrayPath, Path, UseFormGetValues } from 'react-hook-form';
 import { RadioTypes } from 'src/components/utils/Inputs/Radio/Radio.types';
-import { FilterConstant } from 'src/constants';
+import { FilterConstant } from 'src/constants/utils';
 import { AnyCantFix } from 'src/utils/Types';
 
 export const FormComponents = {
@@ -55,26 +55,13 @@ export interface FormComponentValues<M extends boolean> {
   [FormComponents.MULTIPLE_FIELDS]: never;
 }
 
-export type FormSchemaValidation = {
+export type MultipleFieldValue = {
   [K in string]: FieldValue;
 };
 
-/* type NonInputComponent =
-  | FormComponents.HEADING
-  | FormComponents.FIELDGROUP
-  | FormComponents.MULTIPLE_FIELDS;
-
-type ExcludeNonInputComponents<T> = {
-  [K in keyof T]: K extends NonInputComponent ? never : T[K];
+export type FormSchemaValidation = {
+  [K in string]: FieldValue | MultipleFieldValue[];
 };
-
-export type FormSchemaValidation = ExcludeNonInputComponents<
-  FormComponentValues<boolean>
->; */
-
-// type FormFieldName<V extends FormSchemaValidation> = keyof V & string;
-
-type ValidationKey<V extends FormSchemaValidation> = keyof V & string;
 
 export const TextInputComponents = [
   FormComponents.DATEPICKER,

@@ -12,12 +12,16 @@ import {
   CANDIDATE_PROFESSIONAL_SITUATIONS_FILTERS,
   CANDIDATE_RESOURCES_FILTERS,
   CANDIDATE_YES_NO_FILTERS,
+  CandidateAccommodation,
+  CandidateAdministrativeSituation,
   CandidateHelpWithValue,
+  CandidateProfessionalSituation,
+  CandidateResource,
   CandidateYesNoValue,
-  FilterConstant,
   HEARD_ABOUT_FILTERS,
   HeardAboutValue,
 } from 'src/constants';
+import { FilterConstant } from 'src/constants/utils';
 
 export const formCandidateContact: FormSchema<{
   workerFirstName: string;
@@ -37,15 +41,15 @@ export const formCandidateContact: FormSchema<{
   phone: string;
   email: string;
   registeredUnemploymentOffice: CandidateYesNoValue;
-  administrativeSituation;
+  administrativeSituation: CandidateAdministrativeSituation;
   workingRight: CandidateYesNoValue;
-  accommodation;
-  professionalSituation;
-  resources;
+  accommodation: CandidateAccommodation;
+  professionalSituation: CandidateProfessionalSituation;
+  resources: CandidateResource;
   domiciliation: CandidateYesNoValue;
   socialSecurity: CandidateYesNoValue;
-  handicapped;
-  bankAccount;
+  handicapped: CandidateYesNoValue;
+  bankAccount: CandidateYesNoValue;
   businessLines: FilterConstant<BusinessLineValue>;
   description: string;
   heardAbout: HeardAboutValue;

@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { FilterConstant } from '.';
+import { FilterConstant } from './utils';
 
 export const ADMIN_ZONES = {
   PARIS: 'PARIS',
@@ -576,4 +576,52 @@ export const DEPARTMENTS_FILTERS: (FilterConstant<Department> & {
       zone,
     };
   }),
+];
+
+export const Cities = {
+  '93': '93',
+  '75': '75',
+  '92': '92',
+  '35': '35',
+  '56': '56',
+  '59': '59',
+  '69': '69',
+  OTHER: 'other',
+} as const;
+
+export type City = (typeof Cities)[keyof typeof Cities];
+
+export const CITIES_FILTERS: FilterConstant<City>[] = [
+  {
+    label: 'Seine-Saint-Denis (93)',
+    value: '93',
+  },
+  {
+    label: 'Paris (75)',
+    value: '75',
+  },
+  {
+    label: 'Hauts-De-Seine (92)',
+    value: '92',
+  },
+  {
+    label: 'Rennes et sa région (35)',
+    value: '35',
+  },
+  {
+    label: 'Lorient et sa région (56)',
+    value: '56',
+  },
+  {
+    label: 'Lille et sa région (59)',
+    value: '59',
+  },
+  {
+    label: 'Lyon et sa région (69)',
+    value: '69',
+  },
+  {
+    label: 'Autre',
+    value: 'other',
+  },
 ];

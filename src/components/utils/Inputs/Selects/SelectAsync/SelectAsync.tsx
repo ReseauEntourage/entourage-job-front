@@ -9,23 +9,17 @@ import {
 } from '../Selects';
 import { StyledSelect, StyledSelectContainer } from '../Selects.styles';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
-import { FilterConstant } from 'src/constants';
+import { FilterConstant } from 'src/constants/utils';
 
 let debounceTimeoutId;
 
-interface SelectAsyncProps
-  extends CommonInputProps<
-    FilterConstant | FilterConstant[],
-    HTMLSelectElement
-  > {
-  loadOptions: (
-    callback: (options: FilterConstant[]) => void,
-    inputValue: string
-  ) => void;
+interface SelectAsyncProps<T extends FilterConstant | FilterConstant[]>
+  extends CommonInputProps<T, HTMLSelectElement> {
+  loadOptions: (callback: (options: T[]) => void, inputValue: string) => void;
   isMulti?: boolean;
   openMenuOnClick?: boolean;
 }
-export function SelectAsync({
+export function SelectAsync<T extends FilterConstant | FilterConstant[]>({
   id,
   name,
   title,
@@ -41,10 +35,8 @@ export function SelectAsync({
   openMenuOnClick = true,
   showLabel = false,
   inputRef,
-}: SelectAsyncProps) {
-  const [defaultOptions, setDefaultOptions] = useState<
-    FilterConstant[] | FilterConstant
-  >(null);
+}: SelectAsyncProps<T>) {
+  const [defaultOptions, setDefaultOptions] = useState<T[]>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const debouncedLoadOptions = useCallback(

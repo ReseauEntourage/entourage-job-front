@@ -22,19 +22,19 @@ export const HiredDateModal = ({
   return (
     <ModalEdit
       title="Félicitation vous avez décroché un emploi"
-      formSchema={renderSimpleDatePickerField(
+      formSchema={renderSimpleDatePickerField<{ hiredDate: string }>(
         'update-to-hired',
         "Date d'embauche*",
-        'hireDate'
+        'hiredDate'
       )}
       submitText="Valider la date d'embauche"
       cancelText="Je n'ai pas encore de date d'embauche"
-      defaultValues={{ datepicker: moment().format('YYYY-MM-DD') }}
-      onSubmit={async ({ datepicker }, closeModal) => {
+      defaultValues={{ hiredDate: moment().format('YYYY-MM-DD') }}
+      onSubmit={async ({ hiredDate }, closeModal) => {
         try {
           await Api.postOpportunityUserEvent(opportunityId, candidateId, {
             type: EVENT_TYPES.HIRING,
-            startDate: datepicker,
+            startDate: hiredDate,
             contract: { name: contract },
           });
           closeModal();

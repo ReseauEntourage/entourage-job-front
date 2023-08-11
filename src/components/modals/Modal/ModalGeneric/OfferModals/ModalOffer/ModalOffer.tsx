@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
+import { OpportunityWithOpportunityUsers } from 'src/api/types';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { formEditExternalOpportunity } from 'src/components/forms/schemas/formEditExternalOpportunity';
 import { openModal } from 'src/components/modals/Modal';
@@ -99,16 +100,25 @@ PrivateOfferSentence.propTypes = {
   lastName: PropTypes.string.isRequired,
 };
 
+interface ModalOfferProps {
+  currentOffer: OpportunityWithOpportunityUsers;
+  onOfferUpdated: () => void;
+  navigateBackToList: () => void;
+}
+
 export const ModalOffer = ({
   currentOffer,
   onOfferUpdated,
   navigateBackToList,
-}) => {
+}: ModalOfferProps) => {
   const {
     replace,
     pathname,
-    query: { updateStatus, ...restQuery },
+    query: { updateStatus: updateStatusFromQuery, ...restQuery },
   } = useRouter();
+
+  const updateStatus = updateStatusFromQuery as string;
+
   const prevUpdateStatus = usePrevious(updateStatus);
 
   const { user } = useContext(UserContext);
@@ -185,25 +195,6 @@ export const ModalOffer = ({
     offer.opportunityUsers
   );
 
-  const mutatedExternalOfferSchema = mutateFormSchema(
-    formEditExternalOpportunity,
-    [
-      {
-        fieldId: 'candidateStatus',
-        props: [
-          {
-            propName: 'hidden',
-            value: true,
-          },
-          {
-            propName: 'disabled',
-            value: true,
-          },
-        ],
-      },
-    ]
-  );
-
   const updateOpportunity = async (opportunity) => {
     const { candidateId, id, ...restOpportunity } = opportunity;
     setLoading(true);
@@ -225,6 +216,8 @@ export const ModalOffer = ({
 
   const shouldShowCTAs = !offer.isExternal && !offer.opportunityUsers.archived;
 
+  const { opportunityUsers, ...restOffer } = offer;
+
   // Modal
   return (
     <ModalOfferBase
@@ -238,10 +231,9 @@ export const ModalOffer = ({
         <div>
           <h3>Modification de l&apos;offre d&apos;emploi</h3>
           <FormWithValidation
-            formSchema={mutatedExternalOfferSchema}
+            formSchema={formEditExternalOpportunity}
             defaultValues={{
-              ...offer,
-              candidateId: getCandidateIdFromCoachOrCandidate(user),
+              ...restOffer,
               department: findConstantFromValue(
                 offer.department,
                 DEPARTMENTS_FILTERS
@@ -309,7 +301,6 @@ export const ModalOffer = ({
                             )
                           }
                           onConfirm={async () => {
-                            const { opportunityUsers } = offer;
                             await updateOpportunityUser({
                               ...opportunityUsers,
                               archived: true,
@@ -405,7 +396,6 @@ export const ModalOffer = ({
                               GA_TAGS.BACKOFFICE_CANDIDAT_VALIDER_CONTACTER_RECRUTEUR_CLIC
                             );
                             if (status < OFFER_STATUS[1].value) {
-                              const { opportunityUsers } = offer;
                               await updateOpportunityUser({
                                 ...opportunityUsers,
                                 status: OFFER_STATUS[1].value,
@@ -435,7 +425,6 @@ export const ModalOffer = ({
                         gaEvent(
                           GA_TAGS.BACKOFFICE_CANDIDAT_PAS_CONTACTER_RECRUTEUR_CLIC
                         );
-                        const { opportunityUsers } = offer;
                         await updateOpportunityUser({
                           ...opportunityUsers,
                           status: OFFER_STATUS[0].value,
@@ -463,15 +452,14 @@ export const ModalOffer = ({
                           : mutatedOfferStatus
                       }
                       value={status}
-                      onChange={async (event) => {
+                      onChange={async (value) => {
                         gaEvent(
                           GA_TAGS.BACKOFFICE_CANDIDAT_STATUT_SELECTEUR_CLIC
                         );
                         setLoadingStatus(true);
-                        const { opportunityUsers } = offer;
                         await updateOpportunityUser({
                           ...opportunityUsers,
-                          status: parseInt(event.target.value, 10),
+                          status: value,
                         });
                         setLoadingStatus(false);
                       }}
@@ -500,7 +488,6 @@ export const ModalOffer = ({
                 className={bookmarked ? 'ent-color-amber' : undefined}
                 onClick={async () => {
                   setLoadingIcon(true);
-                  const { opportunityUsers } = offer;
                   await updateOpportunityUser({
                     ...opportunityUsers,
                     bookmarked: !bookmarked,
@@ -513,7 +500,6 @@ export const ModalOffer = ({
                 className={archived ? 'ent-color-amber' : undefined}
                 onClick={async () => {
                   setLoadingIcon(true);
-                  const { opportunityUsers } = offer;
                   await updateOpportunityUser({
                     ...opportunityUsers,
                     archived: !archived,
