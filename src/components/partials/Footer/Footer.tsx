@@ -81,7 +81,7 @@ const pages: PageType[] = [
           },
           {
             title: 'Recruter',
-            path: '/entreprises/cvs',
+            path: '/candidats?employed=false',
             props: {
               onClick: () => {
                 gaEvent(GA_TAGS.FOOTER_ENTREPRISES_RECRUTER_CLIC);

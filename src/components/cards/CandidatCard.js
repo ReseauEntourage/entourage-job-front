@@ -42,13 +42,10 @@ export const CandidatCard = ({
   const { asPath } = useRouter();
 
   const isCandidatsPage = asPath.includes('/candidats');
-  const isCompaniesCvsPage = asPath.includes('/entreprises/cvs');
 
   let onCvClickEvent = GA_TAGS.HOME_CV_CLIC;
   if (isCandidatsPage) {
     onCvClickEvent = GA_TAGS.PAGE_GALERIE_CV_CLIC;
-  } else if (isCompaniesCvsPage) {
-    onCvClickEvent = GA_TAGS.PAGE_ENTREPRISES_GALERIE_CV_CLIC;
   }
 
   const showShareOptions = !asPath.includes('/entreprises');

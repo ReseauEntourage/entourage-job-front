@@ -233,6 +233,7 @@ export const formEditOpportunity = {
           component: 'input',
           type: 'text',
           title: 'Jours et horaires de travail',
+          maxLength: 255,
         },
         {
           id: 'isPartTime',
@@ -253,6 +254,7 @@ export const formEditOpportunity = {
           component: 'input',
           type: 'text',
           title: 'Salaire et compléments',
+          maxLength: 255,
         },
         {
           id: 'driversLicense',
@@ -499,6 +501,28 @@ export const formEditOpportunity = {
       args: [],
       validWhen: false,
       message: 'Date antérieure à la date de début',
+    },
+    {
+      field: 'salary',
+      method: 'isLength',
+      args: [
+        {
+          max: 255,
+        },
+      ],
+      validWhen: true,
+      message: '255 caractères maximum',
+    },
+    {
+      field: 'workingHours',
+      method: 'isLength',
+      args: [
+        {
+          max: 255,
+        },
+      ],
+      validWhen: true,
+      message: '255 caractères maximum',
     },
   ],
 };

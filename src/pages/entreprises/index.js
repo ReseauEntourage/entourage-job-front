@@ -282,7 +282,7 @@ const Entreprises = ({ nbPublishedCVs }) => {
             dataTestId="button-contact-company-first-section"
             style="secondary"
           >
-            Contactez-nous&nbsp;
+            Nous contacter&nbsp;
             <Icon name="chevron-right" />
           </Button>
         }
@@ -372,7 +372,7 @@ const Entreprises = ({ nbPublishedCVs }) => {
         />
         <div className="uk-flex uk-flex-center uk-margin-medium-top">
           <Button
-            href={{ pathname: '/entreprises/cvs', query: { employed: false } }}
+            href={{ pathname: '/candidats', query: { employed: false } }}
             style="secondary"
           >
             Découvrir nos candidats <Icon name="chevron-right" />
@@ -431,7 +431,7 @@ const Entreprises = ({ nbPublishedCVs }) => {
             style="secondary"
             className="uk-margin-small-top"
           >
-            Contactez-nous&nbsp;
+            Nous contacter&nbsp;
             <Icon name="chevron-right" />
           </Button>
         </div>
