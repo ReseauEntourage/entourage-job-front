@@ -34,7 +34,6 @@ import {
   formatParagraph,
   getCandidateIdFromCoachOrCandidate,
   mutateDefaultOfferStatus,
-  mutateFormSchema,
 } from 'src/utils';
 
 const AfterContactItem = ({ isPublic }) => {

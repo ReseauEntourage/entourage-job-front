@@ -7,13 +7,11 @@ import { FilterConstant } from 'src/constants/utils';
 import { useCloseOnClickOutsideComponent } from 'src/hooks/useCloseOnClickOutsideComponent';
 import { StyledSelectContainer } from './SelectSimple.styles';
 
-interface SelectProps<T extends string | number | boolean>
+interface SelectSimpleProps<T extends string | number | boolean>
   extends CommonInputProps<T, HTMLInputElement> {
   options: FilterConstant<T>[];
 }
 
-type Test = SelectProps<string>;
-type Test2 = Test['onChange'];
 export function SelectSimple<T extends string | number | boolean>({
   id,
   name,
@@ -27,7 +25,7 @@ export function SelectSimple<T extends string | number | boolean>({
   disabled = false,
   value,
   inputRef,
-}: SelectProps<T>) {
+}: SelectSimpleProps<T>) {
   const [selectedOption, setSelectedOption] = useState<FilterConstant<T>>({
     label: '',
     value: null,
@@ -71,9 +69,7 @@ export function SelectSimple<T extends string | number | boolean>({
           <button
             className="placeholder"
             type="button"
-            onClick={() => {
-              return setOptionsOpen(!optionsOpen);
-            }}
+            onClick={() => setOptionsOpen(!optionsOpen)}
             data-testid={id}
             disabled={disabled}
           >

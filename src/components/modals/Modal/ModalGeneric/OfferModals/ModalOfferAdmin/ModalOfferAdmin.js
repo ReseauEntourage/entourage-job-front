@@ -31,7 +31,6 @@ import {
   findOfferStatus,
   formatParagraph,
   mutateDefaultOfferStatus,
-  mutateFormSchema,
   sortByOrder,
 } from 'src/utils';
 

@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import React, { useRef } from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
-import { formEditExternalOpportunityAsAdmin } from 'src/components/forms/schemas/formEditExternalOpportunity';
+import { formAddExternalOpportunityAsAdmin } from 'src/components/forms/schemas/formAddExternalOpportunity';
+import { formAddOpportunityAsAdmin } from 'src/components/forms/schemas/formAddOpportunity';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
@@ -12,8 +13,6 @@ import { OpportunityList } from 'src/components/opportunities/OpportunityList';
 import { ButtonMultiple } from 'src/components/utils';
 import { Icon } from 'src/components/utils/Icon';
 import { useIsDesktop } from 'src/hooks/utils';
-import { formAddOpportunityAsAdmin } from "src/components/forms/schemas/formAddOpportunity";
-import { formAddExternalOpportunityAsAdmin } from "src/components/forms/schemas/formAddExternalOpportunity";
 
 export const AdminOpportunityList = ({
   search,

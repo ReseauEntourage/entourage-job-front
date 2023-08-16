@@ -1,7 +1,6 @@
 import moment from 'moment';
 
 import { FormSchema } from '../FormSchema';
-import { Api } from 'src/api';
 import {
   BUSINESS_LINES,
   BusinessLineValue,

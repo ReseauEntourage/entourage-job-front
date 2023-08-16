@@ -6,11 +6,11 @@ import 'moment/locale/fr';
 import { RadioTypes } from 'src/components/utils/Inputs/Radio/Radio.types';
 import {
   ANTENNE_INFO,
-  HEARD_ABOUT_FILTERS,
-  HeardAboutValue,
-  CandidateYesNoNSPPValue,
   CANDIDATE_YES_NO_NSPP_FILTERS,
   CandidateYesNoNSPP,
+  CandidateYesNoNSPPValue,
+  HEARD_ABOUT_FILTERS,
+  HeardAboutValue,
 } from 'src/constants';
 import { FormSchema, GetValueType } from '../FormSchema';
 import validator from 'validator';
@@ -32,6 +32,7 @@ function hideIfNoInfoCo<T extends GetValueType<AnyCantFix>>(
   }
   return !filteredOptions;
 }
+
 export const formCandidateInscription: FormSchema<{
   location: City;
   birthdate: string;

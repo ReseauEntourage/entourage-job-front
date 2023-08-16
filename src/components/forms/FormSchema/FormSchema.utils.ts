@@ -1,6 +1,4 @@
-import { Path } from 'react-hook-form';
-import { FieldPathValue } from 'react-hook-form/dist/types/path';
-import { Validate } from 'react-hook-form/dist/types/validator';
+import { FieldPathValue, Path, Validate } from 'react-hook-form';
 import { AnyCantFix } from 'src/utils/Types';
 import {
   CheckBoxComponent,

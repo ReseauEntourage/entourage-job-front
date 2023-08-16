@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
+import { FilterConstant } from 'src/constants/utils';
 import { Select } from './Select';
-import { FilterConstant } from "../../../../../constants/utils";
 
 const meta = {
   title: 'Select',

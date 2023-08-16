@@ -19,6 +19,7 @@ interface SelectAsyncProps<T extends FilterConstant | FilterConstant[]>
   isMulti?: boolean;
   openMenuOnClick?: boolean;
 }
+
 export function SelectAsync<T extends FilterConstant | FilterConstant[]>({
   id,
   name,

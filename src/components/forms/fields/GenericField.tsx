@@ -11,11 +11,8 @@ import {
 import {
   ComponentException,
   ExtractFormSchemaValidation,
-  FormComponentValues,
   FormFieldInput,
   FormSchema,
-  isFormFieldCheckbox,
-  isFormFieldInput,
   isFormFieldRadio,
   isFormFieldSelect,
   isFormFieldSelectRequest,
