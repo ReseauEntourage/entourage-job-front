@@ -17,7 +17,7 @@ const uuidValue = uuid();
 
 export const NewsletterPartial = ({
   style = 'default',
-  padding = false,
+  padding = true,
   tag,
 }: {
   style?: 'default' | 'muted';

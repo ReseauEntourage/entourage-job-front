@@ -117,7 +117,7 @@ const Sinformer = () => {
               title: <div>Sensibiliser ses collaborateurs</div>,
               text: 'Nous proposons des ateliers pour ouvrir le dialogue autour de ce sujet dans votre entreprise et initier une démarche parmi vos collaborateurs.',
               button: {
-                label: 'Contactez-nous',
+                label: 'Nous contacter',
                 href: `mailto:${CONTACT_INFO.CORPORATE_CONTACT}`,
                 external: true,
                 size: 'small',
@@ -142,8 +142,8 @@ const Sinformer = () => {
               ),
               text: 'Découvrez si un candidat LinkedOut correspond à votre besoin ; ou contactez nos partenaires qui cherchent aussi des emplois pour leurs candidats.',
               button: {
-                label: 'Je recrute',
-                href: '/entreprises/cvs',
+                label: 'Recruter',
+                href: '/candidats?employed=false',
                 size: 'small',
               },
             },

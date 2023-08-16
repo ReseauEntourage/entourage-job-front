@@ -140,7 +140,7 @@ export const formCandidateContact = {
       type: 'email',
       component: 'input',
       placeholder: "Tapez l'adresse mail de la personne",
-      title: 'Son adresse mail',
+      title: 'Son adresse mail*',
     },
     {
       id: 'registeredUnemploymentOffice',
@@ -530,9 +530,18 @@ export const formCandidateContact = {
     },
     {
       field: 'email',
-      method: (fieldValue) => {
-        return !fieldValue || fieldValue.length === 0 || isEmail(fieldValue);
-      },
+      method: 'isEmpty',
+      args: [
+        {
+          ignore_whitespace: true,
+        },
+      ],
+      validWhen: false,
+      message: 'Obligatoire',
+    },
+    {
+      field: 'email',
+      method: 'isEmail',
       validWhen: true,
       message: 'Adresse e-mail invalide',
     },
