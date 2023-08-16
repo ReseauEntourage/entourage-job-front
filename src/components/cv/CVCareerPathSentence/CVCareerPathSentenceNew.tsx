@@ -42,28 +42,15 @@ export const CVCareerPathSentenceNew = ({
       return (
         <>
           J&apos;aimerais travailler{' '}
-          {sortedAmbitions[0].prefix || AMBITIONS_PREFIXES[0].label}{' '}
-          <span
-            className="uk-label uk-text-lowercase"
-            style={{
-              lineHeight: 'unset',
-              verticalAlign: 'bottom',
-              fontSize: 'inherit',
-            }}
-          >
+          {sortedAmbitions[0].prefix ||
+            AMBITIONS_PREFIXES[0].label.toLowerCase()}{' '}
+          <span className="orange">
             {sortedAmbitions[0].name || sortedAmbitions[0]}
           </span>
           {sortedAmbitions.length > 1 && (
             <>
               {getAmbitionsLinkingSentence(sortedAmbitions)}
-              <span
-                className="uk-label uk-text-lowercase"
-                style={{
-                  lineHeight: 'unset',
-                  verticalAlign: 'bottom',
-                  fontSize: 'inherit',
-                }}
-              >
+              <span className="orange">
                 {sortedAmbitions[1].name || sortedAmbitions[1]}
               </span>
             </>
@@ -99,7 +86,7 @@ export const CVCareerPathSentenceNew = ({
         return (
           <>
             {' '}
-            {AMBITIONS_PREFIXES[1].label}{' '}
+            {AMBITIONS_PREFIXES[1].label.toLowerCase()}{' '}
             <span className="orange">{careerPaths[index].ambition}</span>
           </>
         );
@@ -116,21 +103,18 @@ export const CVCareerPathSentenceNew = ({
 
     return (
       <StyledCareerPathSentenceContainer>
-        J&apos;aimerais travailler {AMBITIONS_PREFIXES[0].label}{' '}
-        <span>{careerPaths[0].businessLine.label}</span>
+        J&apos;aimerais travailler {AMBITIONS_PREFIXES[0].label.toLowerCase()}{' '}
+        <span>{careerPaths[0].businessLine.label.toLowerCase()}</span>
         {getAmbitionIfExists(0)}
         {hasSecondPart && (
           <>
             {hasSameBusinessLine ? (
-              <>
-                <br /> ou {getAmbitionIfExists(1)}
-              </>
+              <> ou {getAmbitionIfExists(1)}</>
             ) : (
               <>
                 {' '}
-                <br />
-                ou {AMBITIONS_PREFIXES[0].label}{' '}
-                <span>{careerPaths[1].businessLine.label}</span>
+                ou {AMBITIONS_PREFIXES[0].label.toLowerCase()}{' '}
+                <span>{careerPaths[1].businessLine.label.toLowerCase()}</span>
                 {getAmbitionIfExists(1)}
               </>
             )}

@@ -8,6 +8,17 @@ export const CV_COLORS = {
   nameGray: '#979797',
 };
 
+export const StyledBackLink = styled.a`
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 16px;
+  color: ${COLORS.darkGrayFont} !important;
+
+  &:visited {
+    color: ${COLORS.darkGrayFont} !important;
+  }
+`;
+
 export const StyledCVPageContent = styled.div`
   background-color: ${COLORS.wheat};
   display: flex;
@@ -15,6 +26,7 @@ export const StyledCVPageContent = styled.div`
   max-width: 1320px;
   margin: auto;
   color: #484848;
+  font-size: 14px;
   > a {
     margin: 26px auto 0;
     color: black;
@@ -32,12 +44,21 @@ export const StyledCVPageContent = styled.div`
   p {
     color: ${CV_COLORS.parGray};
   }
+
   .strong {
     font-weight: 700;
   }
   ul {
     padding-left: 0;
     list-style: none;
+    margin-bottom: 0;
+    > p:last-child {
+      margin-bottom: 0;
+    }
+    > li:last-child p{
+      margin-bottom: 0;
+
+    }
   }
   .mobile {
     .close {
@@ -58,7 +79,7 @@ export const StyledCVPageContentHeader = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   background-color: #ffffffe5;
   border-radius: 30px;
@@ -71,7 +92,11 @@ export const StyledCVPageContentHeader = styled.div`
   #header-details {
     padding-left: 55px;
     line-height: 24px;
-    width: calc(100% - 355px);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
     box-sizing: border-box;
     #quote {
       span.uk-icon {
@@ -106,6 +131,7 @@ export const StyledCVPageContentHeader = styled.div`
       padding-left: 0;
       text-align: center;
       width: 100%;
+      min-width: 500px;
     }
     .skill-tags {
       margin-bottom: 50px;
@@ -166,7 +192,7 @@ export const StyledCVPageContentStory = styled.div`
   margin-bottom: 20px;
   position: relative;
   p {
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
   &.mobile-hidden {
     max-height: 200px;
@@ -209,12 +235,16 @@ export const StyledCVPageContentDetailsContainer = styled.div`
   flex-direction: row;
   margin: 26px 15px 0;
   box-sizing: border-box;
-  > div {
-    flex-grow: 1;
-  }
+  flex-wrap: wrap;
   &.mobile {
     flex-direction: column;
   }
+`;
+
+export const StyledLeftColumn = styled.div``;
+
+export const StyledRightColumn = styled.div`
+  flex: 1;
 `;
 
 export const StyledCVPageContentInformations = styled.div`
@@ -271,6 +301,7 @@ export const StyledCVPageContentExperience = styled.div`
   margin-bottom: 30px;
   border-radius: 30px;
   position: relative;
+  font-size: 16px;
 `;
 
 export const StyledSkillTag = styled.div`
@@ -289,6 +320,9 @@ export const StyledSkillTag = styled.div`
 
 export const StyledCVExperienceLi = styled.div`
   padding-bottom: 40px;
+  :last-child {
+    padding-bottom: 0;
+  }
   padding-left: 14px;
   border-left: 1px solid #d4d4d4;
   position: relative;
@@ -373,6 +407,7 @@ export const StyledChevronIcon = styled(Icon)`
 `;
 
 export const StyledCVMessageContainer = styled.div`
+  margin-top: 30px;
   &.mobile {
     button {
       margin: auto;

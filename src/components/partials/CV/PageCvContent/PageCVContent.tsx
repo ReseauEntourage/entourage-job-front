@@ -27,6 +27,9 @@ import {
   StyledCVPageContentCarousel,
   StyledChevronIcon,
   StyledCVMessageContainer,
+  StyledBackLink,
+  StyledLeftColumn,
+  StyledRightColumn,
 } from 'src/components/partials/CV/PageCvContent/PageCVContent.styles';
 import { Button, Icon } from 'src/components/utils';
 import { CarouselSwiper } from 'src/components/utils/CarouselSwiper';
@@ -71,8 +74,11 @@ export const PageCVContent = ({
 
   return (
     <StyledCVPageContent>
-      <Link href="/candidats?employed=false">
-        &#12296; Retour à la page candidats
+      <Link href="/candidats?employed=false" scroll={false} shallow passHref>
+        <StyledBackLink>
+          <Icon name="chevron-left" />
+          &nbsp;Retour à la page candidats
+        </StyledBackLink>
       </Link>
       <StyledCVPageContentHeader className={!isDesktop ? 'mobile' : ''}>
         <div id="header-picture-share">
@@ -92,7 +98,7 @@ export const PageCVContent = ({
                 />
                 <p>
                   En augmentant sa visibilité, vous pouvez générer des
-                  rencontres qui peuvent tout changer&#8217;!
+                  rencontres qui peuvent tout changer&nbsp;!
                 </p>
               </StyledShareContainer>
               <CVShareButtons cv={cv} actionDisabled={actionDisabled} />
@@ -100,47 +106,48 @@ export const PageCVContent = ({
           )}
         </div>
         <div id="header-details">
-          <H1
-            title={`${cv.user.candidat.firstName} ${cv.user.candidat.lastName}`}
-            color={CV_COLORS.titleGray}
-            center
-          />
-          <CVCareerPathSentence
-            ambitions={cv.ambitions}
-            businessLines={cv.businessLines}
-          />
-          {cv.catchphrase && (
-            <p id="quote">
-              <Icon name="quote-right" />
-              <span>{cv.catchphrase}</span>
-              <Icon name="quote-right" />
-            </p>
-          )}
-          {cv.story && (
-            <StyledCVPageContentStory
-              className={!isDesktop && isStoryHidden ? 'mobile-hidden' : ''}
-            >
-              <p className="">{cv.story}</p>
-              {!isDesktop && isStoryHidden && (
-                <div className="seeMore">
-                  <div onClick={() => setIsStoryHidden(!isStoryHidden)}>
-                    En lire plus
+          <div>
+            <H1
+              title={`${cv.user.candidat.firstName} ${cv.user.candidat.lastName}`}
+              color={CV_COLORS.titleGray}
+            />
+            <CVCareerPathSentence
+              ambitions={cv.ambitions}
+              businessLines={cv.businessLines}
+            />
+            {cv.catchphrase && (
+              <p id="quote">
+                <Icon name="quote-right" />
+                <span>{cv.catchphrase}</span>
+                <Icon name="quote-right" />
+              </p>
+            )}
+            {cv.story && (
+              <StyledCVPageContentStory
+                className={!isDesktop && isStoryHidden ? 'mobile-hidden' : ''}
+              >
+                <p className="">{cv.story}</p>
+                {!isDesktop && isStoryHidden && (
+                  <div className="seeMore">
+                    <div onClick={() => setIsStoryHidden(!isStoryHidden)}>
+                      En lire plus
+                    </div>
                   </div>
-                </div>
-              )}
-            </StyledCVPageContentStory>
-          )}
-          <div className="skill-tags">
-            {cv.skills.length > 0 &&
-              cv.skills.map(({ name, id }, key) => {
-                return (
-                  <StyledSkillTag key={`${key}-${id}`}>{name}</StyledSkillTag>
-                );
-              })}
+                )}
+              </StyledCVPageContentStory>
+            )}
+            <div className="skill-tags">
+              {cv.skills.length > 0 &&
+                cv.skills.map(({ name, id }, key) => {
+                  return (
+                    <StyledSkillTag key={`${key}-${id}`}>{name}</StyledSkillTag>
+                  );
+                })}
+            </div>
           </div>
           <StyledCVMessageContainer className={!isDesktop ? 'mobile' : ''}>
             <H5
-              title={`Donnez un coup de pouce à ${cv.user.candidat.firstName}.`}
+              title={`Donnez un coup de pouce à ${cv.user.candidat.firstName} !`}
               color={CV_COLORS.titleGray}
             />
             <p>
@@ -163,7 +170,10 @@ export const PageCVContent = ({
                     } conseiller dans sa recherche d'emploi`}
                     submitText="Envoyer"
                     formSchema={formSendExternalMessage}
-                    onSubmit={async ({ optIn, ...fields }, closeModal) => {
+                    onSubmit={async (
+                      { optInContact, ...fields },
+                      closeModal
+                    ) => {
                       gaEvent(GA_TAGS.PAGE_CV_ENVOYER_CONTACTEZ_MOI_CLIC);
                       fbEvent(FB_TAGS.MESSAGE_SEND);
                       try {
@@ -201,7 +211,7 @@ export const PageCVContent = ({
                 />
                 <p>
                   En augmentant sa visibilité, vous pouvez générer des
-                  rencontres qui peuvent tout changer&#8217;!
+                  rencontres qui peuvent tout changer&nbsp;!
                 </p>
               </StyledShareContainer>
               <CVShareButtons cv={cv} actionDisabled={actionDisabled} />
@@ -212,7 +222,7 @@ export const PageCVContent = ({
       <StyledCVPageContentDetailsContainer
         className={!isDesktop ? 'mobile' : ''}
       >
-        <div>
+        <StyledLeftColumn>
           <StyledCVPageContentInformations
             className={`${openedPanel.informations ? '' : 'close'} ${
               !isDesktop ? 'mobile' : ''
@@ -317,8 +327,8 @@ export const PageCVContent = ({
               </ul>
             </StyledCVPageContentPassions>
           )}
-        </div>
-        <div>
+        </StyledLeftColumn>
+        <StyledRightColumn>
           {cv.experiences?.length > 0 && (
             <StyledCVPageContentExperience
               className={`${openedPanel.experiences ? '' : 'close'} ${
@@ -385,7 +395,7 @@ export const PageCVContent = ({
               </ul>
             </StyledCVPageContentPassions>
           )}
-        </div>
+        </StyledRightColumn>
       </StyledCVPageContentDetailsContainer>
       {cv.reviews?.length > 0 && (
         <StyledCVPageContentCarousel>
@@ -397,7 +407,8 @@ export const PageCVContent = ({
                   <StyledCVPageContentSlide key={id}>
                     <Icon name="quote-right" />
                     <div>
-                      <span>{text}</span>{' '}
+                      <span>{text}</span>
+                      <br />
                       <span className="name">
                         {name}, {status}
                       </span>
