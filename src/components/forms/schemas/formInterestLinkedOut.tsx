@@ -1,6 +1,6 @@
 import React from 'react';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
-import validator from 'validator';
+import { isEmail } from 'validator';
 import { FormSchema } from '../FormSchema';
 import { SimpleLink } from 'src/components/utils';
 import {
@@ -46,7 +46,7 @@ export const formInterestLinkedOut: FormSchema<{
       isRequired: true,
       rules: [
         {
-          method: (fieldValue) => validator.isEmail(fieldValue),
+          method: (fieldValue) => isEmail(fieldValue),
 
           message: 'Adresse e-mail invalide',
         },

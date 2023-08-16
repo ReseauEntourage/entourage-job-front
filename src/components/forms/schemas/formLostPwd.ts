@@ -1,4 +1,4 @@
-import validator from 'validator';
+import { isEmail } from 'validator';
 import { FormSchema } from '../FormSchema';
 
 export const formLostPwd: FormSchema<{ email: string }> = {
@@ -15,7 +15,7 @@ export const formLostPwd: FormSchema<{ email: string }> = {
       isRequired: true,
       rules: [
         {
-          method: (fieldValue) => validator.isEmail(fieldValue),
+          method: (fieldValue) => isEmail(fieldValue),
           message: 'Adresse e-mail invalide',
         },
       ],

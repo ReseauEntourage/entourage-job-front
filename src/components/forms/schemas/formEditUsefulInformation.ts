@@ -1,5 +1,5 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
-import validator from 'validator';
+import { isEmail } from 'validator';
 import { FormSchema } from '../FormSchema';
 import { Contract, CONTRACTS } from 'src/constants';
 import { Department, DEPARTMENTS_FILTERS } from 'src/constants/departements';
@@ -25,7 +25,7 @@ export const formEditUsefulInformation: FormSchema<{
       title: 'Adresse mail',
       rules: [
         {
-          method: (fieldValue) => validator.isEmail(fieldValue),
+          method: (fieldValue) => isEmail(fieldValue),
 
           message: 'Adresse e-mail invalide',
         },
@@ -39,10 +39,8 @@ export const formEditUsefulInformation: FormSchema<{
       isRequired: true,
       rules: [
         {
-          method: (fieldValue) => {
-            return fieldValue && isValidPhoneNumber(fieldValue, 'FR');
-          },
-
+          method: (fieldValue) =>
+            fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
           message: 'Numéro de téléphone invalide',
         },
       ],

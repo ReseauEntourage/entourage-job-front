@@ -50,27 +50,36 @@ export function mapFieldRules<
     ExtractFormSchemaValidation<S>
   >
 > {
-  let rules = {} as Record<
-    string,
-    Validate<
-      FieldPathValue<
-        ExtractFormSchemaValidation<S>,
-        Path<ExtractFormSchemaValidation<S>>
-      >,
-      ExtractFormSchemaValidation<S>
-    >
-  >;
-  for (let i = 0; i <= fieldRules.length; i += 1) {
-    rules = {
-      ...rules,
-      [`rule${i}`]: (
-        fieldValue: FormComponentValues<boolean>[T],
-        fieldValues: ExtractFormSchemaValidation<S>
-      ) =>
-        fieldRules[i].method(fieldValue, fieldValues) || fieldRules[i].message,
-    };
+  if (fieldRules) {
+    let rules = {} as Record<
+      string,
+      Validate<
+        FieldPathValue<
+          ExtractFormSchemaValidation<S>,
+          Path<ExtractFormSchemaValidation<S>>
+        >,
+        ExtractFormSchemaValidation<S>
+      >
+    >;
+    for (let i = 0; i < fieldRules.length; i += 1) {
+      rules = {
+        ...rules,
+        [`rule${i}`]: (
+          fieldValue: FormComponentValues<boolean>[T],
+          fieldValues: ExtractFormSchemaValidation<S>
+        ) => {
+          console.log(`fieldRules[${i}]`, fieldRules[i]);
+          console.log(`fieldRules[${i}].method`, fieldRules[i].method);
+          return (
+            fieldRules[i].method(fieldValue, fieldValues) ||
+            fieldRules[i].message
+          );
+        },
+      };
+    }
+    return rules;
   }
-  return rules;
+  return null;
 }
 
 export function isFormFieldTextInput<S extends FormSchemaValidation>(

@@ -171,7 +171,7 @@ export const PageCVContent = ({
                     submitText="Envoyer"
                     formSchema={formSendExternalMessage}
                     onSubmit={async (
-                      { optInContact, ...fields },
+                      fields,
                       closeModal
                     ) => {
                       gaEvent(GA_TAGS.PAGE_CV_ENVOYER_CONTACTEZ_MOI_CLIC);

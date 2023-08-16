@@ -50,7 +50,7 @@ export const CVSendMessage = ({
               } conseiller dans sa recherche d'emploi`}
               submitText="Envoyer"
               formSchema={formSendExternalMessage}
-              onSubmit={async ({ optInContact, ...fields }, closeModal) => {
+              onSubmit={async (fields, closeModal) => {
                 gaEvent(GA_TAGS.PAGE_CV_ENVOYER_CONTACTEZ_MOI_CLIC);
                 fbEvent(FB_TAGS.MESSAGE_SEND);
                 try {
@@ -59,7 +59,6 @@ export const CVSendMessage = ({
                     ...fields,
                   });
                   UIkit.notification('Le message a bien été envoyé', 'success');
-
                   closeModal();
                 } catch (err) {
                   UIkit.notification("Une erreur s'est produite", 'danger');

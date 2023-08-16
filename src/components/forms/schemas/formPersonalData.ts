@@ -101,10 +101,7 @@ export const formPersonalData: FormSchema<{
       isRequired: true,
       rules: [
         {
-          method: (fieldValue) => {
-            return fieldValue && isValidPhoneNumber(fieldValue, 'FR');
-          },
-
+          method: (fieldValue) => fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
           message: 'Numéro de téléphone invalide',
         },
       ],

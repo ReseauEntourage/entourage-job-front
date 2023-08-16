@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { formAddOpportunity } from '../../../forms/schemas/formAddOpportunity';
+import { formAddOpportunity } from 'src/components/forms/schemas/formAddOpportunity';
 import { CV_COLORS } from '../PageCvContent/PageCVContent.styles';
 import { CV } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';

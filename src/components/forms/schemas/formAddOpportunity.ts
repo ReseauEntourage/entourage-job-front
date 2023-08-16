@@ -1,6 +1,5 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
-import validator from 'validator';
-import isEmail from 'validator/lib/isEmail';
+import { isEmail } from 'validator';
 import { FormSchema } from '../FormSchema';
 import { Api } from 'src/api';
 import {
@@ -184,7 +183,7 @@ export const formAddOpportunity: FormSchema<{
       isRequired: true,
       rules: [
         {
-          method: (fieldValue) => validator.isEmail(fieldValue),
+          method: (fieldValue) => isEmail(fieldValue),
 
           message: 'Invalide',
         },
@@ -204,7 +203,6 @@ export const formAddOpportunity: FormSchema<{
               isValidPhoneNumber(fieldValue, 'FR')
             );
           },
-
           message: 'Numéro de téléphone invalide',
         },
       ],
@@ -468,7 +466,7 @@ export const formAddOpportunityAsAdmin: FormSchema<{
       isRequired: true,
       rules: [
         {
-          method: (fieldValue) => validator.isEmail(fieldValue),
+          method: (fieldValue) => isEmail(fieldValue),
 
           message: 'Invalide',
         },
@@ -488,7 +486,6 @@ export const formAddOpportunityAsAdmin: FormSchema<{
               isValidPhoneNumber(fieldValue, 'FR')
             );
           },
-
           message: 'Numéro de téléphone invalide',
         },
       ],
@@ -574,6 +571,7 @@ export const formAddOpportunityAsAdmin: FormSchema<{
           id: 'workingHours',
           name: 'workingHours',
           component: 'text-input',
+          maxLength: 255,
           title: 'Jours et horaires de travail',
         },
         {
@@ -593,6 +591,7 @@ export const formAddOpportunityAsAdmin: FormSchema<{
           id: 'salary',
           name: 'salary',
           component: 'text-input',
+          maxLength: 255,
           title: 'Salaire et compléments',
         },
         {

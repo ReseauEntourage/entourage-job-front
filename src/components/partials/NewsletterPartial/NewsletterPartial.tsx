@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import UIkit from 'uikit';
 
 import { v4 as uuid } from 'uuid';
-import validator from 'validator';
+import { isEmail } from 'validator';
 import { Api } from 'src/api';
 import { StyledNLForm } from 'src/components/partials/NewsletterPartial/NewsletterPartial.styles';
 import { Section } from 'src/components/utils';
@@ -32,7 +32,7 @@ export const NewsletterPartial = ({
   const newsletterParams = useNewsletterTracking();
 
   const onSubmit = async () => {
-    const mailValid = validator.isEmail(email);
+    const mailValid = isEmail(email);
     // const tagsValid = !validator.isEmpty(zone) && !validator.isEmpty(status);
 
     if (!mailValid /* || !tagsValid */) {

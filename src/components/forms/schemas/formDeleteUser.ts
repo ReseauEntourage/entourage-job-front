@@ -1,4 +1,4 @@
-import validator from 'validator';
+import { isEmail } from 'validator';
 import { FormSchema } from '../FormSchema';
 
 export const formDeleteUser: FormSchema<{ confirmation: string }> = {

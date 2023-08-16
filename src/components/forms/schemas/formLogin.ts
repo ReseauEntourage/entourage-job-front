@@ -1,4 +1,4 @@
-import validator from 'validator';
+import { isEmail } from 'validator';
 import { FormSchema } from '../FormSchema';
 
 export const formLogin: FormSchema<{
@@ -18,7 +18,7 @@ export const formLogin: FormSchema<{
       isRequired: true,
       rules: [
         {
-          method: (fieldValue) => validator.isEmail(fieldValue),
+          method: (fieldValue) => isEmail(fieldValue),
           message: 'Adresse e-mail invalide',
         },
       ],

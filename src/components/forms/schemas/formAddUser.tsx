@@ -1,6 +1,6 @@
 import React from 'react';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
-import validator from 'validator';
+import { isEmail } from 'validator';
 import PlusFilledIcon from 'assets/custom/icons/plus-filled.svg';
 import { FormSchema, GetValueType } from '../FormSchema';
 import { Api } from 'src/api';
@@ -44,7 +44,7 @@ type FormAddUserSchema = {
   organizationId: FilterConstant<string>;
   nameOrganization: string;
   addressOrganization: string;
-  zoneOrganization: string;
+  zoneOrganization: AdminZone;
   referentFirstNameOrganization: string;
   referentLastNameOrganization: string;
   referentPhoneOrganization: string;
@@ -130,7 +130,7 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
           isRequired: true,
           rules: [
             {
-              method: (fieldValue) => isValidPhoneNumber(fieldValue, 'FR'),
+              method: (fieldValue) => fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
               message: 'Numéro de téléphone invalide',
             },
           ],
@@ -154,7 +154,7 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
       isRequired: true,
       rules: [
         {
-          method: (fieldValue) => validator.isEmail(fieldValue),
+          method: (fieldValue) => isEmail(fieldValue),
           message: 'Adresse e-mail invalide',
         },
       ],
@@ -354,10 +354,7 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
 
       rules: [
         {
-          method: (fieldValue) => {
-            return fieldValue && isValidPhoneNumber(fieldValue, 'FR');
-          },
-
+          method: (fieldValue) => fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
           message: 'Numéro de téléphone invalide',
         },
       ],
@@ -373,7 +370,7 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
 
       rules: [
         {
-          method: (fieldValue) => validator.isEmail(fieldValue),
+          method: (fieldValue) => isEmail(fieldValue),
           message: 'Adresse e-mail invalide',
         },
       ],

@@ -1,5 +1,5 @@
 import React from 'react';
-import validator from 'validator';
+import { isEmail } from 'validator';
 import { FormSchema } from '../FormSchema';
 import { SimpleLink } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
@@ -20,7 +20,7 @@ export const formGetEmail: FormSchema<{
       isRequired: true,
       rules: [
         {
-          method: (fieldValue) => validator.isEmail(fieldValue),
+          method: (fieldValue) => isEmail(fieldValue),
           message: 'Adresse e-mail invalide',
         },
       ],

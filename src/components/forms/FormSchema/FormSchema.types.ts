@@ -115,7 +115,8 @@ export type InputComponent =
   | TextInputComponent
   | CheckBoxComponent
   | SelectComponent
-  | SelectRequestComponent;
+  | SelectRequestComponent
+  | RadioComponent;
 
 export type GetValueType<V extends FormSchemaValidation> = UseFormGetValues<V>;
 

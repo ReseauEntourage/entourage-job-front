@@ -91,7 +91,7 @@ export function SelectAsync<T extends FilterConstant | FilterConstant[]>({
             return `Aucun résultat`;
           }}
           loadingMessage={() => {
-            return `Chargement`;
+            return `Chargement...`;
           }}
           loadOptions={debouncedLoadOptions}
           isDisabled={disabled}

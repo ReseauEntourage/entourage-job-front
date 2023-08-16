@@ -1,6 +1,6 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
-import validator from 'validator';
-import { Gender } from '../../../constants/users';
+import { isEmail } from 'validator';
+import { Gender } from 'src/constants/users';
 import { FormSchema } from '../FormSchema';
 import {
   BUSINESS_LINES,
@@ -97,7 +97,7 @@ export const formCandidateContact: FormSchema<{
       isRequired: true,
       rules: [
         {
-          method: (fieldValue) => validator.isEmail(fieldValue),
+          method: (fieldValue) => isEmail(fieldValue),
           message: 'Adresse e-mail invalide',
         },
       ],
@@ -110,7 +110,7 @@ export const formCandidateContact: FormSchema<{
       isRequired: true,
       rules: [
         {
-          method: (fieldValue) => isValidPhoneNumber(fieldValue, 'FR'),
+          method: (fieldValue) => fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
           message: 'Numéro de téléphone invalide',
         },
       ],
@@ -192,7 +192,7 @@ export const formCandidateContact: FormSchema<{
       isRequired: true,
       rules: [
         {
-          method: (fieldValue) => isValidPhoneNumber(fieldValue, 'FR'),
+          method: (fieldValue) => fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
           message: 'Numéro de téléphone invalide',
         },
       ],
@@ -202,15 +202,12 @@ export const formCandidateContact: FormSchema<{
       name: 'email',
       type: 'email',
       component: 'text-input',
-      title: 'Son adresse mail',
+      title: 'Son adresse mail*',
+      isRequired: true,
       rules: [
         {
           method: (fieldValue) => {
-            return (
-              !fieldValue ||
-              fieldValue.length === 0 ||
-              validator.isEmail(fieldValue)
-            );
+            return isEmail(fieldValue);
           },
 
           message: 'Adresse e-mail invalide',

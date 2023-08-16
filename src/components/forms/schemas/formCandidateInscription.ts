@@ -13,7 +13,7 @@ import {
   HeardAboutValue,
 } from 'src/constants';
 import { FormSchema, GetValueType } from '../FormSchema';
-import validator from 'validator';
+import { isEmail } from 'validator';
 import { Cities, CITIES_FILTERS, City } from 'src/constants/departements';
 import { AnyCantFix } from 'src/utils/Types';
 
@@ -169,7 +169,8 @@ export const formCandidateInscription: FormSchema<{
           isRequired: true,
           rules: [
             {
-              method: (fieldValue) => isValidPhoneNumber(fieldValue, 'FR'),
+              method: (fieldValue) =>
+                fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
               message: 'Numéro de téléphone invalide',
             },
           ],
@@ -184,7 +185,7 @@ export const formCandidateInscription: FormSchema<{
           isRequired: true,
           rules: [
             {
-              method: (fieldValue) => validator.isEmail(fieldValue),
+              method: (fieldValue) => isEmail(fieldValue),
               message: 'Adresse e-mail invalide',
             },
           ],

@@ -1,5 +1,5 @@
 import moment from 'moment';
-import validator from 'validator';
+import { isEmail } from 'validator';
 import { FormSchema } from '../FormSchema';
 import { Contract, CONTRACTS } from 'src/constants';
 import { findConstantFromValue } from 'src/utils';

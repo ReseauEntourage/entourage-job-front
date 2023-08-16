@@ -57,7 +57,7 @@ export function SelectSimple<T extends string | number | boolean>({
       )}
       <input
         type="hidden"
-        value={selectedOption.value.toString()}
+        value={(selectedOption.value || '').toString()}
         name={name}
         id={id}
         onBlur={onBlur}

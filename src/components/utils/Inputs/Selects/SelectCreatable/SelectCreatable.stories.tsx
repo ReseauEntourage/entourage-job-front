@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { FilterConstant } from '../../../../../constants/utils';
+import { FilterConstant } from 'src/constants/utils';
 import { SelectCreatable } from './SelectCreatable';
 
 const meta = {

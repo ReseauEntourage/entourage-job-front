@@ -10,12 +10,11 @@ import {
   ComponentException,
   FormSchema,
   isFormFieldGroup,
-  isFormFieldTextInput,
   isFormFieldMultiple,
-  isFormFieldSelect,
   isFormFieldText,
   ExtractFormSchemaValidation,
   FormField,
+  isFormFieldInput,
 } from './FormSchema';
 import { StyledForm } from './Forms.styles';
 import { GenericField } from './fields/GenericField';
@@ -213,7 +212,7 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
               }
             }
 
-            if (isFormFieldTextInput(field) || isFormFieldSelect(field)) {
+            if (isFormFieldInput(field)) {
               return (
                 <li key={i}>
                   <GenericField

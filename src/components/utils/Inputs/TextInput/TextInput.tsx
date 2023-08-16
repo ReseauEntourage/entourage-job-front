@@ -35,7 +35,7 @@ export function TextInput({
     return null;
   }
 
-  const remainingCharacters = maxLength - value.length;
+  const remainingCharacters = (maxLength || 0) - (value || '').length;
 
   return (
     <StyledTextInputContainer>

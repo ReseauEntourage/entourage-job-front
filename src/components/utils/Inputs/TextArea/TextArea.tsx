@@ -52,7 +52,7 @@ export function TextArea({
 
   const maxLinesWidth = maxLines?.width || 655;
 
-  const remainingCharacters = (maxLength || 0) - value.length;
+  const remainingCharacters = (maxLength || 0) - (value || '').length;
 
   return (
     <StyledTextAreaContainer>
