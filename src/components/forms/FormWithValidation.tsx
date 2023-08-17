@@ -72,15 +72,6 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
   const onValidForm: SubmitHandler<ExtractFormSchemaValidation<S>> =
     useCallback(
       (formValues) => {
-        /*   const mutatedFormValues = Object.keys(formValues).reduce(
-          (acc, curr) => {
-            return {
-              ...acc,
-              [curr]: getValueFromFormField(formValues[curr]),
-            };
-          },
-          {}
-        ); */
         onSubmit(formValues, (msg) => {
           setError(msg);
         });

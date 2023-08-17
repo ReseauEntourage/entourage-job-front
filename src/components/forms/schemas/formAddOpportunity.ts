@@ -1,5 +1,6 @@
+import moment from 'moment';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
-import { isEmail } from 'validator';
+import { isAfter, isEmail } from 'validator';
 import { FormSchema } from '../FormSchema';
 import { Api } from 'src/api';
 import {
@@ -30,8 +31,6 @@ export const formAddOpportunity: FormSchema<{
   recruiterPhone: string;
   description: string;
   contract: Contract;
-  startOfContract: string;
-  endOfContract: string;
   workingHours: string;
   isPartTime: boolean;
   salary: string;
@@ -83,11 +82,8 @@ export const formAddOpportunity: FormSchema<{
       },
       rules: [
         {
-          method: (fieldValue, fieldValues) => {
-            return (
-              !!fieldValues.isPublic || (fieldValue && fieldValue.length > 0)
-            );
-          },
+          method: (fieldValue, fieldValues) =>
+            fieldValues.isPublic || (fieldValue && fieldValue.length > 0),
           message: 'Obligatoire si offre privée',
         },
       ],
@@ -196,13 +192,10 @@ export const formAddOpportunity: FormSchema<{
       title: 'Votre téléphone portable',
       rules: [
         {
-          method: (fieldValue) => {
-            return (
-              !fieldValue ||
-              fieldValue.length === 0 ||
-              isValidPhoneNumber(fieldValue, 'FR')
-            );
-          },
+          method: (fieldValue) =>
+            !fieldValue ||
+            fieldValue.length === 0 ||
+            isValidPhoneNumber(fieldValue, 'FR'),
           message: 'Numéro de téléphone invalide',
         },
       ],
@@ -226,7 +219,6 @@ export const formAddOpportunity: FormSchema<{
       component: 'select-simple',
       options: CONTRACTS,
       title: 'Type de contrat*',
-      fieldsToReset: ['endOfContract'],
       isRequired: true,
     },
     {
@@ -306,7 +298,7 @@ export const formAddOpportunityAsAdmin: FormSchema<{
   recruiterMail: string;
   recruiterPhone: string;
   contactMail: string;
-  businessLines: FilterConstant<BusinessLineValue>;
+  businessLines: FilterConstant<BusinessLineValue>[];
   description: string;
   contract: Contract;
   startOfContract: string;
@@ -361,11 +353,8 @@ export const formAddOpportunityAsAdmin: FormSchema<{
       },
       rules: [
         {
-          method: (fieldValue, fieldValues) => {
-            return (
-              !!fieldValues.isPublic || (fieldValue && fieldValue.length > 0)
-            );
-          },
+          method: (fieldValue, fieldValues) =>
+            fieldValues.isPublic || (fieldValue && fieldValue.length > 0),
           message: 'Obligatoire si offre privée',
         },
       ],
@@ -399,14 +388,14 @@ export const formAddOpportunityAsAdmin: FormSchema<{
       id: 'company',
       name: 'company',
       component: 'text-input',
-      title: 'Nom de votre entreprise*',
+      title: "Nom de l'entreprise*",
       isRequired: true,
     },
     {
       id: 'companyDescription',
       name: 'companyDescription',
       component: 'textarea',
-      title: "Si vous le souhaitez, présentez l'entreprise en quelques mots",
+      title: "Présentation de l'entreprise",
     },
     {
       id: 'locations',
@@ -440,21 +429,21 @@ export const formAddOpportunityAsAdmin: FormSchema<{
       id: 'recruiterFirstName',
       name: 'recruiterFirstName',
       component: 'text-input',
-      title: 'Votre prénom*',
+      title: 'Prénom*',
       isRequired: true,
     },
     {
       id: 'recruiterName',
       name: 'recruiterName',
       component: 'text-input',
-      title: 'Votre nom*',
+      title: 'Nom*',
       isRequired: true,
     },
     {
       id: 'recruiterPosition',
       name: 'recruiterPosition',
       component: 'text-input',
-      title: 'Votre fonction*',
+      title: 'Fonction*',
       isRequired: true,
     },
     {
@@ -462,7 +451,7 @@ export const formAddOpportunityAsAdmin: FormSchema<{
       name: 'recruiterMail',
       component: 'text-input',
       type: 'email',
-      title: 'Votre adresse mail*',
+      title: 'Adresse mail*',
       isRequired: true,
       rules: [
         {
@@ -476,16 +465,13 @@ export const formAddOpportunityAsAdmin: FormSchema<{
       id: 'recruiterPhone',
       name: 'recruiterPhone',
       component: 'tel-input',
-      title: 'Votre téléphone portable',
+      title: 'Téléphone portable',
       rules: [
         {
-          method: (fieldValue) => {
-            return (
-              !fieldValue ||
-              fieldValue.length === 0 ||
-              isValidPhoneNumber(fieldValue, 'FR')
-            );
-          },
+          method: (fieldValue) =>
+            !fieldValue ||
+            fieldValue.length === 0 ||
+            isValidPhoneNumber(fieldValue, 'FR'),
           message: 'Numéro de téléphone invalide',
         },
       ],
@@ -498,10 +484,8 @@ export const formAddOpportunityAsAdmin: FormSchema<{
       title: 'Adresse mail du recruteur si intermédiaire',
       rules: [
         {
-          // TODO Put trim on all fields
-          method: (fieldValue) => {
-            return !fieldValue.trim() || isEmail(fieldValue);
-          },
+          method: (fieldValue) =>
+            !fieldValue || fieldValue.length === 0 || isEmail(fieldValue),
           message: 'Invalide',
         },
       ],
@@ -559,6 +543,18 @@ export const formAddOpportunityAsAdmin: FormSchema<{
             );
             return !contract || !contract.end;
           },
+          rules: [
+            {
+              method: (fieldValue, fieldValues) =>
+                !fieldValue ||
+                !fieldValues.startOfContract ||
+                isAfter(
+                  fieldValue,
+                  moment(fieldValues.startOfContract).format('YYYY-MM-DD')
+                ),
+              message: 'Date antérieure à la date de début',
+            },
+          ],
         },
       ],
     },
@@ -606,7 +602,7 @@ export const formAddOpportunityAsAdmin: FormSchema<{
       id: 'otherInfo',
       name: 'otherInfo',
       component: 'textarea',
-      title: 'Autres précisions sur votre besoin',
+      title: 'Autres précisions sur le besoin',
     },
     {
       id: 'openNewForm',

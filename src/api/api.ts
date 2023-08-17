@@ -12,7 +12,7 @@ import {
   ContactContactUs,
   ContactCandidate,
   ContactNewsletter,
-  ExternalOpportunity,
+  ExternalOpportunityDto,
   Opportunity,
   OpportunityJoin,
   OpportunityUserEvent,
@@ -23,6 +23,7 @@ import {
   UserDto,
   OrganizationDto,
   ExternalMessage,
+  OpportunityDto,
 } from './types';
 
 export class APIHandler {
@@ -302,11 +303,13 @@ export class APIHandler {
 
   // post
 
-  postOpportunity(params: Opportunity): Promise<AxiosResponse> {
+  postOpportunity(params: OpportunityDto): Promise<AxiosResponse> {
     return this.post('/opportunity', params);
   }
 
-  postExternalOpportunity(params: ExternalOpportunity): Promise<AxiosResponse> {
+  postExternalOpportunity(
+    params: ExternalOpportunityDto
+  ): Promise<AxiosResponse> {
     return this.post('/opportunity/external', params);
   }
 
@@ -334,7 +337,7 @@ export class APIHandler {
 
   putOpportunity(
     opportunityId: string,
-    params: Opportunity
+    params: Partial<OpportunityDto>
   ): Promise<AxiosResponse> {
     return this.put(`/opportunity/${opportunityId}`, params);
   }
@@ -342,7 +345,7 @@ export class APIHandler {
   putExternalOpportunity(
     opportunityId: string,
     candidateId: string,
-    params: ExternalOpportunity
+    params: Partial<ExternalOpportunityDto>
   ): Promise<AxiosResponse> {
     return this.put(
       `/opportunity/external/${opportunityId}/${candidateId}`,

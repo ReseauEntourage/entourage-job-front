@@ -51,7 +51,7 @@ export const formEditCareerPath: FormSchema<{
           rules: [
             {
               method: (fieldValue, fieldValues) => {
-                return !(!fieldValue && !!fieldValues.ambition1);
+                return fieldValue || !fieldValues.ambition1;
               },
               message: 'Obligatoire',
             },

@@ -59,13 +59,10 @@ export const formInterestLinkedOut: FormSchema<{
       title: 'Téléphone portable',
       rules: [
         {
-          method: (fieldValue) => {
-            return (
-              !fieldValue ||
-              fieldValue.length === 0 ||
-              isValidPhoneNumber(fieldValue, 'FR')
-            );
-          },
+          method: (fieldValue) =>
+            !fieldValue ||
+            fieldValue.length === 0 ||
+            isValidPhoneNumber(fieldValue, 'FR'),
           message: 'Numéro de téléphone invalide',
         },
       ],

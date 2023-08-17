@@ -210,75 +210,76 @@ export type Opportunity = {
   companyDescription: string;
   skills: string;
   prerequisites: string;
-  department: string;
+  department: Department;
   contract: ContractValue;
   startOfContract: string;
   endOfContract: string;
   isPartTime: boolean;
   numberOfPositions: number;
-  beContacted: boolean;
   message: string;
   driversLicense: boolean;
   workingHours: string;
   salary: string;
   otherInfo: string;
-  businessLines: { name: string; order: string }[];
+  businessLines: { name: BusinessLineValue; order: number }[];
   candidatesIds: string[];
   isAdmin: boolean;
   shouldSendNotifications: boolean;
   isCopy: boolean;
-  locations: object;
   visit: string;
   visitor: string;
   urlParams: object;
   createdAt: string;
 };
 
-/*
-type OpportunityDto = {
-  'title': string,
-  'isPublic': boolean,
-  'isValidated',
-  'isArchived',
-  'isExternal',
-  'link',
-  'externalOrigin',
-  'company',
-  'recruiterName',
-  'recruiterFirstName',
-  'recruiterMail',
-  'contactMail',
-  'recruiterPosition',
-  'recruiterPhone',
-  'date',
-  'address',
-  'description',
-  'companyDescription',
-  'skills',
-  'prerequisites',
-  'department',
-  'contract',
-  'startOfContract',
-  'endOfContract',
-  'isPartTime',
-  'numberOfPositions',
-  'beContacted',
-  'message',
-  'driversLicense',
-  'workingHours',
-  'salary',
-  'otherInfo',
-  'businessLines',
-  candidatesIds
-  isAdmin
-  shouldSendNotifications
-  isCopy
-  locations
-  visit
-  visitor
-  urlParams
+export interface PleziTrackingData {
+  visit?: string;
+  visitor?: string;
+  urlParams?: {
+    utm?: string;
+    utm_medium?: string;
+    utm_source?: string;
+    gclid?: string;
+    referer?: string;
+  };
 }
-*/
+
+export type OpportunityDto = {
+  title: string;
+  isPublic: boolean;
+  isValidated?: boolean;
+  isArchived?: boolean;
+  company: string;
+  recruiterName: string;
+  recruiterFirstName: string;
+  recruiterMail: string;
+  contactMail?: string;
+  recruiterPosition: string;
+  recruiterPhone: string;
+  date: string;
+  description: string;
+  companyDescription: string;
+  department?: Department;
+  address?: string;
+  contract: ContractValue;
+  startOfContract?: string;
+  endOfContract?: string;
+  isPartTime: boolean;
+  message: string;
+  driversLicense: boolean;
+  workingHours: string;
+  salary: string;
+  otherInfo: string;
+  businessLines?: { name: BusinessLineValue; order: number }[];
+  candidatesIds: string[];
+  isAdmin?: boolean;
+  shouldSendNotifications?: boolean;
+  isCopy?: boolean;
+  locations?: { department: Department; address: string }[];
+  visit?: PleziTrackingData['visit'];
+  visitor?: PleziTrackingData['visitor'];
+  urlParams?: PleziTrackingData['urlParams'];
+};
 
 export type Skill = {
   id: string;
@@ -333,21 +334,21 @@ export interface OpportunityWithOpportunityUsers extends Opportunity {
   opportunityUsers: OpportunityUser;
 }
 
-export type ExternalOpportunity = {
+export type ExternalOpportunityDto = {
   title: string;
   company: string;
   contract: ContractValue;
   startOfContract?: string;
   endOfContract?: string;
-  isPartTime?: string;
-  businessLines?: { name: string; order: string }[];
+  isPartTime?: boolean;
+  businessLines?: { name: BusinessLineValue; order: number }[];
   department: Department;
   link: string;
   description: string;
   externalOrigin?: ExternalOfferOrigin;
   date: string;
   candidateId: string;
-  status?: string;
+  status?: number;
 };
 
 export type OpportunityUserEvent = {

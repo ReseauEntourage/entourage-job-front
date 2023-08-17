@@ -1,5 +1,5 @@
 import moment from 'moment';
-
+import { isAfter } from 'validator';
 import { FormSchema } from '../FormSchema';
 import {
   BUSINESS_LINES,
@@ -15,135 +15,6 @@ import { Department, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { FilterConstant } from 'src/constants/utils';
 import { findConstantFromValue } from 'src/utils';
 
-export const formEditExternalOpportunity: FormSchema<{
-  status: OfferStatus;
-  title: string;
-  company: string;
-  contract: Contract;
-  startOfContract: string;
-  endOfContract: string;
-  isPartTime: boolean;
-  department: FilterConstant<Department>;
-  link: string;
-  description: string;
-  externalOrigin: ExternalOfferOrigin;
-}> = {
-  id: 'form-offer-external',
-  fields: [
-    {
-      id: 'candidateStatus',
-      name: 'candidateStatus',
-      component: 'fieldgroup',
-      fields: [
-        {
-          id: 'status',
-          name: 'status',
-          title: 'Statut',
-          component: 'select-simple',
-          options: OFFER_STATUS.slice(1),
-        },
-      ],
-    },
-    {
-      id: 'title',
-      name: 'title',
-      component: 'text-input',
-      title: "Titre de l'offre*",
-      isRequired: true,
-    },
-    {
-      id: 'company',
-      name: 'company',
-      component: 'text-input',
-      title: "Nom de l'entreprise*",
-      isRequired: true,
-    },
-    {
-      id: 'contract',
-      name: 'contract',
-      component: 'select-simple',
-      options: CONTRACTS,
-      title: 'Type de contrat*',
-      fieldsToReset: ['endOfContract'],
-      isRequired: true,
-    },
-    {
-      id: 'startEndContract',
-      name: 'startEndContract',
-      component: 'fieldgroup',
-      fields: [
-        {
-          id: 'startOfContract',
-          name: 'startOfContract',
-          title: 'Date de début de contrat',
-          component: 'datepicker',
-        },
-        {
-          id: 'endOfContract',
-          name: 'endOfContract',
-          title: 'Date de fin de contrat',
-          component: 'datepicker',
-          disable: (getValue) => {
-            const contract = findConstantFromValue(
-              getValue('contract'),
-              CONTRACTS
-            );
-            return !contract || !contract.end;
-          },
-          rules: [
-            {
-              method: (fieldValue, fieldValues) => {
-                return !(
-                  !!fieldValue &&
-                  !!fieldValues.startOfContract &&
-                  moment(fieldValue, 'YYYY-MM-DD').isBefore(
-                    moment(fieldValues.startOfContract as string, 'YYYY-MM-DD')
-                  )
-                );
-              },
-              message: 'Date antérieure à la date de début',
-            },
-          ],
-        },
-        {
-          id: 'isPartTime',
-          name: 'isPartTime',
-          component: 'checkbox',
-          title: 'Temps partiel',
-        },
-      ],
-    },
-    {
-      id: 'department',
-      name: 'department',
-      title: 'Département*',
-      component: 'select',
-      options: DEPARTMENTS_FILTERS,
-      isRequired: true,
-    },
-    {
-      id: 'link',
-      name: 'link',
-      component: 'text-input',
-      title: "Lien de l'offre",
-    },
-    {
-      id: 'description',
-      name: 'description',
-      component: 'textarea',
-      title: "Description de l'offre",
-      maxLength: 2000,
-    },
-    {
-      id: 'externalOrigin',
-      name: 'externalOrigin',
-      component: 'select-simple',
-      options: EXTERNAL_OFFERS_ORIGINS,
-      title: 'Offre venant de',
-    },
-  ],
-};
-
 export const formEditExternalOpportunityAsAdmin: FormSchema<{
   status: OfferStatus;
   title: string;
@@ -157,8 +28,11 @@ export const formEditExternalOpportunityAsAdmin: FormSchema<{
   link: string;
   description: string;
   externalOrigin: ExternalOfferOrigin;
+  recruiterFirstName: string;
+  recruiterName: string;
+  recruiterMail: string;
 }> = {
-  id: 'form-offer-external',
+  id: 'form-edit-offer-external',
   fields: [
     {
       id: 'candidateStatus',
@@ -174,19 +48,41 @@ export const formEditExternalOpportunityAsAdmin: FormSchema<{
         },
       ],
     },
+
+    {
+      id: 'generalInformation',
+      name: 'generalInformation',
+      title: 'Informations générales',
+      component: 'heading',
+    },
     {
       id: 'title',
       name: 'title',
       component: 'text-input',
-      title: "Titre de l'offre*",
+      title: 'Intitulé du poste *',
       isRequired: true,
     },
     {
-      id: 'company',
-      name: 'company',
-      component: 'text-input',
-      title: "Nom de l'entreprise*",
-      isRequired: true,
+      id: 'companyDepartment',
+      name: 'companyDepartment',
+      component: 'fieldgroup',
+      fields: [
+        {
+          id: 'company',
+          name: 'company',
+          component: 'text-input',
+          title: "Nom de l'entreprise*",
+          isRequired: true,
+        },
+        {
+          id: 'department',
+          name: 'department',
+          title: 'Localisation *',
+          component: 'select',
+          options: DEPARTMENTS_FILTERS,
+          isRequired: true,
+        },
+      ],
     },
     {
       id: 'contract',
@@ -194,7 +90,6 @@ export const formEditExternalOpportunityAsAdmin: FormSchema<{
       component: 'select-simple',
       options: CONTRACTS,
       title: 'Type de contrat*',
-      fieldsToReset: ['endOfContract'],
       isRequired: true,
     },
     {
@@ -222,15 +117,13 @@ export const formEditExternalOpportunityAsAdmin: FormSchema<{
           },
           rules: [
             {
-              method: (fieldValue, fieldValues) => {
-                return !(
-                  !!fieldValue &&
-                  !!fieldValues.startOfContract &&
-                  moment(fieldValue, 'YYYY-MM-DD').isBefore(
-                    moment(fieldValues.startOfContract as string, 'YYYY-MM-DD')
-                  )
-                );
-              },
+              method: (fieldValue, fieldValues) =>
+                !fieldValue ||
+                !fieldValues.startOfContract ||
+                isAfter(
+                  fieldValue,
+                  moment(fieldValues.startOfContract).format('YYYY-MM-DD')
+                ),
               message: 'Date antérieure à la date de début',
             },
           ],
@@ -244,6 +137,44 @@ export const formEditExternalOpportunityAsAdmin: FormSchema<{
       ],
     },
     {
+      id: 'recruiterInformation',
+      name: 'recruiterInformation',
+      title: 'Coordonnées du recruteur',
+      component: 'heading',
+    },
+    {
+      id: 'recruiterInfo',
+      component: 'fieldgroup',
+      name: 'fieldgroup',
+      fields: [
+        {
+          id: 'recruiterFirstName',
+          name: 'recruiterFirstName',
+          component: 'text-input',
+          title: 'Prénom du recruteur',
+        },
+        {
+          id: 'recruiterName',
+          name: 'recruiterName',
+          component: 'text-input',
+          title: 'Nom du recruteur',
+        },
+      ],
+    },
+    {
+      id: 'recruiterMail',
+      name: 'recruiterMail',
+      component: 'text-input',
+      type: 'email',
+      title: 'Adresse mail du recruteur',
+    },
+    {
+      id: 'offerDetails',
+      name: 'offerDetails',
+      title: "Détails de l'offre",
+      component: 'heading',
+    },
+    {
       id: 'businessLines',
       name: 'businessLines',
       title: 'Familles de métiers',
@@ -252,11 +183,11 @@ export const formEditExternalOpportunityAsAdmin: FormSchema<{
       options: BUSINESS_LINES,
     },
     {
-      id: 'department',
-      name: 'department',
-      title: 'Département*',
-      component: 'select',
-      options: DEPARTMENTS_FILTERS,
+      id: 'description',
+      name: 'description',
+      component: 'textarea',
+      title:
+        'Ecrire ou copier le detail de l’offre pour faciliter le suivi de votre candidature',
       isRequired: true,
     },
     {
@@ -264,13 +195,6 @@ export const formEditExternalOpportunityAsAdmin: FormSchema<{
       name: 'link',
       component: 'text-input',
       title: "Lien de l'offre",
-    },
-    {
-      id: 'description',
-      name: 'description',
-      component: 'textarea',
-      title: "Description de l'offre",
-      maxLength: 2000,
     },
     {
       id: 'externalOrigin',

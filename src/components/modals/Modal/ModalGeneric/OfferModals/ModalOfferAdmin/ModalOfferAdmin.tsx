@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
+import { ExternalOpportunityDto, OpportunityDto } from 'src/api/types';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { formEditExternalOpportunityAsAdmin } from 'src/components/forms/schemas/formEditExternalOpportunity';
 import { formEditOpportunity } from 'src/components/forms/schemas/formEditOpportunity';
@@ -78,26 +79,37 @@ export const ModalOfferAdmin = ({
       return findConstantFromValue(businessLineObject.name, BUSINESS_LINES);
     }) || undefined;
 
-  const updateOpportunity = async (opportunity, isExternal) => {
+  const updateOpportunity = async (opportunity: Partial<OpportunityDto>) => {
     setLoading(true);
-    const {
-      createdAt,
-      updatedAt,
-      createdBy,
-      opportunityUsers,
-      id,
-      candidateId,
-      ...restOpportunity
-    } = opportunity;
     try {
-      const { data } = isExternal
-        ? await Api.putExternalOpportunity(id, candidateId, restOpportunity)
-        : await Api.putOpportunity(id, restOpportunity);
+      const { data } = await Api.putOpportunity(offer.id, opportunity);
       setOffer({
         ...data,
-        opportunityUsers: isExternal
-          ? [data.opportunityUsers]
-          : data.opportunityUsers,
+        opportunityUsers: data.opportunityUsers,
+      });
+      await onOfferUpdated();
+      setIsEditing(false);
+    } catch (err) {
+      UIkit.notification(`Une erreur est survenue.`, 'danger');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const updateExternalOpportunity = async (
+    opportunity: Partial<ExternalOpportunityDto>
+  ) => {
+    setLoading(true);
+    const { candidateId, ...restOpportunity } = opportunity;
+    try {
+      const { data } = await Api.putExternalOpportunity(
+        offer.id,
+        candidateId,
+        restOpportunity
+      );
+      setOffer({
+        ...data,
+        opportunityUsers: [data.opportunityUsers],
       });
       await onOfferUpdated();
       setIsEditing(false);
@@ -168,7 +180,7 @@ export const ModalOfferAdmin = ({
               formSchema={formEditExternalOpportunityAsAdmin}
               defaultValues={{
                 ...offer,
-                candidateId: offer.opportunityUsers[0]?.UserId,
+                status: offer.opportunityUsers[0]?.status,
                 businessLines: defaultBusinessLines,
                 department: findConstantFromValue(
                   offer.department,
@@ -184,17 +196,17 @@ export const ModalOfferAdmin = ({
                   startOfContract: fields.startOfContract || null,
                   endOfContract: fields.endOfContract || null,
                   candidateId: offer.opportunityUsers[0]?.UserId,
-                  id: offer.id,
+                  department: fields.department.value,
                   businessLines: fields.businessLines
                     ? fields.businessLines.map((businessLine, index) => {
                         return {
-                          name: businessLine,
+                          name: businessLine.value,
                           order: index,
                         };
                       })
                     : [],
                 };
-                await updateOpportunity(tmpOpportunity, true);
+                await updateExternalOpportunity(tmpOpportunity);
               }}
               submitText="Mettre à jour"
             />
@@ -216,12 +228,12 @@ export const ModalOfferAdmin = ({
               }}
               onSubmit={async (fields) => {
                 const tmpOpportunity = {
-                  ...offer,
                   ...fields,
                   message: fields.isPublic ? null : fields.message,
                   startOfContract: fields.startOfContract || null,
                   endOfContract: fields.endOfContract || null,
                   recruiterPhone: fields.recruiterPhone || null,
+                  department: fields.department.value,
                   candidatesIds:
                     fields.candidatesIds?.map((candidateId) => {
                       return typeof candidateId === 'object'
@@ -231,7 +243,7 @@ export const ModalOfferAdmin = ({
                   businessLines: fields.businessLines
                     ? fields.businessLines.map((businessLine, index) => {
                         return {
-                          name: businessLine,
+                          name: businessLine.value,
                           order: index,
                         };
                       })
@@ -297,7 +309,6 @@ export const ModalOfferAdmin = ({
                   tooltip="Archiver l'offre"
                   onClick={async () => {
                     await updateOpportunity({
-                      ...offer,
                       isArchived: !offer.isArchived,
                     });
                   }}
@@ -359,7 +370,6 @@ export const ModalOfferAdmin = ({
                     href={`tel:${offer.recruiterPhone}`}
                     className="uk-text-meta uk-text-muted uk-flex uk-flex-middle"
                     isExternal
-                    newTab
                   >
                     <span>
                       {offer.recruiterPhone}
@@ -508,7 +518,6 @@ export const ModalOfferAdmin = ({
                 style="default"
                 onClick={async () => {
                   await updateOpportunity({
-                    ...offer,
                     isValidated: false,
                     isArchived: true,
                   });
@@ -522,7 +531,6 @@ export const ModalOfferAdmin = ({
                 style="primary"
                 onClick={async () => {
                   await updateOpportunity({
-                    ...offer,
                     isValidated: true,
                     shouldSendNotifications: true,
                   });
@@ -576,7 +584,6 @@ ModalOfferAdmin.propTypes = {
     recruiterFirstName: PropTypes.string,
     recruiterPosition: PropTypes.string,
     numberOfPositions: PropTypes.number,
-    beContacted: PropTypes.bool,
     link: PropTypes.string,
     externalOrigin: PropTypes.string,
     isExternal: PropTypes.bool,

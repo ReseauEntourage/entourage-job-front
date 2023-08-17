@@ -29,7 +29,7 @@ export const formEditOpportunity: FormSchema<{
   recruiterMail: string;
   recruiterPhone: string;
   contactMail: string;
-  businessLines: FilterConstant<BusinessLineValue>;
+  businessLines: FilterConstant<BusinessLineValue>[];
   description: string;
   contract: Contract;
   startOfContract: string;
@@ -39,7 +39,6 @@ export const formEditOpportunity: FormSchema<{
   salary: string;
   driversLicense: boolean;
   otherInfo: string;
-  openNewForm: boolean;
 }> = {
   id: 'form-edit-offer',
   fields: [
@@ -84,11 +83,8 @@ export const formEditOpportunity: FormSchema<{
       },
       rules: [
         {
-          method: (fieldValue, fieldValues) => {
-            return (
-              !!fieldValues.isPublic || (fieldValue && fieldValue.length > 0)
-            );
-          },
+          method: (fieldValue, fieldValues) =>
+            fieldValues.isPublic || (fieldValue && fieldValue.length > 0),
           message: 'Obligatoire si offre privée',
         },
       ],
@@ -122,14 +118,14 @@ export const formEditOpportunity: FormSchema<{
       id: 'company',
       name: 'company',
       component: 'text-input',
-      title: 'Nom de votre entreprise*',
+      title: "Nom de l'entreprise*",
       isRequired: true,
     },
     {
       id: 'companyDescription',
       name: 'companyDescription',
       component: 'textarea',
-      title: "Si vous le souhaitez, présentez l'entreprise en quelques mots",
+      title: "Présentation de l'entreprise",
     },
     {
       id: 'locations',
@@ -163,21 +159,21 @@ export const formEditOpportunity: FormSchema<{
       id: 'recruiterFirstName',
       name: 'recruiterFirstName',
       component: 'text-input',
-      title: 'Votre prénom*',
+      title: 'Prénom*',
       isRequired: true,
     },
     {
       id: 'recruiterName',
       name: 'recruiterName',
       component: 'text-input',
-      title: 'Votre nom*',
+      title: 'Nom*',
       isRequired: true,
     },
     {
       id: 'recruiterPosition',
       name: 'recruiterPosition',
       component: 'text-input',
-      title: 'Votre fonction*',
+      title: 'Fonction*',
       isRequired: true,
     },
     {
@@ -185,7 +181,7 @@ export const formEditOpportunity: FormSchema<{
       name: 'recruiterMail',
       component: 'text-input',
       type: 'email',
-      title: 'Votre adresse mail*',
+      title: 'Adresse mail*',
       isRequired: true,
       rules: [
         {
@@ -199,16 +195,13 @@ export const formEditOpportunity: FormSchema<{
       id: 'recruiterPhone',
       name: 'recruiterPhone',
       component: 'tel-input',
-      title: 'Votre téléphone portable',
+      title: 'Téléphone portable',
       rules: [
         {
-          method: (fieldValue) => {
-            return (
-              !fieldValue ||
-              fieldValue.length === 0 ||
-              isValidPhoneNumber(fieldValue, 'FR')
-            );
-          },
+          method: (fieldValue) =>
+            !fieldValue ||
+            fieldValue.length === 0 ||
+            isValidPhoneNumber(fieldValue, 'FR'),
           message: 'Numéro de téléphone invalide',
         },
       ],
@@ -221,10 +214,8 @@ export const formEditOpportunity: FormSchema<{
       title: 'Adresse mail du recruteur si intermédiaire',
       rules: [
         {
-          // TODO Put trim on all fields
-          method: (fieldValue) => {
-            return !fieldValue.trim() || isEmail(fieldValue);
-          },
+          method: (fieldValue) =>
+            !fieldValue || fieldValue.length === 0 || isEmail(fieldValue),
           message: 'Invalide',
         },
       ],
@@ -327,14 +318,7 @@ export const formEditOpportunity: FormSchema<{
       id: 'otherInfo',
       name: 'otherInfo',
       component: 'textarea',
-      title: 'Autres précisions sur votre besoin',
-    },
-    {
-      id: 'openNewForm',
-      name: 'openNewForm',
-      component: 'checkbox',
-      title:
-        'Vous avez un autre poste à proposer ? Dupliquez cette offre pour la publier plus rapidement',
+      title: 'Autres précisions sur le besoin',
     },
   ],
 };

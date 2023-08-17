@@ -51,7 +51,7 @@ export const formSendExternalMessage: FormSchema<{
       isRequired: true,
       rules: [
         {
-          method: (fieldValue) => fieldValue && isEmail(fieldValue),
+          method: (fieldValue) => isEmail(fieldValue),
           message: 'Adresse e-mail invalide',
         },
       ],
@@ -68,13 +68,10 @@ export const formSendExternalMessage: FormSchema<{
           title: 'Numéro de téléphone',
           rules: [
             {
-              method: (fieldValue) => {
-                return (
-                  !fieldValue ||
-                  fieldValue.length === 0 ||
-                  isValidPhoneNumber(fieldValue, 'FR')
-                );
-              },
+              method: (fieldValue) =>
+                !fieldValue ||
+                fieldValue.length === 0 ||
+                isValidPhoneNumber(fieldValue, 'FR'),
               message: 'Numéro de téléphone invalide',
             },
           ],

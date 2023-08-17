@@ -1,5 +1,4 @@
 import moment from 'moment';
-import PropTypes from 'prop-types';
 import React, { useRef } from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
@@ -13,7 +12,17 @@ import { OpportunityList } from 'src/components/opportunities/OpportunityList';
 import { ButtonMultiple } from 'src/components/utils';
 import { Icon } from 'src/components/utils/Icon';
 import { useIsDesktop } from 'src/hooks/utils';
+import { AnyToFix } from 'src/utils/Types';
 
+interface AdminOpportunityListProps {
+  filters: AnyToFix; // to be typed
+  setFilters: (updatedFilters: AnyToFix) => void;
+  setTabFilters: (updatedFilters: AnyToFix) => void;
+  tabFilters: AnyToFix[];
+  search?: string;
+  setSearch: (search?: string) => void;
+  resetFilters: () => void;
+}
 export const AdminOpportunityList = ({
   search,
   filters,
@@ -22,10 +31,10 @@ export const AdminOpportunityList = ({
   setTabFilters,
   setSearch,
   resetFilters,
-}) => {
+}: AdminOpportunityListProps) => {
   const isDesktop = useIsDesktop();
 
-  const opportunityListRef = useRef();
+  const opportunityListRef = useRef<{ fetchData: () => Promise<void> }>();
 
   const opportunityModalProps = {
     defaultValues: {
@@ -34,7 +43,7 @@ export const AdminOpportunityList = ({
     isAdmin: true,
     callback: opportunityListRef?.current?.fetchData,
     modalTitle: 'Ajouter une nouvelle offre',
-    schema: formAddOpportunityAsAdmin,
+    formSchema: formAddOpportunityAsAdmin,
   };
 
   return (
@@ -66,15 +75,14 @@ export const AdminOpportunityList = ({
                       try {
                         await Api.postExternalOpportunity({
                           ...fields,
-                          status: parseInt(fields.status, 10),
-                          startOfContract: fields.startOfContract || null,
-                          endOfContract: fields.endOfContract || null,
+                          department: fields.department.value,
+                          candidateId: fields.candidateId.value,
                           date: moment().toISOString(),
                           businessLines: fields.businessLines
                             ? fields.businessLines.map(
                                 (businessLine, index) => {
                                   return {
-                                    name: businessLine,
+                                    name: businessLine.value,
                                     order: index,
                                   };
                                 }
@@ -107,7 +115,7 @@ export const AdminOpportunityList = ({
         </ButtonMultiple>
       </HeaderBackoffice>
       <OpportunityList
-        ref={opportunityListRef}
+        listRef={opportunityListRef}
         tabFilters={tabFilters}
         setTabFilters={setTabFilters}
         search={search}
@@ -119,24 +127,4 @@ export const AdminOpportunityList = ({
       />
     </>
   );
-};
-
-AdminOpportunityList.propTypes = {
-  search: PropTypes.string,
-  filters: PropTypes.shape({}),
-  setFilters: PropTypes.func,
-  tabFilters: PropTypes.arrayOf(PropTypes.shape({})),
-  setTabFilters: PropTypes.func,
-  setSearch: PropTypes.func,
-  resetFilters: PropTypes.func,
-};
-
-AdminOpportunityList.defaultProps = {
-  search: undefined,
-  filters: {},
-  setFilters: () => {},
-  tabFilters: {},
-  setTabFilters: () => {},
-  setSearch: () => {},
-  resetFilters: () => {},
 };

@@ -48,7 +48,7 @@ const Parametres = () => {
           setUserData(data);
         })
         .finally(() => {
-          return setLoadingPersonal(false);
+          setLoadingPersonal(false);
         });
     }
   }, [user]);
@@ -252,7 +252,12 @@ const Parametres = () => {
     }
 
     return openPersonalDataModalAsAdmin;
-  }, []);
+  }, [
+    openPersonalDataModalAsAdmin,
+    openPersonalDataModalAsCandidate,
+    openPersonalDataModalAsCoach,
+    userData,
+  ]);
 
   return (
     <LayoutBackOffice title="Mes Paramètres">

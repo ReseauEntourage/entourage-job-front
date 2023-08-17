@@ -396,7 +396,7 @@ export const StyledCVPageContentFooter = styled.div`
 
 export const StyledChevronIcon = styled(Icon)`
   position: absolute;
-  top: 28px;
+  top: 30px;
   right: 30px;
   svg {
     height: 20px;

@@ -52,19 +52,21 @@ export function MultipleFields<S extends FormSchema<AnyCantFix>>({
   >({ control, name });
 
   // To add the first empty one
-  useMount(() =>
-    append(
-      formFields.reduce((acc, curr) => {
-        return {
-          ...acc,
-          [curr.name]: null,
-        };
-      }, {}) as FieldArray<
-        ExtractFormSchemaValidation<S>,
-        ArrayPath<ExtractFormSchemaValidation<S>>
-      >
-    )
-  );
+  useMount(() => {
+    if (!fields || fields.length === 0) {
+      append(
+        formFields.reduce((acc, curr) => {
+          return {
+            ...acc,
+            [curr.name]: null,
+          };
+        }, {}) as FieldArray<
+          ExtractFormSchemaValidation<S>,
+          ArrayPath<ExtractFormSchemaValidation<S>>
+        >
+      );
+    }
+  });
 
   return (
     <div>

@@ -28,7 +28,7 @@ export function useOnMemberFormSubmit(
       let userFields: UserDto;
       let name: string;
       const shouldTryToCreateOrganization =
-        fields.organizationId.value === CREATE_NEW_ORGANIZATION_VALUE;
+        fields.organizationId?.value === CREATE_NEW_ORGANIZATION_VALUE;
 
       try {
         let {

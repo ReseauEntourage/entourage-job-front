@@ -1,3 +1,5 @@
+import moment from 'moment/moment';
+import { isAfter } from 'validator';
 import { FormSchema } from '../FormSchema';
 import { Api } from 'src/api';
 import {
@@ -13,6 +15,7 @@ import {
 import { Department, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 import { FilterConstant } from 'src/constants/utils';
+import { findConstantFromValue } from 'src/utils';
 
 export const formAddExternalOpportunityCandidate: FormSchema<{
   title: string;
@@ -143,7 +146,10 @@ export const formAddExternalOpportunityAsAdmin: FormSchema<{
   endOfContract: string;
   isPartTime: boolean;
   businessLines: FilterConstant<BusinessLineValue>[];
-  department: Department;
+  recruiterFirstName: string;
+  recruiterName: string;
+  recruiterMail: string;
+  department: FilterConstant<Department>;
   link: string;
   description: string;
   externalOrigin: ExternalOfferOrigin;
@@ -189,19 +195,41 @@ export const formAddExternalOpportunityAsAdmin: FormSchema<{
         },
       ],
     },
+
+    {
+      id: 'generalInformation',
+      name: 'generalInformation',
+      title: 'Informations générales',
+      component: 'heading',
+    },
     {
       id: 'title',
       name: 'title',
       component: 'text-input',
-      title: "Titre de l'offre*",
+      title: 'Intitulé du poste *',
       isRequired: true,
     },
     {
-      id: 'company',
-      name: 'company',
-      component: 'text-input',
-      title: "Nom de l'entreprise*",
-      isRequired: true,
+      id: 'companyDepartment',
+      name: 'companyDepartment',
+      component: 'fieldgroup',
+      fields: [
+        {
+          id: 'company',
+          name: 'company',
+          component: 'text-input',
+          title: "Nom de l'entreprise*",
+          isRequired: true,
+        },
+        {
+          id: 'department',
+          name: 'department',
+          title: 'Localisation *',
+          component: 'select',
+          options: DEPARTMENTS_FILTERS,
+          isRequired: true,
+        },
+      ],
     },
     {
       id: 'contract',
@@ -209,8 +237,89 @@ export const formAddExternalOpportunityAsAdmin: FormSchema<{
       component: 'select-simple',
       options: CONTRACTS,
       title: 'Type de contrat*',
-      fieldsToReset: ['endOfContract'],
       isRequired: true,
+    },
+    {
+      id: 'startEndContract',
+      name: 'startEndContract',
+      component: 'fieldgroup',
+      fields: [
+        {
+          id: 'startOfContract',
+          name: 'startOfContract',
+          title: 'Date de début de contrat',
+          component: 'datepicker',
+        },
+        {
+          id: 'endOfContract',
+          name: 'endOfContract',
+          title: 'Date de fin de contrat',
+          component: 'datepicker',
+          disable: (getValue) => {
+            const contract = findConstantFromValue(
+              getValue('contract'),
+              CONTRACTS
+            );
+            return !contract || !contract.end;
+          },
+          rules: [
+            {
+              method: (fieldValue, fieldValues) =>
+                !fieldValue ||
+                !fieldValues.startOfContract ||
+                isAfter(
+                  fieldValue,
+                  moment(fieldValues.startOfContract).format('YYYY-MM-DD')
+                ),
+              message: 'Date antérieure à la date de début',
+            },
+          ],
+        },
+        {
+          id: 'isPartTime',
+          name: 'isPartTime',
+          component: 'checkbox',
+          title: 'Temps partiel',
+        },
+      ],
+    },
+    {
+      id: 'recruiterInformation',
+      name: 'recruiterInformation',
+      title: 'Coordonnées du recruteur',
+      component: 'heading',
+    },
+    {
+      id: 'recruiterInfo',
+      component: 'fieldgroup',
+      name: 'fieldgroup',
+      fields: [
+        {
+          id: 'recruiterFirstName',
+          name: 'recruiterFirstName',
+          component: 'text-input',
+          title: 'Prénom du recruteur',
+        },
+        {
+          id: 'recruiterName',
+          name: 'recruiterName',
+          component: 'text-input',
+          title: 'Nom du recruteur',
+        },
+      ],
+    },
+    {
+      id: 'recruiterMail',
+      name: 'recruiterMail',
+      component: 'text-input',
+      type: 'email',
+      title: 'Adresse mail du recruteur',
+    },
+    {
+      id: 'offerDetails',
+      name: 'offerDetails',
+      title: "Détails de l'offre",
+      component: 'heading',
     },
     {
       id: 'businessLines',
@@ -221,25 +330,10 @@ export const formAddExternalOpportunityAsAdmin: FormSchema<{
       options: BUSINESS_LINES,
     },
     {
-      id: 'department',
-      name: 'department',
-      title: 'Département*',
-      component: 'select',
-      options: DEPARTMENTS_FILTERS,
-      isRequired: true,
-    },
-    {
       id: 'link',
       name: 'link',
       component: 'text-input',
       title: "Lien de l'offre",
-    },
-    {
-      id: 'description',
-      name: 'description',
-      component: 'textarea',
-      title: "Description de l'offre",
-      maxLength: 2000,
     },
     {
       id: 'externalOrigin',
