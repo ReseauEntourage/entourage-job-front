@@ -33,7 +33,7 @@ import {
 } from 'src/components/partials/CV/PageCvContent/PageCVContent.styles';
 import { Button, Icon } from 'src/components/utils';
 import { CarouselSwiper } from 'src/components/utils/CarouselSwiper';
-import { H1, H2, H3, H4, H5, H6 } from 'src/components/utils/Headings';
+import { H1, H2, H3, H4, H5 } from 'src/components/utils/Headings';
 import { CONTRACTS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
@@ -93,7 +93,7 @@ export const PageCVContent = ({
             <>
               <StyledShareContainer>
                 <H5
-                  title="Partagez son CV sur vos réseaux sociaux"
+                  title="Partagez son CV sur vos réseaux"
                   color={CV_COLORS.titleGray}
                 />
                 <p>
@@ -206,7 +206,7 @@ export const PageCVContent = ({
             <>
               <StyledShareContainer>
                 <H5
-                  title="Partagez son CV sur vos réseaux sociaux"
+                  title="Partagez son CV sur vos réseaux"
                   color={CV_COLORS.titleGray}
                 />
                 <p>
@@ -319,7 +319,7 @@ export const PageCVContent = ({
           </StyledCVPageContentInformations>
           {cv.passions?.length > 0 && isDesktop && (
             <StyledCVPageContentPassions>
-              <H6 title="Mes Passions" color={CV_COLORS.titleGray} />
+              <H4 title="Mes Passions" color={CV_COLORS.titleGray} />
               <ul>
                 {cv?.passions?.map(({ name }) => {
                   return <p>{name}</p>;
