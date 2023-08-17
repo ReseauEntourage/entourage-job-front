@@ -1,18 +1,37 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import { CV } from 'src/api/types';
 import { formEditUsefulInformation } from 'src/components/forms/schemas/formEditUsefulInformation';
 
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Grid, ButtonIcon, Icon } from 'src/components/utils';
-import { CONTRACTS } from 'src/constants';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { Contract, CONTRACTS } from 'src/constants';
 import {
-  findConstantFromValue,
-  mutateFormSchema,
-  sortByOrder,
-} from 'src/utils';
+  AdminZone,
+  Department,
+  DEPARTMENTS_FILTERS,
+} from 'src/constants/departements';
+import { findConstantFromValue, sortByOrder } from 'src/utils';
 
+interface InfoProfileCardProps {
+  contracts: {
+    name: Contract;
+  }[];
+  locations: {
+    name: Department;
+    order: number;
+  }[];
+  availability: string;
+  languages: {
+    name: string;
+  }[];
+  transport: string;
+  email: string;
+  phone: string;
+  address: string;
+  onChange: (updatedInfo: Partial<CV>) => void;
+  userZone: AdminZone;
+}
 export const InfoProfileCard = ({
   contracts,
   locations,
@@ -24,30 +43,7 @@ export const InfoProfileCard = ({
   address,
   onChange,
   userZone,
-}) => {
-  const mutatedSchema = mutateFormSchema(formEditUsefulInformation, [
-    {
-      fieldId: 'email',
-      props: [
-        {
-          propName: 'disabled',
-          value: true,
-        },
-      ],
-    },
-    {
-      fieldId: 'locations',
-      props: [
-        {
-          propName: 'options',
-          value: DEPARTMENTS_FILTERS.filter((filter) => {
-            return !filter.zone || filter.zone === userZone;
-          }),
-        },
-      ],
-    },
-  ]);
-
+}: InfoProfileCardProps) => {
   const sortedLocations =
     locations && locations.length > 0 ? sortByOrder(locations) : [];
 
@@ -69,8 +65,9 @@ export const InfoProfileCard = ({
               openModal(
                 <ModalEdit
                   title="Édition - Informations utiles"
-                  formSchema={mutatedSchema}
+                  formSchema={formEditUsefulInformation}
                   defaultValues={{
+                    userZone,
                     availability,
                     transport,
                     email,
@@ -80,7 +77,7 @@ export const InfoProfileCard = ({
                       return findConstantFromValue(name, CONTRACTS);
                     }),
                     languages: languages.map(({ name }) => {
-                      return name;
+                      return { label: name, value: name };
                     }),
                     locations: sortByOrder(locations).map(({ name }) => {
                       return findConstantFromValue(name, DEPARTMENTS_FILTERS);
@@ -90,19 +87,19 @@ export const InfoProfileCard = ({
                     closeModal();
                     await onChange({
                       ...fields,
-                      contracts: fields.contracts.map((contract) => {
+                      contracts: fields.contracts.map(({ value }) => {
                         return {
-                          name: contract,
+                          name: value,
                         };
                       }),
-                      languages: fields.languages.map((language) => {
+                      languages: fields.languages.map(({ value }) => {
                         return {
-                          name: language,
+                          name: value,
                         };
                       }),
-                      locations: fields.locations.map((location, index) => {
+                      locations: fields.locations.map(({ value }, index) => {
                         return {
-                          name: location,
+                          name: value,
                           order: index,
                         };
                       }),
@@ -172,41 +169,4 @@ export const InfoProfileCard = ({
       </Grid>
     </div>
   );
-};
-
-InfoProfileCard.propTypes = {
-  contracts: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    })
-  ),
-  locations: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    })
-  ),
-  availability: PropTypes.string,
-  languages: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    })
-  ),
-  transport: PropTypes.string,
-  email: PropTypes.string.isRequired,
-  phone: PropTypes.string,
-  address: PropTypes.string,
-  onChange: PropTypes.func,
-  userZone: PropTypes.string,
-};
-
-InfoProfileCard.defaultProps = {
-  contracts: [],
-  locations: [],
-  availability: '',
-  languages: [],
-  transport: '',
-  phone: '',
-  address: '',
-  onChange: null,
-  userZone: undefined,
 };

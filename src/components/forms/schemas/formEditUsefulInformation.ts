@@ -6,27 +6,36 @@ import { Department, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { FilterConstant } from 'src/constants/utils';
 
 export const formEditUsefulInformation: FormSchema<{
+  userZone: string;
   email: string;
   phone: string;
   address: string;
-  contracts: FilterConstant<Contract>;
-  locations: FilterConstant<Department>;
+  contracts: FilterConstant<Contract>[];
+  locations: FilterConstant<Department>[];
   availability: string;
-  languages: FilterConstant<string>;
+  languages: FilterConstant<string>[];
   transport: string;
 }> = {
-  id: 'form-usefullinformation',
+  id: 'form-useful-information',
   fields: [
+    {
+      id: 'userZone',
+      name: 'userZone',
+      title: 'userZone',
+      component: 'text-input',
+      disabled: true,
+      hidden: true,
+    },
     {
       id: 'email',
       name: 'email',
       type: 'email',
       component: 'text-input',
       title: 'Adresse mail',
+      disabled: true,
       rules: [
         {
           method: (fieldValue) => isEmail(fieldValue),
-
           message: 'Adresse e-mail invalide',
         },
       ],
@@ -71,7 +80,10 @@ export const formEditUsefulInformation: FormSchema<{
       name: 'locations',
       title: 'Départements de travail souhaités',
       component: 'select',
-      options: DEPARTMENTS_FILTERS,
+      options: (getValue) =>
+        DEPARTMENTS_FILTERS.filter((filter) => {
+          return !filter.zone || filter.zone === getValue('userZone');
+        }),
       isMulti: true,
     },
     {

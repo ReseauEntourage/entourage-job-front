@@ -52,15 +52,14 @@ const options = [
 ];
 
 const Template = (args) => {
-  const [value, setValue] = useState<string | number>('');
+  const [value, setValue] = useState<string | number | boolean>('');
 
   // TODO use props as argTypes
-
   return (
     <SelectSimple
       {...args}
       onChange={(updatedValue) => {
-        setValue(updatedValue as string | number);
+        setValue(updatedValue);
       }}
       value={value}
     />

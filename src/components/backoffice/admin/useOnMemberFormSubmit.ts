@@ -31,7 +31,9 @@ export function useOnMemberFormSubmit(
         fields.organizationId.value === CREATE_NEW_ORGANIZATION_VALUE;
 
       try {
-        let { organizationId } = fields;
+        let {
+          organizationId: { value: organizationId },
+        } = fields;
 
         if (shouldTryToCreateOrganization) {
           const organizationFields = {
@@ -49,6 +51,8 @@ export function useOnMemberFormSubmit(
               data: { id: organizationId },
             } = await Api.postOrganization(organizationFields));
 
+            name = fields.nameOrganization;
+
             UIkit.notification(`La structure a bien été créée`, 'success');
           } catch (error) {
             console.error(error);
@@ -56,6 +60,7 @@ export function useOnMemberFormSubmit(
               `Une erreur s'est produite lors de la création de la structure`,
               'danger'
             );
+            return;
           }
         }
 
@@ -67,13 +72,17 @@ export function useOnMemberFormSubmit(
           phone: fields.phone,
           role: fields.role,
           email: fields.email,
-          userToLinkId: Array.isArray(fields.userToLinkId)
-            ? fields.userToLinkId.map(({ value }) => value)
-            : fields.userToLinkId.value,
+          ...(fields.userToLinkId
+            ? {
+                userToLinkId: Array.isArray(fields.userToLinkId)
+                  ? fields.userToLinkId.map(({ value }) => value)
+                  : fields.userToLinkId.value,
+              }
+            : {}),
           ...(fields.role === USER_ROLES.ADMIN
             ? { adminRole: fields.adminRole }
             : {}),
-          ...(organizationId ? { OrganizationId: organizationId.value } : {}),
+          ...(organizationId ? { OrganizationId: organizationId } : {}),
         };
 
         const { data } = await apiCall(userFields);

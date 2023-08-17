@@ -68,8 +68,6 @@ export function mapFieldRules<
           fieldValue: FormComponentValues<boolean>[T],
           fieldValues: ExtractFormSchemaValidation<S>
         ) => {
-          console.log(`fieldRules[${i}]`, fieldRules[i]);
-          console.log(`fieldRules[${i}].method`, fieldRules[i].method);
           return (
             fieldRules[i].method(fieldValue, fieldValues) ||
             fieldRules[i].message

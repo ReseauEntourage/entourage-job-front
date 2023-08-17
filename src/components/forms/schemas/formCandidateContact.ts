@@ -1,6 +1,5 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
-import { isEmail } from 'validator';
-import { Gender } from 'src/constants/users';
+import { isEmail, isPostalCode } from 'validator';
 import { FormSchema } from '../FormSchema';
 import {
   BUSINESS_LINES,
@@ -21,6 +20,7 @@ import {
   HEARD_ABOUT_FILTERS,
   HeardAboutValue,
 } from 'src/constants';
+import { Gender } from 'src/constants/users';
 import { FilterConstant } from 'src/constants/utils';
 
 export const formCandidateContact: FormSchema<{
@@ -110,7 +110,8 @@ export const formCandidateContact: FormSchema<{
       isRequired: true,
       rules: [
         {
-          method: (fieldValue) => fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
+          method: (fieldValue) =>
+            fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
           message: 'Numéro de téléphone invalide',
         },
       ],
@@ -171,7 +172,7 @@ export const formCandidateContact: FormSchema<{
       isRequired: true,
       rules: [
         {
-          method: (fieldValue) => validator.isPostalCode(fieldValue, 'FR'),
+          method: (fieldValue) => isPostalCode(fieldValue, 'FR'),
           message: 'Code postal non valide',
         },
       ],
@@ -192,7 +193,8 @@ export const formCandidateContact: FormSchema<{
       isRequired: true,
       rules: [
         {
-          method: (fieldValue) => fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
+          method: (fieldValue) =>
+            fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
           message: 'Numéro de téléphone invalide',
         },
       ],
@@ -206,10 +208,7 @@ export const formCandidateContact: FormSchema<{
       isRequired: true,
       rules: [
         {
-          method: (fieldValue) => {
-            return isEmail(fieldValue);
-          },
-
+          method: (fieldValue) => isEmail(fieldValue),
           message: 'Adresse e-mail invalide',
         },
       ],

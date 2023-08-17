@@ -33,7 +33,7 @@ export const NewsletterPartial = ({
 
   const onSubmit = async () => {
     const mailValid = isEmail(email);
-    // const tagsValid = !validator.isEmpty(zone) && !validator.isEmpty(status);
+    // const tagsValid = !isEmpty(zone) && !isEmpty(status);
 
     if (!mailValid /* || !tagsValid */) {
       setIsMailValid(mailValid);

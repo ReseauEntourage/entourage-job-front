@@ -1,4 +1,4 @@
-import { isEmail } from 'validator';
+import { equals } from 'validator';
 import { FormSchema } from '../FormSchema';
 
 export const formDeleteUser: FormSchema<{ confirmation: string }> = {
@@ -14,7 +14,7 @@ export const formDeleteUser: FormSchema<{ confirmation: string }> = {
       isRequired: true,
       rules: [
         {
-          method: (fieldValue) => validator.equals(fieldValue, 'SUPPRIMER'),
+          method: (fieldValue) => equals(fieldValue, 'SUPPRIMER'),
           message: 'Confirmation non valide',
         },
       ],

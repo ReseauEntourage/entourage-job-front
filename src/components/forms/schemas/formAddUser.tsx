@@ -130,7 +130,8 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
           isRequired: true,
           rules: [
             {
-              method: (fieldValue) => fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
+              method: (fieldValue) =>
+                fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
               message: 'Numéro de téléphone invalide',
             },
           ],
@@ -247,14 +248,6 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
             );
           },
           title: 'Nom du coach ou candidat lié',
-          rules: [
-            {
-              method: (fieldValue) => {
-                return !!fieldValue;
-              },
-              message: 'error',
-            },
-          ],
         },
       ],
     },
@@ -354,7 +347,8 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
 
       rules: [
         {
-          method: (fieldValue) => fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
+          method: (fieldValue) =>
+            fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
           message: 'Numéro de téléphone invalide',
         },
       ],

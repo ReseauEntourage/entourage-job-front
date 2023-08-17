@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { isEmail } from 'validator';
+import { isAfter } from 'validator';
 import { FormSchema } from '../FormSchema';
 import { Contract, CONTRACTS } from 'src/constants';
 import { findConstantFromValue } from 'src/utils';
@@ -32,7 +32,7 @@ export const formEditEmployed: FormSchema<{
       rules: [
         {
           method: (fieldValue) =>
-            validator.isAfter(fieldValue, moment().format('YYYY-MM-DD')),
+            isAfter(fieldValue, moment().format('YYYY-MM-DD')),
           message: "Date antérieure à aujourd'hui",
         },
       ],

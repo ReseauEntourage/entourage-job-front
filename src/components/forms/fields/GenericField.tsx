@@ -173,7 +173,11 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
         <Select
           {...commonProps}
           isMulti={isMulti}
-          options={field.options}
+          options={
+            typeof field.options === 'function'
+              ? field.options(getValue)
+              : field.options
+          }
           openMenuOnClick={field.openMenuOnClick}
         />
       );
@@ -184,7 +188,11 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
         <SelectCreatable
           {...commonProps}
           isMulti={isMulti}
-          options={field.options}
+          options={
+            typeof field.options === 'function'
+              ? field.options(getValue)
+              : field.options
+          }
           openMenuOnClick={field.openMenuOnClick}
         />
       );

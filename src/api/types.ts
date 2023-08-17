@@ -103,13 +103,13 @@ export interface CV {
   catchphrase: string;
   story: string;
   locations: {
-    name: string;
+    name: Department;
     order: number;
   }[];
   availability: string;
   urlImg: string;
   contracts: {
-    name: string;
+    name: ContractValue;
   }[];
   ambitions: {
     name: string;
@@ -122,7 +122,6 @@ export interface CV {
   }[];
   languages: {
     name: string;
-    order: number;
   }[];
   transport: string;
   skills: {
@@ -172,7 +171,7 @@ export type UserDto = {
   gender: Gender;
   zone: AdminZone;
   phone: string;
-  userToLinkId: string | string[];
+  userToLinkId?: string | string[];
   email: string;
   adminRole?: AdminRole;
   OrganizationId?: string;

@@ -3,6 +3,7 @@ import moment from 'moment';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { Api } from 'src/api';
 import 'moment/locale/fr';
+import { isEmail } from 'validator';
 import { RadioTypes } from 'src/components/utils/Inputs/Radio/Radio.types';
 import {
   ANTENNE_INFO,
@@ -13,7 +14,6 @@ import {
   HeardAboutValue,
 } from 'src/constants';
 import { FormSchema, GetValueType } from '../FormSchema';
-import { isEmail } from 'validator';
 import { Cities, CITIES_FILTERS, City } from 'src/constants/departements';
 import { AnyCantFix } from 'src/utils/Types';
 

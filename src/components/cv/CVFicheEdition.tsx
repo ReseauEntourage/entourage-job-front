@@ -15,6 +15,7 @@ import { Grid, Img } from 'src/components/utils';
 
 import { CV_STATUS } from 'src/constants';
 import { useMount, usePrevious } from 'src/hooks/utils';
+import { AdminZone } from "src/constants/departements";
 
 interface CVFicheEditionProps {
   cv: CV;
@@ -24,7 +25,7 @@ interface CVFicheEditionProps {
   phone?: string;
   previewGenerating: boolean;
   address: string;
-  userZone: string;
+  userZone: AdminZone;
 }
 
 export const CVFicheEdition = ({

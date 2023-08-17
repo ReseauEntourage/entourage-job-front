@@ -8,6 +8,7 @@ import {
   MultiValueRemove,
 } from '../Selects';
 import { StyledSelect, StyledSelectContainer } from '../Selects.styles';
+import { IsArrayFilterConstant } from 'src/components/forms/FormSchema';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { FilterConstant } from 'src/constants/utils';
 
@@ -15,7 +16,10 @@ let debounceTimeoutId;
 
 interface SelectAsyncProps<T extends FilterConstant | FilterConstant[]>
   extends CommonInputProps<T, HTMLSelectElement> {
-  loadOptions: (callback: (options: T[]) => void, inputValue: string) => void;
+  loadOptions: (
+    callback: (options: IsArrayFilterConstant<T>) => void,
+    inputValue: string
+  ) => void;
   isMulti?: boolean;
   openMenuOnClick?: boolean;
 }
@@ -37,7 +41,8 @@ export function SelectAsync<T extends FilterConstant | FilterConstant[]>({
   showLabel = false,
   inputRef,
 }: SelectAsyncProps<T>) {
-  const [defaultOptions, setDefaultOptions] = useState<T[]>(null);
+  const [defaultOptions, setDefaultOptions] =
+    useState<IsArrayFilterConstant<T>>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const debouncedLoadOptions = useCallback(
@@ -55,7 +60,7 @@ export function SelectAsync<T extends FilterConstant | FilterConstant[]>({
   );
 
   const onFocus = useCallback(() => {
-    setDefaultOptions([]);
+    setDefaultOptions([] as IsArrayFilterConstant<T>);
     setIsLoading(true);
     loadOptions((options) => {
       setDefaultOptions(options);

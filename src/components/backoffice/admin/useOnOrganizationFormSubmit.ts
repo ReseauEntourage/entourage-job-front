@@ -2,14 +2,19 @@ import { AxiosResponse } from 'axios';
 import { useCallback } from 'react';
 import UIkit from 'uikit';
 import { OrganizationDto } from 'src/api/types';
+import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
+import { formAddOrganization } from 'src/components/forms/schemas/formAddOrganization';
 import { Action, ActionsLabels } from 'src/constants/utils';
 
 export function useOnOrganizationFormSubmit(
-  apiCall: (user: OrganizationDto) => Promise<AxiosResponse>,
+  apiCall: (organization: OrganizationDto) => Promise<AxiosResponse>,
   action: Action
 ) {
   const onSubmit = useCallback(
-    async (fields, closeModal) => {
+    async (
+      fields: ExtractFormSchemaValidation<typeof formAddOrganization>,
+      closeModal
+    ) => {
       try {
         const { data } = await apiCall(fields);
         closeModal();

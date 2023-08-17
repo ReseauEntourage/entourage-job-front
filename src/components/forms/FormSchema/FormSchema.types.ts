@@ -31,11 +31,17 @@ export type FieldValue =
   | FilterConstant
   | FilterConstant[];
 
-type MultiFilterConstant<M extends boolean> = M extends true
-  ? FilterConstant[]
+export type IsArrayFilterConstant<T extends FilterConstant | FilterConstant[]> =
+  T extends FilterConstant[] ? T : T[];
+
+export type MultiFilterConstant<
+  M extends boolean,
+  T extends string | number | boolean = string | number | boolean
+> = M extends true
+  ? FilterConstant<T>[]
   : M extends false
-  ? FilterConstant
-  : FilterConstant | FilterConstant[];
+  ? FilterConstant<T>
+  : FilterConstant<T> | FilterConstant<T>[];
 
 export interface FormComponentValues<M extends boolean> {
   [FormComponents.DATEPICKER]: string;
@@ -199,7 +205,9 @@ export interface FormFieldSelectRequestCommon<
 > extends FormFieldInputCommonProperties<V, SelectRequestComponent, M> {
   component: SelectRequestComponent;
   fieldsToReset?: Path<V>[];
-  options?: FilterConstant[];
+  options?:
+    | FilterConstant[]
+    | ((getValue: GetValueType<V>) => FilterConstant[]);
   loadOptions?: (
     callback: (options: FilterConstant[]) => void,
     inputValue?: string,

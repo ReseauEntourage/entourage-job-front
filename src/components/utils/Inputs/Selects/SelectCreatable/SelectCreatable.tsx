@@ -8,12 +8,13 @@ import {
   MultiValueRemove,
 } from '../Selects';
 import { StyledSelect, StyledSelectContainer } from '../Selects.styles';
+import { IsArrayFilterConstant } from 'src/components/forms/FormSchema';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { FilterConstant } from 'src/constants/utils';
 
 interface SelectAsyncProps<T extends FilterConstant | FilterConstant[]>
   extends CommonInputProps<T, HTMLSelectElement> {
-  options: T[];
+  options: IsArrayFilterConstant<T>;
   isMulti?: boolean;
   openMenuOnClick?: boolean;
 }

@@ -9,13 +9,14 @@ import {
 } from '../Selects';
 
 import { StyledSelect, StyledSelectContainer } from '../Selects.styles';
+import { IsArrayFilterConstant } from 'src/components/forms/FormSchema';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { FilterConstant } from 'src/constants/utils';
 
 interface SelectProps<T extends FilterConstant | FilterConstant[]>
   extends CommonInputProps<T, HTMLSelectElement> {
   isMulti?: boolean;
-  options: T[];
+  options: IsArrayFilterConstant<T>;
   openMenuOnClick?: boolean;
 }
 export function Select<T extends FilterConstant | FilterConstant[]>({
