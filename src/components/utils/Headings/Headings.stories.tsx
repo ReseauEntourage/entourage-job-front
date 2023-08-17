@@ -1,9 +1,12 @@
 import React from 'react';
 import {
-  H2 as Title2,
-  H6 as Title6,
   H1 as Title1,
-} from 'src/components/utils/Headings';
+  H2 as Title2,
+  H3 as Title3,
+  H4 as Title4,
+  H5 as Title5,
+  H6 as Title6,
+} from '.';
 
 const meta = {
   title: 'Headings',
@@ -62,6 +65,30 @@ export const H2Light = {
   args: {
     type: 'light',
   },
+};
+
+const H3Template = () => {
+  return <Title3 title="Smallest title" />;
+};
+
+export const H3 = {
+  render: H3Template,
+};
+
+const H4Template = () => {
+  return <Title4 title="Smallest title" />;
+};
+
+export const H4 = {
+  render: H4Template,
+};
+
+const H5Template = () => {
+  return <Title5 title="Smallest title" />;
+};
+
+export const H5 = {
+  render: H5Template,
 };
 
 const H6Template = () => {

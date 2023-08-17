@@ -14,7 +14,7 @@ export const StyledCheckbox = styled.div`
 
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     height: 16px;
     position: relative;
     cursor: pointer;

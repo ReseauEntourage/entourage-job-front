@@ -9,7 +9,7 @@ interface CVEditPictureProps {
     profileImage,
     profileImageObjectUrl,
   }: {
-    profileImage: Blob | MediaSource;
+    profileImage: Blob;
     profileImageObjectUrl: string;
   }) => void;
   disablePicture?: boolean;
@@ -28,7 +28,7 @@ export const CVEditPicture = ({
     setUrl(urlImg);
   }, [urlImg]);
 
-  const resizeFile = (file: File): Promise<Blob | MediaSource> => {
+  const resizeFile = (file: File): Promise<Blob> => {
     return new Promise((resolve) => {
       Resizer.imageFileResizer(
         file,
@@ -82,9 +82,7 @@ export const CVEditPicture = ({
                           );
                         }
 
-                        const image: Blob | MediaSource = await resizeFile(
-                          file
-                        );
+                        const image: Blob = await resizeFile(file);
                         const profileImageObjectUrl =
                           URL.createObjectURL(image);
                         onChange({

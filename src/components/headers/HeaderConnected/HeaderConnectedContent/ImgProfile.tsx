@@ -1,20 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { UserWithUserCandidate } from 'src/api/types';
 import { Img } from 'src/components/utils';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 import { UserContext } from 'src/store/UserProvider';
 import { isRoleIncluded } from 'src/utils/Finding';
 
 interface ImgProfileProps {
-  user?: {
-    id: string;
-    firstName: string;
-    candidat?: {
-      cvs?: {
-        version: number;
-        urlImg: string;
-      }[];
-    };
-  };
+  user?: UserWithUserCandidate;
   size?: number;
 }
 

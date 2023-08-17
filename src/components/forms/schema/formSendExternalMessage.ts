@@ -63,11 +63,17 @@ export const formSendExternalMessage = {
       title: 'Écrire votre message *',
     },
     {
-      id: 'optIn',
-      name: 'optIn',
+      id: 'optInContact',
+      name: 'optInContact',
       component: 'checkbox-new',
       title:
         "En cochant cette case, vous acceptez qu'un membre de l'équipe vous recontacte *",
+    },
+    {
+      id: 'optInNewsletter',
+      name: 'optInNewsletter',
+      component: 'checkbox-new',
+      title: 'Je souhaite être tenu au courant des actualités du projet',
     },
   ],
   rules: [
@@ -151,7 +157,7 @@ export const formSendExternalMessage = {
       message: 'Obligatoire',
     },
     {
-      field: 'optIn',
+      field: 'optInContact',
       method: (fieldValue) => {
         return !!fieldValue;
       },

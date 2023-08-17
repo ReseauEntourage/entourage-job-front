@@ -47,7 +47,7 @@ export const formAddExternalOpportunityCandidate = {
       component: 'heading',
     },
     {
-      component: 'fieldgroup',
+      component: 'fieldgroup-new',
       fields: [
         {
           id: 'recruiterFirstName',

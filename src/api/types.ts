@@ -3,6 +3,7 @@ import { CookieValueTypes } from 'cookies-next';
 import {
   ExternalMessageContactType,
   Contract as ContractValue,
+  AmbitionsPrefixesType,
 } from 'src/constants';
 import { AdminZone } from 'src/constants/departements';
 import { AdminRole, UserRole } from 'src/constants/users';
@@ -81,40 +82,75 @@ export type User = {
   deletedAt?: string;
 };
 
-type CVEntity = {
-  name: string;
-  order?: number;
-};
+export interface CV {
+  id?: string;
+  version: string;
+  profileImageObjectUrl: string;
 
-export type CV = {
-  id: string;
-  UserId: string;
-  urlImg: string;
-  intro: string;
-  story: string;
-  availability: string;
-  transport: string;
+  profileImage: Blob | string;
+  user: {
+    candidat: {
+      firstName: string;
+      lastName: string;
+      email: string;
+      phone: string;
+      address: string;
+      zone: string;
+      gender: number;
+    };
+  };
   catchphrase: string;
-  status: string;
-  version: number;
-  lastModifiedBy: string;
-  user: User;
-  businessLines: CVEntity[];
-  locations: CVEntity[];
-  ambitions: CVEntity[];
-  contracts: CVEntity[];
-  languages: CVEntity[];
-  passions: CVEntity[];
-  skills: CVEntity[];
-  experiences: {
-    id: string;
-    description: string;
-    order: string;
-    skills: CVEntity[];
+  story: string;
+  locations: {
+    name: string;
+    order: number;
   }[];
-
-  reviews: CVEntity[];
-};
+  availability: string;
+  urlImg: string;
+  contracts: {
+    name: string;
+  }[];
+  ambitions: {
+    name: string;
+    order: number;
+    prefix: AmbitionsPrefixesType;
+  }[];
+  businessLines: {
+    name: string;
+    order: number;
+  }[];
+  languages: {
+    name: string;
+    order: number;
+  }[];
+  transport: string;
+  skills: {
+    id: string;
+    name: string;
+    order: number;
+  }[];
+  passions: {
+    name: string;
+    order: number;
+  }[];
+  reviews: {
+    id: string;
+    name: string;
+    text: string;
+    status: string;
+  }[];
+  experiences: {
+    description: string;
+    order: number;
+    skills: {
+      id: string;
+      name: string;
+      order: number;
+    }[];
+  }[];
+  status: string;
+  UserId: string;
+}
 
 export interface UserCandidateWithUsers extends UserCandidate {
   email: string;

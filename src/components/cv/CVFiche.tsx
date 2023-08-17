@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { v4 as uuid } from 'uuid';
+import { CV } from 'src/api/types';
 import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
 import { Grid, Img, SimpleLink, Icon } from 'src/components/utils';
 import { CONTRACTS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import { useUpdateSharesCount } from 'src/hooks';
 import {
   findConstantFromValue,
   formatParagraph,
@@ -12,14 +13,19 @@ import {
   sortByOrder,
 } from 'src/utils';
 import { CVShape } from './CV.shape';
-import { CVCallToActions } from './CVCallToActions';
+
+const uuidValue = uuid();
 
 /**
  * Le cv en public et en preview
  */
-export const CVFiche = ({ cv, actionDisabled }) => {
-  const updateSharesCount = useUpdateSharesCount();
 
+interface CVFicheProps {
+  cv: CV;
+  actionDisabled?: boolean;
+}
+
+export const CVFiche = ({ cv, actionDisabled }: CVFicheProps) => {
   const experiences =
     cv.experiences && cv.experiences.length > 0
       ? sortByOrder(cv.experiences)
@@ -285,7 +291,7 @@ export const CVFiche = ({ cv, actionDisabled }) => {
                   <ul className="uk-list">
                     {cv.skills.map(({ name }, i) => {
                       return (
-                        <li id={i} key={i}>
+                        <li id={`${i}-${uuidValue}`} key={`${i}-${uuidValue}`}>
                           {name}
                         </li>
                       );
@@ -300,7 +306,7 @@ export const CVFiche = ({ cv, actionDisabled }) => {
                   <ul className="uk-list">
                     {cv.passions.map(({ name }, i) => {
                       return (
-                        <li id={i} key={i}>
+                        <li id={`${i}-${uuidValue}`} key={`${i}-${uuidValue}`}>
                           {name}
                         </li>
                       );
@@ -311,11 +317,11 @@ export const CVFiche = ({ cv, actionDisabled }) => {
             </Grid>
           </Grid>
           <hr />
-          <CVCallToActions
+          {/* <CVCallToActions
             cv={cv}
             updateSharesCount={updateSharesCount}
             actionDisabled={actionDisabled}
-          />
+          /> */}
           {/* {shareSection} */}
         </Grid>
       </div>

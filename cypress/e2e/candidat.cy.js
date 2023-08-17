@@ -79,7 +79,7 @@ describe('Candidat', () => {
   });
 
   it('should open backoffice public offers', () => {
-    cy.visit('/backoffice/candidat/offres', {
+    cy.visit('/backoffice/candidat/offres/public', {
       onBeforeLoad: function async(window) {
         window.localStorage.setItem('access-token', '1234');
         window.localStorage.setItem('release-version', 'v100');
@@ -115,8 +115,8 @@ describe('Candidat', () => {
     });
   });
 
-  it('should open backoffice public offers and add new opportunity', () => {
-    cy.visit('/backoffice/candidat/offres', {
+  it('should open backoffice private offers and add new opportunity', () => {
+    cy.visit('/backoffice/candidat/offres/private', {
       onBeforeLoad: function async(window) {
         window.localStorage.setItem('access-token', '1234');
         window.localStorage.setItem('release-version', 'v100');

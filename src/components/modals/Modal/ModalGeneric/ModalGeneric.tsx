@@ -15,6 +15,8 @@ interface ModalGenericProps {
   withCloseButton?: boolean;
 }
 
+const id = 'modal-generic';
+
 export const ModalGeneric = ({
   title,
   description,
@@ -30,10 +32,11 @@ export const ModalGeneric = ({
   return (
     <Modal className={className} fullWidth={fullWidth}>
       <div
+        id={id}
         className={`uk-margin-auto-vertical ${
           fullWidth ? 'uk-width-expand' : 'uk-width-2xlarge@m'
         }`}
-        data-testid="modal-generic"
+        data-testid={id}
       >
         <div
           className={`uk-modal-body ${
