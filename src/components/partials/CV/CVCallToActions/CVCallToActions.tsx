@@ -71,7 +71,7 @@ export const CVCallToActions = ({
       <StyledCVCTAContainer>
         <StyledCVCTACard className={`${!isDesktop ? 'mobile' : ''}`} order={3}>
           <H5
-            title="Partagez son CV sur vos réseaux sociaux :"
+            title="Partagez son CV sur vos réseaux :"
             center
             color="darkGrayFont"
           />
