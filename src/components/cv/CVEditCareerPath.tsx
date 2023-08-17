@@ -12,7 +12,7 @@ import {
 } from 'src/constants';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
 
-interface CVEditCareerPathProps {
+interface CareerPaths {
   ambitions: {
     order: number;
     name: string;
@@ -22,8 +22,11 @@ interface CVEditCareerPathProps {
     order: number;
     name: string;
   }[];
-  onChange: (arg1: any) => void;
 }
+
+type CVEditCareerPathProps = CareerPaths & {
+  onChange: (updatedCareerPath: CareerPaths) => void;
+};
 
 export const CVEditCareerPath = ({
   ambitions,

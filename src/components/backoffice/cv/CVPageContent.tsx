@@ -58,7 +58,7 @@ const ModalPreview = ({ imageUrl, cv }: ModalPreviewProps) => {
 interface CVPageContentProps {
   cv: CV;
   candidateId: string;
-  setCV: (arg1: any) => void;
+  setCV: (arg1: CV) => void;
 }
 
 export const CVPageContent = ({

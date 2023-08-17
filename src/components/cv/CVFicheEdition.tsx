@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useState } from 'react';
 import { CV } from 'src/api/types';
 import {
@@ -19,7 +18,7 @@ import { useMount, usePrevious } from 'src/hooks/utils';
 
 interface CVFicheEditionProps {
   cv: CV;
-  onChange?: (arg1: any) => void;
+  onChange?: (updatedCV: Partial<CV>) => void;
   disablePicture?: boolean;
   email: string;
   phone?: string;

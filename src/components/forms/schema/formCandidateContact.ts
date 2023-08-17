@@ -1,5 +1,4 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
-import { isEmail } from 'validator';
 import {
   BUSINESS_LINES,
   CANDIDATE_ACCOMMODATIONS_FILTERS,

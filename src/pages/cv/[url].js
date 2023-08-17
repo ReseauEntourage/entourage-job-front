@@ -12,7 +12,7 @@ import { CV_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { useUpdateSharesCount } from 'src/hooks';
 
-const CVPage = ({ cv, exists, router, hideShareOptions }) => {
+const CVPage = ({ cv, exists, router }) => {
   const updateSharesCount = useUpdateSharesCount();
 
   const hostname = process.env.SERVER_URL;
@@ -130,7 +130,6 @@ CVPage.getInitialProps = async ({ query }) => {
       return {
         cv,
         exists,
-        hideShareOptions: query.hideShareOptions === 'true',
       };
     })
     .catch((err) => {
@@ -140,7 +139,6 @@ CVPage.getInitialProps = async ({ query }) => {
 };
 CVPage.propTypes = {
   cv: CVShape,
-  hideShareOptions: PropTypes.bool,
   router: PropTypes.shape({ asPath: PropTypes.string }),
   exists: PropTypes.bool,
 };
@@ -148,7 +146,6 @@ CVPage.propTypes = {
 CVPage.defaultProps = {
   cv: null,
   exists: false,
-  hideShareOptions: false,
   router: {
     asPath: '',
   },

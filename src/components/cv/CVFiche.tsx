@@ -6,7 +6,6 @@ import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
 import { Grid, Img, SimpleLink, Icon } from 'src/components/utils';
 import { CONTRACTS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import { useUpdateSharesCount } from 'src/hooks';
 import {
   findConstantFromValue,
   formatParagraph,

@@ -3,7 +3,7 @@ import { Pagination, Autoplay, Navigation } from 'swiper/modules';
 
 declare module 'swiper/react' {
   interface SwiperProps {
-    modules?: any[];
+    modules?: [Pagination, Autoplay, Navigation];
     threshold?: number;
     navigation: boolean;
     autoplay: boolean;

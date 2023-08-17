@@ -55,9 +55,8 @@ export const StyledCVPageContent = styled.div`
     > p:last-child {
       margin-bottom: 0;
     }
-    > li:last-child p{
+    > li:last-child p {
       margin-bottom: 0;
-
     }
   }
   .mobile {
