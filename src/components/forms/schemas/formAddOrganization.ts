@@ -1,7 +1,7 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { isEmail } from 'validator';
 import { FormSchema } from '../FormSchema';
-import { ADMIN_ZONES_FILTERS, AdminZone } from "src/constants/departements";
+import { ADMIN_ZONES_FILTERS, AdminZone } from 'src/constants/departements';
 
 export const formAddOrganization: FormSchema<{
   name: string;

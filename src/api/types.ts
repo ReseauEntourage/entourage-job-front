@@ -96,7 +96,7 @@ export interface CV {
       email: string;
       phone: string;
       address: string;
-      zone: string;
+      zone: AdminZone;
       gender: Gender;
     };
   };

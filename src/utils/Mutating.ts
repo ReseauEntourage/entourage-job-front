@@ -15,7 +15,6 @@ const updateField = (fieldToUpdate, props, i) => {
   return field;
 };
 
-
 const getAlternateDefaultOfferStatus = (
   offer: Opportunity = {} as Opportunity,
   opportunityUser: OpportunityUser = {} as OpportunityUser

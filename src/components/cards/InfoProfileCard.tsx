@@ -83,9 +83,12 @@ export const InfoProfileCard = ({
                       return findConstantFromValue(name, DEPARTMENTS_FILTERS);
                     }),
                   }}
-                  onSubmit={async (fields, closeModal) => {
+                  onSubmit={async (
+                    { userZone: zone, ...fields },
+                    closeModal
+                  ) => {
                     closeModal();
-                    await onChange({
+                    onChange({
                       ...fields,
                       contracts: fields.contracts.map(({ value }) => {
                         return {

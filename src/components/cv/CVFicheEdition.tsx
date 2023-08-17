@@ -14,8 +14,8 @@ import { CVEditReviews } from 'src/components/cv/CVEditReviews';
 import { Grid, Img } from 'src/components/utils';
 
 import { CV_STATUS } from 'src/constants';
+import { AdminZone } from 'src/constants/departements';
 import { useMount, usePrevious } from 'src/hooks/utils';
-import { AdminZone } from "src/constants/departements";
 
 interface CVFicheEditionProps {
   cv: CV;

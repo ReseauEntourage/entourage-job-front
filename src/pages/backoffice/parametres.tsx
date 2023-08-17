@@ -14,8 +14,8 @@ import { formChangePassword } from 'src/components/forms/schemas/formChangePassw
 import {
   formPersonalDataAsCandidate,
   formPersonalDataAsAdmin,
-  formPersonalDataAsCoach
-} from "src/components/forms/schemas/formPersonalData";
+  formPersonalDataAsCoach,
+} from 'src/components/forms/schemas/formPersonalData';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
@@ -26,7 +26,7 @@ import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
   USER_ROLES,
-} from "src/constants/users";
+} from 'src/constants/users';
 import { useResetForm } from 'src/hooks/utils/useResetForm';
 import { UserContext } from 'src/store/UserProvider';
 import { isRoleIncluded } from 'src/utils/Finding';
@@ -38,7 +38,7 @@ const Parametres = () => {
   const [loadingPassword, setLoadingPassword] = useState(false);
   const [form, resetForm] = useResetForm();
 
-  const modalTitle = "Édition - Informations personnelles"
+  const modalTitle = 'Édition - Informations personnelles';
 
   useEffect(() => {
     if (user) {
@@ -173,10 +173,7 @@ const Parametres = () => {
         }}
       />
     );
-  }, [
-    checkEmailAndSubmit,
-    userData
-  ]);
+  }, [checkEmailAndSubmit, userData]);
 
   const openPersonalDataModalAsCoach = useCallback(() => {
     openModal(
@@ -243,19 +240,19 @@ const Parametres = () => {
   }, [checkEmailAndSubmit, userData]);
 
   const getModalToOpen = useCallback(() => {
-    if(isRoleIncluded(CANDIDATE_USER_ROLES, userData.role)) {
-      if(isRoleIncluded(ALL_USER_ROLES, userData.role)) {
-        if( isRoleIncluded(CANDIDATE_USER_ROLES, userData.role)){
-          return  openPersonalDataModalAsCandidate
+    if (isRoleIncluded(CANDIDATE_USER_ROLES, userData.role)) {
+      if (isRoleIncluded(ALL_USER_ROLES, userData.role)) {
+        if (isRoleIncluded(CANDIDATE_USER_ROLES, userData.role)) {
+          return openPersonalDataModalAsCandidate;
         }
-        if( isRoleIncluded(COACH_USER_ROLES, userData.role)) {
-          return  openPersonalDataModalAsCoach
+        if (isRoleIncluded(COACH_USER_ROLES, userData.role)) {
+          return openPersonalDataModalAsCoach;
         }
       }
     }
 
-    return openPersonalDataModalAsAdmin
-  }, [])
+    return openPersonalDataModalAsAdmin;
+  }, []);
 
   return (
     <LayoutBackOffice title="Mes Paramètres">
@@ -350,12 +347,7 @@ const Parametres = () => {
                   {loadingPersonal ? (
                     <div data-uk-spinner="ratio: .8" />
                   ) : (
-                    <ButtonIcon
-                      name="pencil"
-                      onClick={
-                        getModalToOpen
-                      }
-                    />
+                    <ButtonIcon name="pencil" onClick={getModalToOpen} />
                   )}
                 </Grid>
                 {userData ? (

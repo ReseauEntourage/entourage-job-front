@@ -2,11 +2,15 @@ import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { isEmail } from 'validator';
 import { FormSchema } from '../FormSchema';
 import { Contract, CONTRACTS } from 'src/constants';
-import { Department, DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import {
+  AdminZone,
+  Department,
+  DEPARTMENTS_FILTERS,
+} from 'src/constants/departements';
 import { FilterConstant } from 'src/constants/utils';
 
 export const formEditUsefulInformation: FormSchema<{
-  userZone: string;
+  userZone: AdminZone;
   email: string;
   phone: string;
   address: string;
