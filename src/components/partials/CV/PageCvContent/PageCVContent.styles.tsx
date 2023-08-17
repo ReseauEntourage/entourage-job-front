@@ -130,7 +130,7 @@ export const StyledCVPageContentHeader = styled.div`
       padding-left: 0;
       text-align: center;
       width: 100%;
-      min-width: 500px;
+      min-width: 300px;
     }
     .skill-tags {
       margin-bottom: 50px;
