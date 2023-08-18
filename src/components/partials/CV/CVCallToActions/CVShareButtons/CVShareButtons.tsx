@@ -56,9 +56,12 @@ export const CVShareButtons = ({
     <StyledCVShareButtonsContainer>
       <LinkedinShareButton
         disabled={actionDisabled}
+        onClick={() => {
+          fbEvent(FB_TAGS.SHARE_CV_OPEN);
+        }}
         onShareWindowClose={() => {
           gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_LINKEDIN_CLIC);
-          fbEvent(FB_TAGS.SHARE_CV);
+          fbEvent(FB_TAGS.SHARE_CV_SEND);
           updateSharesCount(cv.UserId, 'linkedin');
           openNewsletterModal();
         }}
@@ -72,9 +75,12 @@ export const CVShareButtons = ({
       </LinkedinShareButton>
       <FacebookShareButton
         disabled={actionDisabled}
+        onClick={() => {
+          fbEvent(FB_TAGS.SHARE_CV_OPEN);
+        }}
         onShareWindowClose={() => {
           gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_FACEBOOK_CLIC);
-          fbEvent(FB_TAGS.SHARE_CV);
+          fbEvent(FB_TAGS.SHARE_CV_SEND);
           updateSharesCount(cv.UserId, 'facebook');
           openNewsletterModal();
         }}
@@ -88,9 +94,12 @@ export const CVShareButtons = ({
       </FacebookShareButton>
       <TwitterShareButton
         disabled={actionDisabled}
+        onClick={() => {
+          fbEvent(FB_TAGS.SHARE_CV_OPEN);
+        }}
         onShareWindowClose={() => {
           gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_TWITTER_CLIC);
-          fbEvent(FB_TAGS.SHARE_CV);
+          fbEvent(FB_TAGS.SHARE_CV_SEND);
           updateSharesCount(cv.UserId, 'twitter');
           openNewsletterModal();
         }}
@@ -105,9 +114,12 @@ export const CVShareButtons = ({
       </TwitterShareButton>
       <WhatsappShareButton
         disabled={actionDisabled}
+        onClick={() => {
+          fbEvent(FB_TAGS.SHARE_CV_OPEN);
+        }}
         onShareWindowClose={() => {
           gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_WHATSAPP_CLIC);
-          fbEvent(FB_TAGS.SHARE_CV);
+          fbEvent(FB_TAGS.SHARE_CV_SEND);
           updateSharesCount(cv.UserId, 'whatsapp');
           openNewsletterModal();
         }}
