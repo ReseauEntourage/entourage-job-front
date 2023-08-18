@@ -377,7 +377,7 @@ export const GA_TAGS = {
   BACKOFFICE_CANDIDAT_HEADER_BAO_CLIC: {
     action: 'Backoffice_Candidat_Header_BAO_Clic',
   },
-};
+} as const;
 
 export const FB_TAGS = {
   CANDIDATE_REGISTRATION_OPEN: {
@@ -448,7 +448,7 @@ export const FB_TAGS = {
     type: 'track',
     action: 'Donate',
   },
-};
+} as const;
 
 export const LINK_TAGS = {
   COMPANY_CONTACT_OPEN: {
@@ -457,4 +457,4 @@ export const LINK_TAGS = {
   COMPANY_CONTACT_SEND: {
     conversionId: 11224580,
   },
-};
+} as const;
