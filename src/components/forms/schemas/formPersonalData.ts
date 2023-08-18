@@ -129,12 +129,6 @@ export const formPersonalDataAsCoach: FormSchema<{
         },
       ],
     },
-    {
-      id: 'addressLabel',
-      name: 'addressLabel',
-      title: "Modifier l'adresse postale",
-      component: 'heading',
-    },
   ],
 };
 

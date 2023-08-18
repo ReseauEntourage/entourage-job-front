@@ -78,10 +78,17 @@ const Parametres = () => {
           })
           .catch((err) => {
             console.error(err);
-            UIkit.notification(
-              "Une erreur c'est produite lors de la mise à jour de vos informations personnelles",
-              'danger'
-            );
+            if (err?.response?.status === 409) {
+              UIkit.notification(
+                'Cette adresse email est déjà utilisée',
+                'danger'
+              );
+            } else {
+              UIkit.notification(
+                "Une erreur c'est produite lors de la mise à jour de vos informations personnelles",
+                'danger'
+              );
+            }
           });
       }
     },
@@ -239,19 +246,19 @@ const Parametres = () => {
     );
   }, [checkEmailAndSubmit, userData]);
 
-  const getModalToOpen = useCallback(() => {
-    if (isRoleIncluded(CANDIDATE_USER_ROLES, userData.role)) {
-      if (isRoleIncluded(ALL_USER_ROLES, userData.role)) {
-        if (isRoleIncluded(CANDIDATE_USER_ROLES, userData.role)) {
-          return openPersonalDataModalAsCandidate;
-        }
-        if (isRoleIncluded(COACH_USER_ROLES, userData.role)) {
-          return openPersonalDataModalAsCoach;
-        }
+  const openCorrespondingModal = useCallback(() => {
+    if (isRoleIncluded(ALL_USER_ROLES, userData.role)) {
+      if (isRoleIncluded(CANDIDATE_USER_ROLES, userData.role)) {
+        openPersonalDataModalAsCandidate();
+        return;
+      }
+      if (isRoleIncluded(COACH_USER_ROLES, userData.role)) {
+        openPersonalDataModalAsCoach();
+        return;
       }
     }
 
-    return openPersonalDataModalAsAdmin;
+    openPersonalDataModalAsAdmin();
   }, [
     openPersonalDataModalAsAdmin,
     openPersonalDataModalAsCandidate,
@@ -352,7 +359,10 @@ const Parametres = () => {
                   {loadingPersonal ? (
                     <div data-uk-spinner="ratio: .8" />
                   ) : (
-                    <ButtonIcon name="pencil" onClick={getModalToOpen} />
+                    <ButtonIcon
+                      name="pencil"
+                      onClick={openCorrespondingModal}
+                    />
                   )}
                 </Grid>
                 {userData ? (
@@ -436,34 +446,26 @@ const Parametres = () => {
                 submitText="Modifier"
                 formSchema={formChangePassword}
                 onSubmit={async (
-                  { newPassword, oldPassword, confirmPassword },
+                  { newPassword, oldPassword },
                   setError
                 ) => {
-                  if (
-                    newPassword !== oldPassword &&
-                    newPassword === confirmPassword
-                  ) {
-                    setLoadingPassword(true);
-                    try {
-                      await Api.putUserChangePwd({
-                        newPassword,
-                        oldPassword,
-                      });
-                      UIkit.notification(
-                        'Nouveau mot de passe enregistré',
-                        'success'
-                      );
-                      resetForm();
-                      setLoadingPassword(false);
-                    } catch (err) {
-                      console.error(err);
-                      setError(
-                        "Problème lors de l'enregistrement du nouveau mot de passe"
-                      );
-                      setLoadingPassword(false);
-                    }
-                  } else {
-                    setError('Nouveau mot de passe erroné');
+                  setLoadingPassword(true);
+                  try {
+                    await Api.putUserChangePwd({
+                      newPassword,
+                      oldPassword,
+                    });
+                    UIkit.notification(
+                      'Nouveau mot de passe enregistré',
+                      'success'
+                    );
+                    resetForm();
+                    setError('');
+                    setLoadingPassword(false);
+                  } catch (err) {
+                    console.error(err);
+                    setError("L'ancien mot de passe n'est pas valide");
+                    setLoadingPassword(false);
                   }
                 }}
               />

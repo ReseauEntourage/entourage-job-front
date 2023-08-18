@@ -8,13 +8,13 @@ import { Text } from 'src/components/utils/Inputs/Text';
 import { AnyCantFix } from 'src/utils/Types';
 import {
   ComponentException,
-  FormSchema,
-  isFormFieldGroup,
-  isFormFieldMultiple,
-  isFormFieldText,
   ExtractFormSchemaValidation,
   FormField,
+  FormSchema,
+  isFormFieldGroup,
   isFormFieldInput,
+  isFormFieldMultiple,
+  isFormFieldText,
 } from './FormSchema';
 import { StyledForm } from './Forms.styles';
 import { GenericField } from './fields/GenericField';
@@ -71,8 +71,8 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
 
   const onValidForm: SubmitHandler<ExtractFormSchemaValidation<S>> =
     useCallback(
-      (formValues) => {
-        onSubmit(formValues, (msg) => {
+      (fieldValues) => {
+        onSubmit(fieldValues, (msg) => {
           setError(msg);
         });
       },
@@ -90,10 +90,11 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
       <StyledForm
         id={formId}
         data-testid="form-with-validation"
+        onSubmit={handleSubmit(onValidForm, onErrorForm)}
         onKeyDown={(ev) => {
           if (enterToSubmit) {
             if (ev.key === 'Enter') {
-              handleSubmit(() => onValidForm(ev), onErrorForm);
+              handleSubmit(onValidForm, onErrorForm)();
             }
           }
         }}
@@ -101,23 +102,24 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
         <fieldset>
           {fields.map((field: FormField<ExtractFormSchemaValidation<S>>, i) => {
             const shouldHide = field.hide
-              ? field.hide(getValues)
+              ? field.hide(getValues, fieldOptions)
               : field.hidden;
 
-            if (shouldHide) {
-              return null;
-            }
-
             if (isFormFieldText(field)) {
+              if (shouldHide) {
+                return null;
+              }
               const title =
                 typeof field.title === 'function'
                   ? field.title(getValues)
                   : field.title;
+
               if (field.component === 'heading') {
                 return (
                   <Heading id={`${formId}-${field.id}`} title={title} key={i} />
                 );
               }
+
               if (field.component === 'text') {
                 return (
                   <Text id={`${formId}-${field.id}`} title={title} key={i} />
@@ -126,60 +128,71 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
             }
 
             if (isFormFieldGroup(field)) {
+              if (shouldHide) {
+                return null;
+              }
+
               if (field.component === 'fieldgroup') {
                 const { fields: childrenFields } = field;
 
                 return (
-                  !shouldHide && (
-                    <li key={i}>
-                      <InputsContainer
-                        fields={childrenFields.map((childrenField) => {
+                  <li key={i}>
+                    <InputsContainer
+                      fields={childrenFields.map((childrenField) => {
+                        if (isFormFieldText(childrenField)) {
                           const shouldHideField = childrenField.hide
                             ? childrenField.hide(getValues)
                             : childrenField.hidden;
 
-                          if (isFormFieldText(childrenField)) {
-                            const title =
-                              typeof childrenField.title === 'function'
-                                ? childrenField.title(getValues)
-                                : childrenField.title;
+                          if (shouldHideField) {
+                            return null;
+                          }
 
-                            if (childrenField.component === 'text') {
-                              return (
-                                <Text
-                                  id={`${formId}-${childrenField.id}`}
-                                  title={title}
-                                  key={i}
-                                />
-                              );
-                            }
-                            throw new ComponentException(
-                              childrenField.component,
-                              field.component
+                          const title =
+                            typeof childrenField.title === 'function'
+                              ? childrenField.title(getValues)
+                              : childrenField.title;
+
+                          if (childrenField.component === 'text') {
+                            return (
+                              <Text
+                                id={`${formId}-${childrenField.id}`}
+                                title={title}
+                                key={i}
+                              />
                             );
                           }
 
-                          return !shouldHideField ? (
-                            <GenericField
-                              formSchema={formSchema}
-                              watch={watch}
-                              resetField={resetField}
-                              control={control}
-                              field={childrenField}
-                              fieldOptions={fieldOptions}
-                              updateFieldOptions={updateFieldOptions}
-                              getValue={getValues}
-                            />
-                          ) : null;
-                        })}
-                      />
-                    </li>
-                  )
+                          throw new ComponentException(
+                            childrenField.component,
+                            field.component
+                          );
+                        }
+
+                        return (
+                          <GenericField
+                            formSchema={formSchema}
+                            watch={watch}
+                            resetField={resetField}
+                            control={control}
+                            field={childrenField}
+                            fieldOptions={fieldOptions}
+                            updateFieldOptions={updateFieldOptions}
+                            getValue={getValues}
+                          />
+                        );
+                      })}
+                    />
+                  </li>
                 );
               }
             }
 
             if (isFormFieldMultiple(field)) {
+              if (shouldHide) {
+                return null;
+              }
+
               if (field.component === 'multiple-fields') {
                 const {
                   fields: multipleFields,

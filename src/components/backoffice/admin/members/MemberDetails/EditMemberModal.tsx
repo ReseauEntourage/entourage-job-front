@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import UIkit from 'uikit';
-import { ExtractFormSchemaValidation } from '../../../../forms/FormSchema';
 import { Api } from 'src/api';
 import { User, UserDto } from 'src/api/types';
 import { useOnMemberFormSubmit } from 'src/components/backoffice/admin/useOnMemberFormSubmit';
+import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { formAddUser } from 'src/components/forms/schemas/formAddUser';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
@@ -108,7 +108,15 @@ export function EditMemberModal({ user, setUser }: EditMemberModal) {
       },
       onCancel: () => setFilledUserFields({}),
       defaultValues: {
-        ...user,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        role: user.role,
+        adminRole: user.adminRole,
+        gender: user.gender,
+        phone: user.phone,
+        address: user.address,
+        zone: user.zone,
         organizationId: organization,
         userToLinkId: userToLink,
       },
@@ -121,6 +129,7 @@ export function EditMemberModal({ user, setUser }: EditMemberModal) {
     userToLink,
   ]);
 
+  // TODO TEST AND FIX
   useEffect(() => {
     if (
       !_.isEmpty(filledUserFields) &&

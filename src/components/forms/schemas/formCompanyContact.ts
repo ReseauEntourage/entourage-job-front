@@ -29,7 +29,6 @@ export const formCompanyContact: FormSchema<{
       component: 'text-input',
       title: 'Votre prénom*',
       isRequired: true,
-      maxLength: 80,
     },
     {
       id: 'lastName',
@@ -37,7 +36,6 @@ export const formCompanyContact: FormSchema<{
       component: 'text-input',
       title: 'Votre nom*',
       isRequired: true,
-      maxLength: 80,
     },
     {
       id: 'approach',

@@ -11,7 +11,12 @@ import {
 import { AdminZone, Department } from 'src/constants/departements';
 import { AdminRole, Gender, UserRole } from 'src/constants/users';
 
-export type SocialMedia = 'facebook' | 'linkedin' | 'twitter' |'whatsapp' | 'other';
+export type SocialMedia =
+  | 'facebook'
+  | 'linkedin'
+  | 'twitter'
+  | 'whatsapp'
+  | 'other';
 
 export const APIRoutes = {
   USERS: 'user',
@@ -80,7 +85,6 @@ export type User = {
   hashReset: string;
   saltReset: string;
   zone: AdminZone;
-  userToCoach: string;
   organization: Organization;
   deletedAt?: string;
 };

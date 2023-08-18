@@ -1,5 +1,4 @@
-import React, { ChangeEvent, RefCallback } from 'react';
-import { StyledErrorMessage } from '../../../forms/fields/FieldErrorMessage/FieldErrorMessage.styles';
+import React, { ChangeEvent } from 'react';
 import {
   StyledAnnotations,
   StyledAnnotationsErrorMessage,

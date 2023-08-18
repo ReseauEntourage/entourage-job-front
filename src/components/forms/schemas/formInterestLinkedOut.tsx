@@ -27,7 +27,6 @@ export const formInterestLinkedOut: FormSchema<{
       component: 'text-input',
       title: 'Nom*',
       isRequired: true,
-      maxLength: 80,
     },
     {
       id: 'firstName',
@@ -35,7 +34,6 @@ export const formInterestLinkedOut: FormSchema<{
       component: 'text-input',
       title: 'Prénom*',
       isRequired: true,
-      maxLength: 80,
     },
     {
       id: 'email',
@@ -72,7 +70,6 @@ export const formInterestLinkedOut: FormSchema<{
       name: 'structure',
       component: 'text-input',
       title: 'Structure',
-      maxLength: 60,
     },
     {
       id: 'message',

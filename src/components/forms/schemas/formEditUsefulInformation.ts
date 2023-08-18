@@ -109,7 +109,7 @@ export const formEditUsefulInformation: FormSchema<{
       name: 'transport',
       component: 'text-input',
       title: 'Permis de conduire',
-      maxLength: 100,
+      maxLength: 40,
     },
   ],
 };

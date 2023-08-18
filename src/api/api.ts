@@ -13,7 +13,6 @@ import {
   ContactCandidate,
   ContactNewsletter,
   ExternalOpportunityDto,
-  Opportunity,
   OpportunityJoin,
   OpportunityUserEvent,
   PutCandidate,

@@ -72,8 +72,6 @@ export function SelectAsync<T extends FilterConstant | FilterConstant[]>({
     return null;
   }
 
-  console.log('value', name, value);
-
   return (
     <StyledSelectContainer disabled={disabled}>
       {showLabel && (

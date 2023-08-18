@@ -12,6 +12,8 @@ interface FooterFormProps {
   formId: string;
   noCompulsory?: boolean;
 }
+
+// TODO NEW STYLE
 export const FormFooter = ({
   error,
   onSubmit,

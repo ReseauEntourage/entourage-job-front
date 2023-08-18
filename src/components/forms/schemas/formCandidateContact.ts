@@ -64,7 +64,6 @@ export const formCandidateContact: FormSchema<{
       component: 'text-input',
       title: 'Votre prénom*',
       isRequired: true,
-      maxLength: 80,
     },
     {
       id: 'workerLastName',
@@ -72,7 +71,6 @@ export const formCandidateContact: FormSchema<{
       component: 'text-input',
       title: 'Votre nom*',
       isRequired: true,
-      maxLength: 80,
     },
     {
       id: 'structure',
@@ -80,7 +78,6 @@ export const formCandidateContact: FormSchema<{
       component: 'text-input',
       title: 'Votre structure* (Association, CCAS, EDAS, etc.)',
       isRequired: true,
-      maxLength: 60,
     },
     {
       id: 'workerPosition',
@@ -122,7 +119,6 @@ export const formCandidateContact: FormSchema<{
       component: 'text-input',
       title: 'Prénom de la personne que vous souhaitez orienter*',
       isRequired: true,
-      maxLength: 80,
     },
     {
       id: 'lastName',
@@ -130,7 +126,6 @@ export const formCandidateContact: FormSchema<{
       component: 'text-input',
       title: 'Son nom*',
       isRequired: true,
-      maxLength: 80,
     },
     {
       id: 'helpWith',

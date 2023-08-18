@@ -1,10 +1,5 @@
 import { useWindowWidth } from '@react-hook/window-size';
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import UIkit from 'uikit';
 import { usePrevious } from 'src/hooks/utils';
 

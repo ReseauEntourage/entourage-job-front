@@ -38,7 +38,7 @@ describe('Parcours travailler', () => {
       'test@gmail.com'
     );
     cy.get('[data-testid="form-candidate-inscription-heardAbout"]').click();
-    cy.get('[data-testid="select-option-LinkedIn"]').click();
+    cy.get('[data-testid="select-option-linkedin"]').click();
     cy.get('[data-testid="form-candidate-inscription-infoCoSubtitle"]').should(
       'include.text',
       Cypress.env('adresseLocauxParis')

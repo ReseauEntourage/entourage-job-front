@@ -25,6 +25,12 @@ export const formChangePassword: FormSchema<{
       isRequired: true,
       rules: [
         {
+          method: (fieldValue, fieldValues) =>
+            !fieldValues.oldPassword || fieldValues.oldPassword !== fieldValue,
+          message:
+            "Le nouveau mot de passe ne peux pas être le même que l'ancien",
+        },
+        {
           method: (fieldValue) => passwordStrength(fieldValue).id >= 2,
           message: 'Doit répondre aux critères ci-dessus',
         },

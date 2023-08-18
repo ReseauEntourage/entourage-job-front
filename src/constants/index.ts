@@ -1014,7 +1014,7 @@ export const ANTENNE_INFO = [
     city: 'Lyon',
     address: ADDRESSES.LYON,
   },
-];
+] as const;
 
 export const MEMBER_TABS = {
   CV: 'cv',

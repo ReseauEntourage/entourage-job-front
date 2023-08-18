@@ -2,7 +2,7 @@ import React from 'react';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { isEmail } from 'validator';
 import PlusFilledIcon from 'assets/custom/icons/plus-filled.svg';
-import { FormSchema, GetValueType } from '../FormSchema';
+import { FormSchema, FormSchemaValidation, GetValueType } from '../FormSchema';
 import { Api } from 'src/api';
 import { ADMIN_ZONES_FILTERS, AdminZone } from 'src/constants/departements';
 import { COLORS } from 'src/constants/styles';
@@ -31,7 +31,7 @@ const CREATE_NEW_ORGANIZATION_OPTION = {
   ),
 };
 
-type FormAddUserSchema = {
+interface FormAddUserSchema extends FormSchemaValidation {
   firstName: string;
   lastName: string;
   role: UserRole;
@@ -49,7 +49,8 @@ type FormAddUserSchema = {
   referentLastNameOrganization: string;
   referentPhoneOrganization: string;
   referentMailOrganization: string;
-};
+}
+
 const hideMethod = (getValue: GetValueType<FormAddUserSchema>) => {
   const role = getValue('role');
   const organizationId = getValue('organizationId')?.value;
@@ -79,7 +80,6 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
           component: 'text-input',
           title: 'Prénom *',
           isRequired: true,
-          maxLength: 80,
         },
         {
           id: 'lastName',
@@ -87,7 +87,6 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
           component: 'text-input',
           title: 'Nom *',
           isRequired: true,
-          maxLength: 80,
         },
       ],
     },

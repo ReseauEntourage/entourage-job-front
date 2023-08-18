@@ -132,10 +132,6 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
     value,
   ]);
 
-  if (commonProps.hidden) {
-    return null;
-  }
-
   if (field.component === 'datepicker') {
     return <DatePicker {...commonProps} min={field.min} max={field.max} />;
   }

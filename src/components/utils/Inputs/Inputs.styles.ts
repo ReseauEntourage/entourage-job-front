@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components';
-import { FieldErrorMessage } from '../../forms/fields/FieldErrorMessage/FieldErrorMessage';
-import { StyledErrorMessage } from '../../forms/fields/FieldErrorMessage/FieldErrorMessage.styles';
+import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { COLORS } from 'src/constants/styles';
 
 export const commonMenuOptionStyles = css`

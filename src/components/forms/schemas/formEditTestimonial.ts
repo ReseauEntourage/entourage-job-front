@@ -13,7 +13,6 @@ export const formEditTestimonial: FormSchema<{
       component: 'text-input',
       title: 'Nom *',
       isRequired: true,
-      maxLength: 40,
     },
     {
       id: 'status',
@@ -21,7 +20,6 @@ export const formEditTestimonial: FormSchema<{
       component: 'text-input',
       title: 'Statut *',
       isRequired: true,
-      maxLength: 80,
     },
     {
       id: 'text',
