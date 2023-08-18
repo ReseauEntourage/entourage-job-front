@@ -22,7 +22,7 @@ const Suivi = () => {
   const { user } = useContext(UserContext);
   const [userCandidat, setUserCandidat] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [value, setValue] = useState();
+  const [value, setValue] = useState<string>();
   const candidateId = useCandidateId();
 
   const prevUser = usePrevious(user);
@@ -36,22 +36,25 @@ const Suivi = () => {
       ? "Ici, vous pouvez prendre des notes sur la progression de vos recherches, noter vos différents rendez-vous, etc. et échanger avec votre coach. Profitez de cet espace d'écriture libre qui vous est dédié !"
       : "Ici, vous pouvez suivre la progression de votre candidat.e grâce à ses notes, et échanger avec lui/elle. Profitez de cet espace d'échange libre qui vous est dédié !";
 
-  const updateValue = (text) => {
+  const updateValue = useCallback((text) => {
     setValue(text || '');
-  };
+  }, []);
 
-  const updateSuivi = (note) => {
-    Api.putCandidate(userCandidat.candidat.id, {
-      note,
-    })
-      .then(() => {
-        setUserCandidat({ ...userCandidat, note });
+  const updateSuivi = useCallback(
+    async (note) => {
+      try {
+        await Api.putCandidate(userCandidat.candidat.id, {
+          note,
+        });
+        setUserCandidat((prevUserCandidat) => ({ ...prevUserCandidat, note }));
         UIkit.notification('Suivi sauvegardé', 'success');
-      })
-      .catch(() => {
+      } catch (err) {
+        console.error(err);
         UIkit.notification('Erreur lors de la mise à jour du suivi', 'danger');
-      });
-  };
+      }
+    },
+    [userCandidat]
+  );
 
   const sendNoteHasBeenRead = useCallback(async () => {
     if (user && user.role !== USER_ROLES.ADMIN && userCandidat?.candidat?.id) {
@@ -61,7 +64,7 @@ const Suivi = () => {
         console.error(err);
       }
     }
-  }, [user, userCandidat?.candidat?.id]);
+  }, [user, userCandidat]);
 
   useEffect(() => {
     if (user && user !== prevUser) {
@@ -85,7 +88,7 @@ const Suivi = () => {
           return setLoading(false);
         });
     }
-  }, [prevUser, sendNoteHasBeenRead, user, candidateId]);
+  }, [prevUser, sendNoteHasBeenRead, user, candidateId, updateValue]);
 
   let content;
   if (loading || !user) {
@@ -117,9 +120,7 @@ const Suivi = () => {
             name="textarea-suivi"
             rows={10}
             value={value}
-            onChange={(updatedValue) => {
-              return updateValue(updatedValue);
-            }}
+            onChange={updateValue}
             showLabel
             placeholder="Tapez votre texte"
             title={title}
@@ -129,7 +130,7 @@ const Suivi = () => {
           <Button
             style="default"
             onClick={() => {
-              return updateValue(userCandidat.note);
+              updateValue(userCandidat.note);
             }}
             disabled={value === userCandidat.note}
           >
@@ -137,9 +138,7 @@ const Suivi = () => {
           </Button>
           <Button
             style="default"
-            onClick={() => {
-              return updateSuivi(value);
-            }}
+            onClick={() => updateSuivi(value)}
             disabled={value === userCandidat.note}
           >
             Sauvegarder

@@ -32,14 +32,12 @@ export const SendMailModalContent = ({
     fetchOpportunities
   );
   const { onClose } = useModalContext();
-  const [textAreaContent, setTextAreaContent] = useState();
-  const handleDescription = (e) => {
-    setTextAreaContent(e.target.value);
-  };
+  const [textAreaContent, setTextAreaContent] = useState<string>();
 
   const object = relance
     ? 'Relance - demande de contact'
     : 'Demande de contact';
+
   const description = relance ? (
     <>
       Vous pouvez ci-dessous envoyer un mail de relance pour le poste de
@@ -149,7 +147,7 @@ export const SendMailModalContent = ({
         <div className="textarea-container">
           <TextArea
             title="Ajouter un message personnel"
-            onChange={handleDescription}
+            onChange={setTextAreaContent}
             value={textAreaContent}
             name="contact-description"
             id="contact-description"

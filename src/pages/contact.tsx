@@ -31,7 +31,7 @@ const Contact = () => {
           avez des questions sur le projet&nbsp;?
         </h4>
         <FormWithValidation
-          ref={form}
+          innerRef={form}
           submitText="Envoyer"
           formSchema={formInterestLinkedOut}
           onSubmit={(fields) => {
@@ -72,7 +72,6 @@ const Contact = () => {
                   <SimpleLink
                     className="uk-link"
                     href={`tel:${contactPerCity[contact]}`}
-                    newTab
                     isExternal
                   >
                     {contactPerCity[contact]}

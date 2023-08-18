@@ -41,7 +41,7 @@ export function Select<T extends FilterConstant | FilterConstant[]>({
   }
 
   return (
-    <StyledSelectContainer>
+    <StyledSelectContainer disabled={disabled}>
       {showLabel && (
         <StyledInputLabel htmlFor={`form-input-${name}`}>
           {title}

@@ -50,7 +50,11 @@ export function Radio({
   }
 
   return (
-    <StyledRadioContainer id={id} data-testid={`test-${id}`}>
+    <StyledRadioContainer
+      id={id}
+      data-testid={`test-${id}`}
+      disabled={disabled}
+    >
       {typeof options === null ? (
         <legend>{errorMessage}</legend>
       ) : (

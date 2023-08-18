@@ -1,4 +1,4 @@
-import { Component, Ref } from 'react';
+import { Component, RefCallback } from 'react';
 import { FieldError } from 'react-hook-form';
 import { AnyCantFix } from 'src/utils/Types';
 
@@ -17,5 +17,5 @@ export interface CommonInputProps<
   hidden?: boolean;
   showLabel?: boolean;
   placeholder?: string;
-  inputRef?: Ref<K>;
+  inputRef?: RefCallback<K>;
 }

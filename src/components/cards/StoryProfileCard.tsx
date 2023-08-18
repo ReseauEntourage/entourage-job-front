@@ -10,7 +10,7 @@ export const StoryProfileCard = ({
   onChange,
 }: {
   description?: string;
-  onChange?: (arg1: { story: string }) => void; // to be typed
+  onChange: (updatedStory: { story: string }) => void;
 }) => {
   return (
     <div className="uk-card uk-card-default uk-card-body">
@@ -27,9 +27,9 @@ export const StoryProfileCard = ({
                   title="Édition - Mon histoire"
                   formSchema={formEditStory}
                   defaultValues={{ story: description }}
-                  onSubmit={async (fields, closeModal) => {
+                  onSubmit={(fields, closeModal) => {
                     closeModal();
-                    await onChange({ ...fields });
+                    onChange(fields);
                   }}
                 />
               );

@@ -115,7 +115,7 @@ export const AdminOpportunityList = ({
         </ButtonMultiple>
       </HeaderBackoffice>
       <OpportunityList
-        listRef={opportunityListRef}
+        innerRef={opportunityListRef}
         tabFilters={tabFilters}
         setTabFilters={setTabFilters}
         search={search}

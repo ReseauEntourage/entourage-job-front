@@ -31,9 +31,7 @@ export function useOnMemberFormSubmit(
         fields.organizationId?.value === CREATE_NEW_ORGANIZATION_VALUE;
 
       try {
-        let {
-          organizationId: { value: organizationId },
-        } = fields;
+        let organizationId = fields.organizationId?.value;
 
         if (shouldTryToCreateOrganization) {
           const organizationFields = {

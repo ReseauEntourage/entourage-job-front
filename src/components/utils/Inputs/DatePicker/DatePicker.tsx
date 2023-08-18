@@ -31,6 +31,7 @@ export function DatePicker({
 
   return (
     <StyledDatePickerContainer
+      disabled={disabled}
       className={`${hidden ? 'uk-hidden' : ''}`}
       onClick={(e) => {
         e.stopPropagation();

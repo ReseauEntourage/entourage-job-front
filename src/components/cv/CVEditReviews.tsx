@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { formEditTestimonial } from 'src/components/forms/schemas/formEditTestimonial';
 import { openModal } from 'src/components/modals/Modal';
@@ -7,7 +6,17 @@ import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Grid, ButtonIcon, Icon } from 'src/components/utils';
 import { formatParagraph, sortByName } from 'src/utils';
 
-export const CVEditReviews = ({ reviews, onChange }) => {
+interface Review {
+  name: string;
+  text: string;
+  status: string;
+}
+
+interface CVEditReviewsProps {
+  reviews: Review[];
+  onChange: (updatedCV: { reviews: Review[] }) => void;
+}
+export const CVEditReviews = ({ reviews, onChange }: CVEditReviewsProps) => {
   const MAX_REVIEWS = 3;
 
   const sortedReviews = sortByName(reviews);
@@ -25,9 +34,9 @@ export const CVEditReviews = ({ reviews, onChange }) => {
                 <ModalEdit
                   title="Ajout - Ils me recommandent"
                   formSchema={formEditTestimonial}
-                  onSubmit={async (fields, closeModal) => {
+                  onSubmit={(fields, closeModal) => {
                     closeModal();
-                    await onChange({
+                    onChange({
                       reviews: [...reviews, fields],
                     });
                   }}
@@ -42,7 +51,7 @@ export const CVEditReviews = ({ reviews, onChange }) => {
         {sortedReviews.length > 0 ? (
           sortedReviews.map((review, i) => {
             return (
-              <li id={i} key={i} className="">
+              <li id={i.toString()} key={i} className="">
                 <Grid
                   eachWidths={['auto', 'expand']}
                   className="uk-padding-small uk-padding-remove-horizontal"
@@ -67,10 +76,10 @@ export const CVEditReviews = ({ reviews, onChange }) => {
                               title="Édition - Ils me recommandent"
                               formSchema={formEditTestimonial}
                               defaultValues={{ ...review }}
-                              onSubmit={async (fields, closeModal) => {
+                              onSubmit={(fields, closeModal) => {
                                 closeModal();
                                 sortedReviews[i] = fields;
-                                await onChange({ reviews: sortedReviews });
+                                onChange({ reviews: sortedReviews });
                               }}
                             />
                           );
@@ -105,18 +114,4 @@ export const CVEditReviews = ({ reviews, onChange }) => {
       </ul>
     </div>
   );
-};
-CVEditReviews.propTypes = {
-  reviews: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired,
-      status: PropTypes.string.isRequired,
-    })
-  ),
-  onChange: PropTypes.func,
-};
-CVEditReviews.defaultProps = {
-  reviews: [],
-  onChange: null,
 };

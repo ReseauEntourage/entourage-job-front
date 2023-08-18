@@ -6,11 +6,12 @@ import {
   AmbitionsPrefixesType,
   BusinessLineValue,
   ExternalOfferOrigin,
+  HeardAboutValue,
 } from 'src/constants';
 import { AdminZone, Department } from 'src/constants/departements';
 import { AdminRole, Gender, UserRole } from 'src/constants/users';
 
-export type SocialMedia = 'facebook' | 'linkedin' | 'twitter';
+export type SocialMedia = 'facebook' | 'linkedin' | 'twitter' |'whatsapp' | 'other';
 
 export const APIRoutes = {
   USERS: 'user',
@@ -125,7 +126,7 @@ export interface CV {
   }[];
   transport: string;
   skills: {
-    id: string;
+    id?: string;
     name: string;
     order: number;
   }[];
@@ -134,7 +135,7 @@ export interface CV {
     order: number;
   }[];
   reviews: {
-    id: string;
+    id?: string;
     name: string;
     text: string;
     status: string;
@@ -143,7 +144,7 @@ export interface CV {
     description: string;
     order: number;
     skills: {
-      id: string;
+      id?: string;
       name: string;
       order: number;
     }[];
@@ -376,7 +377,7 @@ export type ContactContactUs = {
   email: string;
   structure: string;
   message: string;
-  heardAbout: object;
+  heardAbout: HeardAboutValue;
   cgu: boolean;
 };
 

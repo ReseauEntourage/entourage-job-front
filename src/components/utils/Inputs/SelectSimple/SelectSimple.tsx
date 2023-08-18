@@ -49,7 +49,7 @@ export function SelectSimple<T extends string | number | boolean>({
   }
 
   return (
-    <StyledSelectContainer id={selectId}>
+    <StyledSelectContainer id={selectId} disabled={disabled}>
       {showLabel && (
         <StyledInputLabel htmlFor={`form-input-${name}`}>
           {title}

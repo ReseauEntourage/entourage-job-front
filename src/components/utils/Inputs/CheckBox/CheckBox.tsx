@@ -26,6 +26,7 @@ export function CheckBox({
 
   return (
     <StyledCheckbox
+      disabled={disabled}
       removeMargin={removeMargin}
       onClick={(e) => {
         e.stopPropagation();

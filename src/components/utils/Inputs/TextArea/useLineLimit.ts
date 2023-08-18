@@ -1,6 +1,5 @@
 import { useWindowWidth } from '@react-hook/window-size';
 import {
-  MutableRefObject,
   useCallback,
   useEffect,
   useRef,
@@ -13,7 +12,6 @@ export function useLineLimit(
   value: string,
   name: string,
   onChange: (updatedValue: string) => void,
-  inputRef?: MutableRefObject<HTMLTextAreaElement>,
   maxLines?: number
 ) {
   const windowWidth = useWindowWidth();
@@ -22,7 +20,6 @@ export function useLineLimit(
   const [textAreaWidth, setTextAreaWidth] = useState(0);
 
   const ref = useRef<HTMLTextAreaElement>();
-  const refToUse = inputRef || ref;
 
   const prevValue: string = usePrevious(value);
 
@@ -64,8 +61,8 @@ export function useLineLimit(
     maxLines - numberOfLines < 0 ? 0 : maxLines - numberOfLines;
 
   useEffect(() => {
-    if (maxLines && refToUse && refToUse.current && value !== prevValue) {
-      const ta = refToUse.current;
+    if (maxLines && ref && ref.current && value !== prevValue) {
+      const ta = ref.current;
 
       const style = window.getComputedStyle
         ? window.getComputedStyle(ta)
@@ -93,15 +90,7 @@ export function useLineLimit(
         setNumberOfLines(!value ? 0 : nbOfLines);
       }
     }
-  }, [
-    calculateContentHeight,
-    maxLines,
-    name,
-    onChange,
-    prevValue,
-    refToUse,
-    value,
-  ]);
+  }, [calculateContentHeight, maxLines, name, onChange, prevValue, ref, value]);
 
   useEffect(() => {
     const modal = document.getElementById('modal-screen')
@@ -132,5 +121,5 @@ export function useLineLimit(
     }
   }, [windowWidth]);
 
-  return { remainingLines, textAreaRef: refToUse, textAreaWidth };
+  return { remainingLines, textAreaRef: ref, textAreaWidth };
 }

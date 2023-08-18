@@ -4,11 +4,19 @@ import { StyledErrorMessage } from './FieldErrorMessage.styles';
 
 interface FieldErrorMessageProps {
   error?: FieldError;
+  className?: string;
 }
 
-export const FieldErrorMessage = ({ error }: FieldErrorMessageProps) => {
+export const FieldErrorMessage = ({
+  error,
+  className,
+}: FieldErrorMessageProps) => {
   if (error?.message) {
-    return <StyledErrorMessage>{error.message}</StyledErrorMessage>;
+    return (
+      <StyledErrorMessage className={className}>
+        {error.message}
+      </StyledErrorMessage>
+    );
   }
   return null;
 };

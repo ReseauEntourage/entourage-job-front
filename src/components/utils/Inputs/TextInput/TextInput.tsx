@@ -1,12 +1,14 @@
 import React, { ChangeEvent } from 'react';
-import { StyledInputLabel } from '../Inputs.styles';
-import { CommonInputProps } from '../Inputs.types';
-import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
+import { StyledErrorMessage } from '../../../forms/fields/FieldErrorMessage/FieldErrorMessage.styles';
 import {
   StyledAnnotations,
-  StyledLengthLimit,
-  StyledTextInputContainer,
-} from './TextInput.styles';
+  StyledAnnotationsErrorMessage,
+  StyledInputLabel,
+  StyledLimit,
+} from '../Inputs.styles';
+import { CommonInputProps } from '../Inputs.types';
+import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
+import { StyledTextInputContainer } from './TextInput.styles';
 
 interface TextInputProps extends CommonInputProps<string, HTMLInputElement> {
   maxLength?: number;
@@ -38,7 +40,7 @@ export function TextInput({
   const remainingCharacters = (maxLength || 0) - (value || '').length;
 
   return (
-    <StyledTextInputContainer>
+    <StyledTextInputContainer disabled={disabled}>
       {showLabel && (
         <StyledInputLabel htmlFor={`form-input-${name}`}>
           {title}
@@ -60,16 +62,18 @@ export function TextInput({
         id={id}
         data-testid={id}
       />
-      <StyledAnnotations>
-        <div>
-          <FieldErrorMessage error={error} />
-        </div>
-        {maxLength && (
-          <StyledLengthLimit warning={remainingCharacters === 0}>
+      {maxLength ? (
+        <StyledAnnotations>
+          <div>
+            <StyledAnnotationsErrorMessage error={error} />
+          </div>
+          <StyledLimit warning={remainingCharacters === 0}>
             {remainingCharacters} caractère(s) restant(s)
-          </StyledLengthLimit>
-        )}
-      </StyledAnnotations>
+          </StyledLimit>
+        </StyledAnnotations>
+      ) : (
+        <FieldErrorMessage error={error} />
+      )}
     </StyledTextInputContainer>
   );
 }

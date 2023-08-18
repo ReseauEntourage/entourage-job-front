@@ -1,4 +1,5 @@
 import React from 'react';
+import { StyledText } from './Text.styles';
 
 interface TextProps {
   id: string;
@@ -6,8 +7,8 @@ interface TextProps {
 }
 export function Text({ id, title }: TextProps) {
   return (
-    <p id={id} data-testid={id}>
+    <StyledText id={id} data-testid={id}>
       {title}
-    </p>
+    </StyledText>
   );
 }

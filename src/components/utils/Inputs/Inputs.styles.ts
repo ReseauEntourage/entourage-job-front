@@ -1,4 +1,6 @@
 import styled, { css } from 'styled-components';
+import { FieldErrorMessage } from '../../forms/fields/FieldErrorMessage/FieldErrorMessage';
+import { StyledErrorMessage } from '../../forms/fields/FieldErrorMessage/FieldErrorMessage.styles';
 import { COLORS } from 'src/constants/styles';
 
 export const commonMenuOptionStyles = css`
@@ -24,6 +26,7 @@ export const commonInputContainerStyles = css`
   flex-direction: column;
   position: relative;
   min-height: 30px;
+  opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
 `;
 export const commonInputStyles = css`
   font-family: Poppins, sans-serif;
@@ -49,4 +52,28 @@ export const StyledInputLabel = styled.label`
   box-sizing: border-box;
   font-family: Poppins, sans-serif;
   display: inline-block;
+`;
+
+export const StyledAnnotations = styled.div`
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 12px;
+  width: 100%;
+  align-items: center;
+`;
+
+export const StyledAnnotationsErrorMessage = styled(FieldErrorMessage)`
+  position: relative !important;
+  bottom: 0 !important;
+`;
+
+export const StyledLimit = styled.div`
+  color: ${({ warning }) => {
+    return warning ? COLORS.noRed : COLORS.darkGray;
+  }};
+  font-size: 12px;
+  line-height: 12px;
+  text-align: right;
+  align-self: flex-end;
 `;

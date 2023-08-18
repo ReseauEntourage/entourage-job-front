@@ -1,12 +1,15 @@
-import React, { ChangeEvent, MutableRefObject } from 'react';
-import { StyledInputLabel } from '../Inputs.styles';
+import React, { ChangeEvent, RefCallback } from 'react';
+import { StyledErrorMessage } from '../../../forms/fields/FieldErrorMessage/FieldErrorMessage.styles';
+import {
+  StyledAnnotations,
+  StyledAnnotationsErrorMessage,
+  StyledInputLabel,
+  StyledLimit,
+} from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
-import { StyledLengthLimit } from '../TextInput/TextInput.styles';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { useIsMobile } from 'src/hooks/utils';
 import {
-  StyledAnnotations,
-  StyledLineLimit,
   StyledTextArea,
   StyledTextAreaContainer,
   StyledTextAreaScrollContainer,
@@ -42,7 +45,6 @@ export function TextArea({
     value,
     name,
     onChange,
-    inputRef as MutableRefObject<HTMLTextAreaElement>,
     maxLines?.lines
   );
 
@@ -55,7 +57,7 @@ export function TextArea({
   const remainingCharacters = (maxLength || 0) - (value || '').length;
 
   return (
-    <StyledTextAreaContainer>
+    <StyledTextAreaContainer disabled={disabled}>
       {showLabel && (
         <StyledInputLabel htmlFor={`form-input-${name}`}>
           {title}
@@ -71,7 +73,10 @@ export function TextArea({
           isMobile={isMobile}
           hasLineLimit={!!maxLines}
           width={maxLinesWidth}
-          ref={textAreaRef}
+          ref={(e) => {
+            if (inputRef) inputRef(e);
+            textAreaRef.current = e;
+          }}
           name={name}
           id={id}
           rows={rows || 5}
@@ -85,21 +90,25 @@ export function TextArea({
           value={value || ''}
         />
       </StyledTextAreaScrollContainer>
-      <StyledAnnotations>
-        <div>
-          <FieldErrorMessage error={error} />
-        </div>
-        {maxLines && (
-          <StyledLineLimit warning={remainingLines === 0}>
-            {remainingLines} ligne(s) restante(s)
-          </StyledLineLimit>
-        )}
-        {!maxLines && maxLength && (
-          <StyledLengthLimit warning={remainingCharacters === 0}>
-            {remainingCharacters} caractère(s) restant(s)
-          </StyledLengthLimit>
-        )}
-      </StyledAnnotations>
+      {maxLines || maxLength ? (
+        <StyledAnnotations>
+          <div>
+            <StyledAnnotationsErrorMessage error={error} />
+          </div>
+          {maxLines && (
+            <StyledLimit warning={remainingLines === 0}>
+              {remainingLines} ligne(s) restante(s)
+            </StyledLimit>
+          )}
+          {!maxLines && maxLength && (
+            <StyledLimit warning={remainingCharacters === 0}>
+              {remainingCharacters} caractère(s) restant(s)
+            </StyledLimit>
+          )}
+        </StyledAnnotations>
+      ) : (
+        <FieldErrorMessage error={error} />
+      )}
     </StyledTextAreaContainer>
   );
 }

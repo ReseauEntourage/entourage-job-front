@@ -75,7 +75,12 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
     rules: {
       required: field.isRequired ? 'Obligatoire' : false,
       ...(isFormFieldTextInput(field) && field.maxLength
-        ? { maxLength: field.maxLength }
+        ? {
+            maxLength: {
+              value: field.maxLength,
+              message: `${field.maxLength} caractères maximum`,
+            },
+          }
         : {}),
       validate: rules || {},
     },
@@ -88,7 +93,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
       if (isFormFieldSelect(field) || isFormFieldSelectRequest(field)) {
         if (field.fieldsToReset) {
           for (let i = 0; i < field.fieldsToReset.length; i += 1) {
-            resetField(field.fieldsToReset[i]);
+            resetField(field.fieldsToReset[i], { defaultValue: null });
           }
         }
       }
@@ -136,7 +141,13 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
   }
 
   if (field.component === 'text-input') {
-    return <TextInput {...commonProps} type={field.type} />;
+    return (
+      <TextInput
+        {...commonProps}
+        type={field.type}
+        maxLength={field.maxLength}
+      />
+    );
   }
 
   if (field.component === 'tel-input') {
@@ -144,7 +155,13 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
   }
 
   if (field.component === 'textarea') {
-    return <TextArea {...commonProps} maxLines={field.maxLines} />;
+    return (
+      <TextArea
+        {...commonProps}
+        maxLines={field.maxLines}
+        maxLength={field.maxLength}
+      />
+    );
   }
 
   if (field.component === 'checkbox') {

@@ -38,7 +38,7 @@ export function PhoneInput({
   }
 
   return (
-    <StyledPhoneInput>
+    <StyledPhoneInput disabled={disabled}>
       {showLabel && (
         <StyledInputLabel htmlFor={`form-input-${name}`}>
           {title}

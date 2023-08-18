@@ -44,18 +44,3 @@ export const StyledTextAreaScrollContainer = styled.div`
   }};
   min-width: 300px;
 `;
-
-export const StyledAnnotations = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-export const StyledLineLimit = styled.div`
-  color: ${({ warning }) => {
-    return warning ? COLORS.noRed : COLORS.darkGray;
-  }};
-  font-size: 12px;
-  text-align: right;
-  align-self: flex-end;
-  transform: translate(0, -30px);
-`;

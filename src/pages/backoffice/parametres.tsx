@@ -432,7 +432,7 @@ const Parametres = () => {
               </Grid>
               <PasswordCriterias />
               <FormWithValidation
-                ref={form}
+                innerRef={form}
                 submitText="Modifier"
                 formSchema={formChangePassword}
                 onSubmit={async (

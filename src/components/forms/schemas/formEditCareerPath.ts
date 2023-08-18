@@ -11,6 +11,25 @@ export const formEditCareerPath: FormSchema<{
   id: 'form-career-path',
   fields: [
     {
+      id: 'carreerPathText0',
+      name: 'carreerPathText0',
+      component: 'fieldgroup',
+      fields: [
+        {
+          id: 'linkWordIn0',
+          name: 'linkWordIn0',
+          component: 'text',
+          title: 'dans',
+        },
+        {
+          id: 'linkWordLike0',
+          name: 'linkWordLike0',
+          component: 'text',
+          title: 'comme',
+        },
+      ],
+    },
+    {
       id: 'carreerPath0',
       name: 'carreerPath0',
       component: 'fieldgroup',
@@ -24,16 +43,29 @@ export const formEditCareerPath: FormSchema<{
           isRequired: true,
         },
         {
-          id: 'linkWord0',
-          name: 'linkWord0',
-          component: 'text',
-          title: 'comme',
-        },
-        {
           id: 'ambition0',
           name: 'ambition0',
           component: 'text-input',
           title: 'Métier 1',
+        },
+      ],
+    },
+    {
+      id: 'carreerPathText1',
+      name: 'carreerPathText1',
+      component: 'fieldgroup',
+      fields: [
+        {
+          id: 'linkWordIn1',
+          name: 'linkWordIn1',
+          component: 'text',
+          title: 'dans',
+        },
+        {
+          id: 'linkWordLike1',
+          name: 'linkWordLike1',
+          component: 'text',
+          title: 'comme',
         },
       ],
     },
@@ -56,12 +88,6 @@ export const formEditCareerPath: FormSchema<{
               message: 'Obligatoire',
             },
           ],
-        },
-        {
-          id: 'linkWord1',
-          name: 'linkWord1',
-          component: 'text',
-          title: 'comme',
         },
         {
           id: 'ambition1',

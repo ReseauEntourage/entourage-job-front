@@ -163,7 +163,7 @@ export const OpportunityList = ({
   resetFilters,
   tabFilters,
   setTabFilters,
-  listRef,
+  innerRef,
 }) => {
   const {
     push,
@@ -220,7 +220,7 @@ export const OpportunityList = ({
     return filter.active;
   })?.tag;
 
-  useImperativeHandle(listRef, () => {
+  useImperativeHandle(innerRef, () => {
     return {
       fetchData: () => {
         return fetchData(role, search, tabFilterTag, filters, candidateId);
@@ -512,9 +512,9 @@ OpportunityList.propTypes = {
   resetFilters: PropTypes.func,
   tabFilters: PropTypes.arrayOf(PropTypes.shape({})),
   setTabFilters: PropTypes.func,
-  listRef: PropTypes.exact({
+  innerRef: PropTypes.exact({
     current: PropTypes.exact({ fetchData: PropTypes.func }),
-  }).isRequired,
+  }),
 };
 
 OpportunityList.defaultProps = {

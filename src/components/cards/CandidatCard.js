@@ -2,7 +2,7 @@ import _ from 'lodash';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
+import React from 'react';
 
 import {
   FacebookShareButton,
@@ -10,15 +10,14 @@ import {
   TwitterShareButton,
 } from 'react-share';
 
-import { Api } from 'src/api';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalShareCV } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
 import { Grid, Img, SimpleLink, Icon } from 'src/components/utils';
 import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { useUpdateSharesCount } from 'src/hooks';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
-import { SharesCountContext } from 'src/store/SharesCountProvider';
 import {
   buildBusinessLineForSentence,
   findConstantFromValue,
@@ -55,23 +54,10 @@ export const CandidatCard = ({
   const sharedDescription = `La précarité n'exclut pas les compétences\xa0! Avec LinkedOut, aidons ${firstName} à retrouver un emploi en lui proposant un job ou en diffusant son CV\xa0!`;
   const title = `LinkedOut\xa0: Aidez ${firstName} à retrouver un emploi`;
 
-  const { incrementSharesCount } = useContext(SharesCountContext);
+  const updateSharesCount = useUpdateSharesCount();
 
   const openNewsletterModal = () => {
     openModal(<ModalShareCV firstName={firstName} />);
-  };
-
-  const updateShareCount = (candidateId, type) => {
-    Api.postCVCount({
-      candidateId,
-      type,
-    })
-      .then(() => {
-        incrementSharesCount();
-      })
-      .catch((err) => {
-        console.error(err);
-      });
   };
 
   const linkToCV = `/cv/${url}?hideShareOptions=${!showShareOptions}`;
@@ -292,14 +278,14 @@ export const CandidatCard = ({
             <ul className="uk-iconnav">
               <li>
                 <LinkedinShareButton
-                  onShareWindowClose={() => {
+                  onShareWindowClose={async () => {
                     gaEvent(
                       isCandidatsPage
                         ? GA_TAGS.PAGE_GALERIE_PARTAGE_CV_LINKEDIN_CLIC
                         : GA_TAGS.HOME_PARTAGE_CV_LINKEDIN_CLIC
                     );
                     fbEvent(FB_TAGS.SHARE_CV_SEND);
-                    updateShareCount(id, 'linkedin');
+                    await updateSharesCount(id, 'linkedin');
                     openNewsletterModal();
                   }}
                   onClick={() => {
@@ -320,14 +306,14 @@ export const CandidatCard = ({
               </li>
               <li>
                 <FacebookShareButton
-                  onShareWindowClose={() => {
+                  onShareWindowClose={async () => {
                     gaEvent(
                       isCandidatsPage
                         ? GA_TAGS.PAGE_GALERIE_PARTAGE_CV_FACEBOOK_CLIC
                         : GA_TAGS.HOME_PARTAGE_CV_FACEBOOK_CLIC
                     );
                     fbEvent(FB_TAGS.SHARE_CV_SEND);
-                    updateShareCount(id, 'facebook');
+                    await updateSharesCount(id, 'facebook');
                     openNewsletterModal();
                   }}
                   onClick={() => {
@@ -348,14 +334,14 @@ export const CandidatCard = ({
               </li>
               <li>
                 <TwitterShareButton
-                  onShareWindowClose={() => {
+                  onShareWindowClose={async () => {
                     gaEvent(
                       isCandidatsPage
                         ? GA_TAGS.PAGE_GALERIE_PARTAGE_CV_TWITTER_CLIC
                         : GA_TAGS.HOME_PARTAGE_CV_TWITTER_CLIC
                     );
                     fbEvent(FB_TAGS.SHARE_CV_SEND);
-                    updateShareCount(id, 'twitter');
+                    await updateSharesCount(id, 'twitter');
                     openNewsletterModal();
                   }}
                   onClick={() => {

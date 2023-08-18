@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import UIkit from 'uikit';
+import { ExtractFormSchemaValidation } from '../../../../forms/FormSchema';
 import { Api } from 'src/api';
 import { User, UserDto } from 'src/api/types';
 import { useOnMemberFormSubmit } from 'src/components/backoffice/admin/useOnMemberFormSubmit';
@@ -52,12 +53,18 @@ export function EditMemberModal({ user, setUser }: EditMemberModal) {
   }, Actions.UPDATE);
 
   const handleMemberUpdateSubmit = useCallback(
-    async (fields, closeModal) => {
+    async (
+      fields: ExtractFormSchemaValidation<typeof formAddUser>,
+      closeModal
+    ) => {
       const updatedUser = await onSubmit(fields, closeModal);
       try {
+        const userToLinkId = Array.isArray(fields.userToLinkId)
+          ? fields.userToLinkId.map(({ value }) => value)
+          : fields.userToLinkId?.value;
         const { data: updatedUserWithLinkedMember } = await Api.putLinkUser(
           user.id,
-          fields.userToLinkId || null
+          userToLinkId || null
         );
 
         setUser(updatedUserWithLinkedMember);
@@ -81,7 +88,10 @@ export function EditMemberModal({ user, setUser }: EditMemberModal) {
       description:
         'Merci de modifier les informations que vous souhaitez concernant le membre.',
       submitText: 'Modifier le membre',
-      onSubmit: async (fields, closeModal) => {
+      onSubmit: async (
+        fields: ExtractFormSchemaValidation<typeof formAddUser>,
+        closeModal
+      ) => {
         if (fields.role !== user.role) {
           openModal(
             <ModalConfirm

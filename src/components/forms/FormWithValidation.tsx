@@ -31,7 +31,7 @@ interface FormWithValidationProps<S extends FormSchema<AnyCantFix>> {
   submitText?: string;
   cancelText?: string;
   enterToSubmit?: boolean;
-  ref?: Ref<{ resetForm: () => void }>;
+  innerRef?: Ref<{ resetForm: () => void }>;
 }
 
 export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
@@ -43,7 +43,7 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
   onCancel,
   enterToSubmit = false,
   onError,
-  ref,
+  innerRef,
 }: FormWithValidationProps<S>) {
   const { id: formId, fields } = formSchema;
 
@@ -63,9 +63,9 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
       shouldUnregister: true,
     });
 
-  useImperativeHandle(ref, () => {
+  useImperativeHandle(innerRef, () => {
     return {
-      resetForm: reset,
+      resetForm: () => reset({} as ExtractFormSchemaValidation<S>),
     };
   });
 

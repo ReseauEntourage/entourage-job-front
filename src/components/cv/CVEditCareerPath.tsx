@@ -77,7 +77,7 @@ export const CVEditCareerPath = ({
               openModal(
                 <ModalEdit
                   title="Édition - Projet professionnel"
-                  description="J'aimerais travailler dans ..."
+                  description="J'aimerais travailler ..."
                   formSchema={formEditCareerPath}
                   defaultValues={defaultValues}
                   onSubmit={async (

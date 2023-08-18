@@ -27,6 +27,7 @@ export const ModalShareCV = ({ firstName }) => {
                 <br />
                 Vous souhaitez être informé(e) de la suite pour {firstName} ? Et
                 du projet LinkedOut ?<br />
+                <br />
                 Laissez-nous votre adresse mail :
               </p>
               <FormWithValidation
