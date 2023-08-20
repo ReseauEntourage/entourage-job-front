@@ -493,10 +493,10 @@ describe('Admin', () => {
       });
       cy.wait('@organizationListPage');
       // test if all organizations are in the table
-      cy.fixture('organization-search-res').then((organizations) => {
+      cy.fixture('organization-search-res').then((orgs) => {
         cy.get('[data-testid="organization-list"]')
           .find('tr')
-          .should('have.length', organizations.length);
+          .should('have.length', orgs.length);
       });
     });
 

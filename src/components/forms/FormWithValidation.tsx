@@ -14,6 +14,7 @@ import {
   isFormFieldGroup,
   isFormFieldInput,
   isFormFieldMultiple,
+  isFormFieldRadio,
   isFormFieldText,
 } from './FormSchema';
 import { StyledForm } from './Forms.styles';
@@ -109,6 +110,7 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
               if (shouldHide) {
                 return null;
               }
+
               const title =
                 typeof field.title === 'function'
                   ? field.title(getValues)
@@ -139,15 +141,15 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
                   <li key={i}>
                     <InputsContainer
                       fields={childrenFields.map((childrenField) => {
+                        const shouldHideField = childrenField.hide
+                          ? childrenField.hide(getValues)
+                          : childrenField.hidden;
+
+                        if (shouldHideField) {
+                          return null;
+                        }
+
                         if (isFormFieldText(childrenField)) {
-                          const shouldHideField = childrenField.hide
-                            ? childrenField.hide(getValues)
-                            : childrenField.hidden;
-
-                          if (shouldHideField) {
-                            return null;
-                          }
-
                           const title =
                             typeof childrenField.title === 'function'
                               ? childrenField.title(getValues)
@@ -217,6 +219,10 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
             }
 
             if (isFormFieldInput(field)) {
+              // Condition because Radio Async needs to be rendered to make request and check if it should be hidden or not
+              if (!isFormFieldRadio(field) && shouldHide) {
+                return null;
+              }
               return (
                 <li key={i}>
                   <GenericField

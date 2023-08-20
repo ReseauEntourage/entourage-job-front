@@ -82,7 +82,7 @@ export function MemberMobile({
                 name={`member-${member.id}-check`}
                 value={checked}
                 onChange={handleCheckBox}
-                removeMargin
+                useOutsideOfForm
                 disabled={userCandidate?.hidden}
               />
             )}

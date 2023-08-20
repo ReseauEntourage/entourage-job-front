@@ -9,7 +9,6 @@ export const StyledSelectContainer = styled.div`
   ${() => commonInputContainerStyles}
 `;
 export const StyledSelect = styled.div`
-  margin-bottom: 30px;
   & .Select__control--is-disabled {
     background-color: ${COLORS.lightgray} !important;
 

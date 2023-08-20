@@ -4,6 +4,7 @@ describe('Parcours Orienter', () => {
     cy.intercept('POST', '/contact/contactUs', {
       statusCode: 201,
     }).as('postContact');
+    cy.intercept('GET', '/cv/shares', { total: 184222 });
   });
 
   it('Ouvrir la popup du formulaire', () => {

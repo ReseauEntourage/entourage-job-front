@@ -96,12 +96,12 @@ export function TextArea({
           </div>
           {maxLines && (
             <StyledLimit warning={remainingLines === 0}>
-              {remainingLines} ligne(s) restante(s)
+              <span>{remainingLines} ligne(s) restante(s)</span>
             </StyledLimit>
           )}
           {!maxLines && maxLength && (
             <StyledLimit warning={remainingCharacters === 0}>
-              {remainingCharacters} caractère(s) restant(s)
+              <span>{remainingCharacters} caractère(s) restant(s)</span>
             </StyledLimit>
           )}
         </StyledAnnotations>

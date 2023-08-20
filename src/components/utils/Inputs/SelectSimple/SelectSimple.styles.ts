@@ -12,7 +12,6 @@ export const StyledSelectContainer = styled.div`
     width: 100%;
     border: none;
     position: relative;
-    margin-bottom: 30px;
     .placeholder,
     .selected-value {
       ${() => commonInputStyles}

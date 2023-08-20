@@ -6,10 +6,6 @@ export const StyledCheckbox = styled.div`
   ${() => commonInputContainerStyles}
   justify-content: center;
   .checkbox-label {
-    margin-bottom: ${({ removeMargin }) => {
-      return removeMargin ? 0 : 30;
-    }}px;
-
     display: flex;
     align-items: center;
     justify-content: flex-start;

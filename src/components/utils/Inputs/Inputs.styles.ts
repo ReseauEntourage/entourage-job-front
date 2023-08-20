@@ -40,7 +40,6 @@ export const commonInputStyles = css`
   padding: 4px 0;
   min-height: 30px;
   box-sizing: border-box;
-  margin-bottom: 30px;
 `;
 
 export const StyledInputLabel = styled.label`
@@ -56,10 +55,8 @@ export const StyledInputLabel = styled.label`
 export const StyledAnnotations = styled.div`
   display: flex;
   justify-content: space-between;
-  position: absolute;
-  bottom: 12px;
   width: 100%;
-  align-items: center;
+  align-items: flex-start;
 `;
 
 export const StyledAnnotationsErrorMessage = styled(FieldErrorMessage)`
@@ -75,4 +72,8 @@ export const StyledLimit = styled.div`
   line-height: 12px;
   text-align: right;
   align-self: flex-end;
+  min-height: 30px;
+  > * {
+    padding-top: 5px;
+  }
 `;

@@ -42,6 +42,7 @@ function hideIfNoInfoCo(
   return !city?.length || !filteredOptions;
 }
 
+// TODO FIX
 export const formCandidateInscription: FormSchema<FormCandidateInscriptionSchema> =
   {
     id: 'form-candidate-inscription',

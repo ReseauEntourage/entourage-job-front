@@ -86,7 +86,7 @@ export const NewsletterPartial = ({
                     <CheckBox
                       id={tagConst}
                       name={tagConst}
-                      removeMargin
+                      useOutsideOfForm
                       value={tagConst === status}
                       title={label}
                       onChange={() => {
@@ -113,7 +113,7 @@ export const NewsletterPartial = ({
                     <CheckBox
                       id={tagConst}
                       name={tagConst}
-                      removeMargin
+                      useOutsideOfForm
                       value={tagConst === zone}
                       title={label}
                       onChange={() => {

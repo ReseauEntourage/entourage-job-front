@@ -4,7 +4,7 @@ import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage
 import { StyledCheckbox } from 'src/components/utils/Inputs/CheckBox/CheckBox.styles';
 
 interface CheckBoxProps extends CommonInputProps<boolean, HTMLInputElement> {
-  removeMargin?: boolean;
+  useOutsideOfForm?: boolean;
 }
 
 export function CheckBox({
@@ -16,7 +16,7 @@ export function CheckBox({
   disabled = false,
   hidden = false,
   value = false,
-  removeMargin = false,
+  useOutsideOfForm = false,
   error,
   inputRef,
 }: Omit<CheckBoxProps, 'title'> & { title?: string | JSX.Element }) {
@@ -27,7 +27,6 @@ export function CheckBox({
   return (
     <StyledCheckbox
       disabled={disabled}
-      removeMargin={removeMargin}
       onClick={(e) => {
         e.stopPropagation();
       }}
@@ -51,7 +50,7 @@ export function CheckBox({
         <span className="checkmark" />
         {title && <span className="label">{title}</span>}
       </label>
-      <FieldErrorMessage error={error} />
+      {!useOutsideOfForm && <FieldErrorMessage error={error} />}
     </StyledCheckbox>
   );
 }

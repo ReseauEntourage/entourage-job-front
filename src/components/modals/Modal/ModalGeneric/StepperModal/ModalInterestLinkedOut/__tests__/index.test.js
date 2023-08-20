@@ -15,6 +15,14 @@ jest.mock('@react-hook/window-size', () => {
   };
 });
 
+jest.mock('src/components/forms/schemas/formInterestLinkedOut', () => {
+  return {
+    formInterestLinkedOut: {
+      id: 'form-interest',
+      fields: [],
+    },
+  };
+});
 jest.mock('react-modal');
 jest.mock('src/api/index');
 jest.mock('src/components/modals/Modal', () => {

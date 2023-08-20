@@ -5,6 +5,10 @@ export const StyledErrorMessage = styled.div`
   color: ${COLORS.darkOrange};
   font-size: 12px;
   line-height: 12px;
-  position: absolute;
-  bottom: 12px;
+  display: flex;
+  align-items: flex-start;
+  min-height: 30px;
+  > * {
+    padding-top: 5px;
+  }
 `;

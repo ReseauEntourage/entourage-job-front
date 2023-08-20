@@ -11,12 +11,9 @@ export const FieldErrorMessage = ({
   error,
   className,
 }: FieldErrorMessageProps) => {
-  if (error?.message) {
-    return (
-      <StyledErrorMessage className={className}>
-        {error.message}
-      </StyledErrorMessage>
-    );
-  }
-  return null;
+  return (
+    <StyledErrorMessage className={className}>
+      <span>{error?.message ? error.message : ''}</span>
+    </StyledErrorMessage>
+  );
 };

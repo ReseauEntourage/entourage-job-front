@@ -1,5 +1,4 @@
 import React, { ChangeEvent } from 'react';
-import { StyledErrorMessage } from '../../../forms/fields/FieldErrorMessage/FieldErrorMessage.styles';
 import {
   StyledAnnotations,
   StyledAnnotationsErrorMessage,
@@ -68,7 +67,7 @@ export function TextInput({
             <StyledAnnotationsErrorMessage error={error} />
           </div>
           <StyledLimit warning={remainingCharacters === 0}>
-            {remainingCharacters} caractère(s) restant(s)
+            <span>{remainingCharacters} caractère(s) restant(s)</span>
           </StyledLimit>
         </StyledAnnotations>
       ) : (

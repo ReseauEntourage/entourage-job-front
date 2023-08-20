@@ -215,7 +215,7 @@ export function MemberDesktop({
             <TdDesktop>
               <StyledCheckBoxCellContent>
                 <CheckBox
-                  removeMargin
+                  useOutsideOfForm
                   id={`member-${member.id}-check`}
                   name={`member-${member.id}-check`}
                   value={checked}
