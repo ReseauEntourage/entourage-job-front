@@ -89,7 +89,6 @@ export const PageCVContent = ({
           <StyledCVProfilePicture
             className={!isDesktop ? 'mobile' : ''}
             imgSrc={process.env.AWSS3_CDN_URL + addPrefix(cv.urlImg)}
-            // imgSrc="https://d33bu863opcyg0.cloudfront.net/images/5933dc85-08d9-4124-b0fd-ea6a8d78cf0e.Published.jpg"
           >
             <div className="picture" />
             <div className="pseudo" />
