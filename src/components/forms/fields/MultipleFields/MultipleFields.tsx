@@ -83,7 +83,7 @@ export function MultipleFields<S extends FormSchema<AnyCantFix>>({
 
                 const numberedField = {
                   ...field,
-                  id: `${name}.${index}.${field.id}` as Path<
+                  id: `${name}-${index}-${field.id}` as Path<
                     ExtractFormSchemaValidation<S>
                   >,
                   name: `${name}.${index}.${field.name}` as Path<

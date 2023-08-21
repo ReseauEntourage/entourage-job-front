@@ -164,7 +164,6 @@ export const formAddExternalOpportunityAsAdmin: FormSchema<{
         {
           id: 'candidateId',
           name: 'candidateId',
-          isMulti: false,
           title: 'Renseignez le candidat concerné*',
           component: 'select-async',
           loadOptions: (callback, inputValue) => {

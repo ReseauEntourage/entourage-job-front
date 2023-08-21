@@ -77,7 +77,6 @@ describe('Candidat', () => {
 
     cy.intercept('PUT', '/user/changePwd', {}).as('changePwd');
   });
-
   it('should open backoffice public offers', () => {
     cy.visit('/backoffice/candidat/offres/public', {
       onBeforeLoad: function async(window) {
@@ -130,31 +129,43 @@ describe('Candidat', () => {
       );
     });
     cy.get('[data-testid="candidat-add-offer-main"]').click();
-    cy.get('#form-offer-external-title').scrollIntoView().type('test');
-    cy.get('#form-offer-external-company').scrollIntoView().type('test');
-    cy.get('#form-offer-external-department-container')
+    cy.get('#form-add-offer-external-title').scrollIntoView().type('test');
+    cy.get('#form-add-offer-external-company').scrollIntoView().type('test');
+
+    cy.get('#form-add-offer-external-department')
+      .should('be.visible')
       .scrollIntoView()
+      .type('Par');
+
+    cy.get('#form-add-offer-external-department')
+      .find('.Select__menu')
+      .should('be.visible')
+      .scrollIntoView()
+      .find('.Select__option')
+      .contains('Paris (75)')
       .click();
-    cy.get(
-      '#form-offer-external-department-container .options-container .option button'
-    )
-      .first()
+
+    cy.get('#form-add-offer-external-contract-container')
+      .should('be.visible')
+      .scrollIntoView()
+      .click()
+      .find('.option')
+      .contains('CDI')
       .click();
-    cy.get('#form-offer-external-contract-container').scrollIntoView().click();
-    cy.get(
-      '#form-offer-external-contract-container .options-container .option button'
-    )
-      .first()
-      .click();
-    cy.get('#form-offer-external-recruiterFirstName')
+
+    cy.get('#form-add-offer-external-recruiterFirstName')
       .scrollIntoView()
       .type('test');
-    cy.get('#form-offer-external-recruiterName').scrollIntoView().type('test');
-    cy.get('#form-offer-external-recruiterMail')
+    cy.get('#form-add-offer-external-recruiterName')
+      .scrollIntoView()
+      .type('test');
+    cy.get('#form-add-offer-external-recruiterMail')
       .scrollIntoView()
       .type('test@gmail.com');
-    cy.get('#form-offer-external-description').scrollIntoView().type('test');
-    cy.get('#form-offer-external-link').scrollIntoView().type('test');
+    cy.get('#form-add-offer-external-description')
+      .scrollIntoView()
+      .type('test');
+    cy.get('#form-add-offer-external-link').scrollIntoView().type('test');
     cy.get('button').contains('Envoyer').click();
     cy.wait('@postExternal');
 
@@ -169,10 +180,10 @@ describe('Candidat', () => {
         window.localStorage.setItem('release-version', 'v100');
       },
     });
-    cy.get(`[data-testid="test-catchphrase-edit-icon"]`).click({ force: true });
+    cy.get(`[data-testid="test-catchphrase-edit-icon"]`).click();
     const catchPhrase = 'hello my name is Mike';
     cy.get('#form-catchphrase-catchphrase').type(catchPhrase);
-    cy.get(`[data-testid="form-confirm-catchphrase-form"]`).click();
+    cy.get(`[data-testid="form-confirm-form-catchphrase"]`).click();
     cy.get(`[data-testid="cv-edit-catchphrase-content"]`).should(
       'contain',
       catchPhrase
@@ -189,33 +200,36 @@ describe('Candidat', () => {
     });
 
     // toggle hide CV
-    cy.get(`[data-testid="test-toggle-hidden"]`).click({ force: true });
+    cy.get('label[for="ent-toggle-hidden"]').click();
     cy.get(`[data-testid="test-confirm-hidden"]`).click();
     cy.wait('@putCandidatParams');
     cy.get(`[data-testid="test-toggle-hidden"]`).should('be.checked');
-    cy.get(`[data-testid="test-toggle-hidden"]`)
-      .click({ force: true })
-      .should('not.be.checked');
+    cy.get('label[for="ent-toggle-hidden"]').click();
+    cy.get(`[data-testid="test-toggle-hidden"]`).should('not.be.checked');
 
     // toggle is employed
-    cy.get(`[data-testid="test-toggle-employedToggle"]`).click({ force: true });
-    cy.get('#form-edit-employed-contract').select('alt');
+    cy.get('label[for="ent-toggle-employedToggle"]').click();
+
+    cy.get('#form-edit-employed-contract-container')
+      .should('be.visible')
+      .scrollIntoView()
+      .click()
+      .find('.option')
+      .contains('Alternance')
+      .click();
     cy.get('#form-edit-employed-endOfContract').type('2024-03-03');
     cy.contains('Valider').click();
     cy.wait('@putCandidatParams');
     cy.get(`[data-testid="test-toggle-employedToggle"]`).should('be.checked');
-    cy.get(`[data-testid="test-toggle-employedToggle"]`)
-      .click({ force: true })
-      .should('not.be.checked');
+    cy.get('label[for="ent-toggle-employedToggle"]').click();
+    cy.get(`[data-testid="test-toggle-employedToggle"]`).should(
+      'not.be.checked'
+    );
 
     // change password
-    cy.get('#form-change-pwd-oldPassword').type('blablabla', { force: true });
-    cy.get('#form-change-pwd-newPassword').type('Linkedout123!', {
-      force: true,
-    });
-    cy.get('#form-change-pwd-confirmPassword').type('Linkedout123!', {
-      force: true,
-    });
+    cy.get('#form-change-pwd-oldPassword').type('blablabla');
+    cy.get('#form-change-pwd-newPassword').type('Linkedout123!');
+    cy.get('#form-change-pwd-confirmPassword').type('Linkedout123!');
     cy.contains('Modifier').click();
     cy.wait('@changePwd');
   });

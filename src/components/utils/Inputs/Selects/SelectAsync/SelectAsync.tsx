@@ -91,7 +91,11 @@ export function SelectAsync<T extends FilterConstant | FilterConstant[]>({
           defaultOptions={defaultOptions}
           value={value || null}
           isMulti={isMulti}
-          placeholder={placeholder || title}
+          placeholder={
+            showLabel
+              ? placeholder || 'Selectionnez dans la liste...'
+              : placeholder || title
+          }
           noOptionsMessage={() => {
             return `Aucun résultat`;
           }}

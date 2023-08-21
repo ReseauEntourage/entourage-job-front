@@ -79,7 +79,9 @@ export function TextArea({
           name={name}
           id={id}
           rows={rows || 5}
-          placeholder={placeholder || title}
+          placeholder={
+            showLabel ? placeholder || 'Écrivez...' : placeholder || title
+          }
           onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
             onChange(event.target.value)
           }

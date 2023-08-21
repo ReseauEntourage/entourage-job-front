@@ -64,6 +64,7 @@ export const formCandidateContact: FormSchema<{
       component: 'text-input',
       title: 'Votre prénom*',
       isRequired: true,
+      showLabel: true,
     },
     {
       id: 'workerLastName',
@@ -71,6 +72,7 @@ export const formCandidateContact: FormSchema<{
       component: 'text-input',
       title: 'Votre nom*',
       isRequired: true,
+      showLabel: true,
     },
     {
       id: 'structure',
@@ -78,12 +80,14 @@ export const formCandidateContact: FormSchema<{
       component: 'text-input',
       title: 'Votre structure* (Association, CCAS, EDAS, etc.)',
       isRequired: true,
+      showLabel: true,
     },
     {
       id: 'workerPosition',
       name: 'workerPosition',
       component: 'text-input',
       title: 'Votre fonction',
+      showLabel: true,
     },
     {
       id: 'workerEmail',
@@ -98,6 +102,7 @@ export const formCandidateContact: FormSchema<{
           message: 'Adresse e-mail invalide',
         },
       ],
+      showLabel: true,
     },
     {
       id: 'workerPhone',
@@ -112,6 +117,7 @@ export const formCandidateContact: FormSchema<{
           message: 'Numéro de téléphone invalide',
         },
       ],
+      showLabel: true,
     },
     {
       id: 'firstName',
@@ -119,6 +125,7 @@ export const formCandidateContact: FormSchema<{
       component: 'text-input',
       title: 'Prénom de la personne que vous souhaitez orienter*',
       isRequired: true,
+      showLabel: true,
     },
     {
       id: 'lastName',
@@ -126,6 +133,7 @@ export const formCandidateContact: FormSchema<{
       component: 'text-input',
       title: 'Son nom*',
       isRequired: true,
+      showLabel: true,
     },
     {
       id: 'helpWith',
@@ -135,6 +143,7 @@ export const formCandidateContact: FormSchema<{
       options: CANDIDATE_HELP_WITH_FILTERS,
       title: "Dans quel(s) domaine(s) l'accompagnez-vous ?*",
       isRequired: true,
+      showLabel: true,
     },
     {
       id: 'gender',
@@ -143,6 +152,7 @@ export const formCandidateContact: FormSchema<{
       options: CANDIDATE_GENDERS_FILTERS,
       title: 'Son sexe*',
       isRequired: true,
+      showLabel: true,
     },
     {
       id: 'birthDate',
@@ -150,19 +160,21 @@ export const formCandidateContact: FormSchema<{
       component: 'datepicker',
       title:
         'Sa date de naissance (la personne doit avoir plus de 18 ans pour rejoindre LinkedOut)',
+      showLabel: true,
     },
     {
       id: 'address',
       name: 'address',
       component: 'text-input',
       title: 'Son adresse',
+      showLabel: true,
     },
     {
       id: 'postalCode',
       name: 'postalCode',
       component: 'text-input',
       placeholder:
-        'La personne doit résider dans les départements 75, 93, 92, 56, 35, 69 ou 59.',
+        'La personne doit résider dans les départements 75, 93, 92, 56, 35, 69 ou 59',
       title: 'Son code postal*',
       isRequired: true,
       rules: [
@@ -171,13 +183,16 @@ export const formCandidateContact: FormSchema<{
           message: 'Code postal non valide',
         },
       ],
+      showLabel: true,
     },
     {
       id: 'city',
       name: 'city',
       component: 'text-input',
       title: 'Sa ville*',
+
       isRequired: true,
+      showLabel: true,
     },
     {
       id: 'phone',
@@ -193,6 +208,7 @@ export const formCandidateContact: FormSchema<{
           message: 'Numéro de téléphone invalide',
         },
       ],
+      showLabel: true,
     },
     {
       id: 'email',
@@ -207,6 +223,7 @@ export const formCandidateContact: FormSchema<{
           message: 'Adresse e-mail invalide',
         },
       ],
+      showLabel: true,
     },
     {
       id: 'registeredUnemploymentOffice',
@@ -216,6 +233,7 @@ export const formCandidateContact: FormSchema<{
       title:
         'La personne que vous souhaitez orienter est-elle inscrite au Pôle Emploi ?*',
       isRequired: true,
+      showLabel: true,
     },
     {
       id: 'administrativeSituation',
@@ -223,6 +241,7 @@ export const formCandidateContact: FormSchema<{
       component: 'select-simple',
       options: CANDIDATE_ADMINISTRATIVE_SITUATIONS_FILTERS,
       title: "De quels papiers d'identité la personne dispose-t-elle ?",
+      showLabel: true,
     },
     {
       id: 'workingRight',
@@ -232,6 +251,7 @@ export const formCandidateContact: FormSchema<{
       title:
         "A-t-elle l'autorisation de travailler sur le territoire Français ?*",
       isRequired: true,
+      showLabel: true,
     },
     {
       id: 'accommodation',
@@ -240,6 +260,7 @@ export const formCandidateContact: FormSchema<{
       options: CANDIDATE_ACCOMMODATIONS_FILTERS,
       title: "Quelle est sa situation d'hébergement ?*",
       isRequired: true,
+      showLabel: true,
     },
     {
       id: 'professionalSituation',
@@ -248,6 +269,7 @@ export const formCandidateContact: FormSchema<{
       options: CANDIDATE_PROFESSIONAL_SITUATIONS_FILTERS,
       title: 'Quelle est sa situation professionnelle ?*',
       isRequired: true,
+      showLabel: true,
     },
     {
       id: 'resources',
@@ -255,6 +277,7 @@ export const formCandidateContact: FormSchema<{
       component: 'select-simple',
       options: CANDIDATE_RESOURCES_FILTERS,
       title: 'Quelle est la nature de ses ressources ?',
+      showLabel: true,
     },
     {
       id: 'domiciliation',
@@ -264,6 +287,7 @@ export const formCandidateContact: FormSchema<{
       title:
         'A-t-elle une adresse de domiciliation ? Si c\'est la même que celle de son logement, choisir "Oui"*',
       isRequired: true,
+      showLabel: true,
     },
     {
       id: 'socialSecurity',
@@ -273,6 +297,7 @@ export const formCandidateContact: FormSchema<{
       title:
         'A-t-elle des droits ouverts à la sécurité sociale ? (régime général, CSS, CMU, AME, etc.)*',
       isRequired: true,
+      showLabel: true,
     },
     {
       id: 'handicapped',
@@ -281,6 +306,7 @@ export const formCandidateContact: FormSchema<{
       options: CANDIDATE_YES_NO_FILTERS,
       title:
         'A-t-elle la reconnaissance RQTH ? (Reconnaissance de la qualité de travailleur handicapé)',
+      showLabel: true,
     },
     {
       id: 'bankAccount',
@@ -289,6 +315,7 @@ export const formCandidateContact: FormSchema<{
       options: CANDIDATE_YES_NO_FILTERS,
       title: 'A-t-elle un compte bancaire ?*',
       isRequired: true,
+      showLabel: true,
     },
     {
       id: 'businessLines',
@@ -297,6 +324,7 @@ export const formCandidateContact: FormSchema<{
       component: 'select',
       isMulti: true,
       options: BUSINESS_LINES,
+      showLabel: true,
     },
     {
       id: 'descriptionLabel',
@@ -318,6 +346,7 @@ export const formCandidateContact: FormSchema<{
       component: 'select-simple',
       options: HEARD_ABOUT_FILTERS,
       title: 'Comment avez-vous connu LinkedOut ?*',
+      showLabel: true,
       isRequired: true,
     },
     {

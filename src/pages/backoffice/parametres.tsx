@@ -445,10 +445,7 @@ const Parametres = () => {
                 innerRef={form}
                 submitText="Modifier"
                 formSchema={formChangePassword}
-                onSubmit={async (
-                  { newPassword, oldPassword },
-                  setError
-                ) => {
+                onSubmit={async ({ newPassword, oldPassword }, setError) => {
                   setLoadingPassword(true);
                   try {
                     await Api.putUserChangePwd({

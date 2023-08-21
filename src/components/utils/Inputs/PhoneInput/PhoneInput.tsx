@@ -51,7 +51,9 @@ export function PhoneInput({
         id={id}
         data-testid={id}
         value={value}
-        placeholder={placeholder || title}
+        placeholder={
+          showLabel ? placeholder || 'Écrivez...' : placeholder || title
+        }
         onChange={onChange}
         onBlur={onBlur}
         disabled={disabled}

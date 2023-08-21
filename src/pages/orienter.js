@@ -97,6 +97,7 @@ const Orienter = () => {
         }
         cta={{
           label: 'Inscrire un candidat',
+          dataTest: 'button-orientate',
           onClick: () => {
             gaEvent(GA_TAGS.PAGE_ORIENTER_INSCRIPTION_CLIC);
             fbEvent(FB_TAGS.SOCIAL_WORKER_REGISTRATION_OPEN);

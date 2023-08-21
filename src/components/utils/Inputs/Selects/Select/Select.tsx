@@ -56,7 +56,11 @@ export function Select<T extends FilterConstant | FilterConstant[]>({
           isClearable
           value={value || null}
           isMulti={isMulti}
-          placeholder={placeholder || title}
+          placeholder={
+            showLabel
+              ? placeholder || 'Selectionnez dans la liste...'
+              : placeholder || title
+          }
           isDisabled={disabled}
           onChange={onChange}
           onBlur={onBlur}

@@ -34,7 +34,6 @@ export const formInterestLinkedOut: FormSchema<{
       component: 'text-input',
       title: 'Prénom*',
       isRequired: true,
-      maxLength: 30,
     },
     {
       id: 'email',
@@ -46,7 +45,6 @@ export const formInterestLinkedOut: FormSchema<{
       rules: [
         {
           method: (fieldValue) => isEmail(fieldValue),
-
           message: 'Adresse e-mail invalide',
         },
       ],

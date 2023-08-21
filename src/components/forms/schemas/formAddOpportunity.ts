@@ -51,6 +51,7 @@ export const formAddOpportunity: FormSchema<{
       name: 'isPublic',
       component: 'checkbox',
       title: 'Adresser cette offre à tous les candidats',
+      showLabel: true,
     },
     {
       id: 'candidatesIds',
@@ -68,6 +69,7 @@ export const formAddOpportunity: FormSchema<{
         Api.getUsersSearchCandidates({
           params: {
             query: inputValue,
+            showLabel: true,
           },
         })
           .then(({ data }) => {
@@ -87,6 +89,7 @@ export const formAddOpportunity: FormSchema<{
           message: 'Obligatoire si offre privée',
         },
       ],
+      showLabel: true,
     },
     {
       id: 'message',
@@ -99,6 +102,7 @@ export const formAddOpportunity: FormSchema<{
       hide: (getValue) => {
         return getValue('isPublic') === true;
       },
+      showLabel: true,
     },
     {
       id: 'title',
@@ -106,6 +110,7 @@ export const formAddOpportunity: FormSchema<{
       component: 'text-input',
       title: 'Intitulé du poste proposé*',
       isRequired: true,
+      showLabel: true,
     },
     {
       id: 'company',
@@ -113,12 +118,14 @@ export const formAddOpportunity: FormSchema<{
       component: 'text-input',
       title: 'Nom de votre entreprise*',
       isRequired: true,
+      showLabel: true,
     },
     {
       id: 'companyDescription',
       name: 'companyDescription',
       component: 'textarea',
       title: "Si vous le souhaitez, présentez l'entreprise en quelques mots",
+      showLabel: true,
     },
     {
       id: 'locations',
@@ -133,6 +140,7 @@ export const formAddOpportunity: FormSchema<{
           component: 'select',
           options: DEPARTMENTS_FILTERS,
           isRequired: true,
+          showLabel: true,
         },
         {
           id: 'address',
@@ -140,6 +148,7 @@ export const formAddOpportunity: FormSchema<{
           title: 'Adresse du lieu de travail*',
           component: 'text-input',
           isRequired: true,
+          showLabel: true,
         },
       ],
     },
@@ -155,6 +164,7 @@ export const formAddOpportunity: FormSchema<{
       component: 'text-input',
       title: 'Votre prénom*',
       isRequired: true,
+      showLabel: true,
     },
     {
       id: 'recruiterName',
@@ -162,6 +172,7 @@ export const formAddOpportunity: FormSchema<{
       component: 'text-input',
       title: 'Votre nom*',
       isRequired: true,
+      showLabel: true,
     },
     {
       id: 'recruiterPosition',
@@ -169,6 +180,7 @@ export const formAddOpportunity: FormSchema<{
       component: 'text-input',
       title: 'Votre fonction*',
       isRequired: true,
+      showLabel: true,
     },
     {
       id: 'recruiterMail',
@@ -180,10 +192,10 @@ export const formAddOpportunity: FormSchema<{
       rules: [
         {
           method: (fieldValue) => isEmail(fieldValue),
-
           message: 'Invalide',
         },
       ],
+      showLabel: true,
     },
     {
       id: 'recruiterPhone',
@@ -199,6 +211,7 @@ export const formAddOpportunity: FormSchema<{
           message: 'Numéro de téléphone invalide',
         },
       ],
+      showLabel: true,
     },
     {
       id: 'offerDetails',
@@ -212,6 +225,7 @@ export const formAddOpportunity: FormSchema<{
       component: 'textarea',
       title: 'Descriptif des missions proposées*',
       isRequired: true,
+      showLabel: true,
     },
     {
       id: 'contract',
@@ -220,6 +234,7 @@ export const formAddOpportunity: FormSchema<{
       options: CONTRACTS,
       title: 'Type de contrat*',
       isRequired: true,
+      showLabel: true,
     },
     {
       id: 'info1',
@@ -231,12 +246,14 @@ export const formAddOpportunity: FormSchema<{
           name: 'workingHours',
           component: 'text-input',
           title: 'Jours et horaires de travail',
+          showLabel: true,
         },
         {
           id: 'isPartTime',
           name: 'isPartTime',
           component: 'checkbox',
           title: 'Temps partiel',
+          showLabel: true,
         },
       ],
     },
@@ -250,12 +267,14 @@ export const formAddOpportunity: FormSchema<{
           name: 'salary',
           component: 'text-input',
           title: 'Salaire et compléments',
+          showLabel: true,
         },
         {
           id: 'driversLicense',
           name: 'driversLicense',
           component: 'checkbox',
           title: 'Permis de conduire',
+          showLabel: true,
         },
       ],
     },
@@ -264,6 +283,7 @@ export const formAddOpportunity: FormSchema<{
       name: 'otherInfo',
       component: 'textarea',
       title: 'Autres précisions sur votre besoin',
+      showLabel: true,
     },
     {
       id: 'disclaimer',
@@ -278,6 +298,7 @@ export const formAddOpportunity: FormSchema<{
       component: 'checkbox',
       title:
         'Vous avez un autre poste à proposer ? Dupliquez cette offre pour la publier plus rapidement',
+      showLabel: true,
     },
   ],
 };

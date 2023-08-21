@@ -55,7 +55,11 @@ export function TextInput({
         onBlur={onBlur}
         disabled={disabled}
         type={type || 'text'}
-        placeholder={placeholder || (title as string)}
+        placeholder={
+          showLabel
+            ? placeholder || 'Écrivez...'
+            : placeholder || (title as string)
+        }
         name={name}
         maxLength={maxLength}
         id={id}

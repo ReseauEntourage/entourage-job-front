@@ -23,6 +23,7 @@ export function SelectSimple<T extends string | number | boolean>({
   showLabel = false,
   hidden = false,
   disabled = false,
+  placeholder,
   value,
   inputRef,
 }: SelectSimpleProps<T>) {
@@ -75,7 +76,7 @@ export function SelectSimple<T extends string | number | boolean>({
           >
             {showLabel || !title ? (
               <div>
-                Selectionnez dans la liste{' '}
+                {placeholder || 'Selectionnez dans la liste...'}{' '}
                 <Icon name="chevron-down" ratio="2.5" />
               </div>
             ) : (

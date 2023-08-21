@@ -90,7 +90,15 @@ describe('Admin', () => {
       {
         fixture: 'user-admin-candidates-search-res',
       }
-    ).as('getExternalCandidates');
+    ).as('getExternalCandidatesJane');
+
+    cy.intercept(
+      'GET',
+      `/user/search?query=Emile&role=Candidat+externe&organizationId=${entourageOrganizationId}`,
+      {
+        fixture: 'user-admin-candidates-search-res',
+      }
+    ).as('getExternalCandidatesEmile');
 
     cy.intercept('GET', '/organization?limit=50&offset=0&zone[]=LYON', {
       fixture: 'organization-search-res',
@@ -180,7 +188,7 @@ describe('Admin', () => {
           .should('be.visible')
           .scrollIntoView()
           .click()
-          .find('button')
+          .find('.option')
           .contains('Paris')
           .click();
 
@@ -213,7 +221,7 @@ describe('Admin', () => {
             .should('be.visible')
             .scrollIntoView()
             .click()
-            .find('button')
+            .find('.option')
             .contains('Admin')
             .click();
 
@@ -227,7 +235,7 @@ describe('Admin', () => {
             .should('be.visible')
             .scrollIntoView()
             .click()
-            .find('button')
+            .find('.option')
             .contains('Candidats')
             .click();
         });
@@ -237,7 +245,7 @@ describe('Admin', () => {
             .should('be.visible')
             .scrollIntoView()
             .click()
-            .find('button')
+            .find('.option')
             .contains('Candidat LKO')
             .click();
 
@@ -268,7 +276,7 @@ describe('Admin', () => {
             .should('be.visible')
             .scrollIntoView()
             .click()
-            .find('button')
+            .find('.option')
             .contains('Coach LKO')
             .click();
 
@@ -299,7 +307,7 @@ describe('Admin', () => {
             .should('be.visible')
             .scrollIntoView()
             .click()
-            .find('button')
+            .find('.option')
             .contains('Candidat externe')
             .click();
 
@@ -345,7 +353,7 @@ describe('Admin', () => {
             .should('be.visible')
             .scrollIntoView()
             .click()
-            .find('button')
+            .find('.option')
             .contains('Coach externe')
             .click();
 
@@ -373,7 +381,7 @@ describe('Admin', () => {
             .scrollIntoView()
             .type('Jane');
 
-          cy.wait('@getExternalCandidates');
+          cy.wait('@getExternalCandidatesJane');
 
           cy.get('#form-add-user-userToLinkId')
             .find('.Select__menu')
@@ -381,6 +389,21 @@ describe('Admin', () => {
             .scrollIntoView()
             .find('.Select__option')
             .contains('Jane Doe')
+            .click();
+
+          cy.get('#form-add-user-userToLinkId')
+            .should('be.visible')
+            .scrollIntoView()
+            .type('Emile');
+
+          cy.wait('@getExternalCandidatesEmile');
+
+          cy.get('#form-add-user-userToLinkId')
+            .find('.Select__menu')
+            .should('be.visible')
+            .scrollIntoView()
+            .find('.Select__option')
+            .contains('Emile Sf Bex')
             .click();
         });
       });
@@ -424,7 +447,7 @@ describe('Admin', () => {
             .should('be.visible')
             .scrollIntoView()
             .click()
-            .find('button')
+            .find('.option')
             .contains('Paris')
             .click();
 
@@ -466,7 +489,7 @@ describe('Admin', () => {
             .should('be.visible')
             .scrollIntoView()
             .click()
-            .find('button')
+            .find('.option')
             .contains('Candidat externe')
             .click();
         });
@@ -476,7 +499,7 @@ describe('Admin', () => {
             .should('be.visible')
             .scrollIntoView()
             .click()
-            .find('button')
+            .find('.option')
             .contains('Coach externe')
             .click();
         });
@@ -529,7 +552,7 @@ describe('Admin', () => {
         .should('be.visible')
         .scrollIntoView()
         .click()
-        .find('button')
+        .find('.option')
         .contains('Paris')
         .click();
 
@@ -590,7 +613,7 @@ describe('Admin', () => {
         .should('be.visible')
         .scrollIntoView()
         .click()
-        .find('button')
+        .find('.option')
         .contains('Lyon')
         .click();
 
