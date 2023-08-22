@@ -105,7 +105,9 @@ export function MemberList({
   );
 
   useDeepCompareEffect(() => {
-    fetchData(search, filters, role, offset, true);
+    if (role) {
+      fetchData(search, filters, role, offset, true);
+    }
   }, [search, filters, role]);
 
   useEffect(() => {
