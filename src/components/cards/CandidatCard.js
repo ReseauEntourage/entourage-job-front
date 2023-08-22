@@ -27,7 +27,6 @@ import {
 export const CandidatCard = ({
   url,
   imgSrc,
-  imgAlt,
   firstName,
   ambitions,
   businessLines,
@@ -78,7 +77,10 @@ export const CandidatCard = ({
   });
 
   return (
-    <div className="uk-card uk-card-small uk-card-body uk-card-default uk-card-hover uk-text-small uk-text-left">
+    <div
+      className="uk-card uk-card-small uk-card-body uk-card-default uk-card-hover uk-text-small uk-text-left"
+      data-testid={`card-${firstName}`}
+    >
       {/* Contenue de la carte */}
       <SimpleLink
         href={linkToCV}
@@ -94,7 +96,7 @@ export const CandidatCard = ({
           }}
         >
           {/* Image de fond */}
-          <Img src={imgSrc} alt={imgAlt} cover />
+          <Img src={imgSrc} alt={firstName} cover />
           {/* Bandeau à retrouvé un emploie */}
           {employed && (
             <div
@@ -127,7 +129,6 @@ export const CandidatCard = ({
               background: 'white', // 'linear-gradient(90deg, white 50%, transparent 200%)',
               padding: '10px 10px 10px 0px',
             }}
-            data-testid={`card-${imgAlt}`}
             // ent-gradiant-default
             className="uk-width-1-2 uk-position-center-left"
           >
@@ -406,7 +407,6 @@ CandidatCard.propTypes = {
     })
   ).isRequired,
   imgSrc: PropTypes.string,
-  imgAlt: PropTypes.string.isRequired,
   skills: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,

@@ -41,7 +41,6 @@ export const DiscoverPartial = ({
                 (cv.urlImg && process.env.AWSS3_CDN_URL + cv.urlImg) ||
                 undefined
               }
-              imgAlt={cv.user && cv.user.candidat.firstName}
               firstName={cv.user && cv.user.candidat.firstName}
               ambitions={cv.ambitions}
               skills={cv.skills}

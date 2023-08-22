@@ -44,9 +44,9 @@ describe('Parcours CV', () => {
   });
   it("Ouvrir la page d'un CV", () => {
     cy.fixture('cv-cards-random-res').then((cvs) => {
-      cy.get(
-        `[data-testid="card-${cvs.cvs[0].user.candidat.firstName}"]`
-      ).click();
+      cy.get(`[data-testid="card-${cvs.cvs[0].user.candidat.firstName}"]`)
+        .should('be.visible')
+        .click();
       cy.url().should(
         'include',
         `/cv/${cvs.cvs[0].user.candidat.firstName.toLowerCase()}`

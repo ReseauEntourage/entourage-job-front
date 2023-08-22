@@ -140,7 +140,6 @@ export const CVList = ({
                     (cv.urlImg && process.env.AWSS3_CDN_URL + cv.urlImg) ||
                     undefined
                   }
-                  imgAlt={cv.user.candidat.firstName}
                   firstName={cv.user.candidat.firstName}
                   ambitions={cv.ambitions}
                   locations={cv.locations}
