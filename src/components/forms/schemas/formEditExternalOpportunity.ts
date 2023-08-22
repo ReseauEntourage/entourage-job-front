@@ -188,7 +188,7 @@ export const formEditExternalOpportunityAsAdmin: FormSchema<{
       name: 'description',
       component: 'textarea',
       title:
-        'Ecrire ou copier le detail de l’offre pour faciliter le suivi de votre candidature',
+        'Ecrire ou copier le detail de l’offre pour faciliter le suivi de votre candidature*',
       isRequired: true,
     },
     {

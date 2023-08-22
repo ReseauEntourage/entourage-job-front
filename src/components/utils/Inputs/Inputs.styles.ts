@@ -20,7 +20,7 @@ export const commonMenuOptionStyles = css`
 export const commonInputContainerStyles = css`
   font-family: Poppins, sans-serif !important;
   max-width: 100%;
-  background-color: ${COLORS.white};
+  background-color: transparent;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -73,6 +73,7 @@ export const StyledLimit = styled.div`
   text-align: right;
   align-self: flex-end;
   min-height: 30px;
+  display: flex;
   > * {
     padding-top: 5px;
   }

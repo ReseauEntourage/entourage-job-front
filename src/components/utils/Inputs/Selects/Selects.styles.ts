@@ -18,7 +18,7 @@ export const StyledSelect = styled.div`
   }
 
   & .Select__control--is-focused {
-    background-color: ${COLORS.white} !important;
+    background-color: transparent !important;
     box-shadow: none !important;
     border: none !important;
     border-radius: 0 !important;
@@ -72,7 +72,7 @@ export const StyledSelect = styled.div`
   }
 
   & .Select__control {
-    background-color: ${COLORS.white};
+    background-color: transparent;
     min-height: 30px;
     border: none;
     border-bottom: solid 2px ${COLORS.gray} !important;
