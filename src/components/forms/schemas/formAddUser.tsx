@@ -172,6 +172,7 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
           id: 'organizationId',
           name: 'organizationId',
           component: 'select-async',
+          isMulti: false,
           hide: (getValue) => {
             return !isRoleIncluded(EXTERNAL_USER_ROLES, getValue('role'));
           },

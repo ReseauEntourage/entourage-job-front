@@ -1,7 +1,7 @@
 import { ArrayPath, Path, UseFormGetValues } from 'react-hook-form';
 import { RadioTypes } from 'src/components/utils/Inputs/Radio/Radio.types';
 import { FilterConstant } from 'src/constants/utils';
-import { AnyCantFix } from 'src/utils/Types';
+import { AnyCantFix, StrictUnion } from 'src/utils/Types';
 
 export const FormComponents = {
   DATEPICKER: 'datepicker',
@@ -34,14 +34,9 @@ export type FieldValue =
 export type IsArrayFilterConstant<T extends FilterConstant | FilterConstant[]> =
   T extends FilterConstant[] ? T : T[];
 
-export type MultiFilterConstant<
-  M extends boolean,
-  T extends string | number | boolean = string | number | boolean
-> = M extends true
-  ? FilterConstant<T>[]
-  : M extends false
-  ? FilterConstant<T>
-  : FilterConstant<T> | FilterConstant<T>[];
+export type MultiFilterConstant<M extends boolean> = M extends true
+  ? FilterConstant[]
+  : FilterConstant;
 
 export interface FormComponentValues<M extends boolean> {
   [FormComponents.DATEPICKER]: string;
@@ -216,7 +211,6 @@ export interface FormFieldSelectRequestCommon<
   openMenuOnClick?: boolean;
 }
 
-// TODO fix type depending on is Multi
 interface FormFieldSelectRequestMulti<V extends FormSchemaValidation>
   extends FormFieldSelectRequestCommon<V, true> {
   isMulti: true;
@@ -232,23 +226,30 @@ interface FormFieldSelectRequestMethod<V extends FormSchemaValidation>
   isMulti: (getValue: GetValueType<V>) => boolean;
 }
 
-type FormFieldSelectRequestOmit<V extends FormSchemaValidation> = Omit<
-  FormFieldSelectRequestCommon<V, false>,
-  'isMulti'
->;
+// TODO fix type depending on isMulti, should be false when no isMulti property
+
+/*
+  type FormFieldSelectRequestOmit<V extends FormSchemaValidation> = Omit<
+    FormFieldSelectRequestCommon<V, false>,
+    'isMulti'
+  >;
+*/
 
 export type FormFieldSelectRequest<V extends FormSchemaValidation> =
-  | FormFieldSelectRequestMulti<V>
-  | FormFieldSelectRequestSingle<V>
-  | FormFieldSelectRequestOmit<V>
-  | FormFieldSelectRequestMethod<V>;
+  StrictUnion<
+    | FormFieldSelectRequestMulti<V>
+    | FormFieldSelectRequestSingle<V>
+    /*  | FormFieldSelectRequestOmit<V> */
+    | FormFieldSelectRequestMethod<V>
+  >;
 
-export type FormFieldInput<V extends FormSchemaValidation> =
+export type FormFieldInput<V extends FormSchemaValidation> = StrictUnion<
   | FormFieldTextInput<V>
   | FormFieldCheckBox<V>
   | FormFieldRadio<V>
   | FormFieldSelect<V>
-  | FormFieldSelectRequest<V>;
+  | FormFieldSelectRequest<V>
+>;
 
 export interface FormFieldText<V extends FormSchemaValidation>
   extends FormFieldCommonProperties<V, string> {

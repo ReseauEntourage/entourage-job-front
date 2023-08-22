@@ -1,9 +1,10 @@
 import _ from 'lodash';
 import moment from 'moment';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
+import { isEmail } from 'validator';
+import { FormSchema, FormSchemaValidation, GetValueType } from '../FormSchema';
 import { Api } from 'src/api';
 import 'moment/locale/fr';
-import { isEmail } from 'validator';
 import { RadioTypes } from 'src/components/utils/Inputs/Radio/Radio.types';
 import {
   ANTENNE_INFO,
@@ -13,7 +14,6 @@ import {
   HEARD_ABOUT_FILTERS,
   HeardAboutValue,
 } from 'src/constants';
-import { FormSchema, FormSchemaValidation, GetValueType } from '../FormSchema';
 import { Cities, CITIES_FILTERS, City } from 'src/constants/departements';
 
 interface FormCandidateInscriptionSchema extends FormSchemaValidation {
@@ -42,7 +42,6 @@ function hideIfNoInfoCo(
   return !city?.length || !filteredOptions;
 }
 
-// TODO FIX
 export const formCandidateInscription: FormSchema<FormCandidateInscriptionSchema> =
   {
     id: 'form-candidate-inscription',

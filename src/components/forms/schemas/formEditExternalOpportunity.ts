@@ -79,6 +79,7 @@ export const formEditExternalOpportunityAsAdmin: FormSchema<{
           name: 'department',
           title: 'Localisation *',
           component: 'select',
+          isMulti: false,
           options: DEPARTMENTS_FILTERS,
           isRequired: true,
         },

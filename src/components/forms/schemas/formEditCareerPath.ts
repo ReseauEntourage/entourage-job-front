@@ -40,6 +40,7 @@ export const formEditCareerPath: FormSchema<{
           title: 'Famille de métier 1*',
           component: 'select',
           options: BUSINESS_LINES,
+          isMulti: false,
           isRequired: true,
         },
         {
@@ -79,11 +80,12 @@ export const formEditCareerPath: FormSchema<{
           name: 'businessLine1',
           title: 'Famille de métier 2',
           component: 'select',
+          isMulti: false,
           options: BUSINESS_LINES,
           rules: [
             {
               method: (fieldValue, fieldValues) => {
-                return fieldValue || !fieldValues.ambition1;
+                return !!fieldValue || !fieldValues.ambition1;
               },
               message: 'Obligatoire',
             },

@@ -61,6 +61,7 @@ export const formAddExternalOpportunityCandidate: FormSchema<{
           name: 'department',
           title: 'Localisation *',
           component: 'select',
+          isMulti: false,
           options: DEPARTMENTS_FILTERS,
           isRequired: true,
         },
@@ -166,6 +167,7 @@ export const formAddExternalOpportunityAsAdmin: FormSchema<{
           name: 'candidateId',
           title: 'Renseignez le candidat concerné*',
           component: 'select-async',
+          isMulti: false,
           loadOptions: (callback, inputValue) => {
             Api.getUsersSearch({
               params: {
@@ -225,6 +227,7 @@ export const formAddExternalOpportunityAsAdmin: FormSchema<{
           name: 'department',
           title: 'Localisation *',
           component: 'select',
+          isMulti: false,
           options: DEPARTMENTS_FILTERS,
           isRequired: true,
         },

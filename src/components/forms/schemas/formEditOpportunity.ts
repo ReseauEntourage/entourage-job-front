@@ -139,6 +139,7 @@ export const formEditOpportunity: FormSchema<{
           component: 'select',
           options: DEPARTMENTS_FILTERS,
           isRequired: true,
+          isMulti: false,
         },
         {
           id: 'address',
