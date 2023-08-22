@@ -1,7 +1,11 @@
 import React, { FormEvent } from 'react';
 import { ButtonPost } from 'src/components/backoffice/cv/ButtonPost';
 import { Button } from 'src/components/utils/Button';
-import { StyledFooterForm } from './FormFooter.styles';
+import {
+  StyledCompulsoryMessage,
+  StyledErrorMessage,
+  StyledFooterForm,
+} from './FormFooter.styles';
 
 interface FooterFormProps {
   error?: string;
@@ -13,7 +17,6 @@ interface FooterFormProps {
   noCompulsory?: boolean;
 }
 
-// TODO NEW STYLE
 export const FormFooter = ({
   error,
   onSubmit,
@@ -24,17 +27,13 @@ export const FormFooter = ({
   noCompulsory = false,
 }: FooterFormProps) => {
   return (
-    <StyledFooterForm className="uk-flex uk-flex-column uk-flex-left">
-      {error && (
-        <div className="uk-flex uk-flex-1">
-          <span className="uk-text-danger uk-margin-small-bottom">{error}</span>
-        </div>
-      )}
+    <StyledFooterForm>
+      {error && <StyledErrorMessage>{error}</StyledErrorMessage>}
       <div>
         {!noCompulsory && (
-          <div className="uk-width-auto@s uk-margin-small-bottom">
-            <span className="uk-text-meta">* : Mentions obligatoires</span>
-          </div>
+          <StyledCompulsoryMessage>
+            * : Mentions obligatoires
+          </StyledCompulsoryMessage>
         )}
 
         <div className="cta-container">
