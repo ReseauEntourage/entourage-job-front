@@ -1,5 +1,4 @@
 import Router from 'next/router';
-import PropTypes from 'prop-types';
 import Pusher from 'pusher-js';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import UIkit from 'uikit';
@@ -10,7 +9,6 @@ import { ButtonDownload } from 'src/components/backoffice/cv/ButtonDownload';
 import { ButtonPost } from 'src/components/backoffice/cv/ButtonPost';
 import { NoCV } from 'src/components/backoffice/cv/NoCV';
 import { CVBackground, CVFiche, CVFicheEdition } from 'src/components/cv';
-import { CVShape } from 'src/components/cv/CV.shape';
 import { openModal, useModalContext } from 'src/components/modals/Modal';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
@@ -58,7 +56,7 @@ const ModalPreview = ({ imageUrl, cv }: ModalPreviewProps) => {
 interface CVPageContentProps {
   cv: CV;
   candidateId: string;
-  setCV: (arg1: CV) => void;
+  setCV: (updatedCV: CV) => void;
 }
 
 export const CVPageContent = ({
@@ -391,14 +389,4 @@ export const CVPageContent = ({
       />
     </div>
   );
-};
-
-CVPageContent.propTypes = {
-  candidateId: PropTypes.string.isRequired,
-  cv: CVShape,
-  setCV: PropTypes.func.isRequired,
-};
-
-CVPageContent.defaultProps = {
-  cv: undefined,
 };

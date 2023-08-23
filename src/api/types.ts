@@ -4,11 +4,21 @@ import {
   ExternalMessageContactType,
   Contract as ContractValue,
   AmbitionsPrefixesType,
+  BusinessLineValue,
+  ExternalOfferOrigin,
+  HeardAboutValue,
+  CandidateHelpWithValue,
+  CompanyApproach,
 } from 'src/constants';
-import { AdminZone } from 'src/constants/departements';
-import { AdminRole, UserRole } from 'src/constants/users';
+import { AdminZone, Department } from 'src/constants/departements';
+import { AdminRole, Gender, UserRole } from 'src/constants/users';
 
-export type SocialMedia = 'facebook' | 'linkedin' | 'twitter';
+export type SocialMedia =
+  | 'facebook'
+  | 'linkedin'
+  | 'twitter'
+  | 'whatsapp'
+  | 'other';
 
 export const APIRoutes = {
   USERS: 'user',
@@ -67,17 +77,16 @@ export type User = {
   lastName: string;
   email: string;
   role: UserRole;
-  adminRole: string;
+  adminRole: AdminRole;
   password: string;
   salt: string;
-  gender: number;
+  gender: Gender;
   phone: string;
   address: string;
   lastConnection: Date;
   hashReset: string;
   saltReset: string;
   zone: AdminZone;
-  userToCoach: string;
   organization: Organization;
   deletedAt?: string;
 };
@@ -85,9 +94,8 @@ export type User = {
 export interface CV {
   id?: string;
   version: string;
+  profileImage: Blob;
   profileImageObjectUrl: string;
-
-  profileImage: Blob | string;
   user: {
     candidat: {
       firstName: string;
@@ -95,20 +103,20 @@ export interface CV {
       email: string;
       phone: string;
       address: string;
-      zone: string;
-      gender: number;
+      zone: AdminZone;
+      gender: Gender;
     };
   };
   catchphrase: string;
   story: string;
   locations: {
-    name: string;
+    name: Department;
     order: number;
   }[];
   availability: string;
   urlImg: string;
   contracts: {
-    name: string;
+    name: ContractValue;
   }[];
   ambitions: {
     name: string;
@@ -116,16 +124,15 @@ export interface CV {
     prefix: AmbitionsPrefixesType;
   }[];
   businessLines: {
-    name: string;
+    name: BusinessLineValue;
     order: number;
   }[];
   languages: {
     name: string;
-    order: number;
   }[];
   transport: string;
   skills: {
-    id: string;
+    id?: string;
     name: string;
     order: number;
   }[];
@@ -134,7 +141,7 @@ export interface CV {
     order: number;
   }[];
   reviews: {
-    id: string;
+    id?: string;
     name: string;
     text: string;
     status: string;
@@ -143,7 +150,7 @@ export interface CV {
     description: string;
     order: number;
     skills: {
-      id: string;
+      id?: string;
       name: string;
       order: number;
     }[];
@@ -168,10 +175,10 @@ export type UserDto = {
   firstName: string;
   lastName: string;
   role: UserRole;
-  gender: 0 | 1;
+  gender: Gender;
   zone: AdminZone;
   phone: string;
-  userToLinkId: string | string[];
+  userToLinkId?: string | string[];
   email: string;
   adminRole?: AdminRole;
   OrganizationId?: string;
@@ -196,7 +203,7 @@ export type Opportunity = {
   isArchived: boolean;
   isExternal: boolean;
   link: string;
-  externalOrigin: string;
+  externalOrigin: ExternalOfferOrigin;
   company: string;
   recruiterName: string;
   recruiterFirstName: string;
@@ -210,28 +217,75 @@ export type Opportunity = {
   companyDescription: string;
   skills: string;
   prerequisites: string;
-  department: string;
+  department: Department;
   contract: ContractValue;
   startOfContract: string;
   endOfContract: string;
   isPartTime: boolean;
   numberOfPositions: number;
-  beContacted: boolean;
   message: string;
   driversLicense: boolean;
   workingHours: string;
   salary: string;
   otherInfo: string;
-  businessLines: { name: string; order: string }[];
+  businessLines: { name: BusinessLineValue; order: number }[];
   candidatesIds: string[];
   isAdmin: boolean;
   shouldSendNotifications: boolean;
   isCopy: boolean;
-  locations: object;
   visit: string;
   visitor: string;
   urlParams: object;
   createdAt: string;
+};
+
+export interface PleziTrackingData {
+  visit?: string;
+  visitor?: string;
+  urlParams?: {
+    utm?: string;
+    utm_medium?: string;
+    utm_source?: string;
+    gclid?: string;
+    referer?: string;
+  };
+}
+
+export type OpportunityDto = {
+  title: string;
+  isPublic: boolean;
+  isValidated?: boolean;
+  isArchived?: boolean;
+  company: string;
+  recruiterName: string;
+  recruiterFirstName: string;
+  recruiterMail: string;
+  contactMail?: string;
+  recruiterPosition: string;
+  recruiterPhone: string;
+  date: string;
+  description: string;
+  companyDescription: string;
+  department?: Department;
+  address?: string;
+  contract: ContractValue;
+  startOfContract?: string;
+  endOfContract?: string;
+  isPartTime: boolean;
+  message: string;
+  driversLicense: boolean;
+  workingHours: string;
+  salary: string;
+  otherInfo: string;
+  businessLines?: { name: BusinessLineValue; order: number }[];
+  candidatesIds: string[];
+  isAdmin?: boolean;
+  shouldSendNotifications?: boolean;
+  isCopy?: boolean;
+  locations?: { department: Department; address: string }[];
+  visit?: PleziTrackingData['visit'];
+  visitor?: PleziTrackingData['visitor'];
+  urlParams?: PleziTrackingData['urlParams'];
 };
 
 export type Skill = {
@@ -268,7 +322,7 @@ export interface OpportunityUser {
   createdAt: string;
   events: Event[];
   id: string;
-  note: [];
+  note: string;
   recommended: boolean;
   seen: boolean;
   status: number;
@@ -287,26 +341,26 @@ export interface OpportunityWithOpportunityUsers extends Opportunity {
   opportunityUsers: OpportunityUser;
 }
 
-export type ExternalOpportunity = {
+export type ExternalOpportunityDto = {
   title: string;
   company: string;
   contract: ContractValue;
-  startOfContract: string;
-  endOfContract: string;
-  isPartTime: string;
-  businessLines: { name: string; order: string }[];
-  department: string;
+  startOfContract?: string;
+  endOfContract?: string;
+  isPartTime?: boolean;
+  businessLines?: { name: BusinessLineValue; order: number }[];
+  department: Department;
   link: string;
   description: string;
-  externalOrigin: string;
+  externalOrigin?: ExternalOfferOrigin;
   date: string;
   candidateId: string;
-  status: string;
+  status?: number;
 };
 
 export type OpportunityUserEvent = {
-  startDate: Date;
-  endDate?: Date;
+  startDate: string;
+  endDate?: string;
   type: string;
   contract: { name: ContractValue };
 };
@@ -329,20 +383,20 @@ export type ContactContactUs = {
   email: string;
   structure: string;
   message: string;
-  heardAbout: object;
+  heardAbout: HeardAboutValue;
   cgu: boolean;
 };
 
 export type ContactCompany = {
   firstName: string;
   lastName: string;
-  approach: object;
+  approach: CompanyApproach;
   email: string;
   company: string;
   position: string;
-  zone: object;
+  zone: AdminZone;
   phone?: string;
-  heardAbout?: object;
+  heardAbout?: HeardAboutValue;
 };
 
 export type ContactCandidate = {
@@ -354,9 +408,9 @@ export type ContactCandidate = {
   workerPhone: string;
   firstName: string;
   lastName: string;
-  helpWith: string[];
-  gender: string;
-  birthDate?: Date;
+  helpWith: CandidateHelpWithValue[];
+  gender: Gender;
+  birthDate?: string;
   address?: string;
   postalCode: string;
   city: string;
@@ -372,7 +426,7 @@ export type ContactCandidate = {
   socialSecurity: string;
   handicapped?: string;
   bankAccount: string;
-  businessLines?: string[];
+  businessLines?: BusinessLineValue[];
   description: string;
   heardAbout: string;
   diagnostic?: string;

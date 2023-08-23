@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
 export const StyledInputsContainer = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   flex-wrap: ${({ isDesktop }) => {
     return isDesktop ? 'inherit' : 'wrap';
   }};

@@ -22,7 +22,7 @@ import {
   StyledCVShareButtonsContainer,
 } from './CVShareButtons.styles';
 
-interface CVCallToActionsProps {
+interface CVShareButtonsProps {
   cv: CV;
   actionDisabled?: boolean;
 }
@@ -30,7 +30,7 @@ interface CVCallToActionsProps {
 export const CVShareButtons = ({
   cv,
   actionDisabled = false,
-}: CVCallToActionsProps) => {
+}: CVShareButtonsProps) => {
   const updateSharesCount = useUpdateSharesCount();
 
   const openNewsletterModal = useCallback(() => {
@@ -59,10 +59,10 @@ export const CVShareButtons = ({
         onClick={() => {
           fbEvent(FB_TAGS.SHARE_CV_OPEN);
         }}
-        onShareWindowClose={() => {
+        onShareWindowClose={async () => {
           gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_LINKEDIN_CLIC);
           fbEvent(FB_TAGS.SHARE_CV_SEND);
-          updateSharesCount(cv.UserId, 'linkedin');
+          await updateSharesCount(cv.UserId, 'linkedin');
           openNewsletterModal();
         }}
         url={link}
@@ -78,10 +78,10 @@ export const CVShareButtons = ({
         onClick={() => {
           fbEvent(FB_TAGS.SHARE_CV_OPEN);
         }}
-        onShareWindowClose={() => {
+        onShareWindowClose={async () => {
           gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_FACEBOOK_CLIC);
           fbEvent(FB_TAGS.SHARE_CV_SEND);
-          updateSharesCount(cv.UserId, 'facebook');
+          await updateSharesCount(cv.UserId, 'facebook');
           openNewsletterModal();
         }}
         url={link}
@@ -97,10 +97,10 @@ export const CVShareButtons = ({
         onClick={() => {
           fbEvent(FB_TAGS.SHARE_CV_OPEN);
         }}
-        onShareWindowClose={() => {
+        onShareWindowClose={async () => {
           gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_TWITTER_CLIC);
           fbEvent(FB_TAGS.SHARE_CV_SEND);
-          updateSharesCount(cv.UserId, 'twitter');
+          await updateSharesCount(cv.UserId, 'twitter');
           openNewsletterModal();
         }}
         url={link}
@@ -117,10 +117,10 @@ export const CVShareButtons = ({
         onClick={() => {
           fbEvent(FB_TAGS.SHARE_CV_OPEN);
         }}
-        onShareWindowClose={() => {
+        onShareWindowClose={async () => {
           gaEvent(GA_TAGS.PAGE_CV_PARTAGE_CV_WHATSAPP_CLIC);
           fbEvent(FB_TAGS.SHARE_CV_SEND);
-          updateSharesCount(cv.UserId, 'whatsapp');
+          await updateSharesCount(cv.UserId, 'whatsapp');
           openNewsletterModal();
         }}
         url={link}

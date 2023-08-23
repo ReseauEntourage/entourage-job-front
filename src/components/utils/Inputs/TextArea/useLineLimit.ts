@@ -6,14 +6,15 @@ import { usePrevious } from 'src/hooks/utils';
 export function useLineLimit(
   value: string,
   name: string,
-  onChange: (arg: { target: { value: string; name: string } }) => void,
+  onChange: (updatedValue: string) => void,
   maxLines?: number
 ) {
   const windowWidth = useWindowWidth();
-  const ref = useRef<HTMLTextAreaElement>();
 
   const [numberOfLines, setNumberOfLines] = useState(0);
   const [textAreaWidth, setTextAreaWidth] = useState(0);
+
+  const ref = useRef<HTMLTextAreaElement>();
 
   const prevValue: string = usePrevious(value);
 
@@ -79,17 +80,12 @@ export function useLineLimit(
           );
         }
 
-        onChange({
-          target: {
-            value: prevValue || '',
-            name,
-          },
-        });
+        onChange(prevValue);
       } else {
         setNumberOfLines(!value ? 0 : nbOfLines);
       }
     }
-  }, [calculateContentHeight, maxLines, name, onChange, prevValue, value]);
+  }, [calculateContentHeight, maxLines, name, onChange, prevValue, ref, value]);
 
   useEffect(() => {
     const modal = document.getElementById('modal-screen')

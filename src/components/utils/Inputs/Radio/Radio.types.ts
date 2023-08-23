@@ -1,34 +1,24 @@
-export interface RadioTypes {
+import { CommonInputProps } from '../Inputs.types';
+import { FilterConstant } from 'src/constants/utils';
+
+export interface RadioTypes extends FilterConstant<string> {
   inputId: string;
-  label: string;
-  value: string;
   checked?: boolean;
   filterData?: string;
 }
 
-export interface RadioAsyncComponentProps {
-  loadOptions: () => RadioTypes[];
-  id: string;
-  legend: string;
-  name: string;
+export interface RadioAsyncComponentProps
+  extends CommonInputProps<string, HTMLInputElement> {
+  loadOptions: (callback: (options: RadioTypes[]) => void) => void;
   filter?: string;
   errorMessage?: string;
-  hidden?: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  value: string;
   limit?: number;
 }
 
-export interface RadioComponentProps {
+export interface RadioComponentProps
+  extends CommonInputProps<string, HTMLInputElement> {
   options: RadioTypes[];
-  id: string;
-  legend: string;
-  name: string;
   filter?: string;
   errorMessage?: string;
-  hidden?: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-
-  value: string;
   limit?: number;
 }

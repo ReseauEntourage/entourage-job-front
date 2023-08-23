@@ -44,9 +44,9 @@ describe('Parcours CV', () => {
   });
   it("Ouvrir la page d'un CV", () => {
     cy.fixture('cv-cards-random-res').then((cvs) => {
-      cy.get(
-        `[data-testid="card-${cvs.cvs[0].user.candidat.firstName}"]`
-      ).click();
+      cy.get(`[data-testid="card-${cvs.cvs[0].user.candidat.firstName}"]`)
+        .should('be.visible')
+        .click();
       cy.url().should(
         'include',
         `/cv/${cvs.cvs[0].user.candidat.firstName.toLowerCase()}`
@@ -59,33 +59,71 @@ describe('Parcours CV', () => {
 
     // cy.wait('@getCandidats');
 
-    cy.get('#form-offer-isPublic').scrollIntoView().click();
-    cy.get('#form-offer-title').scrollIntoView().type('Form test');
-    cy.get('#form-offer-company').scrollIntoView().type('Random company');
-    cy.get('#form-offer-recruiterFirstName').scrollIntoView().type('John');
-    cy.get('#form-offer-recruiterName').scrollIntoView().type('Doe');
-    cy.get('#form-offer-recruiterPosition')
+    cy.get('label[for="form-add-offer-isPublic"]').scrollIntoView().click();
+    cy.get('#form-add-offer-title').scrollIntoView().type('Form test');
+    cy.get('#form-add-offer-company').scrollIntoView().type('Random company');
+    cy.get('#form-add-offer-companyDescription')
+      .scrollIntoView()
+      .type('Random presentation');
+
+    cy.get('#form-add-offer-locations-0-department')
+      .should('be.visible')
+      .scrollIntoView()
+      .type('Paris');
+
+    cy.get('#form-add-offer-locations-0-department')
+      .find('.Select__menu')
+      .should('be.visible')
+      .scrollIntoView()
+      .find('.Select__option')
+      .contains('Paris (75)')
+      .click();
+
+    cy.get('#form-add-offer-locations-0-address')
+      .scrollIntoView()
+      .type('Rue de Paris');
+
+    cy.get('button').contains('Ajouter une adresse').scrollIntoView().click();
+
+    cy.get('#form-add-offer-locations-1-department')
+      .should('be.visible')
+      .scrollIntoView()
+      .type('Rhône');
+
+    cy.get('#form-add-offer-locations-1-department')
+      .find('.Select__menu')
+      .should('be.visible')
+      .scrollIntoView()
+      .find('.Select__option')
+      .contains('Rhône (69)')
+      .click();
+
+    cy.get('#form-add-offer-locations-1-address')
+      .scrollIntoView()
+      .type('Rue du Rhône');
+
+    cy.get('#form-add-offer-recruiterFirstName').scrollIntoView().type('John');
+    cy.get('#form-add-offer-recruiterName').scrollIntoView().type('Doe');
+    cy.get('#form-add-offer-recruiterPosition')
       .scrollIntoView()
       .type('Random position');
-    cy.get('#form-offer-recruiterMail')
+    cy.get('#form-add-offer-recruiterMail')
       .scrollIntoView()
       .type('johndoe@gmail.com');
-    cy.get('#form-offer-recruiterPhone').scrollIntoView().type('0698754321');
-    cy.get('input[name="department"]').then((elem) => {
-      elem.val('Hauts-de-Seine (92)');
-    });
-    cy.get('#form-offer-description')
+    cy.get('#form-add-offer-recruiterPhone')
+      .scrollIntoView()
+      .type('0698754321');
+
+    cy.get('#form-add-offer-description')
       .scrollIntoView()
       .type('Random description');
-    cy.get('#form-offer-contract').scrollIntoView().select('CDI');
 
-    cy.get('#form-offer-address0')
+    cy.get('#form-add-offer-contract-container')
       .scrollIntoView()
-      .type('New York City Baby', { force: true });
-
-    cy.get('#react-select-4-input').type('92', { force: true });
-
-    cy.get('.select__option').click();
+      .click()
+      .find('.option')
+      .contains('CDI')
+      .click();
 
     cy.get('button').contains('Envoyer').click();
 
@@ -114,7 +152,7 @@ describe('Parcours CV', () => {
       .should('be.visible')
       .scrollIntoView()
       .click()
-      .find('button')
+      .find('.option')
       .contains('Une entreprise')
       .click();
 
@@ -122,7 +160,7 @@ describe('Parcours CV', () => {
       .should('be.visible')
       .scrollIntoView()
       .click()
-      .find('button')
+      .find('.option')
       .contains('Coup de pouce')
       .click();
 

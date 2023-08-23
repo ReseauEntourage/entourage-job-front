@@ -13,3 +13,7 @@ export const ActionsLabels = {
   [Actions.CREATE]: { NAME: 'création', VERB: 'créé' },
   [Actions.UPDATE]: { NAME: 'modification', VERB: 'modifié' },
 } as const;
+
+export type FilterConstant<
+  T extends string | number | boolean = string | number | boolean
+> = { value: T; label: string };

@@ -3,7 +3,11 @@ import { useCallback, useState } from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
 import { UserDto } from 'src/api/types';
-import { CREATE_NEW_ORGANIZATION_VALUE } from 'src/components/forms/schema/formAddUser';
+import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
+import {
+  CREATE_NEW_ORGANIZATION_VALUE,
+  formAddUser,
+} from 'src/components/forms/schemas/formAddUser';
 import { USER_ROLES } from 'src/constants/users';
 import { Action, ActionsLabels } from 'src/constants/utils';
 import { usePrevious } from 'src/hooks/utils';
@@ -17,21 +21,23 @@ export function useOnMemberFormSubmit(
   const prevFilledUserFields = usePrevious(filledUserFields);
 
   const onSubmit = useCallback(
-    async (fields, closeModal) => {
-      let userFields;
-      let name;
+    async (
+      fields: ExtractFormSchemaValidation<typeof formAddUser>,
+      closeModal
+    ) => {
+      let userFields: UserDto;
+      let name: string;
       const shouldTryToCreateOrganization =
-        fields.organizationId === CREATE_NEW_ORGANIZATION_VALUE;
+        fields.organizationId?.value === CREATE_NEW_ORGANIZATION_VALUE;
 
       try {
-        let { organizationId } = fields;
+        let organizationId = fields.organizationId?.value;
 
         if (shouldTryToCreateOrganization) {
           const organizationFields = {
             name: fields.nameOrganization,
             address: fields.addressOrganization,
             zone: fields.zoneOrganization,
-            referentInformation: fields.referentInformationOrganization,
             referentFirstName: fields.referentFirstNameOrganization,
             referentLastName: fields.referentLastNameOrganization,
             referentPhone: fields.referentPhoneOrganization,
@@ -43,6 +49,8 @@ export function useOnMemberFormSubmit(
               data: { id: organizationId },
             } = await Api.postOrganization(organizationFields));
 
+            name = fields.nameOrganization;
+
             UIkit.notification(`La structure a bien été créée`, 'success');
           } catch (error) {
             console.error(error);
@@ -50,6 +58,7 @@ export function useOnMemberFormSubmit(
               `Une erreur s'est produite lors de la création de la structure`,
               'danger'
             );
+            return;
           }
         }
 
@@ -61,7 +70,13 @@ export function useOnMemberFormSubmit(
           phone: fields.phone,
           role: fields.role,
           email: fields.email,
-          userToLinkId: fields.userToLinkId,
+          ...(fields.userToLinkId
+            ? {
+                userToLinkId: Array.isArray(fields.userToLinkId)
+                  ? fields.userToLinkId.map(({ value }) => value)
+                  : fields.userToLinkId.value,
+              }
+            : {}),
           ...(fields.role === USER_ROLES.ADMIN
             ? { adminRole: fields.adminRole }
             : {}),

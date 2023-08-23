@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { CV_COLORS } from '../PageCvContent/PageCVContent.styles';
 import { CV } from 'src/api/types';
+import { formAddOpportunity } from 'src/components/forms/schemas/formAddOpportunity';
 import { openModal } from 'src/components/modals/Modal';
 import { PostOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { Button } from 'src/components/utils';
@@ -48,14 +49,16 @@ export const CVCallToActions = ({
           </span>
         </div>
       ),
-      candidateId: cv.UserId,
       defaultValues: {
-        candidat: {
-          firstName: cv.user.candidat.firstName,
-          lastName: cv.user.candidat.lastName,
-        },
+        candidatesIds: [
+          {
+            label: `${cv.user.candidat.firstName} ${cv.user.candidat.lastName}`,
+            value: cv.UserId,
+          },
+        ],
         isPublic: false,
       },
+      formSchema: formAddOpportunity,
     };
   }, [cv]);
 
@@ -71,7 +74,7 @@ export const CVCallToActions = ({
       <StyledCVCTAContainer>
         <StyledCVCTACard className={`${!isDesktop ? 'mobile' : ''}`} order={3}>
           <H5
-            title="Partagez son CV sur vos réseaux :"
+            title="Partagez son CV sur vos réseaux"
             center
             color="darkGrayFont"
           />

@@ -6,7 +6,7 @@ import UIkit from 'uikit';
 import MainImg from 'public/static/img/travailler-banner.jpg';
 import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
-import { formCandidateInscription } from 'src/components/forms/schema/formCandidateInscription';
+import { formCandidateInscription } from 'src/components/forms/schemas/formCandidateInscription';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
@@ -53,7 +53,6 @@ const Travailler = () => {
         description="Pour mieux vous connaitre, nous avons besoins de quelques informations ! Merci de répondre à ces quelques questions, cela prend moins de 5 min !"
         formSchema={formCandidateInscription}
         submitText="Valider"
-        formId="candidate-inscription-form"
         onSubmit={async (fields, closeModal) => {
           gaEvent({
             ...GA_TAGS.PAGE_TRAVAILLER_ENVOYER_DEPOSER_CANDIDATURE_CLIC,
@@ -88,7 +87,7 @@ const Travailler = () => {
               openModal(
                 <ModalGeneric
                   title="Merci pour votre inscription !"
-                  onClose={closeModal()}
+                  onClose={closeModal}
                   withCloseButton
                 >
                   <StyledModalContent>

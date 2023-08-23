@@ -1,5 +1,5 @@
 import React from 'react';
-import schemaStory from 'src/components/forms/schema/formEditStory.json';
+import { formEditStory } from 'src/components/forms/schemas/formEditStory';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Grid, ButtonIcon } from 'src/components/utils';
@@ -10,7 +10,7 @@ export const StoryProfileCard = ({
   onChange,
 }: {
   description?: string;
-  onChange?: (arg1: { story: string }) => void; // to be typed
+  onChange: (updatedStory: { story: string }) => void;
 }) => {
   return (
     <div className="uk-card uk-card-default uk-card-body">
@@ -25,11 +25,11 @@ export const StoryProfileCard = ({
               openModal(
                 <ModalEdit
                   title="Édition - Mon histoire"
-                  formSchema={schemaStory}
+                  formSchema={formEditStory}
                   defaultValues={{ story: description }}
-                  onSubmit={async (fields, closeModal) => {
+                  onSubmit={(fields, closeModal) => {
                     closeModal();
-                    await onChange({ ...fields });
+                    onChange(fields);
                   }}
                 />
               );

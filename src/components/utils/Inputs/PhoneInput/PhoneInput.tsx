@@ -1,63 +1,66 @@
-import React from 'react';
+import React, { Component } from 'react';
+import {
+  DefaultInputComponentProps,
+  Props,
+  State,
+  Value,
+} from 'react-phone-number-input';
 import PhoneInputWithCountry from 'react-phone-number-input/mobile';
-import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
+import { StyledInputLabel } from '../Inputs.styles';
+import { CommonInputProps } from '../Inputs.types';
+import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { StyledPhoneInput } from './PhoneInput.styles';
 
-interface PhoneInputProps {
-  id: string;
-  name: string;
-  onChange: () => void;
-  title: string;
-  valid: {
-    isInvalid: boolean;
-    message: string;
-  };
-  value: string;
-  disabled: boolean;
-  hidden: boolean;
-  autocomplete: string;
-  showLabel: boolean;
-  placeholder: string;
-}
+interface PhoneInputProps
+  extends CommonInputProps<
+    Value,
+    Component<
+      Props<DefaultInputComponentProps>,
+      State<Props<DefaultInputComponentProps>>
+    >
+  > {}
 export function PhoneInput({
-  valid,
+  id,
+  name,
+  title,
+  value,
+  error,
   onChange,
-  id = '',
-  value = '',
+  onBlur,
   disabled = false,
   hidden = false,
-  autocomplete = 'tel',
-  title = '',
-  name = '',
   showLabel = false,
-  placeholder = '',
+  placeholder,
+  inputRef,
 }: PhoneInputProps) {
   if (hidden) {
     return null;
   }
 
   return (
-    <>
-      <StyledPhoneInput>
-        {showLabel && title && (
-          <label htmlFor={id} className="label-top">
-            {title}
-          </label>
-        )}
-        <PhoneInputWithCountry
-          defaultCountry="FR"
-          title={title}
-          name={name}
-          id={id}
-          data-testid={id}
-          value={value || ''}
-          placeholder={placeholder || title}
-          onChange={onChange}
-          disabled={disabled}
-          autoComplete={autocomplete}
-        />
-      </StyledPhoneInput>
-      <FormValidatorErrorMessage validObj={valid} newInput />
-    </>
+    <StyledPhoneInput disabled={disabled}>
+      {showLabel && (
+        <StyledInputLabel htmlFor={`form-input-${name}`}>
+          {title}
+        </StyledInputLabel>
+      )}
+      <PhoneInputWithCountry
+        defaultCountry="FR"
+        title={title}
+        name={name}
+        id={id}
+        data-testid={id}
+        value={value}
+        placeholder={
+          showLabel ? placeholder || 'Écrivez...' : placeholder || title
+        }
+        onChange={onChange}
+        onBlur={onBlur}
+        disabled={disabled}
+        autoComplete="tel"
+        ref={inputRef}
+      />
+      <FieldErrorMessage error={error} />
+    </StyledPhoneInput>
   );
 }

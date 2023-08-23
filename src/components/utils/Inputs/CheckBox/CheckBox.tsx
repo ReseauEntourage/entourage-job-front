@@ -1,40 +1,32 @@
-import React from 'react';
-import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
+import React, { ChangeEvent } from 'react';
+import { CommonInputProps } from '../Inputs.types';
+import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { StyledCheckbox } from 'src/components/utils/Inputs/CheckBox/CheckBox.styles';
 
-interface CBProps {
-  id: string;
-  name: string;
-  handleClick: () => void;
-  disabled?: boolean;
-  removeMargin?: boolean;
-  hidden?: boolean;
-  value?: boolean;
-  title?: string;
-  valid?: {
-    isInvalid: boolean;
-    message: string;
-  };
+interface CheckBoxProps extends CommonInputProps<boolean, HTMLInputElement> {
+  useOutsideOfForm?: boolean;
 }
 
 export function CheckBox({
-  handleClick,
+  id,
+  name,
+  title,
+  onChange,
+  onBlur,
   disabled = false,
   hidden = false,
   value = false,
-  title,
-  name,
-  id,
-  removeMargin = false,
-  valid,
-}: CBProps) {
+  useOutsideOfForm = false,
+  error,
+  inputRef,
+}: Omit<CheckBoxProps, 'title'> & { title?: string | JSX.Element }) {
   if (hidden) {
     return null;
   }
 
   return (
     <StyledCheckbox
-      removeMargin={removeMargin}
+      disabled={disabled}
       onClick={(e) => {
         e.stopPropagation();
       }}
@@ -46,15 +38,19 @@ export function CheckBox({
         <input
           type="checkbox"
           id={id}
-          onChange={handleClick}
+          onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            onChange(event.target.checked)
+          }
+          onBlur={onBlur}
           disabled={disabled}
           checked={value}
           name={name}
+          ref={inputRef}
         />
         <span className="checkmark" />
         {title && <span className="label">{title}</span>}
       </label>
-      <FormValidatorErrorMessage validObj={valid} newInput />
+      {!useOutsideOfForm && <FieldErrorMessage error={error} />}
     </StyledCheckbox>
   );
 }

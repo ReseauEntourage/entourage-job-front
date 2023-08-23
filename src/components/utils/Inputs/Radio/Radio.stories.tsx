@@ -17,8 +17,8 @@ const Template = (args) => {
   return (
     <Radio
       {...args}
-      onChange={(event) => {
-        setValue(event.target.value);
+      onChange={(updatedValue) => {
+        setValue(updatedValue);
       }}
       value={value}
     />

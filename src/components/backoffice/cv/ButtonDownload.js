@@ -17,7 +17,7 @@ export const ButtonDownload = ({
       disabled={disabled || pdfGenerating}
       style="default"
       text={
-        pdfGenerating ? 'Génération du fichier PDF ...' : 'Télécharger le CV'
+        pdfGenerating ? 'Génération du fichier PDF...' : 'Télécharger le CV'
       }
       icon={pdfGenerating ? null : 'download'}
       action={() => {

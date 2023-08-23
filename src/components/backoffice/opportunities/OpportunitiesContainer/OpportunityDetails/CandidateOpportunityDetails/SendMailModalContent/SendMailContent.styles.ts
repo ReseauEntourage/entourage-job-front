@@ -15,6 +15,7 @@ export const StyledSendMailContent = styled.div`
   .textarea-container {
     padding: 12px;
     background-color: ${COLORS.white};
+    border-radius: 5px;
     & textarea {
       margin-bottom: 0;
     }

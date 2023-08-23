@@ -14,6 +14,7 @@ import { CVEditReviews } from 'src/components/cv/CVEditReviews';
 import { Grid, Img } from 'src/components/utils';
 
 import { CV_STATUS } from 'src/constants';
+import { AdminZone } from 'src/constants/departements';
 import { useMount, usePrevious } from 'src/hooks/utils';
 
 interface CVFicheEditionProps {
@@ -24,7 +25,7 @@ interface CVFicheEditionProps {
   phone?: string;
   previewGenerating: boolean;
   address: string;
-  userZone: string;
+  userZone: AdminZone;
 }
 
 export const CVFicheEdition = ({

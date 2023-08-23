@@ -6,6 +6,7 @@ import {
   COACH_USER_ROLES,
   UserRole,
 } from 'src/constants/users';
+import { FilterConstant } from 'src/constants/utils';
 
 export function findOfferStatus(status, isPublic, isRecommended) {
   const currentStatus = OFFER_STATUS.find((oStatus) => {
@@ -37,22 +38,25 @@ export function findOfferStatus(status, isPublic, isRecommended) {
   return { label: 'Non défini', color: 'muted' };
 }
 
-export function findConstantFromValue(valToFind, constantsToFindFrom) {
+export function findConstantFromValue<T extends FilterConstant>(
+  valToFind: string | boolean | number,
+  constantsToFindFrom: readonly T[]
+): T {
   return (
     constantsToFindFrom.find(({ value }) => {
       return value === valToFind;
-    }) || {
+    }) ||
+    ({
       label: valToFind,
       value: valToFind,
-    }
+    } as T)
   );
 }
 
-interface FormValue {
-  value: number | string;
-}
-
-export function getValueFromFormField(fieldValue: FormValue | FormValue[]) {
+export function getValueFromFormField<T extends string | number | boolean>(
+  fieldValue: FilterConstant<T> | FilterConstant<T>[]
+) {
+  // TODO GENERIC TYPE
   if (_.isArray(fieldValue)) {
     if (
       _.every(fieldValue, (fieldVal) => {

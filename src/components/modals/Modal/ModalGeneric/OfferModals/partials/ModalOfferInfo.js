@@ -137,7 +137,7 @@ ModalOfferInfo.propTypes = {
   startOfContract: PropTypes.string,
   isPartTime: PropTypes.bool.isRequired,
   salary: PropTypes.string,
-  driversLicense: PropTypes.string,
+  driversLicense: PropTypes.bool,
   workingHours: PropTypes.string,
 };
 

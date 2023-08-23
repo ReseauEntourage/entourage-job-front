@@ -9,7 +9,7 @@ import { UIKIT_STYLES } from 'src/components/variables';
 export const DiscoverPartial = ({
   style = 'default',
 }: {
-  style: UIKIT_STYLES;
+  style?: UIKIT_STYLES;
 }) => {
   const [cvs, setCVs] = useState(undefined);
   const [error, setError] = useState(null);
@@ -41,7 +41,6 @@ export const DiscoverPartial = ({
                 (cv.urlImg && process.env.AWSS3_CDN_URL + cv.urlImg) ||
                 undefined
               }
-              imgAlt={cv.user && cv.user.candidat.firstName}
               firstName={cv.user && cv.user.candidat.firstName}
               ambitions={cv.ambitions}
               skills={cv.skills}

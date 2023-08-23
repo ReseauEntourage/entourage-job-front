@@ -1,5 +1,5 @@
 import React from 'react';
-import schemaCatchphrase from 'src/components/forms/schema/formEditCatchphrase.json';
+import { formEditCatchphrase } from 'src/components/forms/schemas/formEditCatchphrase';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Grid, ButtonIcon } from 'src/components/utils';
@@ -25,9 +25,8 @@ export const CVEditCatchphrase = ({
               openModal(
                 <ModalEdit
                   title="Édition - Ma phrase d'accroche"
-                  formSchema={schemaCatchphrase}
+                  formSchema={formEditCatchphrase}
                   defaultValues={{ catchphrase }}
-                  formId="catchphrase-form"
                   onSubmit={async (fields, closeModal) => {
                     closeModal();
                     await onChange({

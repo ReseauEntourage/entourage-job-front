@@ -1,370 +1,262 @@
-import React, {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useState,
-} from 'react';
-import { FooterForm } from 'src/components/forms/FooterForm';
-import FormValidator from 'src/components/forms/FormValidator';
-import { GenericField } from 'src/components/forms/GenericField';
-import { FieldGroup } from 'src/components/forms/fields/FieldGroup';
+import React, { Ref, useCallback, useImperativeHandle, useState } from 'react';
+import { DefaultValues, SubmitHandler, useForm } from 'react-hook-form';
+import { FormFooter } from 'src/components/forms/FormFooter/FormFooter';
 import { InputsContainer } from 'src/components/forms/fields/InputsContainer';
-import { MultipleFields } from 'src/components/forms/fields/MultipleFields';
-import { getValueFromFormField } from 'src/utils/Finding';
-import { AnyToFix } from 'src/utils/Types';
+import { MultipleFields } from 'src/components/forms/fields/MultipleFields/MultipleFields';
+import { Heading } from 'src/components/utils/Inputs';
+import { Text } from 'src/components/utils/Inputs/Text';
+import { AnyCantFix } from 'src/utils/Types';
+import {
+  ComponentException,
+  ExtractFormSchemaValidation,
+  FormField,
+  FormSchema,
+  isFormFieldGroup,
+  isFormFieldInput,
+  isFormFieldMultiple,
+  isFormFieldRadio,
+  isFormFieldText,
+} from './FormSchema';
+import { StyledForm } from './Forms.styles';
+import { GenericField } from './fields/GenericField';
 
-interface FormWithValidationProps {
-  defaultValues?: AnyToFix; // to be typed
+interface FormWithValidationProps<S extends FormSchema<AnyCantFix>> {
+  formSchema: S;
+  defaultValues?: DefaultValues<ExtractFormSchemaValidation<S>>;
   onCancel?: () => void;
-  onSubmit: (arg1: AnyToFix, arg2: AnyToFix) => void; // to be typed
-  onError?: (any) => void;
-  formSchema: {
-    id: string;
-    fields: AnyToFix; // to be typed
-    rules: AnyToFix; // to be typed
-  };
+  onSubmit: (
+    values: ExtractFormSchemaValidation<S>,
+    requestErrorCallback: (msg: string) => void
+  ) => void;
+  onError?: (values: ExtractFormSchemaValidation<S>) => void;
   submitText?: string;
   cancelText?: string;
   enterToSubmit?: boolean;
-  formId?: string;
+  innerRef?: Ref<{ resetForm: () => void }>;
 }
 
-/**
- * Permet de creer un formulaire avec la generation de ses champs et validations de champs
- * Regroupe les deux composants du fichier formWithValidationOld en stateless
- * - Plus lisible
- */
-export const FormWithValidation = forwardRef(
-  (
-    {
-      formSchema: { id, rules, fields },
+export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
+  formSchema,
+  defaultValues,
+  submitText,
+  cancelText,
+  onSubmit,
+  onCancel,
+  enterToSubmit = false,
+  onError,
+  innerRef,
+}: FormWithValidationProps<S>) {
+  const { id: formId, fields } = formSchema;
+
+  const [error, setError] = useState<string>();
+  const [fieldOptions, setFieldOptions] = useState({});
+
+  const updateFieldOptions = useCallback(
+    (fieldWithOptions) => {
+      setFieldOptions({ ...fieldOptions, ...fieldWithOptions });
+    },
+    [fieldOptions]
+  );
+
+  const { handleSubmit, control, reset, getValues, resetField, watch } =
+    useForm<ExtractFormSchemaValidation<S>>({
       defaultValues,
-      submitText,
-      cancelText,
-      onSubmit,
-      onCancel,
-      enterToSubmit,
-      onError,
-      formId,
-    }: FormWithValidationProps,
-    ref
-  ) => {
-    const validator = useMemo(() => {
-      return new FormValidator(rules);
-    }, [rules]);
-
-    const [error, setError] = useState<string>();
-
-    const [fieldValidations, setFieldValidations] = useState({});
-    const [fieldValues, setFieldValues] = useState({});
-    const [fieldOptions, setFieldOptions] = useState({});
-
-    // fonction permettant de verifier une champs d'entré utilisateur
-    const updateForm = useCallback(
-      (args) => {
-        let onChangeArgs = args;
-        if (!Array.isArray(onChangeArgs)) {
-          onChangeArgs = [onChangeArgs];
-        }
-
-        const tmpFieldValues = { ...fieldValues };
-        const tmpFieldValidations = fieldValidations;
-        for (let i = 0; i < onChangeArgs.length; i += 1) {
-          const {
-            target: { name, type, value, checked },
-            isReset,
-          } = onChangeArgs[i];
-
-          /* Validators start */
-          tmpFieldValues[name] = type === 'checkbox' ? checked : value;
-
-          const validation = validator.validate(tmpFieldValues, fields); // envoie une copie des champs pour que le state ne soit pas altéré
-
-          // enregistre la raison de la validation {isInvalid: boolean, message: string}
-          if (validation[name] !== undefined && !isReset) {
-            tmpFieldValidations[`valid_${name}`] = validation[name];
-          }
-          if (isReset) {
-            delete tmpFieldValidations[`valid_${name}`];
-          }
-        }
-
-        setFieldValues(tmpFieldValues); // enregistre la valeur du champs
-        setFieldValidations(tmpFieldValidations);
-
-        /* Validators end */
-        setError('');
-      },
-      [fieldValidations, fieldValues, fields, validator]
-    );
-
-    const submitForm = useCallback(
-      async (event) => {
-        if (event) event.preventDefault();
-        // Vérifie les champs avant soumission
-        /* Validators control before submit */
-
-        const validation = validator.validate(fieldValues, fields);
-        const formattedFieldValues = Object.keys(fieldValues).reduce(
-          (acc, curr) => {
-            return {
-              ...acc,
-              [curr]: getValueFromFormField(fieldValues[curr]),
-            };
-          },
-          {}
-        );
-
-        if (validation.isValid) {
-          // Si les validators sont OK.
-          await onSubmit(formattedFieldValues, (msg) => {
-            return setError(msg);
-          }); // c'est le props onsubmit de FormWithValidation
-        } else {
-          // erreur de validation
-          const tmpFieldValidations = fieldValidations;
-          Object.keys(validation).forEach((key) => {
-            if (key !== 'isValid') {
-              tmpFieldValidations[`valid_${key}`] = validation[key];
-            }
-          });
-          setFieldValidations(tmpFieldValidations);
-          setError('Un ou plusieurs champs sont invalides');
-          if (onError) await onError(fieldValues);
-        }
-      },
-      [fieldValidations, fieldValues, fields, onError, onSubmit, validator]
-    );
-
-    const updateFieldOptions = useCallback(
-      (fieldWithOptions) => {
-        setFieldOptions({ ...fieldOptions, ...fieldWithOptions });
-      },
-      [fieldOptions]
-    );
-
-    const initializeForm = useCallback(() => {
-      // on extrait les nom des champs
-      const fieldsId = fields.reduce((acc, curr) => {
-        if (
-          curr.component === 'fieldgroup' ||
-          curr.component === 'fieldgroup-new'
-        ) {
-          return [
-            ...acc,
-            ...curr.fields.map((field) => {
-              return field.id;
-            }),
-          ];
-        }
-        return [...acc, curr.id];
-      }, []);
-
-      const validations = fieldsId.reduce((acc, value) => {
-        return {
-          ...acc,
-          [`valid_${value}`]: undefined,
-        };
-      }, {});
-      const values = fieldsId.reduce((acc, value) => {
-        return {
-          ...acc,
-          [value]:
-            Array.isArray(defaultValues[value]) &&
-            defaultValues[value].length > 0
-              ? defaultValues[value].map((item) => {
-                  if (typeof item === 'string') {
-                    return {
-                      value: item,
-                      label: item,
-                    };
-                  }
-                  return item;
-                })
-              : defaultValues[value],
-        };
-      }, {});
-      setFieldValues(values);
-      setFieldValidations(validations);
-    }, [defaultValues, fields]);
-
-    useImperativeHandle(ref, () => {
-      return {
-        resetForm: initializeForm,
-      };
+      shouldUnregister: true,
     });
 
-    useEffect(() => {
-      initializeForm();
-    }, [initializeForm]);
+  useImperativeHandle(innerRef, () => {
+    return {
+      resetForm: () => reset({} as ExtractFormSchemaValidation<S>),
+    };
+  });
 
-    return (
-      <>
-        <form
-          id={id}
-          className="uk-form-stacked uk-grid-small uk-width-1-1 uk-child-width-1-1"
-          data-uk-grid
-          onSubmit={submitForm}
-          data-testid="form-with-validation"
-          onKeyDown={(ev) => {
-            if (enterToSubmit) {
-              if (ev.key === 'Enter') {
-                submitForm(ev);
+  const onValidForm: SubmitHandler<ExtractFormSchemaValidation<S>> =
+    useCallback(
+      (fieldValues) => {
+        onSubmit(fieldValues, (msg) => {
+          setError(msg);
+        });
+      },
+      [onSubmit]
+    );
+
+  const onErrorForm = useCallback(() => {
+    if (onError) {
+      onError(getValues());
+    }
+  }, [getValues, onError]);
+
+  return (
+    <>
+      <StyledForm
+        id={formId}
+        data-testid="form-with-validation"
+        onSubmit={handleSubmit(onValidForm, onErrorForm)}
+        onKeyDown={(ev) => {
+          if (enterToSubmit) {
+            if (ev.key === 'Enter') {
+              handleSubmit(onValidForm, onErrorForm)();
+            }
+          }
+        }}
+      >
+        <fieldset>
+          {fields.map((field: FormField<ExtractFormSchemaValidation<S>>, i) => {
+            const shouldHide = field.hide
+              ? field.hide(getValues, fieldOptions)
+              : field.hidden;
+
+            if (isFormFieldText(field)) {
+              if (shouldHide) {
+                return null;
+              }
+
+              const title =
+                typeof field.title === 'function'
+                  ? field.title(getValues)
+                  : field.title;
+
+              if (field.component === 'heading') {
+                return (
+                  <Heading id={`${formId}-${field.id}`} title={title} key={i} />
+                );
+              }
+
+              if (field.component === 'text') {
+                return (
+                  <Text id={`${formId}-${field.id}`} title={title} key={i} />
+                );
               }
             }
-          }}
-        >
-          <fieldset className="uk-fieldset">
-            {fields.map((value, i) => {
-              if (value.component === 'fieldgroup') {
-                const { fields: childrenFields, title, childWidths } = value;
+
+            if (isFormFieldGroup(field)) {
+              if (shouldHide) {
+                return null;
+              }
+
+              if (field.component === 'fieldgroup') {
+                const { fields: childrenFields } = field;
+
                 return (
-                  <li key={i} hidden={!!value.hidden}>
-                    <FieldGroup
-                      title={title}
-                      childWidths={childWidths}
-                      fields={childrenFields.map((field) => {
-                        return !field.hidden ? (
+                  <li key={i}>
+                    <InputsContainer
+                      fields={childrenFields.map((childrenField) => {
+                        const shouldHideField = childrenField.hide
+                          ? childrenField.hide(getValues)
+                          : childrenField.hidden;
+
+                        if (shouldHideField) {
+                          return null;
+                        }
+
+                        if (isFormFieldText(childrenField)) {
+                          const title =
+                            typeof childrenField.title === 'function'
+                              ? childrenField.title(getValues)
+                              : childrenField.title;
+
+                          if (childrenField.component === 'text') {
+                            return (
+                              <Text
+                                id={`${formId}-${childrenField.id}`}
+                                title={title}
+                                key={i}
+                              />
+                            );
+                          }
+
+                          throw new ComponentException(
+                            childrenField.component,
+                            field.component
+                          );
+                        }
+
+                        return (
                           <GenericField
-                            data={field}
-                            formId={id}
+                            formSchema={formSchema}
+                            watch={watch}
+                            resetField={resetField}
+                            control={control}
+                            field={childrenField}
                             fieldOptions={fieldOptions}
-                            value={fieldValues[field.id]}
-                            onChange={updateForm}
                             updateFieldOptions={updateFieldOptions}
-                            getValid={(name) => {
-                              return fieldValidations[`valid_${name}`];
-                            }}
-                            getValue={(name) => {
-                              return fieldValues[name];
-                            }}
+                            getValue={getValues}
                           />
-                        ) : null;
+                        );
                       })}
                     />
                   </li>
                 );
               }
-              if (value.component === 'fieldgroup-new') {
-                const { fields: childrenFields } = value;
+            }
 
-                const shouldHide = value.hide
-                  ? value.hide((name) => {
-                      return fieldValues[name];
-                    })
-                  : value.hidden;
-
-                return (
-                  !shouldHide && (
-                    <li key={i}>
-                      <InputsContainer
-                        fields={childrenFields.map((field) => {
-                          const shouldHideField = field.hide
-                            ? field.hide((name) => {
-                                return fieldValues[name];
-                              })
-                            : field.hidden;
-
-                          return !shouldHideField ? (
-                            <GenericField
-                              data={field}
-                              formId={id}
-                              value={fieldValues[field.id]}
-                              onChange={updateForm}
-                              fieldOptions={fieldOptions}
-                              updateFieldOptions={updateFieldOptions}
-                              getValid={(name) => {
-                                return fieldValidations[`valid_${name}`];
-                              }}
-                              getValue={(name) => {
-                                return fieldValues[name];
-                              }}
-                            />
-                          ) : null;
-                        })}
-                      />
-                    </li>
-                  )
-                );
+            if (isFormFieldMultiple(field)) {
+              if (shouldHide) {
+                return null;
               }
-              if (value.component === 'multiple-fields') {
+
+              if (field.component === 'multiple-fields') {
                 const {
-                  fields: childrenFields,
-                  title,
+                  fields: multipleFields,
                   action,
-                  name: childrenName,
-                  childWidths,
-                } = value;
+                  name: multipleFieldsName,
+                } = field;
                 return (
-                  <li key={i} hidden={!!value.hidden}>
+                  <li key={i}>
                     <MultipleFields
+                      formSchema={formSchema}
+                      watch={watch}
+                      resetField={resetField}
+                      control={control}
                       action={action}
-                      name={childrenName}
-                      title={title}
-                      childWidths={childWidths}
-                      formId={id}
-                      values={fieldValues[childrenName] || [{}]}
-                      getValid={(name) => {
-                        return fieldValidations[`valid_${name}`];
-                      }}
-                      getValue={(name) => {
-                        return fieldValues[name];
-                      }}
-                      onChange={updateForm}
-                      fields={childrenFields}
+                      name={multipleFieldsName}
+                      getValue={getValues}
+                      fields={multipleFields}
                     />
                   </li>
                 );
               }
+            }
 
+            if (isFormFieldInput(field)) {
+              // Condition because Radio Async needs to be rendered to make request and check if it should be hidden or not
+              if (!isFormFieldRadio(field) && shouldHide) {
+                return null;
+              }
               return (
-                <li key={i} hidden={!!value.hidden}>
+                <li key={i}>
                   <GenericField
-                    data={value}
-                    formId={id}
-                    value={fieldValues[value.id]}
-                    onChange={updateForm}
+                    formSchema={formSchema}
+                    watch={watch}
+                    resetField={resetField}
+                    control={control}
+                    field={field}
                     updateFieldOptions={updateFieldOptions}
                     fieldOptions={fieldOptions}
-                    getValid={(name) => {
-                      return fieldValidations[`valid_${name}`];
-                    }}
-                    getValue={(name) => {
-                      return fieldValues[name];
-                    }}
+                    getValue={getValues}
                   />
                 </li>
               );
-            })}
-          </fieldset>
-        </form>
-        <FooterForm
-          error={error}
-          submitText={submitText}
-          cancelText={cancelText}
-          onSubmit={submitForm}
-          formId={formId}
-          onCancel={
-            onCancel &&
-            (() => {
-              initializeForm();
-              onCancel();
-            })
-          }
-        />
-      </>
-    );
-  }
-);
+            }
 
-FormWithValidation.defaultProps = {
-  submitText: undefined,
-  cancelText: undefined,
-  defaultValues: {},
-  onCancel: undefined,
-  enterToSubmit: false,
-  onError: null,
-  formId: '',
-};
+            throw new ComponentException(field.component);
+          })}
+        </fieldset>
+      </StyledForm>
+      <FormFooter
+        error={error}
+        submitText={submitText}
+        cancelText={cancelText}
+        onSubmit={handleSubmit(onValidForm, onErrorForm)}
+        formId={formId}
+        onCancel={
+          onCancel &&
+          (() => {
+            reset();
+            onCancel();
+          })
+        }
+      />
+    </>
+  );
+}

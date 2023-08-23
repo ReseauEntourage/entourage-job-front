@@ -1,21 +1,14 @@
 import styled from 'styled-components';
+import { commonInputContainerStyles } from '../Inputs.styles';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledCheckbox = styled.div`
-  height: 100%;
-  display: flex;
+  ${() => commonInputContainerStyles}
   justify-content: center;
-
-  flex-direction: column;
   .checkbox-label {
-    margin-bottom: ${({ removeMargin }) => {
-      return removeMargin ? 0 : 30;
-    }}px;
-
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    height: 16px;
     position: relative;
     cursor: pointer;
     -webkit-user-select: none;
@@ -23,6 +16,8 @@ export const StyledCheckbox = styled.div`
     -ms-user-select: none;
     user-select: none;
     padding-left: 16px;
+    font-size: 14px;
+    line-height: 17px;
 
     input {
       position: absolute;
@@ -45,6 +40,9 @@ export const StyledCheckbox = styled.div`
     .checkmark {
       position: absolute;
       top: 0;
+      bottom: 0;
+      margin-top: auto;
+      margin-bottom: auto;
       left: 0;
       height: 16px;
       width: 16px;

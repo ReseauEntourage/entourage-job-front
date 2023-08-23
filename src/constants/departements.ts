@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { FilterConstant } from './utils';
 
 export const ADMIN_ZONES = {
   PARIS: 'PARIS',
@@ -11,14 +12,14 @@ export const ADMIN_ZONES = {
 
 export type AdminZone = (typeof ADMIN_ZONES)[keyof typeof ADMIN_ZONES];
 
-export const ADMIN_ZONES_FILTERS = [
+export const ADMIN_ZONES_FILTERS: FilterConstant<AdminZone>[] = [
   { value: ADMIN_ZONES.PARIS, label: _.capitalize(ADMIN_ZONES.PARIS) },
   { value: ADMIN_ZONES.LILLE, label: _.capitalize(ADMIN_ZONES.LILLE) },
   { value: ADMIN_ZONES.LYON, label: _.capitalize(ADMIN_ZONES.LYON) },
   { value: ADMIN_ZONES.LORIENT, label: _.capitalize(ADMIN_ZONES.LORIENT) },
   { value: ADMIN_ZONES.RENNES, label: _.capitalize(ADMIN_ZONES.RENNES) },
   { value: ADMIN_ZONES.HZ, label: _.capitalize(ADMIN_ZONES.HZ) },
-] as const;
+];
 
 export const DEPARTMENTS = [
   {
@@ -530,6 +531,7 @@ export const DEPARTMENTS = [
   },
 ] as const;
 
+export type Department = (typeof DEPARTMENTS)[number]['name'];
 export const REGIONS_LABELS = {
   'Île-de-France': 'Paris et sa région',
   'Auvergne-Rhône-Alpes': 'Lyon et sa région',
@@ -564,7 +566,9 @@ export const REGIONS_FILTERS = _.sortBy(
   'label'
 );
 
-export const DEPARTMENTS_FILTERS = [
+export const DEPARTMENTS_FILTERS: (FilterConstant<Department> & {
+  zone: AdminZone;
+})[] = [
   ...DEPARTMENTS.map(({ name, zone }) => {
     return {
       value: name,
@@ -572,4 +576,52 @@ export const DEPARTMENTS_FILTERS = [
       zone,
     };
   }),
-] as const;
+];
+
+export const Cities = {
+  '93': '93',
+  '75': '75',
+  '92': '92',
+  '35': '35',
+  '56': '56',
+  '59': '59',
+  '69': '69',
+  OTHER: 'other',
+} as const;
+
+export type City = (typeof Cities)[keyof typeof Cities];
+
+export const CITIES_FILTERS: FilterConstant<City>[] = [
+  {
+    label: 'Seine-Saint-Denis (93)',
+    value: '93',
+  },
+  {
+    label: 'Paris (75)',
+    value: '75',
+  },
+  {
+    label: 'Hauts-De-Seine (92)',
+    value: '92',
+  },
+  {
+    label: 'Rennes et sa région (35)',
+    value: '35',
+  },
+  {
+    label: 'Lorient et sa région (56)',
+    value: '56',
+  },
+  {
+    label: 'Lille et sa région (59)',
+    value: '59',
+  },
+  {
+    label: 'Lyon et sa région (69)',
+    value: '69',
+  },
+  {
+    label: 'Autre',
+    value: 'other',
+  },
+];

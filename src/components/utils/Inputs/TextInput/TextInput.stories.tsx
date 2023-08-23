@@ -31,8 +31,8 @@ const Template = (args) => {
   return (
     <TextInput
       {...args}
-      onChange={(event) => {
-        setValue(event.target.value);
+      onChange={(updatedValue) => {
+        setValue(updatedValue);
       }}
       value={value}
     />

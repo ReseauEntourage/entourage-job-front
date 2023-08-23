@@ -44,15 +44,11 @@ export const CVCareerPathSentenceNew = ({
           J&apos;aimerais travailler{' '}
           {sortedAmbitions[0].prefix ||
             AMBITIONS_PREFIXES[0].label.toLowerCase()}{' '}
-          <span className="orange">
-            {sortedAmbitions[0].name || sortedAmbitions[0]}
-          </span>
+          <span className="orange">{sortedAmbitions[0].name}</span>
           {sortedAmbitions.length > 1 && (
             <>
               {getAmbitionsLinkingSentence(sortedAmbitions)}
-              <span className="orange">
-                {sortedAmbitions[1].name || sortedAmbitions[1]}
-              </span>
+              <span className="orange">{sortedAmbitions[1].name}</span>
             </>
           )}
         </>

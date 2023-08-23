@@ -30,23 +30,26 @@ export const ExternalCoachMemberList = () => {
   useEffect(() => {
     if (user) {
       const getRelatedUsers = async () => {
-        const relatedUsersPromises = user.coaches.map(async (relatedUser) => {
-          const { candidat, ...relatedUserWithoutCandidate } = relatedUser;
-          try {
-            const response = await Api.getCVByCandidateId(candidat.id);
-            return {
-              ...candidat,
-              candidat: {
-                ...relatedUserWithoutCandidate,
-                cvs: [response.data],
-              },
-            };
-          } catch (err) {
-            console.error(err);
-          }
-        });
-        const membersData = await Promise.all(relatedUsersPromises);
-        setMembers(membersData);
+        if (user.coaches) {
+          const relatedUsersPromises = user.coaches.map(async (relatedUser) => {
+            const { candidat, ...relatedUserWithoutCandidate } = relatedUser;
+            try {
+              const response = await Api.getCVByCandidateId(candidat.id);
+              return {
+                ...candidat,
+                candidat: {
+                  ...relatedUserWithoutCandidate,
+                  cvs: [response.data],
+                },
+              };
+            } catch (err) {
+              console.error(err);
+            }
+          });
+          const membersData = await Promise.all(relatedUsersPromises);
+          setMembers(membersData);
+        }
+
         setLoading(false);
       };
       getRelatedUsers();

@@ -1,9 +1,16 @@
-/* eslint import/no-unresolved: "off" */
-import { Pagination, Autoplay, Navigation } from 'swiper/modules';
+import React, { FunctionComponent } from 'react';
+import { SwiperRef } from 'swiper/swiper-react';
 
 declare module 'swiper/react' {
-  interface SwiperProps {
-    modules?: [Pagination, Autoplay, Navigation];
+  import {
+    Swiper as OriginalSwiper,
+    SwiperProps as OriginalSwiperProps,
+  } from 'swiper/swiper-react.d';
+
+  import { SwiperModule } from 'swiper/types';
+
+  export interface SwiperProps extends OriginalSwiperProps {
+    modules?: SwiperModule[];
     threshold?: number;
     navigation: boolean;
     autoplay: boolean;
@@ -11,4 +18,8 @@ declare module 'swiper/react' {
       clickable: boolean;
     };
   }
+
+  export const Swiper: FunctionComponent<
+    React.RefAttributes<SwiperRef> & SwiperProps
+  > = OriginalSwiper;
 }

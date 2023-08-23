@@ -50,7 +50,7 @@ export const CVCareerPathSentence = ({
               fontSize: 'inherit',
             }}
           >
-            {sortedAmbitions[0].name || sortedAmbitions[0]}
+            {sortedAmbitions[0].name}
           </span>
           {sortedAmbitions.length > 1 && (
             <>
@@ -63,7 +63,7 @@ export const CVCareerPathSentence = ({
                   fontSize: 'inherit',
                 }}
               >
-                {sortedAmbitions[1].name || sortedAmbitions[1]}
+                {sortedAmbitions[1].name}
               </span>
             </>
           )}
