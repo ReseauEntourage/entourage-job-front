@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { DefaultValues } from 'react-hook-form';
 import { ExtractFormSchemaValidation } from '../forms/FormSchema';
@@ -144,34 +143,4 @@ export const CVEditCareerPath = ({
       )}
     </div>
   );
-};
-
-CVEditCareerPath.propTypes = {
-  ambitions: PropTypes.oneOfType([
-    PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        order: PropTypes.number.isRequired,
-        prefix: PropTypes.oneOf(
-          AMBITIONS_PREFIXES.map(({ value }) => {
-            return value;
-          })
-        ),
-      })
-    ),
-    PropTypes.string,
-  ]).isRequired,
-  businessLines: PropTypes.oneOfType([
-    PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        order: PropTypes.number.isRequired,
-      })
-    ),
-    PropTypes.string,
-  ]).isRequired,
-  onChange: PropTypes.func,
-};
-CVEditCareerPath.defaultProps = {
-  onChange: null,
 };

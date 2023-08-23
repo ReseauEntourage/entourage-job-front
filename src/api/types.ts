@@ -7,6 +7,8 @@ import {
   BusinessLineValue,
   ExternalOfferOrigin,
   HeardAboutValue,
+  CandidateHelpWithValue,
+  CompanyApproach,
 } from 'src/constants';
 import { AdminZone, Department } from 'src/constants/departements';
 import { AdminRole, Gender, UserRole } from 'src/constants/users';
@@ -388,13 +390,13 @@ export type ContactContactUs = {
 export type ContactCompany = {
   firstName: string;
   lastName: string;
-  approach: object;
+  approach: CompanyApproach;
   email: string;
   company: string;
   position: string;
-  zone: object;
+  zone: AdminZone;
   phone?: string;
-  heardAbout?: object;
+  heardAbout?: HeardAboutValue;
 };
 
 export type ContactCandidate = {
@@ -406,9 +408,9 @@ export type ContactCandidate = {
   workerPhone: string;
   firstName: string;
   lastName: string;
-  helpWith: string[];
+  helpWith: CandidateHelpWithValue[];
   gender: Gender;
-  birthDate?: Date;
+  birthDate?: string;
   address?: string;
   postalCode: string;
   city: string;
@@ -424,7 +426,7 @@ export type ContactCandidate = {
   socialSecurity: string;
   handicapped?: string;
   bankAccount: string;
-  businessLines?: string[];
+  businessLines?: BusinessLineValue[];
   description: string;
   heardAbout: string;
   diagnostic?: string;

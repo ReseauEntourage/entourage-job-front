@@ -50,7 +50,7 @@ export const formCandidateContact: FormSchema<{
   socialSecurity: CandidateYesNoValue;
   handicapped: CandidateYesNoValue;
   bankAccount: CandidateYesNoValue;
-  businessLines: FilterConstant<BusinessLineValue>;
+  businessLines: FilterConstant<BusinessLineValue>[];
   description: string;
   heardAbout: HeardAboutValue;
   diagnostic: string;

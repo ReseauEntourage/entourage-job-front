@@ -6,7 +6,6 @@ import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
-import { getValueFromFormField } from 'src/utils';
 
 export const CandidateContactModal = () => {
   return (
@@ -54,8 +53,8 @@ export const CandidateContactModal = () => {
         try {
           await Api.postContactCandidate({
             ...fields,
-            helpWith: getValueFromFormField(helpWith),
-            businessLines: getValueFromFormField(businessLines),
+            helpWith: helpWith.map(({ value }) => value),
+            businessLines: businessLines.map(({ value }) => value),
           });
           gaEvent(GA_TAGS.PAGE_ORIENTER_ENVOYER_INSCRIPTION_CLIC);
           fbEvent(FB_TAGS.SOCIAL_WORKER_REGISTRATION_SEND);

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import UIkit from 'uikit';
 
@@ -12,7 +11,10 @@ import { GA_TAGS } from 'src/constants/tags';
 import { useNewsletterTracking } from 'src/hooks';
 import { gaEvent } from 'src/lib/gtag';
 
-export const ModalShareCV = ({ firstName }) => {
+interface ModalShareCVProps {
+  firstName: string;
+}
+export const ModalShareCV = ({ firstName }: ModalShareCVProps) => {
   const newsletterParams = useNewsletterTracking();
 
   return (
@@ -98,12 +100,4 @@ export const ModalShareCV = ({ firstName }) => {
       ]}
     />
   );
-};
-
-ModalShareCV.propTypes = {
-  firstName: PropTypes.string,
-};
-
-ModalShareCV.defaultProps = {
-  firstName: undefined,
 };

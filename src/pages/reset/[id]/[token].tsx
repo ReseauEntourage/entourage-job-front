@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
@@ -8,7 +7,18 @@ import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { formResetPassword } from 'src/components/forms/schemas/formResetPassword';
 import { Button, Section, Icon } from 'src/components/utils';
 
-const ResetPasswordPage = ({ valid, id, token, isCreation }) => {
+interface ResetPasswordPageProps {
+  valid: boolean;
+  id: string;
+  token: string;
+  isCreation: boolean;
+}
+const ResetPasswordPage = ({
+  valid,
+  id,
+  token,
+  isCreation = false,
+}: ResetPasswordPageProps) => {
   const { push } = useRouter();
 
   return (
@@ -88,17 +98,6 @@ ResetPasswordPage.getInitialProps = async ({ query }) => {
     token,
     isCreation,
   };
-};
-
-ResetPasswordPage.propTypes = {
-  valid: PropTypes.bool.isRequired,
-  id: PropTypes.string.isRequired,
-  token: PropTypes.string.isRequired,
-  isCreation: PropTypes.string,
-};
-
-ResetPasswordPage.defaultProps = {
-  isCreation: false,
 };
 
 export default ResetPasswordPage;
