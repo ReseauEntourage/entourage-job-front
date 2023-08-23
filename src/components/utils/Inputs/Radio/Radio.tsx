@@ -82,9 +82,7 @@ export function Radio({
                       data-testid={inputId}
                       name={name}
                       checked={i === checkedRadio}
-                      onChange={(e) => {
-                        onHandleRadio(i, e);
-                      }}
+                      onChange={(e) => onHandleRadio(i, e)}
                       disabled={disabled}
                       onBlur={onBlur}
                       ref={inputRef}
