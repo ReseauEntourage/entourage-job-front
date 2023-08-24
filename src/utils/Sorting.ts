@@ -13,3 +13,12 @@ export function sortByName<T extends { name: string }[]>(list: T) {
   });
   return listToSort;
 }
+
+
+export function sortByDateStart<T extends { dateStart?: Date }[]>(list: T) {
+  const listToSort = JSON.parse(JSON.stringify(list));
+  listToSort.sort((a, b) => {
+    return a.dateStart?.localeCompare(b.dateStart) > 0 ? -1 : 1;
+  });
+  return listToSort;
+}

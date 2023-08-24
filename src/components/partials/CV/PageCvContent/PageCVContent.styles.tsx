@@ -13,7 +13,6 @@ export const StyledBackLink = styled.a`
   flex-direction: row;
   margin-bottom: 16px;
   color: ${COLORS.darkGrayFont} !important;
-
   &:visited {
     color: ${COLORS.darkGrayFont} !important;
   }
@@ -71,6 +70,9 @@ export const StyledCVPageContent = styled.div`
         display: none;
       }
     }
+  }
+  .name-gray {
+    color: ${CV_COLORS.nameGray};
   }
 `;
 
@@ -234,10 +236,7 @@ export const StyledCVPageContentDetailsContainer = styled.div`
   flex-direction: row;
   margin: 26px 15px 0;
   box-sizing: border-box;
-  > div {
-    flex-grow: 1;
-    min-width: 400px;
-  }
+  flex: 1 1 0%;;
   &.mobile {
     flex-direction: column;
     > div {
@@ -319,20 +318,37 @@ export const StyledSkillTag = styled.div`
   color: ${COLORS.primaryOrange};
   font-size: 14px;
   font-weight: 400;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   /* font-family: Nunito Sans */
 `;
 
 export const StyledCVExperienceLi = styled.div`
-  padding-bottom: 40px;
+  padding-left: 14px;
+  white-space: pre;
   :last-child {
     padding-bottom: 0;
   }
-  padding-left: 14px;
-  border-left: 1px solid #d4d4d4;
-  position: relative;
   > div {
-    margin: 0 0 18px;
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px 15px;
+  }
+`;
+
+export const StyledCVExperienceDate = styled.div`
+  width: 100px;
+  padding: 0 15px;
+  color: ${CV_COLORS.parGray};
+  text-align: right;
+`;
+
+export const StyledCVExperienceDescription = styled.div`
+  position: relative;
+  border-left: 1px solid #d4d4d4;
+  padding-bottom: 20px;
+  color: ${CV_COLORS.parGray};
+  > div, h5 {
+    margin-bottom: 10px;
   }
   ::before {
     content: '';
@@ -342,9 +358,10 @@ export const StyledCVExperienceLi = styled.div`
     background-color: ${COLORS.primaryOrange};
     position: absolute;
     left: -5px;
-    top: 2px;
+    top: 14px;
   }
 `;
+
 
 export const StyledCVPageContentCarousel = styled.div`
   max-width: 1320px;

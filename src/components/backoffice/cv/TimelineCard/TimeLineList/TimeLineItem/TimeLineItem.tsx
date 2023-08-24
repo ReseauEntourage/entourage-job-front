@@ -32,12 +32,14 @@ export const TimeLineItem = ({
   editProps,
 }: TimeLineItem) => {
   let valueToFill;
-
+  let itemType;
   if ('company' in value) {
     // value is of type CVExperience
     valueToFill = { ...value, institution: value.company } as ItemProps;
+    itemType = 'experiences';
   } else {
     valueToFill = { ...value } as ItemProps;
+    itemType = 'formations';
   }
 
   return (
@@ -103,7 +105,7 @@ export const TimeLineItem = ({
                         },
                       };
                       await onChange({
-                        experiences: items,
+                        [itemType]: items,
                       });
                     }}
                   />
@@ -118,8 +120,8 @@ export const TimeLineItem = ({
                     text="Êtes-vous sûr(e) de vouloir supprimer cet élément ?"
                     buttonText="Supprimer"
                     onConfirm={() => {
-                      const experiencesToSort = [...items];
-                      experiencesToSort.splice(sortIndex, 1);
+                      const itemsToSort = [...items];
+                      itemsToSort.splice(sortIndex, 1);
                     }}
                   />
                 );

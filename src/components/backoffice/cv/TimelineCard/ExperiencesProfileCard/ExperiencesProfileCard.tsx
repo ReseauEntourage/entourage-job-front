@@ -4,7 +4,7 @@ import { CVExperience } from 'src/api/types';
 import schemaformEditExperience from 'src/components/forms/schema/formEditExperience.json';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { sortByOrder } from 'src/utils';
+import { sortByDateStart } from 'src/utils';
 
 interface ExperiencesProfileCardProps {
   experiences: CVExperience[];
@@ -15,7 +15,7 @@ export const ExperiencesProfileCard = ({
   experiences,
   onChange,
 }: ExperiencesProfileCardProps) => {
-  const sortedExperiences = sortByOrder(experiences);
+  const sortedExperiences = sortByDateStart(experiences);
 
   return (
     <TimelineCard

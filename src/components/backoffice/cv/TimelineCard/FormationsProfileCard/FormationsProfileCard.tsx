@@ -5,7 +5,7 @@ import { CVFormation } from 'src/api/types';
 import schemaformEditFormation from 'src/components/forms/schema/formEditFormation.json';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { sortByOrder } from 'src/utils';
+import { sortByDateStart } from 'src/utils';
 
 interface FormationProfileCardProps {
   formations: CVFormation[];
@@ -16,7 +16,7 @@ export const FormationsProfileCard = ({
   formations,
   onChange,
 }: FormationProfileCardProps) => {
-  const sortedFormations = sortByOrder(formations);
+  const sortedFormations = sortByDateStart(formations);
 
   return (
     <TimelineCard
