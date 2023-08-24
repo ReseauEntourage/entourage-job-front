@@ -364,6 +364,7 @@ export const StyledCVExperienceDescription = styled.div`
   }
 `;
 
+
 export const StyledCVPageContentCarousel = styled.div`
   max-width: 1320px;
   padding: 0 15px;
