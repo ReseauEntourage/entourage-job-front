@@ -17,13 +17,14 @@ export const formEditExperience: FormSchema<{
       name: 'title',
       component: 'text-input',
       title: 'Intitulé du poste',
+      isRequired: true,
     },
     {
       id: 'description',
       name: 'description',
       component: 'textarea',
       title: 'Description',
-      maxLines: { lines: 10, width: 655 },
+      maxLines: {lines: 10, width: 655},
     },
     {
       id: 'location',

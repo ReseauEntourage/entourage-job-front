@@ -35,7 +35,7 @@ interface ModalPreviewProps {
 
 const ModalPreview = ({ imageUrl, cv }: ModalPreviewProps) => {
   const { onClose } = useModalContext();
-  
+
   return (
     <ModalGeneric title="Prévisualisation du CV" fullWidth>
       {cv.urlImg && (
@@ -64,7 +64,6 @@ export const CVPageContent = ({
   cv,
   setCV,
 }: CVPageContentProps) => {
-  
   const [cvVersion, setCvVersion] = useState<string>();
   const [imageUrl, setImageUrl] = useState<string>();
   const [previewGenerating, setPreviewGenerating] = useState(false);
