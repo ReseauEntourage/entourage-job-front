@@ -24,7 +24,7 @@ export const formEditExperience: FormSchema<{
       name: 'description',
       component: 'textarea',
       title: 'Description',
-      maxLines: { lines: 10, width: 655 },
+      maxLines: {lines: 10, width: 655},
     },
     {
       id: 'location',

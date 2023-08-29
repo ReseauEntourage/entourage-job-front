@@ -47,10 +47,8 @@ export const TimeLineItem = ({
   if ('company' in value) {
     // value is of type CVExperience
     valueToFill = { ...value, institution: value.company } as ItemProps;
-    itemType = 'experiences';
   } else {
     valueToFill = { ...value } as ItemProps;
-    itemType = 'formations';
   }
   return (
     <li style={{ listStyleType: 'none' }}>

@@ -38,7 +38,6 @@ export const CVPageContent = ({
   cv,
   setCV,
 }: CVPageContentProps) => {
-  
   const [cvVersion, setCvVersion] = useState<string>();
   const [imageUrl, setImageUrl] = useState<string>();
   const [previewGenerating, setPreviewGenerating] = useState(false);
