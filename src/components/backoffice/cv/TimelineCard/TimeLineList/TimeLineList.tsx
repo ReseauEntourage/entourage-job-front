@@ -10,12 +10,14 @@ interface TimeLineListProps {
     title: string;
     formSchema: AnyCantFix;
   };
+  type: string;
 }
 
 export const TimeLineList = ({
   items,
   onChange,
   editProps,
+  type,
 }: TimeLineListProps) => {
   return (
     <ul
@@ -36,6 +38,7 @@ export const TimeLineList = ({
               onChange={onChange}
               items={items}
               editProps={editProps}
+              type={type}
             />
           );
         })

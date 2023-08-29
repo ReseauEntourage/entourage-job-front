@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React from 'react';
-import { CVExperience, CVFormation } from 'src/api/types';
+import { CV, CVExperience, CVFormation } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
@@ -17,11 +17,12 @@ interface TimeLineItem {
   value: CVExperience | CVFormation;
   sortIndex: number;
   items: CVExperience[] | CVFormation[];
-  onChange: (arg1: any) => void;
+  onChange: (arg1: Partial<CV>) => void;
   editProps: {
     title: string;
     formSchema: AnyCantFix;
   };
+  type: string;
 }
 
 export const TimeLineItem = ({
@@ -30,16 +31,15 @@ export const TimeLineItem = ({
   items,
   onChange,
   editProps,
+  type,
 }: TimeLineItem) => {
   let valueToFill;
   let itemType;
   if ('company' in value) {
     // value is of type CVExperience
     valueToFill = { ...value, institution: value.company } as ItemProps;
-    itemType = 'experiences';
   } else {
     valueToFill = { ...value } as ItemProps;
-    itemType = 'formations';
   }
 
   return (
@@ -90,7 +90,7 @@ export const TimeLineItem = ({
                     defaultValues={{
                       ...value,
                       skills: value.skills?.map(({ name }) => {
-                        return name;
+                        return { value: name, label: name };
                       }),
                     }}
                     onSubmit={async (fields, closeModal) => {
@@ -99,9 +99,11 @@ export const TimeLineItem = ({
                         ...items[sortIndex],
                         ...{
                           ...fields,
-                          skills: fields.skills?.map((skill) => {
-                            return { name: skill };
-                          }),
+                          skills:
+                            Array.isArray(fields.skills) &&
+                            fields.skills?.map((skill, i) => {
+                              return { name: skill, order: i };
+                            }),
                         },
                       };
                       await onChange({
@@ -119,9 +121,12 @@ export const TimeLineItem = ({
                   <ModalConfirm
                     text="Êtes-vous sûr(e) de vouloir supprimer cet élément ?"
                     buttonText="Supprimer"
-                    onConfirm={() => {
+                    onConfirm={async () => {
                       const itemsToSort = [...items];
                       itemsToSort.splice(sortIndex, 1);
+                      await onChange({
+                        [type]: itemsToSort,
+                      });
                     }}
                   />
                 );

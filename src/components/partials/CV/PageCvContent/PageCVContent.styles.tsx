@@ -192,6 +192,7 @@ export const StyledCVProfilePicture = styled.div`
 export const StyledCVPageContentStory = styled.div`
   margin-bottom: 20px;
   position: relative;
+  white-space: pre;
   p {
     margin-bottom: 0;
   }
@@ -236,7 +237,7 @@ export const StyledCVPageContentDetailsContainer = styled.div`
   flex-direction: row;
   margin: 26px 15px 0;
   box-sizing: border-box;
-  flex: 1 1 0%;;
+  flex: 1 1 0%;
   &.mobile {
     flex-direction: column;
     > div {
@@ -347,7 +348,8 @@ export const StyledCVExperienceDescription = styled.div`
   border-left: 1px solid #d4d4d4;
   padding-bottom: 20px;
   color: ${CV_COLORS.parGray};
-  > div, h5 {
+  > div,
+  h5 {
     margin-bottom: 10px;
   }
   ::before {
@@ -361,7 +363,6 @@ export const StyledCVExperienceDescription = styled.div`
     top: 14px;
   }
 `;
-
 
 export const StyledCVPageContentCarousel = styled.div`
   max-width: 1320px;

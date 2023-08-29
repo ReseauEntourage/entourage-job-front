@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { TimelineCard } from '../TimelineCard';
-import { CVExperience } from 'src/api/types';
-import schemaformEditExperience from 'src/components/forms/schema/formEditExperience.json';
+import { CV, CVExperience } from 'src/api/types';
+import { formEditExperience } from 'src/components/forms/schemas/formEditExperience';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { sortByDateStart } from 'src/utils';
 
 interface ExperiencesProfileCardProps {
   experiences: CVExperience[];
-  onChange: (arg1: any) => void;
+  onChange: (arg1: Partial<CV>) => void;
 }
 
 export const ExperiencesProfileCard = ({
@@ -16,11 +16,18 @@ export const ExperiencesProfileCard = ({
   onChange,
 }: ExperiencesProfileCardProps) => {
   const sortedExperiences = sortByDateStart(experiences);
+  const [remainingItems, setRemainingItems] = useState<number>();
+
+  useEffect(() => {
+    setRemainingItems(5 - experiences.length);
+  }, [experiences]);
 
   return (
     <TimelineCard
       experiences={sortedExperiences}
       onChange={onChange}
+      remainingItems={remainingItems}
+      type="experiences"
       title={
         <>
           Mes <span className="uk-text-primary">expériences</span> et{' '}
@@ -30,8 +37,8 @@ export const ExperiencesProfileCard = ({
       onAdd={() => {
         openModal(
           <ModalEdit
-            title="Ajout -Mes expériences et compétences"
-            formSchema={schemaformEditExperience}
+            title="Ajout - Mes expériences et compétences"
+            formSchema={formEditExperience}
             onSubmit={async (fields, closeModal) => {
               closeModal();
               await onChange({
@@ -39,13 +46,6 @@ export const ExperiencesProfileCard = ({
                   ...sortedExperiences,
                   {
                     ...fields,
-                    order:
-                      (experiences.reduce((acc, val) => {
-                        return acc === undefined ||
-                          (typeof acc === 'number' && val.order > acc)
-                          ? val.order
-                          : acc;
-                      }, []) as number) + 1,
                     skills: fields.skills?.map((skill) => {
                       return {
                         name: skill,
@@ -60,7 +60,7 @@ export const ExperiencesProfileCard = ({
       }}
       editProps={{
         title: 'Édition - Mes expériences et compétences',
-        formSchema: schemaformEditExperience,
+        formSchema: formEditExperience,
       }}
     />
   );

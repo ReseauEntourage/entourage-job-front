@@ -100,7 +100,7 @@ export interface CVExperience {
   location: string;
   order: number;
   skills: {
-    id: string;
+    id?: string;
     name: string;
     order: number;
   }[];
@@ -115,7 +115,7 @@ export interface CVFormation {
   location: string;
   order: number;
   skills: {
-    id: string;
+    id?: string;
     name: string;
     order: number;
   }[];
