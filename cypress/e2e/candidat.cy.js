@@ -77,101 +77,101 @@ describe('Candidat', () => {
 
     cy.intercept('PUT', '/user/changePwd', {}).as('changePwd');
   });
-  // it('should open backoffice public offers', () => {
-  //   cy.visit('/backoffice/candidat/offres/public', {
-  //     onBeforeLoad: function async(window) {
-  //       window.localStorage.setItem('access-token', '1234');
-  //       window.localStorage.setItem('release-version', 'v100');
-  //     },
-  //   });
+  it('should open backoffice public offers', () => {
+    cy.visit('/backoffice/candidat/offres/public', {
+      onBeforeLoad: function async(window) {
+        window.localStorage.setItem('access-token', '1234');
+        window.localStorage.setItem('release-version', 'v100');
+      },
+    });
 
-  //   // check if list is complete
-  //   cy.get('[data-testid="candidat-offer-list-container"]')
-  //     .find('> div')
-  //     .should('have.length', 16);
+    // check if list is complete
+    cy.get('[data-testid="candidat-offer-list-container"]')
+      .find('> div')
+      .should('have.length', 16);
 
-  //   // check if the right opportunity is open
-  //   cy.fixture('user-opportunity-all-res').then((offersList) => {
-  //     cy.url().should('include', offersList.offers[0].id);
-  //     cy.get('[data-testid="candidat-offer-details-title"]').contains(
-  //       offersList.offers[0].title
-  //     );
-  //   });
+    // check if the right opportunity is open
+    cy.fixture('user-opportunity-all-res').then((offersList) => {
+      cy.url().should('include', offersList.offers[0].id);
+      cy.get('[data-testid="candidat-offer-details-title"]').contains(
+        offersList.offers[0].title
+      );
+    });
 
-  //   // bookmark/unbookmark an offer from the list
-  //   cy.fixture('user-opportunity-all-res').then((offersRes) => {
-  //     const { bookmarked } = offersRes.offers[0].opportunityUsers;
-  //     const cta1 = bookmarked ? 'cta-unbookmark' : 'cta-bookmark';
-  //     const cta2 = !bookmarked ? 'cta-unbookmark' : 'cta-bookmark';
-  //     cy.get(`[data-testid="${cta1}"]`)
-  //       .first()
-  //       .should(bookmarked ? 'contain' : 'not.contain', 'Favoris');
-  //     cy.get(`[data-testid="${cta1}"]`).first().click();
-  //     cy.wait('@putOffer');
-  //     cy.get(`[data-testid="${cta2}"]`)
-  //       .first()
-  //       .should(!bookmarked ? 'contain' : 'not.contain', 'Favoris');
-  //   });
-  // });
+    // bookmark/unbookmark an offer from the list
+    cy.fixture('user-opportunity-all-res').then((offersRes) => {
+      const { bookmarked } = offersRes.offers[0].opportunityUsers;
+      const cta1 = bookmarked ? 'cta-unbookmark' : 'cta-bookmark';
+      const cta2 = !bookmarked ? 'cta-unbookmark' : 'cta-bookmark';
+      cy.get(`[data-testid="${cta1}"]`)
+        .first()
+        .should(bookmarked ? 'contain' : 'not.contain', 'Favoris');
+      cy.get(`[data-testid="${cta1}"]`).first().click();
+      cy.wait('@putOffer');
+      cy.get(`[data-testid="${cta2}"]`)
+        .first()
+        .should(!bookmarked ? 'contain' : 'not.contain', 'Favoris');
+    });
+  });
 
-  // it('should open backoffice private offers and add new opportunity', () => {
-  //   cy.visit('/backoffice/candidat/offres/private', {
-  //     onBeforeLoad: function async(window) {
-  //       window.localStorage.setItem('access-token', '1234');
-  //       window.localStorage.setItem('release-version', 'v100');
-  //     },
-  //   });
-  //   // check if the right opportunity is open
-  //   cy.fixture('user-opportunity-all-res').then((offersList) => {
-  //     cy.url().should('include', offersList.offers[0].id);
-  //     cy.get('[data-testid="candidat-offer-details-title"]').contains(
-  //       offersList.offers[0].title
-  //     );
-  //   });
-  //   cy.get('[data-testid="candidat-add-offer-main"]').click();
-  //   cy.get('#form-add-offer-external-title').scrollIntoView().type('test');
-  //   cy.get('#form-add-offer-external-company').scrollIntoView().type('test');
+  it('should open backoffice private offers and add new opportunity', () => {
+    cy.visit('/backoffice/candidat/offres/private', {
+      onBeforeLoad: function async(window) {
+        window.localStorage.setItem('access-token', '1234');
+        window.localStorage.setItem('release-version', 'v100');
+      },
+    });
+    // check if the right opportunity is open
+    cy.fixture('user-opportunity-all-res').then((offersList) => {
+      cy.url().should('include', offersList.offers[0].id);
+      cy.get('[data-testid="candidat-offer-details-title"]').contains(
+        offersList.offers[0].title
+      );
+    });
+    cy.get('[data-testid="candidat-add-offer-main"]').click();
+    cy.get('#form-add-offer-external-title').scrollIntoView().type('test');
+    cy.get('#form-add-offer-external-company').scrollIntoView().type('test');
 
-  //   cy.get('#form-add-offer-external-department')
-  //     .should('be.visible')
-  //     .scrollIntoView()
-  //     .type('Par');
+    cy.get('#form-add-offer-external-department')
+      .should('be.visible')
+      .scrollIntoView()
+      .type('Par');
 
-  //   cy.get('#form-add-offer-external-department')
-  //     .find('.Select__menu')
-  //     .should('be.visible')
-  //     .scrollIntoView()
-  //     .find('.Select__option')
-  //     .contains('Paris (75)')
-  //     .click();
+    cy.get('#form-add-offer-external-department')
+      .find('.Select__menu')
+      .should('be.visible')
+      .scrollIntoView()
+      .find('.Select__option')
+      .contains('Paris (75)')
+      .click();
 
-  //   cy.get('#form-add-offer-external-contract-container')
-  //     .should('be.visible')
-  //     .scrollIntoView()
-  //     .click()
-  //     .find('.option')
-  //     .contains('CDI')
-  //     .click();
+    cy.get('#form-add-offer-external-contract-container')
+      .should('be.visible')
+      .scrollIntoView()
+      .click()
+      .find('.option')
+      .contains('CDI')
+      .click();
 
-  //   cy.get('#form-add-offer-external-recruiterFirstName')
-  //     .scrollIntoView()
-  //     .type('test');
-  //   cy.get('#form-add-offer-external-recruiterName')
-  //     .scrollIntoView()
-  //     .type('test');
-  //   cy.get('#form-add-offer-external-recruiterMail')
-  //     .scrollIntoView()
-  //     .type('test@gmail.com');
-  //   cy.get('#form-add-offer-external-description')
-  //     .scrollIntoView()
-  //     .type('test');
-  //   cy.get('#form-add-offer-external-link').scrollIntoView().type('test');
-  //   cy.get('button').contains('Envoyer').click();
-  //   cy.wait('@postExternal');
+    cy.get('#form-add-offer-external-recruiterFirstName')
+      .scrollIntoView()
+      .type('test');
+    cy.get('#form-add-offer-external-recruiterName')
+      .scrollIntoView()
+      .type('test');
+    cy.get('#form-add-offer-external-recruiterMail')
+      .scrollIntoView()
+      .type('test@gmail.com');
+    cy.get('#form-add-offer-external-description')
+      .scrollIntoView()
+      .type('test');
+    cy.get('#form-add-offer-external-link').scrollIntoView().type('test');
+    cy.get('button').contains('Envoyer').click();
+    cy.wait('@postExternal');
 
-  //   // modal should be closed
-  //   cy.get('.uk-modal-body').should('not.exist');
-  // });
+    // modal should be closed
+    cy.get('.uk-modal-body').should('not.exist');
+  });
 
   it('should open backoffice cv candidat', () => {
     cy.visit('/backoffice/candidat/cv', {
@@ -251,30 +251,30 @@ describe('Candidat', () => {
       },
     });
 
-  //   // toggle is employed
-  //   cy.get('label[for="ent-toggle-employedToggle"]').click();
+    // toggle is employed
+    cy.get('label[for="ent-toggle-employedToggle"]').click();
 
-  //   cy.get('#form-edit-employed-contract-container')
-  //     .should('be.visible')
-  //     .scrollIntoView()
-  //     .click()
-  //     .find('.option')
-  //     .contains('Alternance')
-  //     .click();
-  //   cy.get('#form-edit-employed-endOfContract').type('2024-03-03');
-  //   cy.contains('Valider').click();
-  //   cy.wait('@putCandidatParams');
-  //   cy.get(`[data-testid="test-toggle-employedToggle"]`).should('be.checked');
-  //   cy.get('label[for="ent-toggle-employedToggle"]').click();
-  //   cy.get(`[data-testid="test-toggle-employedToggle"]`).should(
-  //     'not.be.checked'
-  //   );
+    cy.get('#form-edit-employed-contract-container')
+      .should('be.visible')
+      .scrollIntoView()
+      .click()
+      .find('.option')
+      .contains('Alternance')
+      .click();
+    cy.get('#form-edit-employed-endOfContract').type('2024-03-03');
+    cy.contains('Valider').click();
+    cy.wait('@putCandidatParams');
+    cy.get(`[data-testid="test-toggle-employedToggle"]`).should('be.checked');
+    cy.get('label[for="ent-toggle-employedToggle"]').click();
+    cy.get(`[data-testid="test-toggle-employedToggle"]`).should(
+      'not.be.checked'
+    );
 
-  //   // change password
-  //   cy.get('#form-change-pwd-oldPassword').type('blablabla');
-  //   cy.get('#form-change-pwd-newPassword').type('Linkedout123!');
-  //   cy.get('#form-change-pwd-confirmPassword').type('Linkedout123!');
-  //   cy.contains('Modifier').click();
-  //   cy.wait('@changePwd');
-  // });
+    // change password
+    cy.get('#form-change-pwd-oldPassword').type('blablabla');
+    cy.get('#form-change-pwd-newPassword').type('Linkedout123!');
+    cy.get('#form-change-pwd-confirmPassword').type('Linkedout123!');
+    cy.contains('Modifier').click();
+    cy.wait('@changePwd');
+  });
 });
