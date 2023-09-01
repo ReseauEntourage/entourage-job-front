@@ -29,7 +29,6 @@ export type FieldValue =
   | boolean
   | number
   | FilterConstant
-  | Date
   | FilterConstant[];
 
 export type IsArrayFilterConstant<T extends FilterConstant | FilterConstant[]> =

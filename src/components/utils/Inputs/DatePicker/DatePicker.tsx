@@ -27,9 +27,6 @@ export function DatePicker({
     return null;
   }
 
-
-  const valueToDisplay = value?.includes('T') ? value.slice(0, value.indexOf('T')) : value;
-
   if (!min) min = '1900-01-01';
 
   return (
@@ -46,7 +43,7 @@ export function DatePicker({
         data-testid={id}
         className={`${!value ? 'empty-value' : ''}`}
         name={name}
-        value={valueToDisplay || ''}
+        value={value || ''}
         min={min}
         max={max}
         type="date"
