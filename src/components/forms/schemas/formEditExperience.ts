@@ -16,20 +16,20 @@ export const formEditExperience: FormSchema<{
       id: 'title',
       name: 'title',
       component: 'text-input',
-      title: 'Intitulé de la formation',
+      title: 'Intitulé du poste',
     },
     {
       id: 'description',
       name: 'description',
       component: 'textarea',
       title: 'Description',
-      maxLength: 2000,
+      maxLines: { lines: 10, width: 655 },
     },
     {
       id: 'location',
       name: 'location',
       component: 'text-input',
-      title: 'Lieu de formation',
+      title: 'Lieu de travail',
     },
     {
       id: 'company',
@@ -55,6 +55,8 @@ export const formEditExperience: FormSchema<{
       title: 'Compétences acquises',
       component: 'select-creatable',
       isMulti: true,
+      maxChar: 40,
+      maxItems: 3,
     },
   ],
 };

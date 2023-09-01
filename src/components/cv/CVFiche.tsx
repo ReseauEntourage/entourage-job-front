@@ -24,10 +24,7 @@ interface CVFicheProps {
 }
 
 export const CVFiche = ({ cv, actionDisabled }: CVFicheProps) => {
-  const experiences =
-    cv.experiences && cv.experiences.length > 0
-      ? sortByOrder(cv.experiences)
-      : [];
+  const { experiences } = cv;
 
   const locations =
     cv.locations && cv.locations.length > 0 ? sortByOrder(cv.locations) : [];

@@ -92,13 +92,13 @@ export type User = {
 };
 
 export interface CVExperience {
-  description: string;
+  description?: string;
   title: string;
   dateStart?: Date;
   dateEnd?: Date;
-  company: string;
-  location: string;
-  order: number;
+  company?: string;
+  location?: string;
+  order?: number;
   skills: {
     id?: string;
     name: string;
@@ -107,13 +107,12 @@ export interface CVExperience {
 }
 
 export interface CVFormation {
-  description: string;
+  description?: string;
   title: string;
   dateStart?: Date;
   dateEnd?: Date;
-  institution: string;
-  location: string;
-  order: number;
+  institution?: string;
+  location?: string;
   skills: {
     id?: string;
     name: string;

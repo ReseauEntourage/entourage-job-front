@@ -41,6 +41,7 @@ export const CVFicheEdition = ({
   userZone,
 }: CVFicheEditionProps) => {
   const [previewUrl, setPreviewUrl] = useState(undefined);
+
   const [imageUrl, setImageUrl] = useState(undefined);
 
   const prevPreviewGenerating = usePrevious(previewGenerating);

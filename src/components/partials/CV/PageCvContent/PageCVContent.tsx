@@ -1,3 +1,4 @@
+import moment from 'moment';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import UIkit from 'uikit';
@@ -31,7 +32,7 @@ import {
   StyledLeftColumn,
   StyledRightColumn,
   StyledCVExperienceDate,
-  StyledCVExperienceDescription
+  StyledCVExperienceDescription,
 } from 'src/components/partials/CV/PageCvContent/PageCVContent.styles';
 import { Button, Icon } from 'src/components/utils';
 import { CarouselSwiper } from 'src/components/utils/CarouselSwiper';
@@ -43,7 +44,6 @@ import { useIsDesktop } from 'src/hooks/utils';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
 import { addPrefix, findConstantFromValue, sortByOrder } from 'src/utils';
-import moment from 'moment';
 import 'moment/locale/fr';
 
 interface openedPanelType {
@@ -62,10 +62,6 @@ export const PageCVContent = ({
   cv,
   actionDisabled = false,
 }: PageCVContentProps) => {
-
-
-  console.log(cv);
-
   const locations =
     cv.locations && cv.locations.length > 0 ? sortByOrder(cv.locations) : [];
 
@@ -355,30 +351,37 @@ export const PageCVContent = ({
                 <H2 title="Expériences" color={CV_COLORS.titleGray} />
               </span>
               <ul>
-                {cv.experiences.map((experience) => {
+                {cv.experiences?.map((experience) => {
                   return (
                     <StyledCVExperienceLi>
                       <StyledCVExperienceDate>
-                        {experience.dateStart && <>
-                            {
-                              experience.dateEnd ? 
-                              moment(experience.dateEnd).format(('MMMM YYYY')) :
-                              "Aujourd'hui"
-                            }
-                            <br/>
-                            {moment(experience.dateStart).format(('MMMM YYYY'))} 
-                        </>}
+                        {experience.dateStart && (
+                          <>
+                            {experience.dateEnd
+                              ? moment(experience.dateEnd).format('MMMM YYYY')
+                              : "Aujourd'hui"}
+                            <br />
+                            {moment(experience.dateStart).format('MMMM YYYY')}
+                          </>
+                        )}
                       </StyledCVExperienceDate>
                       <StyledCVExperienceDescription>
-                        {experience.title && <H5
-                          title={experience.title}
-                          color={CV_COLORS.titleGray}
-                        />}
-                        {
-                          (experience.company || experience.location) && 
-                          <div className="name-gray">{experience.company}{experience.company &&  experience.location && ' - '}{experience.location}</div>
-                        }
-                        {experience.description && <div>{experience.description}</div>}
+                        {experience.title && (
+                          <H5
+                            title={experience.title}
+                            color={CV_COLORS.titleGray}
+                          />
+                        )}
+                        {(experience.company || experience.location) && (
+                          <div className="name-gray">
+                            {experience.company}
+                            {experience.company && experience.location && ' - '}
+                            {experience.location}
+                          </div>
+                        )}
+                        {experience.description && (
+                          <div>{experience.description}</div>
+                        )}
                         <div>
                           {experience.skills.map(({ name, id }) => {
                             return (
@@ -416,26 +419,35 @@ export const PageCVContent = ({
                   return (
                     <StyledCVExperienceLi>
                       <StyledCVExperienceDate>
-                        {formation.dateStart && <>
-                            {
-                              formation.dateEnd ? 
-                              moment(formation.dateEnd).format(('MMMM YYYY')) :
-                              "Aujourd'hui"
-                            }
-                            <br/>
-                            {moment(formation.dateStart).format(('MMMM YYYY'))} 
-                        </>}
+                        {formation.dateStart && (
+                          <>
+                            {formation.dateEnd
+                              ? moment(formation.dateEnd).format('MMMM YYYY')
+                              : "Aujourd'hui"}
+                            <br />
+                            {moment(formation.dateStart).format('MMMM YYYY')}
+                          </>
+                        )}
                       </StyledCVExperienceDate>
                       <StyledCVExperienceDescription>
-                        {formation.title && <H5
-                          title={formation.title}
-                          color={CV_COLORS.titleGray}
-                        />}
-                        {
-                          (formation.institution || formation.location) && 
-                          <div className="name-gray">{formation.institution}{formation.institution &&  formation.location && ' - '}{formation.location}</div>
-                        }
-                        {formation.description && <div>{formation.description}</div>}
+                        {formation.title && (
+                          <H5
+                            title={formation.title}
+                            color={CV_COLORS.titleGray}
+                          />
+                        )}
+                        {(formation.institution || formation.location) && (
+                          <div className="name-gray">
+                            {formation.institution}
+                            {formation.institution &&
+                              formation.location &&
+                              ' - '}
+                            {formation.location}
+                          </div>
+                        )}
+                        {formation.description && (
+                          <div>{formation.description}</div>
+                        )}
                         <div>
                           {formation.skills.map(({ name, id }) => {
                             return (

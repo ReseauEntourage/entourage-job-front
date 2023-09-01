@@ -1,16 +1,26 @@
 import React from 'react';
 import { CVExperience, CVFormation } from 'src/api/types';
-import { AnyCantFix } from 'src/utils/Types';
+import { formEditExperience } from 'src/components/forms/schemas/formEditExperience';
+import { formEditFormation } from 'src/components/forms/schemas/formEditFormation';
 import { TimeLineItem } from './TimeLineItem';
+
+type CVData = {
+  formations: CVFormation[];
+  experiences: CVExperience[];
+};
+
+type CVDataUpdate = {
+  [type in 'formations' | 'experiences']: CVData[type];
+};
 
 interface TimeLineListProps {
   items: CVExperience[] | CVFormation[];
-  onChange: (arg1: any) => void;
+  onChange: (updatedCV: CVDataUpdate) => void;
   editProps: {
     title: string;
-    formSchema: AnyCantFix;
+    formSchema: typeof formEditExperience | typeof formEditFormation;
   };
-  type: string;
+  type: keyof CVData;
 }
 
 export const TimeLineList = ({

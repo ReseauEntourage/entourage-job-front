@@ -29,7 +29,6 @@ export type FieldValue =
   | boolean
   | number
   | FilterConstant
-  | Date
   | FilterConstant[];
 
 export type IsArrayFilterConstant<T extends FilterConstant | FilterConstant[]> =
@@ -215,6 +214,8 @@ export interface FormFieldSelectRequestCommon<
 interface FormFieldSelectRequestMulti<V extends FormSchemaValidation>
   extends FormFieldSelectRequestCommon<V, true> {
   isMulti: true;
+  maxChar?: number;
+  maxItems?: number;
 }
 
 interface FormFieldSelectRequestSingle<V extends FormSchemaValidation>

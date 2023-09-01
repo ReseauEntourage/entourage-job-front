@@ -1,7 +1,8 @@
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 
 import { TimelineCard } from '../TimelineCard';
-import { CV, CVFormation } from 'src/api/types';
+import { CVFormation } from 'src/api/types';
 import { formEditFormation } from 'src/components/forms/schemas/formEditFormation';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
@@ -9,18 +10,25 @@ import { sortByDateStart } from 'src/utils';
 
 interface FormationProfileCardProps {
   formations: CVFormation[];
-  onChange: (arg1: Partial<CV>) => void;
+  onChange: (updatedFormations: { formations: CVFormation[] }) => void;
 }
+
+const FORMATIONS_LIMIT = 3;
 
 export const FormationsProfileCard = ({
   formations,
   onChange,
 }: FormationProfileCardProps) => {
-  const sortedFormations = sortByDateStart(formations);
   const [remainingItems, setRemainingItems] = useState<number>();
+  const [sortedFormations, setSortedFormations] = useState<CVFormation[]>(
+    sortByDateStart(formations)
+  );
+  useEffect(() => {
+    setSortedFormations(sortByDateStart(formations));
+  }, [formations]);
 
   useEffect(() => {
-    setRemainingItems(3 - formations.length);
+    setRemainingItems(FORMATIONS_LIMIT - formations.length);
   }, [formations]);
 
   return (
@@ -46,16 +54,12 @@ export const FormationsProfileCard = ({
                   ...sortedFormations,
                   {
                     ...fields,
-                    order:
-                      (formations.reduce((acc, val) => {
-                        return acc === undefined ||
-                          (typeof acc === 'number' && val.order > acc)
-                          ? val.order
-                          : acc;
-                      }, []) as number) + 1,
-                    skills: fields.skills?.map((skill) => {
+                    dateStart: moment(fields.dateStart).toDate() as Date,
+                    dateEnd: moment(fields.dateEnd).toDate() as Date,
+                    skills: fields.skills?.map((skill, i) => {
                       return {
                         name: skill.value,
+                        order: i,
                       };
                     }),
                   },

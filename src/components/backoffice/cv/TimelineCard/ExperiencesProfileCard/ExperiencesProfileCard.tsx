@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { TimelineCard } from '../TimelineCard';
-import { CV, CVExperience } from 'src/api/types';
+import { CVExperience } from 'src/api/types';
 import { formEditExperience } from 'src/components/forms/schemas/formEditExperience';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
@@ -8,8 +8,10 @@ import { sortByDateStart } from 'src/utils';
 
 interface ExperiencesProfileCardProps {
   experiences: CVExperience[];
-  onChange: (arg1: Partial<CV>) => void;
+  onChange: (updatedExperiences: { experiences: CVExperience[] }) => void;
 }
+
+const EXPERIENCE_LIMIT = 5;
 
 export const ExperiencesProfileCard = ({
   experiences,
@@ -19,7 +21,7 @@ export const ExperiencesProfileCard = ({
   const [remainingItems, setRemainingItems] = useState<number>();
 
   useEffect(() => {
-    setRemainingItems(5 - experiences.length);
+    setRemainingItems(EXPERIENCE_LIMIT - experiences.length);
   }, [experiences]);
 
   return (
@@ -48,7 +50,7 @@ export const ExperiencesProfileCard = ({
                     ...fields,
                     skills: fields.skills?.map((skill) => {
                       return {
-                        name: skill,
+                        name: skill.value,
                       };
                     }),
                   },

@@ -1,20 +1,29 @@
 import React from 'react';
 import { CVExperience, CVFormation } from 'src/api/types';
+import { formEditExperience } from 'src/components/forms/schemas/formEditExperience';
+import { formEditFormation } from 'src/components/forms/schemas/formEditFormation';
 import { Grid, ButtonIcon } from 'src/components/utils';
-import { AnyCantFix } from 'src/utils/Types';
 import { StyledFooterCount } from './TimeLineCard.styles';
 import { TimeLineList } from './TimeLineList';
 
+type CVData = {
+  formations: CVFormation[];
+  experiences: CVExperience[];
+};
+
+type CVDataUpdate = {
+  [type in 'formations' | 'experiences']: CVData[type];
+};
 interface TimeLineCardProps {
   experiences: CVExperience[] | CVFormation[];
-  onChange: (arg1: any) => void;
+  onChange: (updatedCV: CVDataUpdate) => void;
   title: React.ReactNode;
   onAdd: () => void;
   editProps: {
     title: string;
-    formSchema: AnyCantFix;
+    formSchema: typeof formEditExperience | typeof formEditFormation;
   };
-  type: string;
+  type: keyof CVData;
   remainingItems: number;
 }
 
@@ -32,7 +41,11 @@ export const TimelineCard = ({
       <Grid gap="small" between eachWidths={['expand', 'auto']}>
         <h3 className="uk-card-title">{title}</h3>
         {onAdd && remainingItems > 0 && (
-          <ButtonIcon onClick={onAdd} name="plus" />
+          <ButtonIcon
+            onClick={onAdd}
+            name="plus"
+            dataTestId={`button-cv-add-${type}`}
+          />
         )}
       </Grid>
       <TimeLineList
@@ -42,7 +55,7 @@ export const TimelineCard = ({
         type={type}
       />
       {remainingItems === 0 && (
-        <StyledFooterCount>
+        <StyledFooterCount warning>
           Vous avez atteint le maximum des {type} à entrer
         </StyledFooterCount>
       )}
