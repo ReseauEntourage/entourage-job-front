@@ -65,10 +65,6 @@ export const PageCVContent = ({
   actionDisabled = false,
   isPreview = false,
 }: PageCVContentProps) => {
-
-
-  console.log(cv);
-
   const locations =
     cv.locations && cv.locations.length > 0 ? sortByOrder(cv.locations) : [];
 
