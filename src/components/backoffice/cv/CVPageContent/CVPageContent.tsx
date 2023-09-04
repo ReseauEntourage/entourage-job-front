@@ -315,7 +315,7 @@ export const CVPageContent = ({
           />
           <Button
             onClick={() => {
-              openModal(<CVModalPreview cv={cv} />);
+              openModal(<CVModalPreview cv={cv} imageUrl={imageUrl} />);
             }}
             style="default"
           >

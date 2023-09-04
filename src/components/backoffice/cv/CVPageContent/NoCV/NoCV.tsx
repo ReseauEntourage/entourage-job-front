@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { Api } from 'src/api';
 import { CV, User } from 'src/api/types';
@@ -10,13 +9,13 @@ import {
   getUserCandidateFromCoachOrCandidate,
 } from 'src/utils';
 
-interface NoCV {
+interface NoCVProps {
   candidateId: string;
   user: User;
   setCV: (data: CV) => void;
 }
 
-export const NoCV = ({ candidateId, user, setCV }: NoCV) => {
+export const NoCV = ({ candidateId, user, setCV }: NoCVProps) => {
   const candidate = getUserCandidateFromCoachOrCandidate(user);
   return (
     <Grid column middle>

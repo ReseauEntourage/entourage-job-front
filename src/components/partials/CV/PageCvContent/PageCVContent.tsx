@@ -33,6 +33,7 @@ import {
   StyledRightColumn,
   StyledCVExperienceDate,
   StyledCVExperienceDescription,
+  StyledCVExperienceDateMobile,
 } from 'src/components/partials/CV/PageCvContent/PageCVContent.styles';
 import { Button, Icon } from 'src/components/utils';
 import { CarouselSwiper } from 'src/components/utils/CarouselSwiper';
@@ -70,8 +71,8 @@ export const PageCVContent = ({
   const [isStoryHidden, setIsStoryHidden] = useState<boolean>(true);
 
   const [openedPanel, setOpenedPanel] = useState<openedPanelType>({
-    informations: true,
-    experiences: false,
+    informations: false,
+    experiences: true,
     formations: false,
     passions: false,
   });
@@ -353,23 +354,42 @@ export const PageCVContent = ({
                 {cv.experiences?.map((experience) => {
                   return (
                     <StyledCVExperienceLi>
-                      <StyledCVExperienceDate>
-                        {experience.dateStart && (
-                          <>
-                            {experience.dateEnd
-                              ? moment(experience.dateEnd).format('MMMM YYYY')
-                              : "Aujourd'hui"}
-                            <br />
-                            {moment(experience.dateStart).format('MMMM YYYY')}
-                          </>
-                        )}
-                      </StyledCVExperienceDate>
+                      {isDesktop && (
+                        <StyledCVExperienceDate>
+                          {experience.dateStart && (
+                            <>
+                              {experience.dateEnd
+                                ? moment(experience.dateEnd).format('MMMM YYYY')
+                                : "Aujourd'hui"}
+                              <br />
+                              {moment(experience.dateStart).format('MMMM YYYY')}
+                            </>
+                          )}
+                        </StyledCVExperienceDate>
+                      )}
                       <StyledCVExperienceDescription>
                         {experience.title && (
                           <H5
                             title={experience.title}
                             color={CV_COLORS.titleGray}
                           />
+                        )}
+                        {!isDesktop && (
+                          <StyledCVExperienceDateMobile>
+                            {experience.dateStart && (
+                              <>
+                                {moment(experience.dateStart).format(
+                                  'MMMM YYYY'
+                                )}
+                                {' - '}
+                                {experience.dateEnd
+                                  ? moment(experience.dateEnd).format(
+                                      'MMMM YYYY'
+                                    )
+                                  : "Aujourd'hui"}
+                              </>
+                            )}
+                          </StyledCVExperienceDateMobile>
                         )}
                         {(experience.company || experience.location) && (
                           <div className="name-gray">
@@ -398,7 +418,7 @@ export const PageCVContent = ({
           {cv.formations?.length > 0 && (
             // using same style for Formations and Experiences, but change in fields
             <StyledCVPageContentExperience
-              className={`${openedPanel.experiences ? '' : 'close'} ${
+              className={`${openedPanel.formations ? '' : 'close'} ${
                 !isDesktop ? 'mobile' : ''
               }`}
             >
@@ -407,7 +427,7 @@ export const PageCVContent = ({
                 onClick={() => {
                   setOpenedPanel({
                     ...openedPanel,
-                    experiences: !openedPanel.experiences,
+                    formations: !openedPanel.formations,
                   });
                 }}
               >
@@ -417,23 +437,42 @@ export const PageCVContent = ({
                 {cv.formations.map((formation) => {
                   return (
                     <StyledCVExperienceLi>
-                      <StyledCVExperienceDate>
-                        {formation.dateStart && (
-                          <>
-                            {formation.dateEnd
-                              ? moment(formation.dateEnd).format('MMMM YYYY')
-                              : "Aujourd'hui"}
-                            <br />
-                            {moment(formation.dateStart).format('MMMM YYYY')}
-                          </>
-                        )}
-                      </StyledCVExperienceDate>
+                      {isDesktop && (
+                        <StyledCVExperienceDate>
+                          {formation.dateStart && (
+                            <>
+                              {formation.dateEnd
+                                ? moment(formation.dateEnd).format('MMMM YYYY')
+                                : "Aujourd'hui"}
+                              <br />
+                              {moment(formation.dateStart).format('MMMM YYYY')}
+                            </>
+                          )}
+                        </StyledCVExperienceDate>
+                      )}
                       <StyledCVExperienceDescription>
                         {formation.title && (
                           <H5
                             title={formation.title}
                             color={CV_COLORS.titleGray}
                           />
+                        )}
+                        {!isDesktop && (
+                          <StyledCVExperienceDateMobile>
+                            {formation.dateStart && (
+                              <>
+                                {moment(formation.dateStart).format(
+                                  'MMMM YYYY'
+                                )}
+                                {' - '}
+                                {formation.dateEnd
+                                  ? moment(formation.dateEnd).format(
+                                      'MMMM YYYY'
+                                    )
+                                  : "Aujourd'hui"}
+                              </>
+                            )}
+                          </StyledCVExperienceDateMobile>
                         )}
                         {(formation.institution || formation.location) && (
                           <div className="name-gray">

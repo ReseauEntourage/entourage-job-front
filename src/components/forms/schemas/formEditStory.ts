@@ -9,7 +9,7 @@ export const formEditStory: FormSchema<{ story: string }> = {
       component: 'textarea',
       title: 'Mon histoire',
       rows: 14,
-      maxLength: 1500,
+      maxLines: { lines: 10, width: 655 },
     },
   ],
 };
