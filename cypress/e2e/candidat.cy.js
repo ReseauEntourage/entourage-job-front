@@ -251,6 +251,14 @@ describe('Candidat', () => {
       },
     });
 
+    // toggle hide CV
+    cy.get('label[for="ent-toggle-hidden"]').click();
+    cy.get(`[data-testid="test-confirm-hidden"]`).click();
+    cy.wait('@putCandidatParams');
+    cy.get(`[data-testid="test-toggle-hidden"]`).should('be.checked');
+    cy.get('label[for="ent-toggle-hidden"]').click();
+    cy.get(`[data-testid="test-toggle-hidden"]`).should('not.be.checked');
+
     // toggle is employed
     cy.get('label[for="ent-toggle-employedToggle"]').click();
 
