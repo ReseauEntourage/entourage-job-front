@@ -17,6 +17,7 @@ export const formEditExperience: FormSchema<{
       name: 'title',
       component: 'text-input',
       title: 'Intitulé du poste',
+      isRequired: true,
     },
     {
       id: 'description',

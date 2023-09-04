@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
+import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { AdminOpportunityList } from 'src/components/backoffice/admin/AdminOpportunityList';
-import { LoadingScreen } from 'src/components/backoffice/cv/LoadingScreen';
 import { Section } from 'src/components/utils';
 import {
   OFFER_ADMIN_FILTERS_DATA,

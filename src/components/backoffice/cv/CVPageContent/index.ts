@@ -1,0 +1,1 @@
+export { CVPageContent } from './CVPageContent';

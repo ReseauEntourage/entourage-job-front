@@ -8,10 +8,10 @@ import React, {
 import { v4 as uuid } from 'uuid';
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
+import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { MemberTable } from 'src/components/backoffice/admin/members/MemberTable';
 import { Member } from 'src/components/backoffice/admin/members/MemberTable/Member';
 import { MemberColumn } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.types';
-import { LoadingScreen } from 'src/components/backoffice/cv/LoadingScreen';
 import { UserContext } from 'src/store/UserProvider';
 
 const uuidValue = uuid();

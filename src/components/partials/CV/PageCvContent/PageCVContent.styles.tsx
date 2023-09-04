@@ -192,7 +192,7 @@ export const StyledCVProfilePicture = styled.div`
 export const StyledCVPageContentStory = styled.div`
   margin-bottom: 20px;
   position: relative;
-  white-space: pre;
+  white-space: pre-line;
   p {
     margin-bottom: 0;
   }
@@ -325,7 +325,8 @@ export const StyledSkillTag = styled.div`
 
 export const StyledCVExperienceLi = styled.div`
   padding-left: 14px;
-  white-space: pre;
+  white-space: pre-line;
+  display: flex;
   :last-child {
     padding-bottom: 0;
   }
@@ -337,10 +338,17 @@ export const StyledCVExperienceLi = styled.div`
 `;
 
 export const StyledCVExperienceDate = styled.div`
-  width: 100px;
+  min-width: 150px;
+  max-width: 150px;
   padding: 0 15px;
   color: ${CV_COLORS.parGray};
   text-align: right;
+`;
+
+export const StyledCVExperienceDateMobile = styled.div`
+  color: ${CV_COLORS.parGray};
+  text-align: left;
+  font-size: 13px;
 `;
 
 export const StyledCVExperienceDescription = styled.div`

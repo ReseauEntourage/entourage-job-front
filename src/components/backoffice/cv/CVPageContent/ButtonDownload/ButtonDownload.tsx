@@ -1,8 +1,16 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { Api } from 'src/api';
-import { ButtonPost } from 'src/components/backoffice/cv/ButtonPost';
+import { ButtonPost } from 'src/components/utils/Button/ButtonPost';
 import { gaEvent } from 'src/lib/gtag';
+
+interface ButtondowloadProps {
+  disabled?: boolean;
+  candidateId: string;
+  firstName: string;
+  lastName: string;
+  tag?: { action: string };
+  pdfGenerating?: boolean;
+}
 
 export const ButtonDownload = ({
   disabled,
@@ -11,7 +19,7 @@ export const ButtonDownload = ({
   lastName,
   tag,
   pdfGenerating,
-}) => {
+}: ButtondowloadProps) => {
   return (
     <ButtonPost
       disabled={disabled || pdfGenerating}
@@ -38,18 +46,4 @@ export const ButtonDownload = ({
       }}
     />
   );
-};
-ButtonDownload.propTypes = {
-  disabled: PropTypes.bool,
-  candidateId: PropTypes.string.isRequired,
-  firstName: PropTypes.string.isRequired,
-  lastName: PropTypes.string.isRequired,
-  tag: PropTypes.string,
-  pdfGenerating: PropTypes.bool,
-};
-
-ButtonDownload.defaultProps = {
-  disabled: false,
-  tag: undefined,
-  pdfGenerating: false,
 };

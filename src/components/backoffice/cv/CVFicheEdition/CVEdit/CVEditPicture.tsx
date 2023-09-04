@@ -103,9 +103,3 @@ export const CVEditPicture = ({
     </div>
   );
 };
-
-CVEditPicture.defaultProps = {
-  urlImg: '/static/img/arthur-background.jpg',
-  disablePicture: false,
-  imageUploading: false,
-};
