@@ -1,3 +1,4 @@
+import moment from 'moment';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import UIkit from 'uikit';
@@ -30,6 +31,8 @@ import {
   StyledBackLink,
   StyledLeftColumn,
   StyledRightColumn,
+  StyledCVExperienceDate,
+  StyledCVExperienceDescription,
 } from 'src/components/partials/CV/PageCvContent/PageCVContent.styles';
 import { Button, Icon } from 'src/components/utils';
 import { CarouselSwiper } from 'src/components/utils/CarouselSwiper';
@@ -41,6 +44,7 @@ import { useIsDesktop } from 'src/hooks/utils';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
 import { addPrefix, findConstantFromValue, sortByOrder } from 'src/utils';
+import 'moment/locale/fr';
 
 interface openedPanelType {
   informations: boolean;
@@ -85,6 +89,7 @@ export const PageCVContent = ({
           <StyledCVProfilePicture
             className={!isDesktop ? 'mobile' : ''}
             imgSrc={process.env.AWSS3_CDN_URL + addPrefix(cv.urlImg)}
+            // imgSrc="https://d33bu863opcyg0.cloudfront.net/images/5933dc85-08d9-4124-b0fd-ea6a8d78cf0e.Published.jpg"
           >
             <div className="picture" />
             <div className="pseudo" />
@@ -345,19 +350,112 @@ export const PageCVContent = ({
               >
                 <H2 title="Expériences" color={CV_COLORS.titleGray} />
               </span>
-              {/* } */}
               <ul>
-                {cv.experiences.map((experience) => {
+                {cv.experiences?.map((experience) => {
                   return (
                     <StyledCVExperienceLi>
-                      <div>{experience.description}</div>
-                      <div>
-                        {experience.skills.map(({ name, id }) => {
-                          return (
-                            <StyledSkillTag key={id}>{name}</StyledSkillTag>
-                          );
-                        })}
-                      </div>
+                      <StyledCVExperienceDate>
+                        {experience.dateStart && (
+                          <>
+                            {experience.dateEnd
+                              ? moment(experience.dateEnd).format('MMMM YYYY')
+                              : "Aujourd'hui"}
+                            <br />
+                            {moment(experience.dateStart).format('MMMM YYYY')}
+                          </>
+                        )}
+                      </StyledCVExperienceDate>
+                      <StyledCVExperienceDescription>
+                        {experience.title && (
+                          <H5
+                            title={experience.title}
+                            color={CV_COLORS.titleGray}
+                          />
+                        )}
+                        {(experience.company || experience.location) && (
+                          <div className="name-gray">
+                            {experience.company}
+                            {experience.company && experience.location && ' - '}
+                            {experience.location}
+                          </div>
+                        )}
+                        {experience.description && (
+                          <div>{experience.description}</div>
+                        )}
+                        <div>
+                          {experience.skills.map(({ name, id }) => {
+                            return (
+                              <StyledSkillTag key={id}>{name}</StyledSkillTag>
+                            );
+                          })}
+                        </div>
+                      </StyledCVExperienceDescription>
+                    </StyledCVExperienceLi>
+                  );
+                })}
+              </ul>
+            </StyledCVPageContentExperience>
+          )}
+          {cv.formations?.length > 0 && (
+            // using same style for Formations and Experiences, but change in fields
+            <StyledCVPageContentExperience
+              className={`${openedPanel.experiences ? '' : 'close'} ${
+                !isDesktop ? 'mobile' : ''
+              }`}
+            >
+              {!isDesktop && <StyledChevronIcon name="chevron-down" />}
+              <span
+                onClick={() => {
+                  setOpenedPanel({
+                    ...openedPanel,
+                    experiences: !openedPanel.experiences,
+                  });
+                }}
+              >
+                <H2 title="Formation" color={CV_COLORS.titleGray} />
+              </span>
+              <ul>
+                {cv.formations.map((formation) => {
+                  return (
+                    <StyledCVExperienceLi>
+                      <StyledCVExperienceDate>
+                        {formation.dateStart && (
+                          <>
+                            {formation.dateEnd
+                              ? moment(formation.dateEnd).format('MMMM YYYY')
+                              : "Aujourd'hui"}
+                            <br />
+                            {moment(formation.dateStart).format('MMMM YYYY')}
+                          </>
+                        )}
+                      </StyledCVExperienceDate>
+                      <StyledCVExperienceDescription>
+                        {formation.title && (
+                          <H5
+                            title={formation.title}
+                            color={CV_COLORS.titleGray}
+                          />
+                        )}
+                        {(formation.institution || formation.location) && (
+                          <div className="name-gray">
+                            {formation.institution}
+                            {formation.institution &&
+                              formation.location &&
+                              ' - '}
+                            {formation.location}
+                          </div>
+                        )}
+                        {formation.description && (
+                          <div>{formation.description}</div>
+                        )}
+                        <div>
+                          {formation.skills.map(({ name, id }) => {
+                            return (
+                              <StyledSkillTag key={id}>{name}</StyledSkillTag>
+                            );
+                          })}
+                        </div>
+                      </StyledCVExperienceDescription>
                     </StyledCVExperienceLi>
                   );
                 })}

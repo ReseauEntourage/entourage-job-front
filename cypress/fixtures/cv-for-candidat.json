@@ -230,17 +230,12 @@
       "description": "Formation en bureautique",
       "order": 3,
       "skills": []
-    },
+    }
+  ],
+  "formations": [
     {
-      "id": "9c87b973-30f8-4a95-8609-37d891710e9e",
-      "description": "- Chargé d'accueil à et gestion du courrier à la Défense chez Eurogem\n- Chargé d'accueil dans plusieurs centres d'action sociale à Paris\n- Chargé d'accueil au centre d'aide des réfugiés de Buzenval (réception des appels, accueil du public, orientation des personnes...)\n- Bénévole en accueil à la bibliothèque du Secours Populaire, Espace Ramey, Paris)",
-      "order": 4,
-      "skills": []
-    },
-    {
-      "id": "f1960c53-a69d-454d-98d3-18e2a9d4509b",
-      "description": "Vendeuse à Carrefour ",
-      "order": 5,
+      "id": "4d858b84-e2fc-4cd3-af03-787533c8434b",
+      "description": "Participation au projet \"Points Témoins\" au Quai Branly - partage d'un témoignage sur sa culture d'origine",
       "skills": []
     }
   ]

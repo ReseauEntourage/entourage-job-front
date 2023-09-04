@@ -1,22 +1,24 @@
 import { FormSchema } from '../FormSchema';
 import { FilterConstant } from 'src/constants/utils';
 
-export const formEditExperience: FormSchema<{
+export const formEditFormation: FormSchema<{
+  description: string;
   title: string;
   location: string;
-  company: string;
+  institution: string;
   dateStart: string;
   dateEnd: string;
-  description: string;
   skills: FilterConstant<string>[];
 }> = {
-  id: 'form-experience',
+  id: 'form-formation',
   fields: [
     {
       id: 'title',
       name: 'title',
       component: 'text-input',
-      title: 'Intitulé du poste',
+      type: 'text',
+      title: 'Intitulé de la formation',
+      isRequired: true,
     },
     {
       id: 'description',
@@ -29,13 +31,15 @@ export const formEditExperience: FormSchema<{
       id: 'location',
       name: 'location',
       component: 'text-input',
-      title: 'Lieu de travail',
+      type: 'text',
+      title: 'Lieu de formation',
     },
     {
-      id: 'company',
-      name: 'company',
+      id: 'institution',
+      name: 'institution',
       component: 'text-input',
-      title: 'Entreprise',
+      type: 'text',
+      title: 'Etablissement / Institution',
     },
     {
       id: 'dateStart',

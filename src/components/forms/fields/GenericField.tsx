@@ -207,6 +207,8 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
               : field.options
           }
           openMenuOnClick={field.openMenuOnClick}
+          maxChar={field.maxChar}
+          maxItems={field.maxItems}
         />
       );
     }

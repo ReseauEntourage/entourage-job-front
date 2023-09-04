@@ -383,7 +383,11 @@ export const CVPageContent = ({
         disablePicture={user.role !== USER_ROLES.ADMIN}
         onChange={async (fields) => {
           await autoSaveCV({ ...cv, ...fields });
-          setCV({ ...cv, ...fields, status: CV_STATUS.Draft.value });
+          setCV({
+            ...cv,
+            ...fields,
+            status: CV_STATUS.Draft.value,
+          });
         }}
         userZone={cv.user.candidat.zone}
       />

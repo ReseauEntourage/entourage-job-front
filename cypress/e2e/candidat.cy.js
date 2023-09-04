@@ -180,7 +180,9 @@ describe('Candidat', () => {
         window.localStorage.setItem('release-version', 'v100');
       },
     });
-    cy.get(`[data-testid="test-catchphrase-edit-icon"]`).click();
+    cy.get(`[data-testid="test-catchphrase-edit-icon"]`)
+      .scrollIntoView()
+      .click();
     const catchPhrase = 'hello my name is Mike';
     cy.get('#form-catchphrase-catchphrase').type(catchPhrase);
     cy.get(`[data-testid="form-confirm-form-catchphrase"]`).click();
@@ -188,9 +190,59 @@ describe('Candidat', () => {
       'contain',
       catchPhrase
     );
+    cy.get(`[data-testid="button-cv-add-formations"]`).scrollIntoView().click();
+    cy.get(`[data-testid="form-formation-title"]`)
+      .scrollIntoView()
+      .type('formation title');
+    cy.get('#form-formation-description')
+      .scrollIntoView()
+      .type('formation description');
+    cy.get(`[data-testid="form-formation-location"]`)
+      .scrollIntoView()
+      .type('formation location');
+    cy.get(`[data-testid="form-formation-institution"]`)
+      .scrollIntoView()
+      .type('formation institution');
+    cy.get(`[data-testid="form-formation-dateStart"]`)
+      .scrollIntoView()
+      .type('1994-02-02');
+    cy.get(`[data-testid="form-formation-dateEnd"]`)
+      .scrollIntoView()
+      .type('1995-02-02');
+    // save formation
+    cy.get(`[data-testid="form-confirm-form-formation"]`)
+      .scrollIntoView()
+      .click();
+
+    cy.get(`[data-testid="button-cv-add-experiences"]`)
+      .scrollIntoView()
+      .click();
+    cy.get(`[data-testid="form-experience-title"]`)
+      .scrollIntoView()
+      .type('experience title');
+    cy.get('#form-experience-description')
+      .scrollIntoView()
+      .type('experience description');
+    cy.get(`[data-testid="form-experience-location"]`)
+      .scrollIntoView()
+      .type('experience location');
+    cy.get(`[data-testid="form-experience-company"]`)
+      .scrollIntoView()
+      .type('experience company');
+    cy.get(`[data-testid="form-experience-dateStart"]`)
+      .scrollIntoView()
+      .type('1994-02-02');
+    cy.get(`[data-testid="form-experience-dateEnd"]`)
+      .scrollIntoView()
+      .type('1995-02-02');
+    // save experience
+    cy.get(`[data-testid="form-confirm-form-experience"]`)
+      .scrollIntoView()
+      .click();
+
+    // save CV
     cy.contains('Sauvegarder').scrollIntoView().click();
   });
-
   it('should open backoffice candidate parameters', () => {
     cy.visit('/backoffice/parametres', {
       onBeforeLoad: function async(window) {

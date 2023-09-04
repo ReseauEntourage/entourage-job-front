@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CreatableSelect from 'react-select/creatable';
-import { StyledInputLabel } from '../../Inputs.styles';
+import {
+  StyledAnnotations,
+  StyledAnnotationsErrorMessage,
+  StyledInputLabel,
+  StyledLimit,
+} from '../../Inputs.styles';
 import { CommonInputProps } from '../../Inputs.types';
 import {
   ClearIndicator,
@@ -9,7 +14,6 @@ import {
 } from '../Selects';
 import { StyledSelect, StyledSelectContainer } from '../Selects.styles';
 import { IsArrayFilterConstant } from 'src/components/forms/FormSchema';
-import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { FilterConstant } from 'src/constants/utils';
 
 interface SelectAsyncProps<T extends FilterConstant | FilterConstant[]>
@@ -17,6 +21,8 @@ interface SelectAsyncProps<T extends FilterConstant | FilterConstant[]>
   options: IsArrayFilterConstant<T>;
   isMulti?: boolean;
   openMenuOnClick?: boolean;
+  maxChar?: number;
+  maxItems?: number;
 }
 export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
   id,
@@ -34,10 +40,23 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
   openMenuOnClick = true,
   showLabel = false,
   inputRef,
+  maxChar,
+  maxItems,
 }: SelectAsyncProps<T>) {
+  const [remainingItems, setRemainingItems] = useState<number>(maxItems);
+
   if (hidden) {
     return null;
   }
+
+  const handleChange = (selectedOptions) => {
+    setRemainingItems(
+      selectedOptions ? maxItems - selectedOptions.length : maxItems
+    );
+    if (remainingItems >= 0) {
+      onChange(selectedOptions);
+    }
+  };
 
   return (
     <StyledSelectContainer disabled={disabled}>
@@ -61,16 +80,37 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
               : placeholder || title
           }
           isDisabled={disabled}
-          onChange={onChange}
+          onChange={(selectedOptions) => handleChange(selectedOptions)}
           onBlur={onBlur}
           openMenuOnClick={openMenuOnClick}
           formatCreateLabel={(userInput) => {
             return `Créer "${userInput}"`;
           }}
           ref={inputRef}
+          max={maxItems}
+          maxLength={maxChar}
+          isValidNewOption={(inputValue) => {
+            return maxChar ? inputValue.length < maxChar : true;
+          }}
         />
       </StyledSelect>
-      <FieldErrorMessage error={error} />
+      <StyledAnnotations>
+        <div>
+          <StyledAnnotationsErrorMessage error={error} />
+        </div>
+        {maxChar && (
+          <StyledLimit>
+            <span>
+              Chaque élément ne doit pas dépasser {maxChar} caractères.
+            </span>
+          </StyledLimit>
+        )}
+        {maxItems && (
+          <StyledLimit warning={remainingItems <= 0}>
+            <span>{remainingItems} élément(s) restant(s)</span>
+          </StyledLimit>
+        )}
+      </StyledAnnotations>
     </StyledSelectContainer>
   );
 }
