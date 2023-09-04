@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Api } from 'src/api';
-import { LoadingScreen } from 'src/components/backoffice/cv/LoadingScreen';
+import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { CandidatCard } from 'src/components/cards';
 import { Grid, Section, Icon } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';

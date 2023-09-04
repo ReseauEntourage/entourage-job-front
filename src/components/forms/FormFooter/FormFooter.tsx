@@ -1,6 +1,6 @@
 import React, { FormEvent } from 'react';
-import { ButtonPost } from 'src/components/backoffice/cv/ButtonPost';
 import { Button } from 'src/components/utils/Button';
+import { ButtonPost } from 'src/components/utils/Button/ButtonPost';
 import {
   StyledCompulsoryMessage,
   StyledErrorMessage,
@@ -10,7 +10,7 @@ import {
 interface FooterFormProps {
   error?: string;
   onCancel?: () => void;
-  onSubmit: (event: FormEvent) => void;
+  onSubmit: (event: FormEvent) => Promise<void>;
   submitText: string;
   cancelText?: string;
   formId: string;

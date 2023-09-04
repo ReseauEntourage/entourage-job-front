@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import CountUp from 'react-countup';
-import { CVList } from 'src/components/cv';
 import { Grid, Section, Icon, Button } from 'src/components/utils';
 import { CV_FILTERS_DATA, INITIAL_NB_OF_CV_TO_DISPLAY } from 'src/constants';
 import { SharesCountContext } from 'src/store/SharesCountProvider';
+import { CVList } from './CV/CVList';
 
 export const CandidatListPartial = () => {
   const { totalShares } = useContext(SharesCountContext);

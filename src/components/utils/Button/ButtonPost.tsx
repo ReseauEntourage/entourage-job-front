@@ -1,6 +1,15 @@
-import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { Button, Icon } from 'src/components/utils';
+import { UIKIT_BUTTON_STYLES_SPEC } from 'src/components/variables';
+
+interface ButtonPostProps {
+  text: string;
+  action?: (event?: FormEvent) => Promise<void>;
+  style?: '' | UIKIT_BUTTON_STYLES_SPEC;
+  icon?: string;
+  disabled?: boolean;
+  dataTestId?: string;
+}
 
 export const ButtonPost = ({
   text,
@@ -9,19 +18,21 @@ export const ButtonPost = ({
   style,
   disabled,
   dataTestId,
-}) => {
+}: ButtonPostProps) => {
   const [loading, setLoading] = useState(false);
   return (
     <Button
-      disabled={disabled}
+      disabled={disabled || loading}
       style={style}
       dataTestId={dataTestId}
-      onClick={() => {
+      onClick={async () => {
         if (!loading) {
           setLoading(true);
-          action()?.finally(() => {
-            return setLoading(false);
-          });
+          try {
+            await action();
+          } finally {
+            setLoading(false);
+          }
         }
       }}
     >
@@ -37,20 +48,4 @@ export const ButtonPost = ({
       </div>
     </Button>
   );
-};
-ButtonPost.propTypes = {
-  text: PropTypes.string.isRequired,
-  action: PropTypes.func,
-  style: PropTypes.string,
-  icon: PropTypes.string,
-  disabled: PropTypes.bool,
-  dataTestId: PropTypes.string,
-};
-
-ButtonPost.defaultProps = {
-  action: undefined,
-  style: undefined,
-  icon: undefined,
-  disabled: false,
-  dataTestId: '',
 };

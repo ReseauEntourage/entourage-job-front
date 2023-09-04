@@ -1,23 +1,24 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ExperiencesProfileCard } from '../backoffice/cv/TimelineCard/ExperiencesProfileCard';
-import { FormationsProfileCard } from '../backoffice/cv/TimelineCard/FormationsProfileCard';
 import { CV } from 'src/api/types';
 import {
-  // ExperiencesProfileCard,
+  CVEditCareerPath,
+  CVEditCatchphrase,
+  CVEditPicture,
+  CVEditReviews,
+} from 'src/components/backoffice/cv/CVFicheEdition/CVEdit';
+import {
   InfoProfileCard,
   PassionsCard,
   SkillsCard,
   StoryProfileCard,
 } from 'src/components/cards';
-import { CVEditCareerPath } from 'src/components/cv/CVEditCareerPath';
-import { CVEditCatchphrase } from 'src/components/cv/CVEditCatchphrase';
-import { CVEditPicture } from 'src/components/cv/CVEditPicture';
-import { CVEditReviews } from 'src/components/cv/CVEditReviews';
 import { Grid, Img } from 'src/components/utils';
 
 import { CV_STATUS } from 'src/constants';
 import { AdminZone } from 'src/constants/departements';
 import { useMount, usePrevious } from 'src/hooks/utils';
+import { ExperiencesProfileCard } from './TimelineCard/ExperiencesProfileCard';
+import { FormationsProfileCard } from './TimelineCard/FormationsProfileCard';
 
 interface CVFicheEditionProps {
   cv: CV;

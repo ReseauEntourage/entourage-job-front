@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Api } from 'src/api';
+import { CV, User } from 'src/api/types';
 import { Button, Grid } from 'src/components/utils';
 import { CV_STATUS } from 'src/constants';
 import { COACH_USER_ROLES } from 'src/constants/users';
@@ -9,7 +10,13 @@ import {
   getUserCandidateFromCoachOrCandidate,
 } from 'src/utils';
 
-export const NoCV = ({ candidateId, user, setCV }) => {
+interface NoCV {
+  candidateId: string;
+  user: User;
+  setCV: (data: CV) => void;
+}
+
+export const NoCV = ({ candidateId, user, setCV }: NoCV) => {
   const candidate = getUserCandidateFromCoachOrCandidate(user);
   return (
     <Grid column middle>
@@ -53,13 +60,4 @@ export const NoCV = ({ candidateId, user, setCV }) => {
       )}
     </Grid>
   );
-};
-
-NoCV.propTypes = {
-  candidateId: PropTypes.string.isRequired,
-  user: PropTypes.shape({
-    role: PropTypes.string,
-    candidat: PropTypes.shape({}),
-  }).isRequired,
-  setCV: PropTypes.func.isRequired,
 };

@@ -49,7 +49,3 @@ export const CVEditCatchphrase = ({
     </div>
   );
 };
-
-CVEditCatchphrase.defaultProps = {
-  onChange: null,
-};

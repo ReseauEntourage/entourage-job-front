@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { LoadingScreen } from 'src/components/backoffice/cv/LoadingScreen';
+import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 
 export const ModalOfferBase = ({

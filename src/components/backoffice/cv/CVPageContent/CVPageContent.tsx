@@ -2,17 +2,13 @@ import Router from 'next/router';
 import Pusher from 'pusher-js';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import UIkit from 'uikit';
+import { CVFicheEdition } from '../CVFicheEdition';
 import { Api } from 'src/api';
-
 import { CV, User } from 'src/api/types';
-import { ButtonDownload } from 'src/components/backoffice/cv/ButtonDownload';
-import { ButtonPost } from 'src/components/backoffice/cv/ButtonPost';
-import { NoCV } from 'src/components/backoffice/cv/NoCV';
-import { CVBackground, CVFiche, CVFicheEdition } from 'src/components/cv';
-import { openModal, useModalContext } from 'src/components/modals/Modal';
-import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
+import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { Button, Grid } from 'src/components/utils';
+import { ButtonPost } from 'src/components/utils/Button/ButtonPost';
 import { CV_STATUS, SOCKETS } from 'src/constants';
 import {
   CANDIDATE_USER_ROLES,
@@ -22,36 +18,14 @@ import {
 import { usePrevious } from 'src/hooks/utils';
 import { UserContext } from 'src/store/UserProvider';
 import { isRoleIncluded } from 'src/utils/Finding';
+import { ButtonDownload } from './ButtonDownload';
+import { CVModalPreview } from './CVModalPreview';
+import { NoCV } from './NoCV';
 
 const pusher = new Pusher(process.env.PUSHER_API_KEY, {
   cluster: 'eu',
   forceTLS: true,
 });
-
-interface ModalPreviewProps {
-  imageUrl: string;
-  cv: CV;
-}
-
-const ModalPreview = ({ imageUrl, cv }: ModalPreviewProps) => {
-  const { onClose } = useModalContext();
-
-  return (
-    <ModalGeneric title="Prévisualisation du CV" fullWidth>
-      {cv.urlImg && (
-        <CVBackground
-          url={cv.profileImageObjectUrl ? cv.profileImageObjectUrl : imageUrl}
-        />
-      )}
-      <CVFiche cv={cv} actionDisabled />
-      <div className="uk-modal-footer uk-padding-remove-horizontal uk-padding-remove-bottom uk-margin-medium-top">
-        <Button onClick={onClose} style="default">
-          Fermer
-        </Button>
-      </div>
-    </ModalGeneric>
-  );
-};
 
 interface CVPageContentProps {
   cv: CV;
@@ -341,7 +315,7 @@ export const CVPageContent = ({
           />
           <Button
             onClick={() => {
-              openModal(<ModalPreview imageUrl={imageUrl} cv={cv} />);
+              openModal(<CVModalPreview cv={cv} />);
             }}
             style="default"
           >

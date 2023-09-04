@@ -15,7 +15,6 @@ interface ButtonProps {
   disabled?: boolean;
   visible?: UIKIT_SCREENS;
   style?: UIKIT_BUTTON_STYLES_SPEC | '';
-
   size?: UIKIT_BUTTON_SIZES;
   widths?: string[];
   isExternal?: boolean;
