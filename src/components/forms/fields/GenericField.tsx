@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import {
   Control,
   useController,
@@ -64,7 +64,16 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
 }: GenericFieldProps<S>) {
   const { id: formId } = formSchema;
 
-  const rules = mapFieldRules<S, typeof field.component>(field.rules);
+  let rules = mapFieldRules<S, typeof field.component>(field.rules);
+  const [isMaxLinesReached, setIsMaxLinesReached] = useState<boolean>();
+
+  if (field.maxLines) {
+    rules = {
+      ...rules,
+      maxLines: () =>
+        !isMaxLinesReached || 'Vous avez dépassé le nombre de lignes maximum',
+    };
+  }
 
   const {
     field: { onChange, onBlur, value, name, ref },
@@ -156,6 +165,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
         {...commonProps}
         maxLines={field.maxLines}
         maxLength={field.maxLength}
+        setIsMaxLinesReached={setIsMaxLinesReached}
       />
     );
   }

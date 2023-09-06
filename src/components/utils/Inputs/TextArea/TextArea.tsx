@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useEffect } from 'react';
 import {
   StyledAnnotations,
   StyledAnnotationsErrorMessage,
@@ -19,6 +19,7 @@ interface TextAreaProps extends CommonInputProps<string, HTMLTextAreaElement> {
   maxLines?: { lines: number; width: number };
   maxLength?: number;
   rows?: number;
+  setIsMaxLinesReached?: (isMaxLinesReached: boolean) => void;
 }
 
 export function TextArea({
@@ -37,6 +38,7 @@ export function TextArea({
   showLabel,
   inputRef,
   rows,
+  setIsMaxLinesReached,
 }: TextAreaProps) {
   const isMobile = useIsMobile();
 
@@ -46,6 +48,15 @@ export function TextArea({
     onChange,
     maxLines?.lines
   );
+
+  useEffect(() => {
+    if (!maxLines) return null;
+    if (remainingLines <= 0) {
+      setIsMaxLinesReached(true);
+    } else {
+      setIsMaxLinesReached(false);
+    }
+  });
 
   if (hidden) {
     return null;
