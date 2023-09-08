@@ -57,11 +57,13 @@ interface openedPanelType {
 interface PageCVContentProps {
   cv: CV;
   actionDisabled?: boolean;
+  isPreview?: boolean;
 }
 
 export const PageCVContent = ({
   cv,
   actionDisabled = false,
+  isPreview = false,
 }: PageCVContentProps) => {
   const locations =
     cv.locations && cv.locations.length > 0 ? sortByOrder(cv.locations) : [];
@@ -79,12 +81,14 @@ export const PageCVContent = ({
 
   return (
     <StyledCVPageContent>
-      <Link href="/candidats?employed=false" scroll={false} shallow passHref>
-        <StyledBackLink>
-          <Icon name="chevron-left" />
-          &nbsp;Retour à la page candidats
-        </StyledBackLink>
-      </Link>
+      {!isPreview && (
+        <Link href="/candidats?employed=false" scroll={false} shallow passHref>
+          <StyledBackLink>
+            <Icon name="chevron-left" />
+            &nbsp;Retour à la page candidats
+          </StyledBackLink>
+        </Link>
+      )}
       <StyledCVPageContentHeader className={!isDesktop ? 'mobile' : ''}>
         <div id="header-picture-share">
           <StyledCVProfilePicture
@@ -402,7 +406,7 @@ export const PageCVContent = ({
                           <div>{experience.description}</div>
                         )}
                         <div>
-                          {experience.skills.map(({ name, id }) => {
+                          {experience.skills?.map(({ name, id }) => {
                             return (
                               <StyledSkillTag key={id}>{name}</StyledSkillTag>
                             );
@@ -487,7 +491,7 @@ export const PageCVContent = ({
                           <div>{formation.description}</div>
                         )}
                         <div>
-                          {formation.skills.map(({ name, id }) => {
+                          {formation.skills?.map(({ name, id }) => {
                             return (
                               <StyledSkillTag key={id}>{name}</StyledSkillTag>
                             );

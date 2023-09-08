@@ -15,12 +15,15 @@ export const CVModalPreview = ({ imageUrl, cv }: ModalPreviewProps) => {
   const [cvPreview, setCVPreview] = useState<CV>(cv);
 
   useEffect(() => {
-    setCVPreview({ ...cv, urlImg: imageUrl });
+    const previewHash = Date.now();
+    const status = cv.status === 'Draft' ? 'Progress' : cv.status;
+    const baseUrl = `${process.env.AWSS3_IMAGE_DIRECTORY}${cv.UserId}.${status}`;
+    setCVPreview({ ...cv, urlImg: `${baseUrl}.jpg?${previewHash}` });
   }, [imageUrl, cv]);
 
   return (
     <ModalGeneric title="Prévisualisation du CV" fullWidth>
-      <PageCVContent cv={cvPreview} actionDisabled />
+      <PageCVContent cv={cvPreview} actionDisabled isPreview />
       <div className="uk-modal-footer uk-padding-remove-horizontal uk-padding-remove-bottom uk-margin-medium-top">
         <Button onClick={onClose} style="default">
           Fermer
