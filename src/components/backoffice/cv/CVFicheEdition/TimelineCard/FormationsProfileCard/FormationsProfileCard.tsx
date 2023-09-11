@@ -54,8 +54,12 @@ export const FormationsProfileCard = ({
                   ...sortedFormations,
                   {
                     ...fields,
-                    dateStart: moment(fields.dateStart).toDate() as Date,
-                    dateEnd: moment(fields.dateEnd).toDate() as Date,
+                    dateStart: fields.dateStart
+                      ? (moment(fields.dateStart).toDate() as Date)
+                      : null,
+                    dateEnd: fields.dateEnd
+                      ? (moment(fields.dateEnd).toDate() as Date)
+                      : null,
                     skills: fields.skills?.map((skill, i) => {
                       return {
                         name: skill.value,
