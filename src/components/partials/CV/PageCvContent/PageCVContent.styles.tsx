@@ -187,6 +187,27 @@ export const StyledCVProfilePicture = styled.div`
       transform: translateX(-50%) rotate(7.94deg);
     }
   }
+
+  &.pdfVersion {
+    width: 105px;
+    height: 190px;
+    position: relative;
+    .picture {
+      width: 105px;
+      height: 190px;
+      border-radius: 859px 909px 729px 909px;
+      background-image: ${(props) => {
+        return `url('${props.imgSrc}')`;
+      }};
+      background-position: 66% 39%;
+      position: unset;
+      background-size: cover;
+      transform: unset;
+    }
+    .pseudo {
+      display: none;
+    }
+  }
 `;
 
 export const StyledCVPageContentStory = styled.div`
@@ -219,6 +240,14 @@ export const StyledCVPageContentStory = styled.div`
           cursor: pointer;
         }
       }
+    }
+  }
+  &.pdfVersion {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    p {
+      font-size: 10px;
+      line-height: 12px;
     }
   }
 `;
@@ -290,6 +319,27 @@ export const StyledCVPageContentInformations = styled.div`
     width: 100%;
     max-width: none;
   }
+  &.pdfVersion {
+    padding: 10px;
+    border-radius: 20px;
+    .subtitle {
+      color: #979797;
+      font-size: 10px;
+      .uk-icon {
+        color: ${COLORS.primaryOrange};
+        svg {
+          height: 8px;
+          width: 8px;
+          margin-right: 5px;
+        }
+      }
+    }
+    .content {
+      font-size: 10px;
+      padding-left: 13px;
+      margin-top: 0;
+    }
+  }
 `;
 
 export const StyledCVPageContentPassions = styled.div`
@@ -306,6 +356,14 @@ export const StyledCVPageContentPassions = styled.div`
     width: 100%;
     max-width: none;
   }
+  &.pdfVersion {
+    padding: 10px;
+    border-radius: 20px;
+    p {
+      color: ${COLORS.darkGrayFont};
+      font-size: 8px;
+    }
+  }
 `;
 
 export const StyledCVPageContentExperience = styled.div`
@@ -316,6 +374,10 @@ export const StyledCVPageContentExperience = styled.div`
   border-radius: 30px;
   position: relative;
   font-size: 16px;
+  &.pdfVersion {
+    padding: 10px 20px;
+    border-radius: 20px;
+  }
 `;
 
 export const StyledSkillTag = styled.div`
@@ -329,7 +391,12 @@ export const StyledSkillTag = styled.div`
   font-size: 14px;
   font-weight: 400;
   margin-bottom: 10px;
-  /* font-family: Nunito Sans */
+  &.pdfVersion {
+    font-size: 8px;
+    line-height: 10px;
+    padding: 2px 5px;
+    margin-right: 5px;
+  }
 `;
 
 export const StyledCVExperienceLi = styled.div`
@@ -343,6 +410,11 @@ export const StyledCVExperienceLi = styled.div`
     display: inline-block;
     vertical-align: top;
     padding: 10px 15px;
+  } 
+  &.pdfVersion {
+    > div {
+      padding: 0px 15px 10px;
+    }
   }
 `;
 
@@ -352,6 +424,12 @@ export const StyledCVExperienceDate = styled.div`
   padding: 0 15px;
   color: ${CV_COLORS.parGray};
   text-align: right;
+  &.pdfVersion {
+    min-width: 90px;
+    max-width: 90px;
+    font-size: 10px;
+    line-height: 12px;
+  }
 `;
 
 export const StyledCVExperienceDateMobile = styled.div`
@@ -378,6 +456,16 @@ export const StyledCVExperienceDescription = styled.div`
     position: absolute;
     left: -5px;
     top: 14px;
+  }
+  &.pdfVersion {
+    font-size: 8px;
+    line-height: 10px;
+    > div {
+      margin-bottom: 5px;
+    }
+    ::before {
+      top: 0;
+    }
   }
 `;
 

@@ -38,7 +38,7 @@ const CVPDFPage = ({ cv, page, router }) => {
       }
       metaType="profile"
     >
-      <div className="uk-background-muted">
+      <div>
         <CVPDF cv={cv} page={page} />
       </div>
     </Layout>
