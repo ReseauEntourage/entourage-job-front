@@ -71,6 +71,7 @@ export function useLineLimit(
       const nbOfLines = Math.ceil(
         (taHeight - taPaddingBottom - taPaddingTop) / taLineHeight
       );
+      setNumberOfLines(!value ? 0 : nbOfLines);
 
       if (nbOfLines > maxLines) {
         if (!prevValue || value.length - prevValue.length > 1) {
@@ -79,11 +80,12 @@ export function useLineLimit(
             'danger'
           );
         }
-
-        onChange(prevValue);
-      } else {
-        setNumberOfLines(!value ? 0 : nbOfLines);
+        // onChange(prevValue);
       }
+      // else {
+      //   // console.log(value);
+      //   setNumberOfLines(!value ? 0 : nbOfLines);
+      // }
     }
   }, [calculateContentHeight, maxLines, name, onChange, prevValue, ref, value]);
 
