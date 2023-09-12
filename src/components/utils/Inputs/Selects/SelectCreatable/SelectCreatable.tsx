@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CreatableSelect from 'react-select/creatable';
 import {
   StyledAnnotations,
@@ -45,15 +45,24 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
 }: SelectAsyncProps<T>) {
   const [remainingItems, setRemainingItems] = useState<number>(maxItems);
 
+  useEffect(() => {
+    const receivedValues = value as FilterConstant[];
+    setRemainingItems(
+      receivedValues ? maxItems - receivedValues.length : maxItems
+    );
+  }, [value, maxItems]);
+
   if (hidden) {
     return null;
   }
 
   const handleChange = (selectedOptions) => {
-    setRemainingItems(
-      selectedOptions ? maxItems - selectedOptions.length : maxItems
-    );
-    if (remainingItems >= 0) {
+    const existingValues = value as FilterConstant[];
+    if (
+      selectedOptions &&
+      (existingValues.length > selectedOptions.length ||
+        maxItems - selectedOptions.length >= 0)
+    ) {
       onChange(selectedOptions);
     }
   };
