@@ -6,6 +6,7 @@ import {
   EXTERNAL_MESSAGE_CONTACT_TYPE_FILTERS,
   ExternalMessageSubject,
   ExternalMessageContactType,
+  ExternalMessageSubjects,
 } from 'src/constants';
 
 export const formSendExternalMessage: FormSchema<{
@@ -97,7 +98,12 @@ export const formSendExternalMessage: FormSchema<{
       id: 'message',
       name: 'message',
       component: 'textarea',
-      title: 'Écrire votre message *',
+      title: (getValue) => {
+        if (getValue('subject') === ExternalMessageSubjects.HIRING) {
+          return 'Dites-lui en plus sur le(s) poste(s). N’oubliez pas de mentionner le(s) types de contrat et la localisation.';
+        }
+        return 'Écrire votre message *';
+      },
       isRequired: true,
     },
     {
@@ -105,7 +111,7 @@ export const formSendExternalMessage: FormSchema<{
       name: 'optInContact',
       component: 'checkbox',
       title:
-        "En cochant cette case, vous acceptez qu'un membre de l'équipe vous recontacte *",
+        'J’accepte que mon message soit lu par LinkedOut afin de protéger les Candidats LinkedOut du spam. *',
       isRequired: true,
     },
     {

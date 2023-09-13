@@ -159,11 +159,7 @@ export const PageCVContent = ({
               title={`Donnez un coup de pouce à ${cv.user.candidat.firstName} !`}
               color={CV_COLORS.titleGray}
             />
-            <p>
-              Apporter des conseils, informations sur le secteur
-              d&#8217;activité, retour d&#8217;expérience, mise en contact, une
-              opportunité&nbsp;...
-            </p>
+            <p>Une suggestion, une info à partager&nbsp;?</p>
             <Button
               style="custom-secondary-inverted"
               onClick={() => {
@@ -205,7 +201,7 @@ export const PageCVContent = ({
                 );
               }}
             >
-              M&#8217;envoyer un message
+              Envoyer un message
             </Button>
           </StyledCVMessageContainer>
           {!isDesktop && (
