@@ -100,9 +100,9 @@ export const formSendExternalMessage: FormSchema<{
       component: 'textarea',
       title: (getValue) => {
         if (getValue('subject') === ExternalMessageSubjects.HIRING) {
-          return 'Dites-lui en plus sur le(s) poste(s). N’oubliez pas de mentionner le(s) types de contrat et la localisation.';
+          return 'Dites-lui en plus sur le(s) poste(s). N’oubliez pas de mentionner le(s) types de contrat et la localisation.'
         }
-        return 'Écrire votre message *';
+        return 'Écrire votre message *'
       },
       isRequired: true,
     },
@@ -111,7 +111,7 @@ export const formSendExternalMessage: FormSchema<{
       name: 'optInContact',
       component: 'checkbox',
       title:
-        'J’accepte que mon message soit lu par LinkedOut afin de protéger les Candidats LinkedOut du spam. *',
+        "J'accepte que mon message soit lu par LinkedOut afin de protéger les Candidats LinkedOut du spam. *",
       isRequired: true,
     },
     {
