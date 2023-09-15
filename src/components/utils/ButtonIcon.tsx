@@ -10,6 +10,7 @@ interface ButtonIconProps {
   ratio?: number;
   style?: React.CSSProperties;
   dataTestId?: string;
+  newTab?: boolean;
 }
 
 export const ButtonIcon = ({
@@ -21,6 +22,7 @@ export const ButtonIcon = ({
   tooltip,
   style,
   dataTestId,
+  newTab,
 }: ButtonIconProps) => {
   return (
     <a
@@ -29,6 +31,8 @@ export const ButtonIcon = ({
       data-uk-tooltip={tooltip}
       onClick={onClick}
       data-testid={dataTestId}
+      target={newTab ? '_blank' : ''}
+      rel="noreferrer"
     >
       <Icon name={name} className={className} ratio={ratio} style={style} />
     </a>

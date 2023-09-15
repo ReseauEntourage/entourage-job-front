@@ -1,0 +1,1 @@
+export { CVEditPage } from './CVEditPage';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { DefaultValues } from 'react-hook-form';
-import { ExtractFormSchemaValidation } from '../../../../forms/FormSchema';
 import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
+import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { formEditCareerPath } from 'src/components/forms/schemas/formEditCareerPath';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';

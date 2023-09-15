@@ -60,7 +60,7 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
     const existingValues = value as FilterConstant[];
     if (
       selectedOptions &&
-      (existingValues.length > selectedOptions.length ||
+      (existingValues?.length > selectedOptions.length ||
         maxItems - selectedOptions.length >= 0)
     ) {
       onChange(selectedOptions);

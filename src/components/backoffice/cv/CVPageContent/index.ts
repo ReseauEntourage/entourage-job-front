@@ -1,1 +1,0 @@
-export { CVPageContent } from './CVPageContent';

@@ -2,23 +2,26 @@ import Router from 'next/router';
 import Pusher from 'pusher-js';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import UIkit from 'uikit';
-import { CVFicheEdition } from '../CVFicheEdition';
 import { Api } from 'src/api';
 import { CV, User } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
-import { Button, Grid } from 'src/components/utils';
+import { Button, ButtonIcon, Grid } from 'src/components/utils';
 import { ButtonPost } from 'src/components/utils/Button/ButtonPost';
 import { CV_STATUS, SOCKETS } from 'src/constants';
+import { GA_TAGS } from 'src/constants/tags';
 import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
   USER_ROLES,
 } from 'src/constants/users';
 import { usePrevious } from 'src/hooks/utils';
+import { gaEvent } from 'src/lib/gtag';
 import { UserContext } from 'src/store/UserProvider';
 import { isRoleIncluded } from 'src/utils/Finding';
 import { ButtonDownload } from './ButtonDownload';
+import { StyledCVEditButtonsContainer } from './CVEditPage.styles';
+import { CVFicheEdition } from './CVFicheEdition';
 import { CVModalPreview } from './CVModalPreview';
 import { NoCV } from './NoCV';
 
@@ -33,11 +36,7 @@ interface CVPageContentProps {
   setCV: (updatedCV: CV) => void;
 }
 
-export const CVPageContent = ({
-  candidateId,
-  cv,
-  setCV,
-}: CVPageContentProps) => {
+export const CVEditPage = ({ candidateId, cv, setCV }: CVPageContentProps) => {
   const [cvVersion, setCvVersion] = useState<string>();
   const [imageUrl, setImageUrl] = useState<string>();
   const [previewGenerating, setPreviewGenerating] = useState(false);
@@ -305,13 +304,12 @@ export const CVPageContent = ({
             </div>
           )}
         </Grid>
-
-        <Grid row gap="small">
+        <StyledCVEditButtonsContainer>
           <ButtonDownload
             pdfGenerating={pdfGenerating}
             candidateId={cv.UserId}
-            firstName={cv.user.candidat.firstName}
-            lastName={cv.user.candidat.lastName}
+            firstName={cv.user?.candidat.firstName}
+            lastName={cv.user?.candidat.lastName}
           />
           <Button
             onClick={() => {
@@ -346,12 +344,22 @@ export const CVPageContent = ({
               text="Publier"
             />
           )}
-        </Grid>
+          {user.role === USER_ROLES.ADMIN && (
+            <ButtonIcon
+              name="question"
+              href={process.env.TUTORIAL_CV}
+              newTab
+              onClick={() => {
+                gaEvent(GA_TAGS.BACKOFFICE_CV_AIDE);
+              }}
+            />
+          )}
+        </StyledCVEditButtonsContainer>
       </Grid>
       <CVFicheEdition
-        email={cv.user.candidat.email}
-        phone={cv.user.candidat.phone}
-        address={cv.user.candidat.address}
+        email={cv.user?.candidat.email}
+        phone={cv.user?.candidat.phone}
+        address={cv.user?.candidat.address}
         cv={cv}
         previewGenerating={previewGenerating}
         disablePicture={user.role !== USER_ROLES.ADMIN}
@@ -363,7 +371,7 @@ export const CVPageContent = ({
             status: CV_STATUS.Draft.value,
           });
         }}
-        userZone={cv.user.candidat.zone}
+        userZone={cv.user?.candidat.zone}
       />
     </div>
   );

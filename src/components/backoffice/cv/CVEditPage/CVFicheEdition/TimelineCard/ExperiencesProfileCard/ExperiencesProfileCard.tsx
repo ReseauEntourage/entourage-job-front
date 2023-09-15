@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { TimelineCard } from '../TimelineCard';
 import { CVExperience } from 'src/api/types';
@@ -48,6 +49,8 @@ export const ExperiencesProfileCard = ({
                   ...sortedExperiences,
                   {
                     ...fields,
+                    dateStart: moment(fields.dateStart).toDate() as Date,
+                    dateEnd: moment(fields.dateEnd).toDate() as Date,
                     skills: fields.skills?.map((skill) => {
                       return {
                         name: skill.value,

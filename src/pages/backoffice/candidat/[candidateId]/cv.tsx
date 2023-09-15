@@ -4,8 +4,8 @@ import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
-import { CVEditWelcome } from 'src/components/backoffice/cv/CVFicheEdition/CVEdit';
-import { CVPageContent } from 'src/components/backoffice/cv/CVPageContent';
+import { CVEditPage } from 'src/components/backoffice/cv/CVEditPage';
+import { CVEditWelcome } from 'src/components/backoffice/cv/CVEditPage/CVFicheEdition/CVEdit/CVEditWelcome';
 import { ErrorMessage } from 'src/components/backoffice/cv/ErrorMessage';
 import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
 import { Section } from 'src/components/utils';
@@ -62,7 +62,7 @@ const Edit = () => {
     content = (
       <>
         <CVEditWelcome user={user} />
-        <CVPageContent cv={cv} setCV={setCV} candidateId={candidateId} />
+        <CVEditPage cv={cv} setCV={setCV} candidateId={candidateId} />
       </>
     );
   }

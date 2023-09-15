@@ -1,28 +1,29 @@
 import React from 'react';
-import { formEditSkills } from 'src/components/forms/schemas/formEditSkills';
+import { formEditPassions } from 'src/components/forms/schemas/formEditPassions';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Grid, ButtonIcon, Icon } from 'src/components/utils';
 
-interface Skill {
+interface Passion {
   name: string;
   order: number;
 }
-interface SkillsCardProps {
-  list: Skill[];
-  onChange: (updatedSkills: { skills: Skill[] }) => void;
+
+interface PassionProps {
+  list: Passion[];
+  onChange: (updatedPassions: { passions: Passion[] }) => void;
 }
-export const SkillsCard = ({ list = [], onChange }: SkillsCardProps) => {
+export const PassionsCard = ({ list, onChange }: PassionProps) => {
   return (
-    <div className="uk-card uk-card-secondary uk-card-body">
+    <div className="uk-card uk-card-default uk-card-body">
       <Grid gap="small" between eachWidths={['expand', 'auto']}>
         <h3 className="uk-card-title">
           {!onChange && (
             <span className="uk-margin-small-right">
-              <Icon name="bolt" />
+              <Icon name="heart" />
             </span>
           )}
-          Mes atouts
+          Mes <span className="uk-text-primary">passions</span>
         </h3>
         {onChange && (
           <ButtonIcon
@@ -30,16 +31,16 @@ export const SkillsCard = ({ list = [], onChange }: SkillsCardProps) => {
             onClick={() => {
               openModal(
                 <ModalEdit
-                  title="Édition - Mes atouts (6 maximum)"
-                  formSchema={formEditSkills}
+                  title="Édition - Mes passions (6 maximum)"
+                  formSchema={formEditPassions}
                   defaultValues={list.reduce((acc, { name }, i) => {
-                    acc[`skill${i + 1}`] = name;
+                    acc[`passion${i + 1}`] = name;
                     return acc;
                   }, {})}
                   onSubmit={async (fields, closeModal) => {
                     closeModal();
                     const fieldsTransform = {
-                      skills: Object.values(fields)
+                      passions: Object.values(fields)
                         .filter((val) => {
                           return !!val;
                         })
@@ -68,7 +69,7 @@ export const SkillsCard = ({ list = [], onChange }: SkillsCardProps) => {
             );
           })
         ) : (
-          <li>Aucun atout renseigné</li>
+          <li>Aucune passion renseignée</li>
         )}
       </ul>
     </div>
