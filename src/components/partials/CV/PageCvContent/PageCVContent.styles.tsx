@@ -391,12 +391,6 @@ export const StyledSkillTag = styled.div`
   font-size: 14px;
   font-weight: 400;
   margin-bottom: 10px;
-  &.pdfVersion {
-    font-size: 8px;
-    line-height: 10px;
-    padding: 2px 5px;
-    margin-right: 5px;
-  }
 `;
 
 export const StyledCVExperienceLi = styled.div`
@@ -411,11 +405,6 @@ export const StyledCVExperienceLi = styled.div`
     vertical-align: top;
     padding: 10px 15px;
   } 
-  &.pdfVersion {
-    > div {
-      padding: 0px 15px 10px;
-    }
-  }
 `;
 
 export const StyledCVExperienceDate = styled.div`

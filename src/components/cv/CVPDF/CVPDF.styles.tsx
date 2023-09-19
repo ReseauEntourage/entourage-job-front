@@ -1,5 +1,29 @@
 import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
+import { 
+  StyledCVProfilePicture,
+  StyledCVPageContentStory,
+  StyledCVPageContentInformations,
+  StyledCVPageContentExperience,
+  StyledCVExperienceLi,
+  StyledCVExperienceDate,
+  StyledCVExperienceDescription,
+  StyledSkillTag,
+  StyledCVPageContentPassions,
+  StyledCVPageContentHeader,
+  StyledCVPageContentDetailsContainer,
+  } from 'src/components/partials/CV/PageCvContent/PageCVContent.styles';
+
+
+  export const StyledCVPDFContentHeader = styled(StyledCVPageContentHeader)`
+  margin: 10px 10px 0 10px !important;
+  padding: 15px 20px !important;
+`;
+
+export const StyledCVPDFContentDetailsContainer = styled(StyledCVPageContentDetailsContainer)`
+  margin: 0 10px !important;
+  padding: 0 !important;
+`;
 
 export const StyledCVPDFQuote = styled.div`
   width: 105px;
@@ -30,6 +54,89 @@ export const StyledCVPDFQuote = styled.div`
       }
     }
   }
+`;
+
+export const StyledCVPDFContentPassions = styled(StyledCVPageContentPassions)`
+  padding: 10px;
+  border-radius: 20px;
+  margin-right: 10px;
+  margin-bottom: 0;
+  margin-top: 10px;
+  p {
+    color: ${COLORS.darkGrayFont};
+    font-size: 8px;
+  }
+`;
+
+export const StyledCVPDFStory = styled(StyledCVPageContentStory)`
+    margin-top: 10px;
+    margin-bottom: 10px;
+    p {
+      font-size: 10px;
+      line-height: 12px;
+    } 
+`;
+
+export const StyledCVPDFExperienceLi = styled(StyledCVExperienceLi)`
+  > div {
+      padding: 0px 15px 10px;
+    }
+`;
+
+export const StyledCVPDFExperienceDescription = styled(StyledCVExperienceDescription)`
+  font-size: 8px;
+  line-height: 10px;
+  > div {
+    margin-bottom: 5px;
+  }
+  ::before {
+    top: 0;
+  }
+`;
+
+export const StyledCVPFSkillTag = styled(StyledSkillTag)`
+    font-size: 8px;
+    line-height: 10px;
+    padding: 2px 5px;
+    margin-right: 5px;
+`;
+
+export const StyledCVPDFExperienceDate = styled(StyledCVExperienceDate)`
+  min-width: 90px;
+  max-width: 90px;
+  font-size: 10px;
+  line-height: 12px;
+`;
+
+export const StyledCVPDFContentExperience = styled(StyledCVPageContentExperience)`
+  padding: 10px 20px;
+  border-radius: 20px;
+  margin: 10px 0;
+`;
+
+export const StyledCVPDFContentInformations = styled(StyledCVPageContentInformations)`
+    padding: 10px;
+    border-radius: 20px;
+    margin-right: 10px;
+    margin-bottom: 0;
+    margin-top: 10px;
+    .subtitle {
+      color: #979797;
+      font-size: 10px;
+      .uk-icon {
+        color: ${COLORS.primaryOrange};
+        svg {
+          height: 8px;
+          width: 8px;
+          margin-right: 5px;
+        }
+      }
+    }
+    .content {
+      font-size: 10px;
+      padding-left: 13px;
+      margin-top: 0;
+    }
 `;
 
 export const StyledCVPDFH1 = styled.h1`
@@ -70,4 +177,27 @@ export const StyledCVPDFPage = styled.div`
     p {
         margin: 0;
     }
+`;
+
+export const StyledCVPDFProfilePicture = styled(StyledCVProfilePicture)`
+  display: block;
+  margin: auto;
+  width: 105px;
+  height: 190px;
+  position: relative;
+  .picture {
+    width: 105px;
+    height: 190px;
+    border-radius: 859px 909px 729px 909px;
+    background-image: ${(props) => {
+      return `url('${props.imgSrc}')`;
+    }};
+    background-position: 66% 39%;
+    position: unset;
+    background-size: cover;
+    transform: unset;
+  }
+  .pseudo {
+    display: none;
+  }
 `;

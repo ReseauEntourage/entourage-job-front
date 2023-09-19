@@ -1,43 +1,34 @@
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
-  CV_COLORS,
-  StyledCVExperienceDate,
-  StyledCVExperienceDateMobile,
-  StyledCVExperienceDescription,
-  StyledCVExperienceLi,
-  StyledCVPageContentDetailsContainer,
-  StyledCVPageContentExperience,
-  StyledCVPageContentHeader,
-  StyledCVPageContentInformations,
-  StyledCVPageContentPassions,
-  StyledCVPageContentStory,
-  StyledCVProfilePicture,
   StyledLeftColumn,
   StyledRightColumn,
-  StyledSkillTag,
 } from '../../partials/CV/PageCvContent/PageCVContent.styles';
-import { H2, H4, H5 } from '../../utils/Headings';
 import { CVShape } from '../CV.shape';
 import { CVCareerPathSentenceNew } from 'src/components/cv/CVCareerPathSentence';
-import { Grid, SimpleLink, Icon } from 'src/components/utils';
+import { Icon } from 'src/components/utils';
 import { CONTRACTS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import {
-  addPrefix,
-  formatParagraph,
-  sortByOrder,
-  sortByName,
-  findConstantFromValue,
-} from 'src/utils';
+import { sortByOrder, findConstantFromValue } from 'src/utils';
 import {
   StyledCVPDFPage,
   StyledCVPDFH1,
   StyledCVPDFQuote,
   StyledCVPDFCareerPath,
   StyledCVPDFTitle,
+  StyledCVPDFProfilePicture,
+  StyledCVPDFStory,
+  StyledCVPDFExperienceLi,
+  StyledCVPDFExperienceDescription,
+  StyledCVPFSkillTag,
+  StyledCVPDFExperienceDate,
+  StyledCVPDFContentInformations,
+  StyledCVPDFContentExperience,
+  StyledCVPDFContentPassions,
+  StyledCVPDFContentHeader,
+  StyledCVPDFContentDetailsContainer,
 } from './CVPDF.styles';
 import 'moment/locale/fr';
 
@@ -50,19 +41,29 @@ export const CVPDF = ({ cv, page }) => {
     (cv.businessLines && cv.businessLines.length > 0);
   console.log(cv);
 
+  const [isExperiencesOnPageTwo, setisExperiencesOnPageTwo] =
+    useState<boolean>(false);
+  const [isFormationOnPageOne, setIsFormationOnPageOne] =
+    useState<boolean>(false);
+
+  useEffect(() => {
+    if (cv.experiences?.length + cv.formations?.length <= 4) {
+      setIsFormationOnPageOne(true);
+    }
+    if (cv.experiences?.length > 4) {
+      setisExperiencesOnPageTwo(true);
+    }
+  }, [cv]);
+
   const pages = [
     // First Page
     <StyledCVPDFPage className="uk-background-muted uk-flex uk-flex-column">
-      <StyledCVPageContentHeader>
+      <StyledCVPDFContentHeader>
         <div id="header-picture-share">
-          <StyledCVProfilePicture
-            imgSrc="https://entourage-job-preprod.s3.amazonaws.com/images/c67bcb92-fbd6-471a-8c96-0ecdbf37006d.Progress.jpg?1693841396903"
-            // imgSrc={process.env.AWSS3_CDN_URL + addPrefix(cv.urlImg)}
-            className="pdfVersion"
-          >
+          <StyledCVPDFProfilePicture imgSrc="https://entourage-job-preprod.s3.amazonaws.com/images/c67bcb92-fbd6-471a-8c96-0ecdbf37006d.Progress.jpg?1693841396903">
             <div className="picture" />
             <div className="pseudo" />
-          </StyledCVProfilePicture>
+          </StyledCVPDFProfilePicture>
           {cv.catchphrase && (
             <StyledCVPDFQuote>
               <Icon name="quote-right" />
@@ -85,27 +86,27 @@ export const CVPDF = ({ cv, page }) => {
               </StyledCVPDFCareerPath>
             )}
             {cv.story && (
-              <StyledCVPageContentStory className="pdfVersion">
+              <StyledCVPDFStory>
                 <p>{cv.story}</p>
-              </StyledCVPageContentStory>
+              </StyledCVPDFStory>
             )}
             <div className="skill-tags">
               {cv.skills.length > 0 &&
                 cv.skills.map(({ name, id }, key) => {
                   return (
-                    <StyledSkillTag className="pdfVersion" key={`${key}-${id}`}>
+                    <StyledCVPFSkillTag key={`${key}-${id}`}>
                       {name}
-                    </StyledSkillTag>
+                    </StyledCVPFSkillTag>
                   );
                 })}
             </div>
           </div>
         </div>
-      </StyledCVPageContentHeader>
-      <StyledCVPageContentDetailsContainer>
+      </StyledCVPDFContentHeader>
+      <StyledCVPDFContentDetailsContainer>
         <StyledLeftColumn>
           {/* use Information Container to display contat informations */}
-          <StyledCVPageContentInformations className="pdfVersion">
+          <StyledCVPDFContentInformations>
             <StyledCVPDFTitle>Contact</StyledCVPDFTitle>
             <ul>
               {cv.user.candidat.phone && (
@@ -148,8 +149,8 @@ export const CVPDF = ({ cv, page }) => {
                 </li>
               )}
             </ul>
-          </StyledCVPageContentInformations>
-          <StyledCVPageContentInformations className="pdfVersion">
+          </StyledCVPDFContentInformations>
+          <StyledCVPDFContentInformations>
             <StyledCVPDFTitle>Informations</StyledCVPDFTitle>
             <ul>
               {cv.contracts && cv.contracts.length > 0 && (
@@ -205,27 +206,28 @@ export const CVPDF = ({ cv, page }) => {
                 </li>
               )}
             </ul>
-          </StyledCVPageContentInformations>
+          </StyledCVPDFContentInformations>
           {cv.passions?.length > 0 && (
-            <StyledCVPageContentPassions className="pdfVersion">
+            <StyledCVPDFContentPassions>
               <StyledCVPDFTitle>Mes Passions</StyledCVPDFTitle>
               <ul>
                 {cv?.passions?.map(({ name }) => {
                   return <p>{name}</p>;
                 })}
               </ul>
-            </StyledCVPageContentPassions>
+            </StyledCVPDFContentPassions>
           )}
         </StyledLeftColumn>
         <StyledRightColumn>
           {cv.experiences?.length > 0 && (
-            <StyledCVPageContentExperience className="pdfVersion">
+            <StyledCVPDFContentExperience>
               <StyledCVPDFTitle>Expérience professionnelle</StyledCVPDFTitle>
               <ul>
-                {cv.experiences?.map((experience) => {
+                {cv.experiences?.map((experience, i) => {
+                  if (i > 3) return null;
                   return (
-                    <StyledCVExperienceLi className="pdfVersion">
-                      <StyledCVExperienceDate className="pdfVersion">
+                    <StyledCVPDFExperienceLi>
+                      <StyledCVPDFExperienceDate>
                         {experience.dateStart && (
                           <>
                             {experience.dateEnd
@@ -235,8 +237,8 @@ export const CVPDF = ({ cv, page }) => {
                             {moment(experience.dateStart).format('MMMM YYYY')}
                           </>
                         )}
-                      </StyledCVExperienceDate>
-                      <StyledCVExperienceDescription className="pdfVersion">
+                      </StyledCVPDFExperienceDate>
+                      <StyledCVPDFExperienceDescription>
                         {experience.title && (
                           <StyledCVPDFTitle>
                             {experience.title}
@@ -255,28 +257,28 @@ export const CVPDF = ({ cv, page }) => {
                         <div>
                           {experience.skills.map(({ name, id }) => {
                             return (
-                              <StyledSkillTag key={id} className="pdfVersion">
+                              <StyledCVPFSkillTag key={id}>
                                 {name}
-                              </StyledSkillTag>
+                              </StyledCVPFSkillTag>
                             );
                           })}
                         </div>
-                      </StyledCVExperienceDescription>
-                    </StyledCVExperienceLi>
+                      </StyledCVPDFExperienceDescription>
+                    </StyledCVPDFExperienceLi>
                   );
                 })}
               </ul>
-            </StyledCVPageContentExperience>
+            </StyledCVPDFContentExperience>
           )}
-          {cv.formations?.length > 0 && (
+          {cv.formations?.length > 0 && isFormationOnPageOne && (
             // using same style for Formations and Experiences, but change in fields
-            <StyledCVPageContentExperience className="pdfVersion">
+            <StyledCVPDFContentExperience>
               <StyledCVPDFTitle>Formation</StyledCVPDFTitle>
               <ul>
                 {cv.formations.map((formation) => {
                   return (
-                    <StyledCVExperienceLi className="pdfVersion">
-                      <StyledCVExperienceDate className="pdfVersion">
+                    <StyledCVPDFExperienceLi>
+                      <StyledCVPDFExperienceDate>
                         {formation.dateStart && (
                           <>
                             {formation.dateEnd
@@ -286,8 +288,8 @@ export const CVPDF = ({ cv, page }) => {
                             {moment(formation.dateStart).format('MMMM YYYY')}
                           </>
                         )}
-                      </StyledCVExperienceDate>
-                      <StyledCVExperienceDescription className="pdfVersion">
+                      </StyledCVPDFExperienceDate>
+                      <StyledCVPDFExperienceDescription>
                         {formation.title && (
                           <StyledCVPDFTitle>{formation.title}</StyledCVPDFTitle>
                         )}
@@ -306,25 +308,184 @@ export const CVPDF = ({ cv, page }) => {
                         <div>
                           {formation.skills.map(({ name, id }) => {
                             return (
-                              <StyledSkillTag key={id} className="pdfVersion">
-                                {name}
-                              </StyledSkillTag>
+                              <StyledCVPFSkillTag>{name}</StyledCVPFSkillTag>
                             );
                           })}
                         </div>
-                      </StyledCVExperienceDescription>
-                    </StyledCVExperienceLi>
+                      </StyledCVPDFExperienceDescription>
+                    </StyledCVPDFExperienceLi>
                   );
                 })}
               </ul>
-            </StyledCVPageContentExperience>
+            </StyledCVPDFContentExperience>
           )}
         </StyledRightColumn>
-      </StyledCVPageContentDetailsContainer>
+      </StyledCVPDFContentDetailsContainer>
     </StyledCVPDFPage>,
 
     // Second Page
-    <StyledCVPDFPage />,
+    <StyledCVPDFPage>
+      <StyledCVPDFContentDetailsContainer>
+        <StyledLeftColumn>
+          {/* use Information Container to display profile picture */}
+          <StyledCVPDFContentInformations>
+            <StyledCVPDFProfilePicture
+              imgSrc="https://entourage-job-preprod.s3.amazonaws.com/images/c67bcb92-fbd6-471a-8c96-0ecdbf37006d.Progress.jpg?1693841396903"
+              // imgSrc={process.env.AWSS3_CDN_URL + addPrefix(cv.urlImg)}
+            >
+              <div className="picture" />
+              <div className="pseudo" />
+            </StyledCVPDFProfilePicture>
+          </StyledCVPDFContentInformations>
+          {/* use Information Container to display contat informations */}
+          <StyledCVPDFContentInformations>
+            <StyledCVPDFTitle>Contact</StyledCVPDFTitle>
+            <ul>
+              {cv.user.candidat.phone && (
+                <li>
+                  <div>
+                    <p className="subtitle">
+                      <Icon name="phone" /> <span>Numéro de téléphone</span>
+                    </p>
+                    <p className="content">{cv.user.candidat.phone}</p>
+                  </div>
+                </li>
+              )}
+              {cv.user.candidat.email && (
+                <li>
+                  <div>
+                    <p className="subtitle">
+                      <Icon name="mail" /> <span>Email</span>
+                    </p>
+                    <p className="content">{cv.user.candidat.email}</p>
+                  </div>
+                </li>
+              )}
+              {locations && locations.length > 0 && (
+                <li>
+                  <div>
+                    <p className="subtitle">
+                      <Icon name="location" /> <span>Localisation</span>
+                    </p>
+                    <p className="content">
+                      {locations
+                        .map(({ name }) => {
+                          return findConstantFromValue(
+                            name,
+                            DEPARTMENTS_FILTERS
+                          ).label;
+                        })
+                        .join(' / ')}
+                    </p>
+                  </div>
+                </li>
+              )}
+            </ul>
+          </StyledCVPDFContentInformations>
+        </StyledLeftColumn>
+        <StyledRightColumn>
+          {cv.experiences?.length > 0 && isExperiencesOnPageTwo && (
+            <StyledCVPDFContentExperience>
+              <ul>
+                {cv.experiences?.map((experience, i) => {
+                  if (i < 3) return null;
+                  return (
+                    <StyledCVPDFExperienceLi>
+                      <StyledCVPDFExperienceDate>
+                        {experience.dateStart && (
+                          <>
+                            {experience.dateEnd
+                              ? moment(experience.dateEnd).format('MMMM YYYY')
+                              : "Aujourd'hui"}
+                            <br />
+                            {moment(experience.dateStart).format('MMMM YYYY')}
+                          </>
+                        )}
+                      </StyledCVPDFExperienceDate>
+                      <StyledCVPDFExperienceDescription>
+                        {experience.title && (
+                          <StyledCVPDFTitle>
+                            {experience.title}
+                          </StyledCVPDFTitle>
+                        )}
+                        {(experience.company || experience.location) && (
+                          <div className="name-gray">
+                            {experience.company}
+                            {experience.company && experience.location && ' - '}
+                            {experience.location}
+                          </div>
+                        )}
+                        {experience.description && (
+                          <div>{experience.description}</div>
+                        )}
+                        <div>
+                          {experience.skills.map(({ name, id }) => {
+                            return (
+                              <StyledCVPFSkillTag key={id}>
+                                {name}
+                              </StyledCVPFSkillTag>
+                            );
+                          })}
+                        </div>
+                      </StyledCVPDFExperienceDescription>
+                    </StyledCVPDFExperienceLi>
+                  );
+                })}
+              </ul>
+            </StyledCVPDFContentExperience>
+          )}
+          {cv.formations?.length > 0 && !isFormationOnPageOne && (
+            // using same style for Formations and Experiences, but change in fields
+            <StyledCVPDFContentExperience>
+              <StyledCVPDFTitle>Formation</StyledCVPDFTitle>
+              <ul>
+                {cv.formations.map((formation) => {
+                  return (
+                    <StyledCVPDFExperienceLi>
+                      <StyledCVPDFExperienceDate>
+                        {formation.dateStart && (
+                          <>
+                            {formation.dateEnd
+                              ? moment(formation.dateEnd).format('MMMM YYYY')
+                              : "Aujourd'hui"}
+                            <br />
+                            {moment(formation.dateStart).format('MMMM YYYY')}
+                          </>
+                        )}
+                      </StyledCVPDFExperienceDate>
+                      <StyledCVPDFExperienceDescription>
+                        {formation.title && (
+                          <StyledCVPDFTitle>{formation.title}</StyledCVPDFTitle>
+                        )}
+                        {(formation.institution || formation.location) && (
+                          <div className="name-gray">
+                            {formation.institution}
+                            {formation.institution &&
+                              formation.location &&
+                              ' - '}
+                            {formation.location}
+                          </div>
+                        )}
+                        {formation.description && (
+                          <div>{formation.description}</div>
+                        )}
+                        <div>
+                          {formation.skills.map(({ name, id }) => {
+                            return (
+                              <StyledCVPFSkillTag>{name}</StyledCVPFSkillTag>
+                            );
+                          })}
+                        </div>
+                      </StyledCVPDFExperienceDescription>
+                    </StyledCVPDFExperienceLi>
+                  );
+                })}
+              </ul>
+            </StyledCVPDFContentExperience>
+          )}
+        </StyledRightColumn>
+      </StyledCVPDFContentDetailsContainer>
+    </StyledCVPDFPage>,
   ];
 
   return (
