@@ -162,6 +162,7 @@ export const PageCVContent = ({
             <p>Une suggestion, une info à partager&nbsp;?</p>
             <Button
               style="custom-secondary-inverted"
+              disabled={actionDisabled}
               onClick={() => {
                 gaEvent(GA_TAGS.PAGE_CV_CONTACTEZ_MOI_CLIC);
                 fbEvent(FB_TAGS.MESSAGE_OPEN);

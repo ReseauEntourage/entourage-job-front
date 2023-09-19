@@ -37,19 +37,26 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
   hidden = false,
   onChange,
   onBlur,
-  openMenuOnClick = true,
+  openMenuOnClick = false,
   showLabel = false,
   inputRef,
   maxChar,
   maxItems,
 }: SelectAsyncProps<T>) {
   const [remainingItems, setRemainingItems] = useState<number>(maxItems);
+  const [shouldDisplayOptions, setShouldDisplayOptions] =
+    useState<boolean>(true);
 
   useEffect(() => {
     const receivedValues = value as FilterConstant[];
     setRemainingItems(
-      receivedValues ? maxItems - receivedValues.length : maxItems
+      receivedValues ? maxItems - receivedValues?.length : maxItems
     );
+    if (maxItems && receivedValues) {
+      setShouldDisplayOptions(receivedValues.length < maxItems);
+    } else {
+      setShouldDisplayOptions(true);
+    }
   }, [value, maxItems]);
 
   if (hidden) {
@@ -59,9 +66,10 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
   const handleChange = (selectedOptions) => {
     const existingValues = value as FilterConstant[];
     if (
-      selectedOptions &&
-      (existingValues.length > selectedOptions.length ||
-        maxItems - selectedOptions.length >= 0)
+      !maxItems ||
+      !selectedOptions ||
+      existingValues?.length > selectedOptions?.length ||
+      maxItems - selectedOptions?.length >= 0
     ) {
       onChange(selectedOptions);
     }
@@ -93,7 +101,9 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
           onBlur={onBlur}
           openMenuOnClick={openMenuOnClick}
           formatCreateLabel={(userInput) => {
-            return `Créer "${userInput}"`;
+            return shouldDisplayOptions
+              ? `Créer "${userInput}"`
+              : 'Vous avez atteint le maximum';
           }}
           ref={inputRef}
           max={maxItems}

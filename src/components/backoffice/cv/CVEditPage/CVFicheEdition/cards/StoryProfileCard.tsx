@@ -16,15 +16,16 @@ export const StoryProfileCard = ({
     <div className="uk-card uk-card-default uk-card-body">
       <Grid gap="small" between eachWidths={['expand', 'auto']}>
         <h3 className="uk-card-title">
-          Mon <span className="uk-text-primary">histoire</span>
+          Ma <span className="uk-text-primary">présentation</span>
         </h3>
         {onChange && (
           <ButtonIcon
             name="pencil"
+            dataTestId="test-story-edit-icon"
             onClick={() => {
               openModal(
                 <ModalEdit
-                  title="Édition - Mon histoire"
+                  title="Édition - Ma présentation"
                   formSchema={formEditStory}
                   defaultValues={{ story: description }}
                   onSubmit={(fields, closeModal) => {
@@ -39,10 +40,12 @@ export const StoryProfileCard = ({
       </Grid>
 
       {description ? (
-        <p>{formatParagraph(description)}</p>
+        <p data-testid="cv-edit-story-content">
+          {formatParagraph(description)}
+        </p>
       ) : (
         <p className="uk-text-italic">
-          Aucune histoire n&apos;a encore été ajoutée
+          Aucune présentation n&apos;a encore été ajoutée
         </p>
       )}
     </div>

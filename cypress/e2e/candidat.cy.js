@@ -180,16 +180,37 @@ describe('Candidat', () => {
         window.localStorage.setItem('release-version', 'v100');
       },
     });
+
+    // catchphrase
     cy.get(`[data-testid="test-catchphrase-edit-icon"]`)
       .scrollIntoView()
       .click();
     const catchPhrase = 'hello my name is Mike';
-    cy.get('#form-catchphrase-catchphrase').type(catchPhrase);
+    cy.get('#form-catchphrase-catchphrase').clear().type(catchPhrase);
     cy.get(`[data-testid="form-confirm-form-catchphrase"]`).click();
     cy.get(`[data-testid="cv-edit-catchphrase-content"]`).should(
       'contain',
       catchPhrase
     );
+
+    // presentation
+    cy.get(`[data-testid="test-story-edit-icon"]`).scrollIntoView().click();
+    const story = 'Here I present';
+    cy.get('#form-story').clear().type(story);
+    cy.get(`[data-testid="form-confirm-form-story"]`).click();
+    cy.get(`[data-testid="cv-edit-story-content"]`).should('contain', story);
+
+    // atouts/skills
+    cy.get(`[data-testid="test-skills-edit-icon"]`).scrollIntoView().click();
+    const skill1 = 'skill1';
+    const skill2 = 'skill2';
+    cy.get(`[data-testid="form-skills-skill1"]`).clear().type(skill1);
+    cy.get(`[data-testid="form-skills-skill2"]`).clear().type(skill2);
+    cy.get(`[data-testid="form-confirm-form-skills"]`).click();
+    cy.get(`[data-testid="cv-edit-skill1-content"]`).should('contain', skill1);
+    cy.get(`[data-testid="cv-edit-skill2-content"]`).should('contain', skill2);
+
+    // formations
     cy.get(`[data-testid="button-cv-add-formations"]`).scrollIntoView().click();
     cy.get(`[data-testid="form-formation-title"]`)
       .scrollIntoView()
@@ -214,6 +235,7 @@ describe('Candidat', () => {
       .scrollIntoView()
       .click();
 
+    // experience
     cy.get(`[data-testid="button-cv-add-experiences"]`)
       .scrollIntoView()
       .click();

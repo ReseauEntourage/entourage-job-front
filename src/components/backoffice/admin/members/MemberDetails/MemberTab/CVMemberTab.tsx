@@ -1,6 +1,6 @@
 import React from 'react';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
-import { CVPageContent } from 'src/components/backoffice/cv/CVPageContent';
+import { CVEditPage } from 'src/components/backoffice/cv/CVEditPage';
 import { ErrorMessage } from 'src/components/backoffice/cv/ErrorMessage';
 import { Section } from 'src/components/utils';
 import { OverlayLoader } from 'src/components/utils/OverlayLoader';
@@ -31,5 +31,5 @@ export function CVMemberTab({ candidateId }: CVMemberTabProps) {
     );
   }
 
-  return <CVPageContent candidateId={candidateId} cv={cv} setCV={setCV} />;
+  return <CVEditPage candidateId={candidateId} cv={cv} setCV={setCV} />;
 }

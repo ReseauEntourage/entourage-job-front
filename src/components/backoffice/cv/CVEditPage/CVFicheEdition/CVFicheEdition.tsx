@@ -1,24 +1,24 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { CV } from 'src/api/types';
-import {
-  CVEditCareerPath,
-  CVEditCatchphrase,
-  CVEditPicture,
-  CVEditReviews,
-} from 'src/components/backoffice/cv/CVFicheEdition/CVEdit';
-import {
-  InfoProfileCard,
-  PassionsCard,
-  SkillsCard,
-  StoryProfileCard,
-} from 'src/components/cards';
 import { Grid, Img } from 'src/components/utils';
 
 import { CV_STATUS } from 'src/constants';
 import { AdminZone } from 'src/constants/departements';
 import { useMount, usePrevious } from 'src/hooks/utils';
+import {
+  CVEditCareerPath,
+  CVEditCatchphrase,
+  CVEditPicture,
+  CVEditReviews,
+} from './CVEdit';
 import { ExperiencesProfileCard } from './TimelineCard/ExperiencesProfileCard';
 import { FormationsProfileCard } from './TimelineCard/FormationsProfileCard';
+import {
+  InfoProfileCard,
+  PassionsCard,
+  SkillsCard,
+  StoryProfileCard,
+} from './cards';
 
 interface CVFicheEditionProps {
   cv: CV;
@@ -132,36 +132,32 @@ export const CVFicheEdition = ({
           <CVEditCatchphrase catchphrase={cv.catchphrase} onChange={onChange} />
         </Grid>
       </Grid>
-      <Grid childWidths={['1-2@s']} match>
-        <InfoProfileCard
-          contracts={cv.contracts}
-          locations={cv.locations}
-          availability={cv.availability}
-          languages={cv.languages}
-          transport={cv.transport}
-          email={email}
-          phone={phone}
-          address={address}
-          onChange={onChange}
-          userZone={userZone}
-        />
-        <Grid childWidths={['1-2@m']} match>
-          <SkillsCard list={cv.skills} onChange={onChange} />
-          <PassionsCard list={cv.passions} onChange={onChange} />
-        </Grid>
-      </Grid>
-      <Grid childWidths={['1-2@s']}>
+      <StoryProfileCard description={cv.story} onChange={onChange} />
+      <Grid childWidths={['1-2@s']} row>
         <Grid childWidths={['1-1']}>
-          <StoryProfileCard description={cv.story} onChange={onChange} />
-          <CVEditReviews reviews={cv.reviews} onChange={onChange} />
-          <FormationsProfileCard
-            formations={cv.formations}
+          <SkillsCard list={cv.skills} onChange={onChange} />
+          <InfoProfileCard
+            contracts={cv.contracts}
+            locations={cv.locations}
+            availability={cv.availability}
+            languages={cv.languages}
+            transport={cv.transport}
+            email={email}
+            phone={phone}
+            address={address}
             onChange={onChange}
+            userZone={userZone}
           />
+          <PassionsCard list={cv.passions} onChange={onChange} />
+          <CVEditReviews reviews={cv.reviews} onChange={onChange} />
         </Grid>
         <Grid childWidths={['1-1']}>
           <ExperiencesProfileCard
             experiences={cv.experiences}
+            onChange={onChange}
+          />
+          <FormationsProfileCard
+            formations={cv.formations}
             onChange={onChange}
           />
         </Grid>
