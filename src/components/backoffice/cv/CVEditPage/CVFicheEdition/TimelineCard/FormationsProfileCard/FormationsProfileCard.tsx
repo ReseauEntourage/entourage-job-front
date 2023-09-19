@@ -55,10 +55,10 @@ export const FormationsProfileCard = ({
                   {
                     ...fields,
                     dateStart: fields.dateStart
-                      ? (moment(fields.dateStart).toDate() as Date)
+                      ? moment(fields.dateStart).toDate()
                       : null,
                     dateEnd: fields.dateEnd
-                      ? (moment(fields.dateEnd).toDate() as Date)
+                      ? moment(fields.dateEnd).toDate()
                       : null,
                     skills: fields.skills?.map((skill, i) => {
                       return {

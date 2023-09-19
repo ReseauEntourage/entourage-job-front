@@ -27,6 +27,7 @@ export const SkillsCard = ({ list = [], onChange }: SkillsCardProps) => {
         {onChange && (
           <ButtonIcon
             name="pencil"
+            dataTestId="test-skills-edit-icon"
             onClick={() => {
               openModal(
                 <ModalEdit
@@ -62,7 +63,11 @@ export const SkillsCard = ({ list = [], onChange }: SkillsCardProps) => {
         {list.length !== 0 ? (
           list.map(({ name }, i) => {
             return (
-              <li id={i.toString()} key={i}>
+              <li
+                id={i.toString()}
+                key={i}
+                data-testid={`cv-edit-skill${i + 1}-content`}
+              >
                 {name}
               </li>
             );

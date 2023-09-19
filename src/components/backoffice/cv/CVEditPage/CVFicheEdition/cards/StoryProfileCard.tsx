@@ -21,6 +21,7 @@ export const StoryProfileCard = ({
         {onChange && (
           <ButtonIcon
             name="pencil"
+            dataTestId="test-story-edit-icon"
             onClick={() => {
               openModal(
                 <ModalEdit
@@ -39,7 +40,9 @@ export const StoryProfileCard = ({
       </Grid>
 
       {description ? (
-        <p>{formatParagraph(description)}</p>
+        <p data-testid="cv-edit-story-content">
+          {formatParagraph(description)}
+        </p>
       ) : (
         <p className="uk-text-italic">
           Aucune présentation n&apos;a encore été ajoutée

@@ -49,8 +49,12 @@ export const ExperiencesProfileCard = ({
                   ...sortedExperiences,
                   {
                     ...fields,
-                    dateStart: moment(fields.dateStart).toDate() as Date,
-                    dateEnd: moment(fields.dateEnd).toDate() as Date,
+                    dateStart: fields.dateStart
+                      ? moment(fields.dateStart).toDate()
+                      : null,
+                    dateEnd: fields.dateEnd
+                      ? moment(fields.dateEnd).toDate()
+                      : null,
                     skills: fields.skills?.map((skill) => {
                       return {
                         name: skill.value,

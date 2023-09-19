@@ -30,13 +30,13 @@ const pusher = new Pusher(process.env.PUSHER_API_KEY, {
   forceTLS: true,
 });
 
-interface CVPageContentProps {
+interface CVEditPageProps {
   cv: CV;
   candidateId: string;
   setCV: (updatedCV: CV) => void;
 }
 
-export const CVEditPage = ({ candidateId, cv, setCV }: CVPageContentProps) => {
+export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
   const [cvVersion, setCvVersion] = useState<string>();
   const [imageUrl, setImageUrl] = useState<string>();
   const [previewGenerating, setPreviewGenerating] = useState(false);
