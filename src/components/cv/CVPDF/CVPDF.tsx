@@ -1,17 +1,16 @@
 import moment from 'moment';
-import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
+import { CV } from 'src/api/types';
+import { CVCareerPathSentenceNew } from 'src/components/cv/CVCareerPathSentence';
 import {
   StyledLeftColumn,
   StyledRightColumn,
-} from '../../partials/CV/PageCvContent/PageCVContent.styles';
-import { CVShape } from '../CV.shape';
-import { CVCareerPathSentenceNew } from 'src/components/cv/CVCareerPathSentence';
+} from 'src/components/partials/CV/PageCvContent/PageCVContent.styles';
 import { Icon } from 'src/components/utils';
 import { CONTRACTS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import { sortByOrder, findConstantFromValue } from 'src/utils';
+import { sortByOrder, findConstantFromValue, addPrefix } from 'src/utils';
 import {
   StyledCVPDFPage,
   StyledCVPDFH1,
@@ -32,7 +31,12 @@ import {
 } from './CVPDF.styles';
 import 'moment/locale/fr';
 
-export const CVPDF = ({ cv, page }) => {
+interface CVPDFProps {
+  cv: CV;
+  page: number;
+}
+
+export const CVPDF = ({ cv, page }: CVPDFProps) => {
   const locations =
     cv.locations && cv.locations.length > 0 ? sortByOrder(cv.locations) : [];
 
@@ -60,7 +64,9 @@ export const CVPDF = ({ cv, page }) => {
     <StyledCVPDFPage className="uk-background-muted uk-flex uk-flex-column">
       <StyledCVPDFContentHeader>
         <div id="header-picture-share">
-          <StyledCVPDFProfilePicture imgSrc="https://entourage-job-preprod.s3.amazonaws.com/images/c67bcb92-fbd6-471a-8c96-0ecdbf37006d.Progress.jpg?1693841396903">
+          <StyledCVPDFProfilePicture
+            imgSrc={process.env.AWSS3_CDN_URL + addPrefix(cv.urlImg)}
+          >
             <div className="picture" />
             <div className="pseudo" />
           </StyledCVPDFProfilePicture>
@@ -330,8 +336,7 @@ export const CVPDF = ({ cv, page }) => {
           {/* use Information Container to display profile picture */}
           <StyledCVPDFContentInformations>
             <StyledCVPDFProfilePicture
-              imgSrc="https://entourage-job-preprod.s3.amazonaws.com/images/c67bcb92-fbd6-471a-8c96-0ecdbf37006d.Progress.jpg?1693841396903"
-              // imgSrc={process.env.AWSS3_CDN_URL + addPrefix(cv.urlImg)}
+              imgSrc={process.env.AWSS3_CDN_URL + addPrefix(cv.urlImg)}
             >
               <div className="picture" />
               <div className="pseudo" />
@@ -497,13 +502,4 @@ export const CVPDF = ({ cv, page }) => {
           })}
     </div>
   );
-};
-
-CVPDF.propTypes = {
-  cv: CVShape.isRequired,
-  page: PropTypes.number,
-};
-
-CVPDF.defaultProps = {
-  page: null,
 };

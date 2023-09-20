@@ -404,7 +404,7 @@ export const StyledCVExperienceLi = styled.div`
     display: inline-block;
     vertical-align: top;
     padding: 10px 15px;
-  } 
+  }
 `;
 
 export const StyledCVExperienceDate = styled.div`

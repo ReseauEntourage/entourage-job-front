@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
-import { 
+import {
   StyledCVProfilePicture,
   StyledCVPageContentStory,
   StyledCVPageContentInformations,
@@ -12,15 +11,17 @@ import {
   StyledCVPageContentPassions,
   StyledCVPageContentHeader,
   StyledCVPageContentDetailsContainer,
-  } from 'src/components/partials/CV/PageCvContent/PageCVContent.styles';
+} from 'src/components/partials/CV/PageCvContent/PageCVContent.styles';
+import { COLORS } from 'src/constants/styles';
 
-
-  export const StyledCVPDFContentHeader = styled(StyledCVPageContentHeader)`
+export const StyledCVPDFContentHeader = styled(StyledCVPageContentHeader)`
   margin: 10px 10px 0 10px !important;
   padding: 15px 20px !important;
 `;
 
-export const StyledCVPDFContentDetailsContainer = styled(StyledCVPageContentDetailsContainer)`
+export const StyledCVPDFContentDetailsContainer = styled(
+  StyledCVPageContentDetailsContainer
+)`
   margin: 0 10px !important;
   padding: 0 !important;
 `;
@@ -69,21 +70,23 @@ export const StyledCVPDFContentPassions = styled(StyledCVPageContentPassions)`
 `;
 
 export const StyledCVPDFStory = styled(StyledCVPageContentStory)`
-    margin-top: 10px;
-    margin-bottom: 10px;
-    p {
-      font-size: 10px;
-      line-height: 12px;
-    } 
+  margin-top: 10px;
+  margin-bottom: 10px;
+  p {
+    font-size: 10px;
+    line-height: 12px;
+  }
 `;
 
 export const StyledCVPDFExperienceLi = styled(StyledCVExperienceLi)`
   > div {
-      padding: 0px 15px 10px;
-    }
+    padding: 0px 15px 10px;
+  }
 `;
 
-export const StyledCVPDFExperienceDescription = styled(StyledCVExperienceDescription)`
+export const StyledCVPDFExperienceDescription = styled(
+  StyledCVExperienceDescription
+)`
   font-size: 8px;
   line-height: 10px;
   > div {
@@ -95,10 +98,10 @@ export const StyledCVPDFExperienceDescription = styled(StyledCVExperienceDescrip
 `;
 
 export const StyledCVPFSkillTag = styled(StyledSkillTag)`
-    font-size: 8px;
-    line-height: 10px;
-    padding: 2px 5px;
-    margin-right: 5px;
+  font-size: 8px;
+  line-height: 10px;
+  padding: 2px 5px;
+  margin-right: 5px;
 `;
 
 export const StyledCVPDFExperienceDate = styled(StyledCVExperienceDate)`
@@ -108,35 +111,39 @@ export const StyledCVPDFExperienceDate = styled(StyledCVExperienceDate)`
   line-height: 12px;
 `;
 
-export const StyledCVPDFContentExperience = styled(StyledCVPageContentExperience)`
+export const StyledCVPDFContentExperience = styled(
+  StyledCVPageContentExperience
+)`
   padding: 10px 20px;
   border-radius: 20px;
   margin: 10px 0;
 `;
 
-export const StyledCVPDFContentInformations = styled(StyledCVPageContentInformations)`
-    padding: 10px;
-    border-radius: 20px;
-    margin-right: 10px;
-    margin-bottom: 0;
-    margin-top: 10px;
-    .subtitle {
-      color: #979797;
-      font-size: 10px;
-      .uk-icon {
-        color: ${COLORS.primaryOrange};
-        svg {
-          height: 8px;
-          width: 8px;
-          margin-right: 5px;
-        }
+export const StyledCVPDFContentInformations = styled(
+  StyledCVPageContentInformations
+)`
+  padding: 10px;
+  border-radius: 20px;
+  margin-right: 10px;
+  margin-bottom: 0;
+  margin-top: 10px;
+  .subtitle {
+    color: #979797;
+    font-size: 10px;
+    .uk-icon {
+      color: ${COLORS.primaryOrange};
+      svg {
+        height: 8px;
+        width: 8px;
+        margin-right: 5px;
       }
     }
-    .content {
-      font-size: 10px;
-      padding-left: 13px;
-      margin-top: 0;
-    }
+  }
+  .content {
+    font-size: 10px;
+    padding-left: 13px;
+    margin-top: 0;
+  }
 `;
 
 export const StyledCVPDFH1 = styled.h1`
@@ -153,30 +160,29 @@ export const StyledCVPDFCareerPath = styled.div`
 `;
 
 export const StyledCVPDFTitle = styled.h6`
-    font-size: 10px;
-    line-height: 12px;
-    font-weight: 700;
-    margin-bottom: 5px;
+  font-size: 10px;
+  line-height: 12px;
+  font-weight: 700;
+  margin-bottom: 5px;
 `;
 
-
 export const StyledCVPDFPage = styled.div`
-    height: 1122px;
-    width: 794px;
-    margin-bottom: 50px;
-    background-color: #fff8f5;
-    display: flex;
-    flex-direction: column;
-    ul {
-        margin: 0;
-        padding-left: 0;
-        li {
-            list-style: none;
-        }
+  height: 1122px;
+  width: 794px;
+  margin-bottom: 50px;
+  background-color: #fff8f5;
+  display: flex;
+  flex-direction: column;
+  ul {
+    margin: 0;
+    padding-left: 0;
+    li {
+      list-style: none;
     }
-    p {
-        margin: 0;
-    }
+  }
+  p {
+    margin: 0;
+  }
 `;
 
 export const StyledCVPDFProfilePicture = styled(StyledCVProfilePicture)`
