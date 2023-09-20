@@ -5,6 +5,7 @@ import {
   StyledAnnotationsErrorMessage,
   StyledInputLabel,
   StyledLimit,
+  StyledLimitContainer,
 } from '../../Inputs.styles';
 import { CommonInputProps } from '../../Inputs.types';
 import {
@@ -109,7 +110,8 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
           max={maxItems}
           maxLength={maxChar}
           isValidNewOption={(inputValue) => {
-            return maxChar ? inputValue.length < maxChar : true;
+            const isEmpty = inputValue.trim().length === 0;
+            return maxChar ? inputValue.length < maxChar && !isEmpty : !isEmpty;
           }}
         />
       </StyledSelect>
@@ -117,18 +119,20 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
         <div>
           <StyledAnnotationsErrorMessage error={error} />
         </div>
-        {maxChar && (
-          <StyledLimit>
-            <span>
-              Chaque élément ne doit pas dépasser {maxChar} caractères.
-            </span>
-          </StyledLimit>
-        )}
-        {maxItems && (
-          <StyledLimit warning={remainingItems <= 0}>
-            <span>{remainingItems} élément(s) restant(s)</span>
-          </StyledLimit>
-        )}
+        <StyledLimitContainer>
+          {maxChar && (
+            <StyledLimit>
+              <span>
+                Chaque élément ne doit pas dépasser {maxChar} caractères.
+              </span>
+            </StyledLimit>
+          )}
+          {maxItems && (
+            <StyledLimit warning={remainingItems <= 0}>
+              <span>{remainingItems} élément(s) restant(s)</span>
+            </StyledLimit>
+          )}
+        </StyledLimitContainer>
       </StyledAnnotations>
     </StyledSelectContainer>
   );

@@ -252,6 +252,15 @@ export const StyledRightColumn = styled.div`
   flex: 1;
 `;
 
+export const StyledTitleAccordion = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  > h2 {
+    margin-bottom: 0;
+  }
+`;
+
 export const StyledCVPageContentInformations = styled.div`
   background-color: #ffffffe5;
   padding: 30px;
@@ -427,7 +436,6 @@ export const StyledCVPageContentFooter = styled.div`
 `;
 
 export const StyledChevronIcon = styled(Icon)`
-  position: absolute;
   top: 30px;
   right: 30px;
   svg {
