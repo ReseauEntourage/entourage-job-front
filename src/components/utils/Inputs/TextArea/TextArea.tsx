@@ -42,16 +42,12 @@ export function TextArea({
 }: TextAreaProps) {
   const isMobile = useIsMobile();
 
-  const { textAreaRef, remainingLines, textAreaWidth } = useLineLimit(
-    value,
-    name,
-    onChange,
-    maxLines?.lines
-  );
+  const { textAreaRef, remainingLines, maxLinesReached, textAreaWidth } =
+    useLineLimit(value, name, onChange, maxLines?.lines);
 
   useEffect(() => {
     if (!maxLines) return null;
-    if (remainingLines <= 0) {
+    if (maxLinesReached) {
       setIsMaxLinesReached(true);
     } else {
       setIsMaxLinesReached(false);

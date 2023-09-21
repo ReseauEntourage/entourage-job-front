@@ -64,9 +64,16 @@ export const StyledAnnotationsErrorMessage = styled(FieldErrorMessage)`
   bottom: 0 !important;
 `;
 
+export const StyledLimitContainer = styled.div`
+  display: flex;
+  > :first-child {
+    margin-right: 5px;
+  }
+`;
+
 export const StyledLimit = styled.div`
   color: ${({ warning }) => {
-    return warning ? COLORS.noRed : COLORS.darkGray;
+    return warning ? COLORS.darkOrange : COLORS.darkGray;
   }};
   font-size: 12px;
   line-height: 12px;

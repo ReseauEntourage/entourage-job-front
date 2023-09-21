@@ -34,6 +34,7 @@ import {
   StyledCVExperienceDate,
   StyledCVExperienceDescription,
   StyledCVExperienceDateMobile,
+  StyledTitleAccordion,
 } from 'src/components/partials/CV/PageCvContent/PageCVContent.styles';
 import { Button, Icon } from 'src/components/utils';
 import { CarouselSwiper } from 'src/components/utils/CarouselSwiper';
@@ -231,11 +232,10 @@ export const PageCVContent = ({
               !isDesktop ? 'mobile' : ''
             }`}
           >
-            {!isDesktop && <StyledChevronIcon name="chevron-down" />}
             {isDesktop ? (
               <H4 title="Informations" color={CV_COLORS.titleGray} />
             ) : (
-              <span
+              <StyledTitleAccordion
                 onClick={() => {
                   setOpenedPanel({
                     ...openedPanel,
@@ -244,7 +244,8 @@ export const PageCVContent = ({
                 }}
               >
                 <H2 title="Informations" color={CV_COLORS.titleGray} />
-              </span>
+                <StyledChevronIcon name="chevron-down" />
+              </StyledTitleAccordion>
             )}
             <ul>
               {cv.contracts && cv.contracts.length > 0 && (
@@ -338,10 +339,7 @@ export const PageCVContent = ({
                 !isDesktop ? 'mobile' : ''
               }`}
             >
-              {!isDesktop && <StyledChevronIcon name="chevron-down" />}
-
-              {/* {isDesktop ?<H2 title="Expériences" color={CV_COLORS.titleGray} />:  */}
-              <span
+              <StyledTitleAccordion
                 onClick={() => {
                   setOpenedPanel({
                     ...openedPanel,
@@ -350,7 +348,8 @@ export const PageCVContent = ({
                 }}
               >
                 <H2 title="Expériences" color={CV_COLORS.titleGray} />
-              </span>
+                <StyledChevronIcon name="chevron-down" />
+              </StyledTitleAccordion>
               <ul>
                 {cv.experiences?.map((experience) => {
                   return (
@@ -423,8 +422,7 @@ export const PageCVContent = ({
                 !isDesktop ? 'mobile' : ''
               }`}
             >
-              {!isDesktop && <StyledChevronIcon name="chevron-down" />}
-              <span
+              <StyledTitleAccordion
                 onClick={() => {
                   setOpenedPanel({
                     ...openedPanel,
@@ -433,7 +431,8 @@ export const PageCVContent = ({
                 }}
               >
                 <H2 title="Formation" color={CV_COLORS.titleGray} />
-              </span>
+                <StyledChevronIcon name="chevron-down" />
+              </StyledTitleAccordion>
               <ul>
                 {cv.formations.map((formation) => {
                   return (
@@ -507,11 +506,10 @@ export const PageCVContent = ({
                 !isDesktop ? 'mobile' : ''
               }`}
             >
-              {!isDesktop && <StyledChevronIcon name="chevron-down" />}
               {isDesktop ? (
                 <H4 title="Mes Passions" color={CV_COLORS.titleGray} />
               ) : (
-                <span
+                <StyledTitleAccordion
                   onClick={() => {
                     setOpenedPanel({
                       ...openedPanel,
@@ -520,7 +518,8 @@ export const PageCVContent = ({
                   }}
                 >
                   <H2 title="Mes Passions" color={CV_COLORS.titleGray} />
-                </span>
+                  <StyledChevronIcon name="chevron-down" />
+                </StyledTitleAccordion>
               )}
               <ul>
                 {cv?.passions?.map(({ name }) => {

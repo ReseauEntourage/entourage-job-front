@@ -52,8 +52,9 @@ export function useLineLimit(
     }
   }, []);
 
-  const remainingLines =
-    maxLines - numberOfLines < 0 ? 0 : maxLines - numberOfLines;
+  const maxLinesReached = maxLines - numberOfLines < 0;
+
+  const remainingLines = maxLinesReached ? 0 : maxLines - numberOfLines;
 
   useEffect(() => {
     if (maxLines && ref && ref.current && value !== prevValue) {
@@ -118,5 +119,5 @@ export function useLineLimit(
     }
   }, [windowWidth]);
 
-  return { remainingLines, textAreaRef: ref, textAreaWidth };
+  return { remainingLines, maxLinesReached, textAreaRef: ref, textAreaWidth };
 }
