@@ -50,7 +50,7 @@ const cardsContent = [
     img: HelpProject,
     text: 'Pas de temps mais envie de soutenir notre projet ? Faites un don en quelques clics pour participer à la création d’une société plus inclusive et permettre à nos candidats de vivre des expériences transformantes.',
     cta: 'Faire un don',
-    href: 'https://entourage.iraiser.eu/linkedout/~mon-don',
+    href: process.env.DONATION_LINK,
     alt: 'Des soutiens du projet LinkedOut rassemblés',
     newTab: true,
     gaTag: GA_TAGS.PAGE_AIDER_DON_CLIC,

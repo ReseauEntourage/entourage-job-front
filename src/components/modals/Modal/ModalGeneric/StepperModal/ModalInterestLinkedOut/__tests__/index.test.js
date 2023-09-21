@@ -10,11 +10,18 @@ import { ModalsListener, openModal } from 'src/components/modals/Modal';
 import { BREAKPOINTS } from 'src/constants/styles';
 
 jest.mock('@react-hook/window-size', () => {
-  return jest.fn(() => {
-    return {
-      useWindowWidth: BREAKPOINTS.desktop,
-    };
-  });
+  return {
+    useWindowWidth: () => BREAKPOINTS.desktop,
+  };
+});
+
+jest.mock('src/components/forms/schemas/formInterestLinkedOut', () => {
+  return {
+    formInterestLinkedOut: {
+      id: 'form-interest',
+      fields: [],
+    },
+  };
 });
 jest.mock('react-modal');
 jest.mock('src/api/index');
@@ -26,19 +33,6 @@ jest.mock('src/components/modals/Modal', () => {
       return <div>{props.children}</div>;
     },
   };
-});
-
-jest.mock('src/components/forms/FormValidator', () => {
-  return jest.fn().mockImplementation(() => {
-    return {
-      validate: () => {
-        return {
-          name: '',
-          isValid: true,
-        };
-      },
-    };
-  });
 });
 
 describe('Modal Interest LinkedOut', () => {

@@ -1,55 +1,82 @@
 import React, { ChangeEvent } from 'react';
-import { FormValidatorErrorMessage } from 'src/components/forms/FormValidatorErrorMessage';
+import {
+  StyledAnnotations,
+  StyledAnnotationsErrorMessage,
+  StyledInputLabel,
+  StyledLimit,
+} from '../Inputs.styles';
+import { CommonInputProps } from '../Inputs.types';
+import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { StyledTextInputContainer } from './TextInput.styles';
 
-interface TextInputProps {
-  id: string;
-  title?: string;
-  value: string;
+interface TextInputProps extends CommonInputProps<string, HTMLInputElement> {
+  maxLength?: number;
   type?: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  name?: string;
-  placeholder: string;
-  showLabel?: boolean;
-  valid?: {
-    isInvalid: boolean;
-    message: string;
-  };
-  hidden?: boolean;
-  style: string;
+  style?: 'secondary';
 }
 
 export function TextInput({
+  id,
+  name,
+  title,
+  placeholder,
+  value,
   onChange,
-  valid,
-  title = '',
-  id = '',
-  value = '',
+  onBlur,
   type = 'text',
-  name = '',
-  placeholder = '',
+  style,
+  maxLength,
   showLabel = false,
   hidden = false,
-  style = '',
+  disabled = false,
+  inputRef,
+  error,
 }: TextInputProps) {
   if (hidden) {
     return null;
   }
 
+  const remainingCharacters = (maxLength || 0) - (value || '').length;
+
   return (
-    <StyledTextInputContainer>
-      {showLabel && <label htmlFor={`form-input-${name}`}>{title}</label>}
+    <StyledTextInputContainer disabled={disabled}>
+      {showLabel && (
+        <StyledInputLabel htmlFor={`form-input-${name}`}>
+          {title}
+        </StyledInputLabel>
+      )}
       <input
-        value={value}
-        className={`${value ? '' : 'empty-value'} ${style}`}
-        onChange={onChange}
+        ref={inputRef}
+        value={value || ''}
+        className={`${value ? '' : 'empty-value'} ${style || ''}`}
+        onChange={(event: ChangeEvent<HTMLInputElement>) =>
+          onChange(event.target.value)
+        }
+        onBlur={onBlur}
+        disabled={disabled}
         type={type || 'text'}
-        placeholder={placeholder || title}
+        placeholder={
+          showLabel
+            ? placeholder || 'Écrivez...'
+            : placeholder || (title as string)
+        }
         name={name}
+        maxLength={maxLength}
         id={id}
         data-testid={id}
       />
-      <FormValidatorErrorMessage validObj={valid} newInput />
+      {maxLength ? (
+        <StyledAnnotations>
+          <div>
+            <StyledAnnotationsErrorMessage error={error} />
+          </div>
+          <StyledLimit warning={remainingCharacters === 0}>
+            <span>{remainingCharacters} caractère(s) restant(s)</span>
+          </StyledLimit>
+        </StyledAnnotations>
+      ) : (
+        <FieldErrorMessage error={error} />
+      )}
     </StyledTextInputContainer>
   );
 }

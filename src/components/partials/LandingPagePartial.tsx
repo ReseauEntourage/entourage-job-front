@@ -5,7 +5,7 @@ export const LandingPagePartial = () => {
   return (
     <Background
       blend={{ mode: 'soft-light', colorHex: 'rgba(0,0,0,0.4)' }}
-      src="/static/img/cover-linkedout.jpg"
+      src="/static/img/Linked-Out-VA--052_extended.jpg"
       position="top-center"
     >
       <div

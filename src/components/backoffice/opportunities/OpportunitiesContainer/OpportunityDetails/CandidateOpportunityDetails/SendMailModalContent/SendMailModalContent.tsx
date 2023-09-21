@@ -3,7 +3,7 @@ import UIkit from 'uikit';
 import { Api } from 'src/api';
 import { StyledSendMailContent } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/SendMailModalContent/SendMailContent.styles';
 import { useFetchOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/useFetchOpportunity';
-import { FooterForm } from 'src/components/forms/FooterForm';
+import { FormFooter } from 'src/components/forms/FormFooter';
 import { useModalContext, openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { TextArea } from 'src/components/utils/Inputs/TextArea';
@@ -32,14 +32,12 @@ export const SendMailModalContent = ({
     fetchOpportunities
   );
   const { onClose } = useModalContext();
-  const [textAreaContent, setTextAreaContent] = useState();
-  const handleDescription = (e) => {
-    setTextAreaContent(e.target.value);
-  };
+  const [textAreaContent, setTextAreaContent] = useState<string>();
 
   const object = relance
     ? 'Relance - demande de contact'
     : 'Demande de contact';
+
   const description = relance ? (
     <>
       Vous pouvez ci-dessous envoyer un mail de relance pour le poste de
@@ -149,12 +147,13 @@ export const SendMailModalContent = ({
         <div className="textarea-container">
           <TextArea
             title="Ajouter un message personnel"
-            onChange={handleDescription}
+            onChange={setTextAreaContent}
             value={textAreaContent}
             name="contact-description"
+            id="contact-description"
           />
         </div>
-        <FooterForm
+        <FormFooter
           noCompulsory
           onSubmit={async () => {
             await Api.postOpportunityContactEmployer({

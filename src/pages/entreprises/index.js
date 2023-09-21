@@ -3,7 +3,6 @@ import React from 'react';
 import TextLoop from 'react-text-loop';
 import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
-import { CVList } from 'src/components/cv';
 import { openModal } from 'src/components/modals/Modal';
 import { CompanyContactModal } from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
 import { TaxModal } from 'src/components/modals/PopupModal/TaxModal';
@@ -15,6 +14,7 @@ import {
   Reviews,
   Timeline,
 } from 'src/components/partials';
+import { CVList } from 'src/components/partials/CV/CVList';
 import { ImageTitle } from 'src/components/partials/ImageTitle';
 import { NewsletterPartial } from 'src/components/partials/NewsletterPartial';
 import { Button, Section, AnimatedList, Icon } from 'src/components/utils';

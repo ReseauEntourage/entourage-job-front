@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledRadioContainer = styled.div`
+  opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
+
   font-family: Poppins, sans-serif;
 
   legend {

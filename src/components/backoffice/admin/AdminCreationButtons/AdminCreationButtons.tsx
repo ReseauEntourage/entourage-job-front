@@ -4,8 +4,8 @@ import { useOnOrganizationFormSubmit } from '../useOnOrganizationFormSubmit';
 import { Api } from 'src/api';
 import { OrganizationDto, UserDto } from 'src/api/types';
 import { useOnMemberFormSubmit } from 'src/components/backoffice/admin/useOnMemberFormSubmit';
-import { formAddOrganization } from 'src/components/forms/schema/formAddOrganization';
-import { formAddUser } from 'src/components/forms/schema/formAddUser';
+import { formAddOrganization } from 'src/components/forms/schemas/formAddOrganization';
+import { formAddUser } from 'src/components/forms/schemas/formAddUser';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { ButtonMultiple } from 'src/components/utils';
@@ -88,7 +88,6 @@ export function AdminCreationButtons({
           onClick: () => {
             openModal(
               <ModalEdit
-                formId={formAddOrganization.id}
                 formSchema={formAddOrganization}
                 title="Création de structure partenaire"
                 description="Merci de renseigner quelques informations afin de créer la structure"

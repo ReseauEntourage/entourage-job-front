@@ -9,11 +9,9 @@ jest.mock('react-modal');
 jest.mock('cookies-next');
 
 jest.mock('@react-hook/window-size', () => {
-  return jest.fn(() => {
-    return {
-      useWindowWidth: BREAKPOINTS.desktop,
-    };
-  });
+  return {
+    useWindowWidth: () => BREAKPOINTS.desktop,
+  };
 });
 jest.mock('src/components/modals/Modal', () => {
   const modalModule = jest.requireActual('src/components/modals/Modal');

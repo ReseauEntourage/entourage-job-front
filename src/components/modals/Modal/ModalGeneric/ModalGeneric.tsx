@@ -8,7 +8,7 @@ interface ModalGenericProps {
   children: React.ReactNode;
   title?: React.ReactNode;
   description?: React.ReactNode;
-  onClose?: (arg1?: () => void) => void;
+  onClose?: (onClose?: () => void) => void;
   className?: string;
   fullWidth?: boolean;
   removePadding?: boolean;

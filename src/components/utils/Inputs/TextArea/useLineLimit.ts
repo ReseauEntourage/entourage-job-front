@@ -6,14 +6,15 @@ import { usePrevious } from 'src/hooks/utils';
 export function useLineLimit(
   value: string,
   name: string,
-  onChange: (arg: { target: { value: string; name: string } }) => void,
+  onChange: (updatedValue: string) => void,
   maxLines?: number
 ) {
   const windowWidth = useWindowWidth();
-  const ref = useRef<HTMLTextAreaElement>();
 
   const [numberOfLines, setNumberOfLines] = useState(0);
   const [textAreaWidth, setTextAreaWidth] = useState(0);
+
+  const ref = useRef<HTMLTextAreaElement>();
 
   const prevValue: string = usePrevious(value);
 
@@ -51,8 +52,9 @@ export function useLineLimit(
     }
   }, []);
 
-  const remainingLines =
-    maxLines - numberOfLines < 0 ? 0 : maxLines - numberOfLines;
+  const maxLinesReached = maxLines - numberOfLines < 0;
+
+  const remainingLines = maxLinesReached ? 0 : maxLines - numberOfLines;
 
   useEffect(() => {
     if (maxLines && ref && ref.current && value !== prevValue) {
@@ -70,6 +72,7 @@ export function useLineLimit(
       const nbOfLines = Math.ceil(
         (taHeight - taPaddingBottom - taPaddingTop) / taLineHeight
       );
+      setNumberOfLines(!value ? 0 : nbOfLines);
 
       if (nbOfLines > maxLines) {
         if (!prevValue || value.length - prevValue.length > 1) {
@@ -78,18 +81,14 @@ export function useLineLimit(
             'danger'
           );
         }
-
-        onChange({
-          target: {
-            value: prevValue || '',
-            name,
-          },
-        });
-      } else {
-        setNumberOfLines(!value ? 0 : nbOfLines);
+        // onChange(prevValue);
       }
+      // else {
+      //   // console.log(value);
+      //   setNumberOfLines(!value ? 0 : nbOfLines);
+      // }
     }
-  }, [calculateContentHeight, maxLines, name, onChange, prevValue, value]);
+  }, [calculateContentHeight, maxLines, name, onChange, prevValue, ref, value]);
 
   useEffect(() => {
     const modal = document.getElementById('modal-screen')
@@ -120,5 +119,5 @@ export function useLineLimit(
     }
   }, [windowWidth]);
 
-  return { remainingLines, textAreaRef: ref, textAreaWidth };
+  return { remainingLines, maxLinesReached, textAreaRef: ref, textAreaWidth };
 }

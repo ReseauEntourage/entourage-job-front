@@ -21,15 +21,17 @@ export const StyledHeaderModal = styled.div`
   .description-container {
     padding: 20px 0;
     text-align: center;
+    font-family: Poppins, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: ${COLORS.darkGrayFont};
     > div {
       max-width: 90%;
       display: block;
       margin: auto;
       p {
-        margin-bottom: 0px;
-      }
-      span {
-        color: ${COLORS.darkGray};
+        margin-bottom: 0;
       }
     }
   }

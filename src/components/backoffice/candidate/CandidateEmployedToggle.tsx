@@ -3,7 +3,7 @@ import UIkit from 'uikit';
 
 import { Api } from 'src/api';
 import { ToggleWithConfirmationModal } from 'src/components/backoffice/ToggleWithConfirmationModal';
-import { formEditEmployed } from 'src/components/forms/schema/formEditEmployed';
+import { formEditEmployed } from 'src/components/forms/schemas/formEditEmployed';
 import { Contract, CONTRACTS } from 'src/constants';
 import { findConstantFromValue } from 'src/utils';
 

@@ -3,11 +3,11 @@ import UIkit from 'uikit';
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
-import { CVPageContent } from 'src/components/backoffice/cv/CVPageContent';
+import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
+import { CVEditPage } from 'src/components/backoffice/cv/CVEditPage';
+import { CVEditWelcome } from 'src/components/backoffice/cv/CVEditPage/CVFicheEdition/CVEdit/CVEditWelcome';
 import { ErrorMessage } from 'src/components/backoffice/cv/ErrorMessage';
-import { LoadingScreen } from 'src/components/backoffice/cv/LoadingScreen';
 import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
-import { CVEditWelcome } from 'src/components/cv/CVEditWelcome';
 import { Section } from 'src/components/utils';
 import { COACH_USER_ROLES } from 'src/constants/users';
 import { useFetchCV } from 'src/hooks/useFetchCV';
@@ -26,7 +26,7 @@ const Edit = () => {
     if (user) {
       Api.getUserById(user.id)
         .then(({ data }) => {
-          return setUserCompleteData(data);
+          setUserCompleteData(data);
         })
         .catch(() => {
           UIkit.notification('Erreur lors du chargement du suivi', 'danger');
@@ -62,7 +62,7 @@ const Edit = () => {
     content = (
       <>
         <CVEditWelcome user={user} />
-        <CVPageContent cv={cv} setCV={setCV} candidateId={candidateId} />
+        <CVEditPage cv={cv} setCV={setCV} candidateId={candidateId} />
       </>
     );
   }

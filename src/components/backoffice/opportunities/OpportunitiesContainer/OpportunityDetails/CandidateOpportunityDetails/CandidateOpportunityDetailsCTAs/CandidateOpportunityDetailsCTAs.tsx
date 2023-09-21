@@ -10,7 +10,7 @@ import {
   CTAsByTab,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/CandidateOpportunityDetailsCTAs/CandidateOpportunityDetailsCTAs.utils';
 import { SendMailModalContent } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/SendMailModalContent';
-import { renderSimpleSelectField } from 'src/components/forms/schema/formSimpleSelectField';
+import { renderSimpleSelectField } from 'src/components/forms/schemas/formSimpleSelectField';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
@@ -77,7 +77,7 @@ export const CandidateOpportunityDetailsCTAs = ({
           UserId: candidateId,
           status: OFFER_STATUS[1].value,
         });
-        const date: Date = moment().toDate();
+        const date = moment().format('YYYY-MM-DD');
         await Api.postOpportunityUserEvent(OpportunityId, candidateId, {
           type: EVENT_TYPES.CONTACT,
           startDate: date,
@@ -189,7 +189,8 @@ export const CandidateOpportunityDetailsCTAs = ({
               </span>
             </>
           }
-          formSchema={renderSimpleSelectField(
+          formSchema={renderSimpleSelectField<{ status: string }>(
+            'abandon-offer-reason',
             'Sélectionner un motif dans la liste',
             [
               { value: 'archived', label: 'Je ne suis plus intéressé' },
@@ -208,14 +209,13 @@ export const CandidateOpportunityDetailsCTAs = ({
             'status'
           )}
           defaultValues={{ status: '3' }}
-          formId="abandon-offer-reason"
           submitText="Abandonner l'offre"
-          onSubmit={async (selectedReason, closeModal) => {
+          onSubmit={async ({ status }, closeModal) => {
             const queryParams: { archived?: boolean; status?: number } = {};
-            if (selectedReason.status === 'archived') {
+            if (status === 'archived') {
               queryParams.archived = true;
             } else {
-              queryParams.status = selectedReason.status * 1;
+              queryParams.status = parseInt(status, 10);
             }
             await updateOpportunityUser({
               OpportunityId,
@@ -236,7 +236,7 @@ export const CandidateOpportunityDetailsCTAs = ({
             fetchOpportunities={fetchOpportunities}
             candidateId={candidateId}
             onSubmit={async () => {
-              const date = moment().toDate();
+              const date = moment().format('YYYY-MM-DD');
               try {
                 await Api.postOpportunityUserEvent(OpportunityId, candidateId, {
                   type: EVENT_TYPES.CONTACT,
@@ -264,7 +264,7 @@ export const CandidateOpportunityDetailsCTAs = ({
             fetchOpportunities={fetchOpportunities}
             onSubmit={async () => {
               try {
-                const date = moment().toDate();
+                const date = moment().format('YYYY-MM-DD');
                 await Api.postOpportunityUserEvent(OpportunityId, candidateId, {
                   type: EVENT_TYPES.FOLLOWUP,
                   startDate: date,

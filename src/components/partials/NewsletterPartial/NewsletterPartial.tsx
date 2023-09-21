@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import UIkit from 'uikit';
 
 import { v4 as uuid } from 'uuid';
-import validator from 'validator';
+import { isEmail } from 'validator';
 import { Api } from 'src/api';
 import { StyledNLForm } from 'src/components/partials/NewsletterPartial/NewsletterPartial.styles';
 import { Section } from 'src/components/utils';
@@ -32,8 +32,8 @@ export const NewsletterPartial = ({
   const newsletterParams = useNewsletterTracking();
 
   const onSubmit = async () => {
-    const mailValid = validator.isEmail(email);
-    // const tagsValid = !validator.isEmpty(zone) && !validator.isEmpty(status);
+    const mailValid = isEmail(email);
+    // const tagsValid = !isEmpty(zone) && !isEmpty(status);
 
     if (!mailValid /* || !tagsValid */) {
       setIsMailValid(mailValid);
@@ -86,10 +86,10 @@ export const NewsletterPartial = ({
                     <CheckBox
                       id={tagConst}
                       name={tagConst}
-                      removeMargin
+                      useOutsideOfForm
                       value={tagConst === status}
                       title={label}
-                      handleClick={() => {
+                      onChange={() => {
                         if (status === tagConst) {
                           setStatus(null);
                         } else {
@@ -113,10 +113,10 @@ export const NewsletterPartial = ({
                     <CheckBox
                       id={tagConst}
                       name={tagConst}
-                      removeMargin
+                      useOutsideOfForm
                       value={tagConst === zone}
                       title={label}
-                      handleClick={() => {
+                      onChange={() => {
                         if (zone === tagConst) {
                           setZone(null);
                         } else {
@@ -132,14 +132,15 @@ export const NewsletterPartial = ({
         </div>
         <div className="form-group text-input-container">
           <TextInput
+            title="Renseignez votre adresse email"
             type="email"
             style="secondary"
-            onChange={(e) => {
-              return setEmail(e.target.value);
+            onChange={(value) => {
+              return setEmail(value);
             }}
             value={email}
             id="nl-email-input"
-            placeholder="Renseignez votre adresse email"
+            name="nl-email-input"
           />
         </div>
         {!isMailValid && (

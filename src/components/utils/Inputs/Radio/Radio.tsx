@@ -8,14 +8,17 @@ const uuidValue = uuid();
 export function Radio({
   options,
   id,
-  legend,
+  title,
   name,
   filter,
   onChange,
+  onBlur,
   errorMessage,
-  hidden,
+  hidden = false,
+  disabled = false,
   value: valueProp,
   limit = options.length,
+  inputRef,
 }: RadioComponentProps) {
   const [checkedRadio, setCheckedRadio] = useState<number>();
 
@@ -30,7 +33,7 @@ export function Radio({
   const onHandleRadio = useCallback(
     (i: number, e: React.ChangeEvent<HTMLInputElement>) => {
       setCheckedRadio(i);
-      onChange(e);
+      onChange(e.target.value);
     },
     [onChange]
   );
@@ -47,12 +50,16 @@ export function Radio({
   }
 
   return (
-    <StyledRadioContainer id={id} data-testid={`test-${id}`}>
+    <StyledRadioContainer
+      id={id}
+      data-testid={`test-${id}`}
+      disabled={disabled}
+    >
       {typeof options === null ? (
         <legend>{errorMessage}</legend>
       ) : (
         <>
-          <legend>{legend}</legend>
+          <legend>{title}</legend>
           <div className="inputs-container">
             {options
               .filter(({ filterData }) => {
@@ -75,9 +82,10 @@ export function Radio({
                       data-testid={inputId}
                       name={name}
                       checked={i === checkedRadio}
-                      onChange={(e) => {
-                        onHandleRadio(i, e);
-                      }}
+                      onChange={(e) => onHandleRadio(i, e)}
+                      disabled={disabled}
+                      onBlur={onBlur}
+                      ref={inputRef}
                     />
                     {label}
                   </label>

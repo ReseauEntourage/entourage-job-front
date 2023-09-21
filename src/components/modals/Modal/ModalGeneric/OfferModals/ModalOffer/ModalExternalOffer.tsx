@@ -2,7 +2,7 @@ import moment from 'moment/moment';
 import React from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
-import { formAddExternalOpportunityCandidate } from 'src/components/forms/schema/formAddExternalOpportunity';
+import { formAddExternalOpportunityCandidate } from 'src/components/forms/schemas/formAddExternalOpportunity';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 
 export const ModalExternalOffer = ({
@@ -19,15 +19,14 @@ export const ModalExternalOffer = ({
       submitText="Envoyer"
       formSchema={formAddExternalOpportunityCandidate}
       defaultValues={{
-        candidateId,
         coachNotification: true,
       }}
       onSubmit={async (fields, closeModal) => {
         try {
           await Api.postExternalOpportunity({
             ...fields,
-            status: parseInt(fields.status, 10),
             candidateId,
+            department: fields.department.value,
             date: moment().toISOString(),
           });
           closeModal();

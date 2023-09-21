@@ -5,11 +5,9 @@ import '@testing-library/jest-dom';
 import { BREAKPOINTS } from 'src/constants/styles';
 
 jest.mock('@react-hook/window-size', () => {
-  return jest.fn(() => {
-    return {
-      useWindowWidth: BREAKPOINTS.desktop,
-    };
-  });
+  return {
+    useWindowWidth: () => BREAKPOINTS.desktop,
+  };
 });
 
 describe('Carousel Item', () => {

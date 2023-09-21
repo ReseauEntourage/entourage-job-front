@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
+import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { OrganizationList } from 'src/components/backoffice/admin/organizations/OrganizationList';
 import { useZone } from 'src/components/backoffice/admin/organizations/OrganizationList/useZone';
-import { LoadingScreen } from 'src/components/backoffice/cv/LoadingScreen';
 import { Section } from 'src/components/utils';
 import { ORGANIZATION_FILTERS_DATA } from 'src/constants';
 import { useFilters } from 'src/hooks/useFilters';

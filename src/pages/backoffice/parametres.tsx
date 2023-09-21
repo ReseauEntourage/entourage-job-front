@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
@@ -10,17 +10,25 @@ import { CandidateEmployedToggle } from 'src/components/backoffice/candidate/Can
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
 import { UserInformationCard } from 'src/components/cards/UserInformationCard';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
-import { formChangePassword } from 'src/components/forms/schema/formChangePassword';
-import { formPersonalData } from 'src/components/forms/schema/formPersonalData';
+import { formChangePassword } from 'src/components/forms/schemas/formChangePassword';
+import {
+  formPersonalDataAsCandidate,
+  formPersonalDataAsAdmin,
+  formPersonalDataAsCoach,
+} from 'src/components/forms/schemas/formPersonalData';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Card, Grid, Section, ButtonIcon } from 'src/components/utils';
 import { Icon } from 'src/components/utils/Icon';
-import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
+import {
+  ALL_USER_ROLES,
+  CANDIDATE_USER_ROLES,
+  COACH_USER_ROLES,
+  USER_ROLES,
+} from 'src/constants/users';
 import { useResetForm } from 'src/hooks/utils/useResetForm';
 import { UserContext } from 'src/store/UserProvider';
-import { mutateFormSchema } from 'src/utils';
 import { isRoleIncluded } from 'src/utils/Finding';
 
 const Parametres = () => {
@@ -30,112 +38,7 @@ const Parametres = () => {
   const [loadingPassword, setLoadingPassword] = useState(false);
   const [form, resetForm] = useResetForm();
 
-  let mutatedSchema = formPersonalData;
-
-  if (userData) {
-    mutatedSchema = mutateFormSchema(mutatedSchema, [
-      {
-        fieldId: 'gender',
-        props: [
-          {
-            propName: 'disabled',
-            value: true,
-          },
-          {
-            propName: 'hidden',
-            value: true,
-          },
-        ],
-      },
-    ]);
-    if (userData.role !== USER_ROLES.ADMIN) {
-      mutatedSchema = mutateFormSchema(mutatedSchema, [
-        {
-          fieldId: 'firstName',
-          props: [
-            {
-              propName: 'disabled',
-              value: true,
-            },
-            {
-              propName: 'hidden',
-              value: true,
-            },
-          ],
-        },
-        {
-          fieldId: 'lastName',
-          props: [
-            {
-              propName: 'disabled',
-              value: true,
-            },
-            {
-              propName: 'hidden',
-              value: true,
-            },
-          ],
-        },
-        {
-          fieldId: 'zone',
-          props: [
-            {
-              propName: 'disabled',
-              value: true,
-            },
-            {
-              propName: 'hidden',
-              value: true,
-            },
-          ],
-        },
-        {
-          fieldId: 'adminRole',
-          props: [
-            {
-              propName: 'disabled',
-              value: true,
-            },
-            {
-              propName: 'hidden',
-              value: true,
-            },
-          ],
-        },
-      ]);
-    }
-
-    if (!isRoleIncluded(CANDIDATE_USER_ROLES, userData.role)) {
-      mutatedSchema = mutateFormSchema(mutatedSchema, [
-        {
-          fieldId: 'address',
-          props: [
-            {
-              propName: 'disabled',
-              value: true,
-            },
-            {
-              propName: 'hidden',
-              value: true,
-            },
-          ],
-        },
-        {
-          fieldId: 'addressLabel',
-          props: [
-            {
-              propName: 'disabled',
-              value: true,
-            },
-            {
-              propName: 'hidden',
-              value: true,
-            },
-          ],
-        },
-      ]);
-    }
-  }
+  const modalTitle = 'Édition - Informations personnelles';
 
   useEffect(() => {
     if (user) {
@@ -145,42 +48,223 @@ const Parametres = () => {
           setUserData(data);
         })
         .finally(() => {
-          return setLoadingPersonal(false);
+          setLoadingPersonal(false);
         });
     }
   }, [user]);
 
-  const updateUser = (newUserData, closeModal) => {
-    if (!_.isEmpty(newUserData)) {
-      return Api.putUser(userData.id, newUserData)
-        .then(() => {
-          closeModal();
-          setUserData((prevUserData) => {
-            return {
-              ...prevUserData,
-              ...newUserData,
-            };
+  const updateUser = useCallback(
+    (newUserData: Partial<UserWithUserCandidate>, closeModal) => {
+      if (!_.isEmpty(newUserData)) {
+        return Api.putUser(userData.id, newUserData)
+          .then(() => {
+            closeModal();
+            setUserData((prevUserData) => {
+              return {
+                ...prevUserData,
+                ...newUserData,
+              };
+            });
+            setUser((prevUser) => {
+              return {
+                ...prevUser,
+                ...newUserData,
+              };
+            });
+            UIkit.notification(
+              'Vos informations personnelles ont bien été mises à jour',
+              'success'
+            );
+          })
+          .catch((err) => {
+            console.error(err);
+            if (err?.response?.status === 409) {
+              UIkit.notification(
+                'Cette adresse email est déjà utilisée',
+                'danger'
+              );
+            } else {
+              UIkit.notification(
+                "Une erreur c'est produite lors de la mise à jour de vos informations personnelles",
+                'danger'
+              );
+            }
           });
-          setUser((prevUser) => {
-            return {
-              ...prevUser,
-              ...newUserData,
-            };
-          });
-          UIkit.notification(
-            'Vos informations personnelles ont bien été mises à jour',
-            'success'
+      }
+    },
+    [setUser, userData]
+  );
+
+  const checkEmailAndSubmit = useCallback(
+    async (
+      newUserData: Partial<UserWithUserCandidate>,
+      oldEmail: string,
+      newEmail0: string,
+      newEmail1: string,
+      setError: (msg: string) => void,
+      closeModal: () => void
+    ) => {
+      if (oldEmail || newEmail0 || newEmail1) {
+        if (userData.email !== oldEmail.toLowerCase()) {
+          setError("L'ancienne adresse email n'est pas valide");
+        } else if (newEmail0.length === 0 || newEmail0 !== newEmail1) {
+          setError('Les deux adresses email ne sont pas indentiques');
+        } else {
+          newUserData.email = newEmail0.toLowerCase();
+          await updateUser(newUserData, closeModal);
+          setError('');
+        }
+      } else {
+        await updateUser(newUserData, closeModal);
+      }
+    },
+    [updateUser, userData]
+  );
+
+  const openPersonalDataModalAsAdmin = useCallback(() => {
+    openModal(
+      <ModalEdit
+        submitText="Envoyer"
+        title={modalTitle}
+        defaultValues={{
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+          gender: userData.gender,
+          phone: userData.phone,
+          zone: userData.zone,
+          adminRole: userData.adminRole,
+        }}
+        formSchema={formPersonalDataAsAdmin}
+        onSubmit={async (
+          {
+            firstName,
+            lastName,
+            zone,
+            adminRole,
+            gender,
+            phone,
+            oldEmail,
+            newEmail0,
+            newEmail1,
+          },
+          closeModal,
+          setError
+        ) => {
+          const newUserData: Partial<UserWithUserCandidate> = {};
+          if (firstName !== userData.firstName) {
+            newUserData.firstName = firstName;
+          }
+          if (lastName !== userData.lastName) {
+            newUserData.lastName = lastName;
+          }
+          if (zone !== userData.zone) {
+            newUserData.zone = zone;
+          }
+          if (adminRole !== userData.adminRole) {
+            newUserData.adminRole = adminRole;
+          }
+          if (gender !== userData.gender) {
+            newUserData.gender = gender;
+          }
+          if (phone !== userData.phone) {
+            newUserData.phone = phone;
+          }
+          await checkEmailAndSubmit(
+            newUserData,
+            oldEmail,
+            newEmail0,
+            newEmail1,
+            setError,
+            closeModal
           );
-        })
-        .catch((err) => {
-          console.error(err);
-          UIkit.notification(
-            "Une erreur c'est produite lors de la mise à jour de vos informations personnelles",
-            'danger'
+        }}
+      />
+    );
+  }, [checkEmailAndSubmit, userData]);
+
+  const openPersonalDataModalAsCoach = useCallback(() => {
+    openModal(
+      <ModalEdit
+        title={modalTitle}
+        defaultValues={{
+          phone: userData.phone,
+        }}
+        formSchema={formPersonalDataAsCoach}
+        onSubmit={async (
+          { phone, oldEmail, newEmail0, newEmail1 },
+          closeModal,
+          setError
+        ) => {
+          const newUserData: Partial<UserWithUserCandidate> = {};
+          if (phone !== userData.phone) {
+            newUserData.phone = phone;
+          }
+          await checkEmailAndSubmit(
+            newUserData,
+            oldEmail,
+            newEmail0,
+            newEmail1,
+            setError,
+            closeModal
           );
-        });
+        }}
+      />
+    );
+  }, [checkEmailAndSubmit, userData]);
+
+  const openPersonalDataModalAsCandidate = useCallback(() => {
+    openModal(
+      <ModalEdit
+        title={modalTitle}
+        defaultValues={{
+          phone: userData.phone,
+          address: userData.address,
+        }}
+        formSchema={formPersonalDataAsCandidate}
+        onSubmit={async (
+          { phone, address, oldEmail, newEmail0, newEmail1 },
+          closeModal,
+          setError
+        ) => {
+          const newUserData: Partial<UserWithUserCandidate> = {};
+          if (phone !== userData.phone) {
+            newUserData.phone = phone;
+          }
+          if (address !== userData.address) {
+            newUserData.address = address;
+          }
+          await checkEmailAndSubmit(
+            newUserData,
+            oldEmail,
+            newEmail0,
+            newEmail1,
+            setError,
+            closeModal
+          );
+        }}
+      />
+    );
+  }, [checkEmailAndSubmit, userData]);
+
+  const openCorrespondingModal = useCallback(() => {
+    if (isRoleIncluded(ALL_USER_ROLES, userData.role)) {
+      if (isRoleIncluded(CANDIDATE_USER_ROLES, userData.role)) {
+        openPersonalDataModalAsCandidate();
+        return;
+      }
+      if (isRoleIncluded(COACH_USER_ROLES, userData.role)) {
+        openPersonalDataModalAsCoach();
+        return;
+      }
     }
-  };
+
+    openPersonalDataModalAsAdmin();
+  }, [
+    openPersonalDataModalAsAdmin,
+    openPersonalDataModalAsCandidate,
+    openPersonalDataModalAsCoach,
+    userData,
+  ]);
 
   return (
     <LayoutBackOffice title="Mes Paramètres">
@@ -277,93 +361,7 @@ const Parametres = () => {
                   ) : (
                     <ButtonIcon
                       name="pencil"
-                      onClick={() => {
-                        openModal(
-                          <ModalEdit
-                            submitText="Envoyer"
-                            title="Édition - Informations personnelles"
-                            defaultValues={{
-                              firstName: userData.firstName,
-                              lastName: userData.lastName,
-                              gender: userData && userData.gender.toString(),
-                              phone: userData.phone,
-                              address: userData.address,
-                              zone: userData.zone,
-                              adminRole: userData.adminRole,
-                            }}
-                            formSchema={mutatedSchema}
-                            onSubmit={async (
-                              {
-                                firstName,
-                                lastName,
-                                zone,
-                                adminRole,
-                                gender,
-                                phone,
-                                address,
-                                oldEmail,
-                                newEmail0,
-                                newEmail1,
-                              },
-                              closeModal,
-                              setError
-                            ) => {
-                              let newUserData: Partial<UserWithUserCandidate>;
-                              if (userData.role === USER_ROLES.ADMIN) {
-                                newUserData = {
-                                  firstName,
-                                  lastName,
-                                  gender,
-                                  zone,
-                                  adminRole,
-                                };
-                                if (phone !== userData.phone) {
-                                  newUserData.phone = phone;
-                                }
-                                if (address !== userData.address) {
-                                  newUserData.address = address;
-                                }
-                                if (
-                                  userData.email === oldEmail &&
-                                  newEmail0 === newEmail1
-                                ) {
-                                  newUserData.email = newEmail0.toLowerCase();
-                                }
-                                await updateUser(newUserData, closeModal);
-                              } else {
-                                if (phone !== userData.phone) {
-                                  newUserData.phone = phone;
-                                }
-                                if (address !== userData.address) {
-                                  newUserData.address = address;
-                                }
-                                if (oldEmail || newEmail0 || newEmail1) {
-                                  if (
-                                    userData.email !== oldEmail.toLowerCase()
-                                  ) {
-                                    setError(
-                                      "L'ancienne adresse email n'est pas valide"
-                                    );
-                                  } else if (
-                                    newEmail0.length === 0 ||
-                                    newEmail0 !== newEmail1
-                                  ) {
-                                    setError(
-                                      'Les deux adresses email ne sont pas indentiques'
-                                    );
-                                  } else {
-                                    newUserData.email = newEmail0.toLowerCase();
-                                    await updateUser(newUserData, closeModal);
-                                    setError('');
-                                  }
-                                } else {
-                                  await updateUser(newUserData, closeModal);
-                                }
-                              }
-                            }}
-                          />
-                        );
-                      }}
+                      onClick={openCorrespondingModal}
                     />
                   )}
                 </Grid>
@@ -444,38 +442,27 @@ const Parametres = () => {
               </Grid>
               <PasswordCriterias />
               <FormWithValidation
-                ref={form}
+                innerRef={form}
                 submitText="Modifier"
                 formSchema={formChangePassword}
-                onSubmit={async (
-                  { newPassword, oldPassword, confirmPassword },
-                  setError
-                ) => {
-                  if (
-                    newPassword !== oldPassword &&
-                    newPassword === confirmPassword
-                  ) {
-                    setLoadingPassword(true);
-                    try {
-                      await Api.putUserChangePwd({
-                        newPassword,
-                        oldPassword,
-                      });
-                      UIkit.notification(
-                        'Nouveau mot de passe enregistré',
-                        'success'
-                      );
-                      resetForm();
-                      setLoadingPassword(false);
-                    } catch (err) {
-                      console.error(err);
-                      setError(
-                        "Problème lors de l'enregistrement du nouveau mot de passe"
-                      );
-                      setLoadingPassword(false);
-                    }
-                  } else {
-                    setError('Nouveau mot de passe erroné');
+                onSubmit={async ({ newPassword, oldPassword }, setError) => {
+                  setLoadingPassword(true);
+                  try {
+                    await Api.putUserChangePwd({
+                      newPassword,
+                      oldPassword,
+                    });
+                    UIkit.notification(
+                      'Nouveau mot de passe enregistré',
+                      'success'
+                    );
+                    resetForm();
+                    setError('');
+                    setLoadingPassword(false);
+                  } catch (err) {
+                    console.error(err);
+                    setError("L'ancien mot de passe n'est pas valide");
+                    setLoadingPassword(false);
                   }
                 }}
               />

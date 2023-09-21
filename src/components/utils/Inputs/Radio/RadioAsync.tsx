@@ -6,36 +6,45 @@ import { RadioAsyncComponentProps } from './Radio.types';
 export function RadioAsync({
   loadOptions,
   id,
-  legend,
+  title,
   name,
   onChange,
   filter,
   errorMessage,
-  hidden,
+  disabled = false,
+  hidden = false,
   value,
+  inputRef,
   limit,
 }: RadioAsyncComponentProps) {
   const [options, setOptions] = useState([]);
 
-  useMount(async () => {
-    const optionsLoaded = await loadOptions();
-    setOptions(optionsLoaded);
+  useMount(() => {
+    loadOptions((optionsLoaded) => {
+      setOptions(optionsLoaded);
+    });
   });
+
+  if (hidden) {
+    return null;
+  }
 
   return (
     <>
       {options?.length > 0 && (
         <Radio
           id={id}
-          legend={legend}
+          title={title}
           name={name}
           onChange={onChange}
           filter={filter}
           options={options}
+          disabled={disabled}
           limit={limit}
           hidden={hidden}
           errorMessage={errorMessage}
           value={value}
+          inputRef={inputRef}
         />
       )}
     </>

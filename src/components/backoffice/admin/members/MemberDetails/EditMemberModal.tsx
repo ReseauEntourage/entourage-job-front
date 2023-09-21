@@ -4,7 +4,8 @@ import UIkit from 'uikit';
 import { Api } from 'src/api';
 import { User, UserDto } from 'src/api/types';
 import { useOnMemberFormSubmit } from 'src/components/backoffice/admin/useOnMemberFormSubmit';
-import { formAddUser } from 'src/components/forms/schema/formAddUser';
+import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
+import { formAddUser } from 'src/components/forms/schemas/formAddUser';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
@@ -52,12 +53,18 @@ export function EditMemberModal({ user, setUser }: EditMemberModal) {
   }, Actions.UPDATE);
 
   const handleMemberUpdateSubmit = useCallback(
-    async (fields, closeModal) => {
+    async (
+      fields: ExtractFormSchemaValidation<typeof formAddUser>,
+      closeModal
+    ) => {
       const updatedUser = await onSubmit(fields, closeModal);
       try {
+        const userToLinkId = Array.isArray(fields.userToLinkId)
+          ? fields.userToLinkId.map(({ value }) => value)
+          : fields.userToLinkId?.value;
         const { data: updatedUserWithLinkedMember } = await Api.putLinkUser(
           user.id,
-          fields.userToLinkId || null
+          userToLinkId || null
         );
 
         setUser(updatedUserWithLinkedMember);
@@ -81,7 +88,10 @@ export function EditMemberModal({ user, setUser }: EditMemberModal) {
       description:
         'Merci de modifier les informations que vous souhaitez concernant le membre.',
       submitText: 'Modifier le membre',
-      onSubmit: async (fields, closeModal) => {
+      onSubmit: async (
+        fields: ExtractFormSchemaValidation<typeof formAddUser>,
+        closeModal
+      ) => {
         if (fields.role !== user.role) {
           openModal(
             <ModalConfirm
@@ -98,7 +108,15 @@ export function EditMemberModal({ user, setUser }: EditMemberModal) {
       },
       onCancel: () => setFilledUserFields({}),
       defaultValues: {
-        ...user,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        role: user.role,
+        adminRole: user.adminRole,
+        gender: user.gender,
+        phone: user.phone,
+        address: user.address,
+        zone: user.zone,
         organizationId: organization,
         userToLinkId: userToLink,
       },
@@ -111,6 +129,7 @@ export function EditMemberModal({ user, setUser }: EditMemberModal) {
     userToLink,
   ]);
 
+  // TODO TEST AND FIX
   useEffect(() => {
     if (
       !_.isEmpty(filledUserFields) &&

@@ -1,67 +1,59 @@
 import moment from 'moment';
-import React, {
-  /* memo, */ useCallback,
-  /* useEffect, */ useState,
-} from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
+import { DefaultValues } from 'react-hook-form';
 import UIkit from 'uikit';
 
 import { Api } from 'src/api';
-import { formEditOpportunity as defaultSchema } from 'src/components/forms/schema/formEditOpportunity';
+import {
+  ExtractFormSchemaValidation,
+  FormSchema,
+} from 'src/components/forms/FormSchema';
+import {
+  formAddOpportunity,
+  formAddOpportunityAsAdmin,
+} from 'src/components/forms/schemas/formAddOpportunity';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { BUSINESS_LINES } from 'src/constants';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { useNewsletterTracking } from 'src/hooks/useNewsletterTracking';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
-import { findConstantFromValue, getValueFromFormField } from 'src/utils';
-import { AnyToFix } from 'src/utils/Types';
+import { AnyCantFix } from 'src/utils/Types';
 
-interface PostOpportunityModalProps {
+interface PostOpportunityModalProps<S extends FormSchema<AnyCantFix>> {
   modalTitle: string;
-  modalDesc: string | JSX.Element | JSX.Element[];
+  modalDesc?: string | JSX.Element;
   isAdmin?: boolean;
-  candidateId?: string;
   callback?: () => void;
-  defaultValues: AnyToFix; // to be typed
-  schema?: AnyToFix; // to be typed
+  formSchema: S;
+  defaultValues?: DefaultValues<ExtractFormSchemaValidation<S>>;
 }
-
-export const PostOpportunityModal = ({
+export function PostOpportunityModal<
+  S extends typeof formAddOpportunity | typeof formAddOpportunityAsAdmin
+>({
   modalTitle,
   modalDesc,
   isAdmin = false,
-  candidateId,
   callback,
-  defaultValues = {},
-  schema = defaultSchema,
-}: PostOpportunityModalProps) => {
-  const [lastFilledForm, setLastFilledForm] = useState({});
-  // const prevLastFilledForm = usePrevious(lastFilledForm);
+  defaultValues,
+  formSchema,
+}: PostOpportunityModalProps<S>) {
+  const [lastFilledForm, setLastFilledForm] = useState<
+    ExtractFormSchemaValidation<S>
+  >({} as ExtractFormSchemaValidation<S>);
   const newsletterParams = useNewsletterTracking();
 
-  const mutatedDefaultValue = {
-    ...defaultValues,
-    candidatesIds: defaultValues.candidat
-      ? [
-          {
-            label: `${defaultValues.candidat.firstName} ${defaultValues.candidat.lastName}`,
-            value: candidateId,
-          },
-        ]
-      : [],
-    businessLines: defaultValues.businessLines
-      ? defaultValues.businessLines.map((businessLine) => {
-          return findConstantFromValue(businessLine, BUSINESS_LINES);
-        })
-      : [],
-  };
+  const [shouldHide, setShouldHide] = useState<boolean>(false);
 
   const postOpportunity = useCallback(
-    async (fields, closeModal, adminCallback) => {
-      const { openNewForm, ...opportunity } = fields;
+    async (
+      fields: ExtractFormSchemaValidation<S>,
+      closeModal,
+      adminCallback
+    ) => {
+      const { openNewForm, department, address, ...opportunity } = fields;
       const candidatesIds = opportunity.candidatesIds
-        ? opportunity.candidatesIds.map((id) => {
-            return typeof id === 'object' ? id.value : id;
+        ? opportunity.candidatesIds.map((candidateId) => {
+            return candidateId.value;
           })
         : [];
 
@@ -82,47 +74,69 @@ export const PostOpportunityModal = ({
           : `Merci pour votre offre, le(s) candidat(s) et coach(s) associés reviendront bientôt vers vous.`;
       }
 
+      const locations =
+        'locations' in fields && fields.locations.length > 0
+          ? {
+              locations: fields.locations.map(
+                ({
+                  department: locationDepartment,
+                  address: locationAddress,
+                }) => {
+                  return {
+                    department: locationDepartment.value,
+                    address: locationAddress,
+                  };
+                }
+              ),
+            }
+          : { department: department.value, address };
+
+      const startEndContract =
+        'startOfContract' in fields && 'endOfContract' in fields
+          ? {
+              startOfContract: fields.startOfContract,
+              endOfContract: fields.endOfContract,
+            }
+          : {};
+
       try {
         await Api.postOpportunity({
           ...opportunity,
-          startOfContract: opportunity.startOfContract || null,
-          endOfContract: opportunity.endOfContract || null,
+          ...locations,
+          ...startEndContract,
           candidatesIds:
             opportunity.isPublic && !isAdmin ? null : candidatesIds,
           message: opportunity.isPublic ? null : opportunity.message,
           recruiterPhone: opportunity.recruiterPhone || null,
-          businessLines: opportunity.businessLines
-            ? opportunity.businessLines.map((businessLine, index) => {
-                return {
-                  name: businessLine,
-                  order: index,
-                };
-              })
-            : undefined,
-          locations: opportunity.locations.map(({ department, address }) => {
-            return {
-              department: getValueFromFormField(department),
-              address,
-            };
-          }),
+          ...('businessLines' in fields
+            ? {
+                businessLines: fields.businessLines.map(
+                  (businessLine, index) => {
+                    return {
+                      name: businessLine.value,
+                      order: index,
+                    };
+                  }
+                ),
+              }
+            : {}),
           date: moment().toISOString(),
           ...newsletterParams,
         });
-        closeModal();
         UIkit.notification(successMessage, 'success');
         if (adminCallback) await adminCallback();
         if (openNewForm) {
+          setShouldHide(true);
           setLastFilledForm({
             ...fields,
             candidatesIds: [],
-            businessLines: fields.businessLines
-              ? fields.businessLines.map((businessLine) => {
-                  return findConstantFromValue(businessLine, BUSINESS_LINES);
-                })
-              : [],
           });
+          setTimeout(() => {
+            setShouldHide(false);
+          }, 1000);
         } else {
-          setLastFilledForm({});
+          closeModal();
+          setLastFilledForm({} as ExtractFormSchemaValidation<S>);
         }
       } catch (err) {
         UIkit.notification(`Une erreur est survenue.`, 'danger');
@@ -131,27 +145,18 @@ export const PostOpportunityModal = ({
     [isAdmin, newsletterParams]
   );
 
-  // useEffect(() => {
-  //     if (!_.isEmpty(lastFilledForm) && lastFilledForm !== prevLastFilledForm) {
-  //       setTimeout(() => {
-  //         openModal(<PostOpportunityModal />);
-  //       }, 1000);
-  //     }
-  //   }, [lastFilledForm, PostOpportunityModal, prevLastFilledForm]);
-
-  return (
-    <ModalEdit
-      title={modalTitle}
-      description={modalDesc}
-      submitText={isAdmin ? 'Valider' : 'Envoyer'}
-      defaultValues={{
-        ...mutatedDefaultValue,
+  const modalProps = useMemo(() => {
+    return {
+      title: modalTitle,
+      description: modalDesc,
+      submitText: isAdmin ? 'Valider' : 'Envoyer',
+      defaultValues: {
+        ...defaultValues,
         ...lastFilledForm,
-        candidatesIds: mutatedDefaultValue.candidatesIds,
         shouldSendNotifications: true,
-      }}
-      formSchema={schema}
-      onError={async (fields) => {
+      },
+      formSchema,
+      onError: (fields) => {
         if (!isAdmin) {
           if (fields.isPublic) {
             gaEvent(GA_TAGS.POPUP_OFFRE_ENVOYER_OFFRE_GENERALE_INVALIDE);
@@ -161,8 +166,8 @@ export const PostOpportunityModal = ({
             gaEvent(GA_TAGS.POPUP_OFFRE_ENVOYER_OFFRE_UNIQUE_INVALIDE);
           }
         }
-      }}
-      onSubmit={async (fields, closeModal) => {
+      },
+      onSubmit: async (fields, closeModal) => {
         await postOpportunity(
           isAdmin
             ? {
@@ -173,7 +178,18 @@ export const PostOpportunityModal = ({
           closeModal,
           callback
         );
-      }}
-    />
-  );
-};
+      },
+    };
+  }, [
+    callback,
+    defaultValues,
+    formSchema,
+    isAdmin,
+    lastFilledForm,
+    modalDesc,
+    modalTitle,
+    postOpportunity,
+  ]);
+
+  return !shouldHide && <ModalEdit {...modalProps} />;
+}

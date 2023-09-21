@@ -25,13 +25,13 @@ const meta = {
 };
 
 const Template = (args) => {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState(false);
 
   return (
     <CheckBox
       {...args}
-      handleClick={(event) => {
-        setValue(event.target.checked);
+      onChange={(updatedValue) => {
+        setValue(updatedValue);
       }}
       value={value}
     />

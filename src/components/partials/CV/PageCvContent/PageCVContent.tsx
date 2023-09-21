@@ -1,3 +1,4 @@
+import moment from 'moment';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import UIkit from 'uikit';
@@ -6,7 +7,7 @@ import { CVShareButtons } from '../CVCallToActions/CVShareButtons';
 import { Api } from 'src/api';
 import { CV } from 'src/api/types';
 import { CVCareerPathSentenceNew as CVCareerPathSentence } from 'src/components/cv';
-import { formSendExternalMessage } from 'src/components/forms/schema/formSendExternalMessage';
+import { formSendExternalMessage } from 'src/components/forms/schemas/formSendExternalMessage';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import {
@@ -30,6 +31,10 @@ import {
   StyledBackLink,
   StyledLeftColumn,
   StyledRightColumn,
+  StyledCVExperienceDate,
+  StyledCVExperienceDescription,
+  StyledCVExperienceDateMobile,
+  StyledTitleAccordion,
 } from 'src/components/partials/CV/PageCvContent/PageCVContent.styles';
 import { Button, Icon } from 'src/components/utils';
 import { CarouselSwiper } from 'src/components/utils/CarouselSwiper';
@@ -41,6 +46,7 @@ import { useIsDesktop } from 'src/hooks/utils';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
 import { addPrefix, findConstantFromValue, sortByOrder } from 'src/utils';
+import 'moment/locale/fr';
 
 interface openedPanelType {
   informations: boolean;
@@ -52,11 +58,13 @@ interface openedPanelType {
 interface PageCVContentProps {
   cv: CV;
   actionDisabled?: boolean;
+  isPreview?: boolean;
 }
 
 export const PageCVContent = ({
   cv,
   actionDisabled = false,
+  isPreview = false,
 }: PageCVContentProps) => {
   const locations =
     cv.locations && cv.locations.length > 0 ? sortByOrder(cv.locations) : [];
@@ -66,20 +74,22 @@ export const PageCVContent = ({
   const [isStoryHidden, setIsStoryHidden] = useState<boolean>(true);
 
   const [openedPanel, setOpenedPanel] = useState<openedPanelType>({
-    informations: true,
-    experiences: false,
+    informations: false,
+    experiences: true,
     formations: false,
     passions: false,
   });
 
   return (
     <StyledCVPageContent>
-      <Link href="/candidats?employed=false" scroll={false} shallow passHref>
-        <StyledBackLink>
-          <Icon name="chevron-left" />
-          &nbsp;Retour à la page candidats
-        </StyledBackLink>
-      </Link>
+      {!isPreview && (
+        <Link href="/candidats?employed=false" scroll={false} shallow passHref>
+          <StyledBackLink>
+            <Icon name="chevron-left" />
+            &nbsp;Retour à la page candidats
+          </StyledBackLink>
+        </Link>
+      )}
       <StyledCVPageContentHeader className={!isDesktop ? 'mobile' : ''}>
         <div id="header-picture-share">
           <StyledCVProfilePicture
@@ -150,13 +160,10 @@ export const PageCVContent = ({
               title={`Donnez un coup de pouce à ${cv.user.candidat.firstName} !`}
               color={CV_COLORS.titleGray}
             />
-            <p>
-              Apporter des conseils, informations sur le secteur
-              d&#8217;activité, retour d&#8217;expérience, mise en contact, une
-              opportunité&nbsp;...
-            </p>
+            <p>Une suggestion, une info à partager&nbsp;?</p>
             <Button
               style="custom-secondary-inverted"
+              disabled={actionDisabled}
               onClick={() => {
                 gaEvent(GA_TAGS.PAGE_CV_CONTACTEZ_MOI_CLIC);
                 fbEvent(FB_TAGS.MESSAGE_OPEN);
@@ -170,10 +177,7 @@ export const PageCVContent = ({
                     } conseiller dans sa recherche d'emploi`}
                     submitText="Envoyer"
                     formSchema={formSendExternalMessage}
-                    onSubmit={async (
-                      { optInContact, ...fields },
-                      closeModal
-                    ) => {
+                    onSubmit={async (fields, closeModal) => {
                       gaEvent(GA_TAGS.PAGE_CV_ENVOYER_CONTACTEZ_MOI_CLIC);
                       fbEvent(FB_TAGS.MESSAGE_SEND);
                       try {
@@ -199,7 +203,7 @@ export const PageCVContent = ({
                 );
               }}
             >
-              M&#8217;envoyer un message
+              Envoyer un message
             </Button>
           </StyledCVMessageContainer>
           {!isDesktop && (
@@ -228,11 +232,10 @@ export const PageCVContent = ({
               !isDesktop ? 'mobile' : ''
             }`}
           >
-            {!isDesktop && <StyledChevronIcon name="chevron-down" />}
             {isDesktop ? (
               <H4 title="Informations" color={CV_COLORS.titleGray} />
             ) : (
-              <span
+              <StyledTitleAccordion
                 onClick={() => {
                   setOpenedPanel({
                     ...openedPanel,
@@ -241,7 +244,8 @@ export const PageCVContent = ({
                 }}
               >
                 <H2 title="Informations" color={CV_COLORS.titleGray} />
-              </span>
+                <StyledChevronIcon name="chevron-down" />
+              </StyledTitleAccordion>
             )}
             <ul>
               {cv.contracts && cv.contracts.length > 0 && (
@@ -335,10 +339,7 @@ export const PageCVContent = ({
                 !isDesktop ? 'mobile' : ''
               }`}
             >
-              {!isDesktop && <StyledChevronIcon name="chevron-down" />}
-
-              {/* {isDesktop ?<H2 title="Expériences" color={CV_COLORS.titleGray} />:  */}
-              <span
+              <StyledTitleAccordion
                 onClick={() => {
                   setOpenedPanel({
                     ...openedPanel,
@@ -347,20 +348,152 @@ export const PageCVContent = ({
                 }}
               >
                 <H2 title="Expériences" color={CV_COLORS.titleGray} />
-              </span>
-              {/* } */}
+                <StyledChevronIcon name="chevron-down" />
+              </StyledTitleAccordion>
               <ul>
-                {cv.experiences.map((experience) => {
+                {cv.experiences?.map((experience) => {
                   return (
                     <StyledCVExperienceLi>
-                      <div>{experience.description}</div>
-                      <div>
-                        {experience.skills.map(({ name, id }) => {
-                          return (
-                            <StyledSkillTag key={id}>{name}</StyledSkillTag>
-                          );
-                        })}
-                      </div>
+                      {isDesktop && (
+                        <StyledCVExperienceDate>
+                          {experience.dateStart && (
+                            <>
+                              {experience.dateEnd
+                                ? moment(experience.dateEnd).format('MMMM YYYY')
+                                : "Aujourd'hui"}
+                              <br />
+                              {moment(experience.dateStart).format('MMMM YYYY')}
+                            </>
+                          )}
+                        </StyledCVExperienceDate>
+                      )}
+                      <StyledCVExperienceDescription>
+                        {experience.title && (
+                          <H5
+                            title={experience.title}
+                            color={CV_COLORS.titleGray}
+                          />
+                        )}
+                        {!isDesktop && (
+                          <StyledCVExperienceDateMobile>
+                            {experience.dateStart && (
+                              <>
+                                {moment(experience.dateStart).format(
+                                  'MMMM YYYY'
+                                )}
+                                {' - '}
+                                {experience.dateEnd
+                                  ? moment(experience.dateEnd).format(
+                                      'MMMM YYYY'
+                                    )
+                                  : "Aujourd'hui"}
+                              </>
+                            )}
+                          </StyledCVExperienceDateMobile>
+                        )}
+                        {(experience.company || experience.location) && (
+                          <div className="name-gray">
+                            {experience.company}
+                            {experience.company && experience.location && ' - '}
+                            {experience.location}
+                          </div>
+                        )}
+                        {experience.description && (
+                          <div>{experience.description}</div>
+                        )}
+                        <div>
+                          {experience.skills?.map(({ name, id }) => {
+                            return (
+                              <StyledSkillTag key={id}>{name}</StyledSkillTag>
+                            );
+                          })}
+                        </div>
+                      </StyledCVExperienceDescription>
+                    </StyledCVExperienceLi>
+                  );
+                })}
+              </ul>
+            </StyledCVPageContentExperience>
+          )}
+          {cv.formations?.length > 0 && (
+            // using same style for Formations and Experiences, but change in fields
+            <StyledCVPageContentExperience
+              className={`${openedPanel.formations ? '' : 'close'} ${
+                !isDesktop ? 'mobile' : ''
+              }`}
+            >
+              <StyledTitleAccordion
+                onClick={() => {
+                  setOpenedPanel({
+                    ...openedPanel,
+                    formations: !openedPanel.formations,
+                  });
+                }}
+              >
+                <H2 title="Formation" color={CV_COLORS.titleGray} />
+                <StyledChevronIcon name="chevron-down" />
+              </StyledTitleAccordion>
+              <ul>
+                {cv.formations.map((formation) => {
+                  return (
+                    <StyledCVExperienceLi>
+                      {isDesktop && (
+                        <StyledCVExperienceDate>
+                          {formation.dateStart && (
+                            <>
+                              {formation.dateEnd
+                                ? moment(formation.dateEnd).format('MMMM YYYY')
+                                : "Aujourd'hui"}
+                              <br />
+                              {moment(formation.dateStart).format('MMMM YYYY')}
+                            </>
+                          )}
+                        </StyledCVExperienceDate>
+                      )}
+                      <StyledCVExperienceDescription>
+                        {formation.title && (
+                          <H5
+                            title={formation.title}
+                            color={CV_COLORS.titleGray}
+                          />
+                        )}
+                        {!isDesktop && (
+                          <StyledCVExperienceDateMobile>
+                            {formation.dateStart && (
+                              <>
+                                {moment(formation.dateStart).format(
+                                  'MMMM YYYY'
+                                )}
+                                {' - '}
+                                {formation.dateEnd
+                                  ? moment(formation.dateEnd).format(
+                                      'MMMM YYYY'
+                                    )
+                                  : "Aujourd'hui"}
+                              </>
+                            )}
+                          </StyledCVExperienceDateMobile>
+                        )}
+                        {(formation.institution || formation.location) && (
+                          <div className="name-gray">
+                            {formation.institution}
+                            {formation.institution &&
+                              formation.location &&
+                              ' - '}
+                            {formation.location}
+                          </div>
+                        )}
+                        {formation.description && (
+                          <div>{formation.description}</div>
+                        )}
+                        <div>
+                          {formation.skills?.map(({ name, id }) => {
+                            return (
+                              <StyledSkillTag key={id}>{name}</StyledSkillTag>
+                            );
+                          })}
+                        </div>
+                      </StyledCVExperienceDescription>
                     </StyledCVExperienceLi>
                   );
                 })}
@@ -373,11 +506,10 @@ export const PageCVContent = ({
                 !isDesktop ? 'mobile' : ''
               }`}
             >
-              {!isDesktop && <StyledChevronIcon name="chevron-down" />}
               {isDesktop ? (
                 <H4 title="Mes Passions" color={CV_COLORS.titleGray} />
               ) : (
-                <span
+                <StyledTitleAccordion
                   onClick={() => {
                     setOpenedPanel({
                       ...openedPanel,
@@ -386,7 +518,8 @@ export const PageCVContent = ({
                   }}
                 >
                   <H2 title="Mes Passions" color={CV_COLORS.titleGray} />
-                </span>
+                  <StyledChevronIcon name="chevron-down" />
+                </StyledTitleAccordion>
               )}
               <ul>
                 {cv?.passions?.map(({ name }) => {

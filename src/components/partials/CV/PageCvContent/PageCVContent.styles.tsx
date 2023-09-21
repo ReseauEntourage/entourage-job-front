@@ -13,7 +13,6 @@ export const StyledBackLink = styled.a`
   flex-direction: row;
   margin-bottom: 16px;
   color: ${COLORS.darkGrayFont} !important;
-
   &:visited {
     color: ${COLORS.darkGrayFont} !important;
   }
@@ -71,6 +70,9 @@ export const StyledCVPageContent = styled.div`
         display: none;
       }
     }
+  }
+  .name-gray {
+    color: ${CV_COLORS.nameGray};
   }
 `;
 
@@ -190,6 +192,7 @@ export const StyledCVProfilePicture = styled.div`
 export const StyledCVPageContentStory = styled.div`
   margin-bottom: 20px;
   position: relative;
+  white-space: pre-line;
   p {
     margin-bottom: 0;
   }
@@ -234,9 +237,12 @@ export const StyledCVPageContentDetailsContainer = styled.div`
   flex-direction: row;
   margin: 26px 15px 0;
   box-sizing: border-box;
-  flex-wrap: wrap;
+  flex: 1 1 0%;
   &.mobile {
     flex-direction: column;
+    > div {
+      min-width: unset;
+    }
   }
 `;
 
@@ -244,6 +250,15 @@ export const StyledLeftColumn = styled.div``;
 
 export const StyledRightColumn = styled.div`
   flex: 1;
+`;
+
+export const StyledTitleAccordion = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  > h2 {
+    margin-bottom: 0;
+  }
 `;
 
 export const StyledCVPageContentInformations = styled.div`
@@ -313,20 +328,46 @@ export const StyledSkillTag = styled.div`
   color: ${COLORS.primaryOrange};
   font-size: 14px;
   font-weight: 400;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   /* font-family: Nunito Sans */
 `;
 
 export const StyledCVExperienceLi = styled.div`
-  padding-bottom: 40px;
+  padding-left: 14px;
+  white-space: pre-line;
+  display: flex;
   :last-child {
     padding-bottom: 0;
   }
-  padding-left: 14px;
-  border-left: 1px solid #d4d4d4;
-  position: relative;
   > div {
-    margin: 0 0 18px;
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px 15px;
+  }
+`;
+
+export const StyledCVExperienceDate = styled.div`
+  min-width: 150px;
+  max-width: 150px;
+  padding: 0 15px;
+  color: ${CV_COLORS.parGray};
+  text-align: right;
+`;
+
+export const StyledCVExperienceDateMobile = styled.div`
+  color: ${CV_COLORS.parGray};
+  text-align: left;
+  font-size: 13px;
+`;
+
+export const StyledCVExperienceDescription = styled.div`
+  position: relative;
+  border-left: 1px solid #d4d4d4;
+  padding-bottom: 20px;
+  color: ${CV_COLORS.parGray};
+  > div,
+  h5 {
+    margin-bottom: 10px;
   }
   ::before {
     content: '';
@@ -336,7 +377,7 @@ export const StyledCVExperienceLi = styled.div`
     background-color: ${COLORS.primaryOrange};
     position: absolute;
     left: -5px;
-    top: 2px;
+    top: 14px;
   }
 `;
 
@@ -395,8 +436,7 @@ export const StyledCVPageContentFooter = styled.div`
 `;
 
 export const StyledChevronIcon = styled(Icon)`
-  position: absolute;
-  top: 28px;
+  top: 30px;
   right: 30px;
   svg {
     height: 20px;

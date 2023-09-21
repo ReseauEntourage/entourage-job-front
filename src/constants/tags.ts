@@ -377,6 +377,9 @@ export const GA_TAGS = {
   BACKOFFICE_CANDIDAT_HEADER_BAO_CLIC: {
     action: 'Backoffice_Candidat_Header_BAO_Clic',
   },
+  BACKOFFICE_CV_AIDE: {
+    action: 'Backoffice_CV_Aide',
+  },
 } as const;
 
 export const FB_TAGS = {

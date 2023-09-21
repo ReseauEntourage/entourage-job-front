@@ -3,7 +3,7 @@ import UIkit from 'uikit';
 import { StyledCVCTACard } from '../CVCallToActions.styles';
 import { Api } from 'src/api';
 import { CV } from 'src/api/types';
-import { formSendExternalMessage } from 'src/components/forms/schema/formSendExternalMessage';
+import { formSendExternalMessage } from 'src/components/forms/schemas/formSendExternalMessage';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Button } from 'src/components/utils';
@@ -50,7 +50,7 @@ export const CVSendMessage = ({
               } conseiller dans sa recherche d'emploi`}
               submitText="Envoyer"
               formSchema={formSendExternalMessage}
-              onSubmit={async ({ optIn, ...fields }, closeModal) => {
+              onSubmit={async (fields, closeModal) => {
                 gaEvent(GA_TAGS.PAGE_CV_ENVOYER_CONTACTEZ_MOI_CLIC);
                 fbEvent(FB_TAGS.MESSAGE_SEND);
                 try {
@@ -59,7 +59,6 @@ export const CVSendMessage = ({
                     ...fields,
                   });
                   UIkit.notification('Le message a bien été envoyé', 'success');
-
                   closeModal();
                 } catch (err) {
                   UIkit.notification("Une erreur s'est produite", 'danger');

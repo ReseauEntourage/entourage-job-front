@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+
 describe('Parcours Entreprises', () => {
   beforeEach(() => {
     cy.intercept('POST', '/contact/company', {
@@ -72,10 +73,13 @@ describe('Parcours Entreprises', () => {
       .scrollIntoView()
       .type('Doe');
 
-    cy.get('#form-company-contact-approach')
+    cy.get('#form-company-contact-approach-container')
       .should('be.visible')
       .scrollIntoView()
-      .select('information');
+      .click()
+      .find('.option')
+      .contains('Recruter inclusif')
+      .click();
 
     cy.get('#form-company-contact-email')
       .should('be.visible')
@@ -97,15 +101,21 @@ describe('Parcours Entreprises', () => {
       .scrollIntoView()
       .type('Développeur');
 
-    cy.get('#form-company-contact-zone')
+    cy.get('#form-company-contact-zone-container')
       .should('be.visible')
       .scrollIntoView()
-      .type('Paris{downArrow}{enter}');
+      .click()
+      .find('.option')
+      .contains('Paris')
+      .click();
 
-    cy.get('#form-company-contact-heardAbout')
+    cy.get('#form-company-contact-heardAbout-container')
       .should('be.visible')
       .scrollIntoView()
-      .select('Autre');
+      .click()
+      .find('.option')
+      .contains('Autre')
+      .click();
 
     cy.get('button').contains('Envoyer').should('be.visible').click();
 
