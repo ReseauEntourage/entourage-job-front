@@ -47,6 +47,7 @@ import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
 import { addPrefix, findConstantFromValue, sortByOrder } from 'src/utils';
 import 'moment/locale/fr';
+import _ from 'lodash';
 
 interface openedPanelType {
   informations: boolean;
@@ -359,10 +360,17 @@ export const PageCVContent = ({
                           {experience.dateStart && (
                             <>
                               {experience.dateEnd
-                                ? moment(experience.dateEnd).format('MMMM YYYY')
+                                ? _.capitalize(
+                                    moment(experience.dateEnd).format(
+                                      'MMMM YYYY'
+                                    )
+                                  )
                                 : "Aujourd'hui"}
+                              &nbsp;-
                               <br />
-                              {moment(experience.dateStart).format('MMMM YYYY')}
+                              {_.capitalize(
+                                moment(experience.dateStart).format('MMMM YYYY')
+                              )}
                             </>
                           )}
                         </StyledCVExperienceDate>
@@ -442,10 +450,17 @@ export const PageCVContent = ({
                           {formation.dateStart && (
                             <>
                               {formation.dateEnd
-                                ? moment(formation.dateEnd).format('MMMM YYYY')
+                                ? _.capitalize(
+                                    moment(formation.dateEnd).format(
+                                      'MMMM YYYY'
+                                    )
+                                  )
                                 : "Aujourd'hui"}
+                              &nbsp;-
                               <br />
-                              {moment(formation.dateStart).format('MMMM YYYY')}
+                              {_.capitalize(
+                                moment(formation.dateStart).format('MMMM YYYY')
+                              )}
                             </>
                           )}
                         </StyledCVExperienceDate>

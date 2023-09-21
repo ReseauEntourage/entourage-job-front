@@ -10,26 +10,27 @@ import {
 import { Icon } from 'src/components/utils';
 import { CONTRACTS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import { sortByOrder, findConstantFromValue, addPrefix } from 'src/utils';
+import { addPrefix, findConstantFromValue, sortByOrder } from 'src/utils';
 import {
-  StyledCVPDFPage,
-  StyledCVPDFH1,
-  StyledCVPDFQuote,
   StyledCVPDFCareerPath,
-  StyledCVPDFTitle,
-  StyledCVPDFProfilePicture,
-  StyledCVPDFStory,
-  StyledCVPDFExperienceLi,
-  StyledCVPDFExperienceDescription,
-  StyledCVPFSkillTag,
-  StyledCVPDFExperienceDate,
-  StyledCVPDFContentInformations,
-  StyledCVPDFContentExperience,
-  StyledCVPDFContentPassions,
-  StyledCVPDFContentHeader,
   StyledCVPDFContentDetailsContainer,
+  StyledCVPDFContentExperience,
+  StyledCVPDFContentHeader,
+  StyledCVPDFContentInformations,
+  StyledCVPDFContentPassions,
+  StyledCVPDFExperienceDate,
+  StyledCVPDFExperienceDescription,
+  StyledCVPDFExperienceLi,
+  StyledCVPDFH1,
+  StyledCVPDFPage,
+  StyledCVPDFProfilePicture,
+  StyledCVPDFQuote,
+  StyledCVPDFStory,
+  StyledCVPDFTitle,
+  StyledCVPFSkillTag,
 } from './CVPDF.styles';
 import 'moment/locale/fr';
+import _ from 'lodash';
 
 interface CVPDFProps {
   cv: CV;
@@ -43,7 +44,6 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
   const showCareerPathSentence =
     (cv.ambitions && cv.ambitions.length > 0) ||
     (cv.businessLines && cv.businessLines.length > 0);
-  console.log(cv);
 
   const [isExperiencesOnPageTwo, setisExperiencesOnPageTwo] =
     useState<boolean>(false);
@@ -98,11 +98,9 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
             )}
             <div className="skill-tags">
               {cv.skills.length > 0 &&
-                cv.skills.map(({ name, id }, key) => {
+                cv.skills.map(({ name, id }) => {
                   return (
-                    <StyledCVPFSkillTag key={`${key}-${id}`}>
-                      {name}
-                    </StyledCVPFSkillTag>
+                    <StyledCVPFSkillTag key={id}>{name}</StyledCVPFSkillTag>
                   );
                 })}
             </div>
@@ -135,6 +133,18 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                   </div>
                 </li>
               )}
+              <ul>
+                {cv.user.candidat.address && (
+                  <li>
+                    <div>
+                      <p className="subtitle">
+                        <Icon name="home" /> <span>Adresse</span>
+                      </p>
+                      <p className="content">{cv.user.candidat.address}</p>
+                    </div>
+                  </li>
+                )}
+              </ul>
               {locations && locations.length > 0 && (
                 <li>
                   <div>
@@ -217,8 +227,8 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
             <StyledCVPDFContentPassions>
               <StyledCVPDFTitle>Mes Passions</StyledCVPDFTitle>
               <ul>
-                {cv?.passions?.map(({ name }) => {
-                  return <p>{name}</p>;
+                {cv?.passions?.map(({ name, id }) => {
+                  return <p key={id}>{name}</p>;
                 })}
               </ul>
             </StyledCVPDFContentPassions>
@@ -232,15 +242,20 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                 {cv.experiences?.map((experience, i) => {
                   if (i > 3) return null;
                   return (
-                    <StyledCVPDFExperienceLi>
+                    <StyledCVPDFExperienceLi key={experience.id}>
                       <StyledCVPDFExperienceDate>
                         {experience.dateStart && (
                           <>
                             {experience.dateEnd
-                              ? moment(experience.dateEnd).format('MMMM YYYY')
+                              ? _.capitalize(
+                                  moment(experience.dateEnd).format('MMMM YYYY')
+                                )
                               : "Aujourd'hui"}
+                            &nbsp;-
                             <br />
-                            {moment(experience.dateStart).format('MMMM YYYY')}
+                            {_.capitalize(
+                              moment(experience.dateStart).format('MMMM YYYY')
+                            )}
                           </>
                         )}
                       </StyledCVPDFExperienceDate>
@@ -283,15 +298,20 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
               <ul>
                 {cv.formations.map((formation) => {
                   return (
-                    <StyledCVPDFExperienceLi>
+                    <StyledCVPDFExperienceLi key={formation.id}>
                       <StyledCVPDFExperienceDate>
                         {formation.dateStart && (
                           <>
                             {formation.dateEnd
-                              ? moment(formation.dateEnd).format('MMMM YYYY')
+                              ? _.capitalize(
+                                  moment(formation.dateEnd).format('MMMM YYYY')
+                                )
                               : "Aujourd'hui"}
+                            &nbsp;-
                             <br />
-                            {moment(formation.dateStart).format('MMMM YYYY')}
+                            {_.capitalize(
+                              moment(formation.dateStart).format('MMMM YYYY')
+                            )}
                           </>
                         )}
                       </StyledCVPDFExperienceDate>
@@ -314,7 +334,9 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                         <div>
                           {formation.skills.map(({ name, id }) => {
                             return (
-                              <StyledCVPFSkillTag>{name}</StyledCVPFSkillTag>
+                              <StyledCVPFSkillTag key={id}>
+                                {name}
+                              </StyledCVPFSkillTag>
                             );
                           })}
                         </div>
@@ -395,15 +417,20 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                 {cv.experiences?.map((experience, i) => {
                   if (i < 3) return null;
                   return (
-                    <StyledCVPDFExperienceLi>
+                    <StyledCVPDFExperienceLi key={experience.id}>
                       <StyledCVPDFExperienceDate>
                         {experience.dateStart && (
                           <>
                             {experience.dateEnd
-                              ? moment(experience.dateEnd).format('MMMM YYYY')
+                              ? _.capitalize(
+                                  moment(experience.dateEnd).format('MMMM YYYY')
+                                )
                               : "Aujourd'hui"}
+                            &nbsp;-
                             <br />
-                            {moment(experience.dateStart).format('MMMM YYYY')}
+                            {_.capitalize(
+                              moment(experience.dateStart).format('MMMM YYYY')
+                            )}
                           </>
                         )}
                       </StyledCVPDFExperienceDate>
@@ -446,15 +473,20 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
               <ul>
                 {cv.formations.map((formation) => {
                   return (
-                    <StyledCVPDFExperienceLi>
+                    <StyledCVPDFExperienceLi key={formation.id}>
                       <StyledCVPDFExperienceDate>
                         {formation.dateStart && (
                           <>
                             {formation.dateEnd
-                              ? moment(formation.dateEnd).format('MMMM YYYY')
+                              ? _.capitalize(
+                                  moment(formation.dateEnd).format('MMMM YYYY')
+                                )
                               : "Aujourd'hui"}
+                            &nbsp;-
                             <br />
-                            {moment(formation.dateStart).format('MMMM YYYY')}
+                            {_.capitalize(
+                              moment(formation.dateStart).format('MMMM YYYY')
+                            )}
                           </>
                         )}
                       </StyledCVPDFExperienceDate>
@@ -477,7 +509,9 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                         <div>
                           {formation.skills.map(({ name, id }) => {
                             return (
-                              <StyledCVPFSkillTag>{name}</StyledCVPFSkillTag>
+                              <StyledCVPFSkillTag key={id}>
+                                {name}
+                              </StyledCVPFSkillTag>
                             );
                           })}
                         </div>

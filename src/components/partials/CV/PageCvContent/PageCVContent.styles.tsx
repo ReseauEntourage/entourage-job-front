@@ -275,10 +275,12 @@ export const StyledCVPageContentDetailsContainer = styled.div`
   }
 `;
 
-export const StyledLeftColumn = styled.div``;
+export const StyledLeftColumn = styled.div`
+  flex: 1;
+`;
 
 export const StyledRightColumn = styled.div`
-  flex: 1;
+  flex: 3;
 `;
 
 export const StyledTitleAccordion = styled.div`

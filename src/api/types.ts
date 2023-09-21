@@ -92,6 +92,8 @@ export type User = {
 };
 
 export interface CVExperience {
+  id?: string;
+
   description?: string;
   title: string;
   dateStart?: Date;
@@ -107,6 +109,7 @@ export interface CVExperience {
 }
 
 export interface CVFormation {
+  id?: string;
   description?: string;
   title: string;
   dateStart?: Date;
@@ -166,6 +169,7 @@ export interface CV {
     order: number;
   }[];
   passions: {
+    id?: string;
     name: string;
     order: number;
   }[];
