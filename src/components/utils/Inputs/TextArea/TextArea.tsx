@@ -104,8 +104,14 @@ export function TextArea({
             <StyledAnnotationsErrorMessage error={error} />
           </div>
           {maxLines && (
-            <StyledLimit warning={remainingLines === 0}>
-              <span>{remainingLines} ligne(s) restante(s)</span>
+            <StyledLimit warning={remainingLines < 0}>
+              {remainingLines >= 0 ? (
+                <span>{remainingLines} ligne(s) restante(s)</span>
+              ) : (
+                <span>
+                  Limite dépassée de {Math.abs(remainingLines)} ligne(s)
+                </span>
+              )}
             </StyledLimit>
           )}
           {!maxLines && maxLength && (

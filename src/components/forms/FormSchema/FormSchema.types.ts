@@ -199,6 +199,8 @@ export interface FormFieldSelectRequestCommon<
   M extends boolean
 > extends FormFieldInputCommonProperties<V, SelectRequestComponent, M> {
   component: SelectRequestComponent;
+  maxChar?: number;
+  maxItems?: number;
   fieldsToReset?: Path<V>[];
   options?:
     | FilterConstant[]
@@ -214,8 +216,6 @@ export interface FormFieldSelectRequestCommon<
 interface FormFieldSelectRequestMulti<V extends FormSchemaValidation>
   extends FormFieldSelectRequestCommon<V, true> {
   isMulti: true;
-  maxChar?: number;
-  maxItems?: number;
 }
 
 interface FormFieldSelectRequestSingle<V extends FormSchemaValidation>

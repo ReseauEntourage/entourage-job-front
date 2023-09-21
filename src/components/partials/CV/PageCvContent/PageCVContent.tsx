@@ -1,4 +1,3 @@
-import moment from 'moment';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import UIkit from 'uikit';
@@ -7,6 +6,7 @@ import { CVShareButtons } from '../CVCallToActions/CVShareButtons';
 import { Api } from 'src/api';
 import { CV } from 'src/api/types';
 import { CVCareerPathSentenceNew as CVCareerPathSentence } from 'src/components/cv';
+import { CVDate } from 'src/components/cv/CVDate';
 import { formSendExternalMessage } from 'src/components/forms/schemas/formSendExternalMessage';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
@@ -46,8 +46,6 @@ import { useIsDesktop } from 'src/hooks/utils';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
 import { addPrefix, findConstantFromValue, sortByOrder } from 'src/utils';
-import 'moment/locale/fr';
-import _ from 'lodash';
 
 interface openedPanelType {
   informations: boolean;
@@ -324,7 +322,7 @@ export const PageCVContent = ({
           </StyledCVPageContentInformations>
           {cv.passions?.length > 0 && isDesktop && (
             <StyledCVPageContentPassions>
-              <H4 title="Mes Passions" color={CV_COLORS.titleGray} />
+              <H4 title="Mes passions" color={CV_COLORS.titleGray} />
               <ul>
                 {cv?.passions?.map(({ name }) => {
                   return <p>{name}</p>;
@@ -358,20 +356,7 @@ export const PageCVContent = ({
                       {isDesktop && (
                         <StyledCVExperienceDate>
                           {experience.dateStart && (
-                            <>
-                              {experience.dateEnd
-                                ? _.capitalize(
-                                    moment(experience.dateEnd).format(
-                                      'MMMM YYYY'
-                                    )
-                                  )
-                                : "Aujourd'hui"}
-                              &nbsp;-
-                              <br />
-                              {_.capitalize(
-                                moment(experience.dateStart).format('MMMM YYYY')
-                              )}
-                            </>
+                            <CVDate experience={experience} />
                           )}
                         </StyledCVExperienceDate>
                       )}
@@ -385,17 +370,7 @@ export const PageCVContent = ({
                         {!isDesktop && (
                           <StyledCVExperienceDateMobile>
                             {experience.dateStart && (
-                              <>
-                                {moment(experience.dateStart).format(
-                                  'MMMM YYYY'
-                                )}
-                                {' - '}
-                                {experience.dateEnd
-                                  ? moment(experience.dateEnd).format(
-                                      'MMMM YYYY'
-                                    )
-                                  : "Aujourd'hui"}
-                              </>
+                              <CVDate experience={experience} isMobile />
                             )}
                           </StyledCVExperienceDateMobile>
                         )}
@@ -448,20 +423,7 @@ export const PageCVContent = ({
                       {isDesktop && (
                         <StyledCVExperienceDate>
                           {formation.dateStart && (
-                            <>
-                              {formation.dateEnd
-                                ? _.capitalize(
-                                    moment(formation.dateEnd).format(
-                                      'MMMM YYYY'
-                                    )
-                                  )
-                                : "Aujourd'hui"}
-                              &nbsp;-
-                              <br />
-                              {_.capitalize(
-                                moment(formation.dateStart).format('MMMM YYYY')
-                              )}
-                            </>
+                            <CVDate experience={formation} />
                           )}
                         </StyledCVExperienceDate>
                       )}
@@ -475,17 +437,7 @@ export const PageCVContent = ({
                         {!isDesktop && (
                           <StyledCVExperienceDateMobile>
                             {formation.dateStart && (
-                              <>
-                                {moment(formation.dateStart).format(
-                                  'MMMM YYYY'
-                                )}
-                                {' - '}
-                                {formation.dateEnd
-                                  ? moment(formation.dateEnd).format(
-                                      'MMMM YYYY'
-                                    )
-                                  : "Aujourd'hui"}
-                              </>
+                              <CVDate experience={formation} isMobile />
                             )}
                           </StyledCVExperienceDateMobile>
                         )}
@@ -522,7 +474,7 @@ export const PageCVContent = ({
               }`}
             >
               {isDesktop ? (
-                <H4 title="Mes Passions" color={CV_COLORS.titleGray} />
+                <H4 title="Mes passions" color={CV_COLORS.titleGray} />
               ) : (
                 <StyledTitleAccordion
                   onClick={() => {
@@ -532,7 +484,7 @@ export const PageCVContent = ({
                     });
                   }}
                 >
-                  <H2 title="Mes Passions" color={CV_COLORS.titleGray} />
+                  <H2 title="Mes passions" color={CV_COLORS.titleGray} />
                   <StyledChevronIcon name="chevron-down" />
                 </StyledTitleAccordion>
               )}

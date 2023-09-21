@@ -1,6 +1,7 @@
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 
+import { CVDate } from '../CVDate';
 import { CV } from 'src/api/types';
 import { CVCareerPathSentenceNew } from 'src/components/cv/CVCareerPathSentence';
 import {
@@ -30,7 +31,6 @@ import {
   StyledCVPFSkillTag,
 } from './CVPDF.styles';
 import 'moment/locale/fr';
-import _ from 'lodash';
 
 interface CVPDFProps {
   cv: CV;
@@ -45,7 +45,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
     (cv.ambitions && cv.ambitions.length > 0) ||
     (cv.businessLines && cv.businessLines.length > 0);
 
-  const [isExperiencesOnPageTwo, setisExperiencesOnPageTwo] =
+  const [isExperiencesOnPageTwo, setIsExperiencesOnPageTwo] =
     useState<boolean>(false);
   const [isFormationOnPageOne, setIsFormationOnPageOne] =
     useState<boolean>(false);
@@ -55,7 +55,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
       setIsFormationOnPageOne(true);
     }
     if (cv.experiences?.length > 4) {
-      setisExperiencesOnPageTwo(true);
+      setIsExperiencesOnPageTwo(true);
     }
   }, [cv]);
 
@@ -225,7 +225,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
           </StyledCVPDFContentInformations>
           {cv.passions?.length > 0 && (
             <StyledCVPDFContentPassions>
-              <StyledCVPDFTitle>Mes Passions</StyledCVPDFTitle>
+              <StyledCVPDFTitle>Mes passions</StyledCVPDFTitle>
               <ul>
                 {cv?.passions?.map(({ name, id }) => {
                   return <p key={id}>{name}</p>;
@@ -239,24 +239,12 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
             <StyledCVPDFContentExperience>
               <StyledCVPDFTitle>Expérience professionnelle</StyledCVPDFTitle>
               <ul>
-                {cv.experiences?.map((experience, i) => {
-                  if (i > 3) return null;
+                {cv.experiences?.slice(0, 3).map((experience) => {
                   return (
                     <StyledCVPDFExperienceLi key={experience.id}>
                       <StyledCVPDFExperienceDate>
                         {experience.dateStart && (
-                          <>
-                            {experience.dateEnd
-                              ? _.capitalize(
-                                  moment(experience.dateEnd).format('MMMM YYYY')
-                                )
-                              : "Aujourd'hui"}
-                            &nbsp;-
-                            <br />
-                            {_.capitalize(
-                              moment(experience.dateStart).format('MMMM YYYY')
-                            )}
-                          </>
+                          <CVDate experience={experience} />
                         )}
                       </StyledCVPDFExperienceDate>
                       <StyledCVPDFExperienceDescription>
@@ -301,18 +289,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                     <StyledCVPDFExperienceLi key={formation.id}>
                       <StyledCVPDFExperienceDate>
                         {formation.dateStart && (
-                          <>
-                            {formation.dateEnd
-                              ? _.capitalize(
-                                  moment(formation.dateEnd).format('MMMM YYYY')
-                                )
-                              : "Aujourd'hui"}
-                            &nbsp;-
-                            <br />
-                            {_.capitalize(
-                              moment(formation.dateStart).format('MMMM YYYY')
-                            )}
-                          </>
+                          <CVDate experience={formation} />
                         )}
                       </StyledCVPDFExperienceDate>
                       <StyledCVPDFExperienceDescription>
@@ -420,18 +397,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                     <StyledCVPDFExperienceLi key={experience.id}>
                       <StyledCVPDFExperienceDate>
                         {experience.dateStart && (
-                          <>
-                            {experience.dateEnd
-                              ? _.capitalize(
-                                  moment(experience.dateEnd).format('MMMM YYYY')
-                                )
-                              : "Aujourd'hui"}
-                            &nbsp;-
-                            <br />
-                            {_.capitalize(
-                              moment(experience.dateStart).format('MMMM YYYY')
-                            )}
-                          </>
+                          <CVDate experience={experience} />
                         )}
                       </StyledCVPDFExperienceDate>
                       <StyledCVPDFExperienceDescription>
@@ -476,18 +442,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                     <StyledCVPDFExperienceLi key={formation.id}>
                       <StyledCVPDFExperienceDate>
                         {formation.dateStart && (
-                          <>
-                            {formation.dateEnd
-                              ? _.capitalize(
-                                  moment(formation.dateEnd).format('MMMM YYYY')
-                                )
-                              : "Aujourd'hui"}
-                            &nbsp;-
-                            <br />
-                            {_.capitalize(
-                              moment(formation.dateStart).format('MMMM YYYY')
-                            )}
-                          </>
+                          <CVDate experience={formation} />
                         )}
                       </StyledCVPDFExperienceDate>
                       <StyledCVPDFExperienceDescription>

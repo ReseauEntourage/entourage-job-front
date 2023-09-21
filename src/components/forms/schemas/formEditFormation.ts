@@ -17,8 +17,9 @@ export const formEditFormation: FormSchema<{
       name: 'title',
       component: 'text-input',
       type: 'text',
-      title: 'Intitulé de la formation',
+      title: 'Intitulé de la formation*',
       isRequired: true,
+      maxLength: 35,
     },
     {
       id: 'description',
@@ -33,6 +34,7 @@ export const formEditFormation: FormSchema<{
       component: 'text-input',
       type: 'text',
       title: 'Lieu de formation',
+      maxLength: 20,
     },
     {
       id: 'institution',
@@ -40,6 +42,7 @@ export const formEditFormation: FormSchema<{
       component: 'text-input',
       type: 'text',
       title: 'Etablissement / Institution',
+      maxLength: 20,
     },
     {
       id: 'dateStart',
@@ -59,7 +62,7 @@ export const formEditFormation: FormSchema<{
       title: 'Compétences acquises',
       component: 'select-creatable',
       isMulti: true,
-      maxChar: 40,
+      maxChar: 30,
       maxItems: 3,
     },
   ],

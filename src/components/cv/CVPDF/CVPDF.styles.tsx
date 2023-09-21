@@ -14,6 +14,11 @@ import {
 } from 'src/components/partials/CV/PageCvContent/PageCVContent.styles';
 import { COLORS } from 'src/constants/styles';
 
+export const CV_COLORS = {
+  titleGray: '#484848',
+  parGray: '#6D6C6C',
+  nameGray: '#979797',
+};
 export const StyledCVPDFContentHeader = styled(StyledCVPageContentHeader)`
   margin: 10px 10px 0 10px !important;
   padding: 15px 20px !important;
@@ -65,7 +70,7 @@ export const StyledCVPDFContentPassions = styled(StyledCVPageContentPassions)`
   margin-top: 10px;
   p {
     color: ${COLORS.darkGrayFont};
-    font-size: 8px;
+    font-size: 10px;
   }
 `;
 
@@ -105,9 +110,11 @@ export const StyledCVPFSkillTag = styled(StyledSkillTag)`
 `;
 
 export const StyledCVPDFExperienceDate = styled(StyledCVExperienceDate)`
-  min-width: 90px;
+  min-width: 105px;
   max-width: 90px;
   font-size: 10px;
+  padding-right: 15px;
+  padding-left: 0 !important;
   line-height: 12px;
 `;
 
@@ -117,6 +124,9 @@ export const StyledCVPDFContentExperience = styled(
   padding: 10px 20px;
   border-radius: 20px;
   margin: 10px 0;
+  > ul {
+    margin-top: 10px !important;
+  }
 `;
 
 export const StyledCVPDFContentInformations = styled(
@@ -128,7 +138,7 @@ export const StyledCVPDFContentInformations = styled(
   margin-bottom: 0;
   margin-top: 10px;
   .subtitle {
-    color: #979797;
+    color: ${CV_COLORS.nameGray};
     font-size: 10px;
     .uk-icon {
       color: ${COLORS.primaryOrange};
@@ -170,7 +180,7 @@ export const StyledCVPDFPage = styled.div`
   height: 1122px;
   width: 794px;
   margin-bottom: 50px;
-  background-color: #fff8f5;
+  background-color: ${COLORS.wheat};
   display: flex;
   flex-direction: column;
   ul {
@@ -182,6 +192,9 @@ export const StyledCVPDFPage = styled.div`
   }
   p {
     margin: 0;
+  }
+  .name-gray {
+    color: ${CV_COLORS.nameGray};
   }
 `;
 

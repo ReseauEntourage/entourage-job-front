@@ -128,7 +128,7 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
             </StyledLimit>
           )}
           {maxItems && (
-            <StyledLimit warning={remainingItems <= 0}>
+            <StyledLimit warning={remainingItems < 0}>
               <span>{remainingItems} élément(s) restant(s)</span>
             </StyledLimit>
           )}
