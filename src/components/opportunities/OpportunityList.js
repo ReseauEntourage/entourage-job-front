@@ -244,13 +244,14 @@ export const OpportunityList = ({
               createdBy,
               createdAt,
               updatedAt,
+              isArchived,
+              isValidated,
               ...restOpportunity
             } = offer;
             const { data } = await Api.postOpportunity({
               ...restOpportunity,
               title: `${restOpportunity.title} (copie)`,
               isAdmin: true,
-              isValidated: false,
               date: moment().toISOString(),
               isCopy: true,
             });
@@ -301,6 +302,7 @@ export const OpportunityList = ({
   const getOpportunity = useCallback(async (oppId) => {
     try {
       const { data: offer } = await Api.getOpportunityById(oppId);
+      console.log(offer);
       return offer;
     } catch (err) {
       console.error(err);
