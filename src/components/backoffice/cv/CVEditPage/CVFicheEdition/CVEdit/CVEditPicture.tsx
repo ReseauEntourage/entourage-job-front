@@ -7,7 +7,7 @@ import { addPrefix } from 'src/utils';
 import {
   StyledEditPicture,
   StyledEditPictureButton,
-  StyledPictureMask,
+  StyledEditPictureContainer,
 } from './CVEdit.styles';
 
 interface CVEditPictureProps {
@@ -52,12 +52,12 @@ export const CVEditPicture = ({
       );
     });
   };
-
   return (
-    <StyledEditPicture
-      style={{ backgroundImage: `url(${addPrefix(url)})`, minHeight: '300px' }}
-    >
-      <StyledPictureMask className={!isDesktop ? 'mobile' : ''} />
+    <StyledEditPictureContainer className={!isDesktop ? 'mobile' : ''}>
+      <StyledEditPicture
+        className={!isDesktop ? 'mobile' : ''}
+        style={{ backgroundImage: `url(${addPrefix(url)})` }}
+      />
       {!disablePicture && (
         <StyledEditPictureButton>
           {imageUploading ? (
@@ -99,6 +99,6 @@ export const CVEditPicture = ({
           )}
         </StyledEditPictureButton>
       )}
-    </StyledEditPicture>
+    </StyledEditPictureContainer>
   );
 };

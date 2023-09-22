@@ -6,7 +6,7 @@ import { Api } from 'src/api';
 import { CV, User } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
-import { Button, ButtonIcon, Grid } from 'src/components/utils';
+import { Button, ButtonIcon } from 'src/components/utils';
 import { ButtonPost } from 'src/components/utils/Button/ButtonPost';
 import { CV_STATUS, SOCKETS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
@@ -15,12 +15,16 @@ import {
   COACH_USER_ROLES,
   USER_ROLES,
 } from 'src/constants/users';
-import { usePrevious } from 'src/hooks/utils';
+import { useIsDesktop, usePrevious } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
 import { UserContext } from 'src/store/UserProvider';
 import { isRoleIncluded } from 'src/utils/Finding';
 import { ButtonDownload } from './ButtonDownload';
-import { StyledCVEditButtonsContainer } from './CVEditPage.styles';
+import {
+  StyledCVEditButtonsContainer,
+  StyledCVEditStatusVersion,
+  StyledCVNav,
+} from './CVEditPage.styles';
 import { CVFicheEdition } from './CVFicheEdition';
 import { CVModalPreview } from './CVModalPreview';
 import { NoCV } from './NoCV';
@@ -41,6 +45,8 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
   const [imageUrl, setImageUrl] = useState<string>();
   const [previewGenerating, setPreviewGenerating] = useState(false);
   const [pdfGenerating, setPdfGenerating] = useState(false);
+
+  const isDesktop = useIsDesktop();
 
   const { user } = useContext<{ user: User }>(UserContext);
 
@@ -289,8 +295,8 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
   // affichage du CV
   return (
     <div>
-      <Grid between middle>
-        <Grid column gap="collapse">
+      <StyledCVNav className={isDesktop ? '' : 'mobile'}>
+        <StyledCVEditStatusVersion>
           <div>
             Statut&nbsp;:{' '}
             <span className={`uk-text-${cvStatus.style}`}>
@@ -303,8 +309,8 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
               {cvVersion}
             </div>
           )}
-        </Grid>
-        <StyledCVEditButtonsContainer>
+        </StyledCVEditStatusVersion>
+        <StyledCVEditButtonsContainer className={isDesktop ? '' : 'mobile'}>
           <ButtonDownload
             pdfGenerating={pdfGenerating}
             candidateId={cv.UserId}
@@ -344,7 +350,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
               text="Publier"
             />
           )}
-          {user.role === USER_ROLES.ADMIN && (
+          {user.role !== USER_ROLES.ADMIN && (
             <ButtonIcon
               name="question"
               href={process.env.TUTORIAL_CV}
@@ -355,7 +361,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
             />
           )}
         </StyledCVEditButtonsContainer>
-      </Grid>
+      </StyledCVNav>
       <CVFicheEdition
         email={cv.user?.candidat.email}
         phone={cv.user?.candidat.phone}
