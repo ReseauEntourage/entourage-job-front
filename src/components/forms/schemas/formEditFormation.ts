@@ -26,7 +26,7 @@ export const formEditFormation: FormSchema<{
       name: 'description',
       component: 'textarea',
       title: 'Description',
-      maxLines: { lines: 10, width: 655 },
+      maxLines: { lines: 9, width: 655 },
     },
     {
       id: 'location',
@@ -62,7 +62,7 @@ export const formEditFormation: FormSchema<{
       title: 'Compétences acquises',
       component: 'select-creatable',
       isMulti: true,
-      maxChar: 30,
+      maxChar: 15,
       maxItems: 3,
     },
   ],

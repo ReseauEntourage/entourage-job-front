@@ -148,7 +148,7 @@ export const InfoProfileCard = ({
             : 'Localisations non renseignées'}
         </Grid>
         <Grid row gap="small" middle>
-          <Icon name="calendar" style={{ width: 20 }} />
+          <Icon name="linkedout-calendar" style={{ width: 20 }} />
           {availability && availability !== ''
             ? availability
             : 'Disponibilités non renseignée'}

@@ -11,7 +11,7 @@ export const formEditSkills: FormSchema<{
       name: 'skills',
       component: 'select-creatable',
       title: 'Atouts',
-      maxChar: 30,
+      maxChar: 20,
       maxItems: 6,
       isMulti: true,
     },

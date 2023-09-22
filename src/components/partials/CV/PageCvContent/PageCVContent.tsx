@@ -1,6 +1,17 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 import UIkit from 'uikit';
+
+import CalendarIcon from 'assets/custom/icons/calendar.svg';
+import CarIcon from 'assets/custom/icons/car.svg';
+import DocumentIcon from 'assets/custom/icons/document.svg';
+import EmailIcon from 'assets/custom/icons/email.svg';
+import HomeIcon from 'assets/custom/icons/home.svg';
+import LanguageIcon from 'assets/custom/icons/language.svg';
+import LocationIcon from 'assets/custom/icons/location.svg';
+import PhoneIcon from 'assets/custom/icons/phone.svg';
+import QuoteLeftIcon from 'assets/custom/icons/quote-left.svg';
+import QuoteRightIcon from 'assets/custom/icons/quote-right.svg';
 import { CVCallToActions } from '../CVCallToActions';
 import { CVShareButtons } from '../CVCallToActions/CVShareButtons';
 import { Api } from 'src/api';
@@ -10,6 +21,7 @@ import { CVDate } from 'src/components/cv/CVDate';
 import { formSendExternalMessage } from 'src/components/forms/schemas/formSendExternalMessage';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+
 import {
   StyledCVPageContent,
   CV_COLORS,
@@ -35,6 +47,7 @@ import {
   StyledCVExperienceDescription,
   StyledCVExperienceDateMobile,
   StyledTitleAccordion,
+  StyledCVSkillTagContainer,
 } from 'src/components/partials/CV/PageCvContent/PageCVContent.styles';
 import { Button, Icon } from 'src/components/utils';
 import { CarouselSwiper } from 'src/components/utils/CarouselSwiper';
@@ -145,14 +158,14 @@ export const PageCVContent = ({
                 )}
               </StyledCVPageContentStory>
             )}
-            <div className="skill-tags">
+            <StyledCVSkillTagContainer>
               {cv.skills.length > 0 &&
                 cv.skills.map(({ name, id }, key) => {
                   return (
                     <StyledSkillTag key={`${key}-${id}`}>{name}</StyledSkillTag>
                   );
                 })}
-            </div>
+            </StyledCVSkillTagContainer>
           </div>
           <StyledCVMessageContainer className={!isDesktop ? 'mobile' : ''}>
             <H5
@@ -286,7 +299,8 @@ export const PageCVContent = ({
                 <li>
                   <div>
                     <p className="subtitle">
-                      <Icon name="calendar" /> <span>Disponibilité</span>
+                      <Icon name="linkedout-calendar" />{' '}
+                      <span>Disponibilité</span>
                     </p>
                     <p className="content">{cv.availability}</p>
                   </div>
@@ -384,13 +398,13 @@ export const PageCVContent = ({
                         {experience.description && (
                           <div>{experience.description}</div>
                         )}
-                        <div>
+                        <StyledCVSkillTagContainer>
                           {experience.skills?.map(({ name, id }) => {
                             return (
                               <StyledSkillTag key={id}>{name}</StyledSkillTag>
                             );
                           })}
-                        </div>
+                        </StyledCVSkillTagContainer>
                       </StyledCVExperienceDescription>
                     </StyledCVExperienceLi>
                   );
@@ -453,13 +467,13 @@ export const PageCVContent = ({
                         {formation.description && (
                           <div>{formation.description}</div>
                         )}
-                        <div>
+                        <StyledCVSkillTagContainer>
                           {formation.skills?.map(({ name, id }) => {
                             return (
                               <StyledSkillTag key={id}>{name}</StyledSkillTag>
                             );
                           })}
-                        </div>
+                        </StyledCVSkillTagContainer>
                       </StyledCVExperienceDescription>
                     </StyledCVExperienceLi>
                   );

@@ -21,7 +21,11 @@ export const CV_COLORS = {
 };
 export const StyledCVPDFContentHeader = styled(StyledCVPageContentHeader)`
   margin: 10px 10px 0 10px !important;
-  padding: 15px 20px !important;
+  padding: 10px 10px 10px 0 !important;
+
+  #header-details {
+    padding-left: 0;
+  }
 `;
 
 export const StyledCVPDFContentDetailsContainer = styled(
@@ -33,31 +37,25 @@ export const StyledCVPDFContentDetailsContainer = styled(
 
 export const StyledCVPDFQuote = styled.div`
   width: 105px;
-  margin-top: 20px;
+  margin-top: 12px;
   text-align: center;
   font-size: 8px;
   line-height: 10px;
   position: relative;
-  span.uk-icon {
+  svg {
     color: ${COLORS.primaryOrange};
-    height: 15px;
+    height: 10px;
     width: 15px;
     position: absolute;
     :first-of-type {
       left: -15px;
-      top: 0;
+      top: -5px;
       margin-right: 8px;
-      svg {
-        transform: translateY(-8px) rotate(180deg);
-      }
     }
     :last-of-type {
       margin-left: 8px;
       right: -15px;
-      bottom: 0;
-      svg {
-        transform: translateY(8px);
-      }
+      bottom: -5px;
     }
   }
 `;
@@ -84,8 +82,15 @@ export const StyledCVPDFStory = styled(StyledCVPageContentStory)`
 `;
 
 export const StyledCVPDFExperienceLi = styled(StyledCVExperienceLi)`
+  padding-left: 0;
   > div {
     padding: 0px 15px 10px;
+  }
+
+  &:last-child {
+    > div {
+      padding-bottom: 0;
+    }
   }
 `;
 
@@ -97,6 +102,7 @@ export const StyledCVPDFExperienceDescription = styled(
   > div {
     margin-bottom: 5px;
   }
+  padding-right: 0 !important;
   ::before {
     top: 0;
   }
@@ -110,7 +116,7 @@ export const StyledCVPFSkillTag = styled(StyledSkillTag)`
 `;
 
 export const StyledCVPDFExperienceDate = styled(StyledCVExperienceDate)`
-  min-width: 105px;
+  min-width: 95px;
   max-width: 90px;
   font-size: 10px;
   padding-right: 15px;
@@ -140,13 +146,13 @@ export const StyledCVPDFContentInformations = styled(
   .subtitle {
     color: ${CV_COLORS.nameGray};
     font-size: 10px;
-    .uk-icon {
+    display: flex;
+    align-items: center;
+    svg {
       color: ${COLORS.primaryOrange};
-      svg {
-        height: 8px;
-        width: 8px;
-        margin-right: 5px;
-      }
+      height: 10px !important;
+      width: 10px !important;
+      margin-right: 5px;
     }
   }
   .content {
@@ -201,11 +207,11 @@ export const StyledCVPDFPage = styled.div`
 export const StyledCVPDFProfilePicture = styled(StyledCVProfilePicture)`
   display: block;
   margin: auto;
-  width: 105px;
+  width: 128px;
   height: 190px;
   position: relative;
   .picture {
-    width: 105px;
+    width: 128px;
     height: 190px;
     border-radius: 859px 909px 729px 909px;
     background-image: ${(props) => {
@@ -219,4 +225,14 @@ export const StyledCVPDFProfilePicture = styled(StyledCVProfilePicture)`
   .pseudo {
     display: none;
   }
+`;
+
+export const StyledCVPDFProfilePictureContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 10px;
+  padding-left: 10px;
+  margin-right: 10px;
+  height: 100%;
 `;

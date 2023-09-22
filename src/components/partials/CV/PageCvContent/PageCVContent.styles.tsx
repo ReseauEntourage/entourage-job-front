@@ -119,6 +119,9 @@ export const StyledCVPageContentHeader = styled.div`
   }
   #header-picture-share {
     max-width: 355px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   &.mobile {
     #header-picture-share {
@@ -133,9 +136,6 @@ export const StyledCVPageContentHeader = styled.div`
       text-align: center;
       width: 100%;
       min-width: 300px;
-    }
-    .skill-tags {
-      margin-bottom: 50px;
     }
   }
 `;
@@ -321,6 +321,12 @@ export const StyledCVPageContentExperience = styled.div`
   font-size: 16px;
 `;
 
+export const StyledCVSkillTagContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 10px;
+`;
+
 export const StyledSkillTag = styled.div`
   display: inline-block;
   margin-right: 20px;
@@ -331,7 +337,6 @@ export const StyledSkillTag = styled.div`
   color: ${COLORS.primaryOrange};
   font-size: 14px;
   font-weight: 400;
-  margin-bottom: 10px;
 `;
 
 export const StyledCVExperienceLi = styled.div`
