@@ -1,25 +1,35 @@
 import styled from 'styled-components';
 
-export const StyledEditPicture = styled.div`
-  box-sizing: border-box;
-  width: 100%;
-  flex: auto;
-  background-size: contain;
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
+export const StyledEditPictureContainer = styled.div`
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: black;
   position: relative;
-  transition: box-shadow 0.1s ease-in-out;
-  border-radius: 5px;
-  overflow: hidden;
-  color: #363636;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  &.mobile {
+    height: 270px;
+  }
+`;
+
+export const StyledEditPicture = styled.div`
+  height: 400px;
+  width: 270px !important;
+  border-radius: 859px 909px 729px 909px;
+  background-position: 66% 39%;
+  background-size: cover;
+  &.mobile {
+    width: 190px !important;
+    height: 270px;
+  }
 `;
 
 export const StyledPictureMask = styled.div`
+  display: none;
   position: absolute;
-  left: 39%;
+  left: calc(50% - 135px);
   top: 0;
-  width: 200px;
+  width: 270px;
   height: 100%;
   box-shadow: 0 0 0 99999px rgba(0, 0, 0, 0.8);
   border-radius: 859px 909px 729px 909px;
