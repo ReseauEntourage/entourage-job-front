@@ -16,7 +16,6 @@ import { COLORS } from 'src/constants/styles';
 
 export const CV_COLORS = {
   titleGray: '#484848',
-  parGray: '#6D6C6C',
   nameGray: '#979797',
 };
 export const StyledCVPDFContentHeader = styled(StyledCVPageContentHeader)`

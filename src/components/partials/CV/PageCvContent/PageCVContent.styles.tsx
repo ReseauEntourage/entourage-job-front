@@ -4,17 +4,21 @@ import { COLORS } from 'src/constants/styles';
 
 export const CV_COLORS = {
   titleGray: '#484848',
-  parGray: '#6D6C6C',
   nameGray: '#979797',
 };
 
 export const StyledBackLink = styled.a`
-  display: flex;
+  display: flex !important;
   flex-direction: row;
+  align-items: center;
   margin-bottom: 16px;
   color: ${COLORS.darkGrayFont} !important;
   &:visited {
     color: ${COLORS.darkGrayFont} !important;
+  }
+  svg {
+    width: 8px;
+    fill: ${COLORS.darkGrayFont};
   }
 `;
 
@@ -41,7 +45,7 @@ export const StyledCVPageContent = styled.div`
     }
   }
   p {
-    color: ${CV_COLORS.parGray};
+    color: ${COLORS.darkGrayFont};
   }
 
   .strong {
@@ -100,19 +104,16 @@ export const StyledCVPageContentHeader = styled.div`
     align-items: stretch;
     box-sizing: border-box;
     #quote {
-      span.uk-icon {
+      svg {
+        width: 18px;
         color: ${COLORS.primaryOrange};
         :first-of-type {
           margin-right: 8px;
-          svg {
-            transform: translateY(-8px) rotate(180deg);
-          }
+          transform: translateY(-8px);
         }
         :last-of-type {
           margin-left: 8px;
-          svg {
-            transform: translateY(8px);
-          }
+          transform: translateY(8px);
         }
       }
     }
@@ -193,7 +194,7 @@ export const StyledCVPageContentStory = styled.div`
   margin-bottom: 20px;
   position: relative;
   white-space: pre-line;
-  color: ${CV_COLORS.parGray};
+  color: ${COLORS.darkGrayFont};
   p {
     margin-bottom: 0;
   }
@@ -278,11 +279,13 @@ export const StyledCVPageContentInformations = styled.div`
     margin-block-start: 0;
   }
   .subtitle {
+    display: flex;
+    align-items: center;
     color: ${COLORS.primaryOrange};
     margin-bottom: 0;
     svg {
-      width: 20px;
-      margin-right: 5px;
+      width: 16px;
+      margin-right: 8px;
     }
   }
   .content {
@@ -357,12 +360,12 @@ export const StyledCVExperienceDate = styled.div`
   min-width: 150px;
   max-width: 150px;
   padding: 0 15px;
-  color: ${CV_COLORS.parGray};
+  color: ${COLORS.darkGrayFont};
   text-align: right;
 `;
 
 export const StyledCVExperienceDateMobile = styled.div`
-  color: ${CV_COLORS.parGray};
+  color: ${COLORS.darkGrayFont};
   text-align: left;
   font-size: 13px;
 `;
@@ -371,7 +374,7 @@ export const StyledCVExperienceDescription = styled.div`
   position: relative;
   border-left: 1px solid #d4d4d4;
   padding-bottom: 20px;
-  color: ${CV_COLORS.parGray};
+  color: ${COLORS.darkGrayFont};
 
   > div,
   h5 {
@@ -413,17 +416,30 @@ export const StyledCVPageContentSlide = styled.div`
   > div {
     width: fit-content;
   }
+  padding-top: 4px;
+  padding-bottom: 4px;
   svg {
     color: ${COLORS.primaryOrange};
     width: 32px;
     height: 32px;
   }
-  span {
-    :first-of-type {
-      svg {
-        transform: translateY(-8px) rotate(180deg);
-      }
-    }
+`;
+
+export const StyledRightQuoteContainer = styled.div`
+  display: flex;
+  align-items: flex-end;
+  svg {
+    margin-left: 8px;
+    transform: translateY(8px);
+  }
+`;
+
+export const StyledLeftQuoteContainer = styled.div`
+  display: flex;
+  align-items: flex-start;
+  svg {
+    margin-right: 8px;
+    transform: translateY(-8px);
   }
 `;
 

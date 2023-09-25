@@ -436,7 +436,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                   <li>
                     <div>
                       <p className="subtitle">
-                        <LocationIcon viewBox="0 0 6 6" />{' '}
+                        <LocationIcon viewBox="0 0 384 512" />{' '}
                         <span>Localisation</span>
                       </p>
                       <p className="content">

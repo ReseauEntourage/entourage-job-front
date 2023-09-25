@@ -4,12 +4,10 @@ import UIkit from 'uikit';
 
 import CalendarIcon from 'assets/custom/icons/calendar.svg';
 import CarIcon from 'assets/custom/icons/car.svg';
+import ChevronLeftIcon from 'assets/custom/icons/chevron-left.svg';
 import DocumentIcon from 'assets/custom/icons/document.svg';
-import EmailIcon from 'assets/custom/icons/email.svg';
-import HomeIcon from 'assets/custom/icons/home.svg';
 import LanguageIcon from 'assets/custom/icons/language.svg';
 import LocationIcon from 'assets/custom/icons/location.svg';
-import PhoneIcon from 'assets/custom/icons/phone.svg';
 import QuoteLeftIcon from 'assets/custom/icons/quote-left.svg';
 import QuoteRightIcon from 'assets/custom/icons/quote-right.svg';
 import { CVCallToActions } from '../CVCallToActions';
@@ -48,6 +46,8 @@ import {
   StyledCVExperienceDateMobile,
   StyledTitleAccordion,
   StyledCVSkillTagContainer,
+  StyledRightQuoteContainer,
+  StyledLeftQuoteContainer,
 } from 'src/components/partials/CV/PageCvContent/PageCVContent.styles';
 import { Button, Icon } from 'src/components/utils';
 import { CarouselSwiper } from 'src/components/utils/CarouselSwiper';
@@ -97,7 +97,7 @@ export const PageCVContent = ({
       {!isPreview && (
         <Link href="/candidats?employed=false" scroll={false} shallow passHref>
           <StyledBackLink>
-            <Icon name="chevron-left" />
+            <ChevronLeftIcon viewBox="0 0 320 512" />
             &nbsp;Retour à la page candidats
           </StyledBackLink>
         </Link>
@@ -139,9 +139,9 @@ export const PageCVContent = ({
             />
             {cv.catchphrase && (
               <p id="quote">
-                <Icon name="quote-right" />
+                <QuoteLeftIcon viewBox="0 0 10 8" />
                 <span>{cv.catchphrase}</span>
-                <Icon name="quote-right" />
+                <QuoteRightIcon viewBox="0 0 10 8" />
               </p>
             )}
             {cv.story && (
@@ -264,7 +264,8 @@ export const PageCVContent = ({
                 <li>
                   <div>
                     <p className="subtitle">
-                      <Icon name="file-text" /> <span>Type de contrat</span>
+                      <DocumentIcon viewBox="0 0 6 8" />{' '}
+                      <span>Type de contrat</span>
                     </p>
                     <p className="content">
                       {cv.contracts
@@ -280,7 +281,8 @@ export const PageCVContent = ({
                 <li>
                   <div>
                     <p className="subtitle">
-                      <Icon name="location" /> <span>Localisation</span>
+                      <LocationIcon viewBox="0 0 384 512" />{' '}
+                      <span>Localisation</span>
                     </p>
                     <p className="content">
                       {locations
@@ -299,7 +301,7 @@ export const PageCVContent = ({
                 <li>
                   <div>
                     <p className="subtitle">
-                      <Icon name="linkedout-calendar" />{' '}
+                      <CalendarIcon viewBox="0 0 6 6" />{' '}
                       <span>Disponibilité</span>
                     </p>
                     <p className="content">{cv.availability}</p>
@@ -310,7 +312,7 @@ export const PageCVContent = ({
                 <li>
                   <div>
                     <p className="subtitle">
-                      <Icon name="commenting" /> <span>Langues</span>
+                      <LanguageIcon viewBox="0 0 6 6" /> <span>Langues</span>
                     </p>
                     <p className="content">
                       {cv.languages
@@ -326,7 +328,7 @@ export const PageCVContent = ({
                 <li>
                   <div>
                     <p className="subtitle">
-                      <Icon name="car" /> <span>Mobilité</span>
+                      <CarIcon viewBox="0 0 6 6" /> <span>Mobilité</span>
                     </p>
                     <p className="content">{cv.transport}</p>
                   </div>
@@ -519,7 +521,9 @@ export const PageCVContent = ({
               ...cv.reviews.map(({ text, id, name, status }) => {
                 return (
                   <StyledCVPageContentSlide key={id}>
-                    <Icon name="quote-right" />
+                    <StyledLeftQuoteContainer>
+                      <QuoteLeftIcon viewBox="0 0 10 8" />
+                    </StyledLeftQuoteContainer>
                     <div>
                       <span>{text}</span>
                       <br />
@@ -527,7 +531,9 @@ export const PageCVContent = ({
                         {name}, {status}
                       </span>
                     </div>
-                    <Icon name="quote-right" />
+                    <StyledRightQuoteContainer>
+                      <QuoteRightIcon viewBox="0 0 10 8" />
+                    </StyledRightQuoteContainer>
                   </StyledCVPageContentSlide>
                 );
               }),
