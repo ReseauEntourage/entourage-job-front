@@ -302,7 +302,6 @@ export const OpportunityList = ({
   const getOpportunity = useCallback(async (oppId) => {
     try {
       const { data: offer } = await Api.getOpportunityById(oppId);
-      console.log(offer);
       return offer;
     } catch (err) {
       console.error(err);
