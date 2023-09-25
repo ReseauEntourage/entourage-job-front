@@ -62,7 +62,7 @@ export const formEditFormation: FormSchema<{
       title: 'Compétences acquises',
       component: 'select-creatable',
       isMulti: true,
-      maxChar: 15,
+      maxChar: 20,
       maxItems: 3,
     },
   ],

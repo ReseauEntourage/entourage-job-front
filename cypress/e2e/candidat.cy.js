@@ -204,8 +204,19 @@ describe('Candidat', () => {
     cy.get(`[data-testid="test-skills-edit-icon"]`).scrollIntoView().click();
     const skill1 = 'skill1';
     const skill2 = 'skill2';
-    cy.get(`[data-testid="form-skills-skill1"]`).clear().type(skill1);
-    cy.get(`[data-testid="form-skills-skill2"]`).clear().type(skill2);
+    cy.get('#form-skills')
+      .find('#form-skills-skills')
+      .find(`.Select__clear-indicator`)
+      .should('be.visible')
+      .click();
+    cy.get('#form-skills')
+      .find('#form-skills-skills')
+      .click()
+      .type(`${skill1}{enter}`);
+    cy.get('#form-skills')
+      .find('#form-skills-skills')
+      .click()
+      .type(`${skill2}{enter}`);
     cy.get(`[data-testid="form-confirm-form-skills"]`).click();
     cy.get(`[data-testid="cv-edit-skill1-content"]`).should('contain', skill1);
     cy.get(`[data-testid="cv-edit-skill2-content"]`).should('contain', skill2);

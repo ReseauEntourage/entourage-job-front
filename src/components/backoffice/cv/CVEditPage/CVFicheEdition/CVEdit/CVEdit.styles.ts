@@ -39,6 +39,9 @@ export const StyledEditPictureButton = styled.div`
   width: 50px;
   background-color: white;
   border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   span {
     svg {
