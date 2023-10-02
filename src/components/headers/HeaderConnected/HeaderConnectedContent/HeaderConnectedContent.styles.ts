@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS } from 'src//constants/styles';
+import { COLORS } from 'src/constants/styles';
 
 export const StyledConnectedItem = styled.li`
   display: list-item;

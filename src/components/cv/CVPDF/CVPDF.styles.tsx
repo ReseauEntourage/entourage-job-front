@@ -14,10 +14,6 @@ import {
 } from 'src/components/partials/CV/PageCvContent/PageCVContent.styles';
 import { COLORS } from 'src/constants/styles';
 
-export const CV_COLORS = {
-  titleGray: '#484848',
-  nameGray: '#979797',
-};
 export const StyledCVPDFContentHeader = styled(StyledCVPageContentHeader)`
   margin: 10px 10px 0 10px !important;
   padding: 10px 10px 10px 0 !important;
@@ -143,7 +139,7 @@ export const StyledCVPDFContentInformations = styled(
   margin-bottom: 0;
   margin-top: 10px;
   .subtitle {
-    color: ${CV_COLORS.nameGray};
+    color: ${COLORS.darkGray};
     font-size: 10px;
     display: flex;
     align-items: center;
@@ -199,7 +195,7 @@ export const StyledCVPDFPage = styled.div`
     margin: 0;
   }
   .name-gray {
-    color: ${CV_COLORS.nameGray};
+    color: ${COLORS.darkGray};
   }
 `;
 

@@ -22,7 +22,6 @@ import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 
 import {
   StyledCVPageContent,
-  CV_COLORS,
   StyledCVPageContentFooter,
   StyledCVPageContentStory,
   StyledCVExperienceLi,
@@ -49,11 +48,12 @@ import {
   StyledRightQuoteContainer,
   StyledLeftQuoteContainer,
 } from 'src/components/partials/CV/PageCvContent/PageCVContent.styles';
-import { Button, Icon } from 'src/components/utils';
+import { Button } from 'src/components/utils';
 import { CarouselSwiper } from 'src/components/utils/CarouselSwiper';
 import { H1, H2, H3, H4, H5 } from 'src/components/utils/Headings';
 import { CONTRACTS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { COLORS } from 'src/constants/styles';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { useIsDesktop } from 'src/hooks/utils';
 import { fbEvent } from 'src/lib/fb';
@@ -116,7 +116,7 @@ export const PageCVContent = ({
               <StyledShareContainer>
                 <H5
                   title="Partagez son CV sur vos réseaux"
-                  color={CV_COLORS.titleGray}
+                  color={COLORS.black}
                 />
                 <p>
                   En augmentant sa visibilité, vous pouvez générer des
@@ -131,7 +131,7 @@ export const PageCVContent = ({
           <div>
             <H1
               title={`${cv.user.candidat.firstName} ${cv.user.candidat.lastName}`}
-              color={CV_COLORS.titleGray}
+              color={COLORS.black}
             />
             <CVCareerPathSentence
               ambitions={cv.ambitions}
@@ -170,7 +170,7 @@ export const PageCVContent = ({
           <StyledCVMessageContainer className={!isDesktop ? 'mobile' : ''}>
             <H5
               title={`Donnez un coup de pouce à ${cv.user.candidat.firstName} !`}
-              color={CV_COLORS.titleGray}
+              color={COLORS.black}
             />
             <p>Une suggestion, une info à partager&nbsp;?</p>
             <Button
@@ -223,7 +223,7 @@ export const PageCVContent = ({
               <StyledShareContainer>
                 <H5
                   title="Partagez son CV sur vos réseaux"
-                  color={CV_COLORS.titleGray}
+                  color={COLORS.black}
                 />
                 <p>
                   En augmentant sa visibilité, vous pouvez générer des
@@ -245,7 +245,7 @@ export const PageCVContent = ({
             }`}
           >
             {isDesktop ? (
-              <H4 title="Informations" color={CV_COLORS.titleGray} />
+              <H4 title="Informations" color={COLORS.black} />
             ) : (
               <StyledTitleAccordion
                 onClick={() => {
@@ -255,7 +255,7 @@ export const PageCVContent = ({
                   });
                 }}
               >
-                <H2 title="Informations" color={CV_COLORS.titleGray} />
+                <H2 title="Informations" color={COLORS.black} />
                 <StyledChevronIcon name="chevron-down" />
               </StyledTitleAccordion>
             )}
@@ -338,7 +338,7 @@ export const PageCVContent = ({
           </StyledCVPageContentInformations>
           {cv.passions?.length > 0 && isDesktop && (
             <StyledCVPageContentPassions>
-              <H4 title="Mes passions" color={CV_COLORS.titleGray} />
+              <H4 title="Mes passions" color={COLORS.black} />
               <ul>
                 {cv?.passions?.map(({ name }) => {
                   return <p>{name}</p>;
@@ -362,7 +362,7 @@ export const PageCVContent = ({
                   });
                 }}
               >
-                <H2 title="Expériences" color={CV_COLORS.titleGray} />
+                <H2 title="Expériences" color={COLORS.black} />
                 <StyledChevronIcon name="chevron-down" />
               </StyledTitleAccordion>
               <ul>
@@ -378,10 +378,7 @@ export const PageCVContent = ({
                       )}
                       <StyledCVExperienceDescription>
                         {experience.title && (
-                          <H5
-                            title={experience.title}
-                            color={CV_COLORS.titleGray}
-                          />
+                          <H5 title={experience.title} color={COLORS.black} />
                         )}
                         {!isDesktop && (
                           <StyledCVExperienceDateMobile>
@@ -429,7 +426,7 @@ export const PageCVContent = ({
                   });
                 }}
               >
-                <H2 title="Formation" color={CV_COLORS.titleGray} />
+                <H2 title="Formation" color={COLORS.black} />
                 <StyledChevronIcon name="chevron-down" />
               </StyledTitleAccordion>
               <ul>
@@ -445,10 +442,7 @@ export const PageCVContent = ({
                       )}
                       <StyledCVExperienceDescription>
                         {formation.title && (
-                          <H5
-                            title={formation.title}
-                            color={CV_COLORS.titleGray}
-                          />
+                          <H5 title={formation.title} color={COLORS.black} />
                         )}
                         {!isDesktop && (
                           <StyledCVExperienceDateMobile>
@@ -490,7 +484,7 @@ export const PageCVContent = ({
               }`}
             >
               {isDesktop ? (
-                <H4 title="Mes passions" color={CV_COLORS.titleGray} />
+                <H4 title="Mes passions" color={COLORS.black} />
               ) : (
                 <StyledTitleAccordion
                   onClick={() => {
@@ -500,7 +494,7 @@ export const PageCVContent = ({
                     });
                   }}
                 >
-                  <H2 title="Mes passions" color={CV_COLORS.titleGray} />
+                  <H2 title="Mes passions" color={COLORS.black} />
                   <StyledChevronIcon name="chevron-down" />
                 </StyledTitleAccordion>
               )}
@@ -515,7 +509,7 @@ export const PageCVContent = ({
       </StyledCVPageContentDetailsContainer>
       {cv.reviews?.length > 0 && (
         <StyledCVPageContentCarousel>
-          <H3 title="Ils me recommandent" color={CV_COLORS.titleGray} center />
+          <H3 title="Ils me recommandent" color={COLORS.black} center />
           <CarouselSwiper
             slides={[
               ...cv.reviews.map(({ text, id, name, status }) => {

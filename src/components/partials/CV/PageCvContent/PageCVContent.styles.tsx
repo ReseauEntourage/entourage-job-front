@@ -2,11 +2,6 @@ import styled from 'styled-components';
 import { Icon } from 'src/components/utils';
 import { COLORS } from 'src/constants/styles';
 
-export const CV_COLORS = {
-  titleGray: '#484848',
-  nameGray: '#979797',
-};
-
 export const StyledBackLink = styled.a`
   display: flex !important;
   flex-direction: row;
@@ -76,7 +71,7 @@ export const StyledCVPageContent = styled.div`
     }
   }
   .name-gray {
-    color: ${CV_COLORS.nameGray};
+    color: ${COLORS.darkGray};
   }
 `;
 
@@ -400,7 +395,7 @@ export const StyledCVPageContentCarousel = styled.div`
   box-sizing: border-box;
   span.name {
     /* font-weight: 600; */
-    color: ${CV_COLORS.nameGray};
+    color: ${COLORS.darkGray};
   }
 `;
 
