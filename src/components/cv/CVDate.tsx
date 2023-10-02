@@ -1,15 +1,18 @@
+import _ from 'lodash';
 import moment from 'moment/moment';
 import React from 'react';
 import 'moment/locale/fr';
-import _ from 'lodash';
 
 interface CVDateProps {
-  experience: { dateStart?: Date; dateEnd?: Date };
+  experienceOrFormation: { dateStart?: Date; dateEnd?: Date };
   isMobile?: boolean;
 }
 
-export function CVDate({ experience, isMobile = false }: CVDateProps) {
-  const { dateStart, dateEnd } = experience;
+export function CVDate({
+  experienceOrFormation,
+  isMobile = false,
+}: CVDateProps) {
+  const { dateStart, dateEnd } = experienceOrFormation;
   if (isMobile) {
     return (
       <>

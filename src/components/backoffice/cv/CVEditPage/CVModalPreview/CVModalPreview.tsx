@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { CV } from 'src/api/types';
 import { useModalContext } from 'src/components/modals/Modal';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
-import { PageCVContent } from 'src/components/partials/CV/PageCvContent';
+import { PageCVContent } from 'src/components/partials/CV/PageCVContent';
 import { Button } from 'src/components/utils';
 
 interface ModalPreviewProps {

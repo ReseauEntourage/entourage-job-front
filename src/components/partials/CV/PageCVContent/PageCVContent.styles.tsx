@@ -2,21 +2,6 @@ import styled from 'styled-components';
 import { Icon } from 'src/components/utils';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledBackLink = styled.a`
-  display: flex !important;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 16px;
-  color: ${COLORS.darkGrayFont} !important;
-  &:visited {
-    color: ${COLORS.darkGrayFont} !important;
-  }
-  svg {
-    width: 8px;
-    fill: ${COLORS.darkGrayFont};
-  }
-`;
-
 export const StyledCVPageContent = styled.div`
   background-color: ${COLORS.wheat};
   display: flex;
@@ -89,61 +74,68 @@ export const StyledCVPageContentHeader = styled.div`
   h1 {
     text-transform: uppercase;
   }
-  #header-details {
-    padding-left: 55px;
-    line-height: 24px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-    box-sizing: border-box;
-    #quote {
-      svg {
-        width: 18px;
-        color: ${COLORS.primaryOrange};
-        :first-of-type {
-          margin-right: 8px;
-          transform: translateY(-8px);
-        }
-        :last-of-type {
-          margin-left: 8px;
-          transform: translateY(8px);
-        }
+`;
+
+export const StyledHeaderDetails = styled.div`
+  padding-left: 55px;
+  line-height: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  box-sizing: border-box;
+
+  #quote {
+    svg {
+      width: 18px;
+      color: ${COLORS.primaryOrange};
+
+      :first-of-type {
+        margin-right: 8px;
+        transform: translateY(-8px);
+      }
+
+      :last-of-type {
+        margin-left: 8px;
+        transform: translateY(8px);
       }
     }
   }
-  #header-picture-share {
-    max-width: 355px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+
   &.mobile {
-    #header-picture-share {
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-    }
-    #header-details {
-      padding-left: 0;
-      text-align: center;
-      width: 100%;
-      min-width: 300px;
-    }
+    padding-left: 0;
+    text-align: center;
+    width: 100%;
+    min-width: 300px;
+  }
+`;
+
+export const StyledCVProfilePictureContainer = styled.div`
+  max-width: 355px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  &.mobile {
+    width: 100%;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
   }
 `;
 
 export const StyledCVProfilePicture = styled.div`
-  height: 450px;
-  width: 355px;
+  height: 400px;
+  width: 270px;
+  margin-top: 8%;
   position: relative;
   .picture {
-    height: 400px;
-    width: 270px;
+    height: 100%;
+    width: 100%;
     border-radius: 859px 909px 729px 909px;
+
     background-image: ${(props) => {
       return `url('${props.imgSrc}')`;
     }};
@@ -153,15 +145,14 @@ export const StyledCVProfilePicture = styled.div`
     background-size: cover;
     left: 50%;
     transform: translateX(-50%);
-    top: 25px;
   }
   .pseudo {
     background-color: #f55f241a;
-    height: 450px;
-    width: 300px;
-    left: 50%;
-    transform: translateX(-50%) rotate(7.94deg);
-    top: 0;
+    height: 110%;
+    width: 110%;
+    left: 55%;
+    transform: translateX(-50%) rotate(6.06deg);
+    top: -8%;
     position: absolute;
     border-radius: 859px 909px 729px 909px;
     z-index: 1;
@@ -221,7 +212,7 @@ export const StyledCVPageContentStory = styled.div`
 `;
 
 export const StyledShareContainer = styled.div`
-  margin-top: 30px;
+  margin-top: 38px;
   /* width: 355px; */
   box-sizing: border-box;
   padding: 0 25px;
@@ -465,12 +456,11 @@ export const StyledChevronIcon = styled(Icon)`
 `;
 
 export const StyledCVMessageContainer = styled.div`
-  margin-top: 30px;
+  margin-top: 38px;
   &.mobile {
     button {
       margin: auto;
       display: block;
     }
-    margin-bottom: 50px;
   }
 `;

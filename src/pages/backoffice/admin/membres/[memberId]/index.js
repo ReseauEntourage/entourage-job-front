@@ -6,8 +6,8 @@ import { MemberDetails } from 'src/components/backoffice/admin/members/MemberDet
 import { useMemberId } from 'src/components/backoffice/admin/members/MemberDetails/useMemberId';
 import { useTab } from 'src/components/backoffice/admin/members/MemberDetails/useTab';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
-import { Grid, Section, SimpleLink } from 'src/components/utils';
-import { Icon } from 'src/components/utils/Icon';
+import { Grid, Section } from 'src/components/utils';
+import { BackLink } from 'src/components/utils/BackLink';
 import { MEMBER_TABS } from 'src/constants';
 import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
 import { usePrevious } from 'src/hooks/utils';
@@ -80,13 +80,10 @@ const User = () => {
       <LayoutBackOffice title="Chargement - Gestion des membres">
         <Section>
           <Grid column gap="large">
-            <SimpleLink
-              href="/backoffice/admin/membres"
-              className="uk-link-reset uk-flex uk-flex-middle"
-            >
-              <Icon name="chevron-left" />
-              Retour à la liste
-            </SimpleLink>
+            <BackLink
+              url="/backoffice/admin/membres"
+              label="Retour à la liste"
+            />
             <div>
               <div data-uk-spinner="" />
               <hr className="ent-divier-backoffice" />
@@ -102,13 +99,10 @@ const User = () => {
       <LayoutBackOffice title="Page introuvable - Gestion des membres">
         <Section className="uk-text-center" size="large">
           <Grid column gap="large">
-            <SimpleLink
-              href="/backoffice/admin/membres"
-              className="uk-link-reset uk-flex uk-flex-middle"
-            >
-              <Icon name="chevron-left" />
-              Retour à la liste
-            </SimpleLink>
+            <BackLink
+              url="/backoffice/admin/membres"
+              label="Retour à la liste"
+            />
             <div>
               <hr className="ent-divier-backoffice" />
               <h3 className="uk-text-bold">Ce profil n’est pas disponible</h3>

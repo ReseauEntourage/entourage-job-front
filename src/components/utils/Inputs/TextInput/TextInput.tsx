@@ -61,7 +61,7 @@ export function TextInput({
             : placeholder || (title as string)
         }
         name={name}
-        maxLength={maxLength}
+        // maxLength={maxLength}
         id={id}
         data-testid={id}
       />
@@ -70,8 +70,14 @@ export function TextInput({
           <div>
             <StyledAnnotationsErrorMessage error={error} />
           </div>
-          <StyledLimit warning={remainingCharacters === 0}>
-            <span>{remainingCharacters} caractère(s) restant(s)</span>
+          <StyledLimit warning={remainingCharacters < 0}>
+            {remainingCharacters >= 0 ? (
+              <span>{remainingCharacters} caractère(s) restant(s)</span>
+            ) : (
+              <span>
+                Limite dépassée de {Math.abs(remainingCharacters)} caractères(s)
+              </span>
+            )}
           </StyledLimit>
         </StyledAnnotations>
       ) : (

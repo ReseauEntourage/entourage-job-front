@@ -287,6 +287,7 @@ export const formEditOpportunity: FormSchema<{
           name: 'workingHours',
           component: 'text-input',
           title: 'Jours et horaires de travail',
+          maxLength: 255,
         },
         {
           id: 'isPartTime',
@@ -306,6 +307,7 @@ export const formEditOpportunity: FormSchema<{
           name: 'salary',
           component: 'text-input',
           title: 'Salaire et compléments',
+          maxLength: 255,
         },
         {
           id: 'driversLicense',

@@ -4,7 +4,6 @@ import UIkit from 'uikit';
 
 import CalendarIcon from 'assets/custom/icons/calendar.svg';
 import CarIcon from 'assets/custom/icons/car.svg';
-import ChevronLeftIcon from 'assets/custom/icons/chevron-left.svg';
 import DocumentIcon from 'assets/custom/icons/document.svg';
 import LanguageIcon from 'assets/custom/icons/language.svg';
 import LocationIcon from 'assets/custom/icons/location.svg';
@@ -15,40 +14,38 @@ import { CVShareButtons } from '../CVCallToActions/CVShareButtons';
 import { Api } from 'src/api';
 import { CV } from 'src/api/types';
 import { CVCareerPathSentenceNew as CVCareerPathSentence } from 'src/components/cv';
-import { CVDate } from 'src/components/cv/CVDate';
+import { ExperienceOrFormation } from 'src/components/cv/ExperienceOrFormation';
 import { formSendExternalMessage } from 'src/components/forms/schemas/formSendExternalMessage';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 
 import {
-  StyledCVPageContent,
-  StyledCVPageContentFooter,
-  StyledCVPageContentStory,
-  StyledCVExperienceLi,
-  StyledCVPageContentSlide,
-  StyledShareContainer,
-  StyledSkillTag,
-  StyledCVPageContentHeader,
-  StyledCVProfilePicture,
-  StyledCVPageContentDetailsContainer,
-  StyledCVPageContentInformations,
-  StyledCVPageContentExperience,
-  StyledCVPageContentPassions,
-  StyledCVPageContentCarousel,
   StyledChevronIcon,
   StyledCVMessageContainer,
-  StyledBackLink,
-  StyledLeftColumn,
-  StyledRightColumn,
-  StyledCVExperienceDate,
-  StyledCVExperienceDescription,
-  StyledCVExperienceDateMobile,
-  StyledTitleAccordion,
+  StyledCVPageContent,
+  StyledCVPageContentCarousel,
+  StyledCVPageContentDetailsContainer,
+  StyledCVPageContentExperience,
+  StyledCVPageContentFooter,
+  StyledCVPageContentHeader,
+  StyledCVPageContentInformations,
+  StyledCVPageContentPassions,
+  StyledCVPageContentSlide,
+  StyledCVPageContentStory,
+  StyledCVProfilePicture,
+  StyledCVProfilePictureContainer,
   StyledCVSkillTagContainer,
-  StyledRightQuoteContainer,
+  StyledHeaderDetails,
+  StyledLeftColumn,
   StyledLeftQuoteContainer,
-} from 'src/components/partials/CV/PageCvContent/PageCVContent.styles';
+  StyledRightColumn,
+  StyledRightQuoteContainer,
+  StyledShareContainer,
+  StyledSkillTag,
+  StyledTitleAccordion,
+} from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
 import { Button } from 'src/components/utils';
+import { BackLink } from 'src/components/utils/BackLink';
 import { CarouselSwiper } from 'src/components/utils/CarouselSwiper';
 import { H1, H2, H3, H4, H5 } from 'src/components/utils/Headings';
 import { CONTRACTS } from 'src/constants';
@@ -95,15 +92,13 @@ export const PageCVContent = ({
   return (
     <StyledCVPageContent>
       {!isPreview && (
-        <Link href="/candidats?employed=false" scroll={false} shallow passHref>
-          <StyledBackLink>
-            <ChevronLeftIcon viewBox="0 0 320 512" />
-            &nbsp;Retour à la page candidats
-          </StyledBackLink>
-        </Link>
+        <BackLink
+          url="/candidats?employed=false"
+          label="Retour à la page candidats"
+        />
       )}
-      <StyledCVPageContentHeader className={!isDesktop ? 'mobile' : ''}>
-        <div id="header-picture-share">
+      <StyledCVPageContentHeader>
+        <StyledCVProfilePictureContainer className={!isDesktop ? 'mobile' : ''}>
           <StyledCVProfilePicture
             className={!isDesktop ? 'mobile' : ''}
             imgSrc={process.env.AWSS3_CDN_URL + addPrefix(cv.urlImg)}
@@ -126,8 +121,8 @@ export const PageCVContent = ({
               <CVShareButtons cv={cv} actionDisabled={actionDisabled} />
             </>
           )}
-        </div>
-        <div id="header-details">
+        </StyledCVProfilePictureContainer>
+        <StyledHeaderDetails className={!isDesktop ? 'mobile' : ''}>
           <div>
             <H1
               title={`${cv.user.candidat.firstName} ${cv.user.candidat.lastName}`}
@@ -233,7 +228,7 @@ export const PageCVContent = ({
               <CVShareButtons cv={cv} actionDisabled={actionDisabled} />
             </>
           )}
-        </div>
+        </StyledHeaderDetails>
       </StyledCVPageContentHeader>
       <StyledCVPageContentDetailsContainer
         className={!isDesktop ? 'mobile' : ''}
@@ -366,46 +361,18 @@ export const PageCVContent = ({
                 <StyledChevronIcon name="chevron-down" />
               </StyledTitleAccordion>
               <ul>
-                {cv.experiences?.map((experience) => {
+                {cv.experiences.map((experience) => {
                   return (
-                    <StyledCVExperienceLi>
-                      {isDesktop && (
-                        <StyledCVExperienceDate>
-                          {experience.dateStart && (
-                            <CVDate experience={experience} />
-                          )}
-                        </StyledCVExperienceDate>
-                      )}
-                      <StyledCVExperienceDescription>
-                        {experience.title && (
-                          <H5 title={experience.title} color={COLORS.black} />
-                        )}
-                        {!isDesktop && (
-                          <StyledCVExperienceDateMobile>
-                            {experience.dateStart && (
-                              <CVDate experience={experience} isMobile />
-                            )}
-                          </StyledCVExperienceDateMobile>
-                        )}
-                        {(experience.company || experience.location) && (
-                          <div className="name-gray">
-                            {experience.company}
-                            {experience.company && experience.location && ' - '}
-                            {experience.location}
-                          </div>
-                        )}
-                        {experience.description && (
-                          <div>{experience.description}</div>
-                        )}
-                        <StyledCVSkillTagContainer>
-                          {experience.skills?.map(({ name, id }) => {
-                            return (
-                              <StyledSkillTag key={id}>{name}</StyledSkillTag>
-                            );
-                          })}
-                        </StyledCVSkillTagContainer>
-                      </StyledCVExperienceDescription>
-                    </StyledCVExperienceLi>
+                    <ExperienceOrFormation
+                      key={experience.id}
+                      title={experience.title}
+                      description={experience.description}
+                      dateStart={experience.dateStart}
+                      dateEnd={experience.dateEnd}
+                      location={experience.location}
+                      structure={experience.company}
+                      skills={experience.skills}
+                    />
                   );
                 })}
               </ul>
@@ -432,46 +399,16 @@ export const PageCVContent = ({
               <ul>
                 {cv.formations.map((formation) => {
                   return (
-                    <StyledCVExperienceLi>
-                      {isDesktop && (
-                        <StyledCVExperienceDate>
-                          {formation.dateStart && (
-                            <CVDate experience={formation} />
-                          )}
-                        </StyledCVExperienceDate>
-                      )}
-                      <StyledCVExperienceDescription>
-                        {formation.title && (
-                          <H5 title={formation.title} color={COLORS.black} />
-                        )}
-                        {!isDesktop && (
-                          <StyledCVExperienceDateMobile>
-                            {formation.dateStart && (
-                              <CVDate experience={formation} isMobile />
-                            )}
-                          </StyledCVExperienceDateMobile>
-                        )}
-                        {(formation.institution || formation.location) && (
-                          <div className="name-gray">
-                            {formation.institution}
-                            {formation.institution &&
-                              formation.location &&
-                              ' - '}
-                            {formation.location}
-                          </div>
-                        )}
-                        {formation.description && (
-                          <div>{formation.description}</div>
-                        )}
-                        <StyledCVSkillTagContainer>
-                          {formation.skills?.map(({ name, id }) => {
-                            return (
-                              <StyledSkillTag key={id}>{name}</StyledSkillTag>
-                            );
-                          })}
-                        </StyledCVSkillTagContainer>
-                      </StyledCVExperienceDescription>
-                    </StyledCVExperienceLi>
+                    <ExperienceOrFormation
+                      key={formation.id}
+                      title={formation.title}
+                      description={formation.description}
+                      dateStart={formation.dateStart}
+                      dateEnd={formation.dateEnd}
+                      location={formation.location}
+                      structure={formation.institution}
+                      skills={formation.skills}
+                    />
                   );
                 })}
               </ul>

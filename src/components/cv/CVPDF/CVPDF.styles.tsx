@@ -1,18 +1,25 @@
 import styled from 'styled-components';
 import {
-  StyledCVProfilePicture,
-  StyledCVPageContentStory,
-  StyledCVPageContentInformations,
-  StyledCVPageContentExperience,
-  StyledCVExperienceLi,
   StyledCVExperienceDate,
   StyledCVExperienceDescription,
-  StyledSkillTag,
-  StyledCVPageContentPassions,
-  StyledCVPageContentHeader,
+  StyledCVExperienceLi,
   StyledCVPageContentDetailsContainer,
-} from 'src/components/partials/CV/PageCvContent/PageCVContent.styles';
+  StyledCVPageContentExperience,
+  StyledCVPageContentHeader,
+  StyledCVPageContentInformations,
+  StyledCVPageContentPassions,
+  StyledCVPageContentStory,
+  StyledCVProfilePicture,
+  StyledCVProfilePictureContainer,
+  StyledSkillTag,
+} from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
 import { COLORS } from 'src/constants/styles';
+
+export const StyledCVPDFPageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 export const StyledCVPDFContentHeader = styled(StyledCVPageContentHeader)`
   margin: 10px 10px 0 10px !important;
@@ -37,16 +44,19 @@ export const StyledCVPDFQuote = styled.div`
   font-size: 8px;
   line-height: 10px;
   position: relative;
+
   svg {
     color: ${COLORS.primaryOrange};
     height: 10px;
     width: 15px;
     position: absolute;
+
     :first-of-type {
       left: -15px;
       top: -5px;
       margin-right: 8px;
     }
+
     :last-of-type {
       margin-left: 8px;
       right: -15px;
@@ -61,6 +71,7 @@ export const StyledCVPDFContentPassions = styled(StyledCVPageContentPassions)`
   margin-right: 10px;
   margin-bottom: 0;
   margin-top: 10px;
+
   p {
     color: ${COLORS.darkGrayFont};
     font-size: 10px;
@@ -70,6 +81,7 @@ export const StyledCVPDFContentPassions = styled(StyledCVPageContentPassions)`
 export const StyledCVPDFStory = styled(StyledCVPageContentStory)`
   margin-top: 10px;
   margin-bottom: 10px;
+
   p {
     font-size: 10px;
     line-height: 12px;
@@ -78,6 +90,7 @@ export const StyledCVPDFStory = styled(StyledCVPageContentStory)`
 
 export const StyledCVPDFExperienceLi = styled(StyledCVExperienceLi)`
   padding-left: 0;
+
   > div {
     padding: 0px 15px 10px;
   }
@@ -94,10 +107,13 @@ export const StyledCVPDFExperienceDescription = styled(
 )`
   font-size: 8px;
   line-height: 10px;
+
   > div {
     margin-bottom: 5px;
   }
+
   padding-right: 0 !important;
+
   ::before {
     top: 0;
   }
@@ -125,6 +141,7 @@ export const StyledCVPDFContentExperience = styled(
   padding: 10px 20px;
   border-radius: 20px;
   margin: 10px 0;
+
   > ul {
     margin-top: 10px !important;
   }
@@ -138,11 +155,13 @@ export const StyledCVPDFContentInformations = styled(
   margin-right: 10px;
   margin-bottom: 0;
   margin-top: 10px;
+
   .subtitle {
     color: ${COLORS.darkGray};
     font-size: 10px;
     display: flex;
     align-items: center;
+
     svg {
       color: ${COLORS.primaryOrange};
       height: 10px !important;
@@ -150,6 +169,7 @@ export const StyledCVPDFContentInformations = styled(
       margin-right: 5px;
     }
   }
+
   .content {
     font-size: 10px;
     padding-left: 13px;
@@ -184,48 +204,33 @@ export const StyledCVPDFPage = styled.div`
   background-color: ${COLORS.wheat};
   display: flex;
   flex-direction: column;
+
   ul {
     margin: 0;
     padding-left: 0;
+
     li {
       list-style: none;
     }
   }
+
   p {
     margin: 0;
   }
+
   .name-gray {
     color: ${COLORS.darkGray};
   }
 `;
 
 export const StyledCVPDFProfilePicture = styled(StyledCVProfilePicture)`
-  display: block;
-  margin: auto;
   width: 128px;
   height: 190px;
-  position: relative;
-  .picture {
-    width: 128px;
-    height: 190px;
-    border-radius: 859px 909px 729px 909px;
-    background-image: ${(props) => {
-      return `url('${props.imgSrc}')`;
-    }};
-    background-position: 66% 39%;
-    position: unset;
-    background-size: cover;
-    transform: unset;
-  }
-  .pseudo {
-    display: none;
-  }
 `;
 
-export const StyledCVPDFProfilePictureContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+export const StyledCVPDFProfilePictureContainer = styled(
+  StyledCVProfilePictureContainer
+)`
   padding-right: 10px;
   padding-left: 10px;
   margin-right: 10px;

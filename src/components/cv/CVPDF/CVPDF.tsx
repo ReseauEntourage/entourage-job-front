@@ -3,24 +3,18 @@ import React, { useEffect, useState } from 'react';
 import CalendarIcon from 'assets/custom/icons/calendar.svg';
 import CarIcon from 'assets/custom/icons/car.svg';
 import DocumentIcon from 'assets/custom/icons/document.svg';
-import EmailIcon from 'assets/custom/icons/email.svg';
-import HomeIcon from 'assets/custom/icons/home.svg';
 import LanguageIcon from 'assets/custom/icons/language.svg';
-import LocationIcon from 'assets/custom/icons/location.svg';
-import PhoneIcon from 'assets/custom/icons/phone.svg';
 import QuoteLeftIcon from 'assets/custom/icons/quote-left.svg';
 import QuoteRightIcon from 'assets/custom/icons/quote-right.svg';
-import { CVDate } from '../CVDate';
 import { CV, CVExperience, CVFormation } from 'src/api/types';
 import { CVCareerPathSentenceNew } from 'src/components/cv/CVCareerPathSentence';
 import {
   StyledCVSkillTagContainer,
   StyledLeftColumn,
   StyledRightColumn,
-} from 'src/components/partials/CV/PageCvContent/PageCVContent.styles';
+} from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
 import { CONTRACTS } from 'src/constants';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import { addPrefix, findConstantFromValue, sortByOrder } from 'src/utils';
+import { findConstantFromValue } from 'src/utils';
 
 import {
   StyledCVPDFCareerPath,
@@ -29,12 +23,9 @@ import {
   StyledCVPDFContentHeader,
   StyledCVPDFContentInformations,
   StyledCVPDFContentPassions,
-  StyledCVPDFExperienceDate,
-  StyledCVPDFExperienceDescription,
-  StyledCVPDFExperienceLi,
   StyledCVPDFH1,
   StyledCVPDFPage,
-  StyledCVPDFProfilePicture,
+  StyledCVPDFPageContainer,
   StyledCVPDFProfilePictureContainer,
   StyledCVPDFQuote,
   StyledCVPDFStory,
@@ -42,6 +33,9 @@ import {
   StyledCVPFSkillTag,
 } from './CVPDF.styles';
 import 'moment/locale/fr';
+import { ContactInformationPDF } from './ContactInformationPDF';
+import { ExperienceOrFormationPDF } from './ExperienceOrFormationPDF';
+import { ProfilePicturePDF } from './ProfilePicturePDF';
 
 interface CVPDFProps {
   cv: CV;
@@ -49,9 +43,6 @@ interface CVPDFProps {
 }
 
 export const CVPDF = ({ cv, page }: CVPDFProps) => {
-  const locations =
-    cv.locations && cv.locations.length > 0 ? sortByOrder(cv.locations) : [];
-
   const showCareerPathSentence =
     (cv.ambitions && cv.ambitions.length > 0) ||
     (cv.businessLines && cv.businessLines.length > 0);
@@ -109,21 +100,14 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
       <StyledCVPDFContentHeader>
         <StyledLeftColumn>
           <StyledCVPDFProfilePictureContainer>
-            <div id="header-picture-share">
-              <StyledCVPDFProfilePicture
-                imgSrc={process.env.AWSS3_CDN_URL + addPrefix(cv.urlImg)}
-              >
-                <div className="picture" />
-                <div className="pseudo" />
-              </StyledCVPDFProfilePicture>
-              {cv.catchphrase && (
-                <StyledCVPDFQuote>
-                  <QuoteLeftIcon viewBox="0 0 10 8" />
-                  <span>{cv.catchphrase}</span>
-                  <QuoteRightIcon viewBox="0 0 10 8" />
-                </StyledCVPDFQuote>
-              )}
-            </div>
+            <ProfilePicturePDF urlImg={cv.urlImg} />
+            {cv.catchphrase && (
+              <StyledCVPDFQuote>
+                <QuoteLeftIcon viewBox="0 0 10 8" />
+                <span>{cv.catchphrase}</span>
+                <QuoteRightIcon viewBox="0 0 10 8" />
+              </StyledCVPDFQuote>
+            )}
           </StyledCVPDFProfilePictureContainer>
         </StyledLeftColumn>
         <StyledRightColumn>
@@ -160,64 +144,12 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
       <StyledCVPDFContentDetailsContainer>
         <StyledLeftColumn>
           {/* use Information Container to display contat informations */}
-          <StyledCVPDFContentInformations>
-            <StyledCVPDFTitle>Contact</StyledCVPDFTitle>
-            <ul>
-              {cv.user.candidat.phone && (
-                <li>
-                  <div>
-                    <p className="subtitle">
-                      <PhoneIcon viewBox="0 0 6 6" />{' '}
-                      <span>Numéro de téléphone</span>
-                    </p>
-                    <p className="content">{cv.user.candidat.phone}</p>
-                  </div>
-                </li>
-              )}
-              {cv.user.candidat.email && (
-                <li>
-                  <div>
-                    <p className="subtitle">
-                      <EmailIcon viewBox="0 0 6 6" /> <span>Email</span>
-                    </p>
-                    <p className="content">{cv.user.candidat.email}</p>
-                  </div>
-                </li>
-              )}
-              <ul>
-                {cv.user.candidat.address && (
-                  <li>
-                    <div>
-                      <p className="subtitle">
-                        <HomeIcon viewBox="0 0 576 512" /> <span>Adresse</span>
-                      </p>
-                      <p className="content">{cv.user.candidat.address}</p>
-                    </div>
-                  </li>
-                )}
-              </ul>
-              {locations && locations.length > 0 && (
-                <li>
-                  <div>
-                    <p className="subtitle">
-                      <LocationIcon viewBox="0 0 6 6" />{' '}
-                      <span>Localisation</span>
-                    </p>
-                    <p className="content">
-                      {locations
-                        .map(({ name }) => {
-                          return findConstantFromValue(
-                            name,
-                            DEPARTMENTS_FILTERS
-                          ).label;
-                        })
-                        .join(' / ')}
-                    </p>
-                  </div>
-                </li>
-              )}
-            </ul>
-          </StyledCVPDFContentInformations>
+          <ContactInformationPDF
+            locations={cv.locations}
+            address={cv.user.candidat.address}
+            email={cv.user.candidat.email}
+            phone={cv.user.candidat.phone}
+          />
           <StyledCVPDFContentInformations>
             <StyledCVPDFTitle>Informations</StyledCVPDFTitle>
             <ul>
@@ -295,39 +227,16 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
               <ul>
                 {items.firstPageExperiences.map((experience) => {
                   return (
-                    <StyledCVPDFExperienceLi key={experience.id}>
-                      <StyledCVPDFExperienceDate>
-                        {experience.dateStart && (
-                          <CVDate experience={experience} />
-                        )}
-                      </StyledCVPDFExperienceDate>
-                      <StyledCVPDFExperienceDescription>
-                        {experience.title && (
-                          <StyledCVPDFTitle>
-                            {experience.title}
-                          </StyledCVPDFTitle>
-                        )}
-                        {(experience.company || experience.location) && (
-                          <div className="name-gray">
-                            {experience.company}
-                            {experience.company && experience.location && ' - '}
-                            {experience.location}
-                          </div>
-                        )}
-                        {experience.description && (
-                          <div>{experience.description}</div>
-                        )}
-                        <StyledCVSkillTagContainer>
-                          {experience.skills.map(({ name, id }) => {
-                            return (
-                              <StyledCVPFSkillTag key={id}>
-                                {name}
-                              </StyledCVPFSkillTag>
-                            );
-                          })}
-                        </StyledCVSkillTagContainer>
-                      </StyledCVPDFExperienceDescription>
-                    </StyledCVPDFExperienceLi>
+                    <ExperienceOrFormationPDF
+                      key={experience.id}
+                      title={experience.title}
+                      description={experience.description}
+                      dateStart={experience.dateStart}
+                      dateEnd={experience.dateEnd}
+                      location={experience.location}
+                      structure={experience.company}
+                      skills={experience.skills}
+                    />
                   );
                 })}
               </ul>
@@ -340,39 +249,16 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
               <ul>
                 {items.firstPageFormations.map((formation) => {
                   return (
-                    <StyledCVPDFExperienceLi key={formation.id}>
-                      <StyledCVPDFExperienceDate>
-                        {formation.dateStart && (
-                          <CVDate experience={formation} />
-                        )}
-                      </StyledCVPDFExperienceDate>
-                      <StyledCVPDFExperienceDescription>
-                        {formation.title && (
-                          <StyledCVPDFTitle>{formation.title}</StyledCVPDFTitle>
-                        )}
-                        {(formation.institution || formation.location) && (
-                          <div className="name-gray">
-                            {formation.institution}
-                            {formation.institution &&
-                              formation.location &&
-                              ' - '}
-                            {formation.location}
-                          </div>
-                        )}
-                        {formation.description && (
-                          <div>{formation.description}</div>
-                        )}
-                        <StyledCVSkillTagContainer>
-                          {formation.skills.map(({ name, id }) => {
-                            return (
-                              <StyledCVPFSkillTag key={id}>
-                                {name}
-                              </StyledCVPFSkillTag>
-                            );
-                          })}
-                        </StyledCVSkillTagContainer>
-                      </StyledCVPDFExperienceDescription>
-                    </StyledCVPDFExperienceLi>
+                    <ExperienceOrFormationPDF
+                      key={formation.id}
+                      title={formation.title}
+                      description={formation.description}
+                      dateStart={formation.dateStart}
+                      dateEnd={formation.dateEnd}
+                      location={formation.location}
+                      structure={formation.institution}
+                      skills={formation.skills}
+                    />
                   );
                 })}
               </ul>
@@ -390,70 +276,17 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
           <StyledLeftColumn>
             {/* use Information Container to display profile picture */}
             <StyledCVPDFContentInformations>
-              <StyledCVPDFProfilePicture
-                imgSrc={process.env.AWSS3_CDN_URL + addPrefix(cv.urlImg)}
-              >
-                <div className="picture" />
-                <div className="pseudo" />
-              </StyledCVPDFProfilePicture>
+              <StyledCVPDFProfilePictureContainer>
+                <ProfilePicturePDF urlImg={cv.urlImg} />
+              </StyledCVPDFProfilePictureContainer>
             </StyledCVPDFContentInformations>
-            {/* use Information Container to display contat informations */}
-            <StyledCVPDFContentInformations>
-              <StyledCVPDFTitle>Contact</StyledCVPDFTitle>
-              <ul>
-                {cv.user.candidat.phone && (
-                  <li>
-                    <div>
-                      <p className="subtitle">
-                        <PhoneIcon viewBox="0 0 6 6" />{' '}
-                        <span>Numéro de téléphone</span>
-                      </p>
-                      <p className="content">{cv.user.candidat.phone}</p>
-                    </div>
-                  </li>
-                )}
-                {cv.user.candidat.email && (
-                  <li>
-                    <div>
-                      <p className="subtitle">
-                        <EmailIcon viewBox="0 0 6 6" /> <span>Email</span>
-                      </p>
-                      <p className="content">{cv.user.candidat.email}</p>
-                    </div>
-                  </li>
-                )}
-                {cv.user.candidat.address && (
-                  <li>
-                    <div>
-                      <p className="subtitle">
-                        <HomeIcon viewBox="0 0 24 24" /> <span>Adresse</span>
-                      </p>
-                      <p className="content">{cv.user.candidat.address}</p>
-                    </div>
-                  </li>
-                )}
-                {locations && locations.length > 0 && (
-                  <li>
-                    <div>
-                      <p className="subtitle">
-                        <LocationIcon viewBox="0 0 384 512" />{' '}
-                        <span>Localisation</span>
-                      </p>
-                      <p className="content">
-                        {locations
-                          .map(({ name }) => {
-                            return findConstantFromValue(
-                              name,
-                              DEPARTMENTS_FILTERS
-                            ).label;
-                          })
-                          .join(' / ')}
-                      </p>
-                    </div>
-                  </li>
-                )}
-              </ul>
-            </StyledCVPDFContentInformations>
+            {/* use Information Container to display contact information */}
+            <ContactInformationPDF
+              locations={cv.locations}
+              address={cv.user.candidat.address}
+              email={cv.user.candidat.email}
+              phone={cv.user.candidat.phone}
+            />
           </StyledLeftColumn>
           <StyledRightColumn>
             {items.secondPageExperiences.length > 0 && (
@@ -461,41 +294,16 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                 <ul>
                   {items.secondPageExperiences?.map((experience) => {
                     return (
-                      <StyledCVPDFExperienceLi key={experience.id}>
-                        <StyledCVPDFExperienceDate>
-                          {experience.dateStart && (
-                            <CVDate experience={experience} />
-                          )}
-                        </StyledCVPDFExperienceDate>
-                        <StyledCVPDFExperienceDescription>
-                          {experience.title && (
-                            <StyledCVPDFTitle>
-                              {experience.title}
-                            </StyledCVPDFTitle>
-                          )}
-                          {(experience.company || experience.location) && (
-                            <div className="name-gray">
-                              {experience.company}
-                              {experience.company &&
-                                experience.location &&
-                                ' - '}
-                              {experience.location}
-                            </div>
-                          )}
-                          {experience.description && (
-                            <div>{experience.description}</div>
-                          )}
-                          <StyledCVSkillTagContainer>
-                            {experience.skills.map(({ name, id }) => {
-                              return (
-                                <StyledCVPFSkillTag key={id}>
-                                  {name}
-                                </StyledCVPFSkillTag>
-                              );
-                            })}
-                          </StyledCVSkillTagContainer>
-                        </StyledCVPDFExperienceDescription>
-                      </StyledCVPDFExperienceLi>
+                      <ExperienceOrFormationPDF
+                        key={experience.id}
+                        title={experience.title}
+                        description={experience.description}
+                        dateStart={experience.dateStart}
+                        dateEnd={experience.dateEnd}
+                        location={experience.location}
+                        structure={experience.company}
+                        skills={experience.skills}
+                      />
                     );
                   })}
                 </ul>
@@ -510,41 +318,16 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                 <ul>
                   {items.secondPageFormations.map((formation) => {
                     return (
-                      <StyledCVPDFExperienceLi key={formation.id}>
-                        <StyledCVPDFExperienceDate>
-                          {formation.dateStart && (
-                            <CVDate experience={formation} />
-                          )}
-                        </StyledCVPDFExperienceDate>
-                        <StyledCVPDFExperienceDescription>
-                          {formation.title && (
-                            <StyledCVPDFTitle>
-                              {formation.title}
-                            </StyledCVPDFTitle>
-                          )}
-                          {(formation.institution || formation.location) && (
-                            <div className="name-gray">
-                              {formation.institution}
-                              {formation.institution &&
-                                formation.location &&
-                                ' - '}
-                              {formation.location}
-                            </div>
-                          )}
-                          {formation.description && (
-                            <div>{formation.description}</div>
-                          )}
-                          <StyledCVSkillTagContainer>
-                            {formation.skills.map(({ name, id }) => {
-                              return (
-                                <StyledCVPFSkillTag key={id}>
-                                  {name}
-                                </StyledCVPFSkillTag>
-                              );
-                            })}
-                          </StyledCVSkillTagContainer>
-                        </StyledCVPDFExperienceDescription>
-                      </StyledCVPDFExperienceLi>
+                      <ExperienceOrFormationPDF
+                        key={formation.id}
+                        title={formation.title}
+                        description={formation.description}
+                        dateStart={formation.dateStart}
+                        dateEnd={formation.dateEnd}
+                        location={formation.location}
+                        structure={formation.institution}
+                        skills={formation.skills}
+                      />
                     );
                   })}
                 </ul>
@@ -557,8 +340,8 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
   ];
 
   return (
-    <div className="uk-flex uk-flex-middle uk-flex-column">
+    <StyledCVPDFPageContainer>
       {page && page >= 0 && page < 2 ? pages[Math.floor(page)] : pages}
-    </div>
+    </StyledCVPDFPageContainer>
   );
 };

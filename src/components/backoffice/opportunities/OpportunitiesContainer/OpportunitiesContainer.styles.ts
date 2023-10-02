@@ -20,17 +20,6 @@ export const StyledRightContainer = styled.div`
   padding-left: 20px;
 `;
 
-export const StyledBackLink = styled.a`
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 16px;
-  color: ${COLORS.darkGray};
-
-  &:visited {
-    color: ${COLORS.darkGray};
-  }
-`;
-
 export const StyledTitleText = styled.span`
   font-size: 16px;
   line-height: 19px;

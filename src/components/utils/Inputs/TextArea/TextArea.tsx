@@ -115,8 +115,15 @@ export function TextArea({
             </StyledLimit>
           )}
           {!maxLines && maxLength && (
-            <StyledLimit warning={remainingCharacters === 0}>
-              <span>{remainingCharacters} caractère(s) restant(s)</span>
+            <StyledLimit warning={remainingCharacters < 0}>
+              {remainingCharacters >= 0 ? (
+                <span>{remainingCharacters} caractère(s) restant(s)</span>
+              ) : (
+                <span>
+                  Limite dépassée de {Math.abs(remainingCharacters)}{' '}
+                  caractères(s)
+                </span>
+              )}
             </StyledLimit>
           )}
         </StyledAnnotations>
