@@ -95,7 +95,7 @@ export const formEditUsefulInformation: FormSchema<{
       name: 'availability',
       component: 'text-input',
       title: 'Disponibilités de travail possibles',
-      maxLength: 40,
+      maxLength: 30,
     },
     {
       id: 'languages',
@@ -109,7 +109,7 @@ export const formEditUsefulInformation: FormSchema<{
       name: 'transport',
       component: 'text-input',
       title: 'Permis de conduire',
-      maxLength: 40,
+      maxLength: 30,
     },
   ],
 };

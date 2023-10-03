@@ -1,12 +1,10 @@
-import Link from 'next/link';
 import React from 'react';
 import {
-  StyledBackLink,
   StyledContainer,
   StyledDetailsContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
-import { Icon } from 'src/components/utils';
+import { BackLink } from 'src/components/utils/BackLink';
 import { OpportunitiesContainerProps } from './OpportunitiesContainer.types';
 import { OpportunitiesList } from './OpportunitiesList';
 
@@ -25,12 +23,7 @@ export const OpportunitiesContainerMobile = ({
         <>
           {opportunityId ? (
             <StyledDetailsContainer>
-              <Link href={backButtonHref} scroll={false} shallow passHref>
-                <StyledBackLink>
-                  <Icon name="chevron-left" />
-                  Retour à la liste
-                </StyledBackLink>
-              </Link>
+              <BackLink url={backButtonHref} label="Retour à la liste" />
               {details}
             </StyledDetailsContainer>
           ) : (

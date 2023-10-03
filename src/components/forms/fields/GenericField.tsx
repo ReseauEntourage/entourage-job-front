@@ -66,12 +66,21 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
 
   let rules = mapFieldRules<S, typeof field.component>(field.rules);
   const [isMaxLinesReached, setIsMaxLinesReached] = useState<boolean>();
+  const [isMaxItemsReached, setIsMaxItemsReached] = useState<boolean>();
 
   if (field.maxLines) {
     rules = {
       ...rules,
       maxLines: () =>
         !isMaxLinesReached || 'Vous avez dépassé le nombre de lignes maximum',
+    };
+  }
+
+  if (field.maxItems) {
+    rules = {
+      ...rules,
+      maxItems: () =>
+        !isMaxItemsReached || "Vous avez dépassé le nombre d'élements maximum",
     };
   }
 
@@ -219,6 +228,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
           openMenuOnClick={field.openMenuOnClick}
           maxChar={field.maxChar}
           maxItems={field.maxItems}
+          setIsMaxItemsReached={setIsMaxItemsReached}
         />
       );
     }

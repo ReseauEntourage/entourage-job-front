@@ -27,7 +27,7 @@ export const formEditTestimonial: FormSchema<{
       component: 'textarea',
       title: 'Votre recommandation*',
       isRequired: true,
-      maxLength: 4000,
+      maxLength: 800,
     },
   ],
 };

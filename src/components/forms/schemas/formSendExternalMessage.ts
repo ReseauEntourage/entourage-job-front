@@ -111,7 +111,7 @@ export const formSendExternalMessage: FormSchema<{
       name: 'optInContact',
       component: 'checkbox',
       title:
-        'J’accepte que mon message soit lu par LinkedOut afin de protéger les Candidats LinkedOut du spam. *',
+        "J'accepte que mon message soit lu par LinkedOut afin de protéger les Candidats LinkedOut du spam. *",
       isRequired: true,
     },
     {

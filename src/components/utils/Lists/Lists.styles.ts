@@ -11,7 +11,7 @@ export const StyledCheckListElement = styled.li`
     height: 10px;
     width: 10px;
     padding: 2px;
-    background: url('/static/img/icons/Check.svg') no-repeat center
+    background: url('/static/img/icons/check.svg') no-repeat center
         center/contain content-box,
       ${COLORS.primaryOrange};
     position: absolute;

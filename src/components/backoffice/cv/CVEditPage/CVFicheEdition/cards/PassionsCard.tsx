@@ -31,25 +31,23 @@ export const PassionsCard = ({ list, onChange }: PassionProps) => {
             onClick={() => {
               openModal(
                 <ModalEdit
-                  title="Édition - Mes passions (6 maximum)"
+                  title="Édition - Mes passions"
                   formSchema={formEditPassions}
-                  defaultValues={list.reduce((acc, { name }, i) => {
-                    acc[`passion${i + 1}`] = name;
-                    return acc;
-                  }, {})}
+                  defaultValues={{
+                    passions: list.map(({ name }) => ({
+                      label: name,
+                      value: name,
+                    })),
+                  }}
                   onSubmit={async (fields, closeModal) => {
                     closeModal();
                     const fieldsTransform = {
-                      passions: Object.values(fields)
-                        .filter((val) => {
-                          return !!val;
-                        })
-                        .map((val, index) => {
-                          return {
-                            name: val,
-                            order: index,
-                          };
-                        }),
+                      passions: fields.passions.map(({ value }, index) => {
+                        return {
+                          name: value,
+                          order: index,
+                        };
+                      }),
                     };
                     await onChange(fieldsTransform);
                   }}

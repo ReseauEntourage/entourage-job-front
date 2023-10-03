@@ -21,7 +21,7 @@ export const StyledTextArea = styled.textarea`
   &::placeholder {
     font-style: italic;
     color: ${COLORS.darkGray};
-    background-color: ${COLORS.transpare};
+    background-color: transparent;
     font-family: Poppins, sans-serif;
   }
   :focus-visible {

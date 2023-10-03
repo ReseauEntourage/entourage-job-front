@@ -31,25 +31,23 @@ export const SkillsCard = ({ list = [], onChange }: SkillsCardProps) => {
             onClick={() => {
               openModal(
                 <ModalEdit
-                  title="Édition - Mes atouts (6 maximum)"
+                  title="Édition - Mes atouts"
                   formSchema={formEditSkills}
-                  defaultValues={list.reduce((acc, { name }, i) => {
-                    acc[`skill${i + 1}`] = name;
-                    return acc;
-                  }, {})}
-                  onSubmit={async (fields, closeModal) => {
+                  defaultValues={{
+                    skills: list.map(({ name }) => ({
+                      label: name,
+                      value: name,
+                    })),
+                  }}
+                  onSubmit={async ({ skills }, closeModal) => {
                     closeModal();
                     const fieldsTransform = {
-                      skills: Object.values(fields)
-                        .filter((val) => {
-                          return !!val;
-                        })
-                        .map((val, index) => {
-                          return {
-                            name: val,
-                            order: index,
-                          };
-                        }),
+                      skills: skills.map(({ value }, index) => {
+                        return {
+                          name: value,
+                          order: index,
+                        };
+                      }),
                     };
                     await onChange(fieldsTransform);
                   }}

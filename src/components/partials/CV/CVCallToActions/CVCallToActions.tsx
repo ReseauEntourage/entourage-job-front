@@ -1,15 +1,16 @@
 import React, { useMemo } from 'react';
-import { CV_COLORS } from '../PageCvContent/PageCVContent.styles';
 import { CV } from 'src/api/types';
 import { formAddOpportunity } from 'src/components/forms/schemas/formAddOpportunity';
 import { openModal } from 'src/components/modals/Modal';
 import { PostOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { Button } from 'src/components/utils';
 import { H3, H5 } from 'src/components/utils/Headings';
+import { COLORS } from 'src/constants/styles';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { useIsDesktop } from 'src/hooks/utils';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
+
 import {
   StyledCVCTA,
   StyledCVCTAContainer,
@@ -69,7 +70,7 @@ export const CVCallToActions = ({
           cv?.user?.candidat?.firstName
         }${' '}!`}
         center
-        color={CV_COLORS.titleGray}
+        color={COLORS.black}
       />
       <StyledCVCTAContainer>
         <StyledCVCTACard className={`${!isDesktop ? 'mobile' : ''}`} order={3}>
