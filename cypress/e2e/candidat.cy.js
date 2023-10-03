@@ -234,7 +234,7 @@ describe('Candidat', () => {
       .type('formation location');
     cy.get(`[data-testid="form-formation-institution"]`)
       .scrollIntoView()
-      .type('formation institution');
+      .type('institution');
     cy.get(`[data-testid="form-formation-dateStart"]`)
       .scrollIntoView()
       .type('1994-02-02');
