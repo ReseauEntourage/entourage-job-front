@@ -14,7 +14,7 @@ import { CVShareButtons } from '../CVCallToActions/CVShareButtons';
 import { Api } from 'src/api';
 import { CV } from 'src/api/types';
 import { CVCareerPathSentenceNew as CVCareerPathSentence } from 'src/components/cv';
-import { ExperienceOrFormation } from 'src/components/cv/ExperienceOrFormation';
+import { CVExperienceOrFormation } from 'src/components/cv/CVExperienceOrFormation';
 import { formSendExternalMessage } from 'src/components/forms/schemas/formSendExternalMessage';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
@@ -363,7 +363,7 @@ export const PageCVContent = ({
               <ul>
                 {cv.experiences.map((experience) => {
                   return (
-                    <ExperienceOrFormation
+                    <CVExperienceOrFormation
                       key={experience.id}
                       title={experience.title}
                       description={experience.description}
@@ -399,7 +399,7 @@ export const PageCVContent = ({
               <ul>
                 {cv.formations.map((formation) => {
                   return (
-                    <ExperienceOrFormation
+                    <CVExperienceOrFormation
                       key={formation.id}
                       title={formation.title}
                       description={formation.description}

@@ -33,9 +33,9 @@ import {
   StyledCVPFSkillTag,
 } from './CVPDF.styles';
 import 'moment/locale/fr';
-import { ContactInformationPDF } from './ContactInformationPDF';
-import { ExperienceOrFormationPDF } from './ExperienceOrFormationPDF';
-import { ProfilePicturePDF } from './ProfilePicturePDF';
+import { CVContactInformationPDF } from './CVContactInformationPDF';
+import { CVExperienceOrFormationPDF } from './CVExperienceOrFormationPDF';
+import { CVProfilePicturePDF } from './CVProfilePicturePDF';
 
 interface CVPDFProps {
   cv: CV;
@@ -100,7 +100,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
       <StyledCVPDFContentHeader>
         <StyledLeftColumn>
           <StyledCVPDFProfilePictureContainer>
-            <ProfilePicturePDF urlImg={cv.urlImg} />
+            <CVProfilePicturePDF urlImg={cv.urlImg} />
             {cv.catchphrase && (
               <StyledCVPDFQuote>
                 <QuoteLeftIcon viewBox="0 0 10 8" />
@@ -144,7 +144,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
       <StyledCVPDFContentDetailsContainer>
         <StyledLeftColumn>
           {/* use Information Container to display contat informations */}
-          <ContactInformationPDF
+          <CVContactInformationPDF
             locations={cv.locations}
             address={cv.user.candidat.address}
             email={cv.user.candidat.email}
@@ -227,7 +227,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
               <ul>
                 {items.firstPageExperiences.map((experience) => {
                   return (
-                    <ExperienceOrFormationPDF
+                    <CVExperienceOrFormationPDF
                       key={experience.id}
                       title={experience.title}
                       description={experience.description}
@@ -249,7 +249,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
               <ul>
                 {items.firstPageFormations.map((formation) => {
                   return (
-                    <ExperienceOrFormationPDF
+                    <CVExperienceOrFormationPDF
                       key={formation.id}
                       title={formation.title}
                       description={formation.description}
@@ -277,11 +277,11 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
             {/* use Information Container to display profile picture */}
             <StyledCVPDFContentInformations>
               <StyledCVPDFProfilePictureContainer>
-                <ProfilePicturePDF urlImg={cv.urlImg} />
+                <CVProfilePicturePDF urlImg={cv.urlImg} />
               </StyledCVPDFProfilePictureContainer>
             </StyledCVPDFContentInformations>
             {/* use Information Container to display contact information */}
-            <ContactInformationPDF
+            <CVContactInformationPDF
               locations={cv.locations}
               address={cv.user.candidat.address}
               email={cv.user.candidat.email}
@@ -294,7 +294,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                 <ul>
                   {items.secondPageExperiences?.map((experience) => {
                     return (
-                      <ExperienceOrFormationPDF
+                      <CVExperienceOrFormationPDF
                         key={experience.id}
                         title={experience.title}
                         description={experience.description}
@@ -318,7 +318,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                 <ul>
                   {items.secondPageFormations.map((formation) => {
                     return (
-                      <ExperienceOrFormationPDF
+                      <CVExperienceOrFormationPDF
                         key={formation.id}
                         title={formation.title}
                         description={formation.description}

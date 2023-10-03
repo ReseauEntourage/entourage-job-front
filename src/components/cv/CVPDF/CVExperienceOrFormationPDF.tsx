@@ -25,7 +25,7 @@ interface ExperienceOrFormationPDFProps {
   }[];
 }
 
-export function ExperienceOrFormationPDF({
+export function CVExperienceOrFormationPDF({
   dateStart,
   dateEnd,
   title,

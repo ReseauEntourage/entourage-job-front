@@ -20,7 +20,7 @@ interface ContactInformationPDFProps {
   }[];
 }
 
-export function ContactInformationPDF({
+export function CVContactInformationPDF({
   phone,
   email,
   address,
