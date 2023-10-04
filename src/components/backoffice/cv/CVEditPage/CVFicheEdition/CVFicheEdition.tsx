@@ -22,7 +22,14 @@ import {
 
 interface CVFicheEditionProps {
   cv: CV;
-  onChange?: (updatedCV: Partial<CV>) => void;
+  onChange?: (
+    updatedCV: Partial<CV>,
+    updatedUserData?: Partial<{
+      email: string;
+      phone: string;
+      address: string;
+    }>
+  ) => void;
   disablePicture?: boolean;
   email: string;
   phone?: string;

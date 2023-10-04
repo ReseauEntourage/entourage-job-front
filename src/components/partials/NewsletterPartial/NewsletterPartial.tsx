@@ -54,7 +54,8 @@ export const NewsletterPartial = ({
         setEmail('');
         setZone(null);
         setStatus(null);
-      } catch {
+      } catch (err) {
+        console.error(err);
         UIkit.notification('Une erreur est survenue', 'danger');
       }
       setIsMailValid(true);
