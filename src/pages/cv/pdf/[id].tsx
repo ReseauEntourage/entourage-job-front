@@ -1,13 +1,18 @@
-import { withRouter } from 'next/router';
-import PropTypes from 'prop-types';
+import { NextRouter, withRouter } from 'next/router';
 import React from 'react';
 import { Api } from 'src/api';
+import { CV } from 'src/api/types';
 import { Layout } from 'src/components/Layout';
 import { CVPDF } from 'src/components/cv';
-import { CVShape } from 'src/components/cv/CV.shape';
 import { Section } from 'src/components/utils';
 
-const CVPDFPage = ({ cv, page, router }) => {
+interface CVPDFPageProps {
+  cv: CV;
+  page: number;
+  router: NextRouter;
+}
+
+const CVPDFPage = ({ cv, page, router }: CVPDFPageProps) => {
   if (!cv) {
     return (
       <Layout title="Page introuvable - LinkedOut">
@@ -38,7 +43,7 @@ const CVPDFPage = ({ cv, page, router }) => {
       }
       metaType="profile"
     >
-      <div className="uk-background-muted">
+      <div>
         <CVPDF cv={cv} page={page} />
       </div>
     </Layout>
@@ -59,20 +64,6 @@ CVPDFPage.getInitialProps = async ({ query }) => {
       });
   }
   return { cv: null };
-};
-
-CVPDFPage.propTypes = {
-  cv: CVShape,
-  page: PropTypes.number,
-  router: PropTypes.shape({ asPath: PropTypes.string }),
-};
-
-CVPDFPage.defaultProps = {
-  cv: null,
-  page: null,
-  router: {
-    asPath: '',
-  },
 };
 
 export default withRouter(CVPDFPage);

@@ -60,7 +60,8 @@ export function ParametersMemberTab({
         } else {
           UIkit.notification('Erreur de confirmation', 'danger');
         }
-      } catch {
+      } catch (err) {
+        console.error(err);
         UIkit.notification('Une erreur est survenue', 'danger');
       }
     },

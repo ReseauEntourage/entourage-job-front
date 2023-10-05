@@ -24,6 +24,7 @@ interface SelectAsyncProps<T extends FilterConstant | FilterConstant[]>
   openMenuOnClick?: boolean;
   maxChar?: number;
   maxItems?: number;
+  setIsMaxItemsReached?: (isMaxItemsReached: boolean) => void;
 }
 export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
   id,
@@ -43,6 +44,7 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
   inputRef,
   maxChar,
   maxItems,
+  setIsMaxItemsReached,
 }: SelectAsyncProps<T>) {
   const [remainingItems, setRemainingItems] = useState<number>(maxItems);
   const [shouldDisplayOptions, setShouldDisplayOptions] =
@@ -59,6 +61,15 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
       setShouldDisplayOptions(true);
     }
   }, [value, maxItems]);
+
+  useEffect(() => {
+    if (!maxItems) return null;
+    if (remainingItems < 0) {
+      setIsMaxItemsReached(true);
+    } else {
+      setIsMaxItemsReached(false);
+    }
+  });
 
   if (hidden) {
     return null;
@@ -128,8 +139,14 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
             </StyledLimit>
           )}
           {maxItems && (
-            <StyledLimit warning={remainingItems <= 0}>
-              <span>{remainingItems} élément(s) restant(s)</span>
+            <StyledLimit warning={remainingItems < 0}>
+              {remainingItems >= 0 ? (
+                <span>{remainingItems} élément(s) restant(s)</span>
+              ) : (
+                <span>
+                  Limite dépassée de {Math.abs(remainingItems)} élément(s)
+                </span>
+              )}
             </StyledLimit>
           )}
         </StyledLimitContainer>

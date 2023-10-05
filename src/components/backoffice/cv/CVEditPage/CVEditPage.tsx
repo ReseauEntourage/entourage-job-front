@@ -35,8 +35,8 @@ const pusher = new Pusher(process.env.PUSHER_API_KEY, {
 });
 
 interface CVEditPageProps {
-  cv: CV;
   candidateId: string;
+  cv: CV;
   setCV: (updatedCV: CV) => void;
 }
 
@@ -46,21 +46,25 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
   const [previewGenerating, setPreviewGenerating] = useState(false);
   const [pdfGenerating, setPdfGenerating] = useState(false);
 
+  const [userData, setUserData] = useState({
+    email: cv.user?.candidat?.email,
+    phone: cv.user?.candidat?.phone,
+    address: cv.user?.candidat?.address,
+  });
+
   const isDesktop = useIsDesktop();
 
   const { user } = useContext<{ user: User }>(UserContext);
 
   const prevCV = usePrevious(cv);
 
-  const setCVHasBeenRead = useCallback(() => {
+  const setCVHasBeenRead = useCallback(async () => {
     if (user && user.role !== USER_ROLES.ADMIN && candidateId) {
-      Api.putCVRead(candidateId)
-        .then(() => {
-          // console.log('Note has been read');
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      try {
+        await Api.putCVRead(candidateId);
+      } catch (err) {
+        console.error(err);
+      }
     }
   }, [candidateId, user]);
 
@@ -128,33 +132,6 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
     }
   }, [cv, previewGenerating]);
 
-  const saveUserData = (modifiedCv) => {
-    return new Promise((res, rej) => {
-      if (
-        (modifiedCv.email || modifiedCv.phone || modifiedCv.address) &&
-        (modifiedCv.email !== cv.user.candidat.email ||
-          modifiedCv.phone !== cv.user.candidat.phone ||
-          modifiedCv.address !== cv.user.candidat.address)
-      ) {
-        const userData = {
-          email: modifiedCv.email,
-          address: modifiedCv.address,
-          phone: modifiedCv.phone,
-        };
-
-        Api.putUser(candidateId, userData)
-          .then((data) => {
-            res(data);
-          })
-          .catch((err) => {
-            rej(err);
-          });
-      } else {
-        res(null);
-      }
-    });
-  };
-
   const checkIfLastVersion = useCallback(
     async (callback, isAutoSave = false) => {
       const {
@@ -193,8 +170,38 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
     [candidateId, cvVersion]
   );
 
+  const saveUserData = async ({
+    email,
+    phone,
+    address,
+  }: {
+    email: string;
+    phone: string;
+    address: string;
+  }) => {
+    if (
+      (email || phone || address) &&
+      (email !== cv.user.candidat.email ||
+        phone !== cv.user.candidat.phone ||
+        address !== cv.user.candidat.address)
+    ) {
+      const updatedUserData = {
+        email,
+        address,
+        phone,
+      };
+      try {
+        await Api.putUser(candidateId, updatedUserData);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+
   const postCV = async (status) => {
-    await checkIfLastVersion(() => {
+    await checkIfLastVersion(async () => {
+      await saveUserData(userData);
+
       const channelPreview = pusher.subscribe(SOCKETS.CHANNEL_NAMES.CV_PREVIEW);
       const channelPDF = pusher.subscribe(SOCKETS.CHANNEL_NAMES.CV_PDF);
 
@@ -227,55 +234,64 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
       formData.append('cv', JSON.stringify(obj));
       formData.append('profileImage', cv.profileImage);
       // post
-      return Api.postCV(cv.UserId, formData, true)
-        .then(({ data }) => {
-          setCV(data);
-          setCvVersion(data.version);
+      try {
+        const { data: updatedCV } = await Api.postCV(cv.UserId, formData, true);
+        setCV(updatedCV);
+        setCvVersion(updatedCV.version);
 
-          UIkit.notification(
-            isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
-              ? 'Votre CV a bien été sauvegardé'
-              : 'Le profil a été mis à jour',
-            'success'
-          );
-        })
-        .catch((err) => {
-          console.error(err);
-          UIkit.notification("Une erreur s'est produite", 'danger');
-        });
+        UIkit.notification(
+          isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
+            ? 'Votre CV a bien été sauvegardé'
+            : 'Le profil a été mis à jour',
+          'success'
+        );
+      } catch (err) {
+        console.error(err);
+        UIkit.notification("Une erreur s'est produite", 'danger');
+      }
     });
   };
 
-  const autoSaveCV = async (tempCV) => {
-    await checkIfLastVersion(() => {
+  const autoSaveCV = async (
+    updatedCV: CV,
+    updatedUserData: {
+      email: string;
+      phone: string;
+      address: string;
+    }
+  ) => {
+    await checkIfLastVersion(async () => {
+      await saveUserData({
+        email: updatedUserData.email,
+        phone: updatedUserData.phone,
+        address: updatedUserData.address,
+      });
+
       const formData = new FormData();
       const obj = {
-        ...tempCV,
+        ...updatedCV,
         status: CV_STATUS.Progress.value,
         profileImage: undefined,
       };
       delete obj.id;
       formData.append('cv', JSON.stringify(obj));
-      formData.append('autoSave', '');
+      formData.append('autoSave', 'true');
+
       // post
-      return saveUserData(obj)
-        .then(() => {
-          return Api.postCV(tempCV.UserId, formData, true);
-        })
-        .then(({ data }) => {
-          // console.log('Auto-save succeeded.');
-          setCvVersion(data.version);
-        })
-        .catch(() => {
-          // console.log('Auto-save failed.');
-        });
+      try {
+        const { data } = await Api.postCV(updatedCV.UserId, formData, true);
+
+        setCvVersion(data.version);
+      } catch (err) {
+        console.error(err);
+      }
     }, true);
   };
 
-  if (user === null) return null;
+  if (!user) return null;
 
   // aucun CV
-  if (cv === null) {
+  if (!cv) {
     return (
       <NoCV
         candidateId={candidateId}
@@ -321,31 +337,32 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
             onClick={() => {
               openModal(<CVModalPreview cv={cv} imageUrl={imageUrl} />);
             }}
-            style="default"
+            color="darkGrayFont"
+            style="custom-primary-inverted"
           >
             Prévisualiser
           </Button>
           <ButtonPost
-            style="primary"
+            style="custom-primary"
             action={async () => {
-              return postCV(CV_STATUS.Progress.value);
+              await postCV(CV_STATUS.Progress.value);
             }}
             text="Sauvegarder"
           />
           {isRoleIncluded(COACH_USER_ROLES, user.role) && (
             <ButtonPost
-              style="primary"
+              style="custom-primary"
               action={async () => {
-                return postCV(CV_STATUS.Pending.value);
+                await postCV(CV_STATUS.Pending.value);
               }}
               text="Soumettre"
             />
           )}
           {user.role === USER_ROLES.ADMIN && (
             <ButtonPost
-              style="primary"
+              style="custom-primary"
               action={async () => {
-                return postCV(CV_STATUS.Published.value);
+                await postCV(CV_STATUS.Published.value);
               }}
               text="Publier"
             />
@@ -363,17 +380,26 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
         </StyledCVEditButtonsContainer>
       </StyledCVNav>
       <CVFicheEdition
-        email={cv.user?.candidat.email}
-        phone={cv.user?.candidat.phone}
-        address={cv.user?.candidat.address}
+        email={userData.email}
+        phone={userData.phone}
+        address={userData.address}
         cv={cv}
         previewGenerating={previewGenerating}
         disablePicture={user.role !== USER_ROLES.ADMIN}
-        onChange={async (fields) => {
-          await autoSaveCV({ ...cv, ...fields });
+        onChange={async (updatedCV, updatedUserData = {}) => {
+          await autoSaveCV(
+            { ...cv, ...updatedCV },
+            { ...userData, ...updatedUserData }
+          );
+
+          setUserData({
+            ...userData,
+            ...updatedUserData,
+          });
+
           setCV({
             ...cv,
-            ...fields,
+            ...updatedCV,
             status: CV_STATUS.Draft.value,
           });
         }}

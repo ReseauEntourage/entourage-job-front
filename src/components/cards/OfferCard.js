@@ -171,7 +171,7 @@ export const OfferCard = ({
         </Grid>
         {date && (
           <Grid gap="small" middle eachWidths={['auto', 'expand']}>
-            <Icon name="calendar" />
+            <Icon name="linkedout-calendar" />
             <p>{moment(date).format('DD/MM/YYYY')}</p>
           </Grid>
         )}

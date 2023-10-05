@@ -244,13 +244,14 @@ export const OpportunityList = ({
               createdBy,
               createdAt,
               updatedAt,
+              isArchived,
+              isValidated,
               ...restOpportunity
             } = offer;
             const { data } = await Api.postOpportunity({
               ...restOpportunity,
               title: `${restOpportunity.title} (copie)`,
               isAdmin: true,
-              isValidated: false,
               date: moment().toISOString(),
               isCopy: true,
             });

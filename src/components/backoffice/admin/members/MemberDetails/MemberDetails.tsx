@@ -2,7 +2,8 @@ import React from 'react';
 import { User } from 'src/api/types';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { useTab } from 'src/components/backoffice/admin/members/MemberDetails/useTab';
-import { Grid, Icon, Section, SimpleLink } from 'src/components/utils';
+import { Grid, Section, SimpleLink } from 'src/components/utils';
+import { BackLink } from 'src/components/utils/BackLink';
 import { MEMBER_TABS } from 'src/constants';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 
@@ -24,15 +25,12 @@ export function MemberDetails({ user, setUser }: MemberDetailsProps) {
       <Section container="large">
         <Grid column gap="medium">
           <Grid between eachWidths={['expand@m', 'auto@m']}>
-            <SimpleLink
-              href={`/backoffice/admin/membres?role=${user.role}${
+            <BackLink
+              url={`/backoffice/admin/membres?role=${user.role}${
                 user.zone ? `&zone=${user.zone}` : ''
               }`}
-              className="uk-link-reset uk-flex uk-flex-middle"
-            >
-              <Icon name="chevron-left" />
-              Retour à la liste
-            </SimpleLink>
+              label="Retour à la liste"
+            />
             {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) && (
               <RecommendedOffersButton candidateId={user.id} />
             )}
