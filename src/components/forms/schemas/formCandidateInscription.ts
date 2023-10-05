@@ -27,6 +27,7 @@ interface FormCandidateInscriptionSchema extends FormSchemaValidation {
   email: string;
   heardAbout: HeardAboutValue;
   infoCo: string;
+  tsPrescripteur?: string;
 }
 function hideIfNoInfoCo(
   getValue: GetValueType<FormCandidateInscriptionSchema>,
