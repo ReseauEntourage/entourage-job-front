@@ -29,7 +29,14 @@ interface InfoProfileCardProps {
   email: string;
   phone: string;
   address: string;
-  onChange: (updatedInfo: Partial<CV>) => void;
+  onChange: (
+    updatedCV: Partial<CV>,
+    updatedInfo: {
+      email: string;
+      phone: string;
+      address: string;
+    }
+  ) => void;
   userZone: AdminZone;
 }
 export const InfoProfileCard = ({
@@ -88,25 +95,41 @@ export const InfoProfileCard = ({
                     closeModal
                   ) => {
                     closeModal();
-                    onChange({
-                      ...fields,
-                      contracts: fields.contracts.map(({ value }) => {
-                        return {
-                          name: value,
-                        };
-                      }),
-                      languages: fields.languages.map(({ value }) => {
-                        return {
-                          name: value,
-                        };
-                      }),
-                      locations: fields.locations.map(({ value }, index) => {
-                        return {
-                          name: value,
-                          order: index,
-                        };
-                      }),
-                    });
+                    const {
+                      email: updatedEmail,
+                      phone: updatedPhone,
+                      address: updatedAddress,
+                      ...updatedCV
+                    } = fields;
+
+                    onChange(
+                      {
+                        ...updatedCV,
+                        contracts: updatedCV.contracts.map(({ value }) => {
+                          return {
+                            name: value,
+                          };
+                        }),
+                        languages: updatedCV.languages.map(({ value }) => {
+                          return {
+                            name: value,
+                          };
+                        }),
+                        locations: updatedCV.locations.map(
+                          ({ value }, index) => {
+                            return {
+                              name: value,
+                              order: index,
+                            };
+                          }
+                        ),
+                      },
+                      {
+                        email: updatedEmail,
+                        phone: updatedPhone,
+                        address: updatedAddress,
+                      }
+                    );
                   }}
                 />
               );

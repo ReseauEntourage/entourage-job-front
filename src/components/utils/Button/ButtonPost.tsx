@@ -1,9 +1,11 @@
 import React, { FormEvent, useState } from 'react';
 import { Button, Icon } from 'src/components/utils';
 import { UIKIT_BUTTON_STYLES_SPEC } from 'src/components/variables';
+import { StyledButtonPostContainer } from './ButtonPost.styles';
 
 interface ButtonPostProps {
   text: string;
+  color?: string;
   action?: (event?: FormEvent) => Promise<void>;
   style?: '' | UIKIT_BUTTON_STYLES_SPEC;
   icon?: string;
@@ -16,6 +18,7 @@ export const ButtonPost = ({
   icon,
   action,
   style,
+  color,
   disabled,
   dataTestId,
 }: ButtonPostProps) => {
@@ -25,6 +28,7 @@ export const ButtonPost = ({
       disabled={disabled || loading}
       style={style}
       dataTestId={dataTestId}
+      color={color}
       onClick={async () => {
         if (!loading) {
           setLoading(true);
@@ -36,16 +40,14 @@ export const ButtonPost = ({
         }
       }}
     >
-      <div className="uk-flex uk-flex-middle">
+      <StyledButtonPostContainer>
         {text}
         {loading ? (
-          <div className="uk-margin-small-left" data-uk-spinner="ratio: .5" />
+          <div data-uk-spinner="ratio: .5" />
         ) : (
-          icon && (
-            <Icon className="uk-margin-small-left" name={icon} ratio={0.8} />
-          )
+          icon && <Icon name={icon} ratio={0.8} />
         )}
-      </div>
+      </StyledButtonPostContainer>
     </Button>
   );
 };

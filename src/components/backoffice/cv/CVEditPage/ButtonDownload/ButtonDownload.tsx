@@ -23,26 +23,28 @@ export const ButtonDownload = ({
   return (
     <ButtonPost
       disabled={disabled || pdfGenerating}
-      style="default"
+      style="custom-primary-inverted"
+      color="darkGrayFont"
       text={
-        pdfGenerating ? 'Génération du fichier PDF...' : 'Télécharger le CV'
+        pdfGenerating ? 'Génération du fichier PDF ...' : 'Télécharger le CV'
       }
       icon={pdfGenerating ? null : 'download'}
-      action={() => {
+      action={async () => {
         if (tag) gaEvent(tag);
-        return Api.getCVPdf(candidateId, {
-          params: {
-            fileName: `${firstName}_${lastName}`,
-          },
-        })
-          .then(({ data }) => {
-            const pdfLink = document.createElement('a');
-            pdfLink.href = data.pdfUrl;
-            pdfLink.click();
-          })
-          .catch((err) => {
-            console.error(err);
+        try {
+          const {
+            data: { pdfUrl },
+          } = await Api.getCVPdf(candidateId, {
+            params: {
+              fileName: `${firstName}_${lastName}`,
+            },
           });
+          const pdfLink = document.createElement('a');
+          pdfLink.href = pdfUrl;
+          pdfLink.click();
+        } catch (err) {
+          console.error(err);
+        }
       }}
     />
   );
