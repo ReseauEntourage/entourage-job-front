@@ -96,7 +96,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
 
   const pages = [
     // First Page
-    <StyledCVPDFPage className="uk-background-muted uk-flex uk-flex-column">
+    <StyledCVPDFPage>
       <StyledCVPDFContentHeader>
         <StyledLeftColumn>
           <StyledCVPDFProfilePictureContainer>
