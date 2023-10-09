@@ -52,11 +52,15 @@ export function MemberInfo({
     ? content
     : user && (
         <Link
+          shallow
+          passHref
           href={
             user.role === USER_ROLES.ADMIN
               ? `/backoffice/admin/membres/${id}`
               : `/backoffice/candidat/${id}/cv`
           }
+          scroll={false}
+          legacyBehavior
         >
           <StyledMemberInfoLink>{content}</StyledMemberInfoLink>
         </Link>

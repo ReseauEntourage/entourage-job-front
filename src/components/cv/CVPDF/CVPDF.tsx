@@ -96,19 +96,21 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
 
   const pages = [
     // First Page
-    <StyledCVPDFPage className="uk-background-muted uk-flex uk-flex-column">
+    <StyledCVPDFPage>
       <StyledCVPDFContentHeader>
         <StyledLeftColumn>
-          <StyledCVPDFProfilePictureContainer>
-            <CVProfilePicturePDF urlImg={cv.urlImg} />
-            {cv.catchphrase && (
-              <StyledCVPDFQuote>
-                <QuoteLeftIcon viewBox="0 0 10 8" />
-                <span>{cv.catchphrase}</span>
-                <QuoteRightIcon viewBox="0 0 10 8" />
-              </StyledCVPDFQuote>
-            )}
-          </StyledCVPDFProfilePictureContainer>
+          <StyledCVPDFContentInformations>
+            <StyledCVPDFProfilePictureContainer>
+              <CVProfilePicturePDF urlImg={cv.urlImg} />
+              {cv.catchphrase && (
+                <StyledCVPDFQuote>
+                  <QuoteLeftIcon viewBox="0 0 10 8" />
+                  <span>{cv.catchphrase}</span>
+                  <QuoteRightIcon viewBox="0 0 10 8" />
+                </StyledCVPDFQuote>
+              )}
+            </StyledCVPDFProfilePictureContainer>
+          </StyledCVPDFContentInformations>
         </StyledLeftColumn>
         <StyledRightColumn>
           <div id="header-details">
@@ -277,7 +279,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
             {/* use Information Container to display profile picture */}
             <StyledCVPDFContentInformations>
               <StyledCVPDFProfilePictureContainer>
-                <CVProfilePicturePDF urlImg={cv.urlImg} />
+                <CVProfilePicturePDF urlImg={cv.urlImg} verticalMargin />
               </StyledCVPDFProfilePictureContainer>
             </StyledCVPDFContentInformations>
             {/* use Information Container to display contact information */}

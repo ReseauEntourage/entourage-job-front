@@ -47,9 +47,9 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
   const [pdfGenerating, setPdfGenerating] = useState(false);
 
   const [userData, setUserData] = useState({
-    email: cv.user?.candidat?.email,
-    phone: cv.user?.candidat?.phone,
-    address: cv.user?.candidat?.address,
+    email: cv?.user?.candidat?.email,
+    phone: cv?.user?.candidat?.phone,
+    address: cv?.user?.candidat?.address,
   });
 
   const isDesktop = useIsDesktop();
@@ -170,123 +170,138 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
     [candidateId, cvVersion]
   );
 
-  const saveUserData = async ({
-    email,
-    phone,
-    address,
-  }: {
-    email: string;
-    phone: string;
-    address: string;
-  }) => {
-    if (
-      (email || phone || address) &&
-      (email !== cv.user.candidat.email ||
-        phone !== cv.user.candidat.phone ||
-        address !== cv.user.candidat.address)
-    ) {
-      const updatedUserData = {
-        email,
-        address,
-        phone,
-      };
-      try {
-        await Api.putUser(candidateId, updatedUserData);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-  };
-
-  const postCV = async (status) => {
-    await checkIfLastVersion(async () => {
-      await saveUserData(userData);
-
-      const channelPreview = pusher.subscribe(SOCKETS.CHANNEL_NAMES.CV_PREVIEW);
-      const channelPDF = pusher.subscribe(SOCKETS.CHANNEL_NAMES.CV_PDF);
-
-      setPreviewGenerating(true);
-      setPdfGenerating(true);
-
-      channelPreview.bind(SOCKETS.EVENTS.CV_PREVIEW_DONE, (data) => {
-        if (data.candidateId === candidateId) {
-          setPreviewGenerating(false);
-          pusher.unsubscribe(SOCKETS.CHANNEL_NAMES.CV_PREVIEW);
-        }
-      });
-
-      channelPDF.bind(SOCKETS.EVENTS.CV_PDF_DONE, (data) => {
-        if (data.candidateId === candidateId) {
-          setPdfGenerating(false);
-          pusher.unsubscribe(SOCKETS.CHANNEL_NAMES.CV_PDF);
-        }
-      });
-
-      // prepare data
-      const formData = new FormData();
-      const obj = {
-        ...cv,
-        status,
-        profileImage: undefined,
-      };
-      delete obj.id;
-
-      formData.append('cv', JSON.stringify(obj));
-      formData.append('profileImage', cv.profileImage);
-      // post
-      try {
-        const { data: updatedCV } = await Api.postCV(cv.UserId, formData, true);
-        setCV(updatedCV);
-        setCvVersion(updatedCV.version);
-
-        UIkit.notification(
-          isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
-            ? 'Votre CV a bien été sauvegardé'
-            : 'Le profil a été mis à jour',
-          'success'
-        );
-      } catch (err) {
-        console.error(err);
-        UIkit.notification("Une erreur s'est produite", 'danger');
-      }
-    });
-  };
-
-  const autoSaveCV = async (
-    updatedCV: CV,
-    updatedUserData: {
+  const saveUserData = useCallback(
+    async ({
+      email,
+      phone,
+      address,
+    }: {
       email: string;
       phone: string;
       address: string;
-    }
-  ) => {
-    await checkIfLastVersion(async () => {
-      await saveUserData({
-        email: updatedUserData.email,
-        phone: updatedUserData.phone,
-        address: updatedUserData.address,
-      });
-
-      const formData = new FormData();
-      const obj = {
-        ...updatedCV,
-        status: CV_STATUS.Progress.value,
-        profileImage: undefined,
-      };
-      delete obj.id;
-      formData.append('cv', JSON.stringify(obj));
-      formData.append('autoSave', 'true');
-
-      // post
-      try {
-        const { data } = await Api.postCV(updatedCV.UserId, formData, true);
-
-        setCvVersion(data.version);
-      } catch (err) {
-        console.error(err);
+    }) => {
+      if (
+        (email || phone || address) &&
+        (email !== cv.user.candidat.email ||
+          phone !== cv.user.candidat.phone ||
+          address !== cv.user.candidat.address)
+      ) {
+        const updatedUserData = {
+          email,
+          address,
+          phone,
+        };
+        try {
+          await Api.putUser(candidateId, updatedUserData);
+        } catch (err) {
+          console.error(err);
+        }
       }
-    }, true);
-  };
+    },
+    [candidateId, cv]
+  );
+
+  const postCV = useCallback(
+    async (status) => {
+      await checkIfLastVersion(async () => {
+        await saveUserData(userData);
+
+        const channelPreview = pusher.subscribe(
+          SOCKETS.CHANNEL_NAMES.CV_PREVIEW
+        );
+        const channelPDF = pusher.subscribe(SOCKETS.CHANNEL_NAMES.CV_PDF);
+
+        setPreviewGenerating(true);
+        setPdfGenerating(true);
+
+        channelPreview.bind(SOCKETS.EVENTS.CV_PREVIEW_DONE, (data) => {
+          if (data.candidateId === candidateId) {
+            setPreviewGenerating(false);
+            pusher.unsubscribe(SOCKETS.CHANNEL_NAMES.CV_PREVIEW);
+          }
+        });
+
+        channelPDF.bind(SOCKETS.EVENTS.CV_PDF_DONE, (data) => {
+          if (data.candidateId === candidateId) {
+            setPdfGenerating(false);
+            pusher.unsubscribe(SOCKETS.CHANNEL_NAMES.CV_PDF);
+          }
+        });
+
+        // prepare data
+        const formData = new FormData();
+        const obj = {
+          ...cv,
+          status,
+          profileImage: undefined,
+        };
+        delete obj.id;
+
+        formData.append('cv', JSON.stringify(obj));
+        formData.append('profileImage', cv.profileImage);
+        // post
+        try {
+          const { data: updatedCV } = await Api.postCV(
+            cv.UserId,
+            formData,
+            true
+          );
+          setCV(updatedCV);
+          setCvVersion(updatedCV.version);
+
+          UIkit.notification(
+            isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
+              ? 'Votre CV a bien été sauvegardé'
+              : 'Le profil a été mis à jour',
+            'success'
+          );
+        } catch (err) {
+          console.error(err);
+          UIkit.notification("Une erreur s'est produite", 'danger');
+        }
+      });
+    },
+    [candidateId, checkIfLastVersion, cv, saveUserData, setCV, user, userData]
+  );
+
+  const autoSaveCV = useCallback(
+    async (
+      updatedCV: CV,
+      updatedUserData: {
+        email: string;
+        phone: string;
+        address: string;
+      }
+    ) => {
+      await checkIfLastVersion(async () => {
+        await saveUserData({
+          email: updatedUserData.email,
+          phone: updatedUserData.phone,
+          address: updatedUserData.address,
+        });
+
+        const formData = new FormData();
+        const obj = {
+          ...updatedCV,
+          status: CV_STATUS.Progress.value,
+          profileImage: undefined,
+        };
+        delete obj.id;
+        formData.append('cv', JSON.stringify(obj));
+        formData.append('autoSave', 'true');
+
+        // post
+        try {
+          const { data } = await Api.postCV(updatedCV.UserId, formData, true);
+
+          setCvVersion(data.version);
+        } catch (err) {
+          console.error(err);
+        }
+      }, true);
+    },
+    [checkIfLastVersion, saveUserData]
+  );
 
   if (!user) return null;
 

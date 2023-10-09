@@ -54,8 +54,13 @@ export const TimelineCard = ({
         editProps={editProps}
         type={type}
       />
-      {remainingItems === 0 && (
+      {remainingItems < 0 && (
         <StyledFooterCount warning>
+          Limite de {type} dépassée de {Math.abs(remainingItems)} élément(s)
+        </StyledFooterCount>
+      )}
+      {remainingItems === 0 && (
+        <StyledFooterCount>
           Vous avez atteint le maximum des {type} à entrer
         </StyledFooterCount>
       )}
