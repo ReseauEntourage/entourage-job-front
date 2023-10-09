@@ -16,10 +16,10 @@ export const StyledCVPageContent = styled.div`
     font-size: 14px;
     line-height: 16px;
     width: 100%;
-    display: block;
+    display: flex;
     max-width: 1320px;
     padding: 0 10px;
-    box-sizing: border-box;
+
     :hover {
       color: ${COLORS.primaryOrange};
     }
@@ -69,7 +69,7 @@ export const StyledCVPageContentHeader = styled.div`
   background-color: #ffffffe5;
   border-radius: 30px;
   padding: 30px;
-  box-sizing: border-box;
+
   margin: 26px 15px 0;
   h1 {
     text-transform: uppercase;
@@ -84,7 +84,6 @@ export const StyledHeaderDetails = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
-  box-sizing: border-box;
 
   #quote {
     svg {
@@ -199,7 +198,7 @@ export const StyledCVPageContentStory = styled.div`
       justify-content: flex-end;
       line-height: 30px;
       > div {
-        display: block;
+        display: flex;
         margin: 0 auto;
         color: ${COLORS.primaryOrange};
         border-bottom: ${COLORS.primaryOrange} solid 1px;
@@ -214,7 +213,7 @@ export const StyledCVPageContentStory = styled.div`
 export const StyledShareContainer = styled.div`
   margin-top: 38px;
   /* width: 355px; */
-  box-sizing: border-box;
+
   padding: 0 25px;
   text-align: center;
   max-width: 100%;
@@ -224,7 +223,7 @@ export const StyledCVPageContentDetailsContainer = styled.div`
   display: flex;
   flex-direction: row;
   margin: 26px 15px 0;
-  box-sizing: border-box;
+
   flex: 1 1 0%;
   &.mobile {
     flex-direction: column;
@@ -254,12 +253,13 @@ export const StyledTitleAccordion = styled.div`
 export const StyledCVPageContentInformations = styled.div`
   background-color: #ffffffe5;
   padding: 30px;
-  display: block;
+  display: flex;
+  flex-direction: column;
   max-width: 300px;
   margin-bottom: 30px;
   border-radius: 30px;
   margin-right: 30px;
-  box-sizing: border-box;
+
   position: relative;
   h6 {
     margin-block-start: 0;
@@ -287,12 +287,13 @@ export const StyledCVPageContentInformations = styled.div`
 export const StyledCVPageContentPassions = styled.div`
   background-color: #ffffffe5;
   padding: 30px;
-  display: block;
+  display: flex;
+  flex-direction: column;
   max-width: 300px;
   margin-bottom: 30px;
   border-radius: 30px;
   margin-right: 30px;
-  box-sizing: border-box;
+
   position: relative;
   &.mobile {
     width: 100%;
@@ -303,7 +304,8 @@ export const StyledCVPageContentPassions = styled.div`
 export const StyledCVPageContentExperience = styled.div`
   background-color: #ffffffe5;
   padding: 30px;
-  display: block;
+  display: flex;
+  flex-direction: column;
   margin-bottom: 30px;
   border-radius: 30px;
   position: relative;
@@ -383,7 +385,7 @@ export const StyledCVPageContentCarousel = styled.div`
   padding: 0 15px;
   margin: 30px auto;
   width: 100%;
-  box-sizing: border-box;
+
   span.name {
     /* font-weight: 600; */
     color: ${COLORS.darkGray};
@@ -430,10 +432,10 @@ export const StyledLeftQuoteContainer = styled.div`
 `;
 
 export const StyledCVPageContentFooter = styled.div`
-  display: block;
+  display: flex;
   width: 100%;
   max-width: 1320px;
-  box-sizing: border-box;
+
   padding: 0 15px 50px;
   text-align: center;
   p {
@@ -460,7 +462,7 @@ export const StyledCVMessageContainer = styled.div`
   &.mobile {
     button {
       margin: auto;
-      display: block;
+      display: flex;
     }
   }
 `;
