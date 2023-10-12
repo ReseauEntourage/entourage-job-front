@@ -44,6 +44,7 @@ export const StyledCVPDFQuote = styled.div`
   font-size: 8px;
   line-height: 10px;
   position: relative;
+  align-self: center;
 
   svg {
     color: ${COLORS.primaryOrange};
@@ -241,4 +242,5 @@ export const StyledCVPDFProfilePictureContainer = styled(
   padding-left: 10px;
   margin-right: 10px;
   height: 100%;
+  align-items: flex-start;
 `;
