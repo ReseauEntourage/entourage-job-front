@@ -32,7 +32,7 @@ export const formEditEmployed: FormSchema<{
       rules: [
         {
           method: (fieldValue) =>
-            isAfter(fieldValue, moment().format('YYYY-MM-DD')),
+            !fieldValue || isAfter(fieldValue, moment().format('YYYY-MM-DD')),
           message: "Date antérieure à aujourd'hui",
         },
       ],
