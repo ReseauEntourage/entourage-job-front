@@ -544,6 +544,7 @@ export const HeardAbout = {
   VOLUNTEER: 'volunteer',
   CONTACT: 'contact',
   ORIENTATION: 'orientation',
+  POLE_EMPLOI: 'pole_emploi',
   OTHER: 'other',
 } as const;
 
@@ -555,8 +556,12 @@ export const HEARD_ABOUT_FILTERS: FilterConstant<HeardAboutValue>[] = [
     value: HeardAbout.COMPANY,
   },
   {
-    label: 'Par mon travailleur social/Pôle emploi',
+    label: 'Association / travailleur social',
     value: HeardAbout.ORIENTATION,
+  },
+  {
+    label: 'Pôle Emploi',
+    value: HeardAbout.POLE_EMPLOI,
   },
   {
     label: 'Le réseau Entourage',
