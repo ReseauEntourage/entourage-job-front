@@ -1,6 +1,6 @@
 import React from 'react';
 import { OpportunityDetails } from '../OpportunityDetails';
-import { useFetchOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/useFetchOpportunity';
+import { useFetchCandidateOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/useFetchOpportunity';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { CandidateOpportunityDetails } from './CandidateOpportunityDetails';
 
@@ -13,7 +13,7 @@ export const CandidateOpportunityDetailsContainer = ({
 }) => {
   const opportunityId = useOpportunityId();
 
-  const { opportunity, isLoading, refreshOpportunity } = useFetchOpportunity(
+  const { opportunity, isLoading, refreshOpportunity } = useFetchCandidateOpportunity(
     opportunityId,
     candidateId,
     fetchOpportunities

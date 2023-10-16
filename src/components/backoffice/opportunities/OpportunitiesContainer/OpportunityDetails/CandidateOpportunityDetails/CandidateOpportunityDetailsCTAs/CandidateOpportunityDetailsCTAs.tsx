@@ -4,7 +4,7 @@ import UIkit from 'uikit';
 import { v4 as uuid } from 'uuid';
 import { HiredDateModal, InterviewDateModel } from '../DateModals';
 import { Api } from 'src/api';
-import { StyledOppCTAsContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/CandidateOpportunityDetailsCTAs/CandidateOpportunityDetailsCTAS.styles';
+import { StyledOpportunityCTAsContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunityDetails.styles';
 import {
   allCTAs,
   CTAsByTab,
@@ -290,7 +290,7 @@ export const CandidateOpportunityDetailsCTAs = ({
   };
 
   return (
-    <StyledOppCTAsContainer>
+    <StyledOpportunityCTAsContainer>
       {(tab || tab === 0) &&
         CTAsByTab.find((CTAByTab) => {
           return CTAByTab.tab === tab;
@@ -310,6 +310,6 @@ export const CandidateOpportunityDetailsCTAs = ({
             </li>
           );
         })}
-    </StyledOppCTAsContainer>
+    </StyledOpportunityCTAsContainer>
   );
 };

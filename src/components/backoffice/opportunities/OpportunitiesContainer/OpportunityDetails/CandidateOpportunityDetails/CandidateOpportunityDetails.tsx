@@ -15,13 +15,13 @@ import {
 import { renderTabFromStatus } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.utils';
 import { DetailsProgressBar } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/DetailsProgressBar';
 import {
-  StyledCTAContainer,
-  StyledDetailsContainer,
-  StyledDetailsContentContainer,
-  StyledInfoContainer,
-  StyledRightContainer,
-  StyledTitleContainer,
-  StyledTopContainer,
+  StyledOpportunityDetailsCTAContainer,
+  StyledOpportunityDetailsContainer,
+  StyledOpportunityDetailsDetailsContentContainer,
+  StyledOpportunityDetailsInfoContainer,
+  StyledOpportunityDetailsRightContainer,
+  StyledOpportunityDetailsTitleContainer,
+  StyledOpportunityDetailsTopContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunityDetails.styles';
 import { OpportunitySection } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunitySection';
 import { useBookmarkOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/useBookmarkOpportunity';
@@ -115,9 +115,9 @@ export const CandidateOpportunityDetails = ({
   );
 
   return (
-    <StyledDetailsContainer ref={ref} data-testid="candidat-offer-details">
-      <StyledTopContainer>
-        <StyledTitleContainer>
+    <StyledOpportunityDetailsContainer ref={ref} data-testid="candidat-offer-details">
+      <StyledOpportunityDetailsTopContainer>
+        <StyledOpportunityDetailsTitleContainer>
           <StyledTitleText data-testid="candidat-offer-details-title">
             {title}
           </StyledTitleText>
@@ -135,18 +135,18 @@ export const CandidateOpportunityDetails = ({
             )}
           </InfoText>
           <InfoText>
-            <StyledInfoContainer>
+            <StyledOpportunityDetailsInfoContainer>
               <ContractLabel
                 contract={contract}
                 endOfContract={endOfContract}
                 startOfContract={startOfContract}
               />
               &nbsp;-&nbsp;{department}
-            </StyledInfoContainer>
+            </StyledOpportunityDetailsInfoContainer>
           </InfoText>
           <InfoText>{moment(createdAt).format('DD/MM/YYYY')}</InfoText>
-        </StyledTitleContainer>
-        <StyledRightContainer>
+        </StyledOpportunityDetailsTitleContainer>
+        <StyledOpportunityDetailsRightContainer>
           <ActionLabels
             isBookmarked={!!opportunityUsers?.bookmarked}
             isRecommended={!!opportunityUsers?.recommended}
@@ -163,7 +163,7 @@ export const CandidateOpportunityDetails = ({
               <RightAlignText>{event.date}</RightAlignText>
             </InfoText>
           )}
-        </StyledRightContainer>
+        </StyledOpportunityDetailsRightContainer>
         <DetailsProgressBar
           tab={renderTabFromStatus(
             opportunityUsers.status,
@@ -178,10 +178,10 @@ export const CandidateOpportunityDetails = ({
               !opportunityUsers.archived)
           }
         />
-      </StyledTopContainer>
+      </StyledOpportunityDetailsTopContainer>
       {/* check if there are CTAS on the current tab to render ctas container */}
       {hasCTAContainer && (
-        <StyledCTAContainer>
+        <StyledOpportunityDetailsCTAContainer>
           <CandidateOpportunityDetailsCTAs
             event={event}
             candidateId={candidateId}
@@ -199,10 +199,10 @@ export const CandidateOpportunityDetails = ({
               await fetchOpportunities();
             }}
           />
-        </StyledCTAContainer>
+        </StyledOpportunityDetailsCTAContainer>
       )}
       {(companyDescription || description) && (
-        <StyledDetailsContentContainer
+        <StyledOpportunityDetailsDetailsContentContainer
           height={containerHeight === 0 ? '100%' : containerHeight}
         >
           {companyDescription && (
@@ -217,9 +217,9 @@ export const CandidateOpportunityDetails = ({
               content={description}
             />
           )}
-        </StyledDetailsContentContainer>
+        </StyledOpportunityDetailsDetailsContentContainer>
       )}
-    </StyledDetailsContainer>
+    </StyledOpportunityDetailsContainer>
     /* <ModalOffer
       currentOffer={opportunity}
       onOfferUpdated={fetchOpportunities}

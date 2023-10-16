@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
 import { Api } from 'src/api';
-import { OpportunityWithOpportunityUsers } from 'src/api/types';
+import { AdminOpportunityWithOpportunityUsers, OpportunityWithOpportunityUsers } from 'src/api/types';
 import { USER_ROLES } from 'src/constants/users';
 import { usePrevious } from 'src/hooks/utils';
 import { UserContext } from 'src/store/UserProvider';
 
-export function useFetchOpportunity(
+export function useFetchCandidateOpportunity(
   opportunityId: string,
   candidateId: string,
-  fetchOpportunities: () => void
+  fetchOpportunities: () => void,
 ) {
   const { user } = useContext(UserContext);
   const [opportunity, setOpportunity] =
@@ -69,6 +69,49 @@ export function useFetchOpportunity(
     prevCandidateId,
     fetchOpportunities,
   ]);
+
+  function refreshOpportunity() {
+    setRefresh(true);
+  }
+
+  return { opportunity, isLoading, refreshOpportunity };
+}
+
+export function useFetchAdminOpportunity(
+  opportunityId: string,
+  fetchOpportunities: () => void,
+) {
+  const [isLoading, setIsLoading] = useState(false);
+  const prevOpportunityId = usePrevious(opportunityId);
+  const [refresh, setRefresh] = useState(false);
+  const [opportunity, setOpportunity] =
+    useState<AdminOpportunityWithOpportunityUsers>();
+  useEffect(() => {
+
+    async function fetchOpportunity() {
+      const { data: fetchedOpportunity } = await Api.getOpportunityById(
+        opportunityId
+      );
+      console.log(fetchedOpportunity);
+      setOpportunity(fetchedOpportunity);
+      setIsLoading(false);
+      setRefresh(false);
+    }
+
+    if (
+          opportunityId &&
+          (refresh || (opportunityId && opportunityId !== prevOpportunityId))
+        ) {
+          setIsLoading(true);
+          fetchOpportunity();
+        }
+  }, [
+    opportunity,
+    opportunityId,
+    prevOpportunityId,
+    refresh,
+    fetchOpportunities,
+  ])
 
   function refreshOpportunity() {
     setRefresh(true);

@@ -231,6 +231,7 @@ export const CandidateOpportunities = ({
                 activeStatus={filters.status}
                 tabCounts={tabCounts}
                 candidateId={candidateId}
+                isMobile={isMobile}
               />
             </Section>
           )}

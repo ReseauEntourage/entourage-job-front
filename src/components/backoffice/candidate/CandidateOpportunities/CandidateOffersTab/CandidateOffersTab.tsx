@@ -7,8 +7,6 @@ import {
   formatPlural,
   tabs,
 } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab/CandidateOffersTab.utils';
-import { BREAKPOINTS } from 'src/constants/styles';
-import { isSSR } from 'src/utils/isSSR';
 
 const uuidValue = uuid();
 
@@ -24,23 +22,20 @@ interface CandidateOffersTabProps {
     count: number;
   }[];
   candidateId: string;
+  isMobile: boolean;
 }
 
 export const CandidateOffersTab = ({
   activeStatus,
   tabCounts,
   candidateId,
+  isMobile= false,
 }: CandidateOffersTabProps) => {
   const basePath = `/backoffice/candidat/${candidateId}/offres/private`;
 
-  let isDesktop = true;
-  if (!isSSR) {
-    isDesktop = window.innerWidth >= BREAKPOINTS.desktop;
-  }
-
   return (
     <div>
-      <StyledTabsUl className={isDesktop ? '' : 'ul-mobile'}>
+      <StyledTabsUl className={!isMobile ? '' : 'ul-mobile'}>
         {tabs.map(({ status, text }, k) => {
           let queryString = '?';
           let tabCount = 0;
@@ -71,7 +66,7 @@ export const CandidateOffersTab = ({
           return (
             <li className={isActive ? 'active' : ''} key={`${k}-${uuidValue}`}>
               <Link href={`${basePath}${queryString}`}>
-                {isDesktop ? (
+                {!isMobile ? (
                   <div>
                     <span>{tabCount}</span>
                     <p>{text}</p>

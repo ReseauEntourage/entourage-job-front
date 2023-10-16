@@ -36,3 +36,70 @@ export const StyledListContent = styled.div`
   height: 100%;
   position: relative;
 `;
+
+
+
+export const StyledOpportunityItemContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+`;
+
+export const StyledOpportunityItemTopContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const StyledOpportunityItemIcon = styled.div`
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 1px ${COLORS.gray} solid;
+  color: ${COLORS.gray};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const StyledOpportunityItemTitleContainer = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+`;
+
+export const StyledOpportunityItemActionContainer = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+`;
+
+export const StyledOpportunityItemTitle = styled.div`
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
+export const StyledOpportunityItemCompany = styled.div`
+  text-overflow: ellipsis;
+`;
+
+export const StyledOpportunityItemInfoContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  text-overflow: ellipsis;
+`;
+
+export const StyledOpportunityItemBottomContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const StyledOpportunityItemDescription = styled.div`
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+  color: ${COLORS.black};
+`;

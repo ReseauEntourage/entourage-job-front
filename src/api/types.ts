@@ -7,6 +7,7 @@ import {
   HeardAboutValue,
   CandidateHelpWithValue,
   CompanyApproach,
+  OfferStatus,
 } from 'src/constants';
 import { AdminZone, Department } from 'src/constants/departements';
 import { AdminRole, Gender, UserRole } from 'src/constants/users';
@@ -258,6 +259,8 @@ export type Opportunity = {
   shouldSendNotifications: boolean;
   isCopy: boolean;
   createdAt: string;
+  updatedAt?: string;
+  createdBy?: string;
 };
 
 export type OpportunityDto = {
@@ -331,7 +334,7 @@ export interface OpportunityUser {
   note: string;
   recommended: boolean;
   seen: boolean;
-  status: number;
+  status: OfferStatus;
   updatedAt: string;
   user: UserCandidateWithUsers | UserCandidateWithUsers[];
   otherInfo: string;
@@ -345,6 +348,10 @@ export interface OpportunityUser {
 }
 export interface OpportunityWithOpportunityUsers extends Opportunity {
   opportunityUsers: OpportunityUser;
+}
+
+export interface AdminOpportunityWithOpportunityUsers extends Opportunity {
+  opportunityUsers: OpportunityUser[];
 }
 
 export type ExternalOpportunityDto = {
