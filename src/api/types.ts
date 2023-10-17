@@ -484,6 +484,7 @@ export type CandidateInscription = {
   location: string;
   phone: string;
   workingRight: string;
+  tsPrescripteur?: string;
 };
 
 export type ExternalMessage = {
