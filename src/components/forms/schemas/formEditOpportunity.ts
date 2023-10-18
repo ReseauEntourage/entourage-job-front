@@ -9,7 +9,7 @@ import {
   CONTRACTS,
 } from 'src/constants';
 import { Department, DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import { USER_ROLES } from 'src/constants/users';
+import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 import { FilterConstant } from 'src/constants/utils';
 import { findConstantFromValue } from 'src/utils';
 
@@ -68,7 +68,7 @@ export const formEditOpportunity: FormSchema<{
         Api.getUsersSearch({
           params: {
             query: inputValue,
-            role: USER_ROLES.CANDIDATE,
+            role: CANDIDATE_USER_ROLES,
           },
         })
           .then(({ data }) => {
