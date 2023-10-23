@@ -19,10 +19,10 @@ import _, { replace } from 'lodash';
 import { usePrevious } from 'src/hooks/utils';
 import { useRouter } from 'next/router';
 import AdminOpportunityDetailsContainer from '../../opportunities/OpportunitiesContainer/OpportunityDetails/AdminOpportunityDetails/AdminOpportunityDetailsContainer';
+import { Api } from 'src/api';
+import { filtersToQueryParams } from 'src/utils';
 
-const adminSearchFilters = OPPORTUNITY_FILTERS_DATA.filter((el) => {
-    return el.key !== 'status';
-  });
+const adminSearchFilters = OPPORTUNITY_FILTERS_DATA
   
 interface CandidateOpportunitiesProps {
     search?: string;
@@ -42,12 +42,22 @@ export const AdminOpportunities = ({
     isMobile = false,
   }: CandidateOpportunitiesProps) => {
 
+
     const { replace } = useRouter();
 
     const [ currentTag, setCurrentTag ] = useState()
     useEffect(() => {
-        setCurrentTag(filters.tag[0])
-    }, [filters.tag])
+        setCurrentTag(filters.tag[0]);
+        // const {tag, ...restFilters} = filters;
+        // Api.getOpportunitiesTabCountForAdmin({
+        //     params: {
+        //         search,
+        //         type: filters.tag[0].value,
+        //         ...filtersToQueryParams(restFilters),
+        //     }
+        // })
+    }, [filters])
+
 
     const opportunityId = useOpportunityId();
     const queryParamsOpportunities = useQueryParamsOpportunities();
