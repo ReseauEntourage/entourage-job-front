@@ -27,8 +27,8 @@ const ResetSuccessPage = () => {
             <div className="uk-flex uk-flex-center">
               <Button
                 style="primary"
-                onClick={() => {
-                  return push('/login');
+                onClick={async () => {
+                  await push('/login');
                 }}
               >
                 Se connecter

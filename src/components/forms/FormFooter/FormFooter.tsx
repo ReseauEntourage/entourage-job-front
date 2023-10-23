@@ -14,6 +14,7 @@ interface FooterFormProps {
   submitText: string;
   cancelText?: string;
   formId: string;
+  isLoadingOverride?: boolean;
   noCompulsory?: boolean;
 }
 
@@ -24,6 +25,7 @@ export const FormFooter = ({
   submitText,
   cancelText,
   formId,
+  isLoadingOverride = false,
   noCompulsory = false,
 }: FooterFormProps) => {
   return (
@@ -52,6 +54,7 @@ export const FormFooter = ({
               text={submitText || 'Envoyer'}
               style="custom-primary"
               action={onSubmit}
+              isLoadingOverride={isLoadingOverride}
               dataTestId={`form-confirm-${formId}`}
             />
           </div>

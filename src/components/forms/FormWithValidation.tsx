@@ -48,6 +48,8 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
 }: FormWithValidationProps<S>) {
   const { id: formId, fields } = formSchema;
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [error, setError] = useState<string>();
   const [fieldOptions, setFieldOptions] = useState({});
 
@@ -72,30 +74,36 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
 
   const onValidForm: SubmitHandler<ExtractFormSchemaValidation<S>> =
     useCallback(
-      (fieldValues) => {
-        onSubmit(fieldValues, (msg) => {
+      async (fieldValues) => {
+        await onSubmit(fieldValues, (msg) => {
           setError(msg);
         });
       },
       [onSubmit]
     );
 
-  const onErrorForm = useCallback(() => {
+  const onErrorForm = useCallback(async () => {
     if (onError) {
-      onError(getValues());
+      await onError(getValues());
     }
   }, [getValues, onError]);
+
+  const handleSubmitOverride = useCallback(async () => {
+    setIsLoading(true);
+    await handleSubmit(onValidForm, onErrorForm)();
+    setIsLoading(false);
+  }, [handleSubmit, onErrorForm, onValidForm]);
 
   return (
     <>
       <StyledForm
         id={formId}
         data-testid="form-with-validation"
-        onSubmit={handleSubmit(onValidForm, onErrorForm)}
-        onKeyDown={(ev) => {
+        onSubmit={handleSubmitOverride}
+        onKeyDown={async (ev) => {
           if (enterToSubmit) {
             if (ev.key === 'Enter') {
-              handleSubmit(onValidForm, onErrorForm)();
+              await handleSubmitOverride();
             }
           }
         }}
@@ -247,6 +255,7 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
         error={error}
         submitText={submitText}
         cancelText={cancelText}
+        isLoadingOverride={isLoading}
         onSubmit={handleSubmit(onValidForm, onErrorForm)}
         formId={formId}
         onCancel={
