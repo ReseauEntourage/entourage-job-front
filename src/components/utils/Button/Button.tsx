@@ -20,7 +20,7 @@ interface ButtonProps {
   isExternal?: boolean;
   newTab?: boolean;
   className?: string;
-  onClick?: () => void;
+  onClick?: () => Promise<void> | void;
   toggle?: string;
   shallow?: boolean;
   scroll?: boolean;
@@ -70,9 +70,9 @@ export function Button({
       className={classBuffer}
       disabled={disabled}
       type="button"
-      onClick={() => {
+      onClick={async () => {
         if (onClick) {
-          onClick();
+          await onClick();
         }
       }}
       data-uk-toggle={toggle}

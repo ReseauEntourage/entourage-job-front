@@ -10,6 +10,7 @@ interface ButtonPostProps {
   style?: '' | UIKIT_BUTTON_STYLES_SPEC;
   icon?: string;
   disabled?: boolean;
+  isLoadingOverride?: boolean;
   dataTestId?: string;
 }
 
@@ -20,9 +21,11 @@ export const ButtonPost = ({
   style,
   color,
   disabled,
+  isLoadingOverride,
   dataTestId,
 }: ButtonPostProps) => {
   const [loading, setLoading] = useState(false);
+
   return (
     <Button
       disabled={disabled || loading}
@@ -32,17 +35,14 @@ export const ButtonPost = ({
       onClick={async () => {
         if (!loading) {
           setLoading(true);
-          try {
-            await action();
-          } finally {
-            setLoading(false);
-          }
+          await action();
+          setLoading(false);
         }
       }}
     >
       <StyledButtonPostContainer>
         {text}
-        {loading ? (
+        {loading || isLoadingOverride ? (
           <div data-uk-spinner="ratio: .5" />
         ) : (
           icon && <Icon name={icon} ratio={0.8} />

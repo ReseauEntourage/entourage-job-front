@@ -58,82 +58,85 @@ const Travailler = () => {
             ...GA_TAGS.PAGE_TRAVAILLER_ENVOYER_DEPOSER_CANDIDATURE_CLIC,
             label: gTagLabel,
           });
+
           fbEvent(FB_TAGS.CANDIDATE_REGISTRATION_SEND);
-          await Api.postInscriptionCandidate(fields)
-            .then(() => {
-              closeModal();
-              const selectedCampaign = campaigns.find((campaign) => {
-                return campaign.id === fields.infoCo;
-              });
 
-              const antenne = ANTENNE_INFO.find((info) => {
-                return info.dpt === fields.location;
-              });
+          try {
+            await Api.postInscriptionCandidate(fields);
 
-              const infoCoAddress = selectedCampaign?.address
-                ? _.upperFirst(selectedCampaign?.address)
-                : _.upperFirst(antenne?.address);
+            closeModal();
 
-              const email = antenne?.mailCoordo;
-
-              const infoCoDate = _.upperFirst(
-                `${moment(
-                  campaigns.find((campaign) => {
-                    return campaign.id === fields.infoCo;
-                  })?.time
-                ).format('dddd D MMMM [à] HH[h]mm')}`
-              );
-
-              openModal(
-                <ModalGeneric
-                  title="Merci pour votre inscription !"
-                  onClose={closeModal}
-                  withCloseButton
-                >
-                  <StyledModalContent>
-                    {fields.infoCo ? (
-                      <>
-                        <p>
-                          Nous sommes impatient de vous retrouver pour la
-                          réunion d&apos;information collective, qui aura lieu
-                          dans nos locaux le&nbsp;:
-                        </p>
-                        <p>
-                          <strong>{infoCoDate}</strong>
-                        </p>
-                        <p>
-                          <strong>{infoCoAddress}</strong>
-                        </p>
-                        <p>
-                          N’oubliez pas de noter la date dans votre agenda,
-                          cette réunion est indispensable pour commencer le
-                          programme LinkedOut.
-                        </p>
-                        <p>
-                          Si vous avez un empêchement, n’oubliez pas de nous
-                          prévenir par mail&nbsp;: {email}
-                        </p>
-                      </>
-                    ) : (
-                      <>
-                        <p>
-                          Nous allons vous contacter rapidement pour vous
-                          proposer un rendez-vous.
-                        </p>
-                        <p>
-                          Si vous avez des questions, n’hésitez pas à nous
-                          contacter par mail&nbsp;: {email}
-                        </p>
-                      </>
-                    )}
-                  </StyledModalContent>
-                </ModalGeneric>
-              );
-            })
-            .catch((err) => {
-              console.error(err);
-              UIkit.notification('Un problème est survenu', 'danger');
+            const selectedCampaign = campaigns.find((campaign) => {
+              return campaign.id === fields.infoCo;
             });
+
+            const antenne = ANTENNE_INFO.find((info) => {
+              return info.dpt === fields.location;
+            });
+
+            const infoCoAddress = selectedCampaign?.address
+              ? _.upperFirst(selectedCampaign?.address)
+              : _.upperFirst(antenne?.address);
+
+            const email = antenne?.mailCoordo;
+
+            const infoCoDate = _.upperFirst(
+              `${moment(
+                campaigns.find((campaign) => {
+                  return campaign.id === fields.infoCo;
+                })?.time
+              ).format('dddd D MMMM [à] HH[h]mm')}`
+            );
+
+            openModal(
+              <ModalGeneric
+                title="Merci pour votre inscription !"
+                onClose={closeModal}
+                withCloseButton
+              >
+                <StyledModalContent>
+                  {fields.infoCo ? (
+                    <>
+                      <p>
+                        Nous sommes impatient de vous retrouver pour la réunion
+                        d&apos;information collective, qui aura lieu dans nos
+                        locaux le&nbsp;:
+                      </p>
+                      <p>
+                        <strong>{infoCoDate}</strong>
+                      </p>
+                      <p>
+                        <strong>{infoCoAddress}</strong>
+                      </p>
+                      <p>
+                        N’oubliez pas de noter la date dans votre agenda, cette
+                        réunion est indispensable pour commencer le programme
+                        LinkedOut.
+                      </p>
+                      <p>
+                        Si vous avez un empêchement, n’oubliez pas de nous
+                        prévenir par mail&nbsp;: {email}
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <p>
+                        Nous allons vous contacter rapidement pour vous proposer
+                        un rendez-vous.
+                      </p>
+                      <p>
+                        Si vous avez des questions, n’hésitez pas à nous
+                        contacter par mail&nbsp;: {email}
+                      </p>
+                    </>
+                  )}
+                </StyledModalContent>
+              </ModalGeneric>
+            );
+          } catch (err) {
+            console.error(err);
+            UIkit.notification('Un problème est survenu', 'danger');
+          }
         }}
       />
     );
