@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React from 'react';
 
 import UIkit from 'uikit';
 import MainImg from 'public/static/img/travailler-banner.jpg';
@@ -24,23 +24,10 @@ import { Steps } from 'src/components/partials/Travailler/Steps';
 import { Section } from 'src/components/utils';
 import { ANTENNE_INFO } from 'src/constants';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { useMount } from 'src/hooks/utils/useMount';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
 
 const Travailler = () => {
-  const [campaigns, setCampaigns] = useState([]);
-
-  useMount(() => {
-    Api.getCampaigns()
-      .then((res) => {
-        setCampaigns(res.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  });
-
   const openModalInscription = (gTagLabel: string) => {
     gaEvent({
       ...GA_TAGS.PAGE_TRAVAILLER_DEPOSER_CANDIDATURE_CLIC,
@@ -59,81 +46,85 @@ const Travailler = () => {
             label: gTagLabel,
           });
           fbEvent(FB_TAGS.CANDIDATE_REGISTRATION_SEND);
-          await Api.postInscriptionCandidate(fields)
-            .then(() => {
-              closeModal();
-              const selectedCampaign = campaigns.find((campaign) => {
-                return campaign.id === fields.infoCo;
-              });
 
-              const antenne = ANTENNE_INFO.find((info) => {
-                return info.dpt === fields.location;
-              });
+          try {
+            await Api.postInscriptionCandidate(fields);
 
-              const infoCoAddress = selectedCampaign?.address
-                ? _.upperFirst(selectedCampaign?.address)
-                : _.upperFirst(antenne?.address);
+            closeModal();
 
-              const email = antenne?.mailCoordo;
+            const { data: campaigns } = await Api.getCampaigns();
 
-              const infoCoDate = _.upperFirst(
-                `${moment(
-                  campaigns.find((campaign) => {
-                    return campaign.id === fields.infoCo;
-                  })?.time
-                ).format('dddd D MMMM [à] HH[h]mm')}`
-              );
-
-              openModal(
-                <ModalGeneric
-                  title="Merci pour votre inscription !"
-                  onClose={closeModal}
-                  withCloseButton
-                >
-                  <StyledModalContent>
-                    {fields.infoCo ? (
-                      <>
-                        <p>
-                          Nous sommes impatient de vous retrouver pour la
-                          réunion d&apos;information collective, qui aura lieu
-                          dans nos locaux le&nbsp;:
-                        </p>
-                        <p>
-                          <strong>{infoCoDate}</strong>
-                        </p>
-                        <p>
-                          <strong>{infoCoAddress}</strong>
-                        </p>
-                        <p>
-                          N’oubliez pas de noter la date dans votre agenda,
-                          cette réunion est indispensable pour commencer le
-                          programme LinkedOut.
-                        </p>
-                        <p>
-                          Si vous avez un empêchement, n’oubliez pas de nous
-                          prévenir par mail&nbsp;: {email}
-                        </p>
-                      </>
-                    ) : (
-                      <>
-                        <p>
-                          Nous allons vous contacter rapidement pour vous
-                          proposer un rendez-vous.
-                        </p>
-                        <p>
-                          Si vous avez des questions, n’hésitez pas à nous
-                          contacter par mail&nbsp;: {email}
-                        </p>
-                      </>
-                    )}
-                  </StyledModalContent>
-                </ModalGeneric>
-              );
-            })
-            .catch((err) => {
-              console.error(err);
-              UIkit.notification('Un problème est survenu', 'danger');
+            const selectedCampaign = campaigns.find((campaign) => {
+              return campaign.id === fields.infoCo;
             });
+
+            const antenne = ANTENNE_INFO.find((info) => {
+              return info.dpt === fields.location;
+            });
+
+            const infoCoAddress = selectedCampaign?.address
+              ? _.upperFirst(selectedCampaign?.address)
+              : _.upperFirst(antenne?.address);
+
+            const email = antenne?.mailCoordo;
+
+            const infoCoDate = _.upperFirst(
+              `${moment(
+                campaigns.find((campaign) => {
+                  return campaign.id === fields.infoCo;
+                })?.time
+              ).format('dddd D MMMM [à] HH[h]mm')}`
+            );
+
+            openModal(
+              <ModalGeneric
+                title="Merci pour votre inscription !"
+                onClose={closeModal}
+                withCloseButton
+              >
+                <StyledModalContent>
+                  {fields.infoCo ? (
+                    <>
+                      <p>
+                        Nous sommes impatient de vous retrouver pour la réunion
+                        d&apos;information collective, qui aura lieu dans nos
+                        locaux le&nbsp;:
+                      </p>
+                      <p>
+                        <strong>{infoCoDate}</strong>
+                      </p>
+                      <p>
+                        <strong>{infoCoAddress}</strong>
+                      </p>
+                      <p>
+                        N’oubliez pas de noter la date dans votre agenda, cette
+                        réunion est indispensable pour commencer le programme
+                        LinkedOut.
+                      </p>
+                      <p>
+                        Si vous avez un empêchement, n’oubliez pas de nous
+                        prévenir par mail&nbsp;: {email}
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <p>
+                        Nous allons vous contacter rapidement pour vous proposer
+                        un rendez-vous.
+                      </p>
+                      <p>
+                        Si vous avez des questions, n’hésitez pas à nous
+                        contacter par mail&nbsp;: {email}
+                      </p>
+                    </>
+                  )}
+                </StyledModalContent>
+              </ModalGeneric>
+            );
+          } catch (err) {
+            console.error(err);
+            UIkit.notification('Un problème est survenu', 'danger');
+          }
         }}
       />
     );

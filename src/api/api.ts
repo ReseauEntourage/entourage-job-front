@@ -422,7 +422,7 @@ export class APIHandler {
   // contact /
   /// // //////
 
-  getCampaigns() {
+  getCampaigns(): Promise<AxiosResponse> {
     return this.get(`/contact/campaigns`);
   }
 
