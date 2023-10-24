@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React from 'react';
 
 import UIkit from 'uikit';
 import MainImg from 'public/static/img/travailler-banner.jpg';
@@ -24,23 +24,10 @@ import { Steps } from 'src/components/partials/Travailler/Steps';
 import { Section } from 'src/components/utils';
 import { ANTENNE_INFO } from 'src/constants';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { useMount } from 'src/hooks/utils/useMount';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
 
 const Travailler = () => {
-  const [campaigns, setCampaigns] = useState([]);
-
-  useMount(() => {
-    Api.getCampaigns()
-      .then((res) => {
-        setCampaigns(res.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  });
-
   const openModalInscription = (gTagLabel: string) => {
     gaEvent({
       ...GA_TAGS.PAGE_TRAVAILLER_DEPOSER_CANDIDATURE_CLIC,
@@ -65,6 +52,8 @@ const Travailler = () => {
             await Api.postInscriptionCandidate(fields);
 
             closeModal();
+
+            const { data: campaigns } = await Api.getCampaigns();
 
             const selectedCampaign = campaigns.find((campaign) => {
               return campaign.id === fields.infoCo;
