@@ -12,6 +12,11 @@ export const HEIGHTS = {
   SECTION_PADDING_MOBILE: 12,
 };
 
+export const HEIGHTS_ADMIN = {
+  ...HEIGHTS,
+  TABS_HEIGHT: 170,
+};
+
 export const COLORS = {
   lightgray: '#F5F5F5',
   gray: '#D9D9D9',

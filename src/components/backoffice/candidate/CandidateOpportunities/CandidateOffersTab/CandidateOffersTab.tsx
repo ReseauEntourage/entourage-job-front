@@ -29,7 +29,7 @@ export const CandidateOffersTab = ({
   activeStatus,
   tabCounts,
   candidateId,
-  isMobile= false,
+  isMobile = false,
 }: CandidateOffersTabProps) => {
   const basePath = `/backoffice/candidat/${candidateId}/offres/private`;
 

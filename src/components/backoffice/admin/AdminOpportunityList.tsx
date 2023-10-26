@@ -1,54 +1,56 @@
-import moment from 'moment';
-import React, { useRef } from 'react';
-import UIkit from 'uikit';
-import { Api } from 'src/api';
-import { formAddExternalOpportunityAsAdmin } from 'src/components/forms/schemas/formAddExternalOpportunity';
-import { formAddOpportunityAsAdmin } from 'src/components/forms/schemas/formAddOpportunity';
-import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
-import { openModal } from 'src/components/modals/Modal';
-import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { PostOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal/PostOpportunityModal';
-import { OpportunityList } from 'src/components/opportunities/OpportunityList';
-import { ButtonMultiple } from 'src/components/utils';
-import { Icon } from 'src/components/utils/Icon';
-import { useIsDesktop } from 'src/hooks/utils';
-import { AnyToFix } from 'src/utils/Types';
+// import moment from 'moment';
+import React from 'react';
+// import UIkit from 'uikit';
+// import { Api } from 'src/api';
+// import { formAddExternalOpportunityAsAdmin } from 'src/components/forms/schemas/formAddExternalOpportunity';
+// import { formAddOpportunityAsAdmin } from 'src/components/forms/schemas/formAddOpportunity';
+// import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
+// import { openModal } from 'src/components/modals/Modal';
+// import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+// import { PostOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal/PostOpportunityModal';
+// import { OpportunityList } from 'src/components/opportunities/OpportunityList';
+// import { ButtonMultiple } from 'src/components/utils';
+// import { Icon } from 'src/components/utils/Icon';
+// import { useIsDesktop } from 'src/hooks/utils';
+// import { AnyToFix } from 'src/utils/Types';
 
-interface AdminOpportunityListProps {
-  filters: AnyToFix; // to be typed
-  setFilters: (updatedFilters: AnyToFix) => void;
-  setTabFilters: (updatedFilters: AnyToFix) => void;
-  tabFilters: AnyToFix[];
-  search?: string;
-  setSearch: (search?: string) => void;
-  resetFilters: () => void;
-}
-export const AdminOpportunityList = ({
-  search,
-  filters,
-  setFilters,
-  tabFilters,
-  setTabFilters,
-  setSearch,
-  resetFilters,
-}: AdminOpportunityListProps) => {
-  const isDesktop = useIsDesktop();
+// interface AdminOpportunityListProps {
+//   filters: AnyToFix; // to be typed
+//   setFilters: (updatedFilters: AnyToFix) => void;
+//   setTabFilters: (updatedFilters: AnyToFix) => void;
+//   tabFilters: AnyToFix[];
+//   search?: string;
+//   setSearch: (search?: string) => void;
+//   resetFilters: () => void;
+// }
+export const AdminOpportunityList = () =>
+  // {
+  // search,
+  // filters,
+  // setFilters,
+  // tabFilters,
+  // setTabFilters,
+  // setSearch,
+  // resetFilters,
+  // }
+  {
+    // const isDesktop = useIsDesktop();
 
-  const opportunityListRef = useRef<{ fetchData: () => Promise<void> }>();
+    // const opportunityListRef = useRef<{ fetchData: () => Promise<void> }>();
 
-  const opportunityModalProps = {
-    defaultValues: {
-      isPublic: true,
-    },
-    isAdmin: true,
-    callback: opportunityListRef?.current?.fetchData,
-    modalTitle: 'Ajouter une nouvelle offre',
-    formSchema: formAddOpportunityAsAdmin,
-  };
+    // const opportunityModalProps = {
+    //   defaultValues: {
+    //     isPublic: true,
+    //   },
+    //   isAdmin: true,
+    //   callback: opportunityListRef?.current?.fetchData,
+    //   modalTitle: 'Ajouter une nouvelle offre',
+    //   formSchema: formAddOpportunityAsAdmin,
+    // };
 
-  return (
-    <>
-      <HeaderBackoffice
+    return (
+      <>
+        {/* <HeaderBackoffice
         title="Modération des offres d'emploi"
         description="Ici vous pouvez accéder à toutes les opportunités et valider les offres envoyées par les recruteurs !"
       >
@@ -124,7 +126,7 @@ export const AdminOpportunityList = ({
         setSearch={setSearch}
         setFilters={setFilters}
         userRole="admin"
-      />
-    </>
-  );
-};
+      /> */}
+      </>
+    );
+  };

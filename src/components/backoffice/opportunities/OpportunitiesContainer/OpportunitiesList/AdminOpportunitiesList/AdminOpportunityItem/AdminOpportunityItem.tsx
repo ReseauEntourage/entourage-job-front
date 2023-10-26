@@ -1,32 +1,36 @@
-import React from 'react'
-import { Opportunity } from 'src/api/types'
-import { DescriptionText, InfoText, SubtitleText } from '../../../OpportunitiesContainer.styles';
-import { BUSINESS_LINES } from 'src/constants';
-import { findConstantFromValue } from 'src/utils';
+import React from 'react';
 import { ContractLabel } from '../../../ContractLabel';
-import { ActionsLabels } from 'src/constants/utils';
 import {
-    StyledOpportunityItemActionContainer,
-    StyledOpportunityItemBottomContainer,
-    StyledOpportunityItemContainer,
-    StyledOpportunityItemDescription,
-    StyledOpportunityItemInfoContainer,
-    StyledOpportunityItemTitleContainer,
-    StyledOpportunityItemTopContainer,
-  } from '../../OpportunitiesList.styles';
-  import { StyledAdminOpportunityItemSeparator } from './AdminOpportunityItem.styles';
+  DescriptionText,
+  InfoText,
+  SubtitleText,
+} from '../../../OpportunitiesContainer.styles';
+import {
+  StyledOpportunityItemActionContainer,
+  StyledOpportunityItemBottomContainer,
+  StyledOpportunityItemContainer,
+  StyledOpportunityItemDescription,
+  StyledOpportunityItemInfoContainer,
+  StyledOpportunityItemTitleContainer,
+  StyledOpportunityItemTopContainer,
+} from '../../OpportunitiesList.styles';
+import { Opportunity } from 'src/api/types';
+import { BUSINESS_LINES } from 'src/constants';
+// import { ActionsLabels } from 'src/constants/utils';
+import { findConstantFromValue } from 'src/utils';
+import { StyledAdminOpportunityItemSeparator } from './AdminOpportunityItem.styles';
 
 export const AdminOpportunityItem = ({
-    title,
-    company,
-    description,
-    isExternal,
-    department,
-    contract,
-    endOfContract,
-    startOfContract,
-    businessLines,
-  }: Partial<Opportunity>) => {
+  title,
+  company,
+  description,
+  // isExternal,
+  department,
+  contract,
+  endOfContract,
+  startOfContract,
+  businessLines,
+}: Partial<Opportunity>) => {
   return (
     <StyledOpportunityItemContainer>
       <StyledOpportunityItemTopContainer>
@@ -71,7 +75,7 @@ export const AdminOpportunityItem = ({
           /> */}
         </StyledOpportunityItemActionContainer>
       </StyledOpportunityItemTopContainer>
-      <StyledAdminOpportunityItemSeparator/>
+      <StyledAdminOpportunityItemSeparator />
       <StyledOpportunityItemBottomContainer>
         <SubtitleText>Description mission</SubtitleText>
         <StyledOpportunityItemDescription>
@@ -79,5 +83,5 @@ export const AdminOpportunityItem = ({
         </StyledOpportunityItemDescription>
       </StyledOpportunityItemBottomContainer>
     </StyledOpportunityItemContainer>
-  )
-}
+  );
+};

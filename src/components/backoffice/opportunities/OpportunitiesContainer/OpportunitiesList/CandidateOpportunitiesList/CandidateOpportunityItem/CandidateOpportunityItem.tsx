@@ -1,4 +1,13 @@
 import React from 'react';
+import {
+  StyledOpportunityItemActionContainer,
+  StyledOpportunityItemBottomContainer,
+  StyledOpportunityItemContainer,
+  StyledOpportunityItemDescription,
+  StyledOpportunityItemInfoContainer,
+  StyledOpportunityItemTitleContainer,
+  StyledOpportunityItemTopContainer,
+} from '../../OpportunitiesList.styles';
 import { OpportunityWithOpportunityUsers } from 'src/api/types';
 import { ActionLabelContainer as ActionLabels } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
@@ -10,15 +19,6 @@ import {
 import { useBookmarkOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/useBookmarkOpportunity';
 import { BUSINESS_LINES } from 'src/constants';
 import { findConstantFromValue } from 'src/utils/Finding';
-import {
-  StyledOpportunityItemActionContainer,
-  StyledOpportunityItemBottomContainer,
-  StyledOpportunityItemContainer,
-  StyledOpportunityItemDescription,
-  StyledOpportunityItemInfoContainer,
-  StyledOpportunityItemTitleContainer,
-  StyledOpportunityItemTopContainer,
-} from '../../OpportunitiesList.styles';
 import { ProgressBarStatus } from './ProgressBarStatus';
 
 export const CandidateOpportunityItem = ({

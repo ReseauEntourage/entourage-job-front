@@ -1,6 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
 import { Api } from 'src/api';
-import { AdminOpportunityWithOpportunityUsers, OpportunityWithOpportunityUsers } from 'src/api/types';
+import {
+  AdminOpportunityWithOpportunityUsers,
+  OpportunityWithOpportunityUsers,
+} from 'src/api/types';
 import { USER_ROLES } from 'src/constants/users';
 import { usePrevious } from 'src/hooks/utils';
 import { UserContext } from 'src/store/UserProvider';
@@ -8,7 +11,7 @@ import { UserContext } from 'src/store/UserProvider';
 export function useFetchCandidateOpportunity(
   opportunityId: string,
   candidateId: string,
-  fetchOpportunities: () => void,
+  fetchOpportunities: () => void
 ) {
   const { user } = useContext(UserContext);
   const [opportunity, setOpportunity] =
@@ -79,7 +82,7 @@ export function useFetchCandidateOpportunity(
 
 export function useFetchAdminOpportunity(
   opportunityId: string,
-  fetchOpportunities: () => void,
+  fetchOpportunities: () => void
 ) {
   const [isLoading, setIsLoading] = useState(false);
   const prevOpportunityId = usePrevious(opportunityId);
@@ -87,31 +90,29 @@ export function useFetchAdminOpportunity(
   const [opportunity, setOpportunity] =
     useState<AdminOpportunityWithOpportunityUsers>();
   useEffect(() => {
-
     async function fetchOpportunity() {
       const { data: fetchedOpportunity } = await Api.getOpportunityById(
         opportunityId
       );
-      console.log(fetchedOpportunity);
       setOpportunity(fetchedOpportunity);
       setIsLoading(false);
       setRefresh(false);
     }
 
     if (
-          opportunityId &&
-          (refresh || (opportunityId && opportunityId !== prevOpportunityId))
-        ) {
-          setIsLoading(true);
-          fetchOpportunity();
-        }
+      opportunityId &&
+      (refresh || (opportunityId && opportunityId !== prevOpportunityId))
+    ) {
+      setIsLoading(true);
+      fetchOpportunity();
+    }
   }, [
     opportunity,
     opportunityId,
     prevOpportunityId,
     refresh,
     fetchOpportunities,
-  ])
+  ]);
 
   function refreshOpportunity() {
     setRefresh(true);

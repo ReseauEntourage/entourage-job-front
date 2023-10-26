@@ -31,26 +31,26 @@ export const OFFER_STATUS: (FilterConstant<OfferStatus> & {
   { value: 4, label: 'Refus après entretien', color: 'danger' },
 ];
 
-export type adminOffersTags = "pending" | "validated" | "external" | "archived";
+export type adminOffersTags = 'pending' | 'validated' | 'external' | 'archived';
 
 export const ADMIN_OFFERS_TAGS = [
   {
-    value: "pending",
-    label: "offres à valider",
+    value: 'pending',
+    label: 'offres à valider',
   },
   {
-      value: "validated",
-      label: "offres publiées",
+    value: 'validated',
+    label: 'offres publiées',
   },
   {
-      value: "external",
-      label: "offres externes",
+    value: 'external',
+    label: 'offres externes',
   },
   {
-      value: "archived",
-      label: "offres archivées",
+    value: 'archived',
+    label: 'offres archivées',
   },
-]
+];
 
 export type BusinessLineValue =
   | 'la'
@@ -378,8 +378,10 @@ export const ADMIN_OPPORTUNITY_FILTERS_DATA = [
     title: 'tag',
     // tag: GA_TAGS.BACKOFFICE_OFFRES_FILTRE_STATUT_CLIC,
   },
-  ...OPPORTUNITY_FILTERS_DATA.filter((el) => (el.key !== 'status' && el.key !== 'contracts')),
-]
+  ...OPPORTUNITY_FILTERS_DATA.filter(
+    (el) => el.key !== 'status' && el.key !== 'contracts'
+  ),
+];
 
 export const ORGANIZATION_FILTERS_DATA = [
   {

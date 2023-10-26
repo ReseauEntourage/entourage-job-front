@@ -37,8 +37,6 @@ export const StyledListContent = styled.div`
   position: relative;
 `;
 
-
-
 export const StyledOpportunityItemContainer = styled.div`
   display: flex;
   flex-direction: column;

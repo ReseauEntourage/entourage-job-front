@@ -115,7 +115,10 @@ export const CandidateOpportunityDetails = ({
   );
 
   return (
-    <StyledOpportunityDetailsContainer ref={ref} data-testid="candidat-offer-details">
+    <StyledOpportunityDetailsContainer
+      ref={ref}
+      data-testid="candidat-offer-details"
+    >
       <StyledOpportunityDetailsTopContainer>
         <StyledOpportunityDetailsTitleContainer>
           <StyledTitleText data-testid="candidat-offer-details-title">

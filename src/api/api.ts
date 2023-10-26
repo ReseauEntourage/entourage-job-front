@@ -300,12 +300,12 @@ export class APIHandler {
     return this.get(`/opportunity/candidate/tabCount/${candidateId}`);
   }
 
-  getOpportunitiesTabCountForAdmin(
-    params: object
-  ): Promise<AxiosResponse> {
-    console.log(params);
-    return this.get(`/opportunity/admin/tabCount`, params);
-  }
+  // getOpportunitiesTabCountForAdmin(
+  //   params: object
+  // ): Promise<AxiosResponse> {
+  //   console.log(params);
+  //   return this.get(`/opportunity/admin/tabCount`, params);
+  // }
 
   // post
 

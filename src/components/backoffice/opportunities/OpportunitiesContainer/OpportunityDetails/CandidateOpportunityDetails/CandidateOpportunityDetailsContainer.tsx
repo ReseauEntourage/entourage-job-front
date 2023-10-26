@@ -13,11 +13,12 @@ export const CandidateOpportunityDetailsContainer = ({
 }) => {
   const opportunityId = useOpportunityId();
 
-  const { opportunity, isLoading, refreshOpportunity } = useFetchCandidateOpportunity(
-    opportunityId,
-    candidateId,
-    fetchOpportunities
-  );
+  const { opportunity, isLoading, refreshOpportunity } =
+    useFetchCandidateOpportunity(
+      opportunityId,
+      candidateId,
+      fetchOpportunities
+    );
 
   if (!opportunityId || !opportunity) {
     return <OpportunityDetails isLoading={isLoading} />;

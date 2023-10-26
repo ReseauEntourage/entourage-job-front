@@ -89,7 +89,6 @@ export const StyledOpportunityDetailsRightContainer = styled.div`
   justify-content: space-between;
 `;
 
-
 export const StyledOpportunityCTAsContainer = styled.ul`
   display: flex;
   flex-direction: row;

@@ -189,6 +189,8 @@ export interface UserCandidateWithUsers extends UserCandidate {
   candidat?: User;
   coach?: User;
   cvs?: CV[];
+  firstName?: string;
+  lastName?: string;
 }
 
 export interface UserWithUserCandidate extends User {

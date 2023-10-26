@@ -4,12 +4,12 @@ import UIkit from 'uikit';
 import { v4 as uuid } from 'uuid';
 import { HiredDateModal, InterviewDateModel } from '../DateModals';
 import { Api } from 'src/api';
-import { StyledOpportunityCTAsContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunityDetails.styles';
 import {
   allCTAs,
   CTAsByTab,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/CandidateOpportunityDetailsCTAs/CandidateOpportunityDetailsCTAs.utils';
 import { SendMailModalContent } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/SendMailModalContent';
+import { StyledOpportunityCTAsContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunityDetails.styles';
 import { renderSimpleSelectField } from 'src/components/forms/schemas/formSimpleSelectField';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
