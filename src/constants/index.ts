@@ -498,11 +498,11 @@ export const NEWSLETTER_TAGS = {
     },
     {
       label: "une structure d'insertion",
-      tag: 'STRUCTURE_INSERTION',
+      tag: 'ASSOCIATION',
     },
     {
       label: 'un candidat potentiel',
-      tag: 'CANDIDAT_POTENTIEL',
+      tag: 'CANDIDAT',
     },
   ],
 };

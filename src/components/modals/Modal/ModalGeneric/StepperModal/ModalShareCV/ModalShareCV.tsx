@@ -8,15 +8,12 @@ import { StepperModal } from 'src/components/modals/Modal/ModalGeneric/StepperMo
 import { Button, Img, Icon } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
-import { useNewsletterTracking } from 'src/hooks';
 import { gaEvent } from 'src/lib/gtag';
 
 interface ModalShareCVProps {
   firstName: string;
 }
 export const ModalShareCV = ({ firstName }: ModalShareCVProps) => {
-  const newsletterParams = useNewsletterTracking();
-
   return (
     <StepperModal
       title="Merci pour votre partage."
@@ -40,7 +37,6 @@ export const ModalShareCV = ({ firstName }: ModalShareCVProps) => {
                   gaEvent(GA_TAGS.POPUP_PARTAGE_ENVOYER_MAIL_SUCCES);
                   return Api.postNewsletter({
                     email,
-                    ...newsletterParams,
                   })
                     .then(next)
                     .catch(() => {

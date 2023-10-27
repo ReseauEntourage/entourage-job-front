@@ -10,7 +10,6 @@ import { Button } from 'src/components/utils/Button';
 import { CheckBox } from 'src/components/utils/Inputs/CheckBox';
 import { TextInput } from 'src/components/utils/Inputs/TextInput';
 import { NEWSLETTER_TAGS } from 'src/constants';
-import { useNewsletterTracking } from 'src/hooks';
 import { gaEvent } from 'src/lib/gtag';
 
 const uuidValue = uuid();
@@ -29,7 +28,6 @@ export const NewsletterPartial = ({
   const [status, setStatus] = useState<string | undefined>();
   const [isMailValid, setIsMailValid] = useState<boolean>(true);
   const [isTagsValid, setIsTagsValid] = useState<boolean>(true);
-  const newsletterParams = useNewsletterTracking();
 
   const onSubmit = async () => {
     const mailValid = isEmail(email);
@@ -45,7 +43,6 @@ export const NewsletterPartial = ({
           email,
           zone,
           status,
-          ...newsletterParams,
         });
         UIkit.notification(
           'Votre inscription à la newsletter a bien été prise en compte !',
@@ -136,9 +133,7 @@ export const NewsletterPartial = ({
             title="Renseignez votre adresse email"
             type="email"
             style="secondary"
-            onChange={(value) => {
-              return setEmail(value);
-            }}
+            onChange={(value) => setEmail(value)}
             value={email}
             id="nl-email-input"
             name="nl-email-input"
