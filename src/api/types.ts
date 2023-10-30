@@ -1,5 +1,3 @@
-import { CookieValueTypes } from 'cookies-next';
-
 import {
   ExternalMessageContactType,
   Contract as ContractValue,
@@ -259,23 +257,8 @@ export type Opportunity = {
   isAdmin: boolean;
   shouldSendNotifications: boolean;
   isCopy: boolean;
-  visit: string;
-  visitor: string;
-  urlParams: object;
   createdAt: string;
 };
-
-export interface PleziTrackingData {
-  visit?: string;
-  visitor?: string;
-  urlParams?: {
-    utm?: string;
-    utm_medium?: string;
-    utm_source?: string;
-    gclid?: string;
-    referer?: string;
-  };
-}
 
 export type OpportunityDto = {
   title: string;
@@ -309,9 +292,6 @@ export type OpportunityDto = {
   shouldSendNotifications?: boolean;
   isCopy?: boolean;
   locations?: { department: Department; address: string }[];
-  visit?: PleziTrackingData['visit'];
-  visitor?: PleziTrackingData['visitor'];
-  urlParams?: PleziTrackingData['urlParams'];
 };
 
 export type Skill = {
@@ -463,15 +443,6 @@ export type ContactNewsletter = {
   email: string;
   zone?: string;
   status?: string;
-  visit?: CookieValueTypes;
-  visitor?: string;
-  urlParams?: {
-    utm?: string | string[];
-    utm_medium?: string | string[];
-    utm_source?: string | string[];
-    gclid?: string | string[];
-    referer?: string | string[];
-  };
 };
 
 export type CandidateInscription = {

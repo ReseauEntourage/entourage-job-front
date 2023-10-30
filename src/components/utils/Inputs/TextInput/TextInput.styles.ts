@@ -14,7 +14,6 @@ export const StyledTextInputContainer = styled.div`
       border: #d9d9d9 1px solid;
       border-radius: 30px;
       width: 100%;
-      font-size: 12px;
       line-height: normal;
     }
     &::placeholder {
