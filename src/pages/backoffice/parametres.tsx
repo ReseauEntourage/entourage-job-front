@@ -1,6 +1,12 @@
 import _ from 'lodash';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import UIkit from 'uikit';
+import EmailIcon from 'assets/icons/email.svg';
+import GenderIcon from 'assets/icons/gender.svg';
+import HomeIcon from 'assets/icons/home.svg';
+import PencilIcon from 'assets/icons/pencil.svg';
+import PhoneIcon from 'assets/icons/phone.svg';
+import UserIcon from 'assets/icons/user.svg';
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
 import { PasswordCriterias } from 'src/components/PasswordCriterias';
@@ -20,7 +26,7 @@ import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Card, Grid, Section, ButtonIcon } from 'src/components/utils';
-import { Icon } from 'src/components/utils/Icon';
+
 import {
   ALL_USER_ROLES,
   CANDIDATE_USER_ROLES,
@@ -360,7 +366,7 @@ const Parametres = () => {
                     <div data-uk-spinner="ratio: .8" />
                   ) : (
                     <ButtonIcon
-                      name="pencil"
+                      icon={<PencilIcon />}
                       onClick={openCorrespondingModal}
                     />
                   )}
@@ -368,24 +374,24 @@ const Parametres = () => {
                 {userData ? (
                   <Grid column gap="small">
                     <Grid row gap="small">
-                      <Icon name="user" style={{ width: 20 }} />
+                      <UserIcon width={20} />
                       <span>{`${userData.firstName} ${userData.lastName}`}</span>
                     </Grid>
                     {userData.role !== USER_ROLES.ADMIN && (
                       <Grid row gap="small">
-                        <Icon name="gender" style={{ width: 20 }} />
+                        <GenderIcon width={20} />
                         <span>
                           {`${userData.gender === 0 ? 'Homme' : 'Femme'}`}
                         </span>
                       </Grid>
                     )}
                     <Grid row gap="small">
-                      <Icon name="mail" style={{ width: 20 }} />
+                      <EmailIcon width={20} />
                       <span>{userData.email}</span>
                     </Grid>
                     {userData.role !== USER_ROLES.ADMIN && (
                       <Grid row gap="small">
-                        <Icon name="phone" style={{ width: 20 }} />
+                        <PhoneIcon width={20} />
                         {userData.phone ? (
                           <span>{userData.phone}</span>
                         ) : (
@@ -397,7 +403,7 @@ const Parametres = () => {
                     )}
                     {isRoleIncluded(CANDIDATE_USER_ROLES, [userData.role]) && (
                       <Grid row gap="small">
-                        <Icon name="home" style={{ width: 20 }} />
+                        <HomeIcon width={20} />
                         {userData.address ? (
                           <span>{userData.address}</span>
                         ) : (

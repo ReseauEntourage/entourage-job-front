@@ -1,13 +1,13 @@
-import Image, { StaticImageData } from 'next/image';
 import React from 'react';
 import { StyledBackground } from 'src/components/utils/BackgroundImage/BackgroundImage.styles';
+import { Img } from 'src/components/utils/Img';
 import { useIsDesktop } from 'src/hooks/utils';
 
 interface BackgroundImageProps {
-  img: string | StaticImageData;
+  img: string;
+  imgMobile: string;
   alt: string;
   children: React.ReactNode;
-  imgMobile: string | StaticImageData;
   mobileHeight?: number;
   isHero?: boolean;
   hasCta?: boolean;
@@ -37,23 +37,7 @@ export const BackgroundImage = ({
       >
         <div className="banner-content">{children}</div>
         <div className="banner">
-          {isDesktop ? (
-            <Image
-              src={img}
-              layout="fill"
-              objectFit="cover"
-              objectPosition="center"
-              alt={alt}
-            />
-          ) : (
-            <Image
-              src={imgMobile || img}
-              layout="fill"
-              objectFit="cover"
-              objectPosition="center"
-              alt={alt}
-            />
-          )}
+          <Img src={isDesktop ? img : imgMobile || img} cover alt={alt} />
         </div>
       </div>
     </StyledBackground>

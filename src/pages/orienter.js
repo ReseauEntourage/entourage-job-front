@@ -1,4 +1,5 @@
 import React from 'react';
+import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { Layout } from 'src/components/Layout';
 import { openModal } from 'src/components/modals/Modal';
 import { CandidateContactModal } from 'src/components/modals/Modal/ModalGeneric/CandidateContactModal';
@@ -11,7 +12,7 @@ import {
   Reviews,
 } from 'src/components/partials';
 import { ImageTitle } from 'src/components/partials/ImageTitle';
-import { Section, AnimatedList, Icon } from 'src/components/utils';
+import { Section, AnimatedList } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { PARTNERS } from 'src/constants/partners';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
@@ -78,7 +79,7 @@ const Orienter = () => {
   return (
     <Layout title="Orienter - LinkedOut">
       <ImageTitle
-        img="static/img/header_pic_guide.jpg"
+        img="/static/img/header_pic_guide.jpg"
         id="guide-title"
         title={
           <mark>
@@ -168,7 +169,7 @@ const Orienter = () => {
             }}
           >
             Inscrire un candidat&nbsp;
-            <Icon name="chevron-right" />
+            <ChevronRightIcon />
           </Button>
           <div className="uk-light">
             <Button
@@ -181,7 +182,7 @@ const Orienter = () => {
               }}
             >
               Nous contacter&nbsp;
-              <Icon name="chevron-right" />
+              <ChevronRightIcon />
             </Button>
           </div>
         </div>
@@ -242,7 +243,7 @@ const Orienter = () => {
             }}
           >
             Inscrire un candidat&nbsp;
-            <Icon name="chevron-right" />
+            <ChevronRightIcon />
           </Button>
         }
       />
@@ -290,7 +291,7 @@ const Orienter = () => {
             }}
           >
             Nous contacter&nbsp;
-            <Icon name="chevron-right" />
+            <ChevronRightIcon />
           </Button>
           <div className="uk-light">
             <Button
@@ -304,7 +305,7 @@ const Orienter = () => {
               }}
             >
               Télécharger la brochure&nbsp;
-              <Icon name="chevron-right" />
+              <ChevronRightIcon />
             </Button>
           </div>
           {/*
@@ -319,7 +320,7 @@ const Orienter = () => {
               }}
             >
               Prendre rendez-vous&nbsp;
-              <Icon name="chevron-right" />
+              <ChevronRightIcon />
             </Button>
           */}
         </div>

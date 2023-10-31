@@ -1,7 +1,8 @@
 import React, { useCallback } from 'react';
 
 import { v4 as uuid } from 'uuid';
-import { Button, Icon } from 'src/components/utils';
+import CaretDownIcon from 'assets/icons/caret-down.svg';
+import { Button } from 'src/components/utils';
 import { gaEvent } from 'src/lib/gtag';
 import { AnyToFix } from 'src/utils/Types';
 
@@ -125,13 +126,6 @@ export const FiltersDropdowns = ({
                         filters[key].length === 0 ? 'uk-text-muted' : ''
                       }`}
                     >
-                      {/* {icon && (
-                  <Icon
-                    name={icon}
-                    ratio={0.7}
-                    className="uk-margin-small-right"
-                  />
-                )} */}
                       <span className="uk-width-expand uk-text-left uk-flex uk-flex-middle uk-margin-small-right">
                         {title}
                       </span>
@@ -139,9 +133,10 @@ export const FiltersDropdowns = ({
                         <div>
                           &nbsp;
                           <div className="uk-badge">{filters[key].length}</div>
+                          &nbsp;
                         </div>
                       )}
-                      <Icon name="triangle-down" />
+                      <CaretDownIcon />
                     </Button>
                     <div
                       data-uk-dropdown="mode: click;"

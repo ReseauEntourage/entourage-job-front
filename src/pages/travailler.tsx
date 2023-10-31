@@ -3,7 +3,6 @@ import moment from 'moment';
 import React from 'react';
 
 import UIkit from 'uikit';
-import MainImg from 'public/static/img/travailler-banner.jpg';
 import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
 import { formCandidateInscription } from 'src/components/forms/schemas/formCandidateInscription';
@@ -136,18 +135,15 @@ const Travailler = () => {
       <ImageTitle
         title="LinkedOut, un tremplin vers l’emploi"
         description={`Vous êtes dans une situation de précarité ou d’exclusion\xa0? Vous avez un projet professionnel mais vous n’avez pas de réseau\xa0?`}
-        img={MainImg}
-        imgMobile={MainImg}
+        img="/static/img/travailler-banner.jpg"
+        imgMobile="/static/img/travailler-banner.jpg"
         alt="Candidats LinkedOut en recherche d’emploi"
         cta={{
           label: 'Rejoindre LinkedOut',
-          href: '',
           onClick: () => {
             openModalInscription('Header');
           },
           className: 'custom-secondary-inverted',
-          isExternal: false,
-          newTab: false,
           dataTest: 'banner-cta',
         }}
       />

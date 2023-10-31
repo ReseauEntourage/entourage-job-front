@@ -6,3 +6,4 @@ assets/
 cypress.config.js
 jest.config.js
 next.config.js
+.lintstagedrc.js

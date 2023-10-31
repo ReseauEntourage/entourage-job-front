@@ -41,7 +41,7 @@ export const StyledConnectedItem = styled.li`
     }
   }
   & > a:hover {
-    opacity: 0.5;
+    opacity: 0.6;
   }
 `;
 

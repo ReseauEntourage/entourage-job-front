@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import FacebookIcon from 'public/static/img/icons/facebook.svg';
-import InstaIcon from 'public/static/img/icons/instagram.svg';
-import LinkedInIcon from 'public/static/img/icons/linked-in.svg';
-import TwitterIcon from 'public/static/img/icons/twitter.svg';
-import YoutubeIcon from 'public/static/img/icons/youtube.svg';
+import FacebookIcon from 'assets/icons/facebook.svg';
+import InstaIcon from 'assets/icons/instagram.svg';
+import LinkedInIcon from 'assets/icons/linked-in.svg';
+import TwitterIcon from 'assets/icons/twitter.svg';
+import YoutubeIcon from 'assets/icons/youtube.svg';
 import { StyledShareButton } from 'src/components/partials/SharePartial/SharePartial.styles';
 import { Grid } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';

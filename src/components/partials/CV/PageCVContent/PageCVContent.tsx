@@ -2,13 +2,13 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import UIkit from 'uikit';
 
-import CalendarIcon from 'assets/custom/icons/calendar.svg';
-import CarIcon from 'assets/custom/icons/car.svg';
-import DocumentIcon from 'assets/custom/icons/document.svg';
-import LanguageIcon from 'assets/custom/icons/language.svg';
-import LocationIcon from 'assets/custom/icons/location.svg';
-import QuoteLeftIcon from 'assets/custom/icons/quote-left.svg';
-import QuoteRightIcon from 'assets/custom/icons/quote-right.svg';
+import CalendarIcon from 'assets/icons/calendar.svg';
+import CarIcon from 'assets/icons/car.svg';
+import DocumentIcon from 'assets/icons/document.svg';
+import LanguageIcon from 'assets/icons/language.svg';
+import LocationIcon from 'assets/icons/location.svg';
+import QuoteLeftIcon from 'assets/icons/quote-left.svg';
+import QuoteRightIcon from 'assets/icons/quote-right.svg';
 import { CVCallToActions } from '../CVCallToActions';
 import { CVShareButtons } from '../CVCallToActions/CVShareButtons';
 import { Api } from 'src/api';
@@ -55,7 +55,7 @@ import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { useIsDesktop } from 'src/hooks/utils';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
-import { addPrefix, findConstantFromValue, sortByOrder } from 'src/utils';
+import { findConstantFromValue, sortByOrder } from 'src/utils';
 
 interface openedPanelType {
   informations: boolean;
@@ -101,7 +101,7 @@ export const PageCVContent = ({
         <StyledCVProfilePictureContainer className={!isDesktop ? 'mobile' : ''}>
           <StyledCVProfilePicture
             className={!isDesktop ? 'mobile' : ''}
-            imgSrc={process.env.AWSS3_CDN_URL + addPrefix(cv.urlImg)}
+            imgSrc={`${process.env.AWSS3_CDN_URL}/${cv.urlImg}`}
           >
             <div className="picture" />
             <div className="pseudo" />
@@ -134,9 +134,9 @@ export const PageCVContent = ({
             />
             {cv.catchphrase && (
               <p id="quote">
-                <QuoteLeftIcon viewBox="0 0 10 8" />
+                <QuoteLeftIcon />
                 <span>{cv.catchphrase}</span>
-                <QuoteRightIcon viewBox="0 0 10 8" />
+                <QuoteRightIcon />
               </p>
             )}
             {cv.story && (
@@ -259,8 +259,7 @@ export const PageCVContent = ({
                 <li>
                   <div>
                     <p className="subtitle">
-                      <DocumentIcon viewBox="0 0 6 8" />{' '}
-                      <span>Type de contrat</span>
+                      <DocumentIcon /> <span>Type de contrat</span>
                     </p>
                     <p className="content">
                       {cv.contracts
@@ -276,8 +275,7 @@ export const PageCVContent = ({
                 <li>
                   <div>
                     <p className="subtitle">
-                      <LocationIcon viewBox="0 0 384 512" />{' '}
-                      <span>Localisation</span>
+                      <LocationIcon /> <span>Localisation</span>
                     </p>
                     <p className="content">
                       {locations
@@ -296,8 +294,7 @@ export const PageCVContent = ({
                 <li>
                   <div>
                     <p className="subtitle">
-                      <CalendarIcon viewBox="0 0 6 6" />{' '}
-                      <span>Disponibilité</span>
+                      <CalendarIcon /> <span>Disponibilité</span>
                     </p>
                     <p className="content">{cv.availability}</p>
                   </div>
@@ -307,7 +304,7 @@ export const PageCVContent = ({
                 <li>
                   <div>
                     <p className="subtitle">
-                      <LanguageIcon viewBox="0 0 6 6" /> <span>Langues</span>
+                      <LanguageIcon /> <span>Langues</span>
                     </p>
                     <p className="content">
                       {cv.languages
@@ -323,7 +320,7 @@ export const PageCVContent = ({
                 <li>
                   <div>
                     <p className="subtitle">
-                      <CarIcon viewBox="0 0 6 6" /> <span>Mobilité</span>
+                      <CarIcon /> <span>Mobilité</span>
                     </p>
                     <p className="content">{cv.transport}</p>
                   </div>
@@ -358,7 +355,7 @@ export const PageCVContent = ({
                 }}
               >
                 <H2 title="Expériences" color={COLORS.black} />
-                <StyledChevronIcon name="chevron-down" />
+                {!isDesktop && <StyledChevronIcon name="chevron-down" />}
               </StyledTitleAccordion>
               <ul>
                 {cv.experiences.map((experience) => {
@@ -394,7 +391,7 @@ export const PageCVContent = ({
                 }}
               >
                 <H2 title="Formation" color={COLORS.black} />
-                <StyledChevronIcon name="chevron-down" />
+                {!isDesktop && <StyledChevronIcon name="chevron-down" />}
               </StyledTitleAccordion>
               <ul>
                 {cv.formations.map((formation) => {
@@ -453,7 +450,7 @@ export const PageCVContent = ({
                 return (
                   <StyledCVPageContentSlide key={id}>
                     <StyledLeftQuoteContainer>
-                      <QuoteLeftIcon viewBox="0 0 10 8" />
+                      <QuoteLeftIcon />
                     </StyledLeftQuoteContainer>
                     <div>
                       <span>{text}</span>
@@ -463,7 +460,7 @@ export const PageCVContent = ({
                       </span>
                     </div>
                     <StyledRightQuoteContainer>
-                      <QuoteRightIcon viewBox="0 0 10 8" />
+                      <QuoteRightIcon />
                     </StyledRightQuoteContainer>
                   </StyledCVPageContentSlide>
                 );
@@ -477,11 +474,11 @@ export const PageCVContent = ({
         <p>
           Je suis accompagné{cv.user.candidat.gender === 1 && 'e'} dans ma
           recherche d&#8217;emploi et mon intégration en entreprise par le
-          projet LinkedOut. Pour plus d&#8217;information, contactez :
+          projet LinkedOut. Pour plus d&#8217;information, contactez :&nbsp;
+          <Link href="mailto:contact-linkedout@entourage.social">
+            contact-linkedout@entourage.social
+          </Link>
         </p>
-        <Link href="mailto:contact-linkedout@entourage.social">
-          contact-linkedout@entourage.social
-        </Link>
       </StyledCVPageContentFooter>
     </StyledCVPageContent>
   );

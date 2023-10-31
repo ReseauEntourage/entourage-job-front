@@ -1,8 +1,12 @@
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
+import BoltIcon from 'assets/icons/bolt.svg';
+import CarIcon from 'assets/icons/car.svg';
+import CreditCardIcon from 'assets/icons/credit-card.svg';
+import LinkIcon from 'assets/icons/link.svg';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
-import { ButtonIcon, Icon } from 'src/components/utils';
+import { ButtonIcon } from 'src/components/utils';
 import { useCopyToClipboard } from 'src/hooks';
 
 function translateCategory(isPublic, isRecommended, isExternal) {
@@ -20,7 +24,7 @@ function translateCategory(isPublic, isRecommended, isExternal) {
           <>
             {' '}
             recommandée&nbsp;
-            <Icon name="bolt" ratio={0.8} className="ent-color-amber" />
+            <BoltIcon className="ent-color-amber" />
           </>
         ) : (
           ''
@@ -52,13 +56,12 @@ export const ModalOfferInfo = ({
   return (
     <div className="uk-flex uk-flex-column">
       <div className="uk-flex uk-flex-middle">
-        <h3 className="uk-text-bold uk-margin-remove-bottom">{title}</h3>
+        <h3 className="uk-text-bold uk-margin-remove-bottom uk-margin-small-right">
+          {title}
+        </h3>
         <ButtonIcon
-          style={{ width: 30 }}
-          ratio={0.8}
-          className="uk-margin-small-left"
           tooltip="Copier le lien"
-          name="link"
+          icon={<LinkIcon />}
           onMouseLeave={() => {
             return setHasBeenCopied(false);
           }}
@@ -99,18 +102,14 @@ export const ModalOfferInfo = ({
             <div className="uk-flex uk-flex-column uk-flex-center">
               {salary && (
                 <div className="uk-flex uk-flex-middle">
-                  <Icon name="credit-card" className="uk-margin-small-right" />
+                  <CreditCardIcon className="uk-margin-small-right" />
                   {salary}
                 </div>
               )}
 
               {driversLicense && (
                 <div className="uk-flex uk-flex-middle">
-                  <Icon
-                    style={{ width: 20 }}
-                    name="car"
-                    className="uk-margin-small-right"
-                  />
+                  <CarIcon className="uk-margin-small-right" />
                   Permis requis
                 </div>
               )}

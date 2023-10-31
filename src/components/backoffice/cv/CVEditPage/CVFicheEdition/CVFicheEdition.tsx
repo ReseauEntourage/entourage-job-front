@@ -89,13 +89,9 @@ export const CVFicheEdition = ({
                 </h3>
               </div>
               <div className="uk-card-media-bottom">
-                <div className="uk-inline uk-width-expand">
+                <div className="uk-inline uk-width-expand uk-height-medium uk-width-expand uk-cover-container">
                   {previewUrl ? (
-                    <Img
-                      className="uk-height-medium uk-width-expand"
-                      src={previewUrl}
-                      alt="Preview"
-                    />
+                    <Img cover src={previewUrl} alt="Preview" />
                   ) : (
                     <div className="uk-height-medium uk-width-expand" />
                   )}

@@ -1,4 +1,5 @@
 import React from 'react';
+import PlusIcon from 'assets/icons/plus.svg';
 import { CVExperience, CVFormation } from 'src/api/types';
 import { formEditExperience } from 'src/components/forms/schemas/formEditExperience';
 import { formEditFormation } from 'src/components/forms/schemas/formEditFormation';
@@ -43,7 +44,7 @@ export const TimelineCard = ({
         {onAdd && remainingItems > 0 && (
           <ButtonIcon
             onClick={onAdd}
-            name="plus"
+            icon={<PlusIcon />}
             dataTestId={`button-cv-add-${type}`}
           />
         )}

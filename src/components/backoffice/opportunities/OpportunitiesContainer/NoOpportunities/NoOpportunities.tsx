@@ -1,4 +1,6 @@
 import React from 'react';
+import PlusIcon from 'assets/icons/plus.svg';
+import SearchIcon from 'assets/icons/search.svg';
 import {
   formatPlural,
   tabs,
@@ -8,7 +10,7 @@ import { useCandidateId } from 'src/components/backoffice/opportunities/useCandi
 import { openModal } from 'src/components/modals/Modal';
 import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
 import { Button } from 'src/components/utils';
-import { Icon } from 'src/components/utils/Icon';
+
 import {
   StyledButtonContainer,
   StyledContainer,
@@ -51,8 +53,8 @@ export const NoOpportunities = ({
             );
           }}
         >
-          <Icon name="plus" ratio="0.8" className="uk-margin-small-right" />
-          Ajouter une offre externe
+          <PlusIcon />
+          &nbsp; Ajouter une offre externe
         </Button>
         <Button
           style="custom-primary"
@@ -60,8 +62,8 @@ export const NoOpportunities = ({
           href={`/backoffice/candidat/${candidateId}/offres/public`}
           shallow
         >
-          <Icon name="search" ratio="0.8" className="uk-margin-small-right" />
-          Trouver des offres LinkedOut
+          <SearchIcon />
+          &nbsp; Trouver des offres LinkedOut
         </Button>
       </StyledButtonContainer>
     </StyledContainer>

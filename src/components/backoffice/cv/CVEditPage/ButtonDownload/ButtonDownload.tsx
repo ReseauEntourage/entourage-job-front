@@ -1,9 +1,10 @@
 import React from 'react';
+import DownloadIcon from 'assets/icons/download.svg';
 import { Api } from 'src/api';
 import { ButtonPost } from 'src/components/utils/Button/ButtonPost';
 import { gaEvent } from 'src/lib/gtag';
 
-interface ButtondowloadProps {
+interface ButtonDownloadProps {
   disabled?: boolean;
   candidateId: string;
   firstName: string;
@@ -19,7 +20,7 @@ export const ButtonDownload = ({
   lastName,
   tag,
   pdfGenerating,
-}: ButtondowloadProps) => {
+}: ButtonDownloadProps) => {
   return (
     <ButtonPost
       disabled={disabled || pdfGenerating}
@@ -28,7 +29,7 @@ export const ButtonDownload = ({
       text={
         pdfGenerating ? 'Génération du fichier PDF ...' : 'Télécharger le CV'
       }
-      icon={pdfGenerating ? null : 'download'}
+      icon={pdfGenerating ? null : <DownloadIcon />}
       action={async () => {
         if (tag) gaEvent(tag);
         try {

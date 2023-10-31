@@ -10,7 +10,7 @@ export const StyledHeaderBackOffice = styled.div`
     font-size: 14px;
   }
   hr {
-    opacity: 0.5;
+    opacity: 0.6;
   }
   .notif-container {
     padding: 12px;

@@ -65,14 +65,10 @@ export const Chapter = ({
           </div>
           {imgSrc && (
             <div
-              className="uk-flex uk-flex-center uk-flex-middle"
+              className="uk-height-large uk-flex uk-flex-center uk-flex-middle uk-box-shadow-medium uk-border-rounded uk-cover-container"
               data-uk-scrollspy="cls:uk-animation-fade; delay: 200;"
             >
-              <Img
-                src={imgSrc}
-                alt=""
-                className="uk-height-max-large uk-box-shadow-medium uk-border-rounded"
-              />
+              <Img src={imgSrc} cover alt="" />
             </div>
           )}
         </Grid>

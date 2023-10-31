@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { COLORS, HEIGHTS } from 'src/constants/styles';
 
 export const StyledNavbar = styled.nav`
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
@@ -16,6 +16,7 @@ export const StyledNavbar = styled.nav`
   display: flex;
   width: 100%;
   z-index: 1040;
+  height: ${HEIGHTS.HEADER}px;
 `;
 
 export const StyledCenterContainer = styled.div`

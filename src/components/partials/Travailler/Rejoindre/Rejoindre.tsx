@@ -1,8 +1,6 @@
-import Image from 'next/image';
 import React from 'react';
-import ImgSrc from 'public/static/img/travailler-rejoindre.jpg';
 import { StyledRejoindre } from 'src/components/partials/Travailler/Rejoindre/Rejoindre.styles';
-import { Section, Button } from 'src/components/utils';
+import { Section, Button, Img } from 'src/components/utils';
 import { H2, H6 } from 'src/components/utils/Headings';
 import { BulletListElement as BulletList } from 'src/components/utils/Lists';
 
@@ -51,11 +49,9 @@ export const Rejoindre = ({ cta }: { cta: (label: string) => void }) => {
           </Button>
         </div>
         <div className="image-container">
-          <Image
-            src={ImgSrc}
-            layout="fill"
-            objectFit="cover"
-            objectPosition="top"
+          <Img
+            src="/static/img/travailler-rejoindre.jpg"
+            cover
             alt="Communauté LinkedOut au départ de la route du rhum"
           />
         </div>

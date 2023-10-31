@@ -1,11 +1,12 @@
 import React from 'react';
 import UIkit from 'uikit';
 
+import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { Api } from 'src/api';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { formGetEmail } from 'src/components/forms/schemas/formGetEmail';
 import { StepperModal } from 'src/components/modals/Modal/ModalGeneric/StepperModal';
-import { Button, Img, Icon } from 'src/components/utils';
+import { Button, Img } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
@@ -59,7 +60,8 @@ export const ModalShareCV = ({ firstName }: ModalShareCVProps) => {
               </p>
               <div className="uk-flex uk-flex-center">
                 <Img
-                  className="uk-height-max-small uk-margin-medium-top"
+                  height={150}
+                  width={150}
                   src="/static/img/logo-entourage.png"
                   alt="Logo Entourage"
                 />
@@ -76,7 +78,7 @@ export const ModalShareCV = ({ firstName }: ModalShareCVProps) => {
                   style="primary"
                 >
                   En savoir plus&nbsp;
-                  <Icon name="chevron-right" />
+                  <ChevronRightIcon />
                 </Button>
               </div>
 

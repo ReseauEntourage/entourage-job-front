@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Grid, Icon } from 'src/components/utils';
+import { Grid } from 'src/components/utils';
 
 export const OfferInfoContainer = ({ icon, title, children }) => {
   if (!children) {
@@ -11,7 +11,7 @@ export const OfferInfoContainer = ({ icon, title, children }) => {
 
   return (
     <Grid gap="small" eachWidths={['auto', 'expand']}>
-      {icon ? <Icon name={icon} /> : <div className="uk-margin-left" />}
+      {icon || <div className="uk-margin-left" />}
       <div>
         {title ? <span className="uk-text-bold">{title}</span> : undefined}
         <Grid gap="collapse" childWidths={['1-1']}>
@@ -23,7 +23,7 @@ export const OfferInfoContainer = ({ icon, title, children }) => {
 };
 
 OfferInfoContainer.propTypes = {
-  icon: PropTypes.string,
+  icon: PropTypes.element,
   title: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.element,

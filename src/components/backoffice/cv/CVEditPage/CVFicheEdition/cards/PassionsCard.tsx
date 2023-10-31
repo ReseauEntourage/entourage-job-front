@@ -1,8 +1,9 @@
 import React from 'react';
+import PencilIcon from 'assets/icons/pencil.svg';
 import { formEditPassions } from 'src/components/forms/schemas/formEditPassions';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { Grid, ButtonIcon, Icon } from 'src/components/utils';
+import { Grid, ButtonIcon } from 'src/components/utils';
 
 interface Passion {
   name: string;
@@ -18,16 +19,11 @@ export const PassionsCard = ({ list, onChange }: PassionProps) => {
     <div className="uk-card uk-card-default uk-card-body">
       <Grid gap="small" between eachWidths={['expand', 'auto']}>
         <h3 className="uk-card-title">
-          {!onChange && (
-            <span className="uk-margin-small-right">
-              <Icon name="heart" />
-            </span>
-          )}
           Mes <span className="uk-text-primary">passions</span>
         </h3>
         {onChange && (
           <ButtonIcon
-            name="pencil"
+            icon={<PencilIcon />}
             onClick={() => {
               openModal(
                 <ModalEdit

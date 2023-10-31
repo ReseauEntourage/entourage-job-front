@@ -1,4 +1,3 @@
-import { StaticImageData } from 'next/image';
 import React from 'react';
 import { StyledImageTitle } from 'src/components/partials/ImageTitleNew/ImageTitle.styles';
 import { Container, Button, BackgroundImage } from 'src/components/utils';
@@ -6,6 +5,24 @@ import { H1 } from 'src/components/utils/Headings';
 import { UIKIT_BUTTON_STYLES_SPEC } from 'src/components/variables';
 import { useIsDesktop } from 'src/hooks/utils';
 
+interface CTAProps {
+  onClick: () => void;
+  label: string;
+  href?: string;
+  className: UIKIT_BUTTON_STYLES_SPEC;
+  isExternal?: boolean;
+  newTab?: boolean;
+  dataTest: string;
+}
+
+interface ImageTitleProps {
+  title: string;
+  description: string;
+  img: string;
+  imgMobile?: string;
+  alt?: string;
+  cta?: CTAProps | CTAProps[];
+}
 export const ImageTitle = ({
   title,
   description,
@@ -13,22 +30,7 @@ export const ImageTitle = ({
   imgMobile,
   alt,
   cta,
-}: {
-  title: string;
-  description: string;
-  img: StaticImageData;
-  imgMobile?: StaticImageData;
-  alt?: string;
-  cta?: {
-    onClick: () => void;
-    label: string;
-    href: string;
-    className: UIKIT_BUTTON_STYLES_SPEC;
-    isExternal: boolean;
-    newTab: boolean;
-    dataTest: string;
-  };
-}) => {
+}: ImageTitleProps) => {
   const isDesktop = useIsDesktop();
 
   return (
@@ -49,7 +51,7 @@ export const ImageTitle = ({
           <p data-uk-scrollspy="cls: uk-animation-slide-left uk-animation-fade; delay: 200;">
             {description}
           </p>
-          {cta && (
+          {cta && !Array.isArray(cta) && (
             <Button
               style={cta.className}
               onClick={cta.onClick}
@@ -58,6 +60,21 @@ export const ImageTitle = ({
               {cta.label}
             </Button>
           )}
+          {cta &&
+            Array.isArray(cta) &&
+            cta.length > 0 &&
+            cta.map(({ label, className, dataTest, onClick }, index) => {
+              return (
+                <Button
+                  key={index.toString()}
+                  style={className}
+                  onClick={onClick}
+                  dataTestId={dataTest}
+                >
+                  {label}
+                </Button>
+              );
+            })}
         </StyledImageTitle>
       </Container>
     </BackgroundImage>

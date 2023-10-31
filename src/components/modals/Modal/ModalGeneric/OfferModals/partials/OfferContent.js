@@ -1,5 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import CheckIcon from 'assets/icons/check.svg';
+import LanguageIcon from 'assets/icons/language.svg';
+import LinkIcon from 'assets/icons/link.svg';
+import MoreIcon from 'assets/icons/more.svg';
 import { OfferInfoContainer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferInfoContainer';
 import { Button, Grid, SimpleLink } from 'src/components/utils';
 import { BUSINESS_LINES } from 'src/constants';
@@ -9,30 +13,39 @@ export const OfferContent = ({ offer }) => {
   return (
     <Grid gap="medium" childWidths={['1-1']}>
       {offer.companyDescription && (
-        <OfferInfoContainer icon="comment" title="Description de l'entreprise">
+        <OfferInfoContainer
+          icon={<LanguageIcon />}
+          title="Description de l'entreprise"
+        >
           <div>{formatParagraph(offer.companyDescription)}</div>
         </OfferInfoContainer>
       )}
-      <OfferInfoContainer icon="comment" title="Description de l'offre">
+      <OfferInfoContainer
+        icon={<LanguageIcon />}
+        title="Description de l'offre"
+      >
         <div>{formatParagraph(offer.description)}</div>
       </OfferInfoContainer>
       {offer.skills && (
-        <OfferInfoContainer icon="check" title="Compétences importantes">
+        <OfferInfoContainer
+          icon={<CheckIcon />}
+          title="Compétences importantes"
+        >
           <div>{formatParagraph(offer.skills)}</div>
         </OfferInfoContainer>
       )}
       {offer.prerequisites && (
-        <OfferInfoContainer icon="check" title="Pré-requis">
+        <OfferInfoContainer icon={<CheckIcon />} title="Pré-requis">
           <div>{formatParagraph(offer.prerequisites)}</div>
         </OfferInfoContainer>
       )}
       {offer.otherInfo && (
-        <OfferInfoContainer icon="more" title="Autres précisions">
+        <OfferInfoContainer icon={<MoreIcon />} title="Autres précisions">
           <div>{formatParagraph(offer.otherInfo)}</div>
         </OfferInfoContainer>
       )}
       {offer.link && (
-        <OfferInfoContainer icon="link" title="Lien">
+        <OfferInfoContainer icon={<LinkIcon />} title="Lien">
           <div>
             <SimpleLink
               isExternal

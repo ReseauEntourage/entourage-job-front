@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-import CalendarIcon from 'assets/custom/icons/calendar.svg';
-import CarIcon from 'assets/custom/icons/car.svg';
-import DocumentIcon from 'assets/custom/icons/document.svg';
-import LanguageIcon from 'assets/custom/icons/language.svg';
-import QuoteLeftIcon from 'assets/custom/icons/quote-left.svg';
-import QuoteRightIcon from 'assets/custom/icons/quote-right.svg';
+import CalendarIcon from 'assets/icons/calendar.svg';
+import CarIcon from 'assets/icons/car.svg';
+import DocumentIcon from 'assets/icons/document.svg';
+import LanguageIcon from 'assets/icons/language.svg';
+import QuoteLeftIcon from 'assets/icons/quote-left.svg';
+import QuoteRightIcon from 'assets/icons/quote-right.svg';
 import { CV, CVExperience, CVFormation } from 'src/api/types';
 import { CVCareerPathSentenceNew } from 'src/components/cv/CVCareerPathSentence';
 import {
@@ -103,9 +103,9 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
               <CVProfilePicturePDF urlImg={cv.urlImg} />
               {cv.catchphrase && (
                 <StyledCVPDFQuote>
-                  <QuoteLeftIcon viewBox="0 0 10 8" />
+                  <QuoteLeftIcon />
                   <span>{cv.catchphrase}</span>
-                  <QuoteRightIcon viewBox="0 0 10 8" />
+                  <QuoteRightIcon />
                 </StyledCVPDFQuote>
               )}
             </StyledCVPDFProfilePictureContainer>
@@ -158,8 +158,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                 <li>
                   <div>
                     <p className="subtitle">
-                      <DocumentIcon viewBox="0 0 6 8" />{' '}
-                      <span>Type de contrat</span>
+                      <DocumentIcon /> <span>Type de contrat</span>
                     </p>
                     <p className="content">
                       {cv.contracts
@@ -175,8 +174,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                 <li>
                   <div>
                     <p className="subtitle">
-                      <CalendarIcon viewBox="0 0 6 6" />{' '}
-                      <span>Disponibilité</span>
+                      <CalendarIcon /> <span>Disponibilité</span>
                     </p>
                     <p className="content">{cv.availability}</p>
                   </div>
@@ -186,7 +184,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                 <li>
                   <div>
                     <p className="subtitle">
-                      <LanguageIcon viewBox="0 0 6 6" /> <span>Langues</span>
+                      <LanguageIcon /> <span>Langues</span>
                     </p>
                     <p className="content">
                       {cv.languages
@@ -202,7 +200,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                 <li>
                   <div>
                     <p className="subtitle">
-                      <CarIcon viewBox="0 0 6 6" /> <span>Mobilité</span>
+                      <CarIcon /> <span>Mobilité</span>
                     </p>
                     <p className="content">{cv.transport}</p>
                   </div>

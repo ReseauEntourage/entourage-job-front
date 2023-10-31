@@ -1,7 +1,8 @@
 import React from 'react';
 
+import PencilIcon from 'assets/icons/pencil.svg';
 import { openModal } from 'src/components/modals/Modal';
-import { Button, Icon } from 'src/components/utils';
+import { ButtonIcon } from 'src/components/utils';
 import { TdMobile, TrMobile } from 'src/components/utils/Table';
 import { EditOrganizationModal } from './EditOrganizationModal';
 import { OrganizationProps } from './Organization.types';
@@ -19,8 +20,8 @@ export function OrganizationMobile({
             name={organization.name}
             address={organization.address}
           />
-          <Button
-            style="custom-text"
+          <ButtonIcon
+            icon={<PencilIcon />}
             dataTestId={`button-edit-organization-${organization.id}`}
             onClick={() => {
               openModal(
@@ -30,9 +31,7 @@ export function OrganizationMobile({
                 />
               );
             }}
-          >
-            <Icon name="pencil" />
-          </Button>
+          />
         </TdMobile>
       </div>
       <div className="line">

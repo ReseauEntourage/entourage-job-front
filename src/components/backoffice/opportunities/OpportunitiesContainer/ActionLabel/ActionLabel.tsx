@@ -17,7 +17,6 @@ interface ActionLabelProps {
   label: string;
   disabled?: boolean;
   hoverAnimation?: boolean;
-  fill?: boolean;
   onClick?: () => void;
   id?: string;
 }
@@ -30,11 +29,9 @@ export const ActionLabel = ({
   id = '',
   disabled = false,
   hoverAnimation = false,
-  fill = false,
 }: ActionLabelProps) => {
   return (
     <StyledContainer
-      fill={fill}
       color={color}
       disabled={disabled}
       hoverAnimation={hoverAnimation}

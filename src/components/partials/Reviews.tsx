@@ -4,11 +4,11 @@ import { Img, Section, Grid } from 'src/components/utils';
 interface ReviewsProps {
   reviews: {
     author: string;
-    authorStatus: string;
-    company: string;
-    industry: string;
-    companyInfo: string;
-    review: string;
+    authorStatus?: string;
+    company?: string;
+    industry?: string;
+    companyInfo?: string;
+    review: string | JSX.Element;
     image: string;
   }[];
   title: string | JSX.Element | JSX.Element[];
@@ -64,7 +64,9 @@ export const Reviews = ({ reviews, title }: ReviewsProps) => {
                           </p>
                         )}
                         <p className="uk-text-meta uk-margin-remove uk-text-italic">
-                          <span className="uk-text-bold">{company}</span>
+                          {company && (
+                            <span className="uk-text-bold">{company}</span>
+                          )}
                           {industry && <span>,&nbsp;{industry}</span>}
                           {companyInfo && (
                             <>

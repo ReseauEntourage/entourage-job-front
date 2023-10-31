@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button, Icon } from 'src/components/utils';
+import ChevronRightIcon from 'assets/icons/chevron-right.svg';
+import { Button } from 'src/components/utils';
 import { addPrefix } from 'src/utils';
 
 export const ImageTitleContent = ({ title, text, img, cta }) => {
@@ -42,7 +43,7 @@ export const ImageTitleContent = ({ title, text, img, cta }) => {
                   dataTestId={cta.dataTest}
                 >
                   {cta.label}&nbsp;
-                  <Icon name="chevron-right" />
+                  <ChevronRightIcon />
                 </Button>
               </div>
             )}

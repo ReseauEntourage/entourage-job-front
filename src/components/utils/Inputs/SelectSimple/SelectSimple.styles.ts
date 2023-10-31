@@ -19,10 +19,8 @@ export const StyledSelectContainer = styled.div`
       &:hover {
         cursor: pointer;
       }
-      span {
+      svg {
         float: right;
-        height: 18px;
-        width: 18px;
         color: ${COLORS.primaryOrange};
       }
     }

@@ -15,7 +15,12 @@ export function TaxModal() {
     >
       <SimpleLink href={EXTERNAL_LINKS.TAX} isExternal target="_blank">
         <Container>
-          <Img src="static/img/tax.jpg" alt="Taxe d'apprentissage" />
+          <Img
+            src="/static/img/tax.jpg"
+            width={1080}
+            height={1080}
+            alt="Taxe d'apprentissage"
+          />
         </Container>
       </SimpleLink>
     </ModalGeneric>

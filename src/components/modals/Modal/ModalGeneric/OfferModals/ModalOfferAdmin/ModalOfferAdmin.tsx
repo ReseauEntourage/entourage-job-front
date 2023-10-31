@@ -1,6 +1,20 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import UIkit from 'uikit';
+import ArchiveIcon from 'assets/icons/archive.svg';
+import BoltIcon from 'assets/icons/bolt.svg';
+import CaretDownIcon from 'assets/icons/caret-down.svg';
+import CopyIcon from 'assets/icons/copy.svg';
+import EmailIcon from 'assets/icons/email.svg';
+import HomeIcon from 'assets/icons/home.svg';
+import LanguageIcon from 'assets/icons/language.svg';
+import LocationIcon from 'assets/icons/location.svg';
+import PencilIcon from 'assets/icons/pencil.svg';
+import PhoneIcon from 'assets/icons/phone.svg';
+import SearchIcon from 'assets/icons/search.svg';
+import StarIcon from 'assets/icons/star.svg';
+import UserIcon from 'assets/icons/user.svg';
+
 import { Api } from 'src/api';
 import { ExternalOpportunityDto, OpportunityDto } from 'src/api/types';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
@@ -13,14 +27,7 @@ import { List } from 'src/components/modals/Modal/ModalGeneric/OfferModals/parti
 import { OfferContent } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferContent';
 import { OfferInfoContainer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferInfoContainer';
 import { useModalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/useModalOffer';
-import {
-  Button,
-  Grid,
-  SimpleLink,
-  ButtonIcon,
-  Icon,
-} from 'src/components/utils';
-
+import { Button, Grid, SimpleLink, ButtonIcon } from 'src/components/utils';
 import {
   BUSINESS_LINES,
   EXTERNAL_OFFERS_ORIGINS,
@@ -287,7 +294,7 @@ export const ModalOfferAdmin = ({
             </div>
             <List className="uk-iconnav uk-flex-right uk-flex uk-flex-middle">
               <ButtonIcon
-                name="pencil"
+                icon={<PencilIcon />}
                 tooltip="Modifier l'offre"
                 onClick={() => {
                   setIsEditing(true);
@@ -295,7 +302,7 @@ export const ModalOfferAdmin = ({
               />
               {!offer.isExternal && (
                 <ButtonIcon
-                  name="copy"
+                  icon={<CopyIcon />}
                   tooltip="Dupliquer l'offre"
                   onClick={() => {
                     duplicateOffer(onClose);
@@ -304,8 +311,13 @@ export const ModalOfferAdmin = ({
               )}
               {(offer.isValidated || offer.isArchived || !offer.isExternal) && (
                 <ButtonIcon
-                  name="archive"
-                  className={offer.isArchived ? 'ent-color-amber' : undefined}
+                  icon={
+                    <ArchiveIcon
+                      className={
+                        offer.isArchived ? 'ent-color-amber' : undefined
+                      }
+                    />
+                  }
                   tooltip="Archiver l'offre"
                   onClick={async () => {
                     await updateOpportunity({
@@ -321,7 +333,7 @@ export const ModalOfferAdmin = ({
         {offer.message && (
           <>
             <Grid>
-              <OfferInfoContainer icon="commenting">
+              <OfferInfoContainer icon={<LanguageIcon />}>
                 <div>{formatParagraph(offer.message)}</div>
               </OfferInfoContainer>
             </Grid>
@@ -330,12 +342,12 @@ export const ModalOfferAdmin = ({
         )}
         <Grid className="uk-margin-bottom" eachWidths={['1-3@s', '2-3@s']}>
           <Grid column gap="medium">
-            <OfferInfoContainer icon="home" title="Entreprise">
+            <OfferInfoContainer icon={<HomeIcon />} title="Entreprise">
               {offer.company}
             </OfferInfoContainer>
             {!offer.isExternal && (
               <OfferInfoContainer
-                icon="user"
+                icon={<UserIcon />}
                 title={isInternalContact ? 'Personne à contacter' : 'Recruteur'}
               >
                 {(offer.recruiterFirstName || offer.recruiterName) && (
@@ -362,7 +374,7 @@ export const ModalOfferAdmin = ({
                       {offer.recruiterMail}
                       &nbsp;
                     </span>
-                    <Icon name="mail" ratio={0.8} />
+                    <EmailIcon />
                   </SimpleLink>
                 )}
                 {offer.recruiterPhone && (
@@ -375,13 +387,13 @@ export const ModalOfferAdmin = ({
                       {offer.recruiterPhone}
                       &nbsp;
                     </span>
-                    <Icon name="phone" ratio={0.8} />
+                    <PhoneIcon />{' '}
                   </SimpleLink>
                 )}
               </OfferInfoContainer>
             )}
             {offer.contactMail && (
-              <OfferInfoContainer icon="mail" title="Mail de contact">
+              <OfferInfoContainer icon={<EmailIcon />} title="Mail de contact">
                 <SimpleLink
                   href={`mailto:${offer.contactMail}`}
                   className="uk-text-muted uk-flex uk-flex-middle"
@@ -392,11 +404,17 @@ export const ModalOfferAdmin = ({
                 </SimpleLink>
               </OfferInfoContainer>
             )}
-            <OfferInfoContainer icon="location" title={offer.department}>
+            <OfferInfoContainer
+              icon={<LocationIcon />}
+              title={offer.department}
+            >
               {offer.address && <span>{offer.address}</span>}
             </OfferInfoContainer>
             {offer.externalOrigin && (
-              <OfferInfoContainer icon="search" title="Origine de l'offre">
+              <OfferInfoContainer
+                icon={<SearchIcon />}
+                title="Origine de l'offre"
+              >
                 <div>
                   {
                     EXTERNAL_OFFERS_ORIGINS.find((origin) => {
@@ -408,7 +426,7 @@ export const ModalOfferAdmin = ({
             )}
             {offer.opportunityUsers && (
               <OfferInfoContainer
-                icon="users"
+                icon={<UserIcon />}
                 title={offer.isPublic ? 'Statut pour' : 'Candidat(s) lié(s)'}
               >
                 <div className="uk-height-max-medium uk-overflow-auto">
@@ -441,25 +459,13 @@ export const ModalOfferAdmin = ({
                               </span>
                               <div className="uk-flex-right">
                                 {oppUser.bookmarked && (
-                                  <Icon
-                                    name="star"
-                                    ratio={0.8}
-                                    className="ent-color-amber"
-                                  />
+                                  <StarIcon className="ent-color-amber" />
                                 )}
                                 {oppUser.archived && (
-                                  <Icon
-                                    name="archive"
-                                    ratio={0.8}
-                                    className="ent-color-amber"
-                                  />
+                                  <ArchiveIcon className="ent-color-amber" />
                                 )}
                                 {offer.isPublic && oppUser.recommended && (
-                                  <Icon
-                                    name="bolt"
-                                    ratio={0.8}
-                                    className="ent-color-amber"
-                                  />
+                                  <BoltIcon className="ent-color-amber" />
                                 )}
                               </div>
                             </SimpleLink>
@@ -493,8 +499,7 @@ export const ModalOfferAdmin = ({
                                 >
                                   {offerStatus.label}
                                 </span>
-                                <Icon
-                                  ratio={0.8}
+                                <CaretDownIcon
                                   className="uk-margin-small-left uk-text-muted"
                                   name="triangle-down"
                                 />

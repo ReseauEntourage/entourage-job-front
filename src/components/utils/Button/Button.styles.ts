@@ -21,10 +21,6 @@ export const StyledButton = styled.button`
   justify-content: center;
   padding: 11px 20px !important;
 
-  > svg {
-    margin-right: 8px;
-  }
-
   &:hover {
     transition: 0.2s ease-in-out;
   }
@@ -67,11 +63,11 @@ export const StyledButton = styled.button`
       return COLORS[props.color] || COLORS.primaryOrange;
     }} !important;
 
-    path {
+    /*    path {
       fill: ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
-      }} !important;
-    }
+      return COLORS[props.color] || COLORS.primaryOrange;
+    }} !important;
+    } */
 
     border-radius: 5px;
 

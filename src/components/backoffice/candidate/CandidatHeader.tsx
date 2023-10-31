@@ -1,9 +1,11 @@
 import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
+import LinkIcon from 'assets/icons/link.svg';
+import UserIcon from 'assets/icons/user.svg';
 import { UserWithUserCandidate } from 'src/api/types';
 import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
-import { ImgProfile } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
-import { Grid, SimpleLink, Icon } from 'src/components/utils';
+import { Grid, SimpleLink } from 'src/components/utils';
+import { ImgProfile } from 'src/components/utils/ImgProfile';
 import { USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils/Finding';
 
@@ -58,15 +60,17 @@ export const CandidatHeader = ({
           {relatedUser && (
             <>
               <Grid row gap="small" middle className="uk-margin-small-top">
-                <Icon name="user" style={{ width: 20 }} />
+                <UserIcon />
+                &nbsp;
                 <span className="uk-text-italic">
                   {relatedUser.firstName} {relatedUser.lastName}
                 </span>
               </Grid>
               <Grid row gap="small" middle className="uk-margin-small-top">
-                <Icon name="link" style={{ width: 20 }} />
+                <LinkIcon />
+                &nbsp;
                 <SimpleLink
-                  className="uk-link-text uk-margin-small-top"
+                  className="uk-link-text"
                   target="_blank"
                   href={`/cv/${candidateCVUrl}`}
                 >

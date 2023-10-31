@@ -1,13 +1,16 @@
 import React from 'react';
-import CheckIcon from 'assets/custom/icons/check.svg';
-import CalendarIcon from 'assets/custom/icons/linkedout-calendar.svg';
-import MailIcon from 'assets/custom/icons/linkedout-mail.svg';
-import TrashIcon from 'assets/custom/icons/linkedout-trash.svg';
+import styled from 'styled-components';
+import CalendarIcon from 'assets/icons/calendar.svg';
+import CheckIcon from 'assets/icons/check.svg';
+import EmailIcon from 'assets/icons/email.svg';
+import TrashIcon from 'assets/icons/trash.svg';
 
-const MailIconProps = { width: 17, height: 15, viewBox: '0 -2 15 17' };
-const TrashIconProps = { width: 13, height: 15, viewBox: '0 0 13 15' };
-const CalendarIconProps = { width: 15, height: 15, viewBox: '0 0 15 18' };
-const CheckIconProps = { width: 22, height: 15, viewBox: '0 0 26 18' };
+const StyledButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  justify-content: center;
+`;
 
 export const allCTAs = {
   apply: {
@@ -15,10 +18,10 @@ export const allCTAs = {
     className: 'custom-primary-inverted',
     action: 'contactEmail',
     text: (
-      <>
-        <MailIcon {...MailIconProps} />
-        Je postule
-      </>
+      <StyledButtonContainer>
+        <EmailIcon />
+        &nbsp;Je postule
+      </StyledButtonContainer>
     ),
   },
   applied: {
@@ -26,10 +29,10 @@ export const allCTAs = {
     className: 'custom-primary-inverted',
     action: 'updateToApplied',
     text: (
-      <>
-        <MailIcon {...MailIconProps} />
-        J&apos;ai déjà postulé
-      </>
+      <StyledButtonContainer>
+        <EmailIcon />
+        &nbsp;J&apos;ai déjà postulé
+      </StyledButtonContainer>
     ),
   },
   notInterested: {
@@ -37,10 +40,10 @@ export const allCTAs = {
     className: 'custom-primary-inverted',
     action: 'archive',
     text: (
-      <>
-        <TrashIcon {...TrashIconProps} />
-        Je ne suis pas intéressé
-      </>
+      <StyledButtonContainer>
+        <TrashIcon />
+        &nbsp;Je ne suis pas intéressé
+      </StyledButtonContainer>
     ),
   },
   resend: {
@@ -48,10 +51,10 @@ export const allCTAs = {
     className: 'custom-primary-inverted',
     action: 'contactRelance',
     text: (
-      <>
-        <MailIcon {...MailIconProps} />
-        Je veux relancer l&apos;entreprise
-      </>
+      <StyledButtonContainer>
+        <EmailIcon />
+        &nbsp;Je veux relancer l&apos;entreprise
+      </StyledButtonContainer>
     ),
   },
   gotInterview: {
@@ -59,10 +62,10 @@ export const allCTAs = {
     className: 'custom-primary-inverted',
     action: 'updateToInterview',
     text: (
-      <>
-        <CheckIcon {...CheckIconProps} />
-        J&apos;ai décroché un entretien
-      </>
+      <StyledButtonContainer>
+        <CheckIcon />
+        &nbsp;J&apos;ai décroché un entretien
+      </StyledButtonContainer>
     ),
   },
   abandon: {
@@ -70,10 +73,10 @@ export const allCTAs = {
     className: 'custom-primary-inverted',
     action: 'abandon',
     text: (
-      <>
-        <TrashIcon {...TrashIconProps} />
-        J&apos;abandonne cette offre
-      </>
+      <StyledButtonContainer>
+        <TrashIcon />
+        &nbsp;J&apos;abandonne cette offre
+      </StyledButtonContainer>
     ),
   },
   dateInterview: {
@@ -81,10 +84,10 @@ export const allCTAs = {
     className: 'custom-primary-inverted',
     action: 'addDateInterview',
     text: (
-      <>
-        <CalendarIcon {...CalendarIconProps} />
-        Je note une date d&apos;entretien
-      </>
+      <StyledButtonContainer>
+        <CalendarIcon />
+        &nbsp;Je note une date d&apos;entretien
+      </StyledButtonContainer>
     ),
   },
   gotJob: {
@@ -92,10 +95,10 @@ export const allCTAs = {
     className: 'custom-primary-inverted',
     action: 'updateToHired',
     text: (
-      <>
-        <CheckIcon {...CheckIconProps} />
-        J&apos;ai décroché le job
-      </>
+      <StyledButtonContainer>
+        <CheckIcon />
+        &nbsp;J&apos;ai décroché le job
+      </StyledButtonContainer>
     ),
   },
   dateBegin: {
@@ -103,10 +106,10 @@ export const allCTAs = {
     className: 'custom-primary-inverted',
     action: 'addDateHired',
     text: (
-      <>
-        <CalendarIcon {...CalendarIconProps} />
-        Je note ma date d&apos;embauche
-      </>
+      <StyledButtonContainer>
+        <CalendarIcon />
+        &nbsp;Je note ma date d&apos;embauche
+      </StyledButtonContainer>
     ),
   },
   trialValidated: {

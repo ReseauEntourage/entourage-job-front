@@ -1,6 +1,7 @@
 import React from 'react';
+import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { UIKIT_BUTTON_SIZES } from '../variables';
-import { Button, Img, Grid, Icon } from 'src/components/utils';
+import { Button, Img, Grid } from 'src/components/utils';
 
 interface MultipleCTAProps {
   showNumbers?: boolean;
@@ -57,10 +58,9 @@ export const MultipleCTA = ({
                 <div className="uk-flex uk-flex-bottom uk-flex-center uk-margin-small-bottom">
                   <Img
                     src={item.img}
-                    width=""
-                    height=""
-                    alt=""
-                    className="uk-height-max-small uk-padding-small"
+                    alt={item.title}
+                    height={150}
+                    width={260}
                   />
                 </div>
               )}
@@ -124,7 +124,7 @@ export const MultipleCTA = ({
                       >
                         {item.button.label}
                         &nbsp;
-                        <Icon name="chevron-right" />
+                        <ChevronRightIcon />
                       </Button>
                     </div>
                   )}

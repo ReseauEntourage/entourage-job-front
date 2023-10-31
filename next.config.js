@@ -95,7 +95,24 @@ module.exports = withLess({
 
     config.module.rules.push({
       test: /\.svg$/,
-      use: ['@svgr/webpack'],
+      use: [{
+        loader: '@svgr/webpack',
+        options: {
+          svgoConfig: {
+            plugins: [
+              {
+                name: 'preset-default',
+                params: {
+                  overrides: {
+                    // disable plugins
+                    removeViewBox: false,
+                  },
+                },
+              },
+            ],
+          },
+        }
+      }],
     });
 
     if (!options.isServer) {
@@ -133,6 +150,28 @@ module.exports = withLess({
     return config;
   },
   assetPrefix: !dev ? process.env.CDN_URL || undefined : undefined,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: process.env.CDN_URL.replace('https://', ''),
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: process.env.AWSS3_CDN_URL.replace('https://', ''),
+        port: '',
+        pathname: '/images/**',
+      },
+      {
+        protocol: 'https',
+        hostname: process.env.AWSS3_URL.replace('https://', ''),
+        port: '',
+        pathname: '/images/**',
+      },
+    ],
+  },
   async redirects() {
     return [
       {

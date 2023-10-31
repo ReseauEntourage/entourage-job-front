@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import SearchIcon from 'assets/icons/search.svg';
 import { FiltersCheckboxes } from 'src/components/filters/FiltersCheckboxes';
 import { FiltersDropdowns } from 'src/components/filters/FiltersDropdowns';
 import { FiltersMobile } from 'src/components/filters/FiltersMobile';
 import { FiltersOptions } from 'src/components/filters/FiltersOptions';
 import { FiltersSideBar } from 'src/components/filters/FiltersSideBar';
-import { Icon } from 'src/components/utils';
+import {} from 'src/components/utils';
 import {
   CV_FILTERS_DATA,
   MEMBER_FILTERS_DATA,
@@ -14,7 +15,6 @@ import {
 import { HEIGHTS } from 'src/constants/styles';
 import { gaEvent } from 'src/lib/gtag';
 import { AnyToFix } from 'src/utils/Types';
-
 // to be typed
 
 interface SearchBarProps {
@@ -111,7 +111,7 @@ export const SearchBar = ({
           className="ent-search-icon uk-background-primary uk-light"
           onClick={startSearch}
         >
-          <Icon name="search" className="uk-text-secondary" />
+          <SearchIcon className="uk-text-secondary" />
         </a>
       </div>
       <FiltersSideBar

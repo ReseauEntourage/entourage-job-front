@@ -2,7 +2,16 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { Grid, Icon } from 'src/components/utils';
+import ArchiveIcon from 'assets/icons/archive.svg';
+import BoltIcon from 'assets/icons/bolt.svg';
+import CalendarIcon from 'assets/icons/calendar.svg';
+import CheckIcon from 'assets/icons/check.svg';
+import HomeIcon from 'assets/icons/home.svg';
+import InfoIcon from 'assets/icons/info.svg';
+import LocationIcon from 'assets/icons/location.svg';
+import StarIcon from 'assets/icons/star.svg';
+import UserIcon from 'assets/icons/user.svg';
+import { Grid } from 'src/components/utils';
 import { OFFER_STATUS } from 'src/constants';
 import { findOfferStatus } from 'src/utils';
 
@@ -72,7 +81,7 @@ export const OfferCard = ({
           {shouldShowRecommandationBadge ? (
             <>
               R e c o&nbsp;
-              <Icon name="bolt" ratio={0.5} className="ent-color-amber" />
+              <BoltIcon width={6} height={6} className="ent-color-amber" />
             </>
           ) : (
             ''
@@ -89,40 +98,32 @@ export const OfferCard = ({
           <div className="uk-flex uk-flex-right uk-flex-top">
             {' '}
             {(specificOpportunityUser?.bookmarked || bookmarked) && (
-              <Icon
-                name="star"
-                className="ent-color-amber uk-margin-small-left"
-                ratio={0.8}
-              />
+              <StarIcon className="ent-color-amber uk-margin-small-left" />
             )}
             {(specificOpportunityUser?.archived || (!isAdmin && archived)) && (
-              <Icon
-                name="archive"
-                className="ent-color-amber uk-margin-small-left"
-                ratio={0.8}
-              />
+              <ArchiveIcon className="ent-color-amber uk-margin-small-left" />
             )}
           </div>
         </div>
         <Grid gap="small" middle eachWidths={['auto', 'expand']}>
-          <Icon name="world" />
+          <HomeIcon width={20} />
           <p>{shortDescription}</p>
         </Grid>
         {department && (
           <Grid gap="small" middle eachWidths={['auto', 'expand']}>
-            <Icon name="location" />
+            <LocationIcon width={20} />
             <p>{department}</p>
           </Grid>
         )}
         {isAdmin && from && (
           <Grid gap="small" middle eachWidths={['auto', 'expand']}>
-            <Icon name="user" />
+            <UserIcon width={20} />
             <p>{from}</p>
           </Grid>
         )}
 
         <Grid gap="small" middle eachWidths={['auto', 'expand']}>
-          <Icon name="info" />
+          <InfoIcon width={20} />
           <div>
             {isPublic ? (
               <div>
@@ -171,7 +172,7 @@ export const OfferCard = ({
         </Grid>
         {date && (
           <Grid gap="small" middle eachWidths={['auto', 'expand']}>
-            <Icon name="linkedout-calendar" />
+            <CalendarIcon width={20} />
             <p>{moment(date).format('DD/MM/YYYY')}</p>
           </Grid>
         )}
@@ -183,7 +184,7 @@ export const OfferCard = ({
               (isValidated ? (
                 <div className="uk-flex uk-flex-middle">
                   Publiée&nbsp;
-                  <Icon name="check" />
+                  <CheckIcon />
                 </div>
               ) : (
                 <div className="uk-flex uk-flex-middle uk-text-warning">

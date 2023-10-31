@@ -2,6 +2,7 @@ import Router from 'next/router';
 import Pusher from 'pusher-js';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import UIkit from 'uikit';
+import QuestionIcon from 'assets/icons/question.svg';
 import { Api } from 'src/api';
 import { CV, User } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
@@ -78,7 +79,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
   useEffect(() => {
     if (cv && cv !== prevCV) {
       if (!cvVersion) setCvVersion(cv.version);
-      setImageUrl(`${process.env.AWSS3_URL}${cv.urlImg}`);
+      setImageUrl(`${process.env.AWSS3_URL}/${cv.urlImg}`);
       setCVHasBeenRead();
     }
   }, [candidateId, cv, cvVersion, prevCV, setCVHasBeenRead]);
@@ -384,7 +385,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
           )}
           {user.role !== USER_ROLES.ADMIN && (
             <ButtonIcon
-              name="question"
+              icon={<QuestionIcon />}
               href={process.env.TUTORIAL_CV}
               newTab
               onClick={() => {

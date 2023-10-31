@@ -1,4 +1,4 @@
 module.exports = {
-  '*.ts?(x)': [() => 'yarn ts-check', 'yarn lint:fix'],
-  '*.js?(x)': 'yarn lint:fix',
+  '*.ts?(x)': [() => 'yarn test:ts-check', 'yarn test:eslint'],
+  '*.js?(x)': () => 'yarn test:eslint',
 };
