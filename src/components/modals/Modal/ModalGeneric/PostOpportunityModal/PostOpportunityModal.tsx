@@ -14,7 +14,6 @@ import {
 } from 'src/components/forms/schemas/formAddOpportunity';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { useNewsletterTracking } from 'src/hooks/useNewsletterTracking';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
 import { AnyCantFix } from 'src/utils/Types';
@@ -40,7 +39,6 @@ export function PostOpportunityModal<
   const [lastFilledForm, setLastFilledForm] = useState<
     ExtractFormSchemaValidation<S>
   >({} as ExtractFormSchemaValidation<S>);
-  const newsletterParams = useNewsletterTracking();
 
   const [shouldHide, setShouldHide] = useState<boolean>(false);
 
@@ -121,7 +119,6 @@ export function PostOpportunityModal<
               }
             : {}),
           date: moment().toISOString(),
-          ...newsletterParams,
         });
         UIkit.notification(successMessage, 'success');
         if (adminCallback) await adminCallback();
@@ -142,7 +139,7 @@ export function PostOpportunityModal<
         UIkit.notification(`Une erreur est survenue.`, 'danger');
       }
     },
-    [isAdmin, newsletterParams]
+    [isAdmin]
   );
 
   const modalProps = useMemo(() => {

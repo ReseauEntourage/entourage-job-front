@@ -15,7 +15,8 @@ import {
 } from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
 import { CONTRACTS } from 'src/constants';
 import { findConstantFromValue } from 'src/utils';
-
+import { CVContactInformationPDF } from './CVContactInformationPDF';
+import { CVExperienceOrFormationPDF } from './CVExperienceOrFormationPDF';
 import {
   StyledCVPDFCareerPath,
   StyledCVPDFContentDetailsContainer,
@@ -32,10 +33,8 @@ import {
   StyledCVPDFTitle,
   StyledCVPFSkillTag,
 } from './CVPDF.styles';
-import 'moment/locale/fr';
-import { CVContactInformationPDF } from './CVContactInformationPDF';
-import { CVExperienceOrFormationPDF } from './CVExperienceOrFormationPDF';
 import { CVProfilePicturePDF } from './CVProfilePicturePDF';
+import 'moment/locale/fr';
 
 interface CVPDFProps {
   cv: CV;

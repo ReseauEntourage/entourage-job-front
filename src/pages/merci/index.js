@@ -26,6 +26,16 @@ const thankYouMessages = {
       <h3>Nous vous donnerons des nouvelles rapidement.</h3>
     </>
   ),
+  connector: (
+    <>
+      <h2 className="uk-text-bold">
+        Merci beaucoup pour votre inscription&nbsp;!
+      </h2>
+      <h3>
+        Nous reviendrons rapidement vers vous pour finaliser votre engagement.
+      </h3>
+    </>
+  ),
 };
 
 const Merci = () => {

@@ -136,6 +136,11 @@ module.exports = withLess({
   async redirects() {
     return [
       {
+        source: '/entreprises/cvs',
+        destination: '/candidats',
+        permanent: false,
+      },
+      {
         source: '/don',
         destination: process.env.IRAISER_DONATION_LINK,
         permanent: false,

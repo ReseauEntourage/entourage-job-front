@@ -45,6 +45,7 @@ const Travailler = () => {
             ...GA_TAGS.PAGE_TRAVAILLER_ENVOYER_DEPOSER_CANDIDATURE_CLIC,
             label: gTagLabel,
           });
+
           fbEvent(FB_TAGS.CANDIDATE_REGISTRATION_SEND);
 
           try {

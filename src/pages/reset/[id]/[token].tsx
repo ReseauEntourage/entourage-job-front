@@ -66,8 +66,8 @@ const ResetPasswordPage = ({
                 <div className="uk-flex uk-flex-center">
                   <Button
                     style="primary"
-                    onClick={() => {
-                      return push('/');
+                    onClick={async () => {
+                      await push('/');
                     }}
                   >
                     Retourner à l&apos;accueil

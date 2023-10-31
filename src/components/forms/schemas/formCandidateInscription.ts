@@ -12,6 +12,7 @@ import {
   CandidateYesNoNSPP,
   CandidateYesNoNSPPValue,
   HEARD_ABOUT_FILTERS,
+  HeardAbout,
   HeardAboutValue,
 } from 'src/constants';
 import { Cities, CITIES_FILTERS, City } from 'src/constants/departements';
@@ -26,6 +27,7 @@ interface FormCandidateInscriptionSchema extends FormSchemaValidation {
   email: string;
   heardAbout: HeardAboutValue;
   infoCo: string;
+  tsPrescripteur?: string;
 }
 function hideIfNoInfoCo(
   getValue: GetValueType<FormCandidateInscriptionSchema>,
@@ -198,6 +200,14 @@ export const formCandidateInscription: FormSchema<FormCandidateInscriptionSchema
         showLabel: true,
         isRequired: true,
         options: HEARD_ABOUT_FILTERS,
+      },
+      {
+        id: 'tsPrescripteur',
+        name: 'tsPrescripteur',
+        title: 'Souhaitez-vous nous communiquer son mail?',
+        component: 'text-input',
+        showLabel: true,
+        hide: (getValue) => getValue('heardAbout') !== HeardAbout.ORIENTATION,
       },
       {
         id: 'infoCoTitle',
