@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const webpack = require('webpack');
 
-console.log('WEBPACK');
+// console.log('WEBPACK');
 const withLess = require('next-with-less');
 
 const CircularDependencyPlugin = require('circular-dependency-plugin');
@@ -116,6 +116,7 @@ if (process.env.AWSS3_URL) {
 }
 
 module.exports = withLess({
+  // COMMENTED BECAUSE WARN DISPLAYED
   // webpackDevMiddleware: (config) => {
   //   config.watchOptions = {
   //     poll: 1000,
