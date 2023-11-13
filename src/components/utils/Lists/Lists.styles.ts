@@ -18,6 +18,7 @@ export const StyledCheckIcon = styled(CheckIcon)`
   width: 14px;
   padding: 2px;
   background-color: ${COLORS.primaryOrange};
+  color: white;
   position: absolute;
   border-radius: 14px;
   left: 0;
