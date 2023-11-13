@@ -14,7 +14,7 @@ import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 import { FilterConstant } from 'src/constants/utils';
 import { findConstantFromValue } from 'src/utils';
 
-export const formAddOpportunity: FormSchema<{
+export const formAddPrivateOpportunity: FormSchema<{
   isPublic: boolean;
   candidatesIds: FilterConstant<string>[];
   message: string;

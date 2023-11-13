@@ -1,5 +1,4 @@
 import React from 'react';
-import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
 import { openModal } from 'src/components/modals/Modal';
@@ -165,12 +164,12 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
               linkEvent(LINK_TAGS.COMPANY_CONTACT_OPEN);
               openModal(<CompanyContactModal />);
             },
-            className: 'custom-secondary',
+            className: 'custom-secondary-inverted',
             label: 'Nous contacter',
           },
           {
             dataTest: 'button-offer-company-header',
-            className: 'custom-secondary-inverted',
+            className: 'custom-secondary',
             isExternal: false,
             newTab: false,
             onClick: () => {
@@ -258,10 +257,9 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
               openModal(<CompanyContactModal />);
             }}
             dataTestId="button-contact-company-first-section"
-            style="secondary"
+            style="custom-secondary-inverted"
           >
             Nous contacter&nbsp;
-            <ChevronRightIcon viewBox="0 0 320 512" />
           </Button>
         }
       />
@@ -289,6 +287,20 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
         animate
         direction="left"
         style="default"
+        cta={
+          <Button
+            onClick={() => {
+              gaEvent(GA_TAGS.PAGE_ENTREPRISES_PROPOSER_OFFRE_CLIC);
+              fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER_OPEN);
+              // linkEvent(LINK_TAGS.COMPANY_CONTACT_OPEN);
+              openModal(<PostPublicOfferModal />);
+            }}
+            dataTestId="button-contact-company-second-section"
+            style="custom-secondary-inverted"
+          >
+            Créer une offre
+          </Button>
+        }
       />
       <Chapter
         smallTitle
@@ -333,6 +345,14 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
         animate
         direction="right"
         style="default"
+        cta={
+          <Button
+            href={{ pathname: '/candidats', query: { employed: false } }}
+            style="custom-secondary-inverted"
+          >
+            Découvrir nos candidats
+          </Button>
+        }
       />
       <Section container="large" style="muted">
         <h2 className="uk-text-bold uk-align-center uk-text-center uk-margin-medium-bottom uk-margin-remove-top uk-width-1-2@m">
@@ -351,10 +371,9 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
         <div className="uk-flex uk-flex-center uk-margin-medium-top">
           <Button
             href={{ pathname: '/candidats', query: { employed: false } }}
-            style="secondary"
+            style="custom-secondary-inverted"
           >
-            Découvrir nos candidats&nbsp;
-            <ChevronRightIcon />
+            Découvrir nos candidats
           </Button>
         </div>
       </Section>
@@ -410,8 +429,7 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
             style="secondary"
             className="uk-margin-small-top"
           >
-            Nous contacter&nbsp;
-            <ChevronRightIcon />
+            Nous contacter
           </Button>
         </div>
       </Section>

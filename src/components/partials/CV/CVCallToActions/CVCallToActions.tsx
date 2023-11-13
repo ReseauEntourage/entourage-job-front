@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { CV } from 'src/api/types';
-import { formAddOpportunity } from 'src/components/forms/schemas/formAddOpportunity';
+import { formAddPrivateOpportunity } from 'src/components/forms/schemas/formAddPrivateOpportunity';
 import { openModal } from 'src/components/modals/Modal';
 import { PostOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { Button } from 'src/components/utils';
@@ -59,7 +59,7 @@ export const CVCallToActions = ({
         ],
         isPublic: false,
       },
-      formSchema: formAddOpportunity,
+      formSchema: formAddPrivateOpportunity,
     };
   }, [cv]);
 

@@ -1,5 +1,8 @@
 import React from 'react';
-import { StyledImageTitle } from 'src/components/partials/ImageTitleNew/ImageTitle.styles';
+import {
+  StyledImageTitle,
+  StyledImageTitleCTAsContainer,
+} from 'src/components/partials/ImageTitleNew/ImageTitle.styles';
 import { Container, Button, BackgroundImage } from 'src/components/utils';
 import { H1 } from 'src/components/utils/Headings';
 import { UIKIT_BUTTON_STYLES_SPEC } from 'src/components/variables';
@@ -60,21 +63,22 @@ export const ImageTitle = ({
               {cta.label}
             </Button>
           )}
-          {cta &&
-            Array.isArray(cta) &&
-            cta.length > 0 &&
-            cta.map(({ label, className, dataTest, onClick }, index) => {
-              return (
-                <Button
-                  key={index.toString()}
-                  style={className}
-                  onClick={onClick}
-                  dataTestId={dataTest}
-                >
-                  {label}
-                </Button>
-              );
-            })}
+          {cta && Array.isArray(cta) && cta.length > 0 && (
+            <StyledImageTitleCTAsContainer>
+              {cta.map(({ label, className, dataTest, onClick }, index) => {
+                return (
+                  <Button
+                    key={index.toString()}
+                    style={className}
+                    onClick={onClick}
+                    dataTestId={dataTest}
+                  >
+                    {label}
+                  </Button>
+                );
+              })}
+            </StyledImageTitleCTAsContainer>
+          )}
         </StyledImageTitle>
       </Container>
     </BackgroundImage>

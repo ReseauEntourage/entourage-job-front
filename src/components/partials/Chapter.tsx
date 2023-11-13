@@ -57,11 +57,7 @@ export const Chapter = ({
             <p className="uk-margin-remove-top uk-margin-remove-bottom">
               {content}
             </p>
-            {cta && (
-              <div className="uk-flex uk-flex-center uk-margin-medium-top">
-                {cta}
-              </div>
-            )}
+            {cta && <div className="uk-flex uk-margin-medium-top">{cta}</div>}
           </div>
           {imgSrc && (
             <div

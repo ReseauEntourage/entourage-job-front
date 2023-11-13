@@ -9,9 +9,9 @@ import {
   FormSchema,
 } from 'src/components/forms/FormSchema';
 import {
-  formAddOpportunity,
+  formAddPrivateOpportunity,
   formAddOpportunityAsAdmin,
-} from 'src/components/forms/schemas/formAddOpportunity';
+} from 'src/components/forms/schemas/formAddPrivateOpportunity';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
@@ -27,7 +27,7 @@ interface PostOpportunityModalProps<S extends FormSchema<AnyCantFix>> {
   defaultValues?: DefaultValues<ExtractFormSchemaValidation<S>>;
 }
 export function PostOpportunityModal<
-  S extends typeof formAddOpportunity | typeof formAddOpportunityAsAdmin
+  S extends typeof formAddPrivateOpportunity | typeof formAddOpportunityAsAdmin
 >({
   modalTitle,
   modalDesc,

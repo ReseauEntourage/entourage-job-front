@@ -1,5 +1,5 @@
 import React from 'react';
-import { formAddOpportunity } from 'src/components/forms/schemas/formAddOpportunity';
+import { formAddPrivateOpportunity } from 'src/components/forms/schemas/formAddPrivateOpportunity';
 import { PostOpportunityModal } from './PostOpportunityModal';
 
 export const PostPublicOfferModal = () => {
@@ -10,7 +10,7 @@ export const PostPublicOfferModal = () => {
     modalTitle: 'Proposer une opportunité',
     modalDesc:
       'Cet espace est dédié aux potentiels recruteurs qui souhaitent proposer une opportunité visible par tous les candidats.',
-    formSchema: formAddOpportunity,
+    formSchema: formAddPrivateOpportunity,
   };
 
   return <PostOpportunityModal {...postPublicOfferModalProps} />;

@@ -29,3 +29,11 @@ export const StyledImageTitle = styled.section`
     }
   }
 `;
+
+export const StyledImageTitleCTAsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  button:first-child {
+    margin-right: 8px;
+  }
+`;
