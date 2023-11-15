@@ -45,16 +45,16 @@ export const Chapter = ({
               animate
                 ? `cls:uk-animation-slide-${
                     direction === 'left' ? 'right' : 'left'
-                  }; delay: 200;`
+                  }; delay: 200; target: > .animate;`
                 : ''
             }
           >
             {smallTitle && (
-              <h2 className="uk-text-bold uk-text-left uk-margin-medium-bottom uk-margin-remove-top">
+              <h2 className="uk-text-bold uk-text-left uk-margin-medium-bottom uk-margin-remove-top animate">
                 {title}
               </h2>
             )}
-            <p className="uk-margin-remove-top uk-margin-remove-bottom">
+            <p className="uk-margin-remove-top uk-margin-remove-bottom animate">
               {content}
             </p>
             {cta && <div className="uk-flex uk-margin-medium-top">{cta}</div>}

@@ -41,6 +41,7 @@ export const SearchCandidates = ({ style }: { style?: UIKIT_STYLES }) => {
             <Button
               style="custom-text"
               color="darkGrayFont"
+              dataTestId="search-candidates-post-opportunity-button"
               onClick={() => {
                 gaEvent(GA_TAGS.PAGE_GALERIE_CV_PROPOSER_OFFRE_CLIC);
                 fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER_OPEN);

@@ -256,7 +256,7 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
               linkEvent(LINK_TAGS.COMPANY_CONTACT_OPEN);
               openModal(<CompanyContactModal />);
             }}
-            dataTestId="button-contact-company-first-section"
+            dataTestId="button-company-first-section"
             style="custom-secondary-inverted"
           >
             Nous contacter&nbsp;
@@ -295,7 +295,7 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
               // linkEvent(LINK_TAGS.COMPANY_CONTACT_OPEN);
               openModal(<PostPublicOpportunityModal />);
             }}
-            dataTestId="button-contact-company-second-section"
+            dataTestId="button-company-second-section"
             style="custom-secondary-inverted"
           >
             Créer une offre
