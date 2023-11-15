@@ -50,7 +50,7 @@ export const HeaderPublicContentMobile = ({
             >
               <div className="uk-flex">
                 <HomeIcon width={16} height={16} />
-                &nbsp; <span>Accueil</span>
+                &nbsp;Accueil
               </div>
             </a>
           </li>

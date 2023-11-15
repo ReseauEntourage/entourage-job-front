@@ -43,9 +43,3 @@ export const BackgroundImage = ({
     </StyledBackground>
   );
 };
-
-BackgroundImage.defaultProps = {
-  mobileHeight: undefined,
-  isHero: false,
-  hasCta: false,
-};

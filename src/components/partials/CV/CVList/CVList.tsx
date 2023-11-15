@@ -7,7 +7,7 @@ import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { CandidatCard } from 'src/components/cards';
 import { SearchBar } from 'src/components/filters/SearchBar';
 import { openModal } from 'src/components/modals/Modal';
-import { PostPublicOfferModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
+import { PostPublicOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { Button, Grid, SimpleLink } from 'src/components/utils';
 import { CV_FILTERS_DATA, INITIAL_NB_OF_CV_TO_DISPLAY } from 'src/constants';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
@@ -46,10 +46,10 @@ interface CVListProps {
 }
 
 export const CVList = ({
-  hideSearchBar,
+  hideSearchBar = false,
   nb,
   search,
-  filters,
+  filters = {},
   setFilters,
   setSearch,
   resetFilters,
@@ -127,7 +127,7 @@ export const CVList = ({
   const renderCvList = useCallback(
     (items) => {
       return (
-        <div className="cv-list uk-margin-smal-top">
+        <div className="cv-list uk-margin-small-top">
           <Grid
             childWidths={['1-1', '1-2@s', '1-3@m']}
             gap="small"
@@ -209,9 +209,9 @@ export const CVList = ({
                 }}
                 className="uk-link-text"
                 onClick={() => {
-                  gaEvent(GA_TAGS.PAGE_ENTREPRISES_PROPOSER_OFFRE_CLIC);
+                  gaEvent(GA_TAGS.PAGE_GALERIE_CV_PROPOSER_OFFRE_CLIC);
                   fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER_OPEN);
-                  openModal(<PostPublicOfferModal />);
+                  openModal(<PostPublicOpportunityModal />);
                 }}
               >
                 Publier une offre d’emploi
@@ -254,14 +254,4 @@ export const CVList = ({
       {content}
     </div>
   );
-};
-
-CVList.defaultProps = {
-  nb: undefined,
-  search: undefined,
-  filters: {},
-  hideSearchBar: false,
-  setFilters: null,
-  setSearch: null,
-  resetFilters: null,
 };

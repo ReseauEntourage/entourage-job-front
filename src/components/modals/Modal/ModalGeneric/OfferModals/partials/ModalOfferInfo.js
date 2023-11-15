@@ -102,14 +102,17 @@ export const ModalOfferInfo = ({
             <div className="uk-flex uk-flex-column uk-flex-center">
               {salary && (
                 <div className="uk-flex uk-flex-middle">
-                  <CreditCardIcon className="uk-margin-small-right" />
+                  <CreditCardIcon
+                    width={20}
+                    className="uk-margin-small-right"
+                  />
                   {salary}
                 </div>
               )}
 
               {driversLicense && (
                 <div className="uk-flex uk-flex-middle">
-                  <CarIcon className="uk-margin-small-right" />
+                  <CarIcon width={20} className="uk-margin-small-right" />
                   Permis requis
                 </div>
               )}

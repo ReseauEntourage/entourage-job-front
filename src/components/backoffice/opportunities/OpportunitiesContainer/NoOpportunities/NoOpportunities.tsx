@@ -54,7 +54,7 @@ export const NoOpportunities = ({
           }}
         >
           <PlusIcon />
-          &nbsp; Ajouter une offre externe
+          &nbsp;Ajouter une offre externe
         </Button>
         <Button
           style="custom-primary"

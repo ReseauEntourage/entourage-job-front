@@ -27,7 +27,7 @@ import { List } from 'src/components/modals/Modal/ModalGeneric/OfferModals/parti
 import { OfferContent } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferContent';
 import { OfferInfoContainer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/partials/OfferInfoContainer';
 import { useModalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/useModalOffer';
-import { Button, Grid, SimpleLink, ButtonIcon } from 'src/components/utils';
+import { Button, ButtonIcon, Grid, SimpleLink } from 'src/components/utils';
 import {
   BUSINESS_LINES,
   EXTERNAL_OFFERS_ORIGINS,
@@ -451,7 +451,7 @@ export const ModalOfferAdmin = ({
                             <SimpleLink
                               href={`/backoffice/admin/membres/${oppUser.user.id}`}
                               className="uk-link-muted uk-flex uk-flex-middle"
-                              target="_blank"
+                              onClick={onClose}
                             >
                               <span className="uk-flex-1">
                                 {`${oppUser.user.firstName} ${oppUser.user.lastName}`}
