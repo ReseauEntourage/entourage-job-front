@@ -32,6 +32,7 @@ interface SearchBarProps {
   startSearchEvent?: {
     action: string;
   };
+  additionalButtons?: React.ReactNode;
 }
 
 export const SearchBar = ({
@@ -44,6 +45,7 @@ export const SearchBar = ({
   placeholder,
   startSearchEvent,
   smallSelectors,
+  additionalButtons,
 }: SearchBarProps) => {
   const [searchBuffer, setSearchBuffer] = useState(search || '');
 
@@ -120,6 +122,7 @@ export const SearchBar = ({
           setFilters={setFilters}
           hideOnMobile
         />
+        {additionalButtons}
         {hasFilters && (
           <FiltersOptions
             resetFilters={() => {

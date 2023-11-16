@@ -331,7 +331,7 @@ export const OpportunityList = ({
     executeAction,
     isElementSelected,
     selectionModeActivated,
-    SelectionModeButton,
+    // SelectionModeButton,
     hasSelection,
     toggleSelectionMode,
   } = useBulkActions(
@@ -365,7 +365,7 @@ export const OpportunityList = ({
             style={{ height: 40, maxWidth: SEARCH_MAX_WIDTH }}
           >
             <div className="uk-flex uk-padding-small uk-padding-remove-vertical uk-flex-1 uk-flex-middle uk-flex-row-reverse uk-flex-between uk-flex-wrap">
-              <SelectionModeButton />
+              {/* <SelectionModeButton /> */}
               {selectionModeActivated && (
                 <Button
                   disabled={!hasSelection}

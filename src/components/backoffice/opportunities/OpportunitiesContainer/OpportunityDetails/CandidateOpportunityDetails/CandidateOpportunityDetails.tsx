@@ -1,4 +1,3 @@
-import { useScrollPosition } from '@n8tb1t/use-scroll-position';
 import { useWindowHeight } from '@react-hook/window-size';
 import _ from 'lodash';
 import moment from 'moment';
@@ -31,6 +30,7 @@ import { findConstantFromValue } from 'src/utils/Finding';
 import { mapEventDateFromStatus } from './CandidateOpportunityDetails.utils';
 import { CandidateOpportunityDetailsCTAs } from './CandidateOpportunityDetailsCTAs';
 import { CTAsByTab } from './CandidateOpportunityDetailsCTAs/CandidateOpportunityDetailsCTAs.utils';
+import { useOpportunityDetailsHeight } from './useOpportunityDetailsHeight';
 
 interface CandidateOpportunityDetailsProps
   extends Partial<OpportunityWithOpportunityUsers> {
@@ -64,8 +64,6 @@ export const CandidateOpportunityDetails = ({
   const ref = useRef();
   const windowHeight = useWindowHeight();
 
-  const [containerHeight, setContainerHeight] = useState(0);
-
   const { opportunityUsers, bookmarkOpportunity } = useBookmarkOpportunity(
     id,
     opportunityUsersProp
@@ -93,24 +91,10 @@ export const CandidateOpportunityDetails = ({
 
   const event = mapEventDateFromStatus(opportunityUsers.status, events);
 
-  useScrollPosition(
-    ({ currPos }) => {
-      const conditionalHeight = hasCTAContainer
-        ? HEIGHTS.OFFER_CTA_HEIGHT
-        : -HEIGHTS.SECTION_PADDING;
-
-      const bottom =
-        windowHeight - HEIGHTS.HEADER - HEIGHTS.TABS_HEIGHT - conditionalHeight;
-
-      const calculatedContainerHeight = bottom - currPos.y;
-
-      setContainerHeight(
-        calculatedContainerHeight < 2 * HEIGHTS.SECTION_PADDING
-          ? 2 * HEIGHTS.SECTION_PADDING
-          : calculatedContainerHeight
-      );
-    },
-    [windowHeight, hasCTAContainer],
+  const { containerHeight } = useOpportunityDetailsHeight(
+    windowHeight,
+    hasCTAContainer,
+    HEIGHTS,
     ref
   );
 

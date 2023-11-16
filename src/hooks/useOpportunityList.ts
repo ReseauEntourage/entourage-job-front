@@ -51,15 +51,11 @@ export function useOpportunityList(
               },
             });
 
-            // !!! to be fixed !!!
+            const sortedOffers = offers.sort((a, b) => {
+              return new Date(b.date).getTime() - new Date(a.date).getTime();
+            });
 
-            // const sortedOffers = offers.sort((a, b) => {
-            //   let firstDate = a.date as string;
-            //   let secondDate = b.date as string;
-            //   return new Date(secondDate) - new Date(firstDate);
-            // });
-
-            setOffers(offers);
+            setOffers(sortedOffers);
             setOtherOffers(undefined);
             setBookmarkedOffers(undefined);
 
@@ -119,13 +115,16 @@ export function useAdminOpportunities(
       try {
         setLoading(true);
         setHasError(false);
+        // const filtersToSend = filters;
+        // delete filtersToSend.tag;
+        const { tag, ...filtersToSend } = filters;
         const { data } = await Api.getOpportunityAdmin({
           params: {
             search,
-            type: currentTag.value,
+            type: tag.value || currentTag.value,
             offset: shouldFetchAll ? 0 : offset,
             limit: shouldFetchAll ? LIMIT + offset * LIMIT : LIMIT,
-            ...filtersToQueryParams(filters),
+            ...filtersToQueryParams(filtersToSend),
           },
         });
         setOffers((prevOffers) => {

@@ -1,13 +1,4 @@
 import React from 'react';
-import {
-  StyledOpportunityItemActionContainer,
-  StyledOpportunityItemBottomContainer,
-  StyledOpportunityItemContainer,
-  StyledOpportunityItemDescription,
-  StyledOpportunityItemInfoContainer,
-  StyledOpportunityItemTitleContainer,
-  StyledOpportunityItemTopContainer,
-} from '../../OpportunitiesList.styles';
 import { OpportunityWithOpportunityUsers } from 'src/api/types';
 import { ActionLabelContainer as ActionLabels } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
@@ -16,6 +7,15 @@ import {
   InfoText,
   SubtitleText,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
+import {
+  StyledOpportunityItemActionContainer,
+  StyledOpportunityItemBottomContainer,
+  StyledOpportunityItemContainer,
+  StyledOpportunityItemDescription,
+  StyledOpportunityItemInfoContainer,
+  StyledOpportunityItemTitleContainer,
+  StyledOpportunityItemTopContainer,
+} from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/OpportunitiesList.styles';
 import { useBookmarkOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/useBookmarkOpportunity';
 import { BUSINESS_LINES } from 'src/constants';
 import { findConstantFromValue } from 'src/utils/Finding';
@@ -43,11 +43,6 @@ export const CandidateOpportunityItem = ({
   return (
     <StyledOpportunityItemContainer>
       <StyledOpportunityItemTopContainer>
-        {/*
-          <Icon>
-            <Icon name="home" ratio={1.5} />
-          </Icon>
-        */}
         <StyledOpportunityItemTitleContainer>
           <SubtitleText>{title}</SubtitleText>
           <InfoText>

@@ -1,44 +1,59 @@
-import React from 'react';
-import { ContractLabel } from '../../../ContractLabel';
+import React, { useEffect, useState } from 'react';
+import { Opportunity } from 'src/api/types';
+import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel';
 import {
   DescriptionText,
   InfoText,
   SubtitleText,
-} from '../../../OpportunitiesContainer.styles';
+} from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
 import {
   StyledOpportunityItemActionContainer,
   StyledOpportunityItemBottomContainer,
-  StyledOpportunityItemContainer,
   StyledOpportunityItemDescription,
   StyledOpportunityItemInfoContainer,
   StyledOpportunityItemTitleContainer,
   StyledOpportunityItemTopContainer,
-} from '../../OpportunitiesList.styles';
-import { Opportunity } from 'src/api/types';
+} from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/OpportunitiesList.styles';
+import { CheckBox } from 'src/components/utils/Inputs';
 import { BUSINESS_LINES } from 'src/constants';
-// import { ActionsLabels } from 'src/constants/utils';
 import { findConstantFromValue } from 'src/utils';
-import { StyledAdminOpportunityItemSeparator } from './AdminOpportunityItem.styles';
+import {
+  StyledAdminOpportunityItemCheckboxContainer,
+  StyledAdminOpportunityItemSeparator,
+  StyledAdminOpportunityItemContainer,
+} from './AdminOpportunityItem.styles';
+
+interface AdminOpportunityItemProps extends Partial<Opportunity> {
+  selectOpportunity: ({ id }: { id: string }) => void;
+}
 
 export const AdminOpportunityItem = ({
+  id,
   title,
   company,
   description,
-  // isExternal,
   department,
   contract,
   endOfContract,
   startOfContract,
   businessLines,
-}: Partial<Opportunity>) => {
+  selectOpportunity,
+}: AdminOpportunityItemProps) => {
+  const [isChecked, setIsChecked] = useState<boolean>();
+
+  const handleCheckbox = () => {
+    setIsChecked(!isChecked);
+  };
+
+  useEffect(() => {
+    if (isChecked !== undefined) {
+      selectOpportunity({ id });
+    }
+  }, [isChecked, id, selectOpportunity]);
+
   return (
-    <StyledOpportunityItemContainer>
+    <StyledAdminOpportunityItemContainer>
       <StyledOpportunityItemTopContainer>
-        {/*
-          <Icon>
-            <Icon name="home" ratio={1.5} />
-          </Icon>
-        */}
         <StyledOpportunityItemTitleContainer>
           <SubtitleText>{title}</SubtitleText>
           <InfoText>
@@ -54,6 +69,14 @@ export const AdminOpportunityItem = ({
               </>
             )}
           </InfoText>
+          <StyledAdminOpportunityItemCheckboxContainer>
+            <CheckBox
+              id={`checkbox-${id}`}
+              name={`checkbox-${id}`}
+              onChange={() => handleCheckbox()}
+              value={isChecked}
+            />
+          </StyledAdminOpportunityItemCheckboxContainer>
           <InfoText>
             <StyledOpportunityItemInfoContainer>
               <ContractLabel
@@ -65,15 +88,7 @@ export const AdminOpportunityItem = ({
             </StyledOpportunityItemInfoContainer>
           </InfoText>
         </StyledOpportunityItemTitleContainer>
-        <StyledOpportunityItemActionContainer>
-          {/* <ActionsLabels
-            isBookmarked={!!opportunityUsers?.bookmarked}
-            isRecommended={!!opportunityUsers?.recommended}
-            isPublic={isPublic}
-            isExternal={isExternal}
-            bookmarkOpportunity={bookmarkOpportunity}
-          /> */}
-        </StyledOpportunityItemActionContainer>
+        <StyledOpportunityItemActionContainer />
       </StyledOpportunityItemTopContainer>
       <StyledAdminOpportunityItemSeparator />
       <StyledOpportunityItemBottomContainer>
@@ -82,6 +97,6 @@ export const AdminOpportunityItem = ({
           <DescriptionText>{description}</DescriptionText>
         </StyledOpportunityItemDescription>
       </StyledOpportunityItemBottomContainer>
-    </StyledOpportunityItemContainer>
+    </StyledAdminOpportunityItemContainer>
   );
 };

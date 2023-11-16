@@ -1,90 +1,119 @@
 import { useRouter } from 'next/router';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { AdminOpportunities } from 'src/components/backoffice/admin/AdminOpportunities';
 import { AdminOpportunitiesFilters } from 'src/components/backoffice/admin/AdminOpportunities/AdminOpportunitiesFilters.types';
-// import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
-import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
-// import { OpportunityError } from 'src/components/opportunities/OpportunityError';
-import { ADMIN_OPPORTUNITY_FILTERS_DATA } from 'src/constants';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import {
+  ADMIN_OPPORTUNITY_FILTERS_DATA,
+  OFFER_ADMIN_FILTERS_DATA,
+} from 'src/constants';
+import { ADMIN_ZONES, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { GA_TAGS } from 'src/constants/tags';
+import { USER_ROLES } from 'src/constants/users';
 import { useFilters } from 'src/hooks';
 import { UserContext } from 'src/store/UserProvider';
 
 const AdminOpportunitiesPage = () => {
-  const { replace, pathname, query } = useRouter();
-  // const opportunityId = useOpportunityId();
+  const {
+    replace,
+    query: { q, offerId, tag, ...restParams },
+    isReady,
+  } = useRouter();
 
-  const queryParamsOpportunities = useQueryParamsOpportunities();
+  const [loadingDefaultFilters, setLoadingDefaultFilters] = useState(true);
 
   const { user } = useContext(UserContext);
 
-  // const [hasError, setHasError] = useState(false);
-  // const [loading, setLoading] = useState(false);
-  // const [hasLoadedDefaultFilters, setHasLoadedDefaultFilters] = useState(false);
-
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
     ADMIN_OPPORTUNITY_FILTERS_DATA,
-    `/backoffice/admin/offres`,
+    `/backoffice/admin/offres${offerId ? `/${offerId}` : ''}`,
     [],
-    GA_TAGS.BACKOFFICE_ADMIN_SUPPRIMER_FILTRES_CLIC
+    GA_TAGS.BACKOFFICE_ADMIN_SUPPRIMER_FILTRES_CLIC,
+    true
   );
 
   let content;
 
   // redirect with default tag and departments
   useEffect(() => {
-    if ((!query.tag || !query.department) && user) {
-      const defaultDepartmentsForAdmin = DEPARTMENTS_FILTERS.filter((dept) => {
-        return user.zone === dept.zone;
-      });
+    if (isReady) {
+      const redirectParams = tag
+        ? {
+            tag,
+            ...restParams,
+          }
+        : restParams;
 
-      const redirectQuery = {
-        ...query,
-        tag: query.tag ? query.tag : 'pending',
-        department: query.department
-          ? query.department
-          : defaultDepartmentsForAdmin.map((dept) => {
+      if (q) {
+        replace(
+          {
+            pathname: `/backoffice/admin/offres/${q}`,
+            query: redirectParams,
+          },
+          undefined,
+          {
+            shallow: true,
+          }
+        );
+      } else if (user) {
+        if (user.role !== USER_ROLES.ADMIN) {
+          replace(
+            `/backoffice/candidat/offres${offerId ? `/${offerId}` : ''}`,
+            undefined
+          );
+        } else if (!tag) {
+          const params = {
+            tag: OFFER_ADMIN_FILTERS_DATA[0].tag,
+            ...restParams,
+          } as { department?: string[]; tag?: string };
+          if (user.zone && user.zone !== ADMIN_ZONES.HZ) {
+            const defaultDepartmentsForAdmin = DEPARTMENTS_FILTERS.filter(
+              (dept) => {
+                return user.zone === dept.zone;
+              }
+            );
+
+            params.department = defaultDepartmentsForAdmin.map((dept) => {
               return dept.value;
-            }),
-      };
-      // if no offerId in param
-      if (!pathname.includes('offerId')) {
-        replace(
-          {
-            pathname,
-            query: redirectQuery,
-          },
-          undefined,
-          {
-            shallow: true,
+            });
           }
-        );
-        // if offerId in param, wait for it
-      } else if (query.offerId) {
-        replace(
-          {
-            pathname,
-            query: { ...query, ...redirectQuery },
-          },
-          undefined,
-          {
-            shallow: true,
+          console.log(params.department);
+          if (offerId) {
+            replace(
+              {
+                pathname: `/backoffice/admin/offres/${offerId}`,
+                query: params,
+              },
+              undefined,
+              {
+                shallow: true,
+              }
+            );
+          } else {
+            replace(
+              {
+                pathname: '/backoffice/admin/offres',
+                query: params,
+              },
+              undefined,
+              {
+                shallow: true,
+              }
+            );
           }
-        );
+        } else {
+          setLoadingDefaultFilters(false);
+        }
       }
     }
-  }, [queryParamsOpportunities, query, pathname, replace, user]);
+  }, [q, offerId, replace, restParams, tag, user, isReady]);
 
   if (
     // loading ||
     !user
   ) {
     content = <LoadingScreen />;
-    // } else if (hasError) {
-    //   content = <OpportunityError />;
   } else {
     content = (
       <AdminOpportunities
@@ -97,7 +126,15 @@ const AdminOpportunitiesPage = () => {
     );
   }
   return (
-    <LayoutBackOffice title="Modération des offres">{content}</LayoutBackOffice>
+    <>
+      {!user || loadingDefaultFilters ? (
+        <LoadingScreen />
+      ) : (
+        <LayoutBackOffice title="Modération des offres">
+          {content}
+        </LayoutBackOffice>
+      )}
+    </>
   );
 };
 

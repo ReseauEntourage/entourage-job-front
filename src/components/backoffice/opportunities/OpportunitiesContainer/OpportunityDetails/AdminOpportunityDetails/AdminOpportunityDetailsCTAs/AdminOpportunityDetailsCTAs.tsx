@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import UIkit from 'uikit';
 import { v4 as uuid } from 'uuid';
 import { StyledOpportunityCTAsContainer } from '../../OpportunityDetails.styles';
@@ -17,7 +17,7 @@ import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Button } from 'src/components/utils';
-import { adminOffersTags, BUSINESS_LINES } from 'src/constants';
+import { AdminOffersTags, BUSINESS_LINES } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
 import {
@@ -54,22 +54,25 @@ export const AdminOpportunityDetailsCTAs = ({
 
   const currentPath = '/backoffice/admin/offres';
 
-  const updateExternalOpportunity = async (
-    opportunityId: string,
-    opportunityToUpdate: Partial<ExternalOpportunityDto>
-  ) => {
-    const { candidateId, ...restOpportunity } = opportunityToUpdate;
-    try {
-      await Api.putExternalOpportunity(
-        opportunityId,
-        candidateId,
-        restOpportunity
-      );
-      await oppRefreshCallback();
-    } catch (err) {
-      UIkit.notification(`Une erreur est survenue.`, 'danger');
-    }
-  };
+  const updateExternalOpportunity = useCallback(
+    async (
+      opportunityId: string,
+      opportunityToUpdate: Partial<ExternalOpportunityDto>
+    ) => {
+      const { candidateId, ...restOpportunity } = opportunityToUpdate;
+      try {
+        await Api.putExternalOpportunity(
+          opportunityId,
+          candidateId,
+          restOpportunity
+        );
+        await oppRefreshCallback();
+      } catch (err) {
+        UIkit.notification(`Une erreur est survenue.`, 'danger');
+      }
+    },
+    [oppRefreshCallback]
+  );
 
   const updateOpportunity = async (
     opportunityId,
@@ -263,7 +266,7 @@ export const AdminOpportunityDetailsCTAs = ({
     },
   };
 
-  const [tag, setTag] = useState<adminOffersTags>();
+  const [tag, setTag] = useState<AdminOffersTags>();
   useEffect(() => {
     setTag(getOpportunityCurrentTag(opportunity));
   }, [opportunity]);

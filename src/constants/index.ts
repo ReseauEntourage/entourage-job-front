@@ -31,7 +31,7 @@ export const OFFER_STATUS: (FilterConstant<OfferStatus> & {
   { value: 4, label: 'Refus après entretien', color: 'danger' },
 ];
 
-export type adminOffersTags = 'pending' | 'validated' | 'external' | 'archived';
+export type AdminOffersTags = 'pending' | 'validated' | 'external' | 'archived';
 
 export const ADMIN_OFFERS_TAGS = [
   {
@@ -50,7 +50,7 @@ export const ADMIN_OFFERS_TAGS = [
     value: 'archived',
     label: 'offres archivées',
   },
-];
+] as FilterConstant<AdminOffersTags>[];
 
 export type BusinessLineValue =
   | 'la'

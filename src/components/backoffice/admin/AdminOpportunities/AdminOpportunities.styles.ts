@@ -9,7 +9,8 @@ export const StyledAdminOpportunityNavigation = styled.section`
   top: 80px;
   /* padding-bottom: 20px; */
   .section-container {
-    display: flow-root;
+    display: flex;
+    flex-direction: column;
     box-sizing: content-box;
     max-width: 1360px;
     margin-left: auto;

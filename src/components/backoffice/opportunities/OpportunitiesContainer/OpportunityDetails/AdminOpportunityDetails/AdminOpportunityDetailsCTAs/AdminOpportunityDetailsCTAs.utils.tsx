@@ -1,6 +1,10 @@
 import React from 'react';
 import { AdminOpportunityWithOpportunityUsers } from 'src/api/types';
-import { adminOffersTags } from 'src/constants';
+import { AdminOffersTags } from 'src/constants';
+import {
+  AllCTAsType,
+  CTAsByTagType,
+} from './AdminOpportunityDetailsCTAs.types';
 
 export const allCTAs = {
   validate: {
@@ -45,11 +49,11 @@ export const allCTAs = {
     action: 'archiveOpportunity',
     text: <>Archiver</>,
   },
-};
+} as AllCTAsType;
 
 export const getOpportunityCurrentTag = (
   opportunity: AdminOpportunityWithOpportunityUsers
-): adminOffersTags => {
+): AdminOffersTags => {
   if (opportunity.isArchived) {
     return 'archived';
   }
@@ -81,7 +85,7 @@ export const CTAsByTag = [
       // 'feedback'
     ],
   },
-];
+] as CTAsByTagType;
 
 export const getCandidatesToShowInInput = (offer) => {
   if (offer.opportunityUsers && offer.opportunityUsers.length > 0) {

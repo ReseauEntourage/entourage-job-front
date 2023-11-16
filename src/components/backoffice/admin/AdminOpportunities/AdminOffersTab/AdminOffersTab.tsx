@@ -1,18 +1,19 @@
 import Link from 'next/link';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import { adminOffersTags } from 'src/constants';
+import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
+import { AdminOffersTags } from 'src/constants';
 import { StyledAdminTabsUl } from './AdminOffersTab.styles';
 import {
   adminTabs,
-  // adminTabsLabels, TabsLabelsType, adminTabsStatus
-} from './AdminOffersTab.utils';
+  //   adminTabsLabels, TabsLabelsType, adminTabsStatus
+} from './AdminOffersTab.types';
 
 const uuidValue = uuid();
 
 interface AdminOffersTabProps {
   activeStatus: {
-    value: adminOffersTags;
+    value: AdminOffersTags;
     label: string;
   };
   // tabCounts?: {
@@ -28,25 +29,31 @@ export const AdminOffersTab = ({
   isMobile = false,
 }: AdminOffersTabProps) => {
   const basePath = `/backoffice/admin/offres`;
+  const queryParamsOpportunities = useQueryParamsOpportunities();
+
   return (
     <div>
       <StyledAdminTabsUl className={!isMobile ? '' : 'ul-mobile'}>
         {adminTabs.map(({ value, label }, k) => {
-          const queryString = `?tag=${value}`;
-
           const isActive = activeStatus?.value === value;
 
           return (
             <li className={isActive ? 'active' : ''} key={`${k}-${uuidValue}`}>
-              <Link href={`${basePath}${queryString}`}>
+              <Link
+                href={{
+                  pathname: basePath,
+                  query: {
+                    ...queryParamsOpportunities,
+                    tag: value,
+                  },
+                }}
+              >
                 {!isMobile ? (
                   <div>
-                    {/* <span>{tabCount}</span> */}
                     <p>{label}</p>
                   </div>
                 ) : (
-                  // `${/*tabCount*/} ${label}`
-                  ''
+                  <>{label}</>
                 )}
               </Link>
             </li>

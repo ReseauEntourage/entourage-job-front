@@ -1,7 +1,7 @@
 import React from 'react';
-import { useOpportunityId } from '../../../useOpportunityId';
 import { OpportunityDetails } from '../OpportunityDetails';
 import { useFetchAdminOpportunity } from '../useFetchOpportunity';
+import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { AdminOpportunityDetails } from './AdminOpportunityDetails';
 
 export function AdminOpportunityDetailsContainer({

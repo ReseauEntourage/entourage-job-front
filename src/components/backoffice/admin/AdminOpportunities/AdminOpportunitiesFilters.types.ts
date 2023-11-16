@@ -1,10 +1,10 @@
-import { BusinessLineValue, Contract, adminOffersTags } from 'src/constants';
+import { BusinessLineValue, Contract, AdminOffersTags } from 'src/constants';
 import { AdminZone } from 'src/constants/departements';
 
 export interface AdminOpportunitiesFilters {
   tag: {
     label: string;
-    value: adminOffersTags;
+    value: AdminOffersTags;
   };
   businessLines: {
     label: string;

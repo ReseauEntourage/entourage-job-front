@@ -1,13 +1,13 @@
-import { useScrollPosition } from '@n8tb1t/use-scroll-position';
 import { useWindowHeight } from '@react-hook/window-size';
 import moment from 'moment';
-import React, { useRef, useState } from 'react';
-import { ContractLabel } from '../../ContractLabel';
+import React, { useRef } from 'react';
+import { useOpportunityDetailsHeight } from '../CandidateOpportunityDetails/useOpportunityDetailsHeight';
 import { OpportunitySection } from '../OpportunitySection';
 import { StyledOpportunitySectionList } from '../OpportunitySection/OpportunitySection.styles';
 import { OpportunitySectionCandidates } from '../OpportunitySection/OpportunitySectionCandidates';
 import { AdminOpportunityWithOpportunityUsers } from 'src/api/types';
 import { AdminActionLabelContainer as ActionLabels } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel';
+import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel';
 import {
   InfoText,
   StyledTitleText,
@@ -38,7 +38,6 @@ export const AdminOpportunityDetails = ({
   oppRefreshCallback,
 }: AdminOpportunityDetailsProps) => {
   const {
-    // id,
     title,
     workingHours,
     company,
@@ -49,7 +48,6 @@ export const AdminOpportunityDetails = ({
     department,
     companyDescription,
     description,
-    // opportunityUsers: opportunityUsersProp,
     isPublic,
     isExternal,
     createdAt,
@@ -66,23 +64,10 @@ export const AdminOpportunityDetails = ({
 
   const windowHeight = useWindowHeight();
 
-  const [containerHeight, setContainerHeight] = useState(0);
-
-  useScrollPosition(
-    ({ currPos }) => {
-      const conditionalHeight = HEIGHTS.OFFER_CTA_HEIGHT;
-      const bottom =
-        windowHeight - HEIGHTS.HEADER - HEIGHTS.TABS_HEIGHT - conditionalHeight;
-
-      const calculatedContainerHeight = bottom - currPos.y;
-
-      setContainerHeight(
-        calculatedContainerHeight < 2 * HEIGHTS.SECTION_PADDING
-          ? 2 * HEIGHTS.SECTION_PADDING
-          : calculatedContainerHeight
-      );
-    },
-    [windowHeight],
+  const { containerHeight } = useOpportunityDetailsHeight(
+    windowHeight,
+    true,
+    HEIGHTS,
     ref
   );
 
@@ -204,9 +189,5 @@ export const AdminOpportunityDetails = ({
         </StyledOpportunityDetailsDetailsContentContainer>
       )}
     </StyledOpportunityDetailsContainer>
-    /* <ModalOffer
-          currentOffer={opportunity}
-          onOfferUpdated={fetchOpportunities}
-        /> */
   );
 };

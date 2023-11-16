@@ -1,41 +1,36 @@
 // import { useWindowHeight } from '@react-hook/window-size';
 import Link from 'next/link';
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { v4 as uuid } from 'uuid';
-import { useOpportunityId } from '../../../useOpportunityId';
-import { useQueryParamsOpportunities } from '../../../useQueryParamsOpportunities';
 import {
   StyledLinkCard,
   StyledListContent,
   StyledListItem,
   StyledListItemContainer,
 } from '../OpportunitiesList.styles';
+import { useIsAtBottom } from '../useIsAtBottom';
 import { AdminOpportunityWithOpportunityUsers } from 'src/api/types';
+import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
+import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
 // import { usePrevious } from 'src/hooks/utils';
 import { AdminOpportunityItem } from './AdminOpportunityItem';
 
 interface AdminOpportunitiesListProps {
   opportunities: Partial<AdminOpportunityWithOpportunityUsers>[];
-  // fetchOpportunities: () => void;
-  // setOffset: Dispatch<SetStateAction<number>>;
-  // hasFetchedAll: boolean;
+  setOffset: Dispatch<SetStateAction<number>>;
+  selectOpportunity: ({ id }: { id: string }) => void;
 }
 
 const uuidValue = uuid();
 
 export const AdminOpportunitiesList = ({
   opportunities,
-}: // fetchOpportunities,
-// setOffset,
-// hasFetchedAll,
-AdminOpportunitiesListProps) => {
+  setOffset,
+  selectOpportunity,
+}: AdminOpportunitiesListProps) => {
   const queryParamsOpportunities = useQueryParamsOpportunities();
   const opportunityId = useOpportunityId();
-  // const [isAtBottom, setIsAtBottom] = useState(false);
-  // const windowHeight = useWindowHeight();
-  // const prevIsAtBottom = usePrevious(isAtBottom);
-  // const prevOpportunitiesLength = usePrevious(opportunities.length);
-
+  useIsAtBottom(setOffset, opportunities);
   return (
     <StyledListContent data-testid="admin-offer-list-container">
       {opportunities.map((opportunity, index) => {
@@ -60,6 +55,7 @@ AdminOpportunitiesListProps) => {
                   isSelected={opportunityId === opportunity.id}
                 >
                   <AdminOpportunityItem
+                    id={opportunity.id}
                     title={opportunity.title}
                     company={opportunity.company}
                     description={opportunity.description}
@@ -69,6 +65,7 @@ AdminOpportunitiesListProps) => {
                     endOfContract={opportunity.endOfContract}
                     isExternal={opportunity.isExternal}
                     department={opportunity.department}
+                    selectOpportunity={selectOpportunity}
                   />
                 </StyledListItem>
               </StyledLinkCard>

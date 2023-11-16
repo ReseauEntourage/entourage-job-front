@@ -1,9 +1,8 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
-import { Button, Icon } from 'src/components/utils';
 import { usePrevious } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
 
@@ -102,35 +101,12 @@ export function useBulkActions(apiRoute, refreshElementsCallback, tag) {
     }
   }, [prevSelectionModeActivated, selectionModeActivated]);
 
-  const SelectionModeButton = memo(() => {
-    return (
-      <Button
-        onClick={toggleSelectionMode}
-        style="text"
-        className="uk-text-meta"
-      >
-        {selectionModeActivated ? (
-          <>
-            Quitter le mode sélection&nbsp;
-            <Icon name="close" ratio={0.8} />
-          </>
-        ) : (
-          <>
-            Mode sélection&nbsp;
-            <Icon name="pencil" ratio={0.8} />
-          </>
-        )}
-      </Button>
-    );
-  }, [selectionModeActivated, toggleSelectionMode]);
-
   return {
     selectElement,
     executeAction,
     isElementSelected,
     selectionModeActivated,
     toggleSelectionMode,
-    SelectionModeButton,
     hasSelection: selectedIds.length > 0,
   };
 }
