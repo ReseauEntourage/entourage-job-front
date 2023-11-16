@@ -1,0 +1,10 @@
+
+> linkedout-front@2.10.0 dev
+> node -r dotenv/config server-next.js
+
+info  - Loaded env from /home/gauthier/Dev/hub/mecenat/entourage-job-front/.env
+WEBPACK
+true
+true
+true
+> Ready on http://localhost:3001

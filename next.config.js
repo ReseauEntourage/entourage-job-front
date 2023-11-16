@@ -2,6 +2,8 @@
 require('dotenv').config();
 
 const webpack = require('webpack');
+
+console.log('WEBPACK');
 const withLess = require('next-with-less');
 
 const CircularDependencyPlugin = require('circular-dependency-plugin');
@@ -114,18 +116,23 @@ if (process.env.AWSS3_URL) {
 }
 
 module.exports = withLess({
-  webpackDevMiddleware: (config) => {
-    config.watchOptions = {
-      poll: 1000,
-      aggregateTimeout: 300,
-    };
-    return config;
-  },
-  lessOptions: {
-    javascriptEnabled: true,
-  },
+  // webpackDevMiddleware: (config) => {
+  //   config.watchOptions = {
+  //     poll: 1000,
+  //     aggregateTimeout: 300,
+  //   };
+  //   return config;
+  // },
+  // lessOptions: {
+  //   javascriptEnabled: true,
+  // },
   webpack: (config, options) => {
     config.resolve.modules.push(__dirname);
+
+    // console.log('++ CONFIG ++');
+    // console.log(config);
+    // console.log('++ OPTIONS ++');
+    // console.log(options);
 
     config.module.rules.push({
       test: /\.svg$/,
@@ -157,6 +164,8 @@ module.exports = withLess({
 
     config.plugins.push(new webpack.EnvironmentPlugin(process.env));
 
+    // console.log(process.env.__NEXT_OPTIMIZE_FONTS);
+
     config.plugins.push(
       new CircularDependencyPlugin({
         // exclude detection of files based on a RegExp
@@ -182,7 +191,7 @@ module.exports = withLess({
         })
       );
     }
-
+    // console.log(config);
     return config;
   },
   assetPrefix: !dev ? process.env.CDN_URL || undefined : undefined,
