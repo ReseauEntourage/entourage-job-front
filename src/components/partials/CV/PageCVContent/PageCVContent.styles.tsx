@@ -11,18 +11,7 @@ export const StyledCVPageContent = styled.div`
   color: #484848;
   font-size: 14px;
   > a {
-    margin: 26px auto 0;
-    color: black;
-    font-size: 14px;
-    line-height: 16px;
-    width: 100%;
-    display: flex;
-    max-width: 1320px;
-    padding: 0 10px;
-
-    :hover {
-      color: ${COLORS.primaryOrange};
-    }
+    margin: 26px 26px 0 26px;
   }
   p {
     color: ${COLORS.darkGrayFont};
