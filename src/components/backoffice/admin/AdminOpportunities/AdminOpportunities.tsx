@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useRef, useState } from 'react';
 import UIkit from 'uikit';
 import useDeepCompareEffect from 'use-deep-compare-effect';
+import PlusIcon from 'assets/icons/plus.svg';
 import { useTag } from '../useTag';
 import { Api } from 'src/api';
 import { Opportunity } from 'src/api/types';
@@ -19,7 +20,7 @@ import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { PostOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
-import { Button, ButtonMultiple, Icon, Section } from 'src/components/utils';
+import { Button, ButtonMultiple, Section } from 'src/components/utils';
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 import { HEIGHTS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
@@ -244,8 +245,8 @@ export const AdminOpportunities = ({
                 },
               ]}
             >
-              <Icon name="plus" ratio={0.8} className="uk-margin-small-right" />
-              Créer
+              <PlusIcon />
+              &nbsp; Créer
             </ButtonMultiple>
           </HeaderBackoffice>
           <Section className="custom-primary custom-fixed">

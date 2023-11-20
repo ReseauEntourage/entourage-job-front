@@ -122,7 +122,6 @@ export const AdminOpportunityItem = ({
           {candidateId && opportunityUser && (
             <ActionLabel
               disabled
-              fill
               color={statusToColor[opportunityUser.status]}
               label={statusToTitle(opportunityUser.status)}
             />

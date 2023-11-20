@@ -63,7 +63,7 @@ export const NoOpportunities = ({
           shallow
         >
           <SearchIcon />
-          &nbsp; Trouver des offres LinkedOut
+          &nbsp;Trouver des offres LinkedOut
         </Button>
       </StyledButtonContainer>
     </StyledContainer>

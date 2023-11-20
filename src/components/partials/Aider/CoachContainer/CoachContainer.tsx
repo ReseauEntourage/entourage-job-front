@@ -1,14 +1,10 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import BoiteOutilsIcon from 'assets/icons/aider-boite-outils.svg';
-import InterviewIcon from 'assets/icons/aider-interview.svg';
-import ReseauIcon from 'assets/icons/aider-reseau.svg';
-import WelcomeIcon from 'assets/icons/aider-welcome.svg';
 import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { StyledCoachContainer } from 'src/components/partials/Aider/CoachContainer/CoachContainer.styles';
 import { CoachTestimony } from 'src/components/partials/Aider/CoachContainer/CoachTestimony/CoachTestimony';
 import { TitleSection } from 'src/components/partials/Aider/H2/H2';
-import { BackgroundImage, Button, Container } from 'src/components/utils';
+import { BackgroundImage, Button, Container, Img } from 'src/components/utils';
 import { COLORS } from 'src/constants/styles';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
@@ -18,22 +14,22 @@ const uuidValue = uuid();
 
 const pictoContent = [
   {
-    picto: WelcomeIcon,
+    picto: '/static/img/illustrations/aider-welcome.png',
     subtitle: 'Webinaire d’information',
     text: 'sur la mission  et un parcours de formation.',
   },
   {
-    picto: ReseauIcon,
+    picto: '/static/img/illustrations/aider-reseau.png',
     subtitle: 'Une communauté de coachs ',
     text: 'pour partager son réseau, des bonnes pratiques et des temps conviviaux',
   },
   {
-    picto: InterviewIcon,
+    picto: '/static/img/illustrations/aider-interview.png',
     subtitle: 'Un suivi individualisé',
     text: 'par l’equipe pour répondre à toutes vos questions ',
   },
   {
-    picto: BoiteOutilsIcon,
+    picto: '/static/img/illustrations/aider-boite-outils.png',
     subtitle: 'Une boîte à outils',
     text: 'pour favoriser l’accompagnement à chaque étape du parcours ',
   },
@@ -59,8 +55,13 @@ export const CoachContainer = () => {
             {pictoContent.map((content, key) => {
               return (
                 <div className="picto-text-content" key={`${key}-${uuidValue}`}>
-                  <div className="svg-container">
-                    <content.picto />
+                  <div className="img-container">
+                    <Img
+                      alt={content.subtitle}
+                      src={content.picto}
+                      height={116}
+                      width={340}
+                    />
                   </div>
                   <p>
                     <strong>{content.subtitle}</strong>

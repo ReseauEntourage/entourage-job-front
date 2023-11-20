@@ -16,9 +16,9 @@ export const StyledCoachContainer = styled.section`
       min-width: 200px;
       align-items: center;
       margin-bottom: 40px;
-      .svg-container {
-        min-height: 103px;
+      .img-container {
         margin-bottom: 24px;
+        filter: brightness(0) invert(1);
       }
       p {
         color: #ffffff;
