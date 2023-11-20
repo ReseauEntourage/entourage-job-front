@@ -17,7 +17,7 @@ export const DetailsProgressBar = ({
     useState<{ text: string; className: string; mobile: string }[]>();
   const renderClassNames = (className, index, array) => {
     for (let i = 0; i <= index; i += 1) {
-      array[i].style = className;
+      array[i].className = className;
     }
     setSteps(array);
   };

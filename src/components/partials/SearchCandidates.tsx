@@ -32,10 +32,9 @@ export const SearchCandidates = ({ style }: { style?: UIKIT_STYLES }) => {
             Découvrez les <span className="uk-text-primary">candidats</span>
           </h2>
           <div>
-            Découvrez ci-dessous les CV des candidats LinkedOut disponibles.
-            Vous pouvez leur donner un coup de pouce en partageant leur CV, leur
-            transmettre des opportunités, ou leur proposer des offres
-            d&apos;emploi.
+            Découvrez ci-dessous les CV des candidats LinkedOut. Vous pouvez
+            leur donner un coup de pouce en partageant leur CV, leur transmettre
+            des opportunités, ou leur proposer des offres d&apos;emploi.
           </div>
           <p>
             <Button

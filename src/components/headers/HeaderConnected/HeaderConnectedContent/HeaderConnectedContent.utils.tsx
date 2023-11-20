@@ -6,7 +6,6 @@ import ListIcon from 'assets/icons/list.svg';
 import LogOutIcon from 'assets/icons/log-out.svg';
 import QuestionIcon from 'assets/icons/question.svg';
 import SettingsIcon from 'assets/icons/settings.svg';
-import UserEmptyIcon from 'assets/icons/user-empty.svg';
 import UserIcon from 'assets/icons/user.svg';
 import { GA_TAGS } from 'src/constants/tags';
 import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
@@ -43,7 +42,7 @@ export const renderLinks = (user, logout, candidateId): AnyToFix => {
               user?.zone ? `zone=${user?.zone}` : ''
             }`,
             name: 'Les candidats',
-            icon: <UserEmptyIcon />,
+            // icon: <UserEmptyIcon />,
             badge: 'members',
             tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_CANDIDATS_CLIC,
           },
@@ -53,7 +52,7 @@ export const renderLinks = (user, logout, candidateId): AnyToFix => {
               user?.zone ? `zone=${user?.zone}` : ''
             }`,
             name: 'Les coachs',
-            icon: <UserEmptyIcon />,
+            // icon: <UserEmptyIcon />,
             badge: '',
             tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_COACHS_CLIC,
           },

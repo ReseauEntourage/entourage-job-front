@@ -79,7 +79,7 @@ export function PostPublicOpportunityModal() {
     return {
       title: 'Proposer une opportunité',
       description:
-        'LinkedOut transmettra cette opportunité aux candidats dont le profil correspond à votre besoin',
+        'LinkedOut transmettra cette opportunité aux candidats dont le profil correspond à votre besoin.',
       formSchema: formAddPublicOpportunity,
       submitText: 'Envoyer',
       defaultValues: {

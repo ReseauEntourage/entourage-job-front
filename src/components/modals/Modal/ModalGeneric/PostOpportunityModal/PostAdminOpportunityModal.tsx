@@ -7,12 +7,12 @@ import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { formAddOpportunityAsAdmin } from 'src/components/forms/schemas/formAddOpportunity';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 
-interface PostOpportunityModalProps {
+interface PostAdminOpportunityModalProps {
   callback?: () => void;
 }
 export function PostAdminOpportunityModal({
   callback,
-}: PostOpportunityModalProps) {
+}: PostAdminOpportunityModalProps) {
   const [lastFilledForm, setLastFilledForm] = useState<
     ExtractFormSchemaValidation<typeof formAddOpportunityAsAdmin>
   >({} as ExtractFormSchemaValidation<typeof formAddOpportunityAsAdmin>);

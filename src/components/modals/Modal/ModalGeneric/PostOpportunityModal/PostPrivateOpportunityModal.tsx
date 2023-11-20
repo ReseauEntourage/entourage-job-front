@@ -10,7 +10,7 @@ import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
 
-interface PostOpportunityModalProps {
+interface PostPrivateOpportunityModalProps {
   candidateId: string;
   candidateFirstName: string;
   candidateLastName: string;
@@ -20,7 +20,7 @@ export function PostPrivateOpportunityModal({
   candidateId,
   candidateFirstName,
   candidateLastName,
-}: PostOpportunityModalProps) {
+}: PostPrivateOpportunityModalProps) {
   const [lastFilledForm, setLastFilledForm] = useState<
     ExtractFormSchemaValidation<typeof formAddPrivateOpportunity>
   >({} as ExtractFormSchemaValidation<typeof formAddPrivateOpportunity>);

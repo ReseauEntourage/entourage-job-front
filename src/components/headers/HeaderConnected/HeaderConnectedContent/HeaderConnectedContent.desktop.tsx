@@ -72,8 +72,9 @@ export const HeaderConnectedContentDesktop = ({
         }}
       >
         <ImgProfile user={user} size={40} />
-        <span className="uk-margin-small-left">Bonjour {user.firstName}</span>
-        &nbsp;
+        <span className="uk-margin-small-left uk-margin-small-right">
+          Bonjour {user.firstName}
+        </span>
         <CaretDownIcon />
       </a>
       <Dropdown
