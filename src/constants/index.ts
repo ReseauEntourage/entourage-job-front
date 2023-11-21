@@ -33,7 +33,7 @@ export const OFFER_STATUS: (FilterConstant<OfferStatus> & {
 
 export type AdminOffersTags = 'pending' | 'validated' | 'external' | 'archived';
 
-export const ADMIN_OFFERS_TAGS = [
+export const ADMIN_OFFERS_TAGS: FilterConstant<AdminOffersTags>[] = [
   {
     value: 'pending',
     label: 'offres à valider',
@@ -50,7 +50,7 @@ export const ADMIN_OFFERS_TAGS = [
     value: 'archived',
     label: 'offres archivées',
   },
-] as FilterConstant<AdminOffersTags>[];
+];
 
 export type BusinessLineValue =
   | 'la'
@@ -381,7 +381,7 @@ export const ADMIN_OPPORTUNITY_FILTERS_DATA = [
   ...OPPORTUNITY_FILTERS_DATA.filter(
     (el) => el.key !== 'status' && el.key !== 'contracts'
   ),
-];
+] as const;
 
 export const ORGANIZATION_FILTERS_DATA = [
   {

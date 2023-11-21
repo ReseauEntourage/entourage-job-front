@@ -21,13 +21,14 @@ describe('Admin', () => {
         fixture: 'user-members-res',
       }
     ).as('members');
-    cy.intercept(
-      'GET',
-      '/opportunity/admin?type=validated&department[]=Ain+(01)&department[]=Allier+(03)&department[]=Ard%C3%A8che+(07)&department[]=Cantal+(15)&department[]=Dr%C3%B4me+(26)&department[]=Is%C3%A8re+(38)&department[]=Loire+(42)&department[]=Haute-Loire+(43)&department[]=Puy-de-D%C3%B4me+(63)&department[]=Rh%C3%B4ne+(69)&department[]=Savoie+(73)&department[]=Haute-Savoie+(74)',
-      {
-        fixture: 'opportunity-admin-res',
-      }
-    ).as('offers');
+
+    cy.intercept('GET', '/opportunity/admin**', {
+      fixture: 'opportunities-admin-res',
+    }).as('offers');
+
+    cy.intercept('GET', '/opportunity/84fe74bf-7998-4653-9150-906781bfdb91', {
+      fixture: 'opportunity-admin-res',
+    }).as('offer');
 
     cy.intercept('POST', '/organization', {
       statusCode: 201,
@@ -111,6 +112,10 @@ describe('Admin', () => {
     cy.intercept('GET', '/organization?search=&limit=50&offset=0', {
       fixture: 'organization-search-res',
     }).as('getOrganizationListUpdateCreate');
+
+    cy.intercept('POST', '/opportunity', {
+      fixture: 'opportunity-res',
+    }).as('postOpportunity');
   });
 
   describe('Offers', () => {
@@ -122,12 +127,90 @@ describe('Admin', () => {
         },
       });
       cy.wait('@offers');
-      // test if all offer are in the table
-      cy.fixture('opportunity-admin-res').then((offers) => {
-        cy.get('[data-testid="offer-list"]')
-          .find('li')
-          .should('have.length', offers.length);
+      cy.wait('@offer');
+      // test if all offer are in the table and if url contains first offer
+      cy.fixture('opportunities-admin-res').then((offers) => {
+        cy.get('[data-testid="admin-offer-list-element"]')
+          .its('length')
+          .should('eq', offers.length);
+        cy.url().should('include', offers[0].id);
       });
+
+      // change tabs
+      cy.get('[data-testid="admin-offer-tab-validated"]').click();
+      cy.url().should('include', 'validated');
+      cy.get('[data-testid="admin-offer-tab-external"]').click();
+      cy.url().should('include', 'external');
+      cy.get('[data-testid="admin-offer-tab-archived"]').click();
+      cy.url().should('include', 'archived');
+
+      // reset filters
+      cy.get('[data-testid="reset-filters"]').click();
+      cy.url().should('not.include', 'department');
+
+      // add an offer
+      cy.get('[data-testid="button-admin-create"]').click();
+      cy.get('[data-testid="admin-add-offer-main"]').click();
+      cy.get('#form-add-offer-title').scrollIntoView().type('test');
+      cy.get('#form-add-offer-company').scrollIntoView().type('test');
+
+      cy.get('#form-add-offer-department')
+        .should('be.visible')
+        .scrollIntoView()
+        .type('Par');
+
+      cy.get('#form-add-offer-department')
+        .find('.Select__menu')
+        .scrollIntoView()
+        .should('be.visible')
+        .find('.Select__option')
+        .contains('Paris (75)')
+        .click();
+      cy.get('#form-add-offer-address')
+        .scrollIntoView()
+        .should('be.visible')
+        .type('description');
+
+      cy.get('#form-add-offer-companyDescription')
+        .scrollIntoView()
+        .should('be.visible')
+        .type('description');
+
+      cy.get('#form-add-offer-contract-container')
+        .scrollIntoView()
+        .should('be.visible')
+        .click()
+        .find('.option')
+        .contains('CDI')
+        .click();
+
+      cy.get('#form-add-offer-recruiterFirstName')
+        .scrollIntoView()
+        .type('test');
+      cy.get('#form-add-offer-recruiterName').scrollIntoView().type('test');
+      cy.get('#form-add-offer-recruiterPosition').scrollIntoView().type('test');
+      cy.get('#form-add-offer-recruiterMail')
+        .scrollIntoView()
+        .type('test@gmail.com');
+
+      cy.get('#form-add-offer-businessLines')
+        .should('be.visible')
+        .scrollIntoView()
+        .type('Agr');
+
+      cy.get('#form-add-offer-businessLines')
+        .find('.Select__menu')
+        .scrollIntoView()
+        .should('be.visible')
+        .find('.Select__option')
+        .contains('Agriculture et espaces verts')
+        .click();
+
+      cy.get('#form-add-offer-description').scrollIntoView().type('test');
+      cy.get('button').contains('Valider').click();
+      cy.wait('@postOpportunity');
+
+      cy.get('.uk-modal-body').should('not.exist');
     });
   });
 

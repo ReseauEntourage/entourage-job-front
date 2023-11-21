@@ -74,17 +74,17 @@ export const AdminOpportunityDetailsCTAs = ({
     [oppRefreshCallback]
   );
 
-  const updateOpportunity = async (
-    opportunityId,
-    opportunityToUpdate: Partial<OpportunityDto>
-  ) => {
-    try {
-      await Api.putOpportunity(opportunityId, opportunityToUpdate);
-      await oppRefreshCallback();
-    } catch (err) {
-      UIkit.notification(`Une erreur est survenue.`, 'danger');
-    }
-  };
+  const updateOpportunity = useCallback(
+    async (opportunityId, opportunityToUpdate: Partial<OpportunityDto>) => {
+      try {
+        await Api.putOpportunity(opportunityId, opportunityToUpdate);
+        await oppRefreshCallback();
+      } catch (err) {
+        UIkit.notification(`Une erreur est survenue.`, 'danger');
+      }
+    },
+    [oppRefreshCallback]
+  );
 
   const actions = {
     duplicateOpportunity: async () => {

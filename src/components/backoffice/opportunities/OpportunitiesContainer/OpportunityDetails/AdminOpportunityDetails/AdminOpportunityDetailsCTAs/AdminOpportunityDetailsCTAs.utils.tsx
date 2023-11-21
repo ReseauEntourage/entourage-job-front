@@ -6,7 +6,7 @@ import {
   CTAsByTagType,
 } from './AdminOpportunityDetailsCTAs.types';
 
-export const allCTAs = {
+export const allCTAs: AllCTAsType = {
   validate: {
     color: 'primaryOrange',
     className: 'custom-primary-inverted',
@@ -49,7 +49,7 @@ export const allCTAs = {
     action: 'archiveOpportunity',
     text: <>Archiver</>,
   },
-} as AllCTAsType;
+};
 
 export const getOpportunityCurrentTag = (
   opportunity: AdminOpportunityWithOpportunityUsers
@@ -66,7 +66,7 @@ export const getOpportunityCurrentTag = (
   return 'pending';
 };
 
-export const CTAsByTag = [
+export const CTAsByTag: CTAsByTagType = [
   {
     tag: 'pending',
     ctas: ['validate', 'reject', 'recommand', 'duplicate', 'edit'],
@@ -85,7 +85,7 @@ export const CTAsByTag = [
       // 'feedback'
     ],
   },
-] as CTAsByTagType;
+];
 
 export const getCandidatesToShowInInput = (offer) => {
   if (offer.opportunityUsers && offer.opportunityUsers.length > 0) {

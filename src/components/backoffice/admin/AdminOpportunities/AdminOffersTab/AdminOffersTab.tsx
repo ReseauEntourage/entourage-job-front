@@ -2,12 +2,8 @@ import Link from 'next/link';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
-import { AdminOffersTags } from 'src/constants';
+import { AdminOffersTags, ADMIN_OFFERS_TAGS } from 'src/constants';
 import { StyledAdminTabsUl } from './AdminOffersTab.styles';
-import {
-  adminTabs,
-  //   adminTabsLabels, TabsLabelsType, adminTabsStatus
-} from './AdminOffersTab.types';
 
 const uuidValue = uuid();
 
@@ -34,11 +30,15 @@ export const AdminOffersTab = ({
   return (
     <div>
       <StyledAdminTabsUl className={!isMobile ? '' : 'ul-mobile'}>
-        {adminTabs.map(({ value, label }, k) => {
+        {ADMIN_OFFERS_TAGS.map(({ value, label }, k) => {
           const isActive = activeStatus?.value === value;
 
           return (
-            <li className={isActive ? 'active' : ''} key={`${k}-${uuidValue}`}>
+            <li
+              data-testid={`admin-offer-tab-${value}`}
+              className={isActive ? 'active' : ''}
+              key={`${k}-${uuidValue}`}
+            >
               <Link
                 href={{
                   pathname: basePath,

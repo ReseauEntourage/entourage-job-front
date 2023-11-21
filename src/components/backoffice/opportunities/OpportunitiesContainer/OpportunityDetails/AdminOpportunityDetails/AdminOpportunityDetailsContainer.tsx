@@ -23,9 +23,7 @@ export function AdminOpportunityDetailsContainer({
       details={
         <AdminOpportunityDetails
           opportunity={opportunity}
-          oppRefreshCallback={() => {
-            refreshOpportunity();
-          }}
+          oppRefreshCallback={refreshOpportunity}
           fetchOpportunities={fetchOpportunities}
         />
       }

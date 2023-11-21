@@ -1,6 +1,9 @@
+import moment from 'moment';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import UIkit from 'uikit';
 import useDeepCompareEffect from 'use-deep-compare-effect';
+import { Api } from 'src/api';
 import { Opportunity } from 'src/api/types';
 import { OpportunitiesContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer';
 import { AdminOpportunitiesList } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/AdminOpportunitiesList';
@@ -8,14 +11,19 @@ import { AdminOpportunityDetailsContainer } from 'src/components/backoffice/oppo
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
 import { SearchBar } from 'src/components/filters/SearchBar';
+import { formAddExternalOpportunityAsAdmin } from 'src/components/forms/schemas/formAddExternalOpportunity';
+import { formAddOpportunityAsAdmin } from 'src/components/forms/schemas/formAddOpportunity';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
+import { openModal } from 'src/components/modals/Modal';
+import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { PostOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { OpportunityError } from 'src/components/opportunities/OpportunityError';
-import { Button, Icon, Section } from 'src/components/utils';
+import { Button, ButtonMultiple, Icon, Section } from 'src/components/utils';
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { useBulkActions } from 'src/hooks/useBulkActions';
 import { useAdminOpportunities } from 'src/hooks/useOpportunityList';
-import { usePrevious } from 'src/hooks/utils';
+import { useIsDesktop, usePrevious } from 'src/hooks/utils';
 import { AdminOffersTab } from './AdminOffersTab';
 import { StyledAdminOpportunityNavigation } from './AdminOpportunities.styles';
 import { AdminOpportunitiesFilters } from './AdminOpportunitiesFilters.types';
@@ -141,6 +149,20 @@ export const AdminOpportunities = ({
     }
   }, [hasSelection]);
 
+  const opportunityListRef = useRef<{ fetchData: () => Promise<void> }>();
+
+  const opportunityModalProps = {
+    defaultValues: {
+      isPublic: true,
+    },
+    isAdmin: true,
+    callback: opportunityListRef?.current?.fetchData,
+    modalTitle: 'Ajouter une nouvelle offre',
+    formSchema: formAddOpportunityAsAdmin,
+  };
+
+  const isDesktop = useIsDesktop();
+
   return (
     <>
       {!(isMobile && opportunityId) && (
@@ -151,21 +173,74 @@ export const AdminOpportunities = ({
               title="Modération des offres"
               description="Ici vous pouvez accéder à toutes les opportunités et valider les offres envoyées par les recruteurs !"
             >
-              <Button
-                style="primary"
-                dataTestId="candidat-add-offer-main"
-                onClick={() => {
-                  // openModal(
-                  // );
-                }}
+              <ButtonMultiple
+                id="admin-create"
+                align={isDesktop ? 'right' : 'left'}
+                dataTestId="button-admin-create"
+                style="custom-primary"
+                buttons={[
+                  {
+                    onClick: () => {
+                      openModal(
+                        <PostOpportunityModal {...opportunityModalProps} />
+                      );
+                    },
+                    label: 'Nouvelle offre',
+                    dataTestId: 'admin-add-offer-main',
+                  },
+                  {
+                    onClick: () => {
+                      openModal(
+                        <ModalEdit
+                          title="Ajouter une offre externe"
+                          submitText="Envoyer"
+                          formSchema={formAddExternalOpportunityAsAdmin}
+                          onSubmit={async (fields, closeModal) => {
+                            try {
+                              await Api.postExternalOpportunity({
+                                ...fields,
+                                department: fields.department.value,
+                                candidateId: fields.candidateId.value,
+                                date: moment().toISOString(),
+                                businessLines: fields.businessLines
+                                  ? fields.businessLines.map(
+                                      (businessLine, index) => {
+                                        return {
+                                          name: businessLine.value,
+                                          order: index,
+                                        };
+                                      }
+                                    )
+                                  : [],
+                              });
+                              closeModal();
+                              await opportunityListRef?.current?.fetchData();
+                              UIkit.notification(
+                                "L'offre externe a bien été ajouté",
+                                'success'
+                              );
+                            } catch (err) {
+                              console.error(err);
+                              UIkit.notification(
+                                `Une erreur est survenue.`,
+                                'danger'
+                              );
+                            }
+                          }}
+                        />
+                      );
+                    },
+                    label: 'Offre externe',
+                  },
+                ]}
               >
                 <Icon
                   name="plus"
-                  ratio="0.8"
+                  ratio={0.8}
                   className="uk-margin-small-right"
                 />
-                Ajouter une offre
-              </Button>
+                Créer
+              </ButtonMultiple>
             </HeaderBackoffice>
           </Section>
           <StyledAdminOpportunityNavigation>

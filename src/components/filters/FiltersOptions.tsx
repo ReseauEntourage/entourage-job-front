@@ -17,6 +17,7 @@ export const FiltersOptions = ({
               style="custom-secondary"
               color="primaryOrange"
               size="small"
+              dataTestId="reset-filters"
               onClick={resetFilters}
             >
               Réinitialiser les filtres

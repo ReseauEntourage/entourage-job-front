@@ -1,10 +1,10 @@
 import { useWindowHeight } from '@react-hook/window-size';
 import moment from 'moment';
 import React, { useRef } from 'react';
-import { useOpportunityDetailsHeight } from '../CandidateOpportunityDetails/useOpportunityDetailsHeight';
 import { OpportunitySection } from '../OpportunitySection';
 import { StyledOpportunitySectionList } from '../OpportunitySection/OpportunitySection.styles';
 import { OpportunitySectionCandidates } from '../OpportunitySection/OpportunitySectionCandidates';
+import { useOpportunityDetailsHeight } from '../useOpportunityDetailsHeight';
 import { AdminOpportunityWithOpportunityUsers } from 'src/api/types';
 import { AdminActionLabelContainer as ActionLabels } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel';
@@ -62,14 +62,7 @@ export const AdminOpportunityDetails = ({
 
   const ref = useRef();
 
-  const windowHeight = useWindowHeight();
-
-  const { containerHeight } = useOpportunityDetailsHeight(
-    windowHeight,
-    true,
-    HEIGHTS,
-    ref
-  );
+  const { containerHeight } = useOpportunityDetailsHeight(HEIGHTS, ref, true);
 
   return (
     <StyledOpportunityDetailsContainer
@@ -120,12 +113,8 @@ export const AdminOpportunityDetails = ({
       <StyledOpportunityDetailsCTAContainer>
         <AdminOpportunityDetailsCTAs
           opportunity={opportunity}
-          oppRefreshCallback={() => {
-            oppRefreshCallback();
-          }}
-          fetchOpportunities={async () => {
-            await fetchOpportunities();
-          }}
+          oppRefreshCallback={oppRefreshCallback}
+          fetchOpportunities={fetchOpportunities}
         />
       </StyledOpportunityDetailsCTAContainer>
 

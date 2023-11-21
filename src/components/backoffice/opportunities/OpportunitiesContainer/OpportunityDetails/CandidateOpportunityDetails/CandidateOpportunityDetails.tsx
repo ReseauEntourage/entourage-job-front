@@ -2,6 +2,7 @@ import { useWindowHeight } from '@react-hook/window-size';
 import _ from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
+import { useOpportunityDetailsHeight } from '../useOpportunityDetailsHeight';
 import { OpportunityWithOpportunityUsers, Event } from 'src/api/types';
 import { tabs } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab/CandidateOffersTab.utils';
 import { ActionLabelContainer as ActionLabels } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel';
@@ -30,7 +31,6 @@ import { findConstantFromValue } from 'src/utils/Finding';
 import { mapEventDateFromStatus } from './CandidateOpportunityDetails.utils';
 import { CandidateOpportunityDetailsCTAs } from './CandidateOpportunityDetailsCTAs';
 import { CTAsByTab } from './CandidateOpportunityDetailsCTAs/CandidateOpportunityDetailsCTAs.utils';
-import { useOpportunityDetailsHeight } from './useOpportunityDetailsHeight';
 
 interface CandidateOpportunityDetailsProps
   extends Partial<OpportunityWithOpportunityUsers> {
@@ -92,10 +92,9 @@ export const CandidateOpportunityDetails = ({
   const event = mapEventDateFromStatus(opportunityUsers.status, events);
 
   const { containerHeight } = useOpportunityDetailsHeight(
-    windowHeight,
-    hasCTAContainer,
     HEIGHTS,
-    ref
+    ref,
+    hasCTAContainer
   );
 
   return (

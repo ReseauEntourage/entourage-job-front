@@ -1,6 +1,6 @@
 // import { useWindowHeight } from '@react-hook/window-size';
 import Link from 'next/link';
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import { v4 as uuid } from 'uuid';
 import {
   StyledLinkCard,
@@ -17,7 +17,7 @@ import { AdminOpportunityItem } from './AdminOpportunityItem';
 
 interface AdminOpportunitiesListProps {
   opportunities: Partial<AdminOpportunityWithOpportunityUsers>[];
-  setOffset: Dispatch<SetStateAction<number>>;
+  setOffset: (offset: number) => void;
   selectOpportunity: ({ id }: { id: string }) => void;
 }
 

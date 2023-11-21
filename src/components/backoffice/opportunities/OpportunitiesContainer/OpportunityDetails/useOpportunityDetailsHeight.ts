@@ -1,13 +1,10 @@
 import { useScrollPosition } from '@n8tb1t/use-scroll-position';
+import { useWindowHeight } from '@react-hook/window-size';
 import { useState } from 'react';
 
-export const useOpportunityDetailsHeight = (
-  windowHeight,
-  hasCTAContainer,
-  heights,
-  ref
-) => {
+export const useOpportunityDetailsHeight = (heights, ref, hasCTAContainer) => {
   const [containerHeight, setContainerHeight] = useState<number>(0);
+  const windowHeight = useWindowHeight();
 
   useScrollPosition(
     ({ currPos }) => {

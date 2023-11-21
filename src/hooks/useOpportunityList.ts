@@ -115,8 +115,6 @@ export function useAdminOpportunities(
       try {
         setLoading(true);
         setHasError(false);
-        // const filtersToSend = filters;
-        // delete filtersToSend.tag;
         const { tag, ...filtersToSend } = filters;
         const { data } = await Api.getOpportunityAdmin({
           params: {

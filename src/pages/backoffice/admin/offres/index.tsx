@@ -78,7 +78,6 @@ const AdminOpportunitiesPage = () => {
               return dept.value;
             });
           }
-          console.log(params.department);
           if (offerId) {
             replace(
               {

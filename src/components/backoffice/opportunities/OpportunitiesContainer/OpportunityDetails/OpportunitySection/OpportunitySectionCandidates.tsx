@@ -5,29 +5,15 @@ import {
   UserCandidateWithUsers,
 } from 'src/api/types';
 import { Icon } from 'src/components/utils';
+import { OFFER_STATUS } from 'src/constants';
 import { StyledOpportunitySectionList } from './OpportunitySection.styles';
 
 interface OpportunitySectionCandidatesProps {
   opportunity: AdminOpportunityWithOpportunityUsers;
 }
 
-const CANDIDATE_OPPORTUNITY_TITLES = {
-  A_TRAITER: 'A traiter',
-  CONTACTEE: 'Contactée',
-  ENTRETIEN: "En phase d'entretien",
-  ABANDONNEE: 'Abandonnée',
-  ACCEPTEE: 'Acceptée',
-};
-
 const statusToTitle = (status) => {
-  const titles = {
-    '-1': CANDIDATE_OPPORTUNITY_TITLES.A_TRAITER,
-    '0': CANDIDATE_OPPORTUNITY_TITLES.CONTACTEE,
-    '1': CANDIDATE_OPPORTUNITY_TITLES.ENTRETIEN,
-    '2': CANDIDATE_OPPORTUNITY_TITLES.ABANDONNEE,
-    '3': CANDIDATE_OPPORTUNITY_TITLES.ACCEPTEE,
-  };
-  return titles[status.toString()];
+  return OFFER_STATUS.find((offerStatus) => offerStatus.value === status).label;
 };
 
 export const OpportunitySectionCandidates = ({
