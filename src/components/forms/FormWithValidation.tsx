@@ -76,7 +76,6 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
     useCallback(
       async (fieldValues) => {
         await onSubmit(fieldValues, (msg) => {
-          console.log(msg);
           setError(msg);
         });
       },

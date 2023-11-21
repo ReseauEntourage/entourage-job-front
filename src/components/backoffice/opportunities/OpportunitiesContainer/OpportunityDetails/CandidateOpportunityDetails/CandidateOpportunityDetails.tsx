@@ -1,4 +1,3 @@
-import { useWindowHeight } from '@react-hook/window-size';
 import _ from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
@@ -62,7 +61,6 @@ export const CandidateOpportunityDetails = ({
   candidateId,
 }: CandidateOpportunityDetailsProps) => {
   const ref = useRef();
-  const windowHeight = useWindowHeight();
 
   const { opportunityUsers, bookmarkOpportunity } = useBookmarkOpportunity(
     id,

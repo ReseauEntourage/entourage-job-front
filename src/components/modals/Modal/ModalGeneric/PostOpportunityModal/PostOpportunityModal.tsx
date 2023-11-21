@@ -154,7 +154,6 @@ export function PostOpportunityModal<
       },
       formSchema,
       onError: (fields) => {
-        console.log('error');
         if (!isAdmin) {
           if (fields.isPublic) {
             gaEvent(GA_TAGS.POPUP_OFFRE_ENVOYER_OFFRE_GENERALE_INVALIDE);

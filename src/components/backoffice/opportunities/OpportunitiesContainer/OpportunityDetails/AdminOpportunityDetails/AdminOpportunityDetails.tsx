@@ -1,4 +1,3 @@
-import { useWindowHeight } from '@react-hook/window-size';
 import moment from 'moment';
 import React, { useRef } from 'react';
 import { OpportunitySection } from '../OpportunitySection';
