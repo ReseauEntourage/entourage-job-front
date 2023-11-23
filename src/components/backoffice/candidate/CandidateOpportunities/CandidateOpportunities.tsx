@@ -11,6 +11,7 @@ import { OpportunitiesContainer } from 'src/components/backoffice/opportunities/
 import { NoOpportunities } from 'src/components/backoffice/opportunities/OpportunitiesContainer/NoOpportunities';
 import { CandidateOpportunitiesList } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/CandidateOpportunitiesList';
 import { CandidateOpportunityDetailsContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails';
+import { OpportunityError } from 'src/components/backoffice/opportunities/OpportunityError';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { useOpportunityType } from 'src/components/backoffice/opportunities/useOpportunityType';
 import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
@@ -18,7 +19,6 @@ import { SearchBar } from 'src/components/filters/SearchBar';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer';
-import { OpportunityError } from 'src/components/opportunities/OpportunityError';
 import { Button, Section } from 'src/components/utils';
 import { Icon } from 'src/components/utils/Icon';
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
