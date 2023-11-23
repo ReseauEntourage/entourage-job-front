@@ -1,5 +1,13 @@
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { Opportunity } from 'src/api/types';
+import {
+  OpportunityUser,
+  AdminOpportunityWithOpportunityUsers,
+} from 'src/api/types';
+import {
+  ActionLabel,
+  ActionLabelColor,
+} from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel/ActionLabel';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel';
 import {
   DescriptionText,
@@ -14,6 +22,7 @@ import {
   StyledOpportunityItemTitleContainer,
   StyledOpportunityItemTopContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/OpportunitiesList.styles';
+import { statusToTitle } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunitySection';
 import { CheckBox } from 'src/components/utils/Inputs';
 import { BUSINESS_LINES } from 'src/constants';
 import { findConstantFromValue } from 'src/utils';
@@ -21,9 +30,11 @@ import {
   StyledAdminOpportunityItemCheckboxContainer,
   StyledAdminOpportunityItemSeparator,
   StyledAdminOpportunityItemContainer,
+  StyledAdminStatusOpportunityItemContainer,
 } from './AdminOpportunityItem.styles';
 
-interface AdminOpportunityItemProps extends Partial<Opportunity> {
+interface AdminOpportunityItemProps
+  extends Partial<AdminOpportunityWithOpportunityUsers> {
   selectOpportunity: ({ id }: { id: string }) => void;
 }
 
@@ -38,8 +49,34 @@ export const AdminOpportunityItem = ({
   startOfContract,
   businessLines,
   selectOpportunity,
+  opportunityUsers,
 }: AdminOpportunityItemProps) => {
   const [isChecked, setIsChecked] = useState<boolean>();
+
+  // if candidate Id exists in query params, it means we are on the candidate list page => then find the correct OpportunityUser
+  const {
+    query: { memberId: candidateId },
+  } = useRouter();
+  const [opportunityUser, setOpportunityUser] = useState<OpportunityUser>();
+  useEffect(() => {
+    if (candidateId) {
+      const oppUs = opportunityUsers.find((oppUser) => {
+        return oppUser.user.id === candidateId;
+      });
+      if (oppUs) {
+        setOpportunityUser(oppUs);
+      }
+    }
+  }, [candidateId, opportunityUsers]);
+
+  const statusToColor: { [key: string]: ActionLabelColor } = {
+    '-1': 'primaryOrange',
+    '0': 'primaryOrange',
+    '1': 'primaryOrange',
+    '2': 'yesGreen',
+    '3': 'noRed',
+    '4': 'noRed',
+  };
 
   const handleCheckbox = () => {
     setIsChecked(!isChecked);
@@ -69,14 +106,26 @@ export const AdminOpportunityItem = ({
               </>
             )}
           </InfoText>
-          <StyledAdminOpportunityItemCheckboxContainer>
-            <CheckBox
-              id={`checkbox-${id}`}
-              name={`checkbox-${id}`}
-              onChange={() => handleCheckbox()}
-              value={isChecked}
-            />
-          </StyledAdminOpportunityItemCheckboxContainer>
+          {selectOpportunity && (
+            <StyledAdminOpportunityItemCheckboxContainer>
+              <CheckBox
+                id={`checkbox-${id}`}
+                name={`checkbox-${id}`}
+                onChange={() => handleCheckbox()}
+                value={isChecked}
+              />
+            </StyledAdminOpportunityItemCheckboxContainer>
+          )}
+          {candidateId && opportunityUser && (
+            <StyledAdminStatusOpportunityItemContainer>
+              <ActionLabel
+                disabled
+                fill
+                color={statusToColor[opportunityUser.status]}
+                label={statusToTitle(opportunityUser.status)}
+              />
+            </StyledAdminStatusOpportunityItemContainer>
+          )}
           <InfoText>
             <StyledOpportunityItemInfoContainer>
               <ContractLabel

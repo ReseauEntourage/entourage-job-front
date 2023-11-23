@@ -111,29 +111,45 @@ export function useAdminOpportunities(
   setHasFetchedAll
 ) {
   return useCallback(
-    async (search, filters, offset, shouldFetchAll, currentTag) => {
+    async (
+      search,
+      filters,
+      offset,
+      shouldFetchAll,
+      currentTag,
+      role,
+      candidateId
+    ) => {
       try {
         setLoading(true);
         setHasError(false);
-        const { tag, ...filtersToSend } = filters;
-        const { data } = await Api.getOpportunityAdmin({
-          params: {
-            search,
-            type: tag.value || currentTag.value,
-            offset: shouldFetchAll ? 0 : offset,
-            limit: shouldFetchAll ? LIMIT + offset * LIMIT : LIMIT,
-            ...filtersToQueryParams(filtersToSend),
-          },
-        });
-        setOffers((prevOffers) => {
-          return prevOffers && offset > 0 && !shouldFetchAll
-            ? [...prevOffers, ...data]
-            : data;
-        });
-        setLoading(false);
-        if (data.length < LIMIT) {
-          setHasFetchedAll(true);
+        if (role === 'candidateAsAdmin') {
+          const { data: offers } = await Api.getUserPrivateOpportunities(
+            candidateId,
+            {}
+          );
+          setOffers(offers);
+        } else {
+          const { tag, ...filtersToSend } = filters;
+          const { data } = await Api.getOpportunityAdmin({
+            params: {
+              search,
+              type: tag.value || currentTag.value,
+              offset: shouldFetchAll ? 0 : offset,
+              limit: shouldFetchAll ? LIMIT + offset * LIMIT : LIMIT,
+              ...filtersToQueryParams(filtersToSend),
+            },
+          });
+          setOffers((prevOffers) => {
+            return prevOffers && offset > 0 && !shouldFetchAll
+              ? [...prevOffers, ...data]
+              : data;
+          });
+          if (data.length < LIMIT) {
+            setHasFetchedAll(true);
+          }
         }
+        setLoading(false);
       } catch (err) {
         console.error(err);
         setLoading(false);

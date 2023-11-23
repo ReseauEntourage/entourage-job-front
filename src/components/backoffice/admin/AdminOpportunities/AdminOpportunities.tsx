@@ -81,7 +81,15 @@ export const AdminOpportunities = ({
 
   const fetchOpportunities = async (shouldFetchAll?: boolean) => {
     // const await Api.getOpportunitiesAdminCount()
-    await fetchData(search, filters, offset, shouldFetchAll, currentTag);
+    await fetchData(
+      search,
+      filters,
+      offset,
+      shouldFetchAll,
+      currentTag,
+      null,
+      null
+    );
   };
 
   useDeepCompareEffect(() => {
@@ -131,7 +139,7 @@ export const AdminOpportunities = ({
   const { selectElement, executeAction, hasSelection } = useBulkActions(
     'opportunity',
     async () => {
-      await fetchData(search, filters, offset, false, currentTag);
+      await fetchData(search, filters, offset, false, currentTag, null, null);
     },
     GA_TAGS.BACKOFFICE_ADMIN_ARCHIVER_MASSE_CLIC
   );

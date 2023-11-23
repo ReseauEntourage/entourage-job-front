@@ -1,4 +1,5 @@
 import moment from 'moment';
+// import { useRouter } from 'next/router';
 import React, { useRef } from 'react';
 import { OpportunitySection } from '../OpportunitySection';
 import { StyledOpportunitySectionList } from '../OpportunitySection/OpportunitySection.styles';
@@ -21,7 +22,7 @@ import {
   StyledOpportunityDetailsTopContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunityDetails.styles';
 import { BUSINESS_LINES } from 'src/constants';
-import { HEIGHTS_ADMIN as HEIGHTS } from 'src/constants/styles';
+import { HEIGHTS_ADMIN } from 'src/constants/styles';
 import { findConstantFromValue } from 'src/utils';
 import { AdminOpportunityDetailsCTAs } from './AdminOpportunityDetailsCTAs';
 
@@ -59,9 +60,18 @@ export const AdminOpportunityDetails = ({
     otherInfo,
   } = opportunity;
 
+  // // if candidate Id exists in query params, it means we are on the candidate list page
+  // const {
+  //   query: { memberId: candidateId },
+  // } = useRouter();
+
   const ref = useRef();
 
-  const { containerHeight } = useOpportunityDetailsHeight(HEIGHTS, ref, true);
+  const { containerHeight } = useOpportunityDetailsHeight(
+    HEIGHTS_ADMIN,
+    ref,
+    true
+  );
 
   return (
     <StyledOpportunityDetailsContainer
@@ -152,10 +162,14 @@ export const AdminOpportunityDetails = ({
               </StyledOpportunitySectionList>
             }
           />
-          <OpportunitySection
-            title="Candidats associés"
-            content={<OpportunitySectionCandidates opportunity={opportunity} />}
-          />
+          {opportunity?.opportunityUsers?.length > 0 && (
+            <OpportunitySection
+              title="Candidats associés"
+              content={
+                <OpportunitySectionCandidates opportunity={opportunity} />
+              }
+            />
+          )}
           {companyDescription && (
             <OpportunitySection
               title="Information sur l'entreprise"

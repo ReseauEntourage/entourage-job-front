@@ -32,7 +32,31 @@ export const StyledOpportunitySectionList = styled.ul`
     }
     span {
       flex: 1;
-      color: #363636;
     }
+  }
+`;
+
+export const StyledOpportunitySectionCandidateLi = styled.li`
+  &:not(.orange) {
+    &:hover {
+      cursor: pointer;
+      color: ${COLORS.primaryOrange} !important;
+    }
+  }
+  &.orange {
+    span,
+    select {
+      color: ${COLORS.primaryOrange} !important;
+    }
+  }
+`;
+
+export const StyledOpportunitySectionCandidateSelect = styled.select`
+  border: none;
+  border-bottom: ${COLORS.gray} 1px solid;
+  background-color: transparent;
+  padding: 5px 0;
+  &:focus {
+    outline: none;
   }
 `;

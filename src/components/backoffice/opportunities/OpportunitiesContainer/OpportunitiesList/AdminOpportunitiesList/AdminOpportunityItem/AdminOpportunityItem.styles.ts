@@ -19,3 +19,9 @@ export const StyledAdminOpportunityItemCheckboxContainer = styled.div`
   top: 15px;
   right: 15px;
 `;
+
+export const StyledAdminStatusOpportunityItemContainer = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+`;

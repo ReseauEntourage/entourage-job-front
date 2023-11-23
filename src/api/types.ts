@@ -185,6 +185,7 @@ export interface CV {
 }
 
 export interface UserCandidateWithUsers extends UserCandidate {
+  id?: string;
   email: string;
   candidat?: User;
   coach?: User;
@@ -338,7 +339,7 @@ export interface OpportunityUser {
   seen: boolean;
   status: OfferStatus;
   updatedAt: string;
-  user: UserCandidateWithUsers | UserCandidateWithUsers[];
+  user: UserCandidateWithUsers;
   otherInfo: string;
   prerequisites: string;
   recruiterFirstName: string;

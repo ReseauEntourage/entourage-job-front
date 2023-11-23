@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { Api } from 'src/api';
 import {
   AdminOpportunityWithOpportunityUsers,
@@ -114,9 +114,9 @@ export function useFetchAdminOpportunity(
     fetchOpportunities,
   ]);
 
-  function refreshOpportunity() {
+  const refreshOpportunity = useCallback(() => {
     setRefresh(true);
-  }
+  }, [setRefresh]);
 
   return { opportunity, isLoading, refreshOpportunity };
 }
