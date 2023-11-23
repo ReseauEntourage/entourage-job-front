@@ -80,6 +80,10 @@ export function OffersMemberTab({ candidateId }: OffersMemberTabProps) {
         <OpportunityError />
       ) : (
         <OpportunitiesContainer
+          backButtonHref={{
+            pathname: `/backoffice/admin/membres/${candidateId}/offres`,
+            query: {},
+          }}
           list={
             offers && offers.length > 0 ? (
               <AdminOpportunitiesList
