@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import { v4 as uuid } from 'uuid';
 import {
   StyledLinkCard,
@@ -22,7 +22,7 @@ const uuidValue = uuid();
 interface CandidateOpportunitiesListProps {
   opportunities: Partial<OpportunityWithOpportunityUsers>[];
   fetchOpportunities: () => void;
-  setOffset: Dispatch<SetStateAction<number>>;
+  setOffset: (offset: number) => void;
   hasFetchedAll: boolean;
   candidateId: string;
 }

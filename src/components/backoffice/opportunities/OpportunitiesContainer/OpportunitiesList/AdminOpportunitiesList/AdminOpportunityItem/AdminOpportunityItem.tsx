@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   OpportunityUser,
   AdminOpportunityWithOpportunityUsers,
@@ -24,7 +24,7 @@ import {
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/OpportunitiesList.styles';
 import { statusToTitle } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunitySection';
 import { CheckBox } from 'src/components/utils/Inputs';
-import { BUSINESS_LINES } from 'src/constants';
+import { BUSINESS_LINES, OfferStatus } from 'src/constants';
 import { findConstantFromValue } from 'src/utils';
 import {
   StyledAdminOpportunityItemCheckboxContainer,
@@ -36,6 +36,7 @@ import {
 interface AdminOpportunityItemProps
   extends Partial<AdminOpportunityWithOpportunityUsers> {
   selectOpportunity: ({ id }: { id: string }) => void;
+  isSelected?: boolean;
 }
 
 export const AdminOpportunityItem = ({
@@ -50,9 +51,8 @@ export const AdminOpportunityItem = ({
   businessLines,
   selectOpportunity,
   opportunityUsers,
+  isSelected = false,
 }: AdminOpportunityItemProps) => {
-  const [isChecked, setIsChecked] = useState<boolean>();
-
   // if candidate Id exists in query params, it means we are on the candidate list page => then find the correct OpportunityUser
   const {
     query: { memberId: candidateId },
@@ -69,7 +69,7 @@ export const AdminOpportunityItem = ({
     }
   }, [candidateId, opportunityUsers]);
 
-  const statusToColor: { [key: string]: ActionLabelColor } = {
+  const statusToColor: { [K in OfferStatus]: ActionLabelColor } = {
     '-1': 'primaryOrange',
     '0': 'primaryOrange',
     '1': 'primaryOrange',
@@ -78,15 +78,9 @@ export const AdminOpportunityItem = ({
     '4': 'noRed',
   };
 
-  const handleCheckbox = () => {
-    setIsChecked(!isChecked);
-  };
-
-  useEffect(() => {
-    if (isChecked !== undefined) {
-      selectOpportunity({ id });
-    }
-  }, [isChecked, id, selectOpportunity]);
+  const handleCheckbox = useCallback(() => {
+    selectOpportunity({ id });
+  }, [id, selectOpportunity]);
 
   return (
     <StyledAdminOpportunityItemContainer>
@@ -111,8 +105,8 @@ export const AdminOpportunityItem = ({
               <CheckBox
                 id={`checkbox-${id}`}
                 name={`checkbox-${id}`}
-                onChange={() => handleCheckbox()}
-                value={isChecked}
+                onChange={handleCheckbox}
+                value={isSelected}
               />
             </StyledAdminOpportunityItemCheckboxContainer>
           )}

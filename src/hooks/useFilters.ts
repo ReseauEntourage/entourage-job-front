@@ -7,13 +7,7 @@ import {
   getFiltersObjectsFromQueryParamsFront,
 } from 'src/utils/Filters';
 
-export function useFilters(
-  filtersData,
-  path,
-  otherPathParams?,
-  resetTag?,
-  isAdmin?
-) {
+export function useFilters(filtersData, path, otherPathParams?, resetTag?) {
   const { push, query: originalQuery } = useRouter();
 
   const {
@@ -33,8 +27,6 @@ export function useFilters(
   const filters = getFiltersObjectsFromQueryParamsFront(params, filtersData);
 
   const resetFilters = useCallback(() => {
-    const tag = isAdmin ? originalQuery.tag : undefined;
-
     let query = {
       ...otherParams,
     };
@@ -63,10 +55,7 @@ export function useFilters(
     push(
       {
         pathname: path,
-        query: {
-          ...query,
-          tag,
-        },
+        query,
       },
       undefined,
       {
@@ -74,15 +63,7 @@ export function useFilters(
         scroll: false,
       }
     );
-  }, [
-    filtersData,
-    otherParams,
-    path,
-    push,
-    resetTag,
-    isAdmin,
-    originalQuery.tag,
-  ]);
+  }, [filtersData, otherParams, path, push, resetTag]);
 
   const setFilters = useCallback(
     (updatedFilters) => {

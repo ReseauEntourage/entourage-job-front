@@ -267,6 +267,7 @@ export const AdminOpportunityDetailsCTAs = ({
   };
 
   const [tag, setTag] = useState<AdminOffersTags>();
+
   useEffect(() => {
     setTag(getOpportunityCurrentTag(opportunity));
   }, [opportunity]);

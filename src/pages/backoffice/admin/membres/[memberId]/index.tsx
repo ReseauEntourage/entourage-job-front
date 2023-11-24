@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Api } from 'src/api';
+import { User } from 'src/api/types';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { MemberDetails } from 'src/components/backoffice/admin/members/MemberDetails';
 import { useMemberId } from 'src/components/backoffice/admin/members/MemberDetails/useMemberId';
@@ -14,7 +15,7 @@ import { usePrevious } from 'src/hooks/utils';
 import { isRoleIncluded } from 'src/utils/Finding';
 
 const User = () => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<User>();
 
   const prevUser = usePrevious(user);
 

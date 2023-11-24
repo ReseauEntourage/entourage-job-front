@@ -27,10 +27,9 @@ const AdminOpportunitiesPage = () => {
 
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
     ADMIN_OPPORTUNITY_FILTERS_DATA,
-    `/backoffice/admin/offres${offerId ? `/${offerId}` : ''}`,
-    [],
-    GA_TAGS.BACKOFFICE_ADMIN_SUPPRIMER_FILTRES_CLIC,
-    true
+    `/backoffice/admin/offres`,
+    ['offerId'],
+    GA_TAGS.BACKOFFICE_ADMIN_SUPPRIMER_FILTRES_CLIC
   );
 
   let content;

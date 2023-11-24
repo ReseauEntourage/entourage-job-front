@@ -1,9 +1,10 @@
 import moment from 'moment';
-// import { useRouter } from 'next/router';
-import React, { useRef } from 'react';
-import { OpportunitySection } from '../OpportunitySection';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  OpportunitySection,
+  OpportunitySectionCandidates,
+} from '../OpportunitySection';
 import { StyledOpportunitySectionList } from '../OpportunitySection/OpportunitySection.styles';
-import { OpportunitySectionCandidates } from '../OpportunitySection/OpportunitySectionCandidates';
 import { useOpportunityDetailsHeight } from '../useOpportunityDetailsHeight';
 import { AdminOpportunityWithOpportunityUsers } from 'src/api/types';
 import { AdminActionLabelContainer as ActionLabels } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel';
@@ -22,9 +23,13 @@ import {
   StyledOpportunityDetailsTopContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunityDetails.styles';
 import { BUSINESS_LINES } from 'src/constants';
-import { HEIGHTS_ADMIN } from 'src/constants/styles';
+import { HEIGHTS } from 'src/constants/styles';
 import { findConstantFromValue } from 'src/utils';
 import { AdminOpportunityDetailsCTAs } from './AdminOpportunityDetailsCTAs';
+import {
+  CTAsByTag,
+  getOpportunityCurrentTag,
+} from './AdminOpportunityDetailsCTAs/AdminOpportunityDetailsCTAs.utils';
 
 interface AdminOpportunityDetailsProps {
   opportunity: AdminOpportunityWithOpportunityUsers;
@@ -60,18 +65,24 @@ export const AdminOpportunityDetails = ({
     otherInfo,
   } = opportunity;
 
-  // // if candidate Id exists in query params, it means we are on the candidate list page
-  // const {
-  //   query: { memberId: candidateId },
-  // } = useRouter();
-
   const ref = useRef();
 
+  const [hasCTAContainer, setHasCTAContainer] = useState(true);
+
   const { containerHeight } = useOpportunityDetailsHeight(
-    HEIGHTS_ADMIN,
+    HEIGHTS.TABS_HEIGHT + HEIGHTS.SEARCH_BAR_HEIGHT,
     ref,
-    true
+    hasCTAContainer
   );
+
+  useEffect(() => {
+    const hasCTAs =
+      CTAsByTag.find(({ tag }) => {
+        return tag === getOpportunityCurrentTag(opportunity);
+      }).ctas.length > 0;
+
+    setHasCTAContainer(hasCTAs);
+  }, [hasCTAContainer, opportunity]);
 
   return (
     <StyledOpportunityDetailsContainer
@@ -118,14 +129,15 @@ export const AdminOpportunityDetails = ({
         </StyledOpportunityDetailsRightContainer>
       </StyledOpportunityDetailsTopContainer>
 
-      {/* check if there are CTAS on the current tab to render ctas container */}
-      <StyledOpportunityDetailsCTAContainer>
-        <AdminOpportunityDetailsCTAs
-          opportunity={opportunity}
-          oppRefreshCallback={oppRefreshCallback}
-          fetchOpportunities={fetchOpportunities}
-        />
-      </StyledOpportunityDetailsCTAContainer>
+      {hasCTAContainer && (
+        <StyledOpportunityDetailsCTAContainer>
+          <AdminOpportunityDetailsCTAs
+            opportunity={opportunity}
+            oppRefreshCallback={oppRefreshCallback}
+            fetchOpportunities={fetchOpportunities}
+          />
+        </StyledOpportunityDetailsCTAContainer>
+      )}
 
       {(companyDescription || description) && (
         <StyledOpportunityDetailsDetailsContentContainer

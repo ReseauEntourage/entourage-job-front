@@ -212,7 +212,7 @@ export const CandidateOpportunities = ({
             </HeaderBackoffice>
           </Section>
           {isPublic ? (
-            <Section className="custom-mobile-darkBG custom-fixed">
+            <Section className="custom-primary custom-fixed">
               <SearchBar
                 filtersConstants={
                   candidateSearchFilters as typeof OPPORTUNITY_FILTERS_DATA

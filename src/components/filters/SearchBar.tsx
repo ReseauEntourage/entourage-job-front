@@ -6,6 +6,7 @@ import { FiltersOptions } from 'src/components/filters/FiltersOptions';
 import { FiltersSideBar } from 'src/components/filters/FiltersSideBar';
 import { Icon } from 'src/components/utils';
 import {
+  ADMIN_OPPORTUNITY_FILTERS_DATA,
   CV_FILTERS_DATA,
   MEMBER_FILTERS_DATA,
   OPPORTUNITY_FILTERS_DATA,
@@ -21,6 +22,7 @@ interface SearchBarProps {
     | typeof CV_FILTERS_DATA
     | typeof MEMBER_FILTERS_DATA
     | typeof OPPORTUNITY_FILTERS_DATA
+    | typeof ADMIN_OPPORTUNITY_FILTERS_DATA
     | typeof ORGANIZATION_FILTERS_DATA; // to be typed properly
   filters: AnyToFix; // to be typed
   setFilters: (updatedFilters: AnyToFix) => void;

@@ -22,7 +22,7 @@ export const StyledOpportunitySectionContentContainer = styled.div`
 export const StyledOpportunitySectionList = styled.ul`
   padding-left: 0;
   margin-bottom: 0;
-  li {
+  > li {
     list-style: none;
     display: flex;
     align-items: center;
@@ -37,6 +37,10 @@ export const StyledOpportunitySectionList = styled.ul`
 `;
 
 export const StyledOpportunitySectionCandidateLi = styled.li`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 4px;
   &:not(.orange) {
     &:hover {
       cursor: pointer;
@@ -51,12 +55,21 @@ export const StyledOpportunitySectionCandidateLi = styled.li`
   }
 `;
 
-export const StyledOpportunitySectionCandidateSelect = styled.select`
-  border: none;
-  border-bottom: ${COLORS.gray} 1px solid;
-  background-color: transparent;
-  padding: 5px 0;
-  &:focus {
-    outline: none;
+export const StyledOpportunitySectionCandidateName = styled.div`
+  flex: 1;
+`;
+
+export const StyledOpportunitySectionCandidateSelect = styled.div`
+  display: flex;
+  width: 200px;
+  align-items: center;
+  margin-bottom: -30px;
+  > * {
+    flex: 1;
   }
+`;
+
+export const StyledActionLabelContainer = styled.div`
+  color: ${COLORS.primaryOrange};
+  margin-right: 16px;
 `;

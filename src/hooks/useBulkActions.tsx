@@ -1,16 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
-import { usePrevious } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
 
 export function useBulkActions(apiRoute, refreshElementsCallback, tag) {
   const [selectedIds, setSelectedIds] = useState([]);
-  const [selectionModeActivated, setSelectionModeActivated] = useState(false);
-
-  const prevSelectionModeActivated = usePrevious(selectionModeActivated);
 
   const selectElement = useCallback(
     ({ id }) => {
@@ -86,27 +82,15 @@ export function useBulkActions(apiRoute, refreshElementsCallback, tag) {
     [selectedIds]
   );
 
-  const toggleSelectionMode = useCallback(() => {
-    setSelectionModeActivated((prevSelectionMode) => {
-      return !prevSelectionMode;
-    });
+  const resetSelection = useCallback(() => {
+    setSelectedIds([]);
   }, []);
-
-  useEffect(() => {
-    if (
-      selectionModeActivated !== prevSelectionModeActivated &&
-      !selectionModeActivated
-    ) {
-      setSelectedIds([]);
-    }
-  }, [prevSelectionModeActivated, selectionModeActivated]);
 
   return {
     selectElement,
     executeAction,
     isElementSelected,
-    selectionModeActivated,
-    toggleSelectionMode,
+    resetSelection,
     hasSelection: selectedIds.length > 0,
   };
 }

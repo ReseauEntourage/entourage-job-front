@@ -11,9 +11,11 @@ export const useIsAtBottom = (setOffset, opportunities) => {
 
   useEffect(() => {
     if (isAtBottom && isAtBottom !== prevIsAtBottom) {
-      setOffset((prevOffset) => {
-        return prevOffset + 1;
-      });
+      if (setOffset) {
+        setOffset((prevOffset) => {
+          return prevOffset + 1;
+        });
+      }
     }
   }, [
     setOffset,

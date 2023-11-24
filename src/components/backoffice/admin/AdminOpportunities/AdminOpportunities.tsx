@@ -1,8 +1,9 @@
 import moment from 'moment';
 import { useRouter } from 'next/router';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import UIkit from 'uikit';
 import useDeepCompareEffect from 'use-deep-compare-effect';
+import { useTag } from '../useTag';
 import { Api } from 'src/api';
 import { Opportunity } from 'src/api/types';
 import { OpportunitiesContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer';
@@ -19,18 +20,15 @@ import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { PostOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { Button, ButtonMultiple, Icon, Section } from 'src/components/utils';
-import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
+import { ADMIN_OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { useBulkActions } from 'src/hooks/useBulkActions';
 import { useAdminOpportunities } from 'src/hooks/useOpportunityList';
 import { useIsDesktop, usePrevious } from 'src/hooks/utils';
 import { AdminOffersTab } from './AdminOffersTab';
-import { StyledAdminOpportunityNavigation } from './AdminOpportunities.styles';
 import { AdminOpportunitiesFilters } from './AdminOpportunitiesFilters.types';
 
-const adminSearchFilters = OPPORTUNITY_FILTERS_DATA;
-
-interface CandidateOpportunitiesProps {
+interface AdminOpportunitiesProps {
   search?: string;
   filters: AdminOpportunitiesFilters;
   setFilters?: (updatedFilters: AdminOpportunitiesFilters) => void;
@@ -46,23 +44,26 @@ export const AdminOpportunities = ({
   setSearch,
   resetFilters,
   isMobile = false,
-}: CandidateOpportunitiesProps) => {
+}: AdminOpportunitiesProps) => {
   const { replace } = useRouter();
 
-  const [currentTag, setCurrentTag] = useState();
-  useEffect(() => {
-    setCurrentTag(filters.tag[0]);
-    // const {tag, ...restFilters} = filters;
+  /* useEffect(() => {
+    setCurrentTag(ADMIN_OFFERS_TAGS[0]);
     // Api.getOpportunitiesTabCountForAdmin({
     //     params: {
     //         search,
-    //         type: filters.tag[0].value,
-    //         ...filtersToQueryParams(restFilters),
+    //         tag,
+    //         ...filtersToQueryParams(filters),
     //     }
     // })
-  }, [filters]);
+  }, [filters]); */
 
   const opportunityId = useOpportunityId();
+  const prevOpportunityId = usePrevious(opportunityId);
+
+  const tag = useTag();
+  const previousTag = usePrevious(tag);
+
   const queryParamsOpportunities = useQueryParamsOpportunities();
 
   const [offers, setOffers] = useState<Opportunity[]>(undefined);
@@ -81,34 +82,44 @@ export const AdminOpportunities = ({
 
   const fetchOpportunities = async (shouldFetchAll?: boolean) => {
     // const await Api.getOpportunitiesAdminCount()
-    await fetchData(
-      search,
-      filters,
-      offset,
-      shouldFetchAll,
-      currentTag,
-      null,
-      null
-    );
+    await fetchData(search, filters, offset, shouldFetchAll, tag);
   };
+
+  const {
+    selectElement,
+    executeAction,
+    hasSelection,
+    resetSelection,
+    isElementSelected,
+  } = useBulkActions(
+    'opportunity',
+    async () => {
+      await fetchData(search, filters, offset, false, tag);
+    },
+    GA_TAGS.BACKOFFICE_ADMIN_ARCHIVER_MASSE_CLIC
+  );
 
   useDeepCompareEffect(() => {
     if (offset === 0 || !hasFetchedAll) {
       fetchOpportunities();
+      resetSelection();
     }
-  }, [fetchData, filters, currentTag, hasFetchedAll, offset, search]);
+  }, [fetchData, filters, tag, hasFetchedAll, offset, search]);
 
   useDeepCompareEffect(() => {
     if (
       !isMobile &&
       offers &&
       offers.length > 0 &&
-      offers[0] !== prevOffers?.[0] // don't check all opportunity list because pagination, only if first changes
+      ((offers !== prevOffers && !opportunityId) ||
+        (opportunityId !== prevOpportunityId &&
+          !opportunityId &&
+          tag === previousTag))
     ) {
       replace(
         {
-          pathname: `/backoffice/admin/offres/${
-            offers[0].id ? `${offers[0].id}` : ''
+          pathname: `/backoffice/admin/offres${
+            offers[0].id ? `/${offers[0].id}` : ''
           }`,
           query: queryParamsOpportunities,
         },
@@ -122,7 +133,7 @@ export const AdminOpportunities = ({
     offers,
     opportunityId,
     queryParamsOpportunities,
-    prevOffers,
+    prevOpportunityId,
     replace,
     isMobile,
   ]);
@@ -134,28 +145,11 @@ export const AdminOpportunities = ({
 
   useDeepCompareEffect(() => {
     resetOffset();
-  }, [fetchData, filters, search]);
-
-  const { selectElement, executeAction, hasSelection } = useBulkActions(
-    'opportunity',
-    async () => {
-      await fetchData(search, filters, offset, false, currentTag, null, null);
-    },
-    GA_TAGS.BACKOFFICE_ADMIN_ARCHIVER_MASSE_CLIC
-  );
+  }, [fetchData, tag, filters, search]);
 
   const bulkArchiveOpportunities = async () => {
     executeAction({ isArchived: true }, 'put');
   };
-
-  const [showBulkActions, setShowBulkActions] = useState<boolean>(false);
-  useEffect(() => {
-    if (hasSelection) {
-      setShowBulkActions(true);
-    } else {
-      setShowBulkActions(false);
-    }
-  }, [hasSelection]);
 
   const opportunityListRef = useRef<{ fetchData: () => Promise<void> }>();
 
@@ -251,39 +245,33 @@ export const AdminOpportunities = ({
               </ButtonMultiple>
             </HeaderBackoffice>
           </Section>
-          <StyledAdminOpportunityNavigation>
-            <div className="section-container">
-              <AdminOffersTab
-                activeStatus={currentTag}
-                // tabCounts={tabCounts}
-                isMobile={isMobile}
-              />
-              <SearchBar
-                filtersConstants={
-                  adminSearchFilters as typeof OPPORTUNITY_FILTERS_DATA
-                }
-                filters={filters}
-                resetFilters={resetFilters}
-                search={search}
-                setSearch={setSearch}
-                setFilters={setFilters}
-                placeholder="Rechercher..."
-                additionalButtons={
-                  showBulkActions ? (
-                    <Button
-                      style="custom-secondary-inverted"
-                      size="small"
-                      onClick={() => bulkArchiveOpportunities()}
-                    >
-                      Archiver les offres
-                    </Button>
-                  ) : (
-                    <></>
-                  )
-                }
-              />
-            </div>
-          </StyledAdminOpportunityNavigation>
+          <Section className="custom-primary custom-fixed with-search-bar">
+            <AdminOffersTab
+              activeStatus={tag}
+              // tabCounts={tabCounts}
+              isMobile={isMobile}
+            />
+            <SearchBar
+              filtersConstants={ADMIN_OPPORTUNITY_FILTERS_DATA}
+              filters={filters}
+              resetFilters={resetFilters}
+              search={search}
+              setSearch={setSearch}
+              setFilters={setFilters}
+              placeholder="Rechercher..."
+              additionalButtons={
+                hasSelection && (
+                  <Button
+                    style="custom-secondary-inverted"
+                    size="small"
+                    onClick={bulkArchiveOpportunities}
+                  >
+                    Archiver les offres
+                  </Button>
+                )
+              }
+            />
+          </Section>
         </>
       )}
       <Section className="custom-primary">
@@ -296,13 +284,15 @@ export const AdminOpportunities = ({
               query: queryParamsOpportunities,
             }}
             list={
-              offers && offers.length > 0 ? (
+              offers &&
+              offers.length > 0 && (
                 <AdminOpportunitiesList
                   setOffset={setOffset}
                   opportunities={offers}
                   selectOpportunity={selectElement}
+                  isOpportunitySelected={isElementSelected}
                 />
-              ) : null
+              )
             }
             isLoading={loading}
             details={

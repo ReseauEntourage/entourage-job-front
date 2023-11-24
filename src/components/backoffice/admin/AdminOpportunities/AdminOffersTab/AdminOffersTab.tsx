@@ -8,10 +8,7 @@ import { StyledAdminTabsUl } from './AdminOffersTab.styles';
 const uuidValue = uuid();
 
 interface AdminOffersTabProps {
-  activeStatus: {
-    value: AdminOffersTags;
-    label: string;
-  };
+  activeStatus: AdminOffersTags;
   // tabCounts?: {
   //     tag: string;
   //     count: number;
@@ -31,7 +28,7 @@ export const AdminOffersTab = ({
     <div>
       <StyledAdminTabsUl className={!isMobile ? '' : 'ul-mobile'}>
         {ADMIN_OFFERS_TAGS.map(({ value, label }, k) => {
-          const isActive = activeStatus?.value === value;
+          const isActive = activeStatus === value;
 
           return (
             <li
@@ -53,7 +50,7 @@ export const AdminOffersTab = ({
                     <p>{label}</p>
                   </div>
                 ) : (
-                  <>{label}</>
+                  label
                 )}
               </Link>
             </li>

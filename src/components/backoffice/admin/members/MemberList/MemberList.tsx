@@ -96,17 +96,19 @@ export function MemberList({
     []
   );
 
-  const { selectElement, executeAction, hasSelection } = useBulkActions(
-    'candidate',
-    async () => {
-      await fetchData(search, filters, role, offset, true);
-    },
-    GA_TAGS.BACKOFFICE_ADMIN_MASQUER_MASSE_CLIC
-  );
+  const { selectElement, executeAction, hasSelection, resetSelection } =
+    useBulkActions(
+      'candidate',
+      async () => {
+        await fetchData(search, filters, role, offset, true);
+      },
+      GA_TAGS.BACKOFFICE_ADMIN_MASQUER_MASSE_CLIC
+    );
 
   useDeepCompareEffect(() => {
     if (role) {
       fetchData(search, filters, role, offset, true);
+      resetSelection();
     }
   }, [search, filters, role]);
 

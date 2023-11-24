@@ -372,12 +372,6 @@ export const OPPORTUNITY_FILTERS_DATA = [
 ];
 
 export const ADMIN_OPPORTUNITY_FILTERS_DATA = [
-  {
-    key: 'tag',
-    constants: ADMIN_OFFERS_TAGS,
-    title: 'tag',
-    // tag: GA_TAGS.BACKOFFICE_OFFRES_FILTRE_STATUT_CLIC,
-  },
   ...OPPORTUNITY_FILTERS_DATA.filter(
     (el) => el.key !== 'status' && el.key !== 'contracts'
   ),

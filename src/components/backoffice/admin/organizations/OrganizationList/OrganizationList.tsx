@@ -93,6 +93,7 @@ export function OrganizationList({
       );
     });
   }, [fetchData, filters, offset, organizations, search]);
+
   return (
     <>
       <BackToTop />

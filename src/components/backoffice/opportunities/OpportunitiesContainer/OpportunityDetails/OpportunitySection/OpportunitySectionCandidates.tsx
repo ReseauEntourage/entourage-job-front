@@ -1,14 +1,17 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React from 'react';
 import UIkit from 'uikit';
-import { ActionLabel } from '../../ActionLabel/ActionLabel';
 import { Api } from 'src/api';
 import { AdminOpportunityWithOpportunityUsers } from 'src/api/types';
+import { useMemberId } from 'src/components/backoffice/admin/members/MemberDetails/useMemberId';
+import { ActionLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel/ActionLabel';
 import { Icon } from 'src/components/utils';
+import { SelectSimple } from 'src/components/utils/Inputs';
 import { OFFER_STATUS } from 'src/constants';
 import {
+  StyledActionLabelContainer,
   StyledOpportunitySectionCandidateLi,
+  StyledOpportunitySectionCandidateName,
   StyledOpportunitySectionCandidateSelect,
   StyledOpportunitySectionList,
 } from './OpportunitySection.styles';
@@ -27,14 +30,12 @@ export const OpportunitySectionCandidates = ({
   const { opportunityUsers } = opportunity;
 
   // check if we're on a candidate's page
-  const {
-    query: { memberId: candidateId },
-  } = useRouter();
+  const candidateId = useMemberId();
 
-  const handleSelect = async (e, OpportunityId, UserId) => {
+  const handleSelect = async (value, OpportunityId, UserId) => {
     try {
       await Api.putJoinOpportunity({
-        status: e.target.value,
+        status: value,
         OpportunityId,
         UserId,
       });
@@ -49,51 +50,53 @@ export const OpportunitySectionCandidates = ({
     <StyledOpportunitySectionList>
       {opportunityUsers.map((opportunityUser) => {
         const { recommended, user, status } = opportunityUser;
-
-        return (
-          <StyledOpportunitySectionCandidateLi
-            className={user.id === candidateId ? 'orange' : ''}
-          >
-            {user.id === candidateId ? (
-              <span>
-                {user?.firstName} {user?.lastName}
-              </span>
-            ) : (
-              <Link href={`/backoffice/admin/membres/${user.id}`}>
-                <span>
-                  {user?.firstName} {user?.lastName}
-                </span>
-              </Link>
-            )}
-            <StyledOpportunitySectionCandidateSelect
-              onChange={(e) => {
-                handleSelect(e, opportunity.id, user.id);
-              }}
+        if (user) {
+          return (
+            <StyledOpportunitySectionCandidateLi
+              key={user.id}
+              className={user.id === candidateId ? 'orange' : ''}
             >
-              {OFFER_STATUS.map((offerStatus) => {
-                return (
-                  <option
-                    value={offerStatus.value}
-                    selected={offerStatus.value === status}
-                  >
-                    {offerStatus.label}
-                  </option>
-                );
-              })}
-            </StyledOpportunitySectionCandidateSelect>
-            <span>
-              {recommended && (
-                <ActionLabel
-                  disabled
-                  fill
-                  color="primaryOrange"
-                  label="Recommandé"
-                  icon={<Icon name="entourage" ratio={0.8} />}
+              <StyledOpportunitySectionCandidateName>
+                {user.id === candidateId ? (
+                  <span>
+                    {user.firstName} {user.lastName}
+                  </span>
+                ) : (
+                  <Link href={`/backoffice/admin/membres/${user.id}`}>
+                    <span>
+                      {user.firstName} {user.lastName}
+                    </span>
+                  </Link>
+                )}
+              </StyledOpportunitySectionCandidateName>
+              <StyledActionLabelContainer>
+                {recommended && (
+                  <ActionLabel
+                    disabled
+                    fill
+                    color="primaryOrange"
+                    label="Recommandé"
+                    icon={<Icon name="entourage" ratio={0.8} />}
+                  />
+                )}
+              </StyledActionLabelContainer>
+              <StyledOpportunitySectionCandidateSelect>
+                <SelectSimple
+                  options={OFFER_STATUS}
+                  id="user-opportunity-status"
+                  name="user-opportunity-status"
+                  title="Statut"
+                  showLabel={false}
+                  value={status}
+                  onChange={(value) =>
+                    handleSelect(value, opportunity.id, user.id)
+                  }
                 />
-              )}
-            </span>
-          </StyledOpportunitySectionCandidateLi>
-        );
+              </StyledOpportunitySectionCandidateSelect>
+            </StyledOpportunitySectionCandidateLi>
+          );
+        }
+        return null;
       })}
     </StyledOpportunitySectionList>
   );

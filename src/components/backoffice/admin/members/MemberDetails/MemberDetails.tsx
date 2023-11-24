@@ -14,7 +14,7 @@ import { RecommendedOffersButton } from './RecommendedOffersButton';
 
 interface MemberDetailsProps {
   user: User;
-  setUser: () => void;
+  setUser: (user: User) => void;
 }
 
 export function MemberDetails({ user, setUser }: MemberDetailsProps) {

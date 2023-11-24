@@ -6,7 +6,7 @@ import { OpportunitiesContainer } from 'src/components/backoffice/opportunities/
 import { AdminOpportunitiesList } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/AdminOpportunitiesList';
 import { AdminOpportunityDetailsContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/AdminOpportunityDetails/AdminOpportunityDetailsContainer';
 import { OpportunityError } from 'src/components/backoffice/opportunities/OpportunityError';
-import { useAdminOpportunities } from 'src/hooks/useOpportunityList';
+import { useAdminAsCandidateOpportunities } from 'src/hooks/useOpportunityList';
 import { useIsDesktop, usePrevious } from 'src/hooks/utils';
 
 interface OffersMemberTabProps {
@@ -23,32 +23,20 @@ export function OffersMemberTab({ candidateId }: OffersMemberTabProps) {
   const prevOffers = usePrevious(offers) as Opportunity[];
   const [loading, setLoading] = useState<boolean>(true);
   const [hasError, setHasError] = useState(false);
-  const [hasFetchedAll, setHasFetchedAll] = useState(false);
-  const [offset, setOffset] = useState<number>(0); // will allways be 0
-  const fetchData = useAdminOpportunities(
+
+  const fetchData = useAdminAsCandidateOpportunities(
     setOffers,
     setLoading,
-    setHasError,
-    setHasFetchedAll
+    setHasError
   );
 
-  const fetchOpportunities = async (shouldFetchAll?: boolean) => {
-    await fetchData(
-      null,
-      null,
-      offset,
-      shouldFetchAll,
-      null,
-      'candidateAsAdmin',
-      candidateId
-    );
+  const fetchOpportunities = async () => {
+    await fetchData(candidateId);
   };
 
   useDeepCompareEffect(() => {
-    if (offset === 0 || !hasFetchedAll) {
-      fetchOpportunities();
-    }
-  }, [fetchData, offset]);
+    fetchOpportunities();
+  }, [fetchData]);
 
   const isMobile = !useIsDesktop();
   useDeepCompareEffect(() => {
@@ -85,19 +73,15 @@ export function OffersMemberTab({ candidateId }: OffersMemberTabProps) {
             query: {},
           }}
           list={
-            offers && offers.length > 0 ? (
-              <AdminOpportunitiesList
-                setOffset={setOffset}
-                opportunities={offers}
-              />
-            ) : null
+            offers &&
+            offers.length > 0 && (
+              <AdminOpportunitiesList opportunities={offers} />
+            )
           }
           isLoading={loading}
           details={
             <AdminOpportunityDetailsContainer
-              fetchOpportunities={async () => {
-                await fetchOpportunities(true);
-              }}
+              fetchOpportunities={fetchOpportunities}
             />
           }
           noContent={

@@ -41,16 +41,22 @@ export const StyledSection = styled.section`
   }
   &.custom-fixed {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     position: sticky;
     background-color: ${COLORS.white};
     z-index: 12;
+
     height: ${HEIGHTS.TABS_HEIGHT - 2 * HEIGHTS.SECTION_PADDING}px;
+    &.with-search-bar {
+      height: ${HEIGHTS.TABS_HEIGHT +
+      HEIGHTS.SEARCH_BAR_HEIGHT -
+      2 * HEIGHTS.SECTION_PADDING}px;
+    }
     top: ${HEIGHTS.HEADER}px;
     @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
       padding-top: ${HEIGHTS.SECTION_PADDING_MOBILE}px;
       padding-bottom: ${HEIGHTS.SECTION_PADDING_MOBILE}px;
-      height: auto;
+      height: auto !important;
       position: sticky;
       top: ${HEIGHTS.HEADER_MOBILE}px;
       left: 0;

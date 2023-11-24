@@ -90,7 +90,7 @@ export const CandidateOpportunityDetails = ({
   const event = mapEventDateFromStatus(opportunityUsers.status, events);
 
   const { containerHeight } = useOpportunityDetailsHeight(
-    HEIGHTS,
+    HEIGHTS.TABS_HEIGHT,
     ref,
     hasCTAContainer
   );
