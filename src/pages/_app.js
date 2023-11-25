@@ -17,6 +17,7 @@ import 'react-tooltip/dist/react-tooltip.css';
 import * as Sentry from '@sentry/react';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { Provider } from 'react-redux';
 
 import { SplashScreen } from 'src/components/SplashScreen';
 import { ModalsListener } from 'src/components/modals/Modal';
@@ -25,7 +26,7 @@ import { useMount } from 'src/hooks/utils';
 import * as gtag from 'src/lib/gtag';
 import { DataProvider } from 'src/store/DataProvider';
 import { SharesCountProvider } from 'src/store/SharesCountProvider';
-import { UserProvider } from 'src/store/UserProvider';
+import { store } from 'src/store/store';
 
 UIkit.use(Icons);
 
@@ -108,13 +109,13 @@ const EntourageApp = ({ Component, pageProps, err }) => {
 
   return (
     <Sentry.ErrorBoundary fallback="An error has occurred">
-      <SharesCountProvider>
-        <DataProvider>
-          <UserProvider>
+      <Provider store={store}>
+        <SharesCountProvider>
+          <DataProvider>
             <Container Component={Component} pageProps={pageProps} err={err} />
-          </UserProvider>
-        </DataProvider>
-      </SharesCountProvider>
+          </DataProvider>
+        </SharesCountProvider>
+      </Provider>
     </Sentry.ErrorBoundary>
   );
 };
