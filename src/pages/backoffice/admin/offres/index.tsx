@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { AdminOpportunities } from 'src/components/backoffice/admin/AdminOpportunities';
@@ -13,7 +13,7 @@ import { ADMIN_ZONES, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { GA_TAGS } from 'src/constants/tags';
 import { USER_ROLES } from 'src/constants/users';
 import { useFilters } from 'src/hooks';
-import { UserContext } from 'src/store/UserProvider';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 
 const AdminOpportunitiesPage = () => {
   const {
@@ -22,9 +22,8 @@ const AdminOpportunitiesPage = () => {
     isReady,
   } = useRouter();
 
+  const user = useAuthenticatedUser();
   const [loadingDefaultFilters, setLoadingDefaultFilters] = useState(true);
-
-  const { user } = useContext(UserContext);
 
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
     OPPORTUNITY_FILTERS_DATA,

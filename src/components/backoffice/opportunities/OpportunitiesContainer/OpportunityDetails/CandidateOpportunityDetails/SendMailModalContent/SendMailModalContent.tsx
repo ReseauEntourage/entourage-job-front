@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
 import { StyledSendMailContent } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/SendMailModalContent/SendMailContent.styles';
@@ -7,7 +7,7 @@ import { FormFooter } from 'src/components/forms/FormFooter';
 import { useModalContext, openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { TextArea } from 'src/components/utils/Inputs/TextArea';
-import { UserContext } from 'src/store/UserProvider';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 
 interface SendMailModalContentProps {
   OpportunityId: string;
@@ -24,7 +24,7 @@ export const SendMailModalContent = ({
   fetchOpportunities,
   candidateId,
 }: SendMailModalContentProps) => {
-  const { user } = useContext(UserContext);
+  const user = useAuthenticatedUser();
 
   const { opportunity } = useFetchCandidateOpportunity(
     OpportunityId,

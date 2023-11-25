@@ -1,10 +1,10 @@
 import Router from 'next/router';
 import Pusher from 'pusher-js';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import UIkit from 'uikit';
 import QuestionIcon from 'assets/icons/question.svg';
 import { Api } from 'src/api';
-import { CV, User } from 'src/api/types';
+import { CV } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { Button, ButtonIcon } from 'src/components/utils';
@@ -16,9 +16,9 @@ import {
   COACH_USER_ROLES,
   USER_ROLES,
 } from 'src/constants/users';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop, usePrevious } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
-import { UserContext } from 'src/store/UserProvider';
 import { isRoleIncluded } from 'src/utils/Finding';
 import { ButtonDownload } from './ButtonDownload';
 import {
@@ -59,7 +59,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
 
   const isDesktop = useIsDesktop();
 
-  const { user } = useContext<{ user: User }>(UserContext);
+  const user = useAuthenticatedUser();
 
   const prevCV = usePrevious(cv);
 
