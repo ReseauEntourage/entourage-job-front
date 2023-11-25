@@ -22,6 +22,7 @@ import { Provider } from 'react-redux';
 import { SplashScreen } from 'src/components/SplashScreen';
 import { ModalsListener } from 'src/components/modals/Modal';
 import { OFFCANVAS_GUEST, OFFCANVAS_LOGGED } from 'src/constants/utils';
+import { useAuthentication } from 'src/hooks/authentication/useAuthentication';
 import { useMount } from 'src/hooks/utils';
 import * as gtag from 'src/lib/gtag';
 import { DataProvider } from 'src/store/DataProvider';
@@ -59,6 +60,8 @@ const Container = ({ Component, pageProps, err }) => {
     }
   }, [fading]);
 
+  const { isCurrentRouteReady } = useAuthentication();
+
   return (
     <div
       style={{ height: loading ? '100vh' : 'inherit' }}
@@ -68,7 +71,7 @@ const Container = ({ Component, pageProps, err }) => {
       id="main-container"
     >
       <SplashScreen loading={loading} fading={fading} />
-      <Component {...pageProps} err={err} />
+      {isCurrentRouteReady && <Component {...pageProps} err={err} />}
       <ModalsListener />
     </div>
   );
