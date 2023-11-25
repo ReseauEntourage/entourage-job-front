@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2015",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -18,5 +18,5 @@
     "noImplicitAny": false
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "src/components/utils/CarouselSwiper/swiper-augmentation.d.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "./cypress.config.js"]
 }
