@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router';
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { USER_ROLES, CANDIDATE_USER_ROLES } from 'src/constants/users';
-import { UserContext } from 'src/store/UserProvider';
 import {
   getCandidateIdFromCoachOrCandidate,
   isRoleIncluded,
 } from 'src/utils/Finding';
+import { useAuthenticatedUser } from './authentication/useAuthenticatedUser';
 
 // only used for coaches and candidates
 export const useCandidateAndCoachRedirections = () => {
@@ -14,7 +14,7 @@ export const useCandidateAndCoachRedirections = () => {
 
   const router = useRouter();
 
-  const { user } = useContext(UserContext);
+  const user = useAuthenticatedUser();
 
   useDeepCompareEffect(() => {
     if (

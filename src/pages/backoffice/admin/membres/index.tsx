@@ -1,14 +1,14 @@
 import { useRouter } from 'next/router';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { MemberList } from 'src/components/backoffice/admin/members/MemberList';
 import { useRole } from 'src/components/backoffice/admin/members/MemberList/useRole';
 import { Section } from 'src/components/utils';
 import { ALL_USER_ROLES, CANDIDATE_USER_ROLES } from 'src/constants/users';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useFilters } from 'src/hooks/useFilters';
 import { usePrevious } from 'src/hooks/utils';
-import { UserContext } from 'src/store/UserProvider';
 import { mutateTypeFilterDependingOnRole } from 'src/utils/Filters';
 import { isRoleIncluded } from 'src/utils/Finding';
 
@@ -18,7 +18,7 @@ const MembersAdmin = () => {
   const role = useRole();
 
   const [loadingDefaultFilters, setLoadingDefaultFilters] = useState(true);
-  const { user } = useContext(UserContext);
+  const user = useAuthenticatedUser();
 
   const prevUser = usePrevious(user);
 

@@ -33,6 +33,7 @@ interface FormWithValidationProps<S extends FormSchema<AnyCantFix>> {
   cancelText?: string;
   enterToSubmit?: boolean;
   innerRef?: Ref<{ resetForm: () => void }>;
+  error?: string;
 }
 
 export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
@@ -45,6 +46,7 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
   enterToSubmit = false,
   onError,
   innerRef,
+  error: externalError,
 }: FormWithValidationProps<S>) {
   const { id: formId, fields } = formSchema;
 
@@ -259,8 +261,8 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
         </fieldset>
       </StyledForm>
       <FormFooter
-        error={error}
         // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        error={error ?? externalError}
         submitText={submitText}
         cancelText={cancelText}
         isLoadingOverride={isLoading}

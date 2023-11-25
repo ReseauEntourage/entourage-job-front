@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import UIkit from 'uikit';
 
 import HistoryIcon from 'assets/icons/history.svg';
@@ -15,12 +15,12 @@ import {
   COACH_USER_ROLES,
   USER_ROLES,
 } from 'src/constants/users';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { usePrevious } from 'src/hooks/utils';
-import { UserContext } from 'src/store/UserProvider';
 import { isRoleIncluded } from 'src/utils/Finding';
 
 const Suivi = () => {
-  const { user } = useContext(UserContext);
+  const user = useAuthenticatedUser();
   const [userCandidat, setUserCandidat] = useState(null);
   const [loading, setLoading] = useState(true);
   const [value, setValue] = useState<string>();

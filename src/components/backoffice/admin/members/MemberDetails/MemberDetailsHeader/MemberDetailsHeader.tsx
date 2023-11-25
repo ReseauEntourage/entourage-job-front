@@ -1,12 +1,12 @@
 import _ from 'lodash';
-import React, { useContext } from 'react';
+import React from 'react';
 import LinkIcon from 'assets/icons/link.svg';
 import UserIcon from 'assets/icons/user.svg';
 import { UserWithUserCandidate } from 'src/api/types';
 import { SimpleLink } from 'src/components/utils';
 import { ImgProfile } from 'src/components/utils/ImgProfile';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
-import { UserContext } from 'src/store/UserProvider';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { getRelatedUser, isRoleIncluded } from 'src/utils/Finding';
 import {
   StyledContainer,
@@ -21,7 +21,7 @@ interface MemberDetailsHeaderProps {
 }
 
 export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
-  const { user: connectedUser } = useContext(UserContext);
+  const connectedUser = useAuthenticatedUser();
 
   if (!user || !connectedUser) return null;
 

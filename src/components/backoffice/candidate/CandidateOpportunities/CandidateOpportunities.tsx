@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { useRouter } from 'next/router';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import PlusIcon from 'assets/icons/plus.svg';
 import { CandidateOffersTab } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab';
@@ -25,9 +25,9 @@ import { Button, Section } from 'src/components/utils';
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 import { HEIGHTS } from 'src/constants/styles';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useCandidateOpportunities } from 'src/hooks/useOpportunityList';
 import { usePrevious } from 'src/hooks/utils';
-import { UserContext } from 'src/store/UserProvider';
 import { getUserCandidateFromCoach, isRoleIncluded } from 'src/utils/Finding';
 import { tabs } from './CandidateOffersTab/CandidateOffersTab.utils';
 import { CandidateOpportunitiesFilters } from './CandidateOpportunitiesFilters.types';
@@ -55,7 +55,7 @@ export const CandidateOpportunities = ({
 }: CandidateOpportunitiesProps) => {
   const { replace } = useRouter();
 
-  const { user } = useContext(UserContext);
+  const user = useAuthenticatedUser();
 
   const opportunityId = useOpportunityId();
   const prevOpportunityId = usePrevious(opportunityId);

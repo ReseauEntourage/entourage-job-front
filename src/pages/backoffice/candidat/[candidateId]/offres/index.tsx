@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { useRouter } from 'next/router';
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { validate as uuidValidate } from 'uuid';
 import { Api } from 'src/api';
@@ -18,9 +18,9 @@ import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 import { ADMIN_ZONES, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { GA_TAGS } from 'src/constants/tags';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useFilters } from 'src/hooks/useFilters';
 import { usePrevious } from 'src/hooks/utils';
-import { UserContext } from 'src/store/UserProvider';
 import { isRoleIncluded, getCandidateFromCoach } from 'src/utils/Finding';
 
 // filters for the query
@@ -40,7 +40,7 @@ const Opportunities = () => {
   const queryParamsOpportunities = useQueryParamsOpportunities();
   const prevStatus = usePrevious(queryParamsOpportunities.status);
 
-  const { user } = useContext(UserContext);
+  const user = useAuthenticatedUser();
   const prevUser = usePrevious(user);
 
   const [hasError, setHasError] = useState(false);
