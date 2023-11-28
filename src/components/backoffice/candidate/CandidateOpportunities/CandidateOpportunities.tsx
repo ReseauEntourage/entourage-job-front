@@ -113,15 +113,16 @@ export const CandidateOpportunities = ({
       );
     }
   }, [
-    offers,
-    opportunityId,
-    opportunityType,
-    queryParamsOpportunities,
-    prevOpportunityId,
-    prevStatus,
-    prevOpportunityType,
-    replace,
     isMobile,
+    offers,
+    prevOffers,
+    opportunityId,
+    prevOpportunityId,
+    opportunityType,
+    prevOpportunityType,
+    queryParamsOpportunities,
+    prevStatus,
+    replace,
   ]);
 
   const { tabCounts, fetchTabsCount } = useTabsCount(candidateId);

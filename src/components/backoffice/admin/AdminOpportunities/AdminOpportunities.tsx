@@ -77,7 +77,7 @@ export const AdminOpportunities = ({
   const [loading, setLoading] = useState(true);
   const [offset, setOffset] = useState<number>(0);
   const [hasFetchedAll, setHasFetchedAll] = useState(false);
-  const prevOffers = usePrevious(offers) as Opportunity[];
+  const prevOffers = usePrevious(offers);
 
   const fetchData = useAdminOpportunities(
     setOffers,
@@ -136,12 +136,15 @@ export const AdminOpportunities = ({
       );
     }
   }, [
-    offers,
-    opportunityId,
-    queryParamsOpportunities,
-    prevOpportunityId,
-    replace,
     isMobile,
+    offers,
+    prevOffers,
+    opportunityId,
+    prevOpportunityId,
+    tag,
+    previousTag,
+    queryParamsOpportunities,
+    replace,
   ]);
 
   const resetOffset = async () => {

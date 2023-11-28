@@ -23,7 +23,7 @@ export function OffersMemberTab({ candidateId }: OffersMemberTabProps) {
   const prevOpportunityId = usePrevious(opportunityId);
 
   const [offers, setOffers] = useState([]);
-  const prevOffers = usePrevious(offers) as Opportunity[];
+  const prevOffers = usePrevious(offers);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasError, setHasError] = useState(false);
 
@@ -63,7 +63,7 @@ export function OffersMemberTab({ candidateId }: OffersMemberTabProps) {
         }
       );
     }
-  }, [offers, opportunityId, prevOpportunityId, replace, isMobile]);
+  }, [isMobile, offers, prevOffers, opportunityId, prevOpportunityId, replace]);
 
   return (
     <>
