@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { OpportunityDetails } from '../OpportunityDetails';
+import { useOpportunityDetailsHeight } from '../useOpportunityDetailsHeight';
+import { tabs } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab/CandidateOffersTab.utils';
 import { useFetchCandidateOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/useFetchOpportunity';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
+import { HEIGHTS } from 'src/constants/styles';
 import { CandidateOpportunityDetails } from './CandidateOpportunityDetails';
+import { CTAsByTab } from './CandidateOpportunityDetailsCTAs/CandidateOpportunityDetailsCTAs.utils';
 
 export const CandidateOpportunityDetailsContainer = ({
   fetchOpportunities,
   candidateId,
+  filtersAndTabsHeight,
 }: {
   fetchOpportunities: () => void;
   candidateId: string;
+  filtersAndTabsHeight: number;
 }) => {
   const opportunityId = useOpportunityId();
 
@@ -20,14 +26,49 @@ export const CandidateOpportunityDetailsContainer = ({
       fetchOpportunities
     );
 
+  const ref = useRef();
+
+  const [hasCTAContainer, setHasCTAContainer] = useState(true);
+
+  useEffect(() => {
+    if (opportunity) {
+      const index = tabs.findIndex(
+        ({ status }: { status: (string | number)[] }) => {
+          if (opportunity.opportunityUsers?.archived) {
+            return status.includes('archived');
+          }
+          return status.includes(opportunity.opportunityUsers?.status);
+        }
+      );
+
+      const hasCTAs =
+        CTAsByTab.find((tab) => {
+          return tab.tab === index;
+        })?.ctas.length > 0;
+
+      setHasCTAContainer(hasCTAs);
+    }
+  }, [hasCTAContainer, opportunity]);
+
+  const { containerHeight } = useOpportunityDetailsHeight(
+    filtersAndTabsHeight,
+    HEIGHTS.OFFER_INFO_HEIGHT,
+    ref,
+    hasCTAContainer
+  );
+
   if (!opportunityId || !opportunity) {
     return <OpportunityDetails isLoading={isLoading} />;
   }
 
   return (
     <OpportunityDetails
+      contentHeight={filtersAndTabsHeight}
       details={
         <CandidateOpportunityDetails
+          innerRef={ref}
+          containerHeight={containerHeight}
+          hasCTAContainer={hasCTAContainer}
           id={opportunity.id}
           department={opportunity.department}
           title={opportunity.title}

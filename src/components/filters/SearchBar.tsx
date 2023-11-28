@@ -6,12 +6,12 @@ import { FiltersOptions } from 'src/components/filters/FiltersOptions';
 import { FiltersSideBar } from 'src/components/filters/FiltersSideBar';
 import { Icon } from 'src/components/utils';
 import {
-  ADMIN_OPPORTUNITY_FILTERS_DATA,
   CV_FILTERS_DATA,
   MEMBER_FILTERS_DATA,
   OPPORTUNITY_FILTERS_DATA,
   ORGANIZATION_FILTERS_DATA,
 } from 'src/constants';
+import { HEIGHTS } from 'src/constants/styles';
 import { gaEvent } from 'src/lib/gtag';
 import { AnyToFix } from 'src/utils/Types';
 
@@ -22,7 +22,6 @@ interface SearchBarProps {
     | typeof CV_FILTERS_DATA
     | typeof MEMBER_FILTERS_DATA
     | typeof OPPORTUNITY_FILTERS_DATA
-    | typeof ADMIN_OPPORTUNITY_FILTERS_DATA
     | typeof ORGANIZATION_FILTERS_DATA; // to be typed properly
   filters: AnyToFix; // to be typed
   setFilters: (updatedFilters: AnyToFix) => void;
@@ -77,7 +76,10 @@ export const SearchBar = ({
   const hasFilters = numberOfFilters > 0 || search;
 
   return (
-    <div className="uk-flex uk-flex-column uk-flex-middle">
+    <div
+      className="uk-flex uk-flex-column uk-flex-middle"
+      style={{ height: HEIGHTS.SEARCH_BAR_HEIGHT }}
+    >
       <div className="uk-width-expand ent-search-bar">
         <form className="uk-search uk-search-navbar uk-width-expand">
           <input
@@ -124,7 +126,7 @@ export const SearchBar = ({
           setFilters={setFilters}
           hideOnMobile
         />
-        {additionalButtons}
+        <div className="uk-width-expand">{additionalButtons}</div>
         {hasFilters && (
           <FiltersOptions
             resetFilters={() => {

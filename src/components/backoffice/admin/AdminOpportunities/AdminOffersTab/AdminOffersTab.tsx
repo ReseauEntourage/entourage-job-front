@@ -44,6 +44,10 @@ export const AdminOffersTab = ({
                     tag: value,
                   },
                 }}
+                scroll={false}
+                shallow
+                passHref
+                legacyBehavior
               >
                 {!isMobile ? (
                   <div>

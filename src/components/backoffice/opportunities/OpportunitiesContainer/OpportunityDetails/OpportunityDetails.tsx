@@ -7,13 +7,17 @@ import { OverlayLoader } from 'src/components/utils/OverlayLoader';
 
 export const OpportunityDetails = ({
   isLoading = false,
+  contentHeight,
   details,
 }: {
   isLoading?: boolean;
   details?: React.ReactNode;
+  contentHeight?: number;
 }) => {
   return (
-    <StyledOpportunityDetailsVariableHeightContainer>
+    <StyledOpportunityDetailsVariableHeightContainer
+      contentHeight={contentHeight}
+    >
       <StyledOpportunityDetailsContentContainer>
         {details}
         {isLoading && <OverlayLoader />}

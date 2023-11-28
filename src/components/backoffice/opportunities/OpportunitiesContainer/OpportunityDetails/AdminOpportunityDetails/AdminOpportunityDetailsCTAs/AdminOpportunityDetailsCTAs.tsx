@@ -3,13 +3,13 @@ import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import UIkit from 'uikit';
 import { v4 as uuid } from 'uuid';
-import { StyledOpportunityCTAsContainer } from '../../OpportunityDetails.styles';
 import { Api } from 'src/api';
 import {
   AdminOpportunityWithOpportunityUsers,
   ExternalOpportunityDto,
   OpportunityDto,
 } from 'src/api/types';
+import { StyledOpportunityCTAsContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunityDetails.styles';
 import { formEditExternalOpportunityAsAdmin } from 'src/components/forms/schemas/formEditExternalOpportunity';
 import { formEditOpportunity } from 'src/components/forms/schemas/formEditOpportunity';
 import { formRecommendCandidate } from 'src/components/forms/schemas/formRecommendCandidate';

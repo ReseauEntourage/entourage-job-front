@@ -371,12 +371,6 @@ export const OPPORTUNITY_FILTERS_DATA = [
   },
 ];
 
-export const ADMIN_OPPORTUNITY_FILTERS_DATA = [
-  ...OPPORTUNITY_FILTERS_DATA.filter(
-    (el) => el.key !== 'status' && el.key !== 'contracts'
-  ),
-] as const;
-
 export const ORGANIZATION_FILTERS_DATA = [
   {
     key: 'zone',

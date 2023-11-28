@@ -4,9 +4,10 @@ import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { AdminOpportunities } from 'src/components/backoffice/admin/AdminOpportunities';
 import { AdminOpportunitiesFilters } from 'src/components/backoffice/admin/AdminOpportunities/AdminOpportunitiesFilters.types';
+import { Section } from 'src/components/utils';
 import {
-  ADMIN_OPPORTUNITY_FILTERS_DATA,
   OFFER_ADMIN_FILTERS_DATA,
+  OPPORTUNITY_FILTERS_DATA,
 } from 'src/constants';
 import { ADMIN_ZONES, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { GA_TAGS } from 'src/constants/tags';
@@ -26,7 +27,7 @@ const AdminOpportunitiesPage = () => {
   const { user } = useContext(UserContext);
 
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
-    ADMIN_OPPORTUNITY_FILTERS_DATA,
+    OPPORTUNITY_FILTERS_DATA,
     `/backoffice/admin/offres`,
     ['offerId'],
     GA_TAGS.BACKOFFICE_ADMIN_SUPPRIMER_FILTRES_CLIC
@@ -124,15 +125,11 @@ const AdminOpportunitiesPage = () => {
     );
   }
   return (
-    <>
-      {!user || loadingDefaultFilters ? (
-        <LoadingScreen />
-      ) : (
-        <LayoutBackOffice title="Modération des offres">
-          {content}
-        </LayoutBackOffice>
-      )}
-    </>
+    <LayoutBackOffice title="Modération des offres">
+      <Section className="custom-page">
+        {!user || loadingDefaultFilters ? <LoadingScreen /> : content}
+      </Section>
+    </LayoutBackOffice>
   );
 };
 

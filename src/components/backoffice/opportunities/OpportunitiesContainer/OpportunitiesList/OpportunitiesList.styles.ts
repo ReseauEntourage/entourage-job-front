@@ -72,15 +72,6 @@ export const StyledOpportunityItemActionContainer = styled.div`
   justify-content: flex-end;
 `;
 
-export const StyledOpportunityItemTitle = styled.div`
-  text-overflow: ellipsis;
-  white-space: nowrap;
-`;
-
-export const StyledOpportunityItemCompany = styled.div`
-  text-overflow: ellipsis;
-`;
-
 export const StyledOpportunityItemInfoContainer = styled.div`
   display: flex;
   flex-direction: row;

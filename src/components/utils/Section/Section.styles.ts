@@ -24,6 +24,14 @@ export const StyledSection = styled.section`
       padding-bottom: ${HEIGHTS.SECTION_PADDING_MOBILE}px;
     }
   }
+  &.custom-page {
+    padding-top: ${HEIGHTS.DEFAULT_SECTION_PADDING}px;
+    padding-bottom: ${HEIGHTS.DEFAULT_SECTION_PADDING}px;
+    @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
+      padding-top: ${HEIGHTS.SECTION_PADDING_MOBILE}px;
+      padding-bottom: ${HEIGHTS.SECTION_PADDING_MOBILE}px;
+    }
+  }
   &.custom-primary {
     padding-top: ${HEIGHTS.SECTION_PADDING}px;
     padding-bottom: ${HEIGHTS.SECTION_PADDING}px;
@@ -45,13 +53,6 @@ export const StyledSection = styled.section`
     position: sticky;
     background-color: ${COLORS.white};
     z-index: 12;
-
-    height: ${HEIGHTS.TABS_HEIGHT - 2 * HEIGHTS.SECTION_PADDING}px;
-    &.with-search-bar {
-      height: ${HEIGHTS.TABS_HEIGHT +
-      HEIGHTS.SEARCH_BAR_HEIGHT -
-      2 * HEIGHTS.SECTION_PADDING}px;
-    }
     top: ${HEIGHTS.HEADER}px;
     @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
       padding-top: ${HEIGHTS.SECTION_PADDING_MOBILE}px;

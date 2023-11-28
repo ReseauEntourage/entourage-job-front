@@ -22,6 +22,7 @@ import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/Off
 import { Button, Section } from 'src/components/utils';
 import { Icon } from 'src/components/utils/Icon';
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
+import { HEIGHTS } from 'src/constants/styles';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useCandidateOpportunities } from 'src/hooks/useOpportunityList';
 import { usePrevious } from 'src/hooks/utils';
@@ -61,6 +62,10 @@ export const CandidateOpportunities = ({
   const prevOpportunityType = usePrevious(opportunityType);
 
   const isPublic = opportunityType === 'public';
+
+  const contentHeight = isPublic
+    ? HEIGHTS.SEARCH_BAR_HEIGHT
+    : HEIGHTS.TABS_HEIGHT;
 
   const [offset, setOffset] = useState<number>(0);
   const [hasFetchedAll, setHasFetchedAll] = useState(false);
@@ -162,55 +167,49 @@ export const CandidateOpportunities = ({
     <>
       {!(isMobile && opportunityId) && (
         <>
-          <Section className="custom-header">
-            <HeaderBackoffice
-              title={`${
-                TextVariables.title[
-                  isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
-                    ? USER_ROLES.CANDIDATE
-                    : USER_ROLES.COACH
-                ][isPublic ? 'all' : 'mine']
-              } ${
-                USER_ROLES.COACH_EXTERNAL === user.role
-                  ? `- ${
-                      getUserCandidateFromCoach(user, candidateId)?.candidat
-                        ?.firstName
-                    } ${
-                      getUserCandidateFromCoach(user, candidateId)?.candidat
-                        ?.lastName
-                    }`
-                  : ''
-              }`}
-              description={
-                TextVariables.description[
-                  isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
-                    ? USER_ROLES.CANDIDATE
-                    : USER_ROLES.COACH
-                ][isPublic ? 'all' : 'mine']
-              }
-              noSeparator
+          <HeaderBackoffice
+            title={`${
+              TextVariables.title[
+                isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
+                  ? USER_ROLES.CANDIDATE
+                  : USER_ROLES.COACH
+              ][isPublic ? 'all' : 'mine']
+            } ${
+              USER_ROLES.COACH_EXTERNAL === user.role
+                ? `- ${
+                    getUserCandidateFromCoach(user, candidateId)?.candidat
+                      ?.firstName
+                  } ${
+                    getUserCandidateFromCoach(user, candidateId)?.candidat
+                      ?.lastName
+                  }`
+                : ''
+            }`}
+            description={
+              TextVariables.description[
+                isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
+                  ? USER_ROLES.CANDIDATE
+                  : USER_ROLES.COACH
+              ][isPublic ? 'all' : 'mine']
+            }
+            noSeparator
+          >
+            <Button
+              style="primary"
+              dataTestId="candidat-add-offer-main"
+              onClick={() => {
+                openModal(
+                  <ModalExternalOffer
+                    fetchOpportunities={resetOffset}
+                    candidateId={candidateId}
+                  />
+                );
+              }}
             >
-              <Button
-                style="primary"
-                dataTestId="candidat-add-offer-main"
-                onClick={() => {
-                  openModal(
-                    <ModalExternalOffer
-                      fetchOpportunities={resetOffset}
-                      candidateId={candidateId}
-                    />
-                  );
-                }}
-              >
-                <Icon
-                  name="plus"
-                  ratio="0.8"
-                  className="uk-margin-small-right"
-                />
-                Ajouter une offre
-              </Button>
-            </HeaderBackoffice>
-          </Section>
+              <Icon name="plus" ratio="0.8" className="uk-margin-small-right" />
+              Ajouter une offre
+            </Button>
+          </HeaderBackoffice>
           {isPublic ? (
             <Section className="custom-primary custom-fixed">
               <SearchBar
@@ -237,7 +236,7 @@ export const CandidateOpportunities = ({
           )}
         </>
       )}
-      <Section className="custom-primary">
+      <>
         {hasError ? (
           <OpportunityError />
         ) : (
@@ -260,6 +259,7 @@ export const CandidateOpportunities = ({
             isLoading={loading}
             details={
               <CandidateOpportunityDetailsContainer
+                filtersAndTabsHeight={contentHeight}
                 candidateId={candidateId}
                 fetchOpportunities={async () => {
                   await fetchOpportunities(true);
@@ -293,7 +293,7 @@ export const CandidateOpportunities = ({
             }
           />
         )}
-      </Section>
+      </>
     </>
   );
 };

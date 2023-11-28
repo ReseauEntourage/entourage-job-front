@@ -1,9 +1,7 @@
 import _ from 'lodash';
 import moment from 'moment';
-import React, { useEffect, useRef, useState } from 'react';
-import { useOpportunityDetailsHeight } from '../useOpportunityDetailsHeight';
+import React, { Ref } from 'react';
 import { OpportunityWithOpportunityUsers, Event } from 'src/api/types';
-import { tabs } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab/CandidateOffersTab.utils';
 import { ActionLabelContainer as ActionLabels } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
 import {
@@ -25,11 +23,9 @@ import {
 import { OpportunitySection } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunitySection';
 import { useBookmarkOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/useBookmarkOpportunity';
 import { BUSINESS_LINES } from 'src/constants';
-import { HEIGHTS } from 'src/constants/styles';
 import { findConstantFromValue } from 'src/utils/Finding';
 import { mapEventDateFromStatus } from './CandidateOpportunityDetails.utils';
 import { CandidateOpportunityDetailsCTAs } from './CandidateOpportunityDetailsCTAs';
-import { CTAsByTab } from './CandidateOpportunityDetailsCTAs/CandidateOpportunityDetailsCTAs.utils';
 
 interface CandidateOpportunityDetailsProps
   extends Partial<OpportunityWithOpportunityUsers> {
@@ -38,6 +34,9 @@ interface CandidateOpportunityDetailsProps
   oppRefreshCallback: () => void;
   events?: Event[];
   createdAt: string;
+  hasCTAContainer: boolean;
+  containerHeight: number;
+  innerRef: Ref<HTMLElement>;
 }
 
 export const CandidateOpportunityDetails = ({
@@ -59,45 +58,20 @@ export const CandidateOpportunityDetails = ({
   createdAt,
   oppRefreshCallback,
   candidateId,
+  hasCTAContainer,
+  containerHeight,
+  innerRef,
 }: CandidateOpportunityDetailsProps) => {
-  const ref = useRef();
-
   const { opportunityUsers, bookmarkOpportunity } = useBookmarkOpportunity(
     id,
     opportunityUsersProp
   );
 
-  const [hasCTAContainer, setHasCTAContainer] = useState(true);
-
-  useEffect(() => {
-    const index = tabs.findIndex(
-      ({ status }: { status: (string | number)[] }) => {
-        if (opportunityUsers.archived) {
-          return status.includes('archived');
-        }
-        return status.includes(opportunityUsers.status);
-      }
-    );
-
-    const hasCTAs =
-      CTAsByTab.find((tab) => {
-        return tab.tab === index;
-      }).ctas.length > 0;
-
-    setHasCTAContainer(hasCTAs);
-  }, [hasCTAContainer, opportunityUsers.archived, opportunityUsers.status]);
-
   const event = mapEventDateFromStatus(opportunityUsers.status, events);
-
-  const { containerHeight } = useOpportunityDetailsHeight(
-    HEIGHTS.TABS_HEIGHT,
-    ref,
-    hasCTAContainer
-  );
 
   return (
     <StyledOpportunityDetailsContainer
-      ref={ref}
+      ref={innerRef}
       data-testid="candidat-offer-details"
     >
       <StyledOpportunityDetailsTopContainer>

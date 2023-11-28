@@ -27,10 +27,8 @@ import { CheckBox } from 'src/components/utils/Inputs';
 import { BUSINESS_LINES, OfferStatus } from 'src/constants';
 import { findConstantFromValue } from 'src/utils';
 import {
-  StyledAdminOpportunityItemCheckboxContainer,
   StyledAdminOpportunityItemSeparator,
   StyledAdminOpportunityItemContainer,
-  StyledAdminStatusOpportunityItemContainer,
 } from './AdminOpportunityItem.styles';
 
 interface AdminOpportunityItemProps
@@ -100,26 +98,6 @@ export const AdminOpportunityItem = ({
               </>
             )}
           </InfoText>
-          {selectOpportunity && (
-            <StyledAdminOpportunityItemCheckboxContainer>
-              <CheckBox
-                id={`checkbox-${id}`}
-                name={`checkbox-${id}`}
-                onChange={handleCheckbox}
-                value={isSelected}
-              />
-            </StyledAdminOpportunityItemCheckboxContainer>
-          )}
-          {candidateId && opportunityUser && (
-            <StyledAdminStatusOpportunityItemContainer>
-              <ActionLabel
-                disabled
-                fill
-                color={statusToColor[opportunityUser.status]}
-                label={statusToTitle(opportunityUser.status)}
-              />
-            </StyledAdminStatusOpportunityItemContainer>
-          )}
           <InfoText>
             <StyledOpportunityItemInfoContainer>
               <ContractLabel
@@ -131,7 +109,25 @@ export const AdminOpportunityItem = ({
             </StyledOpportunityItemInfoContainer>
           </InfoText>
         </StyledOpportunityItemTitleContainer>
-        <StyledOpportunityItemActionContainer />
+        <StyledOpportunityItemActionContainer>
+          {selectOpportunity && (
+            <CheckBox
+              useOutsideOfForm
+              id={`checkbox-${id}`}
+              name={`checkbox-${id}`}
+              onChange={handleCheckbox}
+              value={isSelected}
+            />
+          )}
+          {candidateId && opportunityUser && (
+            <ActionLabel
+              disabled
+              fill
+              color={statusToColor[opportunityUser.status]}
+              label={statusToTitle(opportunityUser.status)}
+            />
+          )}
+        </StyledOpportunityItemActionContainer>
       </StyledOpportunityItemTopContainer>
       <StyledAdminOpportunityItemSeparator />
       <StyledOpportunityItemBottomContainer>

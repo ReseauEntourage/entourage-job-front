@@ -6,16 +6,14 @@ export const StyledOpportunityDetailsVariableHeightContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: sticky;
-  top: ${HEIGHTS.HEADER + HEIGHTS.TABS_HEIGHT + HEIGHTS.SECTION_PADDING}px;
+  top: ${({ contentHeight }) => {
+    return `${
+      HEIGHTS.HEADER + 2 * HEIGHTS.SECTION_PADDING + (contentHeight || 0)
+    }`;
+  }}px;
   @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
     top: ${HEIGHTS.HEADER_MOBILE + HEIGHTS.SECTION_PADDING_MOBILE}px;
   }
-`;
-
-export const StyledScroll = styled.div`
-  height: 100%;
-  position: relative;
-  overflow: auto;
 `;
 
 export const StyledOpportunityDetailsTopContainer = styled.div`

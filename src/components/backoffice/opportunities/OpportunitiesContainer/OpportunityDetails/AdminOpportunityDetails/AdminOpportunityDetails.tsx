@@ -1,11 +1,10 @@
 import moment from 'moment';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Ref } from 'react';
 import {
   OpportunitySection,
   OpportunitySectionCandidates,
 } from '../OpportunitySection';
 import { StyledOpportunitySectionList } from '../OpportunitySection/OpportunitySection.styles';
-import { useOpportunityDetailsHeight } from '../useOpportunityDetailsHeight';
 import { AdminOpportunityWithOpportunityUsers } from 'src/api/types';
 import { AdminActionLabelContainer as ActionLabels } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel';
@@ -23,24 +22,25 @@ import {
   StyledOpportunityDetailsTopContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunityDetails.styles';
 import { BUSINESS_LINES } from 'src/constants';
-import { HEIGHTS } from 'src/constants/styles';
 import { findConstantFromValue } from 'src/utils';
 import { AdminOpportunityDetailsCTAs } from './AdminOpportunityDetailsCTAs';
-import {
-  CTAsByTag,
-  getOpportunityCurrentTag,
-} from './AdminOpportunityDetailsCTAs/AdminOpportunityDetailsCTAs.utils';
 
 interface AdminOpportunityDetailsProps {
   opportunity: AdminOpportunityWithOpportunityUsers;
   fetchOpportunities: () => void;
   oppRefreshCallback: () => void;
+  hasCTAContainer: boolean;
+  containerHeight: number;
+  innerRef: Ref<HTMLElement>;
 }
 
 export const AdminOpportunityDetails = ({
   opportunity,
   fetchOpportunities,
   oppRefreshCallback,
+  hasCTAContainer,
+  containerHeight,
+  innerRef,
 }: AdminOpportunityDetailsProps) => {
   const {
     title,
@@ -65,28 +65,9 @@ export const AdminOpportunityDetails = ({
     otherInfo,
   } = opportunity;
 
-  const ref = useRef();
-
-  const [hasCTAContainer, setHasCTAContainer] = useState(true);
-
-  const { containerHeight } = useOpportunityDetailsHeight(
-    HEIGHTS.TABS_HEIGHT + HEIGHTS.SEARCH_BAR_HEIGHT,
-    ref,
-    hasCTAContainer
-  );
-
-  useEffect(() => {
-    const hasCTAs =
-      CTAsByTag.find(({ tag }) => {
-        return tag === getOpportunityCurrentTag(opportunity);
-      }).ctas.length > 0;
-
-    setHasCTAContainer(hasCTAs);
-  }, [hasCTAContainer, opportunity]);
-
   return (
     <StyledOpportunityDetailsContainer
-      ref={ref}
+      ref={innerRef}
       data-testid="candidat-offer-details"
     >
       <StyledOpportunityDetailsTopContainer>
@@ -118,12 +99,11 @@ export const AdminOpportunityDetails = ({
             </StyledOpportunityDetailsInfoContainer>
           </InfoText>
           <InfoText>{moment(createdAt).format('DD/MM/YYYY')}</InfoText>
-          <InfoText>Salaire: {salary || 'Non renseigné'}</InfoText>
+          <InfoText>Salaire&nbsp;: {salary || 'Non renseigné'}</InfoText>
           <InfoText>
-            Jours et horaires: {workingHours || 'Non renseigné'}
+            Jours et horaires&nbsp;: {workingHours || 'Non renseigné'}
           </InfoText>
         </StyledOpportunityDetailsTitleContainer>
-
         <StyledOpportunityDetailsRightContainer>
           <ActionLabels isPublic={isPublic} isExternal={isExternal} />
         </StyledOpportunityDetailsRightContainer>

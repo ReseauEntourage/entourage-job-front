@@ -6,6 +6,7 @@ import { OpportunitiesContainer } from 'src/components/backoffice/opportunities/
 import { AdminOpportunitiesList } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/AdminOpportunitiesList';
 import { AdminOpportunityDetailsContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/AdminOpportunityDetails/AdminOpportunityDetailsContainer';
 import { OpportunityError } from 'src/components/backoffice/opportunities/OpportunityError';
+import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { useAdminAsCandidateOpportunities } from 'src/hooks/useOpportunityList';
 import { useIsDesktop, usePrevious } from 'src/hooks/utils';
 
@@ -13,11 +14,13 @@ interface OffersMemberTabProps {
   candidateId: string;
 }
 
+const contentHeight = 0;
+
 export function OffersMemberTab({ candidateId }: OffersMemberTabProps) {
-  const {
-    replace,
-    query: { offerId: opportunityId },
-  } = useRouter();
+  const { replace } = useRouter();
+
+  const opportunityId = useOpportunityId();
+  const prevOpportunityId = usePrevious(opportunityId);
 
   const [offers, setOffers] = useState([]);
   const prevOffers = usePrevious(offers) as Opportunity[];
@@ -39,20 +42,20 @@ export function OffersMemberTab({ candidateId }: OffersMemberTabProps) {
   }, [fetchData]);
 
   const isMobile = !useIsDesktop();
+
   useDeepCompareEffect(() => {
     if (
       !isMobile &&
-      candidateId &&
       offers &&
       offers.length > 0 &&
-      offers[0] !== prevOffers?.[0]
+      ((offers !== prevOffers && !opportunityId) ||
+        (opportunityId !== prevOpportunityId && !opportunityId))
     ) {
       replace(
         {
-          pathname: `/backoffice/admin/membres/${candidateId}/offres/${
-            offers[0].id ? `${offers[0].id}` : ''
+          pathname: `/backoffice/admin/membres/${candidateId}/offres${
+            offers[0].id ? `/${offers[0].id}` : ''
           }`,
-          query: {},
         },
         undefined,
         {
@@ -60,7 +63,7 @@ export function OffersMemberTab({ candidateId }: OffersMemberTabProps) {
         }
       );
     }
-  }, [offers, opportunityId, replace, isMobile, candidateId]);
+  }, [offers, opportunityId, prevOpportunityId, replace, isMobile]);
 
   return (
     <>
@@ -81,6 +84,7 @@ export function OffersMemberTab({ candidateId }: OffersMemberTabProps) {
           isLoading={loading}
           details={
             <AdminOpportunityDetailsContainer
+              filtersAndTabsHeight={contentHeight}
               fetchOpportunities={fetchOpportunities}
             />
           }

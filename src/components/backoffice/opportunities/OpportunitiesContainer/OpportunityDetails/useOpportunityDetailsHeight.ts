@@ -4,7 +4,8 @@ import { MutableRefObject, useState } from 'react';
 import { HEIGHTS } from 'src/constants/styles';
 
 export const useOpportunityDetailsHeight = (
-  tabsHeights: number,
+  filtersAndTabsHeight: number,
+  opportunityInfoHeight: number,
   ref: MutableRefObject<HTMLElement>,
   hasCTAContainer: boolean
 ) => {
@@ -13,14 +14,17 @@ export const useOpportunityDetailsHeight = (
 
   useScrollPosition(
     ({ currPos }) => {
-      const conditionalHeight = hasCTAContainer
-        ? HEIGHTS.OFFER_CTA_HEIGHT
-        : -HEIGHTS.SECTION_PADDING;
+      const conditionalHeight = hasCTAContainer ? HEIGHTS.OFFER_CTA_HEIGHT : 0;
 
-      const bottom =
-        windowHeight - HEIGHTS.HEADER - tabsHeights - conditionalHeight;
+      const fixedContentHeight =
+        HEIGHTS.HEADER +
+        filtersAndTabsHeight +
+        opportunityInfoHeight +
+        conditionalHeight -
+        HEIGHTS.DEFAULT_SECTION_PADDING;
 
-      const calculatedContainerHeight = bottom - currPos.y;
+      const calculatedContainerHeight =
+        windowHeight - fixedContentHeight - (currPos.y < 0 ? 0 : currPos.y);
 
       setContainerHeight(
         calculatedContainerHeight < 2 * HEIGHTS.SECTION_PADDING

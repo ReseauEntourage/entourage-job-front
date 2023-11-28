@@ -65,7 +65,13 @@ export const CandidateOffersTab = ({
 
           return (
             <li className={isActive ? 'active' : ''} key={`${k}-${uuidValue}`}>
-              <Link href={`${basePath}${queryString}`}>
+              <Link
+                href={`${basePath}${queryString}`}
+                scroll={false}
+                shallow
+                passHref
+                legacyBehavior
+              >
                 {!isMobile ? (
                   <div>
                     <span>{tabCount}</span>

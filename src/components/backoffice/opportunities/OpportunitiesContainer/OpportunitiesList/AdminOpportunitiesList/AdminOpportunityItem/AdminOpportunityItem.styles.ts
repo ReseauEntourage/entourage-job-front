@@ -13,15 +13,3 @@ export const StyledAdminOpportunityItemSeparator = styled.div`
   border-bottom: ${COLORS.gray} 2px solid;
   margin: 10px 0;
 `;
-
-export const StyledAdminOpportunityItemCheckboxContainer = styled.div`
-  position: absolute;
-  top: 15px;
-  right: 15px;
-`;
-
-export const StyledAdminStatusOpportunityItemContainer = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-`;

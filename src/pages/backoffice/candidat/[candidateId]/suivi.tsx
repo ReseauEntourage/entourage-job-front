@@ -150,7 +150,7 @@ const Suivi = () => {
 
   return (
     <LayoutBackOffice title={title}>
-      <Section>{content}</Section>
+      <Section className="custom-page">{content}</Section>
     </LayoutBackOffice>
   );
 };

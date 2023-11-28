@@ -20,7 +20,8 @@ import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { PostOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { Button, ButtonMultiple, Icon, Section } from 'src/components/utils';
-import { ADMIN_OPPORTUNITY_FILTERS_DATA } from 'src/constants';
+import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
+import { HEIGHTS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
 import { useBulkActions } from 'src/hooks/useBulkActions';
 import { useAdminOpportunities } from 'src/hooks/useOpportunityList';
@@ -36,6 +37,11 @@ interface AdminOpportunitiesProps {
   setSearch?: (updatedSearch: string) => void;
   isMobile?: boolean;
 }
+
+const filtersAndTabsHeight =
+  HEIGHTS.TABS_HEIGHT_WITHOUT_NUMBERS +
+  HEIGHTS.SEARCH_BAR_HEIGHT +
+  HEIGHTS.SECTION_PADDING;
 
 export const AdminOpportunities = ({
   search,
@@ -169,90 +175,84 @@ export const AdminOpportunities = ({
     <>
       {!(isMobile && opportunityId) && (
         <>
-          <Section className="custom-header">
-            <HeaderBackoffice
-              noSeparator
-              title="Modération des offres"
-              description="Ici vous pouvez accéder à toutes les opportunités et valider les offres envoyées par les recruteurs !"
+          <HeaderBackoffice
+            noSeparator
+            title="Modération des offres"
+            description="Ici vous pouvez accéder à toutes les opportunités et valider les offres envoyées par les recruteurs !"
+          >
+            <ButtonMultiple
+              id="admin-create"
+              align={isDesktop ? 'right' : 'left'}
+              dataTestId="button-admin-create"
+              style="custom-primary"
+              buttons={[
+                {
+                  onClick: () => {
+                    openModal(
+                      <PostOpportunityModal {...opportunityModalProps} />
+                    );
+                  },
+                  label: 'Nouvelle offre',
+                  dataTestId: 'admin-add-offer-main',
+                },
+                {
+                  onClick: () => {
+                    openModal(
+                      <ModalEdit
+                        title="Ajouter une offre externe"
+                        submitText="Envoyer"
+                        formSchema={formAddExternalOpportunityAsAdmin}
+                        onSubmit={async (fields, closeModal) => {
+                          try {
+                            await Api.postExternalOpportunity({
+                              ...fields,
+                              department: fields.department.value,
+                              candidateId: fields.candidateId.value,
+                              date: moment().toISOString(),
+                              businessLines: fields.businessLines
+                                ? fields.businessLines.map(
+                                    (businessLine, index) => {
+                                      return {
+                                        name: businessLine.value,
+                                        order: index,
+                                      };
+                                    }
+                                  )
+                                : [],
+                            });
+                            closeModal();
+                            await opportunityListRef?.current?.fetchData();
+                            UIkit.notification(
+                              "L'offre externe a bien été ajouté",
+                              'success'
+                            );
+                          } catch (err) {
+                            console.error(err);
+                            UIkit.notification(
+                              `Une erreur est survenue.`,
+                              'danger'
+                            );
+                          }
+                        }}
+                      />
+                    );
+                  },
+                  label: 'Offre externe',
+                },
+              ]}
             >
-              <ButtonMultiple
-                id="admin-create"
-                align={isDesktop ? 'right' : 'left'}
-                dataTestId="button-admin-create"
-                style="custom-primary"
-                buttons={[
-                  {
-                    onClick: () => {
-                      openModal(
-                        <PostOpportunityModal {...opportunityModalProps} />
-                      );
-                    },
-                    label: 'Nouvelle offre',
-                    dataTestId: 'admin-add-offer-main',
-                  },
-                  {
-                    onClick: () => {
-                      openModal(
-                        <ModalEdit
-                          title="Ajouter une offre externe"
-                          submitText="Envoyer"
-                          formSchema={formAddExternalOpportunityAsAdmin}
-                          onSubmit={async (fields, closeModal) => {
-                            try {
-                              await Api.postExternalOpportunity({
-                                ...fields,
-                                department: fields.department.value,
-                                candidateId: fields.candidateId.value,
-                                date: moment().toISOString(),
-                                businessLines: fields.businessLines
-                                  ? fields.businessLines.map(
-                                      (businessLine, index) => {
-                                        return {
-                                          name: businessLine.value,
-                                          order: index,
-                                        };
-                                      }
-                                    )
-                                  : [],
-                              });
-                              closeModal();
-                              await opportunityListRef?.current?.fetchData();
-                              UIkit.notification(
-                                "L'offre externe a bien été ajouté",
-                                'success'
-                              );
-                            } catch (err) {
-                              console.error(err);
-                              UIkit.notification(
-                                `Une erreur est survenue.`,
-                                'danger'
-                              );
-                            }
-                          }}
-                        />
-                      );
-                    },
-                    label: 'Offre externe',
-                  },
-                ]}
-              >
-                <Icon
-                  name="plus"
-                  ratio={0.8}
-                  className="uk-margin-small-right"
-                />
-                Créer
-              </ButtonMultiple>
-            </HeaderBackoffice>
-          </Section>
-          <Section className="custom-primary custom-fixed with-search-bar">
+              <Icon name="plus" ratio={0.8} className="uk-margin-small-right" />
+              Créer
+            </ButtonMultiple>
+          </HeaderBackoffice>
+          <Section className="custom-primary custom-fixed">
             <AdminOffersTab
               activeStatus={tag}
               // tabCounts={tabCounts}
               isMobile={isMobile}
             />
             <SearchBar
-              filtersConstants={ADMIN_OPPORTUNITY_FILTERS_DATA}
+              filtersConstants={OPPORTUNITY_FILTERS_DATA}
               filters={filters}
               resetFilters={resetFilters}
               search={search}
@@ -260,21 +260,20 @@ export const AdminOpportunities = ({
               setFilters={setFilters}
               placeholder="Rechercher..."
               additionalButtons={
-                hasSelection && (
-                  <Button
-                    style="custom-secondary-inverted"
-                    size="small"
-                    onClick={bulkArchiveOpportunities}
-                  >
-                    Archiver les offres
-                  </Button>
-                )
+                <Button
+                  style="custom-secondary-inverted"
+                  size="small"
+                  disabled={!hasSelection}
+                  onClick={bulkArchiveOpportunities}
+                >
+                  Archiver les offres
+                </Button>
               }
             />
           </Section>
         </>
       )}
-      <Section className="custom-primary">
+      <>
         {hasError ? (
           <OpportunityError />
         ) : (
@@ -297,6 +296,7 @@ export const AdminOpportunities = ({
             isLoading={loading}
             details={
               <AdminOpportunityDetailsContainer
+                filtersAndTabsHeight={filtersAndTabsHeight}
                 fetchOpportunities={async () => {
                   await fetchOpportunities(true);
                 }}
@@ -309,7 +309,7 @@ export const AdminOpportunities = ({
             }
           />
         )}
-      </Section>
+      </>
     </>
   );
 };

@@ -22,7 +22,7 @@ export function MemberDetails({ user, setUser }: MemberDetailsProps) {
 
   return (
     <LayoutBackOffice title={`${user.firstName} - Gestion des membres`}>
-      <Section container="large">
+      <Section className="custom-page">
         <Grid column gap="medium">
           <Grid between eachWidths={['expand@m', 'auto@m']}>
             <BackLink
