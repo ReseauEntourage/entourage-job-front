@@ -1,23 +1,27 @@
 import React from 'react';
 import {
-  StyledContainer,
-  StyledContentContainer,
+  StyledOpportunityDetailsVariableHeightContainer,
+  StyledOpportunityDetailsContentContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunityDetails.styles';
 import { OverlayLoader } from 'src/components/utils/OverlayLoader';
 
 export const OpportunityDetails = ({
   isLoading = false,
+  contentHeight,
   details,
 }: {
   isLoading?: boolean;
   details?: React.ReactNode;
+  contentHeight?: number;
 }) => {
   return (
-    <StyledContainer>
-      <StyledContentContainer>
+    <StyledOpportunityDetailsVariableHeightContainer
+      contentHeight={contentHeight}
+    >
+      <StyledOpportunityDetailsContentContainer>
         {details}
         {isLoading && <OverlayLoader />}
-      </StyledContentContainer>
-    </StyledContainer>
+      </StyledOpportunityDetailsContentContainer>
+    </StyledOpportunityDetailsVariableHeightContainer>
   );
 };

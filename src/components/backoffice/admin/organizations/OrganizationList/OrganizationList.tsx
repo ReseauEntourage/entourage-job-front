@@ -93,6 +93,7 @@ export function OrganizationList({
       );
     });
   }, [fetchData, filters, offset, organizations, search]);
+
   return (
     <>
       <BackToTop />
@@ -121,16 +122,18 @@ export function OrganizationList({
         </Section>
       ) : (
         <>
-          <SearchBar
-            filtersConstants={ORGANIZATION_FILTERS_DATA}
-            filters={filters}
-            resetFilters={resetFilters}
-            search={search}
-            setSearch={setSearch}
-            setFilters={setFilters}
-            placeholder="Rechercher..."
-            smallSelectors
-          />
+          <Section className="custom-primary custom-fixed">
+            <SearchBar
+              filtersConstants={ORGANIZATION_FILTERS_DATA}
+              filters={filters}
+              resetFilters={resetFilters}
+              search={search}
+              setSearch={setSearch}
+              setFilters={setFilters}
+              placeholder="Rechercher..."
+              smallSelectors
+            />
+          </Section>
           {loading ? (
             <LoadingScreen />
           ) : (

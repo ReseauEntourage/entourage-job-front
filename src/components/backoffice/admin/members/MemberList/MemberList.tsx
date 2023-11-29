@@ -7,7 +7,6 @@ import { Api } from 'src/api';
 
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { AdminCreationButtons } from 'src/components/backoffice/admin/AdminCreationButtons';
-import { StyledActionsContainer } from 'src/components/backoffice/admin/members/MemberList/MemberList.styles';
 import { SearchBar } from 'src/components/filters/SearchBar';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { Section, Button, BackToTop } from 'src/components/utils';
@@ -96,17 +95,19 @@ export function MemberList({
     []
   );
 
-  const { selectElement, executeAction, hasSelection } = useBulkActions(
-    'candidate',
-    async () => {
-      await fetchData(search, filters, role, offset, true);
-    },
-    GA_TAGS.BACKOFFICE_ADMIN_MASQUER_MASSE_CLIC
-  );
+  const { selectElement, executeAction, hasSelection, resetSelection } =
+    useBulkActions(
+      'candidate',
+      async () => {
+        await fetchData(search, filters, role, offset, true);
+      },
+      GA_TAGS.BACKOFFICE_ADMIN_MASQUER_MASSE_CLIC
+    );
 
   useDeepCompareEffect(() => {
     if (role) {
       fetchData(search, filters, role, offset, true);
+      resetSelection();
     }
   }, [search, filters, role]);
 
@@ -189,31 +190,33 @@ export function MemberList({
         </Section>
       ) : (
         <>
-          <SearchBar
-            filtersConstants={filtersConst}
-            filters={filters}
-            resetFilters={resetFilters}
-            search={search}
-            setSearch={setSearch}
-            setFilters={setFilters}
-            placeholder="Rechercher..."
-            smallSelectors
-          />
-          {isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
-            <StyledActionsContainer>
-              <Button
-                style="custom-secondary"
-                size="small"
-                disabled={!hasSelection}
-                color="primaryOrange"
-                onClick={() => {
-                  return executeAction({ hidden: true }, 'put');
-                }}
-              >
-                Masquer CV
-              </Button>
-            </StyledActionsContainer>
-          )}
+          <Section className="custom-primary custom-fixed">
+            <SearchBar
+              filtersConstants={filtersConst}
+              filters={filters}
+              resetFilters={resetFilters}
+              search={search}
+              setSearch={setSearch}
+              setFilters={setFilters}
+              placeholder="Rechercher..."
+              smallSelectors
+              additionalButtons={
+                isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
+                  <Button
+                    style="custom-secondary-inverted"
+                    size="small"
+                    disabled={!hasSelection}
+                    color="primaryOrange"
+                    onClick={() => {
+                      return executeAction({ hidden: true }, 'put');
+                    }}
+                  >
+                    Masquer CV
+                  </Button>
+                )
+              }
+            />
+          </Section>
           {loading ? (
             <LoadingScreen />
           ) : (

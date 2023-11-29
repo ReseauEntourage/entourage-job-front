@@ -96,7 +96,6 @@ export function PostOpportunityModal<
               endOfContract: fields.endOfContract,
             }
           : {};
-
       try {
         await Api.postOpportunity({
           ...opportunity,
@@ -106,7 +105,8 @@ export function PostOpportunityModal<
             opportunity.isPublic && !isAdmin ? null : candidatesIds,
           message: opportunity.isPublic ? null : opportunity.message,
           recruiterPhone: opportunity.recruiterPhone || null,
-          ...('businessLines' in fields
+          ...('businessLines' in fields &&
+          typeof fields.businessLines !== 'undefined'
             ? {
                 businessLines: fields.businessLines.map(
                   (businessLine, index) => {

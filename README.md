@@ -232,6 +232,14 @@ Si un commit est poussé sur `master`, l'application sera déployé sur la produ
 
 Comme il n'y a pas de tests, **_Github Actions_** n'est utilisé que pour déployer le projet sur **_Heroku_**.
 
+##
+
+Régulièrement, cleaner le code en supprimant les commposants qui ne sont plus utilisés:
+
+```
+npx dead-exports
+```
+
 ## Stack technique
 
 ![Stack technique LinkedOut](./stack.svg)

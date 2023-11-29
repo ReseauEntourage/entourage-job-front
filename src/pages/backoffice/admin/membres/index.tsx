@@ -54,7 +54,7 @@ const MembersAdmin = () => {
 
   return (
     <LayoutBackOffice title="Gestion des membres">
-      <Section container="large">
+      <Section className="custom-page">
         {loadingDefaultFilters ? (
           <LoadingScreen />
         ) : (

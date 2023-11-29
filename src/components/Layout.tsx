@@ -24,9 +24,7 @@ interface LayoutProps extends WithRouterProps {
 export const Layout = withRouter<LayoutProps>(
   ({
     children,
-
     router,
-
     title = 'LinkedOut\xa0= partagez votre réseau avec ceux qui n’en ont pas',
     metaTitle = 'LinkedOut\xa0= partagez votre réseau avec ceux qui n’en ont pas',
     metaImage = `${process.env.SERVER_URL}/static/img/linkedout-preview-new.jpg`,

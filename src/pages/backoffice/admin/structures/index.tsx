@@ -44,7 +44,7 @@ const OrganizationsAdmin = () => {
 
   return (
     <LayoutBackOffice title="Gestion des structures partenaires">
-      <Section container="large">
+      <Section className="custom-page">
         {loadingDefaultFilters ? (
           <LoadingScreen />
         ) : (

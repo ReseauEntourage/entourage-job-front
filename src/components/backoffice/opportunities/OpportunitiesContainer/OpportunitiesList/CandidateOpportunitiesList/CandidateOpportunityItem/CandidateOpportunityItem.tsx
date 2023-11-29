@@ -7,18 +7,18 @@ import {
   InfoText,
   SubtitleText,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
+import {
+  StyledOpportunityItemActionContainer,
+  StyledOpportunityItemBottomContainer,
+  StyledOpportunityItemContainer,
+  StyledOpportunityItemDescription,
+  StyledOpportunityItemInfoContainer,
+  StyledOpportunityItemTitleContainer,
+  StyledOpportunityItemTopContainer,
+} from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/OpportunitiesList.styles';
 import { useBookmarkOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/useBookmarkOpportunity';
 import { BUSINESS_LINES } from 'src/constants';
 import { findConstantFromValue } from 'src/utils/Finding';
-import {
-  StyledActionContainer,
-  StyledBottomContainer,
-  StyledContainer,
-  StyledDescription,
-  StyledInfoContainer,
-  StyledTitleContainer,
-  StyledTopContainer,
-} from './CandidateOpportunityItem.styles';
 import { ProgressBarStatus } from './ProgressBarStatus';
 
 export const CandidateOpportunityItem = ({
@@ -41,14 +41,9 @@ export const CandidateOpportunityItem = ({
   );
 
   return (
-    <StyledContainer>
-      <StyledTopContainer>
-        {/*
-          <Icon>
-            <Icon name="home" ratio={1.5} />
-          </Icon>
-        */}
-        <StyledTitleContainer>
+    <StyledOpportunityItemContainer>
+      <StyledOpportunityItemTopContainer>
+        <StyledOpportunityItemTitleContainer>
           <SubtitleText>{title}</SubtitleText>
           <InfoText>
             {company}
@@ -64,17 +59,17 @@ export const CandidateOpportunityItem = ({
             )}
           </InfoText>
           <InfoText>
-            <StyledInfoContainer>
+            <StyledOpportunityItemInfoContainer>
               <ContractLabel
                 contract={contract}
                 endOfContract={endOfContract}
                 startOfContract={startOfContract}
               />
               &nbsp;-&nbsp;{department}
-            </StyledInfoContainer>
+            </StyledOpportunityItemInfoContainer>
           </InfoText>
-        </StyledTitleContainer>
-        <StyledActionContainer>
+        </StyledOpportunityItemTitleContainer>
+        <StyledOpportunityItemActionContainer>
           <ActionLabels
             isBookmarked={!!opportunityUsers?.bookmarked}
             isRecommended={!!opportunityUsers?.recommended}
@@ -82,8 +77,8 @@ export const CandidateOpportunityItem = ({
             isExternal={isExternal}
             bookmarkOpportunity={bookmarkOpportunity}
           />
-        </StyledActionContainer>
-      </StyledTopContainer>
+        </StyledOpportunityItemActionContainer>
+      </StyledOpportunityItemTopContainer>
       <ProgressBarStatus
         status={opportunityUsers?.status}
         archived={opportunityUsers?.archived}
@@ -91,12 +86,12 @@ export const CandidateOpportunityItem = ({
         isRecommended={opportunityUsers?.recommended}
         isPublic={isPublic}
       />
-      <StyledBottomContainer>
+      <StyledOpportunityItemBottomContainer>
         <SubtitleText>Description mission</SubtitleText>
-        <StyledDescription>
+        <StyledOpportunityItemDescription>
           <DescriptionText>{description}</DescriptionText>
-        </StyledDescription>
-      </StyledBottomContainer>
-    </StyledContainer>
+        </StyledOpportunityItemDescription>
+      </StyledOpportunityItemBottomContainer>
+    </StyledOpportunityItemContainer>
   );
 };

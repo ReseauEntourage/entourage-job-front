@@ -268,7 +268,7 @@ const Parametres = () => {
 
   return (
     <LayoutBackOffice title="Mes Paramètres">
-      <Section>
+      <Section className="custom-page">
         <HeaderBackoffice
           title="Mes paramètres"
           description="Ici, vous pouvez gérer les données qui sont liées à votre compte sur LinkedOut. Vous pouvez aussi changer votre mail et votre mot de passe."

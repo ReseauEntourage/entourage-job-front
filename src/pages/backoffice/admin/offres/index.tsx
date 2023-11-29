@@ -2,7 +2,8 @@ import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
-import { AdminOpportunityList } from 'src/components/backoffice/admin/AdminOpportunityList';
+import { AdminOpportunities } from 'src/components/backoffice/admin/AdminOpportunities';
+import { AdminOpportunitiesFilters } from 'src/components/backoffice/admin/AdminOpportunities/AdminOpportunitiesFilters.types';
 import { Section } from 'src/components/utils';
 import {
   OFFER_ADMIN_FILTERS_DATA,
@@ -11,35 +12,30 @@ import {
 import { ADMIN_ZONES, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { GA_TAGS } from 'src/constants/tags';
 import { USER_ROLES } from 'src/constants/users';
-import { useTabFilters } from 'src/hooks';
-import { useFilters } from 'src/hooks/useFilters';
+import { useFilters } from 'src/hooks';
 import { UserContext } from 'src/store/UserProvider';
 
-const adminQueryFilters = OPPORTUNITY_FILTERS_DATA.slice(0, -1);
-
-const LesOpportunites = () => {
+const AdminOpportunitiesPage = () => {
   const {
-    isReady,
     replace,
     query: { q, offerId, tag, ...restParams },
+    isReady,
   } = useRouter();
 
-  const { user } = useContext(UserContext);
   const [loadingDefaultFilters, setLoadingDefaultFilters] = useState(true);
 
+  const { user } = useContext(UserContext);
+
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
-    adminQueryFilters,
-    '/backoffice/admin/offres',
+    OPPORTUNITY_FILTERS_DATA,
+    `/backoffice/admin/offres`,
     ['offerId'],
     GA_TAGS.BACKOFFICE_ADMIN_SUPPRIMER_FILTRES_CLIC
   );
 
-  const { tabFilters, setTabFilters } = useTabFilters(
-    OFFER_ADMIN_FILTERS_DATA,
-    '/backoffice/admin/offres',
-    ['offerId']
-  );
+  let content;
 
+  // redirect with default tag and departments
   useEffect(() => {
     if (isReady) {
       const redirectParams = tag
@@ -49,7 +45,6 @@ const LesOpportunites = () => {
           }
         : restParams;
 
-      // For retrocompatibility
       if (q) {
         replace(
           {
@@ -69,10 +64,9 @@ const LesOpportunites = () => {
           );
         } else if (!tag) {
           const params = {
-            tag: OFFER_ADMIN_FILTERS_DATA[1].tag,
+            tag: OFFER_ADMIN_FILTERS_DATA[0].tag,
             ...restParams,
-          };
-
+          } as { department?: string[]; tag?: string };
           if (user.zone && user.zone !== ADMIN_ZONES.HZ) {
             const defaultDepartmentsForAdmin = DEPARTMENTS_FILTERS.filter(
               (dept) => {
@@ -114,25 +108,29 @@ const LesOpportunites = () => {
     }
   }, [q, offerId, replace, restParams, tag, user, isReady]);
 
+  if (
+    // loading ||
+    !user
+  ) {
+    content = <LoadingScreen />;
+  } else {
+    content = (
+      <AdminOpportunities
+        search={search}
+        filters={filters as AdminOpportunitiesFilters}
+        resetFilters={resetFilters}
+        setSearch={setSearch}
+        setFilters={setFilters}
+      />
+    );
+  }
   return (
-    <LayoutBackOffice title="Modération des offres d'emploi">
-      <Section>
-        {!user || loadingDefaultFilters ? (
-          <LoadingScreen />
-        ) : (
-          <AdminOpportunityList
-            search={search}
-            filters={filters}
-            resetFilters={resetFilters}
-            setSearch={setSearch}
-            setFilters={setFilters}
-            tabFilters={tabFilters}
-            setTabFilters={setTabFilters}
-          />
-        )}
+    <LayoutBackOffice title="Modération des offres">
+      <Section className="custom-page">
+        {!user || loadingDefaultFilters ? <LoadingScreen /> : content}
       </Section>
     </LayoutBackOffice>
   );
 };
 
-export default LesOpportunites;
+export default AdminOpportunitiesPage;

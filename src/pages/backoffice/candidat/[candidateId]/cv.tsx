@@ -69,7 +69,7 @@ const Edit = () => {
 
   return (
     <LayoutBackOffice title="Edition du CV">
-      <Section>{content}</Section>
+      <Section className="custom-page">{content}</Section>
     </LayoutBackOffice>
   );
 };
