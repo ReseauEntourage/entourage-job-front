@@ -136,7 +136,7 @@ export function ParametersMemberTab({
           }}
         >
           <TrashIcon />
-          &nbsp;Supprimer l&apos;utilisateur
+          Supprimer l&apos;utilisateur
         </Button>
         <Button
           style="custom-secondary"
@@ -146,7 +146,7 @@ export function ParametersMemberTab({
           }
         >
           <PencilIcon />
-          &nbsp;Modifier le membre
+          Modifier le membre
         </Button>
       </StyledMemberActionsContainer>
 

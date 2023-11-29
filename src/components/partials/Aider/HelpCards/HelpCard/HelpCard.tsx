@@ -33,7 +33,7 @@ export const HelpCard = ({ cardContent, keyMap }) => {
           if (fbTag) fbEvent(fbTag);
         }}
       >
-        {cta}&nbsp;
+        {cta}
         <ChevronRightIcon />
       </Button>
     </div>

@@ -20,7 +20,7 @@ export const allCTAs = {
     text: (
       <StyledButtonContainer>
         <EmailIcon />
-        &nbsp;Je postule
+        Je postule
       </StyledButtonContainer>
     ),
   },
@@ -31,7 +31,7 @@ export const allCTAs = {
     text: (
       <StyledButtonContainer>
         <EmailIcon />
-        &nbsp;J&apos;ai déjà postulé
+        J&apos;ai déjà postulé
       </StyledButtonContainer>
     ),
   },
@@ -42,7 +42,7 @@ export const allCTAs = {
     text: (
       <StyledButtonContainer>
         <TrashIcon />
-        &nbsp;Je ne suis pas intéressé
+        Je ne suis pas intéressé
       </StyledButtonContainer>
     ),
   },
@@ -53,7 +53,7 @@ export const allCTAs = {
     text: (
       <StyledButtonContainer>
         <EmailIcon />
-        &nbsp;Je veux relancer l&apos;entreprise
+        Je veux relancer l&apos;entreprise
       </StyledButtonContainer>
     ),
   },
@@ -64,7 +64,7 @@ export const allCTAs = {
     text: (
       <StyledButtonContainer>
         <CheckIcon />
-        &nbsp;J&apos;ai décroché un entretien
+        J&apos;ai décroché un entretien
       </StyledButtonContainer>
     ),
   },
@@ -75,7 +75,7 @@ export const allCTAs = {
     text: (
       <StyledButtonContainer>
         <TrashIcon />
-        &nbsp;J&apos;abandonne cette offre
+        J&apos;abandonne cette offre
       </StyledButtonContainer>
     ),
   },
@@ -86,7 +86,7 @@ export const allCTAs = {
     text: (
       <StyledButtonContainer>
         <CalendarIcon />
-        &nbsp;Je note une date d&apos;entretien
+        Je note une date d&apos;entretien
       </StyledButtonContainer>
     ),
   },
@@ -97,7 +97,7 @@ export const allCTAs = {
     text: (
       <StyledButtonContainer>
         <CheckIcon />
-        &nbsp;J&apos;ai décroché le job
+        J&apos;ai décroché le job
       </StyledButtonContainer>
     ),
   },
@@ -108,7 +108,7 @@ export const allCTAs = {
     text: (
       <StyledButtonContainer>
         <CalendarIcon />
-        &nbsp;Je note ma date d&apos;embauche
+        Je note ma date d&apos;embauche
       </StyledButtonContainer>
     ),
   },

@@ -128,7 +128,6 @@ export const CandidatListPartial = () => {
             {process.env.WOMENS_DAY === 'true'
               ? 'Voir toutes les candidates'
               : 'Voir tous les candidats'}
-            &nbsp;
             <ChevronRightIcon />
           </Button>
         </Grid>

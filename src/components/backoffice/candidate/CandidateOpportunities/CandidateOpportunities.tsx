@@ -209,7 +209,7 @@ export const CandidateOpportunities = ({
               }}
             >
               <PlusIcon />
-              &nbsp;Ajouter une offre
+              Ajouter une offre
             </Button>
           </HeaderBackoffice>
           {isPublic ? (

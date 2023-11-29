@@ -237,7 +237,7 @@ export const AdminOpportunities = ({
               ]}
             >
               <PlusIcon />
-              &nbsp;Créer
+              Créer
             </ButtonMultiple>
           </HeaderBackoffice>
           <Section className="custom-primary custom-fixed">

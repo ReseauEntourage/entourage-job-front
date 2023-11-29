@@ -50,7 +50,7 @@ export const HeaderPublicContentMobile = ({
             >
               <div className="uk-flex">
                 <HomeIcon width={16} height={16} />
-                &nbsp;Accueil
+                &nbsp; Accueil
               </div>
             </a>
           </li>
@@ -107,7 +107,7 @@ export const HeaderPublicContentMobile = ({
               href={{ pathname: '/candidats', query: { employed: false } }}
               style="primary"
             >
-              Découvrir les CV&nbsp;
+              Découvrir les CV
               <ChevronRightIcon />
             </Button>
           </li>
@@ -122,7 +122,7 @@ export const HeaderPublicContentMobile = ({
               }}
               style="default"
             >
-              Faire un don&nbsp;
+              Faire un don
               <ChevronRightIcon />
             </Button>
           </li>

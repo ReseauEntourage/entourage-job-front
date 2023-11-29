@@ -90,7 +90,7 @@ export const CoachContainer = () => {
             }}
             style="primary"
           >
-            Devenir Coach LinkedOut&nbsp;
+            Devenir Coach LinkedOut
             <ChevronRightIcon />
           </Button>
         </div>

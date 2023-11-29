@@ -273,7 +273,7 @@ const Orienter = () => {
               openModal(<ModalInterestLinkedOut />);
             }}
           >
-            Nous contacter&nbsp;
+            Nous contacter
             <ChevronRightIcon />
           </Button>
           <div className="uk-light">
@@ -287,7 +287,7 @@ const Orienter = () => {
                 gaEvent(GA_TAGS.PAGE_ORIENTER_BROCHURE_CLIC);
               }}
             >
-              Télécharger la brochure&nbsp;
+              Télécharger la brochure
               <ChevronRightIcon />
             </Button>
           </div>
@@ -302,7 +302,7 @@ const Orienter = () => {
                 gaEvent(GA_TAGS.PAGE_ORIENTER_APPOINTMENT_CLIC);
               }}
             >
-              Prendre rendez-vous&nbsp;
+              Prendre rendez-vous
               <ChevronRightIcon />
             </Button>
           */}

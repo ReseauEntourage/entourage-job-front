@@ -17,7 +17,7 @@ export function BackLink({ label, url }: BackLinkProps) {
     <Link href={url} scroll={false} shallow passHref>
       <StyledBackLink>
         <ChevronLeftIcon />
-        &nbsp;{label}
+        {label}
       </StyledBackLink>
     </Link>
   );

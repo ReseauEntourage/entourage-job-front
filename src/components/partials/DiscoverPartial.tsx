@@ -68,7 +68,7 @@ export const DiscoverPartial = ({
           href={{ pathname: '/candidats', query: { employed: false } }}
           className="uk-margin-large-top"
         >
-          Voir tous les candidats&nbsp;
+          Voir tous les candidats
           <ChevronRightIcon />
         </Button>
       </div>

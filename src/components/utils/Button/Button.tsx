@@ -79,7 +79,15 @@ export function Button({
       data-testid={dataTestId}
       color={color}
     >
-      {children}
+      {/* Hack to wrap text node in span to be able to add margin to Icon components */}
+      {Array.isArray(children)
+        ? children.map((child, index) => {
+            if (typeof child === 'string') {
+              return <span key={index.toString()}>{child}</span>;
+            }
+            return child;
+          })
+        : children}
     </StyledButton>
   );
   if (href) {
