@@ -5,7 +5,6 @@ import { FiltersDropdowns } from 'src/components/filters/FiltersDropdowns';
 import { FiltersMobile } from 'src/components/filters/FiltersMobile';
 import { FiltersOptions } from 'src/components/filters/FiltersOptions';
 import { FiltersSideBar } from 'src/components/filters/FiltersSideBar';
-import {} from 'src/components/utils';
 import {
   CV_FILTERS_DATA,
   MEMBER_FILTERS_DATA,

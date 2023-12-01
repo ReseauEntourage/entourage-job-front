@@ -1,6 +1,6 @@
 export * from './AnimatedList';
 export * from './Background';
-export * from './ButtonIcon/ButtonIcon';
+export * from './ButtonIcon';
 export * from './Card';
 export * from './Grid';
 export * from './Carousel';

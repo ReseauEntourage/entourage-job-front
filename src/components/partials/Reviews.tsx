@@ -8,10 +8,10 @@ interface ReviewsProps {
     company?: string;
     industry?: string;
     companyInfo?: string;
-    review: string | JSX.Element;
+    review: React.ReactNode;
     image: string;
   }[];
-  title: string | JSX.Element | JSX.Element[];
+  title: React.ReactNode;
 }
 
 export const Reviews = ({ reviews, title }: ReviewsProps) => {
