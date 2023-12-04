@@ -25,17 +25,6 @@ export const StyledContainer = styled.div`
   color: ${({ color }) => {
     return COLORS[color] || COLORS.primaryOrange;
   }} !important;
-  path {
-    fill: ${({ fill, color }) => {
-      return fill ? COLORS[color] || COLORS.primaryOrange : 'transparent';
-    }} !important;
-  }
-
-  polygon {
-    fill: ${({ fill, color }) => {
-      return fill ? COLORS[color] || COLORS.primaryOrange : 'transparent';
-    }} !important;
-  }
 
   .action-label {
     ${({ disabled, hoverAnimation }) => {

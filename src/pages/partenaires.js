@@ -144,16 +144,16 @@ const PartnerItem = ({
               <div className="uk-width-medium uk-flex uk-flex-column uk-flex-middle uk-flex-center">
                 <Img
                   src={`/static/img/partners/${key}/logo.png`}
-                  width=""
-                  height=""
-                  alt=""
+                  alt="key"
+                  width={300}
+                  height={300}
                 />
                 {bis && (
                   <Img
                     src={`/static/img/partners/${key}/logo_bis.png`}
-                    width=""
-                    height=""
-                    alt=""
+                    alt="key"
+                    width={300}
+                    height={300}
                   />
                 )}
               </div>
@@ -185,13 +185,12 @@ const PartnerItem = ({
                     </p>
                   )}
                   <div className="uk-flex">
-                    <div className="uk-flex uk-flex-top">
+                    <div className="uk-flex uk-flex-top uk-margin-small-right">
                       <Img
                         alt=""
-                        width="27"
-                        height="21"
+                        width={27}
+                        height={21}
                         src="/static/img/guillemets.png"
-                        className="uk-margin-small-right"
                       />
                     </div>
                     <div className="uk-flex-1">
@@ -209,13 +208,12 @@ const PartnerItem = ({
                         </div>
                       )}
                     </div>
-                    <div className="uk-flex uk-flex-bottom">
+                    <div className="uk-flex uk-flex-bottom uk-margin-small-left">
                       <Img
                         alt=""
-                        width="15"
-                        height="12"
+                        width={15}
+                        height={12}
                         src="/static/img/guillemetsPetits.png"
-                        className="uk-margin-small-left"
                       />
                     </div>
                   </div>

@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
 import UIkit from 'uikit';
+import PencilIcon from 'assets/icons/pencil.svg';
+import TrashIcon from 'assets/icons/trash.svg';
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
 import { EditMemberModal } from 'src/components/backoffice/admin/members/MemberDetails/EditMemberModal';
@@ -11,7 +13,7 @@ import { MemberColumn } from 'src/components/backoffice/admin/members/MemberTabl
 import { formDeleteUser } from 'src/components/forms/schemas/formDeleteUser';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { Button, Icon } from 'src/components/utils';
+import { Button } from 'src/components/utils';
 import { Heading } from 'src/components/utils/Inputs/Heading';
 import {
   EXTERNAL_USER_ROLES,
@@ -133,8 +135,8 @@ export function ParametersMemberTab({
             );
           }}
         >
-          <Icon name="trash" ratio={0.9} />
-          &nbsp;Supprimer l&apos;utilisateur
+          <TrashIcon />
+          Supprimer l&apos;utilisateur
         </Button>
         <Button
           style="custom-secondary"
@@ -143,8 +145,8 @@ export function ParametersMemberTab({
             openModal(<EditMemberModal user={user} setUser={setUser} />)
           }
         >
-          <Icon name="pencil" />
-          &nbsp;Modifier le membre
+          <PencilIcon />
+          Modifier le membre
         </Button>
       </StyledMemberActionsContainer>
 

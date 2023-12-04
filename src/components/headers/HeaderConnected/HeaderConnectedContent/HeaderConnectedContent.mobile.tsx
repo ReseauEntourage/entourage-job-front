@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useContext } from 'react';
 import { v4 as uuid } from 'uuid';
+import HomeIcon from 'assets/icons/home.svg';
 import { HeaderConnectedMainItemDefaultProps } from '../HeaderConnected.types';
 import { StyledHeaderMobile } from 'src/components/headers/Header.styles';
 import {
@@ -8,7 +9,6 @@ import {
   SimpleLink,
   Hamburger,
   NavbarLogo,
-  Icon,
 } from 'src/components/utils';
 import { Offcanvas } from 'src/components/utils/Offcanvas';
 import { OFFCANVAS_LOGGED } from 'src/constants/utils';
@@ -50,7 +50,7 @@ export const HeaderConnectedContentMobile = ({
         }
         right={
           <div className="uk-padding-small uk-flex uk-flex-middle">
-            <Hamburger targetId={OFFCANVAS_LOGGED} hidden="m" light={false} />
+            <Hamburger targetId={OFFCANVAS_LOGGED} />
           </div>
         }
       />
@@ -58,8 +58,8 @@ export const HeaderConnectedContentMobile = ({
         <ul className="uk-nav uk-nav-default uk-margin-medium-top">
           <li>
             <SimpleLink href="/">
-              <Icon name="home" className="uk-margin-small-right" />
-              Accueil
+              <HomeIcon width={16} height={16} />
+              &nbsp; Accueil
             </SimpleLink>
           </li>
           {!isEmpty &&
@@ -95,7 +95,7 @@ export const HeaderConnectedContentMobile = ({
                         }}
                       >
                         <span>
-                          <Icon name={icon} className="uk-margin-small-right" />
+                          <span className="uk-margin-small-right">{icon}</span>
                           {name}
                         </span>
                       </a>
@@ -129,7 +129,7 @@ export const HeaderConnectedContentMobile = ({
                   }}
                 >
                   <span>
-                    <Icon name={icon} className="uk-margin-small-right" />
+                    <span className="uk-margin-small-right">{icon}</span>
                     {name}
                   </span>
                 </a>

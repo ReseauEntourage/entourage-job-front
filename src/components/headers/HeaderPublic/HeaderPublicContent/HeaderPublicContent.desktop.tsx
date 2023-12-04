@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
+import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { StyledHeaderDesktop } from 'src/components/headers/Header.styles';
-import { Navbar, NavbarLogo, Icon, Nav } from 'src/components/utils';
+import { Navbar, NavbarLogo, Nav } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
@@ -47,8 +48,8 @@ export const HeaderPublicContentDesktop = ({
         }}
         style="primary"
       >
-        Découvrir les CV&nbsp;
-        <Icon name="chevron-right" />
+        Découvrir les CV
+        <ChevronRightIcon />
       </Button>
     </div>,
   ];
@@ -75,8 +76,8 @@ export const HeaderPublicContentDesktop = ({
                 }}
                 style="default"
               >
-                Faire un don&nbsp;
-                <Icon name="chevron-right" />
+                Faire un don
+                <ChevronRightIcon />
               </Button>
             </div>
           </div>

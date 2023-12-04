@@ -1,4 +1,5 @@
 import React from 'react';
+import PencilIcon from 'assets/icons/pencil.svg';
 import { formEditStory } from 'src/components/forms/schemas/formEditStory';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
@@ -18,25 +19,23 @@ export const StoryProfileCard = ({
         <h3 className="uk-card-title">
           Ma <span className="uk-text-primary">présentation</span>
         </h3>
-        {onChange && (
-          <ButtonIcon
-            name="pencil"
-            dataTestId="test-story-edit-icon"
-            onClick={() => {
-              openModal(
-                <ModalEdit
-                  title="Édition - Ma présentation"
-                  formSchema={formEditStory}
-                  defaultValues={{ story: description }}
-                  onSubmit={(fields, closeModal) => {
-                    closeModal();
-                    onChange(fields);
-                  }}
-                />
-              );
-            }}
-          />
-        )}
+        <ButtonIcon
+          icon={<PencilIcon />}
+          dataTestId="test-story-edit-icon"
+          onClick={() => {
+            openModal(
+              <ModalEdit
+                title="Édition - Ma présentation"
+                formSchema={formEditStory}
+                defaultValues={{ story: description }}
+                onSubmit={(fields, closeModal) => {
+                  closeModal();
+                  onChange(fields);
+                }}
+              />
+            );
+          }}
+        />
       </Grid>
 
       {description ? (

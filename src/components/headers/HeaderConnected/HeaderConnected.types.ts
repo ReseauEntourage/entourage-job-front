@@ -1,7 +1,7 @@
 export interface HeaderConnectedItemProps {
   href: string;
   badge?: string;
-  icon?: string;
+  icon?: JSX.Element;
   name?: string;
   external?: boolean;
   queryParams?: string;
@@ -18,7 +18,7 @@ export interface HeaderConnectedMainItemProps extends HeaderConnectedItemProps {
 
 export const HeaderConnectedMainItemDefaultProps = {
   badge: '',
-  icon: '',
+  icon: null,
   external: false,
   tag: null,
   queryParams: '',

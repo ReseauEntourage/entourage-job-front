@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useContext, useState, useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
+import CaretDownIcon from 'assets/icons/caret-down.svg';
 import {
   HeaderConnectedMainItemProps,
   HeaderConnectedMainItemDefaultProps,
@@ -12,8 +13,8 @@ import {
   Nav,
   Dropdown,
   NavbarLogo,
-  Icon,
 } from 'src/components/utils';
+import { ImgProfile } from 'src/components/utils/ImgProfile';
 import { StyledNav } from 'src/components/utils/Navbar/Nav/Nav.styles';
 import {
   CANDIDATE_USER_ROLES,
@@ -25,7 +26,6 @@ import { UserContext } from 'src/store/UserProvider';
 import { isRoleIncluded } from 'src/utils/Finding';
 import { StyledConnectedItem } from './HeaderConnectedContent.styles';
 import { HeaderConnectedContentProps } from './HeaderConnectedContent.types';
-import { ImgProfile } from './ImgProfile';
 import { SubMenu } from './SubMenu';
 
 const uuidValue = uuid();
@@ -71,9 +71,11 @@ export const HeaderConnectedContentDesktop = ({
           justifyContent: 'center',
         }}
       >
-        <ImgProfile />
-        <span className="uk-margin-small-left">Bonjour {user.firstName}</span>
-        <Icon name="triangle-down" />
+        <ImgProfile user={user} size={40} />
+        <span className="uk-margin-small-left uk-margin-small-right">
+          Bonjour {user.firstName}
+        </span>
+        <CaretDownIcon />
       </a>
       <Dropdown
         dividers={[2]}
@@ -187,7 +189,7 @@ export const HeaderConnectedContentDesktop = ({
                           className="uk-flex uk-flex-middle menu-link"
                         >
                           <span className="uk-margin-small-right icon-span">
-                            <Icon name={icon} />
+                            {icon}
                           </span>
                           <span className="name-span">{name}</span>
                           {badges[badge] > 0 && (

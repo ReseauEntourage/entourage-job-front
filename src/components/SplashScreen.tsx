@@ -18,7 +18,8 @@ const SplashScreenContent = () => {
         <Img
           src="/static/img/linkedout_logo_orange_small.png"
           alt="LinkedOut by Entourage"
-          className="uk-width-medium uk-margin-medium-bottom"
+          width={300}
+          height={300}
         />
       </div>
     </div>

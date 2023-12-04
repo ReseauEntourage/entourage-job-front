@@ -12,23 +12,13 @@ export const AdminActionLabelContainer = ({
   return (
     <>
       {!isPublic && !isExternal && (
-        <ActionLabel disabled fill color="primaryOrange" label="Offre privée" />
+        <ActionLabel disabled color="primaryOrange" label="Offre privée" />
       )}
       {isPublic && !isExternal && (
-        <ActionLabel
-          disabled
-          fill
-          color="primaryOrange"
-          label="Offre générale"
-        />
+        <ActionLabel disabled color="primaryOrange" label="Offre générale" />
       )}
       {isExternal && (
-        <ActionLabel
-          disabled
-          fill
-          color="primaryOrange"
-          label="Offre externe"
-        />
+        <ActionLabel disabled color="primaryOrange" label="Offre externe" />
       )}
     </>
   );

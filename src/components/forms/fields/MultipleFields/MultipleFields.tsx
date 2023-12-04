@@ -9,6 +9,8 @@ import {
   UseFormResetField,
   UseFormWatch,
 } from 'react-hook-form';
+import PlusIcon from 'assets/icons/plus.svg';
+import TrashIcon from 'assets/icons/trash.svg';
 import { GenericField } from '../GenericField';
 import { InputsContainer } from '../InputsContainer';
 import {
@@ -16,7 +18,7 @@ import {
   FormSchema,
   ExtractFormSchemaValidation,
 } from 'src/components/forms/FormSchema/FormSchema.types';
-import { Button, ButtonIcon, Icon } from 'src/components/utils';
+import { Button, ButtonIcon } from 'src/components/utils';
 import { useMount } from 'src/hooks/utils';
 import { AnyCantFix } from 'src/utils/Types';
 import {
@@ -109,8 +111,7 @@ export function MultipleFields<S extends FormSchema<AnyCantFix>>({
             <StyledTrashButtonContainer>
               {index === fields.length - 1 && index !== 0 && (
                 <ButtonIcon
-                  name="trash"
-                  ratio={0.8}
+                  icon={<TrashIcon />}
                   onClick={() => {
                     if (fields.length > 1) {
                       remove(index);
@@ -142,7 +143,7 @@ export function MultipleFields<S extends FormSchema<AnyCantFix>>({
           <StyledMultipleFieldButtonLabel>
             {action}
           </StyledMultipleFieldButtonLabel>
-          <Icon name="plus" ratio={0.8} />
+          <PlusIcon />
         </Button>
       </StyledMultipleFieldAddButtonContainer>
     </div>

@@ -10,6 +10,8 @@ export const StyledSwiperSlide = styled(SwiperSlide)`
 `;
 
 export const StyledSwiperContainer = styled.div`
+  padding: 0 15px;
+
   background-color: ${(props) => {
     return props.backgroundColor;
   }};

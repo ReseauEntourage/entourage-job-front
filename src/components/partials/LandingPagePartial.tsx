@@ -21,12 +21,6 @@ export const LandingPagePartial = () => {
         >
           <Section container="large" className="uk-padding">
             <Grid middle column gap="medium">
-              {/* <Img
-                  src="/static/img/linkedout_logo_white.png"
-                  alt="LinkedOut by Entourage"
-                  className="uk-width-medium"
-                  // width="300"
-                /> */}
               <h1
                 className="uk-text-bold uk-text-center uk-width-xlarge@m"
                 style={{ color: 'white' }}
@@ -42,15 +36,6 @@ export const LandingPagePartial = () => {
                   qui n&apos;en ont pas
                 </span>
               </h1>
-              {/* <div className="uk-margin-bottom">
-                  <a
-                    className="ent-link-muted"
-                    href="#header"
-                    data-uk-scroll="offset: -1"
-                  >
-                    <Icon name="chevron-down" ratio="2.5" />
-                  </a>
-                </div> */}
             </Grid>
           </Section>
         </div>

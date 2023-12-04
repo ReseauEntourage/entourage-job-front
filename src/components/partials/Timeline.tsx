@@ -29,13 +29,9 @@ export const Timeline = ({ items }: TimeLineProps) => {
               <div className="ent-timeline-number">{index + 1}</div>
               <div className="ent-timeline-arrow">
                 <div className="uk-flex uk-flex-middle">
-                  <Img
-                    src={icon}
-                    width="25x"
-                    height="25px"
-                    alt={text}
-                    className="uk-margin-small-right"
-                  />
+                  <div className="uk-margin-small-right uk-flex uk-flex-middle uk-flex-center">
+                    <Img src={icon} width={25} height={25} alt={text} />
+                  </div>
                   <span className="uk-text-center uk-text-bold">{text}</span>
                 </div>
               </div>
@@ -49,13 +45,9 @@ export const Timeline = ({ items }: TimeLineProps) => {
                   {index + 1}
                 </div>
                 <span className="uk-text-center uk-text-bold uk-padding-small uk-flex uk-flex-middle uk-flex-center">
-                  <Img
-                    src={icon}
-                    width="25x"
-                    height="25px"
-                    alt={text}
-                    className="uk-margin-small-right"
-                  />
+                  <div className="uk-margin-small-right uk-flex uk-flex-middle uk-flex-center">
+                    <Img src={icon} width={25} height={25} alt={text} />
+                  </div>
                   {text}
                 </span>
               </div>

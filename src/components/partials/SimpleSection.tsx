@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Section, Icon } from 'src/components/utils';
+import ChevronRightIcon from 'assets/icons/chevron-right.svg';
+import { Button, Section } from 'src/components/utils';
 import { UIKIT_STYLES } from 'src/components/variables';
 
 interface SimpleSectionProps {
@@ -58,7 +59,8 @@ export const SimpleSection = ({
             toggle={button.modal}
             onClick={button.onClick}
           >
-            {button.label} <Icon name="chevron-right" />
+            {button.label}
+            <ChevronRightIcon />
           </Button>
         )}
         {children}

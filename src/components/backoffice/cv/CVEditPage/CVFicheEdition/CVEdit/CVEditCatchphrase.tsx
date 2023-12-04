@@ -1,4 +1,5 @@
 import React from 'react';
+import PencilIcon from 'assets/icons/pencil.svg';
 import { formEditCatchphrase } from 'src/components/forms/schemas/formEditCatchphrase';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
@@ -17,27 +18,25 @@ export const CVEditCatchphrase = ({
         <h3 className="uk-card-title">
           Ma <span className="uk-text-primary">phrase d&apos;accroche</span>
         </h3>
-        {onChange && (
-          <ButtonIcon
-            name="pencil"
-            dataTestId="test-catchphrase-edit-icon"
-            onClick={() => {
-              openModal(
-                <ModalEdit
-                  title="Édition - Ma phrase d'accroche"
-                  formSchema={formEditCatchphrase}
-                  defaultValues={{ catchphrase }}
-                  onSubmit={async (fields, closeModal) => {
-                    closeModal();
-                    await onChange({
-                      ...fields,
-                    });
-                  }}
-                />
-              );
-            }}
-          />
-        )}
+        <ButtonIcon
+          icon={<PencilIcon />}
+          dataTestId="test-catchphrase-edit-icon"
+          onClick={() => {
+            openModal(
+              <ModalEdit
+                title="Édition - Ma phrase d'accroche"
+                formSchema={formEditCatchphrase}
+                defaultValues={{ catchphrase }}
+                onSubmit={async (fields, closeModal) => {
+                  closeModal();
+                  await onChange({
+                    ...fields,
+                  });
+                }}
+              />
+            );
+          }}
+        />
       </Grid>
       {catchphrase ? (
         <p data-testid="cv-edit-catchphrase-content">{catchphrase}</p>

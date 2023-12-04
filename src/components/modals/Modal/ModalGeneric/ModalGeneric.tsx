@@ -63,7 +63,6 @@ export const ModalGeneric = ({
                   onClose();
                 }}
                 style="custom-primary"
-                dataTestId="inscription-candidat-confirm-close"
               >
                 Fermer
               </Button>

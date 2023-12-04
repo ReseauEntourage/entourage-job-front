@@ -79,6 +79,40 @@ const securityHeaders = [
   }, */
 ];
 
+let remotePatterns = [];
+
+if (process.env.CDN_URL) {
+  remotePatterns = [
+    ...remotePatterns,
+    {
+      protocol: 'https',
+      hostname: process.env.CDN_URL.replace('https://', ''),
+      pathname: '/**',
+    },
+  ];
+}
+
+if (process.env.AWSS3_CDN_URL) {
+  remotePatterns = [
+    ...remotePatterns,
+    {
+      protocol: 'https',
+      hostname: process.env.AWSS3_CDN_URL.replace('https://', ''),
+      pathname: '/images/**',
+    },
+  ];
+}
+if (process.env.AWSS3_URL) {
+  remotePatterns = [
+    ...remotePatterns,
+    {
+      protocol: 'https',
+      hostname: process.env.AWSS3_URL.replace('https://', ''),
+      pathname: '/images/**',
+    },
+  ];
+}
+
 module.exports = withLess({
   webpackDevMiddleware: (config) => {
     config.watchOptions = {
@@ -95,7 +129,26 @@ module.exports = withLess({
 
     config.module.rules.push({
       test: /\.svg$/,
-      use: ['@svgr/webpack'],
+      use: [
+        {
+          loader: '@svgr/webpack',
+          options: {
+            svgoConfig: {
+              plugins: [
+                {
+                  name: 'preset-default',
+                  params: {
+                    overrides: {
+                      // disable plugins
+                      removeViewBox: false,
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        },
+      ],
     });
 
     if (!options.isServer) {
@@ -133,6 +186,9 @@ module.exports = withLess({
     return config;
   },
   assetPrefix: !dev ? process.env.CDN_URL || undefined : undefined,
+  images: {
+    remotePatterns,
+  },
   async redirects() {
     return [
       {

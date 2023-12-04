@@ -1,9 +1,13 @@
 import React from 'react';
+import PlusIcon from 'assets/icons/plus.svg';
+import QuoteLeftIcon from 'assets/icons/quote-left.svg';
+import QuoteRightIcon from 'assets/icons/quote-right.svg';
+import { EditItemsButtons } from 'src/components/backoffice/cv/CVEditPage/CVFicheEdition/EditItemsButtons';
 import { formEditTestimonial } from 'src/components/forms/schemas/formEditTestimonial';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { Grid, ButtonIcon, Icon } from 'src/components/utils';
+import { Grid, ButtonIcon } from 'src/components/utils';
 import { formatParagraph, sortByName } from 'src/utils';
 
 interface Review {
@@ -16,6 +20,7 @@ interface CVEditReviewsProps {
   reviews: Review[];
   onChange: (updatedCV: { reviews: Review[] }) => void;
 }
+
 export const CVEditReviews = ({ reviews, onChange }: CVEditReviewsProps) => {
   const MAX_REVIEWS = 3;
 
@@ -43,7 +48,7 @@ export const CVEditReviews = ({ reviews, onChange }: CVEditReviewsProps) => {
                 />
               );
             }}
-            name="plus"
+            icon={<PlusIcon />}
           />
         )}
       </Grid>
@@ -53,10 +58,11 @@ export const CVEditReviews = ({ reviews, onChange }: CVEditReviewsProps) => {
             return (
               <li id={i.toString()} key={i} className="">
                 <Grid
+                  gap="small"
                   eachWidths={['auto', 'expand']}
                   className="uk-padding-small uk-padding-remove-horizontal"
                 >
-                  <Icon name="quote-right" />
+                  <QuoteLeftIcon width={15} height={15} />
                   <>
                     <p className="uk-text-small uk-margin-small">
                       {formatParagraph(review.text)}
@@ -66,42 +72,37 @@ export const CVEditReviews = ({ reviews, onChange }: CVEditReviewsProps) => {
                     </p>
                     <p className="uk-margin-remove">{review.status}</p>
                   </>
-                  <span className="uk-text-muted uk-margin-small">
-                    <div className="uk-flex uk-flex-column">
-                      <ButtonIcon
-                        name="pencil"
-                        onClick={() => {
-                          openModal(
-                            <ModalEdit
-                              title="Édition - Ils me recommandent"
-                              formSchema={formEditTestimonial}
-                              defaultValues={{ ...review }}
-                              onSubmit={(fields, closeModal) => {
-                                closeModal();
-                                sortedReviews[i] = fields;
-                                onChange({ reviews: sortedReviews });
-                              }}
-                            />
-                          );
-                        }}
-                      />
-                      <ButtonIcon
-                        name="trash"
-                        onClick={() => {
-                          openModal(
-                            <ModalConfirm
-                              text="Êtes-vous sûr(e) de vouloir supprimer cette recommandation ?"
-                              buttonText="Supprimer"
-                              onConfirm={() => {
-                                sortedReviews.splice(i, 1);
-                                onChange({ reviews: sortedReviews });
-                              }}
-                            />
-                          );
-                        }}
-                      />
-                    </div>
-                  </span>
+                  <div className="uk-flex uk-flex-column uk-flex-right uk-height-1-1">
+                    <QuoteRightIcon width={15} height={15} />
+                  </div>
+                  <EditItemsButtons
+                    onEditClick={() => {
+                      openModal(
+                        <ModalEdit
+                          title="Édition - Ils me recommandent"
+                          formSchema={formEditTestimonial}
+                          defaultValues={{ ...review }}
+                          onSubmit={(fields, closeModal) => {
+                            closeModal();
+                            sortedReviews[i] = fields;
+                            onChange({ reviews: sortedReviews });
+                          }}
+                        />
+                      );
+                    }}
+                    onDeleteClick={() => {
+                      openModal(
+                        <ModalConfirm
+                          text="Êtes-vous sûr(e) de vouloir supprimer cette recommandation ?"
+                          buttonText="Supprimer"
+                          onConfirm={() => {
+                            sortedReviews.splice(i, 1);
+                            onChange({ reviews: sortedReviews });
+                          }}
+                        />
+                      );
+                    }}
+                  />
                 </Grid>
               </li>
             );

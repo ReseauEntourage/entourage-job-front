@@ -18,6 +18,8 @@ export const StyledConnectedItem = styled.li`
     color: ${({ color }) => {
       return COLORS[color] || COLORS.black;
     }};
+    display: flex;
+    align-items: center;
   }
   .name-span {
     text-transform: none;
@@ -41,7 +43,7 @@ export const StyledConnectedItem = styled.li`
     }
   }
   & > a:hover {
-    opacity: 0.5;
+    opacity: 0.6;
   }
 `;
 

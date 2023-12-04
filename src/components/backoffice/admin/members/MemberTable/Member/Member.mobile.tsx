@@ -2,6 +2,9 @@ import moment from 'moment';
 import React from 'react';
 
 import { Tooltip } from 'react-tooltip';
+import EyeHiddenIcon from 'assets/icons/eye-hidden.svg';
+import EyeVisibleIcon from 'assets/icons/eye-visible.svg';
+import LinkIcon from 'assets/icons/link.svg';
 import { translateStatusCV } from 'src/components/backoffice/admin/members/MemberList/MemberList.utils';
 import {
   StyledCVStatusCellContent,
@@ -10,8 +13,8 @@ import {
   StyledNameCellMobile,
 } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.styles';
 import { renderCVStatus } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.utils';
-import { ImgProfile } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
-import { SimpleLink, Icon } from 'src/components/utils';
+import { SimpleLink } from 'src/components/utils';
+import { ImgProfile } from 'src/components/utils/ImgProfile';
 import { CheckBox, useCheckBox } from 'src/components/utils/Inputs/CheckBox';
 import { TdMobile } from 'src/components/utils/Table';
 import { ADMIN_ZONES } from 'src/constants/departements';
@@ -171,7 +174,7 @@ export function MemberMobile({
                   isExternal
                   target="_blank"
                 >
-                  <Icon name="link" style={{ width: 20 }} />
+                  <LinkIcon width={20} height={20} />
                 </SimpleLink>
               </span>
             </TdMobile>
@@ -212,13 +215,9 @@ export function MemberMobile({
               ) : (
                 <span>
                   {userCandidate?.hidden ? (
-                    <Icon
-                      name="eye-hidden"
-                      ratio={1.2}
-                      className="eye-hidden"
-                    />
+                    <EyeHiddenIcon className="eye-hidden" />
                   ) : (
-                    <Icon name="eye-visible" ratio={1.2} />
+                    <EyeVisibleIcon />
                   )}
                 </span>
               )}

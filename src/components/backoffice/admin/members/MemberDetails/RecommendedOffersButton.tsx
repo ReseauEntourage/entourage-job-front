@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
-import { Button, Icon } from 'src/components/utils';
+import ChevronRightIcon from 'assets/icons/chevron-right.svg';
+import { Button } from 'src/components/utils';
 import { OFFER_ADMIN_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { useFetchCV } from 'src/hooks/useFetchCV';
@@ -42,7 +43,7 @@ export function RecommendedOffersButton({
       }}
     >
       Voir les offres qui pourraient intéresser le candidat
-      <Icon name="chevron-right" ratio="0.8" className="uk-margin-small-left" />
+      <ChevronRightIcon />
     </Button>
   );
 }

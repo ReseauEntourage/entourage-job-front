@@ -1,8 +1,9 @@
 import React from 'react';
+import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { Layout } from 'src/components/Layout';
 import { NewsletterPartial } from 'src/components/partials';
 import { CVList } from 'src/components/partials/CV/CVList';
-import { Button, Grid, Section, SimpleLink, Icon } from 'src/components/utils';
+import { Button, Grid, Section, SimpleLink } from 'src/components/utils';
 import { CV_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 
@@ -37,7 +38,8 @@ const Custom404 = () => {
             style="secondary"
             className="uk-margin-large-top"
           >
-            Voir tous les candidats <Icon name="chevron-right" />
+            Voir tous les candidats
+            <ChevronRightIcon />
           </Button>
         </Grid>
       </Section>

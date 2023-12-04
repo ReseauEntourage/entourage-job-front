@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import ChevronDownIcon from 'assets/icons/chevron-down.svg';
 import { StyledInputLabel } from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
-import { Icon } from 'src/components/utils/Icon';
 import { FilterConstant } from 'src/constants/utils';
 import { useCloseOnClickOutsideComponent } from 'src/hooks/useCloseOnClickOutsideComponent';
 import { StyledSelectContainer } from './SelectSimple.styles';
@@ -77,12 +77,12 @@ export function SelectSimple<T extends string | number | boolean>({
             {showLabel || !title ? (
               <div>
                 {placeholder || 'Selectionnez dans la liste...'}{' '}
-                <Icon name="chevron-down" ratio="2.5" />
+                <ChevronDownIcon width={15} height={15} />
               </div>
             ) : (
               <>
                 <label htmlFor={id}>{title}</label>
-                <Icon name="chevron-down" ratio="2.5" />
+                <ChevronDownIcon width={15} height={15} />
               </>
             )}
           </button>
@@ -95,7 +95,7 @@ export function SelectSimple<T extends string | number | boolean>({
             }}
           >
             {selectedOption.label}
-            <Icon name="chevron-down" ratio="2.5" />
+            <ChevronDownIcon width={15} height={15} />
           </button>
         )}
         {optionsOpen && (

@@ -19,7 +19,7 @@ export const StyledNavItem = styled.li`
     color: ${({ color }) => {
       return COLORS[color] || COLORS.white;
     }};
-    opacity: 0.5;
+    opacity: 0.6;
     display: flex;
   }
 
@@ -45,7 +45,7 @@ export const StyledNavItem = styled.li`
   }
 
   & a:hover {
-    opacity: 0.5;
+    opacity: 0.6;
   }
 
   & .uk-navbar-dropdown-nav > li > a {

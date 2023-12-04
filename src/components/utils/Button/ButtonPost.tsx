@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from 'react';
-import { Button, Icon } from 'src/components/utils';
+import { Button } from 'src/components/utils';
 import { UIKIT_BUTTON_STYLES_SPEC } from 'src/components/variables';
 import { StyledButtonPostContainer } from './ButtonPost.styles';
 
@@ -8,7 +8,7 @@ interface ButtonPostProps {
   color?: string;
   action?: (event?: FormEvent) => Promise<void>;
   style?: '' | UIKIT_BUTTON_STYLES_SPEC;
-  icon?: string;
+  icon?: JSX.Element;
   disabled?: boolean;
   isLoadingOverride?: boolean;
   dataTestId?: string;
@@ -45,7 +45,7 @@ export const ButtonPost = ({
         {loading || isLoadingOverride ? (
           <div data-uk-spinner="ratio: .5" />
         ) : (
-          icon && <Icon name={icon} ratio={0.8} />
+          icon && <>&nbsp;{icon}</>
         )}
       </StyledButtonPostContainer>
     </Button>

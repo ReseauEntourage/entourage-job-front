@@ -18,14 +18,14 @@ export const StyledBackToTop = styled.button`
     display: block;
     opacity: 1;
   }
-  span {
+  svg {
     color: white;
     transition: 0.1s ease-in-out;
   }
   &:hover {
     background-color: ${COLORS.hoverOrange};
     cursor: pointer;
-    span {
+    svg {
       color: ${COLORS.primaryOrange};
     }
   }

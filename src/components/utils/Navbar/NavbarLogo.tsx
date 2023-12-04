@@ -6,20 +6,14 @@ interface NavbarLogoProps {
   href: string;
   src: string;
   alt?: string;
-  style?: React.CSSProperties;
 }
 
-export const NavbarLogo = ({ href, src, alt, style }: NavbarLogoProps) => {
+export const NavbarLogo = ({ href, src, alt }: NavbarLogoProps) => {
   return (
     <Link href={href} passHref>
-      <div style={{ width: 180 }}>
-        <a // info: regle css sur uk-logo
-          className="uk-navbar-item"
-          style={style}
-        >
-          <Img src={src} alt={alt} />
-        </a>
-      </div>
+      <a className="uk-margin-small-left uk-margin-small-right uk-flex-center uk-flex">
+        <Img width={180} height={50} src={src} alt={alt} />
+      </a>
     </Link>
   );
 };

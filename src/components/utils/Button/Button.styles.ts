@@ -21,8 +21,11 @@ export const StyledButton = styled.button`
   justify-content: center;
   padding: 11px 20px !important;
 
-  > svg {
+  svg:first-child {
     margin-right: 8px;
+  }
+  svg:last-child {
+    margin-left: 8px;
   }
 
   &:hover {
@@ -67,11 +70,11 @@ export const StyledButton = styled.button`
       return COLORS[props.color] || COLORS.primaryOrange;
     }} !important;
 
-    path {
+    /*    path {
       fill: ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
-      }} !important;
-    }
+      return COLORS[props.color] || COLORS.primaryOrange;
+    }} !important;
+    } */
 
     border-radius: 5px;
 

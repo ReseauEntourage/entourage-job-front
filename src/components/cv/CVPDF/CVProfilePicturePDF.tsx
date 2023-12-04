@@ -1,5 +1,4 @@
 import React from 'react';
-import { addPrefix } from 'src/utils';
 import { StyledCVPDFProfilePicture } from './CVPDF.styles';
 
 export function CVProfilePicturePDF({
@@ -11,7 +10,7 @@ export function CVProfilePicturePDF({
 }) {
   return (
     <StyledCVPDFProfilePicture
-      imgSrc={process.env.AWSS3_CDN_URL + addPrefix(urlImg)}
+      imgSrc={`${process.env.AWSS3_CDN_URL}/${urlImg}`}
       verticalMargin={verticalMargin}
     >
       <div className="picture" />

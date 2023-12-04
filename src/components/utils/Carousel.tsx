@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import { Icon } from 'src/components/utils/Icon';
+import ChevronLeftIcon from 'assets/icons/chevron-left.svg';
+import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 
@@ -63,11 +64,7 @@ export const Carousel = ({
             }
           }}
         >
-          <Icon
-            className="uk-icon-button uk-overlay-default"
-            name="chevron-left"
-            ratio={2}
-          />
+          <ChevronLeftIcon width={30} height={30} />
         </a>
         <a
           href="#"
@@ -79,11 +76,7 @@ export const Carousel = ({
             }
           }}
         >
-          <Icon
-            className="uk-icon-button uk-overlay-default"
-            name="chevron-right"
-            ratio={2}
-          />
+          <ChevronRightIcon width={30} height={30} />
         </a>
       </div>
       <div className="uk-visible@m">
@@ -97,7 +90,7 @@ export const Carousel = ({
             }
           }}
         >
-          <Icon className="uk-text-primary" name="chevron-left" ratio={3} />
+          <ChevronLeftIcon width={40} height={40} />
         </a>
         <a
           href="#"
@@ -109,7 +102,7 @@ export const Carousel = ({
             }
           }}
         >
-          <Icon className="uk-text-primary" name="chevron-right" ratio={3} />
+          <ChevronRightIcon width={40} height={40} />
         </a>
       </div>
     </div>

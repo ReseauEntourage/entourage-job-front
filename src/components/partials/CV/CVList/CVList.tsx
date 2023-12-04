@@ -1,17 +1,19 @@
 import _ from 'lodash';
 import React, { useCallback, useMemo, useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
+import PlusFilledIcon from 'assets/icons/plus-filled.svg';
 import { Api } from 'src/api';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { CandidatCard } from 'src/components/cards';
 import { SearchBar } from 'src/components/filters/SearchBar';
 import { openModal } from 'src/components/modals/Modal';
-import { PostPublicOfferModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
-import { Button, Grid, SimpleLink, Icon } from 'src/components/utils';
+import { PostPublicOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
+import { Button, Grid, SimpleLink } from 'src/components/utils';
 import { CV_FILTERS_DATA, INITIAL_NB_OF_CV_TO_DISPLAY } from 'src/constants';
-import { FB_TAGS } from 'src/constants/tags';
+import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { usePrevious } from 'src/hooks/utils';
 import { fbEvent } from 'src/lib/fb';
+import { gaEvent } from 'src/lib/gtag';
 import { filtersToQueryParams } from 'src/utils/Filters';
 import { AnyToFix } from 'src/utils/Types';
 
@@ -44,10 +46,10 @@ interface CVListProps {
 }
 
 export const CVList = ({
-  hideSearchBar,
+  hideSearchBar = false,
   nb,
   search,
-  filters,
+  filters = {},
   setFilters,
   setSearch,
   resetFilters,
@@ -125,7 +127,7 @@ export const CVList = ({
   const renderCvList = useCallback(
     (items) => {
       return (
-        <div className="cv-list">
+        <div className="cv-list uk-margin-small-top">
           <Grid
             childWidths={['1-1', '1-2@s', '1-3@m']}
             gap="small"
@@ -137,7 +139,8 @@ export const CVList = ({
                   businessLines={cv.businessLines}
                   url={cv.user.url}
                   imgSrc={
-                    (cv.urlImg && process.env.AWSS3_CDN_URL + cv.urlImg) ||
+                    (cv.urlImg &&
+                      `${process.env.AWSS3_CDN_URL}/${cv.urlImg}`) ||
                     undefined
                   }
                   firstName={cv.user.candidat.firstName}
@@ -169,7 +172,7 @@ export const CVList = ({
                     data-uk-spinner="ratio: .6"
                   />
                 ) : (
-                  <Icon className="uk-margin-small-left" name="plus-circle" />
+                  <PlusFilledIcon />
                 )}
               </Button>
             </div>
@@ -206,8 +209,9 @@ export const CVList = ({
                 }}
                 className="uk-link-text"
                 onClick={() => {
+                  gaEvent(GA_TAGS.PAGE_GALERIE_CV_PROPOSER_OFFRE_CLIC);
                   fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER_OPEN);
-                  openModal(<PostPublicOfferModal />);
+                  openModal(<PostPublicOpportunityModal />);
                 }}
               >
                 Publier une offre d’emploi
@@ -250,14 +254,4 @@ export const CVList = ({
       {content}
     </div>
   );
-};
-
-CVList.defaultProps = {
-  nb: undefined,
-  search: undefined,
-  filters: {},
-  hideSearchBar: false,
-  setFilters: null,
-  setSearch: null,
-  resetFilters: null,
 };

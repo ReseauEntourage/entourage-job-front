@@ -1,7 +1,9 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import ChevronRightIcon from 'assets/icons/chevron-right.svg';
+import HomeIcon from 'assets/icons/home.svg';
 import { StyledHeaderMobile } from 'src/components/headers/Header.styles';
-import { Hamburger, Navbar, NavbarLogo, Icon } from 'src/components/utils';
+import { Hamburger, Navbar, NavbarLogo } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { Offcanvas } from 'src/components/utils/Offcanvas';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
@@ -21,7 +23,7 @@ export const HeaderPublicContentMobile = ({
         backgroundColor="darkerBlack"
         sticky
         left={
-          <div className="uk-flex uk-flex-middle">
+          <div className="uk-flex uk-flex-middle uk-position-relative">
             <NavbarLogo
               href="/"
               src="/static/img/linkedout_logo_white.png"
@@ -31,7 +33,7 @@ export const HeaderPublicContentMobile = ({
         }
         right={
           <div className="uk-padding-small uk-flex uk-flex-middle">
-            <Hamburger targetId={OFFCANVAS_GUEST} hidden="m" />
+            <Hamburger targetId={OFFCANVAS_GUEST} />
           </div>
         }
       />
@@ -47,8 +49,8 @@ export const HeaderPublicContentMobile = ({
               }}
             >
               <div className="uk-flex">
-                <Icon name="home" ratio={1} className="uk-margin-small-right" />
-                <span>Accueil</span>
+                <HomeIcon width={16} height={16} />
+                &nbsp; Accueil
               </div>
             </a>
           </li>
@@ -105,8 +107,8 @@ export const HeaderPublicContentMobile = ({
               href={{ pathname: '/candidats', query: { employed: false } }}
               style="primary"
             >
-              Découvrir les CV&nbsp;
-              <Icon name="chevron-right" />
+              Découvrir les CV
+              <ChevronRightIcon />
             </Button>
           </li>
           <li className="uk-flex uk-flex-center uk-padding-small">
@@ -120,8 +122,8 @@ export const HeaderPublicContentMobile = ({
               }}
               style="default"
             >
-              Faire un don&nbsp;
-              <Icon name="chevron-right" />
+              Faire un don
+              <ChevronRightIcon />
             </Button>
           </li>
         </ul>

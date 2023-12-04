@@ -1,12 +1,7 @@
 import React from 'react';
-import {
-  Background,
-  Grid,
-  Img,
-  Section,
-  Button,
-  Icon,
-} from 'src/components/utils';
+import ChevronRightIcon from 'assets/icons/chevron-right.svg';
+import EntourageLogo from 'assets/icons/logo-entourage.svg';
+import { Background, Grid, Img, Section, Button } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
@@ -26,7 +21,7 @@ export const AssociationEntourage = () => {
             className="uk-margin-large-top"
           >
             <div>
-              <Img src="/static/img/logo-entourage.svg" alt="logo-entourage" />
+              <EntourageLogo />
               <h2 className="uk-text-bold uk-margin-small">
                 <span style={{ color: '#fff' }}>L&apos;association </span>
                 <span className="uk-text-primary">Entourage</span>
@@ -48,14 +43,15 @@ export const AssociationEntourage = () => {
                     }}
                     newTab
                   >
-                    Voir le site <Icon name="chevron-right" />
+                    Voir le site
+                    <ChevronRightIcon />
                   </Button>
                 </div>
               </div>
             </div>
             <div className="uk-cover-container uk-height-medium">
               <Img
-                className="uk-cover uk-position-center"
+                cover
                 src="/static/img/association_pic.jpg"
                 alt="Association Entourage"
               />

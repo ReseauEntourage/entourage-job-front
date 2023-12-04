@@ -1,13 +1,14 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import UIkit from 'uikit';
 
+import HistoryIcon from 'assets/icons/history.svg';
 import { Api } from 'src/api';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { Button, Grid, Section } from 'src/components/utils';
-import { Icon } from 'src/components/utils/Icon';
+
 import { TextArea } from 'src/components/utils/Inputs';
 import {
   CANDIDATE_USER_ROLES,
@@ -134,7 +135,7 @@ const Suivi = () => {
             }}
             disabled={value === userCandidat.note}
           >
-            <Icon name="history" />
+            <HistoryIcon />
           </Button>
           <Button
             style="default"

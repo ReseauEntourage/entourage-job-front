@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import React from 'react';
 import UIkit from 'uikit';
+import EntourageIcon from 'assets/icons/entourage.svg';
 import { Api } from 'src/api';
 import { AdminOpportunityWithOpportunityUsers } from 'src/api/types';
 import { useMemberId } from 'src/components/backoffice/admin/members/MemberDetails/useMemberId';
 import { ActionLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel/ActionLabel';
-import { Icon } from 'src/components/utils';
 import { SelectSimple } from 'src/components/utils/Inputs';
 import { OFFER_STATUS } from 'src/constants';
 import {
@@ -73,10 +73,9 @@ export const OpportunitySectionCandidates = ({
                 {recommended && (
                   <ActionLabel
                     disabled
-                    fill
                     color="primaryOrange"
                     label="Recommandé"
-                    icon={<Icon name="entourage" ratio={0.8} />}
+                    icon={<EntourageIcon height={16} width={10} />}
                   />
                 )}
               </StyledActionLabelContainer>

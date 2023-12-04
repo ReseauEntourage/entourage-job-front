@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import CheckIcon from 'assets/icons/check.svg';
 import { Layout } from 'src/components/Layout';
 import { Button, Section } from 'src/components/utils';
-import { Icon } from 'src/components/utils/Icon';
 
 const ResetSuccessPage = () => {
   const {
@@ -19,7 +19,7 @@ const ResetSuccessPage = () => {
       <Section size="large" style="muted">
         <div className="uk-flex uk-flex-center">
           <div className="uk-card uk-card-body uk-text-center">
-            <Icon name="check" ratio={4} className="uk-text-primary" />
+            <CheckIcon className="uk-text-primary" width={100} height={100} />
             <p className="uk-text-lead">
               Votre mot de passe a bien été{' '}
               {isCreation ? 'crée' : 'réinitialisé'}.

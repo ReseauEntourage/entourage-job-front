@@ -32,7 +32,7 @@ export const ModalInterestLinkedOut = () => {
           return (
             <SuccessModalContent
               closeModal={closeModal}
-              text="Merci pour votre message."
+              text="Merci pour votre message !"
             />
           );
         },

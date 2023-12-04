@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Resizer from 'react-image-file-resizer';
 import UIkit from 'uikit';
-import { Icon } from 'src/components/utils';
+import PencilIcon from 'assets/icons/pencil.svg';
 import { useIsDesktop } from 'src/hooks/utils';
 import { addPrefix } from 'src/utils';
 import {
@@ -93,7 +93,7 @@ export const CVEditPicture = ({
                     }
                   }}
                 />
-                <Icon name="pencil" />
+                <PencilIcon />
               </label>
             </div>
           )}

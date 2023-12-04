@@ -1,7 +1,5 @@
-import Image from 'next/image';
 import React from 'react';
-import ImgSrc from 'public/static/img/travailler-participer.jpg';
-import { Button, Section } from 'src/components/utils';
+import { Button, Img, Section } from 'src/components/utils';
 import { H2, H6 } from 'src/components/utils/Headings';
 import { CheckListElement as CheckList } from 'src/components/utils/Lists';
 import { useIsDesktop } from 'src/hooks/utils/usePlatforms';
@@ -15,11 +13,9 @@ export const Participer = ({ cta }: { cta: (label: string) => void }) => {
       <StyledParticiper>
         {isDesktop && (
           <div className="image-container">
-            <Image
-              src={ImgSrc}
-              layout="fill"
-              objectFit="cover"
-              objectPosition="top"
+            <Img
+              src="/static/img/travailler-participer.jpg"
+              cover
               alt="Binôme coach et candidat LinkedOut"
             />
           </div>
@@ -32,11 +28,9 @@ export const Participer = ({ cta }: { cta: (label: string) => void }) => {
           </p>
           {!isDesktop && (
             <div className="image-container-mobile">
-              <Image
-                src={ImgSrc}
-                layout="fill"
-                objectFit="cover"
-                objectPosition="top"
+              <Img
+                src="/static/img/travailler-participer.jpg"
+                cover
                 alt="Binôme coach et candidat LinkedOut"
               />
             </div>

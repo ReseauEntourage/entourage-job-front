@@ -151,32 +151,32 @@ describe('Admin', () => {
       // add an offer
       cy.get('[data-testid="button-admin-create"]').click();
       cy.get('[data-testid="admin-add-offer-main"]').click();
-      cy.get('#form-add-offer-title').scrollIntoView().type('test');
-      cy.get('#form-add-offer-company').scrollIntoView().type('test');
+      cy.get('#form-add-offer-admin-title').scrollIntoView().type('test');
+      cy.get('#form-add-offer-admin-company').scrollIntoView().type('test');
 
-      cy.get('#form-add-offer-department')
+      cy.get('#form-add-offer-admin-department')
         .should('be.visible')
         .scrollIntoView()
         .type('Par');
 
-      cy.get('#form-add-offer-department')
+      cy.get('#form-add-offer-admin-department')
         .find('.Select__menu')
         .scrollIntoView()
         .should('be.visible')
         .find('.Select__option')
         .contains('Paris (75)')
         .click();
-      cy.get('#form-add-offer-address')
+      cy.get('#form-add-offer-admin-address')
         .scrollIntoView()
         .should('be.visible')
         .type('description');
 
-      cy.get('#form-add-offer-companyDescription')
+      cy.get('#form-add-offer-admin-companyDescription')
         .scrollIntoView()
         .should('be.visible')
         .type('description');
 
-      cy.get('#form-add-offer-contract-container')
+      cy.get('#form-add-offer-admin-contract-container')
         .scrollIntoView()
         .should('be.visible')
         .click()
@@ -184,21 +184,21 @@ describe('Admin', () => {
         .contains('CDI')
         .click();
 
-      cy.get('#form-add-offer-recruiterFirstName')
+      cy.get('#form-add-offer-admin-recruiterFirstName')
         .scrollIntoView()
         .type('test');
-      cy.get('#form-add-offer-recruiterName').scrollIntoView().type('test');
-      cy.get('#form-add-offer-recruiterPosition').scrollIntoView().type('test');
-      cy.get('#form-add-offer-recruiterMail')
+      cy.get('#form-add-offer-admin-recruiterName').scrollIntoView().type('test');
+      cy.get('#form-add-offer-admin-recruiterPosition').scrollIntoView().type('test');
+      cy.get('#form-add-offer-admin-recruiterMail')
         .scrollIntoView()
         .type('test@gmail.com');
 
-      cy.get('#form-add-offer-businessLines')
+      cy.get('#form-add-offer-admin-businessLines')
         .should('be.visible')
         .scrollIntoView()
         .type('Agr');
 
-      cy.get('#form-add-offer-businessLines')
+      cy.get('#form-add-offer-admin-businessLines')
         .find('.Select__menu')
         .scrollIntoView()
         .should('be.visible')
@@ -206,7 +206,7 @@ describe('Admin', () => {
         .contains('Agriculture et espaces verts')
         .click();
 
-      cy.get('#form-add-offer-description').scrollIntoView().type('test');
+      cy.get('#form-add-offer-admin-description').scrollIntoView().type('test');
       cy.get('button').contains('Valider').click();
       cy.wait('@postOpportunity');
 

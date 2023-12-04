@@ -2,6 +2,7 @@ import _ from 'lodash';
 import { useRouter } from 'next/router';
 import React, { useContext, useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
+import PlusIcon from 'assets/icons/plus.svg';
 import { CandidateOffersTab } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab';
 import {
   candidateSearchFilters,
@@ -20,7 +21,7 @@ import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer';
 import { Button, Section } from 'src/components/utils';
-import { Icon } from 'src/components/utils/Icon';
+
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 import { HEIGHTS } from 'src/constants/styles';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
@@ -207,7 +208,7 @@ export const CandidateOpportunities = ({
                 );
               }}
             >
-              <Icon name="plus" ratio="0.8" className="uk-margin-small-right" />
+              <PlusIcon />
               Ajouter une offre
             </Button>
           </HeaderBackoffice>

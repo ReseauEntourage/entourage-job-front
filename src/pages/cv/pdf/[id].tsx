@@ -35,7 +35,7 @@ const CVPDFPage = ({ cv, page, router }: CVPDFPageProps) => {
       metaDescription={cv.story}
       metaImage={
         cv.urlImg
-          ? `${process.env.AWSS3_URL}${cv.urlImg.replace(
+          ? `${process.env.AWSS3_URL}/${cv.urlImg.replace(
               '.jpg',
               '.preview.jpg'
             )}`

@@ -1,23 +1,7 @@
-import Image from 'next/image';
 import React from 'react';
-import CarrefourLogo from 'public/static/img/partners/carrefour/logo.png';
-import DecathlonLogo from 'public/static/img/partners/decathlon/logo.png';
-import JCDecauxLogo from 'public/static/img/partners/jcdecaux/logo.png';
-import LeRoyMerlinLogo from 'public/static/img/partners/leroymerlin/logo.png';
-import ManoManoLogo from 'public/static/img/partners/manomano/logo.png';
-import MurfyLogo from 'public/static/img/partners/murfy/logo.png';
-import { Button, Section } from 'src/components/utils';
+import { Button, Img, Section } from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
 import { StyledPartners } from './Partners.styles';
-
-/* const partnersToShow = [
-  'leroymerlin',
-  'manomano',
-  'murfy',
-  'carrefour',
-  'decathlon',
-  'jcdecaux',
-]; */
 
 export const Partners = () => {
   return (
@@ -31,45 +15,50 @@ export const Partners = () => {
         /> */}
         <div className="logos-container">
           <div>
-            <Image
-              src={LeRoyMerlinLogo}
-              objectFit="contain"
-              objectPosition="center"
+            <Img
+              width={150}
+              height={70}
+              src="/static/img/partners/leroymerlin/logo.png"
               alt="leroymerlin"
             />
           </div>
           <div>
-            <Image
-              src={ManoManoLogo}
-              objectFit="contain"
-              objectPosition="center"
+            <Img
+              width={200}
+              height={70}
+              src="/static/img/partners/manomano/logo.png"
               alt="manomano"
             />
           </div>
           <div>
-            <Image src={MurfyLogo} objectFit="cover" objectPosition="center" />
+            <Img
+              width={150}
+              height={70}
+              src="/static/img/partners/murfy/logo.png"
+              alt="murfy"
+            />
           </div>
           <div>
-            <Image
-              src={CarrefourLogo}
-              objectFit="contain"
-              objectPosition="center"
+            <Img
+              width={150}
+              height={70}
+              src="/static/img/partners/carrefour/logo.png"
               alt="carrefour"
             />
           </div>
           <div>
-            <Image
-              src={DecathlonLogo}
-              objectFit="contain"
-              objectPosition="center"
+            <Img
+              width={200}
+              height={70}
+              src="/static/img/partners/decathlon/logo.png"
               alt="decathlon"
             />
           </div>
           <div>
-            <Image
-              src={JCDecauxLogo}
-              objectFit="contain"
-              objectPosition="center"
+            <Img
+              width={150}
+              height={70}
+              src="/static/img/partners/jcdecaux/logo.png"
               alt="jcdecaux"
             />
           </div>

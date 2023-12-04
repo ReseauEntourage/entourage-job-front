@@ -20,6 +20,10 @@ env:
   SERVER_URL: http://localhost:3000
   API_URL: http://localhost:3002
   PORT: 3000
+  AWSS3_URL: https://entourage-job-preprod.s3.amazonaws.com
+  AWSS3_CDN_URL: https://d3s4t580ymtqme.cloudfront.net
+  CDN_URL: https://d280vsj7wg1qqw.cloudfront.net
+  AWSS3_IMAGE_DIRECTORY: /images/
   CYPRESS_IO_PROJECT_ID: ${{ secrets.CYPRESS_IO_PROJECT_ID }}
   PUSHER_API_KEY: ${{ secrets.PUSHER_API_KEY }}
   ADRESSE_LOCAUX_PARIS: "174 Rue Championnet 75018, Paris"
@@ -45,12 +49,12 @@ jobs:
           command: npx cypress run --record --key ${{ secrets.CYPRESS_IO_KEY }}
           wait-on: http://localhost:3000
 
-      - run: yarn lint
+      - run: yarn test:eslint
 
       - name: set-up
         uses: actions/setup-node@v3
         with:
           node-version: '16.x'
 
-      - run: yarn test
+      - run: yarn test:inte
       - run: echo No tests

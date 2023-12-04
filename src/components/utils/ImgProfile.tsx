@@ -1,34 +1,62 @@
-import React from 'react';
-import { Img } from 'src/components/utils/Img';
+import React, { useContext, useEffect, useState } from 'react';
+import { UserWithUserCandidate } from 'src/api/types';
+import { CANDIDATE_USER_ROLES } from 'src/constants/users';
+import { UserContext } from 'src/store/UserProvider';
+import { isRoleIncluded } from 'src/utils/Finding';
+import { Img } from './Img';
 
 interface ImgProfileProps {
-  src?: string;
-  alt?: string;
-  width?: string;
-  height?: string;
-  border?: 'circle' | 'pill' | 'rounded';
+  user?: UserWithUserCandidate;
+  size?: number;
 }
 
-export const ImgProfile = ({
-  src,
-  alt,
-  width,
-  height,
-  border,
-}: ImgProfileProps) => {
+export const ImgProfile = ({ user, size = 40 }: ImgProfileProps) => {
+  const userFromContext = useContext(UserContext).user;
+
+  const { firstName, role, candidat } = user || userFromContext;
+  const [urlImg, setUrlImg] = useState(null);
+
+  useEffect(() => {
+    if (
+      isRoleIncluded(CANDIDATE_USER_ROLES, role) &&
+      candidat &&
+      candidat.cvs
+    ) {
+      const latestCV = candidat.cvs.reduce(
+        (acc, curr) => {
+          return acc.version < curr.version ? curr : acc;
+        },
+        { version: -1 }
+      );
+      setUrlImg(latestCV.urlImg);
+    }
+  }, [candidat, role, user]);
+
   return (
     <div
-      className={`uk-cover-container uk-border-${border}`}
-      style={{ width, height }}
+      className="profileImage uk-background-primary uk-border-circle uk-position-relative uk-flex uk-flex-center uk-flex-middle"
+      style={{
+        width: `${size}px`,
+        height: `${size}px`,
+        overflow: 'hidden',
+      }}
     >
-      <Img cover src={src} alt={alt} />
+      {urlImg ? (
+        <div className="uk-width-expand uk-height-1-1 uk-cover-container">
+          <Img
+            cover
+            src={`${process.env.AWSS3_URL}/${urlImg}`}
+            alt={`photo de ${firstName}`}
+          />
+        </div>
+      ) : (
+        <span
+          className="uk-text-normal uk-text-uppercase"
+          style={{ fontSize: size / 2, color: '#fff' }}
+        >
+          {firstName.substr(0, 1)}
+        </span>
+      )}
     </div>
   );
-};
-ImgProfile.defaultProps = {
-  src: '/static/img/arthur.jpg',
-  alt: '',
-  width: '80px',
-  height: '80px',
-  border: 'circle',
 };

@@ -93,8 +93,8 @@ export const CandidateTestimonies = () => {
                   <div>
                     <Img
                       alt="guillemets"
-                      width="27"
-                      height="21"
+                      width={27}
+                      height={21}
                       src="/static/img/guillemets.png"
                     />
                     <p className="uk-text-small uk-margin-small uk-text-italic">
@@ -106,8 +106,8 @@ export const CandidateTestimonies = () => {
                     >
                       <Img
                         alt="guillemets-petits"
-                        width="15"
-                        height="12"
+                        width={15}
+                        height={12}
                         src="/static/img/guillemetsPetits.png"
                       />
                     </div>
