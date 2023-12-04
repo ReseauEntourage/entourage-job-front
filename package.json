@@ -21,7 +21,7 @@
     "uikit:update": "cd ./node_modules/uikit/ && git pull && yarn",
     "uikit:compile": "cp -r ./assets/custom/ ./node_modules/uikit/custom/ && cd ./node_modules/uikit && yarn compile && cd ../../ && cp -r ./node_modules/uikit/dist ./src/styles/ && cp ./node_modules/uikit/dist/css/*.print.* ./public/static/css/",
     "prepare": "husky install",
-    "storybook": "start-storybook -p 6006 -s ./public",
+    "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "chromatic": "chromatic --exit-zero-on-changes",
     "cypress:io": "npx cypress run --record --key $(grep CYPRESS_IO_KEY .env | cut -d '=' -f2)",
