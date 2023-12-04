@@ -208,7 +208,7 @@ const pages: PageType[] = [
             style="primary"
             className="uk-margin-medium-top"
           >
-            Espace coach & candidat&nbsp;
+            Espace coach & candidat
             <ChevronRightIcon />
           </Button>
         ),

@@ -77,7 +77,7 @@ const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
                 style="secondary"
                 className="uk-margin-large-top"
               >
-                Voir tous les candidats&nbsp;
+                Voir tous les candidats
                 <ChevronRightIcon />
               </Button>
             </Grid>

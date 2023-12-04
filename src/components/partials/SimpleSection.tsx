@@ -59,7 +59,7 @@ export const SimpleSection = ({
             toggle={button.modal}
             onClick={button.onClick}
           >
-            {button.label}&nbsp;
+            {button.label}
             <ChevronRightIcon />
           </Button>
         )}

@@ -30,6 +30,8 @@ export const StyledBackground = styled.section`
       z-index: 0;
       top: 0;
       left: 0;
+      right: 0;
+      bottom: 0;
       height: 360px;
       max-height: 360px;
       overflow: hidden;
@@ -40,8 +42,11 @@ export const StyledBackground = styled.section`
       position: absolute;
       top: 0;
       left: 0;
+      right: 0;
+      bottom: 0;
       z-index: 100;
       width: 100%;
+      display: flex;
     }
     &.mobile-banner-container {
       height: ${(props) => {
@@ -50,14 +55,6 @@ export const StyledBackground = styled.section`
       max-height: ${(props) => {
         return props.mobileHeight ? `${props.mobileHeight}px` : '199px';
       }};
-      &.hasCta {
-        max-height: 300px;
-        height: 300px;
-        .banner {
-          height: 300px;
-          max-height: 300px;
-        }
-      }
       .banner {
         height: ${(props) => {
           return props.mobileHeight ? `${props.mobileHeight}px` : '199px';

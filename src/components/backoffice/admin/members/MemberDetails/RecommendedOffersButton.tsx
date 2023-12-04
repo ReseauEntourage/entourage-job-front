@@ -42,7 +42,7 @@ export function RecommendedOffersButton({
         gaEvent(GA_TAGS.BACKOFFICE_ADMIN_OFFRES_INTERESSER_CLIC);
       }}
     >
-      Voir les offres qui pourraient intéresser le candidat&nbsp;
+      Voir les offres qui pourraient intéresser le candidat
       <ChevronRightIcon />
     </Button>
   );

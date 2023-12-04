@@ -23,7 +23,7 @@ export const SailInfoModal = () => {
         style="secondary"
         className="uk-margin-medium-top"
       >
-        Lire l&apos;histoire&nbsp;
+        Lire l&apos;histoire
         <ChevronRightIcon />
       </Button>
     </>

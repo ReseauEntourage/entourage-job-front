@@ -15,7 +15,7 @@ import {
   SharePartial,
   CandidateTestimoniesOrientation,
 } from 'src/components/partials';
-import { ImageTitle } from 'src/components/partials/ImageTitleNew';
+import { ImageTitle } from 'src/components/partials/ImageTitle';
 import { Partners } from 'src/components/partials/PartnersNew';
 import { Participer } from 'src/components/partials/Travailler/Participer';
 import { Rejoindre } from 'src/components/partials/Travailler/Rejoindre';
@@ -143,7 +143,7 @@ const Travailler = () => {
           onClick: () => {
             openModalInscription('Header');
           },
-          className: 'custom-secondary-inverted',
+          style: 'custom-secondary-inverted',
           dataTest: 'banner-cta',
         }}
       />

@@ -54,7 +54,7 @@ export const Partners = ({
             <LogoList logos={PARTNERS.SPORTS} />
             <div className="uk-flex uk-flex-center uk-flex-middle uk-margin-large-top">
               <Button style="primary" href="/partenaires">
-                En savoir plus&nbsp;
+                En savoir plus
                 <ChevronRightIcon />
               </Button>
             </div>

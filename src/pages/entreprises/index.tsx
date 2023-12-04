@@ -1,10 +1,9 @@
 import React from 'react';
-import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
 import { openModal } from 'src/components/modals/Modal';
 import { CompanyContactModal } from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
-import { PostPublicOfferModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
+import { PostPublicOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { TaxModal } from 'src/components/modals/PopupModal/TaxModal';
 import {
   LogoList,
@@ -15,7 +14,7 @@ import {
   Timeline,
 } from 'src/components/partials';
 import { CVList } from 'src/components/partials/CV/CVList';
-import { ImageTitle } from 'src/components/partials/ImageTitleNew';
+import { ImageTitle } from 'src/components/partials/ImageTitle';
 import { NewsletterPartial } from 'src/components/partials/NewsletterPartial';
 import { Button, Section, AnimatedList } from 'src/components/utils';
 import { CV_FILTERS_DATA, STORAGE_KEYS } from 'src/constants';
@@ -154,7 +153,7 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
     <Layout title="Entreprises - LinkedOut">
       <ImageTitle
         img="/static/img/header_pic_hire.jpg"
-        title="LinkedOut, le programme qui vous accompagne pour changer de regard sur l'inclusion"
+        title="LinkedOut vous accompagne pour changer de regard sur l'inclusion"
         description="Notre objectif ? Vous permettre de créer les conditions d’un recrutement inclusif réussi, au service de la transformation de votre entreprise."
         cta={[
           {
@@ -165,19 +164,19 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
               linkEvent(LINK_TAGS.COMPANY_CONTACT_OPEN);
               openModal(<CompanyContactModal />);
             },
-            className: 'custom-secondary',
+            style: 'custom-secondary-inverted',
             label: 'Nous contacter',
           },
           {
             dataTest: 'button-offer-company-header',
-            className: 'custom-secondary-inverted',
+            style: 'custom-secondary',
             isExternal: false,
             newTab: false,
             onClick: () => {
               gaEvent(GA_TAGS.PAGE_ENTREPRISES_PROPOSER_OFFRE_CLIC);
               fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER_OPEN);
               // linkEvent(LINK_TAGS.COMPANY_CONTACT_OPEN);
-              openModal(<PostPublicOfferModal />);
+              openModal(<PostPublicOpportunityModal />);
             },
             label: 'Créer une offre',
           },
@@ -257,11 +256,10 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
               linkEvent(LINK_TAGS.COMPANY_CONTACT_OPEN);
               openModal(<CompanyContactModal />);
             }}
-            dataTestId="button-contact-company-first-section"
-            style="secondary"
+            dataTestId="button-company-first-section"
+            style="custom-secondary-inverted"
           >
             Nous contacter&nbsp;
-            <ChevronRightIcon viewBox="0 0 320 512" />
           </Button>
         }
       />
@@ -289,6 +287,20 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
         animate
         direction="left"
         style="default"
+        cta={
+          <Button
+            onClick={() => {
+              gaEvent(GA_TAGS.PAGE_ENTREPRISES_PROPOSER_OFFRE_CLIC);
+              fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER_OPEN);
+              // linkEvent(LINK_TAGS.COMPANY_CONTACT_OPEN);
+              openModal(<PostPublicOpportunityModal />);
+            }}
+            dataTestId="button-company-second-section"
+            style="custom-secondary-inverted"
+          >
+            Créer une offre
+          </Button>
+        }
       />
       <Chapter
         smallTitle
@@ -333,6 +345,14 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
         animate
         direction="right"
         style="default"
+        cta={
+          <Button
+            href={{ pathname: '/candidats', query: { employed: false } }}
+            style="custom-secondary-inverted"
+          >
+            Découvrir nos candidats
+          </Button>
+        }
       />
       <Section container="large" style="muted">
         <h2 className="uk-text-bold uk-align-center uk-text-center uk-margin-medium-bottom uk-margin-remove-top uk-width-1-2@m">
@@ -351,10 +371,9 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
         <div className="uk-flex uk-flex-center uk-margin-medium-top">
           <Button
             href={{ pathname: '/candidats', query: { employed: false } }}
-            style="secondary"
+            style="custom-secondary-inverted"
           >
-            Découvrir nos candidats&nbsp;
-            <ChevronRightIcon />
+            Découvrir nos candidats
           </Button>
         </div>
       </Section>
@@ -410,8 +429,7 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
             style="secondary"
             className="uk-margin-small-top"
           >
-            Nous contacter&nbsp;
-            <ChevronRightIcon />
+            Nous contacter
           </Button>
         </div>
       </Section>

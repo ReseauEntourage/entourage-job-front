@@ -41,6 +41,9 @@ export const GA_TAGS = {
   PAGE_GALERIE_CV_CLIC: {
     action: 'Page_Galerie_CV_Clic',
   },
+  PAGE_GALERIE_CV_PROPOSER_OFFRE_CLIC: {
+    action: 'Page_Galerie_CV_Proposer_Offre_Clic',
+  },
   PAGE_GALERIE_PARTAGE_CV_LINKEDIN_CLIC: {
     action: 'Page_Galerie_Partage_CV_LinkedIn_Clic',
   },

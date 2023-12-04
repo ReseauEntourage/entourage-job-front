@@ -123,7 +123,6 @@ export const MultipleCTA = ({
                         size={item.button.size}
                       >
                         {item.button.label}
-                        &nbsp;
                         <ChevronRightIcon />
                       </Button>
                     </div>

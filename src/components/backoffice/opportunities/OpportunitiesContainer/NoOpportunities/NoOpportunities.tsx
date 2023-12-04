@@ -54,7 +54,7 @@ export const NoOpportunities = ({
           }}
         >
           <PlusIcon />
-          &nbsp; Ajouter une offre externe
+          Ajouter une offre externe
         </Button>
         <Button
           style="custom-primary"
@@ -63,7 +63,7 @@ export const NoOpportunities = ({
           shallow
         >
           <SearchIcon />
-          &nbsp;Trouver des offres LinkedOut
+          Trouver des offres LinkedOut
         </Button>
       </StyledButtonContainer>
     </StyledContainer>

@@ -21,6 +21,13 @@ export const StyledButton = styled.button`
   justify-content: center;
   padding: 11px 20px !important;
 
+  svg:first-child {
+    margin-right: 8px;
+  }
+  svg:last-child {
+    margin-left: 8px;
+  }
+
   &:hover {
     transition: 0.2s ease-in-out;
   }

@@ -15,11 +15,10 @@ import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpp
 import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
 import { SearchBar } from 'src/components/filters/SearchBar';
 import { formAddExternalOpportunityAsAdmin } from 'src/components/forms/schemas/formAddExternalOpportunity';
-import { formAddOpportunityAsAdmin } from 'src/components/forms/schemas/formAddOpportunity';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { PostOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
+import { PostAdminOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { Button, ButtonMultiple, Section } from 'src/components/utils';
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 import { HEIGHTS } from 'src/constants/styles';
@@ -163,16 +162,6 @@ export const AdminOpportunities = ({
 
   const opportunityListRef = useRef<{ fetchData: () => Promise<void> }>();
 
-  const opportunityModalProps = {
-    defaultValues: {
-      isPublic: true,
-    },
-    isAdmin: true,
-    callback: opportunityListRef?.current?.fetchData,
-    modalTitle: 'Ajouter une nouvelle offre',
-    formSchema: formAddOpportunityAsAdmin,
-  };
-
   const isDesktop = useIsDesktop();
 
   return (
@@ -193,7 +182,9 @@ export const AdminOpportunities = ({
                 {
                   onClick: () => {
                     openModal(
-                      <PostOpportunityModal {...opportunityModalProps} />
+                      <PostAdminOpportunityModal
+                        callback={opportunityListRef?.current?.fetchData}
+                      />
                     );
                   },
                   label: 'Nouvelle offre',
@@ -246,7 +237,7 @@ export const AdminOpportunities = ({
               ]}
             >
               <PlusIcon />
-              &nbsp; Créer
+              Créer
             </ButtonMultiple>
           </HeaderBackoffice>
           <Section className="custom-primary custom-fixed">

@@ -1,9 +1,20 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import DoubleCarresIcon from 'assets/icons/double-carres.svg';
 import { StyledTitleSection } from 'src/components/partials/Aider/H2/H2.styles';
 
-export const TitleSection = ({ title, titleColor, svgStroke, svgColor }) => {
+interface TitleSectionProps {
+  title: string;
+  titleColor: string;
+  svgStroke?: string;
+  svgColor: string;
+}
+
+export const TitleSection = ({
+  title,
+  titleColor,
+  svgStroke = 'white',
+  svgColor,
+}: TitleSectionProps) => {
   return (
     <StyledTitleSection
       titleColor={titleColor}
@@ -17,15 +28,4 @@ export const TitleSection = ({ title, titleColor, svgStroke, svgColor }) => {
       <DoubleCarresIcon />
     </StyledTitleSection>
   );
-};
-
-TitleSection.propTypes = {
-  title: PropTypes.string.isRequired,
-  titleColor: PropTypes.string.isRequired,
-  svgStroke: PropTypes.string,
-  svgColor: PropTypes.string.isRequired,
-};
-
-TitleSection.defaultProps = {
-  svgStroke: 'white',
 };

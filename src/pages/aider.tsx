@@ -5,7 +5,7 @@ import { NewsletterPartial, SharePartial } from 'src/components/partials';
 import { CoachContainer } from 'src/components/partials/Aider/CoachContainer/CoachContainer';
 import { HelpCards } from 'src/components/partials/Aider/HelpCards/HelpCards';
 import { InfoContainer } from 'src/components/partials/Aider/InfoContainer/InfoContainer';
-import { ImageTitle } from 'src/components/partials/ImageTitleNew';
+import { ImageTitle } from 'src/components/partials/ImageTitle';
 import { Grid, Section } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';
 

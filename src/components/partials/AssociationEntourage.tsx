@@ -43,7 +43,7 @@ export const AssociationEntourage = () => {
                     }}
                     newTab
                   >
-                    Voir le site&nbsp;
+                    Voir le site
                     <ChevronRightIcon />
                   </Button>
                 </div>

@@ -59,7 +59,7 @@ export const HeaderConnectedContentMobile = ({
           <li>
             <SimpleLink href="/">
               <HomeIcon width={16} height={16} />
-              &nbsp;Accueil
+              &nbsp; Accueil
             </SimpleLink>
           </li>
           {!isEmpty &&

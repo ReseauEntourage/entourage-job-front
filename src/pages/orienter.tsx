@@ -80,31 +80,18 @@ const Orienter = () => {
     <Layout title="Orienter - LinkedOut">
       <ImageTitle
         img="/static/img/header_pic_guide.jpg"
-        id="guide-title"
-        title={
-          <mark>
-            <span className="uk-text-primary">Travaillons ensemble</span> pour
-            l&apos;accès&nbsp;à&nbsp;l’emploi
-          </mark>
-        }
-        text={
-          <>
-            Vous accompagnez des personnes en situation d&apos;exclusion&nbsp;?
-            Avec LinkedOut, accélérez leur retour à l’emploi&nbsp;!
-            <br />
-            Notre tremplin vers l’emploi en 6 mois s’inscrit dans la continuité
-            de votre accompagnement.
-          </>
-        }
+        title="Travaillons ensemble pour l'accès à l'emploi"
         cta={{
           label: 'Inscrire un candidat',
           dataTest: 'button-orientate',
+          style: 'custom-secondary-inverted',
           onClick: () => {
             gaEvent(GA_TAGS.PAGE_ORIENTER_INSCRIPTION_CLIC);
             fbEvent(FB_TAGS.SOCIAL_WORKER_REGISTRATION_OPEN);
             openModal(<CandidateContactModal />);
           },
         }}
+        description={`Vous accompagnez des personnes en situation d'exclusion\xa0? Notre tremplin vers l’emploi en 6 mois s’inscrit dans la continuité de votre accompagnement.`}
       />
       <Section container="small" style="default">
         <h2 className="uk-text-bold uk-text-center uk-margin-medium-bottom">
@@ -160,7 +147,7 @@ const Orienter = () => {
         />
         <div className="uk-flex uk-flex uk-flex-center uk-flex-wrap uk-margin-medium-top">
           <Button
-            style="secondary"
+            style="custom-secondary-inverted"
             className="uk-margin-small-right uk-margin-small-left uk-margin-small-top"
             onClick={() => {
               gaEvent(GA_TAGS.PAGE_ORIENTER_INSCRIPTION_CLIC);
@@ -168,23 +155,20 @@ const Orienter = () => {
               openModal(<CandidateContactModal />);
             }}
           >
-            Inscrire un candidat&nbsp;
-            <ChevronRightIcon />
+            Inscrire un candidat
           </Button>
-          <div className="uk-light">
-            <Button
-              style="secondary"
-              className="uk-margin-small-right uk-margin-small-left uk-margin-small-top"
-              dataTestId="button-contact"
-              onClick={() => {
-                gaEvent(GA_TAGS.PAGE_ORIENTER_CONTACT_CLIC);
-                openModal(<ModalInterestLinkedOut />);
-              }}
-            >
-              Nous contacter&nbsp;
-              <ChevronRightIcon />
-            </Button>
-          </div>
+
+          <Button
+            style="custom-secondary"
+            className="uk-margin-small-right uk-margin-small-left uk-margin-small-top"
+            dataTestId="button-contact"
+            onClick={() => {
+              gaEvent(GA_TAGS.PAGE_ORIENTER_CONTACT_CLIC);
+              openModal(<ModalInterestLinkedOut />);
+            }}
+          >
+            Nous contacter
+          </Button>
         </div>
       </Section>
       <Chapter
@@ -235,15 +219,14 @@ const Orienter = () => {
         style="default"
         cta={
           <Button
-            style="secondary"
+            style="custom-secondary-inverted"
             onClick={() => {
               gaEvent(GA_TAGS.PAGE_ORIENTER_INSCRIPTION_CLIC);
               fbEvent(FB_TAGS.SOCIAL_WORKER_REGISTRATION_OPEN);
               openModal(<CandidateContactModal />);
             }}
           >
-            Inscrire un candidat&nbsp;
-            <ChevronRightIcon />
+            Inscrire un candidat
           </Button>
         }
       />
@@ -282,7 +265,7 @@ const Orienter = () => {
         </h2>
         <div className="uk-flex uk-flex uk-flex-center uk-flex-wrap uk-margin-medium-top">
           <Button
-            style="secondary"
+            style="custom-secondary-inverted"
             className="uk-margin-small-right uk-margin-small-left uk-margin-small-top"
             dataTestId="button-contact"
             onClick={() => {
@@ -290,12 +273,12 @@ const Orienter = () => {
               openModal(<ModalInterestLinkedOut />);
             }}
           >
-            Nous contacter&nbsp;
+            Nous contacter
             <ChevronRightIcon />
           </Button>
           <div className="uk-light">
             <Button
-              style="secondary"
+              style="custom-secondary"
               href={process.env.ASSOCIATION_BROCHURE}
               isExternal
               newTab
@@ -304,13 +287,13 @@ const Orienter = () => {
                 gaEvent(GA_TAGS.PAGE_ORIENTER_BROCHURE_CLIC);
               }}
             >
-              Télécharger la brochure&nbsp;
+              Télécharger la brochure
               <ChevronRightIcon />
             </Button>
           </div>
           {/*
             <Button
-              style="secondary"
+              style="custom-secondary"
               href={process.env.ASSOCIATION_APPOINTMENT}
               isExternal
               newTab
@@ -319,7 +302,7 @@ const Orienter = () => {
                 gaEvent(GA_TAGS.PAGE_ORIENTER_APPOINTMENT_CLIC);
               }}
             >
-              Prendre rendez-vous&nbsp;
+              Prendre rendez-vous
               <ChevronRightIcon />
             </Button>
           */}

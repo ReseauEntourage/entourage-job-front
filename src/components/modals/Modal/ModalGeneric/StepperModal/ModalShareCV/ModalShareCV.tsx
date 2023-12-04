@@ -77,7 +77,7 @@ export const ModalShareCV = ({ firstName }: ModalShareCVProps) => {
                   href={EXTERNAL_LINKS.ENTOURAGE}
                   style="primary"
                 >
-                  En savoir plus&nbsp;
+                  En savoir plus
                   <ChevronRightIcon />
                 </Button>
               </div>
