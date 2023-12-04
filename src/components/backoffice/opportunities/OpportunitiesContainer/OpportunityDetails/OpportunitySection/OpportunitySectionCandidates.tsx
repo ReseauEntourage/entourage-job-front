@@ -18,6 +18,7 @@ import {
 
 interface OpportunitySectionCandidatesProps {
   opportunity: AdminOpportunityWithOpportunityUsers;
+  oppRefreshCallback: () => void;
 }
 
 export const statusToTitle = (status) => {
@@ -26,6 +27,7 @@ export const statusToTitle = (status) => {
 
 export const OpportunitySectionCandidates = ({
   opportunity,
+  oppRefreshCallback,
 }: OpportunitySectionCandidatesProps) => {
   const { opportunityUsers } = opportunity;
 
@@ -39,7 +41,8 @@ export const OpportunitySectionCandidates = ({
         OpportunityId,
         UserId,
       });
-      return UIkit.notification('Statut mis à jour', 'success');
+      UIkit.notification('Statut mis à jour', 'success');
+      oppRefreshCallback();
     } catch (err) {
       console.error(err);
       return UIkit.notification('Erreur', 'danger');

@@ -10,6 +10,7 @@ import {
   OpportunityDto,
 } from 'src/api/types';
 import { StyledOpportunityCTAsContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunityDetails.styles';
+import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
 import { formEditExternalOpportunityAsAdmin } from 'src/components/forms/schemas/formEditExternalOpportunity';
 import { formEditOpportunity } from 'src/components/forms/schemas/formEditOpportunity';
 import { formRecommendCandidate } from 'src/components/forms/schemas/formRecommendCandidate';
@@ -41,6 +42,8 @@ export const AdminOpportunityDetailsCTAs = ({
   oppRefreshCallback,
 }: AdminOpportunityDetailsCTAsProps) => {
   const { push } = useRouter();
+
+  const queryParamsOpportunities = useQueryParamsOpportunities();
 
   const sortedBusinessLines =
     opportunity.businessLines && opportunity.businessLines.length > 0
@@ -86,6 +89,21 @@ export const AdminOpportunityDetailsCTAs = ({
     [oppRefreshCallback]
   );
 
+  const afterActionCallback = useCallback(async () => {
+    await fetchOpportunities();
+    push(
+      {
+        pathname: `${currentPath}`,
+        query: queryParamsOpportunities,
+      },
+      undefined,
+      {
+        shallow: true,
+        scroll: false,
+      }
+    );
+  }, [fetchOpportunities, push, queryParamsOpportunities]);
+
   const actions = {
     duplicateOpportunity: async () => {
       const {
@@ -109,7 +127,7 @@ export const AdminOpportunityDetailsCTAs = ({
       push(
         {
           pathname: `${currentPath}/${data.id}`,
-          query: { tag: 'validated' },
+          query: { ...queryParamsOpportunities, tag: 'pending' },
         },
         undefined,
         {
@@ -231,7 +249,7 @@ export const AdminOpportunityDetailsCTAs = ({
             await updateOpportunity(opportunity.id, {
               isArchived: true,
             });
-            fetchOpportunities();
+            await afterActionCallback();
             UIkit.notification("L'offre a bien été archivée", 'success');
           }}
           title="Archiver l'offre"
@@ -255,7 +273,7 @@ export const AdminOpportunityDetailsCTAs = ({
             await updateOpportunity(opportunity.id, {
               isValidated: true,
             });
-            fetchOpportunities();
+            await afterActionCallback();
             UIkit.notification("L'offre a bien été validée", 'success');
           }}
           title="Valider l'offre"
