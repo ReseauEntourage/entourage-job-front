@@ -71,12 +71,13 @@ describe('Candidat', () => {
       });
     });
 
-    cy.intercept('GET', `https://tarteaucitron.io/load.js*`, {});
+    cy.intercept('GET', `https://tarteaucitron.io/*`, {});
 
     cy.intercept('POST', '/opportunity/external', {}).as('postExternal');
 
     cy.intercept('PUT', '/user/changePwd', {}).as('changePwd');
   });
+
   it('should open backoffice public offers', () => {
     cy.fixture('auth-current-candidat-res').then((user) => {
       cy.visit(`/backoffice/candidat/offres/public`, {
@@ -282,6 +283,7 @@ describe('Candidat', () => {
     // save CV
     cy.contains('Sauvegarder').scrollIntoView().click();
   });
+
   it('should open backoffice candidate parameters', () => {
     cy.visit('/backoffice/parametres', {
       onBeforeLoad: function async(window) {

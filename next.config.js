@@ -3,7 +3,6 @@ require('dotenv').config();
 
 const webpack = require('webpack');
 
-// console.log('WEBPACK');
 const withLess = require('next-with-less');
 
 const CircularDependencyPlugin = require('circular-dependency-plugin');
@@ -11,40 +10,15 @@ const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 
 const dev = process.env.NODE_ENV !== 'production';
 
-/*
-const ContentSecurityPolicy = `
-  default-src
-  'self'
-  'unsafe-inline'
-  'unsafe-eval'
-  ${process.env.API_URL.replace(/\/api\/v1/g, '')}
-  ${process.env.AWSS3_CDN_URL}
-  ${process.env.CDN_URL ? process.env.CDN_URL : ''}
-  ${process.env.AWSS3_URL}
-  *.ytimg.com ytimg.com
-  youtube.com *.youtube.com
-  *.youtube-nocookie.com youtube-nocookie.com
-  airtable.com *.airtable.com
-  *.google-analytics.com google-analytics.com
-  *.googletagmanager.com googletagmanager.com
-  *.google.com google.com
-  *.google.fr google.fr
-  *.gstatic.com gstatic.com
-  *.googleapis.com googleapis.com
-  stats.g.doubleclick.net
-  *.facebook.net facebook.net
-  *.facebook.com facebook.com
-  purecatamphetamine.github.io
-  data:
-  sentry.io *.sentry.io
-  sentry-cdn.com *.sentry-cdn.com
-  licdn.com *.licdn.com
-  linkedin.com *.linkedin.com
-  *.pusher.com pusher.com
-  adsymptotic.com *.adsymptotic.com
-  tarteaucitron.io
-`;
-*/
+const FRONTEND_ENV_KEYS = [process.env.__NEXT_OPTIMIZE_FONTS];
+
+const envPlugin = FRONTEND_ENV_KEYS.reduce(
+  (result, key) =>
+    Object.assign({}, result, {
+      [`process.env.${key}`]: JSON.stringify(process.env[key]),
+    }),
+  {}
+);
 
 const securityHeaders = [
   {
@@ -75,10 +49,6 @@ const securityHeaders = [
     key: 'Referrer-Policy',
     value: 'strict-origin',
   },
-  /*  {
-    key: 'Content-Security-Policy',
-    value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
-  }, */
 ];
 
 let remotePatterns = [];
@@ -116,24 +86,8 @@ if (process.env.AWSS3_URL) {
 }
 
 module.exports = withLess({
-  // COMMENTED BECAUSE WARN DISPLAYED
-  // webpackDevMiddleware: (config) => {
-  //   config.watchOptions = {
-  //     poll: 1000,
-  //     aggregateTimeout: 300,
-  //   };
-  //   return config;
-  // },
-  // lessOptions: {
-  //   javascriptEnabled: true,
-  // },
   webpack: (config, options) => {
     config.resolve.modules.push(__dirname);
-
-    // console.log('++ CONFIG ++');
-    // console.log(config);
-    // console.log('++ OPTIONS ++');
-    // console.log(options);
 
     config.module.rules.push({
       test: /\.svg$/,
@@ -163,9 +117,8 @@ module.exports = withLess({
       config.resolve.alias['@sentry/node'] = '@sentry/react';
     }
 
-    config.plugins.push(new webpack.EnvironmentPlugin(process.env));
-
-    // console.log(process.env.__NEXT_OPTIMIZE_FONTS);
+    config.plugins.push(new webpack.DefinePlugin(envPlugin));
+    // config.plugins.push(new webpack.EnvironmentPlugin(process.env));
 
     config.plugins.push(
       new CircularDependencyPlugin({
@@ -192,7 +145,6 @@ module.exports = withLess({
         })
       );
     }
-    // console.log(config);
     return config;
   },
   assetPrefix: !dev ? process.env.CDN_URL || undefined : undefined,

@@ -92,7 +92,7 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
 
   const handleSubmitOverride = useCallback(async () => {
     setIsLoading(true);
-    await handleSubmit(onValidForm, onErrorForm)();
+    handleSubmit(onValidForm, onErrorForm)();
     setIsLoading(false);
   }, [handleSubmit, onErrorForm, onValidForm]);
 

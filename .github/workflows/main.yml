@@ -1,24 +1,24 @@
-name: LinkedOut Frontend Test
+name: E2E on Chrome | LinkedOut (front-end)
 
 on:
-  [push]
-  # pull_request:
-  # branches: [master, develop]
-  # workflow_dispatch:
+  # we don't need 'push' action
+  # push:
+  #  branches: ['*/*'] # matches every branch containing a single '/'
+  pull_request: {} # events by default (open, synchronized, reopened) in any branch triggers the workflow.
 
 env:
-  WEBINAR_URL: https://google.com
-  TOOLBOX_URL: https://google.com
-  TUTORIAL_CV: https://google.com
-  TUTORIAL_PP: https://google.com
-  TUTORIAL_VIDEO_FIRST_STEPS: https://google.com
-  TUTORIAL_VIDEO_CV: https://google.com
-  TUTORIAL_VIDEO_OFFERS: https://google.com
-  TUTORIAL_VIDEO_OFFERS_2: https://google.com
-  TUTORIAL_INTERVIEW_TRAINING: https://google.com
-  IRAISER_DONATION_LINK: https://google.com
-  SERVER_URL: http://localhost:3000
-  API_URL: http://localhost:3002
+  WEBINAR_URL: 'https://google.com'
+  TOOLBOX_URL: 'https://google.com'
+  TUTORIAL_CV: 'https://google.com'
+  TUTORIAL_PP: 'https://google.com'
+  TUTORIAL_VIDEO_FIRST_STEPS: 'https://google.com'
+  TUTORIAL_VIDEO_CV: 'https://google.com'
+  TUTORIAL_VIDEO_OFFERS: 'https://google.com'
+  TUTORIAL_VIDEO_OFFERS_2: 'https://google.com'
+  TUTORIAL_INTERVIEW_TRAINING: 'https://google.com'
+  IRAISER_DONATION_LINK: 'https://google.com'
+  SERVER_URL: 'http://localhost:3000'
+  API_URL: 'http://localhost:3002'
   PORT: 3000
   AWSS3_URL: https://entourage-job-preprod.s3.amazonaws.com
   AWSS3_CDN_URL: https://d3s4t580ymtqme.cloudfront.net
@@ -26,35 +26,40 @@ env:
   AWSS3_IMAGE_DIRECTORY: /images/
   CYPRESS_IO_PROJECT_ID: ${{ secrets.CYPRESS_IO_PROJECT_ID }}
   PUSHER_API_KEY: ${{ secrets.PUSHER_API_KEY }}
-  ADRESSE_LOCAUX_PARIS: "174 Rue Championnet 75018, Paris"
+  ADRESSE_LOCAUX_PARIS: '174 Rue Championnet 75018, Paris'
   HEROKU_RELEASE_VERSION: 'v100'
 
 jobs:
-  test:
+  Test:
     runs-on: ubuntu-latest
     environment: 'entourage-job-front'
     container:
       image: cypress/browsers:node16.17.0-chrome106
       options: --user 1001
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: cypress
+      - name: Set up Node.js
+        # to be sure we use the good version
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+
+      - name: Install dependencies with Yarn
+        run: yarn install
+
+      - name: Run Cypress tests
         uses: cypress-io/github-action@v4
         with:
           start: yarn dev
           config: e2e.baseUrl=http://localhost:3000
           browser: chrome
           command: npx cypress run --record --key ${{ secrets.CYPRESS_IO_KEY }}
-          wait-on: http://localhost:3000
+          wait-on: 'http://localhost:3000'
 
-      - run: yarn test:eslint
+      - name: Linting
+        run: yarn lint
 
-      - name: set-up
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16.x'
-
-      - run: yarn test:inte
-      - run: echo No tests
+      - name: Run unit tests
+        run: yarn test || echo 'No tests'

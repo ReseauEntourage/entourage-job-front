@@ -129,7 +129,7 @@ Un dossier coverage sera créé. Afin de pouvoir le consulter dans le navigateur
 yarn posttest:cov
 ```
 
-#### tests End to End - Cypress
+#### Tests End to End (e2e) - Cypress
 
 La commande suivante permet de lancer les tests Cypress:
 
@@ -145,35 +145,40 @@ yarn cypress:io
 
 ## Styles
 
-Les fichiers du thème globale, qui utilisent la librairie **_UIkit_**, se trouvent dans le dossier `/assets/custom` :
-
-- `entourage.less` : style globale qui surcharge le thème par défaut de **_UIkit_**
-
-- `entourage.print.less` : style utilisé pour le CV en version PDF
-
-- `/icons` : icônes en SVG rajoutés aux icônes **_UIkit_**
-
-Après avoir modifié les fichiers du thème, ou après avoir rajouté un icône, il faut recompiler les fichiers en CSS :
-
-- Installer d'abord **_UIkit_** au sein de son propre module :
-
-```
-yarn uikit-install
-```
-
-- Si le module est déjà installé, le mettre à jour ;
-
-```
-yarn uikit-update
-```
-
-- Ensuite, compiler les fichiers SCSS en CSS :
-
-```
-yarn uikit-compile
-```
-
-Les fichiers transformés se retrouvent dans le dossier `/src/styles/dist`.
+> .
+>
+> #### :warning: NEED UPDATE - UIKit is no longer used
+>
+> Les fichiers du thème globale, qui utilisent la librairie **_UIkit_**, se trouvent dans le dossier `/assets/custom` :
+>
+> - `entourage.less` : style globale qui surcharge le thème par défaut de **_UIkit_**
+>
+> - `entourage.print.less` : style utilisé pour le CV en version PDF
+>
+> - `/icons` : icônes en SVG rajoutés aux icônes **_UIkit_**
+>
+> Après avoir modifié les fichiers du thème, ou après avoir rajouté un icône, il faut recompiler les fichiers en CSS :
+>
+> - Installer d'abord **_UIkit_** au sein de son propre module :
+>
+> ```
+> yarn uikit-install
+> ```
+>
+> - Si le module est déjà installé, le mettre à jour ;
+>
+> ```
+> yarn uikit-update
+> ```
+>
+> - Ensuite, compiler les fichiers SCSS en CSS :
+>
+> ```
+> yarn uikit-compile
+> ```
+>
+> Les fichiers transformés se retrouvent dans le dossier `/src/styles/dist`.
+> .
 
 ## Déploiement
 

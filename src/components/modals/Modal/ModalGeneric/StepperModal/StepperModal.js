@@ -22,13 +22,13 @@ export const StepperModal = ({ composers, title }) => {
 
   const next = useCallback(() => {
     setIndex((prevIndex) => {
-      return prevIndex + 1;
+      return parseInt(prevIndex, 10) + 1;
     });
   }, []);
 
   const previous = useCallback(() => {
     setIndex((prevIndex) => {
-      return prevIndex - 1;
+      return parseInt(prevIndex, 10) - 1;
     });
   }, []);
 
