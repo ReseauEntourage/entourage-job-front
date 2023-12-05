@@ -51,7 +51,9 @@ export const AdminOpportunities = ({
   resetFilters,
   isMobile = false,
 }: AdminOpportunitiesProps) => {
-  const { replace } = useRouter();
+  const { replace, push } = useRouter();
+
+  const currentPath = '/backoffice/admin/offres';
 
   /* useEffect(() => {
     setCurrentTag(ADMIN_OFFERS_TAGS[0]);
@@ -101,6 +103,17 @@ export const AdminOpportunities = ({
     'opportunity',
     async () => {
       await fetchData(search, filters, offset, false, tag);
+      push(
+        {
+          pathname: `${currentPath}`,
+          query: queryParamsOpportunities,
+        },
+        undefined,
+        {
+          shallow: true,
+          scroll: false,
+        }
+      );
     },
     GA_TAGS.BACKOFFICE_ADMIN_ARCHIVER_MASSE_CLIC
   );

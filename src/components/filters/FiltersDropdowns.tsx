@@ -114,12 +114,13 @@ export const FiltersDropdowns = ({
                   }`}
                 >
                   <div
-                    className={`ent-select-search ${
+                    className={`uk-inline ent-select-search ${
                       smallSelectors ? 'ent-select-search-no-padding' : ''
                     } ${showSeparator ? 'ent-select-separator' : ''}`}
                     style={{ opacity: disabled ? 0.6 : 1 }}
                   >
                     <Button
+                      toggle={`target: #dropdown-filters-toggle-${key}`}
                       disabled={disabled}
                       style="text"
                       className={`uk-width-expand ${
@@ -139,6 +140,7 @@ export const FiltersDropdowns = ({
                       <CaretDownIcon />
                     </Button>
                     <div
+                      id={`dropdown-filters-toggle-${key}`}
                       data-uk-dropdown="mode: click;"
                       className="uk-height-max-medium uk-overflow-auto uk-width-medium"
                     >
@@ -186,11 +188,4 @@ export const FiltersDropdowns = ({
       )}
     </div>
   );
-};
-
-FiltersDropdowns.defaultProps = {
-  hideOnMobile: false,
-  fullWidth: false,
-  showSeparator: false,
-  smallSelectors: false,
 };

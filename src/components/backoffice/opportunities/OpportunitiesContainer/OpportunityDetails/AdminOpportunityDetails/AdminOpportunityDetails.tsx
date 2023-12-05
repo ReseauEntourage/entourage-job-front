@@ -13,8 +13,8 @@ import {
   StyledTitleText,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
 import {
-  StyledOpportunityDetailsCTAContainer,
   StyledOpportunityDetailsContainer,
+  StyledOpportunityDetailsCTAContainer,
   StyledOpportunityDetailsDetailsContentContainer,
   StyledOpportunityDetailsInfoContainer,
   StyledOpportunityDetailsRightContainer,
@@ -158,7 +158,10 @@ export const AdminOpportunityDetails = ({
             <OpportunitySection
               title="Candidats associés"
               content={
-                <OpportunitySectionCandidates opportunity={opportunity} />
+                <OpportunitySectionCandidates
+                  opportunity={opportunity}
+                  oppRefreshCallback={oppRefreshCallback}
+                />
               }
             />
           )}

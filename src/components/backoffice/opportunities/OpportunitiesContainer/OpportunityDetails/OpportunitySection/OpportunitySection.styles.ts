@@ -41,6 +41,7 @@ export const StyledOpportunitySectionCandidateLi = styled.li`
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 4px;
+  height: inherit !important;
   &:not(.orange) {
     &:hover {
       cursor: pointer;
@@ -60,6 +61,7 @@ export const StyledOpportunitySectionCandidateName = styled.div`
 `;
 
 export const StyledOpportunitySectionCandidateSelect = styled.div`
+  margin-left: 16px;
   display: flex;
   width: 200px;
   align-items: center;
@@ -71,5 +73,4 @@ export const StyledOpportunitySectionCandidateSelect = styled.div`
 
 export const StyledActionLabelContainer = styled.div`
   color: ${COLORS.primaryOrange};
-  margin-right: 16px;
 `;

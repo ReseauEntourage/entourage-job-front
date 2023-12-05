@@ -18,6 +18,7 @@ export const StyledBackLink = styled.a`
   }
   svg {
     width: 8px;
+    margin-right: 8px;
     fill: ${COLORS.darkGrayFont};
   }
 `;
