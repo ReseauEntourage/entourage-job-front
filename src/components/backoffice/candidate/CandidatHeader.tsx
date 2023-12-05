@@ -27,13 +27,21 @@ export const CandidatHeader = ({
     }
     if (isRoleIncluded(COACH_USER_ROLES, user.role)) {
       const cand = user.coaches?.find(
-        ({ candidat }) => candidat.id === candidateId
+        ({ candidat }) =>
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          candidat.id === candidateId
       );
       setRelatedUser(cand?.candidat);
-      setCandidateCVUrl(cand?.url);
+      setCandidateCVUrl(
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        cand?.url
+      );
     } else {
       setRelatedUser(user.candidat?.coach);
-      setCandidateCVUrl(user.candidat?.url);
+      setCandidateCVUrl(
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        user.candidat?.url
+      );
     }
   }, [user, candidateId]);
 

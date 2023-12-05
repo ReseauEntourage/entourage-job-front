@@ -127,6 +127,7 @@ export const TimeLineItem = ({
                   closeModal();
                   // Update the items array
                   const updatedItems = [...items];
+                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
                   updatedItems[sortIndex] = {
                     ...updatedItems[sortIndex],
                     ...{

@@ -50,6 +50,7 @@ export const ModalGeneric = ({
               if (customOnClose) {
                 customOnClose(onClose);
               } else {
+                // @ts-expect-error after enable TS strict mode. Please, try to fix it
                 onClose();
               }
             }}
@@ -60,6 +61,7 @@ export const ModalGeneric = ({
             <StyledModalContent>
               <Button
                 onClick={() => {
+                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
                   onClose();
                 }}
                 style="custom-primary"

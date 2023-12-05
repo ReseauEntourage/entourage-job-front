@@ -74,9 +74,12 @@ export function MemberList({
           setOffset(LIMIT);
           setAllLoaded(false);
         } else {
-          setMembers((prevMembers) => {
-            return [...prevMembers, ...membersData];
-          });
+          setMembers(
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            (prevMembers) => {
+              return [...prevMembers, ...membersData];
+            }
+          );
           setOffset((prevOffset) => {
             return prevOffset + LIMIT;
           });

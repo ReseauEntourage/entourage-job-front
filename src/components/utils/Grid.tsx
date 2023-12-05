@@ -51,11 +51,13 @@ export const Grid = ({
   let gridBuffer = '';
   if (parallax) gridBuffer += `parallax: ${parallax};`;
   if (masonry) gridBuffer += 'masonry: true';
-  classBuffer += childWidths
-    .map((childWidth) => {
-      return ` uk-child-width-${childWidth}`;
-    })
-    .join(' ');
+  classBuffer +=
+    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+    childWidths
+      .map((childWidth) => {
+        return ` uk-child-width-${childWidth}`;
+      })
+      .join(' ');
   if (gap) classBuffer += ` uk-grid-${gap}`;
   if (match) classBuffer += ' uk-grid-match';
   if (divider) classBuffer += ' uk-grid-divider';
@@ -87,25 +89,33 @@ export const Grid = ({
       style={style}
       data-testid={dataTestId}
     >
-      {content
-        .filter((_) => {
-          return _;
-        })
-        .map((item, index) => {
-          return (
-            <div
-              // todo optimize
-              className={
-                index < eachWidths.length
-                  ? `uk-width-${eachWidths[index]}`
-                  : undefined
-              }
-              key={index}
-            >
-              {item}
-            </div>
-          );
-        })}
+      {
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        content
+          .filter((_) => {
+            return _;
+          })
+          .map((item, index) => {
+            return (
+              <div
+                // todo optimize
+                className={
+                  index <
+                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                  eachWidths.length
+                    ? `uk-width-${
+                        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                        eachWidths[index]
+                      }`
+                    : undefined
+                }
+                key={index}
+              >
+                {item}
+              </div>
+            );
+          })
+      }
     </div>
   );
 };

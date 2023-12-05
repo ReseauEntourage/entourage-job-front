@@ -51,6 +51,7 @@ const ResetPasswordPage = ({
                       push(`/reset/success?isCreation=${isCreation}`);
                     } catch (err) {
                       setError(
+                        // @ts-expect-error after enable TS strict mode. Please, try to fix it
                         err?.response?.data?.error || 'Une erreur est survenue'
                       );
                     }

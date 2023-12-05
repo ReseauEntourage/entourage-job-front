@@ -71,6 +71,7 @@ export const HelpCards = () => {
           {cardsContent.map((cardContent, key) => {
             return (
               <HelpCard
+                // @ts-expect-error after enable TS strict mode. Please, try to fix it
                 cardContent={cardContent}
                 keyMap={`${key}-${uuidValue}`}
               />

@@ -18,19 +18,25 @@ export const FiltersTabs = ({
     <div>
       <Grid eachWidths={['expand', 'auto']}>
         <ul className="uk-subnav ent-subnav">
-          {tabFilters.map(({ title, tag, active }, i) => {
-            return (
-              <li key={`filter-${i}`} className={active ? 'uk-active' : ''}>
-                <a
-                  onClick={() => {
-                    return setTabFilters(tag);
-                  }}
-                >
-                  {title}
-                </a>
-              </li>
-            );
-          })}
+          {
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            tabFilters.map(({ title, tag, active }, i) => {
+              return (
+                <li key={`filter-${i}`} className={active ? 'uk-active' : ''}>
+                  <a
+                    onClick={() => {
+                      return setTabFilters(
+                        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                        tag
+                      );
+                    }}
+                  >
+                    {title}
+                  </a>
+                </li>
+              );
+            })
+          }
         </ul>
       </Grid>
     </div>

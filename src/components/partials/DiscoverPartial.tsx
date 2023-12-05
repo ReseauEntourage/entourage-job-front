@@ -22,7 +22,10 @@ export const DiscoverPartial = ({
       })
       .catch((err) => {
         console.error(err);
-        setError('Impossible de récupérer les CVs.');
+        setError(
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          'Impossible de récupérer les CVs.'
+        );
       });
   }, []);
 
@@ -33,6 +36,7 @@ export const DiscoverPartial = ({
       <Grid
         childWidths={['1-3@m']}
         gap="small"
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         items={cvs.map((cv) => {
           return (
             <CandidatCard

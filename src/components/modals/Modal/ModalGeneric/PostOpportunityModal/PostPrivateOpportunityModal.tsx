@@ -53,6 +53,7 @@ export function PostPrivateOpportunityModal({
           isPublic: false,
           candidatesIds: [candidateId],
           message: opportunity.message,
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           recruiterPhone: opportunity.recruiterPhone || null,
           date: moment().toISOString(),
         });

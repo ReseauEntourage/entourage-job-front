@@ -37,11 +37,15 @@ export const CandidateOpportunityDetailsContainer = ({
           if (opportunity.opportunityUsers?.archived) {
             return status.includes('archived');
           }
-          return status.includes(opportunity.opportunityUsers?.status);
+          return status.includes(
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            opportunity.opportunityUsers?.status
+          );
         }
       );
 
       const hasCTAs =
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         CTAsByTab.find((tab) => {
           return tab.tab === index;
         })?.ctas.length > 0;
@@ -53,6 +57,8 @@ export const CandidateOpportunityDetailsContainer = ({
   const { containerHeight } = useOpportunityDetailsHeight(
     filtersAndTabsHeight,
     HEIGHTS.OFFER_INFO_HEIGHT,
+
+    // @ts-expect-error after enable TS strict mode. Please, try to fix it
     ref,
     hasCTAContainer
   );
@@ -66,6 +72,7 @@ export const CandidateOpportunityDetailsContainer = ({
       contentHeight={filtersAndTabsHeight}
       details={
         <CandidateOpportunityDetails
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           innerRef={ref}
           containerHeight={containerHeight}
           hasCTAContainer={hasCTAContainer}
@@ -83,8 +90,12 @@ export const CandidateOpportunityDetailsContainer = ({
           isExternal={opportunity.isExternal}
           opportunityUsers={opportunity.opportunityUsers}
           fetchOpportunities={fetchOpportunities}
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           createdAt={opportunity.createdAt}
-          events={opportunity.opportunityUsers.events}
+          events={
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            opportunity.opportunityUsers.events
+          }
           oppRefreshCallback={() => {
             refreshOpportunity();
           }}

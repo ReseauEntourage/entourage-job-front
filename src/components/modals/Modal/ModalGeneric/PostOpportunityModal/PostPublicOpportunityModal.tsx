@@ -41,10 +41,13 @@ export function PostPublicOpportunityModal() {
               };
             }
           ),
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           candidatesIds: null,
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           message: null,
           isPublic: true,
           shouldSendNotifications: true,
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           recruiterPhone: opportunity.recruiterPhone || null,
           date: moment().toISOString(),
         });

@@ -104,12 +104,14 @@ export function getRelatedUser(
       return [member.candidat.coach];
     }
     if (member.coaches && member.coaches.length > 0) {
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
       return member.coaches.map(({ candidat }) => {
         return candidat;
       });
     }
   }
 
+  // @ts-expect-error after enable TS strict mode. Please, try to fix it
   return null;
 }
 

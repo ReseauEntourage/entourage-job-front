@@ -25,15 +25,34 @@ export const Background = ({
   const styleBuffer: { backgroundImage?: string; backgroundColor?: string } =
     {};
   if (position) classBuffer += ` uk-background-${position}`;
-  if (blend.mode) classBuffer += ` uk-background-blend-${blend.mode}`;
+  if (
+    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+    blend.mode
+  ) {
+    classBuffer += ` uk-background-blend-${
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      blend.mode
+    }`;
+  }
   if (fixed) classBuffer += ` uk-background-fixed`;
   if (src) {
     styleBuffer.backgroundImage = `url(${addPrefix(src)})`;
   }
-  if (blend.color) {
-    classBuffer += ` uk-background-${blend.color}`;
-  } else if (blend.colorHex) {
-    styleBuffer.backgroundColor = blend.colorHex ? blend.colorHex : undefined;
+  if (
+    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+    blend.color
+  ) {
+    classBuffer += ` uk-background-${
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      blend.color
+    }`;
+  } else if (
+    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+    blend.colorHex
+  ) {
+    styleBuffer.backgroundColor =
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      blend.colorHex ? blend.colorHex : undefined;
   }
   return (
     <div className={classBuffer} style={styleBuffer}>

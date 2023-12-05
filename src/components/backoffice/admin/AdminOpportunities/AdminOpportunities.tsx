@@ -74,7 +74,10 @@ export const AdminOpportunities = ({
 
   const queryParamsOpportunities = useQueryParamsOpportunities();
 
-  const [offers, setOffers] = useState<Opportunity[]>(undefined);
+  const [offers, setOffers] = useState<Opportunity[]>(
+    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+    undefined
+  );
   const [hasError, setHasError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [offset, setOffset] = useState<number>(0);
@@ -195,6 +198,7 @@ export const AdminOpportunities = ({
                 {
                   onClick: () => {
                     openModal(
+                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
                       <PostAdminOpportunityModal
                         callback={opportunityListRef?.current?.fetchData}
                       />
@@ -262,9 +266,12 @@ export const AdminOpportunities = ({
             <SearchBar
               filtersConstants={OPPORTUNITY_FILTERS_DATA}
               filters={filters}
+              // @ts-expect-error after enable TS strict mode. Please, try to fix it
               resetFilters={resetFilters}
               search={search}
+              // @ts-expect-error after enable TS strict mode. Please, try to fix it
               setSearch={setSearch}
+              // @ts-expect-error after enable TS strict mode. Please, try to fix it
               setFilters={setFilters}
               placeholder="Rechercher..."
               additionalButtons={
@@ -288,8 +295,11 @@ export const AdminOpportunities = ({
           <OpportunitiesContainer
             backButtonHref={{
               pathname: '/backoffice/admin/offres',
+
+              // @ts-expect-error after enable TS strict mode. Please, try to fix it
               query: queryParamsOpportunities,
             }}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             list={
               offers &&
               offers.length > 0 && (

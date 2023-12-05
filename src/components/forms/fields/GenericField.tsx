@@ -64,7 +64,10 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
 }: GenericFieldProps<S>) {
   const { id: formId } = formSchema;
 
-  let rules = mapFieldRules<S, typeof field.component>(field.rules);
+  let rules = mapFieldRules<S, typeof field.component>(
+    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+    field.rules
+  );
   const [isMaxLinesReached, setIsMaxLinesReached] = useState<boolean>();
   const [isMaxItemsReached, setIsMaxItemsReached] = useState<boolean>();
 
@@ -111,7 +114,10 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
       if (isFormFieldSelect(field) || isFormFieldSelectRequest(field)) {
         if (field.fieldsToReset) {
           for (let i = 0; i < field.fieldsToReset.length; i += 1) {
-            resetField(field.fieldsToReset[i], { defaultValue: null });
+            resetField(field.fieldsToReset[i], {
+              // @ts-expect-error after enable TS strict mode. Please, try to fix it
+              defaultValue: null,
+            });
           }
         }
       }
@@ -186,7 +192,13 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
   if (field.component === 'select-simple') {
     const { options } = field;
 
-    return <SelectSimple {...commonProps} options={options} />;
+    return (
+      <SelectSimple
+        {...commonProps}
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        options={options}
+      />
+    );
   }
 
   if (isFormFieldSelectRequest(field)) {
@@ -204,7 +216,11 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
       return (
         <Select
           {...commonProps}
-          isMulti={isMulti}
+          isMulti={
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            isMulti
+          }
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           options={
             typeof field.options === 'function'
               ? field.options(getValue)
@@ -219,7 +235,11 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
       return (
         <SelectCreatable
           {...commonProps}
-          isMulti={isMulti}
+          isMulti={
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            isMulti
+          }
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           options={
             typeof field.options === 'function'
               ? field.options(getValue)
@@ -237,9 +257,13 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
       return (
         <SelectAsync
           {...commonProps}
-          isMulti={isMulti}
+          isMulti={
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            isMulti
+          }
           openMenuOnClick={field.openMenuOnClick}
           loadOptions={(callback, inputValue) =>
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             field.loadOptions(callback, inputValue, getValue)
           }
         />
@@ -252,8 +276,12 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
       return (
         <Radio
           {...commonProps}
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           options={field.options}
-          filter={field.dynamicFilter(getValue)}
+          filter={
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            field.dynamicFilter(getValue)
+          }
           hidden={
             field.hide ? field.hide(getValue, fieldOptions) : field.hidden
           }
@@ -266,12 +294,16 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
         <RadioAsync
           {...commonProps}
           loadOptions={async (callback) => {
-            await field.loadOptions((radioOptions) => {
+            await // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            field.loadOptions((radioOptions) => {
               updateFieldOptions({ [field.id]: radioOptions });
               callback(radioOptions);
             });
           }}
-          filter={field.dynamicFilter(getValue)}
+          filter={
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            field.dynamicFilter(getValue)
+          }
           hidden={
             field.hide ? field.hide(getValue, fieldOptions) : field.hidden
           }

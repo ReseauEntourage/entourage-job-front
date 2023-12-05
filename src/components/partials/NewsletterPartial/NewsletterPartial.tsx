@@ -37,7 +37,10 @@ export const NewsletterPartial = ({
       setIsMailValid(mailValid);
       // setIsTagsValid(tagsValid);
     } else {
-      gaEvent(tag);
+      gaEvent(
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        tag
+      );
       try {
         await Api.postNewsletter({
           email,
@@ -49,8 +52,14 @@ export const NewsletterPartial = ({
           'success'
         );
         setEmail('');
-        setZone(null);
-        setStatus(null);
+        setZone(
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          null
+        );
+        setStatus(
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          null
+        );
       } catch (err) {
         console.error(err);
         UIkit.notification('Une erreur est survenue', 'danger');
@@ -89,7 +98,10 @@ export const NewsletterPartial = ({
                       title={label}
                       onChange={() => {
                         if (status === tagConst) {
-                          setStatus(null);
+                          setStatus(
+                            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                            null
+                          );
                         } else {
                           setStatus(tagConst);
                         }
@@ -116,7 +128,10 @@ export const NewsletterPartial = ({
                       title={label}
                       onChange={() => {
                         if (zone === tagConst) {
-                          setZone(null);
+                          setZone(
+                            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                            null
+                          );
                         } else {
                           setZone(tagConst);
                         }

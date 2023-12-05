@@ -29,6 +29,8 @@ export function AdminOpportunityDetailsContainer({
   const { containerHeight } = useOpportunityDetailsHeight(
     filtersAndTabsHeight,
     HEIGHTS.OFFER_ADMIN_INFO_HEIGHT - HEIGHTS.DEFAULT_SECTION_PADDING,
+
+    // @ts-expect-error after enable TS strict mode. Please, try to fix it
     ref,
     hasCTAContainer
   );
@@ -36,6 +38,7 @@ export function AdminOpportunityDetailsContainer({
   useEffect(() => {
     if (opportunity) {
       const hasCTAs =
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         CTAsByTag.find(({ tag }) => {
           return tag === getOpportunityCurrentTag(opportunity);
         })?.ctas.length > 0;
@@ -53,6 +56,7 @@ export function AdminOpportunityDetailsContainer({
       contentHeight={filtersAndTabsHeight}
       details={
         <AdminOpportunityDetails
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           innerRef={ref}
           containerHeight={containerHeight}
           hasCTAContainer={hasCTAContainer}

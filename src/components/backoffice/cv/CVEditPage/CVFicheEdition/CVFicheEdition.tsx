@@ -58,8 +58,14 @@ export const CVFicheEdition = ({
     // Use hash to reload image if an update is done
     const previewHash = Date.now();
     const baseUrl = `${process.env.AWSS3_URL}${process.env.AWSS3_IMAGE_DIRECTORY}${cv.UserId}.${cv.status}`;
-    setPreviewUrl(`${baseUrl}.preview.jpg?${previewHash}`);
-    setImageUrl(`${baseUrl}.jpg?${previewHash}`);
+    setPreviewUrl(
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      `${baseUrl}.preview.jpg?${previewHash}`
+    );
+    setImageUrl(
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      `${baseUrl}.jpg?${previewHash}`
+    );
   }, [cv.UserId, cv.status]);
 
   useMount(() => {
@@ -78,6 +84,7 @@ export const CVFicheEdition = ({
           <CVEditPicture
             imageUploading={previewGenerating}
             urlImg={imageUrl || '/static/img/arthur-background.jpg'}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             onChange={onChange}
             disablePicture={disablePicture}
           />
@@ -130,15 +137,24 @@ export const CVFicheEdition = ({
           <CVEditCareerPath
             ambitions={cv.ambitions}
             businessLines={cv.businessLines}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             onChange={onChange}
           />
           <CVEditCatchphrase catchphrase={cv.catchphrase} onChange={onChange} />
         </Grid>
       </Grid>
-      <StoryProfileCard description={cv.story} onChange={onChange} />
+      <StoryProfileCard
+        description={cv.story}
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        onChange={onChange}
+      />
       <Grid childWidths={['1-2@s']} row>
         <Grid childWidths={['1-1']}>
-          <SkillsCard list={cv.skills} onChange={onChange} />
+          <SkillsCard
+            list={cv.skills}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            onChange={onChange}
+          />
           <InfoProfileCard
             contracts={cv.contracts}
             locations={cv.locations}
@@ -146,21 +162,35 @@ export const CVFicheEdition = ({
             languages={cv.languages}
             transport={cv.transport}
             email={email}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             phone={phone}
             address={address}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             onChange={onChange}
             userZone={userZone}
           />
-          <PassionsCard list={cv.passions} onChange={onChange} />
-          <CVEditReviews reviews={cv.reviews} onChange={onChange} />
+          <PassionsCard
+            list={cv.passions}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            onChange={onChange}
+          />
+          <CVEditReviews
+            reviews={cv.reviews}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            onChange={onChange}
+          />
         </Grid>
         <Grid childWidths={['1-1']}>
           <ExperiencesProfileCard
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             experiences={cv.experiences}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             onChange={onChange}
           />
           <FormationsProfileCard
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             formations={cv.formations}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             onChange={onChange}
           />
         </Grid>

@@ -57,9 +57,12 @@ export function OrganizationList({
           setOffset(LIMIT);
           setAllLoaded(false);
         } else {
-          setOrganizations((pevOrganizations) => {
-            return [...pevOrganizations, ...organizationsData];
-          });
+          setOrganizations(
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            (pevOrganizations) => {
+              return [...pevOrganizations, ...organizationsData];
+            }
+          );
           setOffset((prevOffset) => {
             return prevOffset + LIMIT;
           });

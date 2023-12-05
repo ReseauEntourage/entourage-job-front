@@ -9,6 +9,8 @@ declare global {
 export const fbEvent = ({
   type = 'trackCustom',
   action,
+
+  // @ts-expect-error after enable TS strict mode. Please, try to fix it
   options = null,
 }: {
   type?: string;

@@ -285,6 +285,7 @@ export const CandidateOpportunityDetailsCTAs = ({
 
   const disables = {
     contactRelance: () => {
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
       return event.value === EVENT_TYPES.FOLLOWUP || isExternal;
     },
   };
@@ -292,6 +293,7 @@ export const CandidateOpportunityDetailsCTAs = ({
   return (
     <StyledOpportunityCTAsContainer>
       {(tab || tab === 0) &&
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         CTAsByTab.find((CTAByTab) => {
           return CTAByTab.tab === tab;
         }).ctas.map((cta, key) => {

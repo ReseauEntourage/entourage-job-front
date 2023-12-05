@@ -17,7 +17,10 @@ export function MemberHiddenToggle({
       id={`hidden-${member.id}`}
       modalTitle="Changer la visibilité du CV en ligne ?"
       modalConfirmation="Oui, masquer le CV"
-      defaultValue={member.candidat.hidden}
+      defaultValue={
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        member.candidat.hidden
+      }
       onToggle={async (hidden) => {
         try {
           await Api.putCandidate(member.id, {
@@ -27,6 +30,8 @@ export function MemberHiddenToggle({
           if (setMember) {
             setMember({
               ...member,
+
+              // @ts-expect-error after enable TS strict mode. Please, try to fix it
               candidat: {
                 ...member.candidat,
                 hidden,

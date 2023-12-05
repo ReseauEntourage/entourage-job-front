@@ -42,7 +42,9 @@ export function PostAdminOpportunityModal({
           startOfContract: fields.startOfContract,
           endOfContract: fields.endOfContract,
           candidatesIds,
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           message: opportunity.isPublic ? null : opportunity.message,
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           recruiterPhone: opportunity.recruiterPhone || null,
           businessLines: fields.businessLines.map((businessLine, index) => {
             return {
@@ -87,6 +89,7 @@ export function PostAdminOpportunityModal({
       title: 'Ajouter une nouvelle offre',
       submitText: 'Valider',
       defaultValues: {
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         isPublic: true,
         ...lastFilledForm,
         shouldSendNotifications: true,

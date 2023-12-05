@@ -29,6 +29,8 @@ export function SelectSimple<T extends string | number | boolean>({
 }: SelectSimpleProps<T>) {
   const [selectedOption, setSelectedOption] = useState<FilterConstant<T>>({
     label: '',
+
+    // @ts-expect-error after enable TS strict mode. Please, try to fix it
     value: null,
   });
 
@@ -36,7 +38,10 @@ export function SelectSimple<T extends string | number | boolean>({
     const optionToSelect = options.find(
       ({ value: optionValue }) => optionValue === value
     );
-    setSelectedOption(optionToSelect || { value: null, label: '' });
+    setSelectedOption(
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      optionToSelect || { value: null, label: '' }
+    );
   }, [options, value]);
 
   const {

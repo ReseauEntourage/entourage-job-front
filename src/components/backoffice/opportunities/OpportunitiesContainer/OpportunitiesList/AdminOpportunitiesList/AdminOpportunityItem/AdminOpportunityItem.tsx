@@ -58,9 +58,11 @@ export const AdminOpportunityItem = ({
   const [opportunityUser, setOpportunityUser] = useState<OpportunityUser>();
   useEffect(() => {
     if (candidateId) {
-      const oppUs = opportunityUsers.find((oppUser) => {
-        return oppUser.user.id === candidateId;
-      });
+      const oppUs =
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        opportunityUsers.find((oppUser) => {
+          return oppUser.user.id === candidateId;
+        });
       if (oppUs) {
         setOpportunityUser(oppUs);
       }
@@ -77,7 +79,10 @@ export const AdminOpportunityItem = ({
   };
 
   const handleCheckbox = useCallback(() => {
-    selectOpportunity({ id });
+    selectOpportunity({
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      id,
+    });
   }, [id, selectOpportunity]);
 
   return (
@@ -101,6 +106,7 @@ export const AdminOpportunityItem = ({
           <InfoText>
             <StyledOpportunityItemInfoContainer>
               <ContractLabel
+                // @ts-expect-error after enable TS strict mode. Please, try to fix it
                 contract={contract}
                 endOfContract={endOfContract}
                 startOfContract={startOfContract}
@@ -110,15 +116,18 @@ export const AdminOpportunityItem = ({
           </InfoText>
         </StyledOpportunityItemTitleContainer>
         <StyledOpportunityItemActionContainer>
-          {selectOpportunity && (
-            <CheckBox
-              useOutsideOfForm
-              id={`checkbox-${id}`}
-              name={`checkbox-${id}`}
-              onChange={handleCheckbox}
-              value={isSelected}
-            />
-          )}
+          {
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            selectOpportunity && (
+              <CheckBox
+                useOutsideOfForm
+                id={`checkbox-${id}`}
+                name={`checkbox-${id}`}
+                onChange={handleCheckbox}
+                value={isSelected}
+              />
+            )
+          }
           {candidateId && opportunityUser && (
             <ActionLabel
               disabled

@@ -7,7 +7,7 @@ interface SectionProps {
 
   size?: UIKIT_SECTION_SIZES;
   id?: string;
-  children: JSX.Element | JSX.Element[];
+  children: JSX.Element | JSX.Element[] | React.ReactNode;
   container?: 'small' | 'large';
   className?: string;
   preserveColor?: boolean;

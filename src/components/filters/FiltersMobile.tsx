@@ -50,11 +50,14 @@ export const FiltersMobile = ({
           ) : (
             <FilterEmptyIcon width={15} height={15} />
           )}
-          {numberOfFilters > 0 && (
-            <div className="ent-filter-badge-search uk-text-nowrap">
-              {numberOfFilters}
-            </div>
-          )}
+          {
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            numberOfFilters > 0 && (
+              <div className="ent-filter-badge-search uk-text-nowrap">
+                {numberOfFilters}
+              </div>
+            )
+          }
         </div>
       </Button>
     </div>

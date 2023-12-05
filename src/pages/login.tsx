@@ -25,6 +25,7 @@ const Login = () => {
     if (Array.isArray(requestedPath)) {
       [path] = requestedPath;
     } else {
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
       path = requestedPath;
     }
 

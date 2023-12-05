@@ -53,6 +53,7 @@ export function OffersMemberTab({ candidateId }: OffersMemberTabProps) {
       replace(
         {
           pathname: `/backoffice/admin/membres/${candidateId}/offres${
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             offers[0].id ? `/${offers[0].id}` : ''
           }`,
         },
@@ -74,6 +75,7 @@ export function OffersMemberTab({ candidateId }: OffersMemberTabProps) {
             pathname: `/backoffice/admin/membres/${candidateId}/offres`,
             query: {},
           }}
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           list={
             offers &&
             offers.length > 0 && (

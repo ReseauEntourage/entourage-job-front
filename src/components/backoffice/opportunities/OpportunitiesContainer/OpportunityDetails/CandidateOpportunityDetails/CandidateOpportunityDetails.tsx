@@ -95,6 +95,7 @@ export const CandidateOpportunityDetails = ({
           <InfoText>
             <StyledOpportunityDetailsInfoContainer>
               <ContractLabel
+                // @ts-expect-error after enable TS strict mode. Please, try to fix it
                 contract={contract}
                 endOfContract={endOfContract}
                 startOfContract={startOfContract}
@@ -108,7 +109,9 @@ export const CandidateOpportunityDetails = ({
           <ActionLabels
             isBookmarked={!!opportunityUsers?.bookmarked}
             isRecommended={!!opportunityUsers?.recommended}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             isPublic={isPublic}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             isExternal={isExternal}
             bookmarkOpportunity={async () => {
               await bookmarkOpportunity();
@@ -127,6 +130,7 @@ export const CandidateOpportunityDetails = ({
             opportunityUsers.status,
             opportunityUsers.archived
           )}
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           noProcess={
             _.isNil(opportunityUsers.status) ||
             (opportunityUsers.status === -1 &&
@@ -141,14 +145,18 @@ export const CandidateOpportunityDetails = ({
       {hasCTAContainer && (
         <StyledOpportunityDetailsCTAContainer>
           <CandidateOpportunityDetailsCTAs
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             event={event}
             candidateId={candidateId}
             tab={renderTabFromStatus(
               opportunityUsers.status,
               opportunityUsers.archived
             )}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             OpportunityId={id}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             contract={contract}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             isExternal={isExternal}
             oppRefreshCallback={() => {
               oppRefreshCallback();

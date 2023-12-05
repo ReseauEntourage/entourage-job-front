@@ -30,10 +30,14 @@ import { CVFicheEdition } from './CVFicheEdition';
 import { CVModalPreview } from './CVModalPreview';
 import { NoCV } from './NoCV';
 
-const pusher = new Pusher(process.env.PUSHER_API_KEY, {
-  cluster: 'eu',
-  forceTLS: true,
-});
+const pusher = new Pusher(
+  // @ts-expect-error after enable TS strict mode. Please, try to fix it
+  process.env.PUSHER_API_KEY,
+  {
+    cluster: 'eu',
+    forceTLS: true,
+  }
+);
 
 interface CVEditPageProps {
   candidateId: string;
@@ -351,7 +355,13 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
           />
           <Button
             onClick={() => {
-              openModal(<CVModalPreview cv={cv} imageUrl={imageUrl} />);
+              openModal(
+                <CVModalPreview
+                  cv={cv}
+                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                  imageUrl={imageUrl}
+                />
+              );
             }}
             color="darkGrayFont"
             style="custom-primary-inverted"

@@ -97,7 +97,9 @@ export function ParametersMemberTab({
     return relatedUser?.map((member) => {
       return {
         ...member,
-        candidat: user.coaches.find(({ candidat: { id } }) => member.id === id),
+        candidat:
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          user.coaches.find(({ candidat: { id } }) => member.id === id),
         coaches: user.candidat ? [user.candidat] : [],
         organization: user.organization,
       };

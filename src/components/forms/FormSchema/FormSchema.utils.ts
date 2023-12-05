@@ -77,6 +77,8 @@ export function mapFieldRules<
     }
     return rules;
   }
+
+  // @ts-expect-error after enable TS strict mode. Please, try to fix it
   return null;
 }
 

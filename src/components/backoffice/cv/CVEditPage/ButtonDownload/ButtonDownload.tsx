@@ -29,6 +29,7 @@ export const ButtonDownload = ({
       text={
         pdfGenerating ? 'Génération du fichier PDF ...' : 'Télécharger le CV'
       }
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
       icon={pdfGenerating ? null : <DownloadIcon />}
       action={async () => {
         if (tag) gaEvent(tag);

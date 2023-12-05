@@ -4,9 +4,15 @@ import { Api } from 'src/api';
 import { CV } from 'src/api/types';
 
 export function useFetchCV(candidateId) {
-  const [error, setError] = useState<string>(null);
+  const [error, setError] = useState<string>(
+    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+    null
+  );
   const [loading, setLoading] = useState<boolean>(true);
-  const [cv, setCV] = useState<CV>(undefined);
+  const [cv, setCV] = useState<CV>(
+    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+    undefined
+  );
 
   const fetchCV = useCallback(async () => {
     if (candidateId) {
@@ -15,7 +21,10 @@ export function useFetchCV(candidateId) {
         if (data && !_.isEmpty(data)) {
           setCV(data);
         } else {
-          setCV(null);
+          setCV(
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            null
+          );
         }
       } catch (err) {
         console.error(err);
@@ -23,7 +32,10 @@ export function useFetchCV(candidateId) {
       }
       setLoading(false);
     } else {
-      setCV(null);
+      setCV(
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        null
+      );
       setLoading(false);
     }
   }, [candidateId]);

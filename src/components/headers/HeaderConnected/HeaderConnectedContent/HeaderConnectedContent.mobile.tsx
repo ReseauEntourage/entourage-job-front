@@ -23,11 +23,26 @@ const uuidValue = uuid();
 export const HeaderConnectedContentMobile = ({
   badges,
   links = {
-    admin: [HeaderConnectedMainItemDefaultProps],
-    dropdown: [HeaderConnectedMainItemDefaultProps],
-    candidat: [HeaderConnectedMainItemDefaultProps],
-    coach: [HeaderConnectedMainItemDefaultProps],
-    coach_externe: [HeaderConnectedMainItemDefaultProps],
+    admin: [
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      HeaderConnectedMainItemDefaultProps,
+    ],
+    dropdown: [
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      HeaderConnectedMainItemDefaultProps,
+    ],
+    candidat: [
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      HeaderConnectedMainItemDefaultProps,
+    ],
+    coach: [
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      HeaderConnectedMainItemDefaultProps,
+    ],
+    coach_externe: [
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      HeaderConnectedMainItemDefaultProps,
+    ],
   },
   isEmpty = false,
 }: HeaderConnectedContentProps) => {
@@ -99,14 +114,26 @@ export const HeaderConnectedContentMobile = ({
                           {name}
                         </span>
                       </a>
-                      {badges[badge] > 0 && (
-                        <div>
-                          &nbsp;
-                          <div className="uk-badge">{badges[badge]}</div>
-                        </div>
-                      )}
+                      {
+                        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                        badges[badge] > 0 && (
+                          <div>
+                            &nbsp;
+                            <div className="uk-badge">
+                              {
+                                // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                                badges[badge]
+                              }
+                            </div>
+                          </div>
+                        )
+                      }
                       {subMenu?.length > 0 && (
-                        <SubMenu items={subMenu} badges={badges} />
+                        <SubMenu
+                          items={subMenu}
+                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                          badges={badges}
+                        />
                       )}
                     </StyledConnectedItemMobile>
                   );

@@ -37,7 +37,10 @@ export function mapEventDateFromStatus(offerStatus, events) {
   if (offerStatus === OFFER_STATUS[1].value) {
     const followup = mapEventObject(events, EVENT_TYPES.FOLLOWUP);
 
-    if (followup.date) {
+    if (
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      followup.date
+    ) {
       return followup;
     }
   }

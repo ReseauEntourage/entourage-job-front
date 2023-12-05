@@ -93,7 +93,10 @@ export function useOnMemberFormSubmit(
         return data;
       } catch (error) {
         console.error(error);
-        if (error?.response?.status === 409) {
+        if (
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          error?.response?.status === 409
+        ) {
           UIkit.notification('Cette adresse email est déjà utilisée', 'danger');
         } else {
           UIkit.notification(
@@ -103,11 +106,18 @@ export function useOnMemberFormSubmit(
         }
 
         if (shouldTryToCreateOrganization) {
-          const { OrganizationId, ...restUserFields } = userFields;
+          const { OrganizationId, ...restUserFields } =
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            userFields;
 
           setFilledUserFields({
             ...restUserFields,
-            organizationId: { value: OrganizationId, label: name },
+            organizationId: {
+              value: OrganizationId,
+              label:
+                // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                name,
+            },
           });
           closeModal();
         }

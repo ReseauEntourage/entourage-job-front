@@ -45,6 +45,7 @@ export const TimeLineList = ({
               key={`item-${index}`}
               sortIndex={index}
               value={value}
+              // @ts-expect-error after enable TS strict mode. Please, try to fix it
               onChange={onChange}
               items={items}
               editProps={editProps}

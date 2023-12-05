@@ -66,9 +66,13 @@ export const SearchBar = ({
 
   useEffect(() => {
     setNumberOfFilters(
-      Object.values(filters).reduce((acc: number, curr: string) => {
-        return acc + curr.length;
-      }, 0) as number
+      Object.values(filters).reduce(
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        (acc: number, curr: string) => {
+          return acc + curr.length;
+        },
+        0
+      ) as number
     );
   }, [filters]);
 

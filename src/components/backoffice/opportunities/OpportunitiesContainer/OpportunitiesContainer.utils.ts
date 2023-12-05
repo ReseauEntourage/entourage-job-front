@@ -35,6 +35,8 @@ export const renderTabFromStatus = (status, archived) => {
   ) {
     return 0;
   }
+
+  // @ts-expect-error after enable TS strict mode. Please, try to fix it
   return statusToTab.find((tab) => {
     return tab.status === status;
   }).tab;
