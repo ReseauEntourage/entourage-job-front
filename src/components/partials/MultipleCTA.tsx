@@ -57,12 +57,7 @@ export const MultipleCTA = ({
             >
               {item.img && (
                 <div className="uk-flex uk-flex-bottom uk-flex-center uk-margin-small-bottom">
-                  <Img
-                    src={item.img}
-                    alt={item.title.toString()}
-                    height={150}
-                    width={260}
-                  />
+                  <Img src={item.img} alt="" height={150} width={260} />
                 </div>
               )}
               <div className="uk-flex uk-flex-1">
