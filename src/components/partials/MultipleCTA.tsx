@@ -1,6 +1,6 @@
 import React from 'react';
 import ChevronRightIcon from 'assets/icons/chevron-right.svg';
-import { UIKIT_BUTTON_SIZES } from '../variables';
+import { UIKIT_BUTTON_SIZES, UIKIT_BUTTON_STYLES_SPEC } from '../variables';
 import { Button, Img, Grid } from 'src/components/utils';
 
 interface MultipleCTAProps {
@@ -10,7 +10,7 @@ interface MultipleCTAProps {
   spacing?: 'small' | 'medium' | 'large';
   className?: string;
   data: {
-    title?: string;
+    title?: React.ReactNode;
     text?: React.ReactNode;
     img?: string;
     button?: {
@@ -20,6 +20,7 @@ interface MultipleCTAProps {
       modal?: string;
       onClick?: () => void;
       size?: UIKIT_BUTTON_SIZES;
+      style?: UIKIT_BUTTON_STYLES_SPEC;
     };
   }[];
   animate?: boolean;
@@ -58,7 +59,7 @@ export const MultipleCTA = ({
                 <div className="uk-flex uk-flex-bottom uk-flex-center uk-margin-small-bottom">
                   <Img
                     src={item.img}
-                    alt={item.title}
+                    alt={item.title.toString()}
                     height={150}
                     width={260}
                   />
@@ -115,7 +116,7 @@ export const MultipleCTA = ({
                     >
                       <Button
                         href={item.button.href}
-                        style="secondary"
+                        style={item.button.style || 'secondary'}
                         isExternal={item.button.external}
                         newTab={item.button.external}
                         toggle={item.button.modal}

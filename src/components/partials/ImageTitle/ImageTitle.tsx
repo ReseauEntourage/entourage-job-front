@@ -12,18 +12,19 @@ interface CTAProps {
   onClick: () => void;
   label: string;
   href?: string;
-  style: UIKIT_BUTTON_STYLES_SPEC;
+  style?: UIKIT_BUTTON_STYLES_SPEC;
   isExternal?: boolean;
   newTab?: boolean;
-  dataTest: string;
+  dataTest?: string;
 }
 
 interface ImageTitleProps {
-  title: string;
-  description: string;
   img: string;
   imgMobile?: string;
+  title: React.ReactNode;
+  description: React.ReactNode;
   alt?: string;
+  textColor?: string;
   cta?: CTAProps | CTAProps[];
 }
 
@@ -34,6 +35,7 @@ export const ImageTitle = ({
   imgMobile,
   alt,
   cta,
+  textColor,
 }: ImageTitleProps) => {
   const isDesktop = useIsDesktop();
 
@@ -45,10 +47,13 @@ export const ImageTitle = ({
       isHero
       hasCta={!!cta}
     >
-      <StyledImageTitle className={`${isDesktop ? 'desktop' : ''}`}>
+      <StyledImageTitle
+        className={`${isDesktop ? 'desktop' : ''}`}
+        textColor={textColor || 'white'}
+      >
         <H1
           title={title}
-          color="white"
+          color={textColor || 'white'}
           effect="cls: uk-animation-slide-left uk-animation-fade; delay: 200;"
         />
         <p data-uk-scrollspy="cls: uk-animation-slide-left uk-animation-fade; delay: 200;">

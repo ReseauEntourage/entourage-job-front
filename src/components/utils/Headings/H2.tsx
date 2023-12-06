@@ -8,7 +8,7 @@ export const H2 = ({
   color,
   center = false,
 }: {
-  title: string;
+  title: React.ReactNode;
   type?: string;
   color?: string;
   center?: boolean;
