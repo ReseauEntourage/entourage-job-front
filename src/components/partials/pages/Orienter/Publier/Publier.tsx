@@ -8,7 +8,7 @@ import { useIsDesktop } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledOrienterPublierContainer } from './Publier.styles';
 
-export const Publier = ({innerRef}: {innerRef: Ref<HTMLDivElement>}) => {
+export const Publier = ({ innerRef }: { innerRef: Ref<HTMLDivElement> }) => {
   const isDesktop = useIsDesktop();
   return (
     <Section>

@@ -1,4 +1,4 @@
-import React, { Ref, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Layout } from 'src/components/Layout';
 import {
   LogoList,
@@ -82,20 +82,20 @@ const Orienter = () => {
         }
       />
 
-      <Decouvrir 
-        handleClick={handleClick} 
+      <Decouvrir
+        handleClick={handleClick}
         refInscrire={refInscrire}
         refPublier={refPublier}
-        />
+      />
 
-      <Inscrire innerRef={refInscrire}/>
+      <Inscrire innerRef={refInscrire} />
 
       <VideoSection
         videoId="gUuaeDxlqTE"
         videoTitle="Rencontre avec Najaf, ancien candidat LinkedOut à Paris"
         coloredBackground
       />
-      <Publier innerRef={refPublier}/>
+      <Publier innerRef={refPublier} />
 
       <VideoSection
         videoId="WLmDL-pB1NE"

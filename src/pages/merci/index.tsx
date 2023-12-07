@@ -60,11 +60,7 @@ const Merci = () => {
         <h3>À bientôt&nbsp;!</h3>
         <h4 className="uk-text-italic">L&apos;équipe LinkedOut</h4>
         <Grid middle column gap="collapse">
-          <Button
-            href={'/'}
-            style="secondary"
-            className="uk-margin-large-top"
-          >
+          <Button href="/" style="secondary" className="uk-margin-large-top">
             Revenir à la page d&apos;accueil
           </Button>
         </Grid>

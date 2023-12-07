@@ -13,7 +13,7 @@ import {
   StyledOrienterInscrireContainer,
 } from './Inscrire.styles';
 
-export const Inscrire = ({innerRef}: {innerRef: Ref<HTMLDivElement>}) => {
+export const Inscrire = ({ innerRef }: { innerRef: Ref<HTMLDivElement> }) => {
   const isDesktop = useIsDesktop();
   return (
     <StyledOrienterBackground>

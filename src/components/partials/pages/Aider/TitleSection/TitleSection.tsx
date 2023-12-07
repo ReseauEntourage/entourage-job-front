@@ -10,8 +10,12 @@ interface TitleSectionProps {
   svgColor: string;
 }
 
-
-export const TitleSection = ({ title, titleColor, svgStroke= 'white', svgColor }: TitleSectionProps) => {
+export const TitleSection = ({
+  title,
+  titleColor,
+  svgStroke = 'white',
+  svgColor,
+}: TitleSectionProps) => {
   return (
     <StyledTitleSection
       titleColor={titleColor}
