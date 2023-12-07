@@ -21,6 +21,7 @@ interface MultipleCTAProps {
       onClick?: () => void;
       size?: UIKIT_BUTTON_SIZES;
       style?: UIKIT_BUTTON_STYLES_SPEC;
+      dataTestId?: string;
     };
   }[];
   animate?: boolean;
@@ -117,6 +118,7 @@ export const MultipleCTA = ({
                         toggle={item.button.modal}
                         onClick={item.button.onClick}
                         size={item.button.size}
+                        dataTestId={item.button.dataTestId}
                       >
                         {item.button.label}
                         <ChevronRightIcon />

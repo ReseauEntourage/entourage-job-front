@@ -6,7 +6,7 @@ import { Grid, Section } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { GA_TAGS } from 'src/constants/tags';
 
-const thankYouMessages = {
+const ThankYouMessages = {
   coach: (
     <>
       <h2 className="uk-text-bold">
@@ -38,20 +38,20 @@ const thankYouMessages = {
   ),
 } as const;
 
-type ThankYouMessageType = keyof typeof thankYouMessages;
+type ThankYouMessagesType = keyof typeof ThankYouMessages;
 
 const Merci = () => {
   const {
     query: { type },
   } = useRouter();
 
-  const currentType = type as ThankYouMessageType;
+  const currentType = type as ThankYouMessagesType;
 
   return (
     <Layout title="Merci ! - LinkedOut" noIndex>
       <Section className="uk-text-center" style="default" size="large">
         <>
-          {thankYouMessages[currentType] || (
+          {ThankYouMessages[currentType] || (
             <h2 className="uk-text-bold">
               Merci beaucoup d&apos;avoir répondu au formulaire&nbsp;!
             </h2>
@@ -61,7 +61,7 @@ const Merci = () => {
         <h4 className="uk-text-italic">L&apos;équipe LinkedOut</h4>
         <Grid middle column gap="collapse">
           <Button
-            href={{ pathname: '/', query: {} }}
+            href={{ pathname: '/' }}
             style="secondary"
             className="uk-margin-large-top"
           >

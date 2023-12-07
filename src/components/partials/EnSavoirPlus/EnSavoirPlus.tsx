@@ -31,6 +31,7 @@ export const EnSavoirPlus = () => {
                   gaEvent(GA_TAGS.PAGE_ORIENTER_CONTACT_CLIC);
                   openModal(<ModalInterestLinkedOut />);
                 },
+                dataTestId: 'button-contact',
               },
             },
             {

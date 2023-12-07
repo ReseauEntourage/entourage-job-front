@@ -11,7 +11,7 @@ import { AnyToFix } from 'src/utils/Types';
 
 interface ButtonProps {
   children: React.ReactNode;
-  href?: string | { pathname: string; query: AnyToFix };
+  href?: string | { pathname: string; query?: AnyToFix };
   disabled?: boolean;
   visible?: UIKIT_SCREENS;
   style?: UIKIT_BUTTON_STYLES_SPEC | '';

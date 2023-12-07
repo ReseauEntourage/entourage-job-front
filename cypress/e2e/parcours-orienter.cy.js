@@ -240,5 +240,51 @@ describe('Parcours Orienter', () => {
 
       cy.get('.ReactModalPortal div').should('not.exist');
     });
-  });
+  })
+  
+  
+  describe('Nous contacter', () => {
+    it('Remplir le formulaire, envoyer et fermer', () => {
+      cy.get('[data-testid="button-contact"]')
+        .scrollIntoView()
+        .first()
+        .click();
+
+      cy.wait(500);
+
+      cy.get('.ReactModalPortal div').first().should('be.visible');
+
+      cy.get('#form-interest-lastName').scrollIntoView().type('Doe');
+
+      cy.get('#form-interest-firstName').scrollIntoView().type('John');
+
+      cy.get('#form-interest-email').scrollIntoView().type('johndoe@gmail.com');
+
+      cy.get('#form-interest-phone').scrollIntoView().type('0698754321');
+
+      cy.get('#form-interest-structure').scrollIntoView().type('Test');
+
+      cy.get('#form-interest-message').scrollIntoView().type('Form test');
+
+      cy.get('#form-interest-heardAbout-container')
+        .should('be.visible')
+        .scrollIntoView()
+        .click()
+        .find('.option')
+        .contains('Autre')
+        .click();
+
+      cy.get('label[for="form-interest-cgu"]').scrollIntoView().click();
+
+      cy.get('button').contains('Envoyer').click();
+
+      cy.wait('@postContact');
+
+      cy.get('[data-testid="success-modal-content"]').should('be.visible');
+
+      cy.get('[data-testid="success-close-modal"]').click();
+
+      cy.get('[data-testid="success-modal-content"]').should('not.exist');
+    });
+  });;
 });
