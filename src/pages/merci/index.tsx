@@ -61,7 +61,7 @@ const Merci = () => {
         <h4 className="uk-text-italic">L&apos;équipe LinkedOut</h4>
         <Grid middle column gap="collapse">
           <Button
-            href={{ pathname: '/' }}
+            href={'/'}
             style="secondary"
             className="uk-margin-large-top"
           >

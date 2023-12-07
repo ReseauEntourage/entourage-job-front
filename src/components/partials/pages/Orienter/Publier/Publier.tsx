@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Ref } from 'react';
 import CarteSolidaireIcon from 'assets/icons/orienter-carte-solidaire.svg';
 import SablierIcon from 'assets/icons/orienter-sablier.svg';
 import { Button, Img, Section } from 'src/components/utils';
@@ -8,7 +8,7 @@ import { useIsDesktop } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledOrienterPublierContainer } from './Publier.styles';
 
-export const Publier = () => {
+export const Publier = ({innerRef}: {innerRef: Ref<HTMLDivElement>}) => {
   const isDesktop = useIsDesktop();
   return (
     <Section>
@@ -21,7 +21,7 @@ export const Publier = () => {
       <StyledOrienterPublierContainer
         className={`${isDesktop ? '' : 'mobile'}`}
       >
-        <div className="text-container">
+        <div className="text-container" ref={innerRef}>
           {isDesktop && (
             <H3
               color="primaryOrange"

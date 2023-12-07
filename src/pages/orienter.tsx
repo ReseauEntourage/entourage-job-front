@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { Ref, useRef } from 'react';
 import { Layout } from 'src/components/Layout';
 import {
   LogoList,
@@ -50,18 +50,13 @@ const reviews = [
 
 const Orienter = () => {
   const isDesktop = useIsDesktop();
-  const refDecouvrir1 = useRef(null);
-  const refDecouvrir2 = useRef(null);
-  const handleClick = (i: number) => {
-    if (i === 1) {
-      refDecouvrir1.current.scrollIntoView({
+  const refInscrire = useRef(null);
+  const refPublier = useRef(null);
+  const handleClick = (element) => {
+    if (element.current) {
+      element.current.scrollIntoView({
         behavior: 'smooth',
-        block: 'nearest',
-      });
-    } else {
-      refDecouvrir2.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
+        block: 'center',
       });
     }
   };
@@ -87,18 +82,20 @@ const Orienter = () => {
         }
       />
 
-      <Decouvrir handleClick={handleClick} />
+      <Decouvrir 
+        handleClick={handleClick} 
+        refInscrire={refInscrire}
+        refPublier={refPublier}
+        />
 
-      <Inscrire />
-      <div ref={refDecouvrir1} />
+      <Inscrire innerRef={refInscrire}/>
 
       <VideoSection
         videoId="gUuaeDxlqTE"
         videoTitle="Rencontre avec Najaf, ancien candidat LinkedOut à Paris"
         coloredBackground
       />
-      <Publier />
-      <div ref={refDecouvrir2} />
+      <Publier innerRef={refPublier}/>
 
       <VideoSection
         videoId="WLmDL-pB1NE"

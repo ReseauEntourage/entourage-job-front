@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Ref } from 'react';
 import { Button, Img, Section } from 'src/components/utils';
 import { H2, H5 } from 'src/components/utils/Headings';
 import { useIsDesktop } from 'src/hooks/utils';
@@ -9,8 +9,12 @@ import {
 
 export const Decouvrir = ({
   handleClick,
+  refInscrire,
+  refPublier,
 }: {
-  handleClick: (i: number) => void;
+  handleClick: (ref: Ref<HTMLDivElement>) => void;
+  refInscrire: Ref<HTMLDivElement>;
+  refPublier: Ref<HTMLDivElement>;
 }) => {
   const isDesktop = useIsDesktop();
 
@@ -40,7 +44,7 @@ export const Decouvrir = ({
             <Button
               style="custom-secondary-inverted"
               onClick={() => {
-                handleClick(1);
+                handleClick(refInscrire);
               }}
             >
               Découvrir
@@ -65,7 +69,7 @@ export const Decouvrir = ({
             <Button
               style="custom-secondary-inverted"
               onClick={() => {
-                handleClick(2);
+                handleClick(refPublier);
               }}
             >
               Découvrir

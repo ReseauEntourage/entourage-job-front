@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Ref } from 'react';
 import CarteSolidaireIcon from 'assets/icons/orienter-carte-solidaire.svg';
 import SablierIcon from 'assets/icons/orienter-sablier.svg';
 import { openModal } from 'src/components/modals/Modal';
@@ -13,7 +13,7 @@ import {
   StyledOrienterInscrireContainer,
 } from './Inscrire.styles';
 
-export const Inscrire = () => {
+export const Inscrire = ({innerRef}: {innerRef: Ref<HTMLDivElement>}) => {
   const isDesktop = useIsDesktop();
   return (
     <StyledOrienterBackground>
@@ -25,7 +25,7 @@ export const Inscrire = () => {
           />
         )}
         <StyledOrienterInscrireContainer className={isDesktop ? '' : 'mobile'}>
-          <div className="image-container">
+          <div className="image-container" ref={innerRef}>
             <Img src="/static/img/orientation_who.jpg" alt="" cover />
           </div>
           <div className="text-container">
