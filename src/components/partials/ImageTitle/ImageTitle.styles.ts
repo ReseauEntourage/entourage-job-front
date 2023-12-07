@@ -14,23 +14,16 @@ export const StyledImageTitle = styled.section`
 
   h1 {
     margin: 0;
-    font-size: 24px;
-    color: white;
-    font-weight: 700;
   }
   p {
     font-size: 14px;
     line-height: 20px;
     padding-right: 40px;
-    flex: 1;
-    display: flex;
-    align-items: center;
+    margin-top: 16px;
+    color: ${(props) => props.textColor};
   }
   &.desktop {
     padding: 40px 55% 40px 40px;
-    h1 {
-      font-size: 32px;
-    }
     p {
       font-size: 20px;
       line-height: 30px;

@@ -12,11 +12,13 @@ import {
 interface CarouselSwiperProps {
   slides: React.ReactNode[];
   backgroundColor?: string;
+  slidesPerview?: number;
 }
 
 export const CarouselSwiper = ({
   slides,
   backgroundColor,
+  slidesPerview,
 }: CarouselSwiperProps) => {
   if (slides.length === 0) {
     return null;
@@ -25,12 +27,13 @@ export const CarouselSwiper = ({
     <StyledSwiperContainer backgroundColor={backgroundColor}>
       <Swiper
         modules={[Pagination, Autoplay, Navigation]}
-        threshold={2}
         navigation
+        threshold={2}
         autoplay
         pagination={{
           clickable: true,
         }}
+        slidesPerView={slidesPerview || 1}
       >
         {slides.map((slide) => {
           return <StyledSwiperSlide>{slide}</StyledSwiperSlide>;

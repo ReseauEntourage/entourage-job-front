@@ -1,6 +1,6 @@
 import React from 'react';
 import ChevronRightIcon from 'assets/icons/chevron-right.svg';
-import { UIKIT_BUTTON_SIZES } from '../variables';
+import { UIKIT_BUTTON_SIZES, UIKIT_BUTTON_STYLES_SPEC } from '../variables';
 import { Button, Img, Grid } from 'src/components/utils';
 
 interface MultipleCTAProps {
@@ -10,7 +10,7 @@ interface MultipleCTAProps {
   spacing?: 'small' | 'medium' | 'large';
   className?: string;
   data: {
-    title?: string;
+    title?: React.ReactNode;
     text?: React.ReactNode;
     img?: string;
     button?: {
@@ -20,6 +20,8 @@ interface MultipleCTAProps {
       modal?: string;
       onClick?: () => void;
       size?: UIKIT_BUTTON_SIZES;
+      style?: UIKIT_BUTTON_STYLES_SPEC;
+      dataTestId?: string;
     };
   }[];
   animate?: boolean;
@@ -56,12 +58,7 @@ export const MultipleCTA = ({
             >
               {item.img && (
                 <div className="uk-flex uk-flex-bottom uk-flex-center uk-margin-small-bottom">
-                  <Img
-                    src={item.img}
-                    alt={item.title}
-                    height={150}
-                    width={260}
-                  />
+                  <Img src={item.img} alt="" height={150} width={260} />
                 </div>
               )}
               <div className="uk-flex uk-flex-1">
@@ -115,12 +112,13 @@ export const MultipleCTA = ({
                     >
                       <Button
                         href={item.button.href}
-                        style="secondary"
+                        style={item.button.style || 'secondary'}
                         isExternal={item.button.external}
                         newTab={item.button.external}
                         toggle={item.button.modal}
                         onClick={item.button.onClick}
                         size={item.button.size}
+                        dataTestId={item.button.dataTestId}
                       >
                         {item.button.label}
                         <ChevronRightIcon />

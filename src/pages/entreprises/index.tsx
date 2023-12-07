@@ -77,11 +77,8 @@ const reviews = [
     companyInfo: '20 salariés',
     review: (
       <>
-        Par son expérience,{' '}
-        <span className="uk-text-primary">
-          il apporte quelque chose de radicalement différent.
-        </span>{' '}
-        Si je pouvais embaucher 2 Kenny, je le ferais&nbsp;!
+        &ldquo;Par son expérience, il apporte quelque chose de radicalement
+        différent. Si je pouvais embaucher 2 Kenny, je le ferais&nbsp;!&ldquo;
       </>
     ),
   },
@@ -93,14 +90,11 @@ const reviews = [
     companyInfo: '31 salariés',
     review: (
       <>
-        Avec Miah c’est une réussite. Là où notre compétence s’arrête, on est
-        rassurés par le fait que{' '}
-        <span className="uk-text-primary">
-          LinkedOut est là pour nous accompagner.{' '}
-        </span>
-        Si on peut s’inscrire dans des actions comme celles-ci tout en gardant
+        &ldquo;Avec Miah c’est une réussite. Là où notre compétence s’arrête, on
+        est rassurés par le fait que LinkedOut est là pour nous accompagner. Si
+        on peut s’inscrire dans des actions comme celles-ci tout en gardant
         notre efficacité, en y ajoutant le sourire de quelqu’un qui a envie, on
-        le fait&nbsp;!
+        le fait&nbsp;!&ldquo;
       </>
     ),
   },
@@ -112,28 +106,10 @@ const reviews = [
     industry: 'partenaire LinkedOut',
     review: (
       <>
-        Nous étions à mille lieux des problématiques des personnes en précarité.{' '}
-        <span className="uk-text-primary">
-          Maintenant, chez Advens, on entend des mots comme “résilience”,
-          “deuxième chance”, “rebond”, “inclusion”.
-        </span>{' '}
-        Les collaborateurs sont très fiers !
-      </>
-    ),
-  },
-  {
-    image: '/static/img/temoignage-candidat-amelie.jpg',
-    author: 'Amélie',
-    authorStatus: 'Ancienne candidate LinkedOut',
-    review: (
-      <>
-        C&apos;est vraiment un bon dispositif. Avec mon coach, on ne parle pas
-        simplement du travail, il me donne des conseils. Ce sont des choses dont
-        j&apos;avais besoin, surtout que je n&apos;ai pas de famille ici.{' '}
-        <span className="uk-text-primary">
-          J&apos;ai parcouru beaucoup d&apos;autres dispositifs et là c&apos;est
-          différent, LinkedOut est très présent.
-        </span>
+        &ldquo;Nous étions à mille lieux des problématiques des personnes en
+        précarité. Maintenant, chez Advens, on entend des mots comme
+        “résilience”, “deuxième chance”, “rebond”, “inclusion”. Les
+        collaborateurs sont très fiers !&ldquo;
       </>
     ),
   },
@@ -395,15 +371,7 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
         </h2>
         <NumberGrid numbers={numbers} numbersPerRow={4} />
       </Section>
-      <Reviews
-        reviews={reviews}
-        title={
-          <>
-            Ce que LinkedOut{' '}
-            <span className="uk-text-primary">leur a apporté</span>
-          </>
-        }
-      />
+      <Reviews reviews={reviews} title="Ce que LinkedOut leur a apporté" />
       <Section style="default">
         <h2 className="uk-text-center uk-text-bold uk-margin-medium-bottom">
           <span className="uk-text-primary">Ils ont recruté</span> avec

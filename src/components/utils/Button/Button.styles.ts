@@ -20,6 +20,7 @@ export const StyledButton = styled.button`
   align-items: center;
   justify-content: center;
   padding: 11px 20px !important;
+  scroll-behavior: smooth;
 
   svg:first-child {
     margin-right: 8px;

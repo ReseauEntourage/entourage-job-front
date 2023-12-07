@@ -386,6 +386,9 @@ export const GA_TAGS = {
   BACKOFFICE_CV_AIDE: {
     action: 'Backoffice_CV_Aide',
   },
+  PAGE_ORIENTER_CLASSIQUE_ENVOYER_CLIC: {
+    action: 'Page_Orienter_Classique_Envoyer_Clic',
+  },
 } as const;
 
 export const FB_TAGS = {

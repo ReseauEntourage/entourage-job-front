@@ -50,6 +50,9 @@ export const StyledH2 = styled.h2`
       font-size: 24px;
     }
   }
+  span.orange {
+    color: ${COLORS.primaryOrange};
+  }
 `;
 
 export const StyledH3 = styled.h3`
