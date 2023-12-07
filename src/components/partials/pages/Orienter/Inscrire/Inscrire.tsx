@@ -80,6 +80,7 @@ export const Inscrire = () => {
                 openModal(<CandidateContactModal />);
                 gaEvent(GA_TAGS.PAGE_ORIENTER_CLASSIQUE_ENVOYER_CLIC);
               }}
+              dataTestId="button-orienter"
             >
               Inscrire un candidat
             </Button>
