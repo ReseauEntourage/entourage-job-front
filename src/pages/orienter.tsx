@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { Ref, useRef } from 'react';
 import { Layout } from 'src/components/Layout';
 import {
   LogoList,
