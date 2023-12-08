@@ -83,19 +83,22 @@ export const CVList = ({
         .then(({ data }) => {
           setHasSuggestions(data.suggestions);
           if (isPagination) {
-            setCVs((prevCVs = []) => {
-              return [
-                ...prevCVs,
-                ..._.differenceWith(
-                  data.cvs,
-                  prevCVs,
-                  (cv1: AnyToFix, cv2: AnyToFix) => {
-                    // to be typed
-                    return cv1.id === cv2.id;
-                  }
-                ),
-              ];
-            });
+            setCVs(
+              // @ts-expect-error after enable TS strict mode. Please, try to fix it
+              (prevCVs = []) => {
+                return [
+                  ...prevCVs,
+                  ..._.differenceWith(
+                    data.cvs,
+                    prevCVs,
+                    (cv1: AnyToFix, cv2: AnyToFix) => {
+                      // to be typed
+                      return cv1.id === cv2.id;
+                    }
+                  ),
+                ];
+              }
+            );
           } else {
             setNbOfCVToDisplay(defaultNbOfCVs);
             setCVs(data.cvs);
@@ -103,7 +106,10 @@ export const CVList = ({
         })
         .catch((err) => {
           console.error(err);
-          setError('Impossible de récupérer les CVs.');
+          setError(
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            'Impossible de récupérer les CVs.'
+          );
         })
         .finally(() => {
           setLoading(false);
@@ -211,6 +217,7 @@ export const CVList = ({
                 onClick={() => {
                   gaEvent(GA_TAGS.PAGE_GALERIE_CV_PROPOSER_OFFRE_CLIC);
                   fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER_OPEN);
+                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
                   openModal(<PostPublicOpportunityModal />);
                 }}
               >
@@ -224,7 +231,10 @@ export const CVList = ({
         );
       }
 
-      if (cvs.length <= 0) {
+      if (
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        cvs.length <= 0
+      ) {
         if (
           filters &&
           filters[CV_FILTERS_DATA[1].key] &&
@@ -244,9 +254,12 @@ export const CVList = ({
         <SearchBar
           filtersConstants={CV_FILTERS_DATA}
           filters={filters}
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           resetFilters={resetFilters}
           search={search}
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           setSearch={setSearch}
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           setFilters={setFilters}
           placeholder="Chercher un secteur d’activité, une compétence, un profil..."
         />

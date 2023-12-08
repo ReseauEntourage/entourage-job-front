@@ -22,6 +22,7 @@ interface OpportunitySectionCandidatesProps {
 }
 
 export const statusToTitle = (status) => {
+  // @ts-expect-error after enable TS strict mode. Please, try to fix it
   return OFFER_STATUS.find((offerStatus) => offerStatus.value === status).label;
 };
 

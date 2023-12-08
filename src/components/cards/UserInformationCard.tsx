@@ -34,7 +34,10 @@ export const UserInformationCard = ({
       if (candidat) {
         setLinkedUser(candidat);
       } else {
-        setLinkedUser(null);
+        setLinkedUser(
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          null
+        );
       }
     }
     if (isRoleIncluded(CANDIDATE_USER_ROLES, userToAssign.role)) {
@@ -42,18 +45,26 @@ export const UserInformationCard = ({
       if (coach) {
         setLinkedUser(coach);
       } else {
-        setLinkedUser(null);
+        setLinkedUser(
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          null
+        );
       }
     }
   }, []);
 
   const updateUserCandidate = useCallback((id, props) => {
     setLinkedUser((prevLinkedUser): UserWithUserCandidate[] => {
-      const index = prevLinkedUser.findIndex((prevSingleLinkedUser) => {
-        return prevSingleLinkedUser.id === id;
-      });
+      const index =
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        prevLinkedUser.findIndex((prevSingleLinkedUser) => {
+          return prevSingleLinkedUser.id === id;
+        });
 
-      const newLinkedUser = [...prevLinkedUser];
+      const newLinkedUser = [
+        ...// @ts-expect-error after enable TS strict mode. Please, try to fix it
+        prevLinkedUser,
+      ];
 
       newLinkedUser[index] = {
         ...newLinkedUser[index],

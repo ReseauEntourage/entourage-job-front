@@ -72,10 +72,14 @@ export const AdminOpportunitiesList = ({
                 endOfContract={opportunity.endOfContract}
                 isExternal={opportunity.isExternal}
                 department={opportunity.department}
+                // @ts-expect-error after enable TS strict mode. Please, try to fix it
                 selectOpportunity={selectOpportunity}
                 isSelected={
                   isOpportunitySelected &&
-                  isOpportunitySelected({ id: opportunity.id })
+                  isOpportunitySelected({
+                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                    id: opportunity.id,
+                  })
                 }
                 opportunityUsers={opportunity.opportunityUsers}
               />

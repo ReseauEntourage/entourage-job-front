@@ -109,150 +109,158 @@ export function FormWithValidation<S extends FormSchema<AnyCantFix>>({
         }}
       >
         <fieldset>
-          {fields.map((field: FormField<ExtractFormSchemaValidation<S>>, i) => {
-            const shouldHide = field.hide
-              ? field.hide(getValues, fieldOptions)
-              : field.hidden;
+          {fields.map(
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            (field: FormField<ExtractFormSchemaValidation<S>>, i) => {
+              const shouldHide = field.hide
+                ? field.hide(getValues, fieldOptions)
+                : field.hidden;
 
-            if (isFormFieldText(field)) {
-              if (shouldHide) {
-                return null;
+              if (isFormFieldText(field)) {
+                if (shouldHide) {
+                  return null;
+                }
+
+                const title =
+                  typeof field.title === 'function'
+                    ? field.title(getValues)
+                    : field.title;
+
+                if (field.component === 'heading') {
+                  return (
+                    <Heading
+                      id={`${formId}-${field.id}`}
+                      title={title}
+                      key={i}
+                    />
+                  );
+                }
+
+                if (field.component === 'text') {
+                  return (
+                    <Text id={`${formId}-${field.id}`} title={title} key={i} />
+                  );
+                }
               }
 
-              const title =
-                typeof field.title === 'function'
-                  ? field.title(getValues)
-                  : field.title;
+              if (isFormFieldGroup(field)) {
+                if (shouldHide) {
+                  return null;
+                }
 
-              if (field.component === 'heading') {
-                return (
-                  <Heading id={`${formId}-${field.id}`} title={title} key={i} />
-                );
-              }
+                if (field.component === 'fieldgroup') {
+                  const { fields: childrenFields } = field;
 
-              if (field.component === 'text') {
-                return (
-                  <Text id={`${formId}-${field.id}`} title={title} key={i} />
-                );
-              }
-            }
+                  return (
+                    <li key={i}>
+                      <InputsContainer
+                        fields={childrenFields.map((childrenField) => {
+                          const shouldHideField = childrenField.hide
+                            ? childrenField.hide(getValues)
+                            : childrenField.hidden;
 
-            if (isFormFieldGroup(field)) {
-              if (shouldHide) {
-                return null;
-              }
+                          if (shouldHideField) {
+                            return null;
+                          }
 
-              if (field.component === 'fieldgroup') {
-                const { fields: childrenFields } = field;
+                          if (isFormFieldText(childrenField)) {
+                            const title =
+                              typeof childrenField.title === 'function'
+                                ? childrenField.title(getValues)
+                                : childrenField.title;
 
-                return (
-                  <li key={i}>
-                    <InputsContainer
-                      fields={childrenFields.map((childrenField) => {
-                        const shouldHideField = childrenField.hide
-                          ? childrenField.hide(getValues)
-                          : childrenField.hidden;
+                            if (childrenField.component === 'text') {
+                              return (
+                                <Text
+                                  id={`${formId}-${childrenField.id}`}
+                                  title={title}
+                                  key={i}
+                                />
+                              );
+                            }
 
-                        if (shouldHideField) {
-                          return null;
-                        }
-
-                        if (isFormFieldText(childrenField)) {
-                          const title =
-                            typeof childrenField.title === 'function'
-                              ? childrenField.title(getValues)
-                              : childrenField.title;
-
-                          if (childrenField.component === 'text') {
-                            return (
-                              <Text
-                                id={`${formId}-${childrenField.id}`}
-                                title={title}
-                                key={i}
-                              />
+                            throw new ComponentException(
+                              childrenField.component,
+                              field.component
                             );
                           }
 
-                          throw new ComponentException(
-                            childrenField.component,
-                            field.component
+                          return (
+                            <GenericField
+                              formSchema={formSchema}
+                              watch={watch}
+                              resetField={resetField}
+                              control={control}
+                              field={childrenField}
+                              fieldOptions={fieldOptions}
+                              updateFieldOptions={updateFieldOptions}
+                              getValue={getValues}
+                            />
                           );
-                        }
-
-                        return (
-                          <GenericField
-                            formSchema={formSchema}
-                            watch={watch}
-                            resetField={resetField}
-                            control={control}
-                            field={childrenField}
-                            fieldOptions={fieldOptions}
-                            updateFieldOptions={updateFieldOptions}
-                            getValue={getValues}
-                          />
-                        );
-                      })}
-                    />
-                  </li>
-                );
-              }
-            }
-
-            if (isFormFieldMultiple(field)) {
-              if (shouldHide) {
-                return null;
+                        })}
+                      />
+                    </li>
+                  );
+                }
               }
 
-              if (field.component === 'multiple-fields') {
-                const {
-                  fields: multipleFields,
-                  action,
-                  name: multipleFieldsName,
-                } = field;
+              if (isFormFieldMultiple(field)) {
+                if (shouldHide) {
+                  return null;
+                }
+
+                if (field.component === 'multiple-fields') {
+                  const {
+                    fields: multipleFields,
+                    action,
+                    name: multipleFieldsName,
+                  } = field;
+                  return (
+                    <li key={i}>
+                      <MultipleFields
+                        formSchema={formSchema}
+                        watch={watch}
+                        resetField={resetField}
+                        control={control}
+                        action={action}
+                        name={multipleFieldsName}
+                        getValue={getValues}
+                        fields={multipleFields}
+                      />
+                    </li>
+                  );
+                }
+              }
+
+              if (isFormFieldInput(field)) {
+                // Condition because Radio Async needs to be rendered to make request and check if it should be hidden or not
+                if (!isFormFieldRadio(field) && shouldHide) {
+                  return null;
+                }
                 return (
                   <li key={i}>
-                    <MultipleFields
+                    <GenericField
                       formSchema={formSchema}
                       watch={watch}
                       resetField={resetField}
                       control={control}
-                      action={action}
-                      name={multipleFieldsName}
+                      field={field}
+                      updateFieldOptions={updateFieldOptions}
+                      fieldOptions={fieldOptions}
                       getValue={getValues}
-                      fields={multipleFields}
                     />
                   </li>
                 );
               }
-            }
 
-            if (isFormFieldInput(field)) {
-              // Condition because Radio Async needs to be rendered to make request and check if it should be hidden or not
-              if (!isFormFieldRadio(field) && shouldHide) {
-                return null;
-              }
-              return (
-                <li key={i}>
-                  <GenericField
-                    formSchema={formSchema}
-                    watch={watch}
-                    resetField={resetField}
-                    control={control}
-                    field={field}
-                    updateFieldOptions={updateFieldOptions}
-                    fieldOptions={fieldOptions}
-                    getValue={getValues}
-                  />
-                </li>
-              );
+              throw new ComponentException(field.component);
             }
-
-            throw new ComponentException(field.component);
-          })}
+          )}
         </fieldset>
       </StyledForm>
       <FormFooter
         error={error}
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         submitText={submitText}
         cancelText={cancelText}
         isLoadingOverride={isLoading}

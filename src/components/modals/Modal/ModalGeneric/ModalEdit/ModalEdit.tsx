@@ -48,10 +48,19 @@ export function ModalEdit<S extends FormSchema<AnyCantFix>>({
           if (onCancel) {
             onCancel();
           }
+
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           onClose();
         }}
         onError={onError}
-        onSubmit={(fields, setError) => onSubmit(fields, onClose, setError)}
+        onSubmit={(fields, setError) =>
+          onSubmit(
+            fields,
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            onClose,
+            setError
+          )
+        }
       />
     </ModalGeneric>
   );

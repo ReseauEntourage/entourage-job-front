@@ -33,11 +33,26 @@ const uuidValue = uuid();
 export const HeaderConnectedContentDesktop = ({
   badges,
   links = {
-    admin: [HeaderConnectedMainItemDefaultProps],
-    dropdown: [HeaderConnectedMainItemDefaultProps],
-    candidat: [HeaderConnectedMainItemDefaultProps],
-    coach: [HeaderConnectedMainItemDefaultProps],
-    coach_externe: [HeaderConnectedMainItemDefaultProps],
+    admin: [
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      HeaderConnectedMainItemDefaultProps,
+    ],
+    dropdown: [
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      HeaderConnectedMainItemDefaultProps,
+    ],
+    candidat: [
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      HeaderConnectedMainItemDefaultProps,
+    ],
+    coach: [
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      HeaderConnectedMainItemDefaultProps,
+    ],
+    coach_externe: [
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      HeaderConnectedMainItemDefaultProps,
+    ],
   },
   isEmpty = false,
 }: HeaderConnectedContentProps) => {
@@ -192,18 +207,32 @@ export const HeaderConnectedContentDesktop = ({
                             {icon}
                           </span>
                           <span className="name-span">{name}</span>
-                          {badges[badge] > 0 && (
-                            <div>
-                              &nbsp;
-                              <div className="uk-badge uk-margin-small-left">
-                                {badges[badge]}
+                          {
+                            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                            badges[badge] > 0 && (
+                              <div>
+                                &nbsp;
+                                <div className="uk-badge uk-margin-small-left">
+                                  {
+                                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                                    badges[badge]
+                                  }
+                                </div>
                               </div>
-                            </div>
-                          )}
+                            )
+                          }
                         </SimpleLink>
-                        {subMenu?.length > 0 && (
-                          <SubMenu items={subMenu} badges={badges} />
-                        )}
+                        {
+                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                          subMenu?.length > 0 && (
+                            <SubMenu
+                              // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                              items={subMenu}
+                              // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                              badges={badges}
+                            />
+                          )
+                        }
                       </StyledConnectedItem>
                     );
                   }

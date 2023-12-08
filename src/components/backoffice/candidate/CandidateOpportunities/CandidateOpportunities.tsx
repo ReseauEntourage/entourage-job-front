@@ -93,6 +93,7 @@ export const CandidateOpportunities = ({
     if (
       !isMobile &&
       offers &&
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
       offers.length > 0 &&
       ((offers !== prevOffers && !opportunityId) ||
         (opportunityId !== prevOpportunityId &&
@@ -103,6 +104,7 @@ export const CandidateOpportunities = ({
       replace(
         {
           pathname: `/backoffice/candidat/${candidateId}/offres/${opportunityType}${
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             offers[0].id ? `/${offers[0].id}` : ''
           }`,
           query: queryParamsOpportunities,
@@ -219,9 +221,12 @@ export const CandidateOpportunities = ({
                   candidateSearchFilters as typeof OPPORTUNITY_FILTERS_DATA
                 }
                 filters={filters}
+                // @ts-expect-error after enable TS strict mode. Please, try to fix it
                 resetFilters={resetFilters}
                 search={search}
+                // @ts-expect-error after enable TS strict mode. Please, try to fix it
                 setSearch={setSearch}
+                // @ts-expect-error after enable TS strict mode. Please, try to fix it
                 setFilters={setFilters}
                 placeholder="Rechercher..."
               />
@@ -230,6 +235,7 @@ export const CandidateOpportunities = ({
             <Section className="custom-primary custom-fixed">
               <CandidateOffersTab
                 activeStatus={filters.status}
+                // @ts-expect-error after enable TS strict mode. Please, try to fix it
                 tabCounts={tabCounts}
                 candidateId={candidateId}
                 isMobile={isMobile}
@@ -245,10 +251,15 @@ export const CandidateOpportunities = ({
           <OpportunitiesContainer
             backButtonHref={{
               pathname: `/backoffice/candidat/offres/${opportunityType}`,
+
+              // @ts-expect-error after enable TS strict mode. Please, try to fix it
               query: queryParamsOpportunities,
             }}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             list={
-              offers && offers.length > 0 ? (
+              offers &&
+              // @ts-expect-error after enable TS strict mode. Please, try to fix it
+              offers.length > 0 ? (
                 <CandidateOpportunitiesList
                   hasFetchedAll={hasFetchedAll}
                   setOffset={setOffset}
@@ -275,6 +286,7 @@ export const CandidateOpportunities = ({
                 </div>
               ) : (
                 <NoOpportunities
+                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
                   status={
                     tabs.find(({ status: tabStatus }) => {
                       if (Array.isArray(queryParamsOpportunities.status)) {
@@ -285,7 +297,11 @@ export const CandidateOpportunities = ({
                         );
                       }
                       return tabStatus.includes(
-                        parseInt(queryParamsOpportunities.status, 10)
+                        parseInt(
+                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                          queryParamsOpportunities.status,
+                          10
+                        )
                       );
                     })?.text
                   }

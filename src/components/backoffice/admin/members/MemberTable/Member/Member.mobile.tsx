@@ -48,7 +48,11 @@ export function MemberMobile({
   disableLink,
 }: MemberProps) {
   const cvStatus = renderCVStatus(member);
-  const { checked, handleCheckBox } = useCheckBox(selectionCallback, member.id);
+  const { checked, handleCheckBox } = useCheckBox(
+    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+    selectionCallback,
+    member.id
+  );
   const relatedUser = getRelatedUser(member);
 
   const userCandidate = getUserCandidateFromCoachOrCandidate(member);
@@ -70,6 +74,7 @@ export function MemberMobile({
             firstName={member.firstName}
             lastName={member.lastName}
             email={member.email}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             organizationName={
               isRoleIncluded(EXTERNAL_USER_ROLES, member.role)
                 ? member.organization?.name
@@ -183,8 +188,13 @@ export function MemberMobile({
             <TdMobile title="En emploi">
               <StyledEmployedCellContent>
                 {isEditable ? (
-                  <MemberEmployedToggle setMember={setMember} member={member} />
+                  <MemberEmployedToggle
+                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                    setMember={setMember}
+                    member={member}
+                  />
                 ) : (
+                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
                   <span
                     data-tooltip-id={tooltipId}
                     data-tooltip-content={contractLabel}

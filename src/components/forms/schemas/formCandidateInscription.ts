@@ -27,6 +27,8 @@ interface FormCandidateInscriptionSchema extends FormSchemaValidation {
   email: string;
   heardAbout: HeardAboutValue;
   infoCo: string;
+
+  // @ts-expect-error after enable TS strict mode. Please, try to fix it
   tsPrescripteur?: string;
 }
 function hideIfNoInfoCo(
@@ -170,6 +172,7 @@ export const formCandidateInscription: FormSchema<FormCandidateInscriptionSchema
             rules: [
               {
                 method: (fieldValue) =>
+                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
                   fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
                 message: 'Numéro de téléphone invalide',
               },
@@ -215,7 +218,11 @@ export const formCandidateInscription: FormSchema<FormCandidateInscriptionSchema
         title: 'Prochaine étape : Nous rencontrer',
         component: 'heading',
         hide: (getValue, fieldOptions) =>
-          hideIfNoInfoCo(getValue, fieldOptions),
+          hideIfNoInfoCo(
+            getValue,
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            fieldOptions
+          ),
       },
       {
         id: 'infoCoSubtitle',
@@ -230,7 +237,11 @@ export const formCandidateInscription: FormSchema<FormCandidateInscriptionSchema
         },
         component: 'text',
         hide: (getValue, fieldOptions) =>
-          hideIfNoInfoCo(getValue, fieldOptions),
+          hideIfNoInfoCo(
+            getValue,
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            fieldOptions
+          ),
       },
       {
         id: 'infoCo',
@@ -238,14 +249,22 @@ export const formCandidateInscription: FormSchema<FormCandidateInscriptionSchema
         title:
           'Selectionnez la date de la prochaine réunion d’information à laquelle vous souhaitez participer :',
         component: 'radio-async',
+
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         limit: 7,
+
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         dynamicFilter: (getValue) => {
           return ANTENNE_INFO.find((antenne) => {
             return antenne.dpt === getValue('location');
           })?.city;
         },
         hide: (getValue, fieldOptions) =>
-          hideIfNoInfoCo(getValue, fieldOptions),
+          hideIfNoInfoCo(
+            getValue,
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            fieldOptions
+          ),
         loadOptions: async (callback) => {
           const { data: campaigns } = await Api.getCampaigns();
           const noChoice = {
@@ -265,6 +284,8 @@ export const formCandidateInscription: FormSchema<FormCandidateInscriptionSchema
           });
           callback(options.length ? [...options, noChoice] : []);
         },
+
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         errorMessage:
           'Il n’y a pas de réunion d’information organisée dans les prochains temps dans votre ville, nous allons vous recontacter rapidement',
       },

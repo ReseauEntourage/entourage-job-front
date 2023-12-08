@@ -152,6 +152,7 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
               gaEvent(GA_TAGS.PAGE_ENTREPRISES_PROPOSER_OFFRE_CLIC);
               fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER_OPEN);
               // linkEvent(LINK_TAGS.COMPANY_CONTACT_OPEN);
+              // @ts-expect-error after enable TS strict mode. Please, try to fix it
               openModal(<PostPublicOpportunityModal />);
             },
             label: 'Créer une offre',
@@ -269,6 +270,7 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
               gaEvent(GA_TAGS.PAGE_ENTREPRISES_PROPOSER_OFFRE_CLIC);
               fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER_OPEN);
               // linkEvent(LINK_TAGS.COMPANY_CONTACT_OPEN);
+              // @ts-expect-error after enable TS strict mode. Please, try to fix it
               openModal(<PostPublicOpportunityModal />);
             }}
             dataTestId="button-company-second-section"

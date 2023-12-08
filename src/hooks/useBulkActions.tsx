@@ -10,16 +10,24 @@ export function useBulkActions(apiRoute, refreshElementsCallback, tag) {
 
   const selectElement = useCallback(
     ({ id }) => {
-      if (selectedIds.includes(id)) {
+      if (
+        selectedIds.includes(
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          id
+        )
+      ) {
         setSelectedIds((prevSelectedIds) => {
           return prevSelectedIds.filter((prevSelectedId) => {
             return prevSelectedId !== id;
           });
         });
       } else {
-        setSelectedIds((prevSelectedIds) => {
-          return [...prevSelectedIds, id];
-        });
+        setSelectedIds(
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          (prevSelectedIds) => {
+            return [...prevSelectedIds, id];
+          }
+        );
       }
     },
     [selectedIds]
@@ -77,7 +85,10 @@ export function useBulkActions(apiRoute, refreshElementsCallback, tag) {
 
   const isElementSelected = useCallback(
     ({ id }) => {
-      return selectedIds.includes(id);
+      return selectedIds.includes(
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        id
+      );
     },
     [selectedIds]
   );

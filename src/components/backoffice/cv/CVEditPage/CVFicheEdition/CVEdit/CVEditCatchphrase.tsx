@@ -29,6 +29,7 @@ export const CVEditCatchphrase = ({
                 defaultValues={{ catchphrase }}
                 onSubmit={async (fields, closeModal) => {
                   closeModal();
+                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
                   await onChange({
                     ...fields,
                   });

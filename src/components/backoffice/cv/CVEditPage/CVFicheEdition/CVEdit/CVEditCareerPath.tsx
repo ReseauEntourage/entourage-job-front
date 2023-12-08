@@ -87,7 +87,9 @@ export const CVEditCareerPath = ({
                   let newAmbitions = [];
                   if (ambition0) {
                     newAmbitions = [
+                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
                       ...newAmbitions,
+                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
                       {
                         prefix: AMBITIONS_PREFIXES[1].label,
                         name: ambition0,
@@ -97,8 +99,9 @@ export const CVEditCareerPath = ({
                   }
                   if (ambition1) {
                     newAmbitions = [
+                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
                       ...newAmbitions,
-
+                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
                       {
                         prefix: AMBITIONS_PREFIXES[1].label,
                         name: ambition1,

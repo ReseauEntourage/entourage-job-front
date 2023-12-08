@@ -148,6 +148,7 @@ export const SendMailModalContent = ({
           <TextArea
             title="Ajouter un message personnel"
             onChange={setTextAreaContent}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             value={textAreaContent}
             name="contact-description"
             id="contact-description"
@@ -164,12 +165,15 @@ export const SendMailModalContent = ({
             });
             UIkit.notification('Le recruteur a bien été contacté', 'success');
             await onSubmit();
+
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             onClose();
           }}
           onCancel={() => {
             openModal(
               <ModalConfirm
                 onConfirm={() => {
+                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
                   onClose();
                 }}
                 title="Êtes-vous sûr de vouloir abandonner?"

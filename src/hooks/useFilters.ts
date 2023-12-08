@@ -10,12 +10,17 @@ import {
 export function useFilters(filtersData, path, otherPathParams?, resetTag?) {
   const { push, query: originalQuery } = useRouter();
 
-  const {
-    search,
-    ...params
-  }: { search?: string; [key: string]: string | string[] } = otherPathParams
-    ? _.omit(originalQuery, otherPathParams)
-    : originalQuery;
+  const // @ts-expect-error after enable TS strict mode. Please, try to fix it
+    {
+      search,
+      ...params
+    }: {
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      search?: string;
+      [key: string]: string | string[];
+    } = otherPathParams
+      ? _.omit(originalQuery, otherPathParams)
+      : originalQuery;
 
   const otherParams = _.omit(
     params,

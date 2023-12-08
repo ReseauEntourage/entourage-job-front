@@ -66,6 +66,8 @@ export const AdminOpportunityDetailsCTAs = ({
       try {
         await Api.putExternalOpportunity(
           opportunityId,
+
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           candidateId,
           restOpportunity
         );
@@ -169,7 +171,11 @@ export const AdminOpportunityDetailsCTAs = ({
                 : [],
             };
             UIkit.notification("L'offre a bien été modifiée", 'success');
-            await updateExternalOpportunity(opportunity.id, tmpOpportunity);
+            await updateExternalOpportunity(
+              // @ts-expect-error after enable TS strict mode. Please, try to fix it
+              opportunity.id,
+              tmpOpportunity
+            );
             closeModal();
           }}
         />
@@ -235,7 +241,11 @@ export const AdminOpportunityDetailsCTAs = ({
                   })
                 : [],
             };
-            await updateOpportunity(opportunity.id, tmpOpportunity);
+            await updateOpportunity(
+              opportunity.id,
+              // @ts-expect-error after enable TS strict mode. Please, try to fix it
+              tmpOpportunity
+            );
             UIkit.notification("L'offre a bien été modifiée", 'success');
             closeModal();
           }}
@@ -293,6 +303,7 @@ export const AdminOpportunityDetailsCTAs = ({
   return (
     <StyledOpportunityCTAsContainer>
       {tag &&
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         CTAsByTag.find((CTAByTag) => {
           return CTAByTag.tag === tag;
         }).ctas.map((cta, key) => {

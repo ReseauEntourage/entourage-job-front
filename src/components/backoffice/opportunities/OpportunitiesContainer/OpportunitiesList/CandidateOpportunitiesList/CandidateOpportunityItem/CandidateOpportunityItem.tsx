@@ -61,6 +61,7 @@ export const CandidateOpportunityItem = ({
           <InfoText>
             <StyledOpportunityItemInfoContainer>
               <ContractLabel
+                // @ts-expect-error after enable TS strict mode. Please, try to fix it
                 contract={contract}
                 endOfContract={endOfContract}
                 startOfContract={startOfContract}
@@ -73,7 +74,9 @@ export const CandidateOpportunityItem = ({
           <ActionLabels
             isBookmarked={!!opportunityUsers?.bookmarked}
             isRecommended={!!opportunityUsers?.recommended}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             isPublic={isPublic}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             isExternal={isExternal}
             bookmarkOpportunity={bookmarkOpportunity}
           />
@@ -84,6 +87,7 @@ export const CandidateOpportunityItem = ({
         archived={opportunityUsers?.archived}
         isBookmarked={opportunityUsers?.bookmarked}
         isRecommended={opportunityUsers?.recommended}
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         isPublic={isPublic}
       />
       <StyledOpportunityItemBottomContainer>

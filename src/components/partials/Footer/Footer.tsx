@@ -229,7 +229,10 @@ const SiteMap = ({ isMobile }: { isMobile: boolean }) => {
       {pages.map(({ title, children }: PageType, index: number) => {
         return (
           <div
-            key={title + index}
+            key={
+              // @ts-expect-error after enable TS strict mode. Please, try to fix it
+              title + index
+            }
             className="uk-flex uk-flex-column uk-flex-middle uk-margin-small-bottom"
           >
             <div
@@ -263,7 +266,12 @@ const SiteMap = ({ isMobile }: { isMobile: boolean }) => {
                       );
                     }
                     return (
-                      <React.Fragment key={childrenPath + index}>
+                      <React.Fragment
+                        key={
+                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                          childrenPath + index
+                        }
+                      >
                         <SimpleLink
                           href={childrenPath}
                           className={
@@ -288,6 +296,7 @@ const SiteMap = ({ isMobile }: { isMobile: boolean }) => {
                               return (
                                 <SimpleLink
                                   key={
+                                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
                                     childrenChildrenPath + childrenChildrenIndex
                                   }
                                   href={childrenChildrenPath}

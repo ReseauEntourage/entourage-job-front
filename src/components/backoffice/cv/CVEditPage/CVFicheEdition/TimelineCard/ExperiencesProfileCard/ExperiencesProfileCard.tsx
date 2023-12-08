@@ -29,6 +29,7 @@ export const ExperiencesProfileCard = ({
     <TimelineCard
       experiences={sortedExperiences}
       onChange={onChange}
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
       remainingItems={remainingItems}
       type="experiences"
       title={

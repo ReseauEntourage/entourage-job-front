@@ -21,7 +21,10 @@ export function RadioAsync({
 
   useMount(() => {
     loadOptions((optionsLoaded) => {
-      setOptions(optionsLoaded);
+      setOptions(
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        optionsLoaded
+      );
     });
   });
 

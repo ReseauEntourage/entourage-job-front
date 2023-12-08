@@ -36,7 +36,9 @@ export const Layout = withRouter<LayoutProps>(
     isEmpty = false,
   }: LayoutProps) => {
     const isPDF = router.pathname.includes('/pdf/');
-    const domain = process.env.SERVER_URL.replace(/https:\/\/|http:\/\//g, '');
+    const domain =
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      process.env.SERVER_URL.replace(/https:\/\/|http:\/\//g, '');
 
     return (
       <>

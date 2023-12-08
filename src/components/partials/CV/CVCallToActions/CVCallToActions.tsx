@@ -60,6 +60,7 @@ export const CVCallToActions = ({
               gaEvent(GA_TAGS.PAGE_CV_PROPOSER_OFFRE_CLIC);
               fbEvent(FB_TAGS.COMPANY_CV_OFFER_OPEN);
               openModal(
+                // @ts-expect-error after enable TS strict mode. Please, try to fix it
                 <PostPrivateOpportunityModal
                   candidateId={cv.UserId}
                   candidateFirstName={cv.user.candidat.firstName}

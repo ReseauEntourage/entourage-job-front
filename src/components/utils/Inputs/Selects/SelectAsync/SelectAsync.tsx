@@ -41,8 +41,12 @@ export function SelectAsync<T extends FilterConstant | FilterConstant[]>({
   showLabel = false,
   inputRef,
 }: SelectAsyncProps<T>) {
-  const [defaultOptions, setDefaultOptions] =
-    useState<IsArrayFilterConstant<T>>(null);
+  const [defaultOptions, setDefaultOptions] = useState<
+    IsArrayFilterConstant<T>
+  >(
+    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+    null
+  );
   const [isLoading, setIsLoading] = useState(false);
 
   const debouncedLoadOptions = useCallback(
@@ -60,7 +64,10 @@ export function SelectAsync<T extends FilterConstant | FilterConstant[]>({
   );
 
   const onFocus = useCallback(() => {
-    setDefaultOptions([] as IsArrayFilterConstant<T>);
+    setDefaultOptions(
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      [] as IsArrayFilterConstant<T>
+    );
     setIsLoading(true);
     loadOptions((options) => {
       setDefaultOptions(options);

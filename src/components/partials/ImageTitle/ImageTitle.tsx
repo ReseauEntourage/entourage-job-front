@@ -42,7 +42,9 @@ export const ImageTitle = ({
   return (
     <BackgroundImage
       img={img}
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
       imgMobile={imgMobile}
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
       alt={alt}
       isHero
       hasCta={!!cta}

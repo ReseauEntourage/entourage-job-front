@@ -340,77 +340,99 @@ export const PageCVContent = ({
           )}
         </StyledLeftColumn>
         <StyledRightColumn>
-          {cv.experiences?.length > 0 && (
-            <StyledCVPageContentExperience
-              className={`${openedPanel.experiences ? '' : 'close'} ${
-                !isDesktop ? 'mobile' : ''
-              }`}
-            >
-              <StyledTitleAccordion
-                onClick={() => {
-                  setOpenedPanel({
-                    ...openedPanel,
-                    experiences: !openedPanel.experiences,
-                  });
-                }}
+          {
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            cv.experiences?.length > 0 && (
+              <StyledCVPageContentExperience
+                className={`${openedPanel.experiences ? '' : 'close'} ${
+                  !isDesktop ? 'mobile' : ''
+                }`}
               >
-                <H2 title="Expériences" color={COLORS.black} />
-                {!isDesktop && <StyledChevronIcon name="chevron-down" />}
-              </StyledTitleAccordion>
-              <ul>
-                {cv.experiences.map((experience) => {
-                  return (
-                    <CVExperienceOrFormation
-                      key={experience.id}
-                      title={experience.title}
-                      description={experience.description}
-                      dateStart={experience.dateStart}
-                      dateEnd={experience.dateEnd}
-                      location={experience.location}
-                      structure={experience.company}
-                      skills={experience.skills}
-                    />
-                  );
-                })}
-              </ul>
-            </StyledCVPageContentExperience>
-          )}
-          {cv.formations?.length > 0 && (
-            // using same style for Formations and Experiences, but change in fields
-            <StyledCVPageContentExperience
-              className={`${openedPanel.formations ? '' : 'close'} ${
-                !isDesktop ? 'mobile' : ''
-              }`}
-            >
-              <StyledTitleAccordion
-                onClick={() => {
-                  setOpenedPanel({
-                    ...openedPanel,
-                    formations: !openedPanel.formations,
-                  });
-                }}
+                <StyledTitleAccordion
+                  onClick={() => {
+                    setOpenedPanel({
+                      ...openedPanel,
+                      experiences: !openedPanel.experiences,
+                    });
+                  }}
+                >
+                  <H2 title="Expériences" color={COLORS.black} />
+                  {!isDesktop && <StyledChevronIcon name="chevron-down" />}
+                </StyledTitleAccordion>
+                <ul>
+                  {
+                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                    cv.experiences.map((experience) => {
+                      return (
+                        <CVExperienceOrFormation
+                          key={experience.id}
+                          title={experience.title}
+                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                          description={experience.description}
+                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                          dateStart={experience.dateStart}
+                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                          dateEnd={experience.dateEnd}
+                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                          location={experience.location}
+                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                          structure={experience.company}
+                          skills={experience.skills}
+                        />
+                      );
+                    })
+                  }
+                </ul>
+              </StyledCVPageContentExperience>
+            )
+          }
+          {
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            cv.formations?.length > 0 && (
+              // using same style for Formations and Experiences, but change in fields
+              <StyledCVPageContentExperience
+                className={`${openedPanel.formations ? '' : 'close'} ${
+                  !isDesktop ? 'mobile' : ''
+                }`}
               >
-                <H2 title="Formation" color={COLORS.black} />
-                {!isDesktop && <StyledChevronIcon name="chevron-down" />}
-              </StyledTitleAccordion>
-              <ul>
-                {cv.formations.map((formation) => {
-                  return (
-                    <CVExperienceOrFormation
-                      key={formation.id}
-                      title={formation.title}
-                      description={formation.description}
-                      dateStart={formation.dateStart}
-                      dateEnd={formation.dateEnd}
-                      location={formation.location}
-                      structure={formation.institution}
-                      skills={formation.skills}
-                    />
-                  );
-                })}
-              </ul>
-            </StyledCVPageContentExperience>
-          )}
+                <StyledTitleAccordion
+                  onClick={() => {
+                    setOpenedPanel({
+                      ...openedPanel,
+                      formations: !openedPanel.formations,
+                    });
+                  }}
+                >
+                  <H2 title="Formation" color={COLORS.black} />
+                  {!isDesktop && <StyledChevronIcon name="chevron-down" />}
+                </StyledTitleAccordion>
+                <ul>
+                  {
+                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                    cv.formations.map((formation) => {
+                      return (
+                        <CVExperienceOrFormation
+                          key={formation.id}
+                          title={formation.title}
+                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                          description={formation.description}
+                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                          dateStart={formation.dateStart}
+                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                          dateEnd={formation.dateEnd}
+                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                          location={formation.location}
+                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                          structure={formation.institution}
+                          skills={formation.skills}
+                        />
+                      );
+                    })
+                  }
+                </ul>
+              </StyledCVPageContentExperience>
+            )
+          }
           {cv.passions?.length > 0 && !isDesktop && (
             <StyledCVPageContentPassions
               className={`${openedPanel.passions ? '' : 'close'} ${
