@@ -32,7 +32,7 @@ const Login = () => {
 
   const loginErrorMessage = useMemo(() => {
     if (!loginError) {
-      return null;
+      return;
     }
 
     if (loginError === 'RATE_LIMIT') {

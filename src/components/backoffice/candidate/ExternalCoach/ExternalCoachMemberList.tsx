@@ -24,11 +24,11 @@ export const ExternalCoachMemberList = () => {
   useEffect(() => {
     if (user) {
       const getRelatedUsers = async () => {
-        if ('coaches' in user) {
+        if ('coaches' in user && user.coaches) {
           const relatedUsersPromises = user.coaches.map(async (relatedUser) => {
             const { candidat, ...relatedUserWithoutCandidate } = relatedUser;
             try {
-              const response = await Api.getCVByCandidateId(candidat.id);
+              const response = await Api.getCVByCandidateId(candidat?.id);
               return {
                 ...candidat,
                 candidat: {
@@ -40,7 +40,9 @@ export const ExternalCoachMemberList = () => {
               console.error(err);
             }
           });
-          const membersData = await Promise.all(relatedUsersPromises);
+          const membersData = (await Promise.all(
+            relatedUsersPromises
+          )) as UserWithUserCandidate[];
           setMembers(membersData);
         }
 

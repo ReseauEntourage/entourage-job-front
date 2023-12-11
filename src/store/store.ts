@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import { all, spawn, call } from 'typed-redux-saga';
-import { useCasesConfig } from '../use-cases';
+import { useCasesConfig } from 'src/use-cases';
+import { UseCaseConfigItem } from 'src/use-cases/authentication';
 
-const useCasesList = Object.values(useCasesConfig);
+const useCasesList = Object.values(useCasesConfig) as UseCaseConfigItem[];
 
 const reducers = useCasesList.reduce(
   (acc, { slice }) => ({
