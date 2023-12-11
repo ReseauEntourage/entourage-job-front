@@ -78,15 +78,18 @@ describe('Candidat', () => {
     cy.intercept('PUT', '/user/changePwd', {}).as('changePwd');
   });
   it('should open backoffice public offers', () => {
-    cy.visit('/backoffice/candidat/offres/public', {
-      onBeforeLoad: function async(window) {
-        window.localStorage.setItem('access-token', '1234');
-        window.localStorage.setItem('release-version', 'v100');
-      },
+    cy.fixture('auth-current-candidat-res').then((user) => {
+      cy.visit(`/backoffice/candidat/offres/public`, {
+        onBeforeLoad: function async(window) {
+          window.localStorage.setItem('access-token', '1234');
+          window.localStorage.setItem('release-version', 'v100');
+        },
+      });
+      cy.url().should('include', user.id);
     });
 
     // check if list is complete
-    cy.get('[data-testid="candidat-offer-list-container"]')
+    cy.get('[data-testid="candidat-offer-list-container"]', { timeout: 20000 })
       .find('> div')
       .should('have.length', 16);
 
@@ -115,11 +118,14 @@ describe('Candidat', () => {
   });
 
   it('should open backoffice private offers and add new opportunity', () => {
-    cy.visit('/backoffice/candidat/offres/private', {
-      onBeforeLoad: function async(window) {
-        window.localStorage.setItem('access-token', '1234');
-        window.localStorage.setItem('release-version', 'v100');
-      },
+    cy.fixture('auth-current-candidat-res').then((user) => {
+      cy.visit(`/backoffice/candidat/offres/private`, {
+        onBeforeLoad: function async(window) {
+          window.localStorage.setItem('access-token', '1234');
+          window.localStorage.setItem('release-version', 'v100');
+        },
+      });
+      cy.url().should('include', user.id);
     });
     // check if the right opportunity is open
     cy.fixture('user-opportunity-all-res').then((offersList) => {
