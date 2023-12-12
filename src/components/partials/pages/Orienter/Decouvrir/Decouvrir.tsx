@@ -59,12 +59,13 @@ export const Decouvrir = ({
           </div>
           <div className="text-container">
             <H5
-              title="Parcours tremplin de 6 mois et publication du CV"
+              title="Publication du CV sans parcours d’accompagnement"
               color="primaryOrange"
             />
             <p>
-              La personne que vous accompagnez est intéressée par notre
-              programme d’accompagnement de 6 mois pour retrouver un emploi.
+              La personne que vous accompagnez n’a pas besoin d’un
+              accompagnement supplémentaire, mais son CV mérite un coup de pouce
+              pour être visible !
             </p>
             <Button
               style="custom-secondary-inverted"
