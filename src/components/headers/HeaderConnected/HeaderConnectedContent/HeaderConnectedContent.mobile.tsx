@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useContext } from 'react';
+import React from 'react';
 import { v4 as uuid } from 'uuid';
 import HomeIcon from 'assets/icons/home.svg';
 import { HeaderConnectedMainItemDefaultProps } from '../HeaderConnected.types';
@@ -12,8 +12,8 @@ import {
 } from 'src/components/utils';
 import { Offcanvas } from 'src/components/utils/Offcanvas';
 import { OFFCANVAS_LOGGED } from 'src/constants/utils';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { gaEvent } from 'src/lib/gtag';
-import { UserContext } from 'src/store/UserProvider';
 import { StyledConnectedItemMobile } from './HeaderConnectedContent.styles';
 import { HeaderConnectedContentProps } from './HeaderConnectedContent.types';
 import { SubMenu } from './SubMenu';
@@ -46,7 +46,7 @@ export const HeaderConnectedContentMobile = ({
   },
   isEmpty = false,
 }: HeaderConnectedContentProps) => {
-  const { user } = useContext(UserContext);
+  const user = useAuthenticatedUser();
 
   const { push, asPath } = useRouter();
   const logoLink = links[user?.role?.replace(' ', '_').toLowerCase()][0];

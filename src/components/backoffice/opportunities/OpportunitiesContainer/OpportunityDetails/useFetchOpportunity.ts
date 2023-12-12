@@ -1,19 +1,19 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Api } from 'src/api';
 import {
   AdminOpportunityWithOpportunityUsers,
   OpportunityWithOpportunityUsers,
 } from 'src/api/types';
 import { USER_ROLES } from 'src/constants/users';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { usePrevious } from 'src/hooks/utils';
-import { UserContext } from 'src/store/UserProvider';
 
 export function useFetchCandidateOpportunity(
   opportunityId: string,
   candidateId: string,
   fetchOpportunities: () => void
 ) {
-  const { user } = useContext(UserContext);
+  const user = useAuthenticatedUser();
   const [opportunity, setOpportunity] =
     useState<Partial<OpportunityWithOpportunityUsers>>();
   const [isLoading, setIsLoading] = useState(false);

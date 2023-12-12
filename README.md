@@ -1,5 +1,15 @@
 # LinkedOut Frontend
 
+- [Modules principaux & versions](#modules-principaux--versions)
+- [Architecture](#architecture)
+- [Configuration](#configuration)
+- [Déploiement](#déploiement)
+- [Stack technique](#stack-technique)
+- Code
+  - [Use cases](./docs/use-cases.md)
+  - [Permissions des routes](./docs/routes-permissions.md)
+  - [Styles](#styles)
+
 ## Modules principaux & versions
 
 > Node 16.x.x
@@ -27,6 +37,7 @@
   - `/lib` : librairies pure JS (analytics ...)
   - `/pages` : dossier contenant les composants **_React_** de rendu de pages
   - `/styles` : feuilles CSS compilés à partir de **_UIkit_** + certains styles customs
+  - `/use-cases` : store redux séparé en modules
   - `/utils` : fonctions utilitaires communes
   - `Axios.js` : configuration **_Axios_** pour communiquer facilement avec l'API
 - `.editorconfig` : configuration par défaut de la syntaxe du code de l'éditeur

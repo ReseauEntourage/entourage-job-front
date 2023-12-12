@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { UserWithUserCandidate } from 'src/api/types';
+import React, { useEffect, useState } from 'react';
+import { CV, User, UserWithUserCandidate } from 'src/api/types';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
-import { UserContext } from 'src/store/UserProvider';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { isRoleIncluded } from 'src/utils/Finding';
 import { Img } from './Img';
 
@@ -11,26 +11,28 @@ interface ImgProfileProps {
 }
 
 export const ImgProfile = ({ user, size = 40 }: ImgProfileProps) => {
-  const userFromContext = useContext(UserContext).user;
+  const connectedUser = useAuthenticatedUser();
 
-  const { firstName, role, candidat } = user || userFromContext;
-  const [urlImg, setUrlImg] = useState(null);
+  const myUser: User | UserWithUserCandidate = user || connectedUser;
+  const { firstName, role } = myUser;
+  const [urlImg, setUrlImg] = useState<string>();
 
   useEffect(() => {
-    if (
-      isRoleIncluded(CANDIDATE_USER_ROLES, role) &&
-      candidat &&
-      candidat.cvs
-    ) {
-      const latestCV = candidat.cvs.reduce(
-        (acc, curr) => {
-          return acc.version < curr.version ? curr : acc;
-        },
-        { version: -1 }
-      );
-      setUrlImg(latestCV.urlImg);
+    if ('candidat' in myUser) {
+      const candidatUser = myUser as UserWithUserCandidate;
+      if (
+        isRoleIncluded(CANDIDATE_USER_ROLES, role) &&
+        candidatUser.candidat?.cvs &&
+        candidatUser.candidat?.cvs?.length > 0
+      ) {
+        const { cvs } = candidatUser.candidat;
+        const latestCV: CV = cvs.reduce((lastFound, curr) => {
+          return lastFound.version < curr.version ? curr : lastFound;
+        }, cvs[0]);
+        setUrlImg(latestCV.urlImg);
+      }
     }
-  }, [candidat, role, user]);
+  }, [myUser, role, user]);
 
   return (
     <div

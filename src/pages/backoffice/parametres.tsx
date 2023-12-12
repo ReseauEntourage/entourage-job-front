@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import UIkit from 'uikit';
 import EmailIcon from 'assets/icons/email.svg';
 import GenderIcon from 'assets/icons/gender.svg';
@@ -8,7 +9,7 @@ import PencilIcon from 'assets/icons/pencil.svg';
 import PhoneIcon from 'assets/icons/phone.svg';
 import UserIcon from 'assets/icons/user.svg';
 import { Api } from 'src/api';
-import { UserWithUserCandidate } from 'src/api/types';
+import { User, UserWithUserCandidate } from 'src/api/types';
 import { PasswordCriterias } from 'src/components/PasswordCriterias';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { ToggleWithConfirmationModal } from 'src/components/backoffice/ToggleWithConfirmationModal';
@@ -33,18 +34,28 @@ import {
   COACH_USER_ROLES,
   USER_ROLES,
 } from 'src/constants/users';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useResetForm } from 'src/hooks/utils/useResetForm';
-import { UserContext } from 'src/store/UserProvider';
+import { authenticationActions } from 'src/use-cases/authentication';
 import { isRoleIncluded } from 'src/utils/Finding';
 
 const Parametres = () => {
-  const { user, setUser } = useContext(UserContext);
+  const user = useAuthenticatedUser();
   const [userData, setUserData] = useState<UserWithUserCandidate>();
   const [loadingPersonal, setLoadingPersonal] = useState(false);
   const [loadingPassword, setLoadingPassword] = useState(false);
   const [form, resetForm] = useResetForm();
 
   const modalTitle = 'Édition - Informations personnelles';
+
+  const dispatch = useDispatch();
+
+  const setUser = useCallback(
+    (nextUser: User) => {
+      dispatch(authenticationActions.setUser(nextUser));
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     if (user) {
@@ -69,20 +80,16 @@ const Parametres = () => {
         )
           .then(() => {
             closeModal();
-            setUserData(
-              // @ts-expect-error after enable TS strict mode. Please, try to fix it
-              (prevUserData) => {
-                return {
-                  ...prevUserData,
-                  ...newUserData,
-                };
-              }
-            );
-            setUser((prevUser) => {
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            setUserData((prevUserData) => {
               return {
-                ...prevUser,
+                ...prevUserData,
                 ...newUserData,
               };
+            });
+            setUser({
+              ...user,
+              ...newUserData,
             });
             UIkit.notification(
               'Vos informations personnelles ont bien été mises à jour',
@@ -105,7 +112,7 @@ const Parametres = () => {
           });
       }
     },
-    [setUser, userData]
+    [setUser, user, userData]
   );
 
   const checkEmailAndSubmit = useCallback(

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 import CaretDownIcon from 'assets/icons/caret-down.svg';
 import {
@@ -21,8 +21,8 @@ import {
   COACH_USER_ROLES,
   USER_ROLES,
 } from 'src/constants/users';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { gaEvent } from 'src/lib/gtag';
-import { UserContext } from 'src/store/UserProvider';
 import { isRoleIncluded } from 'src/utils/Finding';
 import { StyledConnectedItem } from './HeaderConnectedContent.styles';
 import { HeaderConnectedContentProps } from './HeaderConnectedContent.types';
@@ -56,7 +56,7 @@ export const HeaderConnectedContentDesktop = ({
   },
   isEmpty = false,
 }: HeaderConnectedContentProps) => {
-  const { user } = useContext(UserContext);
+  const user = useAuthenticatedUser();
 
   const { push, asPath } = useRouter();
 

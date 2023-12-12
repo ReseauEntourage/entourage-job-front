@@ -17,15 +17,17 @@ import 'react-tooltip/dist/react-tooltip.css';
 import * as Sentry from '@sentry/react';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { Provider } from 'react-redux';
 
 import { SplashScreen } from 'src/components/SplashScreen';
 import { ModalsListener } from 'src/components/modals/Modal';
 import { OFFCANVAS_GUEST, OFFCANVAS_LOGGED } from 'src/constants/utils';
+import { useAuthentication } from 'src/hooks/authentication/useAuthentication';
 import { useMount } from 'src/hooks/utils';
 import * as gtag from 'src/lib/gtag';
 import { DataProvider } from 'src/store/DataProvider';
 import { SharesCountProvider } from 'src/store/SharesCountProvider';
-import { UserProvider } from 'src/store/UserProvider';
+import { store } from 'src/store/store';
 
 UIkit.use(Icons);
 
@@ -58,6 +60,8 @@ const Container = ({ Component, pageProps, err }) => {
     }
   }, [fading]);
 
+  const { isCurrentRouteReady } = useAuthentication();
+
   return (
     <div
       style={{ height: loading ? '100vh' : 'inherit' }}
@@ -67,7 +71,7 @@ const Container = ({ Component, pageProps, err }) => {
       id="main-container"
     >
       <SplashScreen loading={loading} fading={fading} />
-      <Component {...pageProps} err={err} />
+      {isCurrentRouteReady && <Component {...pageProps} err={err} />}
       <ModalsListener />
     </div>
   );
@@ -108,13 +112,13 @@ const EntourageApp = ({ Component, pageProps, err }) => {
 
   return (
     <Sentry.ErrorBoundary fallback="An error has occurred">
-      <SharesCountProvider>
-        <DataProvider>
-          <UserProvider>
+      <Provider store={store}>
+        <SharesCountProvider>
+          <DataProvider>
             <Container Component={Component} pageProps={pageProps} err={err} />
-          </UserProvider>
-        </DataProvider>
-      </SharesCountProvider>
+          </DataProvider>
+        </SharesCountProvider>
+      </Provider>
     </Sentry.ErrorBoundary>
   );
 };

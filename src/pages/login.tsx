@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
@@ -10,14 +11,40 @@ import { StepperModal } from 'src/components/modals/Modal/ModalGeneric/StepperMo
 import { SuccessModalContent } from 'src/components/modals/SuccessModalContent';
 import { Section, SimpleLink } from 'src/components/utils';
 import { USER_ROLES } from 'src/constants/users';
-import { UserContext } from 'src/store/UserProvider';
+import {
+  authenticationActions,
+  selectCurrentUser,
+  selectLoginError,
+} from 'src/use-cases/authentication';
 
 const Login = () => {
-  const { login, user } = useContext(UserContext);
+  const user = useSelector(selectCurrentUser);
   const {
     replace,
     query: { requestedPath },
   } = useRouter();
+
+  const dispatch = useDispatch();
+  const loginError = useSelector(selectLoginError);
+
+  const rateLimitErrorMessage =
+    'Trop de tentatives infructueuses.\nVeuillez ressayer dans 1 minute.';
+
+  const loginErrorMessage = useMemo(() => {
+    if (!loginError) {
+      return;
+    }
+
+    if (loginError === 'RATE_LIMIT') {
+      return rateLimitErrorMessage;
+    }
+
+    if (loginError === 'INVALID_CREDENTIALS') {
+      return 'Erreur de connexion. Identifiant ou mot de passe invalide.';
+    }
+
+    return 'Une erreur est survenue';
+  }, [loginError]);
 
   useEffect(() => {
     let path: string;
@@ -40,9 +67,6 @@ const Login = () => {
     }
   }, [replace, requestedPath, user]);
 
-  const rateLimitErrorMessage =
-    'Trop de tentatives infructueuses.\nVeuillez ressayer dans 1 minute.';
-
   return (
     <Layout title="Connexion - LinkedOut">
       <Section size="large" style="muted">
@@ -53,15 +77,12 @@ const Login = () => {
               formSchema={formLogin}
               submitText="Se connecter"
               enterToSubmit
-              onSubmit={({ email, password }, setError) => {
-                return login(email, password).catch((err) => {
-                  const errorMessage =
-                    err && err.response && err.response.status === 429
-                      ? rateLimitErrorMessage
-                      : 'Erreur de connexion. Identifiant ou mot de passe invalide.';
-                  setError(errorMessage);
-                });
+              onSubmit={({ email, password }) => {
+                dispatch(
+                  authenticationActions.loginRequested({ email, password })
+                );
               }}
+              error={loginErrorMessage}
             />
             <SimpleLink
               isExternal

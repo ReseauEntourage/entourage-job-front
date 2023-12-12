@@ -14,13 +14,23 @@ describe('Admin', () => {
     }).as('authCheck');
 
     cy.intercept('GET', '/user/members/count', { pendingCVs: 0 });
+    
+    cy.intercept(
+      'GET',
+      '/user/members?limit=50&offset=0&role[]=Candidat&role[]=Candidat+externe&zone[]=LYON',
+      {
+        fixture: 'user-members-res',
+      }
+    ).as('members');
+
     cy.intercept(
       'GET',
       '/user/members?limit=50&offset=0&role[]=Candidat&zone[]=LYON',
       {
         fixture: 'user-members-res',
       }
-    ).as('members');
+    ).as('membersCandidates');
+
 
     cy.intercept('GET', '/opportunity/admin**', {
       fixture: 'opportunities-admin-res',
