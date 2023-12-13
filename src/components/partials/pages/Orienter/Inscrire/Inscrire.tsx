@@ -66,7 +66,7 @@ export const Inscrire = ({ innerRef }: { innerRef: Ref<HTMLDivElement> }) => {
               <p>
                 <strong>La mise en lien avec des professionnels engagés</strong>{' '}
                 : rencontres avec des professionnels pour bénéficier d’un coup
-                de pouce ( conseil, contact, simulation d’entretien)
+                de pouce (conseil, contact, simulation d’entretien)
               </p>
               <p>
                 <strong>L’utilisation de la plateforme LinkedOut</strong> pour

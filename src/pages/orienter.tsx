@@ -77,7 +77,7 @@ const Orienter = () => {
         description={
           <>
             Vous accompagnez des personnes en situation d&lsquo;exclusion ? Avec
-            LinkedOut, accélérez leur retour à l&ldquo;emploi !
+            LinkedOut, accélérez leur retour à l&lsquo;emploi !
           </>
         }
       />
