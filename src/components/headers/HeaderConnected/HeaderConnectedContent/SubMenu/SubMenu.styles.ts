@@ -8,7 +8,7 @@ export const StyledSubMenu = styled.ul`
     height: 22px;
     padding: 5px 0 5px 40px;
     color: rgba(255, 255, 255, 0.5);
-    .uk-icon {
+    svg {
       display: none;
     }
   }
@@ -35,7 +35,7 @@ export const StyledSubMenu = styled.ul`
       &:hover {
         background-color: ${COLORS.hoverOrange};
       }
-      .uk-icon {
+      svg {
         display: inline-block;
         margin-right: 10px !important;
       }

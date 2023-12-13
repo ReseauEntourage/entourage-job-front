@@ -1,12 +1,13 @@
 import { NextRouter, withRouter } from 'next/router';
 import React, { useEffect } from 'react';
+import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { Api } from 'src/api';
 import { CV } from 'src/api/types';
 import { Layout } from 'src/components/Layout';
 import { DiscoverPartial, NewsletterPartial } from 'src/components/partials';
 import { CVList } from 'src/components/partials/CV/CVList';
 import { PageCVContent } from 'src/components/partials/CV/PageCVContent';
-import { Grid, Section, SimpleLink, Icon, Button } from 'src/components/utils';
+import { Grid, Section, SimpleLink, Button } from 'src/components/utils';
 import { CV_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { useUpdateSharesCount } from 'src/hooks';
@@ -76,7 +77,8 @@ const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
                 style="secondary"
                 className="uk-margin-large-top"
               >
-                Voir tous les candidats <Icon name="chevron-right" />
+                Voir tous les candidats
+                <ChevronRightIcon />
               </Button>
             </Grid>
           </Section>
@@ -113,7 +115,7 @@ const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
       metaDescription={sharedDescription}
       metaImage={
         cv.urlImg
-          ? `${process.env.AWSS3_CDN_URL}${cv.urlImg.replace(
+          ? `${process.env.AWSS3_CDN_URL}/${cv.urlImg.replace(
               '.jpg',
               '.preview.jpg'
             )}`

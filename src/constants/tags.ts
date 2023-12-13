@@ -17,6 +17,9 @@ export const GA_TAGS = {
   PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC: {
     action: 'Page_Entreprises_Contacter_Referent_Clic',
   },
+  PAGE_ENTREPRISES_PROPOSER_OFFRE_CLIC: {
+    action: 'Page_Entreprises_Proposer_Offre_Clic',
+  },
   PAGE_ENTREPRISES_ENVOYER_CONTACT_REFERENT_CLIC: {
     action: 'Page_Entreprises_Envoyer_Contact_Referent_Clic',
   },
@@ -37,6 +40,9 @@ export const GA_TAGS = {
   },
   PAGE_GALERIE_CV_CLIC: {
     action: 'Page_Galerie_CV_Clic',
+  },
+  PAGE_GALERIE_CV_PROPOSER_OFFRE_CLIC: {
+    action: 'Page_Galerie_CV_Proposer_Offre_Clic',
   },
   PAGE_GALERIE_PARTAGE_CV_LINKEDIN_CLIC: {
     action: 'Page_Galerie_Partage_CV_LinkedIn_Clic',
@@ -379,6 +385,9 @@ export const GA_TAGS = {
   },
   BACKOFFICE_CV_AIDE: {
     action: 'Backoffice_CV_Aide',
+  },
+  PAGE_ORIENTER_CLASSIQUE_ENVOYER_CLIC: {
+    action: 'Page_Orienter_Classique_Envoyer_Clic',
   },
 } as const;
 

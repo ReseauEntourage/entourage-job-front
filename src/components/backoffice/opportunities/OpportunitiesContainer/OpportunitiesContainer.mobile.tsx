@@ -23,7 +23,11 @@ export const OpportunitiesContainerMobile = ({
         <>
           {opportunityId ? (
             <StyledDetailsContainer>
-              <BackLink url={backButtonHref} label="Retour à la liste" />
+              <BackLink
+                // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                url={backButtonHref}
+                label="Retour à la liste"
+              />
               {details}
             </StyledDetailsContainer>
           ) : (

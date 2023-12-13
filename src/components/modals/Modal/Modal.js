@@ -18,6 +18,14 @@ const CustomModal = ({ children, closeOnNextRender, className, fullWidth }) => {
     <Modal
       id="modal-screen"
       closeTimeoutMS={200}
+      onAfterOpen={() => {
+        // Fix to make modal scroll to top on open
+        if (document.getElementsByClassName('ReactModal__Overlay')?.[0]) {
+          document
+            .getElementsByClassName('ReactModal__Overlay')[0]
+            .scrollTo(0, 0);
+        }
+      }}
       style={{
         overlay: {
           zIndex: 1050,

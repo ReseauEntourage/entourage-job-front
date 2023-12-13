@@ -1,8 +1,8 @@
 import React from 'react';
-import EmailIcon from 'assets/custom/icons/email.svg';
-import HomeIcon from 'assets/custom/icons/home.svg';
-import LocationIcon from 'assets/custom/icons/location.svg';
-import PhoneIcon from 'assets/custom/icons/phone.svg';
+import EmailIcon from 'assets/icons/email.svg';
+import HomeIcon from 'assets/icons/home.svg';
+import LocationIcon from 'assets/icons/location.svg';
+import PhoneIcon from 'assets/icons/phone.svg';
 import { Department, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
 import {
@@ -36,7 +36,7 @@ export function CVContactInformationPDF({
           <li>
             <div>
               <p className="subtitle">
-                <PhoneIcon viewBox="0 0 6 6" /> <span>Numéro de téléphone</span>
+                <PhoneIcon /> <span>Numéro de téléphone</span>
               </p>
               <p className="content">{phone}</p>
             </div>
@@ -46,7 +46,7 @@ export function CVContactInformationPDF({
           <li>
             <div>
               <p className="subtitle">
-                <EmailIcon viewBox="0 0 6 6" /> <span>Email</span>
+                <EmailIcon /> <span>Email</span>
               </p>
               <p className="content">{email}</p>
             </div>
@@ -57,7 +57,7 @@ export function CVContactInformationPDF({
             <li>
               <div>
                 <p className="subtitle">
-                  <HomeIcon viewBox="0 0 576 512" /> <span>Adresse</span>
+                  <HomeIcon /> <span>Adresse</span>
                 </p>
                 <p className="content">{address}</p>
               </div>
@@ -68,7 +68,7 @@ export function CVContactInformationPDF({
           <li>
             <div>
               <p className="subtitle">
-                <LocationIcon viewBox="0 0 384 512" /> <span>Localisation</span>
+                <LocationIcon /> <span>Localisation</span>
               </p>
               <p className="content">
                 {locations

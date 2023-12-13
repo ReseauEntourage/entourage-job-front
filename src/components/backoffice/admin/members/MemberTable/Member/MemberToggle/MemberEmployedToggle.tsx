@@ -19,7 +19,10 @@ export function MemberEmployedToggle({
   setMember,
 }: MemberEmployedToggleProps) {
   const contractLabel = buildContractLabel(
+    // @ts-expect-error after enable TS strict mode. Please, try to fix it
     member.candidat.contract,
+
+    // @ts-expect-error after enable TS strict mode. Please, try to fix it
     member.candidat.endOfContract
   );
 
@@ -27,8 +30,12 @@ export function MemberEmployedToggle({
     <CandidateEmployedToggle
       modalTitle="Le candidat a retrouvé un emploi ?"
       modalConfirmation="Valider"
-      defaultValue={member.candidat.employed}
+      defaultValue={
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        member.candidat.employed
+      }
       notificationMessage="Le profil du candidat a été mis à jour !"
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
       subtitle={
         member &&
         member.candidat && (
@@ -49,6 +56,8 @@ export function MemberEmployedToggle({
       setData={(newData) => {
         setMember({
           ...member,
+
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           candidat: {
             ...member.candidat,
             ...newData,

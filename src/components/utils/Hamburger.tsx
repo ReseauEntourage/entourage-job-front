@@ -1,44 +1,19 @@
 import React from 'react';
 import UIkit from 'uikit';
-import { ButtonIcon } from 'src/components/utils/ButtonIcon';
-import { UIKIT_SCREENS } from 'src/components/variables';
+import MenuIcon from 'assets/icons/menu.svg';
+import { ButtonIcon } from 'src/components/utils/ButtonIcon/ButtonIcon';
 
 interface HamburgerProps {
-  hidden?: UIKIT_SCREENS;
-  visible?: UIKIT_SCREENS;
   targetId: string;
-  light?: boolean;
 }
 
-export const Hamburger = ({
-  hidden,
-  targetId,
-  visible,
-  light,
-}: HamburgerProps) => {
-  let classBuffer = '';
-  if (hidden) classBuffer += `uk-hidden@${hidden}`;
-  if (visible) classBuffer += `uk-visible@${visible}`;
+export const Hamburger = ({ targetId }: HamburgerProps) => {
   return (
     <ButtonIcon
-      style={
-        light
-          ? {
-              color: 'inherit !important',
-            }
-          : { color: 'white' }
-      }
-      className={classBuffer}
       onClick={() => {
         UIkit.offcanvas(`#${targetId}`).show();
       }}
-      name="menu"
+      icon={<MenuIcon style={{ color: 'white' }} height={26} width={26} />}
     />
   );
-};
-
-Hamburger.defaultProps = {
-  hidden: undefined,
-  visible: undefined,
-  light: false,
 };

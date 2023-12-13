@@ -1,6 +1,7 @@
 import React from 'react';
+import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { LogoList } from 'src/components/partials/LogoList';
-import { Background, Section, Icon } from 'src/components/utils';
+import { Background, Section } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { PARTNERS } from 'src/constants/partners';
 
@@ -53,8 +54,8 @@ export const Partners = ({
             <LogoList logos={PARTNERS.SPORTS} />
             <div className="uk-flex uk-flex-center uk-flex-middle uk-margin-large-top">
               <Button style="primary" href="/partenaires">
-                En savoir plus&nbsp;
-                <Icon name="arrow-right" />
+                En savoir plus
+                <ChevronRightIcon />
               </Button>
             </div>
           </div>

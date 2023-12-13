@@ -46,13 +46,17 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
   maxItems,
   setIsMaxItemsReached,
 }: SelectAsyncProps<T>) {
-  const [remainingItems, setRemainingItems] = useState<number>(maxItems);
+  const [remainingItems, setRemainingItems] = useState<number>(
+    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+    maxItems
+  );
   const [shouldDisplayOptions, setShouldDisplayOptions] =
     useState<boolean>(true);
 
   useEffect(() => {
     const receivedValues = value as FilterConstant[];
     setRemainingItems(
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
       receivedValues ? maxItems - receivedValues?.length : maxItems
     );
     if (maxItems && receivedValues) {
@@ -62,14 +66,19 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
     }
   }, [value, maxItems]);
 
-  useEffect(() => {
-    if (!maxItems) return null;
-    if (remainingItems < 0) {
-      setIsMaxItemsReached(true);
-    } else {
-      setIsMaxItemsReached(false);
+  useEffect(
+    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+    () => {
+      if (!maxItems) return null;
+      if (remainingItems < 0) {
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        setIsMaxItemsReached(true);
+      } else {
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        setIsMaxItemsReached(false);
+      }
     }
-  });
+  );
 
   if (hidden) {
     return null;

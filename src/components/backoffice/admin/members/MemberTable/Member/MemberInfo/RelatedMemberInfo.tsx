@@ -77,6 +77,7 @@ export function RelatedMemberInfo({
                   firstName={firstName}
                   lastName={lastName}
                   email={email}
+                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
                   organizationName={
                     isRoleIncluded(EXTERNAL_USER_ROLES, relatedUserRole)
                       ? organization?.name

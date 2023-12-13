@@ -1,8 +1,7 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { CV } from 'src/api/types';
-import { formAddOpportunity } from 'src/components/forms/schemas/formAddOpportunity';
 import { openModal } from 'src/components/modals/Modal';
-import { PostOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
+import { PostPrivateOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal/PostPrivateOpportunityModal';
 import { Button } from 'src/components/utils';
 import { H3, H5 } from 'src/components/utils/Headings';
 import { COLORS } from 'src/constants/styles';
@@ -30,45 +29,10 @@ export const CVCallToActions = ({
 }: CVCallToActionsProps) => {
   const isDesktop = useIsDesktop();
 
-  const opportunityModalProps = useMemo(() => {
-    return {
-      modalTitle: 'Proposer une opportunité à un candidat',
-      modalDesc: (
-        <div className="uk-text-normal">
-          Contactez ici le candidat et son coach LinkedOut afin de solliciter un
-          échange.
-          <br />
-          <br />
-          Si vous souhaitez échanger avec le coach bénévole qui accompagne le
-          candidat dans sa recherche d&apos;emploi, précisez-le dans votre
-          message.
-          <br />
-          <br />
-          <span className="uk-text-meta uk-text-italic">
-            LinkedOut est susceptible de transmettre cette opportunité à
-            d&apos;autres candidats dont le profil correspond à votre besoin.
-          </span>
-        </div>
-      ),
-      defaultValues: {
-        candidatesIds: [
-          {
-            label: `${cv.user.candidat.firstName} ${cv.user.candidat.lastName}`,
-            value: cv.UserId,
-          },
-        ],
-        isPublic: false,
-      },
-      formSchema: formAddOpportunity,
-    };
-  }, [cv]);
-
   return (
     <StyledCVCTA>
       <H3
-        title={`Donnez un coup de pouce à ${
-          cv?.user?.candidat?.firstName
-        }${' '}!`}
+        title={`Donnez un coup de pouce à ${cv?.user?.candidat?.firstName} !`}
         center
         color={COLORS.black}
       />
@@ -95,7 +59,14 @@ export const CVCallToActions = ({
             onClick={() => {
               gaEvent(GA_TAGS.PAGE_CV_PROPOSER_OFFRE_CLIC);
               fbEvent(FB_TAGS.COMPANY_CV_OFFER_OPEN);
-              openModal(<PostOpportunityModal {...opportunityModalProps} />);
+              openModal(
+                // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                <PostPrivateOpportunityModal
+                  candidateId={cv.UserId}
+                  candidateFirstName={cv.user.candidat.firstName}
+                  candidateLastName={cv.user.candidat.lastName}
+                />
+              );
             }}
           >
             Proposer une offre

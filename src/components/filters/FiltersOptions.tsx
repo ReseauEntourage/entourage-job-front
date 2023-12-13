@@ -11,12 +11,11 @@ export const FiltersOptions = ({
       <div className="uk-flex uk-flex-middle uk-flex-right">
         <div className="uk-flex uk-flex-right uk-flex-wrap uk-flex-1">
           <div className="uk-flex">
-            {' '}
-            &nbsp;
             <Button
               style="custom-secondary"
               color="primaryOrange"
               size="small"
+              dataTestId="reset-filters"
               onClick={resetFilters}
             >
               Réinitialiser les filtres

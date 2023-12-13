@@ -1,7 +1,8 @@
 import React, { useCallback } from 'react';
 
 import { v4 as uuid } from 'uuid';
-import { Button, Icon } from 'src/components/utils';
+import CaretDownIcon from 'assets/icons/caret-down.svg';
+import { Button } from 'src/components/utils';
 import { gaEvent } from 'src/lib/gtag';
 import { AnyToFix } from 'src/utils/Types';
 
@@ -113,25 +114,19 @@ export const FiltersDropdowns = ({
                   }`}
                 >
                   <div
-                    className={`ent-select-search ${
+                    className={`uk-inline ent-select-search ${
                       smallSelectors ? 'ent-select-search-no-padding' : ''
                     } ${showSeparator ? 'ent-select-separator' : ''}`}
                     style={{ opacity: disabled ? 0.6 : 1 }}
                   >
                     <Button
+                      toggle={`target: #dropdown-filters-toggle-${key}`}
                       disabled={disabled}
                       style="text"
                       className={`uk-width-expand ${
                         filters[key].length === 0 ? 'uk-text-muted' : ''
                       }`}
                     >
-                      {/* {icon && (
-                  <Icon
-                    name={icon}
-                    ratio={0.7}
-                    className="uk-margin-small-right"
-                  />
-                )} */}
                       <span className="uk-width-expand uk-text-left uk-flex uk-flex-middle uk-margin-small-right">
                         {title}
                       </span>
@@ -139,11 +134,13 @@ export const FiltersDropdowns = ({
                         <div>
                           &nbsp;
                           <div className="uk-badge">{filters[key].length}</div>
+                          &nbsp;
                         </div>
                       )}
-                      <Icon name="triangle-down" />
+                      <CaretDownIcon />
                     </Button>
                     <div
+                      id={`dropdown-filters-toggle-${key}`}
                       data-uk-dropdown="mode: click;"
                       className="uk-height-max-medium uk-overflow-auto uk-width-medium"
                     >
@@ -191,11 +188,4 @@ export const FiltersDropdowns = ({
       )}
     </div>
   );
-};
-
-FiltersDropdowns.defaultProps = {
-  hideOnMobile: false,
-  fullWidth: false,
-  showSeparator: false,
-  smallSelectors: false,
 };

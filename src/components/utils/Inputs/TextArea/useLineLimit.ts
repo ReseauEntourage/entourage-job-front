@@ -15,7 +15,8 @@ export function useLineLimit(
 
   const ref = useRef<HTMLTextAreaElement>();
 
-  const prevValue: string = usePrevious(value);
+  const // @ts-expect-error after enable TS strict mode. Please, try to fix it
+    prevValue: string = usePrevious(value);
 
   const calculateContentHeight = useCallback((ta, scanAmount) => {
     const origHeight = ta.style.height;
@@ -51,9 +52,13 @@ export function useLineLimit(
     }
   }, []);
 
-  const maxLinesReached = maxLines - numberOfLines < 0;
+  const maxLinesReached =
+    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+    maxLines - numberOfLines < 0;
 
-  const remainingLines = maxLines - numberOfLines;
+  const remainingLines =
+    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+    maxLines - numberOfLines;
 
   useEffect(() => {
     if (maxLines && ref && ref.current && value !== prevValue) {

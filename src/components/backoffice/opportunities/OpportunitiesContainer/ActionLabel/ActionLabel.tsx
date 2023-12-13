@@ -5,13 +5,18 @@ import {
   StyledLabelContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel/ActionLabel.styles';
 
+export type ActionLabelColor =
+  | 'yellow'
+  | 'primaryOrange'
+  | 'yesGreen'
+  | 'noRed';
+
 interface ActionLabelProps {
-  color: 'yellow' | 'primaryOrange';
-  icon: JSX.Element;
+  color: ActionLabelColor;
+  icon?: JSX.Element;
   label: string;
   disabled?: boolean;
   hoverAnimation?: boolean;
-  fill?: boolean;
   onClick?: () => void;
   id?: string;
 }
@@ -24,11 +29,9 @@ export const ActionLabel = ({
   id = '',
   disabled = false,
   hoverAnimation = false,
-  fill = false,
 }: ActionLabelProps) => {
   return (
     <StyledContainer
-      fill={fill}
       color={color}
       disabled={disabled}
       hoverAnimation={hoverAnimation}
@@ -38,7 +41,7 @@ export const ActionLabel = ({
       }}
       data-testid={id}
     >
-      <StyledIconContainer>{icon}</StyledIconContainer>
+      {icon && <StyledIconContainer>{icon}</StyledIconContainer>}
       <StyledLabelContainer className="action-label">
         {label}
       </StyledLabelContainer>

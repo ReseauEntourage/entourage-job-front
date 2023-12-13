@@ -58,24 +58,28 @@ export const CVCareerPathSentenceNew = ({
   }
 
   if (sortedBusinessLines) {
-    const careerPaths = sortedBusinessLines.reduce((acc, curr) => {
-      const correspondingAmbition = sortedAmbitions?.find(({ order }) => {
-        return order === curr.order;
-      });
-      return [
-        ...acc,
-        {
-          order: curr.order,
-          ambition: correspondingAmbition?.name,
-          businessLine: {
-            ...findConstantFromValue(curr.name, BUSINESS_LINES),
-            label: buildBusinessLineForSentence(
-              findConstantFromValue(curr.name, BUSINESS_LINES)
-            ),
+    const careerPaths = sortedBusinessLines.reduce(
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      (acc, curr) => {
+        const correspondingAmbition = sortedAmbitions?.find(({ order }) => {
+          return order === curr.order;
+        });
+        return [
+          ...acc,
+          {
+            order: curr.order,
+            ambition: correspondingAmbition?.name,
+            businessLine: {
+              ...findConstantFromValue(curr.name, BUSINESS_LINES),
+              label: buildBusinessLineForSentence(
+                findConstantFromValue(curr.name, BUSINESS_LINES)
+              ),
+            },
           },
-        },
-      ];
-    }, []);
+        ];
+      },
+      []
+    );
 
     const getAmbitionIfExists = (index) => {
       if (careerPaths[index].ambition) {

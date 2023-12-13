@@ -1,52 +1,39 @@
-/* eslint-disable @next/next/no-img-element */
+import Image from 'next/image';
 import React from 'react';
 import { addPrefix } from 'src/utils';
 
 interface ImgProps {
   src: string;
   alt: string;
-  width?: string;
-  height?: string;
-  className?: string;
+  width?: number;
+  height?: number;
   cover?: boolean;
 }
 
-export const Img = ({
-  src,
-  alt,
-  width,
-  height,
-  className,
-  cover,
-}: ImgProps) => {
+export const Img = ({ src, alt, width, height, cover = false }: ImgProps) => {
   if (cover) {
     return (
-      <img
+      <Image
         alt={alt}
-        data-src={addPrefix(src)}
+        src={addPrefix(src)}
+        layout="fill"
+        objectFit="cover"
+        objectPosition="center"
+      />
+    );
+  }
+  if (width || height) {
+    return (
+      <Image
+        alt={alt}
+        src={addPrefix(src)}
         width={width}
         height={height}
-        data-uk-img=""
-        className={className}
-        data-uk-cover=""
+        objectFit="contain"
       />
     );
   }
   return (
-    <img
-      alt={alt}
-      data-src={addPrefix(src)}
-      width={width}
-      height={height}
-      data-uk-img=""
-      className={className}
-    />
+    <Image alt={alt} src={addPrefix(src)} layout="fill" objectFit="contain" />
   );
-};
-
-Img.defaultProps = {
-  width: undefined,
-  height: undefined,
-  className: undefined,
-  cover: false,
 };

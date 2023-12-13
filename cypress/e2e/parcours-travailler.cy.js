@@ -45,9 +45,17 @@ describe('Parcours travailler', () => {
         '[data-testid="form-candidate-inscription-infoCoSubtitle"]'
       ).should('include.text', Cypress.env('adresseLocauxParis'));
       cy.get('[data-testid="infoco-radio-5"]').click();
-      cy.get('button').contains('Valider').should('be.visible').click();
+      cy.get('.ReactModalPortal div')
+        .find('button')
+        .contains('Valider')
+        .should('be.visible')
+        .click();
       cy.wait('@postInscription');
-      cy.get('button').contains('Fermer').should('be.visible').click();
+      cy.get('.ReactModalPortal div')
+        .find('button')
+        .contains('Fermer')
+        .should('be.visible')
+        .click();
       cy.get('.ReactModalPortal div').should('not.exist');
     });
   });

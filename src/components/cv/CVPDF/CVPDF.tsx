@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-import CalendarIcon from 'assets/custom/icons/calendar.svg';
-import CarIcon from 'assets/custom/icons/car.svg';
-import DocumentIcon from 'assets/custom/icons/document.svg';
-import LanguageIcon from 'assets/custom/icons/language.svg';
-import QuoteLeftIcon from 'assets/custom/icons/quote-left.svg';
-import QuoteRightIcon from 'assets/custom/icons/quote-right.svg';
+import CalendarIcon from 'assets/icons/calendar.svg';
+import CarIcon from 'assets/icons/car.svg';
+import DocumentIcon from 'assets/icons/document.svg';
+import LanguageIcon from 'assets/icons/language.svg';
+import QuoteLeftIcon from 'assets/icons/quote-left.svg';
+import QuoteRightIcon from 'assets/icons/quote-right.svg';
 import { CV, CVExperience, CVFormation } from 'src/api/types';
 import { CVCareerPathSentenceNew } from 'src/components/cv/CVCareerPathSentence';
 import {
@@ -59,11 +59,20 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
   });
 
   useEffect(() => {
-    if (cv.experiences?.length >= 4) {
+    if (
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      cv.experiences?.length >= 4
+    ) {
       setItems({
-        firstPageExperiences: cv.experiences.slice(0, 4),
-        secondPageExperiences: cv.experiences.slice(4),
+        firstPageExperiences:
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          cv.experiences.slice(0, 4),
+        secondPageExperiences:
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          cv.experiences.slice(4),
         firstPageFormations: [],
+
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         secondPageFormations: cv.formations,
       });
     }
@@ -71,24 +80,36 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
       setItems({
         firstPageExperiences: cv.experiences,
         secondPageExperiences: [],
-        firstPageFormations: cv.formations.slice(0, 1),
-        secondPageFormations: cv.formations.slice(1),
+        firstPageFormations:
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          cv.formations.slice(0, 1),
+        secondPageFormations:
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          cv.formations.slice(1),
       });
     }
     if (cv.experiences?.length === 2) {
       setItems({
         firstPageExperiences: cv.experiences,
         secondPageExperiences: [],
-        firstPageFormations: cv.formations.slice(0, 2),
-        secondPageFormations: cv.formations.slice(2),
+        firstPageFormations:
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          cv.formations.slice(0, 2),
+        secondPageFormations:
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          cv.formations.slice(2),
       });
     }
     if (cv.experiences?.length === 1) {
       setItems({
         firstPageExperiences: cv.experiences,
         secondPageExperiences: [],
-        firstPageFormations: cv.formations.slice(0, 3),
-        secondPageFormations: cv.formations.slice(3),
+        firstPageFormations:
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          cv.formations.slice(0, 3),
+        secondPageFormations:
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          cv.formations.slice(3),
       });
     }
   }, [cv]);
@@ -103,9 +124,9 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
               <CVProfilePicturePDF urlImg={cv.urlImg} />
               {cv.catchphrase && (
                 <StyledCVPDFQuote>
-                  <QuoteLeftIcon viewBox="0 0 10 8" />
+                  <QuoteLeftIcon />
                   <span>{cv.catchphrase}</span>
-                  <QuoteRightIcon viewBox="0 0 10 8" />
+                  <QuoteRightIcon />
                 </StyledCVPDFQuote>
               )}
             </StyledCVPDFProfilePictureContainer>
@@ -158,8 +179,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                 <li>
                   <div>
                     <p className="subtitle">
-                      <DocumentIcon viewBox="0 0 6 8" />{' '}
-                      <span>Type de contrat</span>
+                      <DocumentIcon /> <span>Type de contrat</span>
                     </p>
                     <p className="content">
                       {cv.contracts
@@ -175,8 +195,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                 <li>
                   <div>
                     <p className="subtitle">
-                      <CalendarIcon viewBox="0 0 6 6" />{' '}
-                      <span>Disponibilité</span>
+                      <CalendarIcon /> <span>Disponibilité</span>
                     </p>
                     <p className="content">{cv.availability}</p>
                   </div>
@@ -186,7 +205,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                 <li>
                   <div>
                     <p className="subtitle">
-                      <LanguageIcon viewBox="0 0 6 6" /> <span>Langues</span>
+                      <LanguageIcon /> <span>Langues</span>
                     </p>
                     <p className="content">
                       {cv.languages
@@ -202,7 +221,7 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                 <li>
                   <div>
                     <p className="subtitle">
-                      <CarIcon viewBox="0 0 6 6" /> <span>Mobilité</span>
+                      <CarIcon /> <span>Mobilité</span>
                     </p>
                     <p className="content">{cv.transport}</p>
                   </div>
@@ -231,10 +250,15 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                     <CVExperienceOrFormationPDF
                       key={experience.id}
                       title={experience.title}
+                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
                       description={experience.description}
+                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
                       dateStart={experience.dateStart}
+                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
                       dateEnd={experience.dateEnd}
+                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
                       location={experience.location}
+                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
                       structure={experience.company}
                       skills={experience.skills}
                     />
@@ -253,10 +277,15 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                     <CVExperienceOrFormationPDF
                       key={formation.id}
                       title={formation.title}
+                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
                       description={formation.description}
+                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
                       dateStart={formation.dateStart}
+                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
                       dateEnd={formation.dateEnd}
+                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
                       location={formation.location}
+                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
                       structure={formation.institution}
                       skills={formation.skills}
                     />
@@ -298,10 +327,15 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                       <CVExperienceOrFormationPDF
                         key={experience.id}
                         title={experience.title}
+                        // @ts-expect-error after enable TS strict mode. Please, try to fix it
                         description={experience.description}
+                        // @ts-expect-error after enable TS strict mode. Please, try to fix it
                         dateStart={experience.dateStart}
+                        // @ts-expect-error after enable TS strict mode. Please, try to fix it
                         dateEnd={experience.dateEnd}
+                        // @ts-expect-error after enable TS strict mode. Please, try to fix it
                         location={experience.location}
+                        // @ts-expect-error after enable TS strict mode. Please, try to fix it
                         structure={experience.company}
                         skills={experience.skills}
                       />
@@ -322,10 +356,15 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
                       <CVExperienceOrFormationPDF
                         key={formation.id}
                         title={formation.title}
+                        // @ts-expect-error after enable TS strict mode. Please, try to fix it
                         description={formation.description}
+                        // @ts-expect-error after enable TS strict mode. Please, try to fix it
                         dateStart={formation.dateStart}
+                        // @ts-expect-error after enable TS strict mode. Please, try to fix it
                         dateEnd={formation.dateEnd}
+                        // @ts-expect-error after enable TS strict mode. Please, try to fix it
                         location={formation.location}
+                        // @ts-expect-error after enable TS strict mode. Please, try to fix it
                         structure={formation.institution}
                         skills={formation.skills}
                       />

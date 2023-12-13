@@ -1,19 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import SearchIcon from 'assets/icons/search.svg';
 import { FiltersCheckboxes } from 'src/components/filters/FiltersCheckboxes';
 import { FiltersDropdowns } from 'src/components/filters/FiltersDropdowns';
 import { FiltersMobile } from 'src/components/filters/FiltersMobile';
 import { FiltersOptions } from 'src/components/filters/FiltersOptions';
 import { FiltersSideBar } from 'src/components/filters/FiltersSideBar';
-import { Icon } from 'src/components/utils';
 import {
   CV_FILTERS_DATA,
   MEMBER_FILTERS_DATA,
   OPPORTUNITY_FILTERS_DATA,
   ORGANIZATION_FILTERS_DATA,
 } from 'src/constants';
+import { HEIGHTS } from 'src/constants/styles';
 import { gaEvent } from 'src/lib/gtag';
 import { AnyToFix } from 'src/utils/Types';
-
 // to be typed
 
 interface SearchBarProps {
@@ -32,6 +32,7 @@ interface SearchBarProps {
   startSearchEvent?: {
     action: string;
   };
+  additionalButtons?: React.ReactNode;
 }
 
 export const SearchBar = ({
@@ -44,6 +45,7 @@ export const SearchBar = ({
   placeholder,
   startSearchEvent,
   smallSelectors,
+  additionalButtons,
 }: SearchBarProps) => {
   const [searchBuffer, setSearchBuffer] = useState(search || '');
 
@@ -64,16 +66,23 @@ export const SearchBar = ({
 
   useEffect(() => {
     setNumberOfFilters(
-      Object.values(filters).reduce((acc: number, curr: string) => {
-        return acc + curr.length;
-      }, 0) as number
+      Object.values(filters).reduce(
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        (acc: number, curr: string) => {
+          return acc + curr.length;
+        },
+        0
+      ) as number
     );
   }, [filters]);
 
   const hasFilters = numberOfFilters > 0 || search;
 
   return (
-    <div className="uk-flex uk-flex-column uk-flex-middle">
+    <div
+      className="uk-flex uk-flex-column uk-flex-middle"
+      style={{ height: HEIGHTS.SEARCH_BAR_HEIGHT }}
+    >
       <div className="uk-width-expand ent-search-bar">
         <form className="uk-search uk-search-navbar uk-width-expand">
           <input
@@ -105,7 +114,7 @@ export const SearchBar = ({
           className="ent-search-icon uk-background-primary uk-light"
           onClick={startSearch}
         >
-          <Icon name="search" className="uk-text-secondary" />
+          <SearchIcon className="uk-text-secondary" />
         </a>
       </div>
       <FiltersSideBar
@@ -120,6 +129,7 @@ export const SearchBar = ({
           setFilters={setFilters}
           hideOnMobile
         />
+        <div className="uk-width-expand">{additionalButtons}</div>
         {hasFilters && (
           <FiltersOptions
             resetFilters={() => {

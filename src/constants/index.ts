@@ -31,6 +31,27 @@ export const OFFER_STATUS: (FilterConstant<OfferStatus> & {
   { value: 4, label: 'Refus après entretien', color: 'danger' },
 ];
 
+export type AdminOffersTags = 'pending' | 'validated' | 'external' | 'archived';
+
+export const ADMIN_OFFERS_TAGS: FilterConstant<AdminOffersTags>[] = [
+  {
+    value: 'pending',
+    label: 'offres à valider',
+  },
+  {
+    value: 'validated',
+    label: 'offres publiées',
+  },
+  {
+    value: 'external',
+    label: 'offres externes',
+  },
+  {
+    value: 'archived',
+    label: 'offres archivées',
+  },
+];
+
 export type BusinessLineValue =
   | 'la'
   | 'aa'
@@ -288,9 +309,12 @@ export const CV_FILTERS_DATA = [
     key: 'locations',
     constants: REGIONS_FILTERS,
     priority: _.orderBy(
-      REGIONS_FILTERS.filter(({ zone }) => {
-        return zone !== ADMIN_ZONES.HZ;
-      }),
+      REGIONS_FILTERS.filter(
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        ({ zone }) => {
+          return zone !== ADMIN_ZONES.HZ;
+        }
+      ),
       'label',
       'desc'
     ),

@@ -35,6 +35,7 @@ export const FormationsProfileCard = ({
     <TimelineCard
       experiences={sortedFormations}
       onChange={onChange}
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
       remainingItems={remainingItems}
       type="formations"
       title={
@@ -51,12 +52,17 @@ export const FormationsProfileCard = ({
               closeModal();
               await onChange({
                 formations: [
+                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
                   ...sortedFormations,
                   {
                     ...fields,
+
+                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
                     dateStart: fields.dateStart
                       ? moment(fields.dateStart).toDate()
                       : null,
+
+                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
                     dateEnd: fields.dateEnd
                       ? moment(fields.dateEnd).toDate()
                       : null,

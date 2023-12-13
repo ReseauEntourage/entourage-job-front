@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
+import CaretDownIcon from 'assets/icons/caret-down.svg';
 import {
   HeaderConnectedMainItemProps,
   HeaderConnectedMainItemDefaultProps,
@@ -12,20 +13,19 @@ import {
   Nav,
   Dropdown,
   NavbarLogo,
-  Icon,
 } from 'src/components/utils';
+import { ImgProfile } from 'src/components/utils/ImgProfile';
 import { StyledNav } from 'src/components/utils/Navbar/Nav/Nav.styles';
 import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
   USER_ROLES,
 } from 'src/constants/users';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { gaEvent } from 'src/lib/gtag';
-import { UserContext } from 'src/store/UserProvider';
 import { isRoleIncluded } from 'src/utils/Finding';
 import { StyledConnectedItem } from './HeaderConnectedContent.styles';
 import { HeaderConnectedContentProps } from './HeaderConnectedContent.types';
-import { ImgProfile } from './ImgProfile';
 import { SubMenu } from './SubMenu';
 
 const uuidValue = uuid();
@@ -33,15 +33,30 @@ const uuidValue = uuid();
 export const HeaderConnectedContentDesktop = ({
   badges,
   links = {
-    admin: [HeaderConnectedMainItemDefaultProps],
-    dropdown: [HeaderConnectedMainItemDefaultProps],
-    candidat: [HeaderConnectedMainItemDefaultProps],
-    coach: [HeaderConnectedMainItemDefaultProps],
-    coach_externe: [HeaderConnectedMainItemDefaultProps],
+    admin: [
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      HeaderConnectedMainItemDefaultProps,
+    ],
+    dropdown: [
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      HeaderConnectedMainItemDefaultProps,
+    ],
+    candidat: [
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      HeaderConnectedMainItemDefaultProps,
+    ],
+    coach: [
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      HeaderConnectedMainItemDefaultProps,
+    ],
+    coach_externe: [
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      HeaderConnectedMainItemDefaultProps,
+    ],
   },
   isEmpty = false,
 }: HeaderConnectedContentProps) => {
-  const { user } = useContext(UserContext);
+  const user = useAuthenticatedUser();
 
   const { push, asPath } = useRouter();
 
@@ -71,9 +86,11 @@ export const HeaderConnectedContentDesktop = ({
           justifyContent: 'center',
         }}
       >
-        <ImgProfile />
-        <span className="uk-margin-small-left">Bonjour {user.firstName}</span>
-        <Icon name="triangle-down" />
+        <ImgProfile user={user} size={40} />
+        <span className="uk-margin-small-left uk-margin-small-right">
+          Bonjour {user.firstName}
+        </span>
+        <CaretDownIcon />
       </a>
       <Dropdown
         dividers={[2]}
@@ -187,21 +204,35 @@ export const HeaderConnectedContentDesktop = ({
                           className="uk-flex uk-flex-middle menu-link"
                         >
                           <span className="uk-margin-small-right icon-span">
-                            <Icon name={icon} />
+                            {icon}
                           </span>
                           <span className="name-span">{name}</span>
-                          {badges[badge] > 0 && (
-                            <div>
-                              &nbsp;
-                              <div className="uk-badge uk-margin-small-left">
-                                {badges[badge]}
+                          {
+                            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                            badges[badge] > 0 && (
+                              <div>
+                                &nbsp;
+                                <div className="uk-badge uk-margin-small-left">
+                                  {
+                                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                                    badges[badge]
+                                  }
+                                </div>
                               </div>
-                            </div>
-                          )}
+                            )
+                          }
                         </SimpleLink>
-                        {subMenu?.length > 0 && (
-                          <SubMenu items={subMenu} badges={badges} />
-                        )}
+                        {
+                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                          subMenu?.length > 0 && (
+                            <SubMenu
+                              // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                              items={subMenu}
+                              // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                              badges={badges}
+                            />
+                          )
+                        }
                       </StyledConnectedItem>
                     );
                   }

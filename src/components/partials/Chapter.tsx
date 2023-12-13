@@ -45,34 +45,26 @@ export const Chapter = ({
               animate
                 ? `cls:uk-animation-slide-${
                     direction === 'left' ? 'right' : 'left'
-                  }; delay: 200;`
+                  }; delay: 200; target: > .animate;`
                 : ''
             }
           >
             {smallTitle && (
-              <h2 className="uk-text-bold uk-text-left uk-margin-medium-bottom uk-margin-remove-top">
+              <h2 className="uk-text-bold uk-text-left uk-margin-medium-bottom uk-margin-remove-top animate">
                 {title}
               </h2>
             )}
-            <p className="uk-margin-remove-top uk-margin-remove-bottom">
+            <p className="uk-margin-remove-top uk-margin-remove-bottom animate">
               {content}
             </p>
-            {cta && (
-              <div className="uk-flex uk-flex-center uk-margin-medium-top">
-                {cta}
-              </div>
-            )}
+            {cta && <div className="uk-flex uk-margin-medium-top">{cta}</div>}
           </div>
           {imgSrc && (
             <div
-              className="uk-flex uk-flex-center uk-flex-middle"
+              className="uk-height-large uk-flex uk-flex-center uk-flex-middle uk-box-shadow-medium uk-border-rounded uk-cover-container"
               data-uk-scrollspy="cls:uk-animation-fade; delay: 200;"
             >
-              <Img
-                src={imgSrc}
-                alt=""
-                className="uk-height-max-large uk-box-shadow-medium uk-border-rounded"
-              />
+              <Img src={imgSrc} cover alt="" />
             </div>
           )}
         </Grid>

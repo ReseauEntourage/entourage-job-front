@@ -1,6 +1,7 @@
 import React from 'react';
+import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
-import { Button, Img, Icon } from 'src/components/utils';
+import { Button, Img } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { addPrefix } from 'src/utils';
 
@@ -22,8 +23,8 @@ export const SailInfoModal = () => {
         style="secondary"
         className="uk-margin-medium-top"
       >
-        Lire l&apos;histoire&nbsp;
-        <Icon name="chevron-right" />
+        Lire l&apos;histoire
+        <ChevronRightIcon />
       </Button>
     </>
   );

@@ -1,2 +1,2 @@
-export * from './PostOpportunityModal';
-export * from './PostPublicOfferModal';
+export * from './PostAdminOpportunityModal';
+export * from './PostPublicOpportunityModal';

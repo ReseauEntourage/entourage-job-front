@@ -64,6 +64,8 @@ export function EditMemberModal({ user, setUser }: EditMemberModal) {
           : fields.userToLinkId?.value;
         const { data: updatedUserWithLinkedMember } = await Api.putLinkUser(
           user.id,
+
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           userToLinkId || null
         );
 

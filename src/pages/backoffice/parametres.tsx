@@ -1,8 +1,15 @@
 import _ from 'lodash';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import UIkit from 'uikit';
+import EmailIcon from 'assets/icons/email.svg';
+import GenderIcon from 'assets/icons/gender.svg';
+import HomeIcon from 'assets/icons/home.svg';
+import PencilIcon from 'assets/icons/pencil.svg';
+import PhoneIcon from 'assets/icons/phone.svg';
+import UserIcon from 'assets/icons/user.svg';
 import { Api } from 'src/api';
-import { UserWithUserCandidate } from 'src/api/types';
+import { User, UserWithUserCandidate } from 'src/api/types';
 import { PasswordCriterias } from 'src/components/PasswordCriterias';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { ToggleWithConfirmationModal } from 'src/components/backoffice/ToggleWithConfirmationModal';
@@ -20,25 +27,35 @@ import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Card, Grid, Section, ButtonIcon } from 'src/components/utils';
-import { Icon } from 'src/components/utils/Icon';
+
 import {
   ALL_USER_ROLES,
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
   USER_ROLES,
 } from 'src/constants/users';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useResetForm } from 'src/hooks/utils/useResetForm';
-import { UserContext } from 'src/store/UserProvider';
+import { authenticationActions } from 'src/use-cases/authentication';
 import { isRoleIncluded } from 'src/utils/Finding';
 
 const Parametres = () => {
-  const { user, setUser } = useContext(UserContext);
+  const user = useAuthenticatedUser();
   const [userData, setUserData] = useState<UserWithUserCandidate>();
   const [loadingPersonal, setLoadingPersonal] = useState(false);
   const [loadingPassword, setLoadingPassword] = useState(false);
   const [form, resetForm] = useResetForm();
 
   const modalTitle = 'Édition - Informations personnelles';
+
+  const dispatch = useDispatch();
+
+  const setUser = useCallback(
+    (nextUser: User) => {
+      dispatch(authenticationActions.setUser(nextUser));
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     if (user) {
@@ -56,20 +73,23 @@ const Parametres = () => {
   const updateUser = useCallback(
     (newUserData: Partial<UserWithUserCandidate>, closeModal) => {
       if (!_.isEmpty(newUserData)) {
-        return Api.putUser(userData.id, newUserData)
+        return Api.putUser(
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          userData.id,
+          newUserData
+        )
           .then(() => {
             closeModal();
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             setUserData((prevUserData) => {
               return {
                 ...prevUserData,
                 ...newUserData,
               };
             });
-            setUser((prevUser) => {
-              return {
-                ...prevUser,
-                ...newUserData,
-              };
+            setUser({
+              ...user,
+              ...newUserData,
             });
             UIkit.notification(
               'Vos informations personnelles ont bien été mises à jour',
@@ -92,7 +112,7 @@ const Parametres = () => {
           });
       }
     },
-    [setUser, userData]
+    [setUser, user, userData]
   );
 
   const checkEmailAndSubmit = useCallback(
@@ -105,7 +125,10 @@ const Parametres = () => {
       closeModal: () => void
     ) => {
       if (oldEmail || newEmail0 || newEmail1) {
-        if (userData.email !== oldEmail.toLowerCase()) {
+        if (
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          userData.email !== oldEmail.toLowerCase()
+        ) {
           setError("L'ancienne adresse email n'est pas valide");
         } else if (newEmail0.length === 0 || newEmail0 !== newEmail1) {
           setError('Les deux adresses email ne sont pas indentiques');
@@ -127,12 +150,24 @@ const Parametres = () => {
         submitText="Envoyer"
         title={modalTitle}
         defaultValues={{
-          firstName: userData.firstName,
-          lastName: userData.lastName,
-          gender: userData.gender,
-          phone: userData.phone,
-          zone: userData.zone,
-          adminRole: userData.adminRole,
+          firstName:
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            userData.firstName,
+          lastName:
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            userData.lastName,
+          gender:
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            userData.gender,
+          phone:
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            userData.phone,
+          zone:
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            userData.zone,
+          adminRole:
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            userData.adminRole,
         }}
         formSchema={formPersonalDataAsAdmin}
         onSubmit={async (
@@ -151,22 +186,46 @@ const Parametres = () => {
           setError
         ) => {
           const newUserData: Partial<UserWithUserCandidate> = {};
-          if (firstName !== userData.firstName) {
+          if (
+            firstName !==
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            userData.firstName
+          ) {
             newUserData.firstName = firstName;
           }
-          if (lastName !== userData.lastName) {
+          if (
+            lastName !==
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            userData.lastName
+          ) {
             newUserData.lastName = lastName;
           }
-          if (zone !== userData.zone) {
+          if (
+            zone !==
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            userData.zone
+          ) {
             newUserData.zone = zone;
           }
-          if (adminRole !== userData.adminRole) {
+          if (
+            adminRole !==
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            userData.adminRole
+          ) {
             newUserData.adminRole = adminRole;
           }
-          if (gender !== userData.gender) {
+          if (
+            gender !==
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            userData.gender
+          ) {
             newUserData.gender = gender;
           }
-          if (phone !== userData.phone) {
+          if (
+            phone !==
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            userData.phone
+          ) {
             newUserData.phone = phone;
           }
           await checkEmailAndSubmit(
@@ -187,7 +246,9 @@ const Parametres = () => {
       <ModalEdit
         title={modalTitle}
         defaultValues={{
-          phone: userData.phone,
+          phone:
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            userData.phone,
         }}
         formSchema={formPersonalDataAsCoach}
         onSubmit={async (
@@ -196,7 +257,11 @@ const Parametres = () => {
           setError
         ) => {
           const newUserData: Partial<UserWithUserCandidate> = {};
-          if (phone !== userData.phone) {
+          if (
+            phone !==
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            userData.phone
+          ) {
             newUserData.phone = phone;
           }
           await checkEmailAndSubmit(
@@ -217,8 +282,12 @@ const Parametres = () => {
       <ModalEdit
         title={modalTitle}
         defaultValues={{
-          phone: userData.phone,
-          address: userData.address,
+          phone:
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            userData.phone,
+          address:
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            userData.address,
         }}
         formSchema={formPersonalDataAsCandidate}
         onSubmit={async (
@@ -227,10 +296,18 @@ const Parametres = () => {
           setError
         ) => {
           const newUserData: Partial<UserWithUserCandidate> = {};
-          if (phone !== userData.phone) {
+          if (
+            phone !==
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            userData.phone
+          ) {
             newUserData.phone = phone;
           }
-          if (address !== userData.address) {
+          if (
+            address !==
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            userData.address
+          ) {
             newUserData.address = address;
           }
           await checkEmailAndSubmit(
@@ -247,12 +324,30 @@ const Parametres = () => {
   }, [checkEmailAndSubmit, userData]);
 
   const openCorrespondingModal = useCallback(() => {
-    if (isRoleIncluded(ALL_USER_ROLES, userData.role)) {
-      if (isRoleIncluded(CANDIDATE_USER_ROLES, userData.role)) {
+    if (
+      isRoleIncluded(
+        ALL_USER_ROLES,
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        userData.role
+      )
+    ) {
+      if (
+        isRoleIncluded(
+          CANDIDATE_USER_ROLES,
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          userData.role
+        )
+      ) {
         openPersonalDataModalAsCandidate();
         return;
       }
-      if (isRoleIncluded(COACH_USER_ROLES, userData.role)) {
+      if (
+        isRoleIncluded(
+          COACH_USER_ROLES,
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          userData.role
+        )
+      ) {
         openPersonalDataModalAsCoach();
         return;
       }
@@ -268,7 +363,7 @@ const Parametres = () => {
 
   return (
     <LayoutBackOffice title="Mes Paramètres">
-      <Section>
+      <Section className="custom-page">
         <HeaderBackoffice
           title="Mes paramètres"
           description="Ici, vous pouvez gérer les données qui sont liées à votre compte sur LinkedOut. Vous pouvez aussi changer votre mail et votre mot de passe."
@@ -284,9 +379,13 @@ const Parametres = () => {
                       title="J'ai retrouvé un emploi"
                       modalTitle="Vous avez retrouvé un emploi ?"
                       modalConfirmation="Valider"
-                      defaultValue={userData.candidat.employed}
+                      defaultValue={
+                        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                        userData.candidat.employed
+                      }
                       candidateId={userData.id}
                       notificationMessage="Votre profil a été mis à jour !"
+                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
                       subtitle={
                         userData &&
                         userData.candidat && (
@@ -299,6 +398,8 @@ const Parametres = () => {
                       setData={(newData) => {
                         setUserData({
                           ...userData,
+
+                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
                           candidat: {
                             ...userData.candidat,
                             ...newData,
@@ -321,7 +422,10 @@ const Parametres = () => {
                         </>
                       }
                       modalConfirmation="Oui, masquer mon CV"
-                      defaultValue={userData.candidat.hidden}
+                      defaultValue={
+                        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                        userData.candidat.hidden
+                      }
                       onToggle={(hidden) => {
                         return Api.putCandidate(userData.id, {
                           hidden,
@@ -329,6 +433,8 @@ const Parametres = () => {
                           .then(() => {
                             setUserData({
                               ...userData,
+
+                              // @ts-expect-error after enable TS strict mode. Please, try to fix it
                               candidat: {
                                 ...userData.candidat,
                                 hidden,
@@ -360,7 +466,7 @@ const Parametres = () => {
                     <div data-uk-spinner="ratio: .8" />
                   ) : (
                     <ButtonIcon
-                      name="pencil"
+                      icon={<PencilIcon />}
                       onClick={openCorrespondingModal}
                     />
                   )}
@@ -368,24 +474,24 @@ const Parametres = () => {
                 {userData ? (
                   <Grid column gap="small">
                     <Grid row gap="small">
-                      <Icon name="user" style={{ width: 20 }} />
+                      <UserIcon width={20} />
                       <span>{`${userData.firstName} ${userData.lastName}`}</span>
                     </Grid>
                     {userData.role !== USER_ROLES.ADMIN && (
                       <Grid row gap="small">
-                        <Icon name="gender" style={{ width: 20 }} />
+                        <GenderIcon width={20} />
                         <span>
                           {`${userData.gender === 0 ? 'Homme' : 'Femme'}`}
                         </span>
                       </Grid>
                     )}
                     <Grid row gap="small">
-                      <Icon name="mail" style={{ width: 20 }} />
+                      <EmailIcon width={20} />
                       <span>{userData.email}</span>
                     </Grid>
                     {userData.role !== USER_ROLES.ADMIN && (
                       <Grid row gap="small">
-                        <Icon name="phone" style={{ width: 20 }} />
+                        <PhoneIcon width={20} />
                         {userData.phone ? (
                           <span>{userData.phone}</span>
                         ) : (
@@ -397,7 +503,7 @@ const Parametres = () => {
                     )}
                     {isRoleIncluded(CANDIDATE_USER_ROLES, [userData.role]) && (
                       <Grid row gap="small">
-                        <Icon name="home" style={{ width: 20 }} />
+                        <HomeIcon width={20} />
                         {userData.address ? (
                           <span>{userData.address}</span>
                         ) : (

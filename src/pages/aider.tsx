@@ -1,13 +1,10 @@
 import React from 'react';
-
-import MainImg from 'public/static/img/aider-banner-desktop.jpg';
-import MainImgMobile from 'public/static/img/aider-banner-mobile.jpg';
 import { Layout } from 'src/components/Layout';
 import { NewsletterPartial, SharePartial } from 'src/components/partials';
-import { CoachContainer } from 'src/components/partials/Aider/CoachContainer';
-import { HelpCards } from 'src/components/partials/Aider/HelpCards';
-import { InfoContainer } from 'src/components/partials/Aider/InfoContainer';
-import { ImageTitle } from 'src/components/partials/ImageTitleNew';
+import { ImageTitle } from 'src/components/partials/ImageTitle';
+import { CoachContainer } from 'src/components/partials/pages/Aider/CoachContainer';
+import { HelpCards } from 'src/components/partials/pages/Aider/HelpCards';
+import { InfoContainer } from 'src/components/partials/pages/Aider/InfoContainer';
 import { Grid, Section } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';
 
@@ -17,8 +14,8 @@ const Aider = () => {
       <ImageTitle
         title="Vous souhaitez aider&nbsp;?"
         description="Engagez-vous et aidez les candidats LinkedOut à retrouver un réseau, que vous soyez disponibles quelques minutes ou quelques mois."
-        img={MainImg}
-        imgMobile={MainImgMobile}
+        img="/static/img/aider-banner-desktop.jpg"
+        imgMobile="/static/img/aider-banner-mobile.jpg"
         alt="Un candidat LinkedOut et sa coach"
       />
       <HelpCards />

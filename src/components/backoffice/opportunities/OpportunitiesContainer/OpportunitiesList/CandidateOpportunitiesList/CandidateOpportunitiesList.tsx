@@ -1,22 +1,21 @@
-import { useScrollPosition } from '@n8tb1t/use-scroll-position';
-import { useWindowHeight } from '@react-hook/window-size';
 import Link from 'next/link';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React from 'react';
 import { v4 as uuid } from 'uuid';
+import PlusIcon from 'assets/icons/plus.svg';
 import {
   StyledLinkCard,
   StyledListContent,
   StyledListItem,
   StyledListItemContainer,
 } from '../OpportunitiesList.styles';
+import { useIsAtBottom } from '../useIsAtBottom';
 import { OpportunityWithOpportunityUsers } from 'src/api/types';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { useOpportunityType } from 'src/components/backoffice/opportunities/useOpportunityType';
 import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
-import { Button, Icon } from 'src/components/utils';
-import { usePrevious } from 'src/hooks/utils';
+import { Button } from 'src/components/utils';
 import { CandidateOpportunityItem } from './CandidateOpportunityItem';
 
 const uuidValue = uuid();
@@ -24,7 +23,7 @@ const uuidValue = uuid();
 interface CandidateOpportunitiesListProps {
   opportunities: Partial<OpportunityWithOpportunityUsers>[];
   fetchOpportunities: () => void;
-  setOffset: Dispatch<SetStateAction<number>>;
+  setOffset: (offset: number) => void;
   hasFetchedAll: boolean;
   candidateId: string;
 }
@@ -39,41 +38,7 @@ export const CandidateOpportunitiesList = ({
   const queryParamsOpportunities = useQueryParamsOpportunities();
   const opportunityId = useOpportunityId();
   const opportunityType = useOpportunityType();
-
-  const [isAtBottom, setIsAtBottom] = useState(false);
-  const windowHeight = useWindowHeight();
-
-  const prevIsAtBottom = usePrevious(isAtBottom);
-
-  const prevOpportunitiesLength = usePrevious(opportunities.length);
-
-  useEffect(() => {
-    if (isAtBottom && isAtBottom !== prevIsAtBottom) {
-      setOffset((prevOffset) => {
-        return prevOffset + 1;
-      });
-    }
-  }, [
-    setOffset,
-    isAtBottom,
-    prevIsAtBottom,
-    opportunities.length,
-    prevOpportunitiesLength,
-  ]);
-
-  useScrollPosition(
-    ({ currPos }) => {
-      if (
-        !isAtBottom &&
-        currPos.y * -1 === document.body.offsetHeight - windowHeight
-      ) {
-        setIsAtBottom(true);
-      } else {
-        setIsAtBottom(false);
-      }
-    },
-    [windowHeight]
-  );
+  useIsAtBottom(setOffset, opportunities);
 
   const opportunitiesListContent = opportunities.map((opportunity, index) => {
     return (
@@ -134,7 +99,7 @@ export const CandidateOpportunitiesList = ({
             );
           }}
         >
-          <Icon name="plus" ratio="0.8" className="uk-margin-small-right" />
+          <PlusIcon />
           Ajouter une offre externe
         </Button>
       )}

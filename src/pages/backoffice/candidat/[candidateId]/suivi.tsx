@@ -1,25 +1,26 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import UIkit from 'uikit';
 
+import HistoryIcon from 'assets/icons/history.svg';
 import { Api } from 'src/api';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { Button, Grid, Section } from 'src/components/utils';
-import { Icon } from 'src/components/utils/Icon';
+
 import { TextArea } from 'src/components/utils/Inputs';
 import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
   USER_ROLES,
 } from 'src/constants/users';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { usePrevious } from 'src/hooks/utils';
-import { UserContext } from 'src/store/UserProvider';
 import { isRoleIncluded } from 'src/utils/Finding';
 
 const Suivi = () => {
-  const { user } = useContext(UserContext);
+  const user = useAuthenticatedUser();
   const [userCandidat, setUserCandidat] = useState(null);
   const [loading, setLoading] = useState(true);
   const [value, setValue] = useState<string>();
@@ -30,7 +31,13 @@ const Suivi = () => {
   const title =
     user && isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
       ? 'Suivez votre progression'
-      : `Suivi du candidat - ${`${userCandidat?.candidat?.firstName} ${userCandidat?.candidat?.lastName}`}`;
+      : `Suivi du candidat - ${`${
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          userCandidat?.candidat?.firstName
+        } ${
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          userCandidat?.candidat?.lastName
+        }`}`;
   const description =
     user && isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
       ? "Ici, vous pouvez prendre des notes sur la progression de vos recherches, noter vos différents rendez-vous, etc. et échanger avec votre coach. Profitez de cet espace d'écriture libre qui vous est dédié !"
@@ -43,10 +50,18 @@ const Suivi = () => {
   const updateSuivi = useCallback(
     async (note) => {
       try {
-        await Api.putCandidate(userCandidat.candidat.id, {
+        await Api.putCandidate(
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          userCandidat.candidat.id,
+          {
+            note,
+          }
+        );
+        setUserCandidat((prevUserCandidat) => ({
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          ...prevUserCandidat,
           note,
-        });
-        setUserCandidat((prevUserCandidat) => ({ ...prevUserCandidat, note }));
+        }));
         UIkit.notification('Suivi sauvegardé', 'success');
       } catch (err) {
         console.error(err);
@@ -57,9 +72,17 @@ const Suivi = () => {
   );
 
   const sendNoteHasBeenRead = useCallback(async () => {
-    if (user && user.role !== USER_ROLES.ADMIN && userCandidat?.candidat?.id) {
+    if (
+      user &&
+      user.role !== USER_ROLES.ADMIN &&
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      userCandidat?.candidat?.id
+    ) {
       try {
-        await Api.putCandidateRead(userCandidat.candidat.id);
+        await Api.putCandidateRead(
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          userCandidat.candidat.id
+        );
       } catch (err) {
         console.error(err);
       }
@@ -119,6 +142,7 @@ const Suivi = () => {
             id="textarea-suivi"
             name="textarea-suivi"
             rows={10}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             value={value}
             onChange={updateValue}
             showLabel
@@ -130,16 +154,27 @@ const Suivi = () => {
           <Button
             style="default"
             onClick={() => {
-              updateValue(userCandidat.note);
+              updateValue(
+                // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                userCandidat.note
+              );
             }}
-            disabled={value === userCandidat.note}
+            disabled={
+              value ===
+              // @ts-expect-error after enable TS strict mode. Please, try to fix it
+              userCandidat.note
+            }
           >
-            <Icon name="history" />
+            <HistoryIcon />
           </Button>
           <Button
             style="default"
             onClick={() => updateSuivi(value)}
-            disabled={value === userCandidat.note}
+            disabled={
+              value ===
+              // @ts-expect-error after enable TS strict mode. Please, try to fix it
+              userCandidat.note
+            }
           >
             Sauvegarder
           </Button>
@@ -150,7 +185,7 @@ const Suivi = () => {
 
   return (
     <LayoutBackOffice title={title}>
-      <Section>{content}</Section>
+      <Section className="custom-page">{content}</Section>
     </LayoutBackOffice>
   );
 };

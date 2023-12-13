@@ -1,9 +1,10 @@
 import Router from 'next/router';
 import Pusher from 'pusher-js';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import UIkit from 'uikit';
+import QuestionIcon from 'assets/icons/question.svg';
 import { Api } from 'src/api';
-import { CV, User } from 'src/api/types';
+import { CV } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { Button, ButtonIcon } from 'src/components/utils';
@@ -15,9 +16,9 @@ import {
   COACH_USER_ROLES,
   USER_ROLES,
 } from 'src/constants/users';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop, usePrevious } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
-import { UserContext } from 'src/store/UserProvider';
 import { isRoleIncluded } from 'src/utils/Finding';
 import { ButtonDownload } from './ButtonDownload';
 import {
@@ -29,10 +30,14 @@ import { CVFicheEdition } from './CVFicheEdition';
 import { CVModalPreview } from './CVModalPreview';
 import { NoCV } from './NoCV';
 
-const pusher = new Pusher(process.env.PUSHER_API_KEY, {
-  cluster: 'eu',
-  forceTLS: true,
-});
+const pusher = new Pusher(
+  // @ts-expect-error after enable TS strict mode. Please, try to fix it
+  process.env.PUSHER_API_KEY,
+  {
+    cluster: 'eu',
+    forceTLS: true,
+  }
+);
 
 interface CVEditPageProps {
   candidateId: string;
@@ -54,7 +59,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
 
   const isDesktop = useIsDesktop();
 
-  const { user } = useContext<{ user: User }>(UserContext);
+  const user = useAuthenticatedUser();
 
   const prevCV = usePrevious(cv);
 
@@ -78,7 +83,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
   useEffect(() => {
     if (cv && cv !== prevCV) {
       if (!cvVersion) setCvVersion(cv.version);
-      setImageUrl(`${process.env.AWSS3_URL}${cv.urlImg}`);
+      setImageUrl(`${process.env.AWSS3_URL}/${cv.urlImg}`);
       setCVHasBeenRead();
     }
   }, [candidateId, cv, cvVersion, prevCV, setCVHasBeenRead]);
@@ -350,7 +355,13 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
           />
           <Button
             onClick={() => {
-              openModal(<CVModalPreview cv={cv} imageUrl={imageUrl} />);
+              openModal(
+                <CVModalPreview
+                  cv={cv}
+                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                  imageUrl={imageUrl}
+                />
+              );
             }}
             color="darkGrayFont"
             style="custom-primary-inverted"
@@ -384,7 +395,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
           )}
           {user.role !== USER_ROLES.ADMIN && (
             <ButtonIcon
-              name="question"
+              icon={<QuestionIcon />}
               href={process.env.TUTORIAL_CV}
               newTab
               onClick={() => {

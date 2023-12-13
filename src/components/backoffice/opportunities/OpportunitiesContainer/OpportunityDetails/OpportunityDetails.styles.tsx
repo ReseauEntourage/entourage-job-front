@@ -1,24 +1,22 @@
 import styled from 'styled-components';
 import { BREAKPOINTS, COLORS, HEIGHTS } from 'src/constants/styles';
 
-export const StyledContainer = styled.div`
+export const StyledOpportunityDetailsVariableHeightContainer = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: column;
   position: sticky;
-  top: ${HEIGHTS.HEADER + HEIGHTS.TABS_HEIGHT + HEIGHTS.SECTION_PADDING}px;
+  top: ${({ contentHeight }) => {
+    return `${
+      HEIGHTS.HEADER + 2 * HEIGHTS.SECTION_PADDING + (contentHeight || 0)
+    }`;
+  }}px;
   @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
     top: ${HEIGHTS.HEADER_MOBILE + HEIGHTS.SECTION_PADDING_MOBILE}px;
   }
 `;
 
-export const StyledScroll = styled.div`
-  height: 100%;
-  position: relative;
-  overflow: auto;
-`;
-
-export const StyledTopContainer = styled.div`
+export const StyledOpportunityDetailsTopContainer = styled.div`
   display: flex;
   flex-direction: row;
   border-radius: 5px 5px 0 0;
@@ -27,7 +25,7 @@ export const StyledTopContainer = styled.div`
   flex-wrap: wrap;
 `;
 
-export const StyledCTAContainer = styled.div`
+export const StyledOpportunityDetailsCTAContainer = styled.div`
   background-color: ${COLORS.white};
   border-radius: 0 0 5px 5px;
   padding: 12px 16px;
@@ -38,25 +36,25 @@ export const StyledCTAContainer = styled.div`
   margin-top: 2px;
 `;
 
-export const StyledTitleContainer = styled.div`
+export const StyledOpportunityDetailsTitleContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 `;
 
-export const StyledContentContainer = styled.div`
+export const StyledOpportunityDetailsContentContainer = styled.div`
   position: relative;
   min-height: 200px;
 `;
 
-export const StyledInfoContainer = styled.div`
+export const StyledOpportunityDetailsInfoContainer = styled.div`
   display: flex;
   flex-direction: row;
   text-overflow: ellipsis;
 `;
 
-export const StyledDetailsContainer = styled.div`
+export const StyledOpportunityDetailsContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 4px;
@@ -64,7 +62,7 @@ export const StyledDetailsContainer = styled.div`
   background-color: ${COLORS.lightgray};
 `;
 
-export const StyledDetailsContentContainer = styled.div`
+export const StyledOpportunityDetailsDetailsContentContainer = styled.div`
   margin-top: 4px;
   display: flex;
   flex-direction: column;
@@ -82,9 +80,27 @@ export const StyledDetailsContentContainer = styled.div`
   }
 `;
 
-export const StyledRightContainer = styled.div`
+export const StyledOpportunityDetailsRightContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   justify-content: space-between;
+`;
+
+export const StyledOpportunityCTAsContainer = styled.ul`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  padding-left: 0;
+  margin-bottom: 0;
+  li {
+    list-style: none;
+  }
+  @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
+    flex-direction: column;
+    li:not(:last-child) {
+      margin-bottom: 16px;
+    }
+  }
 `;

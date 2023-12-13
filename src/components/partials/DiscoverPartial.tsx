@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { Api } from 'src/api';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { CandidatCard } from 'src/components/cards';
-import { Grid, Section, Icon } from 'src/components/utils';
+import { Grid, Section } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { UIKIT_STYLES } from 'src/components/variables';
 
@@ -21,7 +22,10 @@ export const DiscoverPartial = ({
       })
       .catch((err) => {
         console.error(err);
-        setError('Impossible de récupérer les CVs.');
+        setError(
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          'Impossible de récupérer les CVs.'
+        );
       });
   }, []);
 
@@ -32,13 +36,14 @@ export const DiscoverPartial = ({
       <Grid
         childWidths={['1-3@m']}
         gap="small"
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         items={cvs.map((cv) => {
           return (
             <CandidatCard
               businessLines={cv.businessLines}
               url={cv.user && cv.user.url}
               imgSrc={
-                (cv.urlImg && process.env.AWSS3_CDN_URL + cv.urlImg) ||
+                (cv.urlImg && `${process.env.AWSS3_CDN_URL}/${cv.urlImg}`) ||
                 undefined
               }
               firstName={cv.user && cv.user.candidat.firstName}
@@ -67,7 +72,8 @@ export const DiscoverPartial = ({
           href={{ pathname: '/candidats', query: { employed: false } }}
           className="uk-margin-large-top"
         >
-          Voir tous les candidats <Icon name="chevron-right" />
+          Voir tous les candidats
+          <ChevronRightIcon />
         </Button>
       </div>
     </Section>

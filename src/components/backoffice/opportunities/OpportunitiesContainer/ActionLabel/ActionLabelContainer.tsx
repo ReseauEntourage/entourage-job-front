@@ -1,7 +1,9 @@
 import React from 'react';
-import EntourageIcon from 'assets/custom/icons/entourage.svg';
+import EntourageIcon from 'assets/icons/entourage.svg';
+import HeartEmptyIcon from 'assets/icons/heart-empty.svg';
+import HeartIcon from 'assets/icons/heart.svg';
+import StarIcon from 'assets/icons/star.svg';
 import { ActionLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel/ActionLabel';
-import { Icon } from 'src/components/utils';
 
 interface ActionLabelContainerProps {
   isPublic: boolean;
@@ -22,38 +24,34 @@ export const ActionLabelContainer = ({
       {!isPublic && !isExternal && (
         <ActionLabel
           disabled
-          fill
           color="yellow"
           label="À traiter rapidement"
-          icon={<Icon name="star" ratio={0.8} />}
+          icon={<StarIcon />}
         />
       )}
       {isPublic && isRecommended && (
         <ActionLabel
           disabled
-          fill
           color="primaryOrange"
           label="Recommandée"
-          icon={<EntourageIcon viewBox="-1 6 16 10" height={16} width={10} />}
+          icon={<EntourageIcon height={16} width={10} />}
         />
       )}
       {isPublic && isBookmarked && (
         <ActionLabel
-          fill
           color="primaryOrange"
           label="Favoris"
           onClick={bookmarkOpportunity}
           id="cta-unbookmark"
-          icon={<Icon name="heart" ratio={0.8} />}
+          icon={<HeartIcon />}
         />
       )}
       {isExternal && (
         <ActionLabel
           disabled
-          fill
           color="primaryOrange"
           label="Perso"
-          icon={<Icon name="heart" ratio={0.8} />}
+          icon={<HeartIcon />}
         />
       )}
       {isPublic && !isRecommended && !isBookmarked && (
@@ -63,7 +61,7 @@ export const ActionLabelContainer = ({
           label="Ajouter aux favoris"
           onClick={bookmarkOpportunity}
           id="cta-bookmark"
-          icon={<Icon name="heart" ratio={0.8} />}
+          icon={<HeartEmptyIcon />}
         />
       )}
     </>

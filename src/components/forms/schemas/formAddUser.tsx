@@ -1,7 +1,7 @@
 import React from 'react';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { isEmail } from 'validator';
-import PlusFilledIcon from 'assets/custom/icons/plus-filled.svg';
+import PlusFilledIcon from 'assets/icons/plus-filled.svg';
 import { FormSchema, FormSchemaValidation, GetValueType } from '../FormSchema';
 import { Api } from 'src/api';
 import { ADMIN_ZONES_FILTERS, AdminZone } from 'src/constants/departements';
@@ -130,6 +130,7 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
           rules: [
             {
               method: (fieldValue) =>
+                // @ts-expect-error after enable TS strict mode. Please, try to fix it
                 fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
               message: 'Numéro de téléphone invalide',
             },
@@ -348,6 +349,7 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
       rules: [
         {
           method: (fieldValue) =>
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
           message: 'Numéro de téléphone invalide',
         },

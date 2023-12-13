@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
@@ -10,12 +10,12 @@ import { ErrorMessage } from 'src/components/backoffice/cv/ErrorMessage';
 import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
 import { Section } from 'src/components/utils';
 import { COACH_USER_ROLES } from 'src/constants/users';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useFetchCV } from 'src/hooks/useFetchCV';
-import { UserContext } from 'src/store/UserProvider';
 import { isRoleIncluded, getRelatedUser } from 'src/utils/Finding';
 
 const Edit = () => {
-  const { user } = useContext(UserContext);
+  const user = useAuthenticatedUser();
 
   const [userCompleteData, setUserCompleteData] =
     useState<UserWithUserCandidate>();
@@ -69,7 +69,7 @@ const Edit = () => {
 
   return (
     <LayoutBackOffice title="Edition du CV">
-      <Section>{content}</Section>
+      <Section className="custom-page">{content}</Section>
     </LayoutBackOffice>
   );
 };

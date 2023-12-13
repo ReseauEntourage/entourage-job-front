@@ -35,6 +35,7 @@ export const ModalConfirm = ({
           style="primary"
           dataTestId="modal-confirm-confirm"
           onClick={() => {
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             onClose();
             onConfirm();
           }}

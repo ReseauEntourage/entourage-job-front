@@ -11,7 +11,8 @@
     "@typescript-eslint/eslint-plugin",
     "@typescript-eslint",
     "typescript-sort-keys",
-    "import"
+    "import",
+    "@jambit/typed-redux-saga"
   ],
   "extends": [
     "airbnb",
@@ -199,6 +200,14 @@
       "rules": {
         "import/no-default-export": 0,
         "import/prefer-default-export": 2
+      }
+    },
+    {
+      "files": ["./**/*.ts"],
+      "excludedFiles": ["./**/*.spec.ts"],
+      "rules": {
+        "@jambit/typed-redux-saga/use-typed-effects": "error",
+        "@jambit/typed-redux-saga/delegate-effects": "error"
       }
     }
   ]

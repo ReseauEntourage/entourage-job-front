@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
-import React, { useContext } from 'react';
+import React from 'react';
 import { v4 as uuid } from 'uuid';
+import HomeIcon from 'assets/icons/home.svg';
 import { HeaderConnectedMainItemDefaultProps } from '../HeaderConnected.types';
 import { StyledHeaderMobile } from 'src/components/headers/Header.styles';
 import {
@@ -8,12 +9,11 @@ import {
   SimpleLink,
   Hamburger,
   NavbarLogo,
-  Icon,
 } from 'src/components/utils';
 import { Offcanvas } from 'src/components/utils/Offcanvas';
 import { OFFCANVAS_LOGGED } from 'src/constants/utils';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { gaEvent } from 'src/lib/gtag';
-import { UserContext } from 'src/store/UserProvider';
 import { StyledConnectedItemMobile } from './HeaderConnectedContent.styles';
 import { HeaderConnectedContentProps } from './HeaderConnectedContent.types';
 import { SubMenu } from './SubMenu';
@@ -23,15 +23,30 @@ const uuidValue = uuid();
 export const HeaderConnectedContentMobile = ({
   badges,
   links = {
-    admin: [HeaderConnectedMainItemDefaultProps],
-    dropdown: [HeaderConnectedMainItemDefaultProps],
-    candidat: [HeaderConnectedMainItemDefaultProps],
-    coach: [HeaderConnectedMainItemDefaultProps],
-    coach_externe: [HeaderConnectedMainItemDefaultProps],
+    admin: [
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      HeaderConnectedMainItemDefaultProps,
+    ],
+    dropdown: [
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      HeaderConnectedMainItemDefaultProps,
+    ],
+    candidat: [
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      HeaderConnectedMainItemDefaultProps,
+    ],
+    coach: [
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      HeaderConnectedMainItemDefaultProps,
+    ],
+    coach_externe: [
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      HeaderConnectedMainItemDefaultProps,
+    ],
   },
   isEmpty = false,
 }: HeaderConnectedContentProps) => {
-  const { user } = useContext(UserContext);
+  const user = useAuthenticatedUser();
 
   const { push, asPath } = useRouter();
   const logoLink = links[user?.role?.replace(' ', '_').toLowerCase()][0];
@@ -50,7 +65,7 @@ export const HeaderConnectedContentMobile = ({
         }
         right={
           <div className="uk-padding-small uk-flex uk-flex-middle">
-            <Hamburger targetId={OFFCANVAS_LOGGED} hidden="m" light={false} />
+            <Hamburger targetId={OFFCANVAS_LOGGED} />
           </div>
         }
       />
@@ -58,8 +73,8 @@ export const HeaderConnectedContentMobile = ({
         <ul className="uk-nav uk-nav-default uk-margin-medium-top">
           <li>
             <SimpleLink href="/">
-              <Icon name="home" className="uk-margin-small-right" />
-              Accueil
+              <HomeIcon width={16} height={16} />
+              &nbsp; Accueil
             </SimpleLink>
           </li>
           {!isEmpty &&
@@ -95,18 +110,30 @@ export const HeaderConnectedContentMobile = ({
                         }}
                       >
                         <span>
-                          <Icon name={icon} className="uk-margin-small-right" />
+                          <span className="uk-margin-small-right">{icon}</span>
                           {name}
                         </span>
                       </a>
-                      {badges[badge] > 0 && (
-                        <div>
-                          &nbsp;
-                          <div className="uk-badge">{badges[badge]}</div>
-                        </div>
-                      )}
+                      {
+                        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                        badges[badge] > 0 && (
+                          <div>
+                            &nbsp;
+                            <div className="uk-badge">
+                              {
+                                // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                                badges[badge]
+                              }
+                            </div>
+                          </div>
+                        )
+                      }
                       {subMenu?.length > 0 && (
-                        <SubMenu items={subMenu} badges={badges} />
+                        <SubMenu
+                          items={subMenu}
+                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                          badges={badges}
+                        />
                       )}
                     </StyledConnectedItemMobile>
                   );
@@ -129,7 +156,7 @@ export const HeaderConnectedContentMobile = ({
                   }}
                 >
                   <span>
-                    <Icon name={icon} className="uk-margin-small-right" />
+                    <span className="uk-margin-small-right">{icon}</span>
                     {name}
                   </span>
                 </a>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import ChevronUpIcon from 'assets/icons/chevron-up.svg';
 import { StyledBackToTop } from 'src/components/utils/BackToTop/BackToTop.styles';
-import { Icon } from 'src/components/utils/Icon';
 import { isSSR } from 'src/utils/isSSR';
 
 export const BackToTop = () => {
@@ -33,7 +33,7 @@ export const BackToTop = () => {
   };
   return (
     <StyledBackToTop className={iconClass} onClick={handleClick}>
-      <Icon name="chevron-white" style={{ height: 20 }} />
+      <ChevronUpIcon width={30} height={30} />
     </StyledBackToTop>
   );
 };

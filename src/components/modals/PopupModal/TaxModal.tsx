@@ -10,12 +10,19 @@ export function TaxModal() {
       removePadding
       onClose={(onClose) => {
         localStorage.setItem(STORAGE_KEYS.TAX_MODAL_CLOSED, String(true));
+
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         onClose();
       }}
     >
       <SimpleLink href={EXTERNAL_LINKS.TAX} isExternal target="_blank">
         <Container>
-          <Img src="static/img/tax.jpg" alt="Taxe d'apprentissage" />
+          <Img
+            src="/static/img/tax.jpg"
+            width={1080}
+            height={1080}
+            alt="Taxe d'apprentissage"
+          />
         </Container>
       </SimpleLink>
     </ModalGeneric>

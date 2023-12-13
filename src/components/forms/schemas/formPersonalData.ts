@@ -54,6 +54,7 @@ export const formPersonalDataAsCandidate: FormSchema<{
       rules: [
         {
           method: (fieldValue) =>
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
           message: 'Numéro de téléphone invalide',
         },
@@ -124,6 +125,7 @@ export const formPersonalDataAsCoach: FormSchema<{
       rules: [
         {
           method: (fieldValue) =>
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
           message: 'Numéro de téléphone invalide',
         },
@@ -230,6 +232,7 @@ export const formPersonalDataAsAdmin: FormSchema<{
       rules: [
         {
           method: (fieldValue) =>
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
           message: 'Numéro de téléphone invalide',
         },

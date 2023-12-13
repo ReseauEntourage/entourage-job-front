@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import React, { useMemo, useContext } from 'react';
+import React, { useMemo } from 'react';
 import { USER_ROLES } from 'src/constants/users';
-import { UserContext } from 'src/store/UserProvider';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import {
   StyledMemberInfoLink,
   StyledMemberInfoContainer,
@@ -26,7 +26,7 @@ export function MemberInfo({
   children,
   disableLink,
 }: MemberInfoProps) {
-  const { user } = useContext(UserContext);
+  const user = useAuthenticatedUser();
 
   const content = useMemo(
     () => (

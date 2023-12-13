@@ -1,10 +1,7 @@
-import { useScrollPosition } from '@n8tb1t/use-scroll-position';
-import { useWindowHeight } from '@react-hook/window-size';
 import _ from 'lodash';
 import moment from 'moment';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Ref } from 'react';
 import { OpportunityWithOpportunityUsers, Event } from 'src/api/types';
-import { tabs } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab/CandidateOffersTab.utils';
 import { ActionLabelContainer as ActionLabels } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
 import {
@@ -15,22 +12,20 @@ import {
 import { renderTabFromStatus } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.utils';
 import { DetailsProgressBar } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/DetailsProgressBar';
 import {
-  StyledCTAContainer,
-  StyledDetailsContainer,
-  StyledDetailsContentContainer,
-  StyledInfoContainer,
-  StyledRightContainer,
-  StyledTitleContainer,
-  StyledTopContainer,
+  StyledOpportunityDetailsCTAContainer,
+  StyledOpportunityDetailsContainer,
+  StyledOpportunityDetailsDetailsContentContainer,
+  StyledOpportunityDetailsInfoContainer,
+  StyledOpportunityDetailsRightContainer,
+  StyledOpportunityDetailsTitleContainer,
+  StyledOpportunityDetailsTopContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunityDetails.styles';
 import { OpportunitySection } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunitySection';
 import { useBookmarkOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/useBookmarkOpportunity';
 import { BUSINESS_LINES } from 'src/constants';
-import { HEIGHTS } from 'src/constants/styles';
 import { findConstantFromValue } from 'src/utils/Finding';
 import { mapEventDateFromStatus } from './CandidateOpportunityDetails.utils';
 import { CandidateOpportunityDetailsCTAs } from './CandidateOpportunityDetailsCTAs';
-import { CTAsByTab } from './CandidateOpportunityDetailsCTAs/CandidateOpportunityDetailsCTAs.utils';
 
 interface CandidateOpportunityDetailsProps
   extends Partial<OpportunityWithOpportunityUsers> {
@@ -39,6 +34,9 @@ interface CandidateOpportunityDetailsProps
   oppRefreshCallback: () => void;
   events?: Event[];
   createdAt: string;
+  hasCTAContainer: boolean;
+  containerHeight: number;
+  innerRef: Ref<HTMLElement>;
 }
 
 export const CandidateOpportunityDetails = ({
@@ -60,64 +58,24 @@ export const CandidateOpportunityDetails = ({
   createdAt,
   oppRefreshCallback,
   candidateId,
+  hasCTAContainer,
+  containerHeight,
+  innerRef,
 }: CandidateOpportunityDetailsProps) => {
-  const ref = useRef();
-  const windowHeight = useWindowHeight();
-
-  const [containerHeight, setContainerHeight] = useState(0);
-
   const { opportunityUsers, bookmarkOpportunity } = useBookmarkOpportunity(
     id,
     opportunityUsersProp
   );
 
-  const [hasCTAContainer, setHasCTAContainer] = useState(true);
-
-  useEffect(() => {
-    const index = tabs.findIndex(
-      ({ status }: { status: (string | number)[] }) => {
-        if (opportunityUsers.archived) {
-          return status.includes('archived');
-        }
-        return status.includes(opportunityUsers.status);
-      }
-    );
-
-    const hasCTAs =
-      CTAsByTab.find((tab) => {
-        return tab.tab === index;
-      }).ctas.length > 0;
-
-    setHasCTAContainer(hasCTAs);
-  }, [hasCTAContainer, opportunityUsers.archived, opportunityUsers.status]);
-
   const event = mapEventDateFromStatus(opportunityUsers.status, events);
 
-  useScrollPosition(
-    ({ currPos }) => {
-      const conditionalHeight = hasCTAContainer
-        ? HEIGHTS.OFFER_CTA_HEIGHT
-        : -HEIGHTS.SECTION_PADDING;
-
-      const bottom =
-        windowHeight - HEIGHTS.HEADER - HEIGHTS.TABS_HEIGHT - conditionalHeight;
-
-      const calculatedContainerHeight = bottom - currPos.y;
-
-      setContainerHeight(
-        calculatedContainerHeight < 2 * HEIGHTS.SECTION_PADDING
-          ? 2 * HEIGHTS.SECTION_PADDING
-          : calculatedContainerHeight
-      );
-    },
-    [windowHeight, hasCTAContainer],
-    ref
-  );
-
   return (
-    <StyledDetailsContainer ref={ref} data-testid="candidat-offer-details">
-      <StyledTopContainer>
-        <StyledTitleContainer>
+    <StyledOpportunityDetailsContainer
+      ref={innerRef}
+      data-testid="candidat-offer-details"
+    >
+      <StyledOpportunityDetailsTopContainer>
+        <StyledOpportunityDetailsTitleContainer>
           <StyledTitleText data-testid="candidat-offer-details-title">
             {title}
           </StyledTitleText>
@@ -135,22 +93,25 @@ export const CandidateOpportunityDetails = ({
             )}
           </InfoText>
           <InfoText>
-            <StyledInfoContainer>
+            <StyledOpportunityDetailsInfoContainer>
               <ContractLabel
+                // @ts-expect-error after enable TS strict mode. Please, try to fix it
                 contract={contract}
                 endOfContract={endOfContract}
                 startOfContract={startOfContract}
               />
               &nbsp;-&nbsp;{department}
-            </StyledInfoContainer>
+            </StyledOpportunityDetailsInfoContainer>
           </InfoText>
           <InfoText>{moment(createdAt).format('DD/MM/YYYY')}</InfoText>
-        </StyledTitleContainer>
-        <StyledRightContainer>
+        </StyledOpportunityDetailsTitleContainer>
+        <StyledOpportunityDetailsRightContainer>
           <ActionLabels
             isBookmarked={!!opportunityUsers?.bookmarked}
             isRecommended={!!opportunityUsers?.recommended}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             isPublic={isPublic}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             isExternal={isExternal}
             bookmarkOpportunity={async () => {
               await bookmarkOpportunity();
@@ -163,12 +124,13 @@ export const CandidateOpportunityDetails = ({
               <RightAlignText>{event.date}</RightAlignText>
             </InfoText>
           )}
-        </StyledRightContainer>
+        </StyledOpportunityDetailsRightContainer>
         <DetailsProgressBar
           tab={renderTabFromStatus(
             opportunityUsers.status,
             opportunityUsers.archived
           )}
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           noProcess={
             _.isNil(opportunityUsers.status) ||
             (opportunityUsers.status === -1 &&
@@ -178,19 +140,23 @@ export const CandidateOpportunityDetails = ({
               !opportunityUsers.archived)
           }
         />
-      </StyledTopContainer>
+      </StyledOpportunityDetailsTopContainer>
       {/* check if there are CTAS on the current tab to render ctas container */}
       {hasCTAContainer && (
-        <StyledCTAContainer>
+        <StyledOpportunityDetailsCTAContainer>
           <CandidateOpportunityDetailsCTAs
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             event={event}
             candidateId={candidateId}
             tab={renderTabFromStatus(
               opportunityUsers.status,
               opportunityUsers.archived
             )}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             OpportunityId={id}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             contract={contract}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             isExternal={isExternal}
             oppRefreshCallback={() => {
               oppRefreshCallback();
@@ -199,10 +165,10 @@ export const CandidateOpportunityDetails = ({
               await fetchOpportunities();
             }}
           />
-        </StyledCTAContainer>
+        </StyledOpportunityDetailsCTAContainer>
       )}
       {(companyDescription || description) && (
-        <StyledDetailsContentContainer
+        <StyledOpportunityDetailsDetailsContentContainer
           height={containerHeight === 0 ? '100%' : containerHeight}
         >
           {companyDescription && (
@@ -217,9 +183,9 @@ export const CandidateOpportunityDetails = ({
               content={description}
             />
           )}
-        </StyledDetailsContentContainer>
+        </StyledOpportunityDetailsDetailsContentContainer>
       )}
-    </StyledDetailsContainer>
+    </StyledOpportunityDetailsContainer>
     /* <ModalOffer
       currentOffer={opportunity}
       onOfferUpdated={fetchOpportunities}

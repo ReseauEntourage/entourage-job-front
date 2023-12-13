@@ -53,6 +53,7 @@ export const FormFooter = ({
             <ButtonPost
               text={submitText || 'Envoyer'}
               style="custom-primary"
+              // @ts-expect-error after enable TS strict mode. Please, try to fix it
               action={onSubmit}
               isLoadingOverride={isLoadingOverride}
               dataTestId={`form-confirm-${formId}`}

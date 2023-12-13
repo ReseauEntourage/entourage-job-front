@@ -1,11 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import UIkit from 'uikit';
+import EmailIcon from 'assets/icons/email.svg';
+import HomeIcon from 'assets/icons/home.svg';
+import LinkIcon from 'assets/icons/link.svg';
+import PhoneIcon from 'assets/icons/phone.svg';
+import UserIcon from 'assets/icons/user.svg';
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
 import { ToggleWithConfirmationModal } from 'src/components/backoffice/ToggleWithConfirmationModal';
 import { CandidateEmployedToggle } from 'src/components/backoffice/candidate/CandidateEmployedToggle';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
-import { Card, Grid, SimpleLink, Icon } from 'src/components/utils';
+import { Card, Grid, SimpleLink } from 'src/components/utils';
 import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
 import {
   getRelatedUser,
@@ -29,7 +34,10 @@ export const UserInformationCard = ({
       if (candidat) {
         setLinkedUser(candidat);
       } else {
-        setLinkedUser(null);
+        setLinkedUser(
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          null
+        );
       }
     }
     if (isRoleIncluded(CANDIDATE_USER_ROLES, userToAssign.role)) {
@@ -37,18 +45,26 @@ export const UserInformationCard = ({
       if (coach) {
         setLinkedUser(coach);
       } else {
-        setLinkedUser(null);
+        setLinkedUser(
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          null
+        );
       }
     }
   }, []);
 
   const updateUserCandidate = useCallback((id, props) => {
     setLinkedUser((prevLinkedUser): UserWithUserCandidate[] => {
-      const index = prevLinkedUser.findIndex((prevSingleLinkedUser) => {
-        return prevSingleLinkedUser.id === id;
-      });
+      const index =
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        prevLinkedUser.findIndex((prevSingleLinkedUser) => {
+          return prevSingleLinkedUser.id === id;
+        });
 
-      const newLinkedUser = [...prevLinkedUser];
+      const newLinkedUser = [
+        ...// @ts-expect-error after enable TS strict mode. Please, try to fix it
+        prevLinkedUser,
+      ];
 
       newLinkedUser[index] = {
         ...newLinkedUser[index],
@@ -92,7 +108,7 @@ export const UserInformationCard = ({
         const cardContent = (
           <Grid column gap="small">
             <Grid row gap="small">
-              <Icon name="user" />
+              <UserIcon />
               <span>{`${singleLinkedUser.firstName} ${singleLinkedUser.lastName}`}</span>
             </Grid>
             {!singleLinkedUser.deletedAt && (
@@ -104,7 +120,7 @@ export const UserInformationCard = ({
                   target="_blank"
                 >
                   <Grid row gap="small">
-                    <Icon name="mail" />
+                    <EmailIcon />
                     <span data-testid="linkeduser-email-span">
                       {singleLinkedUser.email}
                     </span>
@@ -117,13 +133,12 @@ export const UserInformationCard = ({
                     isExternal
                   >
                     <Grid row gap="small">
-                      <Icon name="phone" />
-                      <span>{singleLinkedUser.phone}</span>
+                      <PhoneIcon /> <span>{singleLinkedUser.phone}</span>
                     </Grid>
                   </SimpleLink>
                 ) : (
                   <Grid row gap="small">
-                    <Icon name="phone" />
+                    <PhoneIcon />{' '}
                     <span className="uk-text-italic">
                       Numéro de téléphone non renseigné
                     </span>
@@ -132,12 +147,11 @@ export const UserInformationCard = ({
                 {isRoleIncluded(COACH_USER_ROLES, user.role) &&
                   (singleLinkedUser.address ? (
                     <Grid row gap="small">
-                      <Icon name="home" />
-                      <span>{singleLinkedUser.address}</span>
+                      <HomeIcon /> <span>{singleLinkedUser.address}</span>
                     </Grid>
                   ) : (
                     <Grid row gap="small">
-                      <Icon name="home" />
+                      <HomeIcon />{' '}
                       <span className="uk-text-italic">
                         Adresse postale non renseignée
                       </span>
@@ -151,7 +165,7 @@ export const UserInformationCard = ({
                       href={`/cv/${userCandidat.url}`}
                     >
                       <Grid row gap="small">
-                        <Icon name="link" />
+                        <LinkIcon width={20} height={20} />
                         <span className="uk-text-italic">
                           {userCandidat.url}
                         </span>

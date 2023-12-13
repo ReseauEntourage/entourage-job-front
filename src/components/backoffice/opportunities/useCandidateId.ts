@@ -1,14 +1,13 @@
 import { useRouter } from 'next/router';
-import { useContext } from 'react';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
-import { UserContext } from 'src/store/UserProvider';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import {
   getCandidateIdFromCoachOrCandidate,
   isRoleIncluded,
 } from 'src/utils/Finding';
 
 export function useCandidateId() {
-  const { user } = useContext(UserContext);
+  const user = useAuthenticatedUser();
   const {
     query: { candidateId },
   } = useRouter();

@@ -6,10 +6,10 @@ import {
   TwitterShareButton,
   WhatsappShareButton,
 } from 'react-share';
-import FacebookIcon from 'public/static/img/icons/facebook.svg';
-import LinkedInIcon from 'public/static/img/icons/linked-in.svg';
-import TwitterIcon from 'public/static/img/icons/twitter.svg';
-import WhatsappIcon from 'public/static/img/icons/whatsapp.svg';
+import FacebookIcon from 'assets/icons/facebook.svg';
+import LinkedInIcon from 'assets/icons/linked-in.svg';
+import TwitterIcon from 'assets/icons/twitter.svg';
+import WhatsappIcon from 'assets/icons/whatsapp.svg';
 import { CV } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalShareCV } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';

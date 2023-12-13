@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import CountUp from 'react-countup';
-import { Grid, Section, Icon, Button } from 'src/components/utils';
+import ChevronRightIcon from 'assets/icons/chevron-right.svg';
+import { Grid, Section, Button } from 'src/components/utils';
 import { CV_FILTERS_DATA, INITIAL_NB_OF_CV_TO_DISPLAY } from 'src/constants';
 import { SharesCountContext } from 'src/store/SharesCountProvider';
 import { CVList } from './CV/CVList';
@@ -126,8 +127,8 @@ export const CandidatListPartial = () => {
           >
             {process.env.WOMENS_DAY === 'true'
               ? 'Voir toutes les candidates'
-              : 'Voir tous les candidats'}{' '}
-            <Icon name="chevron-right" />
+              : 'Voir tous les candidats'}
+            <ChevronRightIcon />
           </Button>
         </Grid>
       </Grid>

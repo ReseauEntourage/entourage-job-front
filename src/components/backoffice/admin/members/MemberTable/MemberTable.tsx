@@ -19,10 +19,16 @@ export function MemberTable({ columns, members, role }: MemberTableProps) {
     let columnsArray = [];
 
     if (isRoleIncluded(CANDIDATE_USER_ROLES, role)) {
-      columnsArray = [<Th key="memberRole">Candidat</Th>];
+      columnsArray = [
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        <Th key="memberRole">Candidat</Th>,
+      ];
     }
     if (isRoleIncluded(COACH_USER_ROLES, role)) {
-      columnsArray = [<Th key="memberRole">Coach</Th>];
+      columnsArray = [
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        <Th key="memberRole">Coach</Th>,
+      ];
     }
 
     if (
@@ -30,7 +36,10 @@ export function MemberTable({ columns, members, role }: MemberTableProps) {
       isRoleIncluded(CANDIDATE_USER_ROLES, role)
     ) {
       columnsArray = [
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         ...columnsArray,
+
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         <Th key="memberAssociatedRole">Coach</Th>,
       ];
     }
@@ -39,67 +48,118 @@ export function MemberTable({ columns, members, role }: MemberTableProps) {
       isRoleIncluded(COACH_USER_ROLES, role)
     ) {
       columnsArray = [
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         ...columnsArray,
+
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         <Th key="memberAssociatedRole">Candidat</Th>,
       ];
     }
     if (columns.includes('type')) {
-      columnsArray = [...columnsArray, <Th key="memberType">Type</Th>];
+      columnsArray = [
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        ...columnsArray,
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        <Th key="memberType">Type</Th>,
+      ];
     }
 
     if (columns.includes('phone')) {
-      columnsArray = [...columnsArray, <Th key="memberPhone">Téléphone</Th>];
+      columnsArray = [
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        ...columnsArray,
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        <Th key="memberPhone">Téléphone</Th>,
+      ];
     }
 
     if (columns.includes('gender')) {
-      columnsArray = [...columnsArray, <Th key="memberGender">Sexe</Th>];
+      columnsArray = [
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        ...columnsArray,
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        <Th key="memberGender">Sexe</Th>,
+      ];
     }
 
     if (columns.includes('address')) {
-      columnsArray = [...columnsArray, <Th key="memberAddress">Adresse</Th>];
+      columnsArray = [
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        ...columnsArray,
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        <Th key="memberAddress">Adresse</Th>,
+      ];
     }
 
     if (columns.includes('zone')) {
-      columnsArray = [...columnsArray, <Th key="memberZone">Zone</Th>];
+      columnsArray = [
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        ...columnsArray,
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        <Th key="memberZone">Zone</Th>,
+      ];
     }
     if (columns.includes('organization')) {
       columnsArray = [
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         ...columnsArray,
+
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         <Th key="memberOrganization">Structure</Th>,
       ];
     }
     if (columns.includes('lastConnection')) {
       columnsArray = [
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         ...columnsArray,
+
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         <Th key="memberLastConnexion">Dernière connexion</Th>,
       ];
     }
 
     if (isRoleIncluded(CANDIDATE_USER_ROLES, role)) {
       if (columns.includes('cvUrl')) {
-        columnsArray = [...columnsArray, <Th key="memberCVLink">Lien CV</Th>];
+        columnsArray = [
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          ...columnsArray,
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          <Th key="memberCVLink">Lien CV</Th>,
+        ];
       }
       if (columns.includes('employed')) {
         columnsArray = [
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           ...columnsArray,
+
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           <Th key="memberEmployed">En emploi</Th>,
         ];
       }
       if (columns.includes('cvStatus')) {
         columnsArray = [
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           ...columnsArray,
+
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           <Th key="memberCVStatus">Statut CV</Th>,
         ];
       }
       if (columns.includes('cvHidden')) {
         columnsArray = [
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           ...columnsArray,
+
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           <Th key="memberCVHidden">CV masqué</Th>,
         ];
       }
       if (columns.includes('selection')) {
         columnsArray = [
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           ...columnsArray,
+
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           <Th key="memberSelected">Sélection</Th>,
         ];
       }

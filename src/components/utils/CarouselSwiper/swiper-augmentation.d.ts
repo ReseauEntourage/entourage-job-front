@@ -17,6 +17,7 @@ declare module 'swiper/react' {
     pagination: {
       clickable: boolean;
     };
+    slidesPerView: number;
   }
 
   export const Swiper: FunctionComponent<

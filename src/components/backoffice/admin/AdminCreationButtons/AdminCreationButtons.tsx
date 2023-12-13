@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, { useCallback, useEffect, useMemo } from 'react';
+import PlusIcon from 'assets/icons/plus.svg';
 import { useOnOrganizationFormSubmit } from '../useOnOrganizationFormSubmit';
 import { Api } from 'src/api';
 import { OrganizationDto, UserDto } from 'src/api/types';
@@ -9,7 +10,7 @@ import { formAddUser } from 'src/components/forms/schemas/formAddUser';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { ButtonMultiple } from 'src/components/utils';
-import { Icon } from 'src/components/utils/Icon';
+
 import { Actions } from 'src/constants/utils';
 import { useIsDesktop } from 'src/hooks/utils';
 
@@ -101,7 +102,7 @@ export function AdminCreationButtons({
         },
       ]}
     >
-      <Icon name="plus" ratio={0.8} className="uk-margin-small-right" />
+      <PlusIcon />
       Créer
     </ButtonMultiple>
   );

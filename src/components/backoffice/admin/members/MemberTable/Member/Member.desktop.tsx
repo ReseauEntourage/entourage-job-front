@@ -2,10 +2,13 @@ import moment from 'moment';
 import React from 'react';
 
 import { Tooltip } from 'react-tooltip';
+import EyeHiddenIcon from 'assets/icons/eye-hidden.svg';
+import EyeVisibleIcon from 'assets/icons/eye-visible.svg';
+import LinkIcon from 'assets/icons/link.svg';
 import { translateStatusCV } from 'src/components/backoffice/admin/members/MemberList/MemberList.utils';
 import { renderCVStatus } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.utils';
-import { ImgProfile } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
-import { SimpleLink, Icon } from 'src/components/utils';
+import { SimpleLink } from 'src/components/utils';
+import { ImgProfile } from 'src/components/utils/ImgProfile';
 import { CheckBox, useCheckBox } from 'src/components/utils/Inputs/CheckBox';
 import { TrDesktop, TdDesktop } from 'src/components/utils/Table';
 import { ADMIN_ZONES } from 'src/constants/departements';
@@ -46,7 +49,11 @@ export function MemberDesktop({
   disableLink,
 }: MemberProps) {
   const cvStatus = renderCVStatus(member);
-  const { checked, handleCheckBox } = useCheckBox(selectionCallback, member.id);
+  const { checked, handleCheckBox } = useCheckBox(
+    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+    selectionCallback,
+    member.id
+  );
   const relatedUser = getRelatedUser(member);
 
   const userCandidate = getUserCandidateFromCoachOrCandidate(member);
@@ -66,6 +73,7 @@ export function MemberDesktop({
           firstName={member.firstName}
           lastName={member.lastName}
           email={member.email}
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           organizationName={
             !columns.includes('organization') &&
             isRoleIncluded(EXTERNAL_USER_ROLES, member.role)
@@ -152,7 +160,7 @@ export function MemberDesktop({
                   isExternal
                   target="_blank"
                 >
-                  <Icon name="link" style={{ width: 20 }} />
+                  <LinkIcon width={20} height={20} />
                 </SimpleLink>
               </span>
             </TdDesktop>
@@ -161,8 +169,13 @@ export function MemberDesktop({
             <TdDesktop>
               <StyledEmployedCellContent>
                 {isEditable ? (
-                  <MemberEmployedToggle setMember={setMember} member={member} />
+                  <MemberEmployedToggle
+                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                    setMember={setMember}
+                    member={member}
+                  />
                 ) : (
+                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
                   <span
                     data-tooltip-id={tooltipId}
                     data-tooltip-content={contractLabel}
@@ -198,13 +211,9 @@ export function MemberDesktop({
                 ) : (
                   <>
                     {userCandidate?.hidden ? (
-                      <Icon
-                        name="eye-hidden"
-                        ratio={1.2}
-                        className="eye-hidden"
-                      />
+                      <EyeHiddenIcon className="eye-hidden" />
                     ) : (
-                      <Icon name="eye-visible" ratio={1.2} />
+                      <EyeVisibleIcon />
                     )}
                   </>
                 )}

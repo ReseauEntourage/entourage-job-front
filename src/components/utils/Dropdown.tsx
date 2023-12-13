@@ -28,9 +28,24 @@ export const Dropdown = ({
       <ul className="uk-nav uk-navbar-dropdown-nav">
         {(Array.isArray(children) ? children : [children]).map((item, key) => {
           const classBuffer = [];
-          if (active === key) classBuffer.push('uk-active');
-          if (dividers.includes(key)) classBuffer.push('uk-nav-divider');
-          if (headers.includes(key)) classBuffer.push('uk-nav-header');
+          if (active === key) {
+            classBuffer.push(
+              // @ts-expect-error after enable TS strict mode. Please, try to fix it
+              'uk-active'
+            );
+          }
+          if (dividers.includes(key)) {
+            classBuffer.push(
+              // @ts-expect-error after enable TS strict mode. Please, try to fix it
+              'uk-nav-divider'
+            );
+          }
+          if (headers.includes(key)) {
+            classBuffer.push(
+              // @ts-expect-error after enable TS strict mode. Please, try to fix it
+              'uk-nav-header'
+            );
+          }
           return (
             <li key={key} className={classBuffer.join(' ')}>
               {item}

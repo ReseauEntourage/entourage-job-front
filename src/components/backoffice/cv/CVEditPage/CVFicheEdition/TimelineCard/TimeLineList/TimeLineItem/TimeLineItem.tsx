@@ -1,12 +1,13 @@
 import moment from 'moment';
 import React from 'react';
 import { CVExperience, CVFormation } from 'src/api/types';
+import { EditItemsButtons } from 'src/components/backoffice/cv/CVEditPage/CVFicheEdition/EditItemsButtons';
 import { formEditExperience } from 'src/components/forms/schemas/formEditExperience';
 import { formEditFormation } from 'src/components/forms/schemas/formEditFormation';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { Grid, ButtonIcon } from 'src/components/utils';
+import { Grid } from 'src/components/utils';
 import { H6 } from 'src/components/utils/Headings';
 import { formatParagraph } from 'src/utils';
 
@@ -86,84 +87,77 @@ export const TimeLineItem = ({
             </p>
           )}
         </>
-        {onChange && (
-          <div className="uk-flex uk-flex-column">
-            <ButtonIcon
-              name="pencil"
-              onClick={() => {
-                openModal(
-                  <ModalEdit
-                    title={editProps.title}
-                    formSchema={editProps.formSchema}
-                    defaultValues={{
-                      ...value,
-                      dateStart: moment(value.dateStart).format('YYYY-MM-DD'),
-                      dateEnd: moment(value.dateEnd).format('YYYY-MM-DD'),
-                      skills: value.skills?.map(({ name }) => {
-                        return { value: name, label: name };
-                      }),
-                    }}
-                    onSubmit={async (fields, closeModal) => {
-                      closeModal();
-                      // Update the items array
-                      const updatedItems = [...items];
-                      updatedItems[sortIndex] = {
-                        ...updatedItems[sortIndex],
-                        ...{
-                          ...fields,
-                          dateStart: moment(fields.dateStart).toDate() as Date,
-                          dateEnd: moment(fields.dateEnd).toDate() as Date,
-                          skills:
-                            Array.isArray(fields.skills) &&
-                            fields.skills?.map((skill, i) => {
-                              return { name: skill.value, order: i };
-                            }),
-                        },
-                      };
+        <EditItemsButtons
+          onDeleteClick={() => {
+            openModal(
+              <ModalConfirm
+                text="Êtes-vous sûr(e) de vouloir supprimer cet élément ?"
+                buttonText="Supprimer"
+                onConfirm={async () => {
+                  const itemsToSort = [...items];
+                  itemsToSort.splice(sortIndex, 1);
+                  // Prepare the update object
+                  const update: CVDataUpdate =
+                    type === 'formations'
+                      ? {
+                          formations: itemsToSort,
+                        }
+                      : {
+                          experiences: itemsToSort,
+                        };
+                  await onChange(update);
+                }}
+              />
+            );
+          }}
+          onEditClick={() => {
+            openModal(
+              <ModalEdit
+                title={editProps.title}
+                formSchema={editProps.formSchema}
+                defaultValues={{
+                  ...value,
+                  dateStart: moment(value.dateStart).format('YYYY-MM-DD'),
+                  dateEnd: moment(value.dateEnd).format('YYYY-MM-DD'),
+                  skills: value.skills?.map(({ name }) => {
+                    return { value: name, label: name };
+                  }),
+                }}
+                onSubmit={async (fields, closeModal) => {
+                  closeModal();
+                  // Update the items array
+                  const updatedItems = [...items];
+                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                  updatedItems[sortIndex] = {
+                    ...updatedItems[sortIndex],
+                    ...{
+                      ...fields,
+                      dateStart: moment(fields.dateStart).toDate() as Date,
+                      dateEnd: moment(fields.dateEnd).toDate() as Date,
+                      skills:
+                        Array.isArray(fields.skills) &&
+                        fields.skills?.map((skill, i) => {
+                          return { name: skill.value, order: i };
+                        }),
+                    },
+                  };
 
-                      // Prepare the update object
-                      const update: CVDataUpdate =
-                        type === 'formations'
-                          ? {
-                              formations: updatedItems,
-                            }
-                          : {
-                              experiences: updatedItems,
-                            };
+                  // Prepare the update object
+                  const update: CVDataUpdate =
+                    type === 'formations'
+                      ? {
+                          formations: updatedItems,
+                        }
+                      : {
+                          experiences: updatedItems,
+                        };
 
-                      await onChange(update);
-                    }}
-                  />
-                );
-              }}
-            />
-            <ButtonIcon
-              name="trash"
-              onClick={() => {
-                openModal(
-                  <ModalConfirm
-                    text="Êtes-vous sûr(e) de vouloir supprimer cet élément ?"
-                    buttonText="Supprimer"
-                    onConfirm={async () => {
-                      const itemsToSort = [...items];
-                      itemsToSort.splice(sortIndex, 1);
-                      // Prepare the update object
-                      const update: CVDataUpdate =
-                        type === 'formations'
-                          ? {
-                              formations: itemsToSort,
-                            }
-                          : {
-                              experiences: itemsToSort,
-                            };
-                      await onChange(update);
-                    }}
-                  />
-                );
-              }}
-            />
-          </div>
-        )}
+                  await onChange(update);
+                }}
+              />
+            );
+          }}
+        />
       </Grid>
     </li>
   );

@@ -10,9 +10,14 @@ import {
   TwitterShareButton,
 } from 'react-share';
 
+import FacebookIcon from 'assets/icons/facebook.svg';
+import LinkedInIcon from 'assets/icons/linked-in.svg';
+import LocationIcon from 'assets/icons/location.svg';
+import TwitterIcon from 'assets/icons/twitter.svg';
+
 import { openModal } from 'src/components/modals/Modal';
 import { ModalShareCV } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
-import { Grid, Img, SimpleLink, Icon } from 'src/components/utils';
+import { Grid, Img, SimpleLink } from 'src/components/utils';
 import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { useUpdateSharesCount } from 'src/hooks';
@@ -241,12 +246,12 @@ export const CandidatCard = ({
                     return (
                       <div
                         key={name + index}
-                        className="uk-flex uk-flex-middle"
+                        className="uk-flex uk-text-meta uk-flex-middle"
                       >
-                        <Icon name="location" ratio={0.6} />
+                        <LocationIcon width={10} height={10} />
                         &nbsp;
                         <span
-                          className="uk-text-meta uk-flex-1"
+                          className="uk-flex-1"
                           style={{
                             fontSize: '0.775rem',
                           }}
@@ -298,10 +303,10 @@ export const CandidatCard = ({
                   style={{ cursor: 'pointer' }}
                   className="uk-icon-button light-icon-button"
                 >
-                  <Icon
-                    name="linkedin"
-                    ratio={0.9}
+                  <LinkedInIcon
                     className={`share-linkedin-${firstName}`}
+                    width={20}
+                    height={20}
                   />
                 </LinkedinShareButton>
               </li>
@@ -326,10 +331,10 @@ export const CandidatCard = ({
                   style={{ cursor: 'pointer' }}
                   className="uk-icon-button light-icon-button"
                 >
-                  <Icon
-                    name="facebook"
-                    ratio={0.9}
+                  <FacebookIcon
                     className={`share-facebook-${firstName}`}
+                    width={20}
+                    height={20}
                   />
                 </FacebookShareButton>
               </li>
@@ -355,10 +360,10 @@ export const CandidatCard = ({
                   style={{ cursor: 'pointer' }}
                   className="uk-icon-button light-icon-button"
                 >
-                  <Icon
-                    name="twitter"
-                    ratio={0.9}
+                  <TwitterIcon
                     className={`share-twitter-${firstName}`}
+                    width={20}
+                    height={20}
                   />
                 </TwitterShareButton>
               </li>
@@ -419,7 +424,7 @@ CandidatCard.propTypes = {
 };
 
 CandidatCard.defaultProps = {
-  imgSrc: 'static/img/arthur.jpg',
+  imgSrc: '/static/img/arthur.jpg',
   employed: false,
   endOfContract: undefined,
   catchphrase: "cherche un job pour s'en sortir",

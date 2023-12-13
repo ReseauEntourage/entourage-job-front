@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import { useRouter } from 'next/router';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
+import PlusIcon from 'assets/icons/plus.svg';
 import { CandidateOffersTab } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab';
 import {
   candidateSearchFilters,
@@ -11,6 +12,7 @@ import { OpportunitiesContainer } from 'src/components/backoffice/opportunities/
 import { NoOpportunities } from 'src/components/backoffice/opportunities/OpportunitiesContainer/NoOpportunities';
 import { CandidateOpportunitiesList } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/CandidateOpportunitiesList';
 import { CandidateOpportunityDetailsContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails';
+import { OpportunityError } from 'src/components/backoffice/opportunities/OpportunityError';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { useOpportunityType } from 'src/components/backoffice/opportunities/useOpportunityType';
 import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
@@ -18,14 +20,14 @@ import { SearchBar } from 'src/components/filters/SearchBar';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer';
-import { OpportunityError } from 'src/components/opportunities/OpportunityError';
 import { Button, Section } from 'src/components/utils';
-import { Icon } from 'src/components/utils/Icon';
+
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
+import { HEIGHTS } from 'src/constants/styles';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useCandidateOpportunities } from 'src/hooks/useOpportunityList';
 import { usePrevious } from 'src/hooks/utils';
-import { UserContext } from 'src/store/UserProvider';
 import { getUserCandidateFromCoach, isRoleIncluded } from 'src/utils/Finding';
 import { tabs } from './CandidateOffersTab/CandidateOffersTab.utils';
 import { CandidateOpportunitiesFilters } from './CandidateOpportunitiesFilters.types';
@@ -53,7 +55,7 @@ export const CandidateOpportunities = ({
 }: CandidateOpportunitiesProps) => {
   const { replace } = useRouter();
 
-  const { user } = useContext(UserContext);
+  const user = useAuthenticatedUser();
 
   const opportunityId = useOpportunityId();
   const prevOpportunityId = usePrevious(opportunityId);
@@ -61,6 +63,10 @@ export const CandidateOpportunities = ({
   const prevOpportunityType = usePrevious(opportunityType);
 
   const isPublic = opportunityType === 'public';
+
+  const contentHeight = isPublic
+    ? HEIGHTS.SEARCH_BAR_HEIGHT
+    : HEIGHTS.TABS_HEIGHT;
 
   const [offset, setOffset] = useState<number>(0);
   const [hasFetchedAll, setHasFetchedAll] = useState(false);
@@ -87,6 +93,7 @@ export const CandidateOpportunities = ({
     if (
       !isMobile &&
       offers &&
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
       offers.length > 0 &&
       ((offers !== prevOffers && !opportunityId) ||
         (opportunityId !== prevOpportunityId &&
@@ -97,6 +104,7 @@ export const CandidateOpportunities = ({
       replace(
         {
           pathname: `/backoffice/candidat/${candidateId}/offres/${opportunityType}${
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             offers[0].id ? `/${offers[0].id}` : ''
           }`,
           query: queryParamsOpportunities,
@@ -108,15 +116,16 @@ export const CandidateOpportunities = ({
       );
     }
   }, [
-    offers,
-    opportunityId,
-    opportunityType,
-    queryParamsOpportunities,
-    prevOpportunityId,
-    prevStatus,
-    prevOpportunityType,
-    replace,
     isMobile,
+    offers,
+    prevOffers,
+    opportunityId,
+    prevOpportunityId,
+    opportunityType,
+    prevOpportunityType,
+    queryParamsOpportunities,
+    prevStatus,
+    replace,
   ]);
 
   const { tabCounts, fetchTabsCount } = useTabsCount(candidateId);
@@ -162,65 +171,62 @@ export const CandidateOpportunities = ({
     <>
       {!(isMobile && opportunityId) && (
         <>
-          <Section className="custom-header">
-            <HeaderBackoffice
-              title={`${
-                TextVariables.title[
-                  isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
-                    ? USER_ROLES.CANDIDATE
-                    : USER_ROLES.COACH
-                ][isPublic ? 'all' : 'mine']
-              } ${
-                USER_ROLES.COACH_EXTERNAL === user.role
-                  ? `- ${
-                      getUserCandidateFromCoach(user, candidateId)?.candidat
-                        ?.firstName
-                    } ${
-                      getUserCandidateFromCoach(user, candidateId)?.candidat
-                        ?.lastName
-                    }`
-                  : ''
-              }`}
-              description={
-                TextVariables.description[
-                  isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
-                    ? USER_ROLES.CANDIDATE
-                    : USER_ROLES.COACH
-                ][isPublic ? 'all' : 'mine']
-              }
-              noSeparator
+          <HeaderBackoffice
+            title={`${
+              TextVariables.title[
+                isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
+                  ? USER_ROLES.CANDIDATE
+                  : USER_ROLES.COACH
+              ][isPublic ? 'all' : 'mine']
+            } ${
+              USER_ROLES.COACH_EXTERNAL === user.role
+                ? `- ${
+                    getUserCandidateFromCoach(user, candidateId)?.candidat
+                      ?.firstName
+                  } ${
+                    getUserCandidateFromCoach(user, candidateId)?.candidat
+                      ?.lastName
+                  }`
+                : ''
+            }`}
+            description={
+              TextVariables.description[
+                isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
+                  ? USER_ROLES.CANDIDATE
+                  : USER_ROLES.COACH
+              ][isPublic ? 'all' : 'mine']
+            }
+            noSeparator
+          >
+            <Button
+              style="primary"
+              dataTestId="candidat-add-offer-main"
+              onClick={() => {
+                openModal(
+                  <ModalExternalOffer
+                    fetchOpportunities={resetOffset}
+                    candidateId={candidateId}
+                  />
+                );
+              }}
             >
-              <Button
-                style="primary"
-                dataTestId="candidat-add-offer-main"
-                onClick={() => {
-                  openModal(
-                    <ModalExternalOffer
-                      fetchOpportunities={resetOffset}
-                      candidateId={candidateId}
-                    />
-                  );
-                }}
-              >
-                <Icon
-                  name="plus"
-                  ratio="0.8"
-                  className="uk-margin-small-right"
-                />
-                Ajouter une offre
-              </Button>
-            </HeaderBackoffice>
-          </Section>
+              <PlusIcon />
+              Ajouter une offre
+            </Button>
+          </HeaderBackoffice>
           {isPublic ? (
-            <Section className="custom-mobile-darkBG custom-fixed">
+            <Section className="custom-primary custom-fixed">
               <SearchBar
                 filtersConstants={
                   candidateSearchFilters as typeof OPPORTUNITY_FILTERS_DATA
                 }
                 filters={filters}
+                // @ts-expect-error after enable TS strict mode. Please, try to fix it
                 resetFilters={resetFilters}
                 search={search}
+                // @ts-expect-error after enable TS strict mode. Please, try to fix it
                 setSearch={setSearch}
+                // @ts-expect-error after enable TS strict mode. Please, try to fix it
                 setFilters={setFilters}
                 placeholder="Rechercher..."
               />
@@ -229,24 +235,31 @@ export const CandidateOpportunities = ({
             <Section className="custom-primary custom-fixed">
               <CandidateOffersTab
                 activeStatus={filters.status}
+                // @ts-expect-error after enable TS strict mode. Please, try to fix it
                 tabCounts={tabCounts}
                 candidateId={candidateId}
+                isMobile={isMobile}
               />
             </Section>
           )}
         </>
       )}
-      <Section className="custom-primary">
+      <>
         {hasError ? (
           <OpportunityError />
         ) : (
           <OpportunitiesContainer
             backButtonHref={{
               pathname: `/backoffice/candidat/offres/${opportunityType}`,
+
+              // @ts-expect-error after enable TS strict mode. Please, try to fix it
               query: queryParamsOpportunities,
             }}
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             list={
-              offers && offers.length > 0 ? (
+              offers &&
+              // @ts-expect-error after enable TS strict mode. Please, try to fix it
+              offers.length > 0 ? (
                 <CandidateOpportunitiesList
                   hasFetchedAll={hasFetchedAll}
                   setOffset={setOffset}
@@ -259,6 +272,7 @@ export const CandidateOpportunities = ({
             isLoading={loading}
             details={
               <CandidateOpportunityDetailsContainer
+                filtersAndTabsHeight={contentHeight}
                 candidateId={candidateId}
                 fetchOpportunities={async () => {
                   await fetchOpportunities(true);
@@ -272,6 +286,7 @@ export const CandidateOpportunities = ({
                 </div>
               ) : (
                 <NoOpportunities
+                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
                   status={
                     tabs.find(({ status: tabStatus }) => {
                       if (Array.isArray(queryParamsOpportunities.status)) {
@@ -282,7 +297,11 @@ export const CandidateOpportunities = ({
                         );
                       }
                       return tabStatus.includes(
-                        parseInt(queryParamsOpportunities.status, 10)
+                        parseInt(
+                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                          queryParamsOpportunities.status,
+                          10
+                        )
                       );
                     })?.text
                   }
@@ -292,7 +311,7 @@ export const CandidateOpportunities = ({
             }
           />
         )}
-      </Section>
+      </>
     </>
   );
 };

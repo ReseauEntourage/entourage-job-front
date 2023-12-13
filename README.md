@@ -1,5 +1,15 @@
 # LinkedOut Frontend
 
+- [Modules principaux & versions](#modules-principaux--versions)
+- [Architecture](#architecture)
+- [Configuration](#configuration)
+- [Déploiement](#déploiement)
+- [Stack technique](#stack-technique)
+- Code
+  - [Use cases](./docs/use-cases.md)
+  - [Permissions des routes](./docs/routes-permissions.md)
+  - [Styles](#styles)
+
 ## Modules principaux & versions
 
 > Node 16.x.x
@@ -27,6 +37,7 @@
   - `/lib` : librairies pure JS (analytics ...)
   - `/pages` : dossier contenant les composants **_React_** de rendu de pages
   - `/styles` : feuilles CSS compilés à partir de **_UIkit_** + certains styles customs
+  - `/use-cases` : store redux séparé en modules
   - `/utils` : fonctions utilitaires communes
   - `Axios.js` : configuration **_Axios_** pour communiquer facilement avec l'API
 - `.editorconfig` : configuration par défaut de la syntaxe du code de l'éditeur
@@ -140,28 +151,45 @@ yarn cypress:io
 ### Fichier .env minimal
 
 ```dotenv
-AIRTABLE_LINK_COMPANY_HELP=
-AIRTABLE_LINK_COMPANY_SENSITIZATION=
-AIRTABLE_LINK_COMPANY_SPONSOR=
-AIRTABLE_LINK_JOIN_LINKEDOUT=
-AIRTABLE_LINK_PROFESSIONAL_REINTEGRATION=
+ADMIN_CANDIDATES_HZ=
+ADMIN_CANDIDATES_LILLE=
+ADMIN_CANDIDATES_LORIENT=
+ADMIN_CANDIDATES_LYON=
+ADMIN_CANDIDATES_PARIS=
+ADMIN_CANDIDATES_RENNES=
+ADMIN_COMPANIES_HZ=
+ADMIN_COMPANIES_LILLE=
+ADMIN_COMPANIES_LORIENT=
+ADMIN_COMPANIES_LYON=
+ADMIN_COMPANIES_PARIS=
+ADMIN_COMPANIES_RENNES=
+ADRESSE_LOCAUX_PARIS=
 API_URL=
-ASSOCIATION_APPOINTMENT=
+AIRTABLE_LINK_BECOME_COACH=
 ASSOCIATION_BROCHURE=
 AWSS3_CDN_URL=
 AWSS3_IMAGE_DIRECTORY=
 AWSS3_URL=
 CDN_URL=
+CYPRESS_IO_ID=
+CYPRESS_IO_KEY=
+DONATION_LINK=
 FB_APP_ID=
 FB_DOMAIN_VERIFICATION=
 FB_PIXEL_ID=
 GA_TRACKING_ID=
 GTM_TRACKING_ID=
+HEROKU_APP_NAME=
+HEROKU_RELEASE_VERSION=
+IRAISER_DONATION_LINK=
 LINKEDIN_PARTNER_ID=
 MAILJET_CONTACT_EMAIL=
-PORT=
 PUSHER_API_KEY=
+SENTRY_AUTH_TOKEN=
+SENTRY_DSN=
 SERVER_URL=
+SHOW_POPUP=
+TARTEAUCITRON_UUID=
 TOOLBOX_URL=
 TUTORIAL_CV=
 TUTORIAL_INTERVIEW_TRAINING=
@@ -170,8 +198,6 @@ TUTORIAL_VIDEO_CV=
 TUTORIAL_VIDEO_FIRST_STEPS=
 TUTORIAL_VIDEO_OFFERS=
 TUTORIAL_VIDEO_OFFERS_2=
-CYPRESS_IO_KEY=
-LOCAL_DIRNAME=
 ```
 
 ## Styles
@@ -215,6 +241,14 @@ Si un commit est poussé sur `develop`, l'application sera déployé sur la pre-
 Si un commit est poussé sur `master`, l'application sera déployé sur la production : **[https://linkedout.fr](https://linkedout.fr)**
 
 Comme il n'y a pas de tests, **_Github Actions_** n'est utilisé que pour déployer le projet sur **_Heroku_**.
+
+##
+
+Régulièrement, cleaner le code en supprimant les commposants qui ne sont plus utilisés:
+
+```
+npx dead-exports
+```
 
 ## Stack technique
 

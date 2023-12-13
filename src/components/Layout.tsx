@@ -24,9 +24,7 @@ interface LayoutProps extends WithRouterProps {
 export const Layout = withRouter<LayoutProps>(
   ({
     children,
-
     router,
-
     title = 'LinkedOut\xa0= partagez votre réseau avec ceux qui n’en ont pas',
     metaTitle = 'LinkedOut\xa0= partagez votre réseau avec ceux qui n’en ont pas',
     metaImage = `${process.env.SERVER_URL}/static/img/linkedout-preview-new.jpg`,
@@ -38,7 +36,9 @@ export const Layout = withRouter<LayoutProps>(
     isEmpty = false,
   }: LayoutProps) => {
     const isPDF = router.pathname.includes('/pdf/');
-    const domain = process.env.SERVER_URL.replace(/https:\/\/|http:\/\//g, '');
+    const domain =
+      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+      process.env.SERVER_URL.replace(/https:\/\/|http:\/\//g, '');
 
     return (
       <>

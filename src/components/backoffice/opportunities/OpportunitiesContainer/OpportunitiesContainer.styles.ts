@@ -48,7 +48,7 @@ export const InfoText = styled.span`
   color: ${COLORS.darkGray};
 
   &:not(:last-child) {
-    margin-bottom: 4px;
+    margin-bottom: 8px;
   }
 
   overflow: hidden;

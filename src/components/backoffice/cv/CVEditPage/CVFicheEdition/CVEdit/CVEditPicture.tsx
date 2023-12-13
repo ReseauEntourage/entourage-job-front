@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Resizer from 'react-image-file-resizer';
 import UIkit from 'uikit';
-import { Icon } from 'src/components/utils';
+import PencilIcon from 'assets/icons/pencil.svg';
 import { useIsDesktop } from 'src/hooks/utils';
 import { addPrefix } from 'src/utils';
 import {
@@ -45,6 +45,8 @@ export const CVEditPicture = ({
         'JPEG',
         75,
         0,
+
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         (uri: Blob) => {
           resolve(uri);
         },
@@ -56,7 +58,12 @@ export const CVEditPicture = ({
     <StyledEditPictureContainer className={!isDesktop ? 'mobile' : ''}>
       <StyledEditPicture
         className={!isDesktop ? 'mobile' : ''}
-        style={{ backgroundImage: `url(${addPrefix(url)})` }}
+        style={{
+          backgroundImage: `url(${addPrefix(
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            url
+          )})`,
+        }}
       />
       {!disablePicture && (
         <StyledEditPictureButton>
@@ -73,7 +80,9 @@ export const CVEditPicture = ({
                   accept="image/*"
                   style={{ cursor: 'pointer' }}
                   onChange={async ({ target }) => {
-                    const file = target.files[0];
+                    const file =
+                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                      target.files[0];
 
                     if (file) {
                       if (!file.type.includes('image/')) {
@@ -93,7 +102,7 @@ export const CVEditPicture = ({
                     }
                   }}
                 />
-                <Icon name="pencil" />
+                <PencilIcon />
               </label>
             </div>
           )}

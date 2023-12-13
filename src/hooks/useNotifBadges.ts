@@ -30,20 +30,32 @@ export function useNotifBadges(user, path, candidateId) {
       if (user.role === USER_ROLES.ADMIN) {
         const queriesToExecute = [];
         if (user.adminRole === ADMIN_ROLES.CANDIDATES) {
-          queriesToExecute.push(() => {
-            return Api.getUsersMembersCount();
-          });
+          queriesToExecute.push(
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            () => {
+              return Api.getUsersMembersCount();
+            }
+          );
         } else if (user.adminRole === ADMIN_ROLES.COMPANIES) {
-          queriesToExecute.push(() => {
-            return Api.getOpportunitiesAdminCount();
-          });
+          queriesToExecute.push(
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            () => {
+              return Api.getOpportunitiesAdminCount();
+            }
+          );
         } else {
-          queriesToExecute.push(() => {
-            return Api.getUsersMembersCount();
-          });
-          queriesToExecute.push(() => {
-            return Api.getOpportunitiesAdminCount();
-          });
+          queriesToExecute.push(
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            () => {
+              return Api.getUsersMembersCount();
+            }
+          );
+          queriesToExecute.push(
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            () => {
+              return Api.getOpportunitiesAdminCount();
+            }
+          );
         }
         Promise.all(
           queriesToExecute.map((query) => {

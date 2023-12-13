@@ -1,10 +1,12 @@
 import _ from 'lodash';
-import React, { useContext } from 'react';
+import React from 'react';
+import LinkIcon from 'assets/icons/link.svg';
+import UserIcon from 'assets/icons/user.svg';
 import { UserWithUserCandidate } from 'src/api/types';
-import { ImgProfile } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/ImgProfile';
-import { SimpleLink, Icon } from 'src/components/utils';
+import { SimpleLink } from 'src/components/utils';
+import { ImgProfile } from 'src/components/utils/ImgProfile';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
-import { UserContext } from 'src/store/UserProvider';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { getRelatedUser, isRoleIncluded } from 'src/utils/Finding';
 import {
   StyledContainer,
@@ -19,7 +21,7 @@ interface MemberDetailsHeaderProps {
 }
 
 export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
-  const { user: connectedUser } = useContext(UserContext);
+  const connectedUser = useAuthenticatedUser();
 
   if (!user || !connectedUser) return null;
 
@@ -48,7 +50,7 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
           {user.zone ? _.capitalize(user.zone) : 'Non renseignée'}
         </span>
         <StyledRoleContainer>
-          <Icon name="user" style={{ width: 20 }} />
+          <UserIcon width={30} />
           <StyledRole>
             <span className="bold">{`${_.capitalize(user.role)}`}</span>
             {` de ${relatedUserText}`}
@@ -56,9 +58,9 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
         </StyledRoleContainer>
         {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) && (
           <StyledRoleContainer>
-            <Icon name="link" style={{ width: 20 }} />
+            <LinkIcon width={30} />
             <SimpleLink
-              className="uk-link-text uk-margin-small-top"
+              className="uk-link-text"
               target="_blank"
               href={`/cv/${user?.candidat?.url}`}
             >

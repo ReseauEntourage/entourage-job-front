@@ -10,8 +10,15 @@ export const StyledBackLink = styled.a`
   &:visited {
     color: ${COLORS.darkGrayFont} !important;
   }
+  &:hover {
+    color: ${COLORS.primaryOrange} !important;
+    svg {
+      fill: ${COLORS.primaryOrange} !important;
+    }
+  }
   svg {
     width: 8px;
+    margin-right: 8px;
     fill: ${COLORS.darkGrayFont};
   }
 `;

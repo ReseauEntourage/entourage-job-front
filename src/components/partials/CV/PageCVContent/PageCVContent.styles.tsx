@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Icon } from 'src/components/utils';
+import ChevronDownIcon from 'assets/icons/chevron-down.svg';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledCVPageContent = styled.div`
@@ -11,18 +11,7 @@ export const StyledCVPageContent = styled.div`
   color: #484848;
   font-size: 14px;
   > a {
-    margin: 26px auto 0;
-    color: black;
-    font-size: 14px;
-    line-height: 16px;
-    width: 100%;
-    display: flex;
-    max-width: 1320px;
-    padding: 0 10px;
-
-    :hover {
-      color: ${COLORS.primaryOrange};
-    }
+    margin: 26px 26px 0 26px;
   }
   p {
     color: ${COLORS.darkGrayFont};
@@ -255,7 +244,6 @@ export const StyledCVPageContentInformations = styled.div`
   padding: 30px;
   display: flex;
   flex-direction: column;
-  max-width: 300px;
   margin-bottom: 30px;
   border-radius: 30px;
   margin-right: 30px;
@@ -279,8 +267,7 @@ export const StyledCVPageContentInformations = styled.div`
     margin-top: 5px;
   }
   &.mobile {
-    width: 100%;
-    max-width: none;
+    margin-right: 0;
   }
 `;
 
@@ -289,15 +276,12 @@ export const StyledCVPageContentPassions = styled.div`
   padding: 30px;
   display: flex;
   flex-direction: column;
-  max-width: 300px;
   margin-bottom: 30px;
   border-radius: 30px;
   margin-right: 30px;
-
   position: relative;
   &.mobile {
-    width: 100%;
-    max-width: none;
+    margin-right: 0;
   }
 `;
 
@@ -382,7 +366,6 @@ export const StyledCVExperienceDescription = styled.div`
 
 export const StyledCVPageContentCarousel = styled.div`
   max-width: 1320px;
-  padding: 0 15px;
   margin: 30px auto;
   width: 100%;
 
@@ -433,7 +416,8 @@ export const StyledLeftQuoteContainer = styled.div`
 
 export const StyledCVPageContentFooter = styled.div`
   display: flex;
-  width: 100%;
+  align-items: center;
+  justify-content: center;
   max-width: 1320px;
 
   padding: 0 15px 50px;
@@ -447,13 +431,13 @@ export const StyledCVPageContentFooter = styled.div`
   }
 `;
 
-export const StyledChevronIcon = styled(Icon)`
+export const StyledChevronIcon = styled(ChevronDownIcon)`
   top: 30px;
   right: 30px;
+  color: ${COLORS.primaryOrange};
   svg {
     height: 20px;
     width: 20px;
-    color: ${COLORS.primaryOrange};
   }
 `;
 

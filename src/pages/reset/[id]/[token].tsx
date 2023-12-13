@@ -1,11 +1,12 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import CloseIcon from 'assets/icons/close.svg';
 import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
 import { PasswordCriterias } from 'src/components/PasswordCriterias';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { formResetPassword } from 'src/components/forms/schemas/formResetPassword';
-import { Button, Section, Icon } from 'src/components/utils';
+import { Button, Section } from 'src/components/utils';
 
 interface ResetPasswordPageProps {
   valid: boolean;
@@ -50,6 +51,7 @@ const ResetPasswordPage = ({
                       push(`/reset/success?isCreation=${isCreation}`);
                     } catch (err) {
                       setError(
+                        // @ts-expect-error after enable TS strict mode. Please, try to fix it
                         err?.response?.data?.error || 'Une erreur est survenue'
                       );
                     }
@@ -58,7 +60,7 @@ const ResetPasswordPage = ({
               </div>
             ) : (
               <div className="uk-card uk-card-body uk-text-center">
-                <Icon name="ban" ratio={4} className="uk-text-primary" />
+                <CloseIcon className="uk-text-primary" />
                 <p className="uk-text-lead">
                   Ce lien ne semble pas valide. Veuillez contacter l&apos;équipe
                   LinkedOut.

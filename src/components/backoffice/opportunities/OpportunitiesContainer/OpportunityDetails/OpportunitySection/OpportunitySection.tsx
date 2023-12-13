@@ -5,8 +5,8 @@ import {
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
 import {
   StyledContainer,
-  StyledContentContainer,
-  StyledTitleContainer,
+  StyledOpportunitySectionContentContainer,
+  StyledOpportunitySectionTitleContainer,
 } from './OpportunitySection.styles';
 
 export const OpportunitySection = ({
@@ -14,16 +14,16 @@ export const OpportunitySection = ({
   content,
 }: {
   title: string;
-  content: string;
+  content: React.ReactNode;
 }) => {
   return (
     <StyledContainer>
-      <StyledTitleContainer>
+      <StyledOpportunitySectionTitleContainer>
         <SubtitleText>{title}</SubtitleText>
-      </StyledTitleContainer>
-      <StyledContentContainer>
+      </StyledOpportunitySectionTitleContainer>
+      <StyledOpportunitySectionContentContainer>
         <DescriptionText>{content}</DescriptionText>
-      </StyledContentContainer>
+      </StyledOpportunitySectionContentContainer>
     </StyledContainer>
   );
 };

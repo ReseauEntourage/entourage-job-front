@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import { AssociationEntourage, Partners } from 'src/components/partials';
@@ -7,7 +8,7 @@ import {
   PageType,
   ChildrenType,
 } from 'src/components/partials/Footer/Footer.type';
-import { Grid, Section, SimpleLink, Icon, Button } from 'src/components/utils';
+import { Grid, Section, SimpleLink, Button } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
@@ -207,7 +208,8 @@ const pages: PageType[] = [
             style="primary"
             className="uk-margin-medium-top"
           >
-            Espace coach & candidat <Icon name="chevron-right" />
+            Espace coach & candidat
+            <ChevronRightIcon />
           </Button>
         ),
       },
@@ -227,7 +229,10 @@ const SiteMap = ({ isMobile }: { isMobile: boolean }) => {
       {pages.map(({ title, children }: PageType, index: number) => {
         return (
           <div
-            key={title + index}
+            key={
+              // @ts-expect-error after enable TS strict mode. Please, try to fix it
+              title + index
+            }
             className="uk-flex uk-flex-column uk-flex-middle uk-margin-small-bottom"
           >
             <div
@@ -261,7 +266,12 @@ const SiteMap = ({ isMobile }: { isMobile: boolean }) => {
                       );
                     }
                     return (
-                      <React.Fragment key={childrenPath + index}>
+                      <React.Fragment
+                        key={
+                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                          childrenPath + index
+                        }
+                      >
                         <SimpleLink
                           href={childrenPath}
                           className={
@@ -286,6 +296,7 @@ const SiteMap = ({ isMobile }: { isMobile: boolean }) => {
                               return (
                                 <SimpleLink
                                   key={
+                                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
                                     childrenChildrenPath + childrenChildrenIndex
                                   }
                                   href={childrenChildrenPath}
