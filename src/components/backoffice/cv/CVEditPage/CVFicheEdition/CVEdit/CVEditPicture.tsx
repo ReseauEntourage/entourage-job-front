@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Resizer from 'react-image-file-resizer';
-import UIkit from 'uikit';
 import PencilIcon from 'assets/icons/pencil.svg';
+import { ButtonIcon } from '../../../../../utils';
+import { useUploadImage } from 'src/hooks/useUploadImage';
 import { useIsDesktop } from 'src/hooks/utils';
 import { addPrefix } from 'src/utils';
 import {
@@ -32,28 +32,12 @@ export const CVEditPicture = ({
   const [url, setUrl] = useState(urlImg);
   const isDesktop = useIsDesktop();
 
+  const uploadImage = useUploadImage();
+
   useEffect(() => {
     setUrl(urlImg);
   }, [urlImg]);
 
-  const resizeFile = (file: File): Promise<Blob> => {
-    return new Promise((resolve) => {
-      Resizer.imageFileResizer(
-        file,
-        2000,
-        1500,
-        'JPEG',
-        75,
-        0,
-
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        (uri: Blob) => {
-          resolve(uri);
-        },
-        'blob'
-      );
-    });
-  };
   return (
     <StyledEditPictureContainer className={!isDesktop ? 'mobile' : ''}>
       <StyledEditPicture
@@ -73,36 +57,25 @@ export const CVEditPicture = ({
             </div>
           ) : (
             <div data-uk-form-custom>
+              {/* Fix hover effect */}
               <label htmlFor="image-upload">
                 <input
                   id="image-upload"
                   type="file"
                   accept="image/*"
-                  style={{ cursor: 'pointer' }}
                   onChange={async ({ target }) => {
-                    const file =
-                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                      target.files[0];
-
-                    if (file) {
-                      if (!file.type.includes('image/')) {
-                        UIkit.notification(
-                          'Le fichier doit être une image',
-                          'danger'
-                        );
-                      }
-
-                      const image: Blob = await resizeFile(file);
-                      const profileImageObjectUrl = URL.createObjectURL(image);
+                    const image = await uploadImage(target);
+                    if (image) {
+                      const { profileImage, profileImageObjectUrl } = image;
                       onChange({
-                        profileImage: image,
+                        profileImage,
                         profileImageObjectUrl,
                       });
                       setUrl(profileImageObjectUrl);
                     }
                   }}
                 />
-                <PencilIcon />
+                <ButtonIcon icon={<PencilIcon />} />
               </label>
             </div>
           )}
