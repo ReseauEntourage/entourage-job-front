@@ -35,7 +35,6 @@ export function MemberEmployedToggle({
         member.candidat.employed
       }
       notificationMessage="Le profil du candidat a été mis à jour !"
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
       subtitle={
         member &&
         member.candidat && (
