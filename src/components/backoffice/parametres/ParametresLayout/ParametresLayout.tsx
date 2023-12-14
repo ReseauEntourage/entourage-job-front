@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
 import UIkit from 'uikit';
-import { CVPreferences } from '../CVPreferences';
-import { HeaderParametres } from '../HeaderParametres';
-import {
-  UserInformationCard,
-  LinkedUserInformationCard,
-} from '../InformationsPersonnelles';
-import { PasswordCriterias } from '../PasswordCriterias';
 import { useParametres } from '../useParametres';
 import { Api } from 'src/api';
 import { User, UserWithUserCandidate } from 'src/api/types';
@@ -16,12 +9,19 @@ import { Card, Section } from 'src/components/utils';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useResetForm } from 'src/hooks/utils/useResetForm';
 import { isRoleIncluded } from 'src/utils';
+import { CVPreferences } from './CVPreferences';
+import { HeaderParametres } from './HeaderParametres';
+import {
+  UserInformationCard,
+  LinkedUserInformationCard,
+} from './InformationsPersonnelles';
 import {
   StyledParametresLayout,
   StyledParametresGrid,
   StyledParametresRightColumn,
   StyledParametresLeftColumn,
 } from './ParametresLayout.styles';
+import { PasswordCriterias } from './PasswordCriterias';
 
 interface ParametresLayoutProps {
   user: User | UserWithUserCandidate;
