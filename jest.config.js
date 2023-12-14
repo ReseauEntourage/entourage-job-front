@@ -20,14 +20,13 @@ const customJestConfig = {
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
-
 const jestConfig = async () => {
   const nextJestConfig = await createJestConfig(customJestConfig)();
   return {
     ...nextJestConfig,
     moduleNameMapper: {
       // Workaround to put our SVG stub first
-      '\\.svg$': '<rootDir>/__mocks__/svg.ts',
+      '\\.svg$': '<rootDir>/__mocks__/svg.js',
       ...nextJestConfig.moduleNameMapper,
     },
   };
