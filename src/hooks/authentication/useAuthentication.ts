@@ -10,7 +10,7 @@ import { getDefaultUrl } from 'src/utils/Redirects';
 import { useRoutePermissions } from './useRoutePermissions';
 
 export function useAuthentication() {
-  const { replace } = useRouter();
+  const { replace, asPath, push} = useRouter();
   const dispatch = useDispatch();
 
   const isFetchUserSucceeded = useSelector(
@@ -37,8 +37,20 @@ export function useAuthentication() {
 
   useEffect(() => {
     if (!isAuthenticationPending && !isUserAuthorized) {
-      const nextRoute = currentUserRole ? getDefaultUrl(currentUserRole) : '/login';
-      replace(nextRoute);
+      if (asPath && !currentUserRole) {
+        push(
+          asPath
+            ? {
+                pathname: '/login',
+                query: {
+                  requestedPath: asPath,
+                },
+              }
+            : '/login'
+        );
+      } else if (currentUserRole) {
+        replace(getDefaultUrl(currentUserRole));
+      }
     }
   }, [currentUserRole, isAuthenticationPending, isUserAuthorized, replace]);
 
