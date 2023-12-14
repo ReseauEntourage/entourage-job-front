@@ -1,10 +1,10 @@
 import React from 'react';
 import UIkit from 'uikit';
-import { ToggleWithConfirmationModal } from '../../ToggleWithConfirmationModal';
-import { CandidateEmployedToggle } from '../../candidate/CandidateEmployedToggle';
-import { ContractLabel } from '../../opportunities/OpportunitiesContainer/ContractLabel';
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
+import { ToggleWithConfirmationModal } from 'src/components/backoffice/ToggleWithConfirmationModal';
+import { CandidateEmployedToggle } from 'src/components/backoffice/candidate/CandidateEmployedToggle';
+import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel';
 import { Card } from 'src/components/utils';
 import { StyledCVPreferenceLine } from './CVPreferences.styles';
 
