@@ -10,7 +10,7 @@ import { getDefaultUrl } from 'src/utils/Redirects';
 import { useRoutePermissions } from './useRoutePermissions';
 
 export function useAuthentication() {
-  const { replace, asPath, push} = useRouter();
+  const { replace, asPath, push } = useRouter();
   const dispatch = useDispatch();
 
   const isFetchUserSucceeded = useSelector(
@@ -52,7 +52,14 @@ export function useAuthentication() {
         );
       }
     }
-  }, [currentUserRole, isAuthenticationPending, isUserAuthorized, replace, asPath, push]);
+  }, [
+    currentUserRole,
+    isAuthenticationPending,
+    isUserAuthorized,
+    replace,
+    asPath,
+    push,
+  ]);
 
   return {
     isCurrentRouteReady,
