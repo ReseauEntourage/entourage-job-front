@@ -51,6 +51,8 @@ jobs:
 
       - run: yarn test:eslint
 
+      - run: yarn test:ts-check
+
       - name: set-up
         uses: actions/setup-node@v3
         with:

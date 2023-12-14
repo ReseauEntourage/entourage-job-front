@@ -17,8 +17,9 @@ import {
   isRoleIncluded,
   getUserCandidateFromCoach,
 } from 'src/utils/Finding';
+import { StyledInformationsPersonnelles } from './UserInformationCard.styles';
 
-export const UserInformationCard = ({
+export const LinkedUserInformationCard = ({
   isAdmin = false,
   user,
 }: {
@@ -84,14 +85,11 @@ export const UserInformationCard = ({
   if (!linkedUser) {
     return (
       <Card
-        style="secondary"
         title={`Information du${
           isRoleIncluded(COACH_USER_ROLES, user.role) ? ' candidat' : ' coach'
         }`}
       >
-        <Grid column gap="small">
-          <span className="uk-text-italic">Aucun membre lié</span>
-        </Grid>
+        Aucun membre lié
       </Card>
     );
   }
@@ -106,56 +104,56 @@ export const UserInformationCard = ({
 
         // si membre lié ou non
         const cardContent = (
-          <Grid column gap="small">
-            <Grid row gap="small">
+          <StyledInformationsPersonnelles>
+            <li>
               <UserIcon />
               <span>{`${singleLinkedUser.firstName} ${singleLinkedUser.lastName}`}</span>
-            </Grid>
+            </li>
             {!singleLinkedUser.deletedAt && (
-              <Grid column gap="small">
-                <SimpleLink
-                  href={`mailto:${singleLinkedUser.email}`}
-                  className="uk-link-muted"
-                  isExternal
-                  target="_blank"
-                >
-                  <Grid row gap="small">
+              <>
+                <li>
+                  <SimpleLink
+                    href={`mailto:${singleLinkedUser.email}`}
+                    className="uk-link-muted"
+                    isExternal
+                    target="_blank"
+                  >
                     <EmailIcon />
                     <span data-testid="linkeduser-email-span">
                       {singleLinkedUser.email}
                     </span>
-                  </Grid>
-                </SimpleLink>
+                  </SimpleLink>
+                </li>
                 {singleLinkedUser.phone ? (
                   <SimpleLink
                     href={`tel:${singleLinkedUser.phone}`}
                     className="uk-link-muted"
                     isExternal
                   >
-                    <Grid row gap="small">
+                    <li>
                       <PhoneIcon /> <span>{singleLinkedUser.phone}</span>
-                    </Grid>
+                    </li>
                   </SimpleLink>
                 ) : (
-                  <Grid row gap="small">
-                    <PhoneIcon />{' '}
+                  <li>
+                    <PhoneIcon />
                     <span className="uk-text-italic">
                       Numéro de téléphone non renseigné
                     </span>
-                  </Grid>
+                  </li>
                 )}
                 {isRoleIncluded(COACH_USER_ROLES, user.role) &&
                   (singleLinkedUser.address ? (
-                    <Grid row gap="small">
+                    <li>
                       <HomeIcon /> <span>{singleLinkedUser.address}</span>
-                    </Grid>
+                    </li>
                   ) : (
-                    <Grid row gap="small">
+                    <li>
                       <HomeIcon />{' '}
                       <span className="uk-text-italic">
                         Adresse postale non renseignée
                       </span>
-                    </Grid>
+                    </li>
                   ))}
                 {isRoleIncluded(COACH_USER_ROLES, user.role) &&
                   userCandidat && (
@@ -164,17 +162,17 @@ export const UserInformationCard = ({
                       target="_blank"
                       href={`/cv/${userCandidat.url}`}
                     >
-                      <Grid row gap="small">
+                      <li>
                         <LinkIcon width={20} height={20} />
                         <span className="uk-text-italic">
                           {userCandidat.url}
                         </span>
-                      </Grid>
+                      </li>
                     </SimpleLink>
                   )}
-              </Grid>
+              </>
             )}
-          </Grid>
+          </StyledInformationsPersonnelles>
         );
 
         return (
@@ -189,7 +187,7 @@ export const UserInformationCard = ({
             {!isAdmin &&
               isRoleIncluded(COACH_USER_ROLES, user.role) &&
               !singleLinkedUser.deletedAt && (
-                <Card style="secondary" title="Préférences du CV">
+                <Card title="Préférences du CV">
                   <CandidateEmployedToggle
                     title="A retrouvé un emploi"
                     modalTitle="Le candidat a retrouvé un emploi ?"
@@ -245,7 +243,6 @@ export const UserInformationCard = ({
                 </Card>
               )}
             <Card
-              style="secondary"
               title={`Information du${
                 isRoleIncluded(COACH_USER_ROLES, user.role)
                   ? ' candidat'

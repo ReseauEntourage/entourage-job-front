@@ -8,7 +8,7 @@ export const H5 = ({
   center = false,
   color,
 }: {
-  title: string;
+  title: React.ReactNode;
   effect?: string;
   center?: boolean;
   color?: string;

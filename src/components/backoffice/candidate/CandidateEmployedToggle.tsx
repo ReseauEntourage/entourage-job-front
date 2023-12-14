@@ -10,11 +10,11 @@ import { findConstantFromValue } from 'src/utils';
 interface CandidateEmployedToggleProps {
   candidateId: string;
   title?: string;
-  subtitle: JSX.Element | string;
+  subtitle?: JSX.Element | string;
   modalTitle: string;
   modalConfirmation: string;
   notificationMessage: string;
-  defaultValue: boolean;
+  defaultValue?: boolean;
   setData: (updatedData: {
     contract: Contract;
     endOfContract: string;
