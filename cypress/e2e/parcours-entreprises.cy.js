@@ -117,6 +117,11 @@ describe('Parcours Entreprises', () => {
         .contains('Autre')
         .click();
 
+      cy.get('#form-company-contact-message')
+        .should('be.visible')
+        .scrollIntoView()
+        .type('Bonjour, je souhaite recruter.');
+
       cy.get('button').contains('Envoyer').should('be.visible').click();
 
       cy.wait('@postContactCompany');
