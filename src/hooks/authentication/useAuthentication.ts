@@ -37,7 +37,7 @@ export function useAuthentication() {
 
   useEffect(() => {
     if (!isAuthenticationPending && !isUserAuthorized) {
-      const nextRoute = currentUserRole ? getDefaultUrl(currentUserRole) : '/';
+      const nextRoute = currentUserRole ? getDefaultUrl(currentUserRole) : '/login';
       replace(nextRoute);
     }
   }, [currentUserRole, isAuthenticationPending, isUserAuthorized, replace]);
