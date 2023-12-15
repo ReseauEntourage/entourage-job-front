@@ -1,4 +1,4 @@
-import { takeLatest, call, put, select, fork } from 'typed-redux-saga';
+import { call, fork, put, select, takeLatest } from 'typed-redux-saga';
 import { Api } from 'src/api';
 import { isTooManyRequests } from 'src/api/axiosErrors';
 import { STORAGE_KEYS } from 'src/constants';
@@ -20,14 +20,21 @@ const {
 
 function getIsReleaseVersionAllowed() {
   const releaseVersion = localStorage.getItem(STORAGE_KEYS.RELEASE_VERSION);
-  const herokuReleaseVersion = process.env.HEROKU_RELEASE_VERSION;
+  const herokuReleaseVersion = process.env.HEROKU_RELEASE_VERSION as string;
 
   return releaseVersion === herokuReleaseVersion;
+}
+
+function setReleaseVersion() {
+  const herokuReleaseVersion = process.env.HEROKU_RELEASE_VERSION as string;
+
+  localStorage.setItem(STORAGE_KEYS.RELEASE_VERSION, herokuReleaseVersion);
 }
 
 function* fetchUserRequestedSaga() {
   try {
     if (!getIsReleaseVersionAllowed()) {
+      setReleaseVersion();
       throw new Error('Release version is not allowed');
     }
 
