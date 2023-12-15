@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PencilIcon from 'assets/icons/pencil.svg';
 import { ButtonIcon } from 'src/components/utils';
 import { ImageInput } from 'src/components/utils/Inputs';
+import { Spinner } from 'src/components/utils/Spinner';
 import { useIsDesktop } from 'src/hooks/utils';
 import { addPrefix } from 'src/utils';
 import {
@@ -11,7 +12,7 @@ import {
 } from './CVEdit.styles';
 
 interface CVEditPictureProps {
-  urlImg?: string;
+  urlImg: string;
   onChange: ({ profileImage }: { profileImage: Blob }) => void;
   disablePicture?: boolean;
   imageUploading?: boolean;
@@ -23,7 +24,7 @@ export const CVEditPicture = ({
   disablePicture,
   imageUploading,
 }: CVEditPictureProps) => {
-  const [url, setUrl] = useState(urlImg);
+  const [url, setUrl] = useState<string>(urlImg);
   const isDesktop = useIsDesktop();
 
   useEffect(() => {
@@ -35,18 +36,13 @@ export const CVEditPicture = ({
       <StyledEditPicture
         className={!isDesktop ? 'mobile' : ''}
         style={{
-          backgroundImage: `url(${addPrefix(
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            url
-          )})`,
+          backgroundImage: `url(${addPrefix(url)})`,
         }}
       />
       {!disablePicture && (
         <StyledEditPictureButton>
           {imageUploading ? (
-            <div>
-              <div data-uk-spinner="ratio: 1" />
-            </div>
+            <Spinner />
           ) : (
             <ImageInput
               onChange={({ profileImage, profileImageObjectUrl }) => {

@@ -8,12 +8,21 @@ interface ImgProps {
   width?: number;
   height?: number;
   cover?: boolean;
+  onError?: () => void;
 }
 
-export const Img = ({ src, alt, width, height, cover = false }: ImgProps) => {
+export const Img = ({
+  src,
+  alt,
+  width,
+  height,
+  cover = false,
+  onError = () => {},
+}: ImgProps) => {
   if (cover) {
     return (
       <Image
+        onError={onError}
         alt={alt}
         src={addPrefix(src)}
         layout="fill"
@@ -25,6 +34,7 @@ export const Img = ({ src, alt, width, height, cover = false }: ImgProps) => {
   if (width || height) {
     return (
       <Image
+        onError={onError}
         alt={alt}
         src={addPrefix(src)}
         width={width}
@@ -34,6 +44,12 @@ export const Img = ({ src, alt, width, height, cover = false }: ImgProps) => {
     );
   }
   return (
-    <Image alt={alt} src={addPrefix(src)} layout="fill" objectFit="contain" />
+    <Image
+      onError={onError}
+      alt={alt}
+      src={addPrefix(src)}
+      layout="fill"
+      objectFit="contain"
+    />
   );
 };

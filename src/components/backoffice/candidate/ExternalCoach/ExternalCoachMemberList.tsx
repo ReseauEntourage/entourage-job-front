@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
@@ -24,27 +24,27 @@ export const ExternalCoachMemberList = () => {
   useEffect(() => {
     if (user) {
       const getRelatedUsers = async () => {
-        if ('coaches' in user && user.coaches) {
-          const relatedUsersPromises = user.coaches.map(async (relatedUser) => {
-            const { candidat, ...relatedUserWithoutCandidate } = relatedUser;
-            try {
-              const response = await Api.getCVByCandidateId(candidat?.id);
-              return {
-                ...candidat,
-                candidat: {
-                  ...relatedUserWithoutCandidate,
-                  cvs: [response.data],
-                },
-              };
-            } catch (err) {
-              console.error(err);
-            }
-          });
-          const membersData = (await Promise.all(
-            relatedUsersPromises
-          )) as UserWithUserCandidate[];
-          setMembers(membersData);
-        }
+        const relatedUsersPromises = user.coaches
+          ? user.coaches.map(async (relatedUser) => {
+              const { candidat, ...relatedUserWithoutCandidate } = relatedUser;
+              try {
+                const response = await Api.getCVByCandidateId(candidat?.id);
+                return {
+                  ...candidat,
+                  candidat: {
+                    ...relatedUserWithoutCandidate,
+                    cvs: [response.data],
+                  },
+                };
+              } catch (err) {
+                console.error(err);
+              }
+            })
+          : [];
+        const membersData = (await Promise.all(
+          relatedUsersPromises
+        )) as UserWithUserCandidate[];
+        setMembers(membersData);
 
         setLoading(false);
       };
