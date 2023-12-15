@@ -8,14 +8,14 @@ import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { sortByDateStart } from 'src/utils';
 
 interface ExperiencesProfileCardProps {
-  experiences: CVExperience[];
+  experiences?: CVExperience[];
   onChange: (updatedExperiences: { experiences: CVExperience[] }) => void;
 }
 
 const EXPERIENCE_LIMIT = 5;
 
 export const ExperiencesProfileCard = ({
-  experiences,
+  experiences = [],
   onChange,
 }: ExperiencesProfileCardProps) => {
   const sortedExperiences = sortByDateStart(experiences);

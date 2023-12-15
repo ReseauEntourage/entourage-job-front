@@ -1,38 +1,49 @@
-import React, { useEffect, useState } from 'react';
-import { CV, User, UserWithUserCandidate } from 'src/api/types';
+import React, { useCallback, useEffect, useState } from 'react';
+import { CV, UserWithUserCandidate } from 'src/api/types';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { isRoleIncluded } from 'src/utils/Finding';
+import { isRoleIncluded } from 'src/utils';
 import { Img } from './Img';
 
 interface ImgProfileProps {
-  user?: UserWithUserCandidate;
+  user: UserWithUserCandidate;
   size?: number;
 }
 
 export const ImgProfile = ({ user, size = 40 }: ImgProfileProps) => {
   const connectedUser = useAuthenticatedUser();
 
-  const myUser: User | UserWithUserCandidate = user || connectedUser;
+  const myUser: UserWithUserCandidate = user || connectedUser;
   const { firstName, role } = myUser;
-  const [urlImg, setUrlImg] = useState<string>();
+  const [urlImg, setUrlImg] = useState<string | null>(null);
+  const [hash, setHash] = useState<number>(Date.now());
 
   useEffect(() => {
-    if ('candidat' in myUser) {
-      const candidatUser = myUser as UserWithUserCandidate;
-      if (
-        isRoleIncluded(CANDIDATE_USER_ROLES, role) &&
-        candidatUser.candidat?.cvs &&
-        candidatUser.candidat?.cvs?.length > 0
-      ) {
-        const { cvs } = candidatUser.candidat;
-        const latestCV: CV = cvs.reduce((lastFound, curr) => {
-          return lastFound.version < curr.version ? curr : lastFound;
-        }, cvs[0]);
-        setUrlImg(latestCV.urlImg);
+    setUrlImg(
+      `${process.env.AWSS3_URL}${process.env.AWSS3_IMAGE_DIRECTORY}${myUser.id}.profile.jpg`
+    );
+  }, [myUser.id]);
+
+  useEffect(() => {
+    setHash(Date.now());
+  }, [urlImg]);
+
+  const fallbackToCVImage = useCallback(() => {
+    const candidatUser = myUser;
+    if (
+      isRoleIncluded(CANDIDATE_USER_ROLES, role) &&
+      candidatUser.candidat?.cvs &&
+      candidatUser.candidat?.cvs?.length > 0
+    ) {
+      const { cvs } = candidatUser.candidat;
+      const latestCV: CV = cvs.reduce((lastFound, curr) => {
+        return lastFound.version < curr.version ? curr : lastFound;
+      }, cvs[0]);
+      if (latestCV.urlImg) {
+        setUrlImg(`${process.env.AWSS3_URL}/${latestCV.urlImg}`);
       }
     }
-  }, [myUser, role, user]);
+  }, [myUser, role]);
 
   return (
     <div
@@ -47,7 +58,11 @@ export const ImgProfile = ({ user, size = 40 }: ImgProfileProps) => {
         <div className="uk-width-expand uk-height-1-1 uk-cover-container">
           <Img
             cover
-            src={`${process.env.AWSS3_URL}/${urlImg}`}
+            onError={() => {
+              setUrlImg(null);
+              fallbackToCVImage();
+            }}
+            src={`${urlImg}?${hash}`}
             alt={`photo de ${firstName}`}
           />
         </div>
