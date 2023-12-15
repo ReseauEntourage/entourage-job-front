@@ -38,7 +38,7 @@ export function useUploadImage() {
           profileImageObjectUrl,
         };
       }
-      return null
+      return null;
     },
     [resizeFile]
   );
