@@ -6,7 +6,7 @@ export const StyledTag = styled.div`
   margin-right: 20px;
   padding: 3px 10px;
   border-radius: 30px;
-  background-color: #FDDFD2;
+  background-color: #fddfd2;
   border: #f55f241a 1px solid;
   color: ${COLORS.primaryOrange};
   font-size: 14px;
