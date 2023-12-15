@@ -29,6 +29,8 @@ export const UserInformationCard = ({
       title={title}
       editCallback={openCorrespondingModal}
       isLoading={loadingPersonal}
+      isMobileClosable
+      isDefaultOpen
     >
       {!loadingPersonal && (
         <StyledInformationsPersonnelles>
@@ -69,7 +71,9 @@ export const UserInformationCard = ({
                   userData.zone ? _.capitalize(userData.zone) : 'Non renseignée'
                 }
               />
-              {userData.adminRole && <>{_.capitalize(userData.adminRole)}</>}
+              {userData.adminRole && (
+                <Tag content={_.capitalize(userData.adminRole)} />
+              )}
             </li>
           )}
         </StyledInformationsPersonnelles>

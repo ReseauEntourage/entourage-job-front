@@ -7,6 +7,7 @@ import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { formChangePassword } from 'src/components/forms/schemas/formChangePassword';
 import { Card, Section } from 'src/components/utils';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
+import { useIsDesktop } from 'src/hooks/utils';
 import { useResetForm } from 'src/hooks/utils/useResetForm';
 import { isRoleIncluded } from 'src/utils';
 import { CVPreferences } from './CVPreferences';
@@ -43,12 +44,16 @@ export const ParametresLayout = ({
 
   const { openCorrespondingModal } = useParametres(userData, user, setUserData);
 
+  const isDesktop = useIsDesktop();
+
   return (
     <StyledParametresLayout>
       <HeaderParametres userData={userData} />
       <Section className="custom-page">
-        <StyledParametresGrid>
-          <StyledParametresLeftColumn>
+        <StyledParametresGrid className={`${isDesktop ? '' : 'mobile'}`}>
+          <StyledParametresLeftColumn
+            className={`${isDesktop ? '' : 'mobile'}`}
+          >
             {/* Informations Personnelles */}
             <UserInformationCard
               title="Informations personnelles"
@@ -64,6 +69,7 @@ export const ParametresLayout = ({
             <Card
               title="Modification du mot de passe"
               isLoading={loadingPassword}
+              isMobileClosable
             >
               <PasswordCriterias />
               <FormWithValidation
@@ -94,7 +100,9 @@ export const ParametresLayout = ({
             </Card>
           </StyledParametresLeftColumn>
 
-          <StyledParametresRightColumn>
+          <StyledParametresRightColumn
+            className={`${isDesktop ? '' : 'mobile'}`}
+          >
             {/* LinkedUser info */}
             {isRoleIncluded(
               [

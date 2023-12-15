@@ -10,6 +10,11 @@ export const StyledParametresGrid = styled.div`
   gap: 40px;
   align-items: flex-start;
   width: 100%;
+  &.mobile {
+    margin-top: 30px;
+    flex-direction: column;
+    gap: 0;
+  }
 `;
 
 export const StyledParametresLeftColumn = styled.div`
@@ -17,6 +22,10 @@ export const StyledParametresLeftColumn = styled.div`
   flex-direction: column;
   flex-grow: 1;
   gap: 40px;
+  &.mobile {
+    width: 100%;
+    margin-bottom: 40px;
+  }
 `;
 
 export const StyledParametresRightColumn = styled.div`
@@ -24,4 +33,7 @@ export const StyledParametresRightColumn = styled.div`
   flex-direction: column;
   flex-grow: 4;
   gap: 40px;
+  &.mobile {
+    width: 100%;
+  }
 `;
