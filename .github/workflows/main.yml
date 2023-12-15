@@ -49,9 +49,9 @@ jobs:
           command: npx cypress run --record --key ${{ secrets.CYPRESS_IO_KEY }}
           wait-on: http://localhost:3000
 
-      - run: yarn test:eslint
-
       - run: yarn test:ts-check
+
+      - run: yarn test:eslint
 
       - name: set-up
         uses: actions/setup-node@v3

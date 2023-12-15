@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledTag = styled.div`
-  display: inline-block;
+  display: inline-flex;
   margin-right: 20px;
   padding: 3px 10px;
-  border-radius: 5px;
-  background-color: #f55f241a;
+  border-radius: 30px;
+  background-color: #FDDFD2;
   border: #f55f241a 1px solid;
   color: ${COLORS.primaryOrange};
   font-size: 14px;
