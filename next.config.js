@@ -63,6 +63,7 @@ if (process.env.AWSS3_CDN_URL) {
     },
   ];
 }
+
 if (process.env.AWSS3_URL) {
   remotePatterns = [
     ...remotePatterns,
@@ -77,6 +78,10 @@ if (process.env.AWSS3_URL) {
 module.exports = withLess({
   webpack: (config, options) => {
     config.resolve.modules.push(__dirname);
+
+    // @doc https://webpack.js.org/plugins/environment-plugin/
+    delete process.env.__NEXT_OPTIMIZE_FONTS;
+    config.plugins.push(new webpack.EnvironmentPlugin(process.env));
 
     config.module.rules.push({
       test: /\.svg$/,
@@ -102,12 +107,6 @@ module.exports = withLess({
       ],
     });
 
-    if (!options.isServer) {
-      config.resolve.alias['@sentry/node'] = '@sentry/react';
-    }
-
-    config.plugins.push(new webpack.EnvironmentPlugin(process.env));
-
     config.plugins.push(
       new CircularDependencyPlugin({
         // exclude detection of files based on a RegExp
@@ -132,6 +131,10 @@ module.exports = withLess({
           ignore: ['node_modules', 'next.config.js', 'assets', 'public'],
         })
       );
+    }
+
+    if (!options.isServer) {
+      config.resolve.alias['@sentry/node'] = '@sentry/react';
     }
 
     return config;
