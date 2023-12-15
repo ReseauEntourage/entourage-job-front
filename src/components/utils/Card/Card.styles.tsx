@@ -7,12 +7,23 @@ export const StyledCard = styled.div`
   border-radius: 20px;
   padding: 25px;
   position: relative;
+  &.mobile {
+    width: 100%;
+    box-sizing: border-box;
+  }
 `;
 
 export const StyledCardTitleContainer = styled.div`
   border-bottom: #fddfd2 solid 1px;
   margin-bottom: 30px;
   padding-right: 50px;
+  &.no-border {
+    border-bottom: none;
+    margin-bottom: 0px;
+    > h5 {
+      margin-bottom: 0px;
+    }
+  }
 `;
 
 export const StyledEditIconContainer = styled.div`
@@ -29,4 +40,18 @@ export const StyledEditIconContainer = styled.div`
 export const StyledSpinnerContainer = styled.div`
   position: absolute;
   right: 25px;
+`;
+
+export const StyledChevronContainer = styled.div`
+  position: absolute;
+  right: 25px;
+  display: flex;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  svg {
+    color: ${COLORS.primaryOrange};
+    height: 19px;
+    width: 19px;
+  }
 `;

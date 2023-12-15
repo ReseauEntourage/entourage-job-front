@@ -18,7 +18,7 @@ export const CVPreferences = ({
   >;
 }) => {
   return (
-    <Card title="Préférences du CV">
+    <Card title="Préférences du CV" isMobileClosable>
       <StyledCVPreferenceLine>
         <CandidateEmployedToggle
           title="J'ai retrouvé un emploi"

@@ -13,4 +13,7 @@ export const StyledInformationsPersonnelles = styled.ul`
       color: ${COLORS.primaryOrange};
     }
   }
+  h5 {
+    margin-top: 30px;
+  }
 `;

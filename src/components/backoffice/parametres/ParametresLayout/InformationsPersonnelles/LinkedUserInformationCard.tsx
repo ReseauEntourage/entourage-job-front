@@ -11,6 +11,7 @@ import { ToggleWithConfirmationModal } from 'src/components/backoffice/ToggleWit
 import { CandidateEmployedToggle } from 'src/components/backoffice/candidate/CandidateEmployedToggle';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
 import { Card, Grid, SimpleLink } from 'src/components/utils';
+import { H5 } from 'src/components/utils/Headings';
 import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
 import {
   getRelatedUser,
@@ -104,75 +105,142 @@ export const LinkedUserInformationCard = ({
 
         // si membre lié ou non
         const cardContent = (
-          <StyledInformationsPersonnelles>
-            <li>
-              <UserIcon />
-              <span>{`${singleLinkedUser.firstName} ${singleLinkedUser.lastName}`}</span>
-            </li>
-            {!singleLinkedUser.deletedAt && (
-              <>
-                <li>
-                  <SimpleLink
-                    href={`mailto:${singleLinkedUser.email}`}
-                    className="uk-link-muted"
-                    isExternal
-                    target="_blank"
-                  >
-                    <EmailIcon />
-                    <span data-testid="linkeduser-email-span">
-                      {singleLinkedUser.email}
-                    </span>
-                  </SimpleLink>
-                </li>
-                {singleLinkedUser.phone ? (
-                  <SimpleLink
-                    href={`tel:${singleLinkedUser.phone}`}
-                    className="uk-link-muted"
-                    isExternal
-                  >
-                    <li>
-                      <PhoneIcon /> <span>{singleLinkedUser.phone}</span>
-                    </li>
-                  </SimpleLink>
-                ) : (
+          <>
+            <StyledInformationsPersonnelles>
+              <li>
+                <UserIcon />
+                <span>{`${singleLinkedUser.firstName} ${singleLinkedUser.lastName}`}</span>
+              </li>
+              {!singleLinkedUser.deletedAt && (
+                <>
                   <li>
-                    <PhoneIcon />
-                    <span className="uk-text-italic">
-                      Numéro de téléphone non renseigné
-                    </span>
-                  </li>
-                )}
-                {isRoleIncluded(COACH_USER_ROLES, user.role) &&
-                  (singleLinkedUser.address ? (
-                    <li>
-                      <HomeIcon /> <span>{singleLinkedUser.address}</span>
-                    </li>
-                  ) : (
-                    <li>
-                      <HomeIcon />{' '}
-                      <span className="uk-text-italic">
-                        Adresse postale non renseignée
-                      </span>
-                    </li>
-                  ))}
-                {isRoleIncluded(COACH_USER_ROLES, user.role) &&
-                  userCandidat && (
                     <SimpleLink
+                      href={`mailto:${singleLinkedUser.email}`}
                       className="uk-link-muted"
+                      isExternal
                       target="_blank"
-                      href={`/cv/${userCandidat.url}`}
+                    >
+                      <EmailIcon />
+                      <span data-testid="linkeduser-email-span">
+                        {singleLinkedUser.email}
+                      </span>
+                    </SimpleLink>
+                  </li>
+                  {singleLinkedUser.phone ? (
+                    <SimpleLink
+                      href={`tel:${singleLinkedUser.phone}`}
+                      className="uk-link-muted"
+                      isExternal
                     >
                       <li>
-                        <LinkIcon width={20} height={20} />
-                        <span className="uk-text-italic">
-                          {userCandidat.url}
-                        </span>
+                        <PhoneIcon /> <span>{singleLinkedUser.phone}</span>
                       </li>
                     </SimpleLink>
+                  ) : (
+                    <li>
+                      <PhoneIcon />
+                      <span className="uk-text-italic">
+                        Numéro de téléphone non renseigné
+                      </span>
+                    </li>
                   )}
-              </>
-            )}
-          </StyledInformationsPersonnelles>
+                  {isRoleIncluded(COACH_USER_ROLES, user.role) &&
+                    (singleLinkedUser.address ? (
+                      <li>
+                        <HomeIcon /> <span>{singleLinkedUser.address}</span>
+                      </li>
+                    ) : (
+                      <li>
+                        <HomeIcon />{' '}
+                        <span className="uk-text-italic">
+                          Adresse postale non renseignée
+                        </span>
+                      </li>
+                    ))}
+                  {isRoleIncluded(COACH_USER_ROLES, user.role) &&
+                    userCandidat && (
+                      <SimpleLink
+                        className="uk-link-muted"
+                        target="_blank"
+                        href={`/cv/${userCandidat.url}`}
+                      >
+                        <li>
+                          <LinkIcon width={20} height={20} />
+                          <span className="uk-text-italic">
+                            {userCandidat.url}
+                          </span>
+                        </li>
+                      </SimpleLink>
+                    )}
+                </>
+              )}
+            </StyledInformationsPersonnelles>
+            {!isAdmin &&
+              isRoleIncluded(COACH_USER_ROLES, user.role) &&
+              !singleLinkedUser.deletedAt && (
+                <StyledInformationsPersonnelles>
+                  <li>
+                    <H5 color="primaryOrange" title="Informations sur le CV" />
+                  </li>
+                  <li>
+                    <CandidateEmployedToggle
+                      title="A retrouvé un emploi"
+                      modalTitle="Le candidat a retrouvé un emploi ?"
+                      modalConfirmation="Valider"
+                      defaultValue={userCandidat.employed}
+                      notificationMessage="Le profil du candidat a été mis à jour !"
+                      subtitle={
+                        userCandidat && (
+                          <ContractLabel
+                            contract={userCandidat.contract}
+                            endOfContract={userCandidat.endOfContract}
+                          />
+                        )
+                      }
+                      setData={(newData) => {
+                        updateUserCandidate(singleLinkedUser.id, {
+                          ...userCandidat,
+                          ...newData,
+                        });
+                      }}
+                      candidateId={singleLinkedUser.id}
+                    />
+                  </li>
+                  <li>
+                    <ToggleWithConfirmationModal
+                      id="hiddenToggle"
+                      title="Masquer le CV"
+                      modalTitle="Changer la visibilité du CV en ligne ?"
+                      modalConfirmation="Oui, masquer le CV"
+                      defaultValue={userCandidat.hidden}
+                      onToggle={(hidden) => {
+                        return Api.putCandidate(singleLinkedUser.id, {
+                          hidden,
+                        })
+                          .then(() => {
+                            updateUserCandidate(singleLinkedUser.id, {
+                              ...userCandidat,
+                              hidden,
+                            });
+                            UIkit.notification(
+                              hidden
+                                ? 'Le CV est désormais masqué'
+                                : 'Le CV est désormais visible',
+                              'success'
+                            );
+                          })
+                          .catch(() => {
+                            return UIkit.notification(
+                              'Une erreur est survenue lors du masquage du profil',
+                              'danger'
+                            );
+                          });
+                      }}
+                    />
+                  </li>
+                </StyledInformationsPersonnelles>
+              )}
+          </>
         );
 
         return (
@@ -184,70 +252,13 @@ export const LinkedUserInformationCard = ({
             }
             childWidths={['1-1']}
           >
-            {!isAdmin &&
-              isRoleIncluded(COACH_USER_ROLES, user.role) &&
-              !singleLinkedUser.deletedAt && (
-                <Card title="Préférences du CV">
-                  <CandidateEmployedToggle
-                    title="A retrouvé un emploi"
-                    modalTitle="Le candidat a retrouvé un emploi ?"
-                    modalConfirmation="Valider"
-                    defaultValue={userCandidat.employed}
-                    notificationMessage="Le profil du candidat a été mis à jour !"
-                    subtitle={
-                      userCandidat && (
-                        <ContractLabel
-                          contract={userCandidat.contract}
-                          endOfContract={userCandidat.endOfContract}
-                        />
-                      )
-                    }
-                    setData={(newData) => {
-                      updateUserCandidate(singleLinkedUser.id, {
-                        ...userCandidat,
-                        ...newData,
-                      });
-                    }}
-                    candidateId={singleLinkedUser.id}
-                  />
-                  <ToggleWithConfirmationModal
-                    id="hiddenToggle"
-                    title="Masquer le CV"
-                    modalTitle="Changer la visibilité du CV en ligne ?"
-                    modalConfirmation="Oui, masquer le CV"
-                    defaultValue={userCandidat.hidden}
-                    onToggle={(hidden) => {
-                      return Api.putCandidate(singleLinkedUser.id, {
-                        hidden,
-                      })
-                        .then(() => {
-                          updateUserCandidate(singleLinkedUser.id, {
-                            ...userCandidat,
-                            hidden,
-                          });
-                          UIkit.notification(
-                            hidden
-                              ? 'Le CV est désormais masqué'
-                              : 'Le CV est désormais visible',
-                            'success'
-                          );
-                        })
-                        .catch(() => {
-                          return UIkit.notification(
-                            'Une erreur est survenue lors du masquage du profil',
-                            'danger'
-                          );
-                        });
-                    }}
-                  />
-                </Card>
-              )}
             <Card
               title={`Information du${
                 isRoleIncluded(COACH_USER_ROLES, user.role)
                   ? ' candidat'
                   : ' coach'
               }`}
+              isMobileClosable
             >
               {cardContent}
             </Card>
