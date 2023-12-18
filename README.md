@@ -52,6 +52,8 @@
 
 ## Configuration
 
+> make init - to initialize the .env from .env.dist with the right values
+
 ### Avec Docker
 
 #### Build image et container
