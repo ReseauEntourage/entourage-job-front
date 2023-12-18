@@ -10,7 +10,7 @@ import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { AnyCantFix } from 'src/utils/Types';
 
 interface ModalEditProfessionalInformationProps<
-  S extends FormSchema<AnyCantFix>
+  S extends FormSchema<AnyCantFix>,
 > {
   title: React.ReactNode;
   description: React.ReactNode;
@@ -23,7 +23,7 @@ interface ModalEditProfessionalInformationProps<
 }
 
 export const ModalEditProfessionalInformation = <
-  S extends FormSchema<AnyCantFix>
+  S extends FormSchema<AnyCantFix>,
 >({
   title,
   description,

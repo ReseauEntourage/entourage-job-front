@@ -115,43 +115,71 @@ if (process.env.AWSS3_URL) {
 }
 
 module.exports = withLess({
+  reactStrictMode: true,
+  assetPrefix: !dev ? process.env.CDN_URL || undefined : undefined,
+  images: {
+    remotePatterns: [
+      {
+        hostname: '0.0.0.0',
+        port: '3001',
+      },
+    ],
+  },
   webpack: (config, options) => {
     config.resolve.modules.push(__dirname);
+
+    const fileLoaderRule = config.module.rules.find((rule) =>
+      rule.test?.test?.('.svg'),
+    )
+
+    config.module.rules.push(
+      // Reapply the existing rule, but only for svg imports ending in ?url
+      {
+        ...fileLoaderRule,
+        test: /\.svg$/i,
+        resourceQuery: /url/, // *.svg?url
+      },
+      // Convert all other *.svg imports to React components
+      {
+        test: /\.svg$/i,
+        issuer: fileLoaderRule.issuer,
+        resourceQuery: { not: [...fileLoaderRule.resourceQuery.not, /url/] }, // exclude if *.svg?url
+        use: ['@svgr/webpack'],
+      },
+    )
+
+    // Modify the file loader rule to ignore *.svg, since we have it handled now.
+    fileLoaderRule.exclude = /\.svg$/i
 
     // @doc https://webpack.js.org/plugins/environment-plugin/
     delete process.env.__NEXT_OPTIMIZE_FONTS;
     config.plugins.push(new webpack.EnvironmentPlugin(process.env));
 
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ({ resource }) => [
-        {
-          loader: '@svgr/webpack',
-          options: {
-            svgoConfig: {
-              plugins: [
-                {
-                  name: 'preset-default',
-                  params: {
-                    overrides: {
-                      // disable plugins
-                      removeViewBox: false,
-                      cleanupIDs: false,
-                    },
-                  },
-                },
-                {
-                  name: 'cleanupIDs',
-                  params: {
-                    prefix: `svg${hash(relative(context, resource))}`,
-                  },
-                },
-              ],
-            },
-          },
-        },
-      ],
-    });
+    // config.module.rules.push({
+    //   test: /\.svg$/,
+    //   use: ({ resource }) => [
+    //     {
+    //       loader: '@svgr/webpack',
+    //       options: {
+    //         svgoConfig: {
+    //           plugins: [
+    //             {
+    //               name: 'preset-default',
+    //               params: {
+    //                 overrides: {
+    //                   prefixIds: false,
+    //                   cleanupIDs: false,
+    //                   // disable plugins
+    //                   removeViewBox: false,
+    //                 },
+    //               },
+    //             },
+    //           ],
+    //         },
+    //       },
+    //     },
+    //   ],
+    // });
 
     config.plugins.push(
       new CircularDependencyPlugin({
@@ -184,10 +212,6 @@ module.exports = withLess({
     }
 
     return config;
-  },
-  assetPrefix: !dev ? process.env.CDN_URL || undefined : undefined,
-  images: {
-    remotePatterns,
   },
   async redirects() {
     return [

@@ -3,6 +3,7 @@ import axios, {
   AxiosRequestHeaders,
   AxiosResponse,
 } from 'axios';
+
 import _ from 'lodash';
 import { AdminZone } from 'src/constants/departements';
 import { addAxiosInterceptors } from './interceptor';
@@ -33,6 +34,7 @@ export class APIHandler {
 
   constructor() {
     this.name = 'APIHandler';
+
     this.api = axios.create({
       baseURL: `${process.env.API_URL}`,
       headers: {
@@ -40,13 +42,14 @@ export class APIHandler {
         'Content-Type': 'application/json',
       },
     });
+
     addAxiosInterceptors(this.api);
   }
 
   private get(
     route: string,
     query: object = {},
-    headers: AxiosRequestHeaders = {}
+    headers?: AxiosRequestHeaders
   ): Promise<AxiosResponse> {
     if (query && typeof query !== 'object') {
       throw new Error(
@@ -59,7 +62,7 @@ export class APIHandler {
   private post<T extends APIRoute>(
     route: Route<T>,
     payload: object,
-    headers?: AxiosRequestHeaders
+    headers?: Record<string, string>
   ): Promise<AxiosResponse> {
     if (payload && typeof payload !== 'object') {
       throw new Error(
@@ -125,6 +128,7 @@ export class APIHandler {
   }
 
   // post
+
   postCVCount(candidateId: string, type: SocialMedia): Promise<AxiosResponse> {
     return this.post('/cv/count', { candidateId, type });
   }
@@ -134,12 +138,10 @@ export class APIHandler {
     cv: object,
     isFormData: boolean
   ): Promise<AxiosResponse> {
-    if (isFormData) {
-      return this.post(`/cv/${candidateId}`, cv, {
-        'Content-Type': 'multipart/form-data',
-      });
-    }
-    return this.post(`/cv/${candidateId}`, cv);
+    const headers = isFormData
+      ? { 'Content-Type': 'multipart/form-data' }
+      : undefined;
+    return this.post(`/cv/${candidateId}`, cv, headers);
   }
 
   // put
@@ -171,6 +173,7 @@ export class APIHandler {
   }
 
   // can be both coach or candidate ID
+
   getUserCandidate(): Promise<AxiosResponse> {
     return this.get(`/user/candidate`);
   }
@@ -188,6 +191,7 @@ export class APIHandler {
   }
 
   // post
+
   postUser(params: UserDto): Promise<AxiosResponse> {
     return this.post('/user', params);
   }
@@ -196,9 +200,7 @@ export class APIHandler {
     userId: string,
     profileImage: FormData
   ): Promise<AxiosResponse> {
-    return this.post(`/user/profile/uploadImage/${userId}`, profileImage, {
-      'Content-Type': 'multipart/form-data',
-    });
+    return this.post(`/user/profile/uploadImage/${userId}`, profileImage);
   }
 
   // put
@@ -254,6 +256,7 @@ export class APIHandler {
   /// //////////// ///
 
   // get
+
   getAllOrganizations(params: {
     params: {
       limit: number;
@@ -266,11 +269,13 @@ export class APIHandler {
   }
 
   // post
+
   postOrganization(params: OrganizationDto): Promise<AxiosResponse> {
     return this.post('/organization', params);
   }
 
   // put
+
   putOrganization(
     organizationId: string,
     params: OrganizationDto
@@ -319,13 +324,6 @@ export class APIHandler {
   ): Promise<AxiosResponse> {
     return this.get(`/opportunity/candidate/tabCount/${candidateId}`);
   }
-
-  // getOpportunitiesTabCountForAdmin(
-  //   params: object
-  // ): Promise<AxiosResponse> {
-  //   console.log(params);
-  //   return this.get(`/opportunity/admin/tabCount`, params);
-  // }
 
   // post
 
@@ -428,11 +426,6 @@ export class APIHandler {
     return this.post('/auth/login', params);
   }
 
-  // no logout?
-  // postAuthLogout(params) {
-  //   return this.post('')
-  // }
-
   postAuthForgot(params: { email: string }): Promise<AxiosResponse> {
     return this.post('/auth/forgot', params);
   }
@@ -449,9 +442,13 @@ export class APIHandler {
   // contact /
   /// // //////
 
+  // get
+
   getCampaigns(): Promise<AxiosResponse> {
     return this.get(`/contact/campaigns`);
   }
+
+  // post
 
   postContactContactUs(params: ContactContactUs): Promise<AxiosResponse> {
     return this.post('/contact/contactUs', params);
@@ -478,6 +475,9 @@ export class APIHandler {
   /// // //////
   // message /
   /// // //////
+
+  // post
+
   postExternalMessage(params: ExternalMessage): Promise<AxiosResponse> {
     return this.post('/externalMessage', params);
   }

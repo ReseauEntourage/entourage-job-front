@@ -35,7 +35,10 @@
   "rules": {
     // Plain JavaScript Rules
     "arrow-body-style": 0,
-
+    // Note: you must disable the base rule as it can report incorrect errors
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": "error",
+    //
     "no-console": [1, { "allow": ["warn", "error"] }],
     "no-multiple-empty-lines": [2, { "max": 1 }], // prettier like
     // max-len is enought

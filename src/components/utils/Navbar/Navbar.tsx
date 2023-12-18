@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  StyledCenterContainer,
-  StyledLeftContainer,
   StyledNavbar,
+  StyledLeftContainer,
+  StyledCenterContainer,
   StyledRightContainer,
 } from './Navbar.styles';
 
@@ -24,7 +24,7 @@ export const Navbar = ({
   backgroundColor,
 }: NavbarProps) => {
   return (
-    <StyledNavbar sticky={sticky} id={id} backgroundColor={backgroundColor}>
+    <StyledNavbar id={id} sticky={sticky} backgroundColor={backgroundColor}>
       <StyledLeftContainer>{left}</StyledLeftContainer>
       <StyledCenterContainer>{center}</StyledCenterContainer>
       <StyledRightContainer>{right}</StyledRightContainer>

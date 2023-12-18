@@ -37,7 +37,7 @@ import {
 
 export function mapFieldRules<
   S extends FormSchema<AnyCantFix>,
-  T extends InputComponent
+  T extends InputComponent,
 >(
   fieldRules: Rule<ExtractFormSchemaValidation<S>, T, boolean>[]
 ): Record<

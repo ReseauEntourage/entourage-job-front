@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import React from 'react';
 import { addPrefix } from 'src/utils';
 
@@ -23,38 +23,44 @@ export const Img = ({
 }: ImgProps) => {
   if (cover) {
     return (
+      <div>
+        <Image
+          onError={onError}
+          alt={alt}
+          src={addPrefix(src)}
+          layout="fill"
+          objectFit="cover"
+          objectPosition="center"
+          id={id}
+        />
+      </div>
+    );
+  }
+  if (width || height) {
+    return (
+      <div>
+        <Image
+          onError={onError}
+          alt={alt}
+          src={addPrefix(src)}
+          width={width}
+          height={height}
+          objectFit="contain"
+          id={id}
+        />
+      </div>
+    );
+  }
+  return (
+    <div>
       <Image
         onError={onError}
         alt={alt}
         src={addPrefix(src)}
         layout="fill"
-        objectFit="cover"
-        objectPosition="center"
-        id={id}
-      />
-    );
-  }
-  if (width || height) {
-    return (
-      <Image
-        onError={onError}
-        alt={alt}
-        src={addPrefix(src)}
-        width={width}
-        height={height}
         objectFit="contain"
         id={id}
       />
-    );
-  }
-  return (
-    <Image
-      onError={onError}
-      alt={alt}
-      src={addPrefix(src)}
-      layout="fill"
-      objectFit="contain"
-      id={id}
-    />
+    </div>
   );
 };

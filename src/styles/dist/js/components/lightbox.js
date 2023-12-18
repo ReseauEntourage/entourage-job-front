@@ -4,10 +4,10 @@
   typeof exports === 'object' && typeof module !== 'undefined'
     ? (module.exports = factory(require('uikit-util')))
     : typeof define === 'function' && define.amd
-    ? define('uikitlightbox', ['uikit-util'], factory)
-    : ((global =
-        typeof globalThis !== 'undefined' ? globalThis : global || self),
-      (global.UIkitLightbox = factory(global.UIkit.util)));
+      ? define('uikitlightbox', ['uikit-util'], factory)
+      : ((global =
+          typeof globalThis !== 'undefined' ? globalThis : global || self),
+        (global.UIkitLightbox = factory(global.UIkit.util)));
 })(this, function (uikitUtil) {
   'use strict';
 
@@ -192,10 +192,10 @@
                 uikitUtil.isFunction(animate)
                   ? animate
                   : animate === false || !this$1$1.hasAnimation
-                  ? this$1$1._toggle
-                  : this$1$1.hasTransition
-                  ? toggleHeight(this$1$1)
-                  : toggleAnimation(this$1$1)
+                    ? this$1$1._toggle
+                    : this$1$1.hasTransition
+                      ? toggleHeight(this$1$1)
+                      : toggleAnimation(this$1$1)
               )(el, show);
 
               var cls = show ? this$1$1.clsEnter : this$1$1.clsLeave;
@@ -227,10 +227,10 @@
         return uikitUtil.hasClass(el, this.clsEnter)
           ? true
           : uikitUtil.hasClass(el, this.clsLeave)
-          ? false
-          : this.cls
-          ? uikitUtil.hasClass(el, this.cls.split(' ')[0])
-          : !uikitUtil.hasAttr(el, 'hidden');
+            ? false
+            : this.cls
+              ? uikitUtil.hasClass(el, this.cls.split(' ')[0])
+              : !uikitUtil.hasAttr(el, 'hidden');
       },
 
       _toggle: function (el, toggled) {
@@ -613,12 +613,15 @@
             { self: true }
           );
 
-          var timer = setTimeout(function () {
-            off();
-            resolve();
-          }, uikitUtil.toMs(
-            uikitUtil.css(transitionElement, 'transitionDuration')
-          ));
+          var timer = setTimeout(
+            function () {
+              off();
+              resolve();
+            },
+            uikitUtil.toMs(
+              uikitUtil.css(transitionElement, 'transitionDuration')
+            )
+          );
         });
       }).then(function () {
         return delete el._reject;
@@ -1365,10 +1368,10 @@
     return index === 'next'
       ? 1
       : index === 'previous'
-      ? -1
-      : index < prevIndex
-      ? -1
-      : 1;
+        ? -1
+        : index < prevIndex
+          ? -1
+          : 1;
   }
 
   function speedUp(x) {
@@ -1918,11 +1921,11 @@
   function toItem(el) {
     var item = {};
 
-    ['href', 'caption', 'type', 'poster', 'alt', 'attrs'].forEach(function (
-      attr
-    ) {
-      item[attr === 'href' ? 'source' : attr] = uikitUtil.data(el, attr);
-    });
+    ['href', 'caption', 'type', 'poster', 'alt', 'attrs'].forEach(
+      function (attr) {
+        item[attr === 'href' ? 'source' : attr] = uikitUtil.data(el, attr);
+      }
+    );
 
     item.attrs = uikitUtil.parseOptions(item.attrs);
 

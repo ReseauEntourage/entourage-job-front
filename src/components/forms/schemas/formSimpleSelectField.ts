@@ -4,7 +4,7 @@ import { FilterConstant } from 'src/constants/utils';
 
 export function renderSimpleSelectField<
   V extends FormSchemaValidation,
-  O extends FilterConstant[] = FilterConstant[]
+  O extends FilterConstant[] = FilterConstant[],
 >(formId: string, title: string, options: O, inputId: Path<V>): FormSchema<V> {
   if (title) {
     options.unshift({

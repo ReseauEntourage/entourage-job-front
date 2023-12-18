@@ -14,7 +14,7 @@ describe('Admin', () => {
     }).as('authCheck');
 
     cy.intercept('GET', '/user/members/count', { pendingCVs: 0 });
-    
+
     cy.intercept(
       'GET',
       '/user/members?limit=50&offset=0&role[]=Candidat&role[]=Candidat+externe&zone[]=LYON',
@@ -30,7 +30,6 @@ describe('Admin', () => {
         fixture: 'user-members-res',
       }
     ).as('membersCandidates');
-
 
     cy.intercept('GET', '/opportunity/admin**', {
       fixture: 'opportunities-admin-res',
@@ -197,8 +196,12 @@ describe('Admin', () => {
       cy.get('#form-add-offer-admin-recruiterFirstName')
         .scrollIntoView()
         .type('test');
-      cy.get('#form-add-offer-admin-recruiterName').scrollIntoView().type('test');
-      cy.get('#form-add-offer-admin-recruiterPosition').scrollIntoView().type('test');
+      cy.get('#form-add-offer-admin-recruiterName')
+        .scrollIntoView()
+        .type('test');
+      cy.get('#form-add-offer-admin-recruiterPosition')
+        .scrollIntoView()
+        .type('test');
       cy.get('#form-add-offer-admin-recruiterMail')
         .scrollIntoView()
         .type('test@gmail.com');

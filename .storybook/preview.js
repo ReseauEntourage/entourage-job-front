@@ -1,6 +1,6 @@
 import UIkit from 'src/styles/dist/js/uikit';
 import Icons from 'src/styles/dist/js/uikit-icons';
-import * as NextImage from 'next/image';
+import * as NextImage from 'next/legacy/image';
 
 import 'src/styles/dist/css/uikit.entourage.min.css';
 import 'react-phone-number-input/style.css';
