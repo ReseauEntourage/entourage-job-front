@@ -32,7 +32,7 @@ export function useRoutePermissions() {
       return true;
     }
 
-    const isUserRoleAllowed = routesRules.some((routeRules) => {
+    return routesRules.some((routeRules) => {
       if (!Array.isArray(routeRules.roles)) {
         throw new Error('Roles must be an array');
       }
@@ -41,8 +41,6 @@ export function useRoutePermissions() {
         return role === currentUserRole;
       });
     });
-
-    return isUserRoleAllowed;
   }, [isUserAuthenticated, pathname, currentUserRole]);
 
   return {
