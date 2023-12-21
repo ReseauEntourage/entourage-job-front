@@ -17,6 +17,7 @@ export const authenticatedPermissions = [
       USER_ROLES.CANDIDATE,
       USER_ROLES.CANDIDATE_EXTERNAL,
       USER_ROLES.COACH,
+      USER_ROLES.COACH_EXTERNAL,
     ],
   },
   {
