@@ -9,6 +9,8 @@ export const authenticatedPermissions = [
     paths: [
       '/backoffice/candidat/cv',
       '/backoffice/candidat/offres',
+      '/backoffice/candidat/suivi',
+      '/backoffice/candidat/[candidateId]',
       '/backoffice/candidat/[candidateId]/offres',
       '/backoffice/candidat/[candidateId]/suivi',
       '/backoffice/candidat/[candidateId]/cv',
