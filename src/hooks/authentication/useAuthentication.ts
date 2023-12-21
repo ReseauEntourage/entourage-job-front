@@ -2,9 +2,9 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  selectCurrentUser,
-  fetchUserSelectors,
   authenticationActions,
+  fetchUserSelectors,
+  selectCurrentUser,
 } from 'src/use-cases/authentication';
 import { getDefaultUrl } from 'src/utils/Redirects';
 import { useRoutePermissions } from './useRoutePermissions';
@@ -25,7 +25,7 @@ export function useAuthentication() {
 
   const { isUserAuthorized } = useRoutePermissions();
 
-  const isCurrentRouteReady = !isAuthenticationPending && isUserAuthorized;
+  const isCurrentRouteReady = isUserAuthorized;
 
   const currentUserRole = currentUser?.role;
 
