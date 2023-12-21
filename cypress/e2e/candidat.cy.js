@@ -321,7 +321,7 @@ describe('Candidat', () => {
     cy.get('#form-change-pwd-oldPassword').type('blablabla');
     cy.get('#form-change-pwd-newPassword').type('Linkedout123!');
     cy.get('#form-change-pwd-confirmPassword').type('Linkedout123!');
-    cy.contains('Modifier').click();
+    cy.get('[data-testid="form-confirm-form-change-pwd"]').click();
     cy.wait('@changePwd');
   });
 });
