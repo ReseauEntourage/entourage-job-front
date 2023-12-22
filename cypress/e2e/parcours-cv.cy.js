@@ -255,14 +255,6 @@ describe('Parcours CV', () => {
       .scrollIntoView()
       .type('Random message');
 
-    cy.get('label[for="form-send-external-message-optInContact"]')
-      .scrollIntoView()
-      .click();
-
-    cy.get('label[for="form-send-external-message-optInNewsletter"]')
-      .scrollIntoView()
-      .click();
-
     cy.get('button').contains('Envoyer').click();
 
     cy.wait('@postMessage');

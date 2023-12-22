@@ -17,8 +17,6 @@ export const formSendExternalMessage: FormSchema<{
   type: ExternalMessageContactType;
   subject: ExternalMessageSubject;
   message: string;
-  optInContact: boolean;
-  optInNewsletter: boolean;
 }> = {
   id: 'form-send-external-message',
   fields: [
@@ -107,18 +105,11 @@ export const formSendExternalMessage: FormSchema<{
       isRequired: true,
     },
     {
-      id: 'optInContact',
-      name: 'optInContact',
-      component: 'checkbox',
+      id: 'disclaimer',
+      name: 'disclaimer',
+      component: 'text',
       title:
-        "J'accepte que mon message soit lu par LinkedOut afin de protéger les Candidats LinkedOut du spam. *",
-      isRequired: true,
-    },
-    {
-      id: 'optInNewsletter',
-      name: 'optInNewsletter',
-      component: 'checkbox',
-      title: 'Je souhaite être tenu au courant des actualités du projet',
+        "En continuant, j’accepte que mon message soit modéré par l'équipe LinkedOut afin de protéger les candidats d'éventuels messages indésirables",
     },
   ],
 };
