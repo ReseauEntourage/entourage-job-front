@@ -20,6 +20,7 @@ export const formCompanyContact: FormSchema<{
   position: string;
   zone: AdminZone;
   heardAbout: HeardAboutValue;
+  message: string;
 }> = {
   id: 'form-company-contact',
   fields: [
@@ -103,6 +104,13 @@ export const formCompanyContact: FormSchema<{
       component: 'select-simple',
       options: HEARD_ABOUT_FILTERS,
       title: 'Comment avez-vous connu LinkedOut ?',
+    },
+    {
+      id: 'message',
+      name: 'message',
+      component: 'textarea',
+      title: 'Votre message',
+      maxLength: 1000,
     },
   ],
 };
