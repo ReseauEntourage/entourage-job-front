@@ -14,7 +14,6 @@ export const ImgProfile = ({ user, size = 40 }: ImgProfileProps) => {
   const connectedUser = useAuthenticatedUser();
 
   const myUser: UserWithUserCandidate = user || connectedUser;
-  const { firstName, role } = myUser;
   const [urlImg, setUrlImg] = useState<string | null>(null);
   const [hash, setHash] = useState<number>(Date.now());
 
@@ -31,7 +30,7 @@ export const ImgProfile = ({ user, size = 40 }: ImgProfileProps) => {
   const fallbackToCVImage = useCallback(() => {
     const candidatUser = myUser;
     if (
-      isRoleIncluded(CANDIDATE_USER_ROLES, role) &&
+      isRoleIncluded(CANDIDATE_USER_ROLES, candidatUser.role) &&
       candidatUser.candidat?.cvs &&
       candidatUser.candidat?.cvs?.length > 0
     ) {
@@ -39,11 +38,12 @@ export const ImgProfile = ({ user, size = 40 }: ImgProfileProps) => {
       const latestCV: CV = cvs.reduce((lastFound, curr) => {
         return lastFound.version < curr.version ? curr : lastFound;
       }, cvs[0]);
+
       if (latestCV.urlImg) {
         setUrlImg(`${process.env.AWSS3_URL}/${latestCV.urlImg}`);
       }
     }
-  }, [myUser, role]);
+  }, [myUser]);
 
   return (
     <div
@@ -63,7 +63,7 @@ export const ImgProfile = ({ user, size = 40 }: ImgProfileProps) => {
               fallbackToCVImage();
             }}
             src={`${urlImg}?${hash}`}
-            alt={`photo de ${firstName}`}
+            alt={`photo de ${myUser.firstName}`}
           />
         </div>
       ) : (
@@ -71,7 +71,7 @@ export const ImgProfile = ({ user, size = 40 }: ImgProfileProps) => {
           className="uk-text-normal uk-text-uppercase"
           style={{ fontSize: size / 2, color: '#fff' }}
         >
-          {firstName.substr(0, 1)}
+          {myUser.firstName.substring(0, 1)}
         </span>
       )}
     </div>
