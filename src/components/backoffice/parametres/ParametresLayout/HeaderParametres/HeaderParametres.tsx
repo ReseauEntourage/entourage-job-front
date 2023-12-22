@@ -43,7 +43,7 @@ export const HeaderParametres = ({
                 <ImgProfile user={userData} size={size} />
               )}
             </StyledProfilePicture>
-            <StyledEditPictureIconContainer>
+            <StyledEditPictureIconContainer isMobile={!isDesktop}>
               <ImageInput
                 onChange={async ({ profileImage }) => {
                   setImageUploading(true);

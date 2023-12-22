@@ -61,8 +61,12 @@ export const StyledMobileTitlesContainer = styled.div`
 
 export const StyledEditPictureIconContainer = styled.div`
   position: absolute;
-  bottom: 0;
-  right: 0;
+  ${({ isMobile }) => {
+    return css`
+      bottom: ${isMobile ? 0 : '5%'};
+      right: ${isMobile ? 0 : '5%'};
+    `;
+  }}
   border-radius: 50%;
   background-color: white;
   border: 1px solid ${COLORS.primaryOrange};
