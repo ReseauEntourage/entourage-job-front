@@ -3,9 +3,12 @@ import { UserWithUserCandidate } from 'src/api/types';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import {
   LoginError,
+  UpdateError,
   fetchUserAdapter,
   loginAdapter,
   logoutAdapter,
+  updateUserAdapter,
+  updateProfileAdapter,
 } from './authentication.adapters';
 
 export interface State {
@@ -13,17 +16,25 @@ export interface State {
   login: RequestState<typeof loginAdapter>;
   logout: RequestState<typeof logoutAdapter>;
   user: UserWithUserCandidate | null;
+  updateUser: RequestState<typeof updateUserAdapter>;
+  updateProfile: RequestState<typeof updateProfileAdapter>;
   accessToken: string | null;
   loginError: LoginError | null;
+  userUpdateError: UpdateError | null; // TODO: Add error types
+  profileUpdateError: UpdateError | null; // TODO: Add error types
 }
 
 const initialState: State = {
   fetchUser: fetchUserAdapter.getInitialState(),
   logout: logoutAdapter.getInitialState(),
   login: loginAdapter.getInitialState(),
+  updateUser: updateUserAdapter.getInitialState(),
+  updateProfile: updateProfileAdapter.getInitialState(),
   user: null,
   accessToken: null,
   loginError: null,
+  userUpdateError: null,
+  profileUpdateError: null,
 };
 
 export const slice = createSlice({
@@ -56,6 +67,27 @@ export const slice = createSlice({
     setUser(state, action) {
       state.user = action.payload;
     },
+    ...updateUserAdapter.getReducers<State>((state) => state.updateUser, {
+      updateUserSucceeded(state, action) {
+        if (!state.user) return;
+        state.user = { ...state.user, ...action.payload.user };
+      },
+      updateUserFailed(state, action) {
+        state.userUpdateError = action.payload.error;
+      },
+    }),
+    ...updateProfileAdapter.getReducers<State>((state) => state.updateProfile, {
+      updateProfileSucceeded(state, action) {
+        if (!state.user?.userProfile) return;
+        state.user.userProfile = {
+          ...state.user.userProfile,
+          ...action.payload.userProfile,
+        };
+      },
+      updateProfileFailed(state, action) {
+        state.userUpdateError = action.payload.error;
+      },
+    }),
   },
 });
 

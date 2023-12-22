@@ -231,6 +231,13 @@ export class APIHandler {
     return this.put(`/user/linkUser/${userId}`, { userToLinkId });
   }
 
+  putUserProfile(
+    userId: string,
+    userProfile: Partial<UserProfile>
+  ): Promise<AxiosResponse> {
+    return this.put(`/user/profile/${userId}`, userProfile);
+  }
+
   // delete
 
   deleteUser(userId: string): Promise<AxiosResponse> {

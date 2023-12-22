@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import EditIcon from 'assets/icons/editIcon.svg';
 import { Api } from 'src/api';
-import { UserWithUserCandidate } from 'src/api/types';
 import { ButtonIcon, ImgProfile, Section } from 'src/components/utils';
 import { H1, H2, H5, H6 } from 'src/components/utils/Headings';
 import { ImageInput } from 'src/components/utils/Inputs';
 import { Spinner } from 'src/components/utils/Spinner';
 import { COLORS } from 'src/constants/styles';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop } from 'src/hooks/utils';
 import {
   StyledEditPictureIconContainer,
@@ -18,14 +18,11 @@ import {
   StyledTextContainer,
 } from './HeaderParametres.styles';
 
-export const HeaderParametres = ({
-  userData,
-}: {
-  userData: UserWithUserCandidate;
-}) => {
+export const HeaderParametres = () => {
   const isDesktop = useIsDesktop();
   const [imageUploading, setImageUploading] = useState(false);
   const size = isDesktop ? 146 : 64;
+  const user = useAuthenticatedUser();
   return (
     <StyledHeaderParametres className={`${isDesktop ? '' : 'mobile'}`}>
       <Section>
@@ -40,7 +37,7 @@ export const HeaderParametres = ({
               {imageUploading ? (
                 <Spinner color={COLORS.white} />
               ) : (
-                <ImgProfile user={userData} size={size} />
+                <ImgProfile user={user} size={size} />
               )}
             </StyledProfilePicture>
             <StyledEditPictureIconContainer isMobile={!isDesktop}>
@@ -50,7 +47,7 @@ export const HeaderParametres = ({
                   const formData = new FormData();
                   formData.append('profileImage', profileImage);
 
-                  await Api.postProfileImage(userData.id, formData);
+                  await Api.postProfileImage(user.id, formData);
                   setImageUploading(false);
                 }}
                 id="profile-picture-upload"
@@ -66,16 +63,15 @@ export const HeaderParametres = ({
               <H1
                 title={
                   <>
-                    {userData.firstName} {userData.lastName}
+                    {user.firstName} {user.lastName}
                   </>
                 }
                 color="black"
               />
-              {userData.zone && (
+              {user.zone && (
                 <H5
                   title={
-                    userData.zone?.charAt(0) +
-                    userData.zone?.slice(1).toLowerCase()
+                    user.zone?.charAt(0) + user.zone?.slice(1).toLowerCase()
                   }
                   color="black"
                 />
@@ -87,17 +83,14 @@ export const HeaderParametres = ({
               <H2
                 title={
                   <>
-                    {userData.firstName} {userData.lastName}
+                    {user.firstName} {user.lastName}
                   </>
                 }
                 color="black"
               />
-              {userData.zone && (
+              {user.zone && (
                 <H6
-                  title={
-                    userData.zone.charAt(0) +
-                    userData.zone.slice(1).toLowerCase()
-                  }
+                  title={user.zone.charAt(0) + user.zone.slice(1).toLowerCase()}
                   color="black"
                 />
               )}
