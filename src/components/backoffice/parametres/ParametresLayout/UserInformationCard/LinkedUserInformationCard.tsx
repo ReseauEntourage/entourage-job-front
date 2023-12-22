@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import UIkit from 'uikit';
 import EmailIcon from 'assets/icons/email.svg';
 import HomeIcon from 'assets/icons/home.svg';
@@ -10,9 +11,11 @@ import { UserWithUserCandidate } from 'src/api/types';
 import { ToggleWithConfirmationModal } from 'src/components/backoffice/ToggleWithConfirmationModal';
 import { CandidateEmployedToggle } from 'src/components/backoffice/candidate/CandidateEmployedToggle';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
-import { Card, Grid, SimpleLink } from 'src/components/utils';
+import { Card, SimpleLink } from 'src/components/utils';
 import { H5 } from 'src/components/utils/Headings';
 import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { authenticationActions } from 'src/use-cases/authentication';
 import {
   getRelatedUser,
   isRoleIncluded,
@@ -22,12 +25,14 @@ import { StyledInformationsPersonnelles } from './UserInformationCard.styles';
 
 export const LinkedUserInformationCard = ({
   isAdmin = false,
-  user,
 }: {
   isAdmin?: boolean;
-  user: UserWithUserCandidate;
 }) => {
+  const user = useAuthenticatedUser();
+
   const [linkedUser, setLinkedUser] = useState<UserWithUserCandidate[]>();
+
+  const dispatch = useDispatch();
 
   const assignUser = useCallback((userToAssign) => {
     if (isRoleIncluded(COACH_USER_ROLES, userToAssign.role)) {
@@ -55,27 +60,21 @@ export const LinkedUserInformationCard = ({
     }
   }, []);
 
-  const updateUserCandidate = useCallback((id, props) => {
-    setLinkedUser((prevLinkedUser): UserWithUserCandidate[] => {
-      const index =
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        prevLinkedUser.findIndex((prevSingleLinkedUser) => {
-          return prevSingleLinkedUser.id === id;
-        });
-
-      const newLinkedUser = [
-        ...// @ts-expect-error after enable TS strict mode. Please, try to fix it
-        prevLinkedUser,
-      ];
-
-      newLinkedUser[index] = {
-        ...newLinkedUser[index],
-        candidat: props,
-      };
-
-      return newLinkedUser;
-    });
-  }, []);
+  const updateUserCandidate = useCallback(
+    (id, props) => {
+      if (!('coaches' in user) || !user.coaches) return null;
+      const newCoachesArray = user.coaches.map((obj) =>
+        obj.candidat?.id === id ? props : obj
+      );
+      dispatch(
+        authenticationActions.setUser({
+          ...user,
+          coaches: newCoachesArray,
+        })
+      );
+    },
+    [dispatch, user]
+  );
 
   useEffect(() => {
     if (user) {
@@ -244,25 +243,16 @@ export const LinkedUserInformationCard = ({
         );
 
         return (
-          <Grid
-            gap={
+          <Card
+            title={`Information du${
               isRoleIncluded(COACH_USER_ROLES, user.role)
-                ? 'medium'
-                : 'collapse'
-            }
-            childWidths={['1-1']}
+                ? ' candidat'
+                : ' coach'
+            }`}
+            isMobileClosable
           >
-            <Card
-              title={`Information du${
-                isRoleIncluded(COACH_USER_ROLES, user.role)
-                  ? ' candidat'
-                  : ' coach'
-              }`}
-              isMobileClosable
-            >
-              {cardContent}
-            </Card>
-          </Grid>
+            {cardContent}
+          </Card>
         );
       })}
     </>
