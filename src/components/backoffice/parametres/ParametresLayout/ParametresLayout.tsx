@@ -13,23 +13,27 @@ import { isRoleIncluded } from 'src/utils';
 import { CVPreferences } from './CVPreferences';
 import { HeaderParametres } from './HeaderParametres';
 import {
-  UserInformationCard,
   LinkedUserInformationCard,
+  UserInformationCard,
 } from './InformationsPersonnelles';
 import {
-  StyledParametresLayout,
   StyledParametresGrid,
-  StyledParametresRightColumn,
+  StyledParametresLayout,
   StyledParametresLeftColumn,
+  StyledParametresRightColumn,
 } from './ParametresLayout.styles';
 import { PasswordCriterias } from './PasswordCriterias';
 
 interface ParametresLayoutProps {
   user: User | UserWithUserCandidate;
   userData: UserWithUserCandidate;
-  setUserData: React.Dispatch<
-    React.SetStateAction<UserWithUserCandidate | undefined>
-  >;
+  setUserData: (
+    updatedUserData:
+      | UserWithUserCandidate
+      | ((
+          prevUserData: UserWithUserCandidate | undefined
+        ) => UserWithUserCandidate | undefined)
+  ) => void;
   loadingPersonal: boolean;
 }
 

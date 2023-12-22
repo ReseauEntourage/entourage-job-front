@@ -21,6 +21,9 @@ export const StyledImageTitle = styled.section`
     padding-right: 40px;
     margin-top: 16px;
     color: ${(props) => props.textColor};
+    flex: 1;
+    display: flex;
+    align-items: center;
   }
   &.desktop {
     padding: 40px 55% 40px 40px;

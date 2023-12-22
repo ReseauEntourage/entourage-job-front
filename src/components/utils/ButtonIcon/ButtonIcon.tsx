@@ -12,7 +12,7 @@ interface ButtonIconProps {
 
 export const ButtonIcon = ({
   icon,
-  onClick,
+  onClick = () => {},
   href,
   tooltip,
   dataTestId,

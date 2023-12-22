@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { User } from 'src/api/types';
+import { UserWithUserCandidate } from 'src/api/types';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import {
   LoginError,
@@ -12,7 +12,7 @@ export interface State {
   fetchUser: RequestState<typeof fetchUserAdapter>;
   login: RequestState<typeof loginAdapter>;
   logout: RequestState<typeof logoutAdapter>;
-  user: User | null;
+  user: UserWithUserCandidate | null;
   accessToken: string | null;
   loginError: LoginError | null;
 }

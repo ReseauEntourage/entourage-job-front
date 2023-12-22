@@ -14,8 +14,7 @@ const meta = {
       return (
         <div
           style={{
-            display: 'flex',
-            width: 100,
+            width: 500,
           }}
         >
           <Story />

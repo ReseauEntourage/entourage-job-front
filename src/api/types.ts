@@ -126,7 +126,6 @@ export interface CV {
   id?: string;
   version: string;
   profileImage: Blob;
-  profileImageObjectUrl: string;
   user: {
     candidat: {
       firstName: string;

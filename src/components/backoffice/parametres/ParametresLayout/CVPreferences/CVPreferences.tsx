@@ -13,9 +13,7 @@ export const CVPreferences = ({
   setUserData,
 }: {
   userData: UserWithUserCandidate;
-  setUserData: React.Dispatch<
-    React.SetStateAction<UserWithUserCandidate | undefined>
-  >;
+  setUserData: (updatedUserData: UserWithUserCandidate) => void;
 }) => {
   return (
     <Card title="Préférences du CV" isMobileClosable>

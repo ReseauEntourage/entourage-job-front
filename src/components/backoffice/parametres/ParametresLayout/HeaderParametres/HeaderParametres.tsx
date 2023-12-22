@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import EditIcon from 'assets/icons/editIcon.svg';
+import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
-import { Button, ButtonIcon, ImgProfile, Section } from 'src/components/utils';
+import { ButtonIcon, ImgProfile, Section } from 'src/components/utils';
 import { H1, H2, H5, H6 } from 'src/components/utils/Headings';
+import { ImageInput } from 'src/components/utils/Inputs';
+import { Spinner } from 'src/components/utils/Spinner';
+import { COLORS } from 'src/constants/styles';
 import { useIsDesktop } from 'src/hooks/utils';
 import {
+  StyledEditPictureIconContainer,
   StyledHeaderParametres,
   StyledHeaderParametresContent,
+  StyledMobileTitlesContainer,
+  StyledProfilePicture,
   StyledProfilePictureContainer,
   StyledTextContainer,
-  StyledEditPictureIconContainer,
-  StyledMobileTitlesContainer,
 } from './HeaderParametres.styles';
 
 export const HeaderParametres = ({
@@ -19,6 +24,8 @@ export const HeaderParametres = ({
   userData: UserWithUserCandidate;
 }) => {
   const isDesktop = useIsDesktop();
+  const [imageUploading, setImageUploading] = useState(false);
+  const size = isDesktop ? 146 : 64;
   return (
     <StyledHeaderParametres className={`${isDesktop ? '' : 'mobile'}`}>
       <Section>
@@ -26,14 +33,33 @@ export const HeaderParametres = ({
           <StyledProfilePictureContainer
             className={`${isDesktop ? '' : 'mobile'}`}
           >
-            <ImgProfile user={userData} size={isDesktop ? 146 : 64} />
-            {isDesktop ? (
-              <Button style="custom-secondary">Modifier</Button>
-            ) : (
-              <StyledEditPictureIconContainer>
-                <ButtonIcon icon={<EditIcon />} onClick={() => {}} />
-              </StyledEditPictureIconContainer>
-            )}
+            <StyledProfilePicture
+              size={size}
+              className={isDesktop ? '' : 'isMobile'}
+            >
+              {imageUploading ? (
+                <Spinner color={COLORS.white} />
+              ) : (
+                <ImgProfile user={userData} size={size} />
+              )}
+            </StyledProfilePicture>
+            <StyledEditPictureIconContainer isMobile={!isDesktop}>
+              <ImageInput
+                onChange={async ({ profileImage }) => {
+                  setImageUploading(true);
+                  const formData = new FormData();
+                  formData.append('profileImage', profileImage);
+
+                  await Api.postProfileImage(userData.id, formData);
+                  setImageUploading(false);
+                }}
+                id="profile-picture-upload"
+                name="profile-picture-upload"
+              >
+                {/* TODO Fix, the file wrapper doesn't work with buttons */}
+                <ButtonIcon icon={<EditIcon />} />
+              </ImageInput>
+            </StyledEditPictureIconContainer>
           </StyledProfilePictureContainer>
           {isDesktop ? (
             <StyledTextContainer>

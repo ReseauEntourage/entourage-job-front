@@ -22,9 +22,13 @@ import { isRoleIncluded } from 'src/utils';
 export const useParametres = (
   userData: UserWithUserCandidate,
   user: User | UserWithUserCandidate,
-  setUserData: React.Dispatch<
-    React.SetStateAction<UserWithUserCandidate | undefined>
-  >
+  setUserData: (
+    updatedUserData:
+      | UserWithUserCandidate
+      | ((
+          prevUserData: UserWithUserCandidate | undefined
+        ) => UserWithUserCandidate | undefined)
+  ) => void
 ) => {
   const modalTitle = 'Édition - Informations personnelles';
 
@@ -44,12 +48,12 @@ export const useParametres = (
           .then(() => {
             closeModal();
             setUserData((prevUserData) => {
-              return prevUserData && newUserData
-                ? {
-                    ...prevUserData,
-                    ...newUserData,
-                  }
-                : undefined;
+              if (prevUserData && newUserData) {
+                return {
+                  ...(prevUserData || {}),
+                  ...(newUserData || {}),
+                };
+              }
             });
             setUser({
               ...user,
