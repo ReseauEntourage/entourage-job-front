@@ -3,10 +3,12 @@ import { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import UIkit from 'uikit';
 import { HelpNames, UserProfile, UserWithUserCandidate } from 'src/api/types';
+import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 import {
   authenticationActions,
   updateProfileSelectors,
 } from 'src/use-cases/authentication';
+import { isRoleIncluded } from 'src/utils';
 
 export const useHelpField = (user: UserWithUserCandidate) => {
   const { role } = user;
@@ -15,7 +17,7 @@ export const useHelpField = (user: UserWithUserCandidate) => {
 
   useEffect(() => {
     if (!helpField) {
-      if (role === 'Candidat') {
+      if (isRoleIncluded(CANDIDATE_USER_ROLES, role)) {
         setHelpField('helpNeeds');
       } else {
         setHelpField('helpOffers');
