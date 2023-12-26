@@ -29,6 +29,7 @@ interface CardProps {
   isMobileClosable?: boolean;
   isDefaultOpen?: boolean;
   EditButtonText?: string;
+  dataTestId?: string;
 }
 
 export const Card = ({
@@ -43,6 +44,7 @@ export const Card = ({
   isMobileClosable = false,
   isDefaultOpen = true,
   EditButtonText,
+  dataTestId,
 }: CardProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(isDefaultOpen);
 
@@ -62,7 +64,11 @@ export const Card = ({
       )}
       {!isLoading && editCallback && isDesktop && (
         <StyledEditIconContainer>
-          <ButtonIcon icon={<EditIcon />} onClick={editCallback} />
+          <ButtonIcon
+            icon={<EditIcon />}
+            onClick={editCallback}
+            dataTestId={`${dataTestId}-button-edit`}
+          />
         </StyledEditIconContainer>
       )}
       {isMobileClosable && !isDesktop && (

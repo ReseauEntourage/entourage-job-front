@@ -23,6 +23,7 @@ import {
   Route,
   SocialMedia,
   UserDto,
+  UserProfile,
 } from './types';
 
 export class APIHandler {

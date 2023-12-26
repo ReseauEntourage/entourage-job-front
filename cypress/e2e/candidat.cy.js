@@ -42,7 +42,11 @@ describe('Candidat', () => {
 
       cy.intercept('PUT', `/user/candidate/${user.id}`, {
         fixture: 'put-candidate-res',
-      }).as('putCandidatParams');
+      }).as('putUserCandidatParams');
+
+      cy.intercept('PUT', `/user/${user.id}`, {
+        fixture: 'put-candidate-res',
+      }).as('putUserParams');
 
       cy.intercept('GET', `/cv/lastVersion/${user.id}`, {
         fixture: 'cv-for-candidat',
@@ -69,6 +73,9 @@ describe('Candidat', () => {
           opportunityToModify
         ).as('putOffer');
       });
+
+      cy.intercept('PUT', `/user/profile/${user.id}`, {fixture: "user-profile-candidate-modified"}).as('putUserProfile');
+
     });
 
     cy.intercept('GET', `https://tarteaucitron.io/load.js*`, {});
@@ -76,6 +83,7 @@ describe('Candidat', () => {
     cy.intercept('POST', '/opportunity/external', {}).as('postExternal');
 
     cy.intercept('PUT', '/user/changePwd', {}).as('changePwd');
+
   });
   it('should open backoffice public offers', () => {
     cy.fixture('auth-current-candidat-res').then((user) => {
@@ -282,6 +290,7 @@ describe('Candidat', () => {
     // save CV
     cy.contains('Sauvegarder').scrollIntoView().click();
   });
+  
   it('should open backoffice candidate parameters', () => {
     cy.visit('/backoffice/parametres', {
       onBeforeLoad: function async(window) {
@@ -293,7 +302,7 @@ describe('Candidat', () => {
     // toggle hide CV
     cy.get('label[for="ent-toggle-hidden"]').click();
     cy.get(`[data-testid="test-confirm-hidden"]`).click();
-    cy.wait('@putCandidatParams');
+    cy.wait('@putUserCandidatParams');
     cy.get(`[data-testid="test-toggle-hidden"]`).should('be.checked');
     cy.get('label[for="ent-toggle-hidden"]').click();
     cy.get(`[data-testid="test-toggle-hidden"]`).should('not.be.checked');
@@ -310,7 +319,7 @@ describe('Candidat', () => {
       .click();
     cy.get('#form-edit-employed-endOfContract').type('2024-03-03');
     cy.contains('Valider').click();
-    cy.wait('@putCandidatParams');
+    cy.wait('@putUserCandidatParams');
     cy.get(`[data-testid="test-toggle-employedToggle"]`).should('be.checked');
     cy.get('label[for="ent-toggle-employedToggle"]').click();
     cy.get(`[data-testid="test-toggle-employedToggle"]`).should(
@@ -323,5 +332,18 @@ describe('Candidat', () => {
     cy.get('#form-change-pwd-confirmPassword').type('Linkedout123!');
     cy.get('[data-testid="form-confirm-form-change-pwd"]').click();
     cy.wait('@changePwd');
+
+    // check help needs and modify
+    cy.fixture('auth-current-candidat-res').then((userCandidate) => {
+        cy.get(`[data-testid="parametres-help-list"]`).scrollIntoView().find('li').should('have.length', userCandidate.userProfile?.helpNeeds?.length);
+    });
+    cy.get(`[data-testid="parametres-help-card-button-edit"]`).scrollIntoView().click();
+    cy.get(`[data-testid="parametres-help-option-tips"]`).scrollIntoView().click();
+    cy.get(`[data-testid="parametres-help-option-cv"]`).scrollIntoView().click();
+    cy.get(`[data-testid="parametres-help-modal-save"]`).scrollIntoView().click();
+
+    cy.fixture('user-profile-candidate-modified').then((userProfile) => {
+      cy.get(`[data-testid="parametres-help-list"]`).scrollIntoView().find('li').should('have.length', userProfile.helpNeeds?.length);
+  });
   });
 });
