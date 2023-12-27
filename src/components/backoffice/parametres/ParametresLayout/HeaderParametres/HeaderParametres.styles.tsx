@@ -16,8 +16,10 @@ export const StyledProfilePictureContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin-right: 50px;
-
   position: relative;
+  .button-mock-image-input {
+    margin-top: 20px;
+  }
 
   &.mobile {
     margin-right: 10px;

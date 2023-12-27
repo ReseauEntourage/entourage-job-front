@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import EditIcon from 'assets/icons/editIcon.svg';
 import { Api } from 'src/api';
-import { ButtonIcon, ImgProfile, Section } from 'src/components/utils';
+import {
+  ButtonIcon,
+  ButtonMock,
+  ImgProfile,
+  Section,
+} from 'src/components/utils';
 import { H1, H2, H5, H6 } from 'src/components/utils/Headings';
 import { ImageInput } from 'src/components/utils/Inputs';
 import { Spinner } from 'src/components/utils/Spinner';
@@ -17,6 +22,7 @@ import {
   StyledProfilePictureContainer,
   StyledTextContainer,
 } from './HeaderParametres.styles';
+import { ParametresDescription } from './ParametresDescription';
 
 export const HeaderParametres = () => {
   const isDesktop = useIsDesktop();
@@ -40,7 +46,7 @@ export const HeaderParametres = () => {
                 <ImgProfile user={user} size={size} />
               )}
             </StyledProfilePicture>
-            <StyledEditPictureIconContainer isMobile={!isDesktop}>
+            {isDesktop ? (
               <ImageInput
                 onChange={async ({ profileImage }) => {
                   setImageUploading(true);
@@ -50,13 +56,35 @@ export const HeaderParametres = () => {
                   await Api.postProfileImage(user.id, formData);
                   setImageUploading(false);
                 }}
-                id="profile-picture-upload"
-                name="profile-picture-upload"
+                id="profile-picture-upload-desktop"
+                name="profile-picture-upload-desktop"
               >
-                {/* TODO Fix, the file wrapper doesn't work with buttons */}
-                <ButtonIcon icon={<EditIcon />} />
+                <ButtonMock
+                  style="custom-secondary"
+                  className="button-mock-image-input"
+                  dataTestId="button-mock-image-input"
+                >
+                  Modifier
+                </ButtonMock>
               </ImageInput>
-            </StyledEditPictureIconContainer>
+            ) : (
+              <StyledEditPictureIconContainer isMobile={!isDesktop}>
+                <ImageInput
+                  onChange={async ({ profileImage }) => {
+                    setImageUploading(true);
+                    const formData = new FormData();
+                    formData.append('profileImage', profileImage);
+
+                    await Api.postProfileImage(user.id, formData);
+                    setImageUploading(false);
+                  }}
+                  id="profile-picture-upload-mobile"
+                  name="profile-picture-upload-mobile"
+                >
+                  <ButtonIcon icon={<EditIcon />} />
+                </ImageInput>
+              </StyledEditPictureIconContainer>
+            )}
           </StyledProfilePictureContainer>
           {isDesktop ? (
             <StyledTextContainer>
@@ -76,7 +104,7 @@ export const HeaderParametres = () => {
                   color="black"
                 />
               )}
-              {/* <p>to be done</p> */}
+              <ParametresDescription />
             </StyledTextContainer>
           ) : (
             <StyledMobileTitlesContainer>
@@ -97,6 +125,7 @@ export const HeaderParametres = () => {
             </StyledMobileTitlesContainer>
           )}
         </StyledHeaderParametresContent>
+        {!isDesktop && <ParametresDescription />}
       </Section>
     </StyledHeaderParametres>
   );

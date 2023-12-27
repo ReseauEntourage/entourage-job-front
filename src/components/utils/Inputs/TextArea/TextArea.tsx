@@ -90,6 +90,7 @@ export function TextArea({
           }}
           name={name}
           id={id}
+          data-testid={id}
           rows={rows || 5}
           placeholder={
             showLabel ? placeholder || 'Écrivez...' : placeholder || title

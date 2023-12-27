@@ -73,7 +73,7 @@ export type HelpNames = 'tips' | 'interview' | 'cv' | 'network' | 'event';
 
 export type UserProfile = {
   currentJob: string;
-  descrpiption: string;
+  description: string;
   helpNeeds: { name: HelpNames }[];
   helpOffers: { name: HelpNames }[];
   networkBusinessLines: {

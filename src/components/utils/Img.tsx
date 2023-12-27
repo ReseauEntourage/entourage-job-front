@@ -9,6 +9,7 @@ interface ImgProps {
   height?: number;
   cover?: boolean;
   onError?: () => void;
+  id?: string;
 }
 
 export const Img = ({
@@ -18,6 +19,7 @@ export const Img = ({
   height,
   cover = false,
   onError = () => {},
+  id = '',
 }: ImgProps) => {
   if (cover) {
     return (
@@ -28,6 +30,7 @@ export const Img = ({
         layout="fill"
         objectFit="cover"
         objectPosition="center"
+        id={id}
       />
     );
   }
@@ -40,6 +43,7 @@ export const Img = ({
         width={width}
         height={height}
         objectFit="contain"
+        id={id}
       />
     );
   }
@@ -50,6 +54,7 @@ export const Img = ({
       src={addPrefix(src)}
       layout="fill"
       objectFit="contain"
+      id={id}
     />
   );
 };

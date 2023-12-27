@@ -74,7 +74,8 @@ describe('Candidat', () => {
         ).as('putOffer');
       });
 
-      cy.intercept('PUT', `/user/profile/${user.id}`, {fixture: "user-profile-candidate-modified"}).as('putUserProfile');
+
+      cy.intercept('POST', `/user/profile/uploadImage/${user.id}`, "/assets/image-fixture.jpg").as('uploadImage');
 
     });
 
@@ -334,6 +335,9 @@ describe('Candidat', () => {
     cy.wait('@changePwd');
 
     // check help needs and modify
+    cy.fixture('auth-current-candidat-res').then((user) => {
+      cy.intercept('PUT', `/user/profile/${user.id}`, {fixture: "user-profile-candidate-help-modified"}).as('putUserProfile');
+    })
     cy.fixture('auth-current-candidat-res').then((userCandidate) => {
         cy.get(`[data-testid="parametres-help-list"]`).scrollIntoView().find('li').should('have.length', userCandidate.userProfile?.helpNeeds?.length);
     });
@@ -342,8 +346,21 @@ describe('Candidat', () => {
     cy.get(`[data-testid="parametres-help-option-cv"]`).scrollIntoView().click();
     cy.get(`[data-testid="parametres-help-modal-save"]`).scrollIntoView().click();
 
-    cy.fixture('user-profile-candidate-modified').then((userProfile) => {
+    cy.fixture('user-profile-candidate-help-modified').then((userProfile) => {
       cy.get(`[data-testid="parametres-help-list"]`).scrollIntoView().find('li').should('have.length', userProfile.helpNeeds?.length);
-  });
+    });
+
+    // modify profile description
+    cy.fixture('auth-current-candidat-res').then((user) => {
+      cy.intercept('PUT', `/user/profile/${user.id}`, {fixture: "user-profile-candidate-description-modified"}).as('putUserProfile');
+    })
+    cy.get(`[data-testid="parametres-description-placeholder"]`).scrollIntoView().click();
+    cy.get(`[data-testid="form-profile-description-description"]`).scrollIntoView().type('hello');
+    cy.get(`[data-testid="form-confirm-form-profile-description"]`).scrollIntoView().click();
+    cy.get(`[data-testid="parametres-description"]`).should('contain', "hello");
+
+    // change profile picture
+    cy.get(`[data-testid="profile-picture-upload-desktop"]`).selectFile('assets/image-fixture.jpg', {force: true});
+    cy.wait('@uploadImage');
   });
 });
