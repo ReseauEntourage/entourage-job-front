@@ -24,6 +24,7 @@ interface ModalEditProps<S extends FormSchema<AnyCantFix>> {
   description?: string | JSX.Element;
   submitText?: string;
   cancelText?: string;
+  noCompulsory?: boolean;
 }
 export function ModalEdit<S extends FormSchema<AnyCantFix>>({
   title,
@@ -35,6 +36,7 @@ export function ModalEdit<S extends FormSchema<AnyCantFix>>({
   cancelText = 'Annuler',
   onError = () => {},
   onCancel = () => {},
+  noCompulsory = false,
 }: ModalEditProps<S>) {
   const { onClose } = useModalContext();
   return (
@@ -44,23 +46,18 @@ export function ModalEdit<S extends FormSchema<AnyCantFix>>({
         cancelText={cancelText}
         formSchema={formSchema}
         defaultValues={defaultValues}
+        noCompulsory={noCompulsory}
         onCancel={() => {
           if (onCancel) {
             onCancel();
           }
-
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          onClose();
+          if (onClose) onClose();
         }}
         onError={onError}
-        onSubmit={(fields, setError) =>
-          onSubmit(
-            fields,
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            onClose,
-            setError
-          )
-        }
+        onSubmit={(fields, setError) => {
+          if (!onClose) return;
+          onSubmit(fields, onClose, setError);
+        }}
       />
     </ModalGeneric>
   );

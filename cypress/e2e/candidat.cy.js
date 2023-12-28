@@ -362,5 +362,19 @@ describe('Candidat', () => {
     // change profile picture
     cy.get(`[data-testid="profile-picture-upload-desktop"]`).selectFile('assets/image-fixture.jpg', {force: true});
     cy.wait('@uploadImage');
+
+    // change professional information
+    cy.fixture('auth-current-candidat-res').then((user) => {
+      cy.intercept('PUT', `/user/profile/${user.id}`, {fixture: "user-profile-candidate-professional-info-modified"}).as('putUserProfile');
+    })
+    const businessLine = 'Agriculture';
+    const ambition = 'test';
+    cy.get(`[data-testid="parametres-professional-information-card-button-edit"]`).scrollIntoView().click();
+    cy.get(`[data-testid="form-career-path-searchBusinessLine0"]`).scrollIntoView().click();
+    cy.get(`.Select__option`).contains(businessLine).click();
+    cy.get(`[data-testid="form-career-path-searchAmbition0"]`).scrollIntoView().type(ambition);
+    cy.get(`[data-testid="form-confirm-form-career-path"]`).scrollIntoView().click();
+    cy.get(`[data-testid="candidat-businessline-li"]`).should('contain', businessLine);
+    cy.get(`[data-testid="candidat-ambition-li"]`).should('contain', ambition);
   });
 });

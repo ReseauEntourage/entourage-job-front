@@ -47,7 +47,7 @@ export function Select<T extends FilterConstant | FilterConstant[]>({
           {title}
         </StyledInputLabel>
       )}
-      <StyledSelect>
+      <StyledSelect data-testid={id}>
         <ReactSelect
           id={id}
           components={{ ClearIndicator, DropdownIndicator, MultiValueRemove }}

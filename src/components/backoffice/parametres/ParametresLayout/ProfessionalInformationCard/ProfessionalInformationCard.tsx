@@ -4,7 +4,7 @@ import UIkit from 'uikit';
 import PlaceholderIllu from 'assets/icons/illu-bulle-question.svg';
 import { ParametresPlaceholder } from '../ParametresPlaceholder';
 import { Api } from 'src/api';
-import { formEditCareerPath } from 'src/components/forms/schemas/formEditCareerPath';
+import { formEditCandidateProfessionalInformation } from 'src/components/forms/schemas/formEditCandidateProfessionalInformation';
 import { formEditCoachProfessionalInformation } from 'src/components/forms/schemas/formEditCoachProfessionalInformation';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
@@ -75,6 +75,7 @@ export const ProfessionalInformationCard = () => {
           title="Renseignez votre métier et les secteurs dans lesquels vous avez du réseau"
           defaultValues={getCoachDefaultValues(userProfile)}
           formSchema={formEditCoachProfessionalInformation}
+          noCompulsory
           onSubmit={(values, closeModal) => {
             const networkBusinessLines = values.networkBusinessLines.map(
               ({ value }, i) => {
@@ -91,29 +92,31 @@ export const ProfessionalInformationCard = () => {
       ) : (
         <ModalEdit
           title="Renseignez votre projet professionnel"
+          description="Nous vous mettrons en relation avec des professionnels qui pourront vous aider"
           defaultValues={getCandidateDefaultValues(userProfile)}
-          formSchema={formEditCareerPath}
+          formSchema={formEditCandidateProfessionalInformation}
+          noCompulsory
           onSubmit={(values, closeModal) => {
             let newAmbitions = [] as {
               prefix: AmbitionsPrefixesType;
               name: string;
               order: number;
             }[];
-            if (values.ambition0) {
+            if (values.searchAmbition0) {
               newAmbitions = [
                 {
                   prefix: AMBITIONS_PREFIXES[1].label,
-                  name: values.ambition0,
+                  name: values.searchAmbition0,
                   order: 0,
                 },
               ];
             }
-            if (values.ambition1) {
+            if (values.searchAmbition1) {
               newAmbitions = [
                 ...newAmbitions,
                 {
                   prefix: AMBITIONS_PREFIXES[1].label,
-                  name: values.ambition1,
+                  name: values.searchAmbition1,
                   order: 1,
                 },
               ];
@@ -122,15 +125,15 @@ export const ProfessionalInformationCard = () => {
               name: BusinessLineValue;
               order: number;
             }[];
-            if (values.businessLine0) {
+            if (values.searchBusinessLine0) {
               newBusinessLines = [
-                { name: values.businessLine0.value, order: 0 },
+                { name: values.searchBusinessLine0.value, order: 0 },
               ];
             }
-            if (values.businessLine1) {
+            if (values.searchBusinessLine1) {
               newBusinessLines = [
                 ...newBusinessLines,
-                { name: values.businessLine1.value, order: 1 },
+                { name: values.searchBusinessLine1.value, order: 1 },
               ];
             }
             const valuesToSend = {
@@ -151,6 +154,7 @@ export const ProfessionalInformationCard = () => {
       isLoading={false}
       isMobileClosable
       isDefaultOpen
+      dataTestId="parametres-professional-information-card"
     >
       {hasData ? (
         <StyledProfessionalInformationList>
@@ -182,7 +186,7 @@ export const ProfessionalInformationCard = () => {
             <>
               {userProfile?.searchAmbitions &&
                 userProfile.searchAmbitions.length > 0 && (
-                  <li>
+                  <li data-testid="candidat-ambition-li">
                     Je souhaite travailler comme :{' '}
                     {sortByOrder(userProfile.searchAmbitions).map(
                       ({ name }, index) => (
@@ -198,7 +202,7 @@ export const ProfessionalInformationCard = () => {
                 )}
               {userProfile?.searchBusinessLines &&
                 userProfile.searchBusinessLines.length > 0 && (
-                  <li>
+                  <li data-testid="candidat-businessline-li">
                     Je recherche dans :{' '}
                     {sortByOrder(userProfile.searchBusinessLines).map(
                       ({ name }, index) => (
