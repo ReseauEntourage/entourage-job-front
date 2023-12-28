@@ -21,7 +21,7 @@ import {
   isRoleIncluded,
   getUserCandidateFromCoach,
 } from 'src/utils/Finding';
-import { StyledInformationsPersonnelles } from './UserInformationCard.styles';
+import { StyledInformationsPersonnellesList } from './UserInformationCard.styles';
 
 export const LinkedUserInformationCard = ({
   isAdmin = false,
@@ -105,7 +105,7 @@ export const LinkedUserInformationCard = ({
         // si membre lié ou non
         const cardContent = (
           <>
-            <StyledInformationsPersonnelles>
+            <StyledInformationsPersonnellesList>
               <li>
                 <UserIcon />
                 <span>{`${singleLinkedUser.firstName} ${singleLinkedUser.lastName}`}</span>
@@ -173,11 +173,11 @@ export const LinkedUserInformationCard = ({
                     )}
                 </>
               )}
-            </StyledInformationsPersonnelles>
+            </StyledInformationsPersonnellesList>
             {!isAdmin &&
               isRoleIncluded(COACH_USER_ROLES, user.role) &&
               !singleLinkedUser.deletedAt && (
-                <StyledInformationsPersonnelles>
+                <StyledInformationsPersonnellesList>
                   <li>
                     <H5 color="primaryOrange" title="Informations sur le CV" />
                   </li>
@@ -237,7 +237,7 @@ export const LinkedUserInformationCard = ({
                       }}
                     />
                   </li>
-                </StyledInformationsPersonnelles>
+                </StyledInformationsPersonnellesList>
               )}
           </>
         );

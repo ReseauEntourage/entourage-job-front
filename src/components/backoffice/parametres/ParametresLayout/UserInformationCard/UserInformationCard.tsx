@@ -10,7 +10,7 @@ import { Card } from 'src/components/utils';
 import { Tag } from 'src/components/utils/Tag';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { StyledInformationsPersonnelles } from './UserInformationCard.styles';
+import { StyledInformationsPersonnellesList } from './UserInformationCard.styles';
 
 interface UserInformationCardProps {
   loadingPersonal: boolean;
@@ -33,7 +33,7 @@ export const UserInformationCard = ({
       isDefaultOpen
     >
       {!loadingPersonal && (
-        <StyledInformationsPersonnelles>
+        <StyledInformationsPersonnellesList>
           <li>
             <UserIcon width={20} />
             {` ${user.firstName} ${user.lastName}`}
@@ -72,7 +72,7 @@ export const UserInformationCard = ({
               {user.adminRole && <Tag content={_.capitalize(user.adminRole)} />}
             </li>
           )}
-        </StyledInformationsPersonnelles>
+        </StyledInformationsPersonnellesList>
       )}
     </Card>
   );

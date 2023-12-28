@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledInformationsPersonnelles = styled.ul`
+export const StyledInformationsPersonnellesList = styled.ul`
   padding-left: 0;
   li {
     list-style: none;

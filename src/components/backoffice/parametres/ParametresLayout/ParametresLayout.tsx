@@ -14,6 +14,7 @@ import {
   StyledParametresLeftColumn,
   StyledParametresRightColumn,
 } from './ParametresLayout.styles';
+import { ProfessionalInformationCard } from './ProfessionalInformationCard';
 import {
   UserInformationCard,
   LinkedUserInformationCard,
@@ -53,7 +54,6 @@ export const ParametresLayout = ({
           <StyledParametresRightColumn
             className={`${isDesktop ? '' : 'mobile'}`}
           >
-            {/* LinkedUser info */}
             {isRoleIncluded(
               [
                 USER_ROLES.COACH,
@@ -63,6 +63,7 @@ export const ParametresLayout = ({
               user.role
             ) && (
               <>
+                <ProfessionalInformationCard />
                 <ParametresHelpCard />
                 <LinkedUserInformationCard />
               </>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'src/components/utils';
 import { H6 } from 'src/components/utils/Headings';
+import { useIsDesktop } from 'src/hooks/utils';
 import { StyledParametresCardPlaceholder } from './ParametresPlaceholder.styles';
 
 interface ParametresPlaceholderProps {
@@ -16,6 +17,7 @@ export const ParametresPlaceholder = ({
   title,
   description,
 }: ParametresPlaceholderProps) => {
+  const isDesktop = useIsDesktop();
   return (
     <StyledParametresCardPlaceholder>
       <div>
@@ -25,9 +27,11 @@ export const ParametresPlaceholder = ({
           <p>{description}</p>
         </div>
       </div>
-      <Button style="custom-secondary" onClick={onClick}>
-        Renseigner
-      </Button>
+      {isDesktop && (
+        <Button style="custom-secondary" onClick={onClick}>
+          Renseigner
+        </Button>
+      )}
     </StyledParametresCardPlaceholder>
   );
 };

@@ -1,13 +1,13 @@
 import {
   ExternalMessageContactType,
   Contract as ContractValue,
-  AmbitionsPrefixesType,
   BusinessLineValue,
   ExternalOfferOrigin,
   HeardAboutValue,
   CandidateHelpWithValue,
   CompanyApproach,
   OfferStatus,
+  AmbitionsPrefixesType,
 } from 'src/constants';
 import { AdminZone, Department } from 'src/constants/departements';
 import { AdminRole, Gender, UserRole } from 'src/constants/users';
@@ -109,7 +109,7 @@ export type User = {
   zone: AdminZone;
   organization: Organization;
   deletedAt?: string;
-  userProfile?: UserProfile;
+  userProfile: UserProfile;
   OrganizationId?: string;
 };
 
