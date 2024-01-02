@@ -36,7 +36,7 @@ const Travailler = () => {
     openModal(
       <ModalEdit
         title="Rejoindre LinkedOut"
-        description="Pour mieux vous connaitre, nous avons besoins de quelques informations ! Merci de répondre à ces quelques questions, cela prend moins de 5 min !"
+        description="Vous avez entre 18 et 30 ans ? Merci de répondre à ces quelques questions, cela prend moins de 5 min !"
         formSchema={formCandidateInscription}
         submitText="Valider"
         onSubmit={async (fields, closeModal) => {

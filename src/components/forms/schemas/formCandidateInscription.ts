@@ -98,12 +98,14 @@ export const formCandidateInscription: FormSchema<FormCandidateInscriptionSchema
               },
               {
                 method: (fieldValue) => {
-                  const maxBirthdate = new Date('1900-01-01');
+                  const maxBirthdate = new Date();
+                  maxBirthdate.setFullYear(maxBirthdate.getFullYear() - 31);
                   const realBirthdate = new Date(fieldValue);
-                  return maxBirthdate < realBirthdate;
+                  return maxBirthdate <= realBirthdate;
                 },
 
-                message: 'Veuillez entrer une date valide.',
+                message:
+                  'Vous devez avoir entre 18 et 30 ans pour participer au programme.',
               },
             ],
           },
@@ -249,7 +251,6 @@ export const formCandidateInscription: FormSchema<FormCandidateInscriptionSchema
         title:
           'Selectionnez la date de la prochaine réunion d’information à laquelle vous souhaitez participer :',
         component: 'radio-async',
-
         // @ts-expect-error after enable TS strict mode. Please, try to fix it
         limit: 7,
 
@@ -284,7 +285,6 @@ export const formCandidateInscription: FormSchema<FormCandidateInscriptionSchema
           });
           callback(options.length ? [...options, noChoice] : []);
         },
-
         // @ts-expect-error after enable TS strict mode. Please, try to fix it
         errorMessage:
           'Il n’y a pas de réunion d’information organisée dans les prochains temps dans votre ville, nous allons vous recontacter rapidement',
