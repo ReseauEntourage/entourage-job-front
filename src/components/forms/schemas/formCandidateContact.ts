@@ -160,8 +160,31 @@ export const formCandidateContact: FormSchema<{
       name: 'birthDate',
       component: 'datepicker',
       title:
-        'Sa date de naissance (la personne doit avoir plus de 18 ans pour rejoindre LinkedOut)',
+        'Sa date de naissance (la personne doit avoir 18 et 30 ans pour rejoindre LinkedOut)',
       showLabel: true,
+      rules: [
+        {
+          method: (fieldValue) => {
+            const minBirthdate = new Date();
+            minBirthdate.setFullYear(minBirthdate.getFullYear() - 18);
+            const realBirthdate = new Date(fieldValue);
+            return minBirthdate > realBirthdate;
+          },
+          message:
+            'Vous devez être majeur pour participer au programme. En attendant, vous pouvez contacter la Mission locale dont dépend votre commune.',
+        },
+        {
+          method: (fieldValue) => {
+            const maxBirthdate = new Date();
+            maxBirthdate.setFullYear(maxBirthdate.getFullYear() - 31);
+            const realBirthdate = new Date(fieldValue);
+            return maxBirthdate <= realBirthdate;
+          },
+
+          message:
+            'Vous devez avoir entre 18 et 30 ans pour participer au programme.',
+        },
+      ],
     },
     {
       id: 'address',

@@ -25,7 +25,7 @@ describe('Parcours travailler', () => {
         .click();
       cy.get('[data-testid="select-option-93"]').click();
       cy.get('[data-testid="form-candidate-inscription-birthdate"]').type(
-        '1994-02-22'
+        '1996-02-22'
       );
       cy.get('[data-testid="form-candidate-inscription-workingRight"]').click();
       cy.get('[data-testid="select-option-yes"]').click();
