@@ -11,7 +11,7 @@ import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { AnyCantFix } from 'src/utils/Types';
 
 interface ModalEditProps<S extends FormSchema<AnyCantFix>> {
-  title: string | JSX.Element;
+  title: React.ReactNode;
   formSchema: S;
   onCancel?: () => void;
   onSubmit: (
@@ -21,7 +21,7 @@ interface ModalEditProps<S extends FormSchema<AnyCantFix>> {
   ) => void;
   onError?: (values: ExtractFormSchemaValidation<S>) => void;
   defaultValues?: DefaultValues<ExtractFormSchemaValidation<S>>;
-  description?: string | JSX.Element;
+  description?: React.ReactNode;
   submitText?: string;
   cancelText?: string;
   noCompulsory?: boolean;

@@ -8,7 +8,7 @@ import PhoneIcon from 'assets/icons/phone.svg';
 import UserIcon from 'assets/icons/user.svg';
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
-import { ToggleWithConfirmationModal } from 'src/components/backoffice/ToggleWithConfirmationModal';
+import { ToggleWithConfirmationModal } from 'src/components/utils/Inputs/ToggleWithConfirmationModal';
 import { CandidateEmployedToggle } from 'src/components/backoffice/candidate/CandidateEmployedToggle';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
 import { Card, SimpleLink } from 'src/components/utils';

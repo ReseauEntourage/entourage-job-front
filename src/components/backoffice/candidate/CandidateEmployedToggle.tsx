@@ -2,7 +2,7 @@ import React from 'react';
 import UIkit from 'uikit';
 
 import { Api } from 'src/api';
-import { ToggleWithConfirmationModal } from 'src/components/backoffice/ToggleWithConfirmationModal';
+import { ToggleWithConfirmationModal } from 'src/components/utils/Inputs/ToggleWithConfirmationModal';
 import { formEditEmployed } from 'src/components/forms/schemas/formEditEmployed';
 import { Contract, CONTRACTS } from 'src/constants';
 import { findConstantFromValue } from 'src/utils';
@@ -52,20 +52,20 @@ export const CandidateEmployedToggle = ({
             fields.endOfContract && hasEnd ? fields.endOfContract : null,
         };
 
-        return Api.putCandidate(candidateId, {
-          employed,
-          ...mutatedFields,
-        })
-          .then(() => {
+        // return Api.putCandidate(candidateId, {
+        //   employed,
+        //   ...mutatedFields,
+        // })
+        //   .then(() => {
             setData({
               employed,
               ...mutatedFields,
             });
-            UIkit.notification(notificationMessage, 'success');
-          })
-          .catch(() => {
-            return UIkit.notification('Une erreur est survenue', 'danger');
-          });
+          //   UIkit.notification(notificationMessage, 'success');
+          // })
+          // .catch(() => {
+          //   return UIkit.notification('Une erreur est survenue', 'danger');
+          // });
       }}
     />
   );

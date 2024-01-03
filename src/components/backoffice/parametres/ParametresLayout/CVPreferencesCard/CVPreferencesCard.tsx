@@ -2,7 +2,7 @@ import React from 'react';
 import UIkit from 'uikit';
 import { useUpdateUser } from '../../useUpdateUser';
 import { Api } from 'src/api';
-import { ToggleWithConfirmationModal } from 'src/components/backoffice/ToggleWithConfirmationModal';
+import { ToggleWithConfirmationModal } from 'src/components/utils/Inputs/ToggleWithConfirmationModal';
 import { CandidateEmployedToggle } from 'src/components/backoffice/candidate/CandidateEmployedToggle';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel';
 import { Card } from 'src/components/utils';
@@ -63,32 +63,34 @@ export const CVPreferencesCard = () => {
           modalConfirmation="Oui, masquer mon CV"
           defaultValue={user?.candidat?.hidden}
           onToggle={(hidden) => {
-            return Api.putCandidate(user.id, {
-              hidden,
-            })
-              .then(() => {
-                updateUser({
-                  ...user,
-                  candidat: user.candidat
-                    ? {
-                        ...user.candidat,
-                        hidden,
-                      }
-                    : undefined,
-                });
-                UIkit.notification(
-                  hidden
-                    ? 'Votre CV est désormais masqué'
-                    : 'Votre CV est désormais visible',
-                  'success'
-                );
-              })
-              .catch(() => {
-                return UIkit.notification(
-                  'Une erreur est survenue lors du masquage de votre profil',
-                  'danger'
-                );
+            // return Api.putCandidate(user.id, {
+            //   hidden,
+            // })
+            //   .then(() => {
+              console.log(hidden)
+              updateUser({
+                ...user,
+                candidat: user.candidat
+                  ? {
+                      ...user.candidat,
+                      hidden,
+                    }
+                  : undefined,
               });
+              updateUser({hidden: hidden})
+              //   UIkit.notification(
+              //     hidden
+              //       ? 'Votre CV est désormais masqué'
+              //       : 'Votre CV est désormais visible',
+              //     'success'
+              //   );
+              // })
+              // .catch(() => {
+              //   return UIkit.notification(
+              //     'Une erreur est survenue lors du masquage de votre profil',
+              //     'danger'
+              //   );
+              // });
           }}
         />
       </StyledCVPreferenceLine>
