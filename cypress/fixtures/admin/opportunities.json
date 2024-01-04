@@ -1,0 +1,402 @@
+[
+  {
+    "id": "bb9bba2e-7c0e-4df4-abba-b34e18afba02",
+    "updatedAt": "2023-04-03T04:26:36.180Z",
+    "createdAt": "2023-06-09T08:00:17.508Z",
+    "title": "Internal Tactics Specialist",
+    "company": "Mosciski, Waters and Breitenberg",
+    "description": "Tertius peccatus decor amplexus verto tantillus alioqui aggredior. Aranea vinitor officiis centum vulgo triumphus blanditiis apto. Laudantium abeo coniecto velit asper molestias.",
+    "companyDescription": "Substantia talis coaegresco aeternus acidus capillus.",
+    "numberOfPositions": 1,
+    "prerequisites": null,
+    "skills": null,
+    "contract": "cdi",
+    "endOfContract": null,
+    "startOfContract": null,
+    "isPartTime": false,
+    "recruiterName": "Ondricka",
+    "recruiterFirstName": "Herbert",
+    "recruiterPosition": "Human Markets Administrator",
+    "isPublic": true,
+    "isValidated": true,
+    "isExternal": false,
+    "link": null,
+    "externalOrigin": null,
+    "recruiterMail": "Alf31@yahoo.com",
+    "date": "2023-05-13T11:04:43.700Z",
+    "department": "West Sussex",
+    "message": null,
+    "address": "96783",
+    "driversLicense": false,
+    "workingHours": null,
+    "salary": null,
+    "otherInfo": null,
+    "createdBy": "d2028c46-e2be-4cdd-8c65-9eba6664117d",
+    "businessLines": [
+      {
+        "name": "ad",
+        "order": 0,
+        "OpportunityBusinessLine": {
+          "id": "f5ece012-fe93-4a2a-b8a3-04b1da426876",
+          "OpportunityId": "bb9bba2e-7c0e-4df4-abba-b34e18afba02",
+          "BusinessLineId": "43fb4438-df5b-469d-837e-9e7ef0cc4cd0",
+          "createdAt": "2023-07-31T20:06:21.989Z",
+          "updatedAt": "2023-02-17T05:33:12.725Z"
+        }
+      }
+    ],
+    "opportunityUsers": {
+      "id": "84256c6e-0dc1-46d1-a0f8-53840933e756",
+      "UserId": "fe4b1706-23e1-409c-afe5-06799f192425",
+      "OpportunityId": "bb9bba2e-7c0e-4df4-abba-b34e18afba02",
+      "status": 2,
+      "seen": true,
+      "bookmarked": true,
+      "archived": false,
+      "note": null,
+      "updatedAt": "2024-01-19T05:43:44.519Z",
+      "recommended": false,
+      "user": {
+        "id": "fd47bed5-cc4e-4242-ae63-603774e2f279",
+        "email": "Saige.VonRueden72@hotmail.com",
+        "firstName": "Cornelius",
+        "lastName": "Marks",
+        "gender": 1,
+        "zone": "Raulchester",
+        "phone": "1-402-804-0819 x424",
+        "candidat": {
+          "employed": false,
+          "hidden": false,
+          "url": "Iliana-04cf32a0-2d91-43ff-94ea-8512c6290b4b",
+          "coach": {
+            "id": "1f1d82e8-64f7-4a7a-93c4-d814695570b5",
+            "email": "Addison94@yahoo.com",
+            "firstName": "Nedra",
+            "lastName": "Altenwerth",
+            "zone": null
+          }
+        }
+      }
+    }
+  },
+  {
+    "id": "bb9bba2e-7c0e-4df4-abba-b34e18afba02",
+    "updatedAt": "2023-09-06T21:29:41.302Z",
+    "createdAt": "2023-04-03T08:53:07.866Z",
+    "title": "Forward Assurance Associate",
+    "company": "Bradtke, King and Lowe",
+    "description": "Quidem delectatio fugit balbus vita voluptate credo temptatio voluptatem. Tempus curis demoror villa volubilis theologus sub nihil summopere. Abstergo vobis defessus.",
+    "companyDescription": "Terra cubo tandem caries aliquam bene qui nisi volva pecus.",
+    "numberOfPositions": 1,
+    "prerequisites": null,
+    "skills": null,
+    "contract": "cdi",
+    "endOfContract": null,
+    "startOfContract": null,
+    "isPartTime": false,
+    "recruiterName": "Kulas",
+    "recruiterFirstName": "Mariela",
+    "recruiterPosition": "Future Accountability Liaison",
+    "isPublic": true,
+    "isValidated": true,
+    "isExternal": false,
+    "link": null,
+    "externalOrigin": null,
+    "recruiterMail": "Garfield69@gmail.com",
+    "date": "2023-01-31T02:45:57.697Z",
+    "department": "Lee County",
+    "message": null,
+    "address": "19843",
+    "driversLicense": false,
+    "workingHours": null,
+    "salary": null,
+    "otherInfo": null,
+    "createdBy": "ebb05f83-c12a-4113-89be-69b27f6fee5c",
+    "businessLines": [
+      {
+        "name": "ad",
+        "order": 0,
+        "OpportunityBusinessLine": {
+          "id": "f5ece012-fe93-4a2a-b8a3-04b1da426876",
+          "OpportunityId": "bb9bba2e-7c0e-4df4-abba-b34e18afba02",
+          "BusinessLineId": "43fb4438-df5b-469d-837e-9e7ef0cc4cd0",
+          "createdAt": "2023-07-31T20:06:21.989Z",
+          "updatedAt": "2023-02-17T05:33:12.725Z"
+        }
+      }
+    ],
+    "opportunityUsers": {
+      "id": "84256c6e-0dc1-46d1-a0f8-53840933e756",
+      "UserId": "fe4b1706-23e1-409c-afe5-06799f192425",
+      "OpportunityId": "bb9bba2e-7c0e-4df4-abba-b34e18afba02",
+      "status": 2,
+      "seen": true,
+      "bookmarked": true,
+      "archived": false,
+      "note": null,
+      "updatedAt": "2024-01-19T05:43:44.519Z",
+      "recommended": false,
+      "user": {
+        "id": "fd47bed5-cc4e-4242-ae63-603774e2f279",
+        "email": "Saige.VonRueden72@hotmail.com",
+        "firstName": "Cornelius",
+        "lastName": "Marks",
+        "gender": 1,
+        "zone": "Raulchester",
+        "phone": "1-402-804-0819 x424",
+        "candidat": {
+          "employed": false,
+          "hidden": false,
+          "url": "Iliana-04cf32a0-2d91-43ff-94ea-8512c6290b4b",
+          "coach": {
+            "id": "1f1d82e8-64f7-4a7a-93c4-d814695570b5",
+            "email": "Addison94@yahoo.com",
+            "firstName": "Nedra",
+            "lastName": "Altenwerth",
+            "zone": null
+          }
+        }
+      }
+    }
+  },
+  {
+    "id": "bb9bba2e-7c0e-4df4-abba-b34e18afba02",
+    "updatedAt": "2023-08-05T12:29:35.653Z",
+    "createdAt": "2023-08-16T01:20:30.934Z",
+    "title": "Chief Group Supervisor",
+    "company": "Sporer, O'Reilly and McClure",
+    "description": "Amor accedo demonstro beneficium canis pecco alius. Corporis vesica sophismata arbor varietas supellex verus casus. Tabula suus versus accusator cohibeo arceo nisi adeo umbra.",
+    "companyDescription": "Conor aureus acervus vestrum odit vilicus vulpes sublime aveho damnatio.",
+    "numberOfPositions": 1,
+    "prerequisites": null,
+    "skills": null,
+    "contract": "cdi",
+    "endOfContract": null,
+    "startOfContract": null,
+    "isPartTime": false,
+    "recruiterName": "Moore",
+    "recruiterFirstName": "Juwan",
+    "recruiterPosition": "Customer Solutions Architect",
+    "isPublic": true,
+    "isValidated": true,
+    "isExternal": false,
+    "link": null,
+    "externalOrigin": null,
+    "recruiterMail": "Adrian.Spencer6@gmail.com",
+    "date": "2023-12-03T20:36:29.099Z",
+    "department": "Grant County",
+    "message": null,
+    "address": "80313-1941",
+    "driversLicense": false,
+    "workingHours": null,
+    "salary": null,
+    "otherInfo": null,
+    "createdBy": "1030f7bc-c98f-4389-b756-6cb96dc00d76",
+    "businessLines": [
+      {
+        "name": "ad",
+        "order": 0,
+        "OpportunityBusinessLine": {
+          "id": "f5ece012-fe93-4a2a-b8a3-04b1da426876",
+          "OpportunityId": "bb9bba2e-7c0e-4df4-abba-b34e18afba02",
+          "BusinessLineId": "43fb4438-df5b-469d-837e-9e7ef0cc4cd0",
+          "createdAt": "2023-07-31T20:06:21.989Z",
+          "updatedAt": "2023-02-17T05:33:12.725Z"
+        }
+      }
+    ],
+    "opportunityUsers": {
+      "id": "84256c6e-0dc1-46d1-a0f8-53840933e756",
+      "UserId": "fe4b1706-23e1-409c-afe5-06799f192425",
+      "OpportunityId": "bb9bba2e-7c0e-4df4-abba-b34e18afba02",
+      "status": 2,
+      "seen": true,
+      "bookmarked": true,
+      "archived": false,
+      "note": null,
+      "updatedAt": "2024-01-19T05:43:44.519Z",
+      "recommended": false,
+      "user": {
+        "id": "fd47bed5-cc4e-4242-ae63-603774e2f279",
+        "email": "Saige.VonRueden72@hotmail.com",
+        "firstName": "Cornelius",
+        "lastName": "Marks",
+        "gender": 1,
+        "zone": "Raulchester",
+        "phone": "1-402-804-0819 x424",
+        "candidat": {
+          "employed": false,
+          "hidden": false,
+          "url": "Iliana-04cf32a0-2d91-43ff-94ea-8512c6290b4b",
+          "coach": {
+            "id": "1f1d82e8-64f7-4a7a-93c4-d814695570b5",
+            "email": "Addison94@yahoo.com",
+            "firstName": "Nedra",
+            "lastName": "Altenwerth",
+            "zone": null
+          }
+        }
+      }
+    }
+  },
+  {
+    "id": "bb9bba2e-7c0e-4df4-abba-b34e18afba02",
+    "updatedAt": "2023-03-13T07:20:26.616Z",
+    "createdAt": "2024-01-12T02:10:20.019Z",
+    "title": "National Operations Director",
+    "company": "Weimann Group",
+    "description": "Templum crepusculum solutio totam agnosco. Cetera tenax theologus virgo. Neque fugiat constans cultellus ultra claudeo sustineo beatae corroboro.",
+    "companyDescription": "Vox audio somnus sto eius canto est pauper.",
+    "numberOfPositions": 1,
+    "prerequisites": null,
+    "skills": null,
+    "contract": "cdi",
+    "endOfContract": null,
+    "startOfContract": null,
+    "isPartTime": false,
+    "recruiterName": "Donnelly",
+    "recruiterFirstName": "Jaylon",
+    "recruiterPosition": "Principal Interactions Analyst",
+    "isPublic": true,
+    "isValidated": true,
+    "isExternal": false,
+    "link": null,
+    "externalOrigin": null,
+    "recruiterMail": "Sigrid80@gmail.com",
+    "date": "2023-12-30T20:51:05.706Z",
+    "department": "Gloucestershire",
+    "message": null,
+    "address": "73167",
+    "driversLicense": false,
+    "workingHours": null,
+    "salary": null,
+    "otherInfo": null,
+    "createdBy": "45c90289-6095-4204-b57e-ed9285918ae2",
+    "businessLines": [
+      {
+        "name": "ad",
+        "order": 0,
+        "OpportunityBusinessLine": {
+          "id": "f5ece012-fe93-4a2a-b8a3-04b1da426876",
+          "OpportunityId": "bb9bba2e-7c0e-4df4-abba-b34e18afba02",
+          "BusinessLineId": "43fb4438-df5b-469d-837e-9e7ef0cc4cd0",
+          "createdAt": "2023-07-31T20:06:21.989Z",
+          "updatedAt": "2023-02-17T05:33:12.725Z"
+        }
+      }
+    ],
+    "opportunityUsers": {
+      "id": "84256c6e-0dc1-46d1-a0f8-53840933e756",
+      "UserId": "fe4b1706-23e1-409c-afe5-06799f192425",
+      "OpportunityId": "bb9bba2e-7c0e-4df4-abba-b34e18afba02",
+      "status": 2,
+      "seen": true,
+      "bookmarked": true,
+      "archived": false,
+      "note": null,
+      "updatedAt": "2024-01-19T05:43:44.519Z",
+      "recommended": false,
+      "user": {
+        "id": "fd47bed5-cc4e-4242-ae63-603774e2f279",
+        "email": "Saige.VonRueden72@hotmail.com",
+        "firstName": "Cornelius",
+        "lastName": "Marks",
+        "gender": 1,
+        "zone": "Raulchester",
+        "phone": "1-402-804-0819 x424",
+        "candidat": {
+          "employed": false,
+          "hidden": false,
+          "url": "Iliana-04cf32a0-2d91-43ff-94ea-8512c6290b4b",
+          "coach": {
+            "id": "1f1d82e8-64f7-4a7a-93c4-d814695570b5",
+            "email": "Addison94@yahoo.com",
+            "firstName": "Nedra",
+            "lastName": "Altenwerth",
+            "zone": null
+          }
+        }
+      }
+    }
+  },
+  {
+    "id": "bb9bba2e-7c0e-4df4-abba-b34e18afba02",
+    "updatedAt": "2024-01-21T19:09:09.751Z",
+    "createdAt": "2023-09-14T08:26:41.540Z",
+    "title": "Lead Markets Analyst",
+    "company": "D'Amore - Stiedemann",
+    "description": "Demulceo eum umquam caput vorago audacia temperantia corrupti. Ater ager utpote. Caries vesco amor dapifer.",
+    "companyDescription": "Maxime abbas depereo aurum aro umerus.",
+    "numberOfPositions": 1,
+    "prerequisites": null,
+    "skills": null,
+    "contract": "cdi",
+    "endOfContract": null,
+    "startOfContract": null,
+    "isPartTime": false,
+    "recruiterName": "Gleichner",
+    "recruiterFirstName": "Madelynn",
+    "recruiterPosition": "Legacy Quality Planner",
+    "isPublic": true,
+    "isValidated": true,
+    "isExternal": false,
+    "link": null,
+    "externalOrigin": null,
+    "recruiterMail": "Darryl.Schaden66@gmail.com",
+    "date": "2023-05-27T01:47:59.225Z",
+    "department": "South Glamorgan",
+    "message": null,
+    "address": "47790",
+    "driversLicense": false,
+    "workingHours": null,
+    "salary": null,
+    "otherInfo": null,
+    "createdBy": "e7c8f877-7b8b-4600-b672-6d1b48f39abc",
+    "businessLines": [
+      {
+        "name": "ad",
+        "order": 0,
+        "OpportunityBusinessLine": {
+          "id": "f5ece012-fe93-4a2a-b8a3-04b1da426876",
+          "OpportunityId": "bb9bba2e-7c0e-4df4-abba-b34e18afba02",
+          "BusinessLineId": "43fb4438-df5b-469d-837e-9e7ef0cc4cd0",
+          "createdAt": "2023-07-31T20:06:21.989Z",
+          "updatedAt": "2023-02-17T05:33:12.725Z"
+        }
+      }
+    ],
+    "opportunityUsers": {
+      "id": "84256c6e-0dc1-46d1-a0f8-53840933e756",
+      "UserId": "fe4b1706-23e1-409c-afe5-06799f192425",
+      "OpportunityId": "bb9bba2e-7c0e-4df4-abba-b34e18afba02",
+      "status": 2,
+      "seen": true,
+      "bookmarked": true,
+      "archived": false,
+      "note": null,
+      "updatedAt": "2024-01-19T05:43:44.519Z",
+      "recommended": false,
+      "user": {
+        "id": "fd47bed5-cc4e-4242-ae63-603774e2f279",
+        "email": "Saige.VonRueden72@hotmail.com",
+        "firstName": "Cornelius",
+        "lastName": "Marks",
+        "gender": 1,
+        "zone": "Raulchester",
+        "phone": "1-402-804-0819 x424",
+        "candidat": {
+          "employed": false,
+          "hidden": false,
+          "url": "Iliana-04cf32a0-2d91-43ff-94ea-8512c6290b4b",
+          "coach": {
+            "id": "1f1d82e8-64f7-4a7a-93c4-d814695570b5",
+            "email": "Addison94@yahoo.com",
+            "firstName": "Nedra",
+            "lastName": "Altenwerth",
+            "zone": null
+          }
+        }
+      }
+    }
+  }
+]

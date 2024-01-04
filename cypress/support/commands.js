@@ -18,8 +18,18 @@
 //
 //
 // -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
+// Cypress.Commands.add('dismiss', { prevSubjopportunitiesect: 'optional'}, (subject, options) => { ... })
 //
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+import { userOpportunityAllRes } from '../fixtures/candidat/opportunity/user-opportunity-all-res';
+
+Cypress.Commands.add('generateAdminFixture', () => {
+  cy.writeFile(
+    'cypress/fixtures/admin/opportunities.json',
+    userOpportunityAllRes(5),
+    'utf-8'
+  );
+});

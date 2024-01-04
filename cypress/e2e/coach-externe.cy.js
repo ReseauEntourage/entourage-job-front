@@ -2,16 +2,16 @@
 describe('Coach externe', () => {
   beforeEach(() => {
     cy.intercept('GET', '/auth/current', {
-      fixture: 'auth-current-coach-externe-res',
+      fixture: 'coach/auth-current-coach-externe-res',
     }).as('authCheck');
 
     cy.intercept('GET', '/cv/*', {
       fixture: 'cv-for-candidat',
     }).as('cvForCandidat');
 
-    cy.fixture('auth-current-coach-externe-res').then((user) => {
+    cy.fixture('admin/auth-current-coach-externe-res').then((user) => {
       cy.intercept('GET', `/user/${user.id}`, {
-        fixture: 'auth-current-coach-externe-res',
+        fixture: 'coach/auth-current-coach-externe-res',
       });
     });
   });

@@ -1,0 +1,467 @@
+[
+  {
+    "id": "2b6c7818-5eca-4886-925b-56df4b90b9a5",
+    "isPublic": false,
+    "isValidated": true,
+    "isArchived": false,
+    "isExternal": false,
+    "link": null,
+    "externalOrigin": null,
+    "company": "Marie et Nguyen",
+    "recruiterName": "Christodule Girard",
+    "recruiterFirstName": "Fiacre",
+    "recruiterMail": "Fiacre.Boyer@example.com",
+    "contactMail": null,
+    "recruiterPosition": null,
+    "recruiterPhone": "+33 263741516",
+    "date": "2024-02-12T16:50:12.809Z",
+    "address": "1961 Quai Vaneau",
+    "description": null,
+    "companyDescription": "Networked clear-thinking moderator",
+    "skills": null,
+    "prerequisites": null,
+    "department": "Nord-Pas-de-Calais",
+    "contract": null,
+    "startOfContract": "2024-02-12T22:36:10.861Z",
+    "endOfContract": "2024-02-12T22:43:42.153Z",
+    "isPartTime": false,
+    "numberOfPositions": 1,
+    "message": null,
+    "driversLicense": 1,
+    "workingHours": null,
+    "salary": 6045,
+    "otherInfo": null,
+    "createdBy": "0b66ee98-3e73-43ad-9e68-5bcbaa0ca302",
+    "createdAt": "2024-02-13T06:45:31.041Z",
+    "updatedAt": "2024-02-13T05:44:40.933Z",
+    "opportunityUsers": {
+      "id": "3c3bd947-d41d-425c-af83-a8c77a7cd00f",
+      "UserId": "0b9c2685-e008-459f-acd9-9d7073900b51",
+      "OpportunityId": "1718a8a3-fa1c-4a6f-85df-d35f249d54d1",
+      "status": 2,
+      "seen": true,
+      "bookmarked": true,
+      "archived": false,
+      "note": null,
+      "updatedAt": "2023-02-27T14:36:16.774Z",
+      "recommended": false,
+      "user": {
+        "id": "82e8c9c6-7c9f-4104-a154-e94c45252f56",
+        "email": "Lucille_Aubert@hotmail.fr",
+        "firstName": "Esther",
+        "lastName": "Mathieu",
+        "gender": 1,
+        "zone": "Villejuif",
+        "phone": "+33 438372468",
+        "candidat": {
+          "employed": false,
+          "hidden": false,
+          "url": "Agrippin-24fb4e30-ba75-46c5-b14f-9f046310b74b",
+          "coach": {
+            "id": "8185ad81-6dac-4686-978e-a33e9519323e",
+            "email": "Rejean.Poirier@hotmail.fr",
+            "firstName": "Archambaud",
+            "lastName": "Bonnet",
+            "zone": null
+          }
+        }
+      }
+    },
+    "businessLines": [
+      {
+        "name": "Accusantium vero nisi.",
+        "order": 6,
+        "OpportunityBusinessLine": {
+          "id": "22cf3656-b885-4dda-91a1-c3c5188b7e77",
+          "OpportunityId": "27baf1ab-a8a0-4a60-a4e2-10a29baa07a7",
+          "BusinessLineId": "73bb0c9b-d9e2-4e72-8e1c-31e1fd21e1d8",
+          "createdAt": "2024-02-12T13:13:43.778Z",
+          "updatedAt": "2024-02-13T06:09:17.341Z"
+        }
+      },
+      {
+        "name": "Voluptatibus quo quisquam.",
+        "order": 10,
+        "OpportunityBusinessLine": {
+          "id": "bf9eba53-d4d0-49d0-bc44-5d1b8871858d",
+          "OpportunityId": "2459d509-6540-4290-851f-89a86dea9b7f",
+          "BusinessLineId": "178fda8d-0866-4149-b134-22718658a7f7",
+          "createdAt": "2024-02-12T16:41:09.552Z",
+          "updatedAt": "2024-02-12T12:36:18.596Z"
+        }
+      }
+    ]
+  },
+  {
+    "id": "2f0b2a3c-d61e-4ed3-b527-d70bfa62dd44",
+    "isPublic": false,
+    "isValidated": true,
+    "isArchived": false,
+    "isExternal": false,
+    "link": null,
+    "externalOrigin": null,
+    "company": "Baron et Duval",
+    "recruiterName": "Christodule Girard",
+    "recruiterFirstName": "Fiacre",
+    "recruiterMail": "Fiacre15@example.com",
+    "contactMail": null,
+    "recruiterPosition": null,
+    "recruiterPhone": "0675283667",
+    "date": "2024-02-13T01:30:08.216Z",
+    "address": "6 Voie Saint-Dominique",
+    "description": null,
+    "companyDescription": "Focused logistical archive",
+    "skills": null,
+    "prerequisites": null,
+    "department": "Bretagne",
+    "contract": null,
+    "startOfContract": "2024-02-13T07:13:39.389Z",
+    "endOfContract": "2024-02-12T13:41:26.776Z",
+    "isPartTime": false,
+    "numberOfPositions": 1,
+    "message": null,
+    "driversLicense": 1,
+    "workingHours": null,
+    "salary": 10000,
+    "otherInfo": null,
+    "createdBy": "63820cd7-282b-4c7a-9053-c7fb9ea52197",
+    "createdAt": "2024-02-12T15:28:41.643Z",
+    "updatedAt": "2024-02-12T22:02:19.072Z",
+    "opportunityUsers": {
+      "id": "3c3bd947-d41d-425c-af83-a8c77a7cd00f",
+      "UserId": "0b9c2685-e008-459f-acd9-9d7073900b51",
+      "OpportunityId": "1718a8a3-fa1c-4a6f-85df-d35f249d54d1",
+      "status": 2,
+      "seen": true,
+      "bookmarked": true,
+      "archived": false,
+      "note": null,
+      "updatedAt": "2023-02-27T14:36:16.774Z",
+      "recommended": false,
+      "user": {
+        "id": "82e8c9c6-7c9f-4104-a154-e94c45252f56",
+        "email": "Lucille_Aubert@hotmail.fr",
+        "firstName": "Esther",
+        "lastName": "Mathieu",
+        "gender": 1,
+        "zone": "Villejuif",
+        "phone": "+33 438372468",
+        "candidat": {
+          "employed": false,
+          "hidden": false,
+          "url": "Agrippin-24fb4e30-ba75-46c5-b14f-9f046310b74b",
+          "coach": {
+            "id": "8185ad81-6dac-4686-978e-a33e9519323e",
+            "email": "Rejean.Poirier@hotmail.fr",
+            "firstName": "Archambaud",
+            "lastName": "Bonnet",
+            "zone": null
+          }
+        }
+      }
+    },
+    "businessLines": [
+      {
+        "name": "Accusantium vero nisi.",
+        "order": 6,
+        "OpportunityBusinessLine": {
+          "id": "22cf3656-b885-4dda-91a1-c3c5188b7e77",
+          "OpportunityId": "27baf1ab-a8a0-4a60-a4e2-10a29baa07a7",
+          "BusinessLineId": "73bb0c9b-d9e2-4e72-8e1c-31e1fd21e1d8",
+          "createdAt": "2024-02-12T13:13:43.778Z",
+          "updatedAt": "2024-02-13T06:09:17.341Z"
+        }
+      },
+      {
+        "name": "Voluptatibus quo quisquam.",
+        "order": 10,
+        "OpportunityBusinessLine": {
+          "id": "bf9eba53-d4d0-49d0-bc44-5d1b8871858d",
+          "OpportunityId": "2459d509-6540-4290-851f-89a86dea9b7f",
+          "BusinessLineId": "178fda8d-0866-4149-b134-22718658a7f7",
+          "createdAt": "2024-02-12T16:41:09.552Z",
+          "updatedAt": "2024-02-12T12:36:18.596Z"
+        }
+      }
+    ]
+  },
+  {
+    "id": "f45e725b-0059-490c-9886-0354cf4e6ec7",
+    "isPublic": false,
+    "isValidated": true,
+    "isArchived": false,
+    "isExternal": false,
+    "link": null,
+    "externalOrigin": null,
+    "company": "Cousin et Brunet",
+    "recruiterName": "Christodule Girard",
+    "recruiterFirstName": "Fiacre",
+    "recruiterMail": "Fiacre90@example.net",
+    "contactMail": null,
+    "recruiterPosition": null,
+    "recruiterPhone": "+33 225024129",
+    "date": "2024-02-12T11:56:43.446Z",
+    "address": "79 Rue de Solférino",
+    "description": null,
+    "companyDescription": "Advanced scalable internet solution",
+    "skills": null,
+    "prerequisites": null,
+    "department": "Île-de-France",
+    "contract": null,
+    "startOfContract": "2024-02-13T01:32:25.248Z",
+    "endOfContract": "2024-02-12T19:47:39.526Z",
+    "isPartTime": false,
+    "numberOfPositions": 1,
+    "message": null,
+    "driversLicense": 1,
+    "workingHours": null,
+    "salary": 332,
+    "otherInfo": null,
+    "createdBy": "e9dee0f7-4afb-44d6-9df6-461ed4a805f6",
+    "createdAt": "2024-02-13T10:35:12.734Z",
+    "updatedAt": "2024-02-12T20:17:48.065Z",
+    "opportunityUsers": {
+      "id": "3c3bd947-d41d-425c-af83-a8c77a7cd00f",
+      "UserId": "0b9c2685-e008-459f-acd9-9d7073900b51",
+      "OpportunityId": "1718a8a3-fa1c-4a6f-85df-d35f249d54d1",
+      "status": 2,
+      "seen": true,
+      "bookmarked": true,
+      "archived": false,
+      "note": null,
+      "updatedAt": "2023-02-27T14:36:16.774Z",
+      "recommended": false,
+      "user": {
+        "id": "82e8c9c6-7c9f-4104-a154-e94c45252f56",
+        "email": "Lucille_Aubert@hotmail.fr",
+        "firstName": "Esther",
+        "lastName": "Mathieu",
+        "gender": 1,
+        "zone": "Villejuif",
+        "phone": "+33 438372468",
+        "candidat": {
+          "employed": false,
+          "hidden": false,
+          "url": "Agrippin-24fb4e30-ba75-46c5-b14f-9f046310b74b",
+          "coach": {
+            "id": "8185ad81-6dac-4686-978e-a33e9519323e",
+            "email": "Rejean.Poirier@hotmail.fr",
+            "firstName": "Archambaud",
+            "lastName": "Bonnet",
+            "zone": null
+          }
+        }
+      }
+    },
+    "businessLines": [
+      {
+        "name": "Accusantium vero nisi.",
+        "order": 6,
+        "OpportunityBusinessLine": {
+          "id": "22cf3656-b885-4dda-91a1-c3c5188b7e77",
+          "OpportunityId": "27baf1ab-a8a0-4a60-a4e2-10a29baa07a7",
+          "BusinessLineId": "73bb0c9b-d9e2-4e72-8e1c-31e1fd21e1d8",
+          "createdAt": "2024-02-12T13:13:43.778Z",
+          "updatedAt": "2024-02-13T06:09:17.341Z"
+        }
+      },
+      {
+        "name": "Voluptatibus quo quisquam.",
+        "order": 10,
+        "OpportunityBusinessLine": {
+          "id": "bf9eba53-d4d0-49d0-bc44-5d1b8871858d",
+          "OpportunityId": "2459d509-6540-4290-851f-89a86dea9b7f",
+          "BusinessLineId": "178fda8d-0866-4149-b134-22718658a7f7",
+          "createdAt": "2024-02-12T16:41:09.552Z",
+          "updatedAt": "2024-02-12T12:36:18.596Z"
+        }
+      }
+    ]
+  },
+  {
+    "id": "afb0a382-116c-4938-9ef3-ae17337ab870",
+    "isPublic": false,
+    "isValidated": true,
+    "isArchived": false,
+    "isExternal": false,
+    "link": null,
+    "externalOrigin": null,
+    "company": "Roche SCOP",
+    "recruiterName": "Christodule Girard",
+    "recruiterFirstName": "Fiacre",
+    "recruiterMail": "Fiacre_Boyer6@example.net",
+    "contactMail": null,
+    "recruiterPosition": null,
+    "recruiterPhone": "+33 250726184",
+    "date": "2024-02-12T18:06:25.657Z",
+    "address": "3 Rue du Bac",
+    "description": null,
+    "companyDescription": "Realigned solution-oriented benchmark",
+    "skills": null,
+    "prerequisites": null,
+    "department": "Rhône-Alpes",
+    "contract": null,
+    "startOfContract": "2024-02-13T09:34:25.132Z",
+    "endOfContract": "2024-02-12T11:47:55.308Z",
+    "isPartTime": false,
+    "numberOfPositions": 1,
+    "message": null,
+    "driversLicense": 1,
+    "workingHours": null,
+    "salary": 4309,
+    "otherInfo": null,
+    "createdBy": "785d10e7-9790-450f-b28b-52f2985af291",
+    "createdAt": "2024-02-12T21:11:24.029Z",
+    "updatedAt": "2024-02-12T12:43:10.705Z",
+    "opportunityUsers": {
+      "id": "3c3bd947-d41d-425c-af83-a8c77a7cd00f",
+      "UserId": "0b9c2685-e008-459f-acd9-9d7073900b51",
+      "OpportunityId": "1718a8a3-fa1c-4a6f-85df-d35f249d54d1",
+      "status": 2,
+      "seen": true,
+      "bookmarked": true,
+      "archived": false,
+      "note": null,
+      "updatedAt": "2023-02-27T14:36:16.774Z",
+      "recommended": false,
+      "user": {
+        "id": "82e8c9c6-7c9f-4104-a154-e94c45252f56",
+        "email": "Lucille_Aubert@hotmail.fr",
+        "firstName": "Esther",
+        "lastName": "Mathieu",
+        "gender": 1,
+        "zone": "Villejuif",
+        "phone": "+33 438372468",
+        "candidat": {
+          "employed": false,
+          "hidden": false,
+          "url": "Agrippin-24fb4e30-ba75-46c5-b14f-9f046310b74b",
+          "coach": {
+            "id": "8185ad81-6dac-4686-978e-a33e9519323e",
+            "email": "Rejean.Poirier@hotmail.fr",
+            "firstName": "Archambaud",
+            "lastName": "Bonnet",
+            "zone": null
+          }
+        }
+      }
+    },
+    "businessLines": [
+      {
+        "name": "Accusantium vero nisi.",
+        "order": 6,
+        "OpportunityBusinessLine": {
+          "id": "22cf3656-b885-4dda-91a1-c3c5188b7e77",
+          "OpportunityId": "27baf1ab-a8a0-4a60-a4e2-10a29baa07a7",
+          "BusinessLineId": "73bb0c9b-d9e2-4e72-8e1c-31e1fd21e1d8",
+          "createdAt": "2024-02-12T13:13:43.778Z",
+          "updatedAt": "2024-02-13T06:09:17.341Z"
+        }
+      },
+      {
+        "name": "Voluptatibus quo quisquam.",
+        "order": 10,
+        "OpportunityBusinessLine": {
+          "id": "bf9eba53-d4d0-49d0-bc44-5d1b8871858d",
+          "OpportunityId": "2459d509-6540-4290-851f-89a86dea9b7f",
+          "BusinessLineId": "178fda8d-0866-4149-b134-22718658a7f7",
+          "createdAt": "2024-02-12T16:41:09.552Z",
+          "updatedAt": "2024-02-12T12:36:18.596Z"
+        }
+      }
+    ]
+  },
+  {
+    "id": "5504c268-4bf9-4323-bc1f-fa5cae188e30",
+    "isPublic": false,
+    "isValidated": true,
+    "isArchived": false,
+    "isExternal": false,
+    "link": null,
+    "externalOrigin": null,
+    "company": "Lacroix et Carpentier",
+    "recruiterName": "Christodule Girard",
+    "recruiterFirstName": "Fiacre",
+    "recruiterMail": "Fiacre73@example.org",
+    "contactMail": null,
+    "recruiterPosition": null,
+    "recruiterPhone": "0281346679",
+    "date": "2024-02-12T22:47:24.341Z",
+    "address": "21 Impasse de l'Abbaye",
+    "description": null,
+    "companyDescription": "Enhanced analyzing array",
+    "skills": null,
+    "prerequisites": null,
+    "department": "Pays de la Loire",
+    "contract": null,
+    "startOfContract": "2024-02-12T23:07:22.261Z",
+    "endOfContract": "2024-02-12T17:37:06.234Z",
+    "isPartTime": false,
+    "numberOfPositions": 1,
+    "message": null,
+    "driversLicense": 1,
+    "workingHours": null,
+    "salary": 1722,
+    "otherInfo": null,
+    "createdBy": "397ff2a5-f7ac-4e41-8a48-af7a42730451",
+    "createdAt": "2024-02-12T17:00:30.746Z",
+    "updatedAt": "2024-02-13T07:48:12.586Z",
+    "opportunityUsers": {
+      "id": "3c3bd947-d41d-425c-af83-a8c77a7cd00f",
+      "UserId": "0b9c2685-e008-459f-acd9-9d7073900b51",
+      "OpportunityId": "1718a8a3-fa1c-4a6f-85df-d35f249d54d1",
+      "status": 2,
+      "seen": true,
+      "bookmarked": true,
+      "archived": false,
+      "note": null,
+      "updatedAt": "2023-02-27T14:36:16.774Z",
+      "recommended": false,
+      "user": {
+        "id": "82e8c9c6-7c9f-4104-a154-e94c45252f56",
+        "email": "Lucille_Aubert@hotmail.fr",
+        "firstName": "Esther",
+        "lastName": "Mathieu",
+        "gender": 1,
+        "zone": "Villejuif",
+        "phone": "+33 438372468",
+        "candidat": {
+          "employed": false,
+          "hidden": false,
+          "url": "Agrippin-24fb4e30-ba75-46c5-b14f-9f046310b74b",
+          "coach": {
+            "id": "8185ad81-6dac-4686-978e-a33e9519323e",
+            "email": "Rejean.Poirier@hotmail.fr",
+            "firstName": "Archambaud",
+            "lastName": "Bonnet",
+            "zone": null
+          }
+        }
+      }
+    },
+    "businessLines": [
+      {
+        "name": "Accusantium vero nisi.",
+        "order": 6,
+        "OpportunityBusinessLine": {
+          "id": "22cf3656-b885-4dda-91a1-c3c5188b7e77",
+          "OpportunityId": "27baf1ab-a8a0-4a60-a4e2-10a29baa07a7",
+          "BusinessLineId": "73bb0c9b-d9e2-4e72-8e1c-31e1fd21e1d8",
+          "createdAt": "2024-02-12T13:13:43.778Z",
+          "updatedAt": "2024-02-13T06:09:17.341Z"
+        }
+      },
+      {
+        "name": "Voluptatibus quo quisquam.",
+        "order": 10,
+        "OpportunityBusinessLine": {
+          "id": "bf9eba53-d4d0-49d0-bc44-5d1b8871858d",
+          "OpportunityId": "2459d509-6540-4290-851f-89a86dea9b7f",
+          "BusinessLineId": "178fda8d-0866-4149-b134-22718658a7f7",
+          "createdAt": "2024-02-12T16:41:09.552Z",
+          "updatedAt": "2024-02-12T12:36:18.596Z"
+        }
+      }
+    ]
+  }
+]

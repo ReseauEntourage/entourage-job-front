@@ -1,0 +1,16 @@
+{
+  "id": "12345",
+  "email": "johndoe@mail.com",
+  "firstName": "John",
+  "lastName": "Doe",
+  "gender": 0,
+  "phone": "0650403020",
+  "address": "01 rue Acme, 75001 Paris",
+  "zone": "Paris",
+  "role": "Admin",
+  "adminRole": "Candidats",
+  "candidat": false,
+  "coach": false,
+  "lastConnection": "",
+  "sub": "12345"
+}

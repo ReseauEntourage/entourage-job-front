@@ -1,0 +1,155 @@
+{
+  "id": "853b7b5f-fb81-45ff-8ceb-7e66f0a2ab3c",
+  "UserId": "4f487b57-3de3-4894-9aad-297bb15a3fd5",
+  "urlImg": "images/33e64d73-a66b-40ad-9e81-99060243aa37.Published.jpg",
+  "intro": "seeder lover",
+  "story": "Appono adimpleo alias defero aedificium admoneo colo caelum vulgivagus commodi.",
+  "availability": "approve inasmuch pace",
+  "transport": "",
+  "catchphrase": "Utrimque cupiditas uredo alias.",
+  "status": "",
+  "version": 1,
+  "lastModifiedBy": "95188333-6093-48bc-9ce2-5b7b34e2b9a0",
+  "createdAt": "2024-02-12T23:13:11.833Z",
+  "updatedAt": "2024-02-13T00:20:30.363Z",
+  "deletedAt": null,
+  "contracts": [
+    {
+      "id": "4ba04b76-942e-4423-9dba-c8ad87fead4e",
+      "name": "CDI",
+      "CVContract": {
+        "id": "ac6ee7c0-c490-4e73-b98f-b68ccb1052fe",
+        "CVId": "853b7b5f-fb81-45ff-8ceb-7e66f0a2ab3c",
+        "ContractId": "0a49e27c-d9f3-480a-89de-c8262238ad91",
+        "createdAt": "2024-02-12T20:09:16.582Z",
+        "updatedAt": "2024-02-12T19:32:44.824Z"
+      }
+    }
+  ],
+  "languages": [
+    {
+      "id": "15dd78c4-bd59-4030-a241-088ca7fe936e",
+      "name": "Saint Barthelemy",
+      "CVLanguage": {
+        "id": "7221c07d-135a-4c1a-acac-ad2e57af7836",
+        "CVId": "853b7b5f-fb81-45ff-8ceb-7e66f0a2ab3c",
+        "languageId": "b639d359-4c4b-4ed2-9cf0-0b6949c444e7",
+        "createdAt": "2024-02-13T06:32:23.009Z",
+        "updatedAt": "2024-02-12T21:22:40.003Z"
+      }
+    }
+  ],
+  "passions": [
+    {
+      "id": "68f2c1d3-1b42-4a71-8a09-e07416a1722a",
+      "name": "causa",
+      "CVPassion": {
+        "id": "04825ab9-104d-4525-a3ab-138489ba0ad6",
+        "CVId": "853b7b5f-fb81-45ff-8ceb-7e66f0a2ab3c",
+        "PassionId": "938bec9e-c9df-42e2-b8b5-79bfc82aa285",
+        "createdAt": "2024-02-13T01:47:56.758Z",
+        "updatedAt": "2024-02-12T16:50:13.738Z"
+      }
+    }
+  ],
+  "skills": [
+    {
+      "id": "9caf5ea6-18b5-400b-a319-8c274989bfba",
+      "name": "tredecim",
+      "CVSkill": {
+        "id": "8aae846f-399a-474a-8e8e-0e69034b218d",
+        "CVId": "853b7b5f-fb81-45ff-8ceb-7e66f0a2ab3c",
+        "SkillId": "57f35ba4-524f-455a-864e-a7a79d6ad5d3",
+        "createdAt": "2024-02-13T10:20:10.266Z",
+        "updatedAt": "2024-02-13T09:57:59.689Z"
+      }
+    }
+  ],
+  "ambitions": [
+    {
+      "id": "4b9eb304-3dda-407e-81da-00899ed8fd7a",
+      "name": "Direct Infrastructure Agent",
+      "prefix": "",
+      "order": 0,
+      "CVAmbition": {
+        "id": "3ba34aa1-a1d1-45dd-b2c7-6fc42cc297c8",
+        "CVId": "853b7b5f-fb81-45ff-8ceb-7e66f0a2ab3c",
+        "AmbitionId": "e7523630-51fa-47d0-a6cb-d9f2019534a9",
+        "createdAt": "2024-02-12T14:18:10.090Z",
+        "updatedAt": "2024-02-13T04:24:10.884Z"
+      }
+    }
+  ],
+  "businessLines": [
+    {
+      "id": "1010698b-b0b1-475f-a5fe-3f3c789ac383",
+      "name": "contra",
+      "order": 1,
+      "CVBusinessLine": {
+        "id": "497a2c3a-3cf6-4eed-b127-4f5b773dcd15",
+        "CVId": "853b7b5f-fb81-45ff-8ceb-7e66f0a2ab3c",
+        "BusinessLineId": "eaa61f98-7d52-4859-aaa8-a8d8580d87ae",
+        "createdAt": "2024-02-12T22:26:25.886Z",
+        "updatedAt": "2024-02-12T17:22:55.866Z"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "id": "8908eb1e-1cd1-48bb-80c7-306b2cff7d51",
+      "name": "East Lavina",
+      "CVLocation": {
+        "id": "62bc707d-28f2-4868-86ac-90daa9b3cee8",
+        "CVId": "853b7b5f-fb81-45ff-8ceb-7e66f0a2ab3c",
+        "LocationId": "14d81336-d8f0-46a4-bf4c-13b6be72b7ab",
+        "createdAt": "2024-02-12T21:16:41.248Z",
+        "updatedAt": "2024-02-13T04:57:53.989Z"
+      }
+    }
+  ],
+  "user": {
+    "employed": false,
+    "hidden": false,
+    "url": "quidem",
+    "coach": {
+      "id": "a2083456-8ea9-4b8c-824c-2937aa11c75e",
+      "firstName": "Tanner",
+      "lastName": "Goyette",
+      "gender": 1,
+      "email": "Murphy_Wisoky@example.org"
+    },
+    "candidat": {
+      "id": "64a38672-c310-4f31-9846-1c5bce8b239d",
+      "firstName": "Matteo",
+      "lastName": "Hessel",
+      "gender": 0,
+      "email": "Fern.Torp59@example.net",
+      "phone": "425-762-6494 x397",
+      "address": "39321 Wilfredo Stream",
+      "zone": "PARIS"
+    }
+  },
+  "reviews": [
+    {
+      "id": "7614be9d-8707-497a-8bf6-46b2b881d5b0",
+      "text": "Testimonium tutamen verto facilis coma.",
+      "status": "Creative",
+      "name": "Faye Muller PhD"
+    }
+  ],
+  "experiences": [
+    {
+      "id": "46a43565-dc32-4c0d-86d6-31f9b59b9892",
+      "description": "Orchestrator",
+      "order": 0,
+      "skills": []
+    }
+  ],
+  "formations": [
+    {
+      "id": "fdacdc94-190e-4811-8e3e-a169735732f3",
+      "description": "Dynamic",
+      "skills": []
+    }
+  ]
+}

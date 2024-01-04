@@ -24,7 +24,7 @@ describe('Parcours CV', () => {
     }).as('postMessage');
 
     cy.intercept('GET', '/user/search/candidates*', {
-      fixture: 'user-search-candidates-res',
+      fixture: userSearchCandidatesResponses(10),
     }).as('getCandidats');
 
     cy.intercept('GET', '/cv/shares', { total: 184222 }).as('cvShares');
@@ -44,7 +44,9 @@ describe('Parcours CV', () => {
   });
 
   it('Créer une offre publique', () => {
-    cy.get('[data-testid="search-candidates-post-opportunity-button"]').scrollIntoView().click();
+    cy.get('[data-testid="search-candidates-post-opportunity-button"]')
+      .scrollIntoView()
+      .click();
 
     // cy.wait('@getCandidats');
 

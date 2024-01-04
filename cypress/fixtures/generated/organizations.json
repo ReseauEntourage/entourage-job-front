@@ -1,0 +1,162 @@
+[
+  {
+    "id": "3c3a68ab-8111-4a4c-a5ad-b8a04a850626",
+    "name": "Keeling - Graham",
+    "address": "1257 Beech Grove",
+    "zone": "East Masonview",
+    "organizationReferent": {
+      "referentFirstName": "Stacey",
+      "referentLastName": "Glover",
+      "referentPhone": "691-373-9731 x781",
+      "referentMail": "Pablo31@example.com",
+      "updatedAt": "2024-01-22T18:44:29.487Z",
+      "createdAt": "2024-01-23T16:37:18.667Z"
+    },
+    "updatedAt": "2024-01-22T20:34:36.342Z",
+    "createdAt": "2024-01-23T01:50:40.186Z"
+  },
+  {
+    "id": "1938322c-c71b-42e8-afeb-3970b6446381",
+    "name": "Hammes LLC",
+    "address": "901 W Main Street",
+    "zone": "Jacobsonport",
+    "organizationReferent": {
+      "referentFirstName": "Hettie",
+      "referentLastName": "Grady",
+      "referentPhone": "1-599-332-5535",
+      "referentMail": "Stephen.Erdman78@example.org",
+      "updatedAt": "2024-01-22T23:38:00.846Z",
+      "createdAt": "2024-01-23T09:28:08.819Z"
+    },
+    "updatedAt": "2024-01-23T08:42:11.260Z",
+    "createdAt": "2024-01-22T19:27:41.154Z"
+  },
+  {
+    "id": "6019febf-4cac-4a63-a61e-640641865ea1",
+    "name": "Hauck Inc",
+    "address": "418 Peyton Burg",
+    "zone": "Riverview",
+    "organizationReferent": {
+      "referentFirstName": "Domingo",
+      "referentLastName": "Borer",
+      "referentPhone": "(700) 608-9068 x65646",
+      "referentMail": "Phoebe_Ledner@example.org",
+      "updatedAt": "2024-01-22T23:59:44.990Z",
+      "createdAt": "2024-01-23T12:26:45.308Z"
+    },
+    "updatedAt": "2024-01-23T00:54:52.445Z",
+    "createdAt": "2024-01-23T16:13:53.938Z"
+  },
+  {
+    "id": "c9a33276-f539-443a-b910-f31db8841799",
+    "name": "Bosco LLC",
+    "address": "2524 N College Street",
+    "zone": "Amarillo",
+    "organizationReferent": {
+      "referentFirstName": "Sherman",
+      "referentLastName": "Kihn",
+      "referentPhone": "(669) 875-9033 x168",
+      "referentMail": "Gerald.Hickle78@example.net",
+      "updatedAt": "2024-01-22T21:36:48.209Z",
+      "createdAt": "2024-01-22T22:16:59.390Z"
+    },
+    "updatedAt": "2024-01-22T17:12:31.038Z",
+    "createdAt": "2024-01-23T03:35:17.490Z"
+  },
+  {
+    "id": "63bc0e40-d56f-43ec-a91e-a9c375a4ae2b",
+    "name": "Schumm, McDermott and Skiles",
+    "address": "424 Caesar Pine",
+    "zone": "South Coleman",
+    "organizationReferent": {
+      "referentFirstName": "Alf",
+      "referentLastName": "Brakus-Kovacek",
+      "referentPhone": "686.290.7916 x43205",
+      "referentMail": "Gladys.Dietrich@example.com",
+      "updatedAt": "2024-01-23T10:09:29.179Z",
+      "createdAt": "2024-01-23T02:10:00.637Z"
+    },
+    "updatedAt": "2024-01-22T17:26:42.473Z",
+    "createdAt": "2024-01-23T10:24:57.750Z"
+  },
+  {
+    "id": "09060f5b-7968-4976-adfb-a8b11e7ff2d9",
+    "name": "Goyette, Pfeffer and Hane",
+    "address": "93411 Stark Estate",
+    "zone": "Stonehaven",
+    "organizationReferent": {
+      "referentFirstName": "Faustino",
+      "referentLastName": "Boyer",
+      "referentPhone": "516-549-8506",
+      "referentMail": "Cheyenne79@example.net",
+      "updatedAt": "2024-01-23T14:46:18.635Z",
+      "createdAt": "2024-01-22T23:22:01.463Z"
+    },
+    "updatedAt": "2024-01-22T22:47:35.196Z",
+    "createdAt": "2024-01-23T04:59:11.792Z"
+  },
+  {
+    "id": "9b642a1b-8eb9-47d6-808b-3021f1a2f2d7",
+    "name": "Corwin Inc",
+    "address": "364 West Expressway",
+    "zone": "Ziemefield",
+    "organizationReferent": {
+      "referentFirstName": "Kattie",
+      "referentLastName": "Hudson",
+      "referentPhone": "441-314-4980 x32646",
+      "referentMail": "Oswald.Green@example.net",
+      "updatedAt": "2024-01-22T19:54:34.580Z",
+      "createdAt": "2024-01-22T17:05:28.098Z"
+    },
+    "updatedAt": "2024-01-23T07:26:44.397Z",
+    "createdAt": "2024-01-22T19:29:18.407Z"
+  },
+  {
+    "id": "2852dfa9-9aea-491b-80f3-12023e5067d2",
+    "name": "Sipes, Breitenberg and Bauch",
+    "address": "5226 Justus Groves",
+    "zone": "Saginaw",
+    "organizationReferent": {
+      "referentFirstName": "Carolanne",
+      "referentLastName": "Lakin",
+      "referentPhone": "1-736-567-3997",
+      "referentMail": "Asia7@example.com",
+      "updatedAt": "2024-01-23T10:31:55.512Z",
+      "createdAt": "2024-01-23T01:30:00.227Z"
+    },
+    "updatedAt": "2024-01-23T10:05:58.009Z",
+    "createdAt": "2024-01-23T16:51:56.251Z"
+  },
+  {
+    "id": "32cabd95-9956-4247-804c-09da5e343b91",
+    "name": "Veum, Windler and Hansen",
+    "address": "4077 Romaguera Lakes",
+    "zone": "North Estachester",
+    "organizationReferent": {
+      "referentFirstName": "Leonel",
+      "referentLastName": "Hoeger",
+      "referentPhone": "327-612-8257 x95243",
+      "referentMail": "Hortense_Bosco-Boehm56@example.org",
+      "updatedAt": "2024-01-22T18:00:51.252Z",
+      "createdAt": "2024-01-22T18:14:01.451Z"
+    },
+    "updatedAt": "2024-01-22T17:00:35.892Z",
+    "createdAt": "2024-01-23T07:25:44.675Z"
+  },
+  {
+    "id": "6292c12d-0bc5-43e1-9e98-7e148e04ee5c",
+    "name": "Entourage",
+    "address": "910 Kozey Walk",
+    "zone": "Kuhlmanhaven",
+    "organizationReferent": {
+      "referentFirstName": "Ena",
+      "referentLastName": "Marks",
+      "referentPhone": "1-861-816-7109 x5703",
+      "referentMail": "Watson82@example.net",
+      "updatedAt": "2024-01-23T02:43:41.851Z",
+      "createdAt": "2024-01-22T23:56:56.643Z"
+    },
+    "updatedAt": "2024-01-23T11:20:26.825Z",
+    "createdAt": "2024-01-23T05:32:11.580Z"
+  }
+]

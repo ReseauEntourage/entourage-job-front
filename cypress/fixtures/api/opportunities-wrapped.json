@@ -1,0 +1,469 @@
+{
+  "offers": [
+    {
+      "id": "2b5368b8-5140-4abb-a896-8bb7a239798b",
+      "isPublic": false,
+      "isValidated": true,
+      "isArchived": false,
+      "isExternal": false,
+      "link": null,
+      "externalOrigin": null,
+      "company": "Schmitt SEM",
+      "recruiterName": "Timoléon Lambert",
+      "recruiterFirstName": "Julia",
+      "recruiterMail": "Julia_Lambert@example.com",
+      "contactMail": null,
+      "recruiterPosition": null,
+      "recruiterPhone": "+33 765471076",
+      "date": "2024-02-12T21:12:39.168Z",
+      "address": "6107 Quai de Rivoli",
+      "description": null,
+      "companyDescription": "Focused secondary standardization",
+      "skills": null,
+      "prerequisites": null,
+      "department": "Provence-Alpes-Côte d'Azur",
+      "contract": null,
+      "startOfContract": "2024-02-13T01:13:08.700Z",
+      "endOfContract": "2024-02-13T04:56:23.013Z",
+      "isPartTime": false,
+      "numberOfPositions": 1,
+      "message": null,
+      "driversLicense": 1,
+      "workingHours": null,
+      "salary": 6509,
+      "otherInfo": null,
+      "createdBy": "f48ca6ed-526a-42cf-844b-17a2a2d15bd9",
+      "createdAt": "2024-02-12T17:34:04.415Z",
+      "updatedAt": "2024-02-12T19:05:42.842Z",
+      "opportunityUsers": {
+        "id": "a3e951e6-0796-4f14-a192-14156bc906bc",
+        "UserId": "70fd1f54-63b2-470b-9a8d-850dbfcfeae0",
+        "OpportunityId": "cc978d11-43fd-4605-a762-ad2ce01a505b",
+        "status": 2,
+        "seen": true,
+        "bookmarked": true,
+        "archived": false,
+        "note": null,
+        "updatedAt": "2023-06-08T00:14:38.861Z",
+        "recommended": false,
+        "user": {
+          "id": "f0c33f83-77cd-446e-8633-dbacae6e569d",
+          "email": "Abeline_Giraud@hotmail.fr",
+          "firstName": "Adhémar",
+          "lastName": "Dumas",
+          "gender": 0,
+          "zone": "Cholet",
+          "phone": "+33 305047285",
+          "candidat": {
+            "employed": false,
+            "hidden": false,
+            "url": "Parfait-15c2e270-aac9-43bf-a6c0-858a690477a0",
+            "coach": {
+              "id": "eb5a9d42-d5ff-4e6f-a577-a803a96c0be3",
+              "email": "Remi40@yahoo.fr",
+              "firstName": "Bénédicte",
+              "lastName": "Legrand",
+              "zone": null
+            }
+          }
+        }
+      },
+      "businessLines": [
+        {
+          "name": "Excepturi nam nihil tenetur impedit ipsum commodi necessitatibus veniam.",
+          "order": 10,
+          "OpportunityBusinessLine": {
+            "id": "f1c877d1-a09e-40cd-a704-95edd65aa9dc",
+            "OpportunityId": "12b9a8bc-9b02-4639-b122-9444f994e6a1",
+            "BusinessLineId": "a1add603-8245-4a36-bb49-2d9678bb71bc",
+            "createdAt": "2024-02-12T13:33:03.975Z",
+            "updatedAt": "2024-02-12T19:54:55.919Z"
+          }
+        },
+        {
+          "name": "Sit eius est pariatur sequi tempora libero repellendus.",
+          "order": 2,
+          "OpportunityBusinessLine": {
+            "id": "a8becf67-65d5-434f-b758-939ea6986b9e",
+            "OpportunityId": "c8c69205-e060-43ad-94c0-c93adff2129c",
+            "BusinessLineId": "fd7927d0-2963-4315-9019-d42ffc742943",
+            "createdAt": "2024-02-12T19:14:32.866Z",
+            "updatedAt": "2024-02-12T22:34:35.439Z"
+          }
+        }
+      ]
+    },
+    {
+      "id": "21d921f2-7621-4c84-a232-49061943f1e1",
+      "isPublic": false,
+      "isValidated": true,
+      "isArchived": false,
+      "isExternal": false,
+      "link": null,
+      "externalOrigin": null,
+      "company": "Aubert SA",
+      "recruiterName": "Timoléon Lambert",
+      "recruiterFirstName": "Julia",
+      "recruiterMail": "Julia23@example.com",
+      "contactMail": null,
+      "recruiterPosition": null,
+      "recruiterPhone": "+33 594186457",
+      "date": "2024-02-12T15:19:27.074Z",
+      "address": "2636 Place de Richelieu",
+      "description": null,
+      "companyDescription": "Down-sized object-oriented collaboration",
+      "skills": null,
+      "prerequisites": null,
+      "department": "Aquitaine",
+      "contract": null,
+      "startOfContract": "2024-02-13T03:02:11.822Z",
+      "endOfContract": "2024-02-12T15:28:07.821Z",
+      "isPartTime": false,
+      "numberOfPositions": 1,
+      "message": null,
+      "driversLicense": 1,
+      "workingHours": null,
+      "salary": 2325,
+      "otherInfo": null,
+      "createdBy": "39522312-40ca-44d7-a15a-2d5d555d6ed7",
+      "createdAt": "2024-02-13T09:32:14.732Z",
+      "updatedAt": "2024-02-13T02:29:31.718Z",
+      "opportunityUsers": {
+        "id": "a3e951e6-0796-4f14-a192-14156bc906bc",
+        "UserId": "70fd1f54-63b2-470b-9a8d-850dbfcfeae0",
+        "OpportunityId": "cc978d11-43fd-4605-a762-ad2ce01a505b",
+        "status": 2,
+        "seen": true,
+        "bookmarked": true,
+        "archived": false,
+        "note": null,
+        "updatedAt": "2023-06-08T00:14:38.861Z",
+        "recommended": false,
+        "user": {
+          "id": "f0c33f83-77cd-446e-8633-dbacae6e569d",
+          "email": "Abeline_Giraud@hotmail.fr",
+          "firstName": "Adhémar",
+          "lastName": "Dumas",
+          "gender": 0,
+          "zone": "Cholet",
+          "phone": "+33 305047285",
+          "candidat": {
+            "employed": false,
+            "hidden": false,
+            "url": "Parfait-15c2e270-aac9-43bf-a6c0-858a690477a0",
+            "coach": {
+              "id": "eb5a9d42-d5ff-4e6f-a577-a803a96c0be3",
+              "email": "Remi40@yahoo.fr",
+              "firstName": "Bénédicte",
+              "lastName": "Legrand",
+              "zone": null
+            }
+          }
+        }
+      },
+      "businessLines": [
+        {
+          "name": "Excepturi nam nihil tenetur impedit ipsum commodi necessitatibus veniam.",
+          "order": 10,
+          "OpportunityBusinessLine": {
+            "id": "f1c877d1-a09e-40cd-a704-95edd65aa9dc",
+            "OpportunityId": "12b9a8bc-9b02-4639-b122-9444f994e6a1",
+            "BusinessLineId": "a1add603-8245-4a36-bb49-2d9678bb71bc",
+            "createdAt": "2024-02-12T13:33:03.975Z",
+            "updatedAt": "2024-02-12T19:54:55.919Z"
+          }
+        },
+        {
+          "name": "Sit eius est pariatur sequi tempora libero repellendus.",
+          "order": 2,
+          "OpportunityBusinessLine": {
+            "id": "a8becf67-65d5-434f-b758-939ea6986b9e",
+            "OpportunityId": "c8c69205-e060-43ad-94c0-c93adff2129c",
+            "BusinessLineId": "fd7927d0-2963-4315-9019-d42ffc742943",
+            "createdAt": "2024-02-12T19:14:32.866Z",
+            "updatedAt": "2024-02-12T22:34:35.439Z"
+          }
+        }
+      ]
+    },
+    {
+      "id": "e52a0617-53f3-4b44-beae-0c4422529037",
+      "isPublic": false,
+      "isValidated": true,
+      "isArchived": false,
+      "isExternal": false,
+      "link": null,
+      "externalOrigin": null,
+      "company": "Durand et Perrin",
+      "recruiterName": "Timoléon Lambert",
+      "recruiterFirstName": "Julia",
+      "recruiterMail": "Julia.Lambert90@example.com",
+      "contactMail": null,
+      "recruiterPosition": null,
+      "recruiterPhone": "+33 467128108",
+      "date": "2024-02-12T16:39:27.439Z",
+      "address": "2457 Quai de la Paix",
+      "description": null,
+      "companyDescription": "Advanced fault-tolerant hardware",
+      "skills": null,
+      "prerequisites": null,
+      "department": "Bourgogne",
+      "contract": null,
+      "startOfContract": "2024-02-12T22:29:25.858Z",
+      "endOfContract": "2024-02-13T08:41:38.250Z",
+      "isPartTime": false,
+      "numberOfPositions": 1,
+      "message": null,
+      "driversLicense": 1,
+      "workingHours": null,
+      "salary": 4662,
+      "otherInfo": null,
+      "createdBy": "ee5ed7ca-2eb7-400c-80cd-7b2802ddb35a",
+      "createdAt": "2024-02-12T13:32:43.301Z",
+      "updatedAt": "2024-02-13T02:38:45.015Z",
+      "opportunityUsers": {
+        "id": "a3e951e6-0796-4f14-a192-14156bc906bc",
+        "UserId": "70fd1f54-63b2-470b-9a8d-850dbfcfeae0",
+        "OpportunityId": "cc978d11-43fd-4605-a762-ad2ce01a505b",
+        "status": 2,
+        "seen": true,
+        "bookmarked": true,
+        "archived": false,
+        "note": null,
+        "updatedAt": "2023-06-08T00:14:38.861Z",
+        "recommended": false,
+        "user": {
+          "id": "f0c33f83-77cd-446e-8633-dbacae6e569d",
+          "email": "Abeline_Giraud@hotmail.fr",
+          "firstName": "Adhémar",
+          "lastName": "Dumas",
+          "gender": 0,
+          "zone": "Cholet",
+          "phone": "+33 305047285",
+          "candidat": {
+            "employed": false,
+            "hidden": false,
+            "url": "Parfait-15c2e270-aac9-43bf-a6c0-858a690477a0",
+            "coach": {
+              "id": "eb5a9d42-d5ff-4e6f-a577-a803a96c0be3",
+              "email": "Remi40@yahoo.fr",
+              "firstName": "Bénédicte",
+              "lastName": "Legrand",
+              "zone": null
+            }
+          }
+        }
+      },
+      "businessLines": [
+        {
+          "name": "Excepturi nam nihil tenetur impedit ipsum commodi necessitatibus veniam.",
+          "order": 10,
+          "OpportunityBusinessLine": {
+            "id": "f1c877d1-a09e-40cd-a704-95edd65aa9dc",
+            "OpportunityId": "12b9a8bc-9b02-4639-b122-9444f994e6a1",
+            "BusinessLineId": "a1add603-8245-4a36-bb49-2d9678bb71bc",
+            "createdAt": "2024-02-12T13:33:03.975Z",
+            "updatedAt": "2024-02-12T19:54:55.919Z"
+          }
+        },
+        {
+          "name": "Sit eius est pariatur sequi tempora libero repellendus.",
+          "order": 2,
+          "OpportunityBusinessLine": {
+            "id": "a8becf67-65d5-434f-b758-939ea6986b9e",
+            "OpportunityId": "c8c69205-e060-43ad-94c0-c93adff2129c",
+            "BusinessLineId": "fd7927d0-2963-4315-9019-d42ffc742943",
+            "createdAt": "2024-02-12T19:14:32.866Z",
+            "updatedAt": "2024-02-12T22:34:35.439Z"
+          }
+        }
+      ]
+    },
+    {
+      "id": "03b3ce53-ac5d-4fc6-8b28-37c5da35b631",
+      "isPublic": false,
+      "isValidated": true,
+      "isArchived": false,
+      "isExternal": false,
+      "link": null,
+      "externalOrigin": null,
+      "company": "Nicolas et Gonzalez",
+      "recruiterName": "Timoléon Lambert",
+      "recruiterFirstName": "Julia",
+      "recruiterMail": "Julia89@example.net",
+      "contactMail": null,
+      "recruiterPosition": null,
+      "recruiterPhone": "+33 201650979",
+      "date": "2024-02-13T10:00:50.814Z",
+      "address": "52 Voie Saint-Bernard",
+      "description": null,
+      "companyDescription": "De-engineered tertiary structure",
+      "skills": null,
+      "prerequisites": null,
+      "department": "Nord-Pas-de-Calais",
+      "contract": null,
+      "startOfContract": "2024-02-13T00:07:47.537Z",
+      "endOfContract": "2024-02-13T01:38:52.720Z",
+      "isPartTime": false,
+      "numberOfPositions": 1,
+      "message": null,
+      "driversLicense": 1,
+      "workingHours": null,
+      "salary": 1165,
+      "otherInfo": null,
+      "createdBy": "1a141c40-7975-4368-a39d-7bc78f8e9ef8",
+      "createdAt": "2024-02-13T05:46:01.253Z",
+      "updatedAt": "2024-02-13T07:30:38.787Z",
+      "opportunityUsers": {
+        "id": "a3e951e6-0796-4f14-a192-14156bc906bc",
+        "UserId": "70fd1f54-63b2-470b-9a8d-850dbfcfeae0",
+        "OpportunityId": "cc978d11-43fd-4605-a762-ad2ce01a505b",
+        "status": 2,
+        "seen": true,
+        "bookmarked": true,
+        "archived": false,
+        "note": null,
+        "updatedAt": "2023-06-08T00:14:38.861Z",
+        "recommended": false,
+        "user": {
+          "id": "f0c33f83-77cd-446e-8633-dbacae6e569d",
+          "email": "Abeline_Giraud@hotmail.fr",
+          "firstName": "Adhémar",
+          "lastName": "Dumas",
+          "gender": 0,
+          "zone": "Cholet",
+          "phone": "+33 305047285",
+          "candidat": {
+            "employed": false,
+            "hidden": false,
+            "url": "Parfait-15c2e270-aac9-43bf-a6c0-858a690477a0",
+            "coach": {
+              "id": "eb5a9d42-d5ff-4e6f-a577-a803a96c0be3",
+              "email": "Remi40@yahoo.fr",
+              "firstName": "Bénédicte",
+              "lastName": "Legrand",
+              "zone": null
+            }
+          }
+        }
+      },
+      "businessLines": [
+        {
+          "name": "Excepturi nam nihil tenetur impedit ipsum commodi necessitatibus veniam.",
+          "order": 10,
+          "OpportunityBusinessLine": {
+            "id": "f1c877d1-a09e-40cd-a704-95edd65aa9dc",
+            "OpportunityId": "12b9a8bc-9b02-4639-b122-9444f994e6a1",
+            "BusinessLineId": "a1add603-8245-4a36-bb49-2d9678bb71bc",
+            "createdAt": "2024-02-12T13:33:03.975Z",
+            "updatedAt": "2024-02-12T19:54:55.919Z"
+          }
+        },
+        {
+          "name": "Sit eius est pariatur sequi tempora libero repellendus.",
+          "order": 2,
+          "OpportunityBusinessLine": {
+            "id": "a8becf67-65d5-434f-b758-939ea6986b9e",
+            "OpportunityId": "c8c69205-e060-43ad-94c0-c93adff2129c",
+            "BusinessLineId": "fd7927d0-2963-4315-9019-d42ffc742943",
+            "createdAt": "2024-02-12T19:14:32.866Z",
+            "updatedAt": "2024-02-12T22:34:35.439Z"
+          }
+        }
+      ]
+    },
+    {
+      "id": "6182964e-99a6-44bf-abe4-f2891fb98fea",
+      "isPublic": false,
+      "isValidated": true,
+      "isArchived": false,
+      "isExternal": false,
+      "link": null,
+      "externalOrigin": null,
+      "company": "Masson et Rodriguez",
+      "recruiterName": "Timoléon Lambert",
+      "recruiterFirstName": "Julia",
+      "recruiterMail": "Julia_Lambert23@example.org",
+      "contactMail": null,
+      "recruiterPosition": null,
+      "recruiterPhone": "0627148083",
+      "date": "2024-02-12T12:56:59.715Z",
+      "address": "6367 Passage d'Orsel",
+      "description": null,
+      "companyDescription": "Progressive discrete functionalities",
+      "skills": null,
+      "prerequisites": null,
+      "department": "Rhône-Alpes",
+      "contract": null,
+      "startOfContract": "2024-02-13T05:21:18.536Z",
+      "endOfContract": "2024-02-13T08:13:23.051Z",
+      "isPartTime": false,
+      "numberOfPositions": 1,
+      "message": null,
+      "driversLicense": 1,
+      "workingHours": null,
+      "salary": 4349,
+      "otherInfo": null,
+      "createdBy": "2bc16abd-3a72-4760-ae7a-a6e93413635b",
+      "createdAt": "2024-02-13T08:54:17.372Z",
+      "updatedAt": "2024-02-13T08:09:06.961Z",
+      "opportunityUsers": {
+        "id": "a3e951e6-0796-4f14-a192-14156bc906bc",
+        "UserId": "70fd1f54-63b2-470b-9a8d-850dbfcfeae0",
+        "OpportunityId": "cc978d11-43fd-4605-a762-ad2ce01a505b",
+        "status": 2,
+        "seen": true,
+        "bookmarked": true,
+        "archived": false,
+        "note": null,
+        "updatedAt": "2023-06-08T00:14:38.861Z",
+        "recommended": false,
+        "user": {
+          "id": "f0c33f83-77cd-446e-8633-dbacae6e569d",
+          "email": "Abeline_Giraud@hotmail.fr",
+          "firstName": "Adhémar",
+          "lastName": "Dumas",
+          "gender": 0,
+          "zone": "Cholet",
+          "phone": "+33 305047285",
+          "candidat": {
+            "employed": false,
+            "hidden": false,
+            "url": "Parfait-15c2e270-aac9-43bf-a6c0-858a690477a0",
+            "coach": {
+              "id": "eb5a9d42-d5ff-4e6f-a577-a803a96c0be3",
+              "email": "Remi40@yahoo.fr",
+              "firstName": "Bénédicte",
+              "lastName": "Legrand",
+              "zone": null
+            }
+          }
+        }
+      },
+      "businessLines": [
+        {
+          "name": "Excepturi nam nihil tenetur impedit ipsum commodi necessitatibus veniam.",
+          "order": 10,
+          "OpportunityBusinessLine": {
+            "id": "f1c877d1-a09e-40cd-a704-95edd65aa9dc",
+            "OpportunityId": "12b9a8bc-9b02-4639-b122-9444f994e6a1",
+            "BusinessLineId": "a1add603-8245-4a36-bb49-2d9678bb71bc",
+            "createdAt": "2024-02-12T13:33:03.975Z",
+            "updatedAt": "2024-02-12T19:54:55.919Z"
+          }
+        },
+        {
+          "name": "Sit eius est pariatur sequi tempora libero repellendus.",
+          "order": 2,
+          "OpportunityBusinessLine": {
+            "id": "a8becf67-65d5-434f-b758-939ea6986b9e",
+            "OpportunityId": "c8c69205-e060-43ad-94c0-c93adff2129c",
+            "BusinessLineId": "fd7927d0-2963-4315-9019-d42ffc742943",
+            "createdAt": "2024-02-12T19:14:32.866Z",
+            "updatedAt": "2024-02-12T22:34:35.439Z"
+          }
+        }
+      ]
+    }
+  ]
+}

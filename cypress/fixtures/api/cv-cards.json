@@ -1,0 +1,62 @@
+{
+  "cvs": [
+    {
+      "id": "89c9f79b-2f43-43d6-ad80-5154ddec4fd9",
+      "catchphrase": "A deleniti aliquam.",
+      "urlImg": "images/33e64d73-a66b-40ad-9e81-99060243aa37.Published.jpg",
+      "updatedAt": "2023-08-23T10:55:11.805Z",
+      "ambitions": [],
+      "skills": [],
+      "businessLines": [],
+      "locations": [],
+      "user": {
+        "employed": false,
+        "hidden": false,
+        "url": "",
+        "endOfContract": null,
+        "coach": {
+          "id": "138cc0ea-0b1b-4233-817d-006f8a9b124e",
+          "firstName": "Arcadie",
+          "lastName": "Morin",
+          "gender": 1
+        },
+        "candidat": {
+          "id": "7d47ae88-6103-4849-92a6-bba127b20e91",
+          "firstName": "Zacharie",
+          "lastName": "Paris",
+          "gender": 0
+        }
+      },
+      "ranking": 0.12929844832979143
+    },
+    {
+      "id": "d9339883-e4d6-464c-a764-68968375f9f6",
+      "catchphrase": "Placeat labore maiores nostrum unde nam non.",
+      "urlImg": "images/33e64d73-a66b-40ad-9e81-99060243aa37.Published.jpg",
+      "updatedAt": "2023-11-02T19:16:35.937Z",
+      "ambitions": [],
+      "skills": [],
+      "businessLines": [],
+      "locations": [],
+      "user": {
+        "employed": false,
+        "hidden": false,
+        "url": "",
+        "endOfContract": null,
+        "coach": {
+          "id": "0dfe281b-5a89-4dde-88ed-03695fcc066f",
+          "firstName": "Aurélienne",
+          "lastName": "Andre",
+          "gender": 0
+        },
+        "candidat": {
+          "id": "8bebeedc-32b5-4e71-8afa-31cb2d5ff2ef",
+          "firstName": "Émile",
+          "lastName": "Brun",
+          "gender": 1
+        }
+      },
+      "ranking": 0.8806878246832639
+    }
+  ]
+}

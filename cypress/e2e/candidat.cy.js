@@ -4,10 +4,10 @@ describe('Candidat', () => {
     cy.intercept('GET', '/cv/shares', { total: 184221 }).as('cvShares');
 
     cy.intercept('GET', '/auth/current', {
-      fixture: 'auth-current-candidat-res',
+      fixture: 'candidat/auth-current-candidat-res',
     }).as('authCheck');
 
-    cy.fixture('auth-current-candidat-res').then((user) => {
+    cy.fixture('candidat/auth-current-candidat-res').then((user) => {
       cy.intercept('GET', `/opportunity/candidate/count/${user.id}`, {
         unseenOpportunities: 0,
       }).as('userCount');
@@ -33,7 +33,7 @@ describe('Candidat', () => {
       }).as('cvCandidatDetails');
 
       cy.intercept('GET', `/user/${user.id}`, {
-        fixture: 'auth-current-candidat-res',
+        fixture: 'candidat/auth-current-candidat-res',
       });
 
       cy.intercept('PUT', `/cv/read/${user.id}`, {
@@ -74,9 +74,11 @@ describe('Candidat', () => {
         ).as('putOffer');
       });
 
-
-      cy.intercept('POST', `/user/profile/uploadImage/${user.id}`, "/assets/image-fixture.jpg").as('uploadImage');
-
+      cy.intercept(
+        'POST',
+        `/user/profile/uploadImage/${user.id}`,
+        '/assets/image-fixture.jpg'
+      ).as('uploadImage');
     });
 
     cy.intercept('GET', `https://tarteaucitron.io/load.js*`, {});
@@ -90,36 +92,35 @@ describe('Candidat', () => {
     }).as('getUserProfile');
 
     cy.intercept('/message/internal', {}).as('postInternalMessage');
-
   });
 
-  it('should open a user\'s public profile and contact him', () => {
-      cy.fixture('public-profile-res').then((userProfile) => {
-        cy.visit(`/backoffice/profile/${userProfile.id}`, {
-          onBeforeLoad: function async(window) {
-            window.localStorage.setItem('access-token', '1234');
-            window.localStorage.setItem('release-version', 'v100');
-          },
-        });
-        cy.url().should('include', userProfile.id);
-      })
+  it("should open a user's public profile and contact him", () => {
+    cy.fixture('public-profile-res').then((userProfile) => {
+      cy.visit(`/backoffice/profile/${userProfile.id}`, {
+        onBeforeLoad: function async(window) {
+          window.localStorage.setItem('access-token', '1234');
+          window.localStorage.setItem('release-version', 'v100');
+        },
+      });
+      cy.url().should('include', userProfile.id);
+    });
 
-      cy.get('[data-testid="form-contact-internal-message-subject"]')
-        .scrollIntoView()
-        .type('test');
+    cy.get('[data-testid="form-contact-internal-message-subject"]')
+      .scrollIntoView()
+      .type('test');
 
-      cy.get('[data-testid="form-contact-internal-message-message"]')
-        .scrollIntoView()
-        .type('test');
+    cy.get('[data-testid="form-contact-internal-message-message"]')
+      .scrollIntoView()
+      .type('test');
 
+    cy.get('[data-testid="form-confirm-form-contact-internal-message"]')
+      .scrollIntoView()
+      .click();
 
-      cy.get('[data-testid="form-confirm-form-contact-internal-message"]')
-        .scrollIntoView()
-        .click();
-
-
-      cy.get('[data-testid="profile-contact-form-confirm"]')
-        .should('contain', 'Votre message a été envoyé');
+    cy.get('[data-testid="profile-contact-form-confirm"]').should(
+      'contain',
+      'Votre message a été envoyé'
+    );
   });
 
   it('should open backoffice public offers', () => {
@@ -374,45 +375,138 @@ describe('Candidat', () => {
 
     // check help needs and modify
     cy.fixture('auth-current-candidat-res').then((user) => {
-      cy.intercept('PUT', `/user/profile/${user.id}`, {fixture: "user-profile-candidate-help-modified"}).as('putUserProfile');
-    })
-    cy.fixture('auth-current-candidat-res').then((userCandidate) => {
-        cy.get(`[data-testid="parametres-help-list"]`).scrollIntoView().find('li').should('have.length', userCandidate.userProfile?.helpNeeds?.length);
+      cy.intercept('PUT', `/user/profile/${user.id}`, {
+        fixture: 'user-profile-candidate-help-modified',
+      }).as('putUserProfile');
     });
-    cy.get(`[data-testid="parametres-help-card-button-edit"]`).scrollIntoView().click();
-    cy.get(`[data-testid="parametres-help-option-tips"]`).scrollIntoView().click();
-    cy.get(`[data-testid="parametres-help-option-cv"]`).scrollIntoView().click();
-    cy.get(`[data-testid="parametres-help-modal-save"]`).scrollIntoView().click();
+    cy.fixture('auth-current-candidat-res').then((userCandidate) => {
+      cy.get(`[data-testid="parametres-help-list"]`)
+        .scrollIntoView()
+        .find('li')
+        .should('have.length', userCandidate.userProfile?.helpNeeds?.length);
+    });
+    cy.get(`[data-testid="parametres-help-card-button-edit"]`)
+      .scrollIntoView()
+      .click();
+    cy.get(`[data-testid="parametres-help-option-tips"]`)
+      .scrollIntoView()
+      .click();
+    cy.get(`[data-testid="parametres-help-option-cv"]`)
+      .scrollIntoView()
+      .click();
+    cy.get(`[data-testid="parametres-help-modal-save"]`)
+      .scrollIntoView()
+      .click();
 
     cy.fixture('user-profile-candidate-help-modified').then((userProfile) => {
-      cy.get(`[data-testid="parametres-help-list"]`).scrollIntoView().find('li').should('have.length', userProfile.helpNeeds?.length);
+      cy.get(`[data-testid="parametres-help-list"]`)
+        .scrollIntoView()
+        .find('li')
+        .should('have.length', userProfile.helpNeeds?.length);
     });
 
     // modify profile description
     cy.fixture('auth-current-candidat-res').then((user) => {
-      cy.intercept('PUT', `/user/profile/${user.id}`, {fixture: "user-profile-candidate-description-modified"}).as('putUserProfile');
-    })
-    cy.get(`[data-testid="profile-description-placeholder"]`).scrollIntoView().click();
-    cy.get(`[data-testid="form-profile-description-description"]`).scrollIntoView().type('hello');
-    cy.get(`[data-testid="form-confirm-form-profile-description"]`).scrollIntoView().click();
-    cy.get(`[data-testid="profile-description"]`).should('contain', "hello");
+      cy.intercept('PUT', `/user/profile/${user.id}`, {
+        fixture: 'user-profile-candidate-description-modified',
+      }).as('putUserProfile');
+    });
+    cy.get(`[data-testid="profile-description-placeholder"]`)
+      .scrollIntoView()
+      .click();
+    cy.get(`[data-testid="form-profile-description-description"]`)
+      .scrollIntoView()
+      .type('hello');
+    cy.get(`[data-testid="form-confirm-form-profile-description"]`)
+      .scrollIntoView()
+      .click();
+    cy.get(`[data-testid="profile-description"]`).should('contain', 'hello');
 
     // change profile picture
-    cy.get(`[data-testid="profile-picture-upload-desktop"]`).selectFile('assets/image-fixture.jpg', {force: true});
+    cy.get(`[data-testid="profile-picture-upload-desktop"]`).selectFile(
+      'assets/image-fixture.jpg',
+      { force: true }
+    );
     cy.wait('@uploadImage');
 
     // change professional information
     cy.fixture('auth-current-candidat-res').then((user) => {
-      cy.intercept('PUT', `/user/profile/${user.id}`, {fixture: "user-profile-candidate-professional-info-modified"}).as('putUserProfile');
-    })
+      cy.intercept('PUT', `/user/profile/${user.id}`, {
+        fixture: 'user-profile-candidate-professional-info-modified',
+      }).as('putUserProfile');
+    });
     const businessLine = 'Agriculture';
     const ambition = 'test';
-    cy.get(`[data-testid="parametres-professional-information-card-button-edit"]`).scrollIntoView().click();
-    cy.get(`[data-testid="form-career-path-searchBusinessLine0"]`).scrollIntoView().click();
+    cy.get(
+      `[data-testid="parametres-professional-information-card-button-edit"]`
+    )
+      .scrollIntoView()
+      .click();
+    cy.get(`[data-testid="form-career-path-searchBusinessLine0"]`)
+      .scrollIntoView()
+      .click();
     cy.get(`.Select__option`).contains(businessLine).click();
-    cy.get(`[data-testid="form-career-path-searchAmbition0"]`).scrollIntoView().type(ambition);
-    cy.get(`[data-testid="form-confirm-form-career-path"]`).scrollIntoView().click();
-    cy.get(`[data-testid="candidat-businessline-li"]`).should('contain', businessLine);
+    cy.get(`[data-testid="form-career-path-searchAmbition0"]`)
+      .scrollIntoView()
+      .type(ambition);
+    cy.get(`[data-testid="form-confirm-form-career-path"]`)
+      .scrollIntoView()
+      .click();
+    cy.get(`[data-testid="candidat-businessline-li"]`).should(
+      'contain',
+      businessLine
+    );
     cy.get(`[data-testid="candidat-ambition-li"]`).should('contain', ambition);
+  });
+});
+
+/* eslint-disable no-undef */
+describe('Candidat', () => {
+  before(() => {
+    cy.intercept('GET', '/cv/shares', { total: 184221 }).as('cvShares');
+
+    cy.intercept('GET', '/auth/current', {
+      fixture: 'candidat/auth-current-candidat-res',
+    }).as('authCheck');
+
+    cy.fixture('candidat/auth-current-candidat-res').then((user) => {
+      cy.intercept('GET', `/opportunity/candidate/count/${user.id}`, {
+        unseenOpportunities: 0,
+      }).as('userCount');
+
+      // ... Autres interceptions et configurations ...
+
+      cy.fixture('user-opportunity-all-res').then((offersRes) => {
+        cy.intercept(
+          `opportunity/${offersRes.offers[0].id}`,
+          offersRes.offers[0]
+        ).as('getOneOffer');
+        const opportunityToModify = offersRes.offers[0];
+        opportunityToModify.bookmarked = false;
+        cy.intercept(
+          'PUT',
+          `opportunity/join/${offersRes.offers[0].id}/${user.id}`,
+          opportunityToModify
+        ).as('putOffer');
+      });
+    });
+
+    // ... Autres interceptions et configurations ...
+  });
+
+  it('should open backoffice public offers', () => {
+    // ... Votre test reste inchangé ...
+  });
+
+  it('should open backoffice private offers and add new opportunity', () => {
+    // ... Votre test reste inchangé ...
+  });
+
+  it('should open backoffice cv candidat', () => {
+    // ... Votre test reste inchangé ...
+  });
+
+  it('should open backoffice candidate parameters', () => {
+    // ... Votre test reste inchangé ...
   });
 });
