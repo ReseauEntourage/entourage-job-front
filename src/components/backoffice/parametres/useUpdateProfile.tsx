@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import UIkit from 'uikit';
 import { HelpNames, UserProfile, UserWithUserCandidate } from 'src/api/types';
+import { ReduxRequestEvents } from 'src/constants';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 import {
   authenticationActions,
@@ -41,10 +42,10 @@ export const useProfile = (
   );
 
   useEffect(() => {
-    if (updateProfileStatus === 'SUCCEEDED') {
+    if (updateProfileStatus === ReduxRequestEvents.SUCCEEDED) {
       if (onClose) onClose();
       UIkit.notification(`La modification a bien été enregistrée`, 'success');
-    } else if (updateProfileStatus === 'FAILED') {
+    } else if (updateProfileStatus === ReduxRequestEvents.FAILED) {
       UIkit.notification(
         `Une erreur est survenue lors de la modification`,
         'danger'
