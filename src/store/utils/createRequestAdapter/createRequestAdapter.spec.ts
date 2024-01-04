@@ -2,6 +2,7 @@
 
 import { combineReducers, configureStore, createSlice } from '@reduxjs/toolkit';
 import { SliceRootState } from '../types';
+import { ReduxRequestEvents } from 'src/constants';
 import { createRequestAdapter, RequestState } from '.';
 
 describe('createRequestAdapter', () => {
@@ -66,7 +67,9 @@ describe('createRequestAdapter', () => {
   `, () => {
     const { selectors, store } = getSlice();
 
-    expect(selectors.selectLoginUserStatus(store.getState())).toBe('IDLE');
+    expect(selectors.selectLoginUserStatus(store.getState())).toBe(
+      ReduxRequestEvents.IDLE
+    );
     expect(selectors.selectIsLoginUserIdle(store.getState())).toBe(true);
     expect(selectors.selectIsLoginUserRequested(store.getState())).toBe(false);
     expect(selectors.selectIsLoginUserSucceeded(store.getState())).toBe(false);
@@ -90,7 +93,9 @@ describe('createRequestAdapter', () => {
       authentication.actions.loginUserRequested({ email: '', password: '' })
     );
 
-    expect(selectors.selectLoginUserStatus(store.getState())).toBe('REQUESTED');
+    expect(selectors.selectLoginUserStatus(store.getState())).toBe(
+      ReduxRequestEvents.REQUESTED
+    );
     expect(selectors.selectIsLoginUserIdle(store.getState())).toBe(false);
     expect(selectors.selectIsLoginUserRequested(store.getState())).toBe(true);
     expect(selectors.selectIsLoginUserSucceeded(store.getState())).toBe(false);
@@ -113,7 +118,9 @@ describe('createRequestAdapter', () => {
       authentication.actions.loginUserSucceeded({ token: 'myToken' })
     );
 
-    expect(selectors.selectLoginUserStatus(store.getState())).toBe('SUCCEEDED');
+    expect(selectors.selectLoginUserStatus(store.getState())).toBe(
+      ReduxRequestEvents.SUCCEEDED
+    );
     expect(selectors.selectIsLoginUserIdle(store.getState())).toBe(false);
     expect(selectors.selectIsLoginUserRequested(store.getState())).toBe(false);
     expect(selectors.selectIsLoginUserSucceeded(store.getState())).toBe(true);
@@ -134,7 +141,9 @@ describe('createRequestAdapter', () => {
 
     store.dispatch(authentication.actions.loginUserFailed());
 
-    expect(selectors.selectLoginUserStatus(store.getState())).toBe('FAILED');
+    expect(selectors.selectLoginUserStatus(store.getState())).toBe(
+      ReduxRequestEvents.FAILED
+    );
     expect(selectors.selectIsLoginUserIdle(store.getState())).toBe(false);
     expect(selectors.selectIsLoginUserRequested(store.getState())).toBe(false);
     expect(selectors.selectIsLoginUserSucceeded(store.getState())).toBe(false);
@@ -158,7 +167,9 @@ describe('createRequestAdapter', () => {
     );
     store.dispatch(authentication.actions.loginUserReset());
 
-    expect(selectors.selectLoginUserStatus(store.getState())).toBe('IDLE');
+    expect(selectors.selectLoginUserStatus(store.getState())).toBe(
+      ReduxRequestEvents.IDLE
+    );
     expect(selectors.selectIsLoginUserIdle(store.getState())).toBe(true);
     expect(selectors.selectIsLoginUserRequested(store.getState())).toBe(false);
     expect(selectors.selectIsLoginUserSucceeded(store.getState())).toBe(false);

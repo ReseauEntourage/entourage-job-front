@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import CheckIcon from 'assets/icons/check.svg';
-import { AnyCantFix } from 'src/utils/Types';
 import {
   StyledCheckIconContainer,
   StyledSelectList,
@@ -14,7 +13,7 @@ interface SelectListProps {
     component: React.ReactNode;
   }[];
   defaultValues?: string[];
-  onChange: (value: AnyCantFix[]) => void;
+  onChange: (value: string[]) => void;
 }
 
 export function SelectList({
@@ -28,15 +27,20 @@ export function SelectList({
     defaultValues || []
   );
 
-  const handleSelect = (value: string) => {
-    if (selectedOptions.includes(value)) {
-      setSelectedOptions(selectedOptions.filter((option) => option !== value));
-    } else if (isMulti) {
-      setSelectedOptions([...selectedOptions, value]);
-    } else {
-      setSelectedOptions([value]);
-    }
-  };
+  const handleSelect = useCallback(
+    (value: string) => {
+      if (selectedOptions.includes(value)) {
+        setSelectedOptions(
+          selectedOptions.filter((option) => option !== value)
+        );
+      } else if (isMulti) {
+        setSelectedOptions([...selectedOptions, value]);
+      } else {
+        setSelectedOptions([value]);
+      }
+    },
+    [selectedOptions, isMulti]
+  );
 
   useEffect(() => {
     onChange(selectedOptions);

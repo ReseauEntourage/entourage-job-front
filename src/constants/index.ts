@@ -1120,3 +1120,10 @@ export const EXTERNAL_MESSAGE_SUBJECT_FILTERS: FilterConstant<ExternalMessageSub
       value: ExternalMessageSubjects.OTHER,
     },
   ];
+
+export const ReduxRequestEvents = {
+  REQUESTED: 'REQUESTED',
+  SUCCEEDED: 'SUCCEEDED',
+  IDLE: 'IDLE',
+  FAILED: 'FAILED',
+} as const;

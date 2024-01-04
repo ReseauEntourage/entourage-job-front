@@ -62,7 +62,7 @@ export const LinkedUserInformationCard = ({
 
   const updateUserCandidate = useCallback(
     (id, props) => {
-      if (!('coaches' in user) || !user.coaches) return null;
+      if (!user.coaches || user.coaches.length === 0) return null;
       const newCoachesArray = user.coaches.map((obj) =>
         obj.candidat?.id === id ? props : obj
       );

@@ -13,7 +13,7 @@ export const CVPreferencesCard = () => {
   const user = useAuthenticatedUser();
   const { updateUser } = useUpdateUser(user);
 
-  if (!('candidat' in user)) return null;
+  if (!user.candidat) return null;
 
   return (
     <Card title="Préférences du CV" isMobileClosable>

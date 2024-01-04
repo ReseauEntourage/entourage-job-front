@@ -1,5 +1,5 @@
-import { createRequestAdapter } from '../../store/utils';
 import { User, UserProfile } from 'src/api/types';
+import { createRequestAdapter } from 'src/store/utils';
 
 export const fetchUserAdapter = createRequestAdapter('fetchUser').withPayloads<
   void,
