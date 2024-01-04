@@ -29,6 +29,12 @@ export const Rejoindre = ({ cta }: { cta: (label: string) => void }) => {
             </BulletList>
             <BulletList>
               <H6
+                title="Avoir entre 18 et 30 ans"
+                effect="cls:uk-animation-slide-bottom; delay: 200;"
+              />
+            </BulletList>
+            <BulletList>
+              <H6
                 title="Avoir le droit de travailler en France"
                 effect="cls:uk-animation-slide-bottom; delay: 200;"
               />

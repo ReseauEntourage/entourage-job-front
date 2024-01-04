@@ -26,6 +26,7 @@ export const CandidateContactModal = () => {
             <li>
               Réside sur les territoires suivants : 75, 93, 92, 56, 59 ou 69
             </li>
+            <li>A entre 18 et 30 ans (inclus).</li>
             <li>
               Est disponible pour commencer un travail dans moins de 3 mois, et
               pour dédier du temps à sa recherche d&apos;emploi (2h/semaine au
