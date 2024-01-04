@@ -17,8 +17,8 @@ interface ToggleWithConfirmationModalProps<S extends FormSchema<AnyCantFix>> {
   modalTitle: string;
   modalDescription: React.ReactNode;
   modalConfirmation: string;
-  onToggle: (value: boolean, fields?) => void;
-  defaultValue: boolean;
+  onToggle: (fields?: AnyCantFix) => void;
+  isToggled: boolean;
   formSchema: S;
 }
 
@@ -29,17 +29,11 @@ export const ToggleWithConfirmationModal = <S extends FormSchema<AnyCantFix>>({
   modalTitle,
   modalDescription,
   modalConfirmation = "oui",
-  defaultValue,
   onToggle,
   formSchema,
+  isToggled,
 }: ToggleWithConfirmationModalProps<S>) => {
 
-
-  const [isToggled, setIsToggled] = useState<boolean>(defaultValue);
-
-  useEffect(() => {
-    setIsToggled(defaultValue);
-  }, [defaultValue]);
 
   return (
       <StyledToggleContainer>
@@ -52,9 +46,7 @@ export const ToggleWithConfirmationModal = <S extends FormSchema<AnyCantFix>>({
                 checked={isToggled}
                 onChange={() => {
                   if (isToggled) {
-                    onToggle(false).then(() => {
-                      return setIsToggled(false);
-                    });
+                    onToggle()
                   } else if (formSchema) {
                     openModal(
                       <ModalEdit
@@ -63,10 +55,8 @@ export const ToggleWithConfirmationModal = <S extends FormSchema<AnyCantFix>>({
                         formSchema={formSchema}
                         submitText={modalConfirmation}
                         // id={id}
-                        onSubmit={async (fields, closeModal) => {
-                          await onToggle(true, fields);
-                          setIsToggled(true);
-                          closeModal();
+                        onSubmit={async (fields) => {
+                          await onToggle(fields);
                         }}
                       />
                     );
@@ -78,7 +68,6 @@ export const ToggleWithConfirmationModal = <S extends FormSchema<AnyCantFix>>({
                         modalDescription={modalDescription}
                         modalConfirmation={modalConfirmation}
                         onToggle={onToggle}
-                        setIsToggled={setIsToggled}
                       />
                     );
                   }

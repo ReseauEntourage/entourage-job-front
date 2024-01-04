@@ -1,9 +1,13 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import CheckIcon from 'assets/icons/check.svg';
 import { Button } from 'src/components/utils';
 
-export const SuccessModalContent = ({ text, closeModal }) => {
+interface SuccessModalContentProps {
+  text: React.ReactNode;
+  closeModal: () => void;
+}
+
+export const SuccessModalContent = ({ text, closeModal }: SuccessModalContentProps) => {
   return (
     <>
       <div
@@ -24,9 +28,4 @@ export const SuccessModalContent = ({ text, closeModal }) => {
       </div>
     </>
   );
-};
-
-SuccessModalContent.propTypes = {
-  text: PropTypes.string.isRequired,
-  closeModal: PropTypes.func.isRequired,
 };

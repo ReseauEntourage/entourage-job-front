@@ -211,7 +211,7 @@ export const LinkedUserInformationCard = ({
                       title="Masquer le CV"
                       modalTitle="Changer la visibilité du CV en ligne ?"
                       modalConfirmation="Oui, masquer le CV"
-                      defaultValue={userCandidat.hidden}
+                      isToggled={userCandidat.hidden}
                       onToggle={(hidden) => {
                         return Api.putCandidate(singleLinkedUser.id, {
                           hidden,

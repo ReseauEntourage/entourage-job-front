@@ -1,11 +1,17 @@
-import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import Modal from 'react-modal';
 import { useModalContext } from 'src/components/modals/Modal/ModalContext';
 
 Modal.setAppElement('#__next');
 
-const CustomModal = ({ children, closeOnNextRender, className, fullWidth }) => {
+interface CustomModalProps {
+  children: React.ReactNode;
+  closeOnNextRender?: boolean;
+  className?: string;
+  fullWidth?: boolean;
+}
+
+const CustomModal = ({ children, closeOnNextRender = false, className, fullWidth = false }: CustomModalProps) => {
   const { onClose } = useModalContext();
 
   useEffect(() => {
@@ -55,7 +61,7 @@ const CustomModal = ({ children, closeOnNextRender, className, fullWidth }) => {
         if (reason === 'backdropClick') {
           return;
         }
-        onClose();
+        if(onClose) onClose();
       }}
     >
       <div
@@ -70,17 +76,5 @@ const CustomModal = ({ children, closeOnNextRender, className, fullWidth }) => {
   );
 };
 
-CustomModal.propTypes = {
-  children: PropTypes.element.isRequired,
-  closeOnNextRender: PropTypes.bool,
-  className: PropTypes.string,
-  fullWidth: PropTypes.bool,
-};
-
-CustomModal.defaultProps = {
-  closeOnNextRender: false,
-  className: '',
-  fullWidth: false,
-};
 
 export { CustomModal as Modal };

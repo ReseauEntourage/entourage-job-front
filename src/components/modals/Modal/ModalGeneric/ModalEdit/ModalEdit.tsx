@@ -25,6 +25,7 @@ interface ModalEditProps<S extends FormSchema<AnyCantFix>> {
   submitText?: string;
   cancelText?: string;
   noCompulsory?: boolean;
+  closeOnNextRender?: boolean;
 }
 export function ModalEdit<S extends FormSchema<AnyCantFix>>({
   title,
@@ -37,10 +38,11 @@ export function ModalEdit<S extends FormSchema<AnyCantFix>>({
   onError = () => {},
   onCancel = () => {},
   noCompulsory = false,
+  closeOnNextRender = false,
 }: ModalEditProps<S>) {
   const { onClose } = useModalContext();
   return (
-    <ModalGeneric title={title} description={description}>
+    <ModalGeneric title={title} description={description} closeOnNextRender={closeOnNextRender}>
       <FormWithValidation
         submitText={submitText}
         cancelText={cancelText}

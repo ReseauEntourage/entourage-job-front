@@ -1,4 +1,4 @@
-import { User, UserProfile } from 'src/api/types';
+import { User, UserProfile, UserWithUserCandidate } from 'src/api/types';
 import { createRequestAdapter } from 'src/store/utils';
 
 export const fetchUserAdapter = createRequestAdapter('fetchUser').withPayloads<
@@ -31,9 +31,9 @@ export const updateUserAdapter = createRequestAdapter(
 ).withPayloads<
   {
     userId: string;
-    user: Partial<User>;
+    user: Partial<UserWithUserCandidate>;
   },
-  { user: Partial<User> },
+  { user: Partial<UserWithUserCandidate> },
   {
     error: UpdateError;
   }

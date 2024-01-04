@@ -1,9 +1,8 @@
 import _ from 'lodash';
-import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import UIkit from 'uikit';
-import { Api } from 'src/api';
-import { User, UserWithUserCandidate } from 'src/api/types';
+import { UserWithUserCandidate } from 'src/api/types';
 import {
   formPersonalDataAsAdmin,
   formPersonalDataAsCandidate,
@@ -16,60 +15,60 @@ import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
 } from 'src/constants/users';
-import { authenticationActions } from 'src/use-cases/authentication';
+import { authenticationActions, updateUserSelectors } from 'src/use-cases/authentication';
 import { isRoleIncluded } from 'src/utils';
+import { ReduxRequestEvents } from 'src/constants';
 
 export const useUpdateUser = (user: UserWithUserCandidate) => {
+
   const dispatch = useDispatch();
 
-  const setUser = useCallback(
-    (nextUser: User) => {
-      dispatch(authenticationActions.setUser(nextUser));
-    },
-    [dispatch]
-  );
+  const [closeModal, setCloseModal] = React.useState<boolean>(false);
+
+  const updateUserStatus = useSelector(
+    updateUserSelectors.selectFetchUserStatus
+  )
+
+  useEffect(() => {
+    if (updateUserStatus === ReduxRequestEvents.SUCCEEDED) {
+      setCloseModal(true);
+      UIkit.notification(
+        'Vos informations personnelles ont bien été mises à jour',
+        'success'
+      );
+    } else if (updateUserStatus === ReduxRequestEvents.FAILED) {
+      UIkit.notification(
+        "Une erreur c'est produite lors de la mise à jour",
+        'danger'
+      );
+    }
+  }, [updateUserStatus])
+
+
+  useEffect(() => {
+    return () => {
+      dispatch(authenticationActions.updateUserReset());
+    };
+  }, [dispatch]);
 
   const updateUser = useCallback(
-    (newUserData: Partial<UserWithUserCandidate>, closeModal?) => {
-      if (!_.isEmpty(newUserData)) {
-        return Api.putUser(user.id, newUserData)
-          .then(() => {
-            if (closeModal) closeModal();
-            setUser({
-              ...user,
-              ...newUserData,
-            });
-            UIkit.notification(
-              'Vos informations personnelles ont bien été mises à jour',
-              'success'
-            );
-          })
-          .catch((err) => {
-            console.error(err);
-            if (err?.response?.status === 409) {
-              UIkit.notification(
-                'Cette adresse email est déjà utilisée',
-                'danger'
-              );
-            } else {
-              UIkit.notification(
-                "Une erreur c'est produite lors de la mise à jour de vos informations personnelles",
-                'danger'
-              );
-            }
-          });
+    (newUserData: Partial<UserWithUserCandidate>) => {
+      console.log(newUserData);
+      if (!_.isEmpty(newUserData) && user.id) {
+        console.log('dispatching');
+        dispatch(authenticationActions.updateUserRequested({userId: user.id, user: newUserData}));
       }
     },
-    [setUser, user]
+    [dispatch, user]
   );
 
-  return { updateUser };
+  return { updateUser, closeModal };
 };
 
 export const useParametres = (user: UserWithUserCandidate) => {
   const modalTitle = 'Édition - Informations personnelles';
 
-  const { updateUser } = useUpdateUser(user);
+  const { updateUser, closeModal } = useUpdateUser(user);
 
   const checkEmailAndSubmit = useCallback(
     async (
@@ -87,11 +86,11 @@ export const useParametres = (user: UserWithUserCandidate) => {
           setError('Les deux adresses email ne sont pas indentiques');
         } else {
           newUserData.email = newEmail0.toLowerCase();
-          await updateUser(newUserData, closeModal);
+          await updateUser(newUserData);
           setError('');
         }
       } else {
-        await updateUser(newUserData, closeModal);
+        await updateUser(newUserData);
       }
     },
     [updateUser, user]
@@ -102,6 +101,7 @@ export const useParametres = (user: UserWithUserCandidate) => {
       <ModalEdit
         submitText="Envoyer"
         title={modalTitle}
+        closeOnNextRender={closeModal}
         defaultValues={{
           firstName: user.firstName,
           lastName: user.lastName,
@@ -166,6 +166,7 @@ export const useParametres = (user: UserWithUserCandidate) => {
           phone: user.phone,
         }}
         formSchema={formPersonalDataAsCoach}
+        closeOnNextRender={closeModal}
         onSubmit={async (
           { phone, oldEmail, newEmail0, newEmail1 },
           closeModal,
@@ -196,12 +197,17 @@ export const useParametres = (user: UserWithUserCandidate) => {
           phone: user.phone,
           address: user.address,
         }}
+        closeOnNextRender={closeModal}
         formSchema={formPersonalDataAsCandidate}
         onSubmit={async (
           { phone, address, oldEmail, newEmail0, newEmail1 },
           closeModal,
           setError
         ) => {
+          // déclenche une fonction updateUser
+          // cette fonction fait juste un dispatch
+          // j'ai un useEffect qui écoute l'événement "succedeed"
+          // comment fermer la modale ?
           const newUserData: Partial<UserWithUserCandidate> = {};
           if (phone !== user.phone) {
             newUserData.phone = phone;

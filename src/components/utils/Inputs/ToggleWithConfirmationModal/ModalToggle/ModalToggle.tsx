@@ -8,8 +8,7 @@ interface ModalToggleProps {
   modalTitle: string;
   modalDescription: React.ReactNode;
   modalConfirmation: string;
-  onToggle: (value: boolean, fields?) => void;
-  setIsToggled: (boolean) => void;
+  onToggle: () => void;
   id: string;
 }
 
@@ -17,7 +16,6 @@ export const ModalToggle = ({
     modalTitle,
     modalDescription,
     onToggle,
-    setIsToggled,
     modalConfirmation,
     id,
   }: ModalToggleProps) => {
@@ -32,12 +30,7 @@ export const ModalToggle = ({
           <Button
             style="primary"
             dataTestId={`test-confirm-${id}`}
-            onClick={() => {
-              onToggle(true).then(() => {
-                return setIsToggled(true);
-              });
-              if (onClose) onClose();
-            }}
+            onClick={onToggle}
           >
             {modalConfirmation}
           </Button>
