@@ -5,25 +5,25 @@ import GenderIcon from 'assets/icons/gender.svg';
 import HomeIcon from 'assets/icons/home.svg';
 import PhoneIcon from 'assets/icons/phone.svg';
 import UserIcon from 'assets/icons/user.svg';
-import { UserWithUserCandidate } from 'src/api/types';
+import { useParametres } from '../../useUpdateUser';
 import { Card } from 'src/components/utils';
 import { Tag } from 'src/components/utils/Tag';
 import { USER_ROLES } from 'src/constants/users';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { StyledInformationsPersonnelles } from './UserInformationCard.styles';
 
 interface UserInformationCardProps {
   loadingPersonal: boolean;
-  openCorrespondingModal: () => void;
-  userData: UserWithUserCandidate;
   title: React.ReactNode;
 }
 
 export const UserInformationCard = ({
   loadingPersonal,
-  openCorrespondingModal,
-  userData,
   title,
 }: UserInformationCardProps) => {
+  const user = useAuthenticatedUser();
+  const { openCorrespondingModal } = useParametres(user);
+
   return (
     <Card
       title={title}
@@ -36,44 +36,40 @@ export const UserInformationCard = ({
         <StyledInformationsPersonnelles>
           <li>
             <UserIcon width={20} />
-            {` ${userData.firstName} ${userData.lastName}`}
+            {` ${user.firstName} ${user.lastName}`}
           </li>
-          {userData.role !== USER_ROLES.ADMIN && (
+          {user.role !== USER_ROLES.ADMIN && (
             <li>
               <GenderIcon width={20} />
-              {userData.gender === 0 ? 'Homme' : 'Femme'}
+              {user.gender === 0 ? 'Homme' : 'Femme'}
             </li>
           )}
           <li>
             <EmailIcon width={20} />
-            {userData.email}
+            {user.email}
           </li>
           <li>
             <PhoneIcon width={20} />
-            {userData.phone ? (
-              <>{userData.phone}</>
+            {user.phone ? (
+              <>{user.phone}</>
             ) : (
               <>Numéro de téléphone non renseigné</>
             )}
           </li>
           <li>
             <HomeIcon width={20} />
-            {userData.address ? (
-              <>{userData.address}</>
+            {user.address ? (
+              <>{user.address}</>
             ) : (
               <>Adresse postale non renseignée</>
             )}
           </li>
-          {userData.role === USER_ROLES.ADMIN && (
+          {user.role === USER_ROLES.ADMIN && (
             <li>
               <Tag
-                content={
-                  userData.zone ? _.capitalize(userData.zone) : 'Non renseignée'
-                }
+                content={user.zone ? _.capitalize(user.zone) : 'Non renseignée'}
               />
-              {userData.adminRole && (
-                <Tag content={_.capitalize(userData.adminRole)} />
-              )}
+              {user.adminRole && <Tag content={_.capitalize(user.adminRole)} />}
             </li>
           )}
         </StyledInformationsPersonnelles>

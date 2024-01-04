@@ -69,6 +69,27 @@ export type OrganizationDto = {
   zone: AdminZone;
 };
 
+export type HelpNames = 'tips' | 'interview' | 'cv' | 'network' | 'event';
+
+export type UserProfile = {
+  currentJob: string;
+  descrpiption: string;
+  helpNeeds: { name: HelpNames }[];
+  helpOffers: { name: HelpNames }[];
+  networkBusinessLines: {
+    name: BusinessLineValue;
+    order: number;
+  }[];
+  searchBusinessLines: {
+    name: BusinessLineValue;
+    order: number;
+  }[];
+  searchAmbitions: {
+    name: string;
+    order: number;
+    prefix: AmbitionsPrefixesType;
+  }[];
+};
 export type User = {
   coach: User;
   id: string;
@@ -88,6 +109,8 @@ export type User = {
   zone: AdminZone;
   organization: Organization;
   deletedAt?: string;
+  userProfile?: UserProfile;
+  OrganizationId?: string;
 };
 
 export interface CVExperience {
@@ -210,6 +233,7 @@ export type UserDto = {
   adminRole?: AdminRole;
   OrganizationId?: string;
   id?: string;
+  userProfile?: UserProfile;
 };
 
 export type PutCandidate = {

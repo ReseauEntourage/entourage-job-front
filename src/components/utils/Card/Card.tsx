@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ChevronDownIcon from 'assets/icons/chevron-down.svg';
 import ChevronUpIcon from 'assets/icons/chevron-up.svg';
 import EditIcon from 'assets/icons/editIcon.svg';
+import { Button } from '../Button';
 import { ButtonIcon } from '../ButtonIcon';
 import { H5 } from 'src/components/utils/Headings';
 import { Spinner } from 'src/components/utils/Spinner';
@@ -12,6 +13,7 @@ import {
   StyledEditIconContainer,
   StyledSpinnerContainer,
   StyledChevronContainer,
+  StyledCardFooter,
 } from './Card.styles';
 
 interface CardProps {
@@ -26,6 +28,8 @@ interface CardProps {
   isLoading?: boolean;
   isMobileClosable?: boolean;
   isDefaultOpen?: boolean;
+  editButtonText?: string;
+  dataTestId?: string;
 }
 
 export const Card = ({
@@ -39,6 +43,8 @@ export const Card = ({
   isLoading = false,
   isMobileClosable = false,
   isDefaultOpen = true,
+  editButtonText,
+  dataTestId,
 }: CardProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(isDefaultOpen);
 
@@ -58,7 +64,11 @@ export const Card = ({
       )}
       {!isLoading && editCallback && isDesktop && (
         <StyledEditIconContainer>
-          <ButtonIcon icon={<EditIcon />} onClick={editCallback} />
+          <ButtonIcon
+            icon={<EditIcon />}
+            onClick={editCallback}
+            dataTestId={`${dataTestId}-button-edit`}
+          />
         </StyledEditIconContainer>
       )}
       {isMobileClosable && !isDesktop && (
@@ -82,6 +92,13 @@ export const Card = ({
         </StyledCardTitleContainer>
       )}
       {!closedMode && children}
+      {!closedMode && !isLoading && editCallback && !isDesktop && (
+        <StyledCardFooter>
+          <Button style="custom-secondary" onClick={editCallback}>
+            {editButtonText || 'Modifier'}
+          </Button>
+        </StyledCardFooter>
+      )}
     </StyledCard>
   );
 };

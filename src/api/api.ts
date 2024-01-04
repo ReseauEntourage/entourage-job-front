@@ -23,6 +23,7 @@ import {
   Route,
   SocialMedia,
   UserDto,
+  UserProfile,
 } from './types';
 
 export class APIHandler {
@@ -229,6 +230,13 @@ export class APIHandler {
     userToLinkId?: string | string[]
   ): Promise<AxiosResponse> {
     return this.put(`/user/linkUser/${userId}`, { userToLinkId });
+  }
+
+  putUserProfile(
+    userId: string,
+    userProfile: Partial<UserProfile>
+  ): Promise<AxiosResponse> {
+    return this.put(`/user/profile/${userId}`, userProfile);
   }
 
   // delete

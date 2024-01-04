@@ -19,19 +19,7 @@ import {
 import { authenticationActions } from 'src/use-cases/authentication';
 import { isRoleIncluded } from 'src/utils';
 
-export const useParametres = (
-  userData: UserWithUserCandidate,
-  user: User | UserWithUserCandidate,
-  setUserData: (
-    updatedUserData:
-      | UserWithUserCandidate
-      | ((
-          prevUserData: UserWithUserCandidate | undefined
-        ) => UserWithUserCandidate | undefined)
-  ) => void
-) => {
-  const modalTitle = 'Édition - Informations personnelles';
-
+export const useUpdateUser = (user: UserWithUserCandidate) => {
   const dispatch = useDispatch();
 
   const setUser = useCallback(
@@ -42,19 +30,11 @@ export const useParametres = (
   );
 
   const updateUser = useCallback(
-    (newUserData: Partial<UserWithUserCandidate>, closeModal) => {
+    (newUserData: Partial<UserWithUserCandidate>, closeModal?) => {
       if (!_.isEmpty(newUserData)) {
-        return Api.putUser(userData.id, newUserData)
+        return Api.putUser(user.id, newUserData)
           .then(() => {
-            closeModal();
-            setUserData((prevUserData) => {
-              if (prevUserData && newUserData) {
-                return {
-                  ...(prevUserData || {}),
-                  ...(newUserData || {}),
-                };
-              }
-            });
+            if (closeModal) closeModal();
             setUser({
               ...user,
               ...newUserData,
@@ -80,8 +60,16 @@ export const useParametres = (
           });
       }
     },
-    [setUser, user, userData, setUserData]
+    [setUser, user]
   );
+
+  return { updateUser };
+};
+
+export const useParametres = (user: UserWithUserCandidate) => {
+  const modalTitle = 'Édition - Informations personnelles';
+
+  const { updateUser } = useUpdateUser(user);
 
   const checkEmailAndSubmit = useCallback(
     async (
@@ -93,7 +81,7 @@ export const useParametres = (
       closeModal: () => void
     ) => {
       if (oldEmail || newEmail0 || newEmail1) {
-        if (userData.email !== oldEmail.toLowerCase()) {
+        if (user.email !== oldEmail.toLowerCase()) {
           setError("L'ancienne adresse email n'est pas valide");
         } else if (newEmail0.length === 0 || newEmail0 !== newEmail1) {
           setError('Les deux adresses email ne sont pas indentiques');
@@ -106,7 +94,7 @@ export const useParametres = (
         await updateUser(newUserData, closeModal);
       }
     },
-    [updateUser, userData]
+    [updateUser, user]
   );
 
   const openPersonalDataModalAsAdmin = useCallback(() => {
@@ -115,12 +103,12 @@ export const useParametres = (
         submitText="Envoyer"
         title={modalTitle}
         defaultValues={{
-          firstName: userData.firstName,
-          lastName: userData.lastName,
-          gender: userData.gender,
-          phone: userData.phone,
-          zone: userData.zone,
-          adminRole: userData.adminRole,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          gender: user.gender,
+          phone: user.phone,
+          zone: user.zone,
+          adminRole: user.adminRole,
         }}
         formSchema={formPersonalDataAsAdmin}
         onSubmit={async (
@@ -139,22 +127,22 @@ export const useParametres = (
           setError
         ) => {
           const newUserData: Partial<UserWithUserCandidate> = {};
-          if (firstName !== userData.firstName) {
+          if (firstName !== user.firstName) {
             newUserData.firstName = firstName;
           }
-          if (lastName !== userData.lastName) {
+          if (lastName !== user.lastName) {
             newUserData.lastName = lastName;
           }
-          if (zone !== userData.zone) {
+          if (zone !== user.zone) {
             newUserData.zone = zone;
           }
-          if (adminRole !== userData.adminRole) {
+          if (adminRole !== user.adminRole) {
             newUserData.adminRole = adminRole;
           }
-          if (gender !== userData.gender) {
+          if (gender !== user.gender) {
             newUserData.gender = gender;
           }
-          if (phone !== userData.phone) {
+          if (phone !== user.phone) {
             newUserData.phone = phone;
           }
           await checkEmailAndSubmit(
@@ -168,14 +156,14 @@ export const useParametres = (
         }}
       />
     );
-  }, [checkEmailAndSubmit, userData]);
+  }, [checkEmailAndSubmit, user]);
 
   const openPersonalDataModalAsCoach = useCallback(() => {
     openModal(
       <ModalEdit
         title={modalTitle}
         defaultValues={{
-          phone: userData.phone,
+          phone: user.phone,
         }}
         formSchema={formPersonalDataAsCoach}
         onSubmit={async (
@@ -184,7 +172,7 @@ export const useParametres = (
           setError
         ) => {
           const newUserData: Partial<UserWithUserCandidate> = {};
-          if (phone !== userData.phone) {
+          if (phone !== user.phone) {
             newUserData.phone = phone;
           }
           await checkEmailAndSubmit(
@@ -198,15 +186,15 @@ export const useParametres = (
         }}
       />
     );
-  }, [checkEmailAndSubmit, userData]);
+  }, [checkEmailAndSubmit, user]);
 
   const openPersonalDataModalAsCandidate = useCallback(() => {
     openModal(
       <ModalEdit
         title={modalTitle}
         defaultValues={{
-          phone: userData.phone,
-          address: userData.address,
+          phone: user.phone,
+          address: user.address,
         }}
         formSchema={formPersonalDataAsCandidate}
         onSubmit={async (
@@ -215,10 +203,10 @@ export const useParametres = (
           setError
         ) => {
           const newUserData: Partial<UserWithUserCandidate> = {};
-          if (phone !== userData.phone) {
+          if (phone !== user.phone) {
             newUserData.phone = phone;
           }
-          if (address !== userData.address) {
+          if (address !== user.address) {
             newUserData.address = address;
           }
           await checkEmailAndSubmit(
@@ -232,15 +220,15 @@ export const useParametres = (
         }}
       />
     );
-  }, [checkEmailAndSubmit, userData]);
+  }, [checkEmailAndSubmit, user]);
 
   const openCorrespondingModal = useCallback(() => {
-    if (isRoleIncluded(ALL_USER_ROLES, userData.role)) {
-      if (isRoleIncluded(CANDIDATE_USER_ROLES, userData.role)) {
+    if (isRoleIncluded(ALL_USER_ROLES, user.role)) {
+      if (isRoleIncluded(CANDIDATE_USER_ROLES, user.role)) {
         openPersonalDataModalAsCandidate();
         return;
       }
-      if (isRoleIncluded(COACH_USER_ROLES, userData.role)) {
+      if (isRoleIncluded(COACH_USER_ROLES, user.role)) {
         openPersonalDataModalAsCoach();
         return;
       }
@@ -251,7 +239,7 @@ export const useParametres = (
     openPersonalDataModalAsAdmin,
     openPersonalDataModalAsCandidate,
     openPersonalDataModalAsCoach,
-    userData,
+    user,
   ]);
 
   return {

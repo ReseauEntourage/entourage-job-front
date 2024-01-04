@@ -1,20 +1,20 @@
 import React from 'react';
 import UIkit from 'uikit';
+import { useUpdateUser } from '../../useUpdateUser';
 import { Api } from 'src/api';
-import { UserWithUserCandidate } from 'src/api/types';
 import { ToggleWithConfirmationModal } from 'src/components/backoffice/ToggleWithConfirmationModal';
 import { CandidateEmployedToggle } from 'src/components/backoffice/candidate/CandidateEmployedToggle';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel';
 import { Card } from 'src/components/utils';
-import { StyledCVPreferenceLine } from './CVPreferences.styles';
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { StyledCVPreferenceLine } from './CVPreferencesCard.styles';
 
-export const CVPreferences = ({
-  userData,
-  setUserData,
-}: {
-  userData: UserWithUserCandidate;
-  setUserData: (updatedUserData: UserWithUserCandidate) => void;
-}) => {
+export const CVPreferencesCard = () => {
+  const user = useAuthenticatedUser();
+  const { updateUser } = useUpdateUser(user);
+
+  if (!user.candidat) return null;
+
   return (
     <Card title="Préférences du CV" isMobileClosable>
       <StyledCVPreferenceLine>
@@ -22,24 +22,24 @@ export const CVPreferences = ({
           title="J'ai retrouvé un emploi"
           modalTitle="Vous avez retrouvé un emploi ?"
           modalConfirmation="Valider"
-          defaultValue={userData?.candidat?.employed}
-          candidateId={userData.id}
+          defaultValue={user?.candidat?.employed}
+          candidateId={user.id}
           notificationMessage="Votre profil a été mis à jour !"
           subtitle={
-            userData &&
-            userData.candidat && (
+            user &&
+            user.candidat && (
               <ContractLabel
-                contract={userData.candidat.contract}
-                endOfContract={userData.candidat.endOfContract}
+                contract={user.candidat.contract}
+                endOfContract={user.candidat.endOfContract}
               />
             )
           }
           setData={(newData) => {
-            setUserData({
-              ...userData,
-              candidat: userData.candidat
+            updateUser({
+              ...user,
+              candidat: user.candidat
                 ? {
-                    ...userData.candidat,
+                    ...user.candidat,
                     ...newData,
                   }
                 : undefined,
@@ -61,17 +61,17 @@ export const CVPreferences = ({
             </>
           }
           modalConfirmation="Oui, masquer mon CV"
-          defaultValue={userData?.candidat?.hidden}
+          defaultValue={user?.candidat?.hidden}
           onToggle={(hidden) => {
-            return Api.putCandidate(userData.id, {
+            return Api.putCandidate(user.id, {
               hidden,
             })
               .then(() => {
-                setUserData({
-                  ...userData,
-                  candidat: userData.candidat
+                updateUser({
+                  ...user,
+                  candidat: user.candidat
                     ? {
-                        ...userData.candidat,
+                        ...user.candidat,
                         hidden,
                       }
                     : undefined,

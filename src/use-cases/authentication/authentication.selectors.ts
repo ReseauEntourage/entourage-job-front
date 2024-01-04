@@ -13,6 +13,10 @@ export const logoutSelectors = fetchUserAdapter.getSelectors<RootState>(
   (state) => state.authentication.logout
 );
 
+export const updateProfileSelectors = fetchUserAdapter.getSelectors<RootState>(
+  (state) => state.authentication.updateProfile
+);
+
 export function selectAuthentication(state: RootState) {
   return state.authentication;
 }
@@ -23,4 +27,12 @@ export function selectCurrentUser(state: RootState) {
 
 export function selectLoginError(state: RootState) {
   return state.authentication.loginError;
+}
+
+export function selectUserUpdateError(state: RootState) {
+  return state.authentication.userUpdateError;
+}
+
+export function selectProfileUpdateError(state: RootState) {
+  return state.authentication.profileUpdateError;
 }
