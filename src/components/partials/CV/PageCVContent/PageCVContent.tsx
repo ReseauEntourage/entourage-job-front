@@ -167,7 +167,11 @@ export const PageCVContent = ({
               title={`Donnez un coup de pouce à ${cv.user.candidat.firstName} !`}
               color={COLORS.black}
             />
-            <p>Une suggestion, une info à partager&nbsp;?</p>
+            <p>
+              Apporter des conseils, informations sur le secteur
+              d&lsquo;activité, retour d&lsquo;expérience, mise en contact, une
+              opportunité&nbsp;...
+            </p>
             <Button
               style="custom-secondary-inverted"
               disabled={actionDisabled}
