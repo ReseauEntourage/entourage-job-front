@@ -9,41 +9,6 @@ const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 
 const dev = process.env.NODE_ENV !== 'production';
 
-/*
-const ContentSecurityPolicy = `
-  default-src
-  'self'
-  'unsafe-inline'
-  'unsafe-eval'
-  ${process.env.API_URL.replace(/\/api\/v1/g, '')}
-  ${process.env.AWSS3_CDN_URL}
-  ${process.env.CDN_URL ? process.env.CDN_URL : ''}
-  ${process.env.AWSS3_URL}
-  *.ytimg.com ytimg.com
-  youtube.com *.youtube.com
-  *.youtube-nocookie.com youtube-nocookie.com
-  airtable.com *.airtable.com
-  *.google-analytics.com google-analytics.com
-  *.googletagmanager.com googletagmanager.com
-  *.google.com google.com
-  *.google.fr google.fr
-  *.gstatic.com gstatic.com
-  *.googleapis.com googleapis.com
-  stats.g.doubleclick.net
-  *.facebook.net facebook.net
-  *.facebook.com facebook.com
-  purecatamphetamine.github.io
-  data:
-  sentry.io *.sentry.io
-  sentry-cdn.com *.sentry-cdn.com
-  licdn.com *.licdn.com
-  linkedin.com *.linkedin.com
-  *.pusher.com pusher.com
-  adsymptotic.com *.adsymptotic.com
-  tarteaucitron.io
-`;
-*/
-
 const securityHeaders = [
   {
     key: 'X-DNS-Prefetch-Control',
@@ -73,10 +38,6 @@ const securityHeaders = [
     key: 'Referrer-Policy',
     value: 'strict-origin',
   },
-  /*  {
-    key: 'Content-Security-Policy',
-    value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
-  }, */
 ];
 
 let remotePatterns = [];
@@ -102,6 +63,7 @@ if (process.env.AWSS3_CDN_URL) {
     },
   ];
 }
+
 if (process.env.AWSS3_URL) {
   remotePatterns = [
     ...remotePatterns,
@@ -114,18 +76,12 @@ if (process.env.AWSS3_URL) {
 }
 
 module.exports = withLess({
-  webpackDevMiddleware: (config) => {
-    config.watchOptions = {
-      poll: 1000,
-      aggregateTimeout: 300,
-    };
-    return config;
-  },
-  lessOptions: {
-    javascriptEnabled: true,
-  },
   webpack: (config, options) => {
     config.resolve.modules.push(__dirname);
+
+    // @doc https://webpack.js.org/plugins/environment-plugin/
+    delete process.env.__NEXT_OPTIMIZE_FONTS;
+    config.plugins.push(new webpack.EnvironmentPlugin(process.env));
 
     config.module.rules.push({
       test: /\.svg$/,
@@ -151,12 +107,6 @@ module.exports = withLess({
       ],
     });
 
-    if (!options.isServer) {
-      config.resolve.alias['@sentry/node'] = '@sentry/react';
-    }
-
-    config.plugins.push(new webpack.EnvironmentPlugin(process.env));
-
     config.plugins.push(
       new CircularDependencyPlugin({
         // exclude detection of files based on a RegExp
@@ -181,6 +131,10 @@ module.exports = withLess({
           ignore: ['node_modules', 'next.config.js', 'assets', 'public'],
         })
       );
+    }
+
+    if (!options.isServer) {
+      config.resolve.alias['@sentry/node'] = '@sentry/react';
     }
 
     return config;

@@ -196,6 +196,7 @@ export const formEditExternalOpportunityAsAdmin: FormSchema<{
       name: 'link',
       component: 'text-input',
       title: "Lien de l'offre",
+      maxLength: 255,
     },
     {
       id: 'externalOrigin',
