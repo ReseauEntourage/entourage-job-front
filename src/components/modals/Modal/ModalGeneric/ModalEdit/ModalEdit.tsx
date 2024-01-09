@@ -42,7 +42,11 @@ export function ModalEdit<S extends FormSchema<AnyCantFix>>({
 }: ModalEditProps<S>) {
   const { onClose } = useModalContext();
   return (
-    <ModalGeneric title={title} description={description} closeOnNextRender={closeOnNextRender}>
+    <ModalGeneric
+      title={title}
+      description={description}
+      closeOnNextRender={closeOnNextRender}
+    >
       <FormWithValidation
         submitText={submitText}
         cancelText={cancelText}
@@ -50,9 +54,7 @@ export function ModalEdit<S extends FormSchema<AnyCantFix>>({
         defaultValues={defaultValues}
         noCompulsory={noCompulsory}
         onCancel={() => {
-          if (onCancel) {
-            onCancel();
-          }
+          if (onCancel) onCancel();
           if (onClose) onClose();
         }}
         onError={onError}

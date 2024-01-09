@@ -2,7 +2,7 @@ import React from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
-import { ToggleWithConfirmationModal } from 'src/components/utils/Inputs/ToggleWithConfirmationModal';
+import { ToggleWithModal } from 'src/components/utils/Inputs/ToggleWithModal';
 
 interface MemberHiddenToggleProps {
   member: UserWithUserCandidate;
@@ -13,14 +13,14 @@ export function MemberHiddenToggle({
   setMember,
 }: MemberHiddenToggleProps) {
   return (
-    <ToggleWithConfirmationModal
+    <ToggleWithModal
       id={`hidden-${member.id}`}
-      modalTitle="Changer la visibilité du CV en ligne ?"
-      modalConfirmation="Oui, masquer le CV"
-      defaultValue={
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        member.candidat.hidden
-      }
+      title=""
+      modal={{
+        title: 'Changer la visibilité du CV en ligne ?',
+        confirmationText: 'Oui, masquer le CV',
+      }}
+      isToggled={!!member?.candidat?.hidden}
       onToggle={async (hidden) => {
         try {
           await Api.putCandidate(member.id, {

@@ -22,6 +22,9 @@ const {
   updateProfileRequested,
   updateProfileSucceeded,
   updateProfileFailed,
+  updateCandidateRequested,
+  updateCandidateSucceeded,
+  updateCandidateFailed,
 } = slice.actions;
 
 function getIsReleaseVersionAllowed() {
@@ -131,6 +134,29 @@ function* updateUserRequestedSaga(
   }
 }
 
+function* updateCandidateRequestedSaga(
+  action: ReturnType<typeof updateCandidateRequested>
+) {
+  const { userId, userCandidate } = action.payload;
+  try {
+    yield* call(() => {
+      Api.putCandidate(userId, userCandidate);
+    });
+    yield* put(
+      updateCandidateSucceeded({
+        userId,
+        userCandidate,
+      })
+    );
+  } catch (error) {
+    yield* put(
+      updateCandidateFailed({
+        error: 'UPDATE_FAILED',
+      })
+    );
+  }
+}
+
 function* updateProfileRequestedSaga(
   action: ReturnType<typeof updateProfileRequested>
 ) {
@@ -166,4 +192,5 @@ export function* saga() {
   yield* takeLatest(logoutRequested, logoutSucceededSaga);
   yield* takeLatest(updateUserRequested, updateUserRequestedSaga);
   yield* takeLatest(updateProfileRequested, updateProfileRequestedSaga);
+  yield* takeLatest(updateCandidateRequested, updateCandidateRequestedSaga);
 }

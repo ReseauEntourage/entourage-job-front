@@ -5,12 +5,12 @@ import GenderIcon from 'assets/icons/gender.svg';
 import HomeIcon from 'assets/icons/home.svg';
 import PhoneIcon from 'assets/icons/phone.svg';
 import UserIcon from 'assets/icons/user.svg';
-import { useParametres } from '../../useUpdateUser';
 import { Card } from 'src/components/utils';
 import { Tag } from 'src/components/utils/Tag';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { StyledInformationsPersonnellesList } from './UserInformationCard.styles';
+import { useOpenCorrespondingModal } from './useOpenModal';
 
 interface UserInformationCardProps {
   loadingPersonal: boolean;
@@ -22,7 +22,7 @@ export const UserInformationCard = ({
   title,
 }: UserInformationCardProps) => {
   const user = useAuthenticatedUser();
-  const { openCorrespondingModal } = useParametres(user);
+  const { openCorrespondingModal } = useOpenCorrespondingModal(user);
 
   return (
     <Card

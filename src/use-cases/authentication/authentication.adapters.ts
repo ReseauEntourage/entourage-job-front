@@ -1,4 +1,9 @@
-import { User, UserProfile, UserWithUserCandidate } from 'src/api/types';
+import {
+  User,
+  UserCandidateWithUsers,
+  UserProfile,
+  UserWithUserCandidate,
+} from 'src/api/types';
 import { createRequestAdapter } from 'src/store/utils';
 
 export const fetchUserAdapter = createRequestAdapter('fetchUser').withPayloads<
@@ -47,6 +52,22 @@ export const updateProfileAdapter = createRequestAdapter(
     userProfile: Partial<UserProfile>;
   },
   { userProfile: Partial<UserProfile> },
+  {
+    error: UpdateError;
+  }
+>();
+
+export const updateCandidateAdapter = createRequestAdapter(
+  'updateCandidate'
+).withPayloads<
+  {
+    userId: string;
+    userCandidate: Partial<UserCandidateWithUsers>;
+  },
+  {
+    userId: string;
+    userCandidate: Partial<UserCandidateWithUsers>;
+  },
   {
     error: UpdateError;
   }

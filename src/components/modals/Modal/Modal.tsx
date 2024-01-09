@@ -11,7 +11,12 @@ interface CustomModalProps {
   fullWidth?: boolean;
 }
 
-const CustomModal = ({ children, closeOnNextRender = false, className, fullWidth = false }: CustomModalProps) => {
+const CustomModal = ({
+  children,
+  closeOnNextRender = false,
+  className,
+  fullWidth = false,
+}: CustomModalProps) => {
   const { onClose } = useModalContext();
 
   useEffect(() => {
@@ -61,7 +66,7 @@ const CustomModal = ({ children, closeOnNextRender = false, className, fullWidth
         if (reason === 'backdropClick') {
           return;
         }
-        if(onClose) onClose();
+        if (onClose) onClose();
       }}
     >
       <div
@@ -75,6 +80,5 @@ const CustomModal = ({ children, closeOnNextRender = false, className, fullWidth
     </Modal>
   );
 };
-
 
 export { CustomModal as Modal };

@@ -1,13 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import UIkit from 'uikit';
+import { v4 as uuid } from 'uuid';
 import PlaceholderIllu from 'assets/icons/illu-bulle-question.svg';
 import { ParametresPlaceholder } from '../ParametresPlaceholder';
-import { Api } from 'src/api';
 import { formEditCandidateProfessionalInformation } from 'src/components/forms/schemas/formEditCandidateProfessionalInformation';
 import { formEditCoachProfessionalInformation } from 'src/components/forms/schemas/formEditCoachProfessionalInformation';
 import { openModal } from 'src/components/modals/Modal';
-import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Card } from 'src/components/utils';
 import { Tag } from 'src/components/utils/Tag';
 import {
@@ -18,8 +15,8 @@ import {
 } from 'src/constants';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { authenticationActions } from 'src/use-cases/authentication';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
+import { ModalEditProfessionalInformation } from './ModalEditProfessionalInformation';
 import { StyledProfessionalInformationList } from './ProfessionalInformationCard.styles';
 import {
   checkData,
@@ -27,10 +24,11 @@ import {
   getCoachDefaultValues,
 } from './ProfessionalInformationCard.utils';
 
+const uuidValue = uuid();
+
 export const ProfessionalInformationCard = () => {
   const user = useAuthenticatedUser();
   const { userProfile, role } = user;
-  const dispatch = useDispatch();
 
   const [hasData, setHasData] = useState<boolean>(false);
 
@@ -38,45 +36,17 @@ export const ProfessionalInformationCard = () => {
     if (user) setHasData(checkData(user));
   }, [user]);
 
-  const submitForm = useCallback(
-    async (values, closeModal) => {
-      try {
-        await Api.putUserProfile(user.id, values);
-        closeModal();
-        dispatch(
-          authenticationActions.setUser({
-            ...user,
-            userProfile: {
-              ...user.userProfile,
-              ...values,
-            },
-          })
-        );
-        UIkit.notification(
-          'Vos informations professionnelles ont bien été mises à jour',
-          'success'
-        );
-      } catch (error) {
-        console.error(error);
-        UIkit.notification(
-          "Une erreur c'est produite lors de la mise à jour de vos informations professionnelles",
-          'danger'
-        );
-      }
-    },
-    [user, dispatch]
-  );
-
   const openProfessionalInformationModal = useCallback(() => {
     if (!userProfile) return;
     openModal(
       role === USER_ROLES.COACH ? (
-        <ModalEdit
+        <ModalEditProfessionalInformation
           title="Renseignez votre métier et les secteurs dans lesquels vous avez du réseau"
+          description=""
+          user={user}
           defaultValues={getCoachDefaultValues(userProfile)}
           formSchema={formEditCoachProfessionalInformation}
-          noCompulsory
-          onSubmit={(values, closeModal) => {
+          getValuesToSend={(values) => {
             const networkBusinessLines = values.networkBusinessLines.map(
               ({ value }, i) => {
                 return { name: value, order: i };
@@ -86,17 +56,17 @@ export const ProfessionalInformationCard = () => {
               currentJob: values.currentJob,
               networkBusinessLines,
             };
-            submitForm(valuesToSend, closeModal);
+            return valuesToSend;
           }}
         />
       ) : (
-        <ModalEdit
+        <ModalEditProfessionalInformation
           title="Renseignez votre projet professionnel"
           description="Nous vous mettrons en relation avec des professionnels qui pourront vous aider"
           defaultValues={getCandidateDefaultValues(userProfile)}
           formSchema={formEditCandidateProfessionalInformation}
-          noCompulsory
-          onSubmit={(values, closeModal) => {
+          user={user}
+          getValuesToSend={(values) => {
             let newAmbitions = [] as {
               prefix: AmbitionsPrefixesType;
               name: string;
@@ -140,12 +110,12 @@ export const ProfessionalInformationCard = () => {
               searchAmbitions: newAmbitions,
               searchBusinessLines: newBusinessLines,
             };
-            submitForm(valuesToSend, closeModal);
+            return valuesToSend;
           }}
         />
       )
     );
-  }, [userProfile, role, submitForm]);
+  }, [userProfile, role, user]);
 
   return (
     <Card
@@ -170,9 +140,9 @@ export const ProfessionalInformationCard = () => {
                   <li className="tag-container">
                     J&lsquo;ai du réseau dans :{' '}
                     {sortByOrder(userProfile.networkBusinessLines).map(
-                      ({ name }, index) => (
+                      ({ name }) => (
                         <Tag
-                          key={index}
+                          key={uuidValue}
                           content={
                             findConstantFromValue(name, BUSINESS_LINES).label
                           }

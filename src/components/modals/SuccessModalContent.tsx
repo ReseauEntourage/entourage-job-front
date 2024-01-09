@@ -7,7 +7,10 @@ interface SuccessModalContentProps {
   closeModal: () => void;
 }
 
-export const SuccessModalContent = ({ text, closeModal }: SuccessModalContentProps) => {
+export const SuccessModalContent = ({
+  text,
+  closeModal,
+}: SuccessModalContentProps) => {
   return (
     <>
       <div

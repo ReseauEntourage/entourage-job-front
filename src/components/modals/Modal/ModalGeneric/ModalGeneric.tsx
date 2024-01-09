@@ -24,15 +24,19 @@ export const ModalGeneric = ({
   children,
   onClose: customOnClose,
   className,
-  fullWidth=false,
-  removePadding=false,
-  withCloseButton=false,
-  closeOnNextRender=false,
+  fullWidth = false,
+  removePadding = false,
+  withCloseButton = false,
+  closeOnNextRender = false,
 }: ModalGenericProps) => {
   const { onClose } = useModalContext();
 
   return (
-    <Modal className={className} fullWidth={fullWidth} closeOnNextRender={closeOnNextRender}>
+    <Modal
+      className={className}
+      fullWidth={fullWidth}
+      closeOnNextRender={closeOnNextRender}
+    >
       <div
         id={id}
         className={`uk-margin-auto-vertical ${

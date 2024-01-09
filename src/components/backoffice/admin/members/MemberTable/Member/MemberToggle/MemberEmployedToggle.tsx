@@ -1,9 +1,13 @@
 import React from 'react';
 
 import { Tooltip } from 'react-tooltip';
+import UIkit from 'uikit';
+import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
 import { CandidateEmployedToggle } from 'src/components/backoffice/candidate/CandidateEmployedToggle';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
+import { CONTRACTS } from 'src/constants';
+import { findConstantFromValue } from 'src/utils';
 import { buildContractLabel } from 'src/utils/Formatting';
 import { StyledMemberToggleLabel } from './MemberToggle.styles';
 
@@ -28,16 +32,14 @@ export function MemberEmployedToggle({
 
   return (
     <CandidateEmployedToggle
-      modalTitle="Le candidat a retrouvé un emploi ?"
-      modalConfirmation="Valider"
-      defaultValue={
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        member.candidat.employed
-      }
-      notificationMessage="Le profil du candidat a été mis à jour !"
+      modal={{
+        title: 'Le candidat a retrouvé un emploi ?',
+        confirmationText: 'Valider',
+      }}
+      isToggled={!!member?.candidat?.employed}
+      title=""
       subtitle={
-        member &&
-        member.candidat && (
+        member?.candidat && (
           <StyledMemberToggleLabel
             data-tooltip-id={tooltipId}
             data-tooltip-content={contractLabel}
@@ -52,18 +54,45 @@ export function MemberEmployedToggle({
           </StyledMemberToggleLabel>
         )
       }
-      setData={(newData) => {
-        setMember({
-          ...member,
+      onToggle={async (employed, fields, onClose) => {
+        let mutatedFields = fields;
+        if (fields) {
+          const contract = findConstantFromValue(fields.contract, CONTRACTS);
+          const hasEnd = contract && contract.end;
+          mutatedFields = {
+            ...fields,
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            endOfContract:
+              fields.endOfContract && hasEnd ? fields.endOfContract : null,
+          };
+        }
 
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          candidat: {
-            ...member.candidat,
-            ...newData,
-          },
-        });
+        try {
+          await Api.putCandidate(member.id, {
+            employed,
+            ...mutatedFields,
+          });
+          setMember({
+            ...member,
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            candidat: {
+              ...member.candidat,
+              ...{
+                employed,
+                ...mutatedFields,
+              },
+            },
+          });
+          UIkit.notification(
+            'Le profil du candidat a été mis à jour !',
+            'success'
+          );
+          if (onClose) onClose();
+        } catch (error) {
+          console.error(error);
+          UIkit.notification('Une erreur est survenue', 'danger');
+        }
       }}
-      candidateId={member.id}
     />
   );
 }

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PlaceholderIllu from 'assets/icons/illu-coeur-mains-ouvertes.svg';
-import { useHelpField } from '../../useUpdateProfile';
+import { useHelpField, helpFields } from '../../useUpdateProfile';
 import { ParametresPlaceholder } from '../ParametresPlaceholder';
 import { openModal } from 'src/components/modals/Modal';
-import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { Card } from 'src/components/utils';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import {
@@ -15,6 +14,20 @@ import {
   PARAMETRES_HELP_CARD_CONTENTS,
 } from './ParametresHelpCard.utils';
 import { ParametresHelpModal } from './ParametresHelpModal';
+
+const plaholderText = {
+  title: {
+    [helpFields.HELP_NEEDS]: 'Vous n’avez renseigné aucune demande d’entraide',
+    [helpFields.HELP_OFFERS]:
+      'Vous n’avez renseigné aucune proposition d’entraide',
+  },
+  description: {
+    [helpFields.HELP_NEEDS]:
+      'Grâce à ces informations, nous pourrons vous mettre en contact avec des coachs qui pourraient vous accompagner.',
+    [helpFields.HELP_OFFERS]:
+      'Grâce à ces informations, nous pourrons vous mettre en contact avec des candidats que vous pourrez accompagner.',
+  },
+} as const;
 
 export const ParametresHelpCard = () => {
   const user = useAuthenticatedUser();
@@ -30,11 +43,10 @@ export const ParametresHelpCard = () => {
 
   const openHelpEditModal = () => {
     openModal(
-      <ModalGeneric
+      <ParametresHelpModal
+        role={contextualRole}
         title={PARAMETRES_HELP_CARD_TITLES.modal[contextualRole.toLowerCase()]}
-      >
-        <ParametresHelpModal role={contextualRole} />
-      </ModalGeneric>
+      />
     );
   };
 
@@ -68,8 +80,8 @@ export const ParametresHelpCard = () => {
       ) : (
         <ParametresPlaceholder
           image={<PlaceholderIllu />}
-          title="Vous n’avez renseigné aucune demande d’entraide"
-          description="Grâce à ces informations, nous pourrons vous mettre en contact avec des coachs qui pourraient vous accompagner."
+          title={plaholderText.title[helpField]}
+          description={plaholderText.description[helpField]}
           onClick={openHelpEditModal}
         />
       )}

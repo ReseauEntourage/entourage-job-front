@@ -1,11 +1,11 @@
-import { COLORS } from 'src/constants/styles';
 import styled from 'styled-components';
+import { COLORS } from 'src/constants/styles';
 
-const WIDTH = "45px";
-const HEIGHT = "25px";
-const TEST = "19.5px";
-const HEIGHT_ROUNDED = "19.5px";
-const DECALE = "3px";
+const WIDTH = '45px';
+const HEIGHT = '25px';
+const TEST = '19.5px';
+const HEIGHT_ROUNDED = '19.5px';
+const DECALE = '3px';
 
 export const StyledToggleContainer = styled.div`
   display: flex;
@@ -50,23 +50,28 @@ export const StyledSlider = styled.span`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: black;
-  -webkit-transition: .4s;
-  transition: .4s;
+  background-color: ${(props) => {
+    return props.isToggled ? COLORS.primaryOrange : 'black';
+  }};
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
   border-radius: 25.5px;
 
   &:before {
     position: absolute;
-    content: "";
+    content: '';
     height: ${HEIGHT_ROUNDED};
     width: ${HEIGHT_ROUNDED};
     left: ${DECALE};
     bottom: ${DECALE};
     background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
     border-radius: ${HEIGHT};
     border-radius: 50%;
+    transform: ${(props) => {
+      return props.isToggled ? 'translateX(19.5px)' : 'translateX(0px)';
+    }};
   }
 `;
 

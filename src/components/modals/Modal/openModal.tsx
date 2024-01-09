@@ -10,7 +10,7 @@ export function openModal(modal) {
 }
 
 export function ModalsListener() {
-  const [modals, setModals] = useState<{[key: string]: React.ReactNode}>({});
+  const [modals, setModals] = useState<{ [key: string]: React.ReactNode }>({});
 
   const subscription = useMemo(() => {
     return modalsSubject.subscribe((modal) => {

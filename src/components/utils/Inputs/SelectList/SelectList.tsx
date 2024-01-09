@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import CheckIcon from 'assets/icons/check.svg';
+import { AnyCantFix } from 'src/utils/Types';
 import {
   StyledCheckIconContainer,
   StyledSelectList,
@@ -12,53 +13,41 @@ interface SelectListProps {
     value: string;
     component: React.ReactNode;
   }[];
-  defaultValues?: string[];
-  onChange: (value: string[]) => void;
+  values?: AnyCantFix[]; // should be an array of strings
+  onChange: (value: AnyCantFix[]) => void;
 }
 
 export function SelectList({
   options,
   id,
   isMulti = true,
-  defaultValues,
+  values,
   onChange,
 }: SelectListProps) {
-  const [selectedOptions, setSelectedOptions] = useState<string[]>(
-    defaultValues || []
-  );
-
   const handleSelect = useCallback(
     (value: string) => {
-      if (selectedOptions.includes(value)) {
-        setSelectedOptions(
-          selectedOptions.filter((option) => option !== value)
-        );
+      if (!values) return;
+      if (values.includes(value)) {
+        onChange(values.filter((option) => option !== value));
       } else if (isMulti) {
-        setSelectedOptions([...selectedOptions, value]);
+        onChange([...values, value]);
       } else {
-        setSelectedOptions([value]);
+        onChange([value]);
       }
     },
-    [selectedOptions, isMulti]
+    [values, isMulti, onChange]
   );
-
-  useEffect(() => {
-    onChange(selectedOptions);
-  }, [selectedOptions, onChange]);
 
   return (
     <StyledSelectList id={id}>
       {options.map(({ value, component }, i) => {
         return (
-          <li
-            key={i}
-            className={selectedOptions.includes(value) ? 'selected' : ''}
-          >
+          <li key={i} className={values?.includes(value) ? 'selected' : ''}>
             <button onClick={() => handleSelect(value)} type="button">
               {component}
             </button>
             <StyledCheckIconContainer
-              className={selectedOptions.includes(value) ? 'selected' : ''}
+              className={values?.includes(value) ? 'selected' : ''}
             >
               <CheckIcon />
             </StyledCheckIconContainer>

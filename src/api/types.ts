@@ -35,8 +35,8 @@ export type Route<T extends APIRoute> = `/${T}/${string}` | `/${T}`;
 
 export type UserCandidate = {
   employed: boolean;
-  contract: ContractValue;
-  endOfContract: string;
+  contract: ContractValue | null;
+  endOfContract: string | null;
   hidden: boolean;
   note: string;
   url: string;
@@ -208,7 +208,7 @@ export interface CV {
 
 export interface UserCandidateWithUsers extends UserCandidate {
   id?: string;
-  email: string;
+  email?: string;
   candidat?: User;
   coach?: User;
   cvs?: CV[];
@@ -238,8 +238,8 @@ export type UserDto = {
 
 export type PutCandidate = {
   employed: boolean;
-  contract: ContractValue;
-  endOfContract: Date;
+  contract: ContractValue | null;
+  endOfContract: string | null;
   hidden: boolean;
   note: string;
   url: string;
