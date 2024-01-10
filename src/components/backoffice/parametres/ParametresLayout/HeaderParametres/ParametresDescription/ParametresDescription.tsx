@@ -1,12 +1,7 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import UIkit from 'uikit';
-import { Api } from 'src/api';
-import { formEditProfileDescription } from 'src/components/forms/schemas/formEditProfileDescription';
 import { openModal } from 'src/components/modals/Modal';
-import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { authenticationActions } from 'src/use-cases/authentication';
+import { ModalEditProfileDescription } from './ModalEditProfileDescription';
 import {
   StyledParametresDescriptionPlaceholder,
   StyledParametresDescriptionParagraphe,
@@ -15,45 +10,10 @@ import {
 
 export const ParametresDescription = () => {
   const user = useAuthenticatedUser();
-  const { id, userProfile } = user;
-
-  const dispatch = useDispatch();
+  const { userProfile } = user;
 
   const openDescriptionModal = () => {
-    openModal(
-      <ModalEdit
-        title="Ecrire votre présentation"
-        defaultValues={{
-          description: userProfile?.description,
-        }}
-        formSchema={formEditProfileDescription}
-        onSubmit={async (values, closeModal) => {
-          try {
-            await Api.putUserProfile(id, values);
-            closeModal();
-            dispatch(
-              authenticationActions.setUser({
-                ...user,
-                userProfile: {
-                  ...user.userProfile,
-                  description: values.description,
-                },
-              })
-            );
-            UIkit.notification(
-              'Vos informations personnelles ont bien été mises à jour',
-              'success'
-            );
-          } catch (error) {
-            console.error(error);
-            UIkit.notification(
-              "Une erreur c'est produite lors de la mise à jour de votre présentation",
-              'danger'
-            );
-          }
-        }}
-      />
-    );
+    openModal(<ModalEditProfileDescription user={user} />);
   };
 
   return (

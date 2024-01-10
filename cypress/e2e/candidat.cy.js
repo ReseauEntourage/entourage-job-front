@@ -319,7 +319,7 @@ describe('Candidat', () => {
       .contains('Alternance')
       .click();
     cy.get('#form-edit-employed-endOfContract').type('2024-03-03');
-    cy.contains('Valider').click();
+    cy.contains('Sauvegarder').click();
     cy.wait('@putUserCandidatParams');
     cy.get(`[data-testid="test-toggle-employedToggle"]`).should('be.checked');
     cy.get('label[for="ent-toggle-employedToggle"]').click();

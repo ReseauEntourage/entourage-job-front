@@ -7,14 +7,14 @@ import { updateCandidateSelectors } from 'src/use-cases/authentication';
 
 interface CVModalEditProps {
   title: string;
-  dispatchOnSumbit: (keyValue: {
+  dispatchOnSubmit: (keyValue: {
     employed?: boolean;
     contract?: Contract | null;
     endOfContract?: string | null;
   }) => void;
 }
 
-export const CVModalEdit = ({ title, dispatchOnSumbit }: CVModalEditProps) => {
+export const CVModalEdit = ({ title, dispatchOnSubmit }: CVModalEditProps) => {
   const [closeModal, setCloseModal] = React.useState<boolean>(false);
 
   const updateCandidateStatus = useSelector(
@@ -33,7 +33,7 @@ export const CVModalEdit = ({ title, dispatchOnSumbit }: CVModalEditProps) => {
       formSchema={formEditEmployed}
       closeOnNextRender={closeModal}
       onSubmit={(fields) => {
-        dispatchOnSumbit({ employed: true, ...fields });
+        dispatchOnSubmit({ employed: true, ...fields });
       }}
     />
   );

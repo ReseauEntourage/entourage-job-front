@@ -55,7 +55,7 @@ export const CVPreferences = ({
                   ? 'Vous avez retrouvé un emploi ?'
                   : 'Le candidat a-t-il retrouvé un emploi ?'
               }
-              dispatchOnSumbit={dispatchUpdateCandidate}
+              dispatchOnSubmit={dispatchUpdateCandidate}
             />
           }
           onToggle={(employed) => {
@@ -82,7 +82,7 @@ export const CVPreferences = ({
           modal={
             <CVModalConfirmation
               id="hidden"
-              dispatchOnSumbit={dispatchUpdateCandidate}
+              dispatchOnSubmit={dispatchUpdateCandidate}
             />
           }
           isToggled={candidat.hidden}

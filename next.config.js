@@ -9,6 +9,10 @@ const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 
 const dev = process.env.NODE_ENV !== 'production';
 
+const hash = require('string-hash');
+const { relative } = require('path');
+const context = __dirname;
+
 /*
 const ContentSecurityPolicy = `
   default-src
@@ -129,7 +133,7 @@ module.exports = withLess({
 
     config.module.rules.push({
       test: /\.svg$/,
-      use: [
+      use: ({ resource }) => [
         {
           loader: '@svgr/webpack',
           options: {
@@ -141,7 +145,14 @@ module.exports = withLess({
                     overrides: {
                       // disable plugins
                       removeViewBox: false,
+                      cleanupIDs: false,
                     },
+                  },
+                },
+                {
+                  name: 'cleanupIDs',
+                  params: {
+                    prefix: `svg${hash(relative(context, resource))}`,
                   },
                 },
               ],

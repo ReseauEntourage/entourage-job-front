@@ -1,31 +1,30 @@
 import React, { useCallback } from 'react';
 import CheckIcon from 'assets/icons/check.svg';
-import { AnyCantFix } from 'src/utils/Types';
 import {
   StyledCheckIconContainer,
   StyledSelectList,
 } from './SelectList.styles';
 
-interface SelectListProps {
+interface SelectListProps<T extends string> {
   id: string;
   isMulti?: boolean;
   options: {
-    value: string;
+    value: T;
     component: React.ReactNode;
   }[];
-  values?: AnyCantFix[]; // should be an array of strings
-  onChange: (value: AnyCantFix[]) => void;
+  values?: T[];
+  onChange: (value: T[]) => void;
 }
 
-export function SelectList({
+export function SelectList<T extends string>({
   options,
   id,
   isMulti = true,
   values,
   onChange,
-}: SelectListProps) {
+}: SelectListProps<T>) {
   const handleSelect = useCallback(
-    (value: string) => {
+    (value: T) => {
       if (!values) return;
       if (values.includes(value)) {
         onChange(values.filter((option) => option !== value));

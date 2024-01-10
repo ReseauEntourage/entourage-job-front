@@ -30,8 +30,7 @@ export const getCoachDefaultValues = (
   return {
     currentJob,
     networkBusinessLines: networkBusinessLines?.map(({ name }) => {
-      const BL = findConstantFromValue(name, BUSINESS_LINES);
-      return { value: BL.value, label: BL.label };
+      return findConstantFromValue(name, BUSINESS_LINES);
     }),
   };
 };

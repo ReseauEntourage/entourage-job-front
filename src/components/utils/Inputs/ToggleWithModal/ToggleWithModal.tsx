@@ -51,7 +51,7 @@ export const ToggleWithModal = <S extends FormSchema<AnyCantFix>>({
             id={`ent-toggle-${id}`}
             data-testid={`test-toggle-${id}`}
             type="checkbox"
-            checked={false}
+            checked={isToggled}
             onChange={async () => {
               if (isToggled) {
                 await onToggle(false);

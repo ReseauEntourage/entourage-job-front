@@ -8,12 +8,12 @@ import { ReduxRequestEvents } from 'src/constants';
 import { updateCandidateSelectors } from 'src/use-cases/authentication';
 
 interface CVModalConfirmationProps {
-  dispatchOnSumbit: (keyValue: { hidden: boolean }) => void;
+  dispatchOnSubmit: (keyValue: { hidden: boolean }) => void;
   id: string;
 }
 
 export const CVModalConfirmation = ({
-  dispatchOnSumbit,
+  dispatchOnSubmit,
   id,
 }: CVModalConfirmationProps) => {
   const { onClose } = useModalContext();
@@ -28,6 +28,7 @@ export const CVModalConfirmation = ({
       setCloseModal(true);
     }
   }, [updateCandidateStatus]);
+
   return (
     <ModalGeneric
       title="Changer la visibilité du CV en ligne ?"
@@ -49,7 +50,7 @@ export const CVModalConfirmation = ({
           style="primary"
           dataTestId={`test-confirm-${id}`}
           onClick={() => {
-            dispatchOnSumbit({ hidden: true });
+            dispatchOnSubmit({ hidden: true });
           }}
         >
           Oui, masquer mon CV
