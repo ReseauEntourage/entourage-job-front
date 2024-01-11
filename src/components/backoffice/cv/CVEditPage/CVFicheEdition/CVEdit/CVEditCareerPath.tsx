@@ -84,12 +84,14 @@ export const CVEditCareerPath = ({
                   closeModal
                 ) => {
                   closeModal();
-                  let newAmbitions = [];
+                  let newAmbitions = [] as {
+                    prefix: AmbitionsPrefixesType;
+                    name: string;
+                    order: number;
+                  }[];
                   if (ambition0) {
                     newAmbitions = [
-                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
                       ...newAmbitions,
-                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
                       {
                         prefix: AMBITIONS_PREFIXES[1].label,
                         name: ambition0,
@@ -99,9 +101,7 @@ export const CVEditCareerPath = ({
                   }
                   if (ambition1) {
                     newAmbitions = [
-                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
                       ...newAmbitions,
-                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
                       {
                         prefix: AMBITIONS_PREFIXES[1].label,
                         name: ambition1,
@@ -109,20 +109,23 @@ export const CVEditCareerPath = ({
                       },
                     ];
                   }
-                  const newBusinessLines = [
-                    { name: businessLine0.value, order: 0 },
-                  ];
-
+                  let newBusinessLines = [] as {
+                    name: BusinessLineValue;
+                    order: number;
+                  }[];
+                  if (businessLine0) {
+                    newBusinessLines = [
+                      { name: businessLine0.value, order: 0 },
+                    ];
+                  }
+                  if (businessLine1) {
+                    newBusinessLines = [
+                      ...newBusinessLines,
+                      { name: businessLine1.value, order: 1 },
+                    ];
+                  }
                   onChange({
-                    businessLines: businessLine1
-                      ? [
-                          ...newBusinessLines,
-                          {
-                            name: businessLine1.value,
-                            order: 1,
-                          },
-                        ]
-                      : newBusinessLines,
+                    businessLines: newBusinessLines,
                     ambitions: newAmbitions,
                   });
                 }}

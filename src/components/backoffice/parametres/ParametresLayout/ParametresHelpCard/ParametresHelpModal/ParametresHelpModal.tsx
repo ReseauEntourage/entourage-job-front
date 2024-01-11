@@ -1,8 +1,10 @@
-import React from 'react';
-import { useProfile } from '../../../useUpdateProfile';
+import React, { useEffect, useState } from 'react';
+import { useUpdateProfile } from '../../../useUpdateProfile';
 import { StyledHelpModalSelectOption } from '../ParametresHelpCard.styles';
 import { PARAMETRES_HELP_CARD_CONTENTS } from '../ParametresHelpCard.utils';
+import { UserProfile } from 'src/api/types';
 import { useModalContext } from 'src/components/modals/Modal';
+import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { Button } from 'src/components/utils';
 import { H6 } from 'src/components/utils/Headings';
 import { SelectList } from 'src/components/utils/Inputs/SelectList';
@@ -10,19 +12,30 @@ import { UserRole } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { StyledParametresHelpModalCTAContainer } from './StyledParametresHelpModal.styles';
 
-export const ParametresHelpModal = ({ role }: { role: UserRole }) => {
+export const ParametresHelpModal = ({
+  role,
+  title,
+}: {
+  role: UserRole;
+  title: string;
+}) => {
   const { onClose } = useModalContext();
   const user = useAuthenticatedUser();
   const { userProfile } = user;
 
-  const { helpField, updateUserProfile, setTempProfile } = useProfile(
-    user,
-    onClose
-  );
+  const { helpField, updateUserProfile, closeModal } = useUpdateProfile(user);
 
-  if (!helpField || !userProfile) return null;
+  const [tempProfile, setTempProfile] = useState<Partial<UserProfile>>({});
+
+  useEffect(() => {
+    if (helpField && userProfile) {
+      setTempProfile(userProfile);
+    }
+  }, [helpField, userProfile]);
+
+  if (!helpField || !tempProfile || !(helpField in tempProfile)) return null;
   return (
-    <>
+    <ModalGeneric title={title} closeOnNextRender={closeModal}>
       <SelectList
         id="help-select-list"
         onChange={(values) => {
@@ -32,9 +45,13 @@ export const ParametresHelpModal = ({ role }: { role: UserRole }) => {
             }),
           });
         }}
-        defaultValues={userProfile[helpField].map(({ name }) => name)}
+        values={
+          tempProfile[helpField]
+            ? tempProfile[helpField]?.map(({ name }) => name)
+            : []
+        }
         options={PARAMETRES_HELP_CARD_CONTENTS[role.toLowerCase()].map(
-          ({ value, title, description, icon }) => ({
+          ({ value, title: titleH6, description, icon }) => ({
             value,
             component: (
               <StyledHelpModalSelectOption
@@ -42,7 +59,7 @@ export const ParametresHelpModal = ({ role }: { role: UserRole }) => {
               >
                 <div className="img-container">{icon}</div>
                 <div className="text-container">
-                  <H6 title={title} color="primaryOrange" />
+                  <H6 title={titleH6} color="primaryOrange" />
                   <p>{description}</p>
                 </div>
               </StyledHelpModalSelectOption>
@@ -60,12 +77,12 @@ export const ParametresHelpModal = ({ role }: { role: UserRole }) => {
         </Button>
         <Button
           style="custom-secondary-inverted"
-          onClick={updateUserProfile}
+          onClick={() => updateUserProfile(tempProfile)}
           dataTestId="parametres-help-modal-save"
         >
           Sauvegarder
         </Button>
       </StyledParametresHelpModalCTAContainer>
-    </>
+    </ModalGeneric>
   );
 };

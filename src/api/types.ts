@@ -1,13 +1,13 @@
 import {
   ExternalMessageContactType,
   Contract as ContractValue,
-  AmbitionsPrefixesType,
   BusinessLineValue,
   ExternalOfferOrigin,
   HeardAboutValue,
   CandidateHelpWithValue,
   CompanyApproach,
   OfferStatus,
+  AmbitionsPrefixesType,
 } from 'src/constants';
 import { AdminZone, Department } from 'src/constants/departements';
 import { AdminRole, Gender, UserRole } from 'src/constants/users';
@@ -35,8 +35,8 @@ export type Route<T extends APIRoute> = `/${T}/${string}` | `/${T}`;
 
 export type UserCandidate = {
   employed: boolean;
-  contract: ContractValue;
-  endOfContract: string;
+  contract: ContractValue | null;
+  endOfContract: string | null;
   hidden: boolean;
   note: string;
   url: string;
@@ -73,7 +73,7 @@ export type HelpNames = 'tips' | 'interview' | 'cv' | 'network' | 'event';
 
 export type UserProfile = {
   currentJob: string;
-  descrpiption: string;
+  description: string;
   helpNeeds: { name: HelpNames }[];
   helpOffers: { name: HelpNames }[];
   networkBusinessLines: {
@@ -109,7 +109,7 @@ export type User = {
   zone: AdminZone;
   organization: Organization;
   deletedAt?: string;
-  userProfile?: UserProfile;
+  userProfile: UserProfile;
   OrganizationId?: string;
 };
 
@@ -208,7 +208,7 @@ export interface CV {
 
 export interface UserCandidateWithUsers extends UserCandidate {
   id?: string;
-  email: string;
+  email?: string;
   candidat?: User;
   coach?: User;
   cvs?: CV[];
@@ -238,8 +238,8 @@ export type UserDto = {
 
 export type PutCandidate = {
   employed: boolean;
-  contract: ContractValue;
-  endOfContract: Date;
+  contract: ContractValue | null;
+  endOfContract: string | null;
   hidden: boolean;
   note: string;
   url: string;

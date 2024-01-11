@@ -1,8 +1,7 @@
 import _ from 'lodash';
 import { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import UIkit from 'uikit';
-import { HelpNames, UserProfile, UserWithUserCandidate } from 'src/api/types';
+import { UserProfile, UserWithUserCandidate } from 'src/api/types';
 import { ReduxRequestEvents } from 'src/constants';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 import {
@@ -11,10 +10,16 @@ import {
 } from 'src/use-cases/authentication';
 import { isRoleIncluded } from 'src/utils';
 
+export const helpFields = {
+  HELP_NEEDS: 'helpNeeds',
+  HELP_OFFERS: 'helpOffers',
+} as const;
+
 export const useHelpField = (user: UserWithUserCandidate) => {
   const { role } = user;
 
-  const [helpField, setHelpField] = useState<'helpNeeds' | 'helpOffers'>();
+  const [helpField, setHelpField] =
+    useState<(typeof helpFields)[keyof typeof helpFields]>();
 
   useEffect(() => {
     if (!helpField) {
@@ -29,11 +34,13 @@ export const useHelpField = (user: UserWithUserCandidate) => {
   return helpField;
 };
 
-export const useProfile = (
+export const useUpdateProfile = (
   user: UserWithUserCandidate,
   onClose?: () => void
 ) => {
   const dispatch = useDispatch();
+
+  const [closeModal, setCloseModal] = useState<boolean>(false);
 
   const helpField = useHelpField(user);
 
@@ -44,55 +51,27 @@ export const useProfile = (
   useEffect(() => {
     if (updateProfileStatus === ReduxRequestEvents.SUCCEEDED) {
       if (onClose) onClose();
-      UIkit.notification(`La modification a bien été enregistrée`, 'success');
-    } else if (updateProfileStatus === ReduxRequestEvents.FAILED) {
-      UIkit.notification(
-        `Une erreur est survenue lors de la modification`,
-        'danger'
-      );
+      setCloseModal(true);
     }
   }, [updateProfileStatus, onClose]);
 
-  useEffect(() => {
-    return () => {
-      dispatch(authenticationActions.updateProfileReset());
-    };
-  }, [dispatch]);
-
-  const [tempProfile, setTempProfile] = useState<Partial<UserProfile>>({});
-
-  const updateHelpFields = useCallback(
-    (newHelpFields: HelpNames[]): void => {
-      if (!helpField || !tempProfile) return;
-      setTempProfile({
-        ...tempProfile,
-        [helpField]: newHelpFields.map((help) => {
-          return { name: help };
-        }),
-      });
+  const updateUserProfile = useCallback(
+    (newProfileData: Partial<UserProfile>): void => {
+      if (!_.isEmpty(newProfileData) && user.id) {
+        dispatch(
+          authenticationActions.updateProfileRequested({
+            userId: user.id,
+            userProfile: newProfileData,
+          })
+        );
+      }
     },
-    [helpField, tempProfile]
+    [dispatch, user.id]
   );
-
-  const updateUserProfile = useCallback((): void => {
-    if (!tempProfile) return;
-    const cleanedProfile: Partial<UserProfile> = _.pickBy(
-      tempProfile,
-      (v) => v !== null
-    );
-    dispatch(
-      authenticationActions.updateProfileRequested({
-        userId: user.id,
-        userProfile: cleanedProfile,
-      })
-    );
-  }, [dispatch, tempProfile, user.id]);
 
   return {
     helpField,
     updateUserProfile,
-    setTempProfile,
-    updateHelpFields,
-    tempProfile,
+    closeModal,
   };
 };

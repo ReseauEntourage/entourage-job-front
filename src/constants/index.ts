@@ -206,7 +206,12 @@ export const CV_STATUS = {
   },
 };
 
-export const AMBITIONS_PREFIXES = [
+export type AmbitionsPrefixesType = 'dans' | 'comme';
+
+export const AMBITIONS_PREFIXES: {
+  label: AmbitionsPrefixesType;
+  value: AmbitionsPrefixesType;
+}[] = [
   {
     label: 'dans',
     value: 'dans',
@@ -216,8 +221,6 @@ export const AMBITIONS_PREFIXES = [
     value: 'comme',
   },
 ];
-
-export type AmbitionsPrefixesType = ['dans' | 'comme'];
 
 export type Contract =
   | 'cdi'

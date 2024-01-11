@@ -17,6 +17,15 @@ export const updateProfileSelectors = fetchUserAdapter.getSelectors<RootState>(
   (state) => state.authentication.updateProfile
 );
 
+export const updateUserSelectors = fetchUserAdapter.getSelectors<RootState>(
+  (state) => state.authentication.updateUser
+);
+
+export const updateCandidateSelectors =
+  fetchUserAdapter.getSelectors<RootState>(
+    (state) => state.authentication.updateCandidate
+  );
+
 export function selectAuthentication(state: RootState) {
   return state.authentication;
 }

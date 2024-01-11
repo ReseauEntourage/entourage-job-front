@@ -22,7 +22,9 @@ export const StyledParametresLeftColumn = styled.div`
   flex-direction: column;
   flex-grow: 1;
   gap: 40px;
+  min-width: 400px;
   &.mobile {
+    min-width: unset;
     width: 100%;
     margin-bottom: 40px;
   }
@@ -31,7 +33,7 @@ export const StyledParametresLeftColumn = styled.div`
 export const StyledParametresRightColumn = styled.div`
   display: flex;
   flex-direction: column;
-  flex-grow: 4;
+  flex-grow: 2;
   gap: 40px;
   &.mobile {
     width: 100%;

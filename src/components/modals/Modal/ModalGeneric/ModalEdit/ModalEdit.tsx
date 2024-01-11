@@ -11,7 +11,7 @@ import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { AnyCantFix } from 'src/utils/Types';
 
 interface ModalEditProps<S extends FormSchema<AnyCantFix>> {
-  title: string | JSX.Element;
+  title: React.ReactNode;
   formSchema: S;
   onCancel?: () => void;
   onSubmit: (
@@ -21,9 +21,11 @@ interface ModalEditProps<S extends FormSchema<AnyCantFix>> {
   ) => void;
   onError?: (values: ExtractFormSchemaValidation<S>) => void;
   defaultValues?: DefaultValues<ExtractFormSchemaValidation<S>>;
-  description?: string | JSX.Element;
+  description?: React.ReactNode;
   submitText?: string;
   cancelText?: string;
+  noCompulsory?: boolean;
+  closeOnNextRender?: boolean;
 }
 export function ModalEdit<S extends FormSchema<AnyCantFix>>({
   title,
@@ -35,32 +37,31 @@ export function ModalEdit<S extends FormSchema<AnyCantFix>>({
   cancelText = 'Annuler',
   onError = () => {},
   onCancel = () => {},
+  noCompulsory = false,
+  closeOnNextRender = false,
 }: ModalEditProps<S>) {
   const { onClose } = useModalContext();
   return (
-    <ModalGeneric title={title} description={description}>
+    <ModalGeneric
+      title={title}
+      description={description}
+      closeOnNextRender={closeOnNextRender}
+    >
       <FormWithValidation
         submitText={submitText}
         cancelText={cancelText}
         formSchema={formSchema}
         defaultValues={defaultValues}
+        noCompulsory={noCompulsory}
         onCancel={() => {
-          if (onCancel) {
-            onCancel();
-          }
-
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          onClose();
+          if (onCancel) onCancel();
+          if (onClose) onClose();
         }}
         onError={onError}
-        onSubmit={(fields, setError) =>
-          onSubmit(
-            fields,
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            onClose,
-            setError
-          )
-        }
+        onSubmit={(fields, setError) => {
+          if (!onClose) return;
+          onSubmit(fields, onClose, setError);
+        }}
       />
     </ModalGeneric>
   );

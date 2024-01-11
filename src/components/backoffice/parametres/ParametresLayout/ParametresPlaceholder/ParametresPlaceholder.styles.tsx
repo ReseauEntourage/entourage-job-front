@@ -7,7 +7,7 @@ export const StyledParametresCardPlaceholder = styled.div`
   > div {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     > div.illu-container {
       margin-right: 40px;
       svg {
@@ -16,6 +16,11 @@ export const StyledParametresCardPlaceholder = styled.div`
     }
   }
   button {
-    display: none;
+    margin-top: 20px;
+  }
+  &.mobile {
+    button {
+      display: none;
+    }
   }
 `;

@@ -8,7 +8,6 @@ import Icons from 'src/styles/dist/js/uikit-icons';
 import 'src/styles/dist/css/uikit.entourage.min.css';
 import 'src/styles/styles.less';
 import 'src/components/filters/SearchBar.less';
-import 'src/components/backoffice/Toggle.less';
 import 'src/components/modals/Modal/Modal.less';
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 import 'react-phone-number-input/style.css';

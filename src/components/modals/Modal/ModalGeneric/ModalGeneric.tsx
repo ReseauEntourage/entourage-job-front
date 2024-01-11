@@ -13,6 +13,7 @@ interface ModalGenericProps {
   fullWidth?: boolean;
   removePadding?: boolean;
   withCloseButton?: boolean;
+  closeOnNextRender?: boolean;
 }
 
 const id = 'modal-generic';
@@ -23,14 +24,19 @@ export const ModalGeneric = ({
   children,
   onClose: customOnClose,
   className,
-  fullWidth,
-  removePadding,
-  withCloseButton,
+  fullWidth = false,
+  removePadding = false,
+  withCloseButton = false,
+  closeOnNextRender = false,
 }: ModalGenericProps) => {
   const { onClose } = useModalContext();
 
   return (
-    <Modal className={className} fullWidth={fullWidth}>
+    <Modal
+      className={className}
+      fullWidth={fullWidth}
+      closeOnNextRender={closeOnNextRender}
+    >
       <div
         id={id}
         className={`uk-margin-auto-vertical ${
@@ -74,13 +80,4 @@ export const ModalGeneric = ({
       </div>
     </Modal>
   );
-};
-
-ModalGeneric.defaultProps = {
-  onClose: null,
-  className: '',
-  fullWidth: false,
-  removePadding: false,
-  withCloseButton: false,
-  description: '',
 };

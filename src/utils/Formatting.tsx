@@ -55,7 +55,7 @@ export function buildBusinessLineForSentence({ label, prefix }) {
 
 export function buildContractLabel(
   contract: string,
-  endOfContract?: string,
+  endOfContract?: string | null,
   startOfContract?: string
 ) {
   let dates = '';

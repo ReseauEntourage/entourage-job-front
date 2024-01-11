@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { UserWithUserCandidate } from 'src/api/types';
+import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 import { RequestState, SliceRootState } from 'src/store/utils';
+import { isRoleIncluded } from 'src/utils';
 import {
   LoginError,
   UpdateError,
@@ -8,6 +10,7 @@ import {
   loginAdapter,
   logoutAdapter,
   updateUserAdapter,
+  updateCandidateAdapter,
   updateProfileAdapter,
 } from './authentication.adapters';
 
@@ -17,6 +20,7 @@ export interface State {
   logout: RequestState<typeof logoutAdapter>;
   user: UserWithUserCandidate | null;
   updateUser: RequestState<typeof updateUserAdapter>;
+  updateCandidate: RequestState<typeof updateCandidateAdapter>;
   updateProfile: RequestState<typeof updateProfileAdapter>;
   accessToken: string | null;
   loginError: LoginError | null;
@@ -29,6 +33,7 @@ const initialState: State = {
   logout: logoutAdapter.getInitialState(),
   login: loginAdapter.getInitialState(),
   updateUser: updateUserAdapter.getInitialState(),
+  updateCandidate: updateCandidateAdapter.getInitialState(),
   updateProfile: updateProfileAdapter.getInitialState(),
   user: null,
   accessToken: null,
@@ -76,6 +81,39 @@ export const slice = createSlice({
         state.userUpdateError = action.payload.error;
       },
     }),
+    ...updateCandidateAdapter.getReducers<State>(
+      (state) => state.updateCandidate,
+      {
+        updateCandidateSucceeded(state, action) {
+          if (!state.user) return;
+          if (
+            isRoleIncluded(CANDIDATE_USER_ROLES, state.user.role) &&
+            state.user.candidat
+          ) {
+            state.user.candidat = {
+              ...state.user.candidat,
+              ...action.payload.userCandidate,
+            };
+          } else if (state.user.coaches) {
+            state.user = {
+              ...state.user,
+              coaches: state.user.coaches.map((coach) => {
+                if (coach?.candidat?.id === action.payload.userId) {
+                  return {
+                    ...coach,
+                    ...action.payload.userCandidate,
+                  };
+                }
+                return coach;
+              }),
+            };
+          }
+        },
+        updateCandidateFailed(state, action) {
+          state.userUpdateError = action.payload.error;
+        },
+      }
+    ),
     ...updateProfileAdapter.getReducers<State>((state) => state.updateProfile, {
       updateProfileSucceeded(state, action) {
         if (!state.user?.userProfile) return;

@@ -1,10 +1,11 @@
 import React from 'react';
-import { Section } from 'src/components/utils';
+import { useConfirmationToaster } from '../useConfirmationToaster';
+import { Card, Section } from 'src/components/utils';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop } from 'src/hooks/utils';
 import { isRoleIncluded } from 'src/utils';
-import { CVPreferencesCard } from './CVPreferencesCard';
+import { CVPreferences } from './CVPreferences';
 import { ChangePasswordCard } from './ChangePasswordCard';
 import { HeaderParametres } from './HeaderParametres';
 import { ParametresHelpCard } from './ParametresHelpCard';
@@ -14,6 +15,7 @@ import {
   StyledParametresLeftColumn,
   StyledParametresRightColumn,
 } from './ParametresLayout.styles';
+import { ProfessionalInformationCard } from './ProfessionalInformationCard';
 import {
   UserInformationCard,
   LinkedUserInformationCard,
@@ -29,6 +31,7 @@ export const ParametresLayout = ({
   const isDesktop = useIsDesktop();
   const user = useAuthenticatedUser();
 
+  useConfirmationToaster();
   return (
     <StyledParametresLayout>
       <HeaderParametres />
@@ -43,9 +46,16 @@ export const ParametresLayout = ({
               loadingPersonal={loadingPersonal}
             />
             {/* Préférences du CV */}
-            {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) && (
-              <CVPreferencesCard />
-            )}
+            {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) &&
+              user.candidat && (
+                <Card title="Préférences du CV" isMobileClosable>
+                  <CVPreferences
+                    userRole={user.role}
+                    candidat={user.candidat}
+                    candidatId={user.id}
+                  />
+                </Card>
+              )}
             {/* Changement de mot de passe */}
             <ChangePasswordCard />
           </StyledParametresLeftColumn>
@@ -53,7 +63,6 @@ export const ParametresLayout = ({
           <StyledParametresRightColumn
             className={`${isDesktop ? '' : 'mobile'}`}
           >
-            {/* LinkedUser info */}
             {isRoleIncluded(
               [
                 USER_ROLES.COACH,
@@ -63,6 +72,7 @@ export const ParametresLayout = ({
               user.role
             ) && (
               <>
+                <ProfessionalInformationCard />
                 <ParametresHelpCard />
                 <LinkedUserInformationCard />
               </>

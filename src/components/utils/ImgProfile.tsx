@@ -64,6 +64,7 @@ export const ImgProfile = ({ user, size = 40 }: ImgProfileProps) => {
             }}
             src={`${urlImg}?${hash}`}
             alt={`photo de ${myUser.firstName}`}
+            id="parametres-profile-picture"
           />
         </div>
       ) : (
