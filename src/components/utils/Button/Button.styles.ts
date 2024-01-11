@@ -249,3 +249,170 @@ export const StyledButton = styled.button`
     line-height: 16px;
   }
 `;
+
+export const StyledButtonMock = styled.div`
+  font-size: 14px;
+  line-height: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 20px !important;
+  svg:first-child {
+    margin-right: 8px;
+  }
+  svg:last-child {
+    margin-left: 8px;
+  }
+
+  &:hover {
+    transition: 0.2s ease-in-out;
+  }
+
+  &.custom-primary {
+    font-family: Poppins, sans-serif;
+    padding: 8px 20px;
+    border: 0.5px solid
+      ${(props) => {
+        return COLORS[props.color] || COLORS.primaryOrange;
+      }};
+    color: white;
+    background-color: ${(props) => {
+      return COLORS[props.color] || COLORS.primaryOrange;
+    }} !important;
+
+    /*    path {
+      fill: ${(props) => {
+      return COLORS[props.color] || COLORS.primaryOrange;
+    }} !important;
+    } */
+
+    border-radius: 5px;
+
+    &:hover {
+      cursor: pointer;
+      background-color: white !important;
+      color: ${(props) => {
+        return COLORS[props.color] || COLORS.primaryOrange;
+      }} !important;
+
+      path {
+        transition: 0.2s ease-in-out;
+        fill: ${(props) => {
+          return COLORS[props.color] || COLORS.primaryOrange;
+        }} !important;
+      }
+    }
+  }
+
+  &.custom-primary-inverted {
+    font-family: Poppins, sans-serif;
+    padding: 8px 20px;
+    border: 0.5px solid
+      ${(props) => {
+        return COLORS[props.color] || COLORS.primaryOrange;
+      }};
+    color: ${(props) => {
+      return COLORS[props.color] || COLORS.primaryOrange;
+    }} !important;
+
+    path {
+      fill: ${(props) => {
+        return COLORS[props.color] || COLORS.primaryOrange;
+      }} !important;
+    }
+
+    border-radius: 5px;
+    background-color: transparent;
+
+    &:hover {
+      cursor: pointer;
+      background-color: ${(props) => {
+        return colorToHoverBackgroundColor[props.color] || COLORS.hoverOrange;
+      }};
+      color: ${(props) => {
+        return colorToHoverColor[props.color] || COLORS.primaryOrange;
+      }} !important;
+      border: 0.5px solid
+        ${(props) => {
+          return colorToHoverColor[props.color] || COLORS.primaryOrange;
+        }};
+
+      path {
+        transition: 0.2s ease-in-out;
+        fill: ${(props) => {
+          return colorToHoverColor[props.color] || COLORS.primaryOrange;
+        }} !important;
+      }
+    }
+  }
+
+  &.custom-secondary {
+    font-family: Poppins, sans-serif;
+    padding: 6px 15px;
+    background-color: white;
+
+    border: 0.5px solid
+      ${(props) => {
+        return COLORS[props.color] || COLORS.primaryOrange;
+      }};
+    color: ${(props) => {
+      return COLORS[props.color] || COLORS.primaryOrange;
+    }} !important;
+
+    border-radius: 25px;
+
+    &:hover {
+      cursor: pointer;
+      background-color: ${(props) => {
+        return colorToHoverBackgroundColor[props.color] || COLORS.hoverOrange;
+      }} !important;
+
+      color: ${(props) => {
+        return colorToHoverColor[props.color] || COLORS.primaryOrange;
+      }} !important;
+
+      border: 0.5px solid
+        ${(props) => {
+          return colorToHoverColor[props.color] || COLORS.primaryOrange;
+        }};
+    }
+  }
+
+  &.custom-secondary-inverted {
+    font-family: Poppins, sans-serif;
+    padding: 6px 15px;
+    color: white;
+
+    border: 0.5px solid
+      ${(props) => {
+        return COLORS[props.color] || COLORS.primaryOrange;
+      }};
+    background-color: ${(props) => {
+      return COLORS[props.color] || COLORS.primaryOrange;
+    }} !important;
+
+    path {
+      transition: 0.2s ease-in-out;
+      fill: ${(props) => {
+        return COLORS[props.color] || COLORS.primaryOrange;
+      }} !important;
+    }
+
+    border-radius: 25px;
+
+    &:hover {
+      cursor: pointer;
+      background-color: white !important;
+      color: ${(props) => {
+        return COLORS[props.color] || COLORS.primaryOrange;
+      }} !important;
+
+      path {
+        transition: 0.2s ease-in-out;
+        fill: ${(props) => {
+          return COLORS[props.color] || COLORS.primaryOrange;
+        }} !important;
+      }
+    }
+  }
+`;

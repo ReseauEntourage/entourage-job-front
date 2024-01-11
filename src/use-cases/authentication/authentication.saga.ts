@@ -16,6 +16,15 @@ const {
   logoutSucceeded,
   logoutFailed,
   setAccessToken,
+  updateUserRequested,
+  updateUserSucceeded,
+  updateUserFailed,
+  updateProfileRequested,
+  updateProfileSucceeded,
+  updateProfileFailed,
+  updateCandidateRequested,
+  updateCandidateSucceeded,
+  updateCandidateFailed,
 } = slice.actions;
 
 function getIsReleaseVersionAllowed() {
@@ -62,7 +71,6 @@ function* loginRequestedSaga(action: ReturnType<typeof loginRequested>) {
         password,
       })
     );
-
     yield* put(
       loginSucceeded({
         accessToken: response.data.token,
@@ -104,6 +112,71 @@ function logoutSucceededSaga() {
   localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
 }
 
+function* updateUserRequestedSaga(
+  action: ReturnType<typeof updateUserRequested>
+) {
+  const { userId, user } = action.payload;
+  try {
+    yield* call(() => {
+      Api.putUser(userId, user);
+    });
+    yield* put(
+      updateUserSucceeded({
+        user,
+      })
+    );
+  } catch (error) {
+    yield* put(
+      updateUserFailed({
+        error: 'UPDATE_FAILED',
+      })
+    );
+  }
+}
+
+function* updateCandidateRequestedSaga(
+  action: ReturnType<typeof updateCandidateRequested>
+) {
+  const { userId, userCandidate } = action.payload;
+  try {
+    yield* call(() => {
+      Api.putCandidate(userId, userCandidate);
+    });
+    yield* put(
+      updateCandidateSucceeded({
+        userId,
+        userCandidate,
+      })
+    );
+  } catch (error) {
+    yield* put(
+      updateCandidateFailed({
+        error: 'UPDATE_FAILED',
+      })
+    );
+  }
+}
+
+function* updateProfileRequestedSaga(
+  action: ReturnType<typeof updateProfileRequested>
+) {
+  const { userId, userProfile } = action.payload;
+  try {
+    yield* call(() => Api.putUserProfile(userId, userProfile));
+    yield* put(
+      updateProfileSucceeded({
+        userProfile,
+      })
+    );
+  } catch (error) {
+    yield* put(
+      updateProfileFailed({
+        error: 'UPDATE_FAILED',
+      })
+    );
+  }
+}
+
 function* initSaga() {
   const accessToken = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN) || null;
 
@@ -117,4 +190,7 @@ export function* saga() {
   yield* takeLatest(loginSucceeded, loginSucceededSaga);
   yield* takeLatest(logoutRequested, logoutRequestedSaga);
   yield* takeLatest(logoutRequested, logoutSucceededSaga);
+  yield* takeLatest(updateUserRequested, updateUserRequestedSaga);
+  yield* takeLatest(updateProfileRequested, updateProfileRequestedSaga);
+  yield* takeLatest(updateCandidateRequested, updateCandidateRequestedSaga);
 }

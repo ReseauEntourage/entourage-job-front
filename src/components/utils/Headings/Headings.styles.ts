@@ -103,6 +103,7 @@ export const StyledH5 = styled.h5`
   font-size: 16px;
   font-weight: 700;
   line-height: 24px;
+  margin-top: 0;
   /* margin-bottom: 24px; */
   color: ${(props) => {
     if (COLORS[props.color]) {

@@ -3,7 +3,7 @@ import React from 'react';
 import CloseIcon from 'assets/icons/close.svg';
 import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
-import { PasswordCriterias } from 'src/components/PasswordCriterias';
+import { PasswordCriterias } from 'src/components/backoffice/parametres/ParametresLayout/ChangePasswordCard/PasswordCriterias';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { formResetPassword } from 'src/components/forms/schemas/formResetPassword';
 import { Button, Section } from 'src/components/utils';

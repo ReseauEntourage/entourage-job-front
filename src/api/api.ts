@@ -8,21 +8,22 @@ import { AdminZone } from 'src/constants/departements';
 import { addAxiosInterceptors } from './interceptor';
 import {
   APIRoute,
+  CandidateInscription,
+  ContactCandidate,
   ContactCompany,
   ContactContactUs,
-  ContactCandidate,
   ContactNewsletter,
+  ExternalMessage,
   ExternalOpportunityDto,
+  OpportunityDto,
   OpportunityJoin,
   OpportunityUserEvent,
+  OrganizationDto,
   PutCandidate,
   Route,
   SocialMedia,
-  CandidateInscription,
   UserDto,
-  OrganizationDto,
-  ExternalMessage,
-  OpportunityDto,
+  UserProfile,
 } from './types';
 
 export class APIHandler {
@@ -183,9 +184,17 @@ export class APIHandler {
   }
 
   // post
-
   postUser(params: UserDto): Promise<AxiosResponse> {
     return this.post('/user', params);
+  }
+
+  postProfileImage(
+    userId: string,
+    profileImage: FormData
+  ): Promise<AxiosResponse> {
+    return this.post(`/user/profile/uploadImage/${userId}`, profileImage, {
+      'Content-Type': 'multipart/form-data',
+    });
   }
 
   // put
@@ -221,6 +230,13 @@ export class APIHandler {
     userToLinkId?: string | string[]
   ): Promise<AxiosResponse> {
     return this.put(`/user/linkUser/${userId}`, { userToLinkId });
+  }
+
+  putUserProfile(
+    userId: string,
+    userProfile: Partial<UserProfile>
+  ): Promise<AxiosResponse> {
+    return this.put(`/user/profile/${userId}`, userProfile);
   }
 
   // delete

@@ -1,13 +1,13 @@
 import {
   ExternalMessageContactType,
   Contract as ContractValue,
-  AmbitionsPrefixesType,
   BusinessLineValue,
   ExternalOfferOrigin,
   HeardAboutValue,
   CandidateHelpWithValue,
   CompanyApproach,
   OfferStatus,
+  AmbitionsPrefixesType,
 } from 'src/constants';
 import { AdminZone, Department } from 'src/constants/departements';
 import { AdminRole, Gender, UserRole } from 'src/constants/users';
@@ -35,8 +35,8 @@ export type Route<T extends APIRoute> = `/${T}/${string}` | `/${T}`;
 
 export type UserCandidate = {
   employed: boolean;
-  contract: ContractValue;
-  endOfContract: string;
+  contract: ContractValue | null;
+  endOfContract: string | null;
   hidden: boolean;
   note: string;
   url: string;
@@ -69,6 +69,27 @@ export type OrganizationDto = {
   zone: AdminZone;
 };
 
+export type HelpNames = 'tips' | 'interview' | 'cv' | 'network' | 'event';
+
+export type UserProfile = {
+  currentJob: string;
+  description: string;
+  helpNeeds: { name: HelpNames }[];
+  helpOffers: { name: HelpNames }[];
+  networkBusinessLines: {
+    name: BusinessLineValue;
+    order: number;
+  }[];
+  searchBusinessLines: {
+    name: BusinessLineValue;
+    order: number;
+  }[];
+  searchAmbitions: {
+    name: string;
+    order: number;
+    prefix: AmbitionsPrefixesType;
+  }[];
+};
 export type User = {
   coach: User;
   id: string;
@@ -88,6 +109,8 @@ export type User = {
   zone: AdminZone;
   organization: Organization;
   deletedAt?: string;
+  userProfile: UserProfile;
+  OrganizationId?: string;
 };
 
 export interface CVExperience {
@@ -126,7 +149,6 @@ export interface CV {
   id?: string;
   version: string;
   profileImage: Blob;
-  profileImageObjectUrl: string;
   user: {
     candidat: {
       firstName: string;
@@ -186,7 +208,7 @@ export interface CV {
 
 export interface UserCandidateWithUsers extends UserCandidate {
   id?: string;
-  email: string;
+  email?: string;
   candidat?: User;
   coach?: User;
   cvs?: CV[];
@@ -211,12 +233,13 @@ export type UserDto = {
   adminRole?: AdminRole;
   OrganizationId?: string;
   id?: string;
+  userProfile?: UserProfile;
 };
 
 export type PutCandidate = {
   employed: boolean;
-  contract: ContractValue;
-  endOfContract: Date;
+  contract: ContractValue | null;
+  endOfContract: string | null;
   hidden: boolean;
   note: string;
   url: string;

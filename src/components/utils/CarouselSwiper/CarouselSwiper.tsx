@@ -4,10 +4,13 @@ import { Pagination, Autoplay, Navigation } from 'swiper/modules';
 import { Swiper } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import { v4 as uuid } from 'uuid';
 import {
   StyledSwiperSlide,
   StyledSwiperContainer,
 } from './CarouselSwiper.styles';
+
+const uuidValue = uuid();
 
 interface CarouselSwiperProps {
   slides: React.ReactNode[];
@@ -36,7 +39,7 @@ export const CarouselSwiper = ({
         slidesPerView={slidesPerview || 1}
       >
         {slides.map((slide) => {
-          return <StyledSwiperSlide>{slide}</StyledSwiperSlide>;
+          return <StyledSwiperSlide key={uuidValue}>{slide}</StyledSwiperSlide>;
         })}
       </Swiper>
     </StyledSwiperContainer>

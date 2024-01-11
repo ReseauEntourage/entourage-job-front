@@ -16,7 +16,7 @@ export const StyledFooterForm = styled.div`
       flex-direction: row;
       justify-content: center;
 
-      button:last-child {
+      button:last-child:not(:only-child) {
         margin-left: 20px;
       }
     }

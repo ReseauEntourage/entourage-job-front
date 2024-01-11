@@ -36,7 +36,7 @@ interface InfoProfileCardProps {
   }[];
   transport: string;
   email: string;
-  phone: string;
+  phone?: string;
   address: string;
   onChange: (
     updatedCV: Partial<CV>,

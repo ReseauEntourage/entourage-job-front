@@ -10,7 +10,7 @@ import {
 interface FooterFormProps {
   error?: string;
   onCancel?: () => void;
-  onSubmit: (event: FormEvent) => Promise<void>;
+  onSubmit: (event?: FormEvent) => Promise<void>;
   submitText: string;
   cancelText?: string;
   formId: string;
@@ -53,7 +53,6 @@ export const FormFooter = ({
             <ButtonPost
               text={submitText || 'Envoyer'}
               style="custom-primary"
-              // @ts-expect-error after enable TS strict mode. Please, try to fix it
               action={onSubmit}
               isLoadingOverride={isLoadingOverride}
               dataTestId={`form-confirm-${formId}`}

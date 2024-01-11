@@ -9,6 +9,45 @@ const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 
 const dev = process.env.NODE_ENV !== 'production';
 
+const hash = require('string-hash');
+const { relative } = require('path');
+const context = __dirname;
+
+/*
+const ContentSecurityPolicy = `
+  default-src
+  'self'
+  'unsafe-inline'
+  'unsafe-eval'
+  ${process.env.API_URL.replace(/\/api\/v1/g, '')}
+  ${process.env.AWSS3_CDN_URL}
+  ${process.env.CDN_URL ? process.env.CDN_URL : ''}
+  ${process.env.AWSS3_URL}
+  *.ytimg.com ytimg.com
+  youtube.com *.youtube.com
+  *.youtube-nocookie.com youtube-nocookie.com
+  airtable.com *.airtable.com
+  *.google-analytics.com google-analytics.com
+  *.googletagmanager.com googletagmanager.com
+  *.google.com google.com
+  *.google.fr google.fr
+  *.gstatic.com gstatic.com
+  *.googleapis.com googleapis.com
+  stats.g.doubleclick.net
+  *.facebook.net facebook.net
+  *.facebook.com facebook.com
+  purecatamphetamine.github.io
+  data:
+  sentry.io *.sentry.io
+  sentry-cdn.com *.sentry-cdn.com
+  licdn.com *.licdn.com
+  linkedin.com *.linkedin.com
+  *.pusher.com pusher.com
+  adsymptotic.com *.adsymptotic.com
+  tarteaucitron.io
+`;
+*/
+
 const securityHeaders = [
   {
     key: 'X-DNS-Prefetch-Control',
@@ -85,7 +124,7 @@ module.exports = withLess({
 
     config.module.rules.push({
       test: /\.svg$/,
-      use: [
+      use: ({ resource }) => [
         {
           loader: '@svgr/webpack',
           options: {
@@ -97,7 +136,14 @@ module.exports = withLess({
                     overrides: {
                       // disable plugins
                       removeViewBox: false,
+                      cleanupIDs: false,
                     },
+                  },
+                },
+                {
+                  name: 'cleanupIDs',
+                  params: {
+                    prefix: `svg${hash(relative(context, resource))}`,
                   },
                 },
               ],
