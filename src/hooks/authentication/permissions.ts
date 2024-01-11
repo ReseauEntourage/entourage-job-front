@@ -15,6 +15,7 @@ export const authenticatedPermissions = [
       '/backoffice/candidat/[candidateId]/suivi',
       '/backoffice/candidat/[candidateId]/cv',
       '/backoffice/admin/offres',
+      '/backoffice/annuaire',
     ],
     roles: [
       USER_ROLES.CANDIDATE,

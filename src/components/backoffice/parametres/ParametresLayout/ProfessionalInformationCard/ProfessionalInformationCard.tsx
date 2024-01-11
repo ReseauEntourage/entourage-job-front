@@ -172,7 +172,10 @@ export const ProfessionalInformationCard = () => {
                 )}
               {userProfile?.searchBusinessLines &&
                 userProfile.searchBusinessLines.length > 0 && (
-                  <li data-testid="candidat-businessline-li">
+                  <li
+                    className="tag-container"
+                    data-testid="candidat-businessline-li"
+                  >
                     Je recherche dans :{' '}
                     {sortByOrder(userProfile.searchBusinessLines).map(
                       ({ name }, index) => (

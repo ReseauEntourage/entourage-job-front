@@ -4,15 +4,16 @@ import { useHelpField, helpFields } from '../../useUpdateProfile';
 import { ParametresPlaceholder } from '../ParametresPlaceholder';
 import { openModal } from 'src/components/modals/Modal';
 import { Card } from 'src/components/utils';
+import {
+  ParametresHelpCardContents,
+  ParametresHelpCardTitles,
+} from 'src/constants/helps';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import {
-  StyledHelpCardList,
   StyledHelpCardImgContainer,
+  StyledHelpCardList,
 } from './ParametresHelpCard.styles';
-import {
-  PARAMETRES_HELP_CARD_TITLES,
-  PARAMETRES_HELP_CARD_CONTENTS,
-} from './ParametresHelpCard.utils';
+
 import { ParametresHelpModal } from './ParametresHelpModal';
 
 const plaholderText = {
@@ -45,7 +46,7 @@ export const ParametresHelpCard = () => {
     openModal(
       <ParametresHelpModal
         role={contextualRole}
-        title={PARAMETRES_HELP_CARD_TITLES.modal[contextualRole.toLowerCase()]}
+        title={ParametresHelpCardTitles.modal[contextualRole.toLowerCase()]}
       />
     );
   };
@@ -54,14 +55,14 @@ export const ParametresHelpCard = () => {
 
   return (
     <Card
-      title={PARAMETRES_HELP_CARD_TITLES.card[contextualRole.toLowerCase()]}
+      title={ParametresHelpCardTitles.card[contextualRole.toLowerCase()]}
       editCallback={openHelpEditModal}
       isMobileClosable
       dataTestId="parametres-help-card"
     >
       {userProfile[helpField].length > 0 ? (
         <StyledHelpCardList data-testid="parametres-help-list">
-          {PARAMETRES_HELP_CARD_CONTENTS[contextualRole.toLowerCase()].map(
+          {ParametresHelpCardContents[contextualRole.toLowerCase()].map(
             ({ icon, title, value }, index) => {
               if (!userProfile[helpField].some((help) => help.name === value)) {
                 return null;

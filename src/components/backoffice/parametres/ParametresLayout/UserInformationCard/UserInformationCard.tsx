@@ -11,7 +11,10 @@ import { Tag } from 'src/components/utils/Tag';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { isRoleIncluded } from 'src/utils';
-import { StyledInformationsPersonnellesList } from './UserInformationCard.styles';
+import {
+  StyledInformationsPersonnellesList,
+  StyledUserInformationCardTags,
+} from './UserInformationCard.styles';
 import { useOpenCorrespondingModal } from './useOpenModal';
 
 interface UserInformationCardProps {
@@ -79,12 +82,12 @@ export const UserInformationCard = ({
             </>
           )}
           {user.role === USER_ROLES.ADMIN && (
-            <li>
+            <StyledUserInformationCardTags>
               <Tag
                 content={user.zone ? _.capitalize(user.zone) : 'Non renseignée'}
               />
               {user.adminRole && <Tag content={_.capitalize(user.adminRole)} />}
-            </li>
+            </StyledUserInformationCardTags>
           )}
         </StyledInformationsPersonnellesList>
       )}

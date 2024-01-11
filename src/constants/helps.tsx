@@ -4,8 +4,39 @@ import ConversationIllu from 'assets/icons/illu-conversation.svg';
 import MaletteIllu from 'assets/icons/illu-malette.svg';
 import TipsIllu from 'assets/icons/illu-poignee-de-main.svg';
 import RSIllu from 'assets/icons/illu-reseaux-sociaux.svg';
+import { HelpNames } from 'src/api/types';
+import { FilterConstant } from './utils';
 
-export const PARAMETRES_HELP_CARD_TITLES = {
+export const ProfileCardHelps: (FilterConstant<HelpNames> & {
+  icon: JSX.Element;
+})[] = [
+  {
+    icon: <TipsIllu />,
+    value: 'tips',
+    label: 'Soutien',
+  },
+  {
+    icon: <MaletteIllu />,
+    value: 'interview',
+    label: 'Entretien',
+  },
+  {
+    icon: <CVIllu />,
+    value: 'cv',
+    label: 'CV',
+  },
+  {
+    icon: <ConversationIllu />,
+    value: 'event',
+    label: 'Événement',
+  },
+  {
+    icon: <RSIllu />,
+    value: 'network',
+    label: 'Partage',
+  },
+];
+export const ParametresHelpCardTitles = {
   card: {
     coach: 'Vos propositions de coup de pouce',
     candidat: "Vos demandes d'aide",
@@ -18,7 +49,7 @@ export const PARAMETRES_HELP_CARD_TITLES = {
   },
 } as const;
 
-export const PARAMETRES_HELP_CARD_CONTENTS = {
+export const ParametresHelpCardContents = {
   candidat: [
     {
       icon: <TipsIllu />,

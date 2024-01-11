@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useUpdateProfile } from '../../../useUpdateProfile';
 import { StyledHelpModalSelectOption } from '../ParametresHelpCard.styles';
-import { PARAMETRES_HELP_CARD_CONTENTS } from '../ParametresHelpCard.utils';
 import { UserProfile } from 'src/api/types';
 import { useModalContext } from 'src/components/modals/Modal';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { Button } from 'src/components/utils';
 import { H6 } from 'src/components/utils/Headings';
 import { SelectList } from 'src/components/utils/Inputs/SelectList';
+import { ParametresHelpCardContents } from 'src/constants/helps';
 import { UserRole } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { StyledParametresHelpModalCTAContainer } from './StyledParametresHelpModal.styles';
@@ -50,7 +50,7 @@ export const ParametresHelpModal = ({
             ? tempProfile[helpField]?.map(({ name }) => name)
             : []
         }
-        options={PARAMETRES_HELP_CARD_CONTENTS[role.toLowerCase()].map(
+        options={ParametresHelpCardContents[role.toLowerCase()].map(
           ({ value, title: titleH6, description, icon }) => ({
             value,
             component: (

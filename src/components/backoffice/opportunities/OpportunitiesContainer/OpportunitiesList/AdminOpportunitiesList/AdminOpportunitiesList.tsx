@@ -8,15 +8,15 @@ import {
   StyledListItem,
   StyledListItemContainer,
 } from '../OpportunitiesList.styles';
-import { useIsAtBottom } from '../useIsAtBottom';
 import { AdminOpportunityWithOpportunityUsers } from 'src/api/types';
 import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
+import { useIsAtBottom } from 'src/hooks/useIsAtBottom';
 import { AdminOpportunityItem } from './AdminOpportunityItem';
 
 interface AdminOpportunitiesListProps {
   opportunities: Partial<AdminOpportunityWithOpportunityUsers>[];
-  setOffset?: (offset: number) => void;
+  setOffset?: (offset: ((prevOffset: number) => number) | number) => void;
   selectOpportunity?: ({ id }: { id: string }) => void;
   isOpportunitySelected?: ({ id }: { id: string }) => boolean;
 }
@@ -31,7 +31,7 @@ export const AdminOpportunitiesList = ({
 }: AdminOpportunitiesListProps) => {
   const queryParamsOpportunities = useQueryParamsOpportunities();
   const opportunityId = useOpportunityId();
-  useIsAtBottom(setOffset, opportunities);
+  useIsAtBottom(setOffset);
 
   // if candidate Id exists in query params, it means we are on the candidate list page
   const {
