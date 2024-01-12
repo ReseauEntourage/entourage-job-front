@@ -5,12 +5,13 @@ import HomeIcon from 'assets/icons/home.svg';
 import { HeaderConnectedMainItemDefaultProps } from '../HeaderConnected.types';
 import { StyledHeaderMobile } from 'src/components/headers/Header.styles';
 import {
-  Navbar,
-  SimpleLink,
   Hamburger,
+  Navbar,
   NavbarLogo,
+  SimpleLink,
 } from 'src/components/utils';
 import { Offcanvas } from 'src/components/utils/Offcanvas';
+import { USER_ROLES } from 'src/constants/users';
 import { OFFCANVAS_LOGGED } from 'src/constants/utils';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { gaEvent } from 'src/lib/gtag';
@@ -23,27 +24,13 @@ const uuidValue = uuid();
 export const HeaderConnectedContentMobile = ({
   badges,
   links = {
-    admin: [
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      HeaderConnectedMainItemDefaultProps,
-    ],
-    dropdown: [
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      HeaderConnectedMainItemDefaultProps,
-    ],
-    candidat: [
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      HeaderConnectedMainItemDefaultProps,
-    ],
-    coach: [
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      HeaderConnectedMainItemDefaultProps,
-    ],
-    coach_externe: [
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      HeaderConnectedMainItemDefaultProps,
-    ],
+    [USER_ROLES.ADMIN]: [HeaderConnectedMainItemDefaultProps],
+    [USER_ROLES.CANDIDATE]: [HeaderConnectedMainItemDefaultProps],
+    [USER_ROLES.CANDIDATE_EXTERNAL]: [HeaderConnectedMainItemDefaultProps],
+    [USER_ROLES.COACH]: [HeaderConnectedMainItemDefaultProps],
+    [USER_ROLES.COACH_EXTERNAL]: [HeaderConnectedMainItemDefaultProps],
   },
+  dropdown = [HeaderConnectedMainItemDefaultProps],
   isEmpty = false,
 }: HeaderConnectedContentProps) => {
   const user = useAuthenticatedUser();
@@ -114,33 +101,21 @@ export const HeaderConnectedContentMobile = ({
                           {name}
                         </span>
                       </a>
-                      {
-                        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                        badges[badge] > 0 && (
-                          <div>
-                            &nbsp;
-                            <div className="uk-badge">
-                              {
-                                // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                                badges[badge]
-                              }
-                            </div>
-                          </div>
-                        )
-                      }
+                      {badges[badge] > 0 && (
+                        <div>
+                          &nbsp;
+                          <div className="uk-badge">{badges[badge]}</div>
+                        </div>
+                      )}
                       {subMenu?.length > 0 && (
-                        <SubMenu
-                          items={subMenu}
-                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                          badges={badges}
-                        />
+                        <SubMenu items={subMenu} badges={badges} />
                       )}
                     </StyledConnectedItemMobile>
                   );
                 }
               )}
           <hr style={{ opacity: '.5' }} />
-          {links.dropdown.map(({ href, icon, name, onClick, tag }, index) => {
+          {dropdown.map(({ href, icon, name, onClick, tag }, index) => {
             return (
               <StyledConnectedItemMobile key={`${index}-children-${uuidValue}`}>
                 <a

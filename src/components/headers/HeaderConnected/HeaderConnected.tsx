@@ -37,7 +37,8 @@ export const HeaderConnected = ({ isEmpty = false }: { isEmpty?: boolean }) => {
   return (
     <HeaderConnectedContent
       badges={badges}
-      links={LINKS_CONNECTED}
+      links={LINKS_CONNECTED.links}
+      dropdown={LINKS_CONNECTED.dropdown}
       isEmpty={isEmpty}
     />
   );

@@ -1,8 +1,8 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import {
-  HeaderConnectedItemProps,
-  NotifBadgesProps,
+  HeaderConnectedItem,
+  NotifBadges,
 } from 'src/components/headers/HeaderConnected/HeaderConnected.types';
 import { SimpleLink } from 'src/components/utils';
 import { gaEvent } from 'src/lib/gtag';
@@ -14,8 +14,8 @@ export const SubMenu = ({
   items,
   badges,
 }: {
-  items: HeaderConnectedItemProps[];
-  badges: NotifBadgesProps;
+  items: HeaderConnectedItem[];
+  badges: NotifBadges;
 }) => {
   return (
     <StyledSubMenu className="subMenu-container">

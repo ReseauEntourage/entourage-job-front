@@ -1,9 +1,11 @@
 import _ from 'lodash';
 import React, { useMemo } from 'react';
-import { H2, H3 } from '../Headings';
-import { Img } from '../Img';
-import { Tag } from '../Tag';
+import HandsIcon from 'assets/icons/illu-coeur-mains-ouvertes.svg';
+import CaseIcon from 'assets/icons/illu-malette.svg';
 import { HelpNames, UserCandidateWithUsers } from 'src/api/types';
+import { H2, H3, H4 } from 'src/components/utils/Headings';
+import { Img } from 'src/components/utils/Img';
+import { Tag } from 'src/components/utils/Tag';
 import { BUSINESS_LINES, BusinessLineValue } from 'src/constants';
 import { Department } from 'src/constants/departements';
 import { ProfileCardHelps } from 'src/constants/helps';
@@ -18,15 +20,19 @@ import { findConstantFromValue, isRoleIncluded, sortByOrder } from 'src/utils';
 import { Card } from './Card';
 import {
   StyledProfileCard,
-  StyledProfileCardAmbitionsContainer,
   StyledProfileCardBusinessLines,
   StyledProfileCardContent,
   StyledProfileCardDepartment,
+  StyledProfileCardEmptyContainer,
+  StyledProfileCardEmptyIcon,
+  StyledProfileCardEmptyJobContainer,
+  StyledProfileCardEmptyLabel,
   StyledProfileCardHelp,
   StyledProfileCardHelpContainer,
   StyledProfileCardHelpLabel,
   StyledProfileCardHelps,
   StyledProfileCardInfoContainer,
+  StyledProfileCardJobContainer,
   StyledProfileCardLabel,
   StyledProfileCardName,
   StyledProfileCardPicture,
@@ -74,6 +80,9 @@ const getLabelsDependingOnRole = (role) => {
   }
   return {};
 };
+
+const EMPTY_INFO = "Ces informations n'ont pas encore été renseignées";
+const EMPTY_JOB = 'Métier non renseigné';
 
 export function ProfileCard({
   userId,
@@ -145,29 +154,46 @@ export function ProfileCard({
         </StyledProfileCardPictureContainer>
         <StyledProfileCardContent>
           <StyledProfileCardProfessionalSituation>
-            {isRoleIncluded(CANDIDATE_USER_ROLES, role) && sortedAmbitions ? (
-              <StyledProfileCardAmbitionsContainer>
-                {sortedAmbitions.map(({ name }, index) => (
-                  <H3
-                    key={name}
-                    color={COLORS.black}
-                    title={`${_.capitalize(name)}${
-                      index < sortedAmbitions.length - 1 ? ',\xa0' : ''
-                    }`}
-                  />
-                ))}
-              </StyledProfileCardAmbitionsContainer>
-            ) : (
+            {isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
               <>
-                {job && <H3 color={COLORS.black} title={_.capitalize(job)} />}
+                {sortedAmbitions && sortedAmbitions.length > 0 ? (
+                  <StyledProfileCardJobContainer>
+                    {sortedAmbitions.map(({ name }, index) => (
+                      <H3
+                        key={name}
+                        color={COLORS.black}
+                        title={`${_.capitalize(name)}${
+                          index < sortedAmbitions.length - 1 ? ',\xa0' : ''
+                        }`}
+                      />
+                    ))}
+                  </StyledProfileCardJobContainer>
+                ) : (
+                  <StyledProfileCardEmptyJobContainer>
+                    <H4 color={COLORS.black} title={EMPTY_JOB} />
+                  </StyledProfileCardEmptyJobContainer>
+                )}
               </>
             )}
-            {sortedBusinessLines && (
+            {isRoleIncluded(COACH_USER_ROLES, role) && (
               <>
-                <StyledProfileCardLabel>
-                  {labels.businessLines}
-                </StyledProfileCardLabel>
-                <StyledProfileCardBusinessLines>
+                {job ? (
+                  <StyledProfileCardJobContainer>
+                    <H3 color={COLORS.black} title={_.capitalize(job)} />
+                  </StyledProfileCardJobContainer>
+                ) : (
+                  <StyledProfileCardEmptyJobContainer>
+                    <H4 color={COLORS.black} title={EMPTY_JOB} />
+                  </StyledProfileCardEmptyJobContainer>
+                )}
+              </>
+            )}
+            <StyledProfileCardLabel>
+              {labels.businessLines}
+            </StyledProfileCardLabel>
+            <StyledProfileCardBusinessLines>
+              {sortedBusinessLines && sortedBusinessLines.length > 0 ? (
+                <>
                   {sortedBusinessLines.slice(0, 2).map(({ name }) => {
                     const businessLine = findConstantFromValue(
                       name,
@@ -184,16 +210,26 @@ export function ProfileCard({
                     sortedBusinessLines.length > 2 && (
                       <Tag content={`+${sortedBusinessLines.length - 2}`} />
                     )}
-                </StyledProfileCardBusinessLines>
-              </>
-            )}
+                </>
+              ) : (
+                <StyledProfileCardEmptyContainer>
+                  <StyledProfileCardEmptyIcon>
+                    <CaseIcon />
+                  </StyledProfileCardEmptyIcon>
+                  <StyledProfileCardEmptyLabel>
+                    {EMPTY_INFO}
+                  </StyledProfileCardEmptyLabel>
+                </StyledProfileCardEmptyContainer>
+              )}
+            </StyledProfileCardBusinessLines>
           </StyledProfileCardProfessionalSituation>
-          {helps && (
-            <StyledProfileCardHelpContainer>
-              <StyledSeparator />
-              <StyledProfileCardLabel>{labels.helps}</StyledProfileCardLabel>
-              <StyledProfileCardHelps>
-                {helps.map(({ name }) => {
+
+          <StyledProfileCardHelpContainer>
+            <StyledSeparator />
+            <StyledProfileCardLabel>{labels.helps}</StyledProfileCardLabel>
+            <StyledProfileCardHelps>
+              {helps && helps.length > 0 ? (
+                helps.map(({ name }) => {
                   const help = findConstantFromValue(name, ProfileCardHelps);
                   return (
                     <StyledProfileCardHelp key={help.value}>
@@ -203,10 +239,19 @@ export function ProfileCard({
                       </StyledProfileCardHelpLabel>
                     </StyledProfileCardHelp>
                   );
-                })}
-              </StyledProfileCardHelps>
-            </StyledProfileCardHelpContainer>
-          )}
+                })
+              ) : (
+                <StyledProfileCardEmptyContainer>
+                  <StyledProfileCardEmptyIcon>
+                    <HandsIcon />
+                  </StyledProfileCardEmptyIcon>
+                  <StyledProfileCardEmptyLabel>
+                    {EMPTY_INFO}
+                  </StyledProfileCardEmptyLabel>
+                </StyledProfileCardEmptyContainer>
+              )}
+            </StyledProfileCardHelps>
+          </StyledProfileCardHelpContainer>
         </StyledProfileCardContent>
       </Card>
     </StyledProfileCard>

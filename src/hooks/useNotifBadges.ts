@@ -16,7 +16,7 @@ const reducePromisesResults = (data) => {
 };
 
 export function useNotifBadges(user, path, candidateId) {
-  const [badges, setBadges] = useState({
+  const [badges, setBadges] = useState<NotifBadges>({
     offers: 0,
     note: 0,
     cv: 0,

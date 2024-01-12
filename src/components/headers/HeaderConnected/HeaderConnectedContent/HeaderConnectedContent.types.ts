@@ -1,18 +1,14 @@
-import { HeaderConnectedMainItemProps } from '../HeaderConnected.types';
+import {
+  HeaderConnectedMainItem,
+  NotifBadges,
+} from '../HeaderConnected.types';
+import { UserRole } from 'src/constants/users';
 
 export interface HeaderConnectedContentProps {
   links?: {
-    admin: HeaderConnectedMainItemProps[];
-    dropdown: HeaderConnectedMainItemProps[];
-    candidat: HeaderConnectedMainItemProps[];
-    coach: HeaderConnectedMainItemProps[];
-    coach_externe: HeaderConnectedMainItemProps[];
+    [K in UserRole]: HeaderConnectedMainItem[];
   };
-  badges?: {
-    offers: number;
-    note: number;
-    cv: number;
-    members: number;
-  };
+  dropdown: HeaderConnectedMainItem[];
+  badges: NotifBadges;
   isEmpty?: boolean;
 }

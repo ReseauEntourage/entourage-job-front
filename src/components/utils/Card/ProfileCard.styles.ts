@@ -3,6 +3,7 @@ import { COLORS } from 'src/constants/styles';
 
 export const StyledProfileCard = styled.div`
   width: 300px;
+
   > * {
     display: flex;
     flex: 1;
@@ -71,13 +72,19 @@ export const StyledProfileCardContent = styled.div`
 
 export const StyledProfileCardProfessionalSituation = styled.div`
   flex: 1;
-  > h3 {
-    line-height: 24px;
-    margin-bottom: 12px;
-  }
 `;
 
-export const StyledProfileCardAmbitionsContainer = styled.div`
+export const StyledProfileCardEmptyJobContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+  > h4 {
+    line-height: 24px;
+    margin-bottom: 0;
+    font-style: italic;
+  }
+`;
+export const StyledProfileCardJobContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 12px;
@@ -131,5 +138,26 @@ export const StyledProfileCardHelp = styled.div`
 
 export const StyledProfileCardHelpLabel = styled.div`
   font-size: 12px;
+  color: ${COLORS.darkGray};
+`;
+
+export const StyledProfileCardEmptyContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+export const StyledProfileCardEmptyIcon = styled.div`
+  width: 55px;
+  margin-right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const StyledProfileCardEmptyLabel = styled.div`
+  flex: 1;
+  font-size: 14px;
+  font-style: italic;
   color: ${COLORS.darkGray};
 `;
