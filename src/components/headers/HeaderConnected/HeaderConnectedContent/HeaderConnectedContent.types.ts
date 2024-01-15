@@ -1,7 +1,4 @@
-import {
-  HeaderConnectedMainItem,
-  NotifBadges,
-} from '../HeaderConnected.types';
+import { HeaderConnectedMainItem, NotifBadges } from '../HeaderConnected.types';
 import { UserRole } from 'src/constants/users';
 
 export interface HeaderConnectedContentProps {

@@ -26,7 +26,7 @@ export const StyledHeaderBackOffice = styled.div`
     }
   }
   .simple-separator {
-    border-bottom: 0.5px solid ${COLORS.gray};
+    border-bottom: 1px solid ${COLORS.gray};
     margin: 30px 0;
   }
 `;

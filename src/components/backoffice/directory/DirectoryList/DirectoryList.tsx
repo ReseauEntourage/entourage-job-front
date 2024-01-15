@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { DirectoryItem } from '../DirectoryItem';
 import { ProfileCard } from 'src/components/utils/Card/ProfileCard';
@@ -6,6 +6,7 @@ import { CardList } from 'src/components/utils/CardList';
 import { USER_ROLES } from 'src/constants/users';
 import { useLoadMore } from 'src/hooks/useLoadMore';
 import { asyncTimeout } from 'src/utils/asyncTimeout';
+import { StyledDirectoryListContainer } from './DirectoryList.styles';
 
 type ProfileCardProps = React.ComponentProps<typeof ProfileCard>;
 
@@ -33,7 +34,13 @@ export function DirectoryList() {
   const { /* offset, resetOffset, */ isLoading } = useLoadMore(async () => {
     // TODO TO REMOVE, ONLY FOR TESTS
     await asyncTimeout(2000);
+    // TODO dispatch more profiles
     setProfiles((prevProfiles) => [...prevProfiles, ...cards]);
+  });
+
+  useEffect(() => {
+    // TODO listen to selector with profile list
+    // setProfiles((prevProfiles) => [...prevProfiles, ... newProfiles]);
   });
 
   const profileList = useMemo(() => {
@@ -42,5 +49,9 @@ export function DirectoryList() {
     });
   }, [profiles]);
 
-  return <CardList list={profileList} isLoading={isLoading} />;
+  return (
+    <StyledDirectoryListContainer>
+      <CardList list={profileList} isLoading={isLoading} />
+    </StyledDirectoryListContainer>
+  );
 }

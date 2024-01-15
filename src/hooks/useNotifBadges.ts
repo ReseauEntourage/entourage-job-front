@@ -1,5 +1,8 @@
+import { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 import { Api } from 'src/api';
+import { UserWithUserCandidate } from 'src/api/types';
+import { NotifBadges } from 'src/components/headers/HeaderConnected/HeaderConnected.types';
 import { ADMIN_ROLES, USER_ROLES } from 'src/constants/users';
 import { usePrevious } from './utils';
 
@@ -15,7 +18,11 @@ const reducePromisesResults = (data) => {
   }, {});
 };
 
-export function useNotifBadges(user, path, candidateId) {
+export function useNotifBadges(
+  user: UserWithUserCandidate,
+  path: string,
+  candidateId: string
+) {
   const [badges, setBadges] = useState<NotifBadges>({
     offers: 0,
     note: 0,
@@ -28,34 +35,22 @@ export function useNotifBadges(user, path, candidateId) {
   useEffect(() => {
     if (user && user !== prevUser) {
       if (user.role === USER_ROLES.ADMIN) {
-        const queriesToExecute = [];
+        const queriesToExecute: (() => Promise<AxiosResponse>)[] = [];
         if (user.adminRole === ADMIN_ROLES.CANDIDATES) {
-          queriesToExecute.push(
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            () => {
-              return Api.getUsersMembersCount();
-            }
-          );
+          queriesToExecute.push(() => {
+            return Api.getUsersMembersCount();
+          });
         } else if (user.adminRole === ADMIN_ROLES.COMPANIES) {
-          queriesToExecute.push(
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            () => {
-              return Api.getOpportunitiesAdminCount();
-            }
-          );
+          queriesToExecute.push(() => {
+            return Api.getOpportunitiesAdminCount();
+          });
         } else {
-          queriesToExecute.push(
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            () => {
-              return Api.getUsersMembersCount();
-            }
-          );
-          queriesToExecute.push(
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            () => {
-              return Api.getOpportunitiesAdminCount();
-            }
-          );
+          queriesToExecute.push(() => {
+            return Api.getUsersMembersCount();
+          });
+          queriesToExecute.push(() => {
+            return Api.getOpportunitiesAdminCount();
+          });
         }
         Promise.all(
           queriesToExecute.map((query) => {

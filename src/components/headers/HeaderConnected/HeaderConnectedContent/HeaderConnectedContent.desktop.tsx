@@ -16,10 +16,9 @@ import {
 } from 'src/components/utils';
 import { ImgProfile } from 'src/components/utils/ImgProfile';
 import { StyledNav } from 'src/components/utils/Navbar/Nav/Nav.styles';
-import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
+import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { gaEvent } from 'src/lib/gtag';
-import { isRoleIncluded } from 'src/utils/Finding';
 import { StyledConnectedItem } from './HeaderConnectedContent.styles';
 import { HeaderConnectedContentProps } from './HeaderConnectedContent.types';
 import { SubMenu } from './SubMenu';
@@ -106,7 +105,7 @@ export const HeaderConnectedContentDesktop = ({
     if (user.role) {
       if (isEmpty) {
         setActualLinks([]);
-      } else if (isRoleIncluded(CANDIDATE_USER_ROLES, user.role)) {
+      } else {
         setActualLinks(links[user.role]);
       }
     }
@@ -176,7 +175,7 @@ export const HeaderConnectedContentDesktop = ({
                             {icon}
                           </span>
                           <span className="name-span">{name}</span>
-                          {badges && badges[badge] > 0 && (
+                          {badge && badges[badge] > 0 && (
                             <div>
                               &nbsp;
                               <div className="uk-badge uk-margin-small-left">
@@ -185,7 +184,7 @@ export const HeaderConnectedContentDesktop = ({
                             </div>
                           )}
                         </SimpleLink>
-                        {subMenu?.length > 0 && (
+                        {subMenu && subMenu.length > 0 && (
                           <SubMenu items={subMenu} badges={badges} />
                         )}
                       </StyledConnectedItem>

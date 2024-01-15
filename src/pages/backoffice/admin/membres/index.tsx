@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { MemberList } from 'src/components/backoffice/admin/members/MemberList';
-import { useRole } from 'src/components/backoffice/admin/members/MemberList/useRole';
+import { useRole } from 'src/components/backoffice/useRole';
 import { Section } from 'src/components/utils';
 import { ALL_USER_ROLES, CANDIDATE_USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';

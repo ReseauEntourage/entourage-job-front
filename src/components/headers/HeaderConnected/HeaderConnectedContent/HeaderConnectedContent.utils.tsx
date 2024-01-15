@@ -6,6 +6,7 @@ import ListIcon from 'assets/icons/list.svg';
 import LogOutIcon from 'assets/icons/log-out.svg';
 import QuestionIcon from 'assets/icons/question.svg';
 import SettingsIcon from 'assets/icons/settings.svg';
+import ShareIcon from 'assets/icons/share.svg';
 import UserIcon from 'assets/icons/user.svg';
 import { HeaderConnectedMainItem } from '../HeaderConnected.types';
 import { UserWithUserCandidate } from 'src/api/types';
@@ -37,6 +38,58 @@ export const renderLinks = (
   links: { [K in UserRole]: HeaderConnectedMainItem[] };
   dropdown: HeaderConnectedMainItem[];
 } => {
+  const candidateHeaderItems: HeaderConnectedMainItem[] = [
+    {
+      href: `/backoffice/candidat/${candidateId}/offres/private`,
+      name: 'Les offres',
+      queryParams: `?status=-1`,
+      icon: <ListIcon />,
+      tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_OFFRES_CLIC,
+      subMenu: [
+        {
+          href: `/backoffice/candidat/${candidateId}/offres/private`,
+          name: 'Mes offres',
+          queryParams: `?status=-1`,
+          badge: 'offers',
+          tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_MES_OFFRES_CLIC,
+        },
+        {
+          href: `/backoffice/candidat/${candidateId}/offres/public`,
+          name: 'Toutes les offres',
+          tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_OFFRES_GENERALES_CLIC,
+        },
+      ],
+    },
+    {
+      href: `/backoffice/candidat/${candidateId}/suivi`,
+      name: 'Mon suivi',
+      icon: <DocumentIcon />,
+      badge: 'note',
+      tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_SUIVI_CLIC,
+    },
+    {
+      href: `/backoffice/candidat/${candidateId}/cv`,
+      name: 'Mon CV',
+      icon: <UserIcon />,
+      badge: 'cv',
+      tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_CV_CLIC,
+    },
+    {
+      href: '/backoffice/annuaire',
+      name: "Réseau d'entraide",
+      icon: <ShareIcon />,
+    },
+    {
+      href: `${
+        process.env.TOOLBOX_CANDIDATE_URL
+      }?id=${getCandidateIdFromCoachOrCandidate(user)}`,
+      name: 'Boîte à outils',
+      icon: <QuestionIcon />,
+      external: true,
+      tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_BAO_CLIC,
+    },
+  ];
+
   return {
     links: {
       [USER_ROLES.ADMIN]: [
@@ -83,99 +136,20 @@ export const renderLinks = (
           icon: <ListIcon />,
           badge: 'offers',
         },
-      ],
-      [USER_ROLES.CANDIDATE]: [
         {
-          href: `/backoffice/candidat/${candidateId}/offres/private`,
-          name: 'Les offres',
-          queryParams: `?status=-1`,
+          href: '/backoffice/admin/offres',
+          name: 'Les opportunités',
           icon: <ListIcon />,
-          tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_OFFRES_CLIC,
-          subMenu: [
-            {
-              href: `/backoffice/candidat/${candidateId}/offres/private`,
-              name: 'Mes offres',
-              queryParams: `?status=-1`,
-              badge: 'offers',
-              tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_MES_OFFRES_CLIC,
-            },
-            {
-              href: `/backoffice/candidat/${candidateId}/offres/public`,
-              name: 'Toutes les offres',
-              tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_OFFRES_GENERALES_CLIC,
-            },
-          ],
+          badge: 'offers',
         },
         {
-          href: `/backoffice/candidat/${candidateId}/suivi`,
-          name: 'Mon suivi',
-          icon: <DocumentIcon />,
-          badge: 'note',
-          tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_SUIVI_CLIC,
-        },
-        {
-          href: `/backoffice/candidat/${candidateId}/cv`,
-          name: 'Mon CV',
-          icon: <UserIcon />,
-          badge: 'cv',
-          tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_CV_CLIC,
-        },
-        {
-          href: `${
-            process.env.TOOLBOX_CANDIDATE_URL
-          }?id=${getCandidateIdFromCoachOrCandidate(user)}`,
-          name: 'Boîte à outils',
-          icon: <QuestionIcon />,
-          external: true,
-          tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_BAO_CLIC,
+          href: '/backoffice/annuaire',
+          name: "Réseau d'entraide",
+          icon: <ShareIcon />,
         },
       ],
-      [USER_ROLES.CANDIDATE_EXTERNAL]: [
-        {
-          href: `/backoffice/candidat/${candidateId}/offres/private`,
-          name: 'Les offres',
-          queryParams: `?status=-1`,
-          icon: <ListIcon />,
-          tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_OFFRES_CLIC,
-          subMenu: [
-            {
-              href: `/backoffice/candidat/${candidateId}/offres/private`,
-              name: 'Mes offres',
-              queryParams: `?status=-1`,
-              badge: 'offers',
-              tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_MES_OFFRES_CLIC,
-            },
-            {
-              href: `/backoffice/candidat/${candidateId}/offres/public`,
-              name: 'Toutes les offres',
-              tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_OFFRES_GENERALES_CLIC,
-            },
-          ],
-        },
-        {
-          href: `/backoffice/candidat/${candidateId}/suivi`,
-          name: 'Mon suivi',
-          icon: <DocumentIcon />,
-          badge: 'note',
-          tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_SUIVI_CLIC,
-        },
-        {
-          href: `/backoffice/candidat/${candidateId}/cv`,
-          name: 'Mon CV',
-          icon: <UserIcon />,
-          badge: 'cv',
-          tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_CV_CLIC,
-        },
-        {
-          href: `${
-            process.env.TOOLBOX_CANDIDATE_URL
-          }?id=${getCandidateIdFromCoachOrCandidate(user)}`,
-          name: 'Boîte à outils',
-          icon: <QuestionIcon />,
-          external: true,
-          tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_BAO_CLIC,
-        },
-      ],
+      [USER_ROLES.CANDIDATE]: candidateHeaderItems,
+      [USER_ROLES.CANDIDATE_EXTERNAL]: candidateHeaderItems,
       [USER_ROLES.COACH]: [
         {
           href: `/backoffice/candidat/${candidateId}/offres/private`,
@@ -211,6 +185,11 @@ export const renderLinks = (
           icon: <UserIcon />,
           badge: 'cv',
           tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_CV_CLIC,
+        },
+        {
+          href: '/backoffice/annuaire',
+          name: "Réseau d'entraide",
+          icon: <ShareIcon />,
         },
         {
           href: `${
@@ -265,6 +244,11 @@ export const renderLinks = (
           badge: 'cv',
           disabled: !candidateId,
           tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_CV_CLIC,
+        },
+        {
+          href: '/backoffice/annuaire',
+          name: "Réseau d'entraide",
+          icon: <ShareIcon />,
         },
         {
           href: `${

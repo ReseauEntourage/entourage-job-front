@@ -36,7 +36,7 @@ export const HeaderConnectedContentMobile = ({
   const user = useAuthenticatedUser();
 
   const { push, asPath } = useRouter();
-  const logoLink = links[user?.role?.replace(' ', '_').toLowerCase()][0];
+  const logoLink = links[user?.role][0];
 
   return (
     <StyledHeaderMobile id="header">
@@ -65,7 +65,7 @@ export const HeaderConnectedContentMobile = ({
             </SimpleLink>
           </li>
           {!isEmpty &&
-            links[user?.role?.replace(' ', '_').toLowerCase()]
+            links[user?.role]
               .filter(({ href }) => {
                 return href !== '#';
               })
@@ -101,13 +101,13 @@ export const HeaderConnectedContentMobile = ({
                           {name}
                         </span>
                       </a>
-                      {badges[badge] > 0 && (
+                      {badge && badges[badge] > 0 && (
                         <div>
                           &nbsp;
                           <div className="uk-badge">{badges[badge]}</div>
                         </div>
                       )}
-                      {subMenu?.length > 0 && (
+                      {subMenu && subMenu.length > 0 && (
                         <SubMenu items={subMenu} badges={badges} />
                       )}
                     </StyledConnectedItemMobile>

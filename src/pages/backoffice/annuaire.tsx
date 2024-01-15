@@ -1,23 +1,23 @@
 import React from 'react';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
-import { DirectoryList } from 'src/components/backoffice/directory/DirectoryList';
+import { DirectoryContainer } from 'src/components/backoffice/directory/DirectoryContainer/DirectoryContainer';
+import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { Section } from 'src/components/utils';
 
-const Suivi = () => {
-  // const user = useAuthenticatedUser();
-
-  // const prevUser = usePrevious(user);
-
-  const title = 'Annuaire';
-  // const description = "Ici c'est l'annuaire";
-
+const Annuaire = () => {
   return (
-    <LayoutBackOffice title={title}>
+    <LayoutBackOffice title="Annuaire">
       <Section className="custom-page">
-        <DirectoryList />
+        <HeaderBackoffice
+          title="Bienvenu sur votre réseau"
+          description={
+            "Découvrez les membres de la communauté et développez votre carnet d'adresse."
+          }
+        />
+        <DirectoryContainer />
       </Section>
     </LayoutBackOffice>
   );
 };
 
-export default Suivi;
+export default Annuaire;

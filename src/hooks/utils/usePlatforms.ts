@@ -6,7 +6,7 @@ import { isSSR } from 'src/utils/isSSR';
 import { useSSRDataContext } from './useSSRDataContext';
 
 export function useIsDesktop() {
-  const [isDesktop, setIsDesktop] = useState();
+  const [isDesktop, setIsDesktop] = useState<boolean>();
   const { userAgent } = useSSRDataContext();
   const mobileDetect = new MobileDetect(userAgent);
   const userAgentIsDesktop = !mobileDetect.mobile() && !mobileDetect.tablet();
