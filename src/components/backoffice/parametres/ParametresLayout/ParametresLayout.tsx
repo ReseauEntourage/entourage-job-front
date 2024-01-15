@@ -1,4 +1,8 @@
 import React from 'react';
+import {
+  StyledProfileLayout,
+  StyledProfileGrid,
+} from '../../Backoffice.styles';
 import { useConfirmationToaster } from '../useConfirmationToaster';
 import { Card, Section } from 'src/components/utils';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
@@ -10,8 +14,6 @@ import { ChangePasswordCard } from './ChangePasswordCard';
 import { HeaderParametres } from './HeaderParametres';
 import { ParametresHelpCard } from './ParametresHelpCard';
 import {
-  StyledParametresGrid,
-  StyledParametresLayout,
   StyledParametresLeftColumn,
   StyledParametresRightColumn,
 } from './ParametresLayout.styles';
@@ -33,10 +35,10 @@ export const ParametresLayout = ({
 
   useConfirmationToaster();
   return (
-    <StyledParametresLayout>
+    <StyledProfileLayout>
       <HeaderParametres />
       <Section className="custom-page">
-        <StyledParametresGrid className={`${isDesktop ? '' : 'mobile'}`}>
+        <StyledProfileGrid className={`${isDesktop ? '' : 'mobile'}`}>
           <StyledParametresLeftColumn
             className={`${isDesktop ? '' : 'mobile'}`}
           >
@@ -78,8 +80,8 @@ export const ParametresLayout = ({
               </>
             )}
           </StyledParametresRightColumn>
-        </StyledParametresGrid>
+        </StyledProfileGrid>
       </Section>
-    </StyledParametresLayout>
+    </StyledProfileLayout>
   );
 };

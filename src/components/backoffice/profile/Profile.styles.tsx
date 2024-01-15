@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-export const StyledParametresLeftColumn = styled.div`
+export const StyledProfileLeftColumn = styled.div`
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  flex-grow: 3;
   gap: 40px;
   min-width: 400px;
   &.mobile {
@@ -13,10 +13,10 @@ export const StyledParametresLeftColumn = styled.div`
   }
 `;
 
-export const StyledParametresRightColumn = styled.div`
+export const StyledProfileRightColumn = styled.div`
   display: flex;
   flex-direction: column;
-  flex-grow: 2;
+  flex-grow: 1;
   gap: 40px;
   &.mobile {
     width: 100%;

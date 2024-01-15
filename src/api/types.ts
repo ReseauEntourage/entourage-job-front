@@ -508,3 +508,28 @@ export type ExternalMessage = {
 
   type: ExternalMessageContactType;
 };
+
+export type PublicProfile = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  role: UserRole;
+  zone: AdminZone;
+  currentJob: string;
+  description: string;
+  helpNeeds: { name: HelpNames }[];
+  helpOffers: { name: HelpNames }[];
+  networkBusinessLines: {
+    name: BusinessLineValue;
+    order: number;
+  }[];
+  searchBusinessLines: {
+    name: BusinessLineValue;
+    order: number;
+  }[];
+  searchAmbitions: {
+    name: string;
+    order: number;
+    prefix: AmbitionsPrefixesType;
+  }[];
+};
