@@ -4,8 +4,8 @@
   typeof exports === 'object' && typeof module !== 'undefined'
     ? (module.exports = factory())
     : typeof define === 'function' && define.amd
-    ? define('uikitcustom', factory)
-    : ((global = global || self), (global.UIkitCustom = factory()));
+      ? define('uikitcustom', factory)
+      : ((global = global || self), (global.UIkitCustom = factory()));
 })(this, function () {
   'use strict';
 

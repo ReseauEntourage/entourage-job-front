@@ -52,7 +52,6 @@ export const authenticationConfig = {
   slice,
   saga,
 };
-
 ```
 
 ## Slice
@@ -73,7 +72,7 @@ interface State {
 const initialState: State = {
   userId: null,
   isFetching: false,
-}
+};
 
 const slice = createSlice({
   name: 'authentication',
@@ -101,7 +100,7 @@ Un selecteur permet d'exporter les données du store de manière public.
 import { RootState } from './authentication.slice.ts';
 
 export function selectCurrentUser(state: RootState) {
-  return state.authentication.user;  
+  return state.authentication.user;
 }
 ```
 
@@ -112,7 +111,6 @@ export function selectCurrentUser(state: RootState) {
 Redux saga permet de créer des effet de bord comme des appels api, mais également de gérer des scénario complexes.
 
 Par défaut, redux saga fonctionne assez mal avec TypeScript. Pour pallier à ce problème, nous utilisons [typed-redux-saga](https://github.com/agiledigital/typed-redux-saga), une surcouche qui permet d'améliorer le typage des effect comme `call`, `select`, etc.
-
 
 `authentication.saga.ts`
 
@@ -149,14 +147,17 @@ actions:
 `authentication.adapters.ts`
 
 ```ts
-import { createRequestAdapter, RequestState, SliceRootState } from 'src/store/utils';
+import {
+  createRequestAdapter,
+  RequestState,
+  SliceRootState,
+} from 'src/store/utils';
 
 export const loginRequestAdapter = createRequestAdapter('login').withPayloads<
   { email: string; password: string }, // request payload
   { accessToken: string }, // success payload
   void // failed payload
->()
-
+>();
 ```
 
 `authentication.slice.ts`
@@ -193,7 +194,9 @@ export const slice = createSlice({
 ```ts
 import { RootState, loginRequest } from './authentication.slice';
 
-export const loginSelectors = loginRequest.getSelectors<RootState>(state => state.authentication.login);
+export const loginSelectors = loginRequest.getSelectors<RootState>(
+  (state) => state.authentication.login
+);
 ```
 
 ## Entité
@@ -245,9 +248,10 @@ export const slice = createSlice({
 import { RootState } from './candidats.slice';
 import { candidatEntityAdapter } from './candidats.adapters';
 
-export const {
-  selectAll: selectCandidats
-} = candidatEntityAdapter.getSelectors<RootState>((state) => state.candidats.candidats);
+export const { selectAll: selectCandidats } =
+  candidatEntityAdapter.getSelectors<RootState>(
+    (state) => state.candidats.candidats
+  );
 ```
 
 # Integration
@@ -272,7 +276,11 @@ export const useCaseConfig = {
 
 ```tsx
 import { useSelector, useDispatch } from 'react-redux';
-import { selectCurrentUser, selectIsFetchUserRequested, authenticationActions } from './use-cases/authentication'
+import {
+  selectCurrentUser,
+  selectIsFetchUserRequested,
+  authenticationActions,
+} from './use-cases/authentication';
 
 export function DashboardPage() {
   const dispatch = useDispatch();
@@ -282,14 +290,12 @@ export function DashboardPage() {
 
   useEffect(() => {
     dispatch(authenticationActions.fetchUserRequested());
-  }, [dispatch])
+  }, [dispatch]);
 
   if (isFetchUserRequested) {
-    return <Loader />
+    return <Loader />;
   }
 
-  return (
-    <div>{user.name}</div>
-  );
+  return <div>{user.name}</div>;
 }
 ```

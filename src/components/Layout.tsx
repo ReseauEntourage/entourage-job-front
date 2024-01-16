@@ -1,8 +1,9 @@
-import { WithRouterProps } from 'next/dist/client/with-router';
+import React from 'react';
 import Head from 'next/head';
 import { withRouter } from 'next/router';
+import { WithRouterProps } from 'next/dist/client/with-router';
+
 import Script from 'next/script';
-import React from 'react';
 import { HeaderConnected } from 'src/components/headers/HeaderConnected';
 import { HeaderPublic } from 'src/components/headers/HeaderPublic/HeaderPublic';
 import { Footer } from 'src/components/partials/Footer';
@@ -36,9 +37,7 @@ export const Layout = withRouter<LayoutProps>(
     isEmpty = false,
   }: LayoutProps) => {
     const isPDF = router.pathname.includes('/pdf/');
-    const domain =
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      process.env.SERVER_URL.replace(/https:\/\/|http:\/\//g, '');
+    const domain = process.env.SERVER_URL.replace(/https:\/\/|http:\/\//g, '');
 
     return (
       <>

@@ -24,23 +24,18 @@ export const HeaderConnectedContentMobile = ({
   badges,
   links = {
     admin: [
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
       HeaderConnectedMainItemDefaultProps,
     ],
     dropdown: [
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
       HeaderConnectedMainItemDefaultProps,
     ],
     candidat: [
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
       HeaderConnectedMainItemDefaultProps,
     ],
     coach: [
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
       HeaderConnectedMainItemDefaultProps,
     ],
     coach_externe: [
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
       HeaderConnectedMainItemDefaultProps,
     ],
   },
@@ -59,7 +54,7 @@ export const HeaderConnectedContentMobile = ({
         left={
           <NavbarLogo
             href={logoLink.href + (logoLink.queryParams || '')}
-            src="/static/img/linkedout_logo_white.png"
+            src=""
             alt="Linkedout"
           />
         }
@@ -115,13 +110,11 @@ export const HeaderConnectedContentMobile = ({
                         </span>
                       </a>
                       {
-                        // @ts-expect-error after enable TS strict mode. Please, try to fix it
                         badges[badge] > 0 && (
                           <div>
                             &nbsp;
                             <div className="uk-badge">
                               {
-                                // @ts-expect-error after enable TS strict mode. Please, try to fix it
                                 badges[badge]
                               }
                             </div>
@@ -131,7 +124,6 @@ export const HeaderConnectedContentMobile = ({
                       {subMenu?.length > 0 && (
                         <SubMenu
                           items={subMenu}
-                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
                           badges={badges}
                         />
                       )}

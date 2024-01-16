@@ -23,9 +23,8 @@ export function useFetchCandidateOpportunity(
 
   useEffect(() => {
     async function fetchOpportunity() {
-      const { data: fetchedOpportunity } = await Api.getOpportunityById(
-        opportunityId
-      );
+      const { data: fetchedOpportunity } =
+        await Api.getOpportunityById(opportunityId);
       if (user.role === USER_ROLES.COACH_EXTERNAL) {
         const [fetchedOppUser] = fetchedOpportunity.opportunityUsers.filter(
           (oppUser) => {
@@ -91,9 +90,8 @@ export function useFetchAdminOpportunity(
     useState<AdminOpportunityWithOpportunityUsers>();
   useEffect(() => {
     async function fetchOpportunity() {
-      const { data: fetchedOpportunity } = await Api.getOpportunityById(
-        opportunityId
-      );
+      const { data: fetchedOpportunity } =
+        await Api.getOpportunityById(opportunityId);
       setOpportunity(fetchedOpportunity);
       setIsLoading(false);
       setRefresh(false);

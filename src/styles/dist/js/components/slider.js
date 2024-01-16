@@ -4,10 +4,10 @@
   typeof exports === 'object' && typeof module !== 'undefined'
     ? (module.exports = factory(require('uikit-util')))
     : typeof define === 'function' && define.amd
-    ? define('uikitslider', ['uikit-util'], factory)
-    : ((global =
-        typeof globalThis !== 'undefined' ? globalThis : global || self),
-      (global.UIkitSlider = factory(global.UIkit.util)));
+      ? define('uikitslider', ['uikit-util'], factory)
+      : ((global =
+          typeof globalThis !== 'undefined' ? globalThis : global || self),
+        (global.UIkitSlider = factory(global.UIkit.util)));
 })(this, function (uikitUtil) {
   'use strict';
 
@@ -666,10 +666,10 @@
     return index === 'next'
       ? 1
       : index === 'previous'
-      ? -1
-      : index < prevIndex
-      ? -1
-      : 1;
+        ? -1
+        : index < prevIndex
+          ? -1
+          : 1;
   }
 
   function speedUp(x) {
@@ -970,38 +970,40 @@
         var leftCenter = width;
         var slideLeft = 0;
 
-        sets = uikitUtil
-          .sortBy(this.slides, 'offsetLeft')
-          .reduce(function (sets, slide, i) {
-            var slideWidth = uikitUtil.dimensions(slide).width;
-            var slideRight = slideLeft + slideWidth;
+        sets = uikitUtil.sortBy(this.slides, 'offsetLeft').reduce(function (
+          sets,
+          slide,
+          i
+        ) {
+          var slideWidth = uikitUtil.dimensions(slide).width;
+          var slideRight = slideLeft + slideWidth;
 
-            if (slideRight > left) {
-              if (!this$1$1.center && i > this$1$1.maxIndex) {
-                i = this$1$1.maxIndex;
-              }
-
-              if (!uikitUtil.includes(sets, i)) {
-                var cmp = this$1$1.slides[i + 1];
-                if (
-                  this$1$1.center &&
-                  cmp &&
-                  slideWidth < leftCenter - uikitUtil.dimensions(cmp).width / 2
-                ) {
-                  leftCenter -= slideWidth;
-                } else {
-                  leftCenter = width;
-                  sets.push(i);
-                  left =
-                    slideLeft + width + (this$1$1.center ? slideWidth / 2 : 0);
-                }
-              }
+          if (slideRight > left) {
+            if (!this$1$1.center && i > this$1$1.maxIndex) {
+              i = this$1$1.maxIndex;
             }
 
-            slideLeft += slideWidth;
+            if (!uikitUtil.includes(sets, i)) {
+              var cmp = this$1$1.slides[i + 1];
+              if (
+                this$1$1.center &&
+                cmp &&
+                slideWidth < leftCenter - uikitUtil.dimensions(cmp).width / 2
+              ) {
+                leftCenter -= slideWidth;
+              } else {
+                leftCenter = width;
+                sets.push(i);
+                left =
+                  slideLeft + width + (this$1$1.center ? slideWidth / 2 : 0);
+              }
+            }
+          }
 
-            return sets;
-          }, []);
+          slideLeft += slideWidth;
+
+          return sets;
+        }, []);
 
         return !uikitUtil.isEmpty(sets) && sets;
       },
@@ -1138,8 +1140,8 @@
             this$1$1.dir > 0 && i < index
               ? 1
               : this$1$1.dir < 0 && i >= this$1$1.index
-              ? -1
-              : ''
+                ? -1
+                : ''
           );
         });
 

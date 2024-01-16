@@ -4,10 +4,10 @@
   typeof exports === 'object' && typeof module !== 'undefined'
     ? (module.exports = factory(require('uikit-util')))
     : typeof define === 'function' && define.amd
-    ? define('uikitslideshow_parallax', ['uikit-util'], factory)
-    : ((global =
-        typeof globalThis !== 'undefined' ? globalThis : global || self),
-      (global.UIkitSlideshow_parallax = factory(global.UIkit.util)));
+      ? define('uikitslideshow_parallax', ['uikit-util'], factory)
+      : ((global =
+          typeof globalThis !== 'undefined' ? globalThis : global || self),
+        (global.UIkitSlideshow_parallax = factory(global.UIkit.util)));
 })(this, function (uikitUtil) {
   'use strict';
 
@@ -138,8 +138,8 @@
               (prop === 'scale'
                 ? 1
                 : isCssProp
-                ? uikitUtil.css($el, prop)
-                : 0) || 0
+                  ? uikitUtil.css($el, prop)
+                  : 0) || 0
             );
           }
 
@@ -583,8 +583,8 @@
         ? percent
         : 1 - percent
       : dir < 0
-      ? 1 - percent
-      : percent;
+        ? 1 - percent
+        : percent;
   }
 
   if (typeof window !== 'undefined' && window.UIkit) {

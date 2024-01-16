@@ -4,10 +4,10 @@
   typeof exports === 'object' && typeof module !== 'undefined'
     ? (module.exports = factory(require('uikit-util')))
     : typeof define === 'function' && define.amd
-    ? define('uikittooltip', ['uikit-util'], factory)
-    : ((global =
-        typeof globalThis !== 'undefined' ? globalThis : global || self),
-      (global.UIkitTooltip = factory(global.UIkit.util)));
+      ? define('uikittooltip', ['uikit-util'], factory)
+      : ((global =
+          typeof globalThis !== 'undefined' ? globalThis : global || self),
+        (global.UIkitTooltip = factory(global.UIkit.util)));
 })(this, function (uikitUtil) {
   'use strict';
 
@@ -106,10 +106,10 @@
                 uikitUtil.isFunction(animate)
                   ? animate
                   : animate === false || !this$1$1.hasAnimation
-                  ? this$1$1._toggle
-                  : this$1$1.hasTransition
-                  ? toggleHeight(this$1$1)
-                  : toggleAnimation(this$1$1)
+                    ? this$1$1._toggle
+                    : this$1$1.hasTransition
+                      ? toggleHeight(this$1$1)
+                      : toggleAnimation(this$1$1)
               )(el, show);
 
               var cls = show ? this$1$1.clsEnter : this$1$1.clsLeave;
@@ -141,10 +141,10 @@
         return uikitUtil.hasClass(el, this.clsEnter)
           ? true
           : uikitUtil.hasClass(el, this.clsLeave)
-          ? false
-          : this.cls
-          ? uikitUtil.hasClass(el, this.cls.split(' ')[0])
-          : !uikitUtil.hasAttr(el, 'hidden');
+            ? false
+            : this.cls
+              ? uikitUtil.hasClass(el, this.cls.split(' ')[0])
+              : !uikitUtil.hasAttr(el, 'hidden');
       },
 
       _toggle: function (el, toggled) {

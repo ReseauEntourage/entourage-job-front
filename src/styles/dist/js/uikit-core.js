@@ -4,10 +4,10 @@
   typeof exports === 'object' && typeof module !== 'undefined'
     ? (module.exports = factory())
     : typeof define === 'function' && define.amd
-    ? define('uikit', factory)
-    : ((global =
-        typeof globalThis !== 'undefined' ? globalThis : global || self),
-      (global.UIkit = factory()));
+      ? define('uikit', factory)
+      : ((global =
+          typeof globalThis !== 'undefined' ? globalThis : global || self),
+        (global.UIkit = factory()));
 })(this, function () {
   'use strict';
 
@@ -147,8 +147,8 @@
     return !(isArray(obj)
       ? obj.length
       : isObject(obj)
-      ? Object.keys(obj).length
-      : false);
+        ? Object.keys(obj).length
+        : false);
   }
 
   function isUndefined(value) {
@@ -159,10 +159,10 @@
     return isBoolean(value)
       ? value
       : value === 'true' || value === '1' || value === ''
-      ? true
-      : value === 'false' || value === '0'
-      ? false
-      : value;
+        ? true
+        : value === 'false' || value === '0'
+          ? false
+          : value;
   }
 
   function toNumber(value) {
@@ -208,8 +208,8 @@
     return !time
       ? 0
       : endsWith(time, 'ms')
-      ? toFloat(time)
-      : toFloat(time) * 1000;
+        ? toFloat(time)
+        : toFloat(time) * 1000;
   }
 
   function isEqual(value, other) {
@@ -396,10 +396,10 @@
     i = isNumeric(i)
       ? toNumber(i)
       : i === 'next'
-      ? current + 1
-      : i === 'previous'
-      ? current - 1
-      : elements.indexOf(toNode(i));
+        ? current + 1
+        : i === 'previous'
+          ? current - 1
+          : elements.indexOf(toNode(i));
 
     if (finite) {
       return clamp(i, 0, length - 1);
@@ -487,28 +487,28 @@
   var pointerDown = hasPointerEvents
     ? 'pointerdown'
     : hasTouchEvents
-    ? 'touchstart'
-    : 'mousedown';
+      ? 'touchstart'
+      : 'mousedown';
   var pointerMove = hasPointerEvents
     ? 'pointermove'
     : hasTouchEvents
-    ? 'touchmove'
-    : 'mousemove';
+      ? 'touchmove'
+      : 'mousemove';
   var pointerUp = hasPointerEvents
     ? 'pointerup'
     : hasTouchEvents
-    ? 'touchend'
-    : 'mouseup';
+      ? 'touchend'
+      : 'mouseup';
   var pointerEnter = hasPointerEvents
     ? 'pointerenter'
     : hasTouchEvents
-    ? ''
-    : 'mouseenter';
+      ? ''
+      : 'mouseenter';
   var pointerLeave = hasPointerEvents
     ? 'pointerleave'
     : hasTouchEvents
-    ? ''
-    : 'mouseleave';
+      ? ''
+      : 'mouseleave';
   var pointerCancel = hasPointerEvents ? 'pointercancel' : 'touchcancel';
 
   var voidElements = {
@@ -923,10 +923,10 @@
     return isArray(target)
       ? target.map(toEventTarget).filter(Boolean)
       : isString(target)
-      ? findAll(target)
-      : isEventTarget(target)
-      ? [target]
-      : toNodes(target);
+        ? findAll(target)
+        : isEventTarget(target)
+          ? [target]
+          : toNodes(target);
   }
 
   function isTouch(e) {
@@ -1387,16 +1387,16 @@
     return !isString(selector)
       ? toNode(selector)
       : isHtml(selector)
-      ? toNode(fragment(selector))
-      : find(selector, context);
+        ? toNode(fragment(selector))
+        : find(selector, context);
   }
 
   function $$(selector, context) {
     return !isString(selector)
       ? toNodes(selector)
       : isHtml(selector)
-      ? toNodes(fragment(selector))
-      : findAll(selector, context);
+        ? toNodes(fragment(selector))
+        : findAll(selector, context);
   }
 
   function isHtml(str) {
@@ -1935,12 +1935,12 @@
     return isNumeric(value)
       ? +value
       : endsWith(value, 'vh')
-      ? percent(height(toWindow(element)), value)
-      : endsWith(value, 'vw')
-      ? percent(width(toWindow(element)), value)
-      : endsWith(value, '%')
-      ? percent(dimensions(element)[property], value)
-      : toFloat(value);
+        ? percent(height(toWindow(element)), value)
+        : endsWith(value, 'vw')
+          ? percent(width(toWindow(element)), value)
+          : endsWith(value, '%')
+            ? percent(dimensions(element)[property], value)
+            : toFloat(value);
   }
 
   function percent(base, value) {
@@ -2208,8 +2208,8 @@
       ? parentVal
         ? parentVal.concat(childVal)
         : isArray(childVal)
-        ? childVal
-        : [childVal]
+          ? childVal
+          : [childVal]
       : parentVal;
   }
 
@@ -2261,18 +2261,18 @@
       return !options
         ? {}
         : startsWith(options, '{')
-        ? JSON.parse(options)
-        : args.length && !includes(options, ':')
-        ? ((obj = {}), (obj[args[0]] = options), obj)
-        : options.split(';').reduce(function (options, option) {
-            var ref = option.split(/:(.*)/);
-            var key = ref[0];
-            var value = ref[1];
-            if (key && !isUndefined(value)) {
-              options[key.trim()] = value.trim();
-            }
-            return options;
-          }, {});
+          ? JSON.parse(options)
+          : args.length && !includes(options, ':')
+            ? ((obj = {}), (obj[args[0]] = options), obj)
+            : options.split(';').reduce(function (options, option) {
+                var ref = option.split(/:(.*)/);
+                var key = ref[0];
+                var value = ref[1];
+                if (key && !isUndefined(value)) {
+                  options[key.trim()] = value.trim();
+                }
+                return options;
+              }, {});
     } catch (e) {
       return {};
     }
@@ -2640,15 +2640,15 @@
             elAttach[dir] === align
               ? -dim[prop]
               : elAttach[dir] === alignFlip
-              ? dim[prop]
-              : 0;
+                ? dim[prop]
+                : 0;
 
           var targetOffset =
             targetAttach[dir] === align
               ? targetDim[prop]
               : targetAttach[dir] === alignFlip
-              ? -targetDim[prop]
-              : 0;
+                ? -targetDim[prop]
+                : 0;
 
           if (
             position[align] < boundary[align] ||
@@ -2686,8 +2686,8 @@
                 flipped[el][dir] = !elemOffset
                   ? flipped[el][dir]
                   : flipped[el][dir] === dirs[prop][1]
-                  ? dirs[prop][2]
-                  : dirs[prop][1];
+                    ? dirs[prop][2]
+                    : dirs[prop][1];
               });
 
               return true;
@@ -2726,8 +2726,8 @@
       pos = x.test(pos[0])
         ? pos.concat('center')
         : y.test(pos[0])
-        ? ['center'].concat(pos)
-        : ['center', 'center'];
+          ? ['center'].concat(pos)
+          : ['center', 'center'];
     }
 
     return {
@@ -3335,8 +3335,8 @@
           !delegate
             ? null
             : isString(delegate)
-            ? delegate
-            : delegate.call(component),
+              ? delegate
+              : delegate.call(component),
           isString(handler) ? component[handler] : handler.bind(component),
           { passive: passive, capture: capture, self: self }
         )
@@ -3365,10 +3365,12 @@
       return isArray(value)
         ? value
         : isString(value)
-        ? value.split(/,(?![^(]*\))/).map(function (value) {
-            return isNumeric(value) ? toNumber(value) : toBoolean(value.trim());
-          })
-        : [value];
+          ? value.split(/,(?![^(]*\))/).map(function (value) {
+              return isNumeric(value)
+                ? toNumber(value)
+                : toBoolean(value.trim());
+            })
+          : [value];
     }
 
     function normalizeData(ref, ref$1) {
@@ -3587,8 +3589,8 @@
               data: isPlainObject(element) ? element : [].concat(argsArray),
             })
           : !element
-          ? init(element)
-          : $$(element).map(init)[0];
+            ? init(element)
+            : $$(element).map(init)[0];
 
         function init(element) {
           var instance = UIkit.getComponent(element, name);
@@ -3728,11 +3730,14 @@
         if ((css(target, 'animationName') || '').match(/^uk-.*(left|right)/)) {
           started++;
           css(document.documentElement, 'overflowX', 'hidden');
-          setTimeout(function () {
-            if (!--started) {
-              css(document.documentElement, 'overflowX', '');
-            }
-          }, toMs(css(target, 'animationDuration')) + 100);
+          setTimeout(
+            function () {
+              if (!--started) {
+                css(document.documentElement, 'overflowX', '');
+              }
+            },
+            toMs(css(target, 'animationDuration')) + 100
+          );
         }
       },
       true
@@ -3783,8 +3788,8 @@
         ? 'Left'
         : 'Right'
       : y1 - y2 > 0
-      ? 'Up'
-      : 'Down';
+        ? 'Up'
+        : 'Down';
   }
 
   function boot(UIkit) {
@@ -3929,10 +3934,10 @@
                 isFunction(animate)
                   ? animate
                   : animate === false || !this$1$1.hasAnimation
-                  ? this$1$1._toggle
-                  : this$1$1.hasTransition
-                  ? toggleHeight(this$1$1)
-                  : toggleAnimation(this$1$1)
+                    ? this$1$1._toggle
+                    : this$1$1.hasTransition
+                      ? toggleHeight(this$1$1)
+                      : toggleAnimation(this$1$1)
               )(el, show);
 
               var cls = show ? this$1$1.clsEnter : this$1$1.clsLeave;
@@ -3964,10 +3969,10 @@
         return hasClass(el, this.clsEnter)
           ? true
           : hasClass(el, this.clsLeave)
-          ? false
-          : this.cls
-          ? hasClass(el, this.cls.split(' ')[0])
-          : !hasAttr(el, 'hidden');
+            ? false
+            : this.cls
+              ? hasClass(el, this.cls.split(' ')[0])
+              : !hasAttr(el, 'hidden');
       },
 
       _toggle: function (el, toggled) {
@@ -4806,11 +4811,15 @@
           }
         }
 
-        this.showTimer = setTimeout(function () {
-          return (
-            !this$1$1.isToggled() && this$1$1.toggleElement(this$1$1.$el, true)
-          );
-        }, (delay && this.delayShow) || 0);
+        this.showTimer = setTimeout(
+          function () {
+            return (
+              !this$1$1.isToggled() &&
+              this$1$1.toggleElement(this$1$1.$el, true)
+            );
+          },
+          (delay && this.delayShow) || 0
+        );
       },
 
       hide: function (delay) {
@@ -4937,11 +4946,11 @@
         input.files && input.files[0]
           ? input.files[0].name
           : matches(input, 'select') &&
-            (option = $$('option', input).filter(function (el) {
-              return el.selected;
-            })[0]) // eslint-disable-line prefer-destructuring
-          ? option.textContent
-          : input.value;
+              (option = $$('option', input).filter(function (el) {
+                return el.selected;
+              })[0]) // eslint-disable-line prefer-destructuring
+            ? option.textContent
+            : input.value;
 
       if (prev !== value) {
         target[prop] = value;
@@ -5946,8 +5955,8 @@
           parents($el, '.uk-search-large').length
           ? 'search-large'
           : parents($el, '.uk-search-navbar').length
-          ? 'search-navbar'
-          : icon;
+            ? 'search-navbar'
+            : icon;
       },
     },
   };
@@ -6696,10 +6705,13 @@
             { self: true }
           );
 
-          var timer = setTimeout(function () {
-            off();
-            resolve();
-          }, toMs(css(transitionElement, 'transitionDuration')));
+          var timer = setTimeout(
+            function () {
+              off();
+              resolve();
+            },
+            toMs(css(transitionElement, 'transitionDuration'))
+          );
         });
       }).then(function () {
         return delete el._reject;
@@ -8389,8 +8401,8 @@
       var cls = hasClass(this.$el, 'uk-tab-left')
         ? 'uk-tab-left'
         : hasClass(this.$el, 'uk-tab-right')
-        ? 'uk-tab-right'
-        : false;
+          ? 'uk-tab-right'
+          : false;
 
       if (cls) {
         this.$create('toggle', this.$el, {

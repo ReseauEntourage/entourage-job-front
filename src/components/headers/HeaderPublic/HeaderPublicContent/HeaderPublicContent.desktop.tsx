@@ -49,7 +49,7 @@ export const HeaderPublicContentDesktop = ({
         style="primary"
       >
         Découvrir les CV
-        <ChevronRightIcon />
+        {/* <ChevronRightIcon /> */}
       </Button>
     </div>,
   ];
@@ -77,7 +77,7 @@ export const HeaderPublicContentDesktop = ({
                 style="default"
               >
                 Faire un don
-                <ChevronRightIcon />
+                {/* <ChevronRightIcon /> */}
               </Button>
             </div>
           </div>

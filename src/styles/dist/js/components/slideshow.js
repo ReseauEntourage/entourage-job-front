@@ -4,10 +4,10 @@
   typeof exports === 'object' && typeof module !== 'undefined'
     ? (module.exports = factory(require('uikit-util')))
     : typeof define === 'function' && define.amd
-    ? define('uikitslideshow', ['uikit-util'], factory)
-    : ((global =
-        typeof globalThis !== 'undefined' ? globalThis : global || self),
-      (global.UIkitSlideshow = factory(global.UIkit.util)));
+      ? define('uikitslideshow', ['uikit-util'], factory)
+      : ((global =
+          typeof globalThis !== 'undefined' ? globalThis : global || self),
+        (global.UIkitSlideshow = factory(global.UIkit.util)));
 })(this, function (uikitUtil) {
   'use strict';
 
@@ -800,10 +800,10 @@
     return index === 'next'
       ? 1
       : index === 'previous'
-      ? -1
-      : index < prevIndex
-      ? -1
-      : 1;
+        ? -1
+        : index < prevIndex
+          ? -1
+          : 1;
   }
 
   function speedUp(x) {

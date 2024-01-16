@@ -15,7 +15,6 @@ export const addAxiosInterceptors = (api: AxiosInstance): void => {
         const accessToken = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
 
         if (accessToken) {
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           configModified.headers.authorization = `Token ${accessToken}`;
         }
       }

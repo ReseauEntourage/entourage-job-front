@@ -4,10 +4,10 @@
   typeof exports === 'object' && typeof module !== 'undefined'
     ? (module.exports = factory(require('uikit-util')))
     : typeof define === 'function' && define.amd
-    ? define('uikitupload', ['uikit-util'], factory)
-    : ((global =
-        typeof globalThis !== 'undefined' ? globalThis : global || self),
-      (global.UIkitUpload = factory(global.UIkit.util)));
+      ? define('uikitupload', ['uikit-util'], factory)
+      : ((global =
+          typeof globalThis !== 'undefined' ? globalThis : global || self),
+        (global.UIkitUpload = factory(global.UIkit.util)));
 })(this, function (uikitUtil) {
   'use strict';
 
@@ -155,11 +155,15 @@
                 var xhr = env.xhr;
                 xhr.upload &&
                   uikitUtil.on(xhr.upload, 'progress', this$1$1.progress);
-                ['loadStart', 'load', 'loadEnd', 'abort'].forEach(function (
-                  type
-                ) {
-                  return uikitUtil.on(xhr, type.toLowerCase(), this$1$1[type]);
-                });
+                ['loadStart', 'load', 'loadEnd', 'abort'].forEach(
+                  function (type) {
+                    return uikitUtil.on(
+                      xhr,
+                      type.toLowerCase(),
+                      this$1$1[type]
+                    );
+                  }
+                );
 
                 return this$1$1.beforeSend(env);
               },

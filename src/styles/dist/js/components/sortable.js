@@ -4,10 +4,10 @@
   typeof exports === 'object' && typeof module !== 'undefined'
     ? (module.exports = factory(require('uikit-util')))
     : typeof define === 'function' && define.amd
-    ? define('uikitsortable', ['uikit-util'], factory)
-    : ((global =
-        typeof globalThis !== 'undefined' ? globalThis : global || self),
-      (global.UIkitSortable = factory(global.UIkit.util)));
+      ? define('uikitsortable', ['uikit-util'], factory)
+      : ((global =
+          typeof globalThis !== 'undefined' ? globalThis : global || self),
+        (global.UIkitSortable = factory(global.UIkit.util)));
 })(this, function (uikitUtil) {
   'use strict';
 
@@ -193,8 +193,8 @@
     return uikitUtil.hasClass(target, clsLeave)
       ? waitTransitionend(target).then(enterFn)
       : uikitUtil.hasClass(target, clsEnter)
-      ? waitTransitionend(target).then(leaveFn).then(enterFn)
-      : leaveFn().then(enterFn);
+        ? waitTransitionend(target).then(leaveFn).then(enterFn)
+        : leaveFn().then(enterFn);
   }
 
   function transitionIndex(target, next) {
@@ -435,19 +435,19 @@
           name === 'fade'
             ? fade
             : name === 'delayed-fade'
-            ? function () {
-                var args = [],
-                  len = arguments.length;
-                while (len--) args[len] = arguments[len];
+              ? function () {
+                  var args = [],
+                    len = arguments.length;
+                  while (len--) args[len] = arguments[len];
 
-                return fade.apply(void 0, args.concat([40]));
-              }
-            : !name
-            ? function () {
-                action();
-                return uikitUtil.Promise.resolve();
-              }
-            : slide;
+                  return fade.apply(void 0, args.concat([40]));
+                }
+              : !name
+                ? function () {
+                    action();
+                    return uikitUtil.Promise.resolve();
+                  }
+                : slide;
 
         return animationFn(action, target, this.duration).then(function () {
           return this$1$1.$update(target, 'resize');

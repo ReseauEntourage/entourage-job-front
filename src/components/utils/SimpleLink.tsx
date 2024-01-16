@@ -62,14 +62,14 @@ export const SimpleLink = ({
       href={href}
       shallow={shallow}
     >
-      <a
+      {/* <a
         onClick={onClick}
         target={target}
         className={classBuffer}
         rel={target ? 'noopener' : ''}
-      >
-        {children}
-      </a>
+      > */}
+      {children}
+      {/* </a> */}
     </Link>
   );
 };

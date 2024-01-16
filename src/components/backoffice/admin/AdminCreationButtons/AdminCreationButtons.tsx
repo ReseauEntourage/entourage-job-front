@@ -102,7 +102,7 @@ export function AdminCreationButtons({
         },
       ]}
     >
-      <PlusIcon />
+      {/* <PlusIcon /> */}
       Créer
     </ButtonMultiple>
   );

@@ -123,7 +123,7 @@ export type GetValueType<V extends FormSchemaValidation> = UseFormGetValues<V>;
 
 interface FormFieldCommonProperties<
   V extends FormSchemaValidation,
-  N extends Path<V> | ArrayPath<V | string> = Path<V>
+  N extends Path<V> | ArrayPath<V | string> = Path<V>,
 > {
   id: N;
   name: N;
@@ -137,7 +137,7 @@ interface FormFieldCommonProperties<
 export interface Rule<
   V extends FormSchemaValidation,
   T extends InputComponent,
-  M extends boolean
+  M extends boolean,
 > {
   method: (fieldValue: FormComponentValues<M>[T], fieldValues: V) => boolean;
   message: string;
@@ -146,7 +146,7 @@ export interface Rule<
 interface FormFieldInputCommonProperties<
   V extends FormSchemaValidation,
   T extends InputComponent,
-  M extends boolean = boolean
+  M extends boolean = boolean,
 > extends FormFieldCommonProperties<V, Path<V>> {
   isRequired?: boolean;
   rules?: Rule<V, T, M>[];
@@ -196,7 +196,7 @@ export interface FormFieldRadio<V extends FormSchemaValidation>
 
 export interface FormFieldSelectRequestCommon<
   V extends FormSchemaValidation,
-  M extends boolean
+  M extends boolean,
 > extends FormFieldInputCommonProperties<V, SelectRequestComponent, M> {
   component: SelectRequestComponent;
   maxChar?: number;

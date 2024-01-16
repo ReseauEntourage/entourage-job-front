@@ -17,6 +17,13 @@
     "baseUrl": "./",
     "noImplicitAny": false
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "src/components/utils/CarouselSwiper/swiper-augmentation.d.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    "src/components/utils/CarouselSwiper/swiper-augmentation.d.ts"
+  ],
   "exclude": ["node_modules", "./cypress.config.js"]
 }
