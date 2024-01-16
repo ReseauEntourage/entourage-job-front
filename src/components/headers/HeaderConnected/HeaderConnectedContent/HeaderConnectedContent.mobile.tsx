@@ -11,6 +11,7 @@ import {
   SimpleLink,
 } from 'src/components/utils';
 import { Offcanvas } from 'src/components/utils/Offcanvas';
+import { Tag } from 'src/components/utils/Tag';
 import { USER_ROLES } from 'src/constants/users';
 import { OFFCANVAS_LOGGED } from 'src/constants/utils';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -104,7 +105,11 @@ export const HeaderConnectedContentMobile = ({
                       {badge && badges[badge] > 0 && (
                         <div>
                           &nbsp;
-                          <div className="uk-badge">{badges[badge]}</div>
+                          <Tag
+                            size="small"
+                            style="secondary"
+                            content={badges[badge]}
+                          />
                         </div>
                       )}
                       {subMenu && subMenu.length > 0 && (

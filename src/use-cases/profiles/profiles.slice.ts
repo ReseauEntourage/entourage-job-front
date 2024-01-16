@@ -55,6 +55,7 @@ export const slice = createSlice({
         offset: 0,
       };
       state.profilesHasFetchedAll = false;
+      state.profiles = [];
     },
     incrementProfilesOffset(state) {
       state.profilesFilters = {

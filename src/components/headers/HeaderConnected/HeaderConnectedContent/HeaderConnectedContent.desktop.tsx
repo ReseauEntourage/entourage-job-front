@@ -16,6 +16,7 @@ import {
 } from 'src/components/utils';
 import { ImgProfile } from 'src/components/utils/ImgProfile';
 import { StyledNav } from 'src/components/utils/Navbar/Nav/Nav.styles';
+import { Tag } from 'src/components/utils/Tag';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { gaEvent } from 'src/lib/gtag';
@@ -178,9 +179,11 @@ export const HeaderConnectedContentDesktop = ({
                           {badge && badges[badge] > 0 && (
                             <div>
                               &nbsp;
-                              <div className="uk-badge uk-margin-small-left">
-                                {badges[badge]}
-                              </div>
+                              <Tag
+                                size="small"
+                                style="secondary"
+                                content={badges[badge]}
+                              />
                             </div>
                           )}
                         </SimpleLink>

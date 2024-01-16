@@ -19,11 +19,6 @@ export const StyledHeaderBackOffice = styled.div`
     margin: 30px 0;
     font-weight: 700;
     font-size: 14px;
-    .uk-badge {
-      margin-right: 10px;
-      min-width: 25px;
-      padding: 2px 5px;
-    }
   }
   .simple-separator {
     border-bottom: 1px solid ${COLORS.gray};

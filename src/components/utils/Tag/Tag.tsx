@@ -4,9 +4,15 @@ import { StyledTag } from './Tag.styles';
 export const Tag = ({
   content,
   style = 'default',
+  size = 'default',
 }: {
   content: React.ReactNode;
   style?: 'default' | 'secondary';
+  size?: 'default' | 'small';
 }) => {
-  return <StyledTag customStyle={style}>{content}</StyledTag>;
+  return (
+    <StyledTag size={size} customStyle={style}>
+      {content}
+    </StyledTag>
+  );
 };

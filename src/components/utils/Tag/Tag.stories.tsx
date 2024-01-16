@@ -7,7 +7,14 @@ const meta = {
   component: Tag,
   parameters: {
     controls: {
-      exclude: /.*/g,
+      include: ['size'],
+    },
+  },
+  argTypes: {
+    size: {
+      control: 'select',
+      options: ['default', 'small'],
+      defaultValue: 'default',
     },
   },
   decorators: [

@@ -137,12 +137,6 @@ export const renderLinks = (
           badge: 'offers',
         },
         {
-          href: '/backoffice/admin/offres',
-          name: 'Les opportunités',
-          icon: <ListIcon />,
-          badge: 'offers',
-        },
-        {
           href: '/backoffice/annuaire',
           name: "Réseau d'entraide",
           icon: <ShareIcon />,

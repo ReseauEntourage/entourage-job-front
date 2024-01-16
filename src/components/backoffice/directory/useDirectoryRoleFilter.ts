@@ -26,11 +26,10 @@ export function useDirectoryRoleFilter() {
           pathname: route,
           query: { role: COACH_USER_ROLES },
         });
-      }
-      if (isRoleIncluded(COACH_USER_ROLES, user.role)) {
+      } else {
         replace({
           pathname: route,
-          query: { role: COACH_USER_ROLES },
+          query: { role: CANDIDATE_USER_ROLES },
         });
       }
     }
