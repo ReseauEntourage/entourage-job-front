@@ -2,7 +2,7 @@ import { USER_ROLES } from 'src/constants/users';
 
 export const authenticatedPermissions = [
   {
-    paths: ['/backoffice/parametres'],
+    paths: ['/backoffice/parametres', '/backoffice/profile/[userId]'],
     roles: '*',
   },
   {

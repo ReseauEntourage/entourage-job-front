@@ -183,6 +183,10 @@ export class APIHandler {
     return this.get(`/user/candidate/checkUpdate/${candidateId}`);
   }
 
+  getPublicUserProfile(userId: string): Promise<AxiosResponse> {
+    return this.get(`/user/profile/${userId}`);
+  }
+
   // post
   postUser(params: UserDto): Promise<AxiosResponse> {
     return this.post('/user', params);
