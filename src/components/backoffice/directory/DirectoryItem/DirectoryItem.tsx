@@ -7,7 +7,7 @@ import { Department } from 'src/constants/departements';
 import { UserRole } from 'src/constants/users';
 
 interface DirectoryItemProps {
-  userId: string;
+  id: string;
   firstName: string;
   lastName: string;
   role: UserRole;
@@ -28,7 +28,7 @@ interface DirectoryItemProps {
 }
 
 export function DirectoryItem({
-  userId,
+  id,
   firstName,
   lastName,
   role,
@@ -40,9 +40,9 @@ export function DirectoryItem({
   job,
 }: DirectoryItemProps) {
   return (
-    <CardListItem dataTestId={userId}>
+    <CardListItem dataTestId={id}>
       <ProfileCard
-        userId={userId}
+        userId={id}
         firstName={firstName}
         lastName={lastName}
         role={role}

@@ -1,27 +1,37 @@
-import { call, put, takeLatest } from 'typed-redux-saga';
+import { call, put, select, takeLatest } from 'typed-redux-saga';
 import { Api } from 'src/api';
+import {
+  selectProfilesFilters,
+  selectProfilesHasFetchedAll,
+} from './profiles.selectors';
 import { slice } from './profiles.slice';
 
 const {
   fetchSelectedProfileRequested,
   fetchSelectedProfileSucceeded,
   fetchSelectedProfileFailed,
-  fetchProfilesListRequested,
-  // fetchProfilesListSucceeded,
-  fetchProfilesListFailed,
+  fetchProfilesRequested,
+  fetchProfilesSucceeded,
+  fetchProfilesFailed,
+  setProfilesRoleFilter,
+  incrementProfilesOffset,
 } = slice.actions;
 
-function* fetchProfilesListSaga() {
+function* fetchProfilesSagaRequested() {
+  const hasFetchedAll = yield* select(selectProfilesHasFetchedAll);
+
+  if (!hasFetchedAll) {
+    yield* put(fetchProfilesRequested());
+  }
+}
+
+function* fetchProfilesSaga() {
   try {
-    yield* call(() =>
-      // make call to Api to get list of profiles
-      {
-        return {};
-      }
-    );
-    // yield* put(fetchProfilesListSucceeded(response.data));
+    const filters = yield* select(selectProfilesFilters);
+    const response = yield* call(() => Api.getAllUsersProfiles(filters));
+    yield* put(fetchProfilesSucceeded(response.data));
   } catch {
-    yield* put(fetchProfilesListFailed());
+    yield* put(fetchProfilesFailed());
   }
 }
 
@@ -38,6 +48,8 @@ function* fetchSelectedProfileSaga(
 }
 
 export function* saga() {
-  yield* takeLatest(fetchProfilesListRequested, fetchProfilesListSaga);
+  yield* takeLatest(fetchProfilesRequested, fetchProfilesSaga);
+  yield* takeLatest(setProfilesRoleFilter, fetchProfilesSagaRequested);
+  yield* takeLatest(incrementProfilesOffset, fetchProfilesSagaRequested);
   yield* takeLatest(fetchSelectedProfileRequested, fetchSelectedProfileSaga);
 }

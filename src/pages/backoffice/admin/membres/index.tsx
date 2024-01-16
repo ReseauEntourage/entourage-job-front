@@ -24,11 +24,7 @@ const MembersAdmin = () => {
 
   useEffect(() => {
     if (user && user !== prevUser) {
-      if (
-        !role ||
-        (Array.isArray(role) && role.length === 0) ||
-        !isRoleIncluded(ALL_USER_ROLES, role)
-      ) {
+      if (!role || role.length === 0 || !isRoleIncluded(ALL_USER_ROLES, role)) {
         const params = {
           ...query,
           role: CANDIDATE_USER_ROLES,

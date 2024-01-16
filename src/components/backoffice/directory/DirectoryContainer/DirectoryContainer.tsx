@@ -1,58 +1,46 @@
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { DirectoryList } from '../DirectoryList';
-import { useRole } from 'src/components/backoffice/useRole';
 import { Button } from 'src/components/utils';
 import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { isRoleIncluded } from 'src/utils';
 import {
   StyledDirectoryButtonContainer,
   StyledDirectoryContainer,
 } from './DirectoryContainer.styles';
+import { useRoleFilter } from './useRoleFilter';
+
+const route = '/backoffice/annuaire';
 
 export function DirectoryContainer() {
-  const { replace } = useRouter();
-
-  const user = useAuthenticatedUser();
-  const role = useRole();
-
-  useEffect(() => {
-    if (!role) {
-      if (isRoleIncluded(CANDIDATE_USER_ROLES, user.role)) {
-        replace({
-          pathname: '/backoffice/annuaire',
-          query: { role: COACH_USER_ROLES },
-        });
-      }
-      if (isRoleIncluded(COACH_USER_ROLES, user.role)) {
-        replace({
-          pathname: '/backoffice/annuaire',
-          query: { role: CANDIDATE_USER_ROLES },
-        });
-      }
-    }
-  }, [replace, role, user.role]);
+  const { push } = useRouter();
+  const roleFilter = useRoleFilter();
 
   return (
     <StyledDirectoryContainer>
       <StyledDirectoryButtonContainer>
         <Button
           style={`custom-secondary${
-            isRoleIncluded(CANDIDATE_USER_ROLES, role) ? '-inverted' : ''
+            isRoleIncluded(CANDIDATE_USER_ROLES, roleFilter) ? '-inverted' : ''
           }`}
           onClick={() => {
-            // TODO dispatch action to filter by role
+            push({
+              pathname: route,
+              query: { role: CANDIDATE_USER_ROLES },
+            });
           }}
         >
           Les candidats
         </Button>
         <Button
           style={`custom-secondary${
-            isRoleIncluded(COACH_USER_ROLES, role) ? '-inverted' : ''
+            isRoleIncluded(COACH_USER_ROLES, roleFilter) ? '-inverted' : ''
           }`}
           onClick={() => {
-            // TODO dispatch action to filter by role
+            push({
+              pathname: route,
+              query: { role: COACH_USER_ROLES },
+            });
           }}
         >
           Les coachs

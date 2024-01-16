@@ -6,5 +6,5 @@ export function useRole() {
     query: { role },
   } = useRouter();
 
-  return role as UserRole | UserRole[];
+  return role as UserRole[];
 }

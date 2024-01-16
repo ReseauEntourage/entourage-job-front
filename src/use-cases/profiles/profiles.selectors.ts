@@ -1,12 +1,12 @@
 import {
+  fetchProfilesAdapter,
   fetchSelectedProfileAdapter,
-  fetchProfilesListAdapter,
 } from './profiles.adapters';
 import { RootState } from './profiles.slice';
 
-export const fetchProfilesListSelectors =
-  fetchProfilesListAdapter.getSelectors<RootState>(
-    (state) => state.profiles.fetchProfilesList
+export const fetchProfilesSelectors =
+  fetchProfilesAdapter.getSelectors<RootState>(
+    (state) => state.profiles.fetchProfiles
   );
 
 export const fetchSelectedProfileSelectors =
@@ -15,7 +15,19 @@ export const fetchSelectedProfileSelectors =
   );
 
 export function selectProfiles(state: RootState) {
-  return state.profiles.profilesList;
+  return state.profiles.profiles;
+}
+
+export function selectProfilesFilters(state: RootState) {
+  return state.profiles.profilesFilters;
+}
+
+export function selectProfilesRoleFilter(state: RootState) {
+  return state.profiles.profilesFilters.role;
+}
+
+export function selectProfilesHasFetchedAll(state: RootState) {
+  return state.profiles.profilesHasFetchedAll;
 }
 
 export function selectSelectedProfile(state: RootState) {

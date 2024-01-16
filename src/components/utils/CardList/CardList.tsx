@@ -3,6 +3,7 @@ import { Spinner } from '../Spinner';
 import {
   StyledCardList,
   StyledCardListContainer,
+  StyledCardListNoResult,
   StyledCardListSpinnerContainer,
 } from './CardList.styles';
 
@@ -23,7 +24,10 @@ export function CardList({
         data-uk-scrollspy="cls:uk-animation-slide-bottom-small; target: li;"
         data-testid={dataTestId}
       >
-        {list}
+        {list.length > 0 && list}
+        {list.length === 0 && !isLoading && (
+          <StyledCardListNoResult>Aucun résultat.</StyledCardListNoResult>
+        )}
       </StyledCardList>
       {isLoading && (
         <StyledCardListSpinnerContainer>
