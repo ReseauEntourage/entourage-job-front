@@ -41,6 +41,7 @@ export const formEditCandidateProfessionalInformation: FormSchema<{
           component: 'select',
           options: BUSINESS_LINES,
           isMulti: false,
+          isRequired: true,
         },
         {
           id: 'searchAmbition0',
@@ -62,6 +63,14 @@ export const formEditCandidateProfessionalInformation: FormSchema<{
           component: 'select',
           isMulti: false,
           options: BUSINESS_LINES,
+          rules: [
+            {
+              method: (fieldValue, fieldValues) => {
+                return !!fieldValue || !fieldValues.searchAmbition1;
+              },
+              message: 'Obligatoire',
+            },
+          ],
         },
         {
           id: 'searchAmbition1',

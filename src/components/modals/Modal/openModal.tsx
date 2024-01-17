@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 import { ModalContext } from 'src/components/modals/Modal/ModalContext';
 
-const modalsSubject = new Subject();
+const modalsSubject = new Subject<React.ReactNode>();
 
 export function openModal(modal) {
   modalsSubject.next(modal);

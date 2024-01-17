@@ -6,12 +6,13 @@ import {
   formPersonalDataAsCoach,
 } from 'src/components/forms/schemas/formPersonalData';
 import { openModal } from 'src/components/modals/Modal';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import {
   ALL_USER_ROLES,
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
 } from 'src/constants/users';
-import { isRoleIncluded } from 'src/utils';
+import { findConstantFromValue, isRoleIncluded } from 'src/utils';
 import { ModalEditUserInformation } from './ModalEditUserInformation';
 
 export const useOpenCorrespondingModal = (user: UserWithUserCandidate) => {
@@ -37,6 +38,12 @@ export const useOpenCorrespondingModal = (user: UserWithUserCandidate) => {
         formSchema={formPersonalDataAsCoach}
         defaultValues={{
           phone: user.phone,
+          department: user.userProfile.department
+            ? findConstantFromValue(
+                user.userProfile.department,
+                DEPARTMENTS_FILTERS
+              )
+            : undefined,
         }}
       />
     );
@@ -49,6 +56,12 @@ export const useOpenCorrespondingModal = (user: UserWithUserCandidate) => {
         defaultValues={{
           phone: user.phone,
           address: user.address,
+          department: user.userProfile.department
+            ? findConstantFromValue(
+                user.userProfile.department,
+                DEPARTMENTS_FILTERS
+              )
+            : undefined,
         }}
       />
     );
