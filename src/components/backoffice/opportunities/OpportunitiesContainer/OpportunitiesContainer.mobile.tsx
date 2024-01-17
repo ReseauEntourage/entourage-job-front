@@ -3,8 +3,8 @@ import {
   StyledContainer,
   StyledDetailsContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesContainer.styles';
-import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { BackLink } from 'src/components/utils/BackLink';
+import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
 import { OpportunitiesContainerProps } from './OpportunitiesContainer.types';
 import { OpportunitiesList } from './OpportunitiesList';
 

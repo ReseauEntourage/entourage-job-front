@@ -4,10 +4,10 @@ import UIkit from 'uikit';
 import EntourageIcon from 'assets/icons/entourage.svg';
 import { Api } from 'src/api';
 import { AdminOpportunityWithOpportunityUsers } from 'src/api/types';
-import { useMemberId } from 'src/components/backoffice/admin/members/MemberDetails/useMemberId';
 import { ActionLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel/ActionLabel';
 import { SelectSimple } from 'src/components/utils/Inputs';
 import { OFFER_STATUS } from 'src/constants';
+import { useMemberId } from 'src/hooks/queryParams/useMemberId';
 import {
   StyledActionLabelContainer,
   StyledOpportunitySectionCandidateLi,

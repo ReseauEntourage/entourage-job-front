@@ -6,10 +6,10 @@ import {
   tabs,
   TabsLabelsType,
 } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab/CandidateOffersTab.utils';
-import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
 import { Button } from 'src/components/utils';
+import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
 
 import {
   StyledButtonContainer,

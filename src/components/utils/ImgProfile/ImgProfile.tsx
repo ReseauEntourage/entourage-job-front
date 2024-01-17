@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { UserWithUserCandidate } from 'src/api/types';
+import { Img } from 'src/components/utils/Img';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useImageFallback } from 'src/hooks/useImageFallback';
-import { Img } from './Img';
 
 interface ImgProfileProps {
-  user: UserWithUserCandidate;
+  user: Partial<UserWithUserCandidate>;
   size?: number;
 }
 
 export const ImgProfile = ({ user, size = 40 }: ImgProfileProps) => {
   const connectedUser = useAuthenticatedUser();
 
-  const myUser: UserWithUserCandidate = user || connectedUser;
+  const myUser: Partial<UserWithUserCandidate> = user || connectedUser;
   const [hash, setHash] = useState<number>(Date.now());
 
   const { urlImg, fallbackToCVImage } = useImageFallback({

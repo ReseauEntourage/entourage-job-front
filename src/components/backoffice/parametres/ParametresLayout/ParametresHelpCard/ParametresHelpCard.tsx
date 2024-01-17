@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PlaceholderIllu from 'assets/icons/illu-coeur-mains-ouvertes.svg';
 import { useHelpField, helpFields } from '../../useUpdateProfile';
 import { ParametresPlaceholder } from '../ParametresPlaceholder';
+import { ProfileHelpList } from 'src/components/backoffice/profile/ProfileHelpInformationCard/ProfileHelpList';
 import { openModal } from 'src/components/modals/Modal';
 import { Card } from 'src/components/utils';
 import {
@@ -9,11 +10,6 @@ import {
   ParametresHelpCardTitles,
 } from 'src/constants/helps';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import {
-  StyledHelpCardImgContainer,
-  StyledHelpCardList,
-} from './ParametresHelpCard.styles';
-
 import { ParametresHelpModal } from './ParametresHelpModal';
 
 const plaholderText = {
@@ -61,23 +57,10 @@ export const ParametresHelpCard = () => {
       dataTestId="parametres-help-card"
     >
       {userProfile[helpField].length > 0 ? (
-        <StyledHelpCardList data-testid="parametres-help-list">
-          {ParametresHelpCardContents[contextualRole.toLowerCase()].map(
-            ({ icon, title, value }, index) => {
-              if (!userProfile[helpField].some((help) => help.name === value)) {
-                return null;
-              }
-              return (
-                <li key={index}>
-                  <StyledHelpCardImgContainer>
-                    {icon}
-                  </StyledHelpCardImgContainer>
-                  {title}
-                </li>
-              );
-            }
-          )}
-        </StyledHelpCardList>
+        <ProfileHelpList
+          helpList={userProfile[helpField]}
+          role={contextualRole}
+        />
       ) : (
         <ParametresPlaceholder
           image={<PlaceholderIllu />}

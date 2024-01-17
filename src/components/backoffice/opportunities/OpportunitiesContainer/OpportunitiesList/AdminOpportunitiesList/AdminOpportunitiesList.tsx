@@ -9,9 +9,9 @@ import {
   StyledListItemContainer,
 } from '../OpportunitiesList.styles';
 import { AdminOpportunityWithOpportunityUsers } from 'src/api/types';
-import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
-import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
 import { useIsAtBottom } from 'src/hooks/useIsAtBottom';
+import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
+import { useQueryParamsOpportunities } from 'src/hooks/queryParams/useQueryParamsOpportunities';
 import { AdminOpportunityItem } from './AdminOpportunityItem';
 
 interface AdminOpportunitiesListProps {

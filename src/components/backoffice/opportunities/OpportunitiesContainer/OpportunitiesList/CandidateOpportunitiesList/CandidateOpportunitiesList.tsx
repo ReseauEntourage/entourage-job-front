@@ -9,13 +9,13 @@ import {
   StyledListItemContainer,
 } from '../OpportunitiesList.styles';
 import { OpportunityWithOpportunityUsers } from 'src/api/types';
-import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
-import { useOpportunityType } from 'src/components/backoffice/opportunities/useOpportunityType';
-import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
 import { Button } from 'src/components/utils';
 import { useIsAtBottom } from 'src/hooks/useIsAtBottom';
+import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
+import { useOpportunityType } from 'src/hooks/queryParams/useOpportunityType';
+import { useQueryParamsOpportunities } from 'src/hooks/queryParams/useQueryParamsOpportunities';
 import { CandidateOpportunityItem } from './CandidateOpportunityItem';
 
 const uuidValue = uuid();

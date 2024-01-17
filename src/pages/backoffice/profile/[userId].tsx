@@ -18,9 +18,7 @@ const PageProfile = () => {
   if (loadingPersonal) {
     return <LoadingScreen />;
   }
-  if (user) {
-    return <Profile />;
-  }
+  return <Profile />;
 };
 
 export default PageProfile;

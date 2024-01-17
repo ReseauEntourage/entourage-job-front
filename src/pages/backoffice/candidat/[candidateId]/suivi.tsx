@@ -5,7 +5,6 @@ import HistoryIcon from 'assets/icons/history.svg';
 import { Api } from 'src/api';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
-import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { Button, Grid, Section } from 'src/components/utils';
 
@@ -16,6 +15,7 @@ import {
   USER_ROLES,
 } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
 import { usePrevious } from 'src/hooks/utils';
 import { isRoleIncluded } from 'src/utils/Finding';
 

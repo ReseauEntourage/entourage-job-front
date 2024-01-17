@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
 import EditIcon from 'assets/icons/editIcon.svg';
+import {
+  StyledHeaderProfile,
+  StyledHeaderProfileContent,
+  StyledMobileHeaderProfileTitlesContainer,
+  StyledHeaderProfilePicture,
+  StyledHeaderProfilePictureContainer,
+  StyledHeaderProfileTextContainer,
+} from '../../../Backoffice.styles';
 import { Api } from 'src/api';
 import {
   ButtonIcon,
@@ -13,15 +21,7 @@ import { Spinner } from 'src/components/utils/Spinner';
 import { COLORS } from 'src/constants/styles';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop } from 'src/hooks/utils';
-import {
-  StyledEditPictureIconContainer,
-  StyledHeaderParametres,
-  StyledHeaderParametresContent,
-  StyledMobileTitlesContainer,
-  StyledProfilePicture,
-  StyledProfilePictureContainer,
-  StyledTextContainer,
-} from './HeaderParametres.styles';
+import { StyledEditPictureIconContainer } from './HeaderParametres.styles';
 import { ParametresDescription } from './ParametresDescription';
 
 export const HeaderParametres = () => {
@@ -30,13 +30,13 @@ export const HeaderParametres = () => {
   const size = isDesktop ? 146 : 64;
   const user = useAuthenticatedUser();
   return (
-    <StyledHeaderParametres className={`${isDesktop ? '' : 'mobile'}`}>
+    <StyledHeaderProfile className={`${isDesktop ? '' : 'mobile'}`}>
       <Section>
-        <StyledHeaderParametresContent>
-          <StyledProfilePictureContainer
+        <StyledHeaderProfileContent>
+          <StyledHeaderProfilePictureContainer
             className={`${isDesktop ? '' : 'mobile'}`}
           >
-            <StyledProfilePicture
+            <StyledHeaderProfilePicture
               size={size}
               className={isDesktop ? '' : 'isMobile'}
             >
@@ -45,7 +45,7 @@ export const HeaderParametres = () => {
               ) : (
                 <ImgProfile user={user} size={size} />
               )}
-            </StyledProfilePicture>
+            </StyledHeaderProfilePicture>
             {isDesktop ? (
               <ImageInput
                 onChange={async ({ profileImage }) => {
@@ -85,9 +85,9 @@ export const HeaderParametres = () => {
                 </ImageInput>
               </StyledEditPictureIconContainer>
             )}
-          </StyledProfilePictureContainer>
+          </StyledHeaderProfilePictureContainer>
           {isDesktop ? (
-            <StyledTextContainer>
+            <StyledHeaderProfileTextContainer>
               <H1
                 title={
                   <>
@@ -100,9 +100,9 @@ export const HeaderParametres = () => {
                 <H5 title={user.userProfile.department} color="black" />
               )}
               <ParametresDescription />
-            </StyledTextContainer>
+            </StyledHeaderProfileTextContainer>
           ) : (
-            <StyledMobileTitlesContainer>
+            <StyledMobileHeaderProfileTitlesContainer>
               <H2
                 title={
                   <>
@@ -117,11 +117,11 @@ export const HeaderParametres = () => {
                   color="black"
                 />
               )}
-            </StyledMobileTitlesContainer>
+            </StyledMobileHeaderProfileTitlesContainer>
           )}
-        </StyledHeaderParametresContent>
+        </StyledHeaderProfileContent>
         {!isDesktop && <ParametresDescription />}
       </Section>
-    </StyledHeaderParametres>
+    </StyledHeaderProfile>
   );
 };

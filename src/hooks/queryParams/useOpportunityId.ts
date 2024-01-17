@@ -8,7 +8,5 @@ export function useOpportunityId(): string {
   if (Array.isArray(offerId)) {
     return offerId[0];
   }
-
-  // @ts-expect-error after enable TS strict mode. Please, try to fix it
-  return offerId;
+  return offerId as string;
 }

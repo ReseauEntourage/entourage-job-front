@@ -10,7 +10,6 @@ import {
   OpportunityDto,
 } from 'src/api/types';
 import { StyledOpportunityCTAsContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunityDetails.styles';
-import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
 import { formEditExternalOpportunityAsAdmin } from 'src/components/forms/schemas/formEditExternalOpportunity';
 import { formEditOpportunity } from 'src/components/forms/schemas/formEditOpportunity';
 import { formRecommendCandidate } from 'src/components/forms/schemas/formRecommendCandidate';
@@ -20,6 +19,7 @@ import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Button } from 'src/components/utils';
 import { AdminOffersTags, BUSINESS_LINES } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { useQueryParamsOpportunities } from 'src/hooks/queryParams/useQueryParamsOpportunities';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
 import {
   allCTAs,

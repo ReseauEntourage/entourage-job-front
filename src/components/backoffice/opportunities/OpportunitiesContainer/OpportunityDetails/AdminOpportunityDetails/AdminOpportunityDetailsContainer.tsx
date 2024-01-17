@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { OpportunityDetails } from '../OpportunityDetails';
 import { useFetchAdminOpportunity } from '../useFetchOpportunity';
 import { useOpportunityDetailsHeight } from '../useOpportunityDetailsHeight';
-import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { HEIGHTS } from 'src/constants/styles';
+import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
 import { AdminOpportunityDetails } from './AdminOpportunityDetails';
 import {
   CTAsByTag,

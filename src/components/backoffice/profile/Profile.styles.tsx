@@ -5,7 +5,6 @@ export const StyledProfileLeftColumn = styled.div`
   flex-direction: column;
   flex-grow: 3;
   gap: 40px;
-  min-width: 400px;
   &.mobile {
     min-width: unset;
     width: 100%;
@@ -18,6 +17,7 @@ export const StyledProfileRightColumn = styled.div`
   flex-direction: column;
   flex-grow: 1;
   gap: 40px;
+  min-width: 400px;
   &.mobile {
     width: 100%;
   }

@@ -1,7 +1,11 @@
 import _ from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { UserProfile, UserWithUserCandidate } from 'src/api/types';
+import {
+  PublicProfile,
+  UserProfile,
+  UserWithUserCandidate,
+} from 'src/api/types';
 import { ReduxRequestEvents } from 'src/constants';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 import {
@@ -15,13 +19,15 @@ export const helpFields = {
   HELP_OFFERS: 'helpOffers',
 } as const;
 
-export const useHelpField = (user: UserWithUserCandidate) => {
-  const { role } = user;
-
+export const useHelpField = (
+  user: UserWithUserCandidate | PublicProfile | null
+) => {
   const [helpField, setHelpField] =
     useState<(typeof helpFields)[keyof typeof helpFields]>();
 
   useEffect(() => {
+    if (!user) return;
+    const { role } = user;
     if (!helpField) {
       if (isRoleIncluded(CANDIDATE_USER_ROLES, role)) {
         setHelpField('helpNeeds');
@@ -29,7 +35,7 @@ export const useHelpField = (user: UserWithUserCandidate) => {
         setHelpField('helpOffers');
       }
     }
-  }, [helpField, role]);
+  }, [helpField, user]);
 
   return helpField;
 };

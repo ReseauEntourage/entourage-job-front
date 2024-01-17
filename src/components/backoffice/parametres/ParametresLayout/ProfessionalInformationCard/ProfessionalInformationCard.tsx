@@ -33,7 +33,7 @@ export const ProfessionalInformationCard = () => {
   const [hasData, setHasData] = useState<boolean>(false);
 
   useEffect(() => {
-    if (user) setHasData(checkData(user));
+    if (user) setHasData(checkData(user.userProfile, user.role));
   }, [user]);
 
   const openProfessionalInformationModal = useCallback(() => {

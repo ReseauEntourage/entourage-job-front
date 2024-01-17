@@ -14,6 +14,7 @@ import { BackToTop, Button, Section } from 'src/components/utils';
 import { MEMBER_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
+import { useRole } from 'src/hooks/queryParams/useRole';
 import { useBulkActions } from 'src/hooks/useBulkActions';
 import { usePrevious } from 'src/hooks/utils';
 import {
