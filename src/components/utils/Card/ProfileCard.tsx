@@ -59,7 +59,7 @@ interface ProfileCardProps {
     order: number;
   }[];
   userCandidate?: UserCandidateWithUsers;
-  department: Department;
+  department?: Department;
   job?: string;
 }
 
@@ -144,9 +144,11 @@ export function ProfileCard({
                 title={`${firstName} ${lastName.charAt(0)}.`}
               />
             </StyledProfileCardName>
-            <StyledProfileCardDepartment>
-              - {department}
-            </StyledProfileCardDepartment>
+            {department && (
+              <StyledProfileCardDepartment>
+                - {department}
+              </StyledProfileCardDepartment>
+            )}
           </StyledProfileCardInfoContainer>
           <StyledProfileCardRole>
             <Tag content={labels.role} style="secondary" />

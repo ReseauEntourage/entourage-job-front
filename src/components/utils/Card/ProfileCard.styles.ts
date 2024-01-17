@@ -28,7 +28,7 @@ export const StyledProfileCardInfoContainer = styled.div`
   justify-content: flex-start;
   align-items: flex-end;
   position: absolute;
-  bottom: 36px;
+  bottom: 0;
   text-shadow: 2px 2px 5px ${COLORS.black};
   width: 100%;
 `;
@@ -45,14 +45,16 @@ export const StyledProfileCardName = styled.div`
     white-space: nowrap;
     text-overflow: ellipsis;
     margin-bottom: 0;
-    line-height: 28px;
+    padding-bottom: 36px;
+    padding-right: 16px;
   }
 `;
 
 export const StyledProfileCardDepartment = styled.div`
   color: ${COLORS.white};
-  margin-left: 8px;
   padding-right: 16px;
+  line-height: 28px;
+  padding-bottom: 36px;
   flex-wrap: nowrap;
   white-space: nowrap;
 `;
