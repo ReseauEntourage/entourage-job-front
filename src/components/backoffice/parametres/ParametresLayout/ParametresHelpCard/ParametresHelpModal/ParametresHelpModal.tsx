@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useUpdateProfile } from '../../../useUpdateProfile';
 import { StyledHelpModalSelectOption } from '../ParametresHelpCard.styles';
 import { UserProfile } from 'src/api/types';
+import { PARAMETRES_HELP_CARD_CONTENTS } from 'src/components/backoffice/profile/ProfileHelpInformationCard/ProfileHelpList/ProfileHelpList.utils';
 import { useModalContext } from 'src/components/modals/Modal';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { Button } from 'src/components/utils';
