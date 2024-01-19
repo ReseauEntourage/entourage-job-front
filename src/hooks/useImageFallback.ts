@@ -8,8 +8,8 @@ export function useImageFallback({
   role,
   userCandidate,
 }: {
-  userId: string | null;
-  role: UserRole | null;
+  userId: string | undefined;
+  role: UserRole | undefined;
   userCandidate?: UserCandidateWithUsers;
 }) {
   const [urlImg, setUrlImg] = useState<string | null>(null);

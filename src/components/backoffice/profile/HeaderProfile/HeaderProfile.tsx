@@ -29,7 +29,14 @@ export const HeaderProfile = () => {
               size={size}
               className={isDesktop ? '' : 'isMobile'}
             >
-              <ImgProfile user={profile} size={size} />
+              <ImgProfile
+                user={{
+                  role: profile.role,
+                  firstName: profile.firstName,
+                  id: profile.id,
+                }}
+                size={size}
+              />
             </StyledHeaderProfilePicture>
           </StyledHeaderProfilePictureContainer>
           {isDesktop ? (

@@ -49,7 +49,7 @@ export const ImgProfile = ({ user, size = 40 }: ImgProfileProps) => {
           className="uk-text-normal uk-text-uppercase"
           style={{ fontSize: size / 2, color: '#fff' }}
         >
-          {myUser.firstName.substring(0, 1)}
+          {myUser.firstName?.substring(0, 1)}
         </span>
       )}
     </div>

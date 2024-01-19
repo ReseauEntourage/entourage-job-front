@@ -1,13 +1,9 @@
 import _ from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  PublicProfile,
-  UserProfile,
-  UserWithUserCandidate,
-} from 'src/api/types';
+import { UserProfile, UserWithUserCandidate } from 'src/api/types';
 import { ReduxRequestEvents } from 'src/constants';
-import { CANDIDATE_USER_ROLES } from 'src/constants/users';
+import { CANDIDATE_USER_ROLES, UserRole } from 'src/constants/users';
 import {
   authenticationActions,
   updateProfileSelectors,
@@ -19,23 +15,19 @@ export const helpFields = {
   HELP_OFFERS: 'helpOffers',
 } as const;
 
-export const useHelpField = (
-  user: UserWithUserCandidate | PublicProfile | null
-) => {
+export const useHelpField = (userRole: UserRole | undefined) => {
   const [helpField, setHelpField] =
     useState<(typeof helpFields)[keyof typeof helpFields]>();
 
   useEffect(() => {
-    if (!user) return;
-    const { role } = user;
-    if (!helpField) {
-      if (isRoleIncluded(CANDIDATE_USER_ROLES, role)) {
+    if (!helpField && userRole) {
+      if (isRoleIncluded(CANDIDATE_USER_ROLES, userRole)) {
         setHelpField('helpNeeds');
       } else {
         setHelpField('helpOffers');
       }
     }
-  }, [helpField, user]);
+  }, [helpField, userRole]);
 
   return helpField;
 };
@@ -48,7 +40,7 @@ export const useUpdateProfile = (
 
   const [closeModal, setCloseModal] = useState<boolean>(false);
 
-  const helpField = useHelpField(user);
+  const helpField = useHelpField(user.role);
 
   const updateProfileStatus = useSelector(
     updateProfileSelectors.selectFetchUserStatus

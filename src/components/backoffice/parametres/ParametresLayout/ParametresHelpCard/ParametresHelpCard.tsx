@@ -31,7 +31,7 @@ export const ParametresHelpCard = () => {
 
   const { role, userProfile } = user;
 
-  const helpField = useHelpField(user);
+  const helpField = useHelpField(user.role);
 
   const [contextualRole, setContextualRole] = useState(role);
   useEffect(() => {

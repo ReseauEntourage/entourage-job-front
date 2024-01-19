@@ -20,7 +20,15 @@ export const ProfileProfessionalInformationCard = () => {
 
   useEffect(() => {
     if (selectedProfile) {
-      setHasData(checkData(selectedProfile, selectedProfile.role));
+      setHasData(
+        checkData({
+          role: selectedProfile.role,
+          currentJob: selectedProfile.currentJob,
+          networkBusinessLines: selectedProfile.networkBusinessLines,
+          searchAmbitions: selectedProfile.searchAmbitions,
+          searchBusinessLines: selectedProfile.searchBusinessLines,
+        })
+      );
     }
   }, [selectedProfile]);
 

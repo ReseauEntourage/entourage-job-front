@@ -95,7 +95,7 @@ export const ProfileCareerPathSentence = ({
       <>
         <StyledProfileCareerPathLi>
           J&apos;aimerais travailler {AMBITIONS_PREFIXES[0].label}{' '}
-          <Tag content={careerPaths[0].businessLine.label} noMargin />
+          <Tag content={careerPaths[0].businessLine.label} />
           {getAmbitionIfExists(0)}
           {hasSecondPart && hasSameBusinessLine && (
             <> et {getAmbitionIfExists(1)}</>
@@ -105,7 +105,7 @@ export const ProfileCareerPathSentence = ({
           <StyledProfileCareerPathLi>
             {' '}
             J&lsquo;aimerais travailler {AMBITIONS_PREFIXES[0].label}{' '}
-            <Tag noMargin content={careerPaths[1].businessLine.label} />
+            <Tag content={careerPaths[1].businessLine.label} />
             {getAmbitionIfExists(1)}
           </StyledProfileCareerPathLi>
         )}

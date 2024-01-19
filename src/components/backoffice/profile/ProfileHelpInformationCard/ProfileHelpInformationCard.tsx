@@ -10,7 +10,7 @@ import { ProfileHelpList } from './ProfileHelpList';
 
 export const ProfileHelpInformationCard = () => {
   const { selectedProfile } = useSelectedProfile();
-  const helpField = useHelpField(selectedProfile);
+  const helpField = useHelpField(selectedProfile?.role);
 
   if (!selectedProfile || !helpField) return null;
   return (
