@@ -1,11 +1,7 @@
 import _ from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  PublicProfile,
-  UserProfile,
-  UserWithUserCandidate,
-} from 'src/api/types';
+import { UserProfile, UserWithUserCandidate } from 'src/api/types';
 import { ReduxRequestEvents } from 'src/constants';
 import { CANDIDATE_USER_ROLES, UserRole } from 'src/constants/users';
 import {
