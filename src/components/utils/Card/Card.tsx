@@ -2,18 +2,20 @@ import React, { useEffect, useState } from 'react';
 import ChevronDownIcon from 'assets/icons/chevron-down.svg';
 import ChevronUpIcon from 'assets/icons/chevron-up.svg';
 import EditIcon from 'assets/icons/editIcon.svg';
-import { Button } from '../Button';
-import { ButtonIcon } from '../ButtonIcon';
+import { Button } from 'src/components/utils/Button';
+import { ButtonIcon } from 'src/components/utils/ButtonIcon';
 import { H5 } from 'src/components/utils/Headings';
 import { Spinner } from 'src/components/utils/Spinner';
 import { useIsDesktop } from 'src/hooks/utils';
 import {
   StyledCard,
+  StyledCardContent,
+  StyledCardFooter,
   StyledCardTitleContainer,
+  StyledCardTopContainer,
+  StyledChevronContainer,
   StyledEditIconContainer,
   StyledSpinnerContainer,
-  StyledChevronContainer,
-  StyledCardFooter,
 } from './Card.styles';
 
 interface CardProps {
@@ -24,6 +26,7 @@ interface CardProps {
   // body?: boolean;
   // hover?: boolean;
   // size?: 'small' | 'large' | 'default';
+  onClick?: () => void;
   editCallback?: () => void;
   isLoading?: boolean;
   isMobileClosable?: boolean;
@@ -38,6 +41,7 @@ export const Card = ({
   // body = true,
   // hover = false,
   // size,
+  onClick,
   children,
   editCallback,
   isLoading = false,
@@ -56,48 +60,58 @@ export const Card = ({
   }, [isDesktop, isMobileClosable, isOpen]);
 
   return (
-    <StyledCard className={isDesktop ? '' : 'mobile'}>
-      {isLoading && (
-        <StyledSpinnerContainer>
-          <Spinner />
-        </StyledSpinnerContainer>
-      )}
-      {!isLoading && editCallback && isDesktop && (
-        <StyledEditIconContainer>
-          <ButtonIcon
-            icon={<EditIcon />}
-            onClick={editCallback}
-            dataTestId={`${dataTestId}-button-edit`}
-          />
-        </StyledEditIconContainer>
-      )}
-      {isMobileClosable && !isDesktop && (
-        <StyledChevronContainer>
-          <ButtonIcon
-            icon={isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
-            onClick={() => {
-              setIsOpen(!isOpen);
-            }}
-          />
-        </StyledChevronContainer>
-      )}
-      {title && (
-        <StyledCardTitleContainer
-          className={!closedMode ? '' : 'no-border'}
-          onClick={() => {
-            if (!isDesktop && isMobileClosable) setIsOpen(!isOpen);
-          }}
-        >
-          <H5 title={title} />
-        </StyledCardTitleContainer>
-      )}
-      {!closedMode && children}
-      {!closedMode && !isLoading && editCallback && !isDesktop && (
-        <StyledCardFooter>
-          <Button style="custom-secondary" onClick={editCallback}>
-            {editButtonText || 'Modifier'}
-          </Button>
-        </StyledCardFooter>
+    <StyledCard className={isDesktop ? '' : 'mobile'} onClick={onClick}>
+      {title ? (
+        <>
+          <StyledCardTopContainer>
+            {isLoading && (
+              <StyledSpinnerContainer>
+                <Spinner />
+              </StyledSpinnerContainer>
+            )}
+            {!isLoading && editCallback && isDesktop && (
+              <StyledEditIconContainer>
+                <ButtonIcon
+                  icon={<EditIcon />}
+                  onClick={editCallback}
+                  dataTestId={`${dataTestId}-button-edit`}
+                />
+              </StyledEditIconContainer>
+            )}
+            {isMobileClosable && !isDesktop && (
+              <StyledChevronContainer>
+                <ButtonIcon
+                  icon={isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                  onClick={() => {
+                    setIsOpen(!isOpen);
+                  }}
+                />
+              </StyledChevronContainer>
+            )}
+            <StyledCardTitleContainer
+              className={!closedMode ? '' : 'no-border'}
+              onClick={() => {
+                if (!isDesktop && isMobileClosable) setIsOpen(!isOpen);
+              }}
+            >
+              <H5 title={title} />
+            </StyledCardTitleContainer>
+          </StyledCardTopContainer>
+          {!closedMode && (
+            <StyledCardContent>
+              {children}
+              {!closedMode && !isLoading && editCallback && !isDesktop && (
+                <StyledCardFooter>
+                  <Button style="custom-secondary" onClick={editCallback}>
+                    {editButtonText || 'Modifier'}
+                  </Button>
+                </StyledCardFooter>
+              )}
+            </StyledCardContent>
+          )}
+        </>
+      ) : (
+        children
       )}
     </StyledCard>
   );

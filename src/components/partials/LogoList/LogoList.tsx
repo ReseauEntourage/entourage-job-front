@@ -48,6 +48,7 @@ export const LogoList = ({
       {logos.map(({ key, link, bis }) => {
         return (
           <LogoListFlexItem
+            key={key}
             width={`calc(100% * 1 / ${logosPerLine <= 3 ? 3 : logosPerLine})`}
           >
             <Logo logoKey={key} link={link} bis={bis} />

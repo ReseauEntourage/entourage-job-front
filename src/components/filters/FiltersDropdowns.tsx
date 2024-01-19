@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 
 import { v4 as uuid } from 'uuid';
 import CaretDownIcon from 'assets/icons/caret-down.svg';
-import { Button } from 'src/components/utils';
+import { Button, Tag } from 'src/components/utils';
 import { gaEvent } from 'src/lib/gtag';
 import { AnyToFix } from 'src/utils/Types';
 
@@ -133,7 +133,11 @@ export const FiltersDropdowns = ({
                       {filters[key].length > 0 && (
                         <div>
                           &nbsp;
-                          <div className="uk-badge">{filters[key].length}</div>
+                          <Tag
+                            size="small"
+                            style="secondary"
+                            content={filters[key].length}
+                          />
                           &nbsp;
                         </div>
                       )}

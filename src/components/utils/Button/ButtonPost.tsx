@@ -35,8 +35,8 @@ export const ButtonPost = ({
       onClick={async () => {
         if (!loading) {
           setLoading(true);
-          await // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          action();
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          await action();
           setLoading(false);
         }
       }}

@@ -2,6 +2,7 @@ export * from './AnimatedList';
 export * from './Background';
 export * from './ButtonIcon';
 export * from './Card';
+export * from './Tag';
 export * from './Grid';
 export * from './Carousel';
 export * from './CloseButton';

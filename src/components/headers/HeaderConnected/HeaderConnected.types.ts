@@ -1,6 +1,15 @@
-export interface HeaderConnectedItemProps {
+export interface NotifBadges {
+  cv: number;
+  note: number;
+  offers: number;
+  members: number;
+}
+
+export type NotifBadge = keyof NotifBadges;
+
+export interface HeaderConnectedItem {
   href: string;
-  badge?: string;
+  badge?: NotifBadge;
   icon?: JSX.Element;
   name?: string;
   external?: boolean;
@@ -12,24 +21,18 @@ export interface HeaderConnectedItemProps {
   };
 }
 
-export interface HeaderConnectedMainItemProps extends HeaderConnectedItemProps {
-  subMenu?: HeaderConnectedItemProps[];
+export interface HeaderConnectedMainItem extends HeaderConnectedItem {
+  subMenu?: HeaderConnectedItem[];
 }
 
-export const HeaderConnectedMainItemDefaultProps = {
-  badge: '',
-  icon: null,
+export const HeaderConnectedMainItemDefaultProps: HeaderConnectedMainItem = {
+  badge: undefined,
+  icon: undefined,
   external: false,
-  tag: null,
+  tag: undefined,
   queryParams: '',
-  subMenu: null,
-  onClick: null,
+  subMenu: undefined,
+  onClick: undefined,
   disabled: false,
   href: '',
 };
-
-export interface NotifBadgesProps {
-  cv: number;
-  note: number;
-  offers: number;
-}

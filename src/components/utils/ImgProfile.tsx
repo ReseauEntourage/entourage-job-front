@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { CV, UserWithUserCandidate } from 'src/api/types';
-import { CANDIDATE_USER_ROLES } from 'src/constants/users';
+import React, { useEffect, useState } from 'react';
+import { UserWithUserCandidate } from 'src/api/types';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { isRoleIncluded } from 'src/utils';
+import { useImageFallback } from 'src/hooks/useImageFallback';
 import { Img } from './Img';
 
 interface ImgProfileProps {
@@ -14,36 +13,17 @@ export const ImgProfile = ({ user, size = 40 }: ImgProfileProps) => {
   const connectedUser = useAuthenticatedUser();
 
   const myUser: UserWithUserCandidate = user || connectedUser;
-  const [urlImg, setUrlImg] = useState<string | null>(null);
   const [hash, setHash] = useState<number>(Date.now());
 
-  useEffect(() => {
-    setUrlImg(
-      `${process.env.AWSS3_URL}${process.env.AWSS3_IMAGE_DIRECTORY}${myUser.id}.profile.jpg`
-    );
-  }, [myUser.id]);
+  const { urlImg, fallbackToCVImage } = useImageFallback({
+    userId: myUser.id,
+    role: myUser.role,
+    userCandidate: myUser.candidat,
+  });
 
   useEffect(() => {
     setHash(Date.now());
   }, [urlImg]);
-
-  const fallbackToCVImage = useCallback(() => {
-    const candidatUser = myUser;
-    if (
-      isRoleIncluded(CANDIDATE_USER_ROLES, candidatUser.role) &&
-      candidatUser.candidat?.cvs &&
-      candidatUser.candidat?.cvs?.length > 0
-    ) {
-      const { cvs } = candidatUser.candidat;
-      const latestCV: CV = cvs.reduce((lastFound, curr) => {
-        return lastFound.version < curr.version ? curr : lastFound;
-      }, cvs[0]);
-
-      if (latestCV.urlImg) {
-        setUrlImg(`${process.env.AWSS3_URL}/${latestCV.urlImg}`);
-      }
-    }
-  }, [myUser]);
 
   return (
     <div
@@ -58,10 +38,7 @@ export const ImgProfile = ({ user, size = 40 }: ImgProfileProps) => {
         <div className="uk-width-expand uk-height-1-1 uk-cover-container">
           <Img
             cover
-            onError={() => {
-              setUrlImg(null);
-              fallbackToCVImage();
-            }}
+            onError={fallbackToCVImage}
             src={`${urlImg}?${hash}`}
             alt={`photo de ${myUser.firstName}`}
             id="parametres-profile-picture"

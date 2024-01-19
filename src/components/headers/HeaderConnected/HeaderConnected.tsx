@@ -19,7 +19,7 @@ export const HeaderConnected = ({ isEmpty = false }: { isEmpty?: boolean }) => {
     dispatch(authenticationActions.logoutRequested());
   }, [dispatch]);
 
-  const [LINKS_CONNECTED, setLinks] = useState(
+  const [linksConnected, setLinksConnected] = useState(
     renderLinks(user, logout, candidateId)
   );
 
@@ -28,7 +28,7 @@ export const HeaderConnected = ({ isEmpty = false }: { isEmpty?: boolean }) => {
 
   useEffect(() => {
     if (user && user !== prevUser) {
-      setLinks(renderLinks(user, logout, candidateId));
+      setLinksConnected(renderLinks(user, logout, candidateId));
     }
   }, [user, logout, prevUser, candidateId]);
 
@@ -37,7 +37,8 @@ export const HeaderConnected = ({ isEmpty = false }: { isEmpty?: boolean }) => {
   return (
     <HeaderConnectedContent
       badges={badges}
-      links={LINKS_CONNECTED}
+      links={linksConnected.links}
+      dropdown={linksConnected.dropdown}
       isEmpty={isEmpty}
     />
   );

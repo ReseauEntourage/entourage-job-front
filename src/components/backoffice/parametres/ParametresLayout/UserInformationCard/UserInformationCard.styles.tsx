@@ -17,3 +17,9 @@ export const StyledInformationsPersonnellesList = styled.ul`
     margin-top: 30px;
   }
 `;
+
+export const StyledUserInformationCardTags = styled.li`
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+`;

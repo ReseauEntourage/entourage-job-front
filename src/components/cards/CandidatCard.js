@@ -113,7 +113,12 @@ export const CandidatCard = ({
               className="uk-width-1-1 uk-position-bottom uk-flex uk-flex-middle uk-flex-right" // uk-position-cover
             >
               <div className="uk-width-1-2 uk-padding-small uk-text-center">
-                <Img src="/static/img/logo-white.png" alt="logo entourage" />
+                <Img
+                  width={17}
+                  height={25}
+                  src="/static/img/logo-white.png"
+                  alt="logo entourage"
+                />
                 <p
                   className="uk-text-uppercase"
                   style={{ color: '#FFF', margin: '8px 0 0 0' }}

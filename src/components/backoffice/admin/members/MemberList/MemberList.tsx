@@ -7,9 +7,10 @@ import { Api } from 'src/api';
 
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { AdminCreationButtons } from 'src/components/backoffice/admin/AdminCreationButtons';
+import { useRole } from 'src/components/backoffice/useRole';
 import { SearchBar } from 'src/components/filters/SearchBar';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
-import { Section, Button, BackToTop } from 'src/components/utils';
+import { BackToTop, Button, Section } from 'src/components/utils';
 import { MEMBER_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
@@ -21,9 +22,9 @@ import {
 } from 'src/utils/Filters';
 import { isRoleIncluded } from 'src/utils/Finding';
 import { AnyToFix } from 'src/utils/Types';
-import { useRole } from './useRole';
 
 const LIMIT = 50;
+
 interface MemberListProps {
   filters: AnyToFix; // to be typed
   setFilters: (updatedFilters: AnyToFix) => void;

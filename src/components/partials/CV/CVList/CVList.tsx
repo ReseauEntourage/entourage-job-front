@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { useCallback, useMemo, useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import PlusFilledIcon from 'assets/icons/plus-filled.svg';
+import PlusIcon from 'assets/icons/plus.svg';
 import { Api } from 'src/api';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { CandidatCard } from 'src/components/cards';
@@ -10,6 +10,7 @@ import { openModal } from 'src/components/modals/Modal';
 import { PostPublicOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { Button, Grid, SimpleLink } from 'src/components/utils';
 import { CV_FILTERS_DATA, INITIAL_NB_OF_CV_TO_DISPLAY } from 'src/constants';
+import { COLORS } from 'src/constants/styles';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { usePrevious } from 'src/hooks/utils';
 import { fbEvent } from 'src/lib/fb';
@@ -164,7 +165,7 @@ export const CVList = ({
           {!nb && (
             <div className="uk-flex uk-flex-center uk-margin-top">
               <Button
-                style="primary"
+                style="custom-primary"
                 onClick={() => {
                   setNbOfCVToDisplay((prevNbOfCV) => {
                     return prevNbOfCV + INITIAL_NB_OF_CV_TO_DISPLAY;
@@ -174,11 +175,11 @@ export const CVList = ({
                 Voir plus
                 {loadingMore ? (
                   <div
-                    className="uk-margin-small-left"
+                    style={{ color: COLORS.primaryOrange }}
                     data-uk-spinner="ratio: .6"
                   />
                 ) : (
-                  <PlusFilledIcon />
+                  <PlusIcon />
                 )}
               </Button>
             </div>

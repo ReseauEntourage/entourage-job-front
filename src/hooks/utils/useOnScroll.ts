@@ -6,12 +6,19 @@ const enableFetchRef = {
   current: true,
 };
 
-export function useOnScroll({ onScrollBottomEnd, onScrollTopEnd }) {
+interface UseOnScrollParams {
+  onScrollBottomEnd?: () => void | Promise<unknown>;
+  onScrollTopEnd?: () => void | Promise<unknown>;
+}
+
+export function useOnScroll(params: UseOnScrollParams = {}) {
   const [isAtTop, setIsAtTop] = useState(false);
   const [isAtBottom, setIsAtBottom] = useState(false);
 
+  const { onScrollBottomEnd, onScrollTopEnd } = params;
+
   const onScroll = useCallback(
-    async (event) => {
+    async (event: React.UIEvent<HTMLElement>) => {
       const { scrollHeight, offsetHeight, scrollTop } = event.currentTarget;
       const scrollExist = scrollHeight > offsetHeight;
 

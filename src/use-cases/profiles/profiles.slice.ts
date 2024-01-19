@@ -1,22 +1,29 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PublicProfile } from 'src/api/types';
+import { UserRole } from 'src/constants/users';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import {
+  fetchProfilesAdapter,
   fetchSelectedProfileAdapter,
-  fetchProfilesListAdapter,
 } from './profiles.adapters';
 
+const LIMIT = 25;
+
 export interface State {
-  fetchProfilesList: RequestState<typeof fetchProfilesListAdapter>;
+  fetchProfiles: RequestState<typeof fetchProfilesAdapter>;
   fetchSelectedProfile: RequestState<typeof fetchSelectedProfileAdapter>;
-  profilesList: PublicProfile[] | null;
+  profiles: PublicProfile[];
+  profilesFilters: { role?: UserRole[]; offset: number; limit: typeof LIMIT };
+  profilesHasFetchedAll: boolean;
   selectedProfile: PublicProfile | null;
 }
 
 const initialState: State = {
-  fetchProfilesList: fetchProfilesListAdapter.getInitialState(),
+  fetchProfiles: fetchProfilesAdapter.getInitialState(),
   fetchSelectedProfile: fetchSelectedProfileAdapter.getInitialState(),
-  profilesList: null,
+  profiles: [],
+  profilesFilters: { offset: 0, limit: LIMIT },
+  profilesHasFetchedAll: false,
   selectedProfile: null,
 };
 
@@ -24,14 +31,15 @@ export const slice = createSlice({
   name: 'profiles',
   initialState,
   reducers: {
-    ...fetchProfilesListAdapter.getReducers<State>(
-      (state) => state.fetchProfilesList,
-      {
-        fetchProfilesListSucceeded(state, action) {
-          state.profilesList = action.payload;
-        },
-      }
-    ),
+    ...fetchProfilesAdapter.getReducers<State>((state) => state.fetchProfiles, {
+      fetchProfilesSucceeded(state, action) {
+        state.profiles =
+          state.profilesFilters.offset === 0
+            ? action.payload
+            : [...state.profiles, ...action.payload];
+        state.profilesHasFetchedAll = action.payload.length < LIMIT;
+      },
+    }),
     ...fetchSelectedProfileAdapter.getReducers<State>(
       (state) => state.fetchSelectedProfile,
       {
@@ -40,6 +48,23 @@ export const slice = createSlice({
         },
       }
     ),
+    setProfilesRoleFilter(state, action: PayloadAction<UserRole[]>) {
+      state.profilesFilters = {
+        ...state.profilesFilters,
+        role: action.payload,
+        offset: 0,
+      };
+      state.profilesHasFetchedAll = false;
+      state.profiles = [];
+    },
+    incrementProfilesOffset(state) {
+      state.profilesFilters = {
+        ...state.profilesFilters,
+        offset: state.profilesHasFetchedAll
+          ? state.profilesFilters.offset
+          : state.profilesFilters.offset + LIMIT,
+      };
+    },
   },
 });
 

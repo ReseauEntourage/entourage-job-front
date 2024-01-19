@@ -515,7 +515,7 @@ export type PublicProfile = {
   firstName: string;
   lastName: string;
   role: UserRole;
-  zone: AdminZone;
+  department: Department;
   currentJob: string;
   description: string;
   helpNeeds: { name: HelpNames }[];

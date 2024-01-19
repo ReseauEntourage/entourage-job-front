@@ -1,29 +1,25 @@
 import { useRouter } from 'next/router';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import CaretDownIcon from 'assets/icons/caret-down.svg';
 import {
-  HeaderConnectedMainItemProps,
+  HeaderConnectedMainItem,
   HeaderConnectedMainItemDefaultProps,
 } from '../HeaderConnected.types';
 import { StyledHeaderDesktop } from 'src/components/headers/Header.styles';
 import {
-  Navbar,
-  SimpleLink,
-  Nav,
   Dropdown,
+  Nav,
+  Navbar,
   NavbarLogo,
+  SimpleLink,
 } from 'src/components/utils';
 import { ImgProfile } from 'src/components/utils/ImgProfile';
 import { StyledNav } from 'src/components/utils/Navbar/Nav/Nav.styles';
-import {
-  CANDIDATE_USER_ROLES,
-  COACH_USER_ROLES,
-  USER_ROLES,
-} from 'src/constants/users';
+import { Tag } from 'src/components/utils/Tag';
+import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { gaEvent } from 'src/lib/gtag';
-import { isRoleIncluded } from 'src/utils/Finding';
 import { StyledConnectedItem } from './HeaderConnectedContent.styles';
 import { HeaderConnectedContentProps } from './HeaderConnectedContent.types';
 import { SubMenu } from './SubMenu';
@@ -33,39 +29,25 @@ const uuidValue = uuid();
 export const HeaderConnectedContentDesktop = ({
   badges,
   links = {
-    admin: [
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      HeaderConnectedMainItemDefaultProps,
-    ],
-    dropdown: [
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      HeaderConnectedMainItemDefaultProps,
-    ],
-    candidat: [
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      HeaderConnectedMainItemDefaultProps,
-    ],
-    coach: [
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      HeaderConnectedMainItemDefaultProps,
-    ],
-    coach_externe: [
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      HeaderConnectedMainItemDefaultProps,
-    ],
+    [USER_ROLES.ADMIN]: [HeaderConnectedMainItemDefaultProps],
+    [USER_ROLES.CANDIDATE]: [HeaderConnectedMainItemDefaultProps],
+    [USER_ROLES.CANDIDATE_EXTERNAL]: [HeaderConnectedMainItemDefaultProps],
+    [USER_ROLES.COACH]: [HeaderConnectedMainItemDefaultProps],
+    [USER_ROLES.COACH_EXTERNAL]: [HeaderConnectedMainItemDefaultProps],
   },
+  dropdown = [HeaderConnectedMainItemDefaultProps],
   isEmpty = false,
 }: HeaderConnectedContentProps) => {
   const user = useAuthenticatedUser();
 
   const { push, asPath } = useRouter();
 
-  const [logoLink, setLogoLink] = useState<HeaderConnectedMainItemProps>({
+  const [logoLink, setLogoLink] = useState<HeaderConnectedMainItem>({
     href: '/',
   });
 
   const [actualLinks, setActualLinks] = useState<
-    HeaderConnectedMainItemProps[] | []
+    HeaderConnectedMainItem[] | []
   >([]);
 
   const rightItems = [
@@ -97,7 +79,7 @@ export const HeaderConnectedContentDesktop = ({
         id="dropdown-nav-profile"
         boundaryId="nav-profile"
       >
-        {links.dropdown.map(({ href, name, onClick, tag }, index) => {
+        {dropdown.map(({ href, name, onClick, tag }, index) => {
           return (
             <a
               key={`${index}-right-${uuidValue}`}
@@ -124,24 +106,11 @@ export const HeaderConnectedContentDesktop = ({
     if (user.role) {
       if (isEmpty) {
         setActualLinks([]);
-      } else if (isRoleIncluded(CANDIDATE_USER_ROLES, user.role)) {
-        setActualLinks(links.candidat);
-      } else if (user.role === USER_ROLES.COACH_EXTERNAL) {
-        setActualLinks(links.coach_externe);
-      } else if (isRoleIncluded(COACH_USER_ROLES, user.role)) {
-        setActualLinks(links.coach);
       } else {
-        setActualLinks(links.admin);
+        setActualLinks(links[user.role]);
       }
     }
-  }, [
-    links.admin,
-    links.candidat,
-    links.coach_externe,
-    links.coach,
-    user.role,
-    isEmpty,
-  ]);
+  }, [user.role, isEmpty, links]);
 
   useEffect(() => {
     setLogoLink(actualLinks?.length > 0 ? actualLinks[0] : { href: '/' });
@@ -207,32 +176,20 @@ export const HeaderConnectedContentDesktop = ({
                             {icon}
                           </span>
                           <span className="name-span">{name}</span>
-                          {
-                            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                            badges[badge] > 0 && (
-                              <div>
-                                &nbsp;
-                                <div className="uk-badge uk-margin-small-left">
-                                  {
-                                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                                    badges[badge]
-                                  }
-                                </div>
-                              </div>
-                            )
-                          }
+                          {badge && badges[badge] > 0 && (
+                            <div>
+                              &nbsp;
+                              <Tag
+                                size="small"
+                                style="secondary"
+                                content={badges[badge]}
+                              />
+                            </div>
+                          )}
                         </SimpleLink>
-                        {
-                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                          subMenu?.length > 0 && (
-                            <SubMenu
-                              // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                              items={subMenu}
-                              // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                              badges={badges}
-                            />
-                          )
-                        }
+                        {subMenu && subMenu.length > 0 && (
+                          <SubMenu items={subMenu} badges={badges} />
+                        )}
                       </StyledConnectedItem>
                     );
                   }

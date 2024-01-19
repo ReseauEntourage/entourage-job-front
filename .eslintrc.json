@@ -137,7 +137,9 @@
           "tests/**/*",
           "**/__tests__/**",
           "**/__mocks__/**",
-          "**/*{.,_}{test,spec}.{js,jsx,ts,tsx}"
+          "**/*{.,_}{test,spec}.{js,jsx,ts,tsx}",
+          "**/*.stories.*",
+          "**/.storybook/**/*.*"
         ]
       }
     ],
@@ -190,7 +192,7 @@
   "overrides": [
     {
       // storybook use both default export and named exports
-      "files": ["src/**/*.stories.tsx"],
+      "files": ["src/**/*.stories.tsx", "./.storybook/**/*"],
       "rules": {
         "import/no-default-export": 0
       }

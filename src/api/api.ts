@@ -5,6 +5,7 @@ import axios, {
 } from 'axios';
 import _ from 'lodash';
 import { AdminZone } from 'src/constants/departements';
+import { UserRole } from 'src/constants/users';
 import { addAxiosInterceptors } from './interceptor';
 import {
   APIRoute,
@@ -185,6 +186,16 @@ export class APIHandler {
 
   getPublicUserProfile(userId: string): Promise<AxiosResponse> {
     return this.get(`/user/profile/${userId}`);
+  }
+
+  getAllUsersProfiles(params: {
+    role?: UserRole[];
+    offset: number;
+    limit: number;
+  }): Promise<AxiosResponse> {
+    return this.get('/user/profile', {
+      params,
+    });
   }
 
   // post

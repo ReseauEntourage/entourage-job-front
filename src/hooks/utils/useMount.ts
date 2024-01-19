@@ -9,8 +9,9 @@ import { useEffect } from 'react';
  * @param {object} options
  * @return {void}
  */
-export function useMount(fn, { hook = useEffect } = {}) {
-  hook(() => {
-    return fn();
-  }, []);
+export function useMount(
+  fn: Parameters<typeof useEffect>[0],
+  { hook = useEffect } = {}
+) {
+  hook(() => fn(), []);
 }

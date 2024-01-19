@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { StyledHelpModalSelectOption } from 'src/components/backoffice/parametres/ParametresLayout/ParametresHelpCard/ParametresHelpCard.styles';
-import { PARAMETRES_HELP_CARD_CONTENTS } from 'src/components/backoffice/parametres/ParametresLayout/ParametresHelpCard/ParametresHelpCard.utils';
 import { Card } from 'src/components/utils/Card';
 import { H6 } from 'src/components/utils/Headings';
+import { ParametresHelpCardContents } from 'src/constants/helps';
 import { SelectList as SelectListComponent } from './SelectList';
 
 const meta = {
@@ -23,7 +23,7 @@ const meta = {
   args: {
     id: 'select-list-stories',
     onChange: () => {},
-    options: PARAMETRES_HELP_CARD_CONTENTS.candidat.map(
+    options: ParametresHelpCardContents.candidat.map(
       ({ value, title, description, icon }) => ({
         value,
         component: (
