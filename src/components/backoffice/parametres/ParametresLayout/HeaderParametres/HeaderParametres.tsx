@@ -96,13 +96,8 @@ export const HeaderParametres = () => {
                 }
                 color="black"
               />
-              {user.zone && (
-                <H5
-                  title={
-                    user.zone?.charAt(0) + user.zone?.slice(1).toLowerCase()
-                  }
-                  color="black"
-                />
+              {user.userProfile.department && (
+                <H5 title={user.userProfile.department} color="black" />
               )}
               <ParametresDescription />
             </StyledTextContainer>

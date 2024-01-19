@@ -36,6 +36,8 @@ export const useUpdateUser = (
             user: newUserData,
           })
         );
+      } else {
+        setCloseModal(true);
       }
     },
     [dispatch, user]

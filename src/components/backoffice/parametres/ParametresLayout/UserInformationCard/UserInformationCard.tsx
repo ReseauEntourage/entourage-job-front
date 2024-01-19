@@ -3,12 +3,14 @@ import React from 'react';
 import EmailIcon from 'assets/icons/email.svg';
 import GenderIcon from 'assets/icons/gender.svg';
 import HomeIcon from 'assets/icons/home.svg';
+import LocationIcon from 'assets/icons/location.svg';
 import PhoneIcon from 'assets/icons/phone.svg';
 import UserIcon from 'assets/icons/user.svg';
 import { Card } from 'src/components/utils';
 import { Tag } from 'src/components/utils/Tag';
-import { USER_ROLES } from 'src/constants/users';
+import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { isRoleIncluded } from 'src/utils';
 import { StyledInformationsPersonnellesList } from './UserInformationCard.styles';
 import { useOpenCorrespondingModal } from './useOpenModal';
 
@@ -38,12 +40,10 @@ export const UserInformationCard = ({
             <UserIcon width={20} />
             {` ${user.firstName} ${user.lastName}`}
           </li>
-          {user.role !== USER_ROLES.ADMIN && (
-            <li>
-              <GenderIcon width={20} />
-              {user.gender === 0 ? 'Homme' : 'Femme'}
-            </li>
-          )}
+          <li>
+            <GenderIcon width={20} />
+            {user.gender === 0 ? 'Homme' : 'Femme'}
+          </li>
           <li>
             <EmailIcon width={20} />
             {user.email}
@@ -56,14 +56,28 @@ export const UserInformationCard = ({
               <>Numéro de téléphone non renseigné</>
             )}
           </li>
-          <li>
-            <HomeIcon width={20} />
-            {user.address ? (
-              <>{user.address}</>
-            ) : (
-              <>Adresse postale non renseignée</>
-            )}
-          </li>
+          {user.role !== USER_ROLES.ADMIN && (
+            <>
+              <li>
+                <LocationIcon width={20} />
+                {user.userProfile.department ? (
+                  <>{user.userProfile.department}</>
+                ) : (
+                  <>Département non renseignée</>
+                )}
+              </li>
+              {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) && (
+                <li>
+                  <HomeIcon width={20} />
+                  {user.address ? (
+                    <>{user.address}</>
+                  ) : (
+                    <>Adresse postale non renseignée</>
+                  )}
+                </li>
+              )}
+            </>
+          )}
           {user.role === USER_ROLES.ADMIN && (
             <li>
               <Tag

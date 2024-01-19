@@ -1,7 +1,13 @@
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { FormSchema } from '../FormSchema';
-import { ADMIN_ZONES_FILTERS, AdminZone } from 'src/constants/departements';
+import {
+  ADMIN_ZONES_FILTERS,
+  AdminZone,
+  Department,
+  DEPARTMENTS_FILTERS,
+} from 'src/constants/departements';
 import { ADMIN_ROLES, AdminRole, Gender } from 'src/constants/users';
+import { FilterConstant } from 'src/constants/utils';
 
 export const formPersonalDataAsCandidate: FormSchema<{
   phone: string;
@@ -9,6 +15,7 @@ export const formPersonalDataAsCandidate: FormSchema<{
   oldEmail: string;
   newEmail0: string;
   newEmail1: string;
+  department: FilterConstant<Department>;
 }> = {
   id: 'form-personal-data',
   fields: [
@@ -53,9 +60,9 @@ export const formPersonalDataAsCandidate: FormSchema<{
       isRequired: true,
       rules: [
         {
-          method: (fieldValue) =>
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
+          method: (fieldValue) => {
+            return !!fieldValue && isValidPhoneNumber(fieldValue, 'FR');
+          },
           message: 'Numéro de téléphone invalide',
         },
       ],
@@ -65,6 +72,15 @@ export const formPersonalDataAsCandidate: FormSchema<{
       name: 'addressLabel',
       title: "Modifier l'adresse postale",
       component: 'heading',
+    },
+    {
+      id: 'department',
+      name: 'department',
+      title: 'Renseigner votre département*',
+      component: 'select',
+      options: DEPARTMENTS_FILTERS,
+      isRequired: true,
+      isMulti: false,
     },
     {
       id: 'address',
@@ -80,6 +96,7 @@ export const formPersonalDataAsCoach: FormSchema<{
   oldEmail: string;
   newEmail0: string;
   newEmail1: string;
+  department: FilterConstant<Department>;
 }> = {
   id: 'form-personal-data',
   fields: [
@@ -124,12 +141,27 @@ export const formPersonalDataAsCoach: FormSchema<{
       isRequired: true,
       rules: [
         {
-          method: (fieldValue) =>
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
+          method: (fieldValue) => {
+            return !!fieldValue && isValidPhoneNumber(fieldValue, 'FR');
+          },
           message: 'Numéro de téléphone invalide',
         },
       ],
+    },
+    {
+      id: 'departmentLabel',
+      name: 'departmentLabel',
+      title: 'Modifier le département',
+      component: 'heading',
+    },
+    {
+      id: 'department',
+      name: 'department',
+      title: 'Renseigner votre département*',
+      component: 'select',
+      options: DEPARTMENTS_FILTERS,
+      isRequired: true,
+      isMulti: false,
     },
   ],
 };
@@ -231,9 +263,9 @@ export const formPersonalDataAsAdmin: FormSchema<{
       isRequired: true,
       rules: [
         {
-          method: (fieldValue) =>
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
+          method: (fieldValue) => {
+            return !!fieldValue && isValidPhoneNumber(fieldValue, 'FR');
+          },
           message: 'Numéro de téléphone invalide',
         },
       ],

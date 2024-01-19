@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserProfile, UserWithUserCandidate } from 'src/api/types';
 import { ReduxRequestEvents } from 'src/constants';
@@ -64,6 +64,8 @@ export const useUpdateProfile = (
             userProfile: newProfileData,
           })
         );
+      } else {
+        setCloseModal(true);
       }
     },
     [dispatch, user.id]

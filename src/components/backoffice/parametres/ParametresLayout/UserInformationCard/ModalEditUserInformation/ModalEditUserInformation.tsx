@@ -1,29 +1,66 @@
 import React, { useCallback } from 'react';
 import { DefaultValues } from 'react-hook-form';
-import { useUpdateUser } from '../../../useUpdateUser';
-import { UserWithUserCandidate } from 'src/api/types';
+import { UserProfile, UserWithUserCandidate } from 'src/api/types';
+import { useUpdateProfile } from 'src/components/backoffice/parametres/useUpdateProfile';
+import { useUpdateUser } from 'src/components/backoffice/parametres/useUpdateUser';
+import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import {
-  ExtractFormSchemaValidation,
-  FormSchema,
-} from 'src/components/forms/FormSchema';
+  formPersonalDataAsAdmin,
+  formPersonalDataAsCandidate,
+  formPersonalDataAsCoach,
+} from 'src/components/forms/schemas/formPersonalData';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { AnyCantFix } from 'src/utils/Types';
 
-interface ModalEditUserInformationProps<S extends FormSchema<AnyCantFix>> {
-  defaultValues?: DefaultValues<ExtractFormSchemaValidation<S>>;
-  // onSubmit: (values: ExtractFormSchemaValidation<S>) => void,
-  formSchema: S;
+type PersonalDataFormSchema =
+  | typeof formPersonalDataAsCandidate
+  | typeof formPersonalDataAsCoach
+  | typeof formPersonalDataAsAdmin;
+
+function isCoachForm(
+  schema: ExtractFormSchemaValidation<PersonalDataFormSchema>
+): schema is ExtractFormSchemaValidation<typeof formPersonalDataAsCoach> {
+  return 'department' in schema && !('address' in schema);
 }
 
-export const ModalEditUserInformation = <S extends FormSchema<AnyCantFix>>({
+function isCandidateForm(
+  schema: ExtractFormSchemaValidation<PersonalDataFormSchema>
+): schema is ExtractFormSchemaValidation<typeof formPersonalDataAsCandidate> {
+  return 'department' in schema && 'address' in schema;
+}
+
+function isAdminForm(
+  schema: ExtractFormSchemaValidation<PersonalDataFormSchema>
+): schema is ExtractFormSchemaValidation<typeof formPersonalDataAsAdmin> {
+  return (
+    !isCandidateForm(schema) &&
+    !isCoachForm(schema) &&
+    'firstName' in schema &&
+    'lastName' in schema &&
+    'gender' in schema
+  );
+}
+
+interface ModalEditUserInformationProps {
+  defaultValues?: DefaultValues<
+    ExtractFormSchemaValidation<PersonalDataFormSchema>
+  >;
+  // onSubmit: (values: ExtractFormSchemaValidation<S>) => void,
+  formSchema: PersonalDataFormSchema;
+}
+
+export const ModalEditUserInformation = ({
   defaultValues,
   // onSubmit,
   formSchema,
-}: ModalEditUserInformationProps<S>) => {
+}: ModalEditUserInformationProps) => {
   const user = useAuthenticatedUser();
 
-  const { updateUser, closeModal } = useUpdateUser(user);
+  const { updateUser, closeModal: closeModalUser } = useUpdateUser(user);
+  const { updateUserProfile, closeModal: closeModalUserProfile } =
+    useUpdateProfile(user);
+
+  const shouldCloseModal = closeModalUser && closeModalUserProfile;
 
   const isEmailValidated = useCallback(
     (
@@ -54,26 +91,68 @@ export const ModalEditUserInformation = <S extends FormSchema<AnyCantFix>>({
       title="Édition - Informations personnelles"
       defaultValues={defaultValues}
       submitText="Sauvegarder"
-      closeOnNextRender={closeModal}
+      closeOnNextRender={shouldCloseModal}
       onSubmit={(
-        values: ExtractFormSchemaValidation<S>,
+        values: ExtractFormSchemaValidation<PersonalDataFormSchema>,
         onClose: () => void,
         requestErrorCallback: (msg: string) => void
       ) => {
-        const { oldEmail, newEmail0, newEmail1, address, phone } = values;
-        const newUserData: Partial<UserWithUserCandidate> = {};
+        const { oldEmail, newEmail0, newEmail1, phone } = values;
+
+        let newUserData: Partial<UserWithUserCandidate> = {};
+        let newUserProfileData: Partial<UserProfile> = {};
+
         if (phone !== user.phone) {
-          newUserData.phone = phone;
+          newUserData = {
+            ...newUserData,
+            phone,
+          };
         }
-        if (address !== user.address) {
-          newUserData.address = address;
+
+        if (isCandidateForm(values) || isCoachForm(values)) {
+          const { department } = values;
+
+          if (department.value !== user.userProfile.department) {
+            newUserProfileData = {
+              ...newUserProfileData,
+              department: department.value,
+            };
+          }
+
+          if (isCandidateForm(values)) {
+            const { address } = values;
+
+            if (address !== user.address) {
+              newUserData = {
+                ...newUserData,
+                address,
+              };
+            }
+          }
         }
+
+        if (isAdminForm(values)) {
+          const { firstName, lastName, gender } = values;
+
+          newUserData = {
+            ...newUserData,
+            firstName,
+            lastName,
+            gender,
+          };
+        }
+
         if (
           isEmailValidated(oldEmail, newEmail0, newEmail1, requestErrorCallback)
         ) {
-          if (newEmail0) newUserData.email = newEmail0.toLowerCase();
+          if (newEmail0) {
+            newUserData = {
+              ...newUserData,
+              email: newEmail0.toLowerCase(),
+            };
+          }
           updateUser(newUserData);
-          onClose();
+          updateUserProfile(newUserProfileData);
         }
       }}
       formSchema={formSchema}
