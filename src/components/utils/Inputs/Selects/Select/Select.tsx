@@ -19,6 +19,7 @@ interface SelectProps<T extends FilterConstant | FilterConstant[]>
   options: IsArrayFilterConstant<T>;
   openMenuOnClick?: boolean;
 }
+
 export function Select<T extends FilterConstant | FilterConstant[]>({
   id,
   name,
@@ -56,6 +57,9 @@ export function Select<T extends FilterConstant | FilterConstant[]>({
           isClearable
           value={value || null}
           isMulti={isMulti}
+          noOptionsMessage={() => {
+            return `Aucun résultat`;
+          }}
           placeholder={
             showLabel
               ? placeholder || 'Selectionnez dans la liste...'

@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { useRouter } from 'next/router';
 import React, { useMemo } from 'react';
 import HandsIcon from 'assets/icons/illu-coeur-mains-ouvertes.svg';
 import CaseIcon from 'assets/icons/illu-malette.svg';
@@ -41,7 +42,6 @@ import {
   StyledProfileCardRole,
   StyledSeparator,
 } from './ProfileCard.styles';
-import { useRouter } from 'next/router';
 
 interface ProfileCardProps {
   userId: string;
@@ -120,7 +120,7 @@ export function ProfileCard({
       <Card
         onClick={() => {
           push({
-            pathname: '/profile/[userId]',
+            pathname: '/backoffice/profile/[userId]',
             query: { userId },
           });
         }}
