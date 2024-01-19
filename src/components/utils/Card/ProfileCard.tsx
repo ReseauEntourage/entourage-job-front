@@ -41,6 +41,7 @@ import {
   StyledProfileCardRole,
   StyledSeparator,
 } from './ProfileCard.styles';
+import { useRouter } from 'next/router';
 
 interface ProfileCardProps {
   userId: string;
@@ -96,6 +97,8 @@ export function ProfileCard({
   userCandidate,
   job,
 }: ProfileCardProps) {
+  const { push } = useRouter();
+
   const { urlImg, fallbackToCVImage } = useImageFallback({
     userId,
     role,
@@ -116,7 +119,10 @@ export function ProfileCard({
     <StyledProfileCard>
       <Card
         onClick={() => {
-          /* TODO */
+          push({
+            pathname: '/profile/[userId]',
+            query: { userId },
+          });
         }}
       >
         <StyledProfileCardPictureContainer>
