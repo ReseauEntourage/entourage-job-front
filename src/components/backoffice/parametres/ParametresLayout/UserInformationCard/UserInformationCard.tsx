@@ -66,7 +66,7 @@ export const UserInformationCard = ({
                 {user.userProfile.department ? (
                   <>{user.userProfile.department}</>
                 ) : (
-                  <>Département non renseignée</>
+                  <>Département non renseigné</>
                 )}
               </li>
               {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) && (

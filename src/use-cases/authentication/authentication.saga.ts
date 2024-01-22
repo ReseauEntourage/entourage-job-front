@@ -101,7 +101,6 @@ function loginSucceededSaga(action: ReturnType<typeof loginSucceeded>) {
 function* logoutRequestedSaga() {
   try {
     // logout api call
-
     yield* put(logoutSucceeded());
   } catch {
     yield* put(logoutFailed());

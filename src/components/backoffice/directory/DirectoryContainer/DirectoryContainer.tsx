@@ -2,7 +2,11 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { DirectoryList } from '../DirectoryList';
 import { Button } from 'src/components/utils';
-import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
+import {
+  CANDIDATE_USER_ROLES,
+  COACH_USER_ROLES,
+  USER_ROLES,
+} from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils';
 import {
   StyledDirectoryButtonContainer,
@@ -39,7 +43,7 @@ export function DirectoryContainer() {
           onClick={() => {
             push({
               pathname: route,
-              query: { role: COACH_USER_ROLES },
+              query: { role: USER_ROLES.COACH },
             });
           }}
         >

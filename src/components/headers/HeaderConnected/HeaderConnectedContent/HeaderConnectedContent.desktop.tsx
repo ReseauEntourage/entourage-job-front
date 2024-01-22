@@ -1,11 +1,8 @@
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { v4 as uuid } from 'uuid';
 import CaretDownIcon from 'assets/icons/caret-down.svg';
-import {
-  HeaderConnectedMainItem,
-  HeaderConnectedMainItemDefaultProps,
-} from '../HeaderConnected.types';
+import { HeaderConnectedMainItemDefaultProps } from '../HeaderConnected.types';
 import { StyledHeaderDesktop } from 'src/components/headers/Header.styles';
 import {
   Dropdown,
@@ -36,19 +33,11 @@ export const HeaderConnectedContentDesktop = ({
     [USER_ROLES.COACH_EXTERNAL]: [HeaderConnectedMainItemDefaultProps],
   },
   dropdown = [HeaderConnectedMainItemDefaultProps],
-  isEmpty = false,
 }: HeaderConnectedContentProps) => {
   const user = useAuthenticatedUser();
 
   const { push, asPath } = useRouter();
-
-  const [logoLink, setLogoLink] = useState<HeaderConnectedMainItem>({
-    href: '/',
-  });
-
-  const [actualLinks, setActualLinks] = useState<
-    HeaderConnectedMainItem[] | []
-  >([]);
+  const logoLink = links[user?.role][0];
 
   const rightItems = [
     <div
@@ -102,20 +91,6 @@ export const HeaderConnectedContentDesktop = ({
     </div>,
   ];
 
-  useEffect(() => {
-    if (user.role) {
-      if (isEmpty) {
-        setActualLinks([]);
-      } else {
-        setActualLinks(links[user.role]);
-      }
-    }
-  }, [user.role, isEmpty, links]);
-
-  useEffect(() => {
-    setLogoLink(actualLinks?.length > 0 ? actualLinks[0] : { href: '/' });
-  }, [actualLinks]);
-
   return (
     <StyledHeaderDesktop id="header">
       <Navbar
@@ -124,7 +99,7 @@ export const HeaderConnectedContentDesktop = ({
         left={
           <>
             <NavbarLogo
-              href={logoLink?.href + (logoLink.queryParams || '')}
+              href={logoLink.href + (logoLink.queryParams || '')}
               src="/static/img/linkedout_logo_orange.png"
               alt="Linkedout"
             />
@@ -132,68 +107,67 @@ export const HeaderConnectedContentDesktop = ({
               className="uk-navbar-nav"
               style={{ borderLeft: '1px solid lightgray' }}
             >
-              {actualLinks?.length > 0 &&
-                actualLinks.map(
-                  (
-                    {
-                      href,
-                      badge,
-                      icon,
-                      name,
-                      external,
-                      tag,
-                      subMenu,
-                      queryParams,
-                      disabled,
-                    },
-                    index
-                  ) => {
-                    if (disabled) return;
-                    const isActiveOrChildActive =
-                      asPath.includes(href) ||
-                      (subMenu &&
-                        subMenu.some(({ href: subMenuHref }) => {
-                          return asPath.includes(subMenuHref);
-                        }));
-                    return (
-                      <StyledConnectedItem
-                        color="black"
-                        key={`${index}-left-${uuidValue}`}
-                        className={`${subMenu ? 'hasSubMenu ' : ''} ${
-                          isActiveOrChildActive ? 'active' : ''
-                        }`}
+              {links[user.role].map(
+                (
+                  {
+                    href,
+                    badge,
+                    icon,
+                    name,
+                    external,
+                    tag,
+                    subMenu,
+                    queryParams,
+                    disabled,
+                  },
+                  index
+                ) => {
+                  if (disabled) return;
+                  const isActiveOrChildActive =
+                    asPath.includes(href) ||
+                    (subMenu &&
+                      subMenu.some(({ href: subMenuHref }) => {
+                        return asPath.includes(subMenuHref);
+                      }));
+                  return (
+                    <StyledConnectedItem
+                      color="black"
+                      key={`${index}-left-${uuidValue}`}
+                      className={`${subMenu ? 'hasSubMenu ' : ''} ${
+                        isActiveOrChildActive ? 'active' : ''
+                      }`}
+                    >
+                      <SimpleLink
+                        href={href + (queryParams || '')}
+                        onClick={() => {
+                          if (tag) gaEvent(tag);
+                        }}
+                        isExternal={external}
+                        target={external ? '_blank' : '_self'}
+                        className="uk-flex uk-flex-middle menu-link"
                       >
-                        <SimpleLink
-                          href={href + (queryParams || '')}
-                          onClick={() => {
-                            if (tag) gaEvent(tag);
-                          }}
-                          isExternal={external}
-                          target={external ? '_blank' : '_self'}
-                          className="uk-flex uk-flex-middle menu-link"
-                        >
-                          <span className="uk-margin-small-right icon-span">
-                            {icon}
-                          </span>
-                          <span className="name-span">{name}</span>
-                          {badge && badges[badge] > 0 && (
-                            <div>
-                              &nbsp;
-                              <Tag
-                                size="small"
-                                style="secondary"
-                                content={badges[badge]}
-                              />
-                            </div>
-                          )}
-                        </SimpleLink>
-                        {subMenu && subMenu.length > 0 && (
-                          <SubMenu items={subMenu} badges={badges} />
+                        <span className="uk-margin-small-right icon-span">
+                          {icon}
+                        </span>
+                        <span className="name-span">{name}</span>
+                        {badge && badges[badge] > 0 && (
+                          <div>
+                            &nbsp;
+                            <Tag
+                              size="small"
+                              style="secondary"
+                              content={badges[badge]}
+                            />
+                          </div>
                         )}
-                      </StyledConnectedItem>
-                    );
-                  }
-                )}
+                      </SimpleLink>
+                      {subMenu && subMenu.length > 0 && (
+                        <SubMenu items={subMenu} badges={badges} />
+                      )}
+                    </StyledConnectedItem>
+                  );
+                }
+              )}
             </StyledNav>
           </>
         }

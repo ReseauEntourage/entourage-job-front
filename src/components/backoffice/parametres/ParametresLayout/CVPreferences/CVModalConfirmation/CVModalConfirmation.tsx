@@ -20,7 +20,7 @@ export const CVModalConfirmation = ({
   const [closeModal, setCloseModal] = React.useState<boolean>(false);
 
   const updateCandidateStatus = useSelector(
-    updateCandidateSelectors.selectFetchUserStatus
+    updateCandidateSelectors.selectUpdateCandidateStatus
   );
 
   useEffect(() => {

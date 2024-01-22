@@ -37,7 +37,7 @@ export const formEditCandidateProfessionalInformation: FormSchema<{
         {
           id: 'searchBusinessLine0',
           name: 'searchBusinessLine0',
-          title: 'Famille de métier 1',
+          title: 'Famille de métier 1*',
           component: 'select',
           options: BUSINESS_LINES,
           isMulti: false,

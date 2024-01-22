@@ -10,6 +10,10 @@ const StyledButtonContainer = styled.div`
   flex-direction: row;
   align-self: center;
   justify-content: center;
+
+  > svg {
+    margin-right: 8px;
+  }
 `;
 
 export const allCTAs = {

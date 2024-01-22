@@ -1,28 +1,36 @@
-import { fetchUserAdapter } from './authentication.adapters';
+import {
+  fetchUserAdapter,
+  loginAdapter,
+  logoutAdapter,
+  updateCandidateAdapter,
+  updateProfileAdapter,
+  updateUserAdapter,
+} from './authentication.adapters';
 import { RootState } from './authentication.slice';
 
 export const fetchUserSelectors = fetchUserAdapter.getSelectors<RootState>(
   (state) => state.authentication.fetchUser
 );
 
-export const loginSelectors = fetchUserAdapter.getSelectors<RootState>(
+export const loginSelectors = loginAdapter.getSelectors<RootState>(
   (state) => state.authentication.login
 );
 
-export const logoutSelectors = fetchUserAdapter.getSelectors<RootState>(
+export const logoutSelectors = logoutAdapter.getSelectors<RootState>(
   (state) => state.authentication.logout
 );
 
-export const updateProfileSelectors = fetchUserAdapter.getSelectors<RootState>(
-  (state) => state.authentication.updateProfile
-);
+export const updateProfileSelectors =
+  updateProfileAdapter.getSelectors<RootState>(
+    (state) => state.authentication.updateProfile
+  );
 
-export const updateUserSelectors = fetchUserAdapter.getSelectors<RootState>(
+export const updateUserSelectors = updateUserAdapter.getSelectors<RootState>(
   (state) => state.authentication.updateUser
 );
 
 export const updateCandidateSelectors =
-  fetchUserAdapter.getSelectors<RootState>(
+  updateCandidateAdapter.getSelectors<RootState>(
     (state) => state.authentication.updateCandidate
   );
 

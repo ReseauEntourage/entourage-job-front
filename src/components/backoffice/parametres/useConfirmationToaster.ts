@@ -12,17 +12,17 @@ import {
 
 export const useConfirmationToaster = () => {
   const updateProfileStatus = useSelector(
-    updateProfileSelectors.selectFetchUserStatus
+    updateProfileSelectors.selectUpdateProfileStatus
   );
   const prevUpdateProfileStatus = usePrevious(updateProfileStatus);
 
   const updateUserStatus = useSelector(
-    updateUserSelectors.selectFetchUserStatus
+    updateUserSelectors.selectUpdateUserStatus
   );
   const prevUpdateUserStatus = usePrevious(updateUserStatus);
 
   const updateCandidateStatus = useSelector(
-    updateCandidateSelectors.selectFetchUserStatus
+    updateCandidateSelectors.selectUpdateCandidateStatus
   );
   const prevUpdateCandidateStatus = usePrevious(updateCandidateStatus);
 

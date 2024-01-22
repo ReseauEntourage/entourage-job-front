@@ -18,7 +18,7 @@ export const CVModalEdit = ({ title, dispatchOnSubmit }: CVModalEditProps) => {
   const [closeModal, setCloseModal] = React.useState<boolean>(false);
 
   const updateCandidateStatus = useSelector(
-    updateCandidateSelectors.selectFetchUserStatus
+    updateCandidateSelectors.selectUpdateCandidateStatus
   );
 
   useEffect(() => {

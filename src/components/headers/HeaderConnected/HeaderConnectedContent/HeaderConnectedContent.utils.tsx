@@ -150,6 +150,7 @@ export const renderLinks = (
           name: 'Les offres',
           queryParams: `?status=-1`,
           icon: <ListIcon />,
+          disabled: !candidateId,
           tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_OFFRES_CLIC,
           subMenu: [
             {
@@ -171,6 +172,7 @@ export const renderLinks = (
           name: 'Suivi',
           icon: <DocumentIcon />,
           badge: 'note',
+          disabled: !candidateId,
           tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_SUIVI_CLIC,
         },
         {
@@ -178,6 +180,7 @@ export const renderLinks = (
           name: 'CV',
           icon: <UserIcon />,
           badge: 'cv',
+          disabled: !candidateId,
           tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_CV_CLIC,
         },
         {
@@ -198,6 +201,7 @@ export const renderLinks = (
       [USER_ROLES.COACH_EXTERNAL]: [
         {
           href: `/backoffice/candidat/list`,
+          disabled: !candidateId,
           name: 'Retour à la liste des candidats',
           icon: <ChevronLeftIcon />,
         },
@@ -245,9 +249,9 @@ export const renderLinks = (
           icon: <ShareIcon />,
         },
         {
-          href: `${
-            process.env.TOOLBOX_COACH_URL
-          }?id=${getCandidateIdFromCoachOrCandidate(user)}`,
+          href: `${process.env.TOOLBOX_COACH_URL}${
+            candidateId ? `?id=${candidateId}` : ''
+          }}`,
           name: 'Boîte à outils',
           icon: <QuestionIcon />,
           external: true,

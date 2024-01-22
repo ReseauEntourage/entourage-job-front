@@ -1,18 +1,18 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import { USER_ROLES, CANDIDATE_USER_ROLES } from 'src/constants/users';
+import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import {
   getCandidateIdFromCoachOrCandidate,
   isRoleIncluded,
 } from 'src/utils/Finding';
-import { useAuthenticatedUser } from './authentication/useAuthenticatedUser';
+import { useAuthenticatedUser } from './authentication/useAuthenticatedUser'; // only used for coaches and candidates
 
 // only used for coaches and candidates
 export const useCandidateAndCoachRedirections = () => {
   const [isUrlChecked, setIsUrlChecked] = useState(false);
 
-  const router = useRouter();
+  const { replace, asPath, query } = useRouter();
 
   const user = useAuthenticatedUser();
 
@@ -22,46 +22,41 @@ export const useCandidateAndCoachRedirections = () => {
       // wait for user and router to be loaded
       user &&
       // doesn't apply if role is admin
-      user.role !== USER_ROLES.ADMIN &&
-      router
+      user.role !== USER_ROLES.ADMIN
     ) {
       // if external coach, redirect to list
       if (user.role === USER_ROLES.COACH_EXTERNAL) {
-        router.replace(
-          {
-            pathname: `/backoffice/candidat/list`,
-          },
-          undefined,
-          {
-            shallow: true,
-          }
-        );
+        replace(`/backoffice/candidat/list`);
         // if not, send to path in param or default CV page
       } else {
         const candidateId = isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
           ? user.id
           : getCandidateIdFromCoachOrCandidate(user)?.[0];
 
-        const newRoute = router.asPath.replace(
-          '/candidat',
-          `/candidat/${candidateId}`
-        );
+        if (candidateId) {
+          const newRoute = asPath.replace(
+            '/candidat',
+            `/candidat/${candidateId}`
+          );
 
-        const { slug, ...restQuery } = router.query;
-        router.replace(
-          {
-            pathname: newRoute,
-            query: restQuery,
-          },
-          undefined,
-          {
-            shallow: true,
-          }
-        );
+          const { slug, ...restQuery } = query;
+          replace(
+            {
+              pathname: newRoute,
+              query: restQuery,
+            },
+            undefined,
+            {
+              shallow: true,
+            }
+          );
+        } else {
+          replace(`/backoffice/annuaire`);
+        }
       }
       setIsUrlChecked(true);
     }
-  }, [user, router]);
+  }, [user, asPath, query, replace, isUrlChecked]);
 
   return {
     isUrlChecked,

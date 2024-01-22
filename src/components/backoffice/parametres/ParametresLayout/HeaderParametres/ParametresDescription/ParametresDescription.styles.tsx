@@ -5,15 +5,6 @@ export const StyledParametresDescriptionParagraphe = styled.p`
   white-space: pre-line;
 `;
 
-export const StyledParametresDescriptionPlaceholder = styled.a`
-  color: ${COLORS.primaryOrange};
-  text-decoration: underline;
-  font-style: italic;
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
 export const StyledParametresDescriptionEditText = styled.a`
   color: #979797;
   text-decoration: underline;

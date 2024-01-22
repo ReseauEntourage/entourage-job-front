@@ -4,10 +4,10 @@ import React from 'react';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { useCandidateAndCoachRedirections } from 'src/hooks/useRedirections';
 
-const Suivi = () => {
+const Redirection = () => {
   useCandidateAndCoachRedirections();
 
   return <LoadingScreen />;
 };
 
-export default Suivi;
+export default Redirection;

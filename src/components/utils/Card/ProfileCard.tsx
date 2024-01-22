@@ -11,12 +11,14 @@ import { BUSINESS_LINES, BusinessLineValue } from 'src/constants';
 import { Department } from 'src/constants/departements';
 import { ProfileCardHelps } from 'src/constants/helps';
 import { COLORS } from 'src/constants/styles';
+import { GA_TAGS } from 'src/constants/tags';
 import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
   UserRole,
 } from 'src/constants/users';
 import { useImageFallback } from 'src/hooks/useImageFallback';
+import { gaEvent } from 'src/lib/gtag';
 import { findConstantFromValue, isRoleIncluded, sortByOrder } from 'src/utils';
 import { Card } from './Card';
 import {
@@ -119,6 +121,7 @@ export function ProfileCard({
     <StyledProfileCard>
       <Card
         onClick={() => {
+          gaEvent(GA_TAGS.PAGE_ANNUAIRE_CARTE_CLIC);
           push({
             pathname: '/backoffice/profile/[userId]',
             query: { userId },
