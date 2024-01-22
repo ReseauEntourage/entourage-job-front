@@ -5,10 +5,7 @@ import { ParametresPlaceholder } from '../ParametresPlaceholder';
 import { ProfileHelpList } from 'src/components/backoffice/profile/ProfileHelpInformationCard/ProfileHelpList';
 import { openModal } from 'src/components/modals/Modal';
 import { Card } from 'src/components/utils';
-import {
-  ParametresHelpCardContents,
-  ParametresHelpCardTitles,
-} from 'src/constants/helps';
+import { ParametresHelpCardTitles } from 'src/constants/helps';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { ParametresHelpModal } from './ParametresHelpModal';
 

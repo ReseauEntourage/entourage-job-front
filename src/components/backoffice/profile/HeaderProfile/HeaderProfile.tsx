@@ -49,11 +49,11 @@ export const HeaderProfile = () => {
                 }
                 color="black"
               />
-              {profile.zone && (
+              {profile.department && (
                 <H5
                   title={
-                    profile.zone?.charAt(0) +
-                    profile.zone?.slice(1).toLowerCase()
+                    profile.department?.charAt(0) +
+                    profile.department?.slice(1).toLowerCase()
                   }
                   color="black"
                 />
@@ -72,10 +72,11 @@ export const HeaderProfile = () => {
                 }
                 color="black"
               />
-              {profile.zone && (
+              {profile.department && (
                 <H6
                   title={
-                    profile.zone.charAt(0) + profile.zone.slice(1).toLowerCase()
+                    profile.department.charAt(0) +
+                    profile.department.slice(1).toLowerCase()
                   }
                   color="black"
                 />
