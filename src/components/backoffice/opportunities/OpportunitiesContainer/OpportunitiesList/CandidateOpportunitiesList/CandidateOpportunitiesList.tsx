@@ -12,10 +12,10 @@ import { OpportunityWithOpportunityUsers } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
 import { Button } from 'src/components/utils';
-import { useIsAtBottom } from 'src/hooks/useIsAtBottom';
 import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
 import { useOpportunityType } from 'src/hooks/queryParams/useOpportunityType';
 import { useQueryParamsOpportunities } from 'src/hooks/queryParams/useQueryParamsOpportunities';
+import { useIsAtBottom } from 'src/hooks/useIsAtBottom';
 import { CandidateOpportunityItem } from './CandidateOpportunityItem';
 
 const uuidValue = uuid();
