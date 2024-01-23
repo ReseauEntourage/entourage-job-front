@@ -8,8 +8,8 @@ export function useImageFallback({
   role,
   userCandidate,
 }: {
-  userId: string;
-  role: UserRole;
+  userId: string | undefined;
+  role: UserRole | undefined;
   userCandidate?: UserCandidateWithUsers;
 }) {
   const [urlImg, setUrlImg] = useState<string | null>(null);
@@ -23,6 +23,7 @@ export function useImageFallback({
   const fallbackToCVImage = useCallback(() => {
     setUrlImg(null);
     if (
+      role &&
       isRoleIncluded(CANDIDATE_USER_ROLES, role) &&
       userCandidate?.cvs &&
       userCandidate?.cvs?.length > 0

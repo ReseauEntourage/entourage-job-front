@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import LinkIcon from 'assets/icons/link.svg';
 import UserIcon from 'assets/icons/user.svg';
 import { UserWithUserCandidate } from 'src/api/types';
-import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
 import { Grid, SimpleLink } from 'src/components/utils';
 import { ImgProfile } from 'src/components/utils/ImgProfile';
 import { USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
+import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
 import { isRoleIncluded } from 'src/utils/Finding';
 
 export const CandidatHeader = ({

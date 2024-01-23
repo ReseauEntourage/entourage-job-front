@@ -7,10 +7,10 @@ import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { CVEditPage } from 'src/components/backoffice/cv/CVEditPage';
 import { CVEditWelcome } from 'src/components/backoffice/cv/CVEditPage/CVFicheEdition/CVEdit/CVEditWelcome';
 import { ErrorMessage } from 'src/components/backoffice/cv/ErrorMessage';
-import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
 import { Section } from 'src/components/utils';
 import { COACH_USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
 import { useFetchCV } from 'src/hooks/useFetchCV';
 import { isRoleIncluded, getRelatedUser } from 'src/utils/Finding';
 

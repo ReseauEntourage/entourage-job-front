@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { OrganizationList } from 'src/components/backoffice/admin/organizations/OrganizationList';
-import { useZone } from 'src/components/backoffice/admin/organizations/OrganizationList/useZone';
 import { Section } from 'src/components/utils';
 import { ORGANIZATION_FILTERS_DATA } from 'src/constants';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useZone } from 'src/hooks/queryParams/useZone';
 import { useFilters } from 'src/hooks/useFilters';
 import { usePrevious } from 'src/hooks/utils';
 

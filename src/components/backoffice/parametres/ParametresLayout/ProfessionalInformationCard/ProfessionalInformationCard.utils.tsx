@@ -1,23 +1,34 @@
 import { DefaultValues } from 'react-hook-form';
-import { UserProfile, UserWithUserCandidate } from 'src/api/types';
+import { UserProfile } from 'src/api/types';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { formEditCandidateProfessionalInformation } from 'src/components/forms/schemas/formEditCandidateProfessionalInformation';
 import { formEditCoachProfessionalInformation } from 'src/components/forms/schemas/formEditCoachProfessionalInformation';
 import { BUSINESS_LINES } from 'src/constants';
-import { USER_ROLES } from 'src/constants/users';
+import { USER_ROLES, UserRole } from 'src/constants/users';
 import { findConstantFromValue, isRoleIncluded, sortByOrder } from 'src/utils';
 
-export const checkData = (userParam: UserWithUserCandidate): boolean => {
+interface userProfileParamsToCheck {
+  currentJob?: string;
+  networkBusinessLines?: { name: string }[];
+  searchAmbitions?: { name: string; order: number }[];
+  searchBusinessLines?: { name: string; order: number }[];
+  role: UserRole;
+}
+
+export const checkData = (userProfile: userProfileParamsToCheck): boolean => {
   return (
-    (userParam.role === USER_ROLES.COACH &&
-      (!!userParam.userProfile?.currentJob ||
-        userParam.userProfile?.networkBusinessLines?.length > 0)) ||
+    (userProfile.role === USER_ROLES.COACH &&
+      (!!userProfile?.currentJob ||
+        (!!userProfile?.networkBusinessLines &&
+          userProfile.networkBusinessLines?.length > 0))) ||
     (isRoleIncluded(
       [USER_ROLES.CANDIDATE, USER_ROLES.CANDIDATE_EXTERNAL],
-      userParam.role
+      userProfile.role
     ) &&
-      (userParam.userProfile?.searchAmbitions?.length > 0 ||
-        userParam.userProfile?.searchBusinessLines?.length > 0))
+      ((!!userProfile?.searchAmbitions &&
+        userProfile.searchAmbitions?.length > 0) ||
+        (!!userProfile?.searchBusinessLines &&
+          userProfile?.searchBusinessLines?.length > 0)))
   );
 };
 

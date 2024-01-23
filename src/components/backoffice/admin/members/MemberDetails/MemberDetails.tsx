@@ -1,11 +1,11 @@
 import React from 'react';
 import { User } from 'src/api/types';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
-import { useTab } from 'src/components/backoffice/admin/members/MemberDetails/useTab';
 import { Grid, Section, SimpleLink } from 'src/components/utils';
 import { BackLink } from 'src/components/utils/BackLink';
 import { MEMBER_TABS } from 'src/constants';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
+import { useTab } from 'src/hooks/queryParams/useTab';
 
 import { isRoleIncluded } from 'src/utils/Finding';
 import { MemberDetailsHeader } from './MemberDetailsHeader';

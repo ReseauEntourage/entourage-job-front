@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
 import { renderLinks } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/HeaderConnectedContent.utils';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
 import { useNotifBadges } from 'src/hooks/useNotifBadges';
 import { usePrevious } from 'src/hooks/utils';
 import { authenticationActions } from 'src/use-cases/authentication';

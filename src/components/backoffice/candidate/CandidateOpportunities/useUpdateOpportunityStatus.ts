@@ -2,10 +2,10 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
-import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
-import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
-
 import { OFFER_STATUS } from 'src/constants';
+import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
+import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
+
 import { usePrevious } from 'src/hooks/utils';
 
 export function useUpdateOpportunityStatus() {
