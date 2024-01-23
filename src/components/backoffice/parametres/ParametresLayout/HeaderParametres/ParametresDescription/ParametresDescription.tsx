@@ -4,6 +4,7 @@ import { openModal } from 'src/components/modals/Modal';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { ModalEditProfileDescription } from './ModalEditProfileDescription';
 import {
+  StyledParametresDescriptionContainer,
   StyledParametresDescriptionEditText,
   StyledParametresDescriptionParagraphe,
 } from './ParametresDescription.styles';
@@ -17,7 +18,7 @@ export const ParametresDescription = () => {
   };
 
   return (
-    <div>
+    <StyledParametresDescriptionContainer>
       {userProfile?.description ? (
         <StyledParametresDescriptionParagraphe data-testid="parametres-description">
           {userProfile.description}
@@ -36,6 +37,6 @@ export const ParametresDescription = () => {
           Ajouter une description pour vous présenter à la communauté
         </StyledParametresPlaceholder>
       )}
-    </div>
+    </StyledParametresDescriptionContainer>
   );
 };

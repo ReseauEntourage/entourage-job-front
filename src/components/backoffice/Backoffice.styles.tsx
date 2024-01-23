@@ -67,13 +67,31 @@ export const StyledHeaderProfileContent = styled.div`
 `;
 
 export const StyledMobileHeaderProfileTitlesContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   > h2 {
     margin-bottom: 10px;
   }
 
   > h6 {
-    margin-top: 0px;
+    margin-top: 0;
+  }
+  > h5,
+  > h6 {
+    margin-bottom: 0;
   }
 `;
 
-export const StyledHeaderProfileTextContainer = styled.div``;
+export const StyledHeaderProfileTextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  > h5,
+  > h6 {
+    margin-bottom: 0;
+  }
+
+  > a {
+    line-height: 24px;
+  }
+`;

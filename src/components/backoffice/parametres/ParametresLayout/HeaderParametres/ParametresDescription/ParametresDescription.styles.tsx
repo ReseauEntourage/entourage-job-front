@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledParametresDescriptionParagraphe = styled.p`
+export const StyledParametresDescriptionContainer = styled.div`
+  margin-top: 20px;
+`;
+
+export const StyledParametresDescriptionParagraphe = styled.div`
   white-space: pre-line;
 `;
 

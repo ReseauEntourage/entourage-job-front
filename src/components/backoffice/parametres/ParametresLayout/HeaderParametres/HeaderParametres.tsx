@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import EditIcon from 'assets/icons/editIcon.svg';
 import { useOpenCorrespondingModal } from '../UserInformationCard/useOpenModal';
+import { Api } from 'src/api';
 import {
   StyledHeaderProfile,
   StyledHeaderProfileContent,
@@ -8,8 +9,7 @@ import {
   StyledHeaderProfilePicture,
   StyledHeaderProfilePictureContainer,
   StyledHeaderProfileTextContainer,
-} from '../../../Backoffice.styles';
-import { Api } from 'src/api';
+} from 'src/components/backoffice/Backoffice.styles';
 import {
   ButtonIcon,
   ButtonMock,
@@ -23,8 +23,11 @@ import { COLORS } from 'src/constants/styles';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop } from 'src/hooks/utils';
-import { StyledEditPictureIconContainer } from './HeaderParametres.styles';
 import { isRoleIncluded } from 'src/utils';
+import {
+  StyledEditPictureIconContainer,
+  StyledParametresPlaceholder,
+} from './HeaderParametres.styles';
 import { ParametresDescription } from './ParametresDescription';
 
 export const HeaderParametres = () => {

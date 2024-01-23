@@ -24,39 +24,48 @@ export const StyledProfileCardPicture = styled.div`
 
 export const StyledProfileCardInfoContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-end;
+  width: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
   position: absolute;
   bottom: 0;
+  padding-bottom: 20px;
   text-shadow: 2px 2px 5px ${COLORS.black};
-  width: 100%;
 `;
 
 export const StyledProfileCardName = styled.div`
-  display: flex;
-  flex-direction: row;
   text-overflow: ellipsis;
   overflow: hidden;
-  padding-left: 16px;
+  width: 100%;
 
-  > h2 {
+  > h3 {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    margin-bottom: 0;
-    padding-bottom: 36px;
+    padding-left: 16px;
     padding-right: 16px;
+    margin-bottom: 0px;
+    padding-bottom: 4px;
   }
 `;
 
 export const StyledProfileCardDepartment = styled.div`
   color: ${COLORS.white};
-  padding-right: 16px;
-  line-height: 28px;
-  padding-bottom: 36px;
-  flex-wrap: nowrap;
-  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+  padding-bottom: 4px;
+
+  > span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 4px;
+    margin-bottom: 0;
+  }
 `;
 
 export const StyledProfileCardRole = styled.div`
@@ -91,7 +100,7 @@ export const StyledProfileCardJobContainer = styled.div`
   flex-direction: column;
   margin-bottom: 12px;
 
-  > h3 {
+  > h4 {
     line-height: 24px;
     margin-bottom: 0;
 
@@ -102,9 +111,10 @@ export const StyledProfileCardJobContainer = styled.div`
 `;
 
 export const StyledProfileCardLabel = styled.div`
-  margin-bottom: 12px;
-  font-size: 16px;
-  color: ${COLORS.darkGrayFont};
+  > h5 {
+    font-weight: normal;
+    margin-bottom: 12px;
+  }
 `;
 
 export const StyledSeparator = styled.div`
