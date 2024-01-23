@@ -29,9 +29,7 @@ export const StyledProfileCardInfoContainer = styled.div`
   justify-content: flex-end;
   align-items: flex-start;
   position: absolute;
-  bottom: 0;
-  padding-bottom: 20px;
-  text-shadow: 2px 2px 5px ${COLORS.black};
+  bottom: 24px;
 `;
 
 export const StyledProfileCardName = styled.div`
@@ -43,10 +41,9 @@ export const StyledProfileCardName = styled.div`
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    margin-bottom: 0;
     padding-left: 16px;
     padding-right: 16px;
-    margin-bottom: 0px;
-    padding-bottom: 4px;
   }
 `;
 
@@ -55,16 +52,13 @@ export const StyledProfileCardDepartment = styled.div`
   text-overflow: ellipsis;
   overflow: hidden;
   width: 100%;
-  padding-bottom: 4px;
 
-  > span {
+  > div {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     padding-left: 16px;
     padding-right: 16px;
-    padding-bottom: 4px;
-    margin-bottom: 0;
   }
 `;
 

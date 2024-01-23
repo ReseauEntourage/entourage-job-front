@@ -145,6 +145,7 @@ export function ProfileCard({
                 onError={fallbackToCVImage}
               />
             )}
+            <Img src="/static/img/gradient.png" alt="" cover />
           </StyledProfileCardPicture>
           <StyledProfileCardInfoContainer>
             <StyledProfileCardName>
@@ -155,7 +156,7 @@ export function ProfileCard({
             </StyledProfileCardName>
             {department && (
               <StyledProfileCardDepartment>
-                <span>{department}</span>
+                <div>{department}</div>
               </StyledProfileCardDepartment>
             )}
           </StyledProfileCardInfoContainer>
