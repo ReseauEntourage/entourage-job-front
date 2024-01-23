@@ -1,7 +1,7 @@
 import React from 'react';
 import {
-  StyledProfileLayout,
   StyledProfileGrid,
+  StyledProfileLayout,
 } from '../../Backoffice.styles';
 import { useConfirmationToaster } from '../useConfirmationToaster';
 import { Card, Section } from 'src/components/utils';
@@ -19,17 +19,11 @@ import {
 } from './ParametresLayout.styles';
 import { ProfessionalInformationCard } from './ProfessionalInformationCard';
 import {
-  UserInformationCard,
   LinkedUserInformationCard,
+  UserInformationCard,
 } from './UserInformationCard';
 
-interface ParametresLayoutProps {
-  loadingPersonal: boolean;
-}
-
-export const ParametresLayout = ({
-  loadingPersonal,
-}: ParametresLayoutProps) => {
+export const ParametresLayout = () => {
   const isDesktop = useIsDesktop();
   const user = useAuthenticatedUser();
 
@@ -43,10 +37,7 @@ export const ParametresLayout = ({
             className={`${isDesktop ? '' : 'mobile'}`}
           >
             {/* Informations Personnelles */}
-            <UserInformationCard
-              title="Informations personnelles"
-              loadingPersonal={loadingPersonal}
-            />
+            <UserInformationCard title="Informations personnelles" />
             {/* Préférences du CV */}
             {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) &&
               user.candidat && (

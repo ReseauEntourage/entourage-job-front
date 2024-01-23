@@ -73,7 +73,6 @@ const Suivi = () => {
 
   const sendNoteHasBeenRead = useCallback(async () => {
     if (
-      user &&
       user.role !== USER_ROLES.ADMIN &&
       // @ts-expect-error after enable TS strict mode. Please, try to fix it
       userCandidat?.candidat?.id

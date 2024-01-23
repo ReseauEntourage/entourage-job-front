@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledContainer = styled.div`
+export const StyledSpinnerContainer = styled.div`
   position: absolute;
   z-index: 10;
   top: 0;

@@ -8,7 +8,7 @@ const Redirection = () => {
   useEffect(() => {
     replace(
       {
-        pathname: `${pathname}/cv`,
+        pathname: `${pathname}/offres`,
         query,
       },
       undefined,

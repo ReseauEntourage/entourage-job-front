@@ -27,7 +27,7 @@ export const HeaderConnected = () => {
   const prevUser = usePrevious(user);
 
   useEffect(() => {
-    if (user && user !== prevUser) {
+    if (user !== prevUser) {
       setLinksConnected(renderLinks(user, logout, candidateId));
     }
   }, [user, logout, prevUser, candidateId]);

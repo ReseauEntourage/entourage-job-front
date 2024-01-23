@@ -21,7 +21,7 @@ const OrganizationsAdmin = () => {
   const prevUser = usePrevious(user);
 
   useEffect(() => {
-    if (user && user !== prevUser) {
+    if (user !== prevUser) {
       if (!zone || (Array.isArray(zone) && zone.length === 0)) {
         const params = { ...query, ...(user.zone ? { zone: user.zone } : {}) };
         replace(

@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyledProfileGrid, StyledProfileLayout } from '../Backoffice.styles';
 import { LayoutBackOffice } from '../LayoutBackOffice';
+import { LoadingScreen } from '../LoadingScreen';
 import { Section } from 'src/components/utils';
 import { useIsDesktop } from 'src/hooks/utils';
 import { HeaderProfile } from './HeaderProfile';
@@ -37,5 +38,5 @@ export const Profile = () => {
       </LayoutBackOffice>
     );
   }
-  return null;
+  return <LoadingScreen />;
 };
