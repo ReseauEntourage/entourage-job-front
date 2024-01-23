@@ -1,35 +1,175 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubjopportunitiesect: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+import { generateAdminLoginApiResponse } from '../fixtures/src/login/generateAdminLoginApiResponse';
+import { generateUserLoginApiResponse } from '../fixtures/src/login/generateUserLoginApiResponse.js';
+import { generateOpportunitiesApiResponse } from '../fixtures/src/opportunity/generateOpportunitiesApiResponse';
+import { generateUsersApiResponse } from '../fixtures/src/user/generateUsersApiResponse';
+import { generateOrganizationsApiResponse } from '../fixtures/src/organization/generateOrganizationsApiResponse.js';
+import { generateSearchUsersApiResponse } from '../fixtures/src/user/generateSearchUsersApiResponse.js';
+import { generateCvCandidateApiResponse } from '../fixtures/src/cv/generateCvCandidateApiResponse.js';
+import { generateTabCountApiResponse } from '../fixtures/src/tab/generateTabCountApiResponse.js';
+import { generateCvCardsApiResponse } from '../fixtures/src/cv/generateCvCardsApiResponse';
+import { generateCampaignsApiResponse } from '../fixtures/src/campaign/generateCampaignsApiResponse';
 
-import { userOpportunityAllRes } from '../fixtures/candidat/opportunity/user-opportunity-all-res';
-
-Cypress.Commands.add('generateAdminFixture', () => {
+/**
+ * Command to generate admin login
+ */
+Cypress.Commands.add('generateAdminLoginApiResponse', () => {
   cy.writeFile(
-    'cypress/fixtures/admin/opportunities.json',
-    userOpportunityAllRes(5),
+    'cypress/fixtures/api/admin-login.json',
+    generateAdminLoginApiResponse(),
+    'utf-8'
+  );
+});
+
+/**
+ * Command to generate opportunities
+ */
+Cypress.Commands.add('generateOpportunitiesApiResponse', () => {
+  cy.writeFile(
+    'cypress/fixtures/api/opportunities.json',
+    generateOpportunitiesApiResponse(5, 2),
+    'utf-8'
+  );
+});
+
+/**
+ * Command to generate opportunities wrapped for candidates
+ */
+Cypress.Commands.add('generateOpportunitiesWrappedApiResponse', () => {
+  cy.writeFile(
+    'cypress/fixtures/api/opportunities-wrapped.json',
+    generateOpportunitiesApiResponse(5, 2, true),
+    'utf-8'
+  );
+});
+
+/**
+ * Command to generate users
+ */
+Cypress.Commands.add('generateUsersApiResponse', (roleUsers) => {
+  cy.writeFile(
+    `cypress/fixtures/api/users-${roleUsers}.json`,
+    generateUsersApiResponse(10, roleUsers),
+    'utf-8'
+  );
+});
+
+/**
+ * Command to generate structures
+ */
+Cypress.Commands.add('generateOrganizationsApiResponse', (roleUsers) => {
+  cy.writeFile(
+    'cypress/fixtures/api/organizations.json',
+    generateOrganizationsApiResponse(12, roleUsers),
+    'utf-8'
+  );
+});
+
+/**
+ * Command to generate structures
+ */
+Cypress.Commands.add('generateSearchUsersApiResponse', () => {
+  cy.writeFile(
+    'cypress/fixtures/api/search-user.json',
+    generateSearchUsersApiResponse(5),
+    'utf-8'
+  );
+});
+
+/**
+ * Command to generate candidate login
+ */
+Cypress.Commands.add('generateCandidateLoginApiResponse', () => {
+  cy.writeFile(
+    'cypress/fixtures/api/candidate-login.json',
+    generateUserLoginApiResponse('Candidate'),
+    'utf-8'
+  );
+});
+
+/**
+ * Command to generate coach login
+ */
+Cypress.Commands.add('generateCoachLoginApiResponse', () => {
+  cy.writeFile(
+    'cypress/fixtures/api/coach-login.json',
+    generateUserLoginApiResponse('Coach'),
+    'utf-8'
+  );
+});
+
+/**
+ * Command to generate candidate cv
+ */
+Cypress.Commands.add('generateCvCandidateApiResponse', () => {
+  cy.writeFile(
+    'cypress/fixtures/api/cv-candidate.json',
+    generateCvCandidateApiResponse(),
+    'utf-8'
+  );
+});
+
+/**
+ * Command to generate tab Count
+ */
+Cypress.Commands.add('generateTabCountApiResponse', () => {
+  cy.writeFile(
+    'cypress/fixtures/api/tab-count.json',
+    generateTabCountApiResponse(6),
+    'utf-8'
+  );
+});
+
+/**
+ * Command to generate cv read
+ */
+Cypress.Commands.add('generateTabCountApiResponse', () => {
+  cy.writeFile(
+    'cypress/fixtures/api/tab-count.json',
+    generateTabCountApiResponse(5),
+    'utf-8'
+  );
+});
+
+/**
+ * Command to generate cvs card
+ */
+Cypress.Commands.add('generateCvCardsApiResponse', () => {
+  cy.writeFile(
+    'cypress/fixtures/api/cv-cards.json',
+    generateCvCardsApiResponse(2),
+    'utf-8'
+  );
+});
+
+/**
+ * Command to generate cvs card
+ */
+Cypress.Commands.add('generateCvReadApiResponse', () => {
+  cy.writeFile(
+    'cypress/fixtures/api/cv-read.json',
+    generateCvReadApiResponse(),
+    'utf-8'
+  );
+});
+
+/**
+ * Command to generate cv card
+ */
+Cypress.Commands.add('generateCvUrlApiResponse', () => {
+  cy.writeFile(
+    'cypress/fixtures/api/cv-url.json',
+    generateCvUrlApiResponse(),
+    'utf-8'
+  );
+});
+
+/**
+ * Command to generate campaigns
+ */
+Cypress.Commands.add('generateCampaignsApiResponse', () => {
+  cy.writeFile(
+    'cypress/fixtures/api/campaigns.json',
+    generateCampaignsApiResponse(2),
     'utf-8'
   );
 });
