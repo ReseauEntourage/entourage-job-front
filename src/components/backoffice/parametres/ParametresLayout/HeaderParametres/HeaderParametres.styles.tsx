@@ -1,6 +1,16 @@
 import styled, { css } from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
+export const StyledParametresPlaceholder = styled.a`
+  color: ${COLORS.primaryOrange};
+  text-decoration: underline;
+  font-style: italic;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 export const StyledEditPictureIconContainer = styled.div`
   position: absolute;
   ${({ isMobile }) => {

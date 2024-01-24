@@ -3,8 +3,8 @@ import React, { useMemo } from 'react';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import {
-  StyledMemberInfoLink,
   StyledMemberInfoContainer,
+  StyledMemberInfoLink,
   StyledMemberInfoNameContainer,
 } from './MemberInfo.styles';
 
@@ -17,6 +17,7 @@ export interface MemberInfoProps {
   children?: React.ReactNode;
   disableLink?: boolean;
 }
+
 export function MemberInfo({
   id,
   firstName,
@@ -48,23 +49,23 @@ export function MemberInfo({
     [children, email, firstName, lastName, organizationName]
   );
 
-  return disableLink
-    ? content
-    : user && (
-        <Link
-          shallow
-          passHref
-          href={
-            user.role === USER_ROLES.ADMIN
-              ? `/backoffice/admin/membres/${id}`
-              : `/backoffice/candidat/${id}/cv`
-          }
-          scroll={false}
-          legacyBehavior
-        >
-          <StyledMemberInfoLink>{content}</StyledMemberInfoLink>
-        </Link>
-      );
+  return disableLink ? (
+    content
+  ) : (
+    <Link
+      shallow
+      passHref
+      href={
+        user.role === USER_ROLES.ADMIN
+          ? `/backoffice/admin/membres/${id}`
+          : `/backoffice/candidat/${id}/cv`
+      }
+      scroll={false}
+      legacyBehavior
+    >
+      <StyledMemberInfoLink>{content}</StyledMemberInfoLink>
+    </Link>
+  );
 }
 
 MemberInfo.defaultProps = {

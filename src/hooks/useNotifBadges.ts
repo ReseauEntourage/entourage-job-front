@@ -33,7 +33,7 @@ export function useNotifBadges(
   const prevUser = usePrevious(user);
 
   useEffect(() => {
-    if (user && user !== prevUser) {
+    if (user !== prevUser) {
       if (user.role === USER_ROLES.ADMIN) {
         const queriesToExecute: (() => Promise<AxiosResponse>)[] = [];
         if (user.adminRole === ADMIN_ROLES.CANDIDATES) {

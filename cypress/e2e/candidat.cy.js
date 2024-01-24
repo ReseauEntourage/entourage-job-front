@@ -88,7 +88,7 @@ describe('Candidat', () => {
   });
   it('should open backoffice public offers', () => {
     cy.fixture('auth-current-candidat-res').then((user) => {
-      cy.visit(`/backoffice/candidat/offres/public`, {
+      cy.visit(`/backoffice/candidat/${user.id}/offres/public`, {
         onBeforeLoad: function async(window) {
           window.localStorage.setItem('access-token', '1234');
           window.localStorage.setItem('release-version', 'v100');
@@ -128,7 +128,7 @@ describe('Candidat', () => {
 
   it('should open backoffice private offers and add new opportunity', () => {
     cy.fixture('auth-current-candidat-res').then((user) => {
-      cy.visit(`/backoffice/candidat/offres/private`, {
+      cy.visit(`/backoffice/candidat/${user.id}/offres/private`, {
         onBeforeLoad: function async(window) {
           window.localStorage.setItem('access-token', '1234');
           window.localStorage.setItem('release-version', 'v100');
@@ -189,13 +189,15 @@ describe('Candidat', () => {
   });
 
   it('should open backoffice cv candidat', () => {
-    cy.visit('/backoffice/candidat/cv', {
-      onBeforeLoad: function async(window) {
-        window.localStorage.setItem('access-token', '1234');
-        window.localStorage.setItem('release-version', 'v100');
-      },
+    cy.fixture('auth-current-candidat-res').then((user) => {
+      cy.visit(`/backoffice/candidat/${user.id}/cv`, {
+        onBeforeLoad: function async(window) {
+          window.localStorage.setItem('access-token', '1234');
+          window.localStorage.setItem('release-version', 'v100');
+        },
+      });
+      cy.url().should('include', user.id);
     });
-
     // catchphrase
     cy.get(`[data-testid="test-catchphrase-edit-icon"]`)
       .scrollIntoView()
@@ -291,7 +293,7 @@ describe('Candidat', () => {
     // save CV
     cy.contains('Sauvegarder').scrollIntoView().click();
   });
-  
+
   it('should open backoffice candidate parameters', () => {
     cy.visit('/backoffice/parametres', {
       onBeforeLoad: function async(window) {

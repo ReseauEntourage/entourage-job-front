@@ -1,9 +1,11 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { usePrevious } from '../utils';
 import {
   authenticationActions,
   fetchUserSelectors,
+  logoutSelectors,
   selectCurrentUser,
 } from 'src/use-cases/authentication';
 import { getDefaultUrl } from 'src/utils/Redirects';
@@ -16,6 +18,12 @@ export function useAuthentication() {
   const isFetchUserSucceeded = useSelector(
     fetchUserSelectors.selectIsFetchUserSucceeded
   );
+  const isLogoutSucceeded = useSelector(
+    logoutSelectors.selectIsLogoutSucceeded
+  );
+
+  const prevIsLogoutSucceeded = usePrevious(isLogoutSucceeded);
+
   const isFetchUserFailed = useSelector(
     fetchUserSelectors.selectIsFetchUserFailed
   );
@@ -36,7 +44,14 @@ export function useAuthentication() {
   }, [dispatch, isFetchUserIdle]);
 
   useEffect(() => {
-    if (!isAuthenticationPending && !isUserAuthorized) {
+    if (isLogoutSucceeded) {
+      push('/login');
+      dispatch(authenticationActions.logoutReset());
+    } else if (
+      !isAuthenticationPending &&
+      !isUserAuthorized &&
+      !prevIsLogoutSucceeded
+    ) {
       if (currentUserRole) {
         replace(getDefaultUrl(currentUserRole));
       } else {
@@ -59,6 +74,9 @@ export function useAuthentication() {
     replace,
     asPath,
     push,
+    dispatch,
+    prevIsLogoutSucceeded,
+    isLogoutSucceeded,
   ]);
 
   return {

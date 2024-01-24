@@ -18,14 +18,10 @@ import {
 import { useOpenCorrespondingModal } from './useOpenModal';
 
 interface UserInformationCardProps {
-  loadingPersonal: boolean;
   title: React.ReactNode;
 }
 
-export const UserInformationCard = ({
-  loadingPersonal,
-  title,
-}: UserInformationCardProps) => {
+export const UserInformationCard = ({ title }: UserInformationCardProps) => {
   const user = useAuthenticatedUser();
   const { openCorrespondingModal } = useOpenCorrespondingModal(user);
 
@@ -33,64 +29,61 @@ export const UserInformationCard = ({
     <Card
       title={title}
       editCallback={openCorrespondingModal}
-      isLoading={loadingPersonal}
       isMobileClosable
       isDefaultOpen
     >
-      {!loadingPersonal && (
-        <StyledInformationsPersonnellesList>
-          <li>
-            <UserIcon width={20} />
-            {` ${user.firstName} ${user.lastName}`}
-          </li>
-          <li>
-            <GenderIcon width={20} />
-            {user.gender === 0 ? 'Homme' : 'Femme'}
-          </li>
-          <li>
-            <EmailIcon width={20} />
-            {user.email}
-          </li>
-          <li>
-            <PhoneIcon width={20} />
-            {user.phone ? (
-              <>{user.phone}</>
-            ) : (
-              <>Numéro de téléphone non renseigné</>
-            )}
-          </li>
-          {user.role !== USER_ROLES.ADMIN && (
-            <>
+      <StyledInformationsPersonnellesList>
+        <li>
+          <UserIcon width={20} />
+          {` ${user.firstName} ${user.lastName}`}
+        </li>
+        <li>
+          <GenderIcon width={20} />
+          {user.gender === 0 ? 'Homme' : 'Femme'}
+        </li>
+        <li>
+          <EmailIcon width={20} />
+          {user.email}
+        </li>
+        <li>
+          <PhoneIcon width={20} />
+          {user.phone ? (
+            <>{user.phone}</>
+          ) : (
+            <>Numéro de téléphone non renseigné</>
+          )}
+        </li>
+        {user.role !== USER_ROLES.ADMIN && (
+          <>
+            <li>
+              <LocationIcon width={20} />
+              {user.userProfile.department ? (
+                <>{user.userProfile.department}</>
+              ) : (
+                <>Département non renseigné</>
+              )}
+            </li>
+            {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) && (
               <li>
-                <LocationIcon width={20} />
-                {user.userProfile.department ? (
-                  <>{user.userProfile.department}</>
+                <HomeIcon width={20} />
+                {user.address ? (
+                  <>{user.address}</>
                 ) : (
-                  <>Département non renseignée</>
+                  <>Adresse postale non renseignée</>
                 )}
               </li>
-              {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) && (
-                <li>
-                  <HomeIcon width={20} />
-                  {user.address ? (
-                    <>{user.address}</>
-                  ) : (
-                    <>Adresse postale non renseignée</>
-                  )}
-                </li>
-              )}
-            </>
-          )}
-          {user.role === USER_ROLES.ADMIN && (
-            <StyledUserInformationCardTags>
-              <Tag
-                content={user.zone ? _.capitalize(user.zone) : 'Non renseignée'}
-              />
-              {user.adminRole && <Tag content={_.capitalize(user.adminRole)} />}
-            </StyledUserInformationCardTags>
-          )}
-        </StyledInformationsPersonnellesList>
-      )}
+            )}
+          </>
+        )}
+        {user.role === USER_ROLES.ADMIN && (
+          <StyledUserInformationCardTags>
+            <Tag
+              content={user.zone ? _.capitalize(user.zone) : 'Non renseignée'}
+            />
+            {user.adminRole && <Tag content={_.capitalize(user.adminRole)} />}
+          </StyledUserInformationCardTags>
+        )}
+      </StyledInformationsPersonnellesList>
     </Card>
   );
 };

@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRole } from 'src/components/backoffice/useRole';
-import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
+import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { usePrevious } from 'src/hooks/utils';
 import { profilesActions } from 'src/use-cases/profiles';
@@ -24,7 +24,7 @@ export function useDirectoryRoleFilter() {
       if (isRoleIncluded(CANDIDATE_USER_ROLES, user.role)) {
         replace({
           pathname: route,
-          query: { role: COACH_USER_ROLES },
+          query: { role: USER_ROLES.COACH },
         });
       } else {
         replace({

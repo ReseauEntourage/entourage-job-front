@@ -23,22 +23,20 @@ const Edit = () => {
   const candidateId = useCandidateId();
 
   useEffect(() => {
-    if (user) {
-      Api.getUserById(user.id)
-        .then(({ data }) => {
-          setUserCompleteData(data);
-        })
-        .catch(() => {
-          UIkit.notification('Erreur lors du chargement du suivi', 'danger');
-        });
-    }
-  }, [user]);
+    Api.getUserById(user.id)
+      .then(({ data }) => {
+        setUserCompleteData(data);
+      })
+      .catch(() => {
+        UIkit.notification('Erreur lors du chargement du suivi', 'danger');
+      });
+  }, [user.id]);
 
   const { cv, setCV, error, loading } = useFetchCV(candidateId);
 
   let content;
 
-  if (loading || !user || !userCompleteData) {
+  if (loading || !userCompleteData) {
     content = <LoadingScreen />;
   } else if (error) {
     return <ErrorMessage error={error} />;

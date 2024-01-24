@@ -1,11 +1,12 @@
 import React from 'react';
+import { StyledParametresPlaceholder } from '../HeaderParametres.styles';
 import { openModal } from 'src/components/modals/Modal';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { ModalEditProfileDescription } from './ModalEditProfileDescription';
 import {
-  StyledParametresDescriptionPlaceholder,
-  StyledParametresDescriptionParagraphe,
+  StyledParametresDescriptionContainer,
   StyledParametresDescriptionEditText,
+  StyledParametresDescriptionParagraphe,
 } from './ParametresDescription.styles';
 
 export const ParametresDescription = () => {
@@ -17,7 +18,7 @@ export const ParametresDescription = () => {
   };
 
   return (
-    <div>
+    <StyledParametresDescriptionContainer>
       {userProfile?.description ? (
         <StyledParametresDescriptionParagraphe data-testid="parametres-description">
           {userProfile.description}
@@ -29,13 +30,13 @@ export const ParametresDescription = () => {
           </StyledParametresDescriptionEditText>
         </StyledParametresDescriptionParagraphe>
       ) : (
-        <StyledParametresDescriptionPlaceholder
+        <StyledParametresPlaceholder
           onClick={() => openDescriptionModal()}
           data-testid="parametres-description-placeholder"
         >
           Ajouter une description pour vous présenter à la communauté
-        </StyledParametresDescriptionPlaceholder>
+        </StyledParametresPlaceholder>
       )}
-    </div>
+    </StyledParametresDescriptionContainer>
   );
 };

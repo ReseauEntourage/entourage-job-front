@@ -18,7 +18,7 @@ export function usePendingMembers() {
       setPendingMembersCount(pendingCVs);
     }
 
-    if (user && user !== prevUser && user.role === USER_ROLES.ADMIN) {
+    if (user !== prevUser && user.role === USER_ROLES.ADMIN) {
       fetchPendingMembersCount();
     }
   }, [prevUser, user]);

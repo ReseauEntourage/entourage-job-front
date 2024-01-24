@@ -250,8 +250,7 @@ export const CandidateOpportunities = ({
         ) : (
           <OpportunitiesContainer
             backButtonHref={{
-              pathname: `/backoffice/candidat/offres/${opportunityType}`,
-
+              pathname: `/backoffice/candidat/${candidateId}/offres/${opportunityType}`,
               // @ts-expect-error after enable TS strict mode. Please, try to fix it
               query: queryParamsOpportunities,
             }}

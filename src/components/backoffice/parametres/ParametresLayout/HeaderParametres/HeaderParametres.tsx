@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import EditIcon from 'assets/icons/editIcon.svg';
+import { useOpenCorrespondingModal } from '../UserInformationCard/useOpenModal';
+import { Api } from 'src/api';
 import {
   StyledHeaderProfile,
   StyledHeaderProfileContent,
@@ -7,8 +9,7 @@ import {
   StyledHeaderProfilePicture,
   StyledHeaderProfilePictureContainer,
   StyledHeaderProfileTextContainer,
-} from '../../../Backoffice.styles';
-import { Api } from 'src/api';
+} from 'src/components/backoffice/Backoffice.styles';
 import {
   ButtonIcon,
   ButtonMock,
@@ -19,9 +20,14 @@ import { H1, H2, H5, H6 } from 'src/components/utils/Headings';
 import { ImageInput } from 'src/components/utils/Inputs';
 import { Spinner } from 'src/components/utils/Spinner';
 import { COLORS } from 'src/constants/styles';
+import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop } from 'src/hooks/utils';
-import { StyledEditPictureIconContainer } from './HeaderParametres.styles';
+import { isRoleIncluded } from 'src/utils';
+import {
+  StyledEditPictureIconContainer,
+  StyledParametresPlaceholder,
+} from './HeaderParametres.styles';
 import { ParametresDescription } from './ParametresDescription';
 
 export const HeaderParametres = () => {
@@ -29,6 +35,14 @@ export const HeaderParametres = () => {
   const [imageUploading, setImageUploading] = useState(false);
   const size = isDesktop ? 146 : 64;
   const user = useAuthenticatedUser();
+
+  const { openCorrespondingModal } = useOpenCorrespondingModal(user);
+
+  const shouldShowAllProfile = isRoleIncluded(
+    [USER_ROLES.COACH, USER_ROLES.CANDIDATE, USER_ROLES.CANDIDATE_EXTERNAL],
+    user.role
+  );
+
   return (
     <StyledHeaderProfile className={`${isDesktop ? '' : 'mobile'}`}>
       <Section>
@@ -96,10 +110,20 @@ export const HeaderParametres = () => {
                 }
                 color="black"
               />
-              {user.userProfile.department && (
-                <H5 title={user.userProfile.department} color="black" />
+              {shouldShowAllProfile && (
+                <>
+                  {user.userProfile.department ? (
+                    <H5 title={user.userProfile.department} color="black" />
+                  ) : (
+                    <StyledParametresPlaceholder
+                      onClick={openCorrespondingModal}
+                    >
+                      Ajouter votre département
+                    </StyledParametresPlaceholder>
+                  )}
+                  <ParametresDescription />
+                </>
               )}
-              <ParametresDescription />
             </StyledHeaderProfileTextContainer>
           ) : (
             <StyledMobileHeaderProfileTitlesContainer>
@@ -111,16 +135,23 @@ export const HeaderParametres = () => {
                 }
                 color="black"
               />
-              {user.zone && (
-                <H6
-                  title={user.zone.charAt(0) + user.zone.slice(1).toLowerCase()}
-                  color="black"
-                />
+              {shouldShowAllProfile && (
+                <>
+                  {user.userProfile.department ? (
+                    <H6 title={user.userProfile.department} color="black" />
+                  ) : (
+                    <StyledParametresPlaceholder
+                      onClick={openCorrespondingModal}
+                    >
+                      Ajouter votre département
+                    </StyledParametresPlaceholder>
+                  )}
+                </>
               )}
             </StyledMobileHeaderProfileTitlesContainer>
           )}
         </StyledHeaderProfileContent>
-        {!isDesktop && <ParametresDescription />}
+        {!isDesktop && shouldShowAllProfile && <ParametresDescription />}
       </Section>
     </StyledHeaderProfile>
   );

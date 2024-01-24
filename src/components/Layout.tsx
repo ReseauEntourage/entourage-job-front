@@ -18,7 +18,6 @@ interface LayoutProps extends WithRouterProps {
   metaType?: string;
   noIndex?: boolean;
   isBackoffice?: boolean;
-  isEmpty?: boolean;
 }
 
 export const Layout = withRouter<LayoutProps>(
@@ -33,7 +32,6 @@ export const Layout = withRouter<LayoutProps>(
     metaType = 'website',
     noIndex = false,
     isBackoffice = false,
-    isEmpty = false,
   }: LayoutProps) => {
     const isPDF = router.pathname.includes('/pdf/');
     const domain =
@@ -79,15 +77,7 @@ export const Layout = withRouter<LayoutProps>(
             content={process.env.FB_DOMAIN_VERIFICATION}
           />
         </Head>
-        {!isPDF && (
-          <>
-            {isBackoffice ? (
-              <HeaderConnected isEmpty={isEmpty} />
-            ) : (
-              <HeaderPublic />
-            )}
-          </>
-        )}
+        {!isPDF && <>{isBackoffice ? <HeaderConnected /> : <HeaderPublic />}</>}
         {children}
         {!isPDF && !isBackoffice && <Footer />}
         {!isPDF && (

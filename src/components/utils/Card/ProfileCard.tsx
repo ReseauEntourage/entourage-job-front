@@ -4,19 +4,21 @@ import React, { useMemo } from 'react';
 import HandsIcon from 'assets/icons/illu-coeur-mains-ouvertes.svg';
 import CaseIcon from 'assets/icons/illu-malette.svg';
 import { HelpNames, UserCandidateWithUsers } from 'src/api/types';
-import { H2, H3, H4 } from 'src/components/utils/Headings';
+import { H3, H4, H5 } from 'src/components/utils/Headings';
 import { Img } from 'src/components/utils/Img';
 import { Tag } from 'src/components/utils/Tag';
 import { BUSINESS_LINES, BusinessLineValue } from 'src/constants';
 import { Department } from 'src/constants/departements';
 import { ProfileCardHelps } from 'src/constants/helps';
 import { COLORS } from 'src/constants/styles';
+import { GA_TAGS } from 'src/constants/tags';
 import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
   UserRole,
 } from 'src/constants/users';
 import { useImageFallback } from 'src/hooks/useImageFallback';
+import { gaEvent } from 'src/lib/gtag';
 import { findConstantFromValue, isRoleIncluded, sortByOrder } from 'src/utils';
 import { Card } from './Card';
 import {
@@ -119,6 +121,7 @@ export function ProfileCard({
     <StyledProfileCard>
       <Card
         onClick={() => {
+          gaEvent(GA_TAGS.PAGE_ANNUAIRE_CARTE_CLIC);
           push({
             pathname: '/backoffice/profile/[userId]',
             query: { userId },
@@ -142,17 +145,18 @@ export function ProfileCard({
                 onError={fallbackToCVImage}
               />
             )}
+            <Img src="/static/img/gradient.png" alt="" cover />
           </StyledProfileCardPicture>
           <StyledProfileCardInfoContainer>
             <StyledProfileCardName>
-              <H2
+              <H3
                 color={COLORS.white}
                 title={`${firstName} ${lastName.charAt(0)}.`}
               />
             </StyledProfileCardName>
             {department && (
               <StyledProfileCardDepartment>
-                - {department}
+                <div>{department}</div>
               </StyledProfileCardDepartment>
             )}
           </StyledProfileCardInfoContainer>
@@ -167,7 +171,7 @@ export function ProfileCard({
                 {sortedAmbitions && sortedAmbitions.length > 0 ? (
                   <StyledProfileCardJobContainer>
                     {sortedAmbitions.map(({ name }, index) => (
-                      <H3
+                      <H4
                         key={name}
                         color={COLORS.black}
                         title={`${_.capitalize(name)}${
@@ -187,7 +191,7 @@ export function ProfileCard({
               <>
                 {job ? (
                   <StyledProfileCardJobContainer>
-                    <H3 color={COLORS.black} title={_.capitalize(job)} />
+                    <H4 color={COLORS.black} title={_.capitalize(job)} />
                   </StyledProfileCardJobContainer>
                 ) : (
                   <StyledProfileCardEmptyJobContainer>
@@ -197,7 +201,7 @@ export function ProfileCard({
               </>
             )}
             <StyledProfileCardLabel>
-              {labels.businessLines}
+              <H5 color={COLORS.darkGrayFont} title={labels.businessLines} />
             </StyledProfileCardLabel>
             <StyledProfileCardBusinessLines>
               {sortedBusinessLines && sortedBusinessLines.length > 0 ? (
@@ -234,7 +238,9 @@ export function ProfileCard({
 
           <StyledProfileCardHelpContainer>
             <StyledSeparator />
-            <StyledProfileCardLabel>{labels.helps}</StyledProfileCardLabel>
+            <StyledProfileCardLabel>
+              <H5 title={labels.helps} color={COLORS.darkGrayFont} />
+            </StyledProfileCardLabel>
             <StyledProfileCardHelps>
               {helps && helps.length > 0 ? (
                 helps.map(({ name }) => {

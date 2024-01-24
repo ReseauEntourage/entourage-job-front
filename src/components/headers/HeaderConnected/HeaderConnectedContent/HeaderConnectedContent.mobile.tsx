@@ -32,7 +32,6 @@ export const HeaderConnectedContentMobile = ({
     [USER_ROLES.COACH_EXTERNAL]: [HeaderConnectedMainItemDefaultProps],
   },
   dropdown = [HeaderConnectedMainItemDefaultProps],
-  isEmpty = false,
 }: HeaderConnectedContentProps) => {
   const user = useAuthenticatedUser();
 
@@ -65,60 +64,59 @@ export const HeaderConnectedContentMobile = ({
               &nbsp; Accueil
             </SimpleLink>
           </li>
-          {!isEmpty &&
-            links[user?.role]
-              .filter(({ href }) => {
-                return href !== '#';
-              })
-              .map(
-                (
-                  { href, icon, name, badge, tag, subMenu, queryParams },
-                  index
-                ) => {
-                  const isActiveOrChildActive =
-                    asPath.includes(href) ||
-                    (subMenu &&
-                      subMenu.some(({ href: subMenuHref }) => {
-                        return asPath.includes(subMenuHref);
-                      }));
-                  return (
-                    <StyledConnectedItemMobile
-                      key={`${index}-items-${uuidValue}`}
-                      className={`${subMenu ? 'hasSubMenu ' : ''} ${
-                        isActiveOrChildActive ? 'active' : ''
-                      }`}
+          {links[user.role]
+            .filter(({ href }) => {
+              return href !== '#';
+            })
+            .map(
+              (
+                { href, icon, name, badge, tag, subMenu, queryParams },
+                index
+              ) => {
+                const isActiveOrChildActive =
+                  asPath.includes(href) ||
+                  (subMenu &&
+                    subMenu.some(({ href: subMenuHref }) => {
+                      return asPath.includes(subMenuHref);
+                    }));
+                return (
+                  <StyledConnectedItemMobile
+                    key={`${index}-items-${uuidValue}`}
+                    className={`${subMenu ? 'hasSubMenu ' : ''} ${
+                      isActiveOrChildActive ? 'active' : ''
+                    }`}
+                  >
+                    <a
+                      aria-hidden="true"
+                      onClick={() => {
+                        if (tag) gaEvent(tag);
+                        if (href) {
+                          push(href + (queryParams || ''));
+                        }
+                      }}
                     >
-                      <a
-                        aria-hidden="true"
-                        onClick={() => {
-                          if (tag) gaEvent(tag);
-                          if (href) {
-                            push(href + (queryParams || ''));
-                          }
-                        }}
-                      >
-                        <span>
-                          <span className="uk-margin-small-right">{icon}</span>
-                          {name}
-                        </span>
-                      </a>
-                      {badge && badges[badge] > 0 && (
-                        <div>
-                          &nbsp;
-                          <Tag
-                            size="small"
-                            style="secondary"
-                            content={badges[badge]}
-                          />
-                        </div>
-                      )}
-                      {subMenu && subMenu.length > 0 && (
-                        <SubMenu items={subMenu} badges={badges} />
-                      )}
-                    </StyledConnectedItemMobile>
-                  );
-                }
-              )}
+                      <span>
+                        <span className="uk-margin-small-right">{icon}</span>
+                        {name}
+                      </span>
+                    </a>
+                    {badge && badges[badge] > 0 && (
+                      <div>
+                        &nbsp;
+                        <Tag
+                          size="small"
+                          style="secondary"
+                          content={badges[badge]}
+                        />
+                      </div>
+                    )}
+                    {subMenu && subMenu.length > 0 && (
+                      <SubMenu items={subMenu} badges={badges} />
+                    )}
+                  </StyledConnectedItemMobile>
+                );
+              }
+            )}
           <hr style={{ opacity: '.5' }} />
           {dropdown.map(({ href, icon, name, onClick, tag }, index) => {
             return (

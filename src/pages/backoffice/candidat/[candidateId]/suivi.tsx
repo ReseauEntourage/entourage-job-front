@@ -28,20 +28,18 @@ const Suivi = () => {
 
   const prevUser = usePrevious(user);
 
-  const title =
-    user && isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
-      ? 'Suivez votre progression'
-      : `Suivi du candidat - ${`${
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          userCandidat?.candidat?.firstName
-        } ${
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          userCandidat?.candidat?.lastName
-        }`}`;
-  const description =
-    user && isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
-      ? "Ici, vous pouvez prendre des notes sur la progression de vos recherches, noter vos différents rendez-vous, etc. et échanger avec votre coach. Profitez de cet espace d'écriture libre qui vous est dédié !"
-      : "Ici, vous pouvez suivre la progression de votre candidat.e grâce à ses notes, et échanger avec lui/elle. Profitez de cet espace d'échange libre qui vous est dédié !";
+  const title = isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
+    ? 'Suivez votre progression'
+    : `Suivi du candidat - ${`${
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        userCandidat?.candidat?.firstName
+      } ${
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        userCandidat?.candidat?.lastName
+      }`}`;
+  const description = isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
+    ? "Ici, vous pouvez prendre des notes sur la progression de vos recherches, noter vos différents rendez-vous, etc. et échanger avec votre coach. Profitez de cet espace d'écriture libre qui vous est dédié !"
+    : "Ici, vous pouvez suivre la progression de votre candidat.e grâce à ses notes, et échanger avec lui/elle. Profitez de cet espace d'échange libre qui vous est dédié !";
 
   const updateValue = useCallback((text) => {
     setValue(text || '');
@@ -73,7 +71,6 @@ const Suivi = () => {
 
   const sendNoteHasBeenRead = useCallback(async () => {
     if (
-      user &&
       user.role !== USER_ROLES.ADMIN &&
       // @ts-expect-error after enable TS strict mode. Please, try to fix it
       userCandidat?.candidat?.id
@@ -90,7 +87,7 @@ const Suivi = () => {
   }, [user, userCandidat]);
 
   useEffect(() => {
-    if (user && user !== prevUser) {
+    if (user !== prevUser) {
       setLoading(true);
       Api.getUserCandidate()
         .then(({ data }) => {
@@ -114,7 +111,7 @@ const Suivi = () => {
   }, [prevUser, sendNoteHasBeenRead, user, candidateId, updateValue]);
 
   let content;
-  if (loading || !user) {
+  if (loading) {
     content = <LoadingScreen />;
   } else if (!userCandidat) {
     content = (

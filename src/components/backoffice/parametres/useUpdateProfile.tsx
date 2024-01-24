@@ -43,7 +43,7 @@ export const useUpdateProfile = (
   const helpField = useHelpField(user.role);
 
   const updateProfileStatus = useSelector(
-    updateProfileSelectors.selectFetchUserStatus
+    updateProfileSelectors.selectUpdateProfileStatus
   );
 
   useEffect(() => {

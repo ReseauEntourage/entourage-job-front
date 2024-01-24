@@ -10,12 +10,12 @@ import { openModal } from 'src/components/modals/Modal';
 import { StepperModal } from 'src/components/modals/Modal/ModalGeneric/StepperModal';
 import { SuccessModalContent } from 'src/components/modals/SuccessModalContent';
 import { Section, SimpleLink } from 'src/components/utils';
-import { USER_ROLES } from 'src/constants/users';
 import {
   authenticationActions,
   selectCurrentUser,
   selectLoginError,
 } from 'src/use-cases/authentication';
+import { getDefaultUrl } from 'src/utils/Redirects';
 
 const Login = () => {
   const user = useSelector(selectCurrentUser);
@@ -57,13 +57,7 @@ const Login = () => {
     }
 
     if (user) {
-      if (user.role === USER_ROLES.ADMIN) {
-        replace(path || '/backoffice/admin/offres');
-      } else if (user.role === USER_ROLES.COACH_EXTERNAL) {
-        replace(path || '/backoffice/candidat/list');
-      } else {
-        replace(path || '/backoffice/candidat/cv');
-      }
+      replace(path || getDefaultUrl(user.role));
     }
   }, [replace, requestedPath, user]);
 

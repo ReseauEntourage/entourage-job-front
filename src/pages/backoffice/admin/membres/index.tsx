@@ -23,7 +23,7 @@ const MembersAdmin = () => {
   const prevUser = usePrevious(user);
 
   useEffect(() => {
-    if (user && user !== prevUser) {
+    if (user !== prevUser) {
       if (!role || role.length === 0 || !isRoleIncluded(ALL_USER_ROLES, role)) {
         const params = {
           ...query,

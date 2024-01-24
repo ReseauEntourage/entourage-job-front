@@ -9,13 +9,13 @@ import { usePrevious } from 'src/hooks/utils';
 import { authenticationActions } from 'src/use-cases/authentication';
 import { HeaderConnectedContent } from './HeaderConnectedContent';
 
-export const HeaderConnected = ({ isEmpty = false }: { isEmpty?: boolean }) => {
+export const HeaderConnected = () => {
   const user = useAuthenticatedUser();
   const { asPath } = useRouter();
   const candidateId = useCandidateId();
   const dispatch = useDispatch();
 
-  const logout = useCallback(() => {
+  const logout = useCallback(async () => {
     dispatch(authenticationActions.logoutRequested());
   }, [dispatch]);
 
@@ -27,7 +27,7 @@ export const HeaderConnected = ({ isEmpty = false }: { isEmpty?: boolean }) => {
   const prevUser = usePrevious(user);
 
   useEffect(() => {
-    if (user && user !== prevUser) {
+    if (user !== prevUser) {
       setLinksConnected(renderLinks(user, logout, candidateId));
     }
   }, [user, logout, prevUser, candidateId]);
@@ -39,7 +39,6 @@ export const HeaderConnected = ({ isEmpty = false }: { isEmpty?: boolean }) => {
       badges={badges}
       links={linksConnected.links}
       dropdown={linksConnected.dropdown}
-      isEmpty={isEmpty}
     />
   );
 };

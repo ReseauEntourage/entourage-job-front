@@ -17,7 +17,7 @@ export const useUpdateUser = (
   const [closeModal, setCloseModal] = useState<boolean>(false);
 
   const updateUserStatus = useSelector(
-    updateUserSelectors.selectFetchUserStatus
+    updateUserSelectors.selectUpdateUserStatus
   );
 
   useEffect(() => {

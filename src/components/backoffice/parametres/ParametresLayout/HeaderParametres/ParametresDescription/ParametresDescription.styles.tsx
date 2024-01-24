@@ -1,17 +1,12 @@
 import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledParametresDescriptionParagraphe = styled.p`
-  white-space: pre-line;
+export const StyledParametresDescriptionContainer = styled.div`
+  margin-top: 20px;
 `;
 
-export const StyledParametresDescriptionPlaceholder = styled.a`
-  color: ${COLORS.primaryOrange};
-  text-decoration: underline;
-  font-style: italic;
-  &:hover {
-    text-decoration: underline;
-  }
+export const StyledParametresDescriptionParagraphe = styled.div`
+  white-space: pre-line;
 `;
 
 export const StyledParametresDescriptionEditText = styled.a`

@@ -101,7 +101,6 @@ function loginSucceededSaga(action: ReturnType<typeof loginSucceeded>) {
 function* logoutRequestedSaga() {
   try {
     // logout api call
-
     yield* put(logoutSucceeded());
   } catch {
     yield* put(logoutFailed());
@@ -117,9 +116,7 @@ function* updateUserRequestedSaga(
 ) {
   const { userId, user } = action.payload;
   try {
-    yield* call(() => {
-      Api.putUser(userId, user);
-    });
+    yield* call(() => Api.putUser(userId, user));
     yield* put(
       updateUserSucceeded({
         user,
@@ -139,9 +136,7 @@ function* updateCandidateRequestedSaga(
 ) {
   const { userId, userCandidate } = action.payload;
   try {
-    yield* call(() => {
-      Api.putCandidate(userId, userCandidate);
-    });
+    yield* call(() => Api.putCandidate(userId, userCandidate));
     yield* put(
       updateCandidateSucceeded({
         userId,

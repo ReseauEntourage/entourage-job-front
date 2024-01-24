@@ -12,13 +12,11 @@ export function useCandidateId() {
     query: { candidateId },
   } = useRouter();
 
-  if (user && USER_ROLES.COACH === user.role && !candidateId) {
+  if (USER_ROLES.COACH === user.role && !candidateId) {
     return getCandidateIdFromCoachOrCandidate(user)?.[0] as string;
   }
 
   return (
-    user && isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
-      ? user.id
-      : candidateId
+    isRoleIncluded(CANDIDATE_USER_ROLES, user.role) ? user.id : candidateId
   ) as string;
 }

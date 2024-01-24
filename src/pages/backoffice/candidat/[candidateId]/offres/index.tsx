@@ -108,7 +108,6 @@ const Opportunities = () => {
 
   useDeepCompareEffect(() => {
     if (
-      user &&
       candidateId &&
       (user !== prevUser ||
         opportunityType !== prevOpportunityType ||
@@ -246,7 +245,7 @@ const Opportunities = () => {
   return (
     <LayoutBackOffice
       title={
-        user && isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
+        isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
           ? 'Mes opportunités'
           : 'Opportunités du candidat'
       }

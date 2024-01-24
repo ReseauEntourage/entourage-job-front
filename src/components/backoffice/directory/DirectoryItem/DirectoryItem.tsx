@@ -1,5 +1,5 @@
 import React from 'react';
-import { HelpNames, UserCandidateWithUsers } from 'src/api/types';
+import { HelpNames } from 'src/api/types';
 import { ProfileCard } from 'src/components/utils/Card/ProfileCard';
 import { CardListItem } from 'src/components/utils/CardList';
 import { BusinessLineValue } from 'src/constants';
@@ -22,7 +22,6 @@ interface DirectoryItemProps {
     name: string;
     order: number;
   }[];
-  userCandidate?: UserCandidateWithUsers;
   department: Department;
   job?: string;
 }
@@ -36,7 +35,6 @@ export function DirectoryItem({
   helps,
   businessLines,
   ambitions,
-  userCandidate,
   job,
 }: DirectoryItemProps) {
   return (
@@ -50,7 +48,6 @@ export function DirectoryItem({
         businessLines={businessLines}
         helps={helps}
         ambitions={ambitions}
-        userCandidate={userCandidate}
         job={job}
       />
     </CardListItem>

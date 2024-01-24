@@ -22,10 +22,10 @@ export const StyledButton = styled.button`
   padding: 11px 20px !important;
   scroll-behavior: smooth;
 
-  svg:first-child {
+  > svg:first-child {
     margin-right: 8px;
   }
-  svg:last-child {
+  > svg:last-child {
     margin-left: 8px;
   }
 
