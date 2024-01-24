@@ -10,7 +10,7 @@ import {
   updateUserSelectors,
 } from 'src/use-cases/authentication';
 
-export const useConfirmationToaster = () => {
+export function useConfirmationToaster() {
   const updateProfileStatus = useSelector(
     updateProfileSelectors.selectUpdateProfileStatus
   );
@@ -24,6 +24,7 @@ export const useConfirmationToaster = () => {
   const updateCandidateStatus = useSelector(
     updateCandidateSelectors.selectUpdateCandidateStatus
   );
+
   const prevUpdateCandidateStatus = usePrevious(updateCandidateStatus);
 
   const dispatch = useDispatch();
@@ -77,18 +78,5 @@ export const useConfirmationToaster = () => {
       }
       dispatch(authenticationActions.updateCandidateReset());
     }
-  }, [
-    updateCandidateStatus,
-    dispatch,
-    prevUpdateCandidateStatus,
-    prevUpdateUserStatus,
-  ]);
-
-  useEffect(() => {
-    return () => {
-      dispatch(authenticationActions.updateProfileReset());
-      dispatch(authenticationActions.updateUserReset());
-      dispatch(authenticationActions.updateCandidateReset());
-    };
-  }, [dispatch]);
-};
+  }, [updateCandidateStatus, dispatch, prevUpdateCandidateStatus]);
+}

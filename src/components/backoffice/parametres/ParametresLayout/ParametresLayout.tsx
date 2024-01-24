@@ -28,6 +28,7 @@ export const ParametresLayout = () => {
   const user = useAuthenticatedUser();
 
   useConfirmationToaster();
+
   return (
     <StyledProfileLayout>
       <HeaderParametres />
@@ -52,7 +53,6 @@ export const ParametresLayout = () => {
             {/* Changement de mot de passe */}
             <ChangePasswordCard />
           </StyledParametresLeftColumn>
-
           <StyledParametresRightColumn
             className={`${isDesktop ? '' : 'mobile'}`}
           >

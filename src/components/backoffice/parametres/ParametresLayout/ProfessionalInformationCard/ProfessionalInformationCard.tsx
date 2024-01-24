@@ -44,7 +44,6 @@ export const ProfessionalInformationCard = () => {
     );
   }, [
     role,
-    user,
     userProfile.currentJob,
     userProfile.networkBusinessLines,
     userProfile.searchAmbitions,
@@ -67,11 +66,10 @@ export const ProfessionalInformationCard = () => {
                 return { name: value, order: i };
               }
             ) as { name: BusinessLineValue; order: number }[];
-            const valuesToSend = {
+            return {
               currentJob: values.currentJob,
               networkBusinessLines,
             };
-            return valuesToSend;
           }}
         />
       ) : (
@@ -121,11 +119,10 @@ export const ProfessionalInformationCard = () => {
                 { name: values.searchBusinessLine1.value, order: 1 },
               ];
             }
-            const valuesToSend = {
+            return {
               searchAmbitions: newAmbitions,
               searchBusinessLines: newBusinessLines,
             };
-            return valuesToSend;
           }}
         />
       )

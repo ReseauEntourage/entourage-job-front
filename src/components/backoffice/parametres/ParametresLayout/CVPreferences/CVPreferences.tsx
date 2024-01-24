@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { UserCandidateWithUsers } from 'src/api/types';
 import { CandidateEmployedToggle } from 'src/components/backoffice/candidate/CandidateEmployedToggle';
@@ -23,19 +23,22 @@ export const CVPreferences = ({
 }) => {
   const dispatch = useDispatch();
 
-  const dispatchUpdateCandidate = (keyValue: {
-    employed?: boolean;
-    hidden?: boolean;
-    contract?: Contract | null;
-    endOfContract?: string | null;
-  }) => {
-    dispatch(
-      authenticationActions.updateCandidateRequested({
-        userId: candidatId,
-        userCandidate: keyValue,
-      })
-    );
-  };
+  const dispatchUpdateCandidate = useCallback(
+    (keyValue: {
+      employed?: boolean;
+      hidden?: boolean;
+      contract?: Contract | null;
+      endOfContract?: string | null;
+    }) => {
+      dispatch(
+        authenticationActions.updateCandidateRequested({
+          userId: candidatId,
+          userCandidate: keyValue,
+        })
+      );
+    },
+    [candidatId, dispatch]
+  );
 
   if (!candidat || !candidatId) return null;
   return (
