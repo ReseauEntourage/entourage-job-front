@@ -47,9 +47,7 @@ export const LinkedUserInformationCard = ({
   }, []);
 
   useEffect(() => {
-    if (user) {
-      assignUser(user);
-    }
+    assignUser(user);
   }, [assignUser, user]);
 
   if (!linkedUser) {

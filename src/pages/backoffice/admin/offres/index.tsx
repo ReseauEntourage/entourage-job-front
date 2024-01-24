@@ -14,15 +14,18 @@ import { GA_TAGS } from 'src/constants/tags';
 import { USER_ROLES } from 'src/constants/users';
 import { useFilters } from 'src/hooks';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
+import { getDefaultUrl } from 'src/utils/Redirects';
 
 const AdminOpportunitiesPage = () => {
   const {
     replace,
     query: { q, offerId, tag, ...restParams },
-    isReady,
   } = useRouter();
 
   const user = useAuthenticatedUser();
+  const candidateId = useCandidateId();
+
   const [loadingDefaultFilters, setLoadingDefaultFilters] = useState(true);
 
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
@@ -36,76 +39,63 @@ const AdminOpportunitiesPage = () => {
 
   // redirect with default tag and departments
   useEffect(() => {
-    if (isReady) {
-      const redirectParams = tag
-        ? {
-            tag,
-            ...restParams,
+    if (user.role !== USER_ROLES.ADMIN) {
+      if (candidateId) {
+        replace(
+          `/backoffice/candidat/${candidateId}/offres${
+            offerId ? `/${offerId}` : ''
+          }`,
+          undefined,
+          {
+            shallow: true,
           }
-        : restParams;
+        );
+      } else {
+        replace(getDefaultUrl(user.role));
+      }
+    } else if (!tag) {
+      const params = {
+        tag: OFFER_ADMIN_FILTERS_DATA[0].tag,
+        ...restParams,
+      } as { department?: string[]; tag?: string };
+      if (user.zone && user.zone !== ADMIN_ZONES.HZ) {
+        const defaultDepartmentsForAdmin = DEPARTMENTS_FILTERS.filter(
+          (dept) => {
+            return user.zone === dept.zone;
+          }
+        );
 
-      if (q) {
+        params.department = defaultDepartmentsForAdmin.map((dept) => {
+          return dept.value;
+        });
+      }
+      if (offerId) {
         replace(
           {
-            pathname: `/backoffice/admin/offres/${q}`,
-            query: redirectParams,
+            pathname: `/backoffice/admin/offres/${offerId}`,
+            query: params,
           },
           undefined,
           {
             shallow: true,
           }
         );
-      } else if (user) {
-        if (user.role !== USER_ROLES.ADMIN) {
-          replace(
-            `/backoffice/candidat/offres${offerId ? `/${offerId}` : ''}`,
-            undefined
-          );
-        } else if (!tag) {
-          const params = {
-            tag: OFFER_ADMIN_FILTERS_DATA[0].tag,
-            ...restParams,
-          } as { department?: string[]; tag?: string };
-          if (user.zone && user.zone !== ADMIN_ZONES.HZ) {
-            const defaultDepartmentsForAdmin = DEPARTMENTS_FILTERS.filter(
-              (dept) => {
-                return user.zone === dept.zone;
-              }
-            );
-
-            params.department = defaultDepartmentsForAdmin.map((dept) => {
-              return dept.value;
-            });
+      } else {
+        replace(
+          {
+            pathname: '/backoffice/admin/offres',
+            query: params,
+          },
+          undefined,
+          {
+            shallow: true,
           }
-          if (offerId) {
-            replace(
-              {
-                pathname: `/backoffice/admin/offres/${offerId}`,
-                query: params,
-              },
-              undefined,
-              {
-                shallow: true,
-              }
-            );
-          } else {
-            replace(
-              {
-                pathname: '/backoffice/admin/offres',
-                query: params,
-              },
-              undefined,
-              {
-                shallow: true,
-              }
-            );
-          }
-        } else {
-          setLoadingDefaultFilters(false);
-        }
+        );
       }
+    } else {
+      setLoadingDefaultFilters(false);
     }
-  }, [q, offerId, replace, restParams, tag, user, isReady]);
+  }, [offerId, replace, restParams, tag, user, candidateId]);
 
   if (
     // loading ||

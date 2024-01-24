@@ -17,8 +17,6 @@ export function useCandidateId() {
   }
 
   return (
-    user && isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
-      ? user.id
-      : candidateId
+    isRoleIncluded(CANDIDATE_USER_ROLES, user.role) ? user.id : candidateId
   ) as string;
 }

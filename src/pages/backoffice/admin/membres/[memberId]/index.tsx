@@ -30,7 +30,7 @@ const User = () => {
   const opportunityId = useOpportunityId();
 
   useEffect(() => {
-    if (user !== prevUser && user) {
+    if (user && user !== prevUser) {
       if (
         isRoleIncluded(COACH_USER_ROLES, user.role) &&
         (!tab || tab !== MEMBER_TABS.PARAMETERS)

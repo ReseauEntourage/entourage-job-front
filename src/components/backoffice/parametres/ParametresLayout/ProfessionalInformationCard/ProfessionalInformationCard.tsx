@@ -33,17 +33,15 @@ export const ProfessionalInformationCard = () => {
   const [hasData, setHasData] = useState<boolean>(false);
 
   useEffect(() => {
-    if (user) {
-      setHasData(
-        checkData({
-          currentJob: userProfile?.currentJob,
-          networkBusinessLines: userProfile?.networkBusinessLines,
-          searchAmbitions: userProfile?.searchAmbitions,
-          searchBusinessLines: userProfile?.searchBusinessLines,
-          role,
-        })
-      );
-    }
+    setHasData(
+      checkData({
+        currentJob: userProfile?.currentJob,
+        networkBusinessLines: userProfile?.networkBusinessLines,
+        searchAmbitions: userProfile?.searchAmbitions,
+        searchBusinessLines: userProfile?.searchBusinessLines,
+        role,
+      })
+    );
   }, [
     role,
     user,
