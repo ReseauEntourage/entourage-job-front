@@ -9,6 +9,7 @@ import {
   StyledProfileLeftColumn,
   StyledProfileRightColumn,
 } from './Profile.styles';
+import { ProfileContactCard } from './ProfileContactCard';
 import { ProfileHelpInformationCard } from './ProfileHelpInformationCard';
 import { ProfileProfessionalInformationCard } from './ProfileProfessionalInformationCard';
 import { useSelectedProfile } from './useSelectedProfile';
@@ -25,12 +26,16 @@ export const Profile = () => {
           <HeaderProfile />
           <Section className="custom-page">
             <StyledProfileGrid className={`${isDesktop ? '' : 'mobile'}`}>
-              <StyledProfileLeftColumn>
+              <StyledProfileLeftColumn
+                className={`${isDesktop ? '' : 'mobile'}`}
+              >
                 <ProfileProfessionalInformationCard />
                 <ProfileHelpInformationCard />
               </StyledProfileLeftColumn>
-              <StyledProfileRightColumn>
-                {/* <Card title="Contact"><div/></Card> */}
+              <StyledProfileRightColumn
+                className={`${isDesktop ? '' : 'mobile'}`}
+              >
+                <ProfileContactCard />
               </StyledProfileRightColumn>
             </StyledProfileGrid>
           </Section>

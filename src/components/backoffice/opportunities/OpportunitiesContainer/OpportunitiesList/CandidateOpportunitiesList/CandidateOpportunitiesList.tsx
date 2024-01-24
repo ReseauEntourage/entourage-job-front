@@ -16,9 +16,6 @@ import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
 import { useOpportunityType } from 'src/hooks/queryParams/useOpportunityType';
 import { useQueryParamsOpportunities } from 'src/hooks/queryParams/useQueryParamsOpportunities';
 import { useIsAtBottom } from 'src/hooks/useIsAtBottom';
-import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
-import { useOpportunityType } from 'src/hooks/queryParams/useOpportunityType';
-import { useQueryParamsOpportunities } from 'src/hooks/queryParams/useQueryParamsOpportunities';
 import { CandidateOpportunityItem } from './CandidateOpportunityItem';
 
 const uuidValue = uuid();

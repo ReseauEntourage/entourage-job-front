@@ -36,8 +36,8 @@ export const StyledCardContent = styled.div`
 
 export const StyledCardTitleContainer = styled.div`
   border-bottom: ${COLORS.hoverOrange} solid 1px;
-  padding-right: 50px;
-  padding-left: 25px;
+  margin-right: 25px;
+  margin-left: 25px;
   padding-bottom: 25px;
   margin-bottom: 0px;
 

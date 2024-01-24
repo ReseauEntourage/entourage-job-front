@@ -19,6 +19,7 @@ export const StyledProfileRightColumn = styled.div`
   gap: 40px;
   min-width: 400px;
   &.mobile {
+    min-width: unset;
     width: 100%;
   }
 `;
