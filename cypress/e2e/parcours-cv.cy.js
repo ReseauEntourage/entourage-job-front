@@ -19,7 +19,7 @@ describe('Parcours CV', () => {
 
     cy.intercept('POST', '/cv/count', {}).as('postCVCount');
 
-    cy.intercept('POST', '/externalMessage', {
+    cy.intercept('POST', '/message/external', {
       fixture: 'post-external-message-res',
     }).as('postMessage');
 

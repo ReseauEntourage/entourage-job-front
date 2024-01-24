@@ -5,6 +5,7 @@ import { RequestState, SliceRootState } from 'src/store/utils';
 import {
   fetchProfilesAdapter,
   fetchSelectedProfileAdapter,
+  postInternalMessageAdapter,
 } from './profiles.adapters';
 
 const LIMIT = 25;
@@ -12,6 +13,7 @@ const LIMIT = 25;
 export interface State {
   fetchProfiles: RequestState<typeof fetchProfilesAdapter>;
   fetchSelectedProfile: RequestState<typeof fetchSelectedProfileAdapter>;
+  postInternalMessage: RequestState<typeof postInternalMessageAdapter>;
   profiles: PublicProfile[];
   profilesFilters: { role?: UserRole[]; offset: number; limit: typeof LIMIT };
   profilesHasFetchedAll: boolean;
@@ -21,6 +23,7 @@ export interface State {
 const initialState: State = {
   fetchProfiles: fetchProfilesAdapter.getInitialState(),
   fetchSelectedProfile: fetchSelectedProfileAdapter.getInitialState(),
+  postInternalMessage: fetchProfilesAdapter.getInitialState(),
   profiles: [],
   profilesFilters: { offset: 0, limit: LIMIT },
   profilesHasFetchedAll: false,
@@ -47,6 +50,10 @@ export const slice = createSlice({
           state.selectedProfile = action.payload;
         },
       }
+    ),
+    ...postInternalMessageAdapter.getReducers<State>(
+      (state) => state.postInternalMessage,
+      {}
     ),
     setProfilesRoleFilter(state, action: PayloadAction<UserRole[]>) {
       state.profilesFilters = {

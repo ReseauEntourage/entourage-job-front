@@ -516,6 +516,10 @@ export type InternalMessage = {
   addresseeUserId: string;
   subject: string;
   message: string;
+  // answered by the DB
+  senderUserId?: string;
+  createdAt?: string;
+  id?: string;
 };
 
 export type PublicProfile = {
