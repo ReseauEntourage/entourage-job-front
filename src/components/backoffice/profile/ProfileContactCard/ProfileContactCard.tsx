@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import UIkit from 'uikit';
-import { useSelectedProfile } from '../useSelectedProfile';
+import { useSelectSectedProfile } from '../useSelectedProfile';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { formContactInternalMessage } from 'src/components/forms/schemas/formContactInternalMessage';
 import { Card } from 'src/components/utils';
@@ -11,10 +11,12 @@ import {
   postInternalMessageSelectors,
   profilesActions,
 } from 'src/use-cases/profiles';
-import { StyledProfileContactForm } from './ProfileContactCard.styles';
+import { StyledConfirmCheck, StyledContactMessage, StyledProfileContactForm } from './ProfileContactCard.styles';
+import { AvionPapier, Check } from 'assets/icons/icons';
+import { useIsProfileContacted } from '../usIsProfileContacted';
 
 export const ProfileContactCard = () => {
-  const { selectedProfile } = useSelectedProfile();
+  const selectedProfile = useSelectSectedProfile();
   const [isFormSent, setIsFormSent] = useState(false);
   const [loadingSending, setLoadingSending] = useState(false);
   const dispatch = useDispatch();
@@ -36,6 +38,11 @@ export const ProfileContactCard = () => {
     }
   }, [postInternalMessageStatus, prevPostInternalMessageStatus]);
 
+  const contactMessage = `Vous avez déjà contacté ${selectedProfile.firstName}`;
+  const contactedMessage = `Vous avez déjà été contacté par ${selectedProfile.firstName}`;
+
+  const { existingContactMessage } = useIsProfileContacted(selectedProfile, contactMessage, contactedMessage);
+
   return (
     <Card
       title={`Prenez contact avec ${selectedProfile?.firstName}`}
@@ -43,21 +50,33 @@ export const ProfileContactCard = () => {
     >
       <StyledProfileContactForm>
         {isFormSent ? (
-          <div>Message envoyé</div>
+          <div data-testid="profile-contact-form-confirm">
+            <StyledConfirmCheck>
+              <Check />
+            </StyledConfirmCheck>
+            Votre message a été envoyé
+          </div>
         ) : (
-          <FormWithValidation
-            formSchema={formContactInternalMessage}
-            onSubmit={async (values) => {
-              if (!selectedProfile) return null;
-              dispatch(
-                profilesActions.postInternalMessageRequested({
-                  ...values,
-                  addresseeUserId: selectedProfile?.id,
-                })
-              );
-            }}
-            noCompulsory
-          />
+          <>
+            {existingContactMessage && (
+              <StyledContactMessage>
+                <AvionPapier />
+                {existingContactMessage}
+              </StyledContactMessage>
+            )}
+            <FormWithValidation
+              formSchema={formContactInternalMessage}
+              onSubmit={async (values) => {
+                dispatch(
+                  profilesActions.postInternalMessageRequested({
+                    ...values,
+                    addresseeUserId: selectedProfile?.id,
+                  })
+                  );
+                }}
+                noCompulsory
+                />
+          </>
         )}
       </StyledProfileContactForm>
     </Card>

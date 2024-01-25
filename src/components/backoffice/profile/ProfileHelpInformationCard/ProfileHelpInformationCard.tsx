@@ -1,7 +1,7 @@
 import React from 'react';
 import PlaceholderIllu from 'assets/icons/illu-coeur-mains-ouvertes.svg';
 import { ProfilePlaceHolder } from '../ProfilePlaceholder';
-import { useSelectedProfile } from '../useSelectedProfile';
+import { useSelectSectedProfile } from '../useSelectedProfile';
 import { useHelpField } from 'src/components/backoffice/parametres/useUpdateProfile';
 import { Card } from 'src/components/utils';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
@@ -9,10 +9,10 @@ import { isRoleIncluded } from 'src/utils';
 import { ProfileHelpList } from './ProfileHelpList';
 
 export const ProfileHelpInformationCard = () => {
-  const { selectedProfile } = useSelectedProfile();
+  const selectedProfile = useSelectSectedProfile();
   const helpField = useHelpField(selectedProfile?.role);
 
-  if (!selectedProfile || !helpField) return null;
+  if (!helpField) return null;
   return (
     <Card
       title={

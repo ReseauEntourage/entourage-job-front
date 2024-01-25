@@ -108,6 +108,11 @@ Ces deux commandes sont lancées par les hooks de commit
 yarn storybook
 ```
 
+Don't forget to import icons into the storybook when adding a new one in "/assets/icons"
+```
+yarn add-icons
+```
+
 ### Tests
 
 #### Tests Unitaires - Jest

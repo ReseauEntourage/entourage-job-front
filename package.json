@@ -25,7 +25,8 @@
     "build-storybook": "storybook build",
     "chromatic": "chromatic --exit-zero-on-changes",
     "cypress:io": "npx cypress run --record --key $(grep CYPRESS_IO_KEY .env | cut -d '=' -f2)",
-    "cypress:local": "npx cypress open"
+    "cypress:local": "npx cypress open",
+    "add-icons": "node ./assets/icons/export-script.js"
   },
   "repository": {
     "type": "git",

@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyledProfileGrid, StyledProfileLayout } from '../Backoffice.styles';
 import { LayoutBackOffice } from '../LayoutBackOffice';
-import { LoadingScreen } from '../LoadingScreen';
 import { Section } from 'src/components/utils';
 import { useIsDesktop } from 'src/hooks/utils';
 import { HeaderProfile } from './HeaderProfile';
@@ -12,12 +11,12 @@ import {
 import { ProfileContactCard } from './ProfileContactCard';
 import { ProfileHelpInformationCard } from './ProfileHelpInformationCard';
 import { ProfileProfessionalInformationCard } from './ProfileProfessionalInformationCard';
-import { useSelectedProfile } from './useSelectedProfile';
+import { useSelectSectedProfile } from './useSelectedProfile';
 
 export const Profile = () => {
-  const { selectedProfile } = useSelectedProfile();
+  const selectedProfile = useSelectSectedProfile();
   const isDesktop = useIsDesktop();
-  if (selectedProfile) {
+
     return (
       <LayoutBackOffice
         title={`Profil de ${selectedProfile.firstName} ${selectedProfile.lastName}`}
@@ -42,6 +41,4 @@ export const Profile = () => {
         </StyledProfileLayout>
       </LayoutBackOffice>
     );
-  }
-  return <LoadingScreen />;
 };

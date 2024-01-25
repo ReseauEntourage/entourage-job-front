@@ -545,4 +545,6 @@ export type PublicProfile = {
     order: number;
     prefix: AmbitionsPrefixesType;
   }[];
+  lastSentMessage: string;
+  lastReceivedMessage: string;
 };

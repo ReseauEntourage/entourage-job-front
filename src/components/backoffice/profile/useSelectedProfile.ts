@@ -47,3 +47,13 @@ export function useSelectedProfile() {
     selectedProfile,
   };
 }
+
+export function useSelectSectedProfile() {
+  const selectedProfile = useSelector(selectSelectedProfile);
+
+  if (!selectedProfile) {
+    throw new Error('No selected profile');
+  }
+
+  return selectedProfile;
+}
