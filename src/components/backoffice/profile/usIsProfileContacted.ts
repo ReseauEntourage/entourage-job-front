@@ -1,32 +1,33 @@
-import { PublicProfile } from "src/api/types";
 import moment from 'moment';
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+import { PublicProfile } from 'src/api/types';
 
 export const useIsProfileContacted = (
-    selectedProfile: PublicProfile,
-    contactMessage?: string,
-    contactedMessage?: string,
+  selectedProfile: PublicProfile,
+  contactMessage?: string,
+  contactedMessage?: string
 ) => {
-    const [ existingContactMessage, setExistingcontactMessage ] = useState<
+  const [existingContactMessage, setExistingcontactMessage] = useState<
     typeof contactMessage | typeof contactedMessage | null
-  >(null)
-  const [ isContacted, setIsContacted ] = useState<boolean>()
-  
+  >(null);
+  const [isContacted, setIsContacted] = useState<boolean>();
+
   useEffect(() => {
     const { lastSentMessage, lastReceivedMessage } = selectedProfile;
+
     // Check if both timestamps are null
     if (!lastSentMessage && !lastReceivedMessage) {
       setExistingcontactMessage(null);
-      setIsContacted(false)
-    } 
+      setIsContacted(false);
+    }
 
     // Check if at least one timestamp is defined
     if (lastSentMessage || !lastReceivedMessage) {
-      setIsContacted(true)
-    } 
+      setIsContacted(true);
+    }
 
     // if we have contact messages to return
-    if (contactMessage && contactedMessage) {
+    if (!!lastSentMessage && !!lastReceivedMessage) {
       // Check if only lastSentMessage is defined
       if (lastSentMessage && !lastReceivedMessage) {
         setExistingcontactMessage(contactMessage);
@@ -47,10 +48,10 @@ export const useIsProfileContacted = (
         setExistingcontactMessage(contactMessage);
       }
     }
-  }, [selectedProfile, contactMessage, contactedMessage])
+  }, [selectedProfile, contactMessage, contactedMessage]);
 
-    return {
-        isContacted,
-        existingContactMessage,
-    }
-}
+  return {
+    isContacted,
+    existingContactMessage,
+  };
+};
