@@ -8,7 +8,9 @@ import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { formContactInternalMessage } from 'src/components/forms/schemas/formContactInternalMessage';
 import { Card } from 'src/components/utils';
 import { ReduxRequestEvents } from 'src/constants';
+import { GA_TAGS } from 'src/constants/tags';
 import { usePrevious } from 'src/hooks/utils';
+import { gaEvent } from 'src/lib/gtag';
 import {
   postInternalMessageSelectors,
   profilesActions,
@@ -75,6 +77,7 @@ export const ProfileContactCard = () => {
             <FormWithValidation
               formSchema={formContactInternalMessage}
               onSubmit={async (values) => {
+                gaEvent(GA_TAGS.PROFILE_DETAILS_CONTACT_SEND_CLIC);
                 dispatch(
                   profilesActions.postInternalMessageRequested({
                     ...values,
