@@ -1,14 +1,13 @@
 /* eslint-disable import/namespace */
 // this rule is disabled because "All" import sends an error
 
-import React from 'react'
+import React from 'react';
 import * as All from 'assets/icons/icons';
-import { StyledIconsContainer } from './Icons.styles';
-import { StyledIconContainer } from './Icons.styles';
+import { StyledIconsContainer, StyledIconContainer } from './Icons.styles';
 
 export const Icons = () => {
-    
-  const isComponent = (key) => typeof All[key] === 'function' && /^\w+$/.test(key);
+  const isComponent = (key) =>
+    typeof All[key] === 'function' && /^\w+$/.test(key);
 
   const renderComponents = () => {
     return Object.keys(All)
@@ -20,12 +19,8 @@ export const Icons = () => {
             <p>{key}</p>
             <Component key={index} />
           </StyledIconContainer>
-        ); 
+        );
       });
   };
-  return (
-    <StyledIconsContainer>
-      {renderComponents()}
-    </StyledIconsContainer>
-  )
-}
+  return <StyledIconsContainer>{renderComponents()}</StyledIconsContainer>;
+};

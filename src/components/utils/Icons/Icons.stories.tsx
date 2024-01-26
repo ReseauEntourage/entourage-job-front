@@ -3,20 +3,20 @@ import React from 'react';
 import { Icons } from './Icons';
 
 const meta = {
-    title: "Icons SVG",
-    decorators: [
-        (Story) => {
-            return <Story />
-        }
-    ]
-}
+  title: 'Icons SVG',
+  decorators: [
+    (Story) => {
+      return <Story />;
+    },
+  ],
+};
 
 const IconsTemplate = () => {
-    return <Icons />;
-}
+  return <Icons />;
+};
 
 export const IconsSVG = {
-    render: IconsTemplate
+  render: IconsTemplate,
 };
 
 export default meta;

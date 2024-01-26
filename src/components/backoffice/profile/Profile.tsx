@@ -17,28 +17,26 @@ export const Profile = () => {
   const selectedProfile = useSelectSectedProfile();
   const isDesktop = useIsDesktop();
 
-    return (
-      <LayoutBackOffice
-        title={`Profil de ${selectedProfile.firstName} ${selectedProfile.lastName}`}
-      >
-        <StyledProfileLayout>
-          <HeaderProfile />
-          <Section className="custom-page">
-            <StyledProfileGrid className={`${isDesktop ? '' : 'mobile'}`}>
-              <StyledProfileLeftColumn
-                className={`${isDesktop ? '' : 'mobile'}`}
-              >
-                <ProfileProfessionalInformationCard />
-                <ProfileHelpInformationCard />
-              </StyledProfileLeftColumn>
-              <StyledProfileRightColumn
-                className={`${isDesktop ? '' : 'mobile'}`}
-              >
-                <ProfileContactCard />
-              </StyledProfileRightColumn>
-            </StyledProfileGrid>
-          </Section>
-        </StyledProfileLayout>
-      </LayoutBackOffice>
-    );
+  return (
+    <LayoutBackOffice
+      title={`Profil de ${selectedProfile.firstName} ${selectedProfile.lastName}`}
+    >
+      <StyledProfileLayout>
+        <HeaderProfile />
+        <Section className="custom-page">
+          <StyledProfileGrid className={`${isDesktop ? '' : 'mobile'}`}>
+            <StyledProfileLeftColumn className={`${isDesktop ? '' : 'mobile'}`}>
+              <ProfileProfessionalInformationCard />
+              <ProfileHelpInformationCard />
+            </StyledProfileLeftColumn>
+            <StyledProfileRightColumn
+              className={`${isDesktop ? '' : 'mobile'}`}
+            >
+              <ProfileContactCard />
+            </StyledProfileRightColumn>
+          </StyledProfileGrid>
+        </Section>
+      </StyledProfileLayout>
+    </LayoutBackOffice>
+  );
 };

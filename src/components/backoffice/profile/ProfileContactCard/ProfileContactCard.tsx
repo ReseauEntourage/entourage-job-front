@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import UIkit from 'uikit';
+import { AvionPapier, Check } from 'assets/icons/icons';
+import { useIsProfileContacted } from '../usIsProfileContacted';
 import { useSelectSectedProfile } from '../useSelectedProfile';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { formContactInternalMessage } from 'src/components/forms/schemas/formContactInternalMessage';
@@ -11,9 +13,11 @@ import {
   postInternalMessageSelectors,
   profilesActions,
 } from 'src/use-cases/profiles';
-import { StyledConfirmCheck, StyledContactMessage, StyledProfileContactForm } from './ProfileContactCard.styles';
-import { AvionPapier, Check } from 'assets/icons/icons';
-import { useIsProfileContacted } from '../usIsProfileContacted';
+import {
+  StyledConfirmCheck,
+  StyledContactMessage,
+  StyledProfileContactForm,
+} from './ProfileContactCard.styles';
 
 export const ProfileContactCard = () => {
   const selectedProfile = useSelectSectedProfile();
@@ -41,7 +45,11 @@ export const ProfileContactCard = () => {
   const contactMessage = `Vous avez déjà contacté ${selectedProfile.firstName}`;
   const contactedMessage = `Vous avez déjà été contacté par ${selectedProfile.firstName}`;
 
-  const { existingContactMessage } = useIsProfileContacted(selectedProfile, contactMessage, contactedMessage);
+  const { existingContactMessage } = useIsProfileContacted(
+    selectedProfile,
+    contactMessage,
+    contactedMessage
+  );
 
   return (
     <Card
@@ -72,10 +80,10 @@ export const ProfileContactCard = () => {
                     ...values,
                     addresseeUserId: selectedProfile?.id,
                   })
-                  );
-                }}
-                noCompulsory
-                />
+                );
+              }}
+              noCompulsory
+            />
           </>
         )}
       </StyledProfileContactForm>
