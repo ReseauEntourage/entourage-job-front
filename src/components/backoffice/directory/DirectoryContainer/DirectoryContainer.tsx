@@ -13,7 +13,9 @@ import {
 } from 'src/constants/users';
 import { useFilters } from 'src/hooks';
 import {
-  selectProfilesFilters,
+  selectProfilesBusinessLinesFilters,
+  selectProfilesDepartmentsFilters,
+  selectProfilesHelpsFilters,
   selectProfilesSearchFilter,
 } from 'src/use-cases/profiles';
 import { isRoleIncluded } from 'src/utils';
@@ -36,14 +38,20 @@ export function DirectoryContainer() {
     GA_TAGS.PAGE_ANNUAIRE_SUPPRIMER_FILTRES_CLIC
   );
 
-  const filters = useSelector(selectProfilesFilters);
+  const departmentsFilters = useSelector(selectProfilesDepartmentsFilters);
+  const helpsFilters = useSelector(selectProfilesHelpsFilters);
+  const businessLinesFilters = useSelector(selectProfilesBusinessLinesFilters);
   const search = useSelector(selectProfilesSearchFilter);
 
   return (
     <StyledDirectoryContainer>
       <SearchBar
         filtersConstants={DIRECTORY_FILTERS_DATA}
-        filters={filters}
+        filters={{
+          departments: departmentsFilters,
+          helps: helpsFilters,
+          businessLines: businessLinesFilters,
+        }}
         resetFilters={resetFilters}
         search={search}
         setSearch={setSearch}

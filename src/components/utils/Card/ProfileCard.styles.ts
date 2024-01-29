@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledProfileCard = styled.div`
-  width: 300px;
+  width: 295px;
 
   > * {
     display: flex;
@@ -93,6 +93,13 @@ export const StyledProfileCardJobContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 12px;
+  overflow-wrap: break-word;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  white-space: normal;
 
   > h4 {
     line-height: 24px;

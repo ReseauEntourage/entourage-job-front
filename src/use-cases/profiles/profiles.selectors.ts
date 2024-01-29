@@ -25,8 +25,7 @@ export function selectProfiles(state: RootState) {
 }
 
 export function selectProfilesFilters(state: RootState) {
-  const { role, search, ...restFilters } = state.profiles.profilesFilters;
-  return restFilters;
+  return state.profiles.profilesFilters;
 }
 
 export function selectProfilesSearchFilter(state: RootState) {
@@ -35,6 +34,18 @@ export function selectProfilesSearchFilter(state: RootState) {
 
 export function selectProfilesRoleFilter(state: RootState) {
   return state.profiles.profilesFilters.role;
+}
+
+export function selectProfilesHelpsFilters(state: RootState) {
+  return state.profiles.profilesFilters.helps;
+}
+
+export function selectProfilesDepartmentsFilters(state: RootState) {
+  return state.profiles.profilesFilters.departments;
+}
+
+export function selectProfilesBusinessLinesFilters(state: RootState) {
+  return state.profiles.profilesFilters.businessLines;
 }
 
 export function selectProfilesHasFetchedAll(state: RootState) {

@@ -14,6 +14,7 @@ interface ResetPasswordPageProps {
   token: string;
   isCreation: boolean;
 }
+
 const ResetPasswordPage = ({
   valid,
   id,
@@ -60,7 +61,11 @@ const ResetPasswordPage = ({
               </div>
             ) : (
               <div className="uk-card uk-card-body uk-text-center">
-                <CloseIcon className="uk-text-primary" />
+                <CloseIcon
+                  width={100}
+                  height={100}
+                  className="uk-text-primary"
+                />
                 <p className="uk-text-lead">
                   Ce lien ne semble pas valide. Veuillez contacter l&apos;équipe
                   LinkedOut.

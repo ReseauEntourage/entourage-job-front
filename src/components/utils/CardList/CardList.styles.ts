@@ -10,7 +10,7 @@ export const StyledCardList = styled.ul`
   list-style-type: none;
   display: flex;
   flex-wrap: wrap;
-  gap: 32px;
+  gap: 50px;
   justify-content: center;
   padding: 0;
 `;
