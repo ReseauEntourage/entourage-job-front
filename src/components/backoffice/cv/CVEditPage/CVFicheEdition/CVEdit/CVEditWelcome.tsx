@@ -6,9 +6,6 @@ import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils/Finding';
 
 export const CVEditWelcome = ({ user }: { user: UserWithUserCandidate }) => {
-  if (user === null) {
-    return null;
-  }
   return (
     <HeaderBackoffice
       childrenBottom

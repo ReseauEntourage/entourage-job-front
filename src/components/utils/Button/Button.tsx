@@ -33,7 +33,7 @@ export function Button({
   href,
   children,
   className,
-  onClick,
+  onClick = () => {},
   toggle,
   disabled = false,
   shallow = false,
@@ -70,11 +70,7 @@ export function Button({
       className={classBuffer}
       disabled={disabled}
       type="button"
-      onClick={async () => {
-        if (onClick) {
-          await onClick();
-        }
-      }}
+      onClick={onClick}
       data-uk-toggle={toggle}
       data-testid={dataTestId}
       color={color}

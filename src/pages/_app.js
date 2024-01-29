@@ -1,14 +1,10 @@
 // use modified version of UIkit because of bug where we can't touch scroll on Offcanvas
-
 // eslint-disable-next-line import/order
 import UIkit from 'src/styles/dist/js/uikit-fixed';
-// eslint-disable-next-line import/order
-import Icons from 'src/styles/dist/js/uikit-icons';
 
 import 'src/styles/dist/css/uikit.entourage.min.css';
 import 'src/styles/styles.less';
 import 'src/components/filters/SearchBar.less';
-import 'src/components/backoffice/Toggle.less';
 import 'src/components/modals/Modal/Modal.less';
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 import 'react-phone-number-input/style.css';
@@ -28,8 +24,6 @@ import * as gtag from 'src/lib/gtag';
 import { DataProvider } from 'src/store/DataProvider';
 import { SharesCountProvider } from 'src/store/SharesCountProvider';
 import { store } from 'src/store/store';
-
-UIkit.use(Icons);
 
 Sentry.init({
   enabled: process.env.NODE_ENV === 'production',

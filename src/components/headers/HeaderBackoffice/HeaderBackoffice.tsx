@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyledHeaderBackOffice } from 'src/components/headers/HeaderBackoffice/HeaderBackoffice.styles';
 import { Grid } from 'src/components/utils';
+import { Tag } from 'src/components/utils/Tag';
 import { usePendingMembers } from './usePendingMembers';
 
 interface HeaderBackofficeProps {
@@ -37,10 +38,8 @@ export const HeaderBackoffice = ({
       {shouldDisplayAdminNotifications ? (
         <div className="notif-container">
           <p>
-            <div className="uk-badge uk-margin-small-left">
-              {pendingMembersCount}
-            </div>
-            CV en attente de validation
+            <Tag size="small" style="secondary" content={pendingMembersCount} />
+            &nbsp; CV en attente de validation
           </p>
         </div>
       ) : (

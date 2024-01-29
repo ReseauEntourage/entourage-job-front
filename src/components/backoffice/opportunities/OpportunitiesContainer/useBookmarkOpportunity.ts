@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import UIkit from 'uikit';
 import { Api } from 'src/api';
-import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
+import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
 
 export function useBookmarkOpportunity(opportunityId, opportunityUsersProp) {
   const [opportunityUsers, setOpportunityUsers] =

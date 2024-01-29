@@ -1,25 +1,25 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
 import { renderLinks } from 'src/components/headers/HeaderConnected/HeaderConnectedContent/HeaderConnectedContent.utils';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
 import { useNotifBadges } from 'src/hooks/useNotifBadges';
 import { usePrevious } from 'src/hooks/utils';
 import { authenticationActions } from 'src/use-cases/authentication';
 import { HeaderConnectedContent } from './HeaderConnectedContent';
 
-export const HeaderConnected = ({ isEmpty = false }: { isEmpty?: boolean }) => {
+export const HeaderConnected = () => {
   const user = useAuthenticatedUser();
   const { asPath } = useRouter();
   const candidateId = useCandidateId();
   const dispatch = useDispatch();
 
-  const logout = useCallback(() => {
+  const logout = useCallback(async () => {
     dispatch(authenticationActions.logoutRequested());
   }, [dispatch]);
 
-  const [LINKS_CONNECTED, setLinks] = useState(
+  const [linksConnected, setLinksConnected] = useState(
     renderLinks(user, logout, candidateId)
   );
 
@@ -27,8 +27,8 @@ export const HeaderConnected = ({ isEmpty = false }: { isEmpty?: boolean }) => {
   const prevUser = usePrevious(user);
 
   useEffect(() => {
-    if (user && user !== prevUser) {
-      setLinks(renderLinks(user, logout, candidateId));
+    if (user !== prevUser) {
+      setLinksConnected(renderLinks(user, logout, candidateId));
     }
   }, [user, logout, prevUser, candidateId]);
 
@@ -37,8 +37,8 @@ export const HeaderConnected = ({ isEmpty = false }: { isEmpty?: boolean }) => {
   return (
     <HeaderConnectedContent
       badges={badges}
-      links={LINKS_CONNECTED}
-      isEmpty={isEmpty}
+      links={linksConnected.links}
+      dropdown={linksConnected.dropdown}
     />
   );
 };

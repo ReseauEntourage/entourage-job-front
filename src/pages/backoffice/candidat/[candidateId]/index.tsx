@@ -1,9 +1,23 @@
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
-import { useCandidateAndCoachRedirections } from 'src/hooks/useRedirections';
 
 const Redirection = () => {
-  useCandidateAndCoachRedirections();
+  const { replace, pathname, query } = useRouter();
+
+  useEffect(() => {
+    replace(
+      {
+        pathname: `${pathname}/cv`,
+        query,
+      },
+      undefined,
+      {
+        shallow: true,
+      }
+    );
+  }, [pathname, query, replace]);
+
   return <LoadingScreen />;
 };
 

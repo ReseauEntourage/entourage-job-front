@@ -39,9 +39,6 @@ export const StyledSubMenu = styled.ul`
         display: inline-block;
         margin-right: 10px !important;
       }
-      .uk-badge {
-        margin-left: 0 !important;
-      }
     }
   }
 `;

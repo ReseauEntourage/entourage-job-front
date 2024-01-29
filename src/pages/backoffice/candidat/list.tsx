@@ -8,7 +8,7 @@ import { Section } from 'src/components/utils';
 
 const List = () => {
   return (
-    <LayoutBackOffice title="Liste des candidats" isEmpty>
+    <LayoutBackOffice title="Liste des candidats">
       <Section className="custom-page">
         <HeaderBackoffice
           title="Consulter la liste de mes candidats"

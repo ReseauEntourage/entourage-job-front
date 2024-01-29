@@ -1,10 +1,11 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import {
-  HeaderConnectedItemProps,
-  NotifBadgesProps,
+  HeaderConnectedItem,
+  NotifBadges,
 } from 'src/components/headers/HeaderConnected/HeaderConnected.types';
 import { SimpleLink } from 'src/components/utils';
+import { Tag } from 'src/components/utils/Tag';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledSubMenu } from './SubMenu.styles';
 
@@ -14,8 +15,8 @@ export const SubMenu = ({
   items,
   badges,
 }: {
-  items: HeaderConnectedItemProps[];
-  badges: NotifBadgesProps;
+  items: HeaderConnectedItem[];
+  badges: NotifBadges;
 }) => {
   return (
     <StyledSubMenu className="subMenu-container">
@@ -47,8 +48,9 @@ export const SubMenu = ({
                 {name}
               </span>
               {badges[badge] > 0 && (
-                <div className="uk-badge uk-margin-small-left">
-                  {badges[badge]}
+                <div>
+                  &nbsp;
+                  <Tag size="small" style="secondary" content={badges[badge]} />
                 </div>
               )}
             </SimpleLink>

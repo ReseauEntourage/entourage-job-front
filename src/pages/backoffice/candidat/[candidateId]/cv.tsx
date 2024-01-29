@@ -7,10 +7,10 @@ import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { CVEditPage } from 'src/components/backoffice/cv/CVEditPage';
 import { CVEditWelcome } from 'src/components/backoffice/cv/CVEditPage/CVFicheEdition/CVEdit/CVEditWelcome';
 import { ErrorMessage } from 'src/components/backoffice/cv/ErrorMessage';
-import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
 import { Section } from 'src/components/utils';
 import { COACH_USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
 import { useFetchCV } from 'src/hooks/useFetchCV';
 import { isRoleIncluded, getRelatedUser } from 'src/utils/Finding';
 
@@ -23,22 +23,20 @@ const Edit = () => {
   const candidateId = useCandidateId();
 
   useEffect(() => {
-    if (user) {
-      Api.getUserById(user.id)
-        .then(({ data }) => {
-          setUserCompleteData(data);
-        })
-        .catch(() => {
-          UIkit.notification('Erreur lors du chargement du suivi', 'danger');
-        });
-    }
-  }, [user]);
+    Api.getUserById(user.id)
+      .then(({ data }) => {
+        setUserCompleteData(data);
+      })
+      .catch(() => {
+        UIkit.notification('Erreur lors du chargement du suivi', 'danger');
+      });
+  }, [user.id]);
 
   const { cv, setCV, error, loading } = useFetchCV(candidateId);
 
   let content;
 
-  if (loading || !user || !userCompleteData) {
+  if (loading || !userCompleteData) {
     content = <LoadingScreen />;
   } else if (error) {
     return <ErrorMessage error={error} />;

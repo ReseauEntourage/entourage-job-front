@@ -64,14 +64,14 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
   const prevCV = usePrevious(cv);
 
   const setCVHasBeenRead = useCallback(async () => {
-    if (user && user.role !== USER_ROLES.ADMIN && candidateId) {
+    if (user.role !== USER_ROLES.ADMIN && candidateId) {
       try {
         await Api.putCVRead(candidateId);
       } catch (err) {
         console.error(err);
       }
     }
-  }, [candidateId, user]);
+  }, [candidateId, user.role]);
 
   useEffect(() => {
     return () => {

@@ -112,6 +112,9 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
           isClearable
           value={value || null}
           isMulti={isMulti}
+          noOptionsMessage={() => {
+            return `Aucun résultat`;
+          }}
           placeholder={
             showLabel
               ? placeholder || 'Selectionnez dans la liste...'

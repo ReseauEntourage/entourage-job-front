@@ -9,14 +9,14 @@ import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { sortByDateStart } from 'src/utils';
 
 interface FormationProfileCardProps {
-  formations: CVFormation[];
+  formations?: CVFormation[];
   onChange: (updatedFormations: { formations: CVFormation[] }) => void;
 }
 
 const FORMATIONS_LIMIT = 3;
 
 export const FormationsProfileCard = ({
-  formations,
+  formations = [],
   onChange,
 }: FormationProfileCardProps) => {
   const [remainingItems, setRemainingItems] = useState<number>();

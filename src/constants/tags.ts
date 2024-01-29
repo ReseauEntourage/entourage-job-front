@@ -389,6 +389,9 @@ export const GA_TAGS = {
   PAGE_ORIENTER_CLASSIQUE_ENVOYER_CLIC: {
     action: 'Page_Orienter_Classique_Envoyer_Clic',
   },
+  PAGE_ANNUAIRE_CARTE_CLIC: {
+    action: 'Page_Annuaire_Carte_Clic',
+  },
 } as const;
 
 export const FB_TAGS = {

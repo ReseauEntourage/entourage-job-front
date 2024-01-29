@@ -42,7 +42,11 @@ describe('Candidat', () => {
 
       cy.intercept('PUT', `/user/candidate/${user.id}`, {
         fixture: 'put-candidate-res',
-      }).as('putCandidatParams');
+      }).as('putUserCandidatParams');
+
+      cy.intercept('PUT', `/user/${user.id}`, {
+        fixture: 'put-candidate-res',
+      }).as('putUserParams');
 
       cy.intercept('GET', `/cv/lastVersion/${user.id}`, {
         fixture: 'cv-for-candidat',
@@ -69,6 +73,10 @@ describe('Candidat', () => {
           opportunityToModify
         ).as('putOffer');
       });
+
+
+      cy.intercept('POST', `/user/profile/uploadImage/${user.id}`, "/assets/image-fixture.jpg").as('uploadImage');
+
     });
 
     cy.intercept('GET', `https://tarteaucitron.io/load.js*`, {});
@@ -76,10 +84,11 @@ describe('Candidat', () => {
     cy.intercept('POST', '/opportunity/external', {}).as('postExternal');
 
     cy.intercept('PUT', '/user/changePwd', {}).as('changePwd');
+
   });
   it('should open backoffice public offers', () => {
     cy.fixture('auth-current-candidat-res').then((user) => {
-      cy.visit(`/backoffice/candidat/offres/public`, {
+      cy.visit(`/backoffice/candidat/${user.id}/offres/public`, {
         onBeforeLoad: function async(window) {
           window.localStorage.setItem('access-token', '1234');
           window.localStorage.setItem('release-version', 'v100');
@@ -119,7 +128,7 @@ describe('Candidat', () => {
 
   it('should open backoffice private offers and add new opportunity', () => {
     cy.fixture('auth-current-candidat-res').then((user) => {
-      cy.visit(`/backoffice/candidat/offres/private`, {
+      cy.visit(`/backoffice/candidat/${user.id}/offres/private`, {
         onBeforeLoad: function async(window) {
           window.localStorage.setItem('access-token', '1234');
           window.localStorage.setItem('release-version', 'v100');
@@ -180,13 +189,15 @@ describe('Candidat', () => {
   });
 
   it('should open backoffice cv candidat', () => {
-    cy.visit('/backoffice/candidat/cv', {
-      onBeforeLoad: function async(window) {
-        window.localStorage.setItem('access-token', '1234');
-        window.localStorage.setItem('release-version', 'v100');
-      },
+    cy.fixture('auth-current-candidat-res').then((user) => {
+      cy.visit(`/backoffice/candidat/${user.id}/cv`, {
+        onBeforeLoad: function async(window) {
+          window.localStorage.setItem('access-token', '1234');
+          window.localStorage.setItem('release-version', 'v100');
+        },
+      });
+      cy.url().should('include', user.id);
     });
-
     // catchphrase
     cy.get(`[data-testid="test-catchphrase-edit-icon"]`)
       .scrollIntoView()
@@ -282,6 +293,7 @@ describe('Candidat', () => {
     // save CV
     cy.contains('Sauvegarder').scrollIntoView().click();
   });
+
   it('should open backoffice candidate parameters', () => {
     cy.visit('/backoffice/parametres', {
       onBeforeLoad: function async(window) {
@@ -293,7 +305,7 @@ describe('Candidat', () => {
     // toggle hide CV
     cy.get('label[for="ent-toggle-hidden"]').click();
     cy.get(`[data-testid="test-confirm-hidden"]`).click();
-    cy.wait('@putCandidatParams');
+    cy.wait('@putUserCandidatParams');
     cy.get(`[data-testid="test-toggle-hidden"]`).should('be.checked');
     cy.get('label[for="ent-toggle-hidden"]').click();
     cy.get(`[data-testid="test-toggle-hidden"]`).should('not.be.checked');
@@ -309,8 +321,8 @@ describe('Candidat', () => {
       .contains('Alternance')
       .click();
     cy.get('#form-edit-employed-endOfContract').type('2024-03-03');
-    cy.contains('Valider').click();
-    cy.wait('@putCandidatParams');
+    cy.contains('Sauvegarder').click();
+    cy.wait('@putUserCandidatParams');
     cy.get(`[data-testid="test-toggle-employedToggle"]`).should('be.checked');
     cy.get('label[for="ent-toggle-employedToggle"]').click();
     cy.get(`[data-testid="test-toggle-employedToggle"]`).should(
@@ -321,7 +333,50 @@ describe('Candidat', () => {
     cy.get('#form-change-pwd-oldPassword').type('blablabla');
     cy.get('#form-change-pwd-newPassword').type('Linkedout123!');
     cy.get('#form-change-pwd-confirmPassword').type('Linkedout123!');
-    cy.contains('Modifier').click();
+    cy.get('[data-testid="form-confirm-form-change-pwd"]').click();
     cy.wait('@changePwd');
+
+    // check help needs and modify
+    cy.fixture('auth-current-candidat-res').then((user) => {
+      cy.intercept('PUT', `/user/profile/${user.id}`, {fixture: "user-profile-candidate-help-modified"}).as('putUserProfile');
+    })
+    cy.fixture('auth-current-candidat-res').then((userCandidate) => {
+        cy.get(`[data-testid="parametres-help-list"]`).scrollIntoView().find('li').should('have.length', userCandidate.userProfile?.helpNeeds?.length);
+    });
+    cy.get(`[data-testid="parametres-help-card-button-edit"]`).scrollIntoView().click();
+    cy.get(`[data-testid="parametres-help-option-tips"]`).scrollIntoView().click();
+    cy.get(`[data-testid="parametres-help-option-cv"]`).scrollIntoView().click();
+    cy.get(`[data-testid="parametres-help-modal-save"]`).scrollIntoView().click();
+
+    cy.fixture('user-profile-candidate-help-modified').then((userProfile) => {
+      cy.get(`[data-testid="parametres-help-list"]`).scrollIntoView().find('li').should('have.length', userProfile.helpNeeds?.length);
+    });
+
+    // modify profile description
+    cy.fixture('auth-current-candidat-res').then((user) => {
+      cy.intercept('PUT', `/user/profile/${user.id}`, {fixture: "user-profile-candidate-description-modified"}).as('putUserProfile');
+    })
+    cy.get(`[data-testid="parametres-description-placeholder"]`).scrollIntoView().click();
+    cy.get(`[data-testid="form-profile-description-description"]`).scrollIntoView().type('hello');
+    cy.get(`[data-testid="form-confirm-form-profile-description"]`).scrollIntoView().click();
+    cy.get(`[data-testid="parametres-description"]`).should('contain', "hello");
+
+    // change profile picture
+    cy.get(`[data-testid="profile-picture-upload-desktop"]`).selectFile('assets/image-fixture.jpg', {force: true});
+    cy.wait('@uploadImage');
+
+    // change professional information
+    cy.fixture('auth-current-candidat-res').then((user) => {
+      cy.intercept('PUT', `/user/profile/${user.id}`, {fixture: "user-profile-candidate-professional-info-modified"}).as('putUserProfile');
+    })
+    const businessLine = 'Agriculture';
+    const ambition = 'test';
+    cy.get(`[data-testid="parametres-professional-information-card-button-edit"]`).scrollIntoView().click();
+    cy.get(`[data-testid="form-career-path-searchBusinessLine0"]`).scrollIntoView().click();
+    cy.get(`.Select__option`).contains(businessLine).click();
+    cy.get(`[data-testid="form-career-path-searchAmbition0"]`).scrollIntoView().type(ambition);
+    cy.get(`[data-testid="form-confirm-form-career-path"]`).scrollIntoView().click();
+    cy.get(`[data-testid="candidat-businessline-li"]`).should('contain', businessLine);
+    cy.get(`[data-testid="candidat-ambition-li"]`).should('contain', ambition);
   });
 });

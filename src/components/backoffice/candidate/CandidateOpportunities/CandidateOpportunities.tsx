@@ -13,9 +13,6 @@ import { NoOpportunities } from 'src/components/backoffice/opportunities/Opportu
 import { CandidateOpportunitiesList } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/CandidateOpportunitiesList';
 import { CandidateOpportunityDetailsContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails';
 import { OpportunityError } from 'src/components/backoffice/opportunities/OpportunityError';
-import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
-import { useOpportunityType } from 'src/components/backoffice/opportunities/useOpportunityType';
-import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
 import { SearchBar } from 'src/components/filters/SearchBar';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { openModal } from 'src/components/modals/Modal';
@@ -26,6 +23,9 @@ import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 import { HEIGHTS } from 'src/constants/styles';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
+import { useOpportunityType } from 'src/hooks/queryParams/useOpportunityType';
+import { useQueryParamsOpportunities } from 'src/hooks/queryParams/useQueryParamsOpportunities';
 import { useCandidateOpportunities } from 'src/hooks/useOpportunityList';
 import { usePrevious } from 'src/hooks/utils';
 import { getUserCandidateFromCoach, isRoleIncluded } from 'src/utils/Finding';
@@ -250,8 +250,7 @@ export const CandidateOpportunities = ({
         ) : (
           <OpportunitiesContainer
             backButtonHref={{
-              pathname: `/backoffice/candidat/offres/${opportunityType}`,
-
+              pathname: `/backoffice/candidat/${candidateId}/offres/${opportunityType}`,
               // @ts-expect-error after enable TS strict mode. Please, try to fix it
               query: queryParamsOpportunities,
             }}

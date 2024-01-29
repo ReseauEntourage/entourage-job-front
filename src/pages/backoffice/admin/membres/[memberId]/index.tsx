@@ -4,13 +4,13 @@ import { Api } from 'src/api';
 import { User } from 'src/api/types';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { MemberDetails } from 'src/components/backoffice/admin/members/MemberDetails';
-import { useMemberId } from 'src/components/backoffice/admin/members/MemberDetails/useMemberId';
-import { useTab } from 'src/components/backoffice/admin/members/MemberDetails/useTab';
-import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { Grid, Section } from 'src/components/utils';
 import { BackLink } from 'src/components/utils/BackLink';
 import { MEMBER_TABS } from 'src/constants';
 import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
+import { useMemberId } from 'src/hooks/queryParams/useMemberId';
+import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
+import { useTab } from 'src/hooks/queryParams/useTab';
 import { usePrevious } from 'src/hooks/utils';
 import { isRoleIncluded } from 'src/utils/Finding';
 
@@ -30,7 +30,7 @@ const User = () => {
   const opportunityId = useOpportunityId();
 
   useEffect(() => {
-    if (user !== prevUser && user) {
+    if (user && user !== prevUser) {
       if (
         isRoleIncluded(COACH_USER_ROLES, user.role) &&
         (!tab || tab !== MEMBER_TABS.PARAMETERS)

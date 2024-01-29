@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
 import { AdminOffersTags, ADMIN_OFFERS_TAGS } from 'src/constants';
+import { useQueryParamsOpportunities } from 'src/hooks/queryParams/useQueryParamsOpportunities';
 import { StyledAdminTabsUl } from './AdminOffersTab.styles';
 
 const uuidValue = uuid();

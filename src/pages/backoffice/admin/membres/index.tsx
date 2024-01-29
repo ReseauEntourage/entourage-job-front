@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { MemberList } from 'src/components/backoffice/admin/members/MemberList';
-import { useRole } from 'src/components/backoffice/admin/members/MemberList/useRole';
 import { Section } from 'src/components/utils';
 import { ALL_USER_ROLES, CANDIDATE_USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useRole } from 'src/hooks/queryParams/useRole';
 import { useFilters } from 'src/hooks/useFilters';
 import { usePrevious } from 'src/hooks/utils';
 import { mutateTypeFilterDependingOnRole } from 'src/utils/Filters';
@@ -23,12 +23,8 @@ const MembersAdmin = () => {
   const prevUser = usePrevious(user);
 
   useEffect(() => {
-    if (user && user !== prevUser) {
-      if (
-        !role ||
-        (Array.isArray(role) && role.length === 0) ||
-        !isRoleIncluded(ALL_USER_ROLES, role)
-      ) {
+    if (user !== prevUser) {
+      if (!role || role.length === 0 || !isRoleIncluded(ALL_USER_ROLES, role)) {
         const params = {
           ...query,
           role: CANDIDATE_USER_ROLES,

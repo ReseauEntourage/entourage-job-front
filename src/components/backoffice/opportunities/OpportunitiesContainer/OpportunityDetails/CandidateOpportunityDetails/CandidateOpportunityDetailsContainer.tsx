@@ -3,8 +3,8 @@ import { OpportunityDetails } from '../OpportunityDetails';
 import { useOpportunityDetailsHeight } from '../useOpportunityDetailsHeight';
 import { tabs } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab/CandidateOffersTab.utils';
 import { useFetchCandidateOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/useFetchOpportunity';
-import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
 import { HEIGHTS } from 'src/constants/styles';
+import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
 import { CandidateOpportunityDetails } from './CandidateOpportunityDetails';
 import { CTAsByTab } from './CandidateOpportunityDetailsCTAs/CandidateOpportunityDetailsCTAs.utils';
 

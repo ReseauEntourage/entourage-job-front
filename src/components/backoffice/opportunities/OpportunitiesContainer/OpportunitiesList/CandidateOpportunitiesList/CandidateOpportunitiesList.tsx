@@ -8,14 +8,14 @@ import {
   StyledListItem,
   StyledListItemContainer,
 } from '../OpportunitiesList.styles';
-import { useIsAtBottom } from '../useIsAtBottom';
 import { OpportunityWithOpportunityUsers } from 'src/api/types';
-import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
-import { useOpportunityType } from 'src/components/backoffice/opportunities/useOpportunityType';
-import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
 import { Button } from 'src/components/utils';
+import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
+import { useOpportunityType } from 'src/hooks/queryParams/useOpportunityType';
+import { useQueryParamsOpportunities } from 'src/hooks/queryParams/useQueryParamsOpportunities';
+import { useIsAtBottom } from 'src/hooks/useIsAtBottom';
 import { CandidateOpportunityItem } from './CandidateOpportunityItem';
 
 const uuidValue = uuid();
@@ -23,7 +23,7 @@ const uuidValue = uuid();
 interface CandidateOpportunitiesListProps {
   opportunities: Partial<OpportunityWithOpportunityUsers>[];
   fetchOpportunities: () => void;
-  setOffset: (offset: number) => void;
+  setOffset: (offset: ((prevOffset: number) => number) | number) => void;
   hasFetchedAll: boolean;
   candidateId: string;
 }
@@ -38,7 +38,7 @@ export const CandidateOpportunitiesList = ({
   const queryParamsOpportunities = useQueryParamsOpportunities();
   const opportunityId = useOpportunityId();
   const opportunityType = useOpportunityType();
-  useIsAtBottom(setOffset, opportunities);
+  useIsAtBottom(setOffset);
 
   const opportunitiesListContent = opportunities.map((opportunity, index) => {
     return (

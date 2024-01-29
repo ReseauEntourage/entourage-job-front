@@ -7,7 +7,7 @@ export const H3 = ({
   center = false,
   color,
 }: {
-  title: string;
+  title: React.ReactNode;
   center?: boolean;
   color?: string;
 }) => {

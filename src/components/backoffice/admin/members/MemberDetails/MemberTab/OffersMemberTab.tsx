@@ -5,7 +5,7 @@ import { OpportunitiesContainer } from 'src/components/backoffice/opportunities/
 import { AdminOpportunitiesList } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/AdminOpportunitiesList';
 import { AdminOpportunityDetailsContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/AdminOpportunityDetails/AdminOpportunityDetailsContainer';
 import { OpportunityError } from 'src/components/backoffice/opportunities/OpportunityError';
-import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
+import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
 import { useAdminAsCandidateOpportunities } from 'src/hooks/useOpportunityList';
 import { useIsDesktop, usePrevious } from 'src/hooks/utils';
 

@@ -4,19 +4,12 @@ import { Layout } from 'src/components/Layout';
 export const LayoutBackOffice = ({
   children,
   title,
-  isEmpty,
 }: {
   children: React.ReactNode;
   title?: string;
-  isEmpty?: boolean;
 }) => {
   return (
-    <Layout
-      title={`${title} - LinkedOut`}
-      noIndex
-      isBackoffice
-      isEmpty={isEmpty}
-    >
+    <Layout title={`${title} - LinkedOut`} noIndex isBackoffice>
       {children}
     </Layout>
   );
@@ -24,5 +17,4 @@ export const LayoutBackOffice = ({
 
 LayoutBackOffice.defaultProps = {
   title: 'Espace perso',
-  isEmpty: false,
 };

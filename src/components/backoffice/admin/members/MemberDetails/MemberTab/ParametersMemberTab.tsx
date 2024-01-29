@@ -6,7 +6,6 @@ import TrashIcon from 'assets/icons/trash.svg';
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
 import { EditMemberModal } from 'src/components/backoffice/admin/members/MemberDetails/EditMemberModal';
-import { useMemberId } from 'src/components/backoffice/admin/members/MemberDetails/useMemberId';
 import { MemberTable } from 'src/components/backoffice/admin/members/MemberTable';
 import { Member } from 'src/components/backoffice/admin/members/MemberTable/Member';
 import { MemberColumn } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.types';
@@ -20,6 +19,7 @@ import {
   RELATED_ROLES,
   USER_ROLES,
 } from 'src/constants/users';
+import { useMemberId } from 'src/hooks/queryParams/useMemberId';
 import { useIsMobile } from 'src/hooks/utils';
 import { getRelatedUser, isRoleIncluded } from 'src/utils/Finding';
 import {

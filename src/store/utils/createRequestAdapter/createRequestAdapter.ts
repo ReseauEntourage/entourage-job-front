@@ -4,13 +4,14 @@
 
 import { PayloadAction, CaseReducer } from '@reduxjs/toolkit';
 import { upperFirst } from 'lodash';
+import { ReduxRequestEvents } from 'src/constants';
 
 function toCapitalize<T extends string>(value: T) {
   return upperFirst(value) as Capitalize<T>;
 }
 
 export function createRequestAdapter<T extends string>(name: T) {
-  type Status = 'IDLE' | 'REQUESTED' | 'SUCCEEDED' | 'FAILED';
+  type Status = (typeof ReduxRequestEvents)[keyof typeof ReduxRequestEvents];
 
   type InitialState = {
     status: Status;
@@ -65,7 +66,7 @@ export function createRequestAdapter<T extends string>(name: T) {
           state: State,
           action: PayloadAction<Requested>
         ) => {
-          selectState(state).status = 'REQUESTED';
+          selectState(state).status = ReduxRequestEvents.REQUESTED;
 
           if (reducers[requestedActionKey]) {
             reducers[requestedActionKey](state, action);
@@ -75,21 +76,21 @@ export function createRequestAdapter<T extends string>(name: T) {
           state: State,
           action: PayloadAction<Succeeded>
         ) => {
-          selectState(state).status = 'SUCCEEDED';
+          selectState(state).status = ReduxRequestEvents.SUCCEEDED;
 
           if (reducers[succeededActionKey]) {
             reducers[succeededActionKey](state, action);
           }
         },
         [failedActionKey]: (state: State, action: PayloadAction<Failed>) => {
-          selectState(state).status = 'FAILED';
+          selectState(state).status = ReduxRequestEvents.FAILED;
 
           if (reducers[failedActionKey]) {
             reducers[failedActionKey](state, action);
           }
         },
         [resetActionKey]: (state: State, action: PayloadAction<Failed>) => {
-          selectState(state).status = 'IDLE';
+          selectState(state).status = ReduxRequestEvents.IDLE;
 
           if (reducers[resetActionKey]) {
             reducers[resetActionKey](state, action);
@@ -100,7 +101,7 @@ export function createRequestAdapter<T extends string>(name: T) {
 
     function getInitialState() {
       return {
-        status: 'IDLE',
+        status: ReduxRequestEvents.IDLE,
       } as InitialState;
     }
 
@@ -118,10 +119,14 @@ export function createRequestAdapter<T extends string>(name: T) {
       }
 
       return {
-        [selectIsIdleKey]: createSelectorIsStatus('IDLE'),
-        [selectIsRequestedKey]: createSelectorIsStatus('REQUESTED'),
-        [selectIsSucceededKey]: createSelectorIsStatus('SUCCEEDED'),
-        [selectIsFailedKey]: createSelectorIsStatus('FAILED'),
+        [selectIsIdleKey]: createSelectorIsStatus(ReduxRequestEvents.IDLE),
+        [selectIsRequestedKey]: createSelectorIsStatus(
+          ReduxRequestEvents.REQUESTED
+        ),
+        [selectIsSucceededKey]: createSelectorIsStatus(
+          ReduxRequestEvents.SUCCEEDED
+        ),
+        [selectIsFailedKey]: createSelectorIsStatus(ReduxRequestEvents.FAILED),
         [selectStatusKey]: selectStatus,
       } as Selectors;
     }

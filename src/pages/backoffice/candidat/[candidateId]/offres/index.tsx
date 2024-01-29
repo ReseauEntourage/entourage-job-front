@@ -9,16 +9,16 @@ import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { CandidateOpportunities } from 'src/components/backoffice/candidate/CandidateOpportunities';
 import { CandidateOpportunitiesFilters } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOpportunitiesFilters.types';
 import { OpportunityError } from 'src/components/backoffice/opportunities/OpportunityError';
-import { useCandidateId } from 'src/components/backoffice/opportunities/useCandidateId';
-import { useOpportunityId } from 'src/components/backoffice/opportunities/useOpportunityId';
-import { useOpportunityType } from 'src/components/backoffice/opportunities/useOpportunityType';
-import { useQueryParamsOpportunities } from 'src/components/backoffice/opportunities/useQueryParamsOpportunities';
 import { Section } from 'src/components/utils';
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 import { ADMIN_ZONES, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { GA_TAGS } from 'src/constants/tags';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
+import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
+import { useOpportunityType } from 'src/hooks/queryParams/useOpportunityType';
+import { useQueryParamsOpportunities } from 'src/hooks/queryParams/useQueryParamsOpportunities';
 import { useFilters } from 'src/hooks/useFilters';
 import { usePrevious } from 'src/hooks/utils';
 import { isRoleIncluded, getCandidateFromCoach } from 'src/utils/Finding';
@@ -108,7 +108,6 @@ const Opportunities = () => {
 
   useDeepCompareEffect(() => {
     if (
-      user &&
       candidateId &&
       (user !== prevUser ||
         opportunityType !== prevOpportunityType ||
@@ -246,7 +245,7 @@ const Opportunities = () => {
   return (
     <LayoutBackOffice
       title={
-        user && isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
+        isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
           ? 'Mes opportunités'
           : 'Opportunités du candidat'
       }

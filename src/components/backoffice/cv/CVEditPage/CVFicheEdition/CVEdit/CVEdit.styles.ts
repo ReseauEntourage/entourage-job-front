@@ -53,8 +53,17 @@ export const StyledEditPictureButton = styled.div`
   align-items: center;
   justify-content: center;
 
+  &:hover {
+    cursor: pointer;
+  }
   span {
+    &:hover {
+      cursor: pointer;
+    }
     svg {
+      &:hover {
+        cursor: pointer;
+      }
       padding: 10px;
       height: 50px;
       width: 50px;

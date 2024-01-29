@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import Resizer from 'react-image-file-resizer';
-import UIkit from 'uikit';
 import PencilIcon from 'assets/icons/pencil.svg';
+import { ButtonIcon } from 'src/components/utils';
+import { ImageInput } from 'src/components/utils/Inputs';
+import { Spinner } from 'src/components/utils/Spinner';
 import { useIsDesktop } from 'src/hooks/utils';
 import { addPrefix } from 'src/utils';
 import {
@@ -11,14 +12,8 @@ import {
 } from './CVEdit.styles';
 
 interface CVEditPictureProps {
-  urlImg?: string;
-  onChange: ({
-    profileImage,
-    profileImageObjectUrl,
-  }: {
-    profileImage: Blob;
-    profileImageObjectUrl: string;
-  }) => void;
+  urlImg: string;
+  onChange: ({ profileImage }: { profileImage: Blob }) => void;
   disablePicture?: boolean;
   imageUploading?: boolean;
 }
@@ -29,85 +24,42 @@ export const CVEditPicture = ({
   disablePicture,
   imageUploading,
 }: CVEditPictureProps) => {
-  const [url, setUrl] = useState(urlImg);
+  const [url, setUrl] = useState<string>(urlImg);
   const isDesktop = useIsDesktop();
 
   useEffect(() => {
     setUrl(urlImg);
   }, [urlImg]);
 
-  const resizeFile = (file: File): Promise<Blob> => {
-    return new Promise((resolve) => {
-      Resizer.imageFileResizer(
-        file,
-        2000,
-        1500,
-        'JPEG',
-        75,
-        0,
-
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        (uri: Blob) => {
-          resolve(uri);
-        },
-        'blob'
-      );
-    });
-  };
   return (
     <StyledEditPictureContainer className={!isDesktop ? 'mobile' : ''}>
       <StyledEditPicture
         className={!isDesktop ? 'mobile' : ''}
         style={{
-          backgroundImage: `url(${addPrefix(
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            url
-          )})`,
+          backgroundImage: `url(${addPrefix(url)})`,
         }}
       />
       {!disablePicture && (
         <StyledEditPictureButton>
           {imageUploading ? (
-            <div>
-              <div data-uk-spinner="ratio: 1" />
-            </div>
+            <Spinner />
           ) : (
-            <div data-uk-form-custom>
-              <label htmlFor="image-upload">
-                <input
-                  id="image-upload"
-                  type="file"
-                  accept="image/*"
-                  style={{ cursor: 'pointer' }}
-                  onChange={async ({ target }) => {
-                    const file =
-                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                      target.files[0];
-
-                    if (file) {
-                      if (!file.type.includes('image/')) {
-                        UIkit.notification(
-                          'Le fichier doit être une image',
-                          'danger'
-                        );
-                      }
-
-                      const image: Blob = await resizeFile(file);
-                      const profileImageObjectUrl = URL.createObjectURL(image);
-                      onChange({
-                        profileImage: image,
-                        profileImageObjectUrl,
-                      });
-                      setUrl(profileImageObjectUrl);
-                    }
-                  }}
-                />
-                <PencilIcon />
-              </label>
-            </div>
+            <ImageInput
+              onChange={({ profileImage, profileImageObjectUrl }) => {
+                onChange({
+                  profileImage,
+                });
+                setUrl(profileImageObjectUrl);
+              }}
+              id="cv-picture-upload"
+              name="cv-picture-upload"
+            >
+              <ButtonIcon icon={<PencilIcon />} />
+            </ImageInput>
           )}
         </StyledEditPictureButton>
       )}
+      ;
     </StyledEditPictureContainer>
   );
 };
