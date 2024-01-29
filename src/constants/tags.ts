@@ -395,6 +395,21 @@ export const GA_TAGS = {
   PROFILE_DETAILS_CONTACT_SEND_CLIC: {
     action: 'Profile_Details_Contact_Send_Clic',
   },
+  PAGE_ANNUAIRE_FILTRE_ROLE_CLIC: {
+    action: 'Page_Annuaire_Filtre_Role_Clic',
+  },
+  PAGE_ANNUAIRE_FILTRE_DEPARTEMENT_CLIC: {
+    action: 'Page_Annuaire_Filtre_Departement_Clic',
+  },
+  PAGE_ANNUAIRE_FILTRE_AIDE_CLIC: {
+    action: 'Page_Annuaire_Filtre_Aide_Clic',
+  },
+  PAGE_ANNUAIRE_FILTRE_SECTEUR_CLIC: {
+    action: 'Page_Annuaire_Filtre_Secteur_Clic',
+  },
+  PAGE_ANNUAIRE_SUPPRIMER_FILTRES_CLIC: {
+    action: 'Page_Annuaire_Supprimer_Filtres_Clic',
+  },
 } as const;
 
 export const FB_TAGS = {

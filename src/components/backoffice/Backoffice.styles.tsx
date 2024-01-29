@@ -95,3 +95,13 @@ export const StyledHeaderProfileTextContainer = styled.div`
     line-height: 24px;
   }
 `;
+
+export const StyledNoResult = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-style: italic;
+  color: ${COLORS.darkGray};
+`;

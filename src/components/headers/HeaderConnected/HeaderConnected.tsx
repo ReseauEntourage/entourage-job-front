@@ -32,8 +32,6 @@ export const HeaderConnected = () => {
     }
   }, [user, logout, prevUser, candidateId]);
 
-  if (!user) return null;
-
   return (
     <HeaderConnectedContent
       badges={badges}

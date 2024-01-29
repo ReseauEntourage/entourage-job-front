@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { OverlayLoader } from 'src/components/utils/OverlayLoader';
 
 export const StyledLoadingScreen = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   position: relative;
   display: flex;

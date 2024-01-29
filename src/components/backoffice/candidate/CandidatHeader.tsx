@@ -22,9 +22,6 @@ export const CandidatHeader = ({
   const [candidateCVUrl, setCandidateCVUrl] = useState<string>('');
 
   useEffect(() => {
-    if (!user) {
-      return;
-    }
     if (isRoleIncluded(COACH_USER_ROLES, user.role)) {
       const cand = user.coaches?.find(
         ({ candidat }) =>
@@ -44,8 +41,6 @@ export const CandidatHeader = ({
       );
     }
   }, [user, candidateId]);
-
-  if (!user) return null;
 
   return (
     <Grid row gap="small">

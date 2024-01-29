@@ -21,7 +21,7 @@ import { useOpportunityType } from 'src/hooks/queryParams/useOpportunityType';
 import { useQueryParamsOpportunities } from 'src/hooks/queryParams/useQueryParamsOpportunities';
 import { useFilters } from 'src/hooks/useFilters';
 import { usePrevious } from 'src/hooks/utils';
-import { isRoleIncluded, getCandidateFromCoach } from 'src/utils/Finding';
+import { getCandidateFromCoach, isRoleIncluded } from 'src/utils/Finding';
 
 // filters for the query
 const candidateQueryFilters = OPPORTUNITY_FILTERS_DATA.slice(1);
@@ -168,10 +168,12 @@ const Opportunities = () => {
           // Et si on a pas d'autres paramètres qui indiquerait qu'on est pas sur un premier chargement de la page
           // Appliquer les filtres par défaut
           setCandidateDefaultsIfPublicTag(candidate.id, candidate.zone);
-        } else {
+        } else if (!hasLoadedDefaultFilters) {
           // Si on a déjà appliqué les filtres par défaut
           // Ou si on a d'autres paramètres donc ce n'est pas un premier chargement de la page
           setHasLoadedDefaultFilters(true);
+        } else {
+          setLoading(false);
         }
       } else {
         // Dernier cas pour la rétrocompatibilité.
@@ -208,11 +210,7 @@ const Opportunities = () => {
   ]);
 
   let content;
-  if (
-    loading ||
-    !user ||
-    (opportunityType === 'public' && !hasLoadedDefaultFilters)
-  ) {
+  if (loading || (opportunityType === 'public' && !hasLoadedDefaultFilters)) {
     content = <LoadingScreen />;
   } else if (hasError) {
     content = <OpportunityError />;

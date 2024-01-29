@@ -25,7 +25,12 @@ export function selectProfiles(state: RootState) {
 }
 
 export function selectProfilesFilters(state: RootState) {
-  return state.profiles.profilesFilters;
+  const { role, search, ...restFilters } = state.profiles.profilesFilters;
+  return restFilters;
+}
+
+export function selectProfilesSearchFilter(state: RootState) {
+  return state.profiles.profilesFilters.search;
 }
 
 export function selectProfilesRoleFilter(state: RootState) {

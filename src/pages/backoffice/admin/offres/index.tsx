@@ -35,8 +35,6 @@ const AdminOpportunitiesPage = () => {
     GA_TAGS.BACKOFFICE_ADMIN_SUPPRIMER_FILTRES_CLIC
   );
 
-  let content;
-
   // redirect with default tag and departments
   useEffect(() => {
     if (user.role !== USER_ROLES.ADMIN) {
@@ -97,26 +95,20 @@ const AdminOpportunitiesPage = () => {
     }
   }, [offerId, replace, restParams, tag, user, candidateId]);
 
-  if (
-    // loading ||
-    !user
-  ) {
-    content = <LoadingScreen />;
-  } else {
-    content = (
-      <AdminOpportunities
-        search={search}
-        filters={filters as AdminOpportunitiesFilters}
-        resetFilters={resetFilters}
-        setSearch={setSearch}
-        setFilters={setFilters}
-      />
-    );
-  }
   return (
     <LayoutBackOffice title="Modération des offres">
       <Section className="custom-page">
-        {!user || loadingDefaultFilters ? <LoadingScreen /> : content}
+        {loadingDefaultFilters ? (
+          <LoadingScreen />
+        ) : (
+          <AdminOpportunities
+            search={search}
+            filters={filters as AdminOpportunitiesFilters}
+            resetFilters={resetFilters}
+            setSearch={setSearch}
+            setFilters={setFilters}
+          />
+        )}
       </Section>
     </LayoutBackOffice>
   );

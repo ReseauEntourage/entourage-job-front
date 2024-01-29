@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import PlusIcon from 'assets/icons/plus.svg';
+import { StyledNoResult } from 'src/components/backoffice/Backoffice.styles';
 import { CandidateOffersTab } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab';
 import {
   candidateSearchFilters,
@@ -280,9 +281,7 @@ export const CandidateOpportunities = ({
             }
             noContent={
               isPublic ? (
-                <div className="uk-width-expand uk-flex uk-flex-center uk-flex-middle">
-                  Aucun résultat.
-                </div>
+                <StyledNoResult>Aucun résultat</StyledNoResult>
               ) : (
                 <NoOpportunities
                   // @ts-expect-error after enable TS strict mode. Please, try to fix it

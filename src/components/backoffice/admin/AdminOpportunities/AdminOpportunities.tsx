@@ -4,6 +4,7 @@ import React, { useRef, useState } from 'react';
 import UIkit from 'uikit';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import PlusIcon from 'assets/icons/plus.svg';
+import { StyledNoResult } from '../../Backoffice.styles';
 import { Api } from 'src/api';
 import { Opportunity } from 'src/api/types';
 import { OpportunitiesContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer';
@@ -320,11 +321,7 @@ export const AdminOpportunities = ({
                 }}
               />
             }
-            noContent={
-              <div className="uk-width-expand uk-flex uk-flex-center uk-flex-middle">
-                Aucun résultat.
-              </div>
-            }
+            noContent={<StyledNoResult>Aucun résultat</StyledNoResult>}
           />
         )}
       </>

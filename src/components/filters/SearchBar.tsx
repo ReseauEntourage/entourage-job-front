@@ -7,13 +7,15 @@ import { FiltersOptions } from 'src/components/filters/FiltersOptions';
 import { FiltersSideBar } from 'src/components/filters/FiltersSideBar';
 import {
   CV_FILTERS_DATA,
+  DIRECTORY_FILTERS_DATA,
   MEMBER_FILTERS_DATA,
   OPPORTUNITY_FILTERS_DATA,
   ORGANIZATION_FILTERS_DATA,
 } from 'src/constants';
 import { HEIGHTS } from 'src/constants/styles';
 import { gaEvent } from 'src/lib/gtag';
-import { AnyToFix } from 'src/utils/Types';
+import { AnyToFix } from 'src/utils/Types'; // to be typed
+
 // to be typed
 
 interface SearchBarProps {
@@ -21,7 +23,9 @@ interface SearchBarProps {
     | typeof CV_FILTERS_DATA
     | typeof MEMBER_FILTERS_DATA
     | typeof OPPORTUNITY_FILTERS_DATA
-    | typeof ORGANIZATION_FILTERS_DATA; // to be typed properly
+    | typeof ORGANIZATION_FILTERS_DATA
+    | typeof DIRECTORY_FILTERS_DATA;
+  // to be typed properly
   filters: AnyToFix; // to be typed
   setFilters: (updatedFilters: AnyToFix) => void;
   search?: string;

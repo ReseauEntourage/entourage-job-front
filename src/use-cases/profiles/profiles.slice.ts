@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PublicProfile } from 'src/api/types';
-import { UserRole } from 'src/constants/users';
+import { HelpNames, PublicProfile } from 'src/api/types';
+import { BusinessLineValue } from 'src/constants';
+import { Department } from 'src/constants/departements';
+import { CANDIDATE_USER_ROLES, UserRole } from 'src/constants/users';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import {
   fetchProfilesAdapter,
@@ -15,7 +17,15 @@ export interface State {
   fetchSelectedProfile: RequestState<typeof fetchSelectedProfileAdapter>;
   postInternalMessage: RequestState<typeof postInternalMessageAdapter>;
   profiles: PublicProfile[];
-  profilesFilters: { role?: UserRole[]; offset: number; limit: typeof LIMIT };
+  profilesFilters: {
+    role: UserRole[];
+    offset: number;
+    limit: typeof LIMIT;
+    search?: string;
+    helps?: HelpNames[];
+    departments?: Department[];
+    businessLines?: BusinessLineValue[];
+  };
   profilesHasFetchedAll: boolean;
   selectedProfile: PublicProfile | null;
 }
@@ -25,7 +35,7 @@ const initialState: State = {
   fetchSelectedProfile: fetchSelectedProfileAdapter.getInitialState(),
   postInternalMessage: fetchProfilesAdapter.getInitialState(),
   profiles: [],
-  profilesFilters: { offset: 0, limit: LIMIT },
+  profilesFilters: { role: CANDIDATE_USER_ROLES, offset: 0, limit: LIMIT },
   profilesHasFetchedAll: false,
   selectedProfile: null,
 };
@@ -59,6 +69,23 @@ export const slice = createSlice({
       state.profilesFilters = {
         ...state.profilesFilters,
         role: action.payload,
+        offset: 0,
+      };
+      state.profilesHasFetchedAll = false;
+      state.profiles = [];
+    },
+    setProfilesFilters(
+      state,
+      action: PayloadAction<{
+        search?: string;
+        helps?: HelpNames[];
+        departments?: Department[];
+        businessLines?: BusinessLineValue[];
+      }>
+    ) {
+      state.profilesFilters = {
+        ...state.profilesFilters,
+        ...action.payload,
         offset: 0,
       };
       state.profilesHasFetchedAll = false;

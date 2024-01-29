@@ -7,6 +7,7 @@ import {
 } from 'src/constants/departements';
 import { GA_TAGS } from 'src/constants/tags';
 
+import { ProfileCardHelps } from './helps';
 import { GENDERS_FILTERS, USER_ROLES_FILTERS } from './users';
 import { FilterConstant } from './utils';
 
@@ -383,6 +384,27 @@ export const ORGANIZATION_FILTERS_DATA = [
     constants: ADMIN_ZONES_FILTERS,
     title: 'Zone',
     tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_ZONE_CLIC,
+  },
+];
+
+export const DIRECTORY_FILTERS_DATA = [
+  {
+    key: 'departments',
+    constants: DEPARTMENTS_FILTERS,
+    title: 'Département',
+    tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_DEPARTEMENT_CLIC,
+  },
+  {
+    key: 'helps',
+    constants: ProfileCardHelps,
+    title: "Type d'aide",
+    tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_AIDE_CLIC,
+  },
+  {
+    key: 'businessLines',
+    constants: BUSINESS_LINES,
+    title: "Secteur d'activité",
+    tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_AIDE_CLIC,
   },
 ];
 

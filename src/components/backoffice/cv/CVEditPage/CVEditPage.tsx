@@ -308,8 +308,6 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
     [checkIfLastVersion, saveUserData]
   );
 
-  if (!user) return null;
-
   // aucun CV
   if (!cv) {
     return (
