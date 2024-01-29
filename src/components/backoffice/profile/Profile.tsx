@@ -11,10 +11,10 @@ import {
 import { ProfileContactCard } from './ProfileContactCard';
 import { ProfileHelpInformationCard } from './ProfileHelpInformationCard';
 import { ProfileProfessionalInformationCard } from './ProfileProfessionalInformationCard';
-import { useSelectSectedProfile } from './useSelectedProfile';
+import { useSelectSelectedProfile } from './useSelectedProfile';
 
 export const Profile = () => {
-  const selectedProfile = useSelectSectedProfile();
+  const selectedProfile = useSelectSelectedProfile();
   const isDesktop = useIsDesktop();
 
   return (

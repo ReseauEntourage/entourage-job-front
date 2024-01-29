@@ -48,7 +48,7 @@ export function useSelectedProfile() {
   };
 }
 
-export function useSelectSectedProfile() {
+export function useSelectSelectedProfile() {
   const selectedProfile = useSelector(selectSelectedProfile);
 
   if (!selectedProfile) {

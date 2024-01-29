@@ -19,12 +19,7 @@ import {
 } from 'src/constants/users';
 import { useImageFallback } from 'src/hooks/useImageFallback';
 import { gaEvent } from 'src/lib/gtag';
-import {
-  findConstantFromValue,
-  isRoleIncluded,
-  limitChar,
-  sortByOrder,
-} from 'src/utils';
+import { findConstantFromValue, isRoleIncluded, sortByOrder } from 'src/utils';
 import { Card } from './Card';
 import {
   StyledProfileCard,
@@ -196,10 +191,7 @@ export function ProfileCard({
               <>
                 {job ? (
                   <StyledProfileCardJobContainer>
-                    <H4
-                      color={COLORS.black}
-                      title={limitChar(_.capitalize(job), 45)}
-                    />
+                    <H4 color={COLORS.black} title={_.capitalize(job)} />
                   </StyledProfileCardJobContainer>
                 ) : (
                   <StyledProfileCardEmptyJobContainer>

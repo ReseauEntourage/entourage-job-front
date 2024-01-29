@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import UIkit from 'uikit';
 import { AvionPapier, Check } from 'assets/icons/icons';
 import { useIsProfileContacted } from '../usIsProfileContacted';
-import { useSelectSectedProfile } from '../useSelectedProfile';
+import { useSelectSelectedProfile } from '../useSelectedProfile';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { formContactInternalMessage } from 'src/components/forms/schemas/formContactInternalMessage';
 import { Card } from 'src/components/utils';
@@ -22,7 +22,7 @@ import {
 } from './ProfileContactCard.styles';
 
 export const ProfileContactCard = () => {
-  const selectedProfile = useSelectSectedProfile();
+  const selectedProfile = useSelectSelectedProfile();
   const [isFormSent, setIsFormSent] = useState(false);
   const [loadingSending, setLoadingSending] = useState(false);
   const dispatch = useDispatch();
@@ -41,8 +41,9 @@ export const ProfileContactCard = () => {
         UIkit.notification('Une erreur est survenue', 'danger');
         setLoadingSending(false);
       }
+      dispatch(profilesActions.postInternalMessageReset());
     }
-  }, [postInternalMessageStatus, prevPostInternalMessageStatus]);
+  }, [postInternalMessageStatus, prevPostInternalMessageStatus, dispatch]);
 
   const contactMessage = `Vous avez déjà contacté ${selectedProfile.firstName}`;
   const contactedMessage = `Vous avez déjà été contacté par ${selectedProfile.firstName}`;

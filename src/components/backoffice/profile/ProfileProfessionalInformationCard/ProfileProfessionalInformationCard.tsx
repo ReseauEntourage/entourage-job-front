@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 import MaletteIllu from 'assets/icons/illu-malette.svg';
 import { checkData } from '../../parametres/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
 import { ProfilePlaceHolder } from '../ProfilePlaceholder';
-import { useSelectSectedProfile } from '../useSelectedProfile';
+import { useSelectSelectedProfile } from '../useSelectedProfile';
 import { StyledProfessionalInformationList } from 'src/components/backoffice/parametres/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.styles';
 import { Card } from 'src/components/utils';
 import { Tag } from 'src/components/utils/Tag';
@@ -15,7 +15,7 @@ import { ProfileCareerPathSentence } from './ProfileCareerPathSentence';
 const uuidValue = uuid();
 
 export const ProfileProfessionalInformationCard = () => {
-  const selectedProfile = useSelectSectedProfile();
+  const selectedProfile = useSelectSelectedProfile();
   const [hasData, setHasData] = useState<boolean>(false);
 
   useEffect(() => {
