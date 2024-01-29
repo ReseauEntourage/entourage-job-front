@@ -16,6 +16,7 @@ import {
   ContactNewsletter,
   ExternalMessage,
   ExternalOpportunityDto,
+  InternalMessage,
   OpportunityDto,
   OpportunityJoin,
   OpportunityUserEvent,
@@ -489,7 +490,12 @@ export class APIHandler {
   /// // //////
   // message /
   /// // //////
+
   postExternalMessage(params: ExternalMessage): Promise<AxiosResponse> {
-    return this.post('/externalMessage', params);
+    return this.post('/message/external', params);
+  }
+
+  postInternalMessage(params: InternalMessage): Promise<AxiosResponse> {
+    return this.post('/message/internal', params);
   }
 }

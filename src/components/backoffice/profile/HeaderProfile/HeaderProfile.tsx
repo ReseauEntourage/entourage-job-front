@@ -7,7 +7,7 @@ import {
   StyledHeaderProfileTextContainer,
   StyledMobileHeaderProfileTitlesContainer,
 } from '../../Backoffice.styles';
-import { useSelectedProfile } from '../useSelectedProfile';
+import { useSelectSelectedProfile } from '../useSelectedProfile';
 import { ImgProfile, Section } from 'src/components/utils';
 import { H1, H2, H5, H6 } from 'src/components/utils/Headings';
 import { useIsDesktop } from 'src/hooks/utils';
@@ -16,7 +16,7 @@ import { StyledHeaderProfileDescriptionParagraphe } from './HeaderProfile.styles
 export const HeaderProfile = () => {
   const isDesktop = useIsDesktop();
   const size = isDesktop ? 146 : 64;
-  const { selectedProfile: profile } = useSelectedProfile();
+  const profile = useSelectSelectedProfile();
   if (!profile) return null;
   return (
     <StyledHeaderProfile className={`${isDesktop ? '' : 'mobile'}`}>

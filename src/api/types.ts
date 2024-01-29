@@ -26,7 +26,7 @@ export const APIRoutes = {
   CONTACTS: 'contact',
   CVS: 'cv',
   ORGANIZATIONS: 'organization',
-  EXTERNAL_MESSAGES: 'externalMessage',
+  MESSAGE: 'message',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -90,6 +90,8 @@ export type UserProfile = {
     order: number;
     prefix: AmbitionsPrefixesType;
   }[];
+  lastSendMessage: string;
+  lastReceivedMessage: string;
 };
 export type User = {
   coach: User;
@@ -510,6 +512,16 @@ export type ExternalMessage = {
   type: ExternalMessageContactType;
 };
 
+export type InternalMessage = {
+  addresseeUserId: string;
+  subject: string;
+  message: string;
+  // answered by the DB
+  senderUserId?: string;
+  createdAt?: string;
+  id?: string;
+};
+
 export type PublicProfile = {
   id: string;
   firstName: string;
@@ -533,4 +545,6 @@ export type PublicProfile = {
     order: number;
     prefix: AmbitionsPrefixesType;
   }[];
+  lastSentMessage: string;
+  lastReceivedMessage: string;
 };

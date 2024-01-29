@@ -392,6 +392,9 @@ export const GA_TAGS = {
   PAGE_ANNUAIRE_CARTE_CLIC: {
     action: 'Page_Annuaire_Carte_Clic',
   },
+  PROFILE_DETAILS_CONTACT_SEND_CLIC: {
+    action: 'Profile_Details_Contact_Send_Clic',
+  },
 } as const;
 
 export const FB_TAGS = {

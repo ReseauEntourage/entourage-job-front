@@ -16,7 +16,7 @@ export const StyledProfileCardPictureContainer = styled.div`
 `;
 
 export const StyledProfileCardPicture = styled.div`
-  border-radius: 20px;
+  border-radius: 10px;
   overflow: hidden;
   position: relative;
   height: 250px;

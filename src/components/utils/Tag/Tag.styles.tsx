@@ -27,6 +27,7 @@ const sizeVariants = {
 
 export const StyledTag = styled.div`
   display: inline-flex;
+  padding: 3px 10px;
   border-radius: 30px;
   border: 1px solid;
   font-weight: 400;

@@ -123,7 +123,7 @@ export function ProfileCard({
         onClick={() => {
           gaEvent(GA_TAGS.PAGE_ANNUAIRE_CARTE_CLIC);
           push({
-            pathname: '/backoffice/profile/[userId]',
+            pathname: `/backoffice/profile/[userId]`,
             query: { userId },
           });
         }}

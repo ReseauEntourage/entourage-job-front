@@ -1,4 +1,4 @@
-import { PublicProfile } from 'src/api/types';
+import { PublicProfile, InternalMessage } from 'src/api/types';
 import { createRequestAdapter } from 'src/store/utils';
 
 export const fetchProfilesAdapter = createRequestAdapter(
@@ -13,3 +13,7 @@ export const fetchSelectedProfileAdapter = createRequestAdapter(
   },
   PublicProfile
 >();
+
+export const postInternalMessageAdapter = createRequestAdapter(
+  'postInternalMessage'
+).withPayloads<InternalMessage>();
