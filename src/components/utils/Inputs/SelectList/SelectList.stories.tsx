@@ -4,6 +4,7 @@ import { StyledHelpModalSelectOption } from 'src/components/backoffice/parametre
 import { Card } from 'src/components/utils/Card';
 import { H6 } from 'src/components/utils/Headings';
 import { ParametresHelpCardContents } from 'src/constants/helps';
+import { USER_ROLES } from 'src/constants/users';
 import { SelectList as SelectListComponent } from './SelectList';
 
 const meta = {
@@ -23,7 +24,7 @@ const meta = {
   args: {
     id: 'select-list-stories',
     onChange: () => {},
-    options: ParametresHelpCardContents.candidat.map(
+    options: ParametresHelpCardContents[USER_ROLES.CANDIDATE].map(
       ({ value, title, description, icon }) => ({
         value,
         component: (
