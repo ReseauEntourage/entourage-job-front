@@ -14,7 +14,7 @@
     "test": "run-s test:*",
     "test:ts-check": "tsc -p tsconfig.json --noEmit",
     "test:eslint": "npx eslint src --ext js,jsx,ts,tsx --fix --max-warnings=0",
-    "test:inte": "jest",
+    "test:integ": "jest",
     "test:e2e": "yarn cypress:io",
     "build": "next build",
     "uikit:install": "cd ./node_modules/uikit && yarn",
@@ -34,7 +34,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "cacheDirectories": [
     ".next/cache"
   ],

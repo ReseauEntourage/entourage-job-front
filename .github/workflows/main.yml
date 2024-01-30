@@ -1,24 +1,21 @@
-name: LinkedOut Frontend Test
+name: LinkedOut [front-end]
 
 on:
-  [push]
-  # pull_request:
-  # branches: [master, develop]
-  # workflow_dispatch:
+  pull_request: {} # events by default (open, synchronized, reopened) in any branch triggers the workflow.
 
 env:
-  WEBINAR_URL: https://google.com
-  TOOLBOX_URL: https://google.com
-  TUTORIAL_CV: https://google.com
-  TUTORIAL_PP: https://google.com
-  TUTORIAL_VIDEO_FIRST_STEPS: https://google.com
-  TUTORIAL_VIDEO_CV: https://google.com
-  TUTORIAL_VIDEO_OFFERS: https://google.com
-  TUTORIAL_VIDEO_OFFERS_2: https://google.com
-  TUTORIAL_INTERVIEW_TRAINING: https://google.com
-  IRAISER_DONATION_LINK: https://google.com
-  SERVER_URL: http://localhost:3000
-  API_URL: http://localhost:3002
+  WEBINAR_URL: 'https://google.com'
+  TOOLBOX_URL: 'https://google.com'
+  TUTORIAL_CV: 'https://google.com'
+  TUTORIAL_PP: 'https://google.com'
+  TUTORIAL_VIDEO_FIRST_STEPS: 'https://google.com'
+  TUTORIAL_VIDEO_CV: 'https://google.com'
+  TUTORIAL_VIDEO_OFFERS: 'https://google.com'
+  TUTORIAL_VIDEO_OFFERS_2: 'https://google.com'
+  TUTORIAL_INTERVIEW_TRAINING: 'https://google.com'
+  IRAISER_DONATION_LINK: 'https://google.com'
+  SERVER_URL: 'http://localhost:3000'
+  API_URL: 'http://localhost:3002'
   PORT: 3000
   AWSS3_URL: https://entourage-job-preprod.s3.amazonaws.com
   AWSS3_CDN_URL: https://d3s4t580ymtqme.cloudfront.net
@@ -26,37 +23,58 @@ env:
   AWSS3_IMAGE_DIRECTORY: /images/
   CYPRESS_IO_PROJECT_ID: ${{ secrets.CYPRESS_IO_PROJECT_ID }}
   PUSHER_API_KEY: ${{ secrets.PUSHER_API_KEY }}
-  ADRESSE_LOCAUX_PARIS: "174 Rue Championnet 75018, Paris"
+  ADRESSE_LOCAUX_PARIS: '174 Rue Championnet 75018, Paris'
   HEROKU_RELEASE_VERSION: 'v100'
+  NEXT_TELEMETRY_DISABLED: 1
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    name: E2E on Chrome
+    runs-on: ubuntu-latest # use ubuntu-latest
     environment: 'entourage-job-front'
     container:
-      image: cypress/browsers:node16.17.0-chrome106
-      options: --user 1001
+      image: cypress/browsers:node16.17.0-chrome106 # use node16.17.0-chrome106 image from cypress/browsers (dockerhub)
+      options: --user 1001 # to grant user permission
     steps:
-      - name: checkout
-        uses: actions/checkout@v3
+      # Move on the ref
+      - name: Checkout on PR
+        uses: actions/checkout@v3 # action to checkout on the ref
 
-      - name: cypress
-        uses: cypress-io/github-action@v4
+      # Get node module from cache
+      - name: Cache Node Modules
+        id: yarn-cache-deps
+        uses: actions/cache@v3 # action to cache node modules
         with:
-          start: yarn dev
+          # npm cache files are stored in `/node_modules` on Linux/macOS
+          path: '**/node_modules'
+          key: linux-node-modules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            linux-node-modules-
+            linux-node-
+
+      # Run `yarn install` if cache no exist
+      - name: Yarn Install Deps
+        continue-on-error: true
+        run: |
+          yarn install --frozen-lockfile
+        if: steps.yarn-cache-deps.outputs.cache-hit != 'true'
+
+      # Run ts-check test then eslint test
+      - name: Run ts-check & eslint - Code Quality Test
+        run: |
+          yarn test:ts-check
+          yarn test:eslint
+
+      # Run jest test
+      - name: Run Jest - Integration Test
+        run: yarn test:integ
+
+      # Run cypress test
+      - name: Run Cypress - End to End Test
+        uses: cypress-io/github-action@v4 # action to exec cypress-io
+        with:
+          start: yarn dev # run dev script to enable cypress execution
           config: e2e.baseUrl=http://localhost:3000
           browser: chrome
-          command: npx cypress run --record --key ${{ secrets.CYPRESS_IO_KEY }}
+          command: npx cypress run --key ${{ secrets.CYPRESS_IO_KEY }}
           wait-on: http://localhost:3000
-
-      - run: yarn test:ts-check
-
-      - run: yarn test:eslint
-
-      - name: set-up
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16.x'
-
-      - run: yarn test:inte
-      - run: echo No tests
