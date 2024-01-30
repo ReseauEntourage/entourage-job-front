@@ -50,7 +50,7 @@ export const ParametresHelpModal = ({
             ? tempProfile[helpField]?.map(({ name }) => name)
             : []
         }
-        options={ParametresHelpCardContents[role.toLowerCase()].map(
+        options={ParametresHelpCardContents[role].map(
           ({ value, title: titleH6, description, icon }) => ({
             value,
             component: (

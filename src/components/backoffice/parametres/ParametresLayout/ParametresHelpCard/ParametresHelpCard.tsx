@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PlaceholderIllu from 'assets/icons/illu-coeur-mains-ouvertes.svg';
-import { useHelpField, helpFields } from '../../useUpdateProfile';
+import { helpFields, useHelpField } from '../../useUpdateProfile';
 import { ParametresPlaceholder } from '../ParametresPlaceholder';
 import { ProfileHelpList } from 'src/components/backoffice/profile/ProfileHelpInformationCard/ProfileHelpList';
+import { useContextualRole } from 'src/components/backoffice/useContextualRole';
 import { openModal } from 'src/components/modals/Modal';
 import { Card } from 'src/components/utils';
 import { ParametresHelpCardTitles } from 'src/constants/helps';
@@ -30,16 +31,13 @@ export const ParametresHelpCard = () => {
 
   const helpField = useHelpField(user.role);
 
-  const [contextualRole, setContextualRole] = useState(role);
-  useEffect(() => {
-    setContextualRole(role === 'Candidat externe' ? 'Candidat' : role);
-  }, [role]);
+  const { contextualRole } = useContextualRole(role);
 
   const openHelpEditModal = () => {
     openModal(
       <ParametresHelpModal
         role={contextualRole}
-        title={ParametresHelpCardTitles.modal[contextualRole.toLowerCase()]}
+        title={ParametresHelpCardTitles.modal[contextualRole]}
       />
     );
   };
@@ -48,7 +46,7 @@ export const ParametresHelpCard = () => {
 
   return (
     <Card
-      title={ParametresHelpCardTitles.card[contextualRole.toLowerCase()]}
+      title={ParametresHelpCardTitles.card[contextualRole]}
       editCallback={openHelpEditModal}
       isMobileClosable
       dataTestId="parametres-help-card"

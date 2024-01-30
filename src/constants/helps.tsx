@@ -5,6 +5,7 @@ import MaletteIllu from 'assets/icons/illu-malette.svg';
 import TipsIllu from 'assets/icons/illu-poignee-de-main.svg';
 import RSIllu from 'assets/icons/illu-reseaux-sociaux.svg';
 import { HelpNames } from 'src/api/types';
+import { USER_ROLES } from './users';
 import { FilterConstant } from './utils';
 
 export const ProfileCardHelps: (FilterConstant<HelpNames> & {
@@ -36,21 +37,32 @@ export const ProfileCardHelps: (FilterConstant<HelpNames> & {
     label: 'Partage',
   },
 ];
-export const ParametresHelpCardTitles = {
+export const ParametresHelpCardTitles: {
+  [K in 'card' | 'modal']: {
+    [R in typeof USER_ROLES.CANDIDATE | typeof USER_ROLES.COACH]: string;
+  };
+} = {
   card: {
-    coach: 'Vos propositions de coup de pouce',
-    candidat: "Vos demandes d'aide",
+    [USER_ROLES.COACH]: 'Vos propositions de coup de pouce',
+    [USER_ROLES.CANDIDATE]: "Vos demandes d'aide",
   },
   modal: {
-    coach:
+    [USER_ROLES.COACH]:
       'Sélectionnez les coups de pouce que vous souhaitez apporter aux candidats',
-    candidat:
+    [USER_ROLES.CANDIDATE]:
       'Sélectionnez les coups de pouce que vous souhaitez avoir auprès des coachs',
   },
 } as const;
 
-export const ParametresHelpCardContents = {
-  candidat: [
+export const ParametresHelpCardContents: {
+  [K in typeof USER_ROLES.CANDIDATE | typeof USER_ROLES.COACH]: {
+    icon: React.ReactNode;
+    value: string;
+    title: string;
+    description: string;
+  }[];
+} = {
+  [USER_ROLES.CANDIDATE]: [
     {
       icon: <TipsIllu />,
       value: 'tips',
@@ -87,7 +99,7 @@ export const ParametresHelpCardContents = {
         "Multipliez vos opportunités professionnelles en vous connectant avec des professionnels qui peuvent vous soutenir et vous ouvrir des portes sur le marché de l'emploi.",
     },
   ],
-  coach: [
+  [USER_ROLES.COACH]: [
     {
       icon: <TipsIllu />,
       value: 'tips',
@@ -125,4 +137,4 @@ export const ParametresHelpCardContents = {
         'Mettez en relation les candidats avec des contacts pertinents et intégez-les dans des réseaux qui peuvent favoriser leur insertion professionnelle.',
     },
   ],
-} as const;
+};
