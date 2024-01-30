@@ -21,6 +21,7 @@ import { Button, ButtonMultiple, Section } from 'src/components/utils';
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 import { HEIGHTS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
+import { FilterObject } from 'src/constants/utils';
 import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
 import { useQueryParamsOpportunities } from 'src/hooks/queryParams/useQueryParamsOpportunities';
 import { useTag } from 'src/hooks/queryParams/useTag';
@@ -28,14 +29,15 @@ import { useBulkActions } from 'src/hooks/useBulkActions';
 import { useAdminOpportunities } from 'src/hooks/useOpportunityList';
 import { useIsDesktop, usePrevious } from 'src/hooks/utils';
 import { AdminOffersTab } from './AdminOffersTab';
-import { AdminOpportunitiesFilters } from './AdminOpportunitiesFilters.types';
 
 interface AdminOpportunitiesProps {
   search?: string;
-  filters: AdminOpportunitiesFilters;
-  setFilters?: (updatedFilters: AdminOpportunitiesFilters) => void;
+  filters: FilterObject<typeof OPPORTUNITY_FILTERS_DATA>;
+  setFilters?: (
+    updatedFilters: FilterObject<typeof OPPORTUNITY_FILTERS_DATA>
+  ) => void;
   resetFilters?: () => void;
-  setSearch?: (updatedSearch: string) => void;
+  setSearch?: (updatedSearch?: string) => void;
   isMobile?: boolean;
 }
 
@@ -47,9 +49,9 @@ const filtersAndTabsHeight =
 export const AdminOpportunities = ({
   search,
   filters,
-  setFilters,
-  setSearch,
-  resetFilters,
+  setFilters = () => {},
+  setSearch = () => {},
+  resetFilters = () => {},
   isMobile = false,
 }: AdminOpportunitiesProps) => {
   const { replace, push } = useRouter();
@@ -267,12 +269,9 @@ export const AdminOpportunities = ({
             <SearchBar
               filtersConstants={OPPORTUNITY_FILTERS_DATA}
               filters={filters}
-              // @ts-expect-error after enable TS strict mode. Please, try to fix it
               resetFilters={resetFilters}
               search={search}
-              // @ts-expect-error after enable TS strict mode. Please, try to fix it
               setSearch={setSearch}
-              // @ts-expect-error after enable TS strict mode. Please, try to fix it
               setFilters={setFilters}
               placeholder="Rechercher..."
               additionalButtons={

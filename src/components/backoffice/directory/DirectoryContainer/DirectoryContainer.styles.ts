@@ -11,4 +11,5 @@ export const StyledDirectoryButtonContainer = styled.div`
   gap: 16px;
   margin-bottom: 30px;
   position: relative;
+  margin-top: ${({ isMobile }) => (isMobile ? 16 : 0)}px;
 `;

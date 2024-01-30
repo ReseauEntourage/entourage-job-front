@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { AdminOpportunities } from 'src/components/backoffice/admin/AdminOpportunities';
-import { AdminOpportunitiesFilters } from 'src/components/backoffice/admin/AdminOpportunities/AdminOpportunitiesFilters.types';
 import { Section } from 'src/components/utils';
 import {
   OFFER_ADMIN_FILTERS_DATA,
@@ -103,7 +102,7 @@ const AdminOpportunitiesPage = () => {
         ) : (
           <AdminOpportunities
             search={search}
-            filters={filters as AdminOpportunitiesFilters}
+            filters={filters}
             resetFilters={resetFilters}
             setSearch={setSearch}
             setFilters={setFilters}

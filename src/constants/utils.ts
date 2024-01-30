@@ -17,3 +17,23 @@ export const ActionsLabels = {
 export type FilterConstant<
   T extends string | number | boolean = string | number | boolean
 > = { value: T; label: string };
+
+export interface Filter<
+  T extends string | number | boolean = string | number | boolean
+> {
+  key: string;
+  constants: FilterConstant<T>[];
+  title: string;
+  tag?: {
+    action: string;
+  };
+  mandatory?: boolean;
+  priority?: FilterConstant<T>[];
+  type?: 'checkbox';
+  icon?: React.ReactNode;
+  disabled?: boolean;
+}
+
+export type FilterObject<T extends Filter[] = Filter[]> = {
+  [K in T[number]['key']]: T[number]['constants'];
+};

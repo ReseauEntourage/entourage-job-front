@@ -4,11 +4,12 @@ import ConversationIllu from 'assets/icons/illu-conversation.svg';
 import MaletteIllu from 'assets/icons/illu-malette.svg';
 import TipsIllu from 'assets/icons/illu-poignee-de-main.svg';
 import RSIllu from 'assets/icons/illu-reseaux-sociaux.svg';
-import { HelpNames } from 'src/api/types';
 import { USER_ROLES } from './users';
 import { FilterConstant } from './utils';
 
-export const ProfileCardHelps: (FilterConstant<HelpNames> & {
+export type HelpNames = 'tips' | 'interview' | 'cv' | 'network' | 'event';
+
+export const ProfileHelps: (FilterConstant<HelpNames> & {
   icon: JSX.Element;
   shortTitle: {
     Candidat: string;

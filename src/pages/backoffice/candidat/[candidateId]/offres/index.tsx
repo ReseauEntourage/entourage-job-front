@@ -7,7 +7,6 @@ import { Api } from 'src/api';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { CandidateOpportunities } from 'src/components/backoffice/candidate/CandidateOpportunities';
-import { CandidateOpportunitiesFilters } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOpportunitiesFilters.types';
 import { OpportunityError } from 'src/components/backoffice/opportunities/OpportunityError';
 import { Section } from 'src/components/utils';
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
@@ -231,7 +230,7 @@ const Opportunities = () => {
     content = (
       <CandidateOpportunities
         search={search}
-        filters={filters as CandidateOpportunitiesFilters}
+        filters={filters}
         resetFilters={resetFilters}
         setSearch={setSearch}
         setFilters={setFilters}

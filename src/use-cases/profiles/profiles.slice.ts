@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { HelpNames, PublicProfile } from 'src/api/types';
+import { PublicProfile } from 'src/api/types';
 import { BusinessLineValue } from 'src/constants';
 import { Department } from 'src/constants/departements';
+import { HelpNames } from 'src/constants/helps';
 import { CANDIDATE_USER_ROLES, UserRole } from 'src/constants/users';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import {
@@ -65,18 +66,10 @@ export const slice = createSlice({
       (state) => state.postInternalMessage,
       {}
     ),
-    setProfilesRoleFilter(state, action: PayloadAction<UserRole[]>) {
-      state.profilesFilters = {
-        ...state.profilesFilters,
-        role: action.payload,
-        offset: 0,
-      };
-      state.profilesHasFetchedAll = false;
-      state.profiles = [];
-    },
     setProfilesFilters(
       state,
       action: PayloadAction<{
+        role?: UserRole[];
         search?: string;
         helps?: HelpNames[];
         departments?: Department[];

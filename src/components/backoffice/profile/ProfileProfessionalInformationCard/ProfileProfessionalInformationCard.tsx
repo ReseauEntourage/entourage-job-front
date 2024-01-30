@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import MaletteIllu from 'assets/icons/illu-malette.svg';
-import { checkData } from '../../parametres/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
 import { ProfilePlaceHolder } from '../ProfilePlaceholder';
 import { useSelectSelectedProfile } from '../useSelectedProfile';
 import { StyledProfessionalInformationList } from 'src/components/backoffice/parametres/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.styles';
+import { checkData } from 'src/components/backoffice/parametres/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
 import { Card } from 'src/components/utils';
 import { Tag } from 'src/components/utils/Tag';
 import { BUSINESS_LINES } from 'src/constants';

@@ -1,6 +1,5 @@
 import React from 'react';
-import { HelpNames } from 'src/api/types';
-import { ParametresHelpCardContents } from 'src/constants/helps';
+import { HelpNames, ParametresHelpCardContents } from 'src/constants/helps';
 import { USER_ROLES } from 'src/constants/users';
 import {
   StyledHelpList,

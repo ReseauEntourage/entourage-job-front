@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { isAfter, isEmail } from "validator";
+import { isAfter, isEmail } from 'validator';
 import { FormSchema } from '../FormSchema';
 import {
   BUSINESS_LINES,

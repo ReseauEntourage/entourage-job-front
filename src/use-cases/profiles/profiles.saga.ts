@@ -13,7 +13,6 @@ const {
   fetchProfilesRequested,
   fetchProfilesSucceeded,
   fetchProfilesFailed,
-  setProfilesRoleFilter,
   setProfilesFilters,
   incrementProfilesOffset,
   postInternalMessageRequested,
@@ -70,7 +69,6 @@ function* postInternalMessageSaga(
 
 export function* saga() {
   yield* takeLatest(fetchProfilesRequested, fetchProfilesSaga);
-  yield* takeLatest(setProfilesRoleFilter, fetchProfilesSagaRequested);
   yield* takeLatest(setProfilesFilters, fetchProfilesSagaRequested);
   yield* takeLatest(incrementProfilesOffset, fetchProfilesSagaRequested);
   yield* takeLatest(fetchSelectedProfileRequested, fetchSelectedProfileSaga);

@@ -532,6 +532,7 @@ export const DEPARTMENTS = [
 ] as const;
 
 export type Department = (typeof DEPARTMENTS)[number]['name'];
+export type Region = (typeof DEPARTMENTS)[number]['region'];
 export const REGIONS_LABELS = {
   'Île-de-France': 'Paris et sa région',
   'Auvergne-Rhône-Alpes': 'Lyon et sa région',
@@ -540,7 +541,7 @@ export const REGIONS_LABELS = {
   Lorient: 'Lorient',
 } as const;
 
-export const REGIONS_FILTERS = _.sortBy(
+export const REGIONS_FILTERS: FilterConstant<Region>[] = _.sortBy(
   Object.values(
     DEPARTMENTS.reduce((acc, curr) => {
       if (acc[curr.region]) {

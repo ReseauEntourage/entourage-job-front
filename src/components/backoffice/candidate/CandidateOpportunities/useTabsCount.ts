@@ -2,7 +2,12 @@ import { useCallback, useState } from 'react';
 import { Api } from 'src/api';
 
 export function useTabsCount(candidateId: string) {
-  const [tabCounts, setTabCounts] = useState();
+  const [tabCounts, setTabCounts] = useState<
+    {
+      status: number;
+      count: number;
+    }[]
+  >();
 
   const fetchTabsCount = useCallback(async () => {
     const { data } = await Api.getOpportunitiesTabCountByCandidate(candidateId);

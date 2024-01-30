@@ -3,13 +3,13 @@ import { useRouter } from 'next/router';
 import React, { useMemo } from 'react';
 import HandsIcon from 'assets/icons/illu-coeur-mains-ouvertes.svg';
 import CaseIcon from 'assets/icons/illu-malette.svg';
-import { HelpNames, UserCandidateWithUsers } from 'src/api/types';
+import { UserCandidateWithUsers } from 'src/api/types';
 import { H3, H4, H5 } from 'src/components/utils/Headings';
 import { Img } from 'src/components/utils/Img';
 import { Tag } from 'src/components/utils/Tag';
 import { BUSINESS_LINES, BusinessLineValue } from 'src/constants';
 import { Department } from 'src/constants/departements';
-import { ProfileCardHelps } from 'src/constants/helps';
+import { HelpNames, ProfileHelps } from 'src/constants/helps';
 import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
 import {
@@ -244,7 +244,7 @@ export function ProfileCard({
             <StyledProfileCardHelps>
               {helps && helps.length > 0 ? (
                 helps.map(({ name }) => {
-                  const help = findConstantFromValue(name, ProfileCardHelps);
+                  const help = findConstantFromValue(name, ProfileHelps);
                   return (
                     <StyledProfileCardHelp key={help.value}>
                       {help.icon}

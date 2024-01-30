@@ -1,10 +1,12 @@
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { DirectoryList } from '../DirectoryList';
 import { SearchBar } from 'src/components/filters/SearchBar';
 import { Button } from 'src/components/utils';
-import { DIRECTORY_FILTERS_DATA } from 'src/constants';
+import { BUSINESS_LINES, DirectoryFilters } from 'src/constants';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { ProfileHelps } from 'src/constants/helps';
 import { GA_TAGS } from 'src/constants/tags';
 import {
   CANDIDATE_USER_ROLES,
@@ -12,13 +14,14 @@ import {
   USER_ROLES,
 } from 'src/constants/users';
 import { useFilters } from 'src/hooks';
+import { useIsMobile } from 'src/hooks/utils';
 import {
   selectProfilesBusinessLinesFilters,
   selectProfilesDepartmentsFilters,
   selectProfilesHelpsFilters,
   selectProfilesSearchFilter,
 } from 'src/use-cases/profiles';
-import { isRoleIncluded } from 'src/utils';
+import { findConstantFromValue, isRoleIncluded } from 'src/utils';
 import {
   StyledDirectoryButtonContainer,
   StyledDirectoryContainer,
@@ -31,10 +34,12 @@ export function DirectoryContainer() {
   const { push } = useRouter();
   const roleFilter = useRoleFilter();
 
+  const isMobile = useIsMobile();
+
   const { setFilters, setSearch, resetFilters } = useFilters(
-    DIRECTORY_FILTERS_DATA,
+    DirectoryFilters,
     `/backoffice/annuaire`,
-    ['role'],
+    [],
     GA_TAGS.PAGE_ANNUAIRE_SUPPRIMER_FILTRES_CLIC
   );
 
@@ -43,22 +48,35 @@ export function DirectoryContainer() {
   const businessLinesFilters = useSelector(selectProfilesBusinessLinesFilters);
   const search = useSelector(selectProfilesSearchFilter);
 
+  const filters = useMemo(() => {
+    return {
+      departments:
+        departmentsFilters?.map((department) =>
+          findConstantFromValue(department, DEPARTMENTS_FILTERS)
+        ) || [],
+      helps:
+        helpsFilters?.map((help) =>
+          findConstantFromValue(help, ProfileHelps)
+        ) || [],
+      businessLines:
+        businessLinesFilters?.map((businessLine) =>
+          findConstantFromValue(businessLine, BUSINESS_LINES)
+        ) || [],
+    };
+  }, [departmentsFilters, helpsFilters, businessLinesFilters]);
+
   return (
     <StyledDirectoryContainer>
       <SearchBar
-        filtersConstants={DIRECTORY_FILTERS_DATA}
-        filters={{
-          departments: departmentsFilters,
-          helps: helpsFilters,
-          businessLines: businessLinesFilters,
-        }}
+        filtersConstants={DirectoryFilters}
+        filters={filters}
         resetFilters={resetFilters}
         search={search}
         setSearch={setSearch}
         setFilters={setFilters}
         placeholder="Rechercher..."
       />
-      <StyledDirectoryButtonContainer>
+      <StyledDirectoryButtonContainer isMobile={isMobile}>
         <Button
           style={`custom-secondary${
             isRoleIncluded(CANDIDATE_USER_ROLES, roleFilter) ? '-inverted' : ''

@@ -4,7 +4,7 @@ import { COLORS } from 'src/constants/styles';
 export const StyledCard = styled.div`
   background-color: #fff;
   box-shadow: 0px 4px 4px 0px ${COLORS.lightgray};
-  border-radius: 20px;
+  border-radius: 10px;
   position: relative;
   border: 1px solid ${COLORS.lightgray};
 

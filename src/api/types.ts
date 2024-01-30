@@ -1,15 +1,16 @@
 import {
-  ExternalMessageContactType,
-  Contract as ContractValue,
+  AmbitionsPrefixesType,
   BusinessLineValue,
-  ExternalOfferOrigin,
-  HeardAboutValue,
   CandidateHelpWithValue,
   CompanyApproach,
+  Contract as ContractValue,
+  ExternalMessageContactType,
+  ExternalOfferOrigin,
+  HeardAboutValue,
   OfferStatus,
-  AmbitionsPrefixesType,
 } from 'src/constants';
 import { AdminZone, Department } from 'src/constants/departements';
+import { HelpNames } from 'src/constants/helps';
 import { AdminRole, Gender, UserRole } from 'src/constants/users';
 
 export type SocialMedia =
@@ -68,8 +69,6 @@ export type OrganizationDto = {
   referentPhone: string;
   zone: AdminZone;
 };
-
-export type HelpNames = 'tips' | 'interview' | 'cv' | 'network' | 'event';
 
 export type UserProfile = {
   currentJob: string;
@@ -352,6 +351,7 @@ export type Event = {
   updatedAt: string;
   contract: Contract;
 };
+
 export interface OpportunityUser {
   OpportunityId: string;
   UserId: string;
@@ -375,6 +375,7 @@ export interface OpportunityUser {
   salary: string;
   skills: Skill[];
 }
+
 export interface OpportunityWithOpportunityUsers extends Opportunity {
   opportunityUsers: OpportunityUser;
 }

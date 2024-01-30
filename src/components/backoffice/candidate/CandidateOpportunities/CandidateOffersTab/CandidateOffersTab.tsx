@@ -7,17 +7,13 @@ import {
   formatPlural,
   tabs,
 } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab/CandidateOffersTab.utils';
+import { FilterConstant } from 'src/constants/utils';
 
 const uuidValue = uuid();
 
 interface CandidateOffersTabProps {
-  activeStatus: {
-    value: number;
-    label: string;
-    color: string;
-    public: string;
-  }[];
-  tabCounts: {
+  activeStatus: FilterConstant[];
+  tabCounts?: {
     status: number;
     count: number;
   }[];
@@ -59,7 +55,8 @@ export const CandidateOffersTab = ({
 
           const isActive = activeStatus.some((singleActiveStatus) => {
             return (
-              singleActiveStatus && status.includes(singleActiveStatus.value)
+              singleActiveStatus &&
+              status.includes(singleActiveStatus.value as number | string)
             );
           });
 

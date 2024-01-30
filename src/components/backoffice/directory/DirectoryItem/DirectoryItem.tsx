@@ -1,9 +1,9 @@
 import React from 'react';
-import { HelpNames } from 'src/api/types';
 import { ProfileCard } from 'src/components/utils/Card/ProfileCard';
 import { CardListItem } from 'src/components/utils/CardList';
 import { BusinessLineValue } from 'src/constants';
 import { Department } from 'src/constants/departements';
+import { HelpNames } from 'src/constants/helps';
 import { UserRole } from 'src/constants/users';
 
 interface DirectoryItemProps {

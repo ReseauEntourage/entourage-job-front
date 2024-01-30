@@ -12,6 +12,7 @@ import { Button, Grid, SimpleLink } from 'src/components/utils';
 import { CV_FILTERS_DATA, INITIAL_NB_OF_CV_TO_DISPLAY } from 'src/constants';
 import { COLORS } from 'src/constants/styles';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+import { FilterObject } from 'src/constants/utils';
 import { usePrevious } from 'src/hooks/utils';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
@@ -40,9 +41,9 @@ interface CVListProps {
   hideSearchBar?: boolean;
   nb?: number;
   search?: string;
-  filters?: AnyToFix; // to be typed
-  setFilters?: (updatedFilters?: AnyToFix) => void; // to be typed
-  setSearch?: (updatedSearch?: AnyToFix) => void; // to be typed
+  filters: FilterObject<typeof CV_FILTERS_DATA>;
+  setFilters?: (updatedFilters: FilterObject<typeof CV_FILTERS_DATA>) => void;
+  setSearch?: (updatedSearch?: string) => void;
   resetFilters?: () => void;
 }
 
@@ -51,9 +52,9 @@ export const CVList = ({
   nb,
   search,
   filters = {},
-  setFilters,
-  setSearch,
-  resetFilters,
+  setFilters = () => {},
+  setSearch = () => {},
+  resetFilters = () => {},
 }: CVListProps) => {
   const [cvs, setCVs] = useState(undefined);
   const [loading, setLoading] = useState(false);
@@ -255,12 +256,9 @@ export const CVList = ({
         <SearchBar
           filtersConstants={CV_FILTERS_DATA}
           filters={filters}
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           resetFilters={resetFilters}
           search={search}
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           setSearch={setSearch}
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           setFilters={setFilters}
           placeholder="Chercher un secteur d’activité, une compétence, un profil..."
         />

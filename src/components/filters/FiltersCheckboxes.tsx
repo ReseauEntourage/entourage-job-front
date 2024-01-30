@@ -1,11 +1,11 @@
 import React from 'react';
+import { Filter, FilterObject } from 'src/constants/utils';
 import { gaEvent } from 'src/lib/gtag';
-import { AnyToFix } from 'src/utils/Types';
 
 interface FiltersCheckboxesProps {
-  filters: AnyToFix; // to be typed
-  setFilters: (arg1: AnyToFix) => void; // to be typed
-  filterData: AnyToFix; // to be typed
+  filters: FilterObject;
+  setFilters: (updatedFilters: FilterObject) => void;
+  filterData: Filter[];
   hideOnMobile?: boolean;
   fullWidth?: boolean;
 }
