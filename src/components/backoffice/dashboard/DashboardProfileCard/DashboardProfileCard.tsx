@@ -18,7 +18,9 @@ export const DashboardProfileCard = () => {
   const user = useAuthenticatedUser();
   const helpField = useHelpField(user.role);
   const { contextualRole } = useContextualRole(user.role);
+
   if (!helpField || !contextualRole) return null;
+
   return (
     <Card>
       <StyledDashboardProfileCardPictureName>
