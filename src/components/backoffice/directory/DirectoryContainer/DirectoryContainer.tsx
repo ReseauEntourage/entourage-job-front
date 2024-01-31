@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router';
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { DirectoryList } from '../DirectoryList';
+import { useDirectoryFiltersQueryParams } from '../useDirectoryFiltersQueryParams';
 import { SearchBar } from 'src/components/filters/SearchBar';
 import { Button } from 'src/components/utils';
 import { BUSINESS_LINES, DirectoryFilters } from 'src/constants';
@@ -16,6 +17,7 @@ import {
 import { useFilters } from 'src/hooks';
 import { useIsMobile } from 'src/hooks/utils';
 import {
+  profilesActions,
   selectProfilesBusinessLinesFilters,
   selectProfilesDepartmentsFilters,
   selectProfilesHelpsFilters,
@@ -33,8 +35,10 @@ const route = '/backoffice/annuaire';
 export function DirectoryContainer() {
   const { push } = useRouter();
   const roleFilter = useRoleFilter();
+  const dispatch = useDispatch();
 
   const isMobile = useIsMobile();
+  const directoryFiltersParams = useDirectoryFiltersQueryParams();
 
   const { setFilters, setSearch, resetFilters } = useFilters(
     DirectoryFilters,
@@ -50,18 +54,15 @@ export function DirectoryContainer() {
 
   const filters = useMemo(() => {
     return {
-      departments:
-        departmentsFilters?.map((department) =>
-          findConstantFromValue(department, DEPARTMENTS_FILTERS)
-        ) || [],
-      helps:
-        helpsFilters?.map((help) =>
-          findConstantFromValue(help, ProfileHelps)
-        ) || [],
-      businessLines:
-        businessLinesFilters?.map((businessLine) =>
-          findConstantFromValue(businessLine, BUSINESS_LINES)
-        ) || [],
+      departments: departmentsFilters.map((department) =>
+        findConstantFromValue(department, DEPARTMENTS_FILTERS)
+      ),
+      helps: helpsFilters.map((help) =>
+        findConstantFromValue(help, ProfileHelps)
+      ),
+      businessLines: businessLinesFilters.map((businessLine) =>
+        findConstantFromValue(businessLine, BUSINESS_LINES)
+      ),
     };
   }, [departmentsFilters, helpsFilters, businessLinesFilters]);
 
@@ -70,8 +71,11 @@ export function DirectoryContainer() {
       <SearchBar
         filtersConstants={DirectoryFilters}
         filters={filters}
-        resetFilters={resetFilters}
-        search={search}
+        resetFilters={() => {
+          dispatch(profilesActions.resetProfilesFilters());
+          resetFilters();
+        }}
+        search={search || undefined}
         setSearch={setSearch}
         setFilters={setFilters}
         placeholder="Rechercher..."
@@ -84,7 +88,7 @@ export function DirectoryContainer() {
           onClick={() => {
             push({
               pathname: route,
-              query: { role: CANDIDATE_USER_ROLES },
+              query: { ...directoryFiltersParams, role: CANDIDATE_USER_ROLES },
             });
           }}
         >
@@ -97,7 +101,7 @@ export function DirectoryContainer() {
           onClick={() => {
             push({
               pathname: route,
-              query: { role: USER_ROLES.COACH },
+              query: { ...directoryFiltersParams, role: USER_ROLES.COACH },
             });
           }}
         >

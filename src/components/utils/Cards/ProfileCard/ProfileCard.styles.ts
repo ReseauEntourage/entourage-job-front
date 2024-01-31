@@ -1,18 +1,24 @@
 import styled from 'styled-components';
+import { StyledCardCommon } from '../Cards.styles';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledProfileCard = styled.div`
+export const StyledProfileCard = styled(StyledCardCommon)`
   width: 295px;
+  border-radius: 10px;
+  border: 1px solid ${COLORS.gray};
+  cursor: pointer;
+  transition: box-shadow 0.2s ease-in-out;
 
-  > * {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
+  &:hover {
+    box-shadow: 0 8px 16px 0 ${COLORS.gray};
   }
 `;
 
 export const StyledProfileCardPictureContainer = styled.div`
   position: relative;
+  margin-left: -1px;
+  margin-right: -1px;
+  margin-top: -1px;
 `;
 
 export const StyledProfileCardPicture = styled.div`
@@ -83,6 +89,7 @@ export const StyledProfileCardEmptyJobContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 12px;
+
   > h4 {
     line-height: 24px;
     margin-bottom: 0;

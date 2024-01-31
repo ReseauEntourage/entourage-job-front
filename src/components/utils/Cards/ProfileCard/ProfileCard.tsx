@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 import React, { useMemo } from 'react';
 import HandsIcon from 'assets/icons/illu-coeur-mains-ouvertes.svg';
 import CaseIcon from 'assets/icons/illu-malette.svg';
@@ -20,7 +20,6 @@ import {
 import { useImageFallback } from 'src/hooks/useImageFallback';
 import { gaEvent } from 'src/lib/gtag';
 import { findConstantFromValue, isRoleIncluded, sortByOrder } from 'src/utils';
-import { Card } from './Card';
 import {
   StyledProfileCard,
   StyledProfileCardBusinessLines,
@@ -99,8 +98,6 @@ export function ProfileCard({
   userCandidate,
   job,
 }: ProfileCardProps) {
-  const { push } = useRouter();
-
   const { urlImg, fallbackToCVImage } = useImageFallback({
     userId,
     role,
@@ -118,16 +115,16 @@ export function ProfileCard({
     ambitions && ambitions.length > 0 ? sortByOrder(ambitions) : null;
 
   return (
-    <StyledProfileCard>
-      <Card
-        onClick={() => {
-          gaEvent(GA_TAGS.PAGE_ANNUAIRE_CARTE_CLIC);
-          push({
-            pathname: `/backoffice/profile/[userId]`,
-            query: { userId },
-          });
-        }}
-      >
+    <Link
+      href={{
+        pathname: `/backoffice/profile/[userId]`,
+        query: { userId },
+      }}
+      onClick={() => {
+        gaEvent(GA_TAGS.PAGE_ANNUAIRE_CARTE_CLIC);
+      }}
+    >
+      <StyledProfileCard>
         <StyledProfileCardPictureContainer>
           <StyledProfileCardPicture>
             {urlImg ? (
@@ -267,7 +264,7 @@ export function ProfileCard({
             </StyledProfileCardHelps>
           </StyledProfileCardHelpContainer>
         </StyledProfileCardContent>
-      </Card>
-    </StyledProfileCard>
+      </StyledProfileCard>
+    </Link>
   );
 }

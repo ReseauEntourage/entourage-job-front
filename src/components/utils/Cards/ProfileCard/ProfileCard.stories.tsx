@@ -1,5 +1,4 @@
 import { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { USER_ROLES } from 'src/constants/users';
 import { ProfileCard } from './ProfileCard';
@@ -7,21 +6,6 @@ import { ProfileCard } from './ProfileCard';
 const meta = {
   title: 'Profile Card',
   component: ProfileCard,
-  decorators: [
-    (Story) => {
-      return (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            gap: '30px',
-          }}
-        >
-          <Story />
-        </div>
-      );
-    },
-  ],
 } satisfies Meta<typeof ProfileCard>;
 
 export default meta;

@@ -1,9 +1,9 @@
 import React from 'react';
-import { useHelpField } from '../../parametres/useUpdateProfile';
 import { useContextualRole } from '../../useContextualRole';
+import { useHelpField } from 'src/components/backoffice/parametres/useUpdateProfile';
 import { Button, Card, ImgProfile, Tag } from 'src/components/utils';
 import { H5 } from 'src/components/utils/Headings';
-import { ProfileCardHelps } from 'src/constants/helps';
+import { ProfileHelps } from 'src/constants/helps';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import {
   StyledDashboardCTAContainer,
@@ -44,7 +44,7 @@ export const DashboardProfileCard = () => {
           </StyledDashboardProfileCardhelpsTitle>
           <StyledDashboardProfileCardHelpList>
             {user.userProfile[helpField].slice(0, 3).map((help, index) => {
-              const helpDetails = ProfileCardHelps.find(
+              const helpDetails = ProfileHelps.find(
                 (helpConstant) => helpConstant.value === help.name
               );
               if (helpDetails) {

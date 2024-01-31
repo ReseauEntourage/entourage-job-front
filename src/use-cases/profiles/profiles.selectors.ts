@@ -24,6 +24,10 @@ export function selectProfiles(state: RootState) {
   return state.profiles.profiles;
 }
 
+export function selectProfilesIsResetFilters(state: RootState) {
+  return state.profiles.profilesIsResetFilters;
+}
+
 export function selectProfilesFilters(state: RootState) {
   return state.profiles.profilesFilters;
 }

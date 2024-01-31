@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import { ProfileCard } from '../Card/ProfileCard';
+import { ProfileCard } from 'src/components/utils/Cards/ProfileCard';
 import { USER_ROLES } from 'src/constants/users';
 import { CardList } from './CardList';
 import { CardListItem } from './CardListItem';

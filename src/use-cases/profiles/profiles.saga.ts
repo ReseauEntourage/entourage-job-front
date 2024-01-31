@@ -14,18 +14,29 @@ const {
   fetchProfilesSucceeded,
   fetchProfilesFailed,
   setProfilesFilters,
+  setProfilesSearchFilter,
+  setProfilesRoleFilter,
+  setProfilesHelpsFilter,
+  setProfilesBusinessLinesFilter,
+  setProfilesDepartmentsFilter,
   incrementProfilesOffset,
+  resetProfilesOffset,
   postInternalMessageRequested,
   postInternalMessageSucceeded,
   postInternalMessageFailed,
 } = slice.actions;
 
-function* fetchProfilesSagaRequested() {
+function* fetchProfilesNextPageSaga() {
   const hasFetchedAll = yield* select(selectProfilesHasFetchedAll);
 
   if (!hasFetchedAll) {
     yield* put(fetchProfilesRequested());
   }
+}
+
+function* fetchProfilesUpdatedFiltersSaga() {
+  yield* put(resetProfilesOffset());
+  yield* put(fetchProfilesRequested());
 }
 
 function* fetchProfilesSaga() {
@@ -69,8 +80,19 @@ function* postInternalMessageSaga(
 
 export function* saga() {
   yield* takeLatest(fetchProfilesRequested, fetchProfilesSaga);
-  yield* takeLatest(setProfilesFilters, fetchProfilesSagaRequested);
-  yield* takeLatest(incrementProfilesOffset, fetchProfilesSagaRequested);
+  yield* takeLatest(setProfilesFilters, fetchProfilesUpdatedFiltersSaga);
+  yield* takeLatest(setProfilesSearchFilter, fetchProfilesUpdatedFiltersSaga);
+  yield* takeLatest(setProfilesRoleFilter, fetchProfilesUpdatedFiltersSaga);
+  yield* takeLatest(setProfilesHelpsFilter, fetchProfilesUpdatedFiltersSaga);
+  yield* takeLatest(
+    setProfilesBusinessLinesFilter,
+    fetchProfilesUpdatedFiltersSaga
+  );
+  yield* takeLatest(
+    setProfilesDepartmentsFilter,
+    fetchProfilesUpdatedFiltersSaga
+  );
+  yield* takeLatest(incrementProfilesOffset, fetchProfilesNextPageSaga);
   yield* takeLatest(fetchSelectedProfileRequested, fetchSelectedProfileSaga);
   yield* takeLatest(postInternalMessageRequested, postInternalMessageSaga);
 }

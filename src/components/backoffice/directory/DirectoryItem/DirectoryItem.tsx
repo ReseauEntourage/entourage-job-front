@@ -1,6 +1,6 @@
 import React from 'react';
-import { ProfileCard } from 'src/components/utils/Card/ProfileCard';
 import { CardListItem } from 'src/components/utils/CardList';
+import { ProfileCard } from 'src/components/utils/Cards/ProfileCard';
 import { BusinessLineValue } from 'src/constants';
 import { Department } from 'src/constants/departements';
 import { HelpNames } from 'src/constants/helps';

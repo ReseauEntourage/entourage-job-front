@@ -1,25 +1,33 @@
+import _ from 'lodash';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useRole } from 'src/components/backoffice/useRole';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useRole } from 'src/hooks/queryParams/useRole';
 import { usePrevious } from 'src/hooks/utils';
-import { profilesActions } from 'src/use-cases/profiles';
-import { isRoleIncluded, mutateToArray } from 'src/utils';
-import { useDirectoryFiltersParams } from './useDirectoryFiltersParams';
+import {
+  profilesActions,
+  selectProfilesIsResetFilters,
+} from 'src/use-cases/profiles';
+import { isRoleIncluded } from 'src/utils';
+import { useDirectoryFiltersQueryParams } from './useDirectoryFiltersQueryParams';
 
 const route = '/backoffice/annuaire';
 
 export function useDirectoryFilters() {
   const { replace } = useRouter();
+  const user = useAuthenticatedUser();
 
-  const { search, helps, businessLines, departments } =
-    useDirectoryFiltersParams();
+  const isResetFilters = useSelector(selectProfilesIsResetFilters);
+  const prevIsResetFilters = usePrevious(isResetFilters);
+
+  const [isFirstRequest, setIsFirstRequest] = useState(true);
 
   const dispatch = useDispatch();
 
-  const user = useAuthenticatedUser();
+  const directoryFiltersParams = useDirectoryFiltersQueryParams();
+  const { search, helps, businessLines, departments } = directoryFiltersParams;
 
   const role = useRole();
   const prevRole = usePrevious(role);
@@ -31,70 +39,130 @@ export function useDirectoryFilters() {
   useEffect(() => {
     if (!role) {
       if (isRoleIncluded(CANDIDATE_USER_ROLES, user.role)) {
-        replace({
-          pathname: route,
-          query: {
-            helps,
-            businessLines,
-            departments,
-            role: USER_ROLES.COACH,
+        replace(
+          {
+            pathname: route,
+            query: {
+              ...directoryFiltersParams,
+              role: USER_ROLES.COACH,
+            },
           },
-        });
+          undefined,
+          { shallow: true }
+        );
       } else {
-        replace({
-          pathname: route,
-          query: {
-            helps,
-            businessLines,
-            departments,
-            role: CANDIDATE_USER_ROLES,
+        replace(
+          {
+            pathname: route,
+            query: {
+              ...directoryFiltersParams,
+              role: CANDIDATE_USER_ROLES,
+            },
           },
-        });
+          undefined,
+          { shallow: true }
+        );
       }
     }
-  }, [businessLines, departments, helps, replace, role, user.role]);
+  }, [
+    replace,
+    businessLines,
+    departments,
+    helps,
+    role,
+    search,
+    user.role,
+    directoryFiltersParams,
+  ]);
 
   useEffect(() => {
-    if (role && role.length > 0 && role !== prevRole) {
-      dispatch(profilesActions.setProfilesFilters({ role }));
-    }
-  }, [dispatch, prevRole, role]);
-
-  useEffect(() => {
-    if (search !== prevSearch) {
-      dispatch(profilesActions.setProfilesFilters({ search }));
-    }
-  }, [dispatch, prevRole, prevSearch, role, search]);
-
-  useEffect(() => {
-    if (helps !== prevHelps) {
+    if (isFirstRequest && role && role.length > 0) {
       dispatch(
         profilesActions.setProfilesFilters({
-          helps: helps ? mutateToArray(helps) : undefined,
+          role,
+          search,
+          helps,
+          businessLines,
+          departments,
+        })
+      );
+      setIsFirstRequest(false);
+    }
+  }, [
+    dispatch,
+    businessLines,
+    departments,
+    helps,
+    isFirstRequest,
+    role,
+    search,
+  ]);
+
+  useEffect(() => {
+    if (isResetFilters && !prevIsResetFilters) {
+      dispatch(
+        profilesActions.setProfilesFilters({
+          role,
+          search: null,
+          helps: [],
+          businessLines: [],
+          departments: [],
         })
       );
     }
-  }, [departments, dispatch, helps, prevHelps]);
+  }, [
+    dispatch,
+    businessLines,
+    departments,
+    helps,
+    role,
+    search,
+    isFirstRequest,
+    isResetFilters,
+    prevIsResetFilters,
+  ]);
 
   useEffect(() => {
-    if (departments !== prevDepartments) {
-      dispatch(
-        profilesActions.setProfilesFilters({
-          departments: departments ? mutateToArray(departments) : undefined,
-        })
-      );
+    if (!isFirstRequest && !isResetFilters && !_.isEqual(role, prevRole)) {
+      dispatch(profilesActions.setProfilesRoleFilter(role));
     }
-  }, [departments, dispatch, prevDepartments]);
+  }, [dispatch, isFirstRequest, role, prevRole, isResetFilters]);
 
   useEffect(() => {
-    if (businessLines !== prevBusinessLines) {
-      dispatch(
-        profilesActions.setProfilesFilters({
-          businessLines: businessLines
-            ? mutateToArray(businessLines)
-            : undefined,
-        })
-      );
+    if (!isFirstRequest && !isResetFilters && !_.isEqual(search, prevSearch)) {
+      dispatch(profilesActions.setProfilesSearchFilter(search));
     }
-  }, [businessLines, dispatch, prevBusinessLines]);
+  }, [dispatch, isFirstRequest, isResetFilters, prevSearch, search]);
+
+  useEffect(() => {
+    if (!isFirstRequest && !isResetFilters && !_.isEqual(helps, prevHelps)) {
+      dispatch(profilesActions.setProfilesHelpsFilter(helps));
+    }
+  }, [dispatch, isFirstRequest, helps, prevHelps, isResetFilters]);
+
+  useEffect(() => {
+    if (
+      !isFirstRequest &&
+      !isResetFilters &&
+      !_.isEqual(departments, prevDepartments)
+    ) {
+      dispatch(profilesActions.setProfilesDepartmentsFilter(departments));
+    }
+  }, [dispatch, isFirstRequest, departments, prevDepartments, isResetFilters]);
+
+  useEffect(() => {
+    if (
+      !isFirstRequest &&
+      !isResetFilters &&
+      !_.isEqual(businessLines, prevBusinessLines)
+    ) {
+      dispatch(profilesActions.setProfilesBusinessLinesFilter(businessLines));
+    }
+  }, [
+    dispatch,
+    isFirstRequest,
+    businessLines,
+    prevBusinessLines,
+    isResetFilters,
+  ]);
 }
