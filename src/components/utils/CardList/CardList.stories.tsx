@@ -38,6 +38,7 @@ const cards: ProfileCardProps[] = new Array(50)
         { name: 'ouvrier', order: 1 },
       ],
       department: 'Paris (75)',
+      isAvailable: false,
     },
     {
       userId: uuid(),
@@ -51,6 +52,7 @@ const cards: ProfileCardProps[] = new Array(50)
       ],
       ambitions: [{ name: 'développeur', order: 0 }],
       department: 'Paris (75)',
+      isAvailable: true,
     },
   ])
   .reduce((acc, val) => [...acc, ...val], []);
@@ -65,6 +67,7 @@ const list = cards.map(
     businessLines,
     ambitions,
     department,
+    isAvailable,
   }) => (
     <CardListItem>
       <ProfileCard
@@ -76,6 +79,7 @@ const list = cards.map(
         businessLines={businessLines}
         helps={helps}
         ambitions={ambitions}
+        isAvailable={isAvailable}
       />
     </CardListItem>
   )

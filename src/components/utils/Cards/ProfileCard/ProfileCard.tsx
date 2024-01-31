@@ -20,8 +20,10 @@ import {
 import { useImageFallback } from 'src/hooks/useImageFallback';
 import { gaEvent } from 'src/lib/gtag';
 import { findConstantFromValue, isRoleIncluded, sortByOrder } from 'src/utils';
+import { AvailabilityTag } from './AvailabilityTag/AvailabilityTag';
 import {
   StyledProfileCard,
+  StyledProfileCardAvailability,
   StyledProfileCardBusinessLines,
   StyledProfileCardContent,
   StyledProfileCardDepartment,
@@ -63,6 +65,7 @@ interface ProfileCardProps {
   userCandidate?: UserCandidateWithUsers;
   department?: Department;
   job?: string;
+  isAvailable: boolean;
 }
 
 const getLabelsDependingOnRole = (role) => {
@@ -97,6 +100,7 @@ export function ProfileCard({
   ambitions,
   userCandidate,
   job,
+  isAvailable,
 }: ProfileCardProps) {
   const { urlImg, fallbackToCVImage } = useImageFallback({
     userId,
@@ -144,6 +148,9 @@ export function ProfileCard({
             )}
             <Img src="/static/img/gradient.png" alt="" cover />
           </StyledProfileCardPicture>
+          <StyledProfileCardAvailability>
+            <AvailabilityTag isAvailable={isAvailable} />
+          </StyledProfileCardAvailability>
           <StyledProfileCardInfoContainer>
             <StyledProfileCardName>
               <H3

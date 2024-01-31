@@ -531,6 +531,7 @@ export type PublicProfile = {
   department: Department;
   currentJob: string;
   description: string;
+  isAvailable: boolean;
   helpNeeds: { name: HelpNames }[];
   helpOffers: { name: HelpNames }[];
   networkBusinessLines: {
