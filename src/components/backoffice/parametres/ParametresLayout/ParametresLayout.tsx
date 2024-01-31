@@ -1,7 +1,7 @@
 import React from 'react';
 import {
-  StyledProfileGrid,
-  StyledProfileLayout,
+  StyledBackofficeGrid,
+  StyledBackofficeBackground,
 } from '../../Backoffice.styles';
 import { useConfirmationToaster } from '../useConfirmationToaster';
 import { Card, Section } from 'src/components/utils';
@@ -30,10 +30,10 @@ export const ParametresLayout = () => {
   useConfirmationToaster();
 
   return (
-    <StyledProfileLayout>
+    <StyledBackofficeBackground>
       <HeaderParametres />
       <Section className="custom-page">
-        <StyledProfileGrid className={`${isDesktop ? '' : 'mobile'}`}>
+        <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
           <StyledParametresLeftColumn
             className={`${isDesktop ? '' : 'mobile'}`}
           >
@@ -71,8 +71,8 @@ export const ParametresLayout = () => {
               </>
             )}
           </StyledParametresRightColumn>
-        </StyledProfileGrid>
+        </StyledBackofficeGrid>
       </Section>
-    </StyledProfileLayout>
+    </StyledBackofficeBackground>
   );
 };

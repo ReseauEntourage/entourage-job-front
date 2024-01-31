@@ -1,5 +1,8 @@
 import React from 'react';
-import { StyledProfileGrid, StyledProfileLayout } from '../Backoffice.styles';
+import {
+  StyledBackofficeGrid,
+  StyledBackofficeBackground,
+} from '../Backoffice.styles';
 import { LayoutBackOffice } from '../LayoutBackOffice';
 import { Section } from 'src/components/utils';
 import { useIsDesktop } from 'src/hooks/utils';
@@ -21,10 +24,10 @@ export const Profile = () => {
     <LayoutBackOffice
       title={`Profil de ${selectedProfile.firstName} ${selectedProfile.lastName}`}
     >
-      <StyledProfileLayout>
+      <StyledBackofficeBackground>
         <HeaderProfile />
         <Section className="custom-page">
-          <StyledProfileGrid className={`${isDesktop ? '' : 'mobile'}`}>
+          <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
             <StyledProfileLeftColumn className={`${isDesktop ? '' : 'mobile'}`}>
               <ProfileProfessionalInformationCard />
               <ProfileHelpInformationCard />
@@ -34,9 +37,9 @@ export const Profile = () => {
             >
               <ProfileContactCard />
             </StyledProfileRightColumn>
-          </StyledProfileGrid>
+          </StyledBackofficeGrid>
         </Section>
-      </StyledProfileLayout>
+      </StyledBackofficeBackground>
     </LayoutBackOffice>
   );
 };
