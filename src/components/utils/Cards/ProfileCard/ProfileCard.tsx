@@ -20,7 +20,7 @@ import {
 import { useImageFallback } from 'src/hooks/useImageFallback';
 import { gaEvent } from 'src/lib/gtag';
 import { findConstantFromValue, isRoleIncluded, sortByOrder } from 'src/utils';
-import { AvailabilityTag } from './AvailabilityTag/AvailabilityTag';
+import { AvailabilityTag } from 'src/components/utils/AvailabilityTag';
 import {
   StyledProfileCard,
   StyledProfileCardAvailability,
@@ -68,7 +68,7 @@ interface ProfileCardProps {
   isAvailable: boolean;
 }
 
-const getLabelsDependingOnRole = (role) => {
+const getLabelsDependingOnRole = (role: UserRole) => {
   if (isRoleIncluded(CANDIDATE_USER_ROLES, role)) {
     return {
       businessLines: 'Je recherche un emploi dans\xa0:',

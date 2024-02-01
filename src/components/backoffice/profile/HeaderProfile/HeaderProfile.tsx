@@ -1,7 +1,9 @@
 import React from 'react';
 import {
+  StyledHeaderNameAndRole,
   StyledHeaderProfile,
   StyledHeaderProfileContent,
+  StyledHeaderProfileDescription,
   StyledHeaderProfileNameContainer,
   StyledHeaderProfilePicture,
   StyledHeaderProfilePictureContainer,
@@ -9,8 +11,9 @@ import {
   StyledMobileHeaderProfileTitlesContainer,
 } from '../../Backoffice.styles';
 import { useSelectSelectedProfile } from '../useSelectedProfile';
-import { ImgProfile, Section } from 'src/components/utils';
-import { AvailabilityTag } from 'src/components/utils/Cards/ProfileCard/AvailabilityTag/AvailabilityTag';
+import { useContextualRole } from 'src/components/backoffice/useContextualRole';
+import { ImgProfile, Section, Tag } from 'src/components/utils';
+import { AvailabilityTag } from 'src/components/utils/AvailabilityTag/AvailabilityTag';
 import { H1, H2, H5, H6 } from 'src/components/utils/Headings';
 import { useIsDesktop } from 'src/hooks/utils';
 import { StyledHeaderProfileDescriptionParagraphe } from './HeaderProfile.styles';
@@ -19,7 +22,9 @@ export const HeaderProfile = () => {
   const isDesktop = useIsDesktop();
   const size = isDesktop ? 146 : 64;
   const profile = useSelectSelectedProfile();
-  if (!profile) return null;
+
+  const { contextualRole } = useContextualRole(profile.role);
+
   return (
     <StyledHeaderProfile className={`${isDesktop ? '' : 'mobile'}`}>
       <Section>
@@ -44,14 +49,17 @@ export const HeaderProfile = () => {
           {isDesktop ? (
             <StyledHeaderProfileTextContainer>
               <StyledHeaderProfileNameContainer>
-                <H1
-                  title={
-                    <>
-                      {profile.firstName} {profile.lastName}
-                    </>
-                  }
-                  color="black"
-                />
+                <StyledHeaderNameAndRole isDesktop={isDesktop}>
+                  <H1
+                    title={
+                      <>
+                        {profile.firstName} {profile.lastName}
+                      </>
+                    }
+                    color="black"
+                  />
+                  <Tag content={contextualRole} style="secondary" />
+                </StyledHeaderNameAndRole>
                 <AvailabilityTag isAvailable={profile.isAvailable} />
               </StyledHeaderProfileNameContainer>
               {profile.department && (
@@ -63,13 +71,15 @@ export const HeaderProfile = () => {
                   color="black"
                 />
               )}
-              <StyledHeaderProfileDescriptionParagraphe>
-                {profile.description}
-              </StyledHeaderProfileDescriptionParagraphe>
+              <StyledHeaderProfileDescription>
+                <StyledHeaderProfileDescriptionParagraphe>
+                  &ldquo;{profile.description}&rdquo;
+                </StyledHeaderProfileDescriptionParagraphe>
+              </StyledHeaderProfileDescription>
             </StyledHeaderProfileTextContainer>
           ) : (
             <StyledMobileHeaderProfileTitlesContainer>
-              <StyledHeaderProfileNameContainer>
+              <StyledHeaderNameAndRole isDesktop={isDesktop}>
                 <H2
                   title={
                     <>
@@ -78,8 +88,8 @@ export const HeaderProfile = () => {
                   }
                   color="black"
                 />
-                <AvailabilityTag isAvailable={profile.isAvailable} />
-              </StyledHeaderProfileNameContainer>
+                <Tag content={contextualRole} style="secondary" />
+              </StyledHeaderNameAndRole>
               {profile.department && (
                 <H6
                   title={
@@ -93,9 +103,12 @@ export const HeaderProfile = () => {
           )}
         </StyledHeaderProfileContent>
         {!isDesktop && (
-          <StyledHeaderProfileDescriptionParagraphe>
-            {profile.description}
-          </StyledHeaderProfileDescriptionParagraphe>
+          <StyledHeaderProfileDescription>
+            <AvailabilityTag isAvailable={profile.isAvailable} />
+            <StyledHeaderProfileDescriptionParagraphe>
+              &ldquo;{profile.description}&rdquo;
+            </StyledHeaderProfileDescriptionParagraphe>
+          </StyledHeaderProfileDescription>
         )}
       </Section>
     </StyledHeaderProfile>

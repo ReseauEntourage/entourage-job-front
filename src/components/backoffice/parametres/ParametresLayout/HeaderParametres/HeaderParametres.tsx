@@ -3,21 +3,25 @@ import EditIcon from 'assets/icons/editIcon.svg';
 import { useOpenCorrespondingModal } from '../UserInformationCard/useOpenModal';
 import { Api } from 'src/api';
 import {
+  StyledHeaderNameAndRole,
   StyledHeaderProfile,
   StyledHeaderProfileContent,
+  StyledHeaderProfileDescription,
   StyledHeaderProfileNameContainer,
   StyledHeaderProfilePicture,
   StyledHeaderProfilePictureContainer,
   StyledHeaderProfileTextContainer,
   StyledMobileHeaderProfileTitlesContainer,
 } from 'src/components/backoffice/Backoffice.styles';
+import { useContextualRole } from 'src/components/backoffice/useContextualRole';
 import {
   ButtonIcon,
   ButtonMock,
   ImgProfile,
   Section,
+  Tag,
 } from 'src/components/utils';
-import { AvailabilityTag } from 'src/components/utils/Cards/ProfileCard/AvailabilityTag/AvailabilityTag';
+import { AvailabilityTag } from 'src/components/utils/AvailabilityTag/AvailabilityTag';
 import { H1, H2, H5, H6 } from 'src/components/utils/Headings';
 import { ImageInput } from 'src/components/utils/Inputs';
 import { Spinner } from 'src/components/utils/Spinner';
@@ -44,6 +48,8 @@ export const HeaderParametres = () => {
     [USER_ROLES.COACH, USER_ROLES.CANDIDATE, USER_ROLES.CANDIDATE_EXTERNAL],
     user.role
   );
+
+  const { contextualRole } = useContextualRole(user.role);
 
   return (
     <StyledHeaderProfile className={`${isDesktop ? '' : 'mobile'}`}>
@@ -105,15 +111,20 @@ export const HeaderParametres = () => {
           {isDesktop ? (
             <StyledHeaderProfileTextContainer>
               <StyledHeaderProfileNameContainer>
-                <H1
-                  title={
-                    <>
-                      {user.firstName} {user.lastName}
-                    </>
-                  }
-                  color="black"
-                />
-                <AvailabilityTag isAvailable={user.userProfile.isAvailable} />
+                <StyledHeaderNameAndRole isDesktop={isDesktop}>
+                  <H1
+                    title={
+                      <>
+                        {user.firstName} {user.lastName}
+                      </>
+                    }
+                    color="black"
+                  />
+                  <Tag content={contextualRole} style="secondary" />
+                </StyledHeaderNameAndRole>
+                {shouldShowAllProfile && (
+                  <AvailabilityTag isAvailable={user.userProfile.isAvailable} />
+                )}
               </StyledHeaderProfileNameContainer>
               {shouldShowAllProfile && (
                 <>
@@ -132,7 +143,7 @@ export const HeaderParametres = () => {
             </StyledHeaderProfileTextContainer>
           ) : (
             <StyledMobileHeaderProfileTitlesContainer>
-              <StyledHeaderProfileNameContainer>
+              <StyledHeaderNameAndRole isDesktop={isDesktop}>
                 <H2
                   title={
                     <>
@@ -141,8 +152,8 @@ export const HeaderParametres = () => {
                   }
                   color="black"
                 />
-                <AvailabilityTag isAvailable={user.userProfile.isAvailable} />
-              </StyledHeaderProfileNameContainer>
+                <Tag content={contextualRole} style="secondary" />
+              </StyledHeaderNameAndRole>
               {shouldShowAllProfile && (
                 <>
                   {user.userProfile.department ? (
@@ -159,7 +170,12 @@ export const HeaderParametres = () => {
             </StyledMobileHeaderProfileTitlesContainer>
           )}
         </StyledHeaderProfileContent>
-        {!isDesktop && shouldShowAllProfile && <ParametresDescription />}
+        {!isDesktop && shouldShowAllProfile && (
+          <StyledHeaderProfileDescription>
+            <AvailabilityTag isAvailable={user.userProfile.isAvailable} />
+            <ParametresDescription />
+          </StyledHeaderProfileDescription>
+        )}
       </Section>
     </StyledHeaderProfile>
   );

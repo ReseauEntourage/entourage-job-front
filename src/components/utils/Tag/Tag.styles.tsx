@@ -31,6 +31,7 @@ export const StyledTag = styled.div`
   border-radius: 30px;
   border: 1px solid;
   font-weight: 400;
+  overflow-wrap: normal;
   ${({ customStyle }) => styleVariants[customStyle]}
   ${({ size }) => sizeVariants[size]}
 `;

@@ -70,15 +70,14 @@ export const StyledMobileHeaderProfileTitlesContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  > h2 {
-    margin-bottom: 10px;
-  }
 
-  > h6 {
+  h6 {
     margin-top: 0;
   }
-  > h5,
-  > h6 {
+
+  h2,
+  h5,
+  h6 {
     margin-bottom: 0;
   }
 `;
@@ -88,12 +87,13 @@ export const StyledHeaderProfileTextContainer = styled.div`
   flex: 1;
   flex-direction: column;
 
-  > h5,
-  > h6 {
+  h1,
+  h5,
+  h6 {
     margin-bottom: 0;
   }
 
-  > a {
+  a {
     line-height: 24px;
   }
 `;
@@ -104,6 +104,23 @@ export const StyledHeaderProfileNameContainer = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   flex: 1;
+`;
+
+export const StyledHeaderNameAndRole = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: ${({ isDesktop }) => (isDesktop ? 20 : 10)}px;
+  h1,
+  h2 {
+    margin-right: 16px;
+  }
+`;
+
+export const StyledHeaderProfileDescription = styled.div`
+  margin-top: 20px;
+  font-style: italic;
+  color: ${COLORS.darkGrayFont};
 `;
 
 export const StyledNoResult = styled.div`
