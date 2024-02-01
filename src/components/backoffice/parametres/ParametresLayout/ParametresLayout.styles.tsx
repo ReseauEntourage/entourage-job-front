@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const StyledParametresLeftColumn = styled.div`
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  flex: 1;
   gap: 40px;
   min-width: 400px;
   &.mobile {
@@ -16,7 +16,7 @@ export const StyledParametresLeftColumn = styled.div`
 export const StyledParametresRightColumn = styled.div`
   display: flex;
   flex-direction: column;
-  flex-grow: 2;
+  flex: 2;
   gap: 40px;
   &.mobile {
     width: 100%;

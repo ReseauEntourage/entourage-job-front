@@ -68,6 +68,7 @@ export const StyledHeaderProfileContent = styled.div`
 
 export const StyledMobileHeaderProfileTitlesContainer = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
   > h2 {
     margin-bottom: 10px;
@@ -84,6 +85,7 @@ export const StyledMobileHeaderProfileTitlesContainer = styled.div`
 
 export const StyledHeaderProfileTextContainer = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
 
   > h5,
@@ -94,6 +96,14 @@ export const StyledHeaderProfileTextContainer = styled.div`
   > a {
     line-height: 24px;
   }
+`;
+
+export const StyledHeaderProfileNameContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex: 1;
 `;
 
 export const StyledNoResult = styled.div`

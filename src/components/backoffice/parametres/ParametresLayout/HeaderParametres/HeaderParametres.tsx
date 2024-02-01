@@ -5,10 +5,11 @@ import { Api } from 'src/api';
 import {
   StyledHeaderProfile,
   StyledHeaderProfileContent,
-  StyledMobileHeaderProfileTitlesContainer,
+  StyledHeaderProfileNameContainer,
   StyledHeaderProfilePicture,
   StyledHeaderProfilePictureContainer,
   StyledHeaderProfileTextContainer,
+  StyledMobileHeaderProfileTitlesContainer,
 } from 'src/components/backoffice/Backoffice.styles';
 import {
   ButtonIcon,
@@ -16,6 +17,7 @@ import {
   ImgProfile,
   Section,
 } from 'src/components/utils';
+import { AvailabilityTag } from 'src/components/utils/Cards/ProfileCard/AvailabilityTag/AvailabilityTag';
 import { H1, H2, H5, H6 } from 'src/components/utils/Headings';
 import { ImageInput } from 'src/components/utils/Inputs';
 import { Spinner } from 'src/components/utils/Spinner';
@@ -102,14 +104,17 @@ export const HeaderParametres = () => {
           </StyledHeaderProfilePictureContainer>
           {isDesktop ? (
             <StyledHeaderProfileTextContainer>
-              <H1
-                title={
-                  <>
-                    {user.firstName} {user.lastName}
-                  </>
-                }
-                color="black"
-              />
+              <StyledHeaderProfileNameContainer>
+                <H1
+                  title={
+                    <>
+                      {user.firstName} {user.lastName}
+                    </>
+                  }
+                  color="black"
+                />
+                <AvailabilityTag isAvailable={user.userProfile.isAvailable} />
+              </StyledHeaderProfileNameContainer>
               {shouldShowAllProfile && (
                 <>
                   {user.userProfile.department ? (
@@ -127,14 +132,17 @@ export const HeaderParametres = () => {
             </StyledHeaderProfileTextContainer>
           ) : (
             <StyledMobileHeaderProfileTitlesContainer>
-              <H2
-                title={
-                  <>
-                    {user.firstName} {user.lastName}
-                  </>
-                }
-                color="black"
-              />
+              <StyledHeaderProfileNameContainer>
+                <H2
+                  title={
+                    <>
+                      {user.firstName} {user.lastName}
+                    </>
+                  }
+                  color="black"
+                />
+                <AvailabilityTag isAvailable={user.userProfile.isAvailable} />
+              </StyledHeaderProfileNameContainer>
               {shouldShowAllProfile && (
                 <>
                   {user.userProfile.department ? (

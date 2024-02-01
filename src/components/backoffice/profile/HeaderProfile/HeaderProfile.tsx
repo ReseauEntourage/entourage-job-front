@@ -2,6 +2,7 @@ import React from 'react';
 import {
   StyledHeaderProfile,
   StyledHeaderProfileContent,
+  StyledHeaderProfileNameContainer,
   StyledHeaderProfilePicture,
   StyledHeaderProfilePictureContainer,
   StyledHeaderProfileTextContainer,
@@ -9,6 +10,7 @@ import {
 } from '../../Backoffice.styles';
 import { useSelectSelectedProfile } from '../useSelectedProfile';
 import { ImgProfile, Section } from 'src/components/utils';
+import { AvailabilityTag } from 'src/components/utils/Cards/ProfileCard/AvailabilityTag/AvailabilityTag';
 import { H1, H2, H5, H6 } from 'src/components/utils/Headings';
 import { useIsDesktop } from 'src/hooks/utils';
 import { StyledHeaderProfileDescriptionParagraphe } from './HeaderProfile.styles';
@@ -41,14 +43,17 @@ export const HeaderProfile = () => {
           </StyledHeaderProfilePictureContainer>
           {isDesktop ? (
             <StyledHeaderProfileTextContainer>
-              <H1
-                title={
-                  <>
-                    {profile.firstName} {profile.lastName}
-                  </>
-                }
-                color="black"
-              />
+              <StyledHeaderProfileNameContainer>
+                <H1
+                  title={
+                    <>
+                      {profile.firstName} {profile.lastName}
+                    </>
+                  }
+                  color="black"
+                />
+                <AvailabilityTag isAvailable={profile.isAvailable} />
+              </StyledHeaderProfileNameContainer>
               {profile.department && (
                 <H5
                   title={
@@ -64,14 +69,17 @@ export const HeaderProfile = () => {
             </StyledHeaderProfileTextContainer>
           ) : (
             <StyledMobileHeaderProfileTitlesContainer>
-              <H2
-                title={
-                  <>
-                    {profile.firstName} {profile.lastName}
-                  </>
-                }
-                color="black"
-              />
+              <StyledHeaderProfileNameContainer>
+                <H2
+                  title={
+                    <>
+                      {profile.firstName} {profile.lastName}
+                    </>
+                  }
+                  color="black"
+                />
+                <AvailabilityTag isAvailable={profile.isAvailable} />
+              </StyledHeaderProfileNameContainer>
               {profile.department && (
                 <H6
                   title={

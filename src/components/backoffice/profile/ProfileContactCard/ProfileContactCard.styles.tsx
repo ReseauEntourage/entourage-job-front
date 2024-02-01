@@ -33,7 +33,9 @@ export const StyledContactMessage = styled.div`
   background-color: ${COLORS.hoverOrange};
   border-radius: 10px;
   padding: 10px;
-  margin-bottom: 20px;
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
   font-size: 13px;
   svg {
     margin-right: 10px;

@@ -74,6 +74,7 @@ export type UserProfile = {
   currentJob: string;
   description: string;
   department: Department;
+  isAvailable: boolean;
   helpNeeds: { name: HelpNames }[];
   helpOffers: { name: HelpNames }[];
   networkBusinessLines: {

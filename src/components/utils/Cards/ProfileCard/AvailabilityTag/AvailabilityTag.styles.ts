@@ -8,6 +8,8 @@ export const StyledAvailabilityTagContainer = styled.div`
   background-color: ${COLORS.white};
   padding: 2px 8px;
   font-size: 12px;
+  border: 1px solid ${COLORS.gray};
+  overflow-wrap: normal;
 `;
 
 export const StyledAvailabilityTagDot = styled.div<{ isAvailable: boolean }>`
