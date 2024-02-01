@@ -10,31 +10,55 @@ import { FilterConstant } from './utils';
 
 export const ProfileCardHelps: (FilterConstant<HelpNames> & {
   icon: JSX.Element;
+  shortTitle: {
+    Candidat: string;
+    Coach: string;
+  };
 })[] = [
   {
     icon: <TipsIllu />,
     value: 'tips',
     label: 'Soutien',
+    shortTitle: {
+      Candidat: 'Demander un conseil',
+      Coach: 'Conseiller un(e) candidat(e)',
+    },
   },
   {
     icon: <MaletteIllu />,
     value: 'interview',
     label: 'Entretien',
+    shortTitle: {
+      Candidat: 'Préparer un entretien',
+      Coach: 'Aider à préparer un entretien',
+    },
   },
   {
     icon: <CVIllu />,
     value: 'cv',
     label: 'CV',
+    shortTitle: {
+      Candidat: 'Créer mon CV',
+      Coach: 'Aider à réaliser un CV',
+    },
   },
   {
     icon: <ConversationIllu />,
     value: 'event',
     label: 'Événement',
+    shortTitle: {
+      Candidat: 'Rencontrer la communauté',
+      Coach: 'Rencontrer la communauté',
+    },
   },
   {
     icon: <RSIllu />,
     value: 'network',
     label: 'Partage',
+    shortTitle: {
+      Candidat: 'Développer mon réseau',
+      Coach: 'Partager mon réseau',
+    },
   },
 ];
 export const ParametresHelpCardTitles: {

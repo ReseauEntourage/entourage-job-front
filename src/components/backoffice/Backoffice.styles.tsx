@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledBackofficeBackground = styled.div`
-  background-color: #f3f3f3;
+  background-color: ${COLORS.lightGrayBackground};
 `;
 
 export const StyledBackofficeGrid = styled.div`
