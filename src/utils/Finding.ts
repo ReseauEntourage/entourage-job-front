@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { UserWithUserCandidate } from 'src/api/types';
+import { UserCandidateWithUsers, UserWithUserCandidate } from 'src/api/types';
 import { OFFER_STATUS } from 'src/constants';
 import {
   CANDIDATE_USER_ROLES,
@@ -83,13 +83,13 @@ export function isRoleIncluded(
   return _.difference(subset, superset).length === 0;
 }
 
-export function getUserCandidateFromCoachOrCandidate(member) {
+export function getUserCandidateFromCoachOrCandidate(member: UserWithUserCandidate) : UserCandidateWithUsers | UserCandidateWithUsers[] | null{
   if (member) {
-    if (isRoleIncluded(CANDIDATE_USER_ROLES, member.role)) {
+    if (isRoleIncluded(CANDIDATE_USER_ROLES, member.role) && !!member.candidat) {
       return member.candidat;
     }
 
-    if (isRoleIncluded(COACH_USER_ROLES, member.role)) {
+    if (isRoleIncluded(COACH_USER_ROLES, member.role) && !!member.coaches) {
       return member.coaches;
     }
   }
@@ -133,7 +133,6 @@ export function getUserCandidateFromCoach(coach, candidateId) {
       });
     }
   }
-
   return null;
 }
 

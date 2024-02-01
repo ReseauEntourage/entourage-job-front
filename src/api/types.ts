@@ -292,6 +292,13 @@ export type Opportunity = {
   createdBy?: string;
 };
 
+export type OpportunityType = 'public' | 'private';
+
+export type OpportunityTabCount = {
+  status: -1 | 0 | 1 | 2 | 3 | 4 | "archived";
+  count: number;
+}
+
 export type OpportunityDto = {
   title: string;
   isPublic: boolean;

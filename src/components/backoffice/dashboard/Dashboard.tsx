@@ -11,10 +11,11 @@ import { useIsDesktop } from 'src/hooks/utils';
 import { isRoleIncluded } from 'src/utils';
 import {
   StyledDashboardLeftColumn,
-  StyledParametresRightColumn,
+  StyledDashboardRightColumn,
 } from './Dashboard.styles';
 import { DashboardAvailabilityCard } from './DashboardAvailabilityCard';
 import { DashboardProfileCard } from './DashboardProfileCard';
+import { DashboardOpportunitiesCard } from './DashboardOpportunitiesCard';
 
 export const Dashboard = () => {
   const isDesktop = useIsDesktop();
@@ -36,9 +37,11 @@ export const Dashboard = () => {
             <DashboardProfileCard />
             {shouldShowAllProfile && <DashboardAvailabilityCard />}
           </StyledDashboardLeftColumn>
-          <StyledParametresRightColumn
+          <StyledDashboardRightColumn
             className={`${isDesktop ? '' : 'mobile'}`}
-          />
+          >
+            <DashboardOpportunitiesCard />
+          </StyledDashboardRightColumn>
         </StyledBackofficeGrid>
       </Section>
     </StyledBackofficeBackground>

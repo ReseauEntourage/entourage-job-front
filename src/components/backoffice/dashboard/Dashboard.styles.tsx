@@ -14,7 +14,7 @@ export const StyledDashboardLeftColumn = styled.div`
   }
 `;
 
-export const StyledParametresRightColumn = styled.div`
+export const StyledDashboardRightColumn = styled.div`
   display: flex;
   flex-direction: column;
   flex: 2;

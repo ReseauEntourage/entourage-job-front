@@ -33,7 +33,7 @@ export const StyledDashboardProfileCardHelps = styled.div`
 export const StyledDashboardProfileCardhelpsTitle = styled.div`
   width: 100%;
   padding-bottom: 15px;
-  border-bottom: 1px solid #fddfd2;
+  border-bottom: 1px solid #feeae3;
   margin-bottom: 30px;
   font-size: 16px;
 `;

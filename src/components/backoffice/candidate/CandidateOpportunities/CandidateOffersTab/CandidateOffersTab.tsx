@@ -8,15 +8,13 @@ import {
   tabs,
 } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab/CandidateOffersTab.utils';
 import { FilterConstant } from 'src/constants/utils';
+import { OpportunityTabCount } from 'src/api/types';
 
 const uuidValue = uuid();
 
 interface CandidateOffersTabProps {
   activeStatus: FilterConstant[];
-  tabCounts?: {
-    status: number;
-    count: number;
-  }[];
+  tabCounts: OpportunityTabCount[];
   candidateId: string;
   isMobile: boolean;
 }
