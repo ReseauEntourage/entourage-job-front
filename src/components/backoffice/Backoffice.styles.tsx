@@ -1,11 +1,11 @@
 import styled, { css } from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledProfileLayout = styled.div`
-  background-color: #f3f3f3;
+export const StyledBackofficeBackground = styled.div`
+  background-color: ${COLORS.lightGrayBackground};
 `;
 
-export const StyledProfileGrid = styled.div`
+export const StyledBackofficeGrid = styled.div`
   display: flex;
   flex-direction: row;
   gap: 40px;

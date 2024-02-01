@@ -6,6 +6,7 @@ export const authenticatedPermissions = [
       '/backoffice/parametres',
       '/backoffice/profile/[userId]',
       '/backoffice/annuaire',
+      '/backoffice/dashboard',
     ],
     roles: '*',
   },
