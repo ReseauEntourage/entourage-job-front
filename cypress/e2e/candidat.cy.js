@@ -107,11 +107,11 @@ describe('Candidat', () => {
       cy.get('[data-testid="form-contact-internal-message-subject"]')
         .scrollIntoView()
         .type('test');
-    
+
       cy.get('[data-testid="form-contact-internal-message-message"]')
         .scrollIntoView()
         .type('test');
-        
+
 
       cy.get('[data-testid="form-confirm-form-contact-internal-message"]')
         .scrollIntoView()
@@ -392,10 +392,10 @@ describe('Candidat', () => {
     cy.fixture('auth-current-candidat-res').then((user) => {
       cy.intercept('PUT', `/user/profile/${user.id}`, {fixture: "user-profile-candidate-description-modified"}).as('putUserProfile');
     })
-    cy.get(`[data-testid="parametres-description-placeholder"]`).scrollIntoView().click();
+    cy.get(`[data-testid="profile-description-placeholder"]`).scrollIntoView().click();
     cy.get(`[data-testid="form-profile-description-description"]`).scrollIntoView().type('hello');
     cy.get(`[data-testid="form-confirm-form-profile-description"]`).scrollIntoView().click();
-    cy.get(`[data-testid="parametres-description"]`).should('contain', "hello");
+    cy.get(`[data-testid="profile-description"]`).should('contain', "hello");
 
     // change profile picture
     cy.get(`[data-testid="profile-picture-upload-desktop"]`).selectFile('assets/image-fixture.jpg', {force: true});

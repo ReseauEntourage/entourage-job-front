@@ -4,6 +4,7 @@ import React, { useMemo } from 'react';
 import HandsIcon from 'assets/icons/illu-coeur-mains-ouvertes.svg';
 import CaseIcon from 'assets/icons/illu-malette.svg';
 import { UserCandidateWithUsers } from 'src/api/types';
+import { AvailabilityTag } from 'src/components/utils/AvailabilityTag';
 import { H3, H4, H5 } from 'src/components/utils/Headings';
 import { Img } from 'src/components/utils/Img';
 import { Tag } from 'src/components/utils/Tag';
@@ -20,7 +21,6 @@ import {
 import { useImageFallback } from 'src/hooks/useImageFallback';
 import { gaEvent } from 'src/lib/gtag';
 import { findConstantFromValue, isRoleIncluded, sortByOrder } from 'src/utils';
-import { AvailabilityTag } from 'src/components/utils/AvailabilityTag';
 import {
   StyledProfileCard,
   StyledProfileCardAvailability,
