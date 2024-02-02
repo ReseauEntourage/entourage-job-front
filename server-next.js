@@ -1,4 +1,4 @@
-import './tracer';
+require('./tracer');
 
 const next = require('next');
 const cors = require('cors');

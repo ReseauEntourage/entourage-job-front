@@ -1,4 +1,4 @@
-import tracer from 'dd-trace';
+const tracer = require('dd-trace');
 
 const ENV = `${process.env.NODE_ENV}`;
 
@@ -8,4 +8,6 @@ if (ENV === 'production') {
   });
 }
 
-export { tracer };
+module.exports = {
+  tracer,
+};
