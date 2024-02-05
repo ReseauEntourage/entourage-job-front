@@ -2,12 +2,12 @@ import React from 'react';
 import { FiltersCheckboxes } from 'src/components/filters/FiltersCheckboxes';
 import { FiltersDropdowns } from 'src/components/filters/FiltersDropdowns';
 import { Offcanvas } from 'src/components/utils/Offcanvas';
-import { AnyToFix } from 'src/utils/Types';
+import { Filter, FilterObject } from 'src/constants/utils';
 
 interface FilterSideBarProps {
-  filterData: AnyToFix; // to be typed
-  filters: AnyToFix; // to be typed
-  setFilters: (arg1: AnyToFix) => void; // to be typed
+  filters: FilterObject;
+  setFilters: (updatedFilters: FilterObject) => void;
+  filterData: Filter[];
 }
 
 export const FiltersSideBar = ({

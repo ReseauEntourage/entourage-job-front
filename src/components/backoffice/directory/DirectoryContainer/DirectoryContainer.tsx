@@ -1,13 +1,29 @@
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { DirectoryList } from '../DirectoryList';
+import { useDirectoryFiltersQueryParams } from '../useDirectoryFiltersQueryParams';
+import { SearchBar } from 'src/components/filters/SearchBar';
 import { Button } from 'src/components/utils';
+import { BUSINESS_LINES, DirectoryFilters } from 'src/constants';
+import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { ProfileHelps } from 'src/constants/helps';
+import { GA_TAGS } from 'src/constants/tags';
 import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
   USER_ROLES,
 } from 'src/constants/users';
-import { isRoleIncluded } from 'src/utils';
+import { useFilters } from 'src/hooks';
+import { useIsMobile } from 'src/hooks/utils';
+import {
+  profilesActions,
+  selectProfilesBusinessLinesFilters,
+  selectProfilesDepartmentsFilters,
+  selectProfilesHelpsFilters,
+  selectProfilesSearchFilter,
+} from 'src/use-cases/profiles';
+import { findConstantFromValue, isRoleIncluded } from 'src/utils';
 import {
   StyledDirectoryButtonContainer,
   StyledDirectoryContainer,
@@ -19,10 +35,52 @@ const route = '/backoffice/annuaire';
 export function DirectoryContainer() {
   const { push } = useRouter();
   const roleFilter = useRoleFilter();
+  const dispatch = useDispatch();
+
+  const isMobile = useIsMobile();
+  const directoryFiltersParams = useDirectoryFiltersQueryParams();
+
+  const { setFilters, setSearch, resetFilters } = useFilters(
+    DirectoryFilters,
+    `/backoffice/annuaire`,
+    [],
+    GA_TAGS.PAGE_ANNUAIRE_SUPPRIMER_FILTRES_CLIC
+  );
+
+  const departmentsFilters = useSelector(selectProfilesDepartmentsFilters);
+  const helpsFilters = useSelector(selectProfilesHelpsFilters);
+  const businessLinesFilters = useSelector(selectProfilesBusinessLinesFilters);
+  const search = useSelector(selectProfilesSearchFilter);
+
+  const filters = useMemo(() => {
+    return {
+      departments: departmentsFilters.map((department) =>
+        findConstantFromValue(department, DEPARTMENTS_FILTERS)
+      ),
+      helps: helpsFilters.map((help) =>
+        findConstantFromValue(help, ProfileHelps)
+      ),
+      businessLines: businessLinesFilters.map((businessLine) =>
+        findConstantFromValue(businessLine, BUSINESS_LINES)
+      ),
+    };
+  }, [departmentsFilters, helpsFilters, businessLinesFilters]);
 
   return (
     <StyledDirectoryContainer>
-      <StyledDirectoryButtonContainer>
+      <SearchBar
+        filtersConstants={DirectoryFilters}
+        filters={filters}
+        resetFilters={() => {
+          dispatch(profilesActions.resetProfilesFilters());
+          resetFilters();
+        }}
+        search={search || undefined}
+        setSearch={setSearch}
+        setFilters={setFilters}
+        placeholder="Rechercher..."
+      />
+      <StyledDirectoryButtonContainer isMobile={isMobile}>
         <Button
           style={`custom-secondary${
             isRoleIncluded(CANDIDATE_USER_ROLES, roleFilter) ? '-inverted' : ''
@@ -30,7 +88,7 @@ export function DirectoryContainer() {
           onClick={() => {
             push({
               pathname: route,
-              query: { role: CANDIDATE_USER_ROLES },
+              query: { ...directoryFiltersParams, role: CANDIDATE_USER_ROLES },
             });
           }}
         >
@@ -43,7 +101,7 @@ export function DirectoryContainer() {
           onClick={() => {
             push({
               pathname: route,
-              query: { role: USER_ROLES.COACH },
+              query: { ...directoryFiltersParams, role: USER_ROLES.COACH },
             });
           }}
         >

@@ -31,7 +31,11 @@ export const OpportunitiesContainerMobile = ({
               {details}
             </StyledDetailsContainer>
           ) : (
-            <OpportunitiesList isLoading={isLoading} list={list} />
+            <OpportunitiesList
+              isLoading={isLoading}
+              list={list}
+              noContent={noContent}
+            />
           )}
         </>
       ) : (

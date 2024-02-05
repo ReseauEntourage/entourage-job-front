@@ -1,29 +1,15 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import { StyledCardCommon } from '../Cards.styles';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledCard = styled.div`
-  background-color: #fff;
-  box-shadow: 0px 4px 4px 0px ${COLORS.lightgray};
+export const StyledCard = styled(StyledCardCommon)`
   border-radius: 20px;
-  position: relative;
   border: 1px solid ${COLORS.lightgray};
 
   &.mobile {
     width: 100%;
     box-sizing: border-box;
   }
-
-  ${({ onClick }) =>
-    onClick
-      ? css`
-          cursor: pointer;
-          transition: box-shadow 0.2s ease-in-out;
-
-          &:hover {
-            box-shadow: 0px 8px 8px 0px ${COLORS.gray};
-          }
-        `
-      : ''}
 `;
 
 export const StyledCardTopContainer = styled.div`

@@ -24,12 +24,32 @@ export function selectProfiles(state: RootState) {
   return state.profiles.profiles;
 }
 
+export function selectProfilesIsResetFilters(state: RootState) {
+  return state.profiles.profilesIsResetFilters;
+}
+
 export function selectProfilesFilters(state: RootState) {
   return state.profiles.profilesFilters;
 }
 
+export function selectProfilesSearchFilter(state: RootState) {
+  return state.profiles.profilesFilters.search;
+}
+
 export function selectProfilesRoleFilter(state: RootState) {
   return state.profiles.profilesFilters.role;
+}
+
+export function selectProfilesHelpsFilters(state: RootState) {
+  return state.profiles.profilesFilters.helps;
+}
+
+export function selectProfilesDepartmentsFilters(state: RootState) {
+  return state.profiles.profilesFilters.departments;
+}
+
+export function selectProfilesBusinessLinesFilters(state: RootState) {
+  return state.profiles.profilesFilters.businessLines;
 }
 
 export function selectProfilesHasFetchedAll(state: RootState) {

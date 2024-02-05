@@ -1,21 +1,22 @@
 import _ from 'lodash';
-import { MEMBER_FILTERS_DATA, MEMBER_FILTERS_CONSTANT } from 'src/constants';
+import { MEMBER_FILTERS_DATA } from 'src/constants';
 import {
   CANDIDATE_USER_ROLES,
   COACH_USER_ROLES,
   UserRole,
 } from 'src/constants/users';
+import { Filter } from 'src/constants/utils';
 import { isRoleIncluded } from './Finding';
 
 const filterMemberTypeConstantsByRole = (
   roles: typeof CANDIDATE_USER_ROLES | typeof COACH_USER_ROLES
-): MEMBER_FILTERS_CONSTANT => {
+): Filter => {
   return {
     ...MEMBER_FILTERS_DATA[0],
     constants: MEMBER_FILTERS_DATA[0].constants.filter(({ value }) => {
-      return isRoleIncluded(roles, value);
-    }) as MEMBER_FILTERS_CONSTANT['constants'],
-  } as MEMBER_FILTERS_CONSTANT;
+      return isRoleIncluded(roles, value as UserRole);
+    }),
+  };
 };
 
 export const mutateTypeFilterDependingOnRole = (

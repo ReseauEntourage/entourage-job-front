@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
+import { StyledNoResult } from 'src/components/backoffice/Backoffice.styles';
 import { OpportunitiesContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer';
 import { AdminOpportunitiesList } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/AdminOpportunitiesList';
 import { AdminOpportunityDetailsContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/AdminOpportunityDetails/AdminOpportunityDetailsContainer';
@@ -89,11 +90,7 @@ export function OffersMemberTab({ candidateId }: OffersMemberTabProps) {
               fetchOpportunities={fetchOpportunities}
             />
           }
-          noContent={
-            <div className="uk-width-expand uk-flex uk-flex-center uk-flex-middle">
-              Aucun résultat.
-            </div>
-          }
+          noContent={<StyledNoResult>Aucun résultat</StyledNoResult>}
         />
       )}
     </>

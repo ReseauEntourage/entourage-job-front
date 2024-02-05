@@ -65,4 +65,4 @@ export const GENDERS_FILTERS = [
     label: 'Femme',
     value: GENDERS.FEMALE,
   },
-] as const;
+];

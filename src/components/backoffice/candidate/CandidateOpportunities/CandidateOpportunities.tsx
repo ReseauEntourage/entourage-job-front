@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import PlusIcon from 'assets/icons/plus.svg';
+import { StyledNoResult } from 'src/components/backoffice/Backoffice.styles';
 import { CandidateOffersTab } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab';
 import {
   candidateSearchFilters,
@@ -18,10 +19,10 @@ import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer';
 import { Button, Section } from 'src/components/utils';
-
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 import { HEIGHTS } from 'src/constants/styles';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
+import { FilterObject } from 'src/constants/utils';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
 import { useOpportunityType } from 'src/hooks/queryParams/useOpportunityType';
@@ -30,16 +31,17 @@ import { useCandidateOpportunities } from 'src/hooks/useOpportunityList';
 import { usePrevious } from 'src/hooks/utils';
 import { getUserCandidateFromCoach, isRoleIncluded } from 'src/utils/Finding';
 import { tabs } from './CandidateOffersTab/CandidateOffersTab.utils';
-import { CandidateOpportunitiesFilters } from './CandidateOpportunitiesFilters.types';
 import { useTabsCount } from './useTabsCount';
 import { useUpdateOpportunityStatus } from './useUpdateOpportunityStatus';
 
 interface CandidateOpportunitiesProps {
   search?: string;
-  filters: CandidateOpportunitiesFilters;
-  setFilters?: (updatedFilters: CandidateOpportunitiesFilters) => void;
+  filters: FilterObject<typeof OPPORTUNITY_FILTERS_DATA>;
+  setFilters?: (
+    updatedFilters: FilterObject<typeof OPPORTUNITY_FILTERS_DATA>
+  ) => void;
   resetFilters?: () => void;
-  setSearch?: (updatedSearch: string) => void;
+  setSearch?: (updatedSearch?: string) => void;
   candidateId: string;
   isMobile?: boolean;
 }
@@ -47,9 +49,9 @@ interface CandidateOpportunitiesProps {
 export const CandidateOpportunities = ({
   search,
   filters,
-  setFilters,
-  setSearch,
-  resetFilters,
+  setFilters = () => {},
+  setSearch = () => {},
+  resetFilters = () => {},
   candidateId,
   isMobile = false,
 }: CandidateOpportunitiesProps) => {
@@ -217,16 +219,11 @@ export const CandidateOpportunities = ({
           {isPublic ? (
             <Section className="custom-primary custom-fixed">
               <SearchBar
-                filtersConstants={
-                  candidateSearchFilters as typeof OPPORTUNITY_FILTERS_DATA
-                }
+                filtersConstants={candidateSearchFilters}
                 filters={filters}
-                // @ts-expect-error after enable TS strict mode. Please, try to fix it
                 resetFilters={resetFilters}
                 search={search}
-                // @ts-expect-error after enable TS strict mode. Please, try to fix it
                 setSearch={setSearch}
-                // @ts-expect-error after enable TS strict mode. Please, try to fix it
                 setFilters={setFilters}
                 placeholder="Rechercher..."
               />
@@ -235,7 +232,6 @@ export const CandidateOpportunities = ({
             <Section className="custom-primary custom-fixed">
               <CandidateOffersTab
                 activeStatus={filters.status}
-                // @ts-expect-error after enable TS strict mode. Please, try to fix it
                 tabCounts={tabCounts}
                 candidateId={candidateId}
                 isMobile={isMobile}
@@ -280,9 +276,7 @@ export const CandidateOpportunities = ({
             }
             noContent={
               isPublic ? (
-                <div className="uk-width-expand uk-flex uk-flex-center uk-flex-middle">
-                  Aucun résultat.
-                </div>
+                <StyledNoResult>Aucun résultat</StyledNoResult>
               ) : (
                 <NoOpportunities
                   // @ts-expect-error after enable TS strict mode. Please, try to fix it

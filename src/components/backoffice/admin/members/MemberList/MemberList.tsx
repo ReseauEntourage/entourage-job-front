@@ -13,6 +13,7 @@ import { BackToTop, Button, Section } from 'src/components/utils';
 import { MEMBER_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
+import { FilterObject } from 'src/constants/utils';
 import { useRole } from 'src/hooks/queryParams/useRole';
 import { useBulkActions } from 'src/hooks/useBulkActions';
 import { usePrevious } from 'src/hooks/utils';
@@ -21,13 +22,14 @@ import {
   mutateTypeFilterDependingOnRole,
 } from 'src/utils/Filters';
 import { isRoleIncluded } from 'src/utils/Finding';
-import { AnyToFix } from 'src/utils/Types';
 
 const LIMIT = 50;
 
 interface MemberListProps {
-  filters: AnyToFix; // to be typed
-  setFilters: (updatedFilters: AnyToFix) => void;
+  filters: FilterObject<typeof MEMBER_FILTERS_DATA>;
+  setFilters: (
+    updatedFilters: FilterObject<typeof MEMBER_FILTERS_DATA>
+  ) => void;
   search?: string;
   setSearch: (search?: string) => void;
   resetFilters: () => void;

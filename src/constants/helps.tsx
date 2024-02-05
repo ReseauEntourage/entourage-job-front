@@ -4,15 +4,15 @@ import ConversationIllu from 'assets/icons/illu-conversation.svg';
 import MaletteIllu from 'assets/icons/illu-malette.svg';
 import TipsIllu from 'assets/icons/illu-poignee-de-main.svg';
 import RSIllu from 'assets/icons/illu-reseaux-sociaux.svg';
-import { HelpNames } from 'src/api/types';
 import { USER_ROLES } from './users';
 import { FilterConstant } from './utils';
 
-export const ProfileCardHelps: (FilterConstant<HelpNames> & {
+export type HelpNames = 'tips' | 'interview' | 'cv' | 'network' | 'event';
+
+export const ProfileHelps: (FilterConstant<HelpNames> & {
   icon: JSX.Element;
   shortTitle: {
-    Candidat: string;
-    Coach: string;
+    [K in typeof USER_ROLES.CANDIDATE | typeof USER_ROLES.COACH]: string;
   };
 })[] = [
   {
@@ -20,8 +20,8 @@ export const ProfileCardHelps: (FilterConstant<HelpNames> & {
     value: 'tips',
     label: 'Soutien',
     shortTitle: {
-      Candidat: 'Demander un conseil',
-      Coach: 'Conseiller un(e) candidat(e)',
+      [USER_ROLES.CANDIDATE]: 'Demander un conseil',
+      [USER_ROLES.COACH]: 'Conseiller un(e) candidat(e)',
     },
   },
   {
@@ -29,8 +29,8 @@ export const ProfileCardHelps: (FilterConstant<HelpNames> & {
     value: 'interview',
     label: 'Entretien',
     shortTitle: {
-      Candidat: 'Préparer un entretien',
-      Coach: 'Aider à préparer un entretien',
+      [USER_ROLES.CANDIDATE]: 'Préparer un entretien',
+      [USER_ROLES.COACH]: 'Aider à préparer un entretien',
     },
   },
   {
@@ -38,8 +38,8 @@ export const ProfileCardHelps: (FilterConstant<HelpNames> & {
     value: 'cv',
     label: 'CV',
     shortTitle: {
-      Candidat: 'Créer mon CV',
-      Coach: 'Aider à réaliser un CV',
+      [USER_ROLES.CANDIDATE]: 'Créer mon CV',
+      [USER_ROLES.COACH]: 'Aider à réaliser un CV',
     },
   },
   {
@@ -47,8 +47,8 @@ export const ProfileCardHelps: (FilterConstant<HelpNames> & {
     value: 'event',
     label: 'Événement',
     shortTitle: {
-      Candidat: 'Rencontrer la communauté',
-      Coach: 'Rencontrer la communauté',
+      [USER_ROLES.CANDIDATE]: 'Rencontrer la communauté',
+      [USER_ROLES.COACH]: 'Rencontrer la communauté',
     },
   },
   {
@@ -56,8 +56,8 @@ export const ProfileCardHelps: (FilterConstant<HelpNames> & {
     value: 'network',
     label: 'Partage',
     shortTitle: {
-      Candidat: 'Développer mon réseau',
-      Coach: 'Partager mon réseau',
+      [USER_ROLES.CANDIDATE]: 'Développer mon réseau',
+      [USER_ROLES.COACH]: 'Partager mon réseau',
     },
   },
 ];

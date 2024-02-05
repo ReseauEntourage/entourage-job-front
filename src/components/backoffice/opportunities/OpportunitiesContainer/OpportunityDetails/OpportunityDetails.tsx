@@ -1,9 +1,10 @@
 import React from 'react';
-import {
-  StyledOpportunityDetailsVariableHeightContainer,
-  StyledOpportunityDetailsContentContainer,
-} from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/OpportunityDetails.styles';
+import { StyledNoResult } from 'src/components/backoffice/Backoffice.styles';
 import { OverlayLoader } from 'src/components/utils/OverlayLoader';
+import {
+  StyledOpportunityDetailsContentContainer,
+  StyledOpportunityDetailsVariableHeightContainer,
+} from './OpportunityDetails.styles';
 
 export const OpportunityDetails = ({
   isLoading = false,
@@ -19,7 +20,7 @@ export const OpportunityDetails = ({
       contentHeight={contentHeight}
     >
       <StyledOpportunityDetailsContentContainer>
-        {details}
+        {details || <StyledNoResult>Aucune offre sélectionnée</StyledNoResult>}
         {isLoading && <OverlayLoader />}
       </StyledOpportunityDetailsContentContainer>
     </StyledOpportunityDetailsVariableHeightContainer>

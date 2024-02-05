@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledBackofficeBackground = styled.div`
-  background-color: ${COLORS.lightGrayBackground};
+  background-color: ${COLORS.lightgray};
 `;
 
 export const StyledBackofficeGrid = styled.div`
@@ -94,4 +94,14 @@ export const StyledHeaderProfileTextContainer = styled.div`
   > a {
     line-height: 24px;
   }
+`;
+
+export const StyledNoResult = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-style: italic;
+  color: ${COLORS.darkGray};
 `;

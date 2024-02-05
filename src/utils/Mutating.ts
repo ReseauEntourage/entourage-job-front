@@ -1,6 +1,7 @@
 import { Opportunity, OpportunityUser } from 'src/api/types';
 import { OFFER_STATUS } from 'src/constants';
 import { findOfferStatus } from 'src/utils/Finding';
+import { AnyCantFix } from './Types';
 
 const getAlternateDefaultOfferStatus = (
   offer: Opportunity = {} as Opportunity,
@@ -22,3 +23,15 @@ export const mutateDefaultOfferStatus = (offer, opportunityUser) => {
     ...OFFER_STATUS.slice(1),
   ];
 };
+
+export function mutateToArray<T>(
+  value: T | null | undefined
+): T extends AnyCantFix[] | null | undefined ? T : T[] {
+  if (value === null || value === undefined) {
+    return value as T extends AnyCantFix[] | null | undefined ? T : never;
+  }
+  if (Array.isArray(value)) {
+    return value as T extends AnyCantFix[] | null | undefined ? T : never;
+  }
+  return [value] as T extends AnyCantFix[] | null | undefined ? never : T[];
+}

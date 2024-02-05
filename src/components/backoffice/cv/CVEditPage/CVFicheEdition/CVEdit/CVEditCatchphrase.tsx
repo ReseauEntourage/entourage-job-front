@@ -10,7 +10,7 @@ export const CVEditCatchphrase = ({
   onChange,
 }: {
   catchphrase: string;
-  onChange?: (arg1: { catchphrase: string }) => void; // to be typed
+  onChange?: (updatedCV: { catchphrase: string }) => void;
 }) => {
   return (
     <div className="uk-card uk-card-default uk-card-body">

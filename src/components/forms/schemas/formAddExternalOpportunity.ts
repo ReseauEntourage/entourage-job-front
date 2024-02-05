@@ -1,5 +1,5 @@
 import moment from 'moment/moment';
-import { isAfter } from 'validator';
+import { isAfter, isEmail } from 'validator';
 import { FormSchema } from '../FormSchema';
 import { Api } from 'src/api';
 import {
@@ -106,6 +106,13 @@ export const formAddExternalOpportunityCandidate: FormSchema<{
       component: 'text-input',
       type: 'email',
       title: 'Adresse mail du recruteur',
+      rules: [
+        {
+          method: (fieldValue) =>
+            !fieldValue || fieldValue.length === 0 || isEmail(fieldValue),
+          message: 'Invalide',
+        },
+      ],
     },
     {
       id: 'offerDetails',

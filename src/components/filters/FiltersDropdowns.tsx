@@ -3,16 +3,16 @@ import React, { useCallback } from 'react';
 import { v4 as uuid } from 'uuid';
 import CaretDownIcon from 'assets/icons/caret-down.svg';
 import { Button, Tag } from 'src/components/utils';
+import { Filter, FilterConstant, FilterObject } from 'src/constants/utils';
 import { gaEvent } from 'src/lib/gtag';
-import { AnyToFix } from 'src/utils/Types';
 
 const uuidValue1 = uuid();
 const uuidValue2 = uuid();
 
 interface FiltersDropdownProps {
-  filters: AnyToFix; // to be typed
-  setFilters: (arg1: AnyToFix) => void; // to be typed
-  filterData: AnyToFix; // to be typed
+  filters: FilterObject;
+  setFilters: (updatedFilters: FilterObject) => void;
+  filterData: Filter[];
   hideOnMobile?: boolean;
   fullWidth?: boolean;
   smallSelectors?: boolean;
@@ -29,16 +29,17 @@ export const FiltersDropdowns = ({
   smallSelectors,
 }: FiltersDropdownProps) => {
   const renderFilters = useCallback(
-    (filterConstants, key, tag, mandatory, uuidValue) => {
-      const reducedFilters: { value: string; label: string }[] =
-        Object.values(filterConstants); // to be typed properly
-
-      return reducedFilters.map((filterConst, i) => {
-        const indexInSelectedFilters = filters[key].findIndex(
-          (filter: { value: string }) => {
-            return filter && filter.value === filterConst.value;
-          }
-        );
+    (
+      filterConstants: FilterConstant[],
+      key: string,
+      tag?: { action: string },
+      mandatory?: boolean,
+      uuidValue?: string
+    ) => {
+      return filterConstants.map((filterConst, i) => {
+        const indexInSelectedFilters = filters[key].findIndex((filter) => {
+          return filter && filter.value === filterConst.value;
+        });
 
         const isFilterSelected = indexInSelectedFilters > -1;
 
@@ -71,7 +72,7 @@ export const FiltersDropdowns = ({
             key={id}
             htmlFor={id}
             className={`uk-flex uk-flex-middle uk-text-small ${
-              i < reducedFilters.length - 1 ? 'uk-margin-small-bottom' : ''
+              i < filterConstants.length - 1 ? 'uk-margin-small-bottom' : ''
             }`}
             onClick={(event) => event.stopPropagation()}
           >
