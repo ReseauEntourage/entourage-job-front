@@ -5,6 +5,7 @@
     "role": "Candidat",
     "zone": "LILLE",
     "currentJob": null,
+    "isAvailable": true,
     "helpOffers": [],
     "helpNeeds": [
         {
