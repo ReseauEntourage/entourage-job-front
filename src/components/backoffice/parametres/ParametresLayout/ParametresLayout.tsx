@@ -3,8 +3,8 @@ import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,
 } from '../../Backoffice.styles';
-import { HeaderProfile } from '../../HeaderProfile';
 import { useConfirmationToaster } from '../useConfirmationToaster';
+import { HeaderProfile } from 'src/components/headers/HeaderProfile';
 import { Card, Section } from 'src/components/utils';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';

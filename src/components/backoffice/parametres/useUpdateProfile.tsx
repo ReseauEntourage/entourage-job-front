@@ -32,10 +32,7 @@ export const useHelpField = (userRole: UserRole | undefined) => {
   return helpField;
 };
 
-export const useUpdateProfile = (
-  user: UserWithUserCandidate,
-  onClose?: () => void
-) => {
+export const useUpdateProfile = (user: UserWithUserCandidate) => {
   const dispatch = useDispatch();
 
   const [closeModal, setCloseModal] = useState<boolean>(false);
@@ -48,10 +45,9 @@ export const useUpdateProfile = (
 
   useEffect(() => {
     if (updateProfileStatus === ReduxRequestEvents.SUCCEEDED) {
-      if (onClose) onClose();
       setCloseModal(true);
     }
-  }, [updateProfileStatus, onClose]);
+  }, [updateProfileStatus]);
 
   const updateUserProfile = useCallback(
     (newProfileData: Partial<UserProfile>): void => {

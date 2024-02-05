@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { StyledHelpModalSelectOption } from 'src/components/backoffice/parametres/ParametresLayout/ParametresHelpCard/ParametresHelpCard.styles';
-import { Card } from 'src/components/utils/Cards/SimpleCard';
+import { Card } from 'src/components/utils/Cards/Card';
 import { H6 } from 'src/components/utils/Headings';
 import { ParametresHelpCardContents } from 'src/constants/helps';
 import { USER_ROLES } from 'src/constants/users';

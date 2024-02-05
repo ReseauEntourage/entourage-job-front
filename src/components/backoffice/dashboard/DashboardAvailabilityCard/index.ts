@@ -1,1 +1,1 @@
-export * from './DashboardProfileCard';
+export * from './DashboardAvailabilityCard';

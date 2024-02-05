@@ -1,9 +1,9 @@
 import React from 'react';
 import {
-  StyledBackofficeGrid,
   StyledBackofficeBackground,
+  StyledBackofficeGrid,
 } from '../Backoffice.styles';
-import { HeaderProfile } from '../HeaderProfile';
+import { HeaderProfile } from 'src/components/headers/HeaderProfile';
 import { Section } from 'src/components/utils';
 import { useIsDesktop } from 'src/hooks/utils';
 import {

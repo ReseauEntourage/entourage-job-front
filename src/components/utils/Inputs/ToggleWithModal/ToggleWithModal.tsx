@@ -24,7 +24,7 @@ interface ToggleWithModalProps<S extends FormSchema<AnyCantFix>> {
   id: string;
   title: string;
   subtitle?: React.ReactNode;
-  modal: ModalType | React.ReactNode;
+  modal?: ModalType | React.ReactNode;
   onToggle: (
     value: boolean,
     fields?: ExtractFormSchemaValidation<S>,
@@ -53,8 +53,8 @@ export const ToggleWithModal = <S extends FormSchema<AnyCantFix>>({
             type="checkbox"
             checked={isToggled}
             onChange={async () => {
-              if (isToggled) {
-                await onToggle(false);
+              if (!modal || isToggled) {
+                await onToggle(!isToggled);
                 // custom Modal (usually with redux)
               } else if (modal && React.isValidElement(modal)) {
                 openModal(modal);

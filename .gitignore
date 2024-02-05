@@ -11,3 +11,4 @@ coverage/
 /cypress/support
 /cypress/videos
 /tsconfig.tsbuildinfo
+/storybook-static
