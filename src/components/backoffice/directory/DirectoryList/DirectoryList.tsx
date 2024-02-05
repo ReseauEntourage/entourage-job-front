@@ -47,6 +47,7 @@ export function DirectoryList() {
           businessLines={businessLines}
           ambitions={profile.searchAmbitions}
           job={profile.currentJob}
+          isAvailable={profile.isAvailable}
         />
       );
     });

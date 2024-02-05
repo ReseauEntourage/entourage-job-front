@@ -24,6 +24,7 @@ interface DirectoryItemProps {
   }[];
   department: Department;
   job?: string;
+  isAvailable: boolean;
 }
 
 export function DirectoryItem({
@@ -36,6 +37,7 @@ export function DirectoryItem({
   businessLines,
   ambitions,
   job,
+  isAvailable,
 }: DirectoryItemProps) {
   return (
     <CardListItem dataTestId={id}>
@@ -49,6 +51,7 @@ export function DirectoryItem({
         helps={helps}
         ambitions={ambitions}
         job={job}
+        isAvailable={isAvailable}
       />
     </CardListItem>
   );

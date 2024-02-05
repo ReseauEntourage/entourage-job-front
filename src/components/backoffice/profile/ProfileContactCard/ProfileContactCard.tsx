@@ -60,35 +60,44 @@ export const ProfileContactCard = () => {
       isLoading={loadingSending}
     >
       <StyledProfileContactForm>
-        {isFormSent ? (
-          <div data-testid="profile-contact-form-confirm">
-            <StyledConfirmCheck>
-              <Check />
-            </StyledConfirmCheck>
-            Votre message a été envoyé
-          </div>
-        ) : (
+        {selectedProfile.isAvailable ? (
           <>
-            {existingContactMessage && (
-              <StyledContactMessage>
-                <AvionPapier />
-                {existingContactMessage}
-              </StyledContactMessage>
+            {isFormSent ? (
+              <div data-testid="profile-contact-form-confirm">
+                <StyledConfirmCheck>
+                  <Check />
+                </StyledConfirmCheck>
+                Votre message a été envoyé
+              </div>
+            ) : (
+              <>
+                {existingContactMessage && (
+                  <StyledContactMessage>
+                    <AvionPapier />
+                    {existingContactMessage}
+                  </StyledContactMessage>
+                )}
+                <FormWithValidation
+                  formSchema={formContactInternalMessage}
+                  onSubmit={async (values) => {
+                    gaEvent(GA_TAGS.PROFILE_DETAILS_CONTACT_SEND_CLIC);
+                    dispatch(
+                      profilesActions.postInternalMessageRequested({
+                        ...values,
+                        addresseeUserId: selectedProfile?.id,
+                      })
+                    );
+                  }}
+                  noCompulsory
+                />
+              </>
             )}
-            <FormWithValidation
-              formSchema={formContactInternalMessage}
-              onSubmit={async (values) => {
-                gaEvent(GA_TAGS.PROFILE_DETAILS_CONTACT_SEND_CLIC);
-                dispatch(
-                  profilesActions.postInternalMessageRequested({
-                    ...values,
-                    addresseeUserId: selectedProfile?.id,
-                  })
-                );
-              }}
-              noCompulsory
-            />
           </>
+        ) : (
+          <StyledContactMessage>
+            {selectedProfile.firstName} n&apos;est pas disponible pour le moment
+            pour recevoir des demandes de contact
+          </StyledContactMessage>
         )}
       </StyledProfileContactForm>
     </Card>

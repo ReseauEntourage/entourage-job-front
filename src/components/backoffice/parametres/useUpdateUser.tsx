@@ -8,10 +8,7 @@ import {
   updateUserSelectors,
 } from 'src/use-cases/authentication';
 
-export const useUpdateUser = (
-  user: UserWithUserCandidate,
-  onClose?: () => void
-) => {
+export const useUpdateUser = (user: UserWithUserCandidate) => {
   const dispatch = useDispatch();
 
   const [closeModal, setCloseModal] = useState<boolean>(false);
@@ -22,10 +19,9 @@ export const useUpdateUser = (
 
   useEffect(() => {
     if (updateUserStatus === ReduxRequestEvents.SUCCEEDED) {
-      if (onClose) onClose();
       setCloseModal(true);
     }
-  }, [updateUserStatus, onClose]);
+  }, [updateUserStatus]);
 
   const updateUser = useCallback(
     (newUserData: Partial<UserWithUserCandidate>) => {

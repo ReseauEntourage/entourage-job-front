@@ -3,7 +3,7 @@ import { Layout } from 'src/components/Layout';
 
 export const LayoutBackOffice = ({
   children,
-  title,
+  title = 'Espace personnel',
 }: {
   children: React.ReactNode;
   title?: string;
@@ -13,8 +13,4 @@ export const LayoutBackOffice = ({
       {children}
     </Layout>
   );
-};
-
-LayoutBackOffice.defaultProps = {
-  title: 'Espace perso',
 };

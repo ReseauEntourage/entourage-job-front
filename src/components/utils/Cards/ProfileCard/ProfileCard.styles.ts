@@ -38,6 +38,15 @@ export const StyledProfileCardInfoContainer = styled.div`
   bottom: 24px;
 `;
 
+export const StyledProfileCardAvailability = styled.div`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 10px;
+  right: 10px;
+`;
+
 export const StyledProfileCardName = styled.div`
   text-overflow: ellipsis;
   overflow: hidden;

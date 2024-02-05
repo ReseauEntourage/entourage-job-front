@@ -33,7 +33,7 @@ export const StyledNLForm = styled.div`
       .input-label {
         display: flex;
         flex-direction: row;
-        flex-grow: 1;
+        flex: 1;
         margin-bottom: 16px;
       }
     }

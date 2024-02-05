@@ -74,6 +74,7 @@ export type UserProfile = {
   currentJob: string;
   description: string;
   department: Department;
+  isAvailable: boolean;
   helpNeeds: { name: HelpNames }[];
   helpOffers: { name: HelpNames }[];
   networkBusinessLines: {
@@ -531,6 +532,7 @@ export type PublicProfile = {
   department: Department;
   currentJob: string;
   description: string;
+  isAvailable: boolean;
   helpNeeds: { name: HelpNames }[];
   helpOffers: { name: HelpNames }[];
   networkBusinessLines: {

@@ -25,18 +25,18 @@ export const StyledCardTitleContainer = styled.div`
   margin-right: 25px;
   margin-left: 25px;
   padding-bottom: 25px;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 
   h5 {
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
 
   &.no-border {
     border-bottom: none;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 
     > h5 {
-      margin-bottom: 0px;
+      margin-bottom: 0;
     }
   }
 `;

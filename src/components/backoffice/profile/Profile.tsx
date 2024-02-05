@@ -1,11 +1,11 @@
 import React from 'react';
 import {
-  StyledBackofficeGrid,
   StyledBackofficeBackground,
+  StyledBackofficeGrid,
 } from '../Backoffice.styles';
+import { HeaderProfile } from 'src/components/headers/HeaderProfile';
 import { Section } from 'src/components/utils';
 import { useIsDesktop } from 'src/hooks/utils';
-import { HeaderProfile } from './HeaderProfile';
 import {
   StyledProfileLeftColumn,
   StyledProfileRightColumn,
@@ -13,13 +13,24 @@ import {
 import { ProfileContactCard } from './ProfileContactCard';
 import { ProfileHelpInformationCard } from './ProfileHelpInformationCard';
 import { ProfileProfessionalInformationCard } from './ProfileProfessionalInformationCard';
+import { useSelectSelectedProfile } from './useSelectedProfile';
 
 export const Profile = () => {
   const isDesktop = useIsDesktop();
+  const selectedProfile = useSelectSelectedProfile();
 
   return (
     <StyledBackofficeBackground>
-      <HeaderProfile />
+      <HeaderProfile
+        id={selectedProfile.id}
+        firstName={selectedProfile.firstName}
+        lastName={selectedProfile.lastName}
+        description={selectedProfile.description}
+        role={selectedProfile.role}
+        department={selectedProfile.department}
+        isAvailable={selectedProfile.isAvailable}
+        isEditable={false}
+      />
       <Section className="custom-page">
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
           <StyledProfileLeftColumn className={`${isDesktop ? '' : 'mobile'}`}>

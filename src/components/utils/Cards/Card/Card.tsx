@@ -20,12 +20,7 @@ import {
 
 interface CardProps {
   children: React.ReactNode;
-  // badge?: React.ReactNode;
-  // style?: 'default' | 'primary' | 'secondary';
   title?: React.ReactNode;
-  // body?: boolean;
-  // hover?: boolean;
-  // size?: 'small' | 'large' | 'default';
   onClick?: () => void;
   editCallback?: () => void;
   isLoading?: boolean;
@@ -37,10 +32,6 @@ interface CardProps {
 
 export const Card = ({
   title,
-  // style = 'default',
-  // body = true,
-  // hover = false,
-  // size,
   onClick,
   children,
   editCallback,

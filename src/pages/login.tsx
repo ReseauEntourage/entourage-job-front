@@ -65,7 +65,7 @@ const Login = () => {
     <Layout title="Connexion - LinkedOut">
       <Section size="large" style="muted">
         <div className="uk-flex uk-flex-center">
-          <div className="uk-width-1-2@m uk-card uk-card-default uk-card-body">
+          <div className="uk-width-1-2@m uk-card uk-card-default uk-card-body uk-flex uk-flex-column">
             <h1>Connexion</h1>
             <FormWithValidation
               formSchema={formLogin}
@@ -80,7 +80,7 @@ const Login = () => {
             />
             <SimpleLink
               isExternal
-              className="uk-text-small uk-margin-remove"
+              className="uk-text-small uk-margin-small-top"
               onClick={() => {
                 openModal(
                   <StepperModal

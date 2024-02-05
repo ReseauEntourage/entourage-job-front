@@ -4,6 +4,7 @@ import React, { useMemo } from 'react';
 import HandsIcon from 'assets/icons/illu-coeur-mains-ouvertes.svg';
 import CaseIcon from 'assets/icons/illu-malette.svg';
 import { UserCandidateWithUsers } from 'src/api/types';
+import { AvailabilityTag } from 'src/components/utils/AvailabilityTag';
 import { H3, H4, H5 } from 'src/components/utils/Headings';
 import { Img } from 'src/components/utils/Img';
 import { Tag } from 'src/components/utils/Tag';
@@ -22,6 +23,7 @@ import { gaEvent } from 'src/lib/gtag';
 import { findConstantFromValue, isRoleIncluded, sortByOrder } from 'src/utils';
 import {
   StyledProfileCard,
+  StyledProfileCardAvailability,
   StyledProfileCardBusinessLines,
   StyledProfileCardContent,
   StyledProfileCardDepartment,
@@ -63,9 +65,10 @@ interface ProfileCardProps {
   userCandidate?: UserCandidateWithUsers;
   department?: Department;
   job?: string;
+  isAvailable: boolean;
 }
 
-const getLabelsDependingOnRole = (role) => {
+const getLabelsDependingOnRole = (role: UserRole) => {
   if (isRoleIncluded(CANDIDATE_USER_ROLES, role)) {
     return {
       businessLines: 'Je recherche un emploi dans\xa0:',
@@ -97,6 +100,7 @@ export function ProfileCard({
   ambitions,
   userCandidate,
   job,
+  isAvailable,
 }: ProfileCardProps) {
   const { urlImg, fallbackToCVImage } = useImageFallback({
     userId,
@@ -144,6 +148,9 @@ export function ProfileCard({
             )}
             <Img src="/static/img/gradient.png" alt="" cover />
           </StyledProfileCardPicture>
+          <StyledProfileCardAvailability>
+            <AvailabilityTag isAvailable={isAvailable} />
+          </StyledProfileCardAvailability>
           <StyledProfileCardInfoContainer>
             <StyledProfileCardName>
               <H3
