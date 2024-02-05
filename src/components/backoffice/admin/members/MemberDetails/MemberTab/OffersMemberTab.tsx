@@ -14,7 +14,7 @@ interface OffersMemberTabProps {
   candidateId: string;
 }
 
-const contentHeight = 0;
+const filtersAndTabsHeight = 0;
 
 export function OffersMemberTab({ candidateId }: OffersMemberTabProps) {
   const { replace } = useRouter();
@@ -86,7 +86,7 @@ export function OffersMemberTab({ candidateId }: OffersMemberTabProps) {
           isLoading={loading}
           details={
             <AdminOpportunityDetailsContainer
-              filtersAndTabsHeight={contentHeight}
+              filtersAndTabsHeight={filtersAndTabsHeight}
               fetchOpportunities={fetchOpportunities}
             />
           }

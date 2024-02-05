@@ -20,7 +20,6 @@ import { openModal } from 'src/components/modals/Modal';
 import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer';
 import { Button, Section } from 'src/components/utils';
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
-import { HEIGHTS } from 'src/constants/styles';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { FilterObject } from 'src/constants/utils';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -66,9 +65,7 @@ export const CandidateOpportunities = ({
 
   const isPublic = opportunityType === 'public';
 
-  const contentHeight = isPublic
-    ? HEIGHTS.SEARCH_BAR_HEIGHT
-    : HEIGHTS.TABS_HEIGHT;
+  const filtersAndTabsHeight = 0;
 
   const [offset, setOffset] = useState<number>(0);
   const [hasFetchedAll, setHasFetchedAll] = useState(false);
@@ -217,7 +214,7 @@ export const CandidateOpportunities = ({
             </Button>
           </HeaderBackoffice>
           {isPublic ? (
-            <Section className="custom-primary custom-fixed">
+            <Section className="custom-primary">
               <SearchBar
                 filtersConstants={candidateSearchFilters}
                 filters={filters}
@@ -229,7 +226,7 @@ export const CandidateOpportunities = ({
               />
             </Section>
           ) : (
-            <Section className="custom-primary custom-fixed">
+            <Section className="custom-primary">
               <CandidateOffersTab
                 activeStatus={filters.status}
                 tabCounts={tabCounts}
@@ -267,7 +264,7 @@ export const CandidateOpportunities = ({
             isLoading={loading}
             details={
               <CandidateOpportunityDetailsContainer
-                filtersAndTabsHeight={contentHeight}
+                filtersAndTabsHeight={filtersAndTabsHeight}
                 candidateId={candidateId}
                 fetchOpportunities={async () => {
                   await fetchOpportunities(true);
