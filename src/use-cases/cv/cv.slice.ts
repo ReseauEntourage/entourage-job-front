@@ -1,30 +1,28 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { CV } from 'src/api/types';
-import {
-    fetchCVAdapter,
-} from './cv.adapter';
 import { RequestState, SliceRootState } from 'src/store/utils';
+import { fetchCVAdapter } from './cv.adapter';
 
 export interface State {
-    fetchCV: RequestState<typeof fetchCVAdapter>;
-    cv: CV | null;
+  fetchCV: RequestState<typeof fetchCVAdapter>;
+  currentCv: CV | null;
 }
 
 const initialState: State = {
-    fetchCV: fetchCVAdapter.getInitialState(),
-    cv: null,
+  fetchCV: fetchCVAdapter.getInitialState(),
+  currentCv: null,
 };
 
 export const slice = createSlice({
-    name: 'cv',
-    initialState,
-    reducers: {
-        ...fetchCVAdapter.getReducers<State>((state) => state.fetchCV, {
-            fetchCVSucceeded(state, action) {
-                state.cv = action.payload;
-            },
-        }),
-    },
+  name: 'cv',
+  initialState,
+  reducers: {
+    ...fetchCVAdapter.getReducers<State>((state) => state.fetchCV, {
+      fetchCVSucceeded(state, action) {
+        state.currentCv = action.payload;
+      },
+    }),
+  },
 });
 
 export type RootState = SliceRootState<typeof slice>;

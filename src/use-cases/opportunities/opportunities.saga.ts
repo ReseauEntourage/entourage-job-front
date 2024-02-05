@@ -1,55 +1,79 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
+import { selectProfilesOffset } from '../profiles';
 import { Api } from 'src/api';
+import { Opportunity } from 'src/api/types';
+import { mutateToArray } from 'src/utils';
 import { slice } from './opportunities.slice';
-import {
-    selectOpportunitiesFilters,
-    selectOpportunitiesHasFetchedAll,
-} from './opportunities.selectors';
 
 const {
-    fetchOpportunitiesSucceeded,
-    fetchOpportunitiesFailed,
-    fetchOpportunitiesRequested,
-    fetchOpportunitiesTabCountsSucceeded,
-    fetchOpportunitiesTabCountsFailed,
-    fetchOpportunitiesTabCountsRequested,
-    setOpportunitiesFilter,
-    incrementOpportunitiesOffset,
-}= slice.actions;
+  fetchOpportunitiesAsCandidateSucceeded,
+  fetchOpportunitiesAsCandidateFailed,
+  fetchOpportunitiesAsCandidateRequested,
+  fetchOpportunitiesTabCountsSucceeded,
+  fetchOpportunitiesTabCountsFailed,
+  fetchOpportunitiesTabCountsRequested,
+  fetchOpportunitiesAsCandidateWithFilters,
+  resetOpportunitiesOffset,
+} = slice.actions;
 
-function* fetchOpportunitiesSagaRequested() {
-    const hasFetchedAll = yield* select(selectOpportunitiesHasFetchedAll);
-
-    if (!hasFetchedAll) {
-        yield* put(fetchOpportunitiesRequested());
-    }
+function* fetchOpportunitiesAsCandidateRequestedSaga(
+  action: ReturnType<typeof fetchOpportunitiesAsCandidateRequested>
+) {
+  try {
+    const { candidateId, department, businessLines, ...restFilters } =
+      action.payload;
+    const offset = yield* select(selectProfilesOffset);
+    const response = yield* call(() =>
+      Api.getAllCandidateOpportunities(candidateId, {
+        params: {
+          ...restFilters,
+          department: mutateToArray(department),
+          businessLines: mutateToArray(businessLines),
+          offset,
+        },
+      })
+    );
+    yield* put(
+      fetchOpportunitiesAsCandidateSucceeded(
+        response.data.offers as Opportunity[]
+      )
+    );
+  } catch {
+    yield* put(fetchOpportunitiesAsCandidateFailed());
+  }
 }
 
-function* fetchOpportunitiesSaga() {
-    try {
-        const {candidateId, ...restFilters} = yield* select(selectOpportunitiesFilters);
-        const response = yield* call(() => Api.getAllCandidateOpportunities(candidateId, {params: restFilters}));
-        yield* put(fetchOpportunitiesSucceeded(response.data.offers));
-    } catch {
-        yield* put(fetchOpportunitiesFailed());
-    }
+function* fetchOpportunitiesAsCandidateWithFiltersSaga(
+  action: ReturnType<typeof fetchOpportunitiesAsCandidateWithFilters>
+) {
+  yield* put(resetOpportunitiesOffset());
+  yield* put(fetchOpportunitiesAsCandidateRequested(action.payload));
 }
 
 function* fetchOpportunitiesTabCountsSaga(
-    action: ReturnType<typeof fetchOpportunitiesTabCountsRequested>
+  action: ReturnType<typeof fetchOpportunitiesTabCountsRequested>
 ) {
-    try {
-        const response = yield* call(() => Api.getOpportunitiesTabCountByCandidate(action.payload));
-        yield* put(fetchOpportunitiesTabCountsSucceeded(response.data));
-    } catch {
-        yield* put(fetchOpportunitiesTabCountsFailed());
-    }
+  try {
+    const response = yield* call(() =>
+      Api.getOpportunitiesTabCountByCandidate(action.payload)
+    );
+    yield* put(fetchOpportunitiesTabCountsSucceeded(response.data));
+  } catch {
+    yield* put(fetchOpportunitiesTabCountsFailed());
+  }
 }
 
-
 export function* saga() {
-    yield* takeLatest(fetchOpportunitiesRequested, fetchOpportunitiesSaga);
-    yield* takeLatest(setOpportunitiesFilter, fetchOpportunitiesSagaRequested);
-    yield* takeLatest(incrementOpportunitiesOffset, fetchOpportunitiesSagaRequested);
-    yield* takeLatest(fetchOpportunitiesTabCountsRequested, fetchOpportunitiesTabCountsSaga);
+  yield* takeLatest(
+    fetchOpportunitiesAsCandidateRequested,
+    fetchOpportunitiesAsCandidateRequestedSaga
+  );
+  yield* takeLatest(
+    fetchOpportunitiesTabCountsRequested,
+    fetchOpportunitiesTabCountsSaga
+  );
+  yield* takeLatest(
+    fetchOpportunitiesAsCandidateWithFilters,
+    fetchOpportunitiesAsCandidateWithFiltersSaga
+  );
 }

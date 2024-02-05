@@ -1,15 +1,23 @@
-import { Opportunity, OpportunityTabCount, OpportunityType } from 'src/api/types';
+import {
+  OpportunitiesFiltersForCandidate,
+  Opportunity,
+  OpportunityTabCount,
+} from 'src/api/types';
 import { createRequestAdapter } from 'src/store/utils';
 
-export const fetchOpportunitiesAdapter = createRequestAdapter(
-    'fetchOpportunities'
-).withPayloads<void, Opportunity[]>();
-
-
+export const fetchOpportunitiesAsCandidateAdapter = createRequestAdapter(
+  'fetchOpportunitiesAsCandidate'
+).withPayloads<
+  OpportunitiesFiltersForCandidate & {
+    candidateId: string;
+    limit: number;
+  },
+  Opportunity[]
+>();
 
 export const fetchOpportunitiesTabCountsAdapter = createRequestAdapter(
-    'fetchOpportunitiesTabCounts'
+  'fetchOpportunitiesTabCounts'
 ).withPayloads<
-    string, // userId
-    OpportunityTabCount[]
+  string, // userId
+  OpportunityTabCount[]
 >();

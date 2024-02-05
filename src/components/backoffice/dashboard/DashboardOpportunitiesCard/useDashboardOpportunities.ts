@@ -1,101 +1,128 @@
-import { ParsedUrlQueryInput } from "querystring";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { User } from "src/api/types";
-import { ReduxRequestEvents } from "src/constants";
-import { usePrevious } from "src/hooks/utils";
-import { fetchOpportunitiesSelectors, fetchOpportunitiesTabCountsSelectors, opportunitiesActions, selectOpportunities, selectOpportunitiesTabCounts } from "src/use-cases/opportunities";
-import { fetchProfilesSelectors, fetchSelectedProfileSelectors, profilesActions, selectSelectedProfile } from "src/use-cases/profiles";
-import { getCandidateIdFromCoachOrCandidate, getUserCandidateFromCoachOrCandidate } from 'src/utils';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import UIkit from 'uikit';
+import {
+  OpportunitiesFiltersForCandidate,
+  User,
+  UserCandidateWithUsers,
+  UserProfile,
+} from 'src/api/types';
+import { ReduxRequestEvents } from 'src/constants';
+import {
+  fetchOpportunitiesAsCandidateSelectors,
+  fetchOpportunitiesTabCountsSelectors,
+  opportunitiesActions,
+  selectOpportunities,
+  selectOpportunitiesTabCounts,
+} from 'src/use-cases/opportunities';
+import {
+  getCandidateIdFromCoachOrCandidate,
+  getUserCandidateFromCoachOrCandidate,
+} from 'src/utils';
 
+export const useDashboardOpportunities = (user: User) => {
+  const opportunities = useSelector(selectOpportunities);
+  const tabCounts = useSelector(selectOpportunitiesTabCounts);
 
+  const [isDataLoading, setIsDataLoading] = useState<boolean>(true);
+  const [opportunitiesDefaultFilters, setOpportunitiesDefaultFilter] =
+    useState<OpportunitiesFiltersForCandidate>();
+  const dispatch = useDispatch();
 
+  const fetchOpportunitiesStatus = useSelector(
+    fetchOpportunitiesAsCandidateSelectors.selectFetchOpportunitiesAsCandidateStatus
+  );
+  useEffect(() => {
+    if (fetchOpportunitiesStatus === ReduxRequestEvents.SUCCEEDED) {
+      setIsDataLoading(false);
+    }
+    if (fetchOpportunitiesStatus === ReduxRequestEvents.FAILED) {
+      UIkit.notification('Une erreur est survenue', 'danger');
+    }
+  }, [fetchOpportunitiesStatus, dispatch]);
 
-export const useDashboardOpportunities = (
-    user: User,
-) => {
-    const candidate = getUserCandidateFromCoachOrCandidate(user);
-    const candidateId = getCandidateIdFromCoachOrCandidate(user);
-    const opportunities = useSelector(selectOpportunities);
-    const tabCounts = useSelector(selectOpportunitiesTabCounts)
-    const userCandidateProfile = useSelector(selectSelectedProfile);
+  const isFetchOpportunitiesTabCountsFailed = useSelector(
+    fetchOpportunitiesTabCountsSelectors.selectIsFetchOpportunitiesTabCountsFailed
+  );
+  useEffect(() => {
+    if (isFetchOpportunitiesTabCountsFailed) {
+      UIkit.notification('Une erreur est survenue', 'danger');
+    }
+  }, [isFetchOpportunitiesTabCountsFailed, dispatch]);
 
-    const [ isDataLoading, setIsDataLoading ] = useState<boolean>(true);
-    const [ opportunitiesDefaultFilters, setOpportunitiesDefaultFilter ] = useState<string | ParsedUrlQueryInput | null | undefined>();
-    const dispatch = useDispatch();
-
-    const fetchSelectedProfileStatus = useSelector(fetchSelectedProfileSelectors.selectFetchSelectedProfileStatus);
-    const prevFetchSelectedProfileStatus = usePrevious(fetchSelectedProfileStatus);
-
-    console.log(candidate);
-    // useEffect(() => {
-    //     if (prevFetchSelectedProfileStatus === ReduxRequestEvents.REQUESTED) {
-    //         if (fetchSelectedProfileStatus === ReduxRequestEvents.SUCCEEDED) {
-    //             setIsDataLoading(false);
-    //         }
-    //         if (fetchSelectedProfileStatus === ReduxRequestEvents.FAILED) {
-    //             UIkit.notification('Une erreur est survenue', 'danger');
-    //           }
-    //         dispatch(profilesActions.fetchSelectedProfileReset());
-    //     }
-    // }, [fetchSelectedProfileStatus, prevFetchSelectedProfileStatus])
-    // useEffect(() => {
-    //     if (candidateId) {
-    //         dispatch(profilesActions.fetchSelectedProfileRequested({userId: candidateId}));
-    //     }
-    // }, [candidateId])
-
-    // const fetchOpportunitiesStatus = useSelector(fetchOpportunitiesSelectors.selectFetchOpportunitiesStatus);
-    // const prevFetchOpportunitiesStatus = usePrevious(fetchOpportunitiesStatus)
-    // useEffect(() => {
-    //     if (prevFetchOpportunitiesStatus === ReduxRequestEvents.REQUESTED) {
-    //         if (fetchOpportunitiesStatus === ReduxRequestEvents.SUCCEEDED) {
-    //             setIsDataLoading(false);
-    //         }
-    //         if (fetchOpportunitiesStatus === ReduxRequestEvents.FAILED) {
-    //             UIkit.notification('Une erreur est survenue', 'danger');
-    //           }
-    //         dispatch(opportunitiesActions.fetchOpportunitiesReset());
-    //     }
-    // }, [fetchOpportunitiesStatus, prevFetchOpportunitiesStatus])
-
-    
-    // useEffect(() => {
-    //     if (candidate && candidateId && userCandidateProfile) {
-    //         dispatch(opportunitiesActions.fetchOpportunitiesTabCountsRequested(candidateId));
-    //         dispatch(opportunitiesActions.setOpportunitiesFilter({
-    //             candidateId: candidateId,
-    //             type: 'public',
-    //             department: [userCandidateProfile.department],
-    //             limit: 3,
-    //             offset: 0,
-    //             businessLines: userCandidateProfile.searchBusinessLines.map((businessLine) => businessLine.name),
-    //         }));
-    //         setOpportunitiesDefaultFilter({
-    //                 department: [userCandidateProfile.department],
-    //                 limit: 3,
-    //                 offset: 0,
-    //                 businessLines: userCandidateProfile.searchBusinessLines.map((businessLine) => businessLine.name),
-                
-    //         });
-    //     }
-    // }, [dispatch, candidate, candidateId, userCandidateProfile]);
-
-
-    const [ numberOpportunitiesInProgess, setNumberOpportunitiesInProgress ] = useState<number>()
-
-    // useEffect(() => {
-    //     if (tabCounts) {
-    //         setNumberOpportunitiesInProgress(tabCounts.find((tabCount) => tabCount.status === -1)?.count)
-    //     }
-    // }, [tabCounts])
-
-    return {
-        opportunities,
-        numberOpportunitiesInProgess,
-        opportunitiesDefaultFilters,
-        candidateId,
-        isDataLoading,
+  useEffect(() => {
+    return () => {
+      dispatch(opportunitiesActions.fetchOpportunitiesAsCandidateReset());
+      dispatch(opportunitiesActions.fetchOpportunitiesTabCountsReset());
     };
-}
+  }, [dispatch]);
+
+  const [candidate, setCandidate] = useState<UserCandidateWithUsers | User>();
+  const [candidateId, setCandidateId] = useState<string>();
+
+  useEffect(() => {
+    const candidateTemp = getUserCandidateFromCoachOrCandidate(user);
+    const candidateIdTemp = getCandidateIdFromCoachOrCandidate(user);
+    if (user && candidateIdTemp && candidateTemp && isDataLoading) {
+      let candidateIdArg: string = candidateIdTemp;
+      if (Array.isArray(candidateIdTemp)) {
+        [candidateIdArg] = candidateIdTemp;
+      }
+      setCandidateId(candidateIdArg);
+      let userCandidateProfile: UserProfile;
+      if (
+        Array.isArray(candidateTemp) &&
+        candidateTemp[0]?.candidat?.userProfile
+      ) {
+        userCandidateProfile = candidateTemp[0]?.candidat?.userProfile;
+        setCandidate(candidateTemp[0]?.candidat);
+      } else {
+        setCandidate(user);
+        userCandidateProfile = user?.userProfile;
+      }
+      dispatch(
+        opportunitiesActions.fetchOpportunitiesTabCountsRequested(
+          candidateIdArg
+        )
+      );
+      dispatch(
+        opportunitiesActions.fetchOpportunitiesAsCandidateRequested({
+          candidateId: candidateIdArg,
+          type: 'public',
+          department: [userCandidateProfile.department],
+          limit: 3,
+          businessLines: userCandidateProfile.searchBusinessLines.map(
+            (businessLine) => businessLine.name
+          ),
+        })
+      );
+      setOpportunitiesDefaultFilter({
+        type: 'public',
+        department: [userCandidateProfile.department],
+        businessLines: userCandidateProfile.searchBusinessLines.map(
+          (businessLine) => businessLine.name
+        ),
+      });
+    }
+  }, [dispatch, user, isDataLoading]);
+
+  const [numberOpportunitiesInProgess, setNumberOpportunitiesInProgress] =
+    useState<number>();
+
+  useEffect(() => {
+    if (tabCounts) {
+      setNumberOpportunitiesInProgress(
+        tabCounts.find((tabCount) => tabCount.status === -1)?.count
+      );
+    }
+  }, [tabCounts]);
+
+  return {
+    opportunities,
+    numberOpportunitiesInProgess,
+    opportunitiesDefaultFilters,
+    candidateId,
+    isDataLoading,
+    candidate,
+  };
+};

@@ -49,11 +49,7 @@ export function MemberDesktop({
   disableLink,
 }: MemberProps) {
   const cvStatus = renderCVStatus(member);
-  const { checked, handleCheckBox } = useCheckBox(
-    // @ts-expect-error after enable TS strict mode. Please, try to fix it
-    selectionCallback,
-    member.id
-  );
+  const { checked, handleCheckBox } = useCheckBox(member.id, selectionCallback);
   const relatedUser = getRelatedUser(member);
 
   const userCandidate = getUserCandidateFromCoachOrCandidate(member);
@@ -150,92 +146,93 @@ export function MemberDesktop({
           )}
         </TdDesktop>
       )}
-      {isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
-        <>
-          {columns.includes('cvUrl') && (
-            <TdDesktop>
-              <span>
-                <SimpleLink
-                  href={`/cv/${userCandidate?.url}`}
-                  isExternal
-                  target="_blank"
-                >
-                  <LinkIcon width={20} height={20} />
-                </SimpleLink>
-              </span>
-            </TdDesktop>
-          )}
-          {columns.includes('employed') && (
-            <TdDesktop>
-              <StyledEmployedCellContent>
-                {isEditable ? (
-                  <MemberEmployedToggle
-                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                    setMember={setMember}
-                    member={member}
-                  />
-                ) : (
-                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                  <span
-                    data-tooltip-id={tooltipId}
-                    data-tooltip-content={contractLabel}
-                    data-tooltip-place="bottom"
+      {isRoleIncluded(CANDIDATE_USER_ROLES, role) &&
+        !Array.isArray(userCandidate) && (
+          <>
+            {columns.includes('cvUrl') && (
+              <TdDesktop>
+                <span>
+                  <SimpleLink
+                    href={`/cv/${userCandidate?.url}`}
+                    isExternal
+                    target="_blank"
                   >
-                    {userCandidate?.employed ? (
-                      <span className="yes">Oui</span>
-                    ) : (
-                      <span className="no">Non</span>
-                    )}
-                    <Tooltip id={tooltipId} />
-                  </span>
-                )}
-              </StyledEmployedCellContent>
-            </TdDesktop>
-          )}
-          {columns.includes('cvStatus') && (
-            <TdDesktop>
-              <StyledCVStatusCellContent cvStatus={cvStatus.toLowerCase()}>
-                {cvStatus === 'none' ? (
-                  <span>Aucun</span>
-                ) : (
-                  <span>{translateStatusCV(cvStatus)}</span>
-                )}
-              </StyledCVStatusCellContent>
-            </TdDesktop>
-          )}
-          {columns.includes('cvHidden') && (
-            <TdDesktop>
-              <StyledHiddenCVCellContent>
-                {isEditable ? (
-                  <MemberHiddenToggle setMember={setMember} member={member} />
-                ) : (
-                  <>
-                    {userCandidate?.hidden ? (
-                      <EyeHiddenIcon className="eye-hidden" />
-                    ) : (
-                      <EyeVisibleIcon />
-                    )}
-                  </>
-                )}
-              </StyledHiddenCVCellContent>
-            </TdDesktop>
-          )}
-          {columns.includes('selection') && selectionCallback && (
-            <TdDesktop>
-              <StyledCheckBoxCellContent>
-                <CheckBox
-                  useOutsideOfForm
-                  id={`member-${member.id}-check`}
-                  name={`member-${member.id}-check`}
-                  value={checked}
-                  onChange={handleCheckBox}
-                  disabled={userCandidate?.hidden}
-                />
-              </StyledCheckBoxCellContent>
-            </TdDesktop>
-          )}
-        </>
-      )}
+                    <LinkIcon width={20} height={20} />
+                  </SimpleLink>
+                </span>
+              </TdDesktop>
+            )}
+            {columns.includes('employed') && (
+              <TdDesktop>
+                <StyledEmployedCellContent>
+                  {isEditable ? (
+                    <MemberEmployedToggle
+                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                      setMember={setMember}
+                      member={member}
+                    />
+                  ) : (
+                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                    <span
+                      data-tooltip-id={tooltipId}
+                      data-tooltip-content={contractLabel}
+                      data-tooltip-place="bottom"
+                    >
+                      {userCandidate?.employed ? (
+                        <span className="yes">Oui</span>
+                      ) : (
+                        <span className="no">Non</span>
+                      )}
+                      <Tooltip id={tooltipId} />
+                    </span>
+                  )}
+                </StyledEmployedCellContent>
+              </TdDesktop>
+            )}
+            {columns.includes('cvStatus') && (
+              <TdDesktop>
+                <StyledCVStatusCellContent cvStatus={cvStatus.toLowerCase()}>
+                  {cvStatus === 'none' ? (
+                    <span>Aucun</span>
+                  ) : (
+                    <span>{translateStatusCV(cvStatus)}</span>
+                  )}
+                </StyledCVStatusCellContent>
+              </TdDesktop>
+            )}
+            {columns.includes('cvHidden') && (
+              <TdDesktop>
+                <StyledHiddenCVCellContent>
+                  {isEditable ? (
+                    <MemberHiddenToggle setMember={setMember} member={member} />
+                  ) : (
+                    <>
+                      {userCandidate?.hidden ? (
+                        <EyeHiddenIcon className="eye-hidden" />
+                      ) : (
+                        <EyeVisibleIcon />
+                      )}
+                    </>
+                  )}
+                </StyledHiddenCVCellContent>
+              </TdDesktop>
+            )}
+            {columns.includes('selection') && (
+              <TdDesktop>
+                <StyledCheckBoxCellContent>
+                  <CheckBox
+                    useOutsideOfForm
+                    id={`member-${member.id}-check`}
+                    name={`member-${member.id}-check`}
+                    value={checked}
+                    onChange={handleCheckBox}
+                    disabled={userCandidate?.hidden}
+                  />
+                </StyledCheckBoxCellContent>
+              </TdDesktop>
+            )}
+          </>
+        )}
     </TrDesktop>
   );
 }

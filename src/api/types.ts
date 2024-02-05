@@ -42,6 +42,7 @@ export type UserCandidate = {
   note: string;
   url: string;
   lastModifiedBy: string;
+  deletedAt: string;
 };
 
 export type Organization = {
@@ -295,9 +296,9 @@ export type Opportunity = {
 export type OpportunityType = 'public' | 'private';
 
 export type OpportunityTabCount = {
-  status: -1 | 0 | 1 | 2 | 3 | 4 | "archived";
+  status: -1 | 0 | 1 | 2 | 3 | 4 | 'archived';
   count: number;
-}
+};
 
 export type OpportunityDto = {
   title: string;
@@ -564,5 +565,13 @@ export type ProfilesFilters = {
   search?: string;
   helps: HelpNames | HelpNames[];
   departments: Department | Department[];
+  businessLines: BusinessLineValue | BusinessLineValue[];
+};
+
+export type OpportunitiesFiltersForCandidate = {
+  search?: string;
+  status?: OfferStatus;
+  type?: OpportunityType;
+  department: Department | Department[];
   businessLines: BusinessLineValue | BusinessLineValue[];
 };

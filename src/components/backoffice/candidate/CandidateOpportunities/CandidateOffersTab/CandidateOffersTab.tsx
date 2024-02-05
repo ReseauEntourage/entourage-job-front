@@ -2,13 +2,13 @@ import _ from 'lodash';
 import Link from 'next/link';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
+import { OpportunityTabCount } from 'src/api/types';
 import { StyledTabsUl } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab/CandidateOffersTab.styles';
 import {
   formatPlural,
   tabs,
 } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab/CandidateOffersTab.utils';
 import { FilterConstant } from 'src/constants/utils';
-import { OpportunityTabCount } from 'src/api/types';
 
 const uuidValue = uuid();
 

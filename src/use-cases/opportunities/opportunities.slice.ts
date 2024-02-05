@@ -1,86 +1,80 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Opportunity, OpportunityTabCount, OpportunityType } from 'src/api/types';
-import { BusinessLineValue } from 'src/constants';
-import { Department } from 'src/constants/departements';
+import {
+  OpportunitiesFiltersForCandidate,
+  Opportunity,
+  OpportunityTabCount,
+} from 'src/api/types';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import {
-    fetchOpportunitiesAdapter,
-    fetchOpportunitiesTabCountsAdapter,
+  fetchOpportunitiesAsCandidateAdapter,
+  fetchOpportunitiesTabCountsAdapter,
 } from './opportunities.adapters';
 
 export interface State {
-    fetchOpportunities: RequestState<typeof fetchOpportunitiesAdapter>;
-    fetchOpportunitiesTabCounts: RequestState<typeof fetchOpportunitiesTabCountsAdapter>;
-    opportunities: Opportunity[];
-    opportunitiesFilters: {
-        candidateId: string;
-        type: OpportunityType;
-        department: Department[];
-        limit: number;
-        offset: number;
-        search: string;
-        businessLines: BusinessLineValue[];
-    };
-    opportunitiesHasFetchedAll: boolean;
-    opportunitiesTabCounts: OpportunityTabCount[];
+  fetchOpportunitiesAsCandidate: RequestState<
+    typeof fetchOpportunitiesAsCandidateAdapter
+  >;
+  fetchOpportunitiesTabCounts: RequestState<
+    typeof fetchOpportunitiesTabCountsAdapter
+  >;
+  opportunities: Opportunity[];
+  opportunitiesHasFetchedAll: boolean;
+  opportunitiesTabCounts: OpportunityTabCount[];
+  opportunitiesOffset: number;
 }
 
 const initialState: State = {
-    fetchOpportunities: fetchOpportunitiesAdapter.getInitialState(),
-    fetchOpportunitiesTabCounts: fetchOpportunitiesTabCountsAdapter.getInitialState(),
-    opportunities: [],
-    opportunitiesFilters: {
-        candidateId: '',
-        type: 'public',
-        department: [],
-        limit: 25,
-        offset: 0,
-        search: '',
-        businessLines: [],
-    },
-    opportunitiesHasFetchedAll: false,
-    opportunitiesTabCounts: [],
+  fetchOpportunitiesAsCandidate:
+    fetchOpportunitiesAsCandidateAdapter.getInitialState(),
+  fetchOpportunitiesTabCounts:
+    fetchOpportunitiesTabCountsAdapter.getInitialState(),
+  opportunities: [],
+  opportunitiesHasFetchedAll: false,
+  opportunitiesTabCounts: [],
+  opportunitiesOffset: 0,
 };
 
 export const slice = createSlice({
-    name: 'opportunities',
-    initialState,
-    reducers: {
-        ...fetchOpportunitiesAdapter.getReducers<State>((state) => state.fetchOpportunities, {
-            fetchOpportunitiesSucceeded(state, action) {
-                state.opportunities =
-                    state.opportunitiesFilters.offset === 0
-                        ? action.payload
-                        : [...state.opportunities, ...action.payload];
-                state.opportunitiesHasFetchedAll = action.payload.length < state.opportunitiesFilters.limit;
-            },
-        }),
-        ...fetchOpportunitiesTabCountsAdapter.getReducers<State>(
-            (state) => state.fetchOpportunitiesTabCounts,
-            {
-                fetchOpportunitiesTabCountsSucceeded(state, action) {
-                    state.opportunitiesTabCounts = action.payload;
-                },
-            }
-        ),
-        setOpportunitiesFilter(state, action: PayloadAction<Partial<State['opportunitiesFilters']>>) {
-            state.opportunitiesFilters = {
-                ...state.opportunitiesFilters,
-                ...action.payload,
-                offset: 0,
-            };
-            state.opportunitiesHasFetchedAll = false;
-            state.opportunities = [];
+  name: 'opportunities',
+  initialState,
+  reducers: {
+    ...fetchOpportunitiesAsCandidateAdapter.getReducers<State>(
+      (state) => state.fetchOpportunitiesAsCandidate,
+      {
+        fetchOpportunitiesAsCandidateSucceeded(state, action) {
+          state.opportunities =
+            state.opportunitiesOffset === 0
+              ? action.payload
+              : [...state.opportunities, ...action.payload];
         },
-        incrementOpportunitiesOffset(state) {
-            state.opportunitiesFilters = {
-                ...state.opportunitiesFilters,
-                offset:  state.opportunitiesHasFetchedAll ?
-                state.opportunitiesFilters.offset :
-                state.opportunitiesFilters.offset + state.opportunitiesFilters.limit,
-            };
+      }
+    ),
+    ...fetchOpportunitiesTabCountsAdapter.getReducers<State>(
+      (state) => state.fetchOpportunitiesTabCounts,
+      {
+        fetchOpportunitiesTabCountsSucceeded(state, action) {
+          state.opportunitiesTabCounts = action.payload;
         },
+      }
+    ),
+    resetOpportunitiesOffset(state) {
+      state.opportunitiesOffset = 0;
+      state.opportunitiesHasFetchedAll = false;
+      state.opportunities = [];
     },
+    fetchOpportunitiesAsCandidateWithFilters(
+      _state,
+      _action: PayloadAction<
+        OpportunitiesFiltersForCandidate & {
+          candidateId: string;
+          limit: number;
+        }
+      >
+    ) {},
+    setOpportunitiesHasFetchedAll(state, action: PayloadAction<boolean>) {
+      state.opportunitiesHasFetchedAll = action.payload;
+    },
+  },
 });
 
 export type RootState = SliceRootState<typeof slice>;

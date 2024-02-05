@@ -8,7 +8,6 @@ export type UseCaseConfigItem = {
   saga: Saga;
 };
 
-
 export * from './opportunities.selectors';
 
 export const opportunitiesActions = slice.actions;
