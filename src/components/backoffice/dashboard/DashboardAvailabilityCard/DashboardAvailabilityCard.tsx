@@ -5,9 +5,11 @@ import { useUpdateProfile } from 'src/components/backoffice/parametres/useUpdate
 import { Card } from 'src/components/utils';
 import { ToggleWithModal } from 'src/components/utils/Inputs/ToggleWithModal';
 import { ReduxRequestEvents } from 'src/constants';
+import { GA_TAGS } from 'src/constants/tags';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { usePrevious } from 'src/hooks/utils';
+import { gaEvent } from 'src/lib/gtag';
 import {
   authenticationActions,
   updateProfileSelectors,
@@ -59,6 +61,7 @@ export const DashboardAvailabilityCard = () => {
         isToggled={user.userProfile.isAvailable}
         onToggle={(isAvailable) => {
           updateUserProfile({ isAvailable });
+          gaEvent(GA_TAGS.PAGE_DASHBOARD_DISPONIBILITE_CLIC);
         }}
       />
     </Card>

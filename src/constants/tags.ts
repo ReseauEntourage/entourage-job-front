@@ -410,6 +410,9 @@ export const GA_TAGS = {
   PAGE_ANNUAIRE_SUPPRIMER_FILTRES_CLIC: {
     action: 'Page_Annuaire_Supprimer_Filtres_Clic',
   },
+  PAGE_DASHBOARD_DISPONIBILITE_CLIC: {
+    action: 'Page_Dashboard_Disponibilite_Clic',
+  },
 } as const;
 
 export const FB_TAGS = {
