@@ -103,7 +103,7 @@ export function useDirectoryFilters() {
       dispatch(
         profilesActions.setProfilesFilters({
           role,
-          search: null,
+          search: undefined,
           helps: [],
           businessLines: [],
           departments: [],
@@ -123,37 +123,61 @@ export function useDirectoryFilters() {
   ]);
 
   useEffect(() => {
-    if (!isFirstRequest && !isResetFilters && !_.isEqual(role, prevRole)) {
+    if (
+      !isFirstRequest &&
+      !isResetFilters &&
+      role &&
+      !_.isEqual(role, prevRole)
+    ) {
       dispatch(profilesActions.setProfilesRoleFilter(role));
     }
   }, [dispatch, isFirstRequest, role, prevRole, isResetFilters]);
 
   useEffect(() => {
-    if (!isFirstRequest && !isResetFilters && !_.isEqual(search, prevSearch)) {
+    if (
+      !isFirstRequest &&
+      !isResetFilters &&
+      role &&
+      !_.isEqual(search, prevSearch)
+    ) {
       dispatch(profilesActions.setProfilesSearchFilter(search));
     }
-  }, [dispatch, isFirstRequest, isResetFilters, prevSearch, search]);
-
-  useEffect(() => {
-    if (!isFirstRequest && !isResetFilters && !_.isEqual(helps, prevHelps)) {
-      dispatch(profilesActions.setProfilesHelpsFilter(helps));
-    }
-  }, [dispatch, isFirstRequest, helps, prevHelps, isResetFilters]);
+  }, [dispatch, isFirstRequest, isResetFilters, prevSearch, role, search]);
 
   useEffect(() => {
     if (
       !isFirstRequest &&
       !isResetFilters &&
+      role &&
+      !_.isEqual(helps, prevHelps)
+    ) {
+      dispatch(profilesActions.setProfilesHelpsFilter(helps));
+    }
+  }, [dispatch, isFirstRequest, helps, prevHelps, isResetFilters, role]);
+
+  useEffect(() => {
+    if (
+      !isFirstRequest &&
+      !isResetFilters &&
+      role &&
       !_.isEqual(departments, prevDepartments)
     ) {
       dispatch(profilesActions.setProfilesDepartmentsFilter(departments));
     }
-  }, [dispatch, isFirstRequest, departments, prevDepartments, isResetFilters]);
+  }, [
+    dispatch,
+    isFirstRequest,
+    departments,
+    prevDepartments,
+    isResetFilters,
+    role,
+  ]);
 
   useEffect(() => {
     if (
       !isFirstRequest &&
       !isResetFilters &&
+      role &&
       !_.isEqual(businessLines, prevBusinessLines)
     ) {
       dispatch(profilesActions.setProfilesBusinessLinesFilter(businessLines));
@@ -164,5 +188,6 @@ export function useDirectoryFilters() {
     businessLines,
     prevBusinessLines,
     isResetFilters,
+    role,
   ]);
 }

@@ -16,18 +16,18 @@ export function useDirectory() {
     fetchProfilesSelectors.selectFetchProfilesStatus
   );
 
-  const prevIsFetchProfilesStatus = usePrevious(fetchProfilesStatus);
+  const prevFetchProfilesStatus = usePrevious(fetchProfilesStatus);
   const profiles = useSelector(selectProfiles);
 
   useEffect(() => {
-    if (prevIsFetchProfilesStatus === ReduxRequestEvents.REQUESTED) {
+    if (prevFetchProfilesStatus === ReduxRequestEvents.REQUESTED) {
       if (fetchProfilesStatus === ReduxRequestEvents.FAILED) {
         UIkit.notification('Une erreur est survenue', 'danger');
       }
 
       dispatch(profilesActions.fetchProfilesReset());
     }
-  }, [dispatch, fetchProfilesStatus, prevIsFetchProfilesStatus]);
+  }, [dispatch, fetchProfilesStatus, prevFetchProfilesStatus]);
 
   return {
     profiles,

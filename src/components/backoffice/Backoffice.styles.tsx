@@ -27,4 +27,5 @@ export const StyledNoResult = styled.div`
   font-size: 14px;
   font-style: italic;
   color: ${COLORS.darkGray};
+  margin-top: 16px;
 `;

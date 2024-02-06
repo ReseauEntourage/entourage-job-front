@@ -8,12 +8,25 @@ export function useDirectoryFiltersQueryParams() {
     query: { search, helps, businessLines, departments },
   } = useRouter();
 
-  return {
-    search: (search || null) as string | null,
+  const filters: {
+    search?: string;
+    helps: HelpNames | HelpNames[];
+    departments: Department | Department[];
+    businessLines: BusinessLineValue | BusinessLineValue[];
+  } = {
     helps: (helps || []) as HelpNames | HelpNames[],
     businessLines: (businessLines || []) as
       | BusinessLineValue
       | BusinessLineValue[],
     departments: (departments || []) as Department | Department[],
   };
+
+  if (search) {
+    return {
+      ...filters,
+      search: search as string,
+    };
+  }
+
+  return filters;
 }

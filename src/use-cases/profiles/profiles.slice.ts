@@ -23,7 +23,7 @@ export interface State {
     role: UserRole[];
     offset: number;
     limit: typeof LIMIT;
-    search: string | null;
+    search?: string;
     helps: HelpNames[];
     departments: Department[];
     businessLines: BusinessLineValue[];
@@ -42,7 +42,7 @@ const initialState: State = {
     role: CANDIDATE_USER_ROLES,
     offset: 0,
     limit: LIMIT,
-    search: null,
+    search: undefined,
     helps: [],
     departments: [],
     businessLines: [],
@@ -82,7 +82,7 @@ export const slice = createSlice({
       state,
       action: PayloadAction<{
         role: UserRole[];
-        search: string | null;
+        search?: string;
         helps: HelpNames | HelpNames[];
         departments: Department | Department[];
         businessLines: BusinessLineValue | BusinessLineValue[];
@@ -129,7 +129,7 @@ export const slice = createSlice({
         role: action.payload,
       };
     },
-    setProfilesSearchFilter(state, action: PayloadAction<string | null>) {
+    setProfilesSearchFilter(state, action: PayloadAction<string | undefined>) {
       state.profilesFilters = {
         ...state.profilesFilters,
         search: action.payload,

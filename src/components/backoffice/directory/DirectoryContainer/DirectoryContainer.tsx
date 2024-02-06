@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { DirectoryList } from '../DirectoryList';
 import { useDirectoryFiltersQueryParams } from '../useDirectoryFiltersQueryParams';
 import { SearchBar } from 'src/components/filters/SearchBar';
-import { Button } from 'src/components/utils';
+import { Button, Section } from 'src/components/utils';
 import { BUSINESS_LINES, DirectoryFilters } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { ProfileHelps } from 'src/constants/helps';
@@ -68,46 +68,62 @@ export function DirectoryContainer() {
 
   return (
     <StyledDirectoryContainer>
-      <SearchBar
-        filtersConstants={DirectoryFilters}
-        filters={filters}
-        resetFilters={() => {
-          dispatch(profilesActions.resetProfilesFilters());
-          resetFilters();
-        }}
-        search={search || undefined}
-        setSearch={setSearch}
-        setFilters={setFilters}
-        placeholder="Rechercher..."
-      />
-      <StyledDirectoryButtonContainer isMobile={isMobile}>
-        <Button
-          style={`custom-secondary${
-            isRoleIncluded(CANDIDATE_USER_ROLES, roleFilter) ? '-inverted' : ''
-          }`}
-          onClick={() => {
-            push({
-              pathname: route,
-              query: { ...directoryFiltersParams, role: CANDIDATE_USER_ROLES },
-            });
+      <Section className="custom-primary custom-fixed">
+        <SearchBar
+          filtersConstants={DirectoryFilters}
+          filters={filters}
+          resetFilters={() => {
+            dispatch(profilesActions.resetProfilesFilters());
+            resetFilters();
           }}
-        >
-          Les candidats
-        </Button>
-        <Button
-          style={`custom-secondary${
-            isRoleIncluded(COACH_USER_ROLES, roleFilter) ? '-inverted' : ''
-          }`}
-          onClick={() => {
-            push({
-              pathname: route,
-              query: { ...directoryFiltersParams, role: USER_ROLES.COACH },
-            });
-          }}
-        >
-          Les coachs
-        </Button>
-      </StyledDirectoryButtonContainer>
+          search={search}
+          setSearch={setSearch}
+          setFilters={setFilters}
+          placeholder="Rechercher..."
+          additionalButtons={
+            <StyledDirectoryButtonContainer isMobile={isMobile}>
+              <Button
+                size={isMobile ? 'small' : 'large'}
+                style={`custom-secondary${
+                  isRoleIncluded(CANDIDATE_USER_ROLES, roleFilter)
+                    ? '-inverted'
+                    : ''
+                }`}
+                onClick={() => {
+                  push({
+                    pathname: route,
+                    query: {
+                      ...directoryFiltersParams,
+                      role: CANDIDATE_USER_ROLES,
+                    },
+                  });
+                }}
+              >
+                Les candidats
+              </Button>
+              <Button
+                size={isMobile ? 'small' : 'large'}
+                style={`custom-secondary${
+                  isRoleIncluded(COACH_USER_ROLES, roleFilter)
+                    ? '-inverted'
+                    : ''
+                }`}
+                onClick={() => {
+                  push({
+                    pathname: route,
+                    query: {
+                      ...directoryFiltersParams,
+                      role: USER_ROLES.COACH,
+                    },
+                  });
+                }}
+              >
+                Les coachs
+              </Button>
+            </StyledDirectoryButtonContainer>
+          }
+        />
+      </Section>
       <DirectoryList />
     </StyledDirectoryContainer>
   );
