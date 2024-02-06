@@ -21,7 +21,7 @@ type Story = StoryObj<typeof meta>;
 
 type ProfileCardProps = React.ComponentProps<typeof ProfileCard>;
 
-const cards: ProfileCardProps[] = new Array(50)
+const cards: ProfileCardProps[] = new Array(4)
   .fill([
     {
       userId: uuid(),

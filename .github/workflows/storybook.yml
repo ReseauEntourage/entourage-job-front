@@ -2,9 +2,9 @@
 name: 'Storybook deploy'
 
 # Event for the workflow
-on: 
+on:
   push:
-    branches: 
+    branches:
       - develop
 
 # List of jobs
@@ -14,11 +14,11 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
-        with: 
+        with:
           node-version: 16
       - name: Install dependencies
         run: yarn
       - name: Publish to Chromatic
-        uses: chromaui/action@v1
+        uses: chromaui/action@latest
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
