@@ -7,7 +7,8 @@ import { isRoleIncluded } from 'src/utils';
 
 const route = '/backoffice/annuaire';
 
-export function useDirectoryRoleFilterRedirection() {
+// Manage redirection to add the mandatory role query param
+export function useDirectoryRoleRedirection() {
   const { replace, query } = useRouter();
   const { role: userRole } = useAuthenticatedUser();
 

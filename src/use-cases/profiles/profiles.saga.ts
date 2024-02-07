@@ -1,9 +1,9 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
-import { mutateToArray } from '../../utils';
 import { Api } from 'src/api';
+import { PROFILES_LIMIT } from 'src/constants';
+import { mutateToArray } from 'src/utils';
 import {
   selectProfilesHasFetchedAll,
-  selectProfilesLimit,
   selectProfilesOffset,
 } from './profiles.selectors';
 import { slice } from './profiles.slice';
@@ -45,7 +45,7 @@ function* fetchProfilesRequestedSaga(
 ) {
   try {
     const offset = yield* select(selectProfilesOffset);
-    const limit = yield* select(selectProfilesLimit);
+    const limit = PROFILES_LIMIT;
 
     const { departments, role, search, helps, businessLines } = action.payload;
 

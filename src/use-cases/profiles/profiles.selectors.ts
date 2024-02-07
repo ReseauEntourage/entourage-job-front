@@ -28,10 +28,6 @@ export function selectProfilesOffset(state: RootState) {
   return state.profiles.profilesOffset;
 }
 
-export function selectProfilesLimit(state: RootState) {
-  return state.profiles.profilesLimit;
-}
-
 export function selectProfilesHasFetchedAll(state: RootState) {
   return state.profiles.profilesHasFetchedAll;
 }

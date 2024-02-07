@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ProfilesFilters, PublicProfile } from 'src/api/types';
+import { PROFILES_LIMIT } from 'src/constants';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import {
   fetchProfilesAdapter,
@@ -8,15 +8,12 @@ import {
   postInternalMessageAdapter,
 } from './profiles.adapters';
 
-const LIMIT = 25;
-
 export interface State {
   fetchProfiles: RequestState<typeof fetchProfilesAdapter>;
   fetchSelectedProfile: RequestState<typeof fetchSelectedProfileAdapter>;
   postInternalMessage: RequestState<typeof postInternalMessageAdapter>;
   profiles: PublicProfile[];
   profilesOffset: number;
-  profilesLimit: typeof LIMIT;
   profilesHasFetchedAll: boolean;
   selectedProfile: PublicProfile | null;
 }
@@ -27,7 +24,6 @@ const initialState: State = {
   postInternalMessage: fetchProfilesAdapter.getInitialState(),
   profiles: [],
   profilesOffset: 0,
-  profilesLimit: LIMIT,
   profilesHasFetchedAll: false,
   selectedProfile: null,
 };
@@ -42,7 +38,7 @@ export const slice = createSlice({
           state.profilesOffset === 0
             ? action.payload
             : [...state.profiles, ...action.payload];
-        state.profilesHasFetchedAll = action.payload.length < LIMIT;
+        state.profilesHasFetchedAll = action.payload.length < PROFILES_LIMIT;
       },
     }),
     ...fetchSelectedProfileAdapter.getReducers<State>(
@@ -62,11 +58,14 @@ export const slice = createSlice({
       state.profilesHasFetchedAll = false;
       state.profiles = [];
     },
-    fetchProfilesWithFilters(state, action: PayloadAction<ProfilesFilters>) {},
-    fetchProfilesNextPage(state, action: PayloadAction<ProfilesFilters>) {
+    fetchProfilesWithFilters(
+      _state,
+      _action: PayloadAction<ProfilesFilters>
+    ) {},
+    fetchProfilesNextPage(state, _action: PayloadAction<ProfilesFilters>) {
       state.profilesOffset = state.profilesHasFetchedAll
         ? state.profilesOffset
-        : state.profilesOffset + LIMIT;
+        : state.profilesOffset + PROFILES_LIMIT;
     },
   },
 });

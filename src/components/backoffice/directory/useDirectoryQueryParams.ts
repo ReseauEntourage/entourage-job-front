@@ -3,14 +3,15 @@ import { ProfilesFilters } from 'src/api/types';
 import { BusinessLineValue } from 'src/constants';
 import { Department } from 'src/constants/departements';
 import { HelpNames } from 'src/constants/helps';
-import { useRoleFilter } from './useRoleFilter';
+import { useDirectoryRole } from './useDirectoryRole';
 
-export function useDirectoryFiltersQueryParams() {
+// Get the current query params for the directory filters
+export function useDirectoryQueryParams() {
+  const role = useDirectoryRole();
+
   const {
     query: { search, helps, businessLines, departments },
   } = useRouter();
-
-  const role = useRoleFilter();
 
   const filters: ProfilesFilters = {
     role,

@@ -10,6 +10,8 @@ import { ProfileHelps } from './helps';
 import { GENDERS_FILTERS, USER_ROLES_FILTERS } from './users';
 import { Filter, FilterConstant } from './utils';
 
+export const PROFILES_LIMIT = 25;
+
 export type OfferStatus = -1 | 0 | 1 | 2 | 3 | 4;
 
 export const OFFER_STATUS: (FilterConstant<OfferStatus> & {

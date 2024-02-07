@@ -1,8 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useMemo } from 'react';
 import { DirectoryList } from '../DirectoryList';
-import { useDirectoryFilters } from '../useDirectoryFilters';
-import { useDirectoryFiltersQueryParams } from '../useDirectoryFiltersQueryParams';
+import { useDirectoryQueryParams } from '../useDirectoryQueryParams';
 import { SearchBar } from 'src/components/filters/SearchBar';
 import { Button, Section } from 'src/components/utils';
 import { BUSINESS_LINES, DirectoryFilters } from 'src/constants';
@@ -32,9 +31,7 @@ export function DirectoryContainer() {
   const { push } = useRouter();
   const isMobile = useIsMobile();
 
-  useDirectoryFilters();
-
-  const directoryFiltersParams = useDirectoryFiltersQueryParams();
+  const directoryFiltersParams = useDirectoryQueryParams();
   const { role, departments, helps, businessLines, search } =
     directoryFiltersParams;
 
