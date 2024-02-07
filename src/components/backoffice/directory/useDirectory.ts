@@ -1,8 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import UIkit from 'uikit';
-import { ReduxRequestEvents } from 'src/constants';
-import { usePrevious } from 'src/hooks/utils';
 import {
   fetchProfilesSelectors,
   profilesActions,
@@ -12,22 +10,23 @@ import {
 export function useDirectory() {
   const dispatch = useDispatch();
 
-  const fetchProfilesStatus = useSelector(
-    fetchProfilesSelectors.selectFetchProfilesStatus
+  const isFetchProfileStatusFailed = useSelector(
+    fetchProfilesSelectors.selectIsFetchProfilesFailed
   );
 
-  const prevFetchProfilesStatus = usePrevious(fetchProfilesStatus);
   const profiles = useSelector(selectProfiles);
 
   useEffect(() => {
-    if (prevFetchProfilesStatus === ReduxRequestEvents.REQUESTED) {
-      if (fetchProfilesStatus === ReduxRequestEvents.FAILED) {
-        UIkit.notification('Une erreur est survenue', 'danger');
-      }
-
-      dispatch(profilesActions.fetchProfilesReset());
+    if (isFetchProfileStatusFailed) {
+      UIkit.notification('Une erreur est survenue', 'danger');
     }
-  }, [dispatch, fetchProfilesStatus, prevFetchProfilesStatus]);
+  }, [dispatch, isFetchProfileStatusFailed]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(profilesActions.fetchProfilesReset());
+    };
+  }, [dispatch]);
 
   return {
     profiles,

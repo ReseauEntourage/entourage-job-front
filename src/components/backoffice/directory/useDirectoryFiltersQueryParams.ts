@@ -1,19 +1,19 @@
 import { useRouter } from 'next/router';
+import { ProfilesFilters } from 'src/api/types';
 import { BusinessLineValue } from 'src/constants';
 import { Department } from 'src/constants/departements';
 import { HelpNames } from 'src/constants/helps';
+import { useRoleFilter } from './useRoleFilter';
 
 export function useDirectoryFiltersQueryParams() {
   const {
     query: { search, helps, businessLines, departments },
   } = useRouter();
 
-  const filters: {
-    search?: string;
-    helps: HelpNames | HelpNames[];
-    departments: Department | Department[];
-    businessLines: BusinessLineValue | BusinessLineValue[];
-  } = {
+  const role = useRoleFilter();
+
+  const filters: ProfilesFilters = {
+    role,
     helps: (helps || []) as HelpNames | HelpNames[],
     businessLines: (businessLines || []) as
       | BusinessLineValue

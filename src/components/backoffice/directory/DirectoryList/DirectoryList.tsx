@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DirectoryItem } from '../DirectoryItem';
 import { useDirectory } from '../useDirectory';
+import { useDirectoryFiltersQueryParams } from '../useDirectoryFiltersQueryParams';
 import { CardList } from 'src/components/utils/CardList';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 import { useIsAtBottom } from 'src/hooks/useIsAtBottom';
@@ -17,8 +18,10 @@ export function DirectoryList() {
 
   const dispatch = useDispatch();
 
+  const directoryFiltersParams = useDirectoryFiltersQueryParams();
+
   useIsAtBottom(() => {
-    dispatch(profilesActions.incrementProfilesOffset());
+    dispatch(profilesActions.fetchProfilesNextPage(directoryFiltersParams));
   });
 
   const isFetchProfilesRequested = useSelector(
