@@ -551,3 +551,11 @@ export type PublicProfile = {
   lastSentMessage: string;
   lastReceivedMessage: string;
 };
+
+export type ProfilesFilters = {
+  role: UserRole[];
+  search?: string;
+  helps: HelpNames | HelpNames[];
+  departments: Department | Department[];
+  businessLines: BusinessLineValue | BusinessLineValue[];
+};

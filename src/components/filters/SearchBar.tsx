@@ -69,7 +69,7 @@ export const SearchBar = ({
   return (
     <div
       className="uk-flex uk-flex-column uk-flex-middle"
-      style={{ height: HEIGHTS.SEARCH_BAR_HEIGHT }}
+      style={{ minHeight: HEIGHTS.SEARCH_BAR_HEIGHT }}
     >
       <div className="uk-width-expand ent-search-bar">
         <form className="uk-search uk-search-navbar uk-width-expand">

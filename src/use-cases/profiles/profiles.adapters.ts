@@ -1,9 +1,9 @@
-import { PublicProfile, InternalMessage } from 'src/api/types';
+import { InternalMessage, ProfilesFilters, PublicProfile } from 'src/api/types';
 import { createRequestAdapter } from 'src/store/utils';
 
 export const fetchProfilesAdapter = createRequestAdapter(
   'fetchProfiles'
-).withPayloads<void, PublicProfile[]>();
+).withPayloads<ProfilesFilters, PublicProfile[]>();
 
 export const fetchSelectedProfileAdapter = createRequestAdapter(
   'fetchSelectedProfile'

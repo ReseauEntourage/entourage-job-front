@@ -28,7 +28,7 @@ export function useSelectedProfile() {
     if (userId && userId !== prevUserId) {
       dispatch(
         profilesActions.fetchSelectedProfileRequested({
-          userId: userId as string,
+          userId,
         })
       );
     }

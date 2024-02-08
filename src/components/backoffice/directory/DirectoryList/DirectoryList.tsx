@@ -1,25 +1,15 @@
 import React, { useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { DirectoryItem } from '../DirectoryItem';
 import { useDirectory } from '../useDirectory';
 import { CardList } from 'src/components/utils/CardList';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
-import { useIsAtBottom } from 'src/hooks/useIsAtBottom';
-import {
-  fetchProfilesSelectors,
-  profilesActions,
-} from 'src/use-cases/profiles';
+import { fetchProfilesSelectors } from 'src/use-cases/profiles';
 import { isRoleIncluded } from 'src/utils';
 import { StyledDirectoryListContainer } from './DirectoryList.styles';
 
 export function DirectoryList() {
   const { profiles } = useDirectory();
-
-  const dispatch = useDispatch();
-
-  useIsAtBottom(() => {
-    dispatch(profilesActions.incrementProfilesOffset());
-  });
 
   const isFetchProfilesRequested = useSelector(
     fetchProfilesSelectors.selectIsFetchProfilesRequested
