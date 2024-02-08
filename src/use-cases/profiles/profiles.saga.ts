@@ -1,4 +1,4 @@
-import { call, put, select, takeLatest } from 'typed-redux-saga';
+import { call, put, select, takeLatest, takeLeading } from 'typed-redux-saga';
 import { Api } from 'src/api';
 import { PROFILES_LIMIT } from 'src/constants';
 import { mutateToArray } from 'src/utils';
@@ -97,7 +97,7 @@ function* postInternalMessageSaga(
 
 export function* saga() {
   yield* takeLatest(fetchProfilesWithFilters, fetchProfilesWithFiltersSaga);
-  yield* takeLatest(fetchProfilesNextPage, fetchProfilesNextPageSaga);
+  yield* takeLeading(fetchProfilesNextPage, fetchProfilesNextPageSaga);
   yield* takeLatest(fetchProfilesRequested, fetchProfilesRequestedSaga);
   yield* takeLatest(fetchSelectedProfileRequested, fetchSelectedProfileSaga);
   yield* takeLatest(postInternalMessageRequested, postInternalMessageSaga);
