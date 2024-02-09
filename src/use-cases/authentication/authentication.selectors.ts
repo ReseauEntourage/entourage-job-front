@@ -92,7 +92,7 @@ export function selectCandidateId(state: RootState): string | null {
   return null;
 }
 
-// select department and bsuinesslines from the profile of the current user's candidate => doesn't work for external coach
+// select department and businesslines from the profile of the current user's candidate => doesn't work for external coach
 export function selectCandidateProfileDefaultFiltersForDashboardOpportunities(
   state: RootState
 ): {

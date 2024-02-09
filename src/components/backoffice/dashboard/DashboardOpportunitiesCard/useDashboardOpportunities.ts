@@ -19,14 +19,14 @@ export const useDashboardOpportunities = () => {
   const isFetchOpportunitiesIdle = useSelector(
     fetchDashboardOpportunitiesSelectors.selectIsFetchDashboardOpportunitiesIdle
   );
-  const isFetchOpportunitiesRequsted = useSelector(
+  const isFetchOpportunitiesRequested = useSelector(
     fetchDashboardOpportunitiesSelectors.selectIsFetchDashboardOpportunitiesRequested
   );
   const isFetchOpportunitiesFailed = useSelector(
     fetchOpportunitiesAsCandidateSelectors.selectIsFetchOpportunitiesAsCandidateFailed
   );
   const isDataLoading =
-    isFetchOpportunitiesIdle || isFetchOpportunitiesRequsted;
+    isFetchOpportunitiesIdle || isFetchOpportunitiesRequested;
 
   // default filters
   const [opportunitiesDefaultFilters, setOpportunitiesDefaultFilter] =
@@ -39,7 +39,6 @@ export const useDashboardOpportunities = () => {
   const numberOpportunitiesInProgess = useSelector(
     selectNumberOfOpportunitiesInProgress
   );
-  useState<number>();
   const isFetchOpportunitiesTabCountsFailed = useSelector(
     fetchOpportunitiesTabCountsSelectors.selectIsFetchOpportunitiesTabCountsFailed
   );
