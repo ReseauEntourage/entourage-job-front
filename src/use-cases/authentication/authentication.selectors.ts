@@ -1,3 +1,11 @@
+import { UserCandidateWithUsers, UserProfile } from 'src/api/types';
+import { BusinessLineValue } from 'src/constants';
+import { Department } from 'src/constants/departements';
+import {
+  getCandidateIdFromCoachOrCandidate,
+  getUserCandidateFromCoachOrCandidate,
+  mutateToArray,
+} from 'src/utils';
 import {
   fetchUserAdapter,
   loginAdapter,
@@ -52,4 +60,61 @@ export function selectUserUpdateError(state: RootState) {
 
 export function selectProfileUpdateError(state: RootState) {
   return state.authentication.profileUpdateError;
+}
+
+// select candidate for the current user => doesn't work for external coach
+export function selectCandidate(
+  state: RootState
+): UserCandidateWithUsers | null {
+  if (state.authentication.user) {
+    let candidate = getUserCandidateFromCoachOrCandidate(
+      state.authentication.user
+    );
+    if (Array.isArray(candidate)) {
+      [candidate] = candidate;
+    }
+    return candidate;
+  }
+  return null;
+}
+
+// select candidateId for the current user => doesn't work for external coach
+export function selectCandidateId(state: RootState): string | null {
+  if (state.authentication.user) {
+    let candidateId = getCandidateIdFromCoachOrCandidate(
+      state.authentication.user
+    );
+    if (Array.isArray(candidateId)) {
+      [candidateId] = candidateId;
+    }
+    return candidateId;
+  }
+  return null;
+}
+
+// select department and bsuinesslines from the profile of the current user's candidate => doesn't work for external coach
+export function selectCandidateProfileDefaultFiltersForDashboardOpportunities(
+  state: RootState
+): {
+  department: Department[];
+  businessLines: BusinessLineValue[];
+} | null {
+  let userCandidateProfile: UserProfile;
+  if (state.authentication.user) {
+    const candidate = getUserCandidateFromCoachOrCandidate(
+      state.authentication.user
+    );
+    if (Array.isArray(candidate) && candidate[0]?.candidat?.userProfile) {
+      userCandidateProfile = candidate[0]?.candidat?.userProfile;
+    } else {
+      userCandidateProfile = state.authentication.user?.userProfile;
+    }
+    return {
+      department: mutateToArray(userCandidateProfile.department),
+      businessLines: userCandidateProfile.searchBusinessLines.map(
+        (businessLine) => businessLine.name
+      ),
+    };
+  }
+  return null;
 }

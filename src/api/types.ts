@@ -213,7 +213,7 @@ export interface CV {
 export interface UserCandidateWithUsers extends UserCandidate {
   id?: string;
   email?: string;
-  candidat?: User;
+  candidat: User;
   coach?: User;
   cvs?: CV[];
   firstName?: string;

@@ -1,4 +1,5 @@
 import {
+  fetchDashboardOpportunitiesAdapter,
   fetchOpportunitiesAsCandidateAdapter,
   fetchOpportunitiesTabCountsAdapter,
 } from './opportunities.adapters';
@@ -14,8 +15,17 @@ export const fetchOpportunitiesTabCountsSelectors =
     (state) => state.opportunities.fetchOpportunitiesTabCounts
   );
 
+export const fetchDashboardOpportunitiesSelectors =
+  fetchDashboardOpportunitiesAdapter.getSelectors<RootState>(
+    (state) => state.opportunities.fetchDashboardOpportunities
+  );
+
 export function selectOpportunities(state: RootState) {
   return state.opportunities.opportunities;
+}
+
+export function selectDashboardOpportunities(state: RootState) {
+  return state.opportunities.dashboardOpportunities;
 }
 
 export function selectOpportunitiesHasFetchedAll(state: RootState) {
@@ -24,4 +34,10 @@ export function selectOpportunitiesHasFetchedAll(state: RootState) {
 
 export function selectOpportunitiesTabCounts(state: RootState) {
   return state.opportunities.opportunitiesTabCounts;
+}
+
+export function selectNumberOfOpportunitiesInProgress(state: RootState) {
+  return state.opportunities.opportunitiesTabCounts.find(
+    (tabCount) => tabCount.status === -1
+  )?.count;
 }

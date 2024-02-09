@@ -1,6 +1,9 @@
-import { User } from '@sentry/react';
 import _ from 'lodash';
-import { UserCandidateWithUsers, UserWithUserCandidate } from 'src/api/types';
+import {
+  UserCandidateWithUsers,
+  UserWithUserCandidate,
+  User,
+} from 'src/api/types';
 import { OFFER_STATUS } from 'src/constants';
 import {
   CANDIDATE_USER_ROLES,
@@ -110,7 +113,6 @@ export function getRelatedUser(
       return [member.candidat.coach];
     }
     if (member.coaches && member.coaches.length > 0) {
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
       return member.coaches.map(({ candidat }) => {
         return candidat;
       });
@@ -154,7 +156,9 @@ export function getCandidateFromCoach(
   return getUserCandidateFromCoach(coach, candidateId)?.candidat;
 }
 
-export function getCandidateIdFromCoachOrCandidate(member) {
+export function getCandidateIdFromCoachOrCandidate(
+  member: UserWithUserCandidate
+): string | string[] | null {
   if (member) {
     if (isRoleIncluded(CANDIDATE_USER_ROLES, member.role)) {
       return member.id;

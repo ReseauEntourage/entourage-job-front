@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import { IlluMalette } from 'assets/icons/icons';
 import { StyledCardNotificationContainer } from '../../Backoffice.styles';
@@ -11,6 +12,10 @@ import { BUSINESS_LINES } from 'src/constants';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop } from 'src/hooks/utils';
+import {
+  selectCandidate,
+  selectCandidateProfileDefaultFiltersForDashboardOpportunities,
+} from 'src/use-cases/authentication';
 import { findConstantFromValue, buildContractLabel } from 'src/utils';
 import {
   StyledDashboardOpportunitiesListContainer,
@@ -32,11 +37,14 @@ export const DashboardOpportunitiesCard = () => {
     numberOpportunitiesInProgess,
     opportunities,
     opportunitiesDefaultFilters,
-    candidateId,
-    candidate,
-  } = useDashboardOpportunities(user);
+  } = useDashboardOpportunities();
   const { contextualRole } = useContextualRole(user.role);
   const isDesktop = useIsDesktop();
+  const candidate = useSelector(selectCandidate);
+  const candidateId = useSelector(
+    selectCandidateProfileDefaultFiltersForDashboardOpportunities
+  );
+
   return (
     <Card
       title={

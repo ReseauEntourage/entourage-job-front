@@ -6,6 +6,7 @@ import {
 } from 'src/api/types';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import {
+  fetchDashboardOpportunitiesAdapter,
   fetchOpportunitiesAsCandidateAdapter,
   fetchOpportunitiesTabCountsAdapter,
 } from './opportunities.adapters';
@@ -17,7 +18,11 @@ export interface State {
   fetchOpportunitiesTabCounts: RequestState<
     typeof fetchOpportunitiesTabCountsAdapter
   >;
+  fetchDashboardOpportunities: RequestState<
+    typeof fetchDashboardOpportunitiesAdapter
+  >;
   opportunities: Opportunity[];
+  dashboardOpportunities: Opportunity[];
   opportunitiesHasFetchedAll: boolean;
   opportunitiesTabCounts: OpportunityTabCount[];
   opportunitiesOffset: number;
@@ -28,9 +33,12 @@ const initialState: State = {
     fetchOpportunitiesAsCandidateAdapter.getInitialState(),
   fetchOpportunitiesTabCounts:
     fetchOpportunitiesTabCountsAdapter.getInitialState(),
+  fetchDashboardOpportunities:
+    fetchDashboardOpportunitiesAdapter.getInitialState(),
   opportunities: [],
   opportunitiesHasFetchedAll: false,
   opportunitiesTabCounts: [],
+  dashboardOpportunities: [],
   opportunitiesOffset: 0,
 };
 
@@ -54,6 +62,14 @@ export const slice = createSlice({
       {
         fetchOpportunitiesTabCountsSucceeded(state, action) {
           state.opportunitiesTabCounts = action.payload;
+        },
+      }
+    ),
+    ...fetchDashboardOpportunitiesAdapter.getReducers<State>(
+      (state) => state.fetchDashboardOpportunities,
+      {
+        fetchDashboardOpportunitiesSucceeded(state, action) {
+          state.dashboardOpportunities = action.payload;
         },
       }
     ),

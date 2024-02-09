@@ -1,128 +1,87 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import UIkit from 'uikit';
-import {
-  OpportunitiesFiltersForCandidate,
-  User,
-  UserCandidateWithUsers,
-  UserProfile,
-} from 'src/api/types';
-import { ReduxRequestEvents } from 'src/constants';
+import { OpportunitiesFiltersForCandidate } from 'src/api/types';
+import { selectCandidateProfileDefaultFiltersForDashboardOpportunities } from 'src/use-cases/authentication';
 import {
   fetchOpportunitiesAsCandidateSelectors,
   fetchOpportunitiesTabCountsSelectors,
   opportunitiesActions,
-  selectOpportunities,
-  selectOpportunitiesTabCounts,
+  fetchDashboardOpportunitiesSelectors,
+  selectDashboardOpportunities,
+  selectNumberOfOpportunitiesInProgress,
 } from 'src/use-cases/opportunities';
-import {
-  getCandidateIdFromCoachOrCandidate,
-  getUserCandidateFromCoachOrCandidate,
-} from 'src/utils';
 
-export const useDashboardOpportunities = (user: User) => {
-  const opportunities = useSelector(selectOpportunities);
-  const tabCounts = useSelector(selectOpportunitiesTabCounts);
+export const useDashboardOpportunities = () => {
+  const dispatch = useDispatch();
+  // opportunities
+  const opportunities = useSelector(selectDashboardOpportunities);
+  const isFetchOpportunitiesIdle = useSelector(
+    fetchDashboardOpportunitiesSelectors.selectIsFetchDashboardOpportunitiesIdle
+  );
+  const isFetchOpportunitiesRequsted = useSelector(
+    fetchDashboardOpportunitiesSelectors.selectIsFetchDashboardOpportunitiesRequested
+  );
+  const isFetchOpportunitiesFailed = useSelector(
+    fetchOpportunitiesAsCandidateSelectors.selectIsFetchOpportunitiesAsCandidateFailed
+  );
+  const isDataLoading =
+    isFetchOpportunitiesIdle || isFetchOpportunitiesRequsted;
 
-  const [isDataLoading, setIsDataLoading] = useState<boolean>(true);
+  // default filters
   const [opportunitiesDefaultFilters, setOpportunitiesDefaultFilter] =
     useState<OpportunitiesFiltersForCandidate>();
-  const dispatch = useDispatch();
-
-  const fetchOpportunitiesStatus = useSelector(
-    fetchOpportunitiesAsCandidateSelectors.selectFetchOpportunitiesAsCandidateStatus
+  const candidateProfileDefaultFilters = useSelector(
+    selectCandidateProfileDefaultFiltersForDashboardOpportunities
   );
-  useEffect(() => {
-    if (fetchOpportunitiesStatus === ReduxRequestEvents.SUCCEEDED) {
-      setIsDataLoading(false);
-    }
-    if (fetchOpportunitiesStatus === ReduxRequestEvents.FAILED) {
-      UIkit.notification('Une erreur est survenue', 'danger');
-    }
-  }, [fetchOpportunitiesStatus, dispatch]);
 
+  // number of opportunities in progress
+  const numberOpportunitiesInProgess = useSelector(
+    selectNumberOfOpportunitiesInProgress
+  );
+  useState<number>();
   const isFetchOpportunitiesTabCountsFailed = useSelector(
     fetchOpportunitiesTabCountsSelectors.selectIsFetchOpportunitiesTabCountsFailed
   );
+
+  // requests on opportunities and counts + reset on unmount
+  useEffect(() => {
+    dispatch(opportunitiesActions.fetchDashboardOpportunitiesRequested());
+    dispatch(opportunitiesActions.fetchOpportunitiesTabCountsRequested());
+    return () => {
+      dispatch(opportunitiesActions.fetchDashboardOpportunitiesReset());
+      dispatch(opportunitiesActions.fetchOpportunitiesTabCountsReset());
+    };
+  }, [dispatch]);
+
+  // notif on error for opportunitie fails
+  useEffect(() => {
+    if (isFetchOpportunitiesFailed) {
+      UIkit.notification('Une erreur est survenue', 'danger');
+    }
+  }, [isFetchOpportunitiesFailed, dispatch]);
+
+  // notif on error for tab counts fails
   useEffect(() => {
     if (isFetchOpportunitiesTabCountsFailed) {
       UIkit.notification('Une erreur est survenue', 'danger');
     }
   }, [isFetchOpportunitiesTabCountsFailed, dispatch]);
 
+  // set complete default filters for button
   useEffect(() => {
-    return () => {
-      dispatch(opportunitiesActions.fetchOpportunitiesAsCandidateReset());
-      dispatch(opportunitiesActions.fetchOpportunitiesTabCountsReset());
-    };
-  }, [dispatch]);
-
-  const [candidate, setCandidate] = useState<UserCandidateWithUsers | User>();
-  const [candidateId, setCandidateId] = useState<string>();
-
-  useEffect(() => {
-    const candidateTemp = getUserCandidateFromCoachOrCandidate(user);
-    const candidateIdTemp = getCandidateIdFromCoachOrCandidate(user);
-    if (user && candidateIdTemp && candidateTemp && isDataLoading) {
-      let candidateIdArg: string = candidateIdTemp;
-      if (Array.isArray(candidateIdTemp)) {
-        [candidateIdArg] = candidateIdTemp;
-      }
-      setCandidateId(candidateIdArg);
-      let userCandidateProfile: UserProfile;
-      if (
-        Array.isArray(candidateTemp) &&
-        candidateTemp[0]?.candidat?.userProfile
-      ) {
-        userCandidateProfile = candidateTemp[0]?.candidat?.userProfile;
-        setCandidate(candidateTemp[0]?.candidat);
-      } else {
-        setCandidate(user);
-        userCandidateProfile = user?.userProfile;
-      }
-      dispatch(
-        opportunitiesActions.fetchOpportunitiesTabCountsRequested(
-          candidateIdArg
-        )
-      );
-      dispatch(
-        opportunitiesActions.fetchOpportunitiesAsCandidateRequested({
-          candidateId: candidateIdArg,
-          type: 'public',
-          department: [userCandidateProfile.department],
-          limit: 3,
-          businessLines: userCandidateProfile.searchBusinessLines.map(
-            (businessLine) => businessLine.name
-          ),
-        })
-      );
+    if (candidateProfileDefaultFilters) {
       setOpportunitiesDefaultFilter({
         type: 'public',
-        department: [userCandidateProfile.department],
-        businessLines: userCandidateProfile.searchBusinessLines.map(
-          (businessLine) => businessLine.name
-        ),
+        ...candidateProfileDefaultFilters,
       });
     }
-  }, [dispatch, user, isDataLoading]);
-
-  const [numberOpportunitiesInProgess, setNumberOpportunitiesInProgress] =
-    useState<number>();
-
-  useEffect(() => {
-    if (tabCounts) {
-      setNumberOpportunitiesInProgress(
-        tabCounts.find((tabCount) => tabCount.status === -1)?.count
-      );
-    }
-  }, [tabCounts]);
+  }, [dispatch, candidateProfileDefaultFilters]);
 
   return {
     opportunities,
     numberOpportunitiesInProgess,
     opportunitiesDefaultFilters,
-    candidateId,
     isDataLoading,
-    candidate,
   };
 };

@@ -1,7 +1,10 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
+import {
+  selectCandidateId,
+  selectCandidateProfileDefaultFiltersForDashboardOpportunities,
+} from '../authentication';
 import { selectProfilesOffset } from '../profiles';
 import { Api } from 'src/api';
-import { Opportunity } from 'src/api/types';
 import { mutateToArray } from 'src/utils';
 import { slice } from './opportunities.slice';
 
@@ -14,6 +17,9 @@ const {
   fetchOpportunitiesTabCountsRequested,
   fetchOpportunitiesAsCandidateWithFilters,
   resetOpportunitiesOffset,
+  fetchDashboardOpportunitiesSucceeded,
+  fetchDashboardOpportunitiesFailed,
+  fetchDashboardOpportunitiesRequested,
 } = slice.actions;
 
 function* fetchOpportunitiesAsCandidateRequestedSaga(
@@ -33,11 +39,7 @@ function* fetchOpportunitiesAsCandidateRequestedSaga(
         },
       })
     );
-    yield* put(
-      fetchOpportunitiesAsCandidateSucceeded(
-        response.data.offers as Opportunity[]
-      )
-    );
+    yield* put(fetchOpportunitiesAsCandidateSucceeded(response.data.offers));
   } catch {
     yield* put(fetchOpportunitiesAsCandidateFailed());
   }
@@ -50,16 +52,39 @@ function* fetchOpportunitiesAsCandidateWithFiltersSaga(
   yield* put(fetchOpportunitiesAsCandidateRequested(action.payload));
 }
 
-function* fetchOpportunitiesTabCountsSaga(
-  action: ReturnType<typeof fetchOpportunitiesTabCountsRequested>
-) {
+function* fetchOpportunitiesTabCountsSaga() {
+  const candidateId = yield* select(selectCandidateId);
+  if (!candidateId) return null;
   try {
     const response = yield* call(() =>
-      Api.getOpportunitiesTabCountByCandidate(action.payload)
+      Api.getOpportunitiesTabCountByCandidate(candidateId)
     );
     yield* put(fetchOpportunitiesTabCountsSucceeded(response.data));
   } catch {
     yield* put(fetchOpportunitiesTabCountsFailed());
+  }
+}
+
+function* fetchDashboardOpportunitiesSaga() {
+  const candidateId = yield* select(selectCandidateId);
+  const defaultFilters = yield* select(
+    selectCandidateProfileDefaultFiltersForDashboardOpportunities
+  );
+  if (!candidateId) return null;
+  try {
+    const response = yield* call(() =>
+      Api.getAllCandidateOpportunities(candidateId, {
+        params: {
+          offset: 0,
+          limit: 3,
+          type: 'public',
+          ...defaultFilters,
+        },
+      })
+    );
+    yield* put(fetchDashboardOpportunitiesSucceeded(response.data.offers));
+  } catch {
+    yield* put(fetchDashboardOpportunitiesFailed());
   }
 }
 
@@ -75,5 +100,9 @@ export function* saga() {
   yield* takeLatest(
     fetchOpportunitiesAsCandidateWithFilters,
     fetchOpportunitiesAsCandidateWithFiltersSaga
+  );
+  yield* takeLatest(
+    fetchDashboardOpportunitiesRequested,
+    fetchDashboardOpportunitiesSaga
   );
 }

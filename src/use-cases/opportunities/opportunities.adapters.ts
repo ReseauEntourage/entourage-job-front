@@ -15,9 +15,10 @@ export const fetchOpportunitiesAsCandidateAdapter = createRequestAdapter(
   Opportunity[]
 >();
 
+export const fetchDashboardOpportunitiesAdapter = createRequestAdapter(
+  'fetchDashboardOpportunities'
+).withPayloads<void, Opportunity[]>();
+
 export const fetchOpportunitiesTabCountsAdapter = createRequestAdapter(
   'fetchOpportunitiesTabCounts'
-).withPayloads<
-  string, // userId
-  OpportunityTabCount[]
->();
+).withPayloads<void, OpportunityTabCount[]>();
