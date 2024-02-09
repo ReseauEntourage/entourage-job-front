@@ -20,6 +20,7 @@ import { DashboardOpportunitiesCard } from './DashboardOpportunitiesCard';
 import { DashboardProfileCard } from './DashboardProfileCard';
 import { DashboardRecommendationsCard } from './DashboardRecommendationsCard';
 import { DashboardStepsCard } from './DashboardStepsCard';
+import { Notification } from 'src/components/utils/Notification';
 
 export const Dashboard = () => {
   const isDesktop = useIsDesktop();
@@ -32,6 +33,10 @@ export const Dashboard = () => {
 
   return (
     <StyledBackofficeBackground>
+      <Notification 
+        type="success"
+        message="Modifications enregistrées"
+      />
       <Section className="custom-page">
         <StyledDashboardTitleContainer>
           <H1 title="Bienvenue sur votre espace personnel" color="black" />
