@@ -1,16 +1,35 @@
-import React from 'react'
-import { StyledNotification } from './Notification.styles';
+import React, { useEffect, useState } from 'react'
+import { StyledSuccessNotification, StyledFailedNotification } from './Notification.styles';
+import { Check, Close } from 'assets/icons/icons';
 
-interface NotificationProps {
+export interface NotificationProps {
     type: 'success' | 'danger';
     message: string;
 }
 
 export const Notification = ({
     type,
-    message
+    message,
 }: NotificationProps) => {
-  return (
-    <StyledNotification>{message}</StyledNotification>
-  )
+
+  const [hasTranslated, setHasTranslated] = useState(false)
+  useEffect(() => {
+      setHasTranslated(true)
+  }, [])
+
+    if (type === 'success') {
+      return (
+        <StyledSuccessNotification hasTranslated={hasTranslated}>
+            <Check />
+              {message}
+        </StyledSuccessNotification>
+        )
+    } else {
+     return  (
+      <StyledFailedNotification hasTranslated={hasTranslated}>
+        <Close />
+        {message}
+      </StyledFailedNotification>
+      )
+    }
 }

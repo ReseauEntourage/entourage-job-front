@@ -6,7 +6,10 @@ import React from 'react';
 import { HeaderConnected } from 'src/components/headers/HeaderConnected';
 import { HeaderPublic } from 'src/components/headers/HeaderPublic/HeaderPublic';
 import { Footer } from 'src/components/partials/Footer';
+import { selectNotifications } from 'src/use-cases/notifications';
 import { addPrefix } from 'src/utils';
+import { useSelector } from 'react-redux';
+import { NotificationsContainer } from './utils/Notification';
 
 interface LayoutProps extends WithRouterProps {
   children: React.ReactNode;
@@ -37,6 +40,8 @@ export const Layout = withRouter<LayoutProps>(
     const domain =
       // @ts-expect-error after enable TS strict mode. Please, try to fix it
       process.env.SERVER_URL.replace(/https:\/\/|http:\/\//g, '');
+
+    const notifications = useSelector(selectNotifications)
 
     return (
       <>
@@ -78,6 +83,7 @@ export const Layout = withRouter<LayoutProps>(
           />
         </Head>
         {!isPDF && <>{isBackoffice ? <HeaderConnected /> : <HeaderPublic />}</>}
+        <NotificationsContainer notifications={notifications}/>;
         {children}
         {!isPDF && !isBackoffice && <Footer />}
         {!isPDF && (

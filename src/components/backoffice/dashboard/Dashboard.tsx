@@ -33,10 +33,6 @@ export const Dashboard = () => {
 
   return (
     <StyledBackofficeBackground>
-      <Notification 
-        type="success"
-        message="Modifications enregistrées"
-      />
       <Section className="custom-page">
         <StyledDashboardTitleContainer>
           <H1 title="Bienvenue sur votre espace personnel" color="black" />
