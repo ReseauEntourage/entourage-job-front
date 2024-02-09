@@ -42,16 +42,23 @@ export const useDashboardOpportunities = () => {
   const isFetchOpportunitiesTabCountsFailed = useSelector(
     fetchOpportunitiesTabCountsSelectors.selectIsFetchOpportunitiesTabCountsFailed
   );
+  const isFetchOpportunitiesTabCountsIdle = useSelector(
+    fetchOpportunitiesTabCountsSelectors.selectIsFetchOpportunitiesTabCountsIdle
+  );
 
   // requests on opportunities and counts + reset on unmount
   useEffect(() => {
-    dispatch(opportunitiesActions.fetchDashboardOpportunitiesRequested());
-    dispatch(opportunitiesActions.fetchOpportunitiesTabCountsRequested());
+    if (isFetchOpportunitiesIdle) {
+      dispatch(opportunitiesActions.fetchDashboardOpportunitiesRequested());
+    }
+    if (isFetchOpportunitiesTabCountsIdle) {
+      dispatch(opportunitiesActions.fetchOpportunitiesTabCountsRequested());
+    }
     return () => {
       dispatch(opportunitiesActions.fetchDashboardOpportunitiesReset());
       dispatch(opportunitiesActions.fetchOpportunitiesTabCountsReset());
     };
-  }, [dispatch]);
+  }, [dispatch, isFetchOpportunitiesIdle, isFetchOpportunitiesTabCountsIdle]);
 
   // notif on error for opportunitie fails
   useEffect(() => {
