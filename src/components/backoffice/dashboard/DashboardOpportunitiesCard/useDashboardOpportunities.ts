@@ -16,17 +16,17 @@ export const useDashboardOpportunities = () => {
   const dispatch = useDispatch();
   // opportunities
   const opportunities = useSelector(selectDashboardOpportunities);
-  const isFetchOpportunitiesIdle = useSelector(
+  const isFetchDashboardOpportunitiesIdle = useSelector(
     fetchDashboardOpportunitiesSelectors.selectIsFetchDashboardOpportunitiesIdle
   );
-  const isFetchOpportunitiesRequested = useSelector(
+  const isFetchDashboardOpportunitiesRequested = useSelector(
     fetchDashboardOpportunitiesSelectors.selectIsFetchDashboardOpportunitiesRequested
   );
   const isFetchOpportunitiesFailed = useSelector(
     fetchOpportunitiesAsCandidateSelectors.selectIsFetchOpportunitiesAsCandidateFailed
   );
   const isDataLoading =
-    isFetchOpportunitiesIdle || isFetchOpportunitiesRequested;
+    isFetchDashboardOpportunitiesIdle || isFetchDashboardOpportunitiesRequested;
 
   // default filters
   const [opportunitiesDefaultFilters, setOpportunitiesDefaultFilter] =
@@ -46,19 +46,27 @@ export const useDashboardOpportunities = () => {
     fetchOpportunitiesTabCountsSelectors.selectIsFetchOpportunitiesTabCountsIdle
   );
 
-  // requests on opportunities and counts + reset on unmount
+  // fetch opportunities
   useEffect(() => {
-    if (isFetchOpportunitiesIdle) {
+    if (isFetchDashboardOpportunitiesIdle) {
       dispatch(opportunitiesActions.fetchDashboardOpportunitiesRequested());
     }
+  }, [dispatch, isFetchDashboardOpportunitiesIdle]);
+
+  // fetch tab counts
+  useEffect(() => {
     if (isFetchOpportunitiesTabCountsIdle) {
       dispatch(opportunitiesActions.fetchOpportunitiesTabCountsRequested());
     }
+  }, [dispatch, isFetchOpportunitiesTabCountsIdle]);
+
+  // clean on unmount
+  useEffect(() => {
     return () => {
       dispatch(opportunitiesActions.fetchDashboardOpportunitiesReset());
       dispatch(opportunitiesActions.fetchOpportunitiesTabCountsReset());
     };
-  }, [dispatch, isFetchOpportunitiesIdle, isFetchOpportunitiesTabCountsIdle]);
+  }, [dispatch]);
 
   // notif on error for opportunitie fails
   useEffect(() => {
