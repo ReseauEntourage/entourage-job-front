@@ -14,6 +14,7 @@ import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedU
 import { useIsDesktop } from 'src/hooks/utils';
 import {
   selectCandidate,
+  selectCandidateId,
   selectCandidateProfileDefaultFiltersForDashboardOpportunities,
 } from 'src/use-cases/authentication';
 import { findConstantFromValue, buildContractLabel } from 'src/utils';
@@ -32,19 +33,15 @@ const uuidValue = uuid();
 
 export const DashboardOpportunitiesCard = () => {
   const user = useAuthenticatedUser();
-  const {
-    isDataLoading,
-    numberOpportunitiesInProgess,
-    opportunities,
-    opportunitiesDefaultFilters,
-  } = useDashboardOpportunities();
+  const { isDataLoading, numberOpportunitiesInProgess, opportunities } =
+    useDashboardOpportunities();
   const { contextualRole } = useContextualRole(user.role);
   const isDesktop = useIsDesktop();
   const candidate = useSelector(selectCandidate);
-  const candidateId = useSelector(
+  const candidateId = useSelector(selectCandidateId);
+  const opportunitiesDefaultFilters = useSelector(
     selectCandidateProfileDefaultFiltersForDashboardOpportunities
   );
-
   return (
     <Card
       title={

@@ -1,4 +1,9 @@
-import { UserCandidateWithUsers, UserProfile } from 'src/api/types';
+import { memoize } from 'lodash';
+import {
+  OpportunityType,
+  UserCandidateWithUsers,
+  UserProfile,
+} from 'src/api/types';
 import { BusinessLineValue } from 'src/constants';
 import { Department } from 'src/constants/departements';
 import {
@@ -93,28 +98,33 @@ export function selectCandidateId(state: RootState): string | null {
 }
 
 // select department and businesslines from the profile of the current user's candidate => doesn't work for external coach
-export function selectCandidateProfileDefaultFiltersForDashboardOpportunities(
-  state: RootState
-): {
-  department: Department[];
-  businessLines: BusinessLineValue[];
-} | null {
-  let userCandidateProfile: UserProfile;
-  if (state.authentication.user) {
-    const candidate = getUserCandidateFromCoachOrCandidate(
-      state.authentication.user
-    );
-    if (Array.isArray(candidate) && candidate[0]?.candidat?.userProfile) {
-      userCandidateProfile = candidate[0]?.candidat?.userProfile;
-    } else {
-      userCandidateProfile = state.authentication.user?.userProfile;
+export const selectCandidateProfileDefaultFiltersForDashboardOpportunities =
+  memoize(
+    (
+      state: RootState
+    ): {
+      type: OpportunityType;
+      department: Department[];
+      businessLines: BusinessLineValue[];
+    } | null => {
+      let userCandidateProfile: UserProfile;
+      if (state.authentication.user) {
+        const candidate = getUserCandidateFromCoachOrCandidate(
+          state.authentication.user
+        );
+        if (Array.isArray(candidate) && candidate[0]?.candidat?.userProfile) {
+          userCandidateProfile = candidate[0]?.candidat?.userProfile;
+        } else {
+          userCandidateProfile = state.authentication.user?.userProfile;
+        }
+        return {
+          type: 'public',
+          department: mutateToArray(userCandidateProfile.department),
+          businessLines: userCandidateProfile.searchBusinessLines.map(
+            (businessLine) => businessLine.name
+          ),
+        };
+      }
+      return null;
     }
-    return {
-      department: mutateToArray(userCandidateProfile.department),
-      businessLines: userCandidateProfile.searchBusinessLines.map(
-        (businessLine) => businessLine.name
-      ),
-    };
-  }
-  return null;
-}
+  );

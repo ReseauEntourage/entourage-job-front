@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import UIkit from 'uikit';
-import { OpportunitiesFiltersForCandidate } from 'src/api/types';
-import { selectCandidateProfileDefaultFiltersForDashboardOpportunities } from 'src/use-cases/authentication';
 import {
   fetchOpportunitiesAsCandidateSelectors,
   fetchOpportunitiesTabCountsSelectors,
@@ -27,13 +25,6 @@ export const useDashboardOpportunities = () => {
   );
   const isDataLoading =
     isFetchDashboardOpportunitiesIdle || isFetchDashboardOpportunitiesRequested;
-
-  // default filters
-  const [opportunitiesDefaultFilters, setOpportunitiesDefaultFilter] =
-    useState<OpportunitiesFiltersForCandidate>();
-  const candidateProfileDefaultFilters = useSelector(
-    selectCandidateProfileDefaultFiltersForDashboardOpportunities
-  );
 
   // number of opportunities in progress
   const numberOpportunitiesInProgess = useSelector(
@@ -82,20 +73,9 @@ export const useDashboardOpportunities = () => {
     }
   }, [isFetchOpportunitiesTabCountsFailed, dispatch]);
 
-  // set complete default filters for button
-  useEffect(() => {
-    if (candidateProfileDefaultFilters) {
-      setOpportunitiesDefaultFilter({
-        type: 'public',
-        ...candidateProfileDefaultFilters,
-      });
-    }
-  }, [dispatch, candidateProfileDefaultFilters]);
-
   return {
     opportunities,
     numberOpportunitiesInProgess,
-    opportunitiesDefaultFilters,
     isDataLoading,
   };
 };
