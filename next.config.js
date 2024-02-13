@@ -128,6 +128,7 @@ module.exports = withLess({
         {
           loader: '@svgr/webpack',
           options: {
+            icon: true,
             svgoConfig: {
               plugins: [
                 {
