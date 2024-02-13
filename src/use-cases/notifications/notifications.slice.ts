@@ -23,7 +23,7 @@ export const slice = createSlice({
     reducers: {
         addNotification(state, action: PayloadAction<{ type: 'danger' | 'success'; message: string; }>) {
             const id =  uuid();
-            state.notifications.push({id, ...action.payload});
+            state.notifications = [...state.notifications, {id, ...action.payload}];
         },
         removeNotification(state, action: PayloadAction<{id: string}>) {
             state.notifications = state.notifications.filter(

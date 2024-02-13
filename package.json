@@ -83,6 +83,7 @@
     "react-spinners": "^0.13.8",
     "react-text-loop": "^2.3.0",
     "react-tooltip": "^5.11.1",
+    "react-transition-group": "^4.4.5",
     "react-visibility-sensor": "^5.1.1",
     "redux-saga": "^1.2.3",
     "rxjs": "^7.4.0",

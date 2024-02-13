@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { StyledSuccessNotification, StyledFailedNotification } from './Notification.styles';
+import React, { useEffect, useState } from 'react'
+import { StyledSuccessNotification, StyledFailedNotification, NOTIF_WIDTH } from './Notification.styles';
 import { Check, Close } from 'assets/icons/icons';
 import { asyncTimeout } from 'src/utils/asyncTimeout';
 import { notificationsActions } from 'src/use-cases/notifications';
 import { useDispatch } from 'react-redux';
-import { usePrevious } from 'src/hooks/utils';
+import { Transition } from 'react-transition-group';
+import { useRef } from 'react';
 
 export interface NotificationProps {
     id: string;
@@ -18,53 +19,68 @@ export const Notification = ({
     message,
 }: NotificationProps) => {
 
-  const [hasTranslated, setHasTranslated] = useState(false);
-  const prevHasTranslated = usePrevious(hasTranslated);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    setHasTranslated(true);
-  }, [])
-
-  
-  useEffect(() => {
-    const handleNotification = async () => {
-      await asyncTimeout(3000);
-      setHasTranslated(false);
-      // await asyncTimeout(500);
-      // dispatch(notificationsActions.removeNotification({id}))
-    }
-    if (hasTranslated) {
-      handleNotification()
-    }
-  }, [hasTranslated])
+  const handleNotification = async () => {
+    await asyncTimeout(100);
+    setInProp(true);
+    await asyncTimeout(3000);
+    setInProp(false);
+    await asyncTimeout(500);
+    dispatch(notificationsActions.removeNotification({id}))
+  }
 
 
   useEffect(() => {
-    const handleNotification = async () => {
-      // await asyncTimeout(3000);
-      // setHasTranslated(false);
-      await asyncTimeout(500);
-      dispatch(notificationsActions.removeNotification({id}))
-    }
-    if (!hasTranslated && prevHasTranslated) {
-      handleNotification()
-    }
-  }, [hasTranslated, id, dispatch])
+    handleNotification()
+  }, [dispatch, id])
 
-    if (type === 'success') {
-      return (
-        <StyledSuccessNotification hasTranslated={hasTranslated}>
-            <Check />
+  const duration = 500;
+
+  const defaultStyle = {
+    transition: `${duration}ms ease-in-out`,
+    transform: `translateX(${NOTIF_WIDTH})`,
+    opacity:0
+  }
+
+  const transitionStyles = {
+    entering: { transform:  `translateX(0)`, opacity:1 },
+    entered: { transform:  `translateX(0)`, opacity:1 },
+    exiting: { transform:  `translateX(${NOTIF_WIDTH})` , opacity:0},
+    exited: { transform:  `translateX(${NOTIF_WIDTH})` , opacity:0},
+  }
+
+  const nodeRef = useRef(null);
+  const [ inProp, setInProp ] = useState(false);
+
+  return (<Transition 
+    in={inProp} 
+    nodeRef={nodeRef} 
+    timeout={duration}
+    >
+    {(state) => 
+    type === 'success' ?
+        <StyledSuccessNotification 
+          nodeRef={nodeRef}
+          style={{
+            ...defaultStyle,
+            ...transitionStyles[state]
+          }}
+          >
+              <Check />
               {message}
         </StyledSuccessNotification>
-        )
-    } else {
-     return  (
-      <StyledFailedNotification hasTranslated={hasTranslated}>
-        <Close />
-        {message}
-      </StyledFailedNotification>
-      )
+      :
+        <StyledFailedNotification 
+          nodeRef={nodeRef}
+          style={{
+            ...defaultStyle,
+            ...transitionStyles[state]
+          }}
+          >
+            <Close />
+            {message}
+        </StyledFailedNotification>
     }
+  </Transition>)
 }

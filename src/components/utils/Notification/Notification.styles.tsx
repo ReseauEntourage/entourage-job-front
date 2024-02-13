@@ -1,8 +1,7 @@
 import { COLORS } from 'src/constants/styles';
 import styled from 'styled-components';
 
-
-const NOTIF_WIDTH = "400px";
+export const NOTIF_WIDTH = "400px";
 
 export const StyledNotificationsContainer = styled.div`
     position: fixed;
@@ -24,14 +23,6 @@ const StyledNotification = styled.div`
     color: white;
     padding-left: 20px;
     border-radius: 5px 0 0 5px;
-    /* transform: ${(props) => props.hasTranslated ? 'translateX(O)' : `translateX(${NOTIF_WIDTH})`}; */
-    transform: translateX(O);
-    transition: 0.5s ease-in-out;
-    @keyframes moveLeft {
-        100% {
-            transform: translateX(${NOTIF_WIDTH});
-        }
-    }
     svg {
         margin-right: 20px;
         height: 25px;
