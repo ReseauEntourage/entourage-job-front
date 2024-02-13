@@ -11,9 +11,10 @@ import { useIsDesktop } from 'src/hooks/utils';
 import { isRoleIncluded } from 'src/utils';
 import {
   StyledDashboardLeftColumn,
-  StyledParametresRightColumn,
+  StyledDashboardRightColumn,
 } from './Dashboard.styles';
 import { DashboardAvailabilityCard } from './DashboardAvailabilityCard';
+import { DashboardOpportunitiesCard } from './DashboardOpportunitiesCard';
 import { DashboardProfileCard } from './DashboardProfileCard';
 
 export const Dashboard = () => {
@@ -29,16 +30,19 @@ export const Dashboard = () => {
     <StyledBackofficeBackground>
       <Section className="custom-page">
         <H1 title="Bienvenue sur votre espace personnel" color="black" />
-        {/* </Section>
-        <Section className="custom-page"> */}
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
           <StyledDashboardLeftColumn className={`${isDesktop ? '' : 'mobile'}`}>
             <DashboardProfileCard />
             {shouldShowAllProfile && <DashboardAvailabilityCard />}
           </StyledDashboardLeftColumn>
-          <StyledParametresRightColumn
+          <StyledDashboardRightColumn
             className={`${isDesktop ? '' : 'mobile'}`}
-          />
+          >
+            {!isRoleIncluded(
+              [USER_ROLES.COACH_EXTERNAL, USER_ROLES.ADMIN],
+              user.role
+            ) && <DashboardOpportunitiesCard />}
+          </StyledDashboardRightColumn>
         </StyledBackofficeGrid>
       </Section>
     </StyledBackofficeBackground>

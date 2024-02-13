@@ -2,6 +2,7 @@ import _ from 'lodash';
 import Link from 'next/link';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
+import { OpportunityTabCount } from 'src/api/types';
 import { StyledTabsUl } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab/CandidateOffersTab.styles';
 import {
   formatPlural,
@@ -13,10 +14,7 @@ const uuidValue = uuid();
 
 interface CandidateOffersTabProps {
   activeStatus: FilterConstant[];
-  tabCounts?: {
-    status: number;
-    count: number;
-  }[];
+  tabCounts: OpportunityTabCount[];
   candidateId: string;
   isMobile: boolean;
 }

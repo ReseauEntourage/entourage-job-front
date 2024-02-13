@@ -28,7 +28,7 @@ export const LinkedUserInformationCard = ({
 
   const assignUser = useCallback((userToAssign) => {
     if (isRoleIncluded(COACH_USER_ROLES, userToAssign.role)) {
-      const candidat: UserWithUserCandidate | UserWithUserCandidate[] =
+      const candidat: UserWithUserCandidate[] | null =
         getRelatedUser(userToAssign);
       if (candidat) {
         setLinkedUser(candidat);
@@ -37,7 +37,8 @@ export const LinkedUserInformationCard = ({
       }
     }
     if (isRoleIncluded(CANDIDATE_USER_ROLES, userToAssign.role)) {
-      const coach = getRelatedUser(userToAssign);
+      const coach: UserWithUserCandidate[] | null =
+        getRelatedUser(userToAssign);
       if (coach) {
         setLinkedUser(coach);
       } else {
@@ -144,6 +145,7 @@ export const LinkedUserInformationCard = ({
             </StyledInformationsPersonnellesList>
             {!isAdmin &&
               isRoleIncluded(COACH_USER_ROLES, user.role) &&
+              userCandidat &&
               !singleLinkedUser.deletedAt && (
                 <StyledInformationsPersonnellesList>
                   <li>

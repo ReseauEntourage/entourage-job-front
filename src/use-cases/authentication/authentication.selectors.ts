@@ -1,3 +1,10 @@
+import { createSelector } from '@reduxjs/toolkit';
+import { UserCandidateWithUsers, UserProfile } from 'src/api/types';
+import {
+  getCandidateIdFromCoachOrCandidate,
+  getUserCandidateFromCoachOrCandidate,
+  mutateToArray,
+} from 'src/utils';
 import {
   fetchUserAdapter,
   loginAdapter,
@@ -53,3 +60,57 @@ export function selectUserUpdateError(state: RootState) {
 export function selectProfileUpdateError(state: RootState) {
   return state.authentication.profileUpdateError;
 }
+
+// select candidate for the current user => doesn't work for external coach
+export function selectCandidate(
+  state: RootState
+): UserCandidateWithUsers | null {
+  if (state.authentication.user) {
+    let candidate = getUserCandidateFromCoachOrCandidate(
+      state.authentication.user
+    );
+    if (Array.isArray(candidate)) {
+      [candidate] = candidate;
+    }
+    return candidate;
+  }
+  return null;
+}
+
+// select candidateId for the current user => doesn't work for external coach
+export function selectCandidateId(state: RootState): string | null {
+  if (state.authentication.user) {
+    let candidateId = getCandidateIdFromCoachOrCandidate(
+      state.authentication.user
+    );
+    if (Array.isArray(candidateId)) {
+      [candidateId] = candidateId;
+    }
+    return candidateId;
+  }
+  return null;
+}
+
+// select department and businesslines from the profile of the current user's candidate => doesn't work for external coach
+export const selectCandidateProfileDefaultFiltersForDashboardOpportunities =
+  createSelector(
+    (state: RootState) => state.authentication.user,
+    (user) => {
+      let userCandidateProfile: UserProfile;
+      if (user) {
+        const candidate = getUserCandidateFromCoachOrCandidate(user);
+        if (Array.isArray(candidate) && candidate[0]?.candidat?.userProfile) {
+          userCandidateProfile = candidate[0]?.candidat?.userProfile;
+        } else {
+          userCandidateProfile = user?.userProfile;
+        }
+        return {
+          department: mutateToArray(userCandidateProfile.department),
+          businessLines: userCandidateProfile.searchBusinessLines.map(
+            (businessLine) => businessLine.name
+          ),
+        };
+      }
+      return null;
+    }
+  );

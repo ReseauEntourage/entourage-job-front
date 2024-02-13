@@ -42,6 +42,7 @@ export type UserCandidate = {
   note: string;
   url: string;
   lastModifiedBy: string;
+  deletedAt: string;
 };
 
 export type Organization = {
@@ -212,7 +213,7 @@ export interface CV {
 export interface UserCandidateWithUsers extends UserCandidate {
   id?: string;
   email?: string;
-  candidat?: User;
+  candidat: User;
   coach?: User;
   cvs?: CV[];
   firstName?: string;
@@ -290,6 +291,13 @@ export type Opportunity = {
   createdAt: string;
   updatedAt?: string;
   createdBy?: string;
+};
+
+export type OpportunityType = 'public' | 'private';
+
+export type OpportunityTabCount = {
+  status: -1 | 0 | 1 | 2 | 3 | 4 | 'archived';
+  count: number;
 };
 
 export type OpportunityDto = {
@@ -557,5 +565,13 @@ export type ProfilesFilters = {
   search?: string;
   helps: HelpNames | HelpNames[];
   departments: Department | Department[];
+  businessLines: BusinessLineValue | BusinessLineValue[];
+};
+
+export type OpportunitiesFiltersForCandidate = {
+  search?: string;
+  status?: OfferStatus;
+  type?: OpportunityType;
+  department: Department | Department[];
   businessLines: BusinessLineValue | BusinessLineValue[];
 };
