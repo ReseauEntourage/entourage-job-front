@@ -41,7 +41,7 @@ export const Layout = withRouter<LayoutProps>(
       // @ts-expect-error after enable TS strict mode. Please, try to fix it
       process.env.SERVER_URL.replace(/https:\/\/|http:\/\//g, '');
 
-    const notifications = useSelector(selectNotifications)
+    // const notifications = useSelector(selectNotifications)
 
     return (
       <>
@@ -83,7 +83,7 @@ export const Layout = withRouter<LayoutProps>(
           />
         </Head>
         {!isPDF && <>{isBackoffice ? <HeaderConnected /> : <HeaderPublic />}</>}
-        <NotificationsContainer notifications={notifications}/>;
+        <NotificationsContainer/>
         {children}
         {!isPDF && !isBackoffice && <Footer />}
         {!isPDF && (

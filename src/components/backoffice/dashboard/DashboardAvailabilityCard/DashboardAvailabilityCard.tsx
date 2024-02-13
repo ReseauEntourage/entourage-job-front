@@ -34,9 +34,9 @@ export const DashboardAvailabilityCard = () => {
           `La modification de votre disponibilité a bien été enregistrée`,
           'success'
         );
-        dispatch(notificationsActions.displayNotificationRequested({
+        dispatch(notificationsActions.addNotification({
           type: 'success',
-          message: `La modification de votre disponibilité a bien été enregistrée`
+          message: `La modification a bien été enregistrée`
         }))
       } else if (updateProfileStatus === ReduxRequestEvents.FAILED) {
         UIkit.notification(
@@ -44,7 +44,7 @@ export const DashboardAvailabilityCard = () => {
           'danger'
         );
 
-        dispatch(notificationsActions.displayNotificationRequested({
+        dispatch(notificationsActions.addNotification({
           type: 'danger',
           message: `Une erreur est survenue`
         }))

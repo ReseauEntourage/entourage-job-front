@@ -1,11 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SliceRootState } from 'src/store/utils';
-import { displayNotificationAdapter } from "./notifications.adapters";
+import { v4 as uuid } from 'uuid';
 
 
 
 export interface State {
-    displayNotification: ReturnType<typeof displayNotificationAdapter.getInitialState>;
     notifications: {
         id: string;
         type: 'danger' | 'success';
@@ -14,7 +13,6 @@ export interface State {
 }
 
 const initialState: State = {
-    displayNotification: displayNotificationAdapter.getInitialState(),
     notifications: [],
 };
 
@@ -23,9 +21,9 @@ export const slice = createSlice({
     name: 'notifications',
     initialState,
     reducers: {
-        ...displayNotificationAdapter.getReducers<State>((state) => state.displayNotification),
-        addNotification(state, action: PayloadAction<{ id: string; type: 'danger' | 'success'; message: string; }>) {
-            state.notifications.push(action.payload);
+        addNotification(state, action: PayloadAction<{ type: 'danger' | 'success'; message: string; }>) {
+            const id =  uuid();
+            state.notifications.push({id, ...action.payload});
         },
         removeNotification(state, action: PayloadAction<{id: string}>) {
             state.notifications = state.notifications.filter(
