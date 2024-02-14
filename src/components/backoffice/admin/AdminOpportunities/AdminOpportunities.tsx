@@ -19,7 +19,6 @@ import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { PostAdminOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { Button, ButtonMultiple, Section } from 'src/components/utils';
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
-import { HEIGHTS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
 import { FilterObject } from 'src/constants/utils';
 import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
@@ -41,10 +40,7 @@ interface AdminOpportunitiesProps {
   isMobile?: boolean;
 }
 
-const filtersAndTabsHeight =
-  HEIGHTS.TABS_HEIGHT_WITHOUT_NUMBERS +
-  HEIGHTS.SEARCH_BAR_HEIGHT +
-  HEIGHTS.SECTION_PADDING;
+const filtersAndTabsHeight = 0;
 
 export const AdminOpportunities = ({
   search,
@@ -260,7 +256,7 @@ export const AdminOpportunities = ({
               Créer
             </ButtonMultiple>
           </HeaderBackoffice>
-          <Section className="custom-primary custom-fixed">
+          <Section className="custom-primary">
             <AdminOffersTab
               activeStatus={tag}
               // tabCounts={tabCounts}
