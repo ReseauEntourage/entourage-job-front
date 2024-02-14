@@ -27,7 +27,7 @@ export const useIsProfileContacted = (
     }
 
     // if we have contact messages to return
-    if (!!lastSentMessage && !!lastReceivedMessage) {
+    if (!!lastSentMessage || !!lastReceivedMessage) {
       // Check if only lastSentMessage is defined
       if (lastSentMessage && !lastReceivedMessage) {
         setExistingcontactMessage(contactMessage);

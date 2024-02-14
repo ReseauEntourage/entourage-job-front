@@ -2,6 +2,9 @@ import styled from 'styled-components';
 
 export const StyledProfessionalInformationList = styled.ul`
   padding-left: 0;
+  div {
+    display: inline;
+  }
   li {
     list-style: none;
     align-items: center;

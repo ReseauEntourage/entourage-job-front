@@ -3,6 +3,7 @@ import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,
 } from '../Backoffice.styles';
+import { StyledSpaceDiv } from 'src/components/styled-components';
 import { Section } from 'src/components/utils';
 import { H1 } from 'src/components/utils/Headings';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
@@ -30,6 +31,7 @@ export const Dashboard = () => {
     <StyledBackofficeBackground>
       <Section className="custom-page">
         <H1 title="Bienvenue sur votre espace personnel" color="black" />
+        <StyledSpaceDiv height="20px" />
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
           <StyledDashboardLeftColumn className={`${isDesktop ? '' : 'mobile'}`}>
             <DashboardProfileCard />

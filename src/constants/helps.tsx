@@ -97,30 +97,30 @@ export const ParametresHelpCardContents: {
     {
       icon: <MaletteIllu />,
       value: 'interview',
-      title: 'Se préparer aux entretien d’embauche',
+      title: 'Se préparer aux entretiens d’embauche',
       description:
-        "Profitez de l'expertise de nos coachs pour créer des CV et lettres de motivation qui mettent en avant vos atouts et compétences.",
+        'Préparez au mieux vos entretiens grâce aux conseils et au soutien des coachs LinkedOut.',
     },
     {
       icon: <CVIllu />,
       value: 'cv',
       title: 'M’aider à réaliser mon CV et mes lettres de motivation',
       description:
-        "Préparez-vous à réussir vos entretiens avec l'aide de nos coachs, qui vous apporteront des conseils pratiques et un soutien moral.",
+        "Profitez de l'expérience des coachs LinkedOut pour créer des CV et lettres de motivation qui mettent en avant vos atous et compétences.",
     },
     {
       icon: <ConversationIllu />,
       value: 'event',
-      title: 'Se rencontrer et échanger avec les membres de la communautés',
+      title: 'Se rencontrer et échanger avec les membres de la communauté',
       description:
         "Rejoignez notre communauté lors d'événements pour partager vos expériences, apprendre des autres et tisser des liens professionnels précieux.",
     },
     {
       icon: <RSIllu />,
       value: 'network',
-      title: 'Avoir plus de réseau professionnel',
+      title: 'Faire grandir votre réseau professionnel',
       description:
-        "Multipliez vos opportunités professionnelles en vous connectant avec des professionnels qui peuvent vous soutenir et vous ouvrir des portes sur le marché de l'emploi.",
+        "Multipliez les opportunités professionnelles en vous connectant avec des professionnels qui peuvent vous soutenir et vous ouvrir des portes sur le marché de l'emploi.",
     },
   ],
   [USER_ROLES.COACH]: [

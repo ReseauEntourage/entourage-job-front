@@ -28,14 +28,14 @@ export const StyledDashboardProfileCardDescription = styled.div`
 `;
 
 export const StyledDashboardProfileCardHelps = styled.div`
-  margin: 0 20px 20px 20px;
+  margin: 20px 20px 30px 20px;
 `;
 
 export const StyledDashboardProfileCardhelpsTitle = styled.div`
   width: 100%;
   padding-bottom: 15px;
   border-bottom: 1px solid ${COLORS.hoverOrange};
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   font-size: 16px;
 `;
 
@@ -51,4 +51,15 @@ export const StyledDashboardCTAContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+`;
+
+export const StyledDashboardProfileCardHelpListEmptyState = styled.div`
+  font-style: italic;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  svg {
+    width: 50px;
+    margin-right: 15px;
+  }
 `;
