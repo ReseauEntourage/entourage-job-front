@@ -11,9 +11,15 @@ import { StyledDirectoryListContainer } from './DirectoryList.styles';
 export function DirectoryList() {
   const { profiles } = useDirectory();
 
+  const isFetchProfilesIdle = useSelector(
+    fetchProfilesSelectors.selectIsFetchProfilesIdle
+  );
+
   const isFetchProfilesRequested = useSelector(
     fetchProfilesSelectors.selectIsFetchProfilesRequested
   );
+
+  const isLoading = isFetchProfilesIdle || isFetchProfilesRequested;
 
   const profileList = useMemo(() => {
     return profiles?.map((profile) => {
@@ -45,7 +51,7 @@ export function DirectoryList() {
 
   return (
     <StyledDirectoryListContainer>
-      <CardList list={profileList} isLoading={isFetchProfilesRequested} />
+      <CardList list={profileList} isLoading={isLoading} />
     </StyledDirectoryListContainer>
   );
 }

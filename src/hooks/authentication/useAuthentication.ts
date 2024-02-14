@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { usePrevious } from '../utils';
 import {
   authenticationActions,
   fetchUserSelectors,
@@ -22,18 +21,21 @@ export function useAuthentication() {
     logoutSelectors.selectIsLogoutSucceeded
   );
 
-  const prevIsLogoutSucceeded = usePrevious(isLogoutSucceeded);
-
   const isFetchUserFailed = useSelector(
     fetchUserSelectors.selectIsFetchUserFailed
   );
+
   const isFetchUserIdle = useSelector(fetchUserSelectors.selectIsFetchUserIdle);
-  const isAuthenticationPending = !isFetchUserSucceeded && !isFetchUserFailed;
+
   const currentUser = useSelector(selectCurrentUser);
+
+  const isAuthenticationPending = !isFetchUserSucceeded && !isFetchUserFailed;
 
   const { isUserAuthorized } = useRoutePermissions();
 
   const isCurrentRouteReady = isUserAuthorized;
+
+  const isUserAuthenticated = !!currentUser;
 
   const currentUserRole = currentUser?.role;
 
@@ -44,19 +46,12 @@ export function useAuthentication() {
   }, [dispatch, isFetchUserIdle]);
 
   useEffect(() => {
-    if (isLogoutSucceeded) {
-      push('/login');
-      dispatch(authenticationActions.logoutReset());
-    } else if (
-      !isAuthenticationPending &&
-      !isUserAuthorized &&
-      !prevIsLogoutSucceeded
-    ) {
-      if (currentUserRole) {
+    if (!isAuthenticationPending && !isUserAuthorized) {
+      if (isUserAuthenticated && currentUserRole) {
         replace(getDefaultUrl(currentUserRole));
       } else {
         push(
-          asPath
+          asPath && !isLogoutSucceeded
             ? {
                 pathname: '/login',
                 query: {
@@ -68,15 +63,14 @@ export function useAuthentication() {
       }
     }
   }, [
+    asPath,
     currentUserRole,
     isAuthenticationPending,
-    isUserAuthorized,
-    replace,
-    asPath,
-    push,
-    dispatch,
-    prevIsLogoutSucceeded,
     isLogoutSucceeded,
+    isUserAuthenticated,
+    isUserAuthorized,
+    push,
+    replace,
   ]);
 
   return {
