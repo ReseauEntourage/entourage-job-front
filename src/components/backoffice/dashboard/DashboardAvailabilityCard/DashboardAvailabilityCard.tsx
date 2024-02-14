@@ -14,8 +14,8 @@ import {
   authenticationActions,
   updateProfileSelectors,
 } from 'src/use-cases/authentication';
-import { isRoleIncluded } from 'src/utils';
 import { notificationsActions } from 'src/use-cases/notifications';
+import { isRoleIncluded } from 'src/utils';
 
 export const DashboardAvailabilityCard = () => {
   const user = useAuthenticatedUser();
@@ -34,20 +34,24 @@ export const DashboardAvailabilityCard = () => {
           `La modification de votre disponibilité a bien été enregistrée`,
           'success'
         );
-        dispatch(notificationsActions.addNotification({
-          type: 'success',
-          message: `La modification a bien été enregistrée`
-        }))
+        dispatch(
+          notificationsActions.addNotification({
+            type: 'success',
+            message: `La modification a bien été enregistrée`,
+          })
+        );
       } else if (updateProfileStatus === ReduxRequestEvents.FAILED) {
         UIkit.notification(
           `Une erreur est survenue lors de la modification de votre disponibilité`,
           'danger'
         );
 
-        dispatch(notificationsActions.addNotification({
-          type: 'danger',
-          message: `Une erreur est survenue`
-        }))
+        dispatch(
+          notificationsActions.addNotification({
+            type: 'danger',
+            message: `Une erreur est survenue`,
+          })
+        );
       }
       dispatch(authenticationActions.updateProfileReset());
     }

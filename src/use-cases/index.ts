@@ -1,8 +1,8 @@
 import { authenticationConfig, UseCaseConfigType } from './authentication';
 import { cvConfig } from './cv';
+import { notificationsConfig } from './notifications';
 import { opportunitiesConfig } from './opportunities';
 import { profilesConfig } from './profiles';
-import { notificationsConfig } from './notifications';
 
 export const useCasesConfig: UseCaseConfigType = {
   authenticationConfig,

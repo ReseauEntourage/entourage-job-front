@@ -48,7 +48,6 @@ export const useIsProfileContacted = (
         setExistingcontactMessage(contactMessage);
       }
     }
-    console.log(existingContactMessage);
   }, [selectedProfile, contactMessage, contactedMessage]);
 
   return {

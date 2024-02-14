@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { slice } from './notifications.slice';
 import { Saga } from 'redux-saga';
 import { saga } from './notifications.saga';
+import { slice } from './notifications.slice';
 
 export type UseCaseConfigItem = {
   slice: ReturnType<typeof createSlice>;
