@@ -23,3 +23,7 @@ export const StyledDashboardRightColumn = styled.div`
     width: 100%;
   }
 `;
+
+export const StyledDashboardTitleContainer = styled.div`
+  padding-bottom: 20px;
+`;

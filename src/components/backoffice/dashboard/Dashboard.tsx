@@ -12,6 +12,7 @@ import { isRoleIncluded } from 'src/utils';
 import {
   StyledDashboardLeftColumn,
   StyledDashboardRightColumn,
+  StyledDashboardTitleContainer,
 } from './Dashboard.styles';
 import { DashboardAvailabilityCard } from './DashboardAvailabilityCard';
 import { DashboardOpportunitiesCard } from './DashboardOpportunitiesCard';
@@ -29,7 +30,9 @@ export const Dashboard = () => {
   return (
     <StyledBackofficeBackground>
       <Section className="custom-page">
-        <H1 title="Bienvenue sur votre espace personnel" color="black" />
+        <StyledDashboardTitleContainer>
+          <H1 title="Bienvenue sur votre espace personnel" color="black" />
+        </StyledDashboardTitleContainer>
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
           <StyledDashboardLeftColumn className={`${isDesktop ? '' : 'mobile'}`}>
             <DashboardProfileCard />
