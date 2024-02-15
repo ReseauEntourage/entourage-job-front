@@ -17,7 +17,7 @@ import {
 export const DashboardLinkedUserCard = () => {
   const user = useAuthenticatedUser();
   const linkedUser = useSelector(selectLinkedUser);
-  if (!linkedUser || user.role === USER_ROLES.COACH_EXTERNAL) {
+  if (!linkedUser || isRoleIncluded([USER_ROLES.COACH_EXTERNAL, USER_ROLES.ADMIN], user.role)) {
     return null;
   }
   return (
