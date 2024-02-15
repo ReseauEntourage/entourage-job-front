@@ -16,7 +16,7 @@ const Annuaire = () => {
     <LayoutBackOffice title="Annuaire">
       <Section className="custom-page">
         <HeaderBackoffice
-          title="Bienvenu sur votre réseau"
+          title="Bienvenue sur votre réseau"
           description={
             "Découvrez les membres de la communauté et développez votre carnet d'adresse."
           }
