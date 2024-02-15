@@ -15,6 +15,7 @@ import {
   StyledDashboardTitleContainer,
 } from './Dashboard.styles';
 import { DashboardAvailabilityCard } from './DashboardAvailabilityCard';
+import { DashboardLinkedUserCard } from './DashboardLinkedUserCard';
 import { DashboardOpportunitiesCard } from './DashboardOpportunitiesCard';
 import { DashboardProfileCard } from './DashboardProfileCard';
 
@@ -37,6 +38,7 @@ export const Dashboard = () => {
           <StyledDashboardLeftColumn className={`${isDesktop ? '' : 'mobile'}`}>
             <DashboardProfileCard />
             {shouldShowAllProfile && <DashboardAvailabilityCard />}
+            <DashboardLinkedUserCard />
           </StyledDashboardLeftColumn>
           <StyledDashboardRightColumn
             className={`${isDesktop ? '' : 'mobile'}`}
