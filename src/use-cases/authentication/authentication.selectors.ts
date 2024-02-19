@@ -2,6 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import {
   UserCandidateWithUsers,
   UserProfile,
+  User,
   UserWithUserCandidate,
 } from 'src/api/types';
 import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
@@ -69,7 +70,7 @@ export function selectProfileUpdateError(state: RootState) {
 }
 
 // select candidate for the current user => doesn't work for external coach
-export function selectCandidate(
+export function selectUserCandidateWithUsers(
   state: RootState
 ): UserCandidateWithUsers | null {
   if (state.authentication.user) {
@@ -80,6 +81,25 @@ export function selectCandidate(
       [candidate] = candidate;
     }
     return candidate;
+  }
+  return null;
+}
+
+// select candidate User for the current user => doesn't work for external coach
+export function selectCandidateAsUser(state: RootState): User | null {
+  const { user } = state.authentication;
+  if (user) {
+    let candidate = getUserCandidateFromCoachOrCandidate(user);
+    if (
+      isRoleIncluded(COACH_USER_ROLES, user.role) &&
+      Array.isArray(candidate)
+    ) {
+      [candidate] = candidate;
+      if (candidate?.candidat) {
+        return candidate.candidat;
+      }
+    }
+    return user;
   }
   return null;
 }

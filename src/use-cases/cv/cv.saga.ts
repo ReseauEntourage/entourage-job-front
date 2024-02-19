@@ -1,11 +1,12 @@
-import { call, put, takeLatest } from 'typed-redux-saga';
+import { call, put, takeLatest, select } from 'typed-redux-saga';
 import { Api } from 'src/api';
+import { selectCandidateId } from 'src/use-cases/authentication';
 import { slice } from './cv.slice';
 
 const { fetchCVSucceeded, fetchCVFailed, fetchCVRequested } = slice.actions;
 
-function* fetchCVSagaRequested(action: ReturnType<typeof fetchCVRequested>) {
-  const candidateId = action.payload;
+function* fetchCVSagaRequested() {
+  const candidateId = yield* select(selectCandidateId);
 
   try {
     const response = yield* call(() => Api.getCVByCandidateId(candidateId));

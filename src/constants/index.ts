@@ -206,7 +206,7 @@ export const CV_STATUS = {
     value: 'Unknown',
     style: '',
   },
-};
+} as const;
 
 export type AmbitionsPrefixesType = 'dans' | 'comme';
 

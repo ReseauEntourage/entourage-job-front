@@ -18,6 +18,7 @@ import { DashboardAvailabilityCard } from './DashboardAvailabilityCard';
 import { DashboardLinkedUserCard } from './DashboardLinkedUserCard';
 import { DashboardOpportunitiesCard } from './DashboardOpportunitiesCard';
 import { DashboardProfileCard } from './DashboardProfileCard';
+import { DashboardStepsCard } from './DashboardStepsCard';
 
 export const Dashboard = () => {
   const isDesktop = useIsDesktop();
@@ -46,7 +47,12 @@ export const Dashboard = () => {
             {!isRoleIncluded(
               [USER_ROLES.COACH_EXTERNAL, USER_ROLES.ADMIN],
               user.role
-            ) && <DashboardOpportunitiesCard />}
+            ) && (
+              <>
+                <DashboardStepsCard />
+                <DashboardOpportunitiesCard />
+              </>
+            )}
           </StyledDashboardRightColumn>
         </StyledBackofficeGrid>
       </Section>

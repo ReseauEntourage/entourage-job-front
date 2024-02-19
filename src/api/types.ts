@@ -149,6 +149,14 @@ export interface CVFormation {
   }[];
 }
 
+export type CVStatus =
+  | 'Draft'
+  | 'Published'
+  | 'New'
+  | 'Pending'
+  | 'Progress'
+  | 'Unknown';
+
 export interface CV {
   id?: string;
   version: string;
@@ -206,7 +214,7 @@ export interface CV {
   }[];
   formations?: CVFormation[];
   experiences?: CVExperience[];
-  status: string;
+  status: CVStatus;
   UserId: string;
 }
 
