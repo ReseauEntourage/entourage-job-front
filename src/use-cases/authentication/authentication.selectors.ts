@@ -1,8 +1,15 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { UserCandidateWithUsers, UserProfile } from 'src/api/types';
+import {
+  UserCandidateWithUsers,
+  UserProfile,
+  UserWithUserCandidate,
+} from 'src/api/types';
+import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
 import {
   getCandidateIdFromCoachOrCandidate,
+  getRelatedUser,
   getUserCandidateFromCoachOrCandidate,
+  isRoleIncluded,
   mutateToArray,
 } from 'src/utils';
 import {
@@ -114,3 +121,28 @@ export const selectCandidateProfileDefaultFiltersForDashboardOpportunities =
       return null;
     }
   );
+
+// selects linked user if only one user is linked, otherwise sends first user of the list; if whole list needed, create new selector
+export const selectLinkedUser = (
+  state: RootState
+): UserWithUserCandidate | null => {
+  const { user } = state.authentication;
+  if (!user) return null;
+  if (isRoleIncluded(COACH_USER_ROLES, user.role)) {
+    const candidat: UserWithUserCandidate[] | null = getRelatedUser(user);
+    if (candidat) {
+      const [userToSend] = candidat;
+      return userToSend;
+    }
+    return null;
+  }
+  if (isRoleIncluded(CANDIDATE_USER_ROLES, user.role)) {
+    const coach: UserWithUserCandidate[] | null = getRelatedUser(user);
+    if (coach) {
+      const [userToSend] = coach;
+      return userToSend;
+    }
+    return null;
+  }
+  return null;
+};
