@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
-export const NOTIF_WIDTH = '400px';
+export const NOTIF_WIDTH = '600px';
 
 export const StyledNotificationsContainer = styled.div`
   position: fixed;
@@ -12,6 +12,7 @@ export const StyledNotificationsContainer = styled.div`
   right: 0;
   width: ${NOTIF_WIDTH};
   height: 50px;
+  z-index: 100;
 `;
 
 const StyledNotification = styled.div`

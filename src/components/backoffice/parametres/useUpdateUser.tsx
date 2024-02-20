@@ -18,6 +18,12 @@ export const useUpdateUser = (user: UserWithUserCandidate) => {
   );
 
   useEffect(() => {
+    return () => {
+      dispatch(authenticationActions.updateUserReset());
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
     if (updateUserStatus === ReduxRequestEvents.SUCCEEDED) {
       setCloseModal(true);
     }

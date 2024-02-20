@@ -49,6 +49,12 @@ export const useUpdateProfile = (user: UserWithUserCandidate) => {
     }
   }, [updateProfileStatus]);
 
+  useEffect(() => {
+    return () => {
+      dispatch(authenticationActions.updateProfileReset());
+    };
+  }, [dispatch]);
+
   const updateUserProfile = useCallback(
     (newProfileData: Partial<UserProfile>): void => {
       if (!_.isEmpty(newProfileData) && user.id) {

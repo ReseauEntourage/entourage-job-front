@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { UserCandidateWithUsers } from 'src/api/types';
 import { CandidateEmployedToggle } from 'src/components/backoffice/candidate/CandidateEmployedToggle';
@@ -22,6 +22,12 @@ export const CVPreferences = ({
   candidatId: string;
 }) => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(authenticationActions.updateCandidateReset());
+    };
+  }, [dispatch]);
 
   const dispatchUpdateCandidate = useCallback(
     (keyValue: {

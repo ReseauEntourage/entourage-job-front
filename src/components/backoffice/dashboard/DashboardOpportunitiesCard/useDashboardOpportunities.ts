@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import UIkit from 'uikit';
+import { notificationsActions } from 'src/use-cases/notifications';
 import {
   fetchOpportunitiesAsCandidateSelectors,
   fetchOpportunitiesTabCountsSelectors,
@@ -62,14 +62,24 @@ export const useDashboardOpportunities = () => {
   // notif on error for opportunitie fails
   useEffect(() => {
     if (isFetchOpportunitiesFailed) {
-      UIkit.notification('Une erreur est survenue', 'danger');
+      dispatch(
+        notificationsActions.addNotification({
+          type: 'danger',
+          message: `Une erreur est survenue`,
+        })
+      );
     }
   }, [isFetchOpportunitiesFailed, dispatch]);
 
   // notif on error for tab counts fails
   useEffect(() => {
     if (isFetchOpportunitiesTabCountsFailed) {
-      UIkit.notification('Une erreur est survenue', 'danger');
+      dispatch(
+        notificationsActions.addNotification({
+          type: 'danger',
+          message: `Une erreur est survenue`,
+        })
+      );
     }
   }, [isFetchOpportunitiesTabCountsFailed, dispatch]);
 

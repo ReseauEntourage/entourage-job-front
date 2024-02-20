@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useModalContext } from 'src/components/modals/Modal';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { Button } from 'src/components/utils/Button';
 import { Grid } from 'src/components/utils/Grid';
 import { ReduxRequestEvents } from 'src/constants';
-import { usePrevious } from 'src/hooks/utils';
-import { updateCandidateSelectors } from 'src/use-cases/authentication';
+import {
+  authenticationActions,
+  updateCandidateSelectors,
+} from 'src/use-cases/authentication';
 
 interface CVModalConfirmationProps {
   dispatchOnSubmit: (keyValue: { hidden: boolean }) => void;
@@ -19,21 +21,23 @@ export const CVModalConfirmation = ({
 }: CVModalConfirmationProps) => {
   const { onClose } = useModalContext();
   const [closeModal, setCloseModal] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   const updateCandidateStatus = useSelector(
     updateCandidateSelectors.selectUpdateCandidateStatus
   );
 
-  const prevUpdateCandidateStatus = usePrevious(updateCandidateStatus);
+  useEffect(() => {
+    return () => {
+      dispatch(authenticationActions.updateCandidateReset());
+    };
+  }, [dispatch]);
 
   useEffect(() => {
-    if (
-      prevUpdateCandidateStatus === ReduxRequestEvents.REQUESTED &&
-      updateCandidateStatus === ReduxRequestEvents.SUCCEEDED
-    ) {
+    if (updateCandidateStatus === ReduxRequestEvents.SUCCEEDED) {
       setCloseModal(true);
     }
-  }, [prevUpdateCandidateStatus, updateCandidateStatus]);
+  }, [updateCandidateStatus]);
 
   return (
     <ModalGeneric
