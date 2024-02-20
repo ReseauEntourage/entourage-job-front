@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectNotifications } from 'src/use-cases/notifications';
-import { Notification } from './Notification';
 import { StyledNotificationsContainer } from './Notification.styles';
+import { NotificationWrapper } from './NotificationWrapper';
 
 export const NotificationsContainer = () => {
   const notifications = useSelector(selectNotifications);
@@ -10,7 +10,7 @@ export const NotificationsContainer = () => {
   return (
     <StyledNotificationsContainer>
       {notifications.map((notification) => (
-        <Notification
+        <NotificationWrapper
           key={notification.id}
           id={notification.id}
           message={notification.message}

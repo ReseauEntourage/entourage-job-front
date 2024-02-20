@@ -1,13 +1,9 @@
 import React from 'react';
-import { Check, Close } from 'assets/icons/icons';
-import {
-  StyledSuccessNotification,
-  StyledFailedNotification,
-} from './Notification.styles';
+import { Notification } from './Notification';
 
 const meta = {
   title: 'Notification',
-  component: 'Notification',
+  component: Notification,
   parameters: {
     controls: {
       exclude: /.*/g,
@@ -21,12 +17,7 @@ const meta = {
 };
 
 const SuccessNotificationTemplate = () => {
-  return (
-    <StyledSuccessNotification>
-      <Check />
-      Notification de succès
-    </StyledSuccessNotification>
-  );
+  return <Notification type="success" message="Notification de succès" />;
 };
 
 export const NotificationDeSuccès = {
@@ -34,12 +25,7 @@ export const NotificationDeSuccès = {
 };
 
 const DangerNotificationTemplate = () => {
-  return (
-    <StyledFailedNotification>
-      <Close />
-      Notification d&lsquo;échec
-    </StyledFailedNotification>
-  );
+  return <Notification type="danger" message="Notification d'échec" />;
 };
 
 export const NotificationDEchec = {

@@ -3,24 +3,27 @@ import { COLORS } from 'src/constants/styles';
 
 export const NOTIF_WIDTH = '600px';
 
-export const StyledNotificationsContainer = styled.div`
+export const StyledNotificationWrapper = styled.div`
+  top: 143px;
   position: fixed;
+  z-index: 100;
+  right: 0;
+`;
+
+export const StyledNotificationsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  top: 143px;
-  right: 0;
   width: ${NOTIF_WIDTH};
   height: 50px;
-  z-index: 100;
 `;
 
 const StyledNotification = styled.div`
   box-sizing: border-box;
   width: ${NOTIF_WIDTH};
+  color: white;
   height: 50px;
   line-height: 50px;
-  color: white;
   padding-left: 20px;
   border-radius: 5px 0 0 5px;
   svg {
