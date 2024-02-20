@@ -26,8 +26,6 @@ export const StyledDashboardCVCreationStepContent = styled.div`
   margin: 30px 0;
   svg {
     min-width: 140px;
-    height: 140px;
-    width: 140px;
   }
 `;
 

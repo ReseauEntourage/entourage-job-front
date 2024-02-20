@@ -86,7 +86,7 @@ export const DashboardCVCreationStepCard = () => {
         <StyledDashboardCVCreationStepContent>
           {isDesktop && (
             <div>
-              <IlluCV />
+              <IlluCV height="140" width="140" />
             </div>
           )}
           <StyledDashboardCVCreationStepContentText>
