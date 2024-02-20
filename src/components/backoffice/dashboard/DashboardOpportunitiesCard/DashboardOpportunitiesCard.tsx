@@ -19,6 +19,7 @@ import {
 } from 'src/use-cases/authentication';
 import { findConstantFromValue, buildContractLabel } from 'src/utils';
 import {
+  StyledDashboardOpportunitiesEmptyState,
   StyledDashboardOpportunitiesListContainer,
   StyledDashboardOpportunityItem,
   StyledDashboardOpportunityItemBLs,
@@ -33,7 +34,7 @@ const uuidValue = uuid();
 
 export const DashboardOpportunitiesCard = () => {
   const user = useAuthenticatedUser();
-  const { isDataLoading, numberOpportunitiesInProgess, opportunities } =
+  const { isDataLoading, opportunities, numberOpportunitiesInProgess } =
     useDashboardOpportunities();
   const { contextualRole } = useContextualRole(user.role);
   const isDesktop = useIsDesktop();
@@ -52,92 +53,106 @@ export const DashboardOpportunitiesCard = () => {
     >
       {!isDataLoading ? (
         <>
-          {numberOpportunitiesInProgess && (
-            <StyledCardNotificationContainer>
-              <StyledDashbordOpportunitiesInProgress>
-                <div>
-                  <IlluMalette />
-                  {contextualRole === USER_ROLES.COACH
-                    ? `${candidate?.firstName} a`
-                    : `Vous avez`}
-                  <strong>
-                    {' '}
-                    {numberOpportunitiesInProgess} opportunité
-                    {numberOpportunitiesInProgess > 0 && 's'} à traiter.
-                  </strong>
-                </div>
-                {isDesktop && (
-                  <Button
-                    style="custom-secondary"
-                    size="small"
-                    href={`/backoffice/candidat/${candidateId}/offres/private?status=-1`}
-                  >
-                    Traiter les offres
-                  </Button>
-                )}
-              </StyledDashbordOpportunitiesInProgress>
-            </StyledCardNotificationContainer>
-          )}
-          {opportunities && opportunities.length > 0 && !isDataLoading && (
-            <>
-              <H6
-                title={
-                  contextualRole === USER_ROLES.COACH
-                    ? `D'autres offres qui pourraient intéresser ${candidate?.firstName}`
-                    : `D'autres offres qui pourraient vous intéresser`
-                }
-              />
-              <StyledDashboardOpportunitiesListContainer>
-                {opportunities.map((opportunity, i) => {
-                  return (
-                    <Link
-                      href={{
-                        pathname: `/backoffice/candidat/${candidateId}/offres/public/${opportunity.id}`,
-                        query: opportunitiesDefaultFilters,
-                      }}
-                      key={`opp-${uuidValue}-${i}`}
+          {!!numberOpportunitiesInProgess &&
+            numberOpportunitiesInProgess > 0 && (
+              <StyledCardNotificationContainer>
+                <StyledDashbordOpportunitiesInProgress>
+                  <div>
+                    <IlluMalette height="39" width="39" />
+                    {contextualRole === USER_ROLES.COACH
+                      ? `${candidate?.firstName} a`
+                      : `Vous avez`}
+                    <strong>
+                      {' '}
+                      {numberOpportunitiesInProgess} opportunité
+                      {numberOpportunitiesInProgess > 0 && 's'} à traiter.
+                    </strong>
+                  </div>
+                  {isDesktop && (
+                    <Button
+                      style="custom-secondary"
+                      size="small"
+                      href={`/backoffice/candidat/${candidateId}/offres/private?status=-1`}
                     >
-                      <StyledDashboardOpportunityItem
-                        className={isDesktop ? '' : 'mobile'}
+                      Traiter les offres
+                    </Button>
+                  )}
+                </StyledDashbordOpportunitiesInProgress>
+              </StyledCardNotificationContainer>
+            )}
+          {opportunities && !isDataLoading && (
+            <>
+              {!!numberOpportunitiesInProgess &&
+                numberOpportunitiesInProgess > 0 && (
+                  <H6
+                    title={
+                      contextualRole === USER_ROLES.COACH
+                        ? `D'autres offres qui pourraient intéresser ${candidate?.firstName}`
+                        : `D'autres offres qui pourraient vous intéresser`
+                    }
+                  />
+                )}
+              {!isDataLoading && opportunities && opportunities.length > 0 && (
+                <StyledDashboardOpportunitiesListContainer>
+                  {opportunities.map((opportunity, i) => {
+                    return (
+                      <Link
+                        href={{
+                          pathname: `/backoffice/candidat/${candidateId}/offres/public/${opportunity.id}`,
+                          query: opportunitiesDefaultFilters,
+                        }}
+                        key={`opp-${uuidValue}-${i}`}
                       >
-                        <StyledDashboardOpportunityItemTitle
+                        <StyledDashboardOpportunityItem
                           className={isDesktop ? '' : 'mobile'}
                         >
-                          {opportunity.title.toUpperCase()}
-                        </StyledDashboardOpportunityItemTitle>
-                        <StyledDashboardOpportunityItemBLs>
-                          {opportunity.businessLines.map((businessLine, k) => {
-                            return (
-                              <Tag
-                                key={`tag-${uuidValue}-${k}`}
-                                content={
-                                  findConstantFromValue(
-                                    businessLine.name,
-                                    BUSINESS_LINES
-                                  ).label
-                                }
-                              />
-                            );
-                          })}
-                        </StyledDashboardOpportunityItemBLs>
-                        <StyledDashboardOpportunitySubInfos>
-                          {buildContractLabel(
-                            opportunity.contract,
-                            opportunity.endOfContract,
-                            opportunity.startOfContract
-                          )}{' '}
-                          - {opportunity.department}
-                        </StyledDashboardOpportunitySubInfos>
-                      </StyledDashboardOpportunityItem>
-                    </Link>
-                  );
-                })}
-              </StyledDashboardOpportunitiesListContainer>
+                          <StyledDashboardOpportunityItemTitle
+                            className={isDesktop ? '' : 'mobile'}
+                          >
+                            {opportunity.title.toUpperCase()}
+                          </StyledDashboardOpportunityItemTitle>
+                          <StyledDashboardOpportunityItemBLs>
+                            {opportunity.businessLines.map(
+                              (businessLine, k) => {
+                                return (
+                                  <Tag
+                                    key={`tag-${uuidValue}-${k}`}
+                                    content={
+                                      findConstantFromValue(
+                                        businessLine.name,
+                                        BUSINESS_LINES
+                                      ).label
+                                    }
+                                  />
+                                );
+                              }
+                            )}
+                          </StyledDashboardOpportunityItemBLs>
+                          <StyledDashboardOpportunitySubInfos>
+                            {buildContractLabel(
+                              opportunity.contract,
+                              opportunity.endOfContract,
+                              opportunity.startOfContract
+                            )}{' '}
+                            - {opportunity.department}
+                          </StyledDashboardOpportunitySubInfos>
+                        </StyledDashboardOpportunityItem>
+                      </Link>
+                    );
+                  })}
+                </StyledDashboardOpportunitiesListContainer>
+              )}
+              {!isDataLoading &&
+                opportunities &&
+                opportunities.length === 0 && (
+                  <StyledDashboardOpportunitiesEmptyState>
+                    <IlluMalette height="39" width="39" />
+                    Aucune offre ne corresond à votre recherche.
+                  </StyledDashboardOpportunitiesEmptyState>
+                )}
             </>
           )}
-          {!isDataLoading && opportunities && opportunities.length === 0 && (
-            <></>
-          )}
+
           <StyledDashboardOpprtunityCTAOrSpinnerContainer>
             <Button
               style="custom-secondary-inverted"

@@ -63,6 +63,7 @@ export const StyledDashboardOpportunityItemBLs = styled.div`
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     white-space: normal;
+    max-width: 200px;
   }
 `;
 
@@ -77,4 +78,11 @@ export const StyledDashboardOpprtunityCTAOrSpinnerContainer = styled.div`
   align-items: center;
   margin-top: 20px;
   width: 100%;
+`;
+
+export const StyledDashboardOpportunitiesEmptyState = styled.div`
+  font-style: italic;
+  svg {
+    margin-right: 10px;
+  }
 `;
