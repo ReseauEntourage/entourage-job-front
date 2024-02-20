@@ -106,7 +106,7 @@ export const ParametresHelpCardContents: {
       value: 'cv',
       title: 'M’aider à réaliser mon CV et mes lettres de motivation',
       description:
-        "Profitez de l'expérience des coachs LinkedOut pour créer des CV et lettres de motivation qui mettent en avant vos atous et compétences.",
+        "Profitez de l'expérience des coachs LinkedOut pour créer des CV et lettres de motivation qui mettent en avant vos atouts et compétences.",
     },
     {
       icon: <ConversationIllu />,
