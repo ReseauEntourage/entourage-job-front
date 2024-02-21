@@ -54,7 +54,7 @@ function* fetchOpportunitiesAsCandidateWithFiltersSaga(
 
 function* fetchOpportunitiesTabCountsSaga() {
   const candidateId = yield* select(selectCandidateId);
-  if (!candidateId) return null;
+  if (!candidateId) return;
   try {
     const response = yield* call(() =>
       Api.getOpportunitiesTabCountByCandidate(candidateId)

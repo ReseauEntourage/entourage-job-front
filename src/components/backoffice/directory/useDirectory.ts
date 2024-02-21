@@ -15,6 +15,20 @@ import { useDirectoryQueryParams } from './useDirectoryQueryParams';
 export function useDirectory() {
   const dispatch = useDispatch();
 
+  const isFetchProfilesIdle = useSelector(
+    fetchProfilesSelectors.selectIsFetchProfilesIdle
+  );
+
+  const isFetchProfilesRequested = useSelector(
+    fetchProfilesSelectors.selectIsFetchProfilesRequested
+  );
+
+  const isLoading = isFetchProfilesIdle || isFetchProfilesRequested;
+
+  const isFetchProfileStatusFailed = useSelector(
+    fetchProfilesSelectors.selectIsFetchProfilesFailed
+  );
+
   const directoryFiltersParams = useDirectoryQueryParams();
 
   const prevDirectoryFiltersParams = usePrevious(directoryFiltersParams);
@@ -26,10 +40,6 @@ export function useDirectory() {
       );
     }
   }, [dispatch, directoryFiltersParams, prevDirectoryFiltersParams]);
-
-  const isFetchProfileStatusFailed = useSelector(
-    fetchProfilesSelectors.selectIsFetchProfilesFailed
-  );
 
   const profiles = useSelector(selectProfiles);
 
@@ -52,5 +62,6 @@ export function useDirectory() {
 
   return {
     profiles,
+    isLoading,
   };
 }

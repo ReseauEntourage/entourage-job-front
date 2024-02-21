@@ -10,9 +10,6 @@ export const StyledDashboardCVCreationStep = styled.div`
 `;
 
 export const StyledDashboardCVCreationStepSubtitle = styled.div`
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 21px;
   text-align: center;
 `;
 

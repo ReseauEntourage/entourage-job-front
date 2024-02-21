@@ -57,6 +57,10 @@ export function selectCurrentUser(state: RootState) {
   return state.authentication.user;
 }
 
+export function selectCurrentUserId(state: RootState) {
+  return state.authentication.user?.id;
+}
+
 export function selectLoginError(state: RootState) {
   return state.authentication.loginError;
 }
