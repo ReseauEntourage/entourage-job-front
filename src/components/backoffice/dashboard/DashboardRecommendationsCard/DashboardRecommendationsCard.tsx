@@ -1,10 +1,22 @@
 import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
+import {
+  StyledDashboardCardContent,
+  StyledDashboardCardContentContainer,
+  StyledDashboardCardSubtitle,
+} from '../Dashboard.styles';
 import { DirectoryItem } from 'src/components/backoffice/directory/DirectoryItem';
 import { Button, Card } from 'src/components/utils';
 import { CardList } from 'src/components/utils/CardList';
+import { Label } from 'src/components/utils/Label';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { isRoleIncluded } from 'src/utils';
+import {
+  selectCurrentUserProfileBusinessLines,
+  selectCurrentUserProfileHelps,
+} from 'src/use-cases/authentication';
+import { isRoleIncluded, mutateToArray } from 'src/utils';
+import { StyledDashboardRecommendationsList } from './DashboardRecommendationsCard.styles';
 import { useDashboardRecommendations } from './useDashboardRecommendations';
 
 const recommendationsLabels: {
@@ -32,6 +44,19 @@ export const DashboardRecommendationsCard = () => {
   const user = useAuthenticatedUser();
 
   const { recommendations, isLoading } = useDashboardRecommendations();
+
+  const currentUserHelps = useSelector(selectCurrentUserProfileHelps);
+  const currentUserBusinessLines = useSelector(
+    selectCurrentUserProfileBusinessLines
+  );
+
+  const query = {
+    businessLines: currentUserBusinessLines
+      ? currentUserBusinessLines.map(({ name }) => name)
+      : [],
+    helps: currentUserHelps ? currentUserHelps.map(({ name }) => name) : [],
+    departments: mutateToArray(user.userProfile.department),
+  };
 
   const recommendationsList = useMemo(() => {
     return recommendations.map((profile) => {
@@ -63,9 +88,22 @@ export const DashboardRecommendationsCard = () => {
 
   return (
     <Card title={recommendationsLabels[user.role].title}>
-      <p>{recommendationsLabels[user.role].subtitle}</p>
-      <CardList list={recommendationsList} isLoading={isLoading} />
-      <Button>{recommendationsLabels[user.role].button}</Button>
+      <StyledDashboardCardContentContainer>
+        <StyledDashboardCardSubtitle>
+          <Label>{recommendationsLabels[user.role].subtitle}</Label>
+        </StyledDashboardCardSubtitle>
+        <StyledDashboardCardContent>
+          <StyledDashboardRecommendationsList>
+            <CardList list={recommendationsList} isLoading={isLoading} />
+          </StyledDashboardRecommendationsList>
+        </StyledDashboardCardContent>
+        <Button
+          style="custom-secondary-inverted"
+          href={{ pathname: '/backoffice/annuaire', query }}
+        >
+          {recommendationsLabels[user.role].button}
+        </Button>
+      </StyledDashboardCardContentContainer>
     </Card>
   );
 };

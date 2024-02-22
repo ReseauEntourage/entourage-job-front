@@ -1,8 +1,14 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { IlluCV } from 'assets/icons/icons';
+import {
+  StyledDashboardCardContent,
+  StyledDashboardCardContentContainer,
+  StyledDashboardCardSubtitle,
+} from '../../Dashboard.styles';
 import { useContextualRole } from 'src/components/backoffice/useContextualRole';
 import { Button, Card } from 'src/components/utils';
+import { Label } from 'src/components/utils/Label';
 import { CV_STATUS } from 'src/constants';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -10,11 +16,9 @@ import { useIsDesktop } from 'src/hooks/utils';
 import { selectCandidateAsUser } from 'src/use-cases/authentication';
 import { selectCurrentCVStatus } from 'src/use-cases/cv';
 import {
-  StyledDashboardCVCreationStep,
   StyledDashboardCVCreationStepCandidateName,
   StyledDashboardCVCreationStepContent,
   StyledDashboardCVCreationStepContentText,
-  StyledDashboardCVCreationStepSubtitle,
 } from './DashboardCVCreationStepCard.styles';
 
 export const DashboardCVCreationStepCard = () => {
@@ -79,36 +83,38 @@ export const DashboardCVCreationStepCard = () => {
   if (!CVStatus || !candidate) return null;
   return (
     <Card title={textContent.title[contextualRole][CVStatus]}>
-      <StyledDashboardCVCreationStep>
-        <StyledDashboardCVCreationStepSubtitle>
-          {textContent.subTitle[contextualRole][CVStatus]}
-        </StyledDashboardCVCreationStepSubtitle>
-        <StyledDashboardCVCreationStepContent>
-          {isDesktop && (
-            <div>
-              <IlluCV height="140" width="140" />
-            </div>
-          )}
-          <StyledDashboardCVCreationStepContentText>
-            <StyledDashboardCVCreationStepCandidateName>
-              {candidate?.firstName?.toUpperCase()}{' '}
-              {candidate.lastName.toUpperCase()}{' '}
-              <span>&#8226; {candidate.userProfile.department}</span>
-            </StyledDashboardCVCreationStepCandidateName>
-            <p>
-              {USER_ROLES.CANDIDATE === contextualRole
-                ? 'L’objectif du CV Entourage Pro est de rendre visible et valoriser votre projet professionnel auprès des entreprises mais aussi vos qualités et votre parcours de vie.'
-                : 'L’objectif du CV Entourage Pro est de rendre visible et valoriser le projet professionnel du candidat auprès des entreprises mais aussi ses qualités et son parcours de vie.'}
-            </p>
-          </StyledDashboardCVCreationStepContentText>
-        </StyledDashboardCVCreationStepContent>
+      <StyledDashboardCardContentContainer>
+        <StyledDashboardCardSubtitle>
+          <Label>{textContent.subTitle[contextualRole][CVStatus]}</Label>
+        </StyledDashboardCardSubtitle>
+        <StyledDashboardCardContent>
+          <StyledDashboardCVCreationStepContent>
+            {isDesktop && (
+              <div>
+                <IlluCV height="140" width="140" />
+              </div>
+            )}
+            <StyledDashboardCVCreationStepContentText>
+              <StyledDashboardCVCreationStepCandidateName>
+                {candidate?.firstName?.toUpperCase()}{' '}
+                {candidate.lastName.toUpperCase()}{' '}
+                <span>&#8226; {candidate.userProfile.department}</span>
+              </StyledDashboardCVCreationStepCandidateName>
+              <p>
+                {USER_ROLES.CANDIDATE === contextualRole
+                  ? 'L’objectif du CV Entourage Pro est de rendre visible et valoriser votre projet professionnel auprès des entreprises mais aussi vos qualités et votre parcours de vie.'
+                  : 'L’objectif du CV Entourage Pro est de rendre visible et valoriser le projet professionnel du candidat auprès des entreprises mais aussi ses qualités et son parcours de vie.'}
+              </p>
+            </StyledDashboardCVCreationStepContentText>
+          </StyledDashboardCVCreationStepContent>
+        </StyledDashboardCardContent>
         <Button
           style="custom-secondary-inverted"
           href={`/backoffice/candidat/${candidate.id}/cv`}
         >
           {textContent.CTA[contextualRole][CVStatus]}
         </Button>
-      </StyledDashboardCVCreationStep>
+      </StyledDashboardCardContentContainer>
     </Card>
   );
 };

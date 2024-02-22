@@ -3,7 +3,7 @@ import { StyledCardCommon } from '../Cards.styles';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledProfileCard = styled(StyledCardCommon)`
-  width: 295px;
+  width: 270px;
   border-radius: 10px;
   border: 1px solid ${COLORS.gray};
   cursor: pointer;
@@ -25,7 +25,7 @@ export const StyledProfileCardPicture = styled.div`
   border-radius: 10px;
   overflow: hidden;
   position: relative;
-  height: 250px;
+  height: 225px;
 `;
 
 export const StyledProfileCardInfoContainer = styled.div`

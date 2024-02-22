@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { Text } from './Text';
+import { Label } from './Label';
 
 const meta = {
-  title: 'Text',
-  component: Text,
+  title: 'Label',
+  component: Label,
   parameters: {
     controls: {
       include: ['color', 'size', 'weight'],
@@ -29,7 +29,7 @@ const meta = {
   args: {
     children: 'This is an example text',
   },
-} satisfies Meta<typeof Text>;
+} satisfies Meta<typeof Label>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

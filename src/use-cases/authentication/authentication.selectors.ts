@@ -5,7 +5,11 @@ import {
   User,
   UserWithUserCandidate,
 } from 'src/api/types';
-import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
+import {
+  CANDIDATE_USER_ROLES,
+  COACH_USER_ROLES,
+  USER_ROLES,
+} from 'src/constants/users';
 import {
   getCandidateIdFromCoachOrCandidate,
   getRelatedUser,
@@ -71,6 +75,30 @@ export function selectUserUpdateError(state: RootState) {
 
 export function selectProfileUpdateError(state: RootState) {
   return state.authentication.profileUpdateError;
+}
+
+export function selectCurrentUserProfileHelps(state: RootState) {
+  if (state.authentication.user) {
+    if (isRoleIncluded(CANDIDATE_USER_ROLES, state.authentication.user.role)) {
+      return state.authentication.user.userProfile.helpNeeds;
+    }
+    if (state.authentication.user.role === USER_ROLES.COACH) {
+      return state.authentication.user.userProfile.helpOffers;
+    }
+  }
+  return null;
+}
+
+export function selectCurrentUserProfileBusinessLines(state: RootState) {
+  if (state.authentication.user) {
+    if (isRoleIncluded(CANDIDATE_USER_ROLES, state.authentication.user.role)) {
+      return state.authentication.user.userProfile.searchBusinessLines;
+    }
+    if (state.authentication.user.role === USER_ROLES.COACH) {
+      return state.authentication.user.userProfile.networkBusinessLines;
+    }
+  }
+  return null;
 }
 
 // select candidate for the current user => doesn't work for external coach
