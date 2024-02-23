@@ -14,6 +14,7 @@ import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedU
 import {
   selectCurrentUserProfileBusinessLines,
   selectCurrentUserProfileHelps,
+  selectLinkedUser,
 } from 'src/use-cases/authentication';
 import { isRoleIncluded, mutateToArray } from 'src/utils';
 import { StyledDashboardRecommendationsList } from './DashboardRecommendationsCard.styles';
@@ -42,6 +43,11 @@ const recommendationsLabels: {
 
 export const DashboardRecommendationsCard = () => {
   const user = useAuthenticatedUser();
+
+  const linkedUser = useSelector(selectLinkedUser);
+
+  const isAlreadyLinkedCandidate =
+    isRoleIncluded(CANDIDATE_USER_ROLES, user.role) && linkedUser;
 
   const { recommendations, isLoading } = useDashboardRecommendations();
 
@@ -85,6 +91,10 @@ export const DashboardRecommendationsCard = () => {
       );
     });
   }, [recommendations]);
+
+  if (isAlreadyLinkedCandidate || recommendations.length === 0) {
+    return null;
+  }
 
   return (
     <Card title={recommendationsLabels[user.role].title}>

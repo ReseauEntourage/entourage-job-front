@@ -2,8 +2,7 @@ import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledDashboardCVCreationStepContent = styled.div`
-  width: 700px;
-  max-width: 100%;
+  max-width: 700px;
   display: flex;
   flex-direction: row;
   align-items: center;
