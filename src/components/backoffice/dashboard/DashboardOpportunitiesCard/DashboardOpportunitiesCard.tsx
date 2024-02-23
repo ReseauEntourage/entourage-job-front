@@ -16,7 +16,7 @@ import {
   selectCandidateId,
   selectCandidateProfileDefaultFiltersForDashboardOpportunities,
   selectCandidateAsUser,
-} from 'src/use-cases/authentication';
+} from 'src/use-cases/current-user';
 import { findConstantFromValue, buildContractLabel } from 'src/utils';
 import {
   StyledDashboardOpportunitiesEmptyState,

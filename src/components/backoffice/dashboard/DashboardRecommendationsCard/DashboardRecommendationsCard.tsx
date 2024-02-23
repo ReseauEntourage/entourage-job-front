@@ -15,7 +15,7 @@ import {
   selectCurrentUserProfileBusinessLines,
   selectCurrentUserProfileHelps,
   selectLinkedUser,
-} from 'src/use-cases/authentication';
+} from 'src/use-cases/current-user';
 import { isRoleIncluded, mutateToArray } from 'src/utils';
 import { StyledDashboardRecommendationsList } from './DashboardRecommendationsCard.styles';
 import { useDashboardRecommendations } from './useDashboardRecommendations';

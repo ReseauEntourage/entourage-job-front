@@ -12,9 +12,9 @@ import { SuccessModalContent } from 'src/components/modals/SuccessModalContent';
 import { Section, SimpleLink } from 'src/components/utils';
 import {
   authenticationActions,
-  selectCurrentUser,
   selectLoginError,
 } from 'src/use-cases/authentication';
+import { selectCurrentUser } from 'src/use-cases/current-user';
 import { getDefaultUrl } from 'src/utils/Redirects';
 
 const Login = () => {

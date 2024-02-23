@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { selectCurrentUser } from 'src/use-cases/authentication';
+import { selectCurrentUser } from 'src/use-cases/current-user';
 import { authenticatedPermissions } from './permissions';
 
 export function useRoutePermissions() {

@@ -6,7 +6,7 @@ import { ContractLabel } from 'src/components/backoffice/opportunities/Opportuni
 import { ToggleWithModal } from 'src/components/utils/Inputs/ToggleWithModal';
 import { Contract } from 'src/constants';
 import { CANDIDATE_USER_ROLES, UserRole } from 'src/constants/users';
-import { authenticationActions } from 'src/use-cases/authentication';
+import { currentUserActions } from 'src/use-cases/current-user';
 import { isRoleIncluded } from 'src/utils';
 import { CVModalConfirmation } from './CVModalConfirmation';
 import { CVModalEdit } from './CVModalEdit';
@@ -31,7 +31,7 @@ export const CVPreferences = ({
       endOfContract?: string | null;
     }) => {
       dispatch(
-        authenticationActions.updateCandidateRequested({
+        currentUserActions.updateCandidateRequested({
           userId: candidatId,
           userCandidate: keyValue,
         })

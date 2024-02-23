@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { UserWithUserCandidate } from 'src/api/types';
 import { ReduxRequestEvents } from 'src/constants';
 import {
-  authenticationActions,
+  currentUserActions,
   updateUserSelectors,
-} from 'src/use-cases/authentication';
+} from 'src/use-cases/current-user';
 
 export const useUpdateUser = (user: UserWithUserCandidate) => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ export const useUpdateUser = (user: UserWithUserCandidate) => {
     (newUserData: Partial<UserWithUserCandidate>) => {
       if (!_.isEmpty(newUserData) && user.id) {
         dispatch(
-          authenticationActions.updateUserRequested({
+          currentUserActions.updateUserRequested({
             userId: user.id,
             user: newUserData,
           })

@@ -10,7 +10,7 @@ import { Card, SimpleLink } from 'src/components/utils';
 import { H5 } from 'src/components/utils/Headings';
 import { COACH_USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { selectLinkedUser } from 'src/use-cases/authentication';
+import { selectLinkedUser } from 'src/use-cases/current-user';
 import { isRoleIncluded, getUserCandidateFromCoach } from 'src/utils/Finding';
 import { StyledInformationsPersonnellesList } from './UserInformationCard.styles';
 
