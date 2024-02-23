@@ -52,7 +52,9 @@ export const StyledProfileCardName = styled.div`
   overflow: hidden;
   width: 100%;
 
-  > h3 {
+  > * {
+    line-height: 36px;
+    font-size: 22px !important;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -63,18 +65,19 @@ export const StyledProfileCardName = styled.div`
 `;
 
 export const StyledProfileCardDepartment = styled.div`
-  color: ${COLORS.white};
   text-overflow: ellipsis;
   overflow: hidden;
   width: 100%;
 
-  > div {
+  > * {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     padding-left: 16px;
     padding-right: 16px;
+    color: ${COLORS.white} !important;
   }
+}
 `;
 
 export const StyledProfileCardRole = styled.div`
@@ -99,7 +102,7 @@ export const StyledProfileCardEmptyJobContainer = styled.div`
   flex-direction: column;
   margin-bottom: 12px;
 
-  > h4 {
+  > * {
     line-height: 24px;
     margin-bottom: 0;
     font-style: italic;
@@ -117,9 +120,10 @@ export const StyledProfileCardJobContainer = styled.div`
   -webkit-box-orient: vertical;
   white-space: normal;
 
-  > h4 {
+  > * {
     line-height: 24px;
     margin-bottom: 0;
+    font-size: 18px !important;
 
     &:not(:first-child) {
       margin-top: 4px;
@@ -128,10 +132,7 @@ export const StyledProfileCardJobContainer = styled.div`
 `;
 
 export const StyledProfileCardLabel = styled.div`
-  > h5 {
-    font-weight: normal;
-    margin-bottom: 12px;
-  }
+  margin-bottom: 12px;
 `;
 
 export const StyledSeparator = styled.div`
@@ -155,7 +156,9 @@ export const StyledProfileCardHelps = styled.div`
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 6px;
+  margin-right: -8px;
+  margin-left: -8px;
 `;
 
 export const StyledProfileCardHelp = styled.div`
@@ -166,27 +169,28 @@ export const StyledProfileCardHelp = styled.div`
 `;
 
 export const StyledProfileCardHelpLabel = styled.div`
-  font-size: 12px;
+  font-size: 10px;
   color: ${COLORS.darkGray};
 `;
 
-export const StyledProfileCardEmptyContainer = styled.div`
+export const StyledProfileCardEmptyBusinessLinesContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
 `;
 
+export const StyledProfileCardEmptyHelpsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 8px;
+  margin-right: 8px;
+`;
+
 export const StyledProfileCardEmptyIcon = styled.div`
   width: 55px;
-  margin-right: 4px;
+  margin-right: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-export const StyledProfileCardEmptyLabel = styled.div`
-  flex: 1;
-  font-size: 14px;
-  font-style: italic;
-  color: ${COLORS.darkGray};
 `;

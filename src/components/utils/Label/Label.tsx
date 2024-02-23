@@ -6,9 +6,10 @@ export function Label({
   size = 'normal',
   weight = 'normal',
   color = 'normal',
+  variant = 'normal',
 }: LabelProps) {
   return (
-    <StyledLabel size={size} weight={weight} color={color}>
+    <StyledLabel size={size} weight={weight} color={color} variant={variant}>
       {children}
     </StyledLabel>
   );

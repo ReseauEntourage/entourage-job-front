@@ -6,7 +6,7 @@ const meta = {
   component: Label,
   parameters: {
     controls: {
-      include: ['color', 'size', 'weight'],
+      include: ['color', 'size', 'weight', 'variant'],
     },
   },
   argTypes: {
@@ -25,6 +25,11 @@ const meta = {
       options: ['normal', 'bold'],
       defaultValue: 'normal',
     },
+    variant: {
+      control: 'select',
+      options: ['normal', 'italic'],
+      defaultValue: 'normal',
+    },
   },
   args: {
     children: 'This is an example text',
@@ -39,5 +44,6 @@ export const Default = {
     color: 'normal',
     size: 'normal',
     weight: 'normal',
+    variant: 'normal',
   },
 } satisfies Story;

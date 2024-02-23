@@ -7,12 +7,13 @@ export interface LabelProps {
   size?: 'small' | 'normal' | 'large';
   weight?: 'normal' | 'bold';
   color?: 'lighter' | 'light' | 'normal';
+  variant?: 'normal' | 'italic';
 }
 
 const sizes: { [K in NonNullable<LabelProps['size']>]: number } = {
   small: 12,
-  normal: 15,
-  large: 18,
+  normal: 14,
+  large: 16,
 };
 
 const colors: { [K in NonNullable<LabelProps['color']>]: string } = {
@@ -21,11 +22,12 @@ const colors: { [K in NonNullable<LabelProps['color']>]: string } = {
   normal: COLORS.black,
 };
 
-export const StyledLabel = styled.p<LabelProps>`
+export const StyledLabel = styled.span<LabelProps>`
   padding: 0;
   margin: 0;
   font-weight: ${({ weight }) => weight};
   font-size: ${({ size }) => sizes[size]}px;
-  line-height: ${({ size }) => sizes[size]}px;
+  line-height: ${({ size }) => sizes[size] * 1.5}px;
   color: ${({ color }) => colors[color]};
+  font-style: ${({ variant }) => variant};
 `;
