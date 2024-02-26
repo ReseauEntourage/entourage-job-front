@@ -19,6 +19,7 @@ interface CVModalEditProps {
 
 export const CVModalEdit = ({ title, dispatchOnSubmit }: CVModalEditProps) => {
   const [closeModal, setCloseModal] = useState<boolean>(false);
+  const [isFirstRender, setIsFirstRender] = useState(true);
 
   const updateCandidateStatus = useSelector(
     updateCandidateSelectors.selectUpdateCandidateStatus
@@ -26,16 +27,19 @@ export const CVModalEdit = ({ title, dispatchOnSubmit }: CVModalEditProps) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (
+      updateCandidateStatus === ReduxRequestEvents.SUCCEEDED &&
+      !isFirstRender
+    ) {
+      setCloseModal(true);
+    }
+  }, [updateCandidateStatus, isFirstRender]);
+
+  useEffect(() => {
     return () => {
       dispatch(authenticationActions.updateCandidateReset());
     };
   }, [dispatch]);
-
-  useEffect(() => {
-    if (updateCandidateStatus === ReduxRequestEvents.SUCCEEDED) {
-      setCloseModal(true);
-    }
-  }, [updateCandidateStatus]);
 
   return (
     <ModalEdit
@@ -43,6 +47,7 @@ export const CVModalEdit = ({ title, dispatchOnSubmit }: CVModalEditProps) => {
       formSchema={formEditEmployed}
       closeOnNextRender={closeModal}
       onSubmit={(fields) => {
+        setIsFirstRender(false);
         dispatchOnSubmit({ employed: true, ...fields });
       }}
     />

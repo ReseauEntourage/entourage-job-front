@@ -22,6 +22,7 @@ export const CVModalConfirmation = ({
   const { onClose } = useModalContext();
   const [closeModal, setCloseModal] = useState<boolean>(false);
   const dispatch = useDispatch();
+  const [isFirstRender, setIsFirstRender] = useState(true);
 
   const updateCandidateStatus = useSelector(
     updateCandidateSelectors.selectUpdateCandidateStatus
@@ -34,10 +35,13 @@ export const CVModalConfirmation = ({
   }, [dispatch]);
 
   useEffect(() => {
-    if (updateCandidateStatus === ReduxRequestEvents.SUCCEEDED) {
+    if (
+      updateCandidateStatus === ReduxRequestEvents.SUCCEEDED &&
+      !isFirstRender
+    ) {
       setCloseModal(true);
     }
-  }, [updateCandidateStatus]);
+  }, [updateCandidateStatus, isFirstRender]);
 
   return (
     <ModalGeneric
@@ -60,6 +64,7 @@ export const CVModalConfirmation = ({
           style="primary"
           dataTestId={`test-confirm-${id}`}
           onClick={() => {
+            setIsFirstRender(false);
             dispatchOnSubmit({ hidden: true });
           }}
         >

@@ -1,35 +1,24 @@
-import React from 'react';
+import { Meta, StoryObj } from '@storybook/react';
 import { Notification } from './Notification';
 
 const meta = {
   title: 'Notification',
   component: Notification,
-  parameters: {
-    controls: {
-      exclude: /.*/g,
-    },
-  },
-  decorators: [
-    (Story) => {
-      return <Story />;
-    },
-  ],
-};
-
-const SuccessNotificationTemplate = () => {
-  return <Notification type="success" message="Notification de succès" />;
-};
-
-export const NotificationDeSuccès = {
-  render: SuccessNotificationTemplate,
-};
-
-const DangerNotificationTemplate = () => {
-  return <Notification type="danger" message="Notification d'échec" />;
-};
-
-export const NotificationDEchec = {
-  render: DangerNotificationTemplate,
-};
+} satisfies Meta<typeof Notification>;
 
 export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const SuccessNotification = {
+  args: {
+    type: 'success',
+    message: 'Notification de succès',
+  },
+} as Story;
+
+export const DangerNotification = {
+  args: {
+    type: 'danger',
+    message: "Notification d'échec",
+  },
+} as Story;
