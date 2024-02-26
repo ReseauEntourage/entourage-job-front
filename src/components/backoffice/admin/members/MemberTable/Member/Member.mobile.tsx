@@ -48,11 +48,7 @@ export function MemberMobile({
   disableLink,
 }: MemberProps) {
   const cvStatus = renderCVStatus(member);
-  const { checked, handleCheckBox } = useCheckBox(
-    // @ts-expect-error after enable TS strict mode. Please, try to fix it
-    selectionCallback,
-    member.id
-  );
+  const { checked, handleCheckBox } = useCheckBox(member.id, selectionCallback);
   const relatedUser = getRelatedUser(member);
 
   const userCandidate = getUserCandidateFromCoachOrCandidate(member);
@@ -84,6 +80,7 @@ export function MemberMobile({
           />
           {columns.includes('selection') &&
             selectionCallback &&
+            !Array.isArray(userCandidate) &&
             !isRoleIncluded(COACH_USER_ROLES, role) && (
               <CheckBox
                 id={`member-${member.id}-check`}
@@ -169,72 +166,73 @@ export function MemberMobile({
           </TdMobile>
         )}
       </div>
-      {!isRoleIncluded(COACH_USER_ROLES, role) && (
-        <div className="line">
-          {columns.includes('cvUrl') && (
-            <TdMobile title="Lien CV">
-              <span>
-                <SimpleLink
-                  href={`/cv/${userCandidate?.url}`}
-                  isExternal
-                  target="_blank"
-                >
-                  <LinkIcon width={20} height={20} />
-                </SimpleLink>
-              </span>
-            </TdMobile>
-          )}
-          {columns.includes('employed') && (
-            <TdMobile title="En emploi">
-              <StyledEmployedCellContent>
-                {isEditable ? (
-                  <MemberEmployedToggle
-                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                    setMember={setMember}
-                    member={member}
-                  />
-                ) : (
-                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                  <span
-                    data-tooltip-id={tooltipId}
-                    data-tooltip-content={contractLabel}
-                    data-tooltip-place="bottom"
+      {!isRoleIncluded(COACH_USER_ROLES, role) &&
+        !Array.isArray(userCandidate) && (
+          <div className="line">
+            {columns.includes('cvUrl') && (
+              <TdMobile title="Lien CV">
+                <span>
+                  <SimpleLink
+                    href={`/cv/${userCandidate?.url}`}
+                    isExternal
+                    target="_blank"
                   >
-                    {userCandidate?.employed ? (
-                      <span className="yes">Oui</span>
+                    <LinkIcon width={20} height={20} />
+                  </SimpleLink>
+                </span>
+              </TdMobile>
+            )}
+            {columns.includes('employed') && (
+              <TdMobile title="En emploi">
+                <StyledEmployedCellContent>
+                  {isEditable ? (
+                    <MemberEmployedToggle
+                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                      setMember={setMember}
+                      member={member}
+                    />
+                  ) : (
+                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                    <span
+                      data-tooltip-id={tooltipId}
+                      data-tooltip-content={contractLabel}
+                      data-tooltip-place="bottom"
+                    >
+                      {userCandidate?.employed ? (
+                        <span className="yes">Oui</span>
+                      ) : (
+                        <span className="no">Non</span>
+                      )}
+                      <Tooltip id={tooltipId} />
+                    </span>
+                  )}
+                </StyledEmployedCellContent>
+              </TdMobile>
+            )}
+            {columns.includes('cvStatus') && (
+              <TdMobile title="Statut du CV">
+                <StyledCVStatusCellContent cvStatus={cvStatus.toLowerCase()}>
+                  {cvStatus === 'none' ? 'Aucun' : translateStatusCV(cvStatus)}
+                </StyledCVStatusCellContent>
+              </TdMobile>
+            )}
+            {columns.includes('cvHidden') && (
+              <TdMobile title="CV masqué">
+                {isEditable ? (
+                  <MemberHiddenToggle setMember={setMember} member={member} />
+                ) : (
+                  <span>
+                    {userCandidate?.hidden ? (
+                      <EyeHiddenIcon className="eye-hidden" />
                     ) : (
-                      <span className="no">Non</span>
+                      <EyeVisibleIcon />
                     )}
-                    <Tooltip id={tooltipId} />
                   </span>
                 )}
-              </StyledEmployedCellContent>
-            </TdMobile>
-          )}
-          {columns.includes('cvStatus') && (
-            <TdMobile title="Statut du CV">
-              <StyledCVStatusCellContent cvStatus={cvStatus.toLowerCase()}>
-                {cvStatus === 'none' ? 'Aucun' : translateStatusCV(cvStatus)}
-              </StyledCVStatusCellContent>
-            </TdMobile>
-          )}
-          {columns.includes('cvHidden') && (
-            <TdMobile title="CV masqué">
-              {isEditable ? (
-                <MemberHiddenToggle setMember={setMember} member={member} />
-              ) : (
-                <span>
-                  {userCandidate?.hidden ? (
-                    <EyeHiddenIcon className="eye-hidden" />
-                  ) : (
-                    <EyeVisibleIcon />
-                  )}
-                </span>
-              )}
-            </TdMobile>
-          )}
-        </div>
-      )}
+              </TdMobile>
+            )}
+          </div>
+        )}
     </StyledMobileMember>
   );
 }

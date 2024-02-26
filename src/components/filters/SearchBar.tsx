@@ -5,25 +5,14 @@ import { FiltersDropdowns } from 'src/components/filters/FiltersDropdowns';
 import { FiltersMobile } from 'src/components/filters/FiltersMobile';
 import { FiltersOptions } from 'src/components/filters/FiltersOptions';
 import { FiltersSideBar } from 'src/components/filters/FiltersSideBar';
-import {
-  CV_FILTERS_DATA,
-  MEMBER_FILTERS_DATA,
-  OPPORTUNITY_FILTERS_DATA,
-  ORGANIZATION_FILTERS_DATA,
-} from 'src/constants';
 import { HEIGHTS } from 'src/constants/styles';
+import { Filter, FilterConstant, FilterObject } from 'src/constants/utils';
 import { gaEvent } from 'src/lib/gtag';
-import { AnyToFix } from 'src/utils/Types';
-// to be typed
 
 interface SearchBarProps {
-  filtersConstants:
-    | typeof CV_FILTERS_DATA
-    | typeof MEMBER_FILTERS_DATA
-    | typeof OPPORTUNITY_FILTERS_DATA
-    | typeof ORGANIZATION_FILTERS_DATA; // to be typed properly
-  filters: AnyToFix; // to be typed
-  setFilters: (updatedFilters: AnyToFix) => void;
+  filtersConstants: Filter[];
+  filters: FilterObject;
+  setFilters: (updatedFilters: FilterObject) => void;
   search?: string;
   setSearch: (search?: string) => void;
   resetFilters: () => void;
@@ -42,9 +31,9 @@ export const SearchBar = ({
   search,
   setSearch,
   resetFilters,
-  placeholder,
+  placeholder = 'Rechercher...',
   startSearchEvent,
-  smallSelectors,
+  smallSelectors = false,
   additionalButtons,
 }: SearchBarProps) => {
   const [searchBuffer, setSearchBuffer] = useState(search || '');
@@ -67,12 +56,11 @@ export const SearchBar = ({
   useEffect(() => {
     setNumberOfFilters(
       Object.values(filters).reduce(
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        (acc: number, curr: string) => {
-          return acc + curr.length;
+        (acc: number, curr: FilterConstant[] | undefined) => {
+          return acc + (curr ? curr.length : 0);
         },
         0
-      ) as number
+      )
     );
   }, [filters]);
 
@@ -81,7 +69,7 @@ export const SearchBar = ({
   return (
     <div
       className="uk-flex uk-flex-column uk-flex-middle"
-      style={{ height: HEIGHTS.SEARCH_BAR_HEIGHT }}
+      style={{ minHeight: HEIGHTS.SEARCH_BAR_HEIGHT }}
     >
       <div className="uk-width-expand ent-search-bar">
         <form className="uk-search uk-search-navbar uk-width-expand">
@@ -141,11 +129,4 @@ export const SearchBar = ({
       </div>
     </div>
   );
-};
-
-SearchBar.defaultProps = {
-  placeholder: 'Rechercher...',
-  startSearchEvent: undefined,
-  search: undefined,
-  smallSelectors: false,
 };

@@ -1,9 +1,10 @@
 import React from 'react';
 import {
-  StyledProfileGrid,
-  StyledProfileLayout,
+  StyledBackofficeBackground,
+  StyledBackofficeGrid,
 } from '../../Backoffice.styles';
 import { useConfirmationToaster } from '../useConfirmationToaster';
+import { HeaderProfile } from 'src/components/headers/HeaderProfile';
 import { Card, Section } from 'src/components/utils';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -11,7 +12,6 @@ import { useIsDesktop } from 'src/hooks/utils';
 import { isRoleIncluded } from 'src/utils';
 import { CVPreferences } from './CVPreferences';
 import { ChangePasswordCard } from './ChangePasswordCard';
-import { HeaderParametres } from './HeaderParametres';
 import { ParametresHelpCard } from './ParametresHelpCard';
 import {
   StyledParametresLeftColumn,
@@ -30,10 +30,19 @@ export const ParametresLayout = () => {
   useConfirmationToaster();
 
   return (
-    <StyledProfileLayout>
-      <HeaderParametres />
+    <StyledBackofficeBackground>
+      <HeaderProfile
+        id={user.id}
+        firstName={user.firstName}
+        lastName={user.lastName}
+        description={user.userProfile.description}
+        role={user.role}
+        department={user.userProfile.department}
+        isAvailable={user.userProfile.isAvailable}
+        isEditable
+      />
       <Section className="custom-page">
-        <StyledProfileGrid className={`${isDesktop ? '' : 'mobile'}`}>
+        <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
           <StyledParametresLeftColumn
             className={`${isDesktop ? '' : 'mobile'}`}
           >
@@ -71,8 +80,8 @@ export const ParametresLayout = () => {
               </>
             )}
           </StyledParametresRightColumn>
-        </StyledProfileGrid>
+        </StyledBackofficeGrid>
       </Section>
-    </StyledProfileLayout>
+    </StyledBackofficeBackground>
   );
 };

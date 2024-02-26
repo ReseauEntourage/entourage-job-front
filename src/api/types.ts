@@ -1,15 +1,16 @@
 import {
-  ExternalMessageContactType,
-  Contract as ContractValue,
+  AmbitionsPrefixesType,
   BusinessLineValue,
-  ExternalOfferOrigin,
-  HeardAboutValue,
   CandidateHelpWithValue,
   CompanyApproach,
+  Contract as ContractValue,
+  ExternalMessageContactType,
+  ExternalOfferOrigin,
+  HeardAboutValue,
   OfferStatus,
-  AmbitionsPrefixesType,
 } from 'src/constants';
 import { AdminZone, Department } from 'src/constants/departements';
+import { HelpNames } from 'src/constants/helps';
 import { AdminRole, Gender, UserRole } from 'src/constants/users';
 
 export type SocialMedia =
@@ -26,7 +27,7 @@ export const APIRoutes = {
   CONTACTS: 'contact',
   CVS: 'cv',
   ORGANIZATIONS: 'organization',
-  EXTERNAL_MESSAGES: 'externalMessage',
+  MESSAGE: 'message',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -41,6 +42,7 @@ export type UserCandidate = {
   note: string;
   url: string;
   lastModifiedBy: string;
+  deletedAt: string;
 };
 
 export type Organization = {
@@ -69,12 +71,11 @@ export type OrganizationDto = {
   zone: AdminZone;
 };
 
-export type HelpNames = 'tips' | 'interview' | 'cv' | 'network' | 'event';
-
 export type UserProfile = {
   currentJob: string;
   description: string;
   department: Department;
+  isAvailable: boolean;
   helpNeeds: { name: HelpNames }[];
   helpOffers: { name: HelpNames }[];
   networkBusinessLines: {
@@ -90,6 +91,8 @@ export type UserProfile = {
     order: number;
     prefix: AmbitionsPrefixesType;
   }[];
+  lastSendMessage: string;
+  lastReceivedMessage: string;
 };
 export type User = {
   coach: User;
@@ -145,6 +148,14 @@ export interface CVFormation {
     order: number;
   }[];
 }
+
+export type CVStatus =
+  | 'Draft'
+  | 'Published'
+  | 'New'
+  | 'Pending'
+  | 'Progress'
+  | 'Unknown';
 
 export interface CV {
   id?: string;
@@ -203,14 +214,14 @@ export interface CV {
   }[];
   formations?: CVFormation[];
   experiences?: CVExperience[];
-  status: string;
+  status: CVStatus;
   UserId: string;
 }
 
 export interface UserCandidateWithUsers extends UserCandidate {
   id?: string;
   email?: string;
-  candidat?: User;
+  candidat: User;
   coach?: User;
   cvs?: CV[];
   firstName?: string;
@@ -290,6 +301,13 @@ export type Opportunity = {
   createdBy?: string;
 };
 
+export type OpportunityType = 'public' | 'private';
+
+export type OpportunityTabCount = {
+  status: -1 | 0 | 1 | 2 | 3 | 4 | 'archived';
+  count: number;
+};
+
 export type OpportunityDto = {
   title: string;
   isPublic: boolean;
@@ -350,6 +368,7 @@ export type Event = {
   updatedAt: string;
   contract: Contract;
 };
+
 export interface OpportunityUser {
   OpportunityId: string;
   UserId: string;
@@ -373,6 +392,7 @@ export interface OpportunityUser {
   salary: string;
   skills: Skill[];
 }
+
 export interface OpportunityWithOpportunityUsers extends Opportunity {
   opportunityUsers: OpportunityUser;
 }
@@ -510,6 +530,16 @@ export type ExternalMessage = {
   type: ExternalMessageContactType;
 };
 
+export type InternalMessage = {
+  addresseeUserId: string;
+  subject: string;
+  message: string;
+  // answered by the DB
+  senderUserId?: string;
+  createdAt?: string;
+  id?: string;
+};
+
 export type PublicProfile = {
   id: string;
   firstName: string;
@@ -518,6 +548,7 @@ export type PublicProfile = {
   department: Department;
   currentJob: string;
   description: string;
+  isAvailable: boolean;
   helpNeeds: { name: HelpNames }[];
   helpOffers: { name: HelpNames }[];
   networkBusinessLines: {
@@ -533,4 +564,22 @@ export type PublicProfile = {
     order: number;
     prefix: AmbitionsPrefixesType;
   }[];
+  lastSentMessage: string;
+  lastReceivedMessage: string;
+};
+
+export type ProfilesFilters = {
+  role: UserRole[];
+  search?: string;
+  helps: HelpNames | HelpNames[];
+  departments: Department | Department[];
+  businessLines: BusinessLineValue | BusinessLineValue[];
+};
+
+export type OpportunitiesFiltersForCandidate = {
+  search?: string;
+  status?: OfferStatus;
+  type?: OpportunityType;
+  department: Department | Department[];
+  businessLines: BusinessLineValue | BusinessLineValue[];
 };

@@ -1,9 +1,9 @@
 import React from 'react';
-import { HelpNames } from 'src/api/types';
-import { ProfileCard } from 'src/components/utils/Card/ProfileCard';
 import { CardListItem } from 'src/components/utils/CardList';
+import { ProfileCard } from 'src/components/utils/Cards/ProfileCard';
 import { BusinessLineValue } from 'src/constants';
 import { Department } from 'src/constants/departements';
+import { HelpNames } from 'src/constants/helps';
 import { UserRole } from 'src/constants/users';
 
 interface DirectoryItemProps {
@@ -24,6 +24,7 @@ interface DirectoryItemProps {
   }[];
   department: Department;
   job?: string;
+  isAvailable: boolean;
 }
 
 export function DirectoryItem({
@@ -36,6 +37,7 @@ export function DirectoryItem({
   businessLines,
   ambitions,
   job,
+  isAvailable,
 }: DirectoryItemProps) {
   return (
     <CardListItem dataTestId={id}>
@@ -49,6 +51,7 @@ export function DirectoryItem({
         helps={helps}
         ambitions={ambitions}
         job={job}
+        isAvailable={isAvailable}
       />
     </CardListItem>
   );

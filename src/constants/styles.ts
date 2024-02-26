@@ -18,6 +18,7 @@ export const HEIGHTS = {
 
 export const COLORS = {
   lightgray: '#F5F5F5',
+  lightGrayBackground: '#f3f3f3',
   gray: '#D9D9D9',
   darkGray: '#A0A0A0',
   darkGrayFont: '#6D6C6C',

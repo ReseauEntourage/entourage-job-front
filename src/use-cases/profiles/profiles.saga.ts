@@ -1,8 +1,10 @@
-import { call, put, select, takeLatest } from 'typed-redux-saga';
+import { call, put, select, takeLatest, takeLeading } from 'typed-redux-saga';
 import { Api } from 'src/api';
+import { PROFILES_LIMIT } from 'src/constants';
+import { mutateToArray } from 'src/utils';
 import {
-  selectProfilesFilters,
   selectProfilesHasFetchedAll,
+  selectProfilesOffset,
 } from './profiles.selectors';
 import { slice } from './profiles.slice';
 
@@ -13,22 +15,51 @@ const {
   fetchProfilesRequested,
   fetchProfilesSucceeded,
   fetchProfilesFailed,
-  setProfilesRoleFilter,
-  incrementProfilesOffset,
+  fetchProfilesNextPage,
+  resetProfilesOffset,
+  fetchProfilesWithFilters,
+  postInternalMessageRequested,
+  postInternalMessageSucceeded,
+  postInternalMessageFailed,
 } = slice.actions;
 
-function* fetchProfilesSagaRequested() {
+function* fetchProfilesNextPageSaga(
+  action: ReturnType<typeof fetchProfilesNextPage>
+) {
   const hasFetchedAll = yield* select(selectProfilesHasFetchedAll);
 
   if (!hasFetchedAll) {
-    yield* put(fetchProfilesRequested());
+    yield* put(fetchProfilesRequested(action.payload));
   }
 }
 
-function* fetchProfilesSaga() {
+function* fetchProfilesWithFiltersSaga(
+  action: ReturnType<typeof fetchProfilesWithFilters>
+) {
+  yield* put(resetProfilesOffset());
+  yield* put(fetchProfilesRequested(action.payload));
+}
+
+function* fetchProfilesRequestedSaga(
+  action: ReturnType<typeof fetchProfilesRequested>
+) {
   try {
-    const filters = yield* select(selectProfilesFilters);
-    const response = yield* call(() => Api.getAllUsersProfiles(filters));
+    const offset = yield* select(selectProfilesOffset);
+    const limit = PROFILES_LIMIT;
+
+    const { departments, role, search, helps, businessLines } = action.payload;
+
+    const response = yield* call(() =>
+      Api.getAllUsersProfiles({
+        departments: mutateToArray(departments),
+        businessLines: mutateToArray(businessLines),
+        helps: mutateToArray(helps),
+        role,
+        search,
+        offset,
+        limit,
+      })
+    );
     yield* put(fetchProfilesSucceeded(response.data));
   } catch {
     yield* put(fetchProfilesFailed());
@@ -47,9 +78,27 @@ function* fetchSelectedProfileSaga(
   }
 }
 
+function* postInternalMessageSaga(
+  action: ReturnType<typeof postInternalMessageRequested>
+) {
+  try {
+    const postInternalMessageResponse = yield* call(() =>
+      Api.postInternalMessage(action.payload)
+    );
+    yield* put(postInternalMessageSucceeded(postInternalMessageResponse.data));
+    const putProfileResponse = yield* call(() =>
+      Api.getPublicUserProfile(action.payload.addresseeUserId)
+    );
+    yield* put(fetchSelectedProfileSucceeded(putProfileResponse.data));
+  } catch {
+    yield* put(postInternalMessageFailed());
+  }
+}
+
 export function* saga() {
-  yield* takeLatest(fetchProfilesRequested, fetchProfilesSaga);
-  yield* takeLatest(setProfilesRoleFilter, fetchProfilesSagaRequested);
-  yield* takeLatest(incrementProfilesOffset, fetchProfilesSagaRequested);
+  yield* takeLatest(fetchProfilesWithFilters, fetchProfilesWithFiltersSaga);
+  yield* takeLeading(fetchProfilesNextPage, fetchProfilesNextPageSaga);
+  yield* takeLatest(fetchProfilesRequested, fetchProfilesRequestedSaga);
   yield* takeLatest(fetchSelectedProfileRequested, fetchSelectedProfileSaga);
+  yield* takeLatest(postInternalMessageRequested, postInternalMessageSaga);
 }

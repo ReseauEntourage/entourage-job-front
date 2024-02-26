@@ -2,25 +2,19 @@ import _ from 'lodash';
 import Link from 'next/link';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
+import { OpportunityTabCount } from 'src/api/types';
 import { StyledTabsUl } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab/CandidateOffersTab.styles';
 import {
   formatPlural,
   tabs,
 } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab/CandidateOffersTab.utils';
+import { FilterConstant } from 'src/constants/utils';
 
 const uuidValue = uuid();
 
 interface CandidateOffersTabProps {
-  activeStatus: {
-    value: number;
-    label: string;
-    color: string;
-    public: string;
-  }[];
-  tabCounts: {
-    status: number;
-    count: number;
-  }[];
+  activeStatus: FilterConstant[];
+  tabCounts: OpportunityTabCount[];
   candidateId: string;
   isMobile: boolean;
 }
@@ -59,7 +53,8 @@ export const CandidateOffersTab = ({
 
           const isActive = activeStatus.some((singleActiveStatus) => {
             return (
-              singleActiveStatus && status.includes(singleActiveStatus.value)
+              singleActiveStatus &&
+              status.includes(singleActiveStatus.value as number | string)
             );
           });
 

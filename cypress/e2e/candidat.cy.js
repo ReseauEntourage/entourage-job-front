@@ -85,7 +85,43 @@ describe('Candidat', () => {
 
     cy.intercept('PUT', '/user/changePwd', {}).as('changePwd');
 
+    cy.intercept('GET', '/user/profile/*', {
+      fixture: 'public-profile-res',
+    }).as('getUserProfile');
+
+    cy.intercept('/message/internal', {}).as('postInternalMessage');
+
   });
+
+  it('should open a user\'s public profile and contact him', () => {
+      cy.fixture('public-profile-res').then((userProfile) => {
+        cy.visit(`/backoffice/profile/${userProfile.id}`, {
+          onBeforeLoad: function async(window) {
+            window.localStorage.setItem('access-token', '1234');
+            window.localStorage.setItem('release-version', 'v100');
+          },
+        });
+        cy.url().should('include', userProfile.id);
+      })
+
+      cy.get('[data-testid="form-contact-internal-message-subject"]')
+        .scrollIntoView()
+        .type('test');
+
+      cy.get('[data-testid="form-contact-internal-message-message"]')
+        .scrollIntoView()
+        .type('test');
+
+
+      cy.get('[data-testid="form-confirm-form-contact-internal-message"]')
+        .scrollIntoView()
+        .click();
+
+
+      cy.get('[data-testid="profile-contact-form-confirm"]')
+        .should('contain', 'Votre message a été envoyé');
+  });
+
   it('should open backoffice public offers', () => {
     cy.fixture('auth-current-candidat-res').then((user) => {
       cy.visit(`/backoffice/candidat/${user.id}/offres/public`, {
@@ -356,10 +392,10 @@ describe('Candidat', () => {
     cy.fixture('auth-current-candidat-res').then((user) => {
       cy.intercept('PUT', `/user/profile/${user.id}`, {fixture: "user-profile-candidate-description-modified"}).as('putUserProfile');
     })
-    cy.get(`[data-testid="parametres-description-placeholder"]`).scrollIntoView().click();
+    cy.get(`[data-testid="profile-description-placeholder"]`).scrollIntoView().click();
     cy.get(`[data-testid="form-profile-description-description"]`).scrollIntoView().type('hello');
     cy.get(`[data-testid="form-confirm-form-profile-description"]`).scrollIntoView().click();
-    cy.get(`[data-testid="parametres-description"]`).should('contain', "hello");
+    cy.get(`[data-testid="profile-description"]`).should('contain', "hello");
 
     // change profile picture
     cy.get(`[data-testid="profile-picture-upload-desktop"]`).selectFile('assets/image-fixture.jpg', {force: true});

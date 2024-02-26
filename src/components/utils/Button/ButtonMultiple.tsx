@@ -30,7 +30,6 @@ interface ButtonMultipleProps {
   align?: 'left' | 'right';
   buttons: {
     href?: string | { pathname: string; query: AnyToFix };
-
     newTab?: boolean;
     onClick?: () => void;
     toggle?: string;

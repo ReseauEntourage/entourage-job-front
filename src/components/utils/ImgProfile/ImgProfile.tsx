@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { UserWithUserCandidate } from 'src/api/types';
+import { UserCandidateWithUsers } from 'src/api/types';
 import { Img } from 'src/components/utils/Img';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { UserRole } from 'src/constants/users';
 import { useImageFallback } from 'src/hooks/useImageFallback';
 
 interface ImgProfileProps {
-  user: Partial<UserWithUserCandidate>;
+  user: {
+    id: string;
+    firstName: string;
+    role: UserRole;
+    candidat?: UserCandidateWithUsers;
+  };
   size?: number;
 }
 
 export const ImgProfile = ({ user, size = 40 }: ImgProfileProps) => {
-  const connectedUser = useAuthenticatedUser();
-
-  const myUser: Partial<UserWithUserCandidate> = user || connectedUser;
   const [hash, setHash] = useState<number>(Date.now());
 
   const { urlImg, fallbackToCVImage } = useImageFallback({
-    userId: myUser.id,
-    role: myUser.role,
-    userCandidate: myUser.candidat,
+    userId: user.id,
+    role: user.role,
+    userCandidate: user.candidat,
   });
 
   useEffect(() => {
@@ -40,7 +42,7 @@ export const ImgProfile = ({ user, size = 40 }: ImgProfileProps) => {
             cover
             onError={fallbackToCVImage}
             src={`${urlImg}?${hash}`}
-            alt={`photo de ${myUser.firstName}`}
+            alt={`photo de ${user.firstName}`}
             id="parametres-profile-picture"
           />
         </div>
@@ -49,7 +51,7 @@ export const ImgProfile = ({ user, size = 40 }: ImgProfileProps) => {
           className="uk-text-normal uk-text-uppercase"
           style={{ fontSize: size / 2, color: '#fff' }}
         >
-          {myUser.firstName?.substring(0, 1)}
+          {user.firstName?.substring(0, 1)}
         </span>
       )}
     </div>

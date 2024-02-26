@@ -1,26 +1,29 @@
 import _ from 'lodash';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
+import { Filter } from 'src/constants/utils';
 import { gaEvent } from 'src/lib/gtag';
 import {
   filtersToQueryParams,
   getFiltersObjectsFromQueryParamsFront,
 } from 'src/utils/Filters';
 
-export function useFilters(filtersData, path, otherPathParams?, resetTag?) {
+export function useFilters(
+  filtersData: Filter[],
+  path: string,
+  otherPathParams?: string[],
+  resetTag?: { action: string }
+) {
   const { push, query: originalQuery } = useRouter();
 
-  const // @ts-expect-error after enable TS strict mode. Please, try to fix it
-    {
-      search,
-      ...params
-    }: {
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      search?: string;
-      [key: string]: string | string[];
-    } = otherPathParams
-      ? _.omit(originalQuery, otherPathParams)
-      : originalQuery;
+  const {
+    search: querySearch,
+    ...params
+  }: {
+    [key: string]: string | string[] | undefined;
+  } = otherPathParams ? _.omit(originalQuery, otherPathParams) : originalQuery;
+
+  const search = querySearch as string | undefined;
 
   const otherParams = _.omit(
     params,

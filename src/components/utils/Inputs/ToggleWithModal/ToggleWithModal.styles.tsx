@@ -51,7 +51,7 @@ export const StyledSlider = styled.span`
   right: 0;
   bottom: 0;
   background-color: ${(props) => {
-    return props.isToggled ? COLORS.primaryOrange : 'black';
+    return props.isToggled ? COLORS.yesGreen : 'black';
   }};
   -webkit-transition: 0.4s;
   transition: 0.4s;
@@ -78,4 +78,5 @@ export const StyledSlider = styled.span`
 export const StyledToggleLabel = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
 `;

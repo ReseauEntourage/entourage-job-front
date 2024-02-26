@@ -1,25 +1,21 @@
 import React from 'react';
 import PlaceholderIllu from 'assets/icons/illu-coeur-mains-ouvertes.svg';
 import { ProfilePlaceHolder } from '../ProfilePlaceholder';
-import { useSelectedProfile } from '../useSelectedProfile';
+import { useSelectSelectedProfile } from '../useSelectedProfile';
 import { useHelpField } from 'src/components/backoffice/parametres/useUpdateProfile';
 import { useContextualRole } from 'src/components/backoffice/useContextualRole';
 import { Card } from 'src/components/utils';
-import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
+import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils';
 import { ProfileHelpList } from './ProfileHelpList';
 
 export const ProfileHelpInformationCard = () => {
-  const { selectedProfile } = useSelectedProfile();
-
+  const selectedProfile = useSelectSelectedProfile();
   const helpField = useHelpField(selectedProfile?.role);
 
-  const { contextualRole } = useContextualRole(
-    // TODO remove check because selectedProfile always exists
-    selectedProfile ? selectedProfile.role : USER_ROLES.CANDIDATE
-  );
+  const { contextualRole } = useContextualRole(selectedProfile.role);
 
-  if (!selectedProfile || !helpField) return null;
+  if (!helpField) return null;
 
   return (
     <Card

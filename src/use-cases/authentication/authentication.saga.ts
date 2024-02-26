@@ -184,7 +184,7 @@ export function* saga() {
   yield* takeLatest(loginRequested, loginRequestedSaga);
   yield* takeLatest(loginSucceeded, loginSucceededSaga);
   yield* takeLatest(logoutRequested, logoutRequestedSaga);
-  yield* takeLatest(logoutRequested, logoutSucceededSaga);
+  yield* takeLatest(logoutSucceeded, logoutSucceededSaga);
   yield* takeLatest(updateUserRequested, updateUserRequestedSaga);
   yield* takeLatest(updateProfileRequested, updateProfileRequestedSaga);
   yield* takeLatest(updateCandidateRequested, updateCandidateRequestedSaga);

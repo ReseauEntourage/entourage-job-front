@@ -3,10 +3,11 @@ require('dotenv').config();
 const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
+  video: false,
   projectId: process.env.CYPRESS_IO_PROJECT_ID,
   defaultCommandTimeout: 10000,
   pageLoadTimeout: 120000,
-  scrollBehavior: "center",
+  scrollBehavior: 'center',
   env: {
     adresseLocauxParis: `${process.env.ADRESSE_LOCAUX_PARIS}`,
   },

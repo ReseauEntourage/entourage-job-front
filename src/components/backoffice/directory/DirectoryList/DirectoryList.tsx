@@ -1,29 +1,25 @@
 import React, { useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { DirectoryItem } from '../DirectoryItem';
 import { useDirectory } from '../useDirectory';
 import { CardList } from 'src/components/utils/CardList';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
-import { useIsAtBottom } from 'src/hooks/useIsAtBottom';
-import {
-  fetchProfilesSelectors,
-  profilesActions,
-} from 'src/use-cases/profiles';
+import { fetchProfilesSelectors } from 'src/use-cases/profiles';
 import { isRoleIncluded } from 'src/utils';
 import { StyledDirectoryListContainer } from './DirectoryList.styles';
 
 export function DirectoryList() {
   const { profiles } = useDirectory();
 
-  const dispatch = useDispatch();
-
-  useIsAtBottom(() => {
-    dispatch(profilesActions.incrementProfilesOffset());
-  });
+  const isFetchProfilesIdle = useSelector(
+    fetchProfilesSelectors.selectIsFetchProfilesIdle
+  );
 
   const isFetchProfilesRequested = useSelector(
     fetchProfilesSelectors.selectIsFetchProfilesRequested
   );
+
+  const isLoading = isFetchProfilesIdle || isFetchProfilesRequested;
 
   const profileList = useMemo(() => {
     return profiles?.map((profile) => {
@@ -47,6 +43,7 @@ export function DirectoryList() {
           businessLines={businessLines}
           ambitions={profile.searchAmbitions}
           job={profile.currentJob}
+          isAvailable={profile.isAvailable}
         />
       );
     });
@@ -54,7 +51,7 @@ export function DirectoryList() {
 
   return (
     <StyledDirectoryListContainer>
-      <CardList list={profileList} isLoading={isFetchProfilesRequested} />
+      <CardList list={profileList} isLoading={isLoading} />
     </StyledDirectoryListContainer>
   );
 }

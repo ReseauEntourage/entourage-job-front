@@ -1,3 +1,18 @@
+import { createSelector } from '@reduxjs/toolkit';
+import {
+  UserCandidateWithUsers,
+  UserProfile,
+  User,
+  UserWithUserCandidate,
+} from 'src/api/types';
+import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
+import {
+  getCandidateIdFromCoachOrCandidate,
+  getRelatedUser,
+  getUserCandidateFromCoachOrCandidate,
+  isRoleIncluded,
+  mutateToArray,
+} from 'src/utils';
 import {
   fetchUserAdapter,
   loginAdapter,
@@ -53,3 +68,101 @@ export function selectUserUpdateError(state: RootState) {
 export function selectProfileUpdateError(state: RootState) {
   return state.authentication.profileUpdateError;
 }
+
+// select candidate for the current user => doesn't work for external coach
+export function selectUserCandidateWithUsers(
+  state: RootState
+): UserCandidateWithUsers | null {
+  if (state.authentication.user) {
+    let candidate = getUserCandidateFromCoachOrCandidate(
+      state.authentication.user
+    );
+    if (Array.isArray(candidate)) {
+      [candidate] = candidate;
+    }
+    return candidate;
+  }
+  return null;
+}
+
+// select candidate User for the current user => doesn't work for external coach
+export function selectCandidateAsUser(state: RootState): User | null {
+  const { user } = state.authentication;
+  if (user) {
+    let candidate = getUserCandidateFromCoachOrCandidate(user);
+    if (
+      isRoleIncluded(COACH_USER_ROLES, user.role) &&
+      Array.isArray(candidate)
+    ) {
+      [candidate] = candidate;
+      if (candidate?.candidat) {
+        return candidate.candidat;
+      }
+    }
+    return user;
+  }
+  return null;
+}
+
+// select candidateId for the current user => doesn't work for external coach
+export function selectCandidateId(state: RootState): string | null {
+  if (state.authentication.user) {
+    let candidateId = getCandidateIdFromCoachOrCandidate(
+      state.authentication.user
+    );
+    if (Array.isArray(candidateId)) {
+      [candidateId] = candidateId;
+    }
+    return candidateId;
+  }
+  return null;
+}
+
+// select department and businesslines from the profile of the current user's candidate => doesn't work for external coach
+export const selectCandidateProfileDefaultFiltersForDashboardOpportunities =
+  createSelector(
+    (state: RootState) => state.authentication.user,
+    (user) => {
+      let userCandidateProfile: UserProfile;
+      if (user) {
+        const candidate = getUserCandidateFromCoachOrCandidate(user);
+        if (Array.isArray(candidate) && candidate[0]?.candidat?.userProfile) {
+          userCandidateProfile = candidate[0]?.candidat?.userProfile;
+        } else {
+          userCandidateProfile = user?.userProfile;
+        }
+        return {
+          department: mutateToArray(userCandidateProfile.department),
+          businessLines: userCandidateProfile.searchBusinessLines.map(
+            (businessLine) => businessLine.name
+          ),
+        };
+      }
+      return null;
+    }
+  );
+
+// selects linked user if only one user is linked, otherwise sends first user of the list; if whole list needed, create new selector
+export const selectLinkedUser = (
+  state: RootState
+): UserWithUserCandidate | null => {
+  const { user } = state.authentication;
+  if (!user) return null;
+  if (isRoleIncluded(COACH_USER_ROLES, user.role)) {
+    const candidat: UserWithUserCandidate[] | null = getRelatedUser(user);
+    if (candidat) {
+      const [userToSend] = candidat;
+      return userToSend;
+    }
+    return null;
+  }
+  if (isRoleIncluded(CANDIDATE_USER_ROLES, user.role)) {
+    const coach: UserWithUserCandidate[] | null = getRelatedUser(user);
+    if (coach) {
+      const [userToSend] = coach;
+      return userToSend;
+    }
+    return null;
+  }
+  return null;
+};

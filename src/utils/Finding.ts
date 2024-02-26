@@ -1,5 +1,9 @@
 import _ from 'lodash';
-import { UserWithUserCandidate } from 'src/api/types';
+import {
+  UserCandidateWithUsers,
+  UserWithUserCandidate,
+  User,
+} from 'src/api/types';
 import { OFFER_STATUS } from 'src/constants';
 import {
   CANDIDATE_USER_ROLES,
@@ -76,20 +80,25 @@ export function getValueFromFormField<T extends string | number | boolean>(
 export function isRoleIncluded(
   superset: readonly UserRole[],
   subset: UserRole | UserRole[]
-) {
+): boolean {
   if (!Array.isArray(subset)) {
     return _.difference([subset], superset).length === 0;
   }
   return _.difference(subset, superset).length === 0;
 }
 
-export function getUserCandidateFromCoachOrCandidate(member) {
+export function getUserCandidateFromCoachOrCandidate(
+  member: UserWithUserCandidate
+): UserCandidateWithUsers | UserCandidateWithUsers[] | null {
   if (member) {
-    if (isRoleIncluded(CANDIDATE_USER_ROLES, member.role)) {
+    if (
+      isRoleIncluded(CANDIDATE_USER_ROLES, member.role) &&
+      !!member.candidat
+    ) {
       return member.candidat;
     }
 
-    if (isRoleIncluded(COACH_USER_ROLES, member.role)) {
+    if (isRoleIncluded(COACH_USER_ROLES, member.role) && !!member.coaches) {
       return member.coaches;
     }
   }
@@ -98,50 +107,58 @@ export function getUserCandidateFromCoachOrCandidate(member) {
 
 export function getRelatedUser(
   member: UserWithUserCandidate
-): UserWithUserCandidate[] {
+): UserWithUserCandidate[] | null {
   if (member) {
     if (member.candidat && member.candidat.coach) {
       return [member.candidat.coach];
     }
     if (member.coaches && member.coaches.length > 0) {
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
       return member.coaches.map(({ candidat }) => {
         return candidat;
       });
     }
   }
-
-  // @ts-expect-error after enable TS strict mode. Please, try to fix it
   return null;
 }
 
-export function getCoachFromCandidate(candidate) {
+export function getCoachFromCandidate(
+  candidate: UserWithUserCandidate
+): UserWithUserCandidate | null {
   if (candidate && isRoleIncluded(CANDIDATE_USER_ROLES, candidate.role)) {
     if (candidate.candidat && candidate.candidat.coach) {
       return candidate.candidat.coach;
     }
   }
-
   return null;
 }
 
-export function getUserCandidateFromCoach(coach, candidateId) {
+export function getUserCandidateFromCoach(
+  coach: UserWithUserCandidate,
+  candidateId: string
+): UserCandidateWithUsers | null {
   if (coach && isRoleIncluded(COACH_USER_ROLES, coach.role)) {
     if (coach.coaches && coach.coaches.length > 0) {
-      return coach.coaches.find(({ candidat }) => {
-        return candidat.id === candidateId;
+      const candidate = coach.coaches.find(({ candidat }) => {
+        return candidat?.id === candidateId;
       });
+      if (candidate) {
+        return candidate;
+      }
     }
   }
-
   return null;
 }
 
-export function getCandidateFromCoach(coach, candidateId) {
+export function getCandidateFromCoach(
+  coach: UserWithUserCandidate,
+  candidateId: string
+): User | undefined {
   return getUserCandidateFromCoach(coach, candidateId)?.candidat;
 }
 
-export function getCandidateIdFromCoachOrCandidate(member) {
+export function getCandidateIdFromCoachOrCandidate(
+  member: UserWithUserCandidate
+): string | string[] | null {
   if (member) {
     if (isRoleIncluded(CANDIDATE_USER_ROLES, member.role)) {
       return member.id;

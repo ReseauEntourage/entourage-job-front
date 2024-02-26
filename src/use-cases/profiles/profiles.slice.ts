@@ -1,19 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PublicProfile } from 'src/api/types';
-import { UserRole } from 'src/constants/users';
+import { ProfilesFilters, PublicProfile } from 'src/api/types';
+import { PROFILES_LIMIT } from 'src/constants';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import {
   fetchProfilesAdapter,
   fetchSelectedProfileAdapter,
+  postInternalMessageAdapter,
 } from './profiles.adapters';
-
-const LIMIT = 25;
 
 export interface State {
   fetchProfiles: RequestState<typeof fetchProfilesAdapter>;
   fetchSelectedProfile: RequestState<typeof fetchSelectedProfileAdapter>;
+  postInternalMessage: RequestState<typeof postInternalMessageAdapter>;
   profiles: PublicProfile[];
-  profilesFilters: { role?: UserRole[]; offset: number; limit: typeof LIMIT };
+  profilesOffset: number;
   profilesHasFetchedAll: boolean;
   selectedProfile: PublicProfile | null;
 }
@@ -21,8 +21,9 @@ export interface State {
 const initialState: State = {
   fetchProfiles: fetchProfilesAdapter.getInitialState(),
   fetchSelectedProfile: fetchSelectedProfileAdapter.getInitialState(),
+  postInternalMessage: fetchProfilesAdapter.getInitialState(),
   profiles: [],
-  profilesFilters: { offset: 0, limit: LIMIT },
+  profilesOffset: 0,
   profilesHasFetchedAll: false,
   selectedProfile: null,
 };
@@ -34,10 +35,10 @@ export const slice = createSlice({
     ...fetchProfilesAdapter.getReducers<State>((state) => state.fetchProfiles, {
       fetchProfilesSucceeded(state, action) {
         state.profiles =
-          state.profilesFilters.offset === 0
+          state.profilesOffset === 0
             ? action.payload
             : [...state.profiles, ...action.payload];
-        state.profilesHasFetchedAll = action.payload.length < LIMIT;
+        state.profilesHasFetchedAll = action.payload.length < PROFILES_LIMIT;
       },
     }),
     ...fetchSelectedProfileAdapter.getReducers<State>(
@@ -48,22 +49,23 @@ export const slice = createSlice({
         },
       }
     ),
-    setProfilesRoleFilter(state, action: PayloadAction<UserRole[]>) {
-      state.profilesFilters = {
-        ...state.profilesFilters,
-        role: action.payload,
-        offset: 0,
-      };
+    ...postInternalMessageAdapter.getReducers<State>(
+      (state) => state.postInternalMessage,
+      {}
+    ),
+    resetProfilesOffset(state) {
+      state.profilesOffset = 0;
       state.profilesHasFetchedAll = false;
       state.profiles = [];
     },
-    incrementProfilesOffset(state) {
-      state.profilesFilters = {
-        ...state.profilesFilters,
-        offset: state.profilesHasFetchedAll
-          ? state.profilesFilters.offset
-          : state.profilesFilters.offset + LIMIT,
-      };
+    fetchProfilesWithFilters(
+      _state,
+      _action: PayloadAction<ProfilesFilters>
+    ) {},
+    fetchProfilesNextPage(state, _action: PayloadAction<ProfilesFilters>) {
+      state.profilesOffset = state.profilesHasFetchedAll
+        ? state.profilesOffset
+        : state.profilesOffset + PROFILES_LIMIT;
     },
   },
 });

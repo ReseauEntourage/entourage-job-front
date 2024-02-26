@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tooltip } from 'react-tooltip';
 import { v4 as uuid } from 'uuid';
+import { UserWithUserCandidate } from 'src/api/types';
 import { EXTERNAL_USER_ROLES, USER_ROLES, UserRole } from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils/Finding';
 import { MemberInfo } from './MemberInfo';
@@ -12,18 +13,8 @@ import {
 
 const uuidValue = uuid();
 
-interface RelatedMemberProps {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  role: UserRole;
-  organization: {
-    name: string;
-  };
-}
 interface RelatedMemberInfoProps {
-  relatedUser: RelatedMemberProps[];
+  relatedUser: UserWithUserCandidate[] | null;
   role: UserRole;
 }
 

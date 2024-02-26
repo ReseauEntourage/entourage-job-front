@@ -6,9 +6,11 @@ import {
   REGIONS_FILTERS,
 } from 'src/constants/departements';
 import { GA_TAGS } from 'src/constants/tags';
-
+import { ProfileHelps } from './helps';
 import { GENDERS_FILTERS, USER_ROLES_FILTERS } from './users';
-import { FilterConstant } from './utils';
+import { Filter, FilterConstant } from './utils';
+
+export const PROFILES_LIMIT = 25;
 
 export type OfferStatus = -1 | 0 | 1 | 2 | 3 | 4;
 
@@ -204,7 +206,7 @@ export const CV_STATUS = {
     value: 'Unknown',
     style: '',
   },
-};
+} as const;
 
 export type AmbitionsPrefixesType = 'dans' | 'comme';
 
@@ -297,7 +299,7 @@ export const OFFER_ADMIN_FILTERS_DATA = [
   { tag: 'archived', title: 'Offres archivées' },
 ];
 
-export const CV_FILTERS_DATA = [
+export const CV_FILTERS_DATA: Filter[] = [
   {
     key: 'employed',
     type: 'checkbox',
@@ -338,7 +340,7 @@ export const CV_FILTERS_DATA = [
   },
 ];
 
-export const OPPORTUNITY_FILTERS_DATA = [
+export const OPPORTUNITY_FILTERS_DATA: Filter[] = [
   {
     key: 'isPublic',
     constants: [
@@ -377,7 +379,7 @@ export const OPPORTUNITY_FILTERS_DATA = [
   },
 ];
 
-export const ORGANIZATION_FILTERS_DATA = [
+export const ORGANIZATION_FILTERS_DATA: Filter[] = [
   {
     key: 'zone',
     constants: ADMIN_ZONES_FILTERS,
@@ -386,7 +388,7 @@ export const ORGANIZATION_FILTERS_DATA = [
   },
 ];
 
-export const MEMBER_FILTERS_DATA = [
+export const MEMBER_FILTERS_DATA: Filter[] = [
   {
     key: 'role',
     constants: USER_ROLES_FILTERS,
@@ -444,9 +446,28 @@ export const MEMBER_FILTERS_DATA = [
     title: 'Statut du CV',
     tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_STATUT_CV_CLIC,
   },
-] as const;
+];
 
-export type MEMBER_FILTERS_CONSTANT = (typeof MEMBER_FILTERS_DATA)[number];
+export const DirectoryFilters: Filter[] = [
+  {
+    key: 'departments',
+    constants: DEPARTMENTS_FILTERS,
+    title: 'Département',
+    tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_DEPARTEMENT_CLIC,
+  },
+  {
+    key: 'helps',
+    constants: ProfileHelps,
+    title: "Type d'aide",
+    tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_AIDE_CLIC,
+  },
+  {
+    key: 'businessLines',
+    constants: BUSINESS_LINES,
+    title: "Secteur d'activité",
+    tag: GA_TAGS.PAGE_ANNUAIRE_FILTRE_AIDE_CLIC,
+  },
+];
 
 export type ExternalOfferOrigin = 'network' | 'internet' | 'counselor';
 

@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import { ProfileCard } from '../Card/ProfileCard';
+import { ProfileCard } from 'src/components/utils/Cards/ProfileCard';
 import { USER_ROLES } from 'src/constants/users';
 import { CardList } from './CardList';
 import { CardListItem } from './CardListItem';
@@ -21,7 +21,7 @@ type Story = StoryObj<typeof meta>;
 
 type ProfileCardProps = React.ComponentProps<typeof ProfileCard>;
 
-const cards: ProfileCardProps[] = new Array(50)
+const cards: ProfileCardProps[] = new Array(4)
   .fill([
     {
       userId: uuid(),
@@ -38,6 +38,7 @@ const cards: ProfileCardProps[] = new Array(50)
         { name: 'ouvrier', order: 1 },
       ],
       department: 'Paris (75)',
+      isAvailable: false,
     },
     {
       userId: uuid(),
@@ -51,6 +52,7 @@ const cards: ProfileCardProps[] = new Array(50)
       ],
       ambitions: [{ name: 'développeur', order: 0 }],
       department: 'Paris (75)',
+      isAvailable: true,
     },
   ])
   .reduce((acc, val) => [...acc, ...val], []);
@@ -65,6 +67,7 @@ const list = cards.map(
     businessLines,
     ambitions,
     department,
+    isAvailable,
   }) => (
     <CardListItem>
       <ProfileCard
@@ -76,6 +79,7 @@ const list = cards.map(
         businessLines={businessLines}
         helps={helps}
         ambitions={ambitions}
+        isAvailable={isAvailable}
       />
     </CardListItem>
   )

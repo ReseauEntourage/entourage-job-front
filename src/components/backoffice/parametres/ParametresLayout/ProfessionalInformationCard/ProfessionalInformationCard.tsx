@@ -152,9 +152,9 @@ export const ProfessionalInformationCard = () => {
                   <li className="tag-container">
                     J&lsquo;ai du réseau dans :{' '}
                     {sortByOrder(userProfile.networkBusinessLines).map(
-                      ({ name }) => (
+                      ({ name }, index) => (
                         <Tag
-                          key={uuidValue}
+                          key={`${uuidValue}-${name}-${index}`}
                           content={
                             findConstantFromValue(name, BUSINESS_LINES).label
                           }
@@ -172,12 +172,12 @@ export const ProfessionalInformationCard = () => {
                     Je souhaite travailler comme :{' '}
                     {sortByOrder(userProfile.searchAmbitions).map(
                       ({ name }, index) => (
-                        <>
-                          <strong key={index}>{name}</strong>
+                        <div key={`${uuidValue}-${name}-${index}`}>
+                          <strong>{name}</strong>
                           {index < userProfile.searchAmbitions.length - 1
                             ? ', '
                             : ''}
-                        </>
+                        </div>
                       )
                     )}
                   </li>
@@ -192,7 +192,7 @@ export const ProfessionalInformationCard = () => {
                     {sortByOrder(userProfile.searchBusinessLines).map(
                       ({ name }, index) => (
                         <Tag
-                          key={index}
+                          key={`${uuidValue}-${name}-${index}`}
                           content={
                             findConstantFromValue(name, BUSINESS_LINES).label
                           }

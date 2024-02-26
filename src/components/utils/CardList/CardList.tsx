@@ -1,9 +1,9 @@
 import React from 'react';
 import { Spinner } from '../Spinner';
+import { StyledNoResult } from 'src/components/backoffice/Backoffice.styles';
 import {
   StyledCardList,
   StyledCardListContainer,
-  StyledCardListNoResult,
   StyledCardListSpinnerContainer,
 } from './CardList.styles';
 
@@ -26,7 +26,7 @@ export function CardList({
       >
         {list.length > 0 && list}
         {list.length === 0 && !isLoading && (
-          <StyledCardListNoResult>Aucun résultat.</StyledCardListNoResult>
+          <StyledNoResult>Aucun résultat</StyledNoResult>
         )}
       </StyledCardList>
       {isLoading && (

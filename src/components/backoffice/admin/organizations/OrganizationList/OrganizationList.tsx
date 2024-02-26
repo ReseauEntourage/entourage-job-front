@@ -10,14 +10,16 @@ import { SearchBar } from 'src/components/filters/SearchBar';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { Section, Button, BackToTop } from 'src/components/utils';
 import { ORGANIZATION_FILTERS_DATA } from 'src/constants';
+import { FilterObject } from 'src/constants/utils';
 import { filtersToQueryParams } from 'src/utils/Filters';
-import { AnyToFix } from 'src/utils/Types';
 
 const LIMIT = 50;
 
 interface OrganizationListProps {
-  filters: AnyToFix; // to be typed
-  setFilters: (updatedFilters: AnyToFix) => void;
+  filters: FilterObject<typeof ORGANIZATION_FILTERS_DATA>;
+  setFilters: (
+    updatedFilters: FilterObject<typeof ORGANIZATION_FILTERS_DATA>
+  ) => void;
   search?: string;
   setSearch: (search?: string) => void;
   resetFilters: () => void;

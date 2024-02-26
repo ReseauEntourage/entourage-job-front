@@ -4,37 +4,61 @@ import ConversationIllu from 'assets/icons/illu-conversation.svg';
 import MaletteIllu from 'assets/icons/illu-malette.svg';
 import TipsIllu from 'assets/icons/illu-poignee-de-main.svg';
 import RSIllu from 'assets/icons/illu-reseaux-sociaux.svg';
-import { HelpNames } from 'src/api/types';
 import { USER_ROLES } from './users';
 import { FilterConstant } from './utils';
 
-export const ProfileCardHelps: (FilterConstant<HelpNames> & {
+export type HelpNames = 'tips' | 'interview' | 'cv' | 'network' | 'event';
+
+export const ProfileHelps: (FilterConstant<HelpNames> & {
   icon: JSX.Element;
+  shortTitle: {
+    [K in typeof USER_ROLES.CANDIDATE | typeof USER_ROLES.COACH]: string;
+  };
 })[] = [
   {
     icon: <TipsIllu />,
     value: 'tips',
     label: 'Soutien',
+    shortTitle: {
+      [USER_ROLES.CANDIDATE]: 'Demander un conseil',
+      [USER_ROLES.COACH]: 'Conseiller un(e) candidat(e)',
+    },
   },
   {
     icon: <MaletteIllu />,
     value: 'interview',
     label: 'Entretien',
+    shortTitle: {
+      [USER_ROLES.CANDIDATE]: 'Préparer un entretien',
+      [USER_ROLES.COACH]: 'Aider à préparer un entretien',
+    },
   },
   {
     icon: <CVIllu />,
     value: 'cv',
     label: 'CV',
+    shortTitle: {
+      [USER_ROLES.CANDIDATE]: 'Créer mon CV',
+      [USER_ROLES.COACH]: 'Aider à réaliser un CV',
+    },
   },
   {
     icon: <ConversationIllu />,
     value: 'event',
     label: 'Événement',
+    shortTitle: {
+      [USER_ROLES.CANDIDATE]: 'Rencontrer la communauté',
+      [USER_ROLES.COACH]: 'Rencontrer la communauté',
+    },
   },
   {
     icon: <RSIllu />,
     value: 'network',
     label: 'Partage',
+    shortTitle: {
+      [USER_ROLES.CANDIDATE]: 'Développer mon réseau',
+      [USER_ROLES.COACH]: 'Partager mon réseau',
+    },
   },
 ];
 export const ParametresHelpCardTitles: {
@@ -73,30 +97,30 @@ export const ParametresHelpCardContents: {
     {
       icon: <MaletteIllu />,
       value: 'interview',
-      title: 'Se préparer aux entretien d’embauche',
+      title: 'Se préparer aux entretiens d’embauche',
       description:
-        "Profitez de l'expertise de nos coachs pour créer des CV et lettres de motivation qui mettent en avant vos atouts et compétences.",
+        'Préparez au mieux vos entretiens grâce aux conseils et au soutien des coachs LinkedOut.',
     },
     {
       icon: <CVIllu />,
       value: 'cv',
       title: 'M’aider à réaliser mon CV et mes lettres de motivation',
       description:
-        "Préparez-vous à réussir vos entretiens avec l'aide de nos coachs, qui vous apporteront des conseils pratiques et un soutien moral.",
+        "Profitez de l'expérience des coachs LinkedOut pour créer des CV et lettres de motivation qui mettent en avant vos atouts et compétences.",
     },
     {
       icon: <ConversationIllu />,
       value: 'event',
-      title: 'Se rencontrer et échanger avec les membres de la communautés',
+      title: 'Se rencontrer et échanger avec les membres de la communauté',
       description:
         "Rejoignez notre communauté lors d'événements pour partager vos expériences, apprendre des autres et tisser des liens professionnels précieux.",
     },
     {
       icon: <RSIllu />,
       value: 'network',
-      title: 'Avoir plus de réseau professionnel',
+      title: 'Faire grandir votre réseau professionnel',
       description:
-        "Multipliez vos opportunités professionnelles en vous connectant avec des professionnels qui peuvent vous soutenir et vous ouvrir des portes sur le marché de l'emploi.",
+        "Multipliez les opportunités professionnelles en vous connectant avec des professionnels qui peuvent vous soutenir et vous ouvrir des portes sur le marché de l'emploi.",
     },
   ],
   [USER_ROLES.COACH]: [

@@ -9,6 +9,4 @@ export const StyledDirectoryButtonContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  margin-bottom: 30px;
-  position: relative;
 `;

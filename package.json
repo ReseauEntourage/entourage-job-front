@@ -1,6 +1,6 @@
 {
   "name": "linkedout-front",
-  "version": "2.13.2",
+  "version": "2.14.0",
   "description": "",
   "main": "index.js",
   "engines": {
@@ -14,7 +14,7 @@
     "test": "run-s test:*",
     "test:ts-check": "tsc -p tsconfig.json --noEmit",
     "test:eslint": "npx eslint src --ext js,jsx,ts,tsx --fix --max-warnings=0",
-    "test:inte": "jest",
+    "test:integ": "jest",
     "test:e2e": "yarn cypress:io",
     "build": "next build",
     "uikit:install": "cd ./node_modules/uikit && yarn",
@@ -25,7 +25,8 @@
     "build-storybook": "storybook build",
     "chromatic": "chromatic --exit-zero-on-changes",
     "cypress:io": "npx cypress run --record --key $(grep CYPRESS_IO_KEY .env | cut -d '=' -f2)",
-    "cypress:local": "npx cypress open"
+    "cypress:local": "npx cypress open",
+    "add-icons": "node ./assets/icons/export-script.js"
   },
   "repository": {
     "type": "git",
@@ -33,7 +34,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "cacheDirectories": [
     ".next/cache"
   ],
@@ -53,6 +54,7 @@
     "circular-dependency-plugin": "^5.2.2",
     "cookies-next": "^2.1.1",
     "cors": "^2.8.5",
+    "dd-trace": "^3.3.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-sslify": "^1.2.0",

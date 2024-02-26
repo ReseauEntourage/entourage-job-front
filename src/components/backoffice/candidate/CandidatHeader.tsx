@@ -22,14 +22,9 @@ export const CandidatHeader = ({
   const [candidateCVUrl, setCandidateCVUrl] = useState<string>('');
 
   useEffect(() => {
-    if (!user) {
-      return;
-    }
     if (isRoleIncluded(COACH_USER_ROLES, user.role)) {
       const cand = user.coaches?.find(
-        ({ candidat }) =>
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          candidat.id === candidateId
+        ({ candidat }) => candidat.id === candidateId
       );
       setRelatedUser(cand?.candidat);
       setCandidateCVUrl(
@@ -40,12 +35,10 @@ export const CandidatHeader = ({
       setRelatedUser(user.candidat?.coach);
       setCandidateCVUrl(
         // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        user.candidat?.url
+        user.candidat.url
       );
     }
   }, [user, candidateId]);
-
-  if (!user) return null;
 
   return (
     <Grid row gap="small">

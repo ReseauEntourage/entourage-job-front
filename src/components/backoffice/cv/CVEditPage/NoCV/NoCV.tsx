@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Api } from 'src/api';
-import { CV, User } from 'src/api/types';
+import { CV, User, UserCandidateWithUsers } from 'src/api/types';
 import { Button, Grid } from 'src/components/utils';
 import { CV_STATUS } from 'src/constants';
 import { COACH_USER_ROLES } from 'src/constants/users';
@@ -16,7 +16,22 @@ interface NoCVProps {
 }
 
 export const NoCV = ({ candidateId, user, setCV }: NoCVProps) => {
-  const candidate = getUserCandidateFromCoachOrCandidate(user);
+  const [candidate, setCandidate] = useState<
+    UserCandidateWithUsers | undefined
+  >();
+  useEffect(() => {
+    const associatedUsers = getUserCandidateFromCoachOrCandidate(user);
+    if (Array.isArray(associatedUsers)) {
+      setCandidate(
+        associatedUsers.find((c) => c?.candidat?.id === candidateId)
+      );
+    } else if (associatedUsers) {
+      setCandidate(associatedUsers);
+    }
+  }, [candidateId, user]);
+
+  useEffect(() => {}, [candidate]);
+  if (!candidate) return null;
   return (
     <Grid column middle>
       {isRoleIncluded(COACH_USER_ROLES, user.role) &&

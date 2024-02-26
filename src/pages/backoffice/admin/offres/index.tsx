@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { AdminOpportunities } from 'src/components/backoffice/admin/AdminOpportunities';
-import { AdminOpportunitiesFilters } from 'src/components/backoffice/admin/AdminOpportunities/AdminOpportunitiesFilters.types';
 import { Section } from 'src/components/utils';
 import {
   OFFER_ADMIN_FILTERS_DATA,
@@ -34,8 +33,6 @@ const AdminOpportunitiesPage = () => {
     ['offerId'],
     GA_TAGS.BACKOFFICE_ADMIN_SUPPRIMER_FILTRES_CLIC
   );
-
-  let content;
 
   // redirect with default tag and departments
   useEffect(() => {
@@ -97,26 +94,20 @@ const AdminOpportunitiesPage = () => {
     }
   }, [offerId, replace, restParams, tag, user, candidateId]);
 
-  if (
-    // loading ||
-    !user
-  ) {
-    content = <LoadingScreen />;
-  } else {
-    content = (
-      <AdminOpportunities
-        search={search}
-        filters={filters as AdminOpportunitiesFilters}
-        resetFilters={resetFilters}
-        setSearch={setSearch}
-        setFilters={setFilters}
-      />
-    );
-  }
   return (
     <LayoutBackOffice title="Modération des offres">
       <Section className="custom-page">
-        {!user || loadingDefaultFilters ? <LoadingScreen /> : content}
+        {loadingDefaultFilters ? (
+          <LoadingScreen />
+        ) : (
+          <AdminOpportunities
+            search={search}
+            filters={filters}
+            resetFilters={resetFilters}
+            setSearch={setSearch}
+            setFilters={setFilters}
+          />
+        )}
       </Section>
     </LayoutBackOffice>
   );

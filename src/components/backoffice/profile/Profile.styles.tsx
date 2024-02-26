@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const StyledProfileLeftColumn = styled.div`
   display: flex;
   flex-direction: column;
-  flex-grow: 3;
+  flex: 2;
   gap: 40px;
   &.mobile {
     min-width: unset;
@@ -15,10 +15,11 @@ export const StyledProfileLeftColumn = styled.div`
 export const StyledProfileRightColumn = styled.div`
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  flex: 1;
   gap: 40px;
   min-width: 400px;
   &.mobile {
+    min-width: unset;
     width: 100%;
   }
 `;
