@@ -11,11 +11,7 @@ import { useResetForm } from 'src/hooks/utils';
 const Contact = () => {
   const [form, resetForm] = useResetForm();
 
-  const contactPerCity = {
-    Paris: '07 82 44 97 39',
-    Lille: '07 83 85 48 95',
-    Lyon: '07 67 35 05 86',
-  };
+  const CONTACT_NUMBER = '07 49 69 31 12';
 
   return (
     <Layout title="Contact - LinkedOut">
@@ -61,25 +57,16 @@ const Contact = () => {
             {process.env.MAILJET_CONTACT_EMAIL}
           </SimpleLink>
           <br />
-          <div className="uk-margin-small-top uk-text-italic uk-text-muted">
+          <div className="uk-margin-small-top uk-margin-small-bottom uk-text-italic uk-text-muted">
             ou
           </div>
-          <ul className="uk-list">
-            {Object.keys(contactPerCity).map((contact) => {
-              return (
-                <li key={contact}>
-                  <span className="uk-text-bold">{contact}&nbsp;:&nbsp;</span>
-                  <SimpleLink
-                    className="uk-link"
-                    href={`tel:${contactPerCity[contact]}`}
-                    isExternal
-                  >
-                    {contactPerCity[contact]}
-                  </SimpleLink>
-                </li>
-              );
-            })}
-          </ul>
+          <SimpleLink
+            className="uk-link"
+            href={`tel:${CONTACT_NUMBER}`}
+            isExternal
+          >
+            {CONTACT_NUMBER}
+          </SimpleLink>
         </h4>
       </Section>
     </Layout>
