@@ -16,9 +16,7 @@ export const CVModalPreview = ({ imageUrl, cv }: ModalPreviewProps) => {
 
   useEffect(() => {
     const previewHash = Date.now();
-    const status = cv.status === 'Draft' ? 'Progress' : cv.status;
-    const baseUrl = `${process.env.AWSS3_IMAGE_DIRECTORY}${cv.UserId}.${status}`;
-    setCVPreview({ ...cv, urlImg: `${baseUrl}.jpg?${previewHash}` });
+    setCVPreview({ ...cv, urlImg: `${cv.urlImg}?${previewHash}` });
   }, [imageUrl, cv]);
 
   return (
