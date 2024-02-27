@@ -8,7 +8,7 @@ import {
 import { DirectoryItem } from 'src/components/backoffice/directory/DirectoryItem';
 import { Button, Card } from 'src/components/utils';
 import { CardList } from 'src/components/utils/CardList';
-import { Label } from 'src/components/utils/Label';
+import { Typography } from 'src/components/utils/Typography';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import {
@@ -100,7 +100,7 @@ export const DashboardRecommendationsCard = () => {
     <Card title={recommendationsLabels[user.role].title}>
       <StyledDashboardCardContentContainer>
         <StyledDashboardCardSubtitle>
-          <Label>{recommendationsLabels[user.role].subtitle}</Label>
+          <Typography>{recommendationsLabels[user.role].subtitle}</Typography>
         </StyledDashboardCardSubtitle>
         <StyledDashboardCardContent>
           <StyledDashboardRecommendationsList>

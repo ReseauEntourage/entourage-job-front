@@ -8,7 +8,7 @@ import {
 } from '../../Dashboard.styles';
 import { useContextualRole } from 'src/components/backoffice/useContextualRole';
 import { Button, Card } from 'src/components/utils';
-import { Label } from 'src/components/utils/Label';
+import { Typography } from 'src/components/utils/Typography';
 import { CV_STATUS } from 'src/constants';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -85,7 +85,9 @@ export const DashboardCVCreationStepCard = () => {
     <Card title={textContent.title[contextualRole][CVStatus]}>
       <StyledDashboardCardContentContainer>
         <StyledDashboardCardSubtitle>
-          <Label>{textContent.subTitle[contextualRole][CVStatus]}</Label>
+          <Typography>
+            {textContent.subTitle[contextualRole][CVStatus]}
+          </Typography>
         </StyledDashboardCardSubtitle>
         <StyledDashboardCardContent>
           <StyledDashboardCVCreationStepContent>
