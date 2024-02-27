@@ -24,7 +24,7 @@ export const CandidateContactModal = () => {
           Avant de remplir ce formulaire, vérifiez que le candidat&nbsp;:
           <ul className="uk-text-left">
             <li>
-              Réside sur les territoires suivants : 75, 93, 92, 56, 59 ou 69
+              Réside sur les territoires suivants : 75, 93, 92, 56, 35, 69 ou 59
             </li>
             <li>A entre 18 et 30 ans (inclus).</li>
             <li>
