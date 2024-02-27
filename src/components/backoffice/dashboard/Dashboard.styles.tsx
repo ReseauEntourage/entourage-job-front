@@ -27,3 +27,19 @@ export const StyledDashboardRightColumn = styled.div`
 export const StyledDashboardTitleContainer = styled.div`
   padding-bottom: 20px;
 `;
+
+export const StyledDashboardCardContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+`;
+
+export const StyledDashboardCardContent = styled.div`
+  margin: 30px 0;
+`;
+
+export const StyledDashboardCardSubtitle = styled.div`
+  text-align: center;
+`;

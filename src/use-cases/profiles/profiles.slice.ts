@@ -4,27 +4,35 @@ import { PROFILES_LIMIT } from 'src/constants';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import {
   fetchProfilesAdapter,
+  fetchProfilesRecommendationsAdapter,
   fetchSelectedProfileAdapter,
   postInternalMessageAdapter,
 } from './profiles.adapters';
 
 export interface State {
   fetchProfiles: RequestState<typeof fetchProfilesAdapter>;
+  fetchProfilesRecommendations: RequestState<
+    typeof fetchProfilesRecommendationsAdapter
+  >;
   fetchSelectedProfile: RequestState<typeof fetchSelectedProfileAdapter>;
   postInternalMessage: RequestState<typeof postInternalMessageAdapter>;
   profiles: PublicProfile[];
   profilesOffset: number;
   profilesHasFetchedAll: boolean;
+  profilesRecommendations: PublicProfile[];
   selectedProfile: PublicProfile | null;
 }
 
 const initialState: State = {
   fetchProfiles: fetchProfilesAdapter.getInitialState(),
+  fetchProfilesRecommendations:
+    fetchProfilesRecommendationsAdapter.getInitialState(),
   fetchSelectedProfile: fetchSelectedProfileAdapter.getInitialState(),
   postInternalMessage: fetchProfilesAdapter.getInitialState(),
   profiles: [],
   profilesOffset: 0,
   profilesHasFetchedAll: false,
+  profilesRecommendations: [],
   selectedProfile: null,
 };
 
@@ -41,6 +49,14 @@ export const slice = createSlice({
         state.profilesHasFetchedAll = action.payload.length < PROFILES_LIMIT;
       },
     }),
+    ...fetchProfilesRecommendationsAdapter.getReducers<State>(
+      (state) => state.fetchProfilesRecommendations,
+      {
+        fetchProfilesRecommendationsSucceeded(state, action) {
+          state.profilesRecommendations = action.payload;
+        },
+      }
+    ),
     ...fetchSelectedProfileAdapter.getReducers<State>(
       (state) => state.fetchSelectedProfile,
       {

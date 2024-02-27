@@ -200,6 +200,10 @@ export class APIHandler {
     });
   }
 
+  getProfilesRecommendations(userId: string): Promise<AxiosResponse> {
+    return this.get(`/user/profile/recommendations/${userId}`);
+  }
+
   // post
   postUser(params: UserDto): Promise<AxiosResponse> {
     return this.post('/user', params);

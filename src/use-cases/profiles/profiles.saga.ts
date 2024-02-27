@@ -1,4 +1,5 @@
 import { call, put, select, takeLatest, takeLeading } from 'typed-redux-saga';
+import { selectCurrentUserId } from '../authentication';
 import { Api } from 'src/api';
 import { PROFILES_LIMIT } from 'src/constants';
 import { mutateToArray } from 'src/utils';
@@ -18,6 +19,9 @@ const {
   fetchProfilesNextPage,
   resetProfilesOffset,
   fetchProfilesWithFilters,
+  fetchProfilesRecommendationsRequested,
+  fetchProfilesRecommendationsSucceeded,
+  fetchProfilesRecommendationsFailed,
   postInternalMessageRequested,
   postInternalMessageSucceeded,
   postInternalMessageFailed,
@@ -66,6 +70,17 @@ function* fetchProfilesRequestedSaga(
   }
 }
 
+function* fetchProfilesRecommendationsRequestedSaga() {
+  const userId = yield* select(selectCurrentUserId);
+  if (!userId) return;
+  try {
+    const response = yield* call(() => Api.getProfilesRecommendations(userId));
+    yield* put(fetchProfilesRecommendationsSucceeded(response.data));
+  } catch {
+    yield* put(fetchProfilesRecommendationsFailed());
+  }
+}
+
 function* fetchSelectedProfileSaga(
   action: ReturnType<typeof fetchSelectedProfileRequested>
 ) {
@@ -99,6 +114,10 @@ export function* saga() {
   yield* takeLatest(fetchProfilesWithFilters, fetchProfilesWithFiltersSaga);
   yield* takeLeading(fetchProfilesNextPage, fetchProfilesNextPageSaga);
   yield* takeLatest(fetchProfilesRequested, fetchProfilesRequestedSaga);
+  yield* takeLatest(
+    fetchProfilesRecommendationsRequested,
+    fetchProfilesRecommendationsRequestedSaga
+  );
   yield* takeLatest(fetchSelectedProfileRequested, fetchSelectedProfileSaga);
   yield* takeLatest(postInternalMessageRequested, postInternalMessageSaga);
 }

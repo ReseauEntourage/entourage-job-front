@@ -18,6 +18,7 @@ import { DashboardAvailabilityCard } from './DashboardAvailabilityCard';
 import { DashboardLinkedUserCard } from './DashboardLinkedUserCard';
 import { DashboardOpportunitiesCard } from './DashboardOpportunitiesCard';
 import { DashboardProfileCard } from './DashboardProfileCard';
+import { DashboardRecommendationsCard } from './DashboardRecommendationsCard';
 import { DashboardStepsCard } from './DashboardStepsCard';
 
 export const Dashboard = () => {
@@ -51,6 +52,7 @@ export const Dashboard = () => {
               <>
                 <DashboardStepsCard />
                 <DashboardOpportunitiesCard />
+                <DashboardRecommendationsCard />
               </>
             )}
           </StyledDashboardRightColumn>

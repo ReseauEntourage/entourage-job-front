@@ -5,9 +5,10 @@ import HandsIcon from 'assets/icons/illu-coeur-mains-ouvertes.svg';
 import CaseIcon from 'assets/icons/illu-malette.svg';
 import { UserCandidateWithUsers } from 'src/api/types';
 import { AvailabilityTag } from 'src/components/utils/AvailabilityTag';
-import { H3, H4, H5 } from 'src/components/utils/Headings';
+import { H3, H5 } from 'src/components/utils/Headings';
 import { Img } from 'src/components/utils/Img';
 import { Tag } from 'src/components/utils/Tag';
+import { Typography } from 'src/components/utils/Typography';
 import { BUSINESS_LINES, BusinessLineValue } from 'src/constants';
 import { Department } from 'src/constants/departements';
 import { HelpNames, ProfileHelps } from 'src/constants/helps';
@@ -27,10 +28,10 @@ import {
   StyledProfileCardBusinessLines,
   StyledProfileCardContent,
   StyledProfileCardDepartment,
-  StyledProfileCardEmptyContainer,
+  StyledProfileCardEmptyBusinessLinesContainer,
+  StyledProfileCardEmptyHelpsContainer,
   StyledProfileCardEmptyIcon,
   StyledProfileCardEmptyJobContainer,
-  StyledProfileCardEmptyLabel,
   StyledProfileCardHelp,
   StyledProfileCardHelpContainer,
   StyledProfileCardHelpLabel,
@@ -88,6 +89,8 @@ const getLabelsDependingOnRole = (role: UserRole) => {
 
 const EMPTY_INFO = "Ces informations n'ont pas encore été renseignées";
 const EMPTY_JOB = 'Métier non renseigné';
+
+const iconSizeProps = { width: 40, height: 40 };
 
 export function ProfileCard({
   userId,
@@ -160,7 +163,7 @@ export function ProfileCard({
             </StyledProfileCardName>
             {department && (
               <StyledProfileCardDepartment>
-                <div>{department}</div>
+                <Typography>{department}</Typography>
               </StyledProfileCardDepartment>
             )}
           </StyledProfileCardInfoContainer>
@@ -175,7 +178,7 @@ export function ProfileCard({
                 {sortedAmbitions && sortedAmbitions.length > 0 ? (
                   <StyledProfileCardJobContainer>
                     {sortedAmbitions.map(({ name }, index) => (
-                      <H4
+                      <H5
                         key={name}
                         color={COLORS.black}
                         title={`${_.capitalize(name)}${
@@ -186,7 +189,7 @@ export function ProfileCard({
                   </StyledProfileCardJobContainer>
                 ) : (
                   <StyledProfileCardEmptyJobContainer>
-                    <H4 color={COLORS.black} title={EMPTY_JOB} />
+                    <H5 color={COLORS.black} title={EMPTY_JOB} />
                   </StyledProfileCardEmptyJobContainer>
                 )}
               </>
@@ -195,17 +198,17 @@ export function ProfileCard({
               <>
                 {job ? (
                   <StyledProfileCardJobContainer>
-                    <H4 color={COLORS.black} title={_.capitalize(job)} />
+                    <H5 color={COLORS.black} title={_.capitalize(job)} />
                   </StyledProfileCardJobContainer>
                 ) : (
                   <StyledProfileCardEmptyJobContainer>
-                    <H4 color={COLORS.black} title={EMPTY_JOB} />
+                    <H5 color={COLORS.black} title={EMPTY_JOB} />
                   </StyledProfileCardEmptyJobContainer>
                 )}
               </>
             )}
             <StyledProfileCardLabel>
-              <H5 color={COLORS.darkGrayFont} title={labels.businessLines} />
+              <Typography color="light">{labels.businessLines}</Typography>{' '}
             </StyledProfileCardLabel>
             <StyledProfileCardBusinessLines>
               {sortedBusinessLines && sortedBusinessLines.length > 0 ? (
@@ -228,14 +231,14 @@ export function ProfileCard({
                     )}
                 </>
               ) : (
-                <StyledProfileCardEmptyContainer>
+                <StyledProfileCardEmptyBusinessLinesContainer>
                   <StyledProfileCardEmptyIcon>
-                    <CaseIcon />
+                    <CaseIcon {...iconSizeProps} />
                   </StyledProfileCardEmptyIcon>
-                  <StyledProfileCardEmptyLabel>
+                  <Typography color="lighter" size="small" variant="italic">
                     {EMPTY_INFO}
-                  </StyledProfileCardEmptyLabel>
-                </StyledProfileCardEmptyContainer>
+                  </Typography>
+                </StyledProfileCardEmptyBusinessLinesContainer>
               )}
             </StyledProfileCardBusinessLines>
           </StyledProfileCardProfessionalSituation>
@@ -243,7 +246,7 @@ export function ProfileCard({
           <StyledProfileCardHelpContainer>
             <StyledSeparator />
             <StyledProfileCardLabel>
-              <H5 title={labels.helps} color={COLORS.darkGrayFont} />
+              <Typography color="light">{labels.helps}</Typography>
             </StyledProfileCardLabel>
             <StyledProfileCardHelps>
               {helps && helps.length > 0 ? (
@@ -259,14 +262,14 @@ export function ProfileCard({
                   );
                 })
               ) : (
-                <StyledProfileCardEmptyContainer>
+                <StyledProfileCardEmptyHelpsContainer>
                   <StyledProfileCardEmptyIcon>
-                    <HandsIcon />
+                    <HandsIcon {...iconSizeProps} />
                   </StyledProfileCardEmptyIcon>
-                  <StyledProfileCardEmptyLabel>
+                  <Typography color="lighter" size="small" variant="italic">
                     {EMPTY_INFO}
-                  </StyledProfileCardEmptyLabel>
-                </StyledProfileCardEmptyContainer>
+                  </Typography>
+                </StyledProfileCardEmptyHelpsContainer>
               )}
             </StyledProfileCardHelps>
           </StyledProfileCardHelpContainer>
