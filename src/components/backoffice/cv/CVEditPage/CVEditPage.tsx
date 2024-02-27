@@ -409,7 +409,6 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
         address={userData.address}
         cv={cv}
         previewGenerating={previewGenerating}
-        disablePicture={user.role !== USER_ROLES.ADMIN}
         onChange={async (updatedCV, updatedUserData = {}) => {
           await autoSaveCV(
             { ...cv, ...updatedCV },
