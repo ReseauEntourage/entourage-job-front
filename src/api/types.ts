@@ -566,6 +566,7 @@ export type PublicProfile = {
   }[];
   lastSentMessage: string;
   lastReceivedMessage: string;
+  cvUrl?: string;
 };
 
 export type ProfilesFilters = {

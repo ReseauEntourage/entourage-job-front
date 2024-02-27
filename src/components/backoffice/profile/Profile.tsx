@@ -30,6 +30,7 @@ export const Profile = () => {
         department={selectedProfile.department}
         isAvailable={selectedProfile.isAvailable}
         isEditable={false}
+        cvUrl={selectedProfile.cvUrl}
       />
       <Section className="custom-page">
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>

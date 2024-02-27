@@ -1,6 +1,12 @@
 import React from 'react';
 import EditIcon from 'assets/icons/editIcon.svg';
-import { ButtonIcon, ImgProfile, Section, Tag } from 'src/components/utils';
+import {
+  Button,
+  ButtonIcon,
+  ImgProfile,
+  Section,
+  Tag,
+} from 'src/components/utils';
 import { AvailabilityTag } from 'src/components/utils/AvailabilityTag/AvailabilityTag';
 import { H2, H6 } from 'src/components/utils/Headings';
 import { ImageInput } from 'src/components/utils/Inputs';
@@ -12,6 +18,7 @@ import {
   StyledHeaderNameAndRoleMobile,
   StyledHeaderProfile,
   StyledHeaderProfileContent,
+  StyledHeaderProfileCVButton,
   StyledHeaderProfileDescription,
   StyledHeaderProfileInfoContainer,
   StyledHeaderProfileNameContainer,
@@ -33,6 +40,7 @@ export const HeaderProfileMobile = ({
   description,
   isAvailable,
   isEditable,
+  cvUrl,
 }: HeaderProfileProps) => {
   const {
     openCorrespondingModal,
@@ -106,6 +114,17 @@ export const HeaderProfileMobile = ({
               description={description}
               isEditable={isEditable}
             />
+            {cvUrl && (
+              <StyledHeaderProfileCVButton>
+                <Button
+                  size="small"
+                  style="custom-secondary"
+                  href={`/cv/${cvUrl}`}
+                >
+                  Voir le CV
+                </Button>
+              </StyledHeaderProfileCVButton>
+            )}
           </StyledHeaderProfileDescription>
         )}
       </Section>
