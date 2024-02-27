@@ -1,7 +1,10 @@
 name: LinkedOut [front-end]
 
 on:
-  pull_request: {} # events by default (open, synchronized, reopened) in any branch triggers the workflow.
+  push:
+    branches: [ master ]
+  pull_request: {}
+  workflow_dispatch:
 
 env:
   WEBINAR_URL: 'https://google.com'
