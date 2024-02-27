@@ -12,8 +12,8 @@ import { ButtonPost } from 'src/components/utils/Button/ButtonPost';
 import { CV_STATUS, SOCKETS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import {
+  ALL_USER_ROLES,
   CANDIDATE_USER_ROLES,
-  COACH_USER_ROLES,
   USER_ROLES,
 } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -373,7 +373,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
             }}
             text="Sauvegarder"
           />
-          {isRoleIncluded(COACH_USER_ROLES, user.role) && (
+          {isRoleIncluded(ALL_USER_ROLES, user.role) && (
             <ButtonPost
               style="custom-primary"
               action={async () => {
