@@ -26,7 +26,7 @@ export const DashboardCVCreationStepCard = () => {
   const candidate = useSelector(selectCandidateAsUser);
   const { contextualRole } = useContextualRole(user.role);
   const isDesktop = useIsDesktop();
-  const CVStatus = useSelector(selectCurrentCVStatus);
+  const cvStatus = useSelector(selectCurrentCVStatus);
 
   const textContent = useMemo(
     () => ({
@@ -80,13 +80,15 @@ export const DashboardCVCreationStepCard = () => {
     }),
     [candidate]
   );
-  if (!CVStatus || !candidate) return null;
+
+  if (!candidate) return null;
+
   return (
-    <Card title={textContent.title[contextualRole][CVStatus]}>
+    <Card title={textContent.title[contextualRole][cvStatus]}>
       <StyledDashboardCardContentContainer>
         <StyledDashboardCardSubtitle>
           <Typography>
-            {textContent.subTitle[contextualRole][CVStatus]}
+            {textContent.subTitle[contextualRole][cvStatus]}
           </Typography>
         </StyledDashboardCardSubtitle>
         <StyledDashboardCardContent>
@@ -114,7 +116,7 @@ export const DashboardCVCreationStepCard = () => {
           style="custom-secondary-inverted"
           href={`/backoffice/candidat/${candidate.id}/cv`}
         >
-          {textContent.CTA[contextualRole][CVStatus]}
+          {textContent.CTA[contextualRole][cvStatus]}
         </Button>
       </StyledDashboardCardContentContainer>
     </Card>

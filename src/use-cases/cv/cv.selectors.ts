@@ -15,6 +15,6 @@ export function selectIsCurrentCVValidated(state: RootState) {
   return state.cv.currentCv?.status === CV_STATUS.Published.value;
 }
 
-export function selectCurrentCVStatus(state: RootState): CVStatus | undefined {
-  return state.cv.currentCv?.status;
+export function selectCurrentCVStatus(state: RootState): CVStatus {
+  return state.cv.currentCv?.status || CV_STATUS.New.value;
 }
