@@ -67,6 +67,7 @@ export const HeaderProfileDesktop = ({
               >
                 <ButtonMock
                   style="custom-secondary"
+                  size="small"
                   className="button-mock-image-input"
                   dataTestId="button-mock-image-input"
                 >

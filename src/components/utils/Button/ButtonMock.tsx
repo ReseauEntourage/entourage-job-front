@@ -1,38 +1,34 @@
 import React from 'react';
-import {
-  UIKIT_BUTTON_SIZES,
-  UIKIT_BUTTON_STYLES_SPEC,
-} from 'src/components/variables';
+
+import { ButtonProps, getButtonClassBuffer } from './Button';
 import { StyledButtonMock } from './Button.styles';
 
-interface ButtonMockProps {
-  style?: UIKIT_BUTTON_STYLES_SPEC | '';
-  children: React.ReactNode;
-  size?: UIKIT_BUTTON_SIZES;
-  color?: string;
-  className?: string;
-  dataTestId?: string;
-}
-
 export const ButtonMock = ({
+  visible,
   children,
+  className,
+  disabled = false,
   style = 'custom-primary',
   size = 'large',
-  color = 'primaryOrange',
+  widths = [],
   dataTestId = '',
-  className = '',
-}: ButtonMockProps) => {
-  let classBuffer = '';
-  if (style && style.includes('custom')) {
-    classBuffer = style;
-    if (size) classBuffer += ` ${size}`;
-    if (className) classBuffer += ` ${className}`;
-  }
+  color = 'primaryOrange',
+}: ButtonProps) => {
+  const classBuffer = getButtonClassBuffer({
+    visible,
+    className,
+    disabled,
+    style,
+    size,
+    widths,
+  });
+
   return (
     <StyledButtonMock
-      color={color}
       className={classBuffer}
+      type="button"
       data-testid={dataTestId}
+      color={color}
     >
       {children}
     </StyledButtonMock>

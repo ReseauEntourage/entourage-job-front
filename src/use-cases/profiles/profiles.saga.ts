@@ -1,8 +1,9 @@
 import { call, put, select, takeLatest, takeLeading } from 'typed-redux-saga';
 import { Api } from 'src/api';
 import { PROFILES_LIMIT } from 'src/constants';
+import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
-import { mutateToArray } from 'src/utils';
+import { isRoleIncluded, mutateToArray } from 'src/utils';
 import {
   selectProfilesHasFetchedAll,
   selectProfilesOffset,
@@ -86,8 +87,26 @@ function* fetchSelectedProfileSaga(
 ) {
   const { userId } = action.payload;
   try {
-    const response = yield* call(() => Api.getPublicUserProfile(userId));
-    yield* put(fetchSelectedProfileSucceeded(response.data));
+    const { data: profile } = yield* call(() =>
+      Api.getPublicUserProfile(userId)
+    );
+
+    if (isRoleIncluded(CANDIDATE_USER_ROLES, profile.role) && profile.cvUrl) {
+      try {
+        const {
+          data: { cv },
+        } = yield* call(() => Api.getCVByUrl(profile.cvUrl));
+
+        if (cv) {
+          yield* put(fetchSelectedProfileSucceeded(profile));
+          return;
+        }
+      } catch (err) {
+        console.error("Couldn't fetch CV from candidate", err);
+      }
+    }
+
+    yield* put(fetchSelectedProfileSucceeded({ ...profile, cvUrl: null }));
   } catch {
     yield* put(fetchSelectedProfileFailed());
   }
