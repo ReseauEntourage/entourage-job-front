@@ -9,7 +9,10 @@ export const Rejoindre = ({ cta }: { cta: (label: string) => void }) => {
     <Section className="custom-primary">
       <StyledRejoindre>
         <div className="text-container">
-          <H2 type="light" title={`Vous avez envie de nous rejoindre\xa0?`} />
+          <H2
+            weight="normal"
+            title={`Vous avez envie de nous rejoindre\xa0?`}
+          />
           <p>
             LinkedOut s&apos;adresse à des personnes motivées et disponibles
             pour travailler et qui en raison d&apos;un parcours de vie difficile
