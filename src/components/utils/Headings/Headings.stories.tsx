@@ -3,7 +3,7 @@ import React from 'react';
 import { COLORS } from 'src/constants/styles';
 import { H1, H2, H3, H4, H5, H6 } from '.';
 
-type headingStoryProps = React.ComponentProps<
+type HeadingStoryProps = React.ComponentProps<
   typeof H1 | typeof H2 | typeof H3 | typeof H4 | typeof H5 | typeof H6
 >;
 
@@ -29,7 +29,7 @@ const variantArgType = {
 const meta = {
   title: 'Headings',
   argTypes: basiArgTypes,
-} satisfies Meta<headingStoryProps>;
+} satisfies Meta<HeadingStoryProps>;
 
 export default meta;
 
