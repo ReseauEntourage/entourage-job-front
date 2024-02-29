@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import useChange from '@react-hook/change';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useModalContext } from 'src/components/modals/Modal';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { Button } from 'src/components/utils/Button';
 import { Grid } from 'src/components/utils/Grid';
 import { ReduxRequestEvents } from 'src/constants';
-import {
-  authenticationActions,
-  updateCandidateSelectors,
-} from 'src/use-cases/authentication';
+import { updateCandidateSelectors } from 'src/use-cases/authentication';
 
 interface CVModalConfirmationProps {
   dispatchOnSubmit: (keyValue: { hidden: boolean }) => void;
@@ -21,27 +19,16 @@ export const CVModalConfirmation = ({
 }: CVModalConfirmationProps) => {
   const { onClose } = useModalContext();
   const [closeModal, setCloseModal] = useState<boolean>(false);
-  const dispatch = useDispatch();
-  const [isFirstRender, setIsFirstRender] = useState(true);
 
   const updateCandidateStatus = useSelector(
     updateCandidateSelectors.selectUpdateCandidateStatus
   );
 
-  useEffect(() => {
-    return () => {
-      dispatch(authenticationActions.updateCandidateReset());
-    };
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (
-      updateCandidateStatus === ReduxRequestEvents.SUCCEEDED &&
-      !isFirstRender
-    ) {
+  useChange(updateCandidateStatus, () => {
+    if (updateCandidateStatus === ReduxRequestEvents.SUCCEEDED) {
       setCloseModal(true);
     }
-  }, [updateCandidateStatus, isFirstRender]);
+  });
 
   return (
     <ModalGeneric
@@ -64,7 +51,6 @@ export const CVModalConfirmation = ({
           style="primary"
           dataTestId={`test-confirm-${id}`}
           onClick={() => {
-            setIsFirstRender(false);
             dispatchOnSubmit({ hidden: true });
           }}
         >
