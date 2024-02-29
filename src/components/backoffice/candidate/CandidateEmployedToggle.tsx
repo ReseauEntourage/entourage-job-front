@@ -7,7 +7,7 @@ import {
 } from 'src/components/utils/Inputs/ToggleWithModal';
 
 interface CandidateEmployedToggleProps {
-  title: string;
+  title?: string;
   subtitle?: React.ReactNode | string;
   modal: React.ReactNode | ModalType;
   isToggled: boolean;

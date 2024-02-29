@@ -30,7 +30,7 @@ export const SailInfoModal = () => {
   );
 
   return (
-    <ModalGeneric title="">
+    <ModalGeneric>
       <div className="uk-inline uk-visible@m">
         <Img
           src="/static/img/boat-tjv.jpg"

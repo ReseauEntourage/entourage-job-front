@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useUpdateProfile } from '../../../useUpdateProfile';
-import { StyledHelpModalSelectOption } from '../ParametresHelpCard.styles';
 import { UserProfile } from 'src/api/types';
 import { useModalContext } from 'src/components/modals/Modal';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { Button } from 'src/components/utils';
-import { H6 } from 'src/components/utils/Headings';
 import { SelectList } from 'src/components/utils/Inputs/SelectList';
 import { ParametresHelpCardContents } from 'src/constants/helps';
 import { UserRole } from 'src/constants/users';
@@ -38,6 +36,7 @@ export const ParametresHelpModal = ({
     <ModalGeneric title={title} closeOnNextRender={closeModal}>
       <SelectList
         id="help-select-list"
+        name="help-select-list"
         onChange={(values) => {
           setTempProfile({
             [helpField]: values.map((help) => {
@@ -45,27 +44,8 @@ export const ParametresHelpModal = ({
             }),
           });
         }}
-        values={
-          tempProfile[helpField]
-            ? tempProfile[helpField]?.map(({ name }) => name)
-            : []
-        }
-        options={ParametresHelpCardContents[role].map(
-          ({ value, title: titleH6, description, icon }) => ({
-            value,
-            component: (
-              <StyledHelpModalSelectOption
-                data-testid={`parametres-help-option-${value}`}
-              >
-                <div className="img-container">{icon}</div>
-                <div className="text-container">
-                  <H6 title={titleH6} color="primaryOrange" />
-                  <p>{description}</p>
-                </div>
-              </StyledHelpModalSelectOption>
-            ),
-          })
-        )}
+        value={tempProfile[helpField]?.map(({ name }) => name) || []}
+        options={ParametresHelpCardContents[role]}
       />
       <StyledParametresHelpModalCTAContainer>
         <Button

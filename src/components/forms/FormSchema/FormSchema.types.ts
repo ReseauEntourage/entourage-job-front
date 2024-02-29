@@ -13,6 +13,7 @@ export const FormComponents = {
   SELECT: 'select',
   SELECT_CREATABLE: 'select-creatable',
   SELECT_ASYNC: 'select-async',
+  SELECT_LIST: 'select-list',
   RADIO: 'radio',
   RADIO_ASYNC: 'radio-async',
   HEADING: 'heading',
@@ -26,6 +27,7 @@ export type FormComponent =
 
 export type FieldValue =
   | string
+  | string[]
   | boolean
   | number
   | FilterConstant
@@ -48,6 +50,7 @@ export interface FormComponentValues<M extends boolean> {
   [FormComponents.SELECT]: MultiFilterConstant<M>;
   [FormComponents.SELECT_CREATABLE]: MultiFilterConstant<M>;
   [FormComponents.SELECT_ASYNC]: MultiFilterConstant<M>;
+  [FormComponents.SELECT_LIST]: string[];
   [FormComponents.RADIO]: string | number;
   [FormComponents.RADIO_ASYNC]: string | number;
   [FormComponents.HEADING]: never;
@@ -80,6 +83,7 @@ export const SelectRequestComponents = [
   FormComponents.SELECT,
   FormComponents.SELECT_CREATABLE,
   FormComponents.SELECT_ASYNC,
+  FormComponents.SELECT_LIST,
 ] as const;
 
 export type SelectRequestComponent = (typeof SelectRequestComponents)[number];
@@ -150,7 +154,7 @@ interface FormFieldInputCommonProperties<
 > extends FormFieldCommonProperties<V, Path<V>> {
   isRequired?: boolean;
   rules?: Rule<V, T, M>[];
-  title: string | JSX.Element | ((getValue: GetValueType<V>) => string);
+  title?: string | JSX.Element | ((getValue: GetValueType<V>) => string);
   disabled?: boolean;
   disable?: (getValue: GetValueType<V>) => boolean;
   placeholder?: string;

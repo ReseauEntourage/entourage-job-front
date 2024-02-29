@@ -14,14 +14,14 @@ interface ProfileHelpListProps {
 export const ProfileHelpList = ({ helpList, role }: ProfileHelpListProps) => {
   return (
     <StyledHelpList data-testid="parametres-help-list">
-      {ParametresHelpCardContents[role].map(({ icon, title, value }, index) => {
+      {ParametresHelpCardContents[role].map(({ icon, label, value }, index) => {
         if (!helpList.some((help) => help.name === value)) {
           return null;
         }
         return (
           <li key={index}>
             <StyledHelpListImgContainer>{icon}</StyledHelpListImgContainer>
-            {title}
+            {label}
           </li>
         );
       })}

@@ -15,7 +15,6 @@ export function MemberHiddenToggle({
   return (
     <ToggleWithModal
       id={`hidden-${member.id}`}
-      title=""
       modal={{
         title: 'Changer la visibilité du CV en ligne ?',
         confirmationText: 'Oui, masquer le CV',

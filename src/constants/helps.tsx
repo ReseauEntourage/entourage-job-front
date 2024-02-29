@@ -81,46 +81,46 @@ export const ParametresHelpCardTitles: {
 } as const;
 
 export const ParametresHelpCardContents: {
-  [K in typeof USER_ROLES.CANDIDATE | typeof USER_ROLES.COACH]: {
+  [K in
+    | typeof USER_ROLES.CANDIDATE
+    | typeof USER_ROLES.COACH]: (FilterConstant<string> & {
     icon: React.ReactNode;
-    value: string;
-    title: string;
     description: string;
-  }[];
+  })[];
 } = {
   [USER_ROLES.CANDIDATE]: [
     {
       icon: <TipsIllu {...iconSizeProps} />,
       value: 'tips',
-      title: 'Demander des conseils aux membre de la communauté',
+      label: 'Demander des conseils aux membre de la communauté',
       description:
         'Recevez des conseils personnalisés et un accompagnement de la part de nos coachs pour vous guider dans votre parcours professionnel.',
     },
     {
       icon: <MaletteIllu {...iconSizeProps} />,
       value: 'interview',
-      title: 'Se préparer aux entretiens d’embauche',
+      label: 'Se préparer aux entretiens d’embauche',
       description:
         'Préparez au mieux vos entretiens grâce aux conseils et au soutien des coachs LinkedOut.',
     },
     {
       icon: <CVIllu {...iconSizeProps} />,
       value: 'cv',
-      title: 'M’aider à réaliser mon CV et mes lettres de motivation',
+      label: 'M’aider à réaliser mon CV et mes lettres de motivation',
       description:
         "Profitez de l'expérience des coachs LinkedOut pour créer des CV et lettres de motivation qui mettent en avant vos atouts et compétences.",
     },
     {
       icon: <ConversationIllu {...iconSizeProps} />,
       value: 'event',
-      title: 'Se rencontrer et échanger avec les membres de la communauté',
+      label: 'Se rencontrer et échanger avec les membres de la communauté',
       description:
         "Rejoignez notre communauté lors d'événements pour partager vos expériences, apprendre des autres et tisser des liens professionnels précieux.",
     },
     {
       icon: <RSIllu {...iconSizeProps} />,
       value: 'network',
-      title: 'Faire grandir votre réseau professionnel',
+      label: 'Faire grandir votre réseau professionnel',
       description:
         "Multipliez les opportunités professionnelles en vous connectant avec des professionnels qui peuvent vous soutenir et vous ouvrir des portes sur le marché de l'emploi.",
     },
@@ -129,28 +129,28 @@ export const ParametresHelpCardContents: {
     {
       icon: <TipsIllu {...iconSizeProps} />,
       value: 'tips',
-      title: 'Donner des conseils aux membres de la communauté',
+      label: 'Donner des conseils aux membres de la communauté',
       description:
         'Partagez votre savoir-faire et vos conseils pour aider les candidats à naviguer sur le marché du travail et à trouver des opportunités adaptées à leurs compétences.',
     },
     {
       icon: <MaletteIllu {...iconSizeProps} />,
       value: 'interview',
-      title: 'Aider à préparer les entretiens d’embauche',
+      label: 'Aider à préparer les entretiens d’embauche',
       description:
         "Mettez à profit votre expertise pour coacher les candidats, les aider à anticiper les questions d'entretiens et à communiquer efficacement leur motivation.",
     },
     {
       icon: <CVIllu {...iconSizeProps} />,
       value: 'cv',
-      title: 'Aider à réaliser un CV et une lettre de motivation',
+      label: 'Aider à réaliser un CV et une lettre de motivation',
       description:
         'Utilisez votre expérience pour guider les candidats dans la création de documents professionnels qui reflètent leur potentiel et leurs expériences.',
     },
     {
       icon: <ConversationIllu {...iconSizeProps} />,
       value: 'event',
-      title:
+      label:
         'Se rencontrer lors d’événements avec les membres de la communautés',
       description:
         "Participer à des événements qui encouragent l'entraide, le partage d'expériences et le développement de réseaux professionnels enrichissants pour les candidats.",
@@ -158,7 +158,7 @@ export const ParametresHelpCardContents: {
     {
       icon: <RSIllu {...iconSizeProps} />,
       value: 'network',
-      title: 'Partager votre réseau professionnel',
+      label: 'Partager votre réseau professionnel',
       description:
         'Mettez en relation les candidats avec des contacts pertinents et intégez-les dans des réseaux qui peuvent favoriser leur insertion professionnelle.',
     },

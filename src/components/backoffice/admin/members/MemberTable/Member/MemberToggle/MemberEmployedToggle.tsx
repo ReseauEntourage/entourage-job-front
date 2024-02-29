@@ -37,7 +37,6 @@ export function MemberEmployedToggle({
         confirmationText: 'Valider',
       }}
       isToggled={!!member?.candidat?.employed}
-      title=""
       subtitle={
         member?.candidat && (
           <StyledMemberToggleLabel
