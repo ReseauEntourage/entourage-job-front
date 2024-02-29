@@ -79,7 +79,7 @@ export const CharteEthique = () => {
         );
       })}
       {
-        user && <SignDocument documentName={DocumentNames.CharteEthique}/>
+        user && !user.ReadDocuments.includes(DocumentNames.CharteEthique) && <SignDocument documentName={DocumentNames.CharteEthique}/>
       }
     </Section>
   );

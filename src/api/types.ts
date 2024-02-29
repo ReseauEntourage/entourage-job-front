@@ -28,6 +28,7 @@ export const APIRoutes = {
   CVS: 'cv',
   ORGANIZATIONS: 'organization',
   MESSAGE: 'message',
+  READ_DOCUMENTS: 'read-documents',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];

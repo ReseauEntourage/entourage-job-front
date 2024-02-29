@@ -13,6 +13,7 @@ import {
   ContactCompany,
   ContactContactUs,
   ContactNewsletter,
+  DocumentNamesTypes,
   ExternalMessage,
   ExternalOpportunityDto,
   InternalMessage,
@@ -510,7 +511,7 @@ export class APIHandler {
   // read documents //
   ////////////////////
 
-  postReadDocument(params: object): Promise<AxiosResponse> {
-    return this.post('/read-documents/read', params);
+  postReadDocument(params: {documentName: DocumentNamesTypes}, userId): Promise<AxiosResponse> {
+    return this.post(`/read-documents/read/${userId}`, params);
   }
 }

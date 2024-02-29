@@ -6,6 +6,7 @@ import { WarningStrip } from 'src/components/utils/WarningStrip';
 import { StyledSignDocument, StyledSignDocumentButtonContainer } from './SignDocument.styles';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from 'src/use-cases/authentication';
+import { Api } from 'src/api';
 
 interface SignDocumentProps {
   documentName: DocumentNamesTypes;
@@ -16,11 +17,18 @@ export const SignDocument = ({documentName}: SignDocumentProps) => {
     const [ isChecked, setIsChecked ] = useState(false);
     const user  = useSelector(selectCurrentUser);
 
-    const handleSignDocument = useCallback(() => {
-        if (isChecked) {
-            
+    const handleSignDocument = useCallback(async () => {
+        if (isChecked && user) {
+            try {
+                Api.postReadDocument({documentName}, user.id);
+                console.log("done")
+            } catch {
+                console.log("error")
+            }
+        } else {
+            console.log("error")
         }
-    }, [isChecked]);
+    }, [isChecked, user]);
 
 
     return (
@@ -38,9 +46,7 @@ export const SignDocument = ({documentName}: SignDocumentProps) => {
             <StyledSignDocumentButtonContainer>
                 <Button
                     style="custom-secondary-inverted"
-                    onClick={() => {
-                        handleSignDocument()
-                    }}
+                    onClick={handleSignDocument}
                 >
                     Valider
                 </Button>
