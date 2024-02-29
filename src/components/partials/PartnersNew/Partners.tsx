@@ -1,13 +1,19 @@
 import React from 'react';
 import { Button, Img, Section } from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
+import { COLORS } from 'src/constants/styles';
 import { StyledPartners } from './Partners.styles';
 
 export const Partners = () => {
   return (
     <StyledPartners>
       <Section className="custom-primary" display="flex-center">
-        <H2 type="big" title="Elles ont déjà recruté" />
+        <H2
+          variant="big"
+          title="Elles ont déjà recruté"
+          weight="normal"
+          color={COLORS.darkGrayFont}
+        />
         {/* <LogoList
           logos={PARTNERS.HIRED.filter(({ key }) => {
             return partnersToShow.includes(key);
