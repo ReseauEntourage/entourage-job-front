@@ -94,6 +94,9 @@ export type UserProfile = {
   lastSendMessage: string;
   lastReceivedMessage: string;
 };
+
+export type DocumentNamesTypes = 'CharteEthique' | 'ConseilsPosture';
+
 export type User = {
   coach: User;
   id: string;
@@ -115,6 +118,7 @@ export type User = {
   deletedAt?: string;
   userProfile: UserProfile;
   OrganizationId?: string;
+  ReadDocuments: DocumentNamesTypes[];
 };
 
 export interface CVExperience {

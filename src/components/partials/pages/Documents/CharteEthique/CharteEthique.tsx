@@ -7,6 +7,10 @@ import {
 import { Section } from 'src/components/utils';
 import { H1, H4 } from 'src/components/utils/Headings';
 import { COLORS } from 'src/constants/styles';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from 'src/use-cases/authentication';
+import { SignDocument } from '../SignDocument';
+import { DocumentNames } from 'src/constants';
 
 const textContent = [
   {
@@ -47,6 +51,7 @@ const textContent = [
 ];
 
 export const CharteEthique = () => {
+  const user  = useSelector(selectCurrentUser);
   return (
     <Section style="custom-primary">
       <H1 title="Charte Ethique" color={COLORS.primaryOrange} center />
@@ -73,6 +78,9 @@ export const CharteEthique = () => {
           </StyledDocumentTitleText>
         );
       })}
+      {
+        user && <SignDocument documentName={DocumentNames.CharteEthique}/>
+      }
     </Section>
   );
 };

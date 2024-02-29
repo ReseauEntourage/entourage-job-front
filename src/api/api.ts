@@ -492,9 +492,9 @@ export class APIHandler {
     return this.post('/contact/candidateInscription', params);
   }
 
-  /// // //////
-  // message /
-  /// // //////
+  /////////////
+  // message //
+  /////////////
 
   postExternalMessage(params: ExternalMessage): Promise<AxiosResponse> {
     return this.post('/message/external', params);
@@ -502,5 +502,15 @@ export class APIHandler {
 
   postInternalMessage(params: InternalMessage): Promise<AxiosResponse> {
     return this.post('/message/internal', params);
+  }
+
+
+  
+  ////////////////////
+  // read documents //
+  ////////////////////
+
+  postReadDocument(params: object): Promise<AxiosResponse> {
+    return this.post('/read-documents/read', params);
   }
 }
