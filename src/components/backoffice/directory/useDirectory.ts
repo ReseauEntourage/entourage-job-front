@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import UIkit from 'uikit';
 import { useIsAtBottom } from 'src/hooks/useIsAtBottom';
 import { usePrevious } from 'src/hooks/utils';
+import { notificationsActions } from 'src/use-cases/notifications';
 import {
   fetchProfilesSelectors,
   profilesActions,
@@ -45,7 +45,12 @@ export function useDirectory() {
 
   useEffect(() => {
     if (isFetchProfileStatusFailed) {
-      UIkit.notification('Une erreur est survenue', 'danger');
+      dispatch(
+        notificationsActions.addNotification({
+          type: 'danger',
+          message: `Une erreur est survenue`,
+        })
+      );
     }
   }, [dispatch, isFetchProfileStatusFailed]);
 

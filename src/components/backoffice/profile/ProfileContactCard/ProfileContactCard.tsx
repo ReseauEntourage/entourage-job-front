@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import UIkit from 'uikit';
 import { AvionPapier, Check } from 'assets/icons/icons';
 import { useIsProfileContacted } from '../usIsProfileContacted';
 import { useSelectSelectedProfile } from '../useSelectedProfile';
@@ -9,8 +8,8 @@ import { formContactInternalMessage } from 'src/components/forms/schemas/formCon
 import { Card } from 'src/components/utils';
 import { ReduxRequestEvents } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
-import { usePrevious } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
+import { notificationsActions } from 'src/use-cases/notifications';
 import {
   postInternalMessageSelectors,
   profilesActions,
@@ -29,21 +28,34 @@ export const ProfileContactCard = () => {
   const postInternalMessageStatus = useSelector(
     postInternalMessageSelectors.selectPostInternalMessageStatus
   );
-  const prevPostInternalMessageStatus = usePrevious(postInternalMessageStatus);
+
+  useEffect(
+    () => () => {
+      dispatch(profilesActions.postInternalMessageReset());
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
-    if (prevPostInternalMessageStatus === ReduxRequestEvents.REQUESTED) {
-      if (postInternalMessageStatus === ReduxRequestEvents.SUCCEEDED) {
-        UIkit.notification('Le message a bien été envoyé', 'success');
-        setIsFormSent(true);
-        setLoadingSending(false);
-      } else if (postInternalMessageStatus === ReduxRequestEvents.FAILED) {
-        UIkit.notification('Une erreur est survenue', 'danger');
-        setLoadingSending(false);
-      }
-      dispatch(profilesActions.postInternalMessageReset());
+    if (postInternalMessageStatus === ReduxRequestEvents.SUCCEEDED) {
+      dispatch(
+        notificationsActions.addNotification({
+          type: 'success',
+          message: `Le message a bien été envoyé`,
+        })
+      );
+      setIsFormSent(true);
+      setLoadingSending(false);
+    } else if (postInternalMessageStatus === ReduxRequestEvents.FAILED) {
+      dispatch(
+        notificationsActions.addNotification({
+          type: 'danger',
+          message: `Une erreur est survenue`,
+        })
+      );
+      setLoadingSending(false);
     }
-  }, [postInternalMessageStatus, prevPostInternalMessageStatus, dispatch]);
+  }, [postInternalMessageStatus, dispatch]);
 
   const contactMessage = `Vous avez déjà contacté ${selectedProfile.firstName}`;
   const contactedMessage = `Vous avez déjà été contacté par ${selectedProfile.firstName}`;

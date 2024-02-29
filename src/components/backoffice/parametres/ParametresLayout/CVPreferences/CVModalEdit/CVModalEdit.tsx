@@ -1,10 +1,13 @@
+import useChange from '@react-hook/change';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { formEditEmployed } from 'src/components/forms/schemas/formEditEmployed';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Contract, ReduxRequestEvents } from 'src/constants';
-import { usePrevious } from 'src/hooks/utils';
-import { updateCandidateSelectors } from 'src/use-cases/authentication';
+import {
+  authenticationActions,
+  updateCandidateSelectors,
+} from 'src/use-cases/authentication';
 
 interface CVModalEditProps {
   title: string;
@@ -21,17 +24,19 @@ export const CVModalEdit = ({ title, dispatchOnSubmit }: CVModalEditProps) => {
   const updateCandidateStatus = useSelector(
     updateCandidateSelectors.selectUpdateCandidateStatus
   );
+  const dispatch = useDispatch();
 
-  const prevUpdateCandidateStatus = usePrevious(updateCandidateStatus);
-
-  useEffect(() => {
-    if (
-      prevUpdateCandidateStatus === ReduxRequestEvents.REQUESTED &&
-      updateCandidateStatus === ReduxRequestEvents.SUCCEEDED
-    ) {
+  useChange(updateCandidateStatus, () => {
+    if (updateCandidateStatus === ReduxRequestEvents.SUCCEEDED) {
       setCloseModal(true);
     }
-  }, [prevUpdateCandidateStatus, updateCandidateStatus]);
+  });
+
+  useEffect(() => {
+    return () => {
+      dispatch(authenticationActions.updateCandidateReset());
+    };
+  }, [dispatch]);
 
   return (
     <ModalEdit

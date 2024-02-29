@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import UIkit from 'uikit';
 import { useUpdateProfile } from 'src/components/backoffice/parametres/useUpdateProfile';
 import { Card } from 'src/components/utils';
 import { ToggleWithModal } from 'src/components/utils/Inputs/ToggleWithModal';
@@ -8,12 +7,12 @@ import { ReduxRequestEvents } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { usePrevious } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
 import {
   authenticationActions,
   updateProfileSelectors,
 } from 'src/use-cases/authentication';
+import { notificationsActions } from 'src/use-cases/notifications';
 import { isRoleIncluded } from 'src/utils';
 
 export const DashboardAvailabilityCard = () => {
@@ -22,26 +21,32 @@ export const DashboardAvailabilityCard = () => {
   const updateProfileStatus = useSelector(
     updateProfileSelectors.selectUpdateProfileStatus
   );
-  const prevUpdateProfileStatus = usePrevious(updateProfileStatus);
 
   const { updateUserProfile } = useUpdateProfile(user);
 
   useEffect(() => {
-    if (prevUpdateProfileStatus === ReduxRequestEvents.REQUESTED) {
-      if (updateProfileStatus === ReduxRequestEvents.SUCCEEDED) {
-        UIkit.notification(
-          `La modification de votre disponibilité a bien été enregistrée`,
-          'success'
-        );
-      } else if (updateProfileStatus === ReduxRequestEvents.FAILED) {
-        UIkit.notification(
-          `Une erreur est survenue lors de la modification de votre disponibilité`,
-          'danger'
-        );
-      }
+    return () => {
       dispatch(authenticationActions.updateProfileReset());
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (updateProfileStatus === ReduxRequestEvents.SUCCEEDED) {
+      dispatch(
+        notificationsActions.addNotification({
+          type: 'success',
+          message: `La modification a bien été enregistrée`,
+        })
+      );
+    } else if (updateProfileStatus === ReduxRequestEvents.FAILED) {
+      dispatch(
+        notificationsActions.addNotification({
+          type: 'danger',
+          message: `Une erreur est survenue`,
+        })
+      );
     }
-  }, [updateProfileStatus, prevUpdateProfileStatus, dispatch]);
+  }, [updateProfileStatus, dispatch]);
 
   return (
     <Card

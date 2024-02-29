@@ -7,6 +7,7 @@ import { HeaderConnected } from 'src/components/headers/HeaderConnected';
 import { HeaderPublic } from 'src/components/headers/HeaderPublic/HeaderPublic';
 import { Footer } from 'src/components/partials/Footer';
 import { addPrefix } from 'src/utils';
+import { NotificationsContainer } from './utils/Notification';
 
 interface LayoutProps extends WithRouterProps {
   children: React.ReactNode;
@@ -78,6 +79,7 @@ export const Layout = withRouter<LayoutProps>(
           />
         </Head>
         {!isPDF && <>{isBackoffice ? <HeaderConnected /> : <HeaderPublic />}</>}
+        <NotificationsContainer />
         {children}
         {!isPDF && !isBackoffice && <Footer />}
         {!isPDF && (

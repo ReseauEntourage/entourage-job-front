@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import useChange from '@react-hook/change';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useModalContext } from 'src/components/modals/Modal';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { Button } from 'src/components/utils/Button';
 import { Grid } from 'src/components/utils/Grid';
 import { ReduxRequestEvents } from 'src/constants';
-import { usePrevious } from 'src/hooks/utils';
 import { updateCandidateSelectors } from 'src/use-cases/authentication';
 
 interface CVModalConfirmationProps {
@@ -24,16 +24,11 @@ export const CVModalConfirmation = ({
     updateCandidateSelectors.selectUpdateCandidateStatus
   );
 
-  const prevUpdateCandidateStatus = usePrevious(updateCandidateStatus);
-
-  useEffect(() => {
-    if (
-      prevUpdateCandidateStatus === ReduxRequestEvents.REQUESTED &&
-      updateCandidateStatus === ReduxRequestEvents.SUCCEEDED
-    ) {
+  useChange(updateCandidateStatus, () => {
+    if (updateCandidateStatus === ReduxRequestEvents.SUCCEEDED) {
       setCloseModal(true);
     }
-  }, [prevUpdateCandidateStatus, updateCandidateStatus]);
+  });
 
   return (
     <ModalGeneric
