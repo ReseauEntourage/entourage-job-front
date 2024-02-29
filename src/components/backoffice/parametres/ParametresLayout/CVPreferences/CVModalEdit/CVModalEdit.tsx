@@ -1,3 +1,4 @@
+import useChange from '@react-hook/change';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { formEditEmployed } from 'src/components/forms/schemas/formEditEmployed';
@@ -19,21 +20,17 @@ interface CVModalEditProps {
 
 export const CVModalEdit = ({ title, dispatchOnSubmit }: CVModalEditProps) => {
   const [closeModal, setCloseModal] = useState<boolean>(false);
-  const [isFirstRender, setIsFirstRender] = useState(true);
 
   const updateCandidateStatus = useSelector(
     updateCandidateSelectors.selectUpdateCandidateStatus
   );
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (
-      updateCandidateStatus === ReduxRequestEvents.SUCCEEDED &&
-      !isFirstRender
-    ) {
+  useChange(updateCandidateStatus, () => {
+    if (updateCandidateStatus === ReduxRequestEvents.SUCCEEDED) {
       setCloseModal(true);
     }
-  }, [updateCandidateStatus, isFirstRender]);
+  });
 
   useEffect(() => {
     return () => {
@@ -47,7 +44,6 @@ export const CVModalEdit = ({ title, dispatchOnSubmit }: CVModalEditProps) => {
       formSchema={formEditEmployed}
       closeOnNextRender={closeModal}
       onSubmit={(fields) => {
-        setIsFirstRender(false);
         dispatchOnSubmit({ employed: true, ...fields });
       }}
     />

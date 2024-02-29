@@ -1,3 +1,4 @@
+import useChange from '@react-hook/change';
 import _ from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -43,17 +44,11 @@ export const useUpdateProfile = (user: UserWithUserCandidate) => {
     updateProfileSelectors.selectUpdateProfileStatus
   );
 
-  useEffect(() => {
+  useChange(updateProfileStatus, () => {
     if (updateProfileStatus === ReduxRequestEvents.SUCCEEDED) {
       setCloseModal(true);
     }
-  }, [updateProfileStatus]);
-
-  useEffect(() => {
-    return () => {
-      dispatch(authenticationActions.updateProfileReset());
-    };
-  }, [dispatch]);
+  });
 
   const updateUserProfile = useCallback(
     (newProfileData: Partial<UserProfile>): void => {

@@ -1,5 +1,6 @@
+import useChange from '@react-hook/change';
 import _ from 'lodash';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserWithUserCandidate } from 'src/api/types';
 import { ReduxRequestEvents } from 'src/constants';
@@ -17,17 +18,11 @@ export const useUpdateUser = (user: UserWithUserCandidate) => {
     updateUserSelectors.selectUpdateUserStatus
   );
 
-  useEffect(() => {
-    return () => {
-      dispatch(authenticationActions.updateUserReset());
-    };
-  }, [dispatch]);
-
-  useEffect(() => {
+  useChange(updateUserStatus, () => {
     if (updateUserStatus === ReduxRequestEvents.SUCCEEDED) {
       setCloseModal(true);
     }
-  }, [updateUserStatus]);
+  });
 
   const updateUser = useCallback(
     (newUserData: Partial<UserWithUserCandidate>) => {

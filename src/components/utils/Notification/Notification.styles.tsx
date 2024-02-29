@@ -3,12 +3,7 @@ import { COLORS } from 'src/constants/styles';
 
 export const NOTIF_WIDTH = '600px';
 
-export const StyledNotificationWrapper = styled.div`
-  top: 143px;
-  position: fixed;
-  z-index: 100;
-  right: 0;
-`;
+export const StyledNotificationWrapper = styled.div``;
 
 export const StyledNotificationsContainer = styled.div`
   display: flex;
@@ -16,6 +11,10 @@ export const StyledNotificationsContainer = styled.div`
   gap: 20px;
   width: ${NOTIF_WIDTH};
   height: 50px;
+  top: 143px;
+  position: fixed;
+  right: 0;
+  z-index: 100;
 `;
 
 const StyledNotification = styled.div`

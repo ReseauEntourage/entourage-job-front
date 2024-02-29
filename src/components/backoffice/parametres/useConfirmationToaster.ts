@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxRequestEvents } from 'src/constants';
 import {
+  authenticationActions,
   updateCandidateSelectors,
   updateProfileSelectors,
   updateUserSelectors,
@@ -9,6 +10,8 @@ import {
 import { notificationsActions } from 'src/use-cases/notifications';
 
 export function useConfirmationToaster() {
+  const dispatch = useDispatch();
+
   const updateProfileStatus = useSelector(
     updateProfileSelectors.selectUpdateProfileStatus
   );
@@ -21,7 +24,13 @@ export function useConfirmationToaster() {
     updateCandidateSelectors.selectUpdateCandidateStatus
   );
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    return () => {
+      dispatch(authenticationActions.updateProfileReset());
+      dispatch(authenticationActions.updateUserReset());
+      dispatch(authenticationActions.updateCandidateReset());
+    };
+  }, [dispatch]);
 
   useEffect(() => {
     if (updateProfileStatus === ReduxRequestEvents.SUCCEEDED) {
