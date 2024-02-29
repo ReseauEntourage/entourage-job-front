@@ -115,3 +115,7 @@ export const StyledHeaderProfileDescription = styled.div`
   flex-direction: column;
   align-items: flex-start;
 `;
+
+export const StyledHeaderProfileCVButton = styled.div`
+  margin-top: 12px;
+`;
