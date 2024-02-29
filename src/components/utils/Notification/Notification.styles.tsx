@@ -9,8 +9,6 @@ export const StyledNotificationsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: ${NOTIF_WIDTH};
-  height: 50px;
   top: 143px;
   position: fixed;
   right: 0;
