@@ -20,7 +20,6 @@ import { DashboardOpportunitiesCard } from './DashboardOpportunitiesCard';
 import { DashboardProfileCard } from './DashboardProfileCard';
 import { DashboardRecommendationsCard } from './DashboardRecommendationsCard';
 import { DashboardStepsCard } from './DashboardStepsCard';
-import { Notification } from 'src/components/utils/Notification';
 
 export const Dashboard = () => {
   const isDesktop = useIsDesktop();
