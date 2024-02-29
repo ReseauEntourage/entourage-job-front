@@ -1,12 +1,14 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { logoutSelectors } from 'src/use-cases/authentication';
+
 import {
-  authenticationActions,
+  currentUserActions,
   fetchUserSelectors,
-  logoutSelectors,
   selectCurrentUser,
-} from 'src/use-cases/authentication';
+} from 'src/use-cases/current-user';
+
 import { getDefaultUrl } from 'src/utils/Redirects';
 import { useRoutePermissions } from './useRoutePermissions';
 
@@ -41,7 +43,7 @@ export function useAuthentication() {
 
   useEffect(() => {
     if (isFetchUserIdle) {
-      dispatch(authenticationActions.fetchUserRequested());
+      dispatch(currentUserActions.fetchUserRequested());
     }
   }, [dispatch, isFetchUserIdle]);
 

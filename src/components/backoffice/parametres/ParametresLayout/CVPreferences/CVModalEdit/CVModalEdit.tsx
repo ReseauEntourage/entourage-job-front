@@ -5,9 +5,9 @@ import { formEditEmployed } from 'src/components/forms/schemas/formEditEmployed'
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Contract, ReduxRequestEvents } from 'src/constants';
 import {
-  authenticationActions,
+  currentUserActions,
   updateCandidateSelectors,
-} from 'src/use-cases/authentication';
+} from 'src/use-cases/current-user';
 
 interface CVModalEditProps {
   title: string;
@@ -34,7 +34,7 @@ export const CVModalEdit = ({ title, dispatchOnSubmit }: CVModalEditProps) => {
 
   useEffect(() => {
     return () => {
-      dispatch(authenticationActions.updateCandidateReset());
+      dispatch(currentUserActions.updateCandidateReset());
     };
   }, [dispatch]);
 

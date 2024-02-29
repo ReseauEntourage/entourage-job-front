@@ -1,6 +1,6 @@
 import { call, put, takeLatest, select } from 'typed-redux-saga';
 import { Api } from 'src/api';
-import { selectCandidateId } from 'src/use-cases/authentication';
+import { selectCandidateId } from 'src/use-cases/current-user';
 import { slice } from './cv.slice';
 
 const { fetchCVSucceeded, fetchCVFailed, fetchCVRequested } = slice.actions;

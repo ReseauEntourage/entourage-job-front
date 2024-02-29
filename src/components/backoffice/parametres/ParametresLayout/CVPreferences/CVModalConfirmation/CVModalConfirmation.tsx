@@ -6,7 +6,7 @@ import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { Button } from 'src/components/utils/Button';
 import { Grid } from 'src/components/utils/Grid';
 import { ReduxRequestEvents } from 'src/constants';
-import { updateCandidateSelectors } from 'src/use-cases/authentication';
+import { updateCandidateSelectors } from 'src/use-cases/current-user';
 
 interface CVModalConfirmationProps {
   dispatchOnSubmit: (keyValue: { hidden: boolean }) => void;

@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxRequestEvents } from 'src/constants';
 import {
-  authenticationActions,
+  currentUserActions,
   updateCandidateSelectors,
   updateProfileSelectors,
   updateUserSelectors,
-} from 'src/use-cases/authentication';
+} from 'src/use-cases/current-user';
 import { notificationsActions } from 'src/use-cases/notifications';
 
 export function useConfirmationToaster() {
@@ -26,9 +26,9 @@ export function useConfirmationToaster() {
 
   useEffect(() => {
     return () => {
-      dispatch(authenticationActions.updateProfileReset());
-      dispatch(authenticationActions.updateUserReset());
-      dispatch(authenticationActions.updateCandidateReset());
+      dispatch(currentUserActions.updateProfileReset());
+      dispatch(currentUserActions.updateUserReset());
+      dispatch(currentUserActions.updateCandidateReset());
     };
   }, [dispatch]);
 

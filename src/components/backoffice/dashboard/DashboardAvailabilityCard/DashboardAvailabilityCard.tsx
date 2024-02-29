@@ -9,9 +9,9 @@ import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { gaEvent } from 'src/lib/gtag';
 import {
-  authenticationActions,
+  currentUserActions,
   updateProfileSelectors,
-} from 'src/use-cases/authentication';
+} from 'src/use-cases/current-user';
 import { notificationsActions } from 'src/use-cases/notifications';
 import { isRoleIncluded } from 'src/utils';
 
@@ -26,7 +26,7 @@ export const DashboardAvailabilityCard = () => {
 
   useEffect(() => {
     return () => {
-      dispatch(authenticationActions.updateProfileReset());
+      dispatch(currentUserActions.updateProfileReset());
     };
   }, [dispatch]);
 

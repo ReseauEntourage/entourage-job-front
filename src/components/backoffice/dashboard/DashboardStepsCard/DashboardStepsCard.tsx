@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCandidateAsUser } from 'src/use-cases/authentication';
+import { selectCandidateAsUser } from 'src/use-cases/current-user';
 import {
   cvActions,
   fetchCVSelectors,

@@ -13,7 +13,7 @@ import { CV_STATUS } from 'src/constants';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop } from 'src/hooks/utils';
-import { selectCandidateAsUser } from 'src/use-cases/authentication';
+import { selectCandidateAsUser } from 'src/use-cases/current-user';
 import { selectCurrentCVStatus } from 'src/use-cases/cv';
 import {
   StyledDashboardCVCreationStepCandidateName,

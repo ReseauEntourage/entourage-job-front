@@ -5,10 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { UserProfile, UserWithUserCandidate } from 'src/api/types';
 import { ReduxRequestEvents } from 'src/constants';
 import { CANDIDATE_USER_ROLES, UserRole } from 'src/constants/users';
+
 import {
-  authenticationActions,
+  currentUserActions,
   updateProfileSelectors,
-} from 'src/use-cases/authentication';
+} from 'src/use-cases/current-user';
 import { isRoleIncluded } from 'src/utils';
 
 export const helpFields = {
@@ -54,7 +55,7 @@ export const useUpdateProfile = (user: UserWithUserCandidate) => {
     (newProfileData: Partial<UserProfile>): void => {
       if (!_.isEmpty(newProfileData) && user.id) {
         dispatch(
-          authenticationActions.updateProfileRequested({
+          currentUserActions.updateProfileRequested({
             userId: user.id,
             userProfile: newProfileData,
           })
