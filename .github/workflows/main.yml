@@ -2,7 +2,7 @@ name: LinkedOut [front-end]
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, develop ]
   pull_request: {}
   workflow_dispatch:
 
