@@ -21,7 +21,7 @@ const RoleOptions: SelectListType[] = [
 ];
 
 export const formOnboardingRole: FormSchema<{
-  role: typeof USER_ROLES.CANDIDATE | typeof USER_ROLES.COACH;
+  role: (typeof USER_ROLES.CANDIDATE | typeof USER_ROLES.COACH)[];
 }> = {
   id: 'form-onboarding-role',
   fields: [

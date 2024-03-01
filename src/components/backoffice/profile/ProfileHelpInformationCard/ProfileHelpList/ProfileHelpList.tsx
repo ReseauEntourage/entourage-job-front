@@ -1,5 +1,5 @@
 import React from 'react';
-import { HelpNames, ParametresHelpCardContents } from 'src/constants/helps';
+import { HelpValue, ParametresHelpCardContents } from 'src/constants/helps';
 import { USER_ROLES } from 'src/constants/users';
 import {
   StyledHelpList,
@@ -7,7 +7,7 @@ import {
 } from './ProfileHelpList.styles';
 
 interface ProfileHelpListProps {
-  helpList: { name: HelpNames }[];
+  helpList: { name: HelpValue }[];
   role: typeof USER_ROLES.CANDIDATE | typeof USER_ROLES.COACH;
 }
 

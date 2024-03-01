@@ -3,41 +3,69 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
-import { Container } from 'src/components/utils';
+import { Card, Typography } from 'src/components/utils';
+import { H6 } from 'src/components/utils/Headings';
+import { Spinner } from 'src/components/utils/Spinner';
+import { useResetForm } from 'src/hooks/utils';
 import { onboardingActions } from 'src/use-cases/onboarding';
-import { firstOnboardingStep, PageContents } from './Onboarding.types';
-import { incrementOnboardingStep } from './Onboarding.utils';
+import {
+  StyledOnboardingContainer,
+  StyledOnboardingFooter,
+  StyledOnboardingSpinnerContainer,
+} from './Onboarding.styles';
 import { useOnboarding } from './useOnboarding';
 
 export function Onboarding() {
   const { push, back } = useRouter();
   const dispatch = useDispatch();
+  const [form, resetForm] = useResetForm();
 
-  const { currentStep, pageData } = useOnboarding();
+  const {
+    pageContent,
+    pageData,
+    isFirstOnboardingStep,
+    isLastOnboardingStep,
+    nextStep,
+  } = useOnboarding();
 
   return (
-    <Container>
-      {PageContents[currentStep].subtitle}
-      <FormWithValidation
-        formSchema={PageContents[currentStep].form}
-        defaultValues={pageData || {}}
-        onSubmit={(fields) => {
-          dispatch(onboardingActions.setOnboardingCurrentStepData(fields));
-          push(
-            `/inscription/${incrementOnboardingStep(currentStep)}`,
-            undefined,
-            {
-              shallow: true,
-            }
-          );
-        }}
-        submitText="Suivant"
-        cancelText="Précédent"
-        {...(currentStep !== firstOnboardingStep ? { onCancel: back } : {})}
-      />
-      <div>
-        Vous avez déjà un compte ? <Link href="/login">Connectez-vous</Link>
-      </div>
-    </Container>
+    <StyledOnboardingContainer>
+      <Card title="Créer mon compte Entourage Pro en 5 minutes">
+        {pageContent && (
+          <>
+            <H6 weight="normal" title={pageContent.subtitle} />
+            <FormWithValidation
+              innerRef={form}
+              formSchema={pageContent.form}
+              defaultValues={pageData}
+              onSubmit={(fields) => {
+                dispatch(
+                  onboardingActions.setOnboardingCurrentStepData(fields)
+                );
+                resetForm();
+                if (!isLastOnboardingStep) {
+                  push(`/inscription/${nextStep}`, undefined, {
+                    shallow: true,
+                  });
+                }
+              }}
+              submitText="Suivant"
+              cancelText="Précédent"
+              {...(!isFirstOnboardingStep ? { onCancel: back } : {})}
+            />
+          </>
+        )}
+        {!pageContent && (
+          <StyledOnboardingSpinnerContainer>
+            <Spinner />
+          </StyledOnboardingSpinnerContainer>
+        )}
+        <StyledOnboardingFooter>
+          <Typography size="small">
+            Vous avez déjà un compte ? <Link href="/login">Connectez-vous</Link>
+          </Typography>
+        </StyledOnboardingFooter>
+      </Card>
+    </StyledOnboardingContainer>
   );
 }

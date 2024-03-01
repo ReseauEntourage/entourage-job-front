@@ -3,15 +3,18 @@ import { Layout } from 'src/components/Layout';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { Onboarding } from 'src/components/onboarding/Onboarding/Onboarding';
 import { useRedirectToFirstStep } from 'src/components/onboarding/Onboarding/useRedirectToFirstStep';
+import { Section } from 'src/components/utils';
 import { useStep } from 'src/hooks/queryParams/useStep';
 
 const Inscription = () => {
   useRedirectToFirstStep();
-  const page = useStep();
+  const step = useStep();
 
   return (
     <Layout title="Inscription - LinkedOut">
-      {page ? <Onboarding /> : <LoadingScreen />}
+      <Section className="custom-page">
+        {step ? <Onboarding /> : <LoadingScreen />}
+      </Section>
     </Layout>
   );
 };

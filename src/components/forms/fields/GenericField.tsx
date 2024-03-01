@@ -108,8 +108,6 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
     },
   });
 
-  console.log("value", value)
-
   watch();
 
   const onChangeCustom = useCallback(

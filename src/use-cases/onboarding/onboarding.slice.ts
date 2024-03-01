@@ -1,17 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   OnboardingStep,
-  StepData,
+  OnboardingSteps,
+  StepsData,
 } from 'src/components/onboarding/Onboarding/Onboarding.types';
 import { SliceRootState } from 'src/store/utils';
 
 export interface State {
   currentStep: OnboardingStep;
-  data: StepData;
+  data: StepsData;
 }
 
 const initialState: State = {
-  currentStep: 'step-1',
+  currentStep: OnboardingSteps.FIRST,
   data: {},
 };
 
@@ -21,7 +22,7 @@ export const slice = createSlice({
   reducers: {
     setOnboardingCurrentStepData(
       state,
-      action: PayloadAction<StepData[OnboardingStep]>
+      action: PayloadAction<StepsData[OnboardingStep]>
     ) {
       state.data[state.currentStep] = action.payload;
     },

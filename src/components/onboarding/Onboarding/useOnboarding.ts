@@ -2,15 +2,16 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   onboardingActions,
+  selectIsFirstOnboardingStep,
+  selectIsLastOnboardingStep,
+  selectOnboardingCurrentStepContent,
   selectOnboardingCurrentStepData,
+  selectOnboardingNextStep,
 } from 'src/use-cases/onboarding';
 import { useOnboardingStep } from './useOnboardingStep';
-import { useRedirectToFirstStep } from './useRedirectToFirstStep';
 
 export function useOnboarding() {
   const dispatch = useDispatch();
-
-  useRedirectToFirstStep();
 
   const currentStep = useOnboardingStep();
 
@@ -19,6 +20,16 @@ export function useOnboarding() {
   }, [dispatch, currentStep]);
 
   const pageData = useSelector(selectOnboardingCurrentStepData);
+  const pageContent = useSelector(selectOnboardingCurrentStepContent);
+  const isFirstOnboardingStep = useSelector(selectIsFirstOnboardingStep);
+  const isLastOnboardingStep = useSelector(selectIsLastOnboardingStep);
+  const nextStep = useSelector(selectOnboardingNextStep);
 
-  return { pageData, currentStep };
+  return {
+    pageContent,
+    pageData,
+    isFirstOnboardingStep,
+    isLastOnboardingStep,
+    nextStep,
+  };
 }

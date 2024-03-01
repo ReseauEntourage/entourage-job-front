@@ -7,11 +7,11 @@ import RSIllu from 'assets/icons/illu-reseaux-sociaux.svg';
 import { USER_ROLES } from './users';
 import { FilterConstant } from './utils';
 
-export type HelpNames = 'tips' | 'interview' | 'cv' | 'network' | 'event';
+export type HelpValue = 'tips' | 'interview' | 'cv' | 'network' | 'event';
 
 const iconSizeProps = { width: 40, height: 40 };
 
-export const ProfileHelps: (FilterConstant<HelpNames> & {
+export const ProfileHelps: (FilterConstant<HelpValue> & {
   icon: JSX.Element;
   shortTitle: {
     [K in typeof USER_ROLES.CANDIDATE | typeof USER_ROLES.COACH]: string;
@@ -83,7 +83,7 @@ export const ParametresHelpCardTitles: {
 export const ParametresHelpCardContents: {
   [K in
     | typeof USER_ROLES.CANDIDATE
-    | typeof USER_ROLES.COACH]: (FilterConstant<string> & {
+    | typeof USER_ROLES.COACH]: (FilterConstant<HelpValue> & {
     icon: React.ReactNode;
     description: string;
   })[];

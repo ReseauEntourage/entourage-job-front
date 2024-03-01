@@ -21,7 +21,7 @@ export const AssociationEntourage = () => {
             className="uk-margin-large-top"
           >
             <div>
-              <EntourageLogo />
+              <EntourageLogo width={50} height={50} />
               <h2 className="uk-text-bold uk-margin-small">
                 <span style={{ color: '#fff' }}>L&apos;association </span>
                 <span className="uk-text-primary">Entourage</span>
