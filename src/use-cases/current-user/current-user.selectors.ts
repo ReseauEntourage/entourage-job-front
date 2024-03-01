@@ -19,6 +19,7 @@ import {
 } from 'src/utils';
 import {
   fetchUserAdapter,
+  readDocumentAdapter,
   updateCandidateAdapter,
   updateProfileAdapter,
   updateUserAdapter,
@@ -32,6 +33,11 @@ export const fetchUserSelectors = fetchUserAdapter.getSelectors<RootState>(
 export const updateProfileSelectors =
   updateProfileAdapter.getSelectors<RootState>(
     (state) => state.currentUser.updateProfile
+  );
+
+export const readDocumentSelectors =
+  readDocumentAdapter.getSelectors<RootState>(
+    (state) => state.currentUser.readDocument
   );
 
 export const updateUserSelectors = updateUserAdapter.getSelectors<RootState>(

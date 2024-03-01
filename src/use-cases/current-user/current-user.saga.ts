@@ -5,6 +5,7 @@ import {
   authenticationActions,
   selectAccessToken,
 } from 'src/use-cases/authentication';
+import { selectCurrentUserId } from './current-user.selectors';
 import { slice } from './current-user.slice';
 
 const {
@@ -21,6 +22,9 @@ const {
   updateCandidateRequested,
   updateCandidateSucceeded,
   updateCandidateFailed,
+  readDocumentSucceeded,
+  readDocumentRequested,
+  readDocumentFailed,
 } = slice.actions;
 
 function getIsReleaseVersionAllowed() {
@@ -118,6 +122,22 @@ function* updateProfileRequestedSaga(
   }
 }
 
+function* readDocumentRequestedSaga(
+  action: ReturnType<typeof readDocumentRequested>
+) {
+  const { documentName } = action.payload;
+  const userId = yield* select(selectCurrentUserId);
+  try {
+    if (userId) {
+      Api.postReadDocument({ documentName }, userId);
+      yield* put(readDocumentSucceeded());
+    }
+    yield* fetchUserRequestedSaga();
+  } catch {
+    yield* put(readDocumentFailed());
+  }
+}
+
 function* loginSucceededSaga(
   action: ReturnType<typeof authenticationActions.loginSucceeded>
 ) {
@@ -135,4 +155,5 @@ export function* saga() {
   yield* takeLatest(updateUserRequested, updateUserRequestedSaga);
   yield* takeLatest(updateProfileRequested, updateProfileRequestedSaga);
   yield* takeLatest(updateCandidateRequested, updateCandidateRequestedSaga);
+  yield* takeLatest(readDocumentRequested, readDocumentRequestedSaga);
 }

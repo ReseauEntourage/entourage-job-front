@@ -1,56 +1,79 @@
-import React, { useCallback, useState } from 'react';
-import { DocumentNamesTypes } from 'src/api/types';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'src/components/utils';
 import { CheckBox } from 'src/components/utils/Inputs';
 import { WarningStrip } from 'src/components/utils/WarningStrip';
-import { StyledSignDocument, StyledSignDocumentButtonContainer } from './SignDocument.styles';
-import { useSelector } from 'react-redux';
-import { selectCurrentUser } from 'src/use-cases/authentication';
-import { Api } from 'src/api';
+import { DocumentNameType, ReduxRequestEvents } from 'src/constants';
+import {
+  currentUserActions,
+  readDocumentSelectors,
+} from 'src/use-cases/current-user';
+import { notificationsActions } from 'src/use-cases/notifications';
+import {
+  StyledSignDocument,
+  StyledSignDocumentButtonContainer,
+} from './SignDocument.styles';
 
 interface SignDocumentProps {
-  documentName: DocumentNamesTypes;
+  documentName: DocumentNameType;
+  label: string;
 }
 
-export const SignDocument = ({documentName}: SignDocumentProps) => {
-  
-    const [ isChecked, setIsChecked ] = useState(false);
-    const user  = useSelector(selectCurrentUser);
+export const SignDocument = ({ documentName, label }: SignDocumentProps) => {
+  const [isChecked, setIsChecked] = useState(false);
+  const dispatch = useDispatch();
+  const readDocumentStatus = useSelector(
+    readDocumentSelectors.selectReadDocumentStatus
+  );
 
-    const handleSignDocument = useCallback(async () => {
-        if (isChecked && user) {
-            try {
-                Api.postReadDocument({documentName}, user.id);
-                console.log("done")
-            } catch {
-                console.log("error")
-            }
-        } else {
-            console.log("error")
-        }
-    }, [isChecked, user]);
+  useEffect(() => {
+    if (readDocumentStatus === ReduxRequestEvents.SUCCEEDED) {
+      dispatch(
+        notificationsActions.addNotification({
+          type: 'success',
+          message: `Validation confirmée`,
+        })
+      );
+    } else if (readDocumentStatus === ReduxRequestEvents.FAILED) {
+      dispatch(
+        notificationsActions.addNotification({
+          type: 'danger',
+          message: `Une erreur est survenue`,
+        })
+      );
+    }
+  }, [readDocumentStatus, dispatch]);
 
+  const handleSignDocument = useCallback(async () => {
+    if (isChecked) {
+      dispatch(currentUserActions.readDocumentRequested({ documentName }));
+    } else {
+      dispatch(
+        notificationsActions.addNotification({
+          type: 'danger',
+          message: `Veuillez accepter le document avant de valider`,
+        })
+      );
+    }
+  }, [isChecked, dispatch, documentName]);
 
-    return (
-        <StyledSignDocument>
-            <WarningStrip>
-                    <CheckBox
-                        title="J'accepte la charte éthique Entourage pro"
-                        value={isChecked}
-                        useOutsideOfForm
-                        onChange={() => setIsChecked(isChecked => !isChecked)}
-                        name="accept-ethic-charter"
-                        id="charte-ethique-checkbox"
-                    />
-            </WarningStrip>
-            <StyledSignDocumentButtonContainer>
-                <Button
-                    style="custom-secondary-inverted"
-                    onClick={handleSignDocument}
-                >
-                    Valider
-                </Button>
-            </StyledSignDocumentButtonContainer>
-        </StyledSignDocument>
-    )
-}
+  return (
+    <StyledSignDocument>
+      <WarningStrip>
+        <CheckBox
+          title={label}
+          value={isChecked}
+          useOutsideOfForm
+          onChange={() => setIsChecked((v) => !v)}
+          name="accept-ethic-charter"
+          id="charte-ethique-checkbox"
+        />
+      </WarningStrip>
+      <StyledSignDocumentButtonContainer>
+        <Button style="custom-secondary-inverted" onClick={handleSignDocument}>
+          Valider
+        </Button>
+      </StyledSignDocumentButtonContainer>
+    </StyledSignDocument>
+  );
+};

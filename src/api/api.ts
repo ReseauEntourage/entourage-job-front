@@ -4,6 +4,7 @@ import axios, {
   AxiosResponse,
 } from 'axios';
 import _ from 'lodash';
+import { DocumentNameType } from 'src/constants';
 import { AdminZone } from 'src/constants/departements';
 import { addAxiosInterceptors } from './interceptor';
 import {
@@ -13,7 +14,6 @@ import {
   ContactCompany,
   ContactContactUs,
   ContactNewsletter,
-  DocumentNamesTypes,
   ExternalMessage,
   ExternalOpportunityDto,
   InternalMessage,
@@ -493,9 +493,9 @@ export class APIHandler {
     return this.post('/contact/candidateInscription', params);
   }
 
-  /////////////
+  /// //////////
   // message //
-  /////////////
+  /// //////////
 
   postExternalMessage(params: ExternalMessage): Promise<AxiosResponse> {
     return this.post('/message/external', params);
@@ -505,13 +505,14 @@ export class APIHandler {
     return this.post('/message/internal', params);
   }
 
-
-  
-  ////////////////////
+  /// /////////////////
   // read documents //
-  ////////////////////
+  /// /////////////////
 
-  postReadDocument(params: {documentName: DocumentNamesTypes}, userId): Promise<AxiosResponse> {
-    return this.post(`/read-documents/read/${userId}`, params);
+  postReadDocument(
+    params: { documentName: DocumentNameType },
+    userId
+  ): Promise<AxiosResponse> {
+    return this.post(`/readDocuments/read/${userId}`, params);
   }
 }

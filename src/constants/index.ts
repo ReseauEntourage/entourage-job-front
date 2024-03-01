@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import { DocumentNamesTypes } from 'src/api/types';
 import {
   ADMIN_ZONES,
   ADMIN_ZONES_FILTERS,
@@ -1153,7 +1152,9 @@ export const ReduxRequestEvents = {
   FAILED: 'FAILED',
 } as const;
 
-export const DocumentNames: {[k in DocumentNamesTypes]: DocumentNamesTypes} = {
-  CharteEthique: "CharteEthique",
-  ConseilsPosture: "ConseilsPosture", 
-}
+export type DocumentNameType = 'CharteEthique' | 'ConseilsPosture';
+
+export const DocumentNames: { [k in DocumentNameType]: DocumentNameType } = {
+  CharteEthique: 'CharteEthique',
+  ConseilsPosture: 'ConseilsPosture',
+};
