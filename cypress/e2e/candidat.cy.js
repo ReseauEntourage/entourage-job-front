@@ -1,4 +1,6 @@
 /* eslint-disable no-undef */
+import moment from 'moment';
+
 describe('Candidat', () => {
   beforeEach(() => {
     cy.intercept('GET', '/cv/shares', { total: 184221 }).as('cvShares');
@@ -356,7 +358,9 @@ describe('Candidat', () => {
       .find('.option')
       .contains('Alternance')
       .click();
-    cy.get('#form-edit-employed-endOfContract').type('2024-03-03');
+    cy.get('#form-edit-employed-endOfContract').type(
+      moment().add(1, 'month').format('YYYY-MM-DD')
+    );
     cy.contains('Sauvegarder').click();
     cy.wait('@putUserCandidatParams');
     cy.get(`[data-testid="test-toggle-employedToggle"]`).should('be.checked');
