@@ -4,7 +4,7 @@ import ConversationIllu from 'assets/icons/illu-conversation.svg';
 import MaletteIllu from 'assets/icons/illu-malette.svg';
 import TipsIllu from 'assets/icons/illu-poignee-de-main.svg';
 import RSIllu from 'assets/icons/illu-reseaux-sociaux.svg';
-import { USER_ROLES } from './users';
+import { NormalUserRole, USER_ROLES } from './users';
 import { FilterConstant } from './utils';
 
 export type HelpValue = 'tips' | 'interview' | 'cv' | 'network' | 'event';
@@ -14,7 +14,7 @@ const iconSizeProps = { width: 40, height: 40 };
 export const ProfileHelps: (FilterConstant<HelpValue> & {
   icon: JSX.Element;
   shortTitle: {
-    [K in typeof USER_ROLES.CANDIDATE | typeof USER_ROLES.COACH]: string;
+    [K in NormalUserRole]: string;
   };
 })[] = [
   {
@@ -65,7 +65,7 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
 ];
 export const ParametresHelpCardTitles: {
   [K in 'card' | 'modal']: {
-    [R in typeof USER_ROLES.CANDIDATE | typeof USER_ROLES.COACH]: string;
+    [R in NormalUserRole]: string;
   };
 } = {
   card: {
@@ -81,9 +81,7 @@ export const ParametresHelpCardTitles: {
 } as const;
 
 export const ParametresHelpCardContents: {
-  [K in
-    | typeof USER_ROLES.CANDIDATE
-    | typeof USER_ROLES.COACH]: (FilterConstant<HelpValue> & {
+  [K in NormalUserRole]: (FilterConstant<HelpValue> & {
     icon: React.ReactNode;
     description: string;
   })[];

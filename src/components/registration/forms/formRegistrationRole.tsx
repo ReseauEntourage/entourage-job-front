@@ -3,9 +3,9 @@ import CVIllu from 'assets/icons/illu-CV.svg';
 import TipsIllu from 'assets/icons/illu-poignee-de-main.svg';
 import { FormSchema } from 'src/components/forms/FormSchema';
 import { SelectListType } from 'src/components/utils/Inputs/SelectList/SelectList.types';
-import { USER_ROLES } from 'src/constants/users';
+import { NormalUserRole, USER_ROLES } from 'src/constants/users';
 
-const RoleOptions: SelectListType[] = [
+const RoleOptions: SelectListType<NormalUserRole>[] = [
   {
     value: USER_ROLES.CANDIDATE,
     label: "J'ai besoin d'aide dans ma recherche d'emploi",
@@ -20,10 +20,10 @@ const RoleOptions: SelectListType[] = [
   },
 ];
 
-export const formOnboardingRole: FormSchema<{
-  role: (typeof USER_ROLES.CANDIDATE | typeof USER_ROLES.COACH)[];
+export const formRegistrationRole: FormSchema<{
+  role: NormalUserRole[];
 }> = {
-  id: 'form-onboarding-role',
+  id: 'form-registration-role',
   fields: [
     {
       id: 'role',

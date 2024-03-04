@@ -1,8 +1,8 @@
 import React from 'react';
 import { Layout } from 'src/components/Layout';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
-import { Onboarding } from 'src/components/onboarding/Onboarding/Onboarding';
-import { useRedirectToFirstStep } from 'src/components/onboarding/useRedirectToFirstStep';
+import { Registration } from 'src/components/registration/Registration';
+import { useRedirectToFirstStep } from 'src/components/registration/useRedirectToFirstStep';
 import { Section } from 'src/components/utils';
 import { useStep } from 'src/hooks/queryParams/useStep';
 
@@ -13,7 +13,7 @@ const Inscription = () => {
   return (
     <Layout title="Inscription - LinkedOut">
       <Section className="custom-page">
-        {step ? <Onboarding /> : <LoadingScreen />}
+        {step ? <Registration /> : <LoadingScreen />}
       </Section>
     </Layout>
   );

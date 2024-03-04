@@ -1,6 +1,6 @@
 import React from 'react';
 import { HelpValue, ParametresHelpCardContents } from 'src/constants/helps';
-import { USER_ROLES } from 'src/constants/users';
+import { NormalUserRole } from 'src/constants/users';
 import {
   StyledHelpList,
   StyledHelpListImgContainer,
@@ -8,7 +8,7 @@ import {
 
 interface ProfileHelpListProps {
   helpList: { name: HelpValue }[];
-  role: typeof USER_ROLES.CANDIDATE | typeof USER_ROLES.COACH;
+  role: NormalUserRole;
 }
 
 export const ProfileHelpList = ({ helpList, role }: ProfileHelpListProps) => {

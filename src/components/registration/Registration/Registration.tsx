@@ -1,28 +1,28 @@
 import Link from 'next/link';
 import React from 'react';
-import { useOnboarding } from '../useOnboarding';
+import { useRegistration } from '../useRegistration';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { Card, Typography } from 'src/components/utils';
 import { H6 } from 'src/components/utils/Headings';
 import { Spinner } from 'src/components/utils/Spinner';
 import {
-  StyledOnboardingContainer,
-  StyledOnboardingFooter,
-  StyledOnboardingSpinnerContainer,
-} from './Onboarding.styles';
+  StyledRegistrationContainer,
+  StyledRegistrationFooter,
+  StyledRegistrationSpinnerContainer,
+} from './Registration.styles';
 
-export function Onboarding() {
+export function Registration() {
   const {
     isLoading,
     pageContent,
     pageData,
-    isFirstOnboardingStep,
+    isFirstRegistrationStep,
     onSubmitStepForm,
     onBack,
-  } = useOnboarding();
+  } = useRegistration();
 
   return (
-    <StyledOnboardingContainer>
+    <StyledRegistrationContainer>
       <Card title="Créer mon compte Entourage Pro en 5 minutes">
         {!isLoading && (
           <>
@@ -33,21 +33,21 @@ export function Onboarding() {
               onSubmit={onSubmitStepForm}
               submitText="Suivant"
               cancelText="Précédent"
-              {...(!isFirstOnboardingStep ? { onCancel: onBack } : {})}
+              {...(!isFirstRegistrationStep ? { onCancel: onBack } : {})}
             />
           </>
         )}
         {isLoading && (
-          <StyledOnboardingSpinnerContainer>
+          <StyledRegistrationSpinnerContainer>
             <Spinner />
-          </StyledOnboardingSpinnerContainer>
+          </StyledRegistrationSpinnerContainer>
         )}
-        <StyledOnboardingFooter>
+        <StyledRegistrationFooter>
           <Typography size="small">
             Vous avez déjà un compte ? <Link href="/login">Connectez-vous</Link>
           </Typography>
-        </StyledOnboardingFooter>
+        </StyledRegistrationFooter>
       </Card>
-    </StyledOnboardingContainer>
+    </StyledRegistrationContainer>
   );
 }

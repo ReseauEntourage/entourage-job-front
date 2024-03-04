@@ -1,44 +1,44 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-  OnboardingStep,
-  OnboardingSteps,
+  REGISTRATION_FIRST_STEP,
+  RegistrationStep,
   StepsData,
-} from 'src/components/onboarding/Onboarding/Onboarding.types';
+} from 'src/components/registration/Registration/Registration.types';
 import { RequestState, SliceRootState } from 'src/store/utils';
-import { createUserAdapter } from './onboarding.adapters';
+import { createUserAdapter } from './registration.adapters';
 
 export interface State {
   createUser: RequestState<typeof createUserAdapter>;
-  currentStep: OnboardingStep;
+  currentStep: RegistrationStep;
   data: StepsData;
   isLoading: boolean;
 }
 
 const initialState: State = {
   createUser: createUserAdapter.getInitialState(),
-  currentStep: OnboardingSteps.FIRST,
+  currentStep: REGISTRATION_FIRST_STEP,
   data: {},
   isLoading: true,
 };
 
 export const slice = createSlice({
-  name: 'onboarding',
+  name: 'registration',
   initialState,
   reducers: {
     ...createUserAdapter.getReducers<State>((state) => state.createUser, {
       // TODO on creation success, set user data
     }),
-    setOnboardingCurrentStepData(
+    setRegistrationCurrentStepData(
       state,
-      action: PayloadAction<StepsData[OnboardingStep]>
+      action: PayloadAction<StepsData[RegistrationStep]>
     ) {
       state.data[state.currentStep] = action.payload;
     },
-    setOnboardingStep(state, action: PayloadAction<OnboardingStep>) {
+    setRegistrationStep(state, action: PayloadAction<RegistrationStep>) {
       state.currentStep = action.payload;
       state.isLoading = true;
     },
-    setOnboardingIsLoading(state, action: PayloadAction<boolean>) {
+    setRegistrationIsLoading(state, action: PayloadAction<boolean>) {
       state.isLoading = action.payload;
     },
   },

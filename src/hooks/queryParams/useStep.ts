@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
-import { OnboardingStep } from 'src/components/onboarding/Onboarding/Onboarding.types';
+import { RegistrationStep } from 'src/components/registration/Registration/Registration.types';
 
 export function useStep() {
   const {
     query: { step },
   } = useRouter();
 
-  return step as OnboardingStep;
+  return step as RegistrationStep;
 }
