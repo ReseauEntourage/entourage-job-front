@@ -1,6 +1,5 @@
-import { formEditCatchphrase } from 'src/components/forms/schemas/formEditCatchphrase';
+import { formOnboardingRole } from '../forms/formOnboardingRole';
 import { USER_ROLES } from 'src/constants/users';
-import { formOnboardingRole } from './forms/formOnboardingRole';
 
 export type OnboardingStep = `step-${number}`;
 
@@ -13,8 +12,10 @@ type RoleStepData = {
   role: (typeof USER_ROLES.CANDIDATE | typeof USER_ROLES.COACH)[];
 };
 
+export type StepData = RoleStepData; /* TODO Add other steps types here */
+
 export type StepsData = {
-  [K in OnboardingStep]: RoleStepData /* TODO Add other steps types here */;
+  [K in OnboardingStep]: StepData;
 };
 
 const OnboardingLabels = {
@@ -25,7 +26,8 @@ const OnboardingLabels = {
 export type OnboardingLabel =
   (typeof OnboardingLabels)[keyof typeof OnboardingLabels];
 
-type OnboardingForms = typeof formOnboardingRole | typeof formEditCatchphrase;
+export type OnboardingForms =
+  | typeof formOnboardingRole; /* TODO Add other steps forms here */
 
 export interface OnboardingPageContent {
   subtitle: string;

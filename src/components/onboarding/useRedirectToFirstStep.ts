@@ -6,7 +6,7 @@ import {
   selectIsEmptyOnboardingData,
   selectIsFirstOnboardingStep,
 } from 'src/use-cases/onboarding';
-import { OnboardingSteps } from './Onboarding.types';
+import { OnboardingSteps } from './Onboarding/Onboarding.types';
 
 export function useRedirectToFirstStep() {
   const isEmptyOnboardingData = useSelector(selectIsEmptyOnboardingData);

@@ -32,6 +32,10 @@ export function selectOnboardingNextStep(state: RootState): OnboardingStep {
   return `step-${currentStepNumber + 1}`;
 }
 
+export function selectIsOnboardingLoading(state: RootState) {
+  return state.onboarding.isLoading;
+}
+
 export function selectOnboardingCurrentStepData(
   state: RootState
 ): StepsData[OnboardingStep] {
