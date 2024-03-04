@@ -1,6 +1,5 @@
-import { COLORS } from 'src/constants/styles';
 import styled from 'styled-components';
-
+import { COLORS } from 'src/constants/styles';
 
 export const StyledWarningStrip = styled.div`
   background-color: ${COLORS.hoverOrange};

@@ -7,6 +7,7 @@ import { useContextualRole } from '../../useContextualRole';
 import { Button, Card, Tag } from 'src/components/utils';
 import { H6 } from 'src/components/utils/Headings';
 import { Spinner } from 'src/components/utils/Spinner';
+import { WarningStrip } from 'src/components/utils/WarningStrip';
 import { BUSINESS_LINES } from 'src/constants';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -28,7 +29,6 @@ import {
   StyledDashbordOpportunitiesInProgress,
 } from './DashboardOpportunitiesCard.styles';
 import { useDashboardOpportunities } from './useDashboardOpportunities';
-import { WarningStrip } from 'src/components/utils/WarningStrip';
 
 const uuidValue = uuid();
 

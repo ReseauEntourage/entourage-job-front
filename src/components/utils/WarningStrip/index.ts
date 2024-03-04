@@ -1,1 +1,1 @@
-export * from './WarningStrip'
+export * from './WarningStrip';
