@@ -3,11 +3,11 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import { IlluMalette } from 'assets/icons/icons';
-import { StyledCardNotificationContainer } from '../../Backoffice.styles';
 import { useContextualRole } from '../../useContextualRole';
 import { Button, Card, Tag } from 'src/components/utils';
 import { H6 } from 'src/components/utils/Headings';
 import { Spinner } from 'src/components/utils/Spinner';
+import { WarningStrip } from 'src/components/utils/WarningStrip';
 import { BUSINESS_LINES } from 'src/constants';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -55,7 +55,7 @@ export const DashboardOpportunitiesCard = () => {
         <>
           {!!numberOpportunitiesInProgess &&
             numberOpportunitiesInProgess > 0 && (
-              <StyledCardNotificationContainer>
+              <WarningStrip>
                 <StyledDashbordOpportunitiesInProgress>
                   <div>
                     <IlluMalette height="39" width="39" />
@@ -78,7 +78,7 @@ export const DashboardOpportunitiesCard = () => {
                     </Button>
                   )}
                 </StyledDashbordOpportunitiesInProgress>
-              </StyledCardNotificationContainer>
+              </WarningStrip>
             )}
           {opportunities && !isDataLoading && (
             <>

@@ -4,6 +4,7 @@ import {
   CandidateHelpWithValue,
   CompanyApproach,
   Contract as ContractValue,
+  DocumentNameType,
   ExternalMessageContactType,
   ExternalOfferOrigin,
   HeardAboutValue,
@@ -28,6 +29,7 @@ export const APIRoutes = {
   CVS: 'cv',
   ORGANIZATIONS: 'organization',
   MESSAGE: 'message',
+  READ_DOCUMENTS: 'readDocuments',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -94,6 +96,7 @@ export type UserProfile = {
   lastSendMessage: string;
   lastReceivedMessage: string;
 };
+
 export type User = {
   coach: User;
   id: string;
@@ -115,6 +118,7 @@ export type User = {
   deletedAt?: string;
   userProfile: UserProfile;
   OrganizationId?: string;
+  readDocuments: { documentName: DocumentNameType }[];
 };
 
 export interface CVExperience {

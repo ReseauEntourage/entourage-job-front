@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import {
   StyledDocumentCenteredText,
   StyledDocumentTitleText,
 } from '../Documents.styles';
+import { isReadDocument } from '../Documents.utils';
+import { SignDocument } from '../SignDocument';
 import { Section } from 'src/components/utils';
 import { H1, H4 } from 'src/components/utils/Headings';
+import { DocumentNames } from 'src/constants';
 import { COLORS } from 'src/constants/styles';
+import {
+  currentUserActions,
+  selectCurrentUser,
+} from 'src/use-cases/current-user';
 
 const textContent = [
   {
@@ -47,6 +55,14 @@ const textContent = [
 ];
 
 export const CharteEthique = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    return () => {
+      dispatch(currentUserActions.readDocumentReset());
+    };
+  }, [dispatch]);
+
+  const user = useSelector(selectCurrentUser);
   return (
     <Section style="custom-primary">
       <H1 title="Charte Ethique" color={COLORS.primaryOrange} center />
@@ -73,6 +89,13 @@ export const CharteEthique = () => {
           </StyledDocumentTitleText>
         );
       })}
+      {user &&
+        !isReadDocument(user.readDocuments, DocumentNames.CharteEthique) && (
+          <SignDocument
+            documentName={DocumentNames.CharteEthique}
+            label={"J'accepte la charte éthique Entourage pro"}
+          />
+        )}
     </Section>
   );
 };

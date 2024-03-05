@@ -4,6 +4,7 @@ import axios, {
   AxiosResponse,
 } from 'axios';
 import _ from 'lodash';
+import { DocumentNameType } from 'src/constants';
 import { AdminZone } from 'src/constants/departements';
 import { addAxiosInterceptors } from './interceptor';
 import {
@@ -492,9 +493,9 @@ export class APIHandler {
     return this.post('/contact/candidateInscription', params);
   }
 
-  /// // //////
-  // message /
-  /// // //////
+  /// //////////
+  // message //
+  /// //////////
 
   postExternalMessage(params: ExternalMessage): Promise<AxiosResponse> {
     return this.post('/message/external', params);
@@ -502,5 +503,16 @@ export class APIHandler {
 
   postInternalMessage(params: InternalMessage): Promise<AxiosResponse> {
     return this.post('/message/internal', params);
+  }
+
+  /// /////////////////
+  // read documents //
+  /// /////////////////
+
+  postReadDocument(
+    params: { documentName: DocumentNameType },
+    userId
+  ): Promise<AxiosResponse> {
+    return this.post(`/readDocuments/read/${userId}`, params);
   }
 }

@@ -1151,3 +1151,10 @@ export const ReduxRequestEvents = {
   IDLE: 'IDLE',
   FAILED: 'FAILED',
 } as const;
+
+export type DocumentNameType = 'CharteEthique' | 'ConseilsPosture';
+
+export const DocumentNames: { [k in DocumentNameType]: DocumentNameType } = {
+  CharteEthique: 'CharteEthique',
+  ConseilsPosture: 'ConseilsPosture',
+};

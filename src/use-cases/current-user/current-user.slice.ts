@@ -9,6 +9,7 @@ import {
   updateUserAdapter,
   updateCandidateAdapter,
   updateProfileAdapter,
+  readDocumentAdapter,
 } from './current-user.adapters';
 
 export interface State {
@@ -16,6 +17,7 @@ export interface State {
   updateUser: RequestState<typeof updateUserAdapter>;
   updateCandidate: RequestState<typeof updateCandidateAdapter>;
   updateProfile: RequestState<typeof updateProfileAdapter>;
+  readDocument: RequestState<typeof readDocumentAdapter>;
   user: UserWithUserCandidate | null;
   userUpdateError: UpdateError | null; // TODO: Add error types
   profileUpdateError: UpdateError | null; // TODO: Add error types
@@ -26,6 +28,7 @@ const initialState: State = {
   updateUser: updateUserAdapter.getInitialState(),
   updateCandidate: updateCandidateAdapter.getInitialState(),
   updateProfile: updateProfileAdapter.getInitialState(),
+  readDocument: readDocumentAdapter.getInitialState(),
   user: null,
   userUpdateError: null,
   profileUpdateError: null,
@@ -93,6 +96,9 @@ export const slice = createSlice({
       updateProfileFailed(state, action) {
         state.userUpdateError = action.payload.error;
       },
+    }),
+    ...readDocumentAdapter.getReducers<State>((state) => state.readDocument, {
+      readDocumentSucceeded() {},
     }),
     setUser(state, action: PayloadAction<UserWithUserCandidate | null>) {
       state.user = action.payload;

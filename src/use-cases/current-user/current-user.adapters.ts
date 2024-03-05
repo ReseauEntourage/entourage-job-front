@@ -4,6 +4,7 @@ import {
   UserProfile,
   UserWithUserCandidate,
 } from 'src/api/types';
+import { DocumentNameType } from 'src/constants';
 import { createRequestAdapter } from 'src/store/utils';
 
 export const fetchUserAdapter = createRequestAdapter('fetchUser').withPayloads<
@@ -53,4 +54,13 @@ export const updateCandidateAdapter = createRequestAdapter(
   {
     error: UpdateError;
   }
+>();
+
+export const readDocumentAdapter = createRequestAdapter(
+  'readDocument'
+).withPayloads<
+  {
+    documentName: DocumentNameType;
+  },
+  void
 >();
