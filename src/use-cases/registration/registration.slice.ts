@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-  AllStepData,
+  StepData,
   FirstStepData,
   REGISTRATION_FIRST_STEP,
   RegistrationErrorMessages,
@@ -35,7 +35,7 @@ export const slice = createSlice({
     ...createUserAdapter.getReducers<State>((state) => state.createUser, {
       // TODO on creation success, set user data
     }),
-    setRegistrationCurrentStepData(state, action: PayloadAction<AllStepData>) {
+    setRegistrationCurrentStepData(state, action: PayloadAction<StepData>) {
       const { currentStep } = state;
 
       assertIsDefined(currentStep, RegistrationErrorMessages.CURRENT_STEP);

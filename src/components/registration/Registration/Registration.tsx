@@ -28,14 +28,16 @@ export function Registration() {
       <Card title="Créer mon compte Entourage Pro en 5 minutes">
         {!isLoading && (
           <>
-            <StyledRegistrationSubtitle>
-              <Typography weight="normal">{pageContent.subtitle}</Typography>
-              {pageContent.annotation && (
-                <Typography weight="normal" color="lighter" variant="italic">
-                  {pageContent.annotation}
-                </Typography>
-              )}
-            </StyledRegistrationSubtitle>
+            {pageContent.subtitle && (
+              <StyledRegistrationSubtitle>
+                <Typography weight="normal">{pageContent.subtitle}</Typography>
+                {pageContent.annotation && (
+                  <Typography weight="normal" color="lighter" variant="italic">
+                    {pageContent.annotation}
+                  </Typography>
+                )}
+              </StyledRegistrationSubtitle>
+            )}
             <FormWithValidation
               formSchema={pageContent.form}
               defaultValues={pageData || {}}

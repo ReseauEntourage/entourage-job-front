@@ -14,6 +14,7 @@ export const FormComponents = {
   SELECT_CREATABLE: 'select-creatable',
   SELECT_ASYNC: 'select-async',
   SELECT_LIST: 'select-list',
+  SELECT_CARD: 'select-card',
   RADIO: 'radio',
   RADIO_ASYNC: 'radio-async',
   HEADING: 'heading',
@@ -51,6 +52,7 @@ export interface FormComponentValues<M extends boolean> {
   [FormComponents.SELECT_CREATABLE]: MultiFilterConstant<M>;
   [FormComponents.SELECT_ASYNC]: MultiFilterConstant<M>;
   [FormComponents.SELECT_LIST]: string[];
+  [FormComponents.SELECT_CARD]: string[];
   [FormComponents.RADIO]: string | number;
   [FormComponents.RADIO_ASYNC]: string | number;
   [FormComponents.HEADING]: never;
@@ -84,6 +86,7 @@ export const SelectRequestComponents = [
   FormComponents.SELECT_CREATABLE,
   FormComponents.SELECT_ASYNC,
   FormComponents.SELECT_LIST,
+  FormComponents.SELECT_CARD,
 ] as const;
 
 export type SelectRequestComponent = (typeof SelectRequestComponents)[number];

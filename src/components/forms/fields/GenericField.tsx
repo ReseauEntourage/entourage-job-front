@@ -8,6 +8,7 @@ import {
   UseFormWatch,
 } from 'react-hook-form';
 
+import { SelectCard } from '../../utils/Inputs/SelectCard';
 import {
   ComponentException,
   ExtractFormSchemaValidation,
@@ -274,6 +275,23 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
     if (field.component === 'select-list') {
       return (
         <SelectList
+          {...commonProps}
+          isMulti={
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            isMulti
+          }
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          options={
+            typeof field.options === 'function'
+              ? field.options(getValue)
+              : field.options
+          }
+        />
+      );
+    }
+    if (field.component === 'select-card') {
+      return (
+        <SelectCard
           {...commonProps}
           isMulti={
             // @ts-expect-error after enable TS strict mode. Please, try to fix it

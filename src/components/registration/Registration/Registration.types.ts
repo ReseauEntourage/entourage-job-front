@@ -1,28 +1,41 @@
-import { formRegistrationCandidateExpectations } from '../forms/formRegistrationCandidateExpectations';
-import { formRegistrationRole } from '../forms/formRegistrationRole';
-import { HelpValue } from 'src/constants/helps';
-import { NormalUserRole, USER_ROLES } from 'src/constants/users';
+import { ExtractFormSchemaValidation } from '../../forms/FormSchema';
+import { USER_ROLES } from 'src/constants/users';
+import { formRegistrationCandidateExpectations } from './forms/formRegistrationCandidateExpectations';
+import { formRegistrationCandidateInfo } from './forms/formRegistrationCandidateInfo';
+import { formRegistrationCandidateProgram } from './forms/formRegistrationCandidateProgram';
+import { formRegistrationCoachInfo } from './forms/formRegistrationCoachInfo';
+import { formRegistrationCoachProgram } from './forms/formRegistrationCoachProgram';
+import { formRegistrationRole } from './forms/formRegistrationRole';
 
 export type RegistrationStep = `step-${number}`;
 export const REGISTRATION_FIRST_STEP = 'step-1' as const;
 
-type RoleStepData = {
-  role: NormalUserRole[];
-};
+export type CandidateRegistrationForm =
+  | typeof formRegistrationCandidateExpectations
+  | typeof formRegistrationCandidateInfo
+  | typeof formRegistrationCandidateProgram;
+/* TODO Add other steps forms here */
 
-type CandidateExpectationsStepData = {
-  expectations: HelpValue[];
-};
+export type CoachRegistrationForm =
+  | typeof formRegistrationCoachInfo
+  | typeof formRegistrationCoachProgram;
+/* TODO Add other steps forms here */
 
-export type AllStepData =
-  | RoleStepData
-  | CandidateExpectationsStepData; /* TODO Add other steps data here */
+export type FirstStepRegistrationForm = typeof formRegistrationRole;
 
-export type FirstStepData = RoleStepData;
+export type RegistrationForms =
+  | FirstStepRegistrationForm
+  | CandidateRegistrationForm
+  | CoachRegistrationForm;
+
+export type StepData = ExtractFormSchemaValidation<RegistrationForms>;
+
+export type FirstStepData =
+  ExtractFormSchemaValidation<FirstStepRegistrationForm>;
 
 type RegistrationStepDataByRole = Partial<{
-  [USER_ROLES.CANDIDATE]: CandidateExpectationsStepData;
-  /*  [USER_ROLES.COACH]:  */
+  [USER_ROLES.CANDIDATE]: ExtractFormSchemaValidation<CandidateRegistrationForm>;
+  [USER_ROLES.COACH]: ExtractFormSchemaValidation<CoachRegistrationForm>;
 }>;
 
 export type RegistrationStepData = Partial<{
@@ -30,31 +43,33 @@ export type RegistrationStepData = Partial<{
 }>;
 
 const RegistrationLabels = {
-  MULTIPLE_CHOICE_LABEL: 'Plusieurs choix possible',
+  MULTIPLE_CHOICE: 'Plusieurs choix possible',
+  SINGLE_CHOICE: 'Sélectionnez une des deux options',
   FUTURE_CHANGE: 'Vous pourrez modifier votre choix à tout moment',
 } as const;
 
 export type RegistrationLabel =
   (typeof RegistrationLabels)[keyof typeof RegistrationLabels];
 
-export type RegistrationForms =
-  | typeof formRegistrationRole
-  | typeof formRegistrationCandidateExpectations; /* TODO Add other steps forms here */
-
-export interface RegistrationStepContent {
-  subtitle: string;
+export interface RegistrationStepContent<
+  T extends RegistrationForms = RegistrationForms
+> {
+  subtitle?: string;
   annotation?: RegistrationLabel;
-  form: RegistrationForms;
+  form: T;
 }
 
 export type RegistrationStepContentByRole = Partial<{
-  [K in NormalUserRole]: RegistrationStepContent;
+  [USER_ROLES.CANDIDATE]: RegistrationStepContent<CandidateRegistrationForm>;
+  [USER_ROLES.COACH]: RegistrationStepContent<CoachRegistrationForm>;
 }>;
 
-export const FirstStepContent: RegistrationStepContent = {
-  subtitle: 'Faisons connaissance : quelle est votre situation actuelle ?*',
-  form: formRegistrationRole,
-};
+export const FirstStepContent: RegistrationStepContent<FirstStepRegistrationForm> =
+  {
+    subtitle: 'Faisons connaissance : quelle est votre situation actuelle ?*',
+    form: formRegistrationRole,
+    annotation: RegistrationLabels.SINGLE_CHOICE,
+  };
 
 export const RegistrationStepContents: {
   [K in RegistrationStep]: RegistrationStepContentByRole;
@@ -63,7 +78,27 @@ export const RegistrationStepContents: {
     [USER_ROLES.CANDIDATE]: {
       subtitle: 'Quelles sont vos attentes en rejoignant Entourage Pro ?*',
       form: formRegistrationCandidateExpectations,
-      annotation: RegistrationLabels.MULTIPLE_CHOICE_LABEL,
+      annotation: RegistrationLabels.MULTIPLE_CHOICE,
+    },
+    [USER_ROLES.COACH]: {
+      form: formRegistrationCoachInfo,
+    },
+  },
+  'step-3': {
+    [USER_ROLES.CANDIDATE]: {
+      form: formRegistrationCandidateInfo,
+    },
+    [USER_ROLES.COACH]: {
+      subtitle: "Choisissez le type d'accompagnement qui vous correspond",
+      annotation: RegistrationLabels.FUTURE_CHANGE,
+      form: formRegistrationCoachProgram,
+    },
+  },
+  'step-4': {
+    [USER_ROLES.CANDIDATE]: {
+      subtitle: "Choisissez le type d'accompagnement qui vous correspond",
+      annotation: RegistrationLabels.FUTURE_CHANGE,
+      form: formRegistrationCandidateProgram,
     },
   },
   /* TODO add other steps contents here */

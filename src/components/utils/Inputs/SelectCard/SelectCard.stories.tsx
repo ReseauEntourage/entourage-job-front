@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
 import { Card } from 'src/components/utils/Cards/Card';
-import { ParametresHelpCardContents } from 'src/constants/helps';
+import { ProgramOptions } from 'src/constants/programs';
 import { USER_ROLES } from 'src/constants/users';
-import { SelectList } from './SelectList';
+import { SelectCard } from './SelectCard';
 
 const meta = {
-  title: 'Select List',
-  component: SelectList,
+  title: 'Select Card',
+  component: SelectCard,
   parameters: {
     controls: {
       include: ['isMulti'],
@@ -21,7 +21,7 @@ const meta = {
   },
   args: {
     id: 'select-list-stories',
-    options: ParametresHelpCardContents[USER_ROLES.CANDIDATE],
+    options: ProgramOptions[USER_ROLES.CANDIDATE],
   },
   decorators: [
     (Story) => {
@@ -40,13 +40,13 @@ const meta = {
   ],
 };
 const Template = (args) => {
-  const [helps, setHelps] = useState<string[]>([]);
+  const [programs, setPrograms] = useState<string[]>([]);
 
   return (
-    <SelectList
-      value={helps}
+    <SelectCard
+      value={programs}
       onChange={(values) => {
-        setHelps(values);
+        setPrograms(values);
       }}
       {...args}
     />

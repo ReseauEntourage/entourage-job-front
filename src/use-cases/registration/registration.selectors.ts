@@ -1,11 +1,11 @@
 import {
-  AllStepData,
   FirstStepContent,
   REGISTRATION_FIRST_STEP,
   RegistrationErrorMessages,
   RegistrationStep,
   RegistrationStepContent,
   RegistrationStepContents,
+  StepData,
 } from 'src/components/registration/Registration/Registration.types';
 import { assertIsDefined } from 'src/utils/asserts';
 import { RootState } from './registration.slice';
@@ -71,7 +71,7 @@ export function selectIsRegistrationLoading(state: RootState) {
 
 export function selectRegistrationCurrentStepData(
   state: RootState
-): AllStepData | null {
+): StepData | null {
   const currentStep = selectDefinedRegistrationCurrentStep(state);
 
   const isFirstStep = selectIsFirstRegistrationStep(state);
@@ -83,7 +83,7 @@ export function selectRegistrationCurrentStepData(
 
   const selectedRole = selectDefinedRegistrationSelectedRole(state);
 
-  return state.registration.data[currentStep]?.[selectedRole];
+  return state.registration.data[currentStep]?.[selectedRole] || null;
 }
 
 export function selectRegistrationCurrentStepContent(

@@ -2,26 +2,29 @@ import styled from 'styled-components';
 import { commonInputContainerStyles } from '../Inputs.styles';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledSelectListContainer = styled.div`
+export const StyledSelectCardContainer = styled.div`
   ${() => commonInputContainerStyles}
 `;
-export const StyledSelectList = styled.ul`
+export const StyledSelectCard = styled.ul`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: stretch;
+  justify-content: center;
   padding: 0;
   margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 40px;
 
   > li {
     list-style: none;
-    width: 100%;
-    :not(:last-child) {
-      margin-bottom: 30px;
-    }
+    width: 270px;
+    display: flex;
 
     > button {
+      flex: 1;
+      display: flex;
       width: 100%;
-      border: 2px solid ${COLORS.lightgray};
+      border: 2px solid #ffeadc;
       background-color: #ffffff;
       border-radius: 20px;
       padding: 11px 1px;
@@ -34,8 +37,8 @@ export const StyledSelectList = styled.ul`
     &.selected {
       > button {
         padding: 10px 0px;
-        border: 3px solid ${COLORS.primaryBlue};
-        background-color: ${COLORS.hoverBlue};
+        border: 3px solid #f55f24;
+        background-color: #fef8f5;
       }
 
       position: relative;
@@ -49,7 +52,7 @@ export const StyledCheckIconContainer = styled.div`
     position: absolute;
     right: -8px;
     top: -8px;
-    background-color: ${COLORS.primaryBlue};
+    background-color: ${COLORS.primaryOrange};
     border-radius: 20px;
     display: flex;
     align-items: center;
@@ -64,30 +67,33 @@ export const StyledCheckIconContainer = styled.div`
   }
 `;
 
-export const StyledListOption = styled.div`
+export const StyledSelectCardOption = styled.div`
+  flex: 1;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   font-family: Poppins, sans-serif;
-  > .img-container {
-    min-width: 100px;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    > svg {
-      height: 45px;
-      width: 45px;
-    }
+  padding: 16px;
+  text-align: left;
+`;
+
+export const StyledSelectCardBulletList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin-top: 0;
+`;
+
+export const StyledSelectCardBullet = styled.li`
+  display: flex;
+  align-items: center;
+  :not(:last-child) {
+    margin-bottom: 8px;
   }
-  > .text-container {
-    padding: 10px;
-    text-align: left;
-    h6 {
-      margin-bottom: 10px;
-    }
-    p {
-      margin: 0;
-      line-height: 24px;
-    }
-  }
+`;
+
+export const StyledSelectCardBulletIcon = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+  width: 20px;
 `;

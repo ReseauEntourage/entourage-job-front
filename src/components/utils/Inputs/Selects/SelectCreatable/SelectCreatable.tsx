@@ -26,6 +26,7 @@ interface SelectAsyncProps<T extends FilterConstant | FilterConstant[]>
   maxItems?: number;
   setIsMaxItemsReached?: (isMaxItemsReached: boolean) => void;
 }
+
 export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
   id,
   name,
@@ -116,9 +117,8 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
             return `Aucun résultat`;
           }}
           placeholder={
-            showLabel
-              ? placeholder || 'Selectionnez dans la liste...'
-              : placeholder || title
+            (showLabel ? placeholder : placeholder || title) ||
+            'Selectionnez dans la liste...'
           }
           isDisabled={disabled}
           onChange={(selectedOptions) => handleChange(selectedOptions)}

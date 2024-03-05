@@ -11,7 +11,7 @@ export const StyledRegistrationContainer = styled.div`
 `;
 
 export const StyledRegistrationFooter = styled.div`
-  margin-top: 16px;
+  margin-top: 32px;
 `;
 
 export const StyledRegistrationSpinnerContainer = styled.div`

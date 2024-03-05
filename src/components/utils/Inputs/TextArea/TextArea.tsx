@@ -93,7 +93,7 @@ export function TextArea({
           data-testid={id}
           rows={rows || 5}
           placeholder={
-            showLabel ? placeholder || 'Écrivez...' : placeholder || title
+            (showLabel ? placeholder : placeholder || title) || 'Écrivez'
           }
           onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
             onChange(event.target.value)

@@ -4,22 +4,26 @@ import { CommonInputProps } from '../Inputs.types';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage';
 import { H6 } from 'src/components/utils/Headings';
 import { StyledInputLabel } from 'src/components/utils/Inputs/Inputs.styles';
+import { Typography } from 'src/components/utils/Typography';
 import {
   StyledCheckIconContainer,
-  StyledSelectList,
-  StyledSelectListContainer,
-  StyledListOption,
-} from './SelectList.styles';
-import { SelectListType } from './SelectList.types';
+  StyledSelectCard,
+  StyledSelectCardBullet,
+  StyledSelectCardBulletIcon,
+  StyledSelectCardBulletList,
+  StyledSelectCardContainer,
+  StyledSelectCardOption,
+} from './SelectCard.styles';
+import { SelectCardType } from './SelectCard.types';
 
-interface SelectListProps<T extends string[]>
+interface SelectCardProps<T extends string[]>
   extends CommonInputProps<T, HTMLElement> {
   id: string;
   isMulti?: boolean;
-  options: SelectListType[];
+  options: SelectCardType[];
 }
 
-export function SelectList<T extends string[]>({
+export function SelectCard<T extends string[]>({
   id,
   value: valueProp,
   title,
@@ -33,7 +37,7 @@ export function SelectList<T extends string[]>({
   hidden = false,
   showLabel = false,
   inputRef,
-}: SelectListProps<T>) {
+}: SelectCardProps<T>) {
   const handleSelect = useCallback(
     (value: string) => {
       const currentValue = valueProp || [];
@@ -53,14 +57,14 @@ export function SelectList<T extends string[]>({
   }
 
   return (
-    <StyledSelectListContainer disabled={disabled}>
+    <StyledSelectCardContainer disabled={disabled}>
       {showLabel && (
         <StyledInputLabel htmlFor={`form-input-${name}`}>
           {title}
         </StyledInputLabel>
       )}
-      <StyledSelectList data-testid={id}>
-        {options.map(({ value, label, description, icon }) => {
+      <StyledSelectCard data-testid={id}>
+        {options.map(({ value, label, description, bullets }) => {
           return (
             <li
               id={`${id}-${value}`}
@@ -74,24 +78,35 @@ export function SelectList<T extends string[]>({
                 onBlur={onBlur}
                 ref={inputRef}
               >
-                <StyledListOption>
-                  <div className="img-container">{icon}</div>
-                  <div className="text-container">
-                    <H6 title={label} color="primaryBlue" />
-                    <p>{description}</p>
-                  </div>
-                </StyledListOption>
+                <StyledSelectCardOption>
+                  <H6 title={label} />
+                  <StyledSelectCardBulletList>
+                    {bullets.map(({ label: bulletLabel, icon }) => {
+                      return (
+                        <StyledSelectCardBullet>
+                          <StyledSelectCardBulletIcon>
+                            {icon}
+                          </StyledSelectCardBulletIcon>
+                          <Typography size="small" color="lighter">
+                            {bulletLabel}
+                          </Typography>
+                        </StyledSelectCardBullet>
+                      );
+                    })}
+                  </StyledSelectCardBulletList>
+                  <Typography>{description}</Typography>
+                </StyledSelectCardOption>
+                <StyledCheckIconContainer
+                  className={valueProp?.includes(value) ? 'selected' : ''}
+                >
+                  <CheckIcon />
+                </StyledCheckIconContainer>
               </button>
-              <StyledCheckIconContainer
-                className={valueProp?.includes(value) ? 'selected' : ''}
-              >
-                <CheckIcon />
-              </StyledCheckIconContainer>
             </li>
           );
         })}
-      </StyledSelectList>
+      </StyledSelectCard>
       <FieldErrorMessage error={error} />
-    </StyledSelectListContainer>
+    </StyledSelectCardContainer>
   );
 }
