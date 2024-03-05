@@ -5,7 +5,7 @@ export const isReadDocument = (
   userReadDocuments: User['readDocuments'],
   documentName: DocumentNameType
 ) => {
-  return !!userReadDocuments.find(
+  return userReadDocuments.some(
     (document) => document.documentName === documentName
   );
 };
