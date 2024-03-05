@@ -3,17 +3,17 @@ import React from 'react';
 import { useRegistration } from '../useRegistration';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { Card, Typography } from 'src/components/utils';
-import { H6 } from 'src/components/utils/Headings';
 import { Spinner } from 'src/components/utils/Spinner';
 import {
   StyledRegistrationContainer,
   StyledRegistrationFooter,
   StyledRegistrationSpinnerContainer,
+  StyledRegistrationSubtitle,
 } from './Registration.styles';
 
 export function Registration() {
   const {
-    isLoading,
+    isRegistrationLoading,
     pageContent,
     pageData,
     isFirstRegistrationStep,
@@ -21,15 +21,24 @@ export function Registration() {
     onBack,
   } = useRegistration();
 
+  const isLoading = isRegistrationLoading || !pageContent;
+
   return (
     <StyledRegistrationContainer>
       <Card title="Créer mon compte Entourage Pro en 5 minutes">
         {!isLoading && (
           <>
-            <H6 weight="normal" title={pageContent.subtitle} />
+            <StyledRegistrationSubtitle>
+              <Typography weight="normal">{pageContent.subtitle}</Typography>
+              {pageContent.annotation && (
+                <Typography weight="normal" color="lighter" variant="italic">
+                  {pageContent.annotation}
+                </Typography>
+              )}
+            </StyledRegistrationSubtitle>
             <FormWithValidation
               formSchema={pageContent.form}
-              defaultValues={pageData}
+              defaultValues={pageData || {}}
               onSubmit={onSubmitStepForm}
               submitText="Suivant"
               cancelText="Précédent"

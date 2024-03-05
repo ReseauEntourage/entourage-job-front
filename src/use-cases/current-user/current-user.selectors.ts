@@ -54,7 +54,10 @@ export function selectCurrentUser(state: RootState) {
 }
 
 export function selectCurrentUserId(state: RootState) {
-  return state.currentUser.user?.id;
+  if (!state.currentUser.user) {
+    throw new Error('No current user id');
+  }
+  return state.currentUser.user.id;
 }
 
 export function selectCurrentUserProfileHelps(state: RootState) {

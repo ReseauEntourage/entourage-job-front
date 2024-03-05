@@ -9,6 +9,7 @@ export const StyledSelectList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  margin-bottom: 8px;
 
   > li {
     list-style: none;

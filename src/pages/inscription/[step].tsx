@@ -2,18 +2,16 @@ import React from 'react';
 import { Layout } from 'src/components/Layout';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { Registration } from 'src/components/registration/Registration';
-import { useRedirectToFirstStep } from 'src/components/registration/useRedirectToFirstStep';
+import { useRegistrationRedirection } from 'src/components/registration/useRegistrationRedirection';
 import { Section } from 'src/components/utils';
-import { useStep } from 'src/hooks/queryParams/useStep';
 
 const Inscription = () => {
-  useRedirectToFirstStep();
-  const step = useStep();
+  const { isLoading } = useRegistrationRedirection();
 
   return (
     <Layout title="Inscription - Entourage Pro">
       <Section className="custom-page">
-        {step ? <Registration /> : <LoadingScreen />}
+        {isLoading ? <LoadingScreen /> : <Registration />}
       </Section>
     </Layout>
   );

@@ -1,31 +1,46 @@
-import _ from 'lodash';
 import {
+  AllStepData,
+  FirstStepContent,
   REGISTRATION_FIRST_STEP,
-  RegistrationPageContent,
-  RegistrationPageContents,
   RegistrationStep,
-  StepsData,
+  RegistrationStepContent,
+  RegistrationStepContents,
 } from 'src/components/registration/Registration/Registration.types';
 import { RootState } from './registration.slice';
 
 export function selectIsEmptyRegistrationData(state: RootState) {
-  return _.isEmpty(state.registration.data);
+  return !state.registration.selectedRole;
 }
 
 export function selectRegistrationData(state: RootState) {
   return state.registration.data;
 }
 
+export function selectRegistrationStep(state: RootState) {
+  return state.registration.currentStep;
+}
+
+export function selectRegistrationCurrentStep(state: RootState) {
+  const currentStep = selectRegistrationStep(state);
+
+  if (!currentStep) {
+    throw new Error('No registration current step');
+  }
+  return currentStep;
+}
+
 export function selectRegistrationNextStep(state: RootState): RegistrationStep {
-  const currentStepNumber: number = parseInt(
-    state.registration.currentStep.split('-')[1],
-    10
-  );
+  const currentStep = selectRegistrationCurrentStep(state);
+  const currentStepNumber: number = parseInt(currentStep.split('-')[1], 10);
   return `step-${currentStepNumber + 1}`;
 }
 
 export function selectRegistrationSelectedRole(state: RootState) {
-  return state.registration.data[REGISTRATION_FIRST_STEP]?.role?.[0];
+  const { selectedRole } = state.registration;
+  if (!selectedRole) {
+    throw new Error('No registration selected role');
+  }
+  return selectedRole;
 }
 
 export function selectIsFirstRegistrationStep(state: RootState) {
@@ -34,9 +49,15 @@ export function selectIsFirstRegistrationStep(state: RootState) {
 
 export function selectIsLastRegistrationStep(state: RootState) {
   const nextStep = selectRegistrationNextStep(state);
+  const isFirstStep = selectIsFirstRegistrationStep(state);
+
+  if (isFirstStep) {
+    return false;
+  }
+
   const selectedRole = selectRegistrationSelectedRole(state);
 
-  return !RegistrationPageContents[nextStep]?.[selectedRole];
+  return !RegistrationStepContents[nextStep]?.[selectedRole];
 }
 
 export function selectIsRegistrationLoading(state: RootState) {
@@ -45,21 +66,32 @@ export function selectIsRegistrationLoading(state: RootState) {
 
 export function selectRegistrationCurrentStepData(
   state: RootState
-): StepsData[RegistrationStep] {
+): AllStepData | null {
+  const currentStep = selectRegistrationCurrentStep(state);
+
   const isFirstStep = selectIsFirstRegistrationStep(state);
+
   if (isFirstStep) {
-    return state.registration.data[state.registration.currentStep];
+    const { selectedRole } = state.registration;
+    return selectedRole ? { role: [selectedRole] } : null;
   }
 
   const selectedRole = selectRegistrationSelectedRole(state);
 
-  return state.registration.data[state.registration.currentStep]?.[
-    selectedRole
-  ];
+  return state.registration.data[currentStep]?.[selectedRole];
 }
 
 export function selectRegistrationCurrentStepContent(
   state: RootState
-): RegistrationPageContent {
-  return RegistrationPageContents[state.registration.currentStep];
+): RegistrationStepContent | null {
+  const currentStep = selectRegistrationCurrentStep(state);
+
+  const isFirstStep = selectIsFirstRegistrationStep(state);
+  if (isFirstStep) {
+    return FirstStepContent;
+  }
+
+  const selectedRole = selectRegistrationSelectedRole(state);
+
+  return RegistrationStepContents[currentStep]?.[selectedRole] || null;
 }

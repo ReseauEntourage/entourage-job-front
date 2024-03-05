@@ -14,7 +14,7 @@ export function* setRegistrationCurrentStepDataSaga() {
   const isLastRegistrationStep = yield* select(selectIsLastRegistrationStep);
   if (isLastRegistrationStep) {
     yield* put(setRegistrationIsLoading(true));
-    // const data = yield* select(selectRegistrationData);
+    // const data = yield* select(sselectRegistrationData);
 
     try {
       // TODO send info to API

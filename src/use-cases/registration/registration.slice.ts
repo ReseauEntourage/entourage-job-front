@@ -1,22 +1,27 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
+  AllStepData,
+  FirstStepData,
   REGISTRATION_FIRST_STEP,
   RegistrationStep,
-  StepsData,
+  RegistrationStepData,
 } from 'src/components/registration/Registration/Registration.types';
+import { NormalUserRole } from 'src/constants/users';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import { createUserAdapter } from './registration.adapters';
 
 export interface State {
   createUser: RequestState<typeof createUserAdapter>;
-  currentStep: RegistrationStep;
-  data: StepsData;
+  currentStep: RegistrationStep | null;
+  selectedRole: NormalUserRole | null;
+  data: RegistrationStepData;
   isLoading: boolean;
 }
 
 const initialState: State = {
   createUser: createUserAdapter.getInitialState(),
-  currentStep: REGISTRATION_FIRST_STEP,
+  currentStep: null,
+  selectedRole: null,
   data: {},
   isLoading: true,
 };
@@ -28,11 +33,27 @@ export const slice = createSlice({
     ...createUserAdapter.getReducers<State>((state) => state.createUser, {
       // TODO on creation success, set user data
     }),
-    setRegistrationCurrentStepData(
-      state,
-      action: PayloadAction<StepsData[RegistrationStep]>
-    ) {
-      state.data[state.currentStep] = action.payload;
+    setRegistrationCurrentStepData(state, action: PayloadAction<AllStepData>) {
+      const { currentStep } = state;
+
+      if (!currentStep) {
+        throw new Error('No registration step');
+      }
+
+      if (currentStep === REGISTRATION_FIRST_STEP) {
+        state.selectedRole =
+          (action.payload as FirstStepData).role?.[0] || null;
+      } else {
+        const { selectedRole } = state;
+        if (selectedRole) {
+          const currentStepData = state.data[currentStep] || {};
+
+          state.data[currentStep] = {
+            ...currentStepData,
+            [selectedRole]: action.payload,
+          };
+        }
+      }
     },
     setRegistrationStep(state, action: PayloadAction<RegistrationStep>) {
       state.currentStep = action.payload;

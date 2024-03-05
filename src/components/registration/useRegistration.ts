@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import {
@@ -12,17 +12,10 @@ import {
   selectRegistrationNextStep,
 } from 'src/use-cases/registration';
 import { RegistrationForms } from './Registration/Registration.types';
-import { useRegistrationStep } from './useRegistrationStep';
 
 export function useRegistration() {
   const { push, back } = useRouter();
   const dispatch = useDispatch();
-
-  const currentStep = useRegistrationStep();
-
-  useEffect(() => {
-    dispatch(registrationActions.setRegistrationStep(currentStep));
-  }, [dispatch, currentStep]);
 
   const isRegistrationLoading = useSelector(selectIsRegistrationLoading);
 
@@ -32,11 +25,10 @@ export function useRegistration() {
   const isLastRegistrationStep = useSelector(selectIsLastRegistrationStep);
   const nextStep = useSelector(selectRegistrationNextStep);
 
-  const isLoading = isRegistrationLoading;
-
   const onSubmitStepForm = useCallback(
     (fields: ExtractFormSchemaValidation<RegistrationForms>) => {
       dispatch(registrationActions.setRegistrationCurrentStepData(fields));
+
       if (!isLastRegistrationStep) {
         push(`/inscription/${nextStep}`, undefined, {
           shallow: true,
@@ -49,7 +41,7 @@ export function useRegistration() {
   const onBack = useCallback(back, [back]);
 
   return {
-    isLoading,
+    isRegistrationLoading,
     pageContent,
     pageData,
     isFirstRegistrationStep,

@@ -19,3 +19,7 @@ export const StyledRegistrationSpinnerContainer = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
+export const StyledRegistrationSubtitle = styled.div`
+  margin-bottom: 20px;
+`;
