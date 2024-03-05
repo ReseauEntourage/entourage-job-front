@@ -1,4 +1,5 @@
 import { Context, createContext, useContext } from 'react';
+import { assertIsDefined } from 'src/utils/asserts';
 
 export const ModalContext: Context<{ onClose?: () => void }> = createContext(
   {}
@@ -7,9 +8,10 @@ export const ModalContext: Context<{ onClose?: () => void }> = createContext(
 export function useModalContext() {
   const modalContext = useContext(ModalContext);
 
-  if (!modalContext) {
-    throw new Error("You can't use useModalContext() outside modal");
-  }
+  assertIsDefined(
+    modalContext,
+    "You can't use useModalContext() outside modal"
+  );
 
   return modalContext;
 }

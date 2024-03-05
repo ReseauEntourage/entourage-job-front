@@ -3,11 +3,13 @@ import {
   AllStepData,
   FirstStepData,
   REGISTRATION_FIRST_STEP,
+  RegistrationErrorMessages,
   RegistrationStep,
   RegistrationStepData,
 } from 'src/components/registration/Registration/Registration.types';
 import { NormalUserRole } from 'src/constants/users';
 import { RequestState, SliceRootState } from 'src/store/utils';
+import { assertIsDefined } from 'src/utils/asserts';
 import { createUserAdapter } from './registration.adapters';
 
 export interface State {
@@ -36,23 +38,22 @@ export const slice = createSlice({
     setRegistrationCurrentStepData(state, action: PayloadAction<AllStepData>) {
       const { currentStep } = state;
 
-      if (!currentStep) {
-        throw new Error('No registration step');
-      }
+      assertIsDefined(currentStep, RegistrationErrorMessages.CURRENT_STEP);
 
       if (currentStep === REGISTRATION_FIRST_STEP) {
         state.selectedRole =
           (action.payload as FirstStepData).role?.[0] || null;
       } else {
         const { selectedRole } = state;
-        if (selectedRole) {
-          const currentStepData = state.data[currentStep] || {};
 
-          state.data[currentStep] = {
-            ...currentStepData,
-            [selectedRole]: action.payload,
-          };
-        }
+        assertIsDefined(selectedRole, RegistrationErrorMessages.SELECTED_ROLE);
+
+        const currentStepData = state.data[currentStep] || {};
+
+        state.data[currentStep] = {
+          ...currentStepData,
+          [selectedRole]: action.payload,
+        };
       }
     },
     setRegistrationStep(state, action: PayloadAction<RegistrationStep>) {

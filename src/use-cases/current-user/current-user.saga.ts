@@ -5,6 +5,7 @@ import {
   authenticationActions,
   selectAccessToken,
 } from 'src/use-cases/authentication';
+import { assertCondition, assertIsDefined } from 'src/utils/asserts';
 import { selectCurrentUserId } from './current-user.selectors';
 import { slice } from './current-user.slice';
 
@@ -42,16 +43,15 @@ function setReleaseVersion() {
 
 function* fetchUserRequestedSaga() {
   try {
-    if (!getIsReleaseVersionAllowed()) {
+    const isReleaseVersionAllowed = getIsReleaseVersionAllowed();
+    if (!isReleaseVersionAllowed) {
       setReleaseVersion();
-      throw new Error('Release version is not allowed');
     }
+    assertCondition(isReleaseVersionAllowed, 'Release version is not allowed');
 
     const accessToken = yield* select(selectAccessToken);
 
-    if (!accessToken) {
-      throw new Error('Access token is not set');
-    }
+    assertIsDefined(accessToken, 'Access token is not set');
 
     const response = yield* call(() => Api.getAuthCurrent());
 

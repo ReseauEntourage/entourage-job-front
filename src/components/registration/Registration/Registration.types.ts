@@ -68,3 +68,8 @@ export const RegistrationStepContents: {
   },
   /* TODO add other steps contents here */
 };
+
+export const RegistrationErrorMessages = {
+  CURRENT_STEP: 'Registration current step is not set',
+  SELECTED_ROLE: 'Registration selected role is not set',
+};

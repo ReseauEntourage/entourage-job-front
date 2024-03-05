@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useStep } from 'src/hooks/queryParams/useStep';
 import {
   registrationActions,
-  selectRegistrationStep,
+  selectRegistrationCurrentStep,
 } from 'src/use-cases/registration';
 import { REGISTRATION_FIRST_STEP } from './Registration/Registration.types';
 
@@ -14,7 +14,7 @@ export function useRegistrationRedirection() {
 
   const step = useStep();
 
-  const currentStep = useSelector(selectRegistrationStep);
+  const currentStep = useSelector(selectRegistrationCurrentStep);
 
   const shouldRedirect =
     !step || (!currentStep && step !== REGISTRATION_FIRST_STEP);
