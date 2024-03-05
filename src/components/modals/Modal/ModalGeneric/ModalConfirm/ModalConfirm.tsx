@@ -46,8 +46,3 @@ export const ModalConfirm = ({
     </ModalGeneric>
   );
 };
-
-ModalConfirm.defaultProps = {
-  title: '',
-  children: <></>,
-};

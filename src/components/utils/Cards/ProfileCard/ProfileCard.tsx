@@ -11,7 +11,7 @@ import { Tag } from 'src/components/utils/Tag';
 import { Typography } from 'src/components/utils/Typography';
 import { BUSINESS_LINES, BusinessLineValue } from 'src/constants';
 import { Department } from 'src/constants/departements';
-import { HelpNames, ProfileHelps } from 'src/constants/helps';
+import { HelpValue, ProfileHelps } from 'src/constants/helps';
 import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
 import {
@@ -53,7 +53,7 @@ interface ProfileCardProps {
   lastName: string;
   role: UserRole;
   helps?: {
-    name: HelpNames;
+    name: HelpValue;
   }[];
   businessLines?: {
     name: BusinessLineValue;

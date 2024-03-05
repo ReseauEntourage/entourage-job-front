@@ -12,7 +12,7 @@ export const StyledH1 = styled.h1<StyledHeadingProps>`
     if (props.color) {
       return props.color;
     }
-    return 'black';
+    return COLORS.black;
   }};
   text-align: ${(props) => (props.center ? 'center' : 'left')};
 `;
@@ -49,7 +49,7 @@ export const StyledH3 = styled.h3<StyledHeadingProps>`
     if (props.color) {
       return props.color;
     }
-    return 'black';
+    return COLORS.black;
   }};
   text-align: ${(props) => (props.center ? 'center' : 'left')};
   font-size: ${(props) => (props.mobile ? '18px' : '24px')};
@@ -65,7 +65,7 @@ export const StyledH4 = styled.h4<StyledHeadingProps>`
     if (props.color) {
       return props.color;
     }
-    return 'black';
+    return COLORS.black;
   }};
   text-align: ${(props) => (props.center ? 'center' : 'left')};
   font-size: ${(props) => (props.mobile ? '16px' : '20px')};
@@ -83,7 +83,7 @@ export const StyledH5 = styled.h5<StyledHeadingProps>`
     if (props.color) {
       return props.color;
     }
-    return 'black';
+    return COLORS.black;
   }};
   text-align: ${(props) => (props.center ? 'center' : 'left')};
   font-size: ${(props) => (props.mobile ? '14px' : '16px')};
@@ -101,7 +101,7 @@ export const StyledH6 = styled.h6<StyledHeadingProps>`
     if (props.color) {
       return props.color;
     }
-    return 'black';
+    return COLORS.black;
   }};
   text-align: ${(props) => (props.center ? 'center' : 'left')};
 `;

@@ -1,30 +1,41 @@
 import styled from 'styled-components';
+import { commonInputContainerStyles } from '../Inputs.styles';
 import { COLORS } from 'src/constants/styles';
 
+export const StyledSelectListContainer = styled.div`
+  ${() => commonInputContainerStyles}
+`;
 export const StyledSelectList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 30px;
+
   > li {
     list-style: none;
     width: 100%;
+    :not(:last-child) {
+      margin-bottom: 30px;
+    }
+
     > button {
       width: 100%;
       border: 2px solid #ffeadc;
       background-color: #ffffff;
       border-radius: 20px;
       padding: 11px 1px;
+
       &:hover {
         cursor: pointer;
       }
     }
+
     &.selected {
       > button {
         padding: 10px 0px;
         border: 3px solid #f55f24;
         background-color: #fef8f5;
       }
+
       position: relative;
     }
   }
@@ -47,6 +58,34 @@ export const StyledCheckIconContainer = styled.div`
       color: white;
       height: 19px;
       width: 19px;
+    }
+  }
+`;
+
+export const StyledSelectOption = styled.div`
+  display: flex;
+  flex-direction: row;
+  font-family: Poppins, sans-serif;
+  > .img-container {
+    min-width: 100px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    > svg {
+      height: 45px;
+      width: 45px;
+    }
+  }
+  > .text-container {
+    padding: 10px;
+    text-align: left;
+    h6 {
+      margin-bottom: 10px;
+    }
+    p {
+      margin: 0;
+      line-height: 24px;
     }
   }
 `;

@@ -42,7 +42,7 @@ export const FormFooter = ({
           <div>
             {onCancel && (
               <Button
-                style="custom-primary-inverted"
+                style="custom-secondary"
                 color="primaryOrange"
                 onClick={onCancel}
                 dataTestId={`form-cancel-${formId}`}
@@ -52,7 +52,7 @@ export const FormFooter = ({
             )}
             <ButtonPost
               text={submitText || 'Envoyer'}
-              style="custom-primary"
+              style="custom-secondary-inverted"
               action={onSubmit}
               isLoadingOverride={isLoadingOverride}
               dataTestId={`form-confirm-${formId}`}

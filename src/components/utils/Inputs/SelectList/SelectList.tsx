@@ -1,58 +1,97 @@
 import React, { useCallback } from 'react';
 import CheckIcon from 'assets/icons/check.svg';
+import { CommonInputProps } from '../Inputs.types';
+import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage';
+import { H6 } from 'src/components/utils/Headings';
+import { StyledInputLabel } from 'src/components/utils/Inputs/Inputs.styles';
 import {
   StyledCheckIconContainer,
   StyledSelectList,
+  StyledSelectListContainer,
+  StyledSelectOption,
 } from './SelectList.styles';
+import { SelectListType } from './SelectList.types';
 
-interface SelectListProps<T extends string> {
+interface SelectListProps<T extends string[]>
+  extends CommonInputProps<T, HTMLElement> {
   id: string;
   isMulti?: boolean;
-  options: {
-    value: T;
-    component: React.ReactNode;
-  }[];
-  values?: T[];
-  onChange: (value: T[]) => void;
+  options: SelectListType[];
 }
 
-export function SelectList<T extends string>({
-  options,
+export function SelectList<T extends string[]>({
   id,
-  isMulti = true,
-  values,
+  value: valueProp,
+  title,
   onChange,
+  onBlur,
+  options,
+  isMulti = true,
+  error,
+  name,
+  disabled = false,
+  hidden = false,
+  showLabel = false,
+  inputRef,
 }: SelectListProps<T>) {
   const handleSelect = useCallback(
-    (value: T) => {
-      if (!values) return;
-      if (values.includes(value)) {
-        onChange(values.filter((option) => option !== value));
+    (value: string) => {
+      const currentValue = valueProp || [];
+      if (currentValue.includes(value)) {
+        onChange(currentValue.filter((option) => option !== value) as T);
       } else if (isMulti) {
-        onChange([...values, value]);
+        onChange([...currentValue, value] as T);
       } else {
-        onChange([value]);
+        onChange([value] as T);
       }
     },
-    [values, isMulti, onChange]
+    [valueProp, isMulti, onChange]
   );
 
+  if (hidden) {
+    return null;
+  }
+
   return (
-    <StyledSelectList id={id}>
-      {options.map(({ value, component }, i) => {
-        return (
-          <li key={i} className={values?.includes(value) ? 'selected' : ''}>
-            <button onClick={() => handleSelect(value)} type="button">
-              {component}
-            </button>
-            <StyledCheckIconContainer
-              className={values?.includes(value) ? 'selected' : ''}
+    <StyledSelectListContainer disabled={disabled}>
+      {showLabel && (
+        <StyledInputLabel htmlFor={`form-input-${name}`}>
+          {title}
+        </StyledInputLabel>
+      )}
+      <StyledSelectList data-testid={id}>
+        {options.map(({ value, label, description, icon }) => {
+          return (
+            <li
+              id={`${id}-${value}`}
+              key={`${id}-${value}`}
+              data-testid={`${id}-${value}`}
+              className={valueProp?.includes(value) ? 'selected' : ''}
             >
-              <CheckIcon />
-            </StyledCheckIconContainer>
-          </li>
-        );
-      })}
-    </StyledSelectList>
+              <button
+                onClick={() => handleSelect(value)}
+                type="button"
+                onBlur={onBlur}
+                ref={inputRef}
+              >
+                <StyledSelectOption>
+                  <div className="img-container">{icon}</div>
+                  <div className="text-container">
+                    <H6 title={label} color="primaryOrange" />
+                    <p>{description}</p>
+                  </div>
+                </StyledSelectOption>
+              </button>
+              <StyledCheckIconContainer
+                className={valueProp?.includes(value) ? 'selected' : ''}
+              >
+                <CheckIcon />
+              </StyledCheckIconContainer>
+            </li>
+          );
+        })}
+      </StyledSelectList>
+      <FieldErrorMessage error={error} />
+    </StyledSelectListContainer>
   );
 }

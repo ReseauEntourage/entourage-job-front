@@ -9,7 +9,11 @@ import { DirectoryItem } from 'src/components/backoffice/directory/DirectoryItem
 import { Button, Card } from 'src/components/utils';
 import { CardList } from 'src/components/utils/CardList';
 import { Typography } from 'src/components/utils/Typography';
-import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
+import {
+  CANDIDATE_USER_ROLES,
+  NormalUserRole,
+  USER_ROLES,
+} from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import {
   selectCurrentUserProfileBusinessLines,
@@ -21,7 +25,7 @@ import { StyledDashboardRecommendationsList } from './DashboardRecommendationsCa
 import { useDashboardRecommendations } from './useDashboardRecommendations';
 
 const recommendationsLabels: {
-  [K in typeof USER_ROLES.CANDIDATE | typeof USER_ROLES.COACH]: {
+  [K in NormalUserRole]: {
     title: string;
     subtitle: string;
     button: string;

@@ -11,7 +11,7 @@ import {
   OfferStatus,
 } from 'src/constants';
 import { AdminZone, Department } from 'src/constants/departements';
-import { HelpNames } from 'src/constants/helps';
+import { HelpValue } from 'src/constants/helps';
 import { AdminRole, Gender, UserRole } from 'src/constants/users';
 
 export type SocialMedia =
@@ -78,8 +78,8 @@ export type UserProfile = {
   description: string;
   department: Department;
   isAvailable: boolean;
-  helpNeeds: { name: HelpNames }[];
-  helpOffers: { name: HelpNames }[];
+  helpNeeds: { name: HelpValue }[];
+  helpOffers: { name: HelpValue }[];
   networkBusinessLines: {
     name: BusinessLineValue;
     order: number;
@@ -553,8 +553,8 @@ export type PublicProfile = {
   currentJob: string;
   description: string;
   isAvailable: boolean;
-  helpNeeds: { name: HelpNames }[];
-  helpOffers: { name: HelpNames }[];
+  helpNeeds: { name: HelpValue }[];
+  helpOffers: { name: HelpValue }[];
   networkBusinessLines: {
     name: BusinessLineValue;
     order: number;
@@ -576,7 +576,7 @@ export type PublicProfile = {
 export type ProfilesFilters = {
   role: UserRole[];
   search?: string;
-  helps: HelpNames | HelpNames[];
+  helps: HelpValue | HelpValue[];
   departments: Department | Department[];
   businessLines: BusinessLineValue | BusinessLineValue[];
 };

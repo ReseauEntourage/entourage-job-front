@@ -4,6 +4,7 @@ import { cvConfig } from './cv';
 import { notificationsConfig } from './notifications';
 import { opportunitiesConfig } from './opportunities';
 import { profilesConfig } from './profiles';
+import { registrationConfig } from './registration';
 import { UseCaseConfigType } from './types';
 
 export const useCasesConfig: UseCaseConfigType = {
@@ -12,5 +13,6 @@ export const useCasesConfig: UseCaseConfigType = {
   profilesConfig,
   cvConfig,
   opportunitiesConfig,
+  registrationConfig,
   notificationsConfig,
 };

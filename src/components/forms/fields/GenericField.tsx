@@ -1,11 +1,11 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import {
   Control,
+  Path,
   useController,
+  UseFormGetValues,
   UseFormResetField,
   UseFormWatch,
-  UseFormGetValues,
-  Path,
 } from 'react-hook-form';
 
 import {
@@ -35,6 +35,7 @@ import {
 import { CommonInputProps } from 'src/components/utils/Inputs/Inputs.types';
 import { RadioTypes } from 'src/components/utils/Inputs/Radio/Radio.types';
 
+import { SelectList } from 'src/components/utils/Inputs/SelectList';
 import { AnyCantFix } from 'src/utils/Types';
 
 interface GenericFieldProps<S extends FormSchema<AnyCantFix>> {
@@ -265,6 +266,24 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
           loadOptions={(callback, inputValue) =>
             // @ts-expect-error after enable TS strict mode. Please, try to fix it
             field.loadOptions(callback, inputValue, getValue)
+          }
+        />
+      );
+    }
+
+    if (field.component === 'select-list') {
+      return (
+        <SelectList
+          {...commonProps}
+          isMulti={
+            // @ts-expect-error after enable TS strict mode. Please, try to fix it
+            isMulti
+          }
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          options={
+            typeof field.options === 'function'
+              ? field.options(getValue)
+              : field.options
           }
         />
       );
