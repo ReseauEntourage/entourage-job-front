@@ -16,6 +16,7 @@ export function Registration() {
     isRegistrationLoading,
     pageContent,
     pageData,
+    defaultValueFromOtherStep,
     isFirstRegistrationStep,
     onSubmitStepForm,
     onBack,
@@ -40,7 +41,10 @@ export function Registration() {
             )}
             <FormWithValidation
               formSchema={pageContent.form}
-              defaultValues={pageData || {}}
+              defaultValues={{
+                ...(pageData || {}),
+                ...(defaultValueFromOtherStep || {}),
+              }}
               onSubmit={onSubmitStepForm}
               submitText="Suivant"
               cancelText="Précédent"

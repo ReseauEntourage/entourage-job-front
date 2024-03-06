@@ -6,17 +6,18 @@ import { H6 } from 'src/components/utils/Headings';
 import { StyledInputLabel } from 'src/components/utils/Inputs/Inputs.styles';
 import {
   StyledCheckIconContainer,
+  StyledListOption,
   StyledSelectList,
   StyledSelectListContainer,
-  StyledListOption,
 } from './SelectList.styles';
 import { SelectListType } from './SelectList.types';
+import { Unarray } from 'src/utils/Types';
 
 interface SelectListProps<T extends string[]>
   extends CommonInputProps<T, HTMLElement> {
   id: string;
   isMulti?: boolean;
-  options: SelectListType[];
+  options: SelectListType<Unarray<T>>[];
 }
 
 export function SelectList<T extends string[]>({

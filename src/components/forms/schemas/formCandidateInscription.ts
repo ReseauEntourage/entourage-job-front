@@ -27,7 +27,6 @@ interface FormCandidateInscriptionSchema extends FormSchemaValidation {
   email: string;
   heardAbout: HeardAboutValue;
   infoCo: string;
-
   // @ts-expect-error after enable TS strict mode. Please, try to fix it
   tsPrescripteur?: string;
 }
@@ -287,7 +286,7 @@ export const formCandidateInscription: FormSchema<FormCandidateInscriptionSchema
         },
         // @ts-expect-error after enable TS strict mode. Please, try to fix it
         errorMessage:
-          'Il n’y a pas de réunion d’information organisée dans les prochains temps dans votre ville, nous allons vous recontacter rapidement',
+          'Il n’y a pas de réunion d’information organisée dans les prochains temps dans votre ville, nous allons vous recontacter rapidement.',
       },
     ],
   };

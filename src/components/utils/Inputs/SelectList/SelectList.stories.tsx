@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-
-import { Card } from 'src/components/utils/Cards/Card';
 import { ParametresHelpCardContents } from 'src/constants/helps';
 import { USER_ROLES } from 'src/constants/users';
 import { SelectList } from './SelectList';
@@ -31,9 +29,7 @@ const meta = {
             maxWidth: '600px',
           }}
         >
-          <Card>
-            <Story />
-          </Card>
+          <Story />
         </div>
       );
     },

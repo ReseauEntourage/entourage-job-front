@@ -11,6 +11,7 @@ export function RadioAsync({
   onChange,
   filter,
   errorMessage,
+  error,
   disabled = false,
   hidden = false,
   value,
@@ -33,23 +34,20 @@ export function RadioAsync({
   }
 
   return (
-    <>
-      {options?.length > 0 && (
-        <Radio
-          id={id}
-          title={title}
-          name={name}
-          onChange={onChange}
-          filter={filter}
-          options={options}
-          disabled={disabled}
-          limit={limit}
-          hidden={hidden}
-          errorMessage={errorMessage}
-          value={value}
-          inputRef={inputRef}
-        />
-      )}
-    </>
+    <Radio
+      id={id}
+      title={title}
+      name={name}
+      onChange={onChange}
+      filter={filter}
+      options={options}
+      disabled={disabled}
+      limit={limit}
+      hidden={hidden}
+      error={error}
+      errorMessage={errorMessage}
+      value={value}
+      inputRef={inputRef}
+    />
   );
 }

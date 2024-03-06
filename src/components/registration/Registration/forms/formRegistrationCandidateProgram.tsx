@@ -1,9 +1,9 @@
 import { FormSchema } from 'src/components/forms/FormSchema';
-import { Programs, ProgramOptions } from 'src/constants/programs';
+import { Program, ProgramOptions } from 'src/constants/programs';
 import { USER_ROLES } from 'src/constants/users';
 
 export const formRegistrationCandidateProgram: FormSchema<{
-  program: Programs[];
+  program: Program[];
 }> = {
   id: 'form-registration-candidate-program',
   fields: [

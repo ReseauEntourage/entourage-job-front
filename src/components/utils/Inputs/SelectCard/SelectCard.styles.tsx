@@ -48,6 +48,7 @@ export const StyledSelectCard = styled.ul`
 
 export const StyledCheckIconContainer = styled.div`
   display: none;
+
   &.selected {
     position: absolute;
     right: -8px;
@@ -59,6 +60,7 @@ export const StyledCheckIconContainer = styled.div`
     justify-content: center;
     height: 25px;
     width: 25px;
+
     svg {
       color: white;
       height: 19px;
@@ -76,6 +78,13 @@ export const StyledSelectCardOption = styled.div`
   text-align: left;
 `;
 
+export const StyledSelectBlurableSection = styled.div<{
+  shouldBlur: boolean;
+}>`
+  ${({ shouldBlur }) => shouldBlur && 'filter: blur(2px);'}
+`;
+export const StyledSelectCardDisabledOverlay = styled.div``;
+
 export const StyledSelectCardBulletList = styled.ul`
   list-style: none;
   padding: 0;
@@ -85,6 +94,7 @@ export const StyledSelectCardBulletList = styled.ul`
 export const StyledSelectCardBullet = styled.li`
   display: flex;
   align-items: center;
+
   :not(:last-child) {
     margin-bottom: 8px;
   }

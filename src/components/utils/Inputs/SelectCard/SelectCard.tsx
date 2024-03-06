@@ -5,13 +5,16 @@ import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage
 import { H6 } from 'src/components/utils/Headings';
 import { StyledInputLabel } from 'src/components/utils/Inputs/Inputs.styles';
 import { Typography } from 'src/components/utils/Typography';
+import { Unarray } from 'src/utils/Types';
 import {
   StyledCheckIconContainer,
+  StyledSelectBlurableSection,
   StyledSelectCard,
   StyledSelectCardBullet,
   StyledSelectCardBulletIcon,
   StyledSelectCardBulletList,
   StyledSelectCardContainer,
+  StyledSelectCardDisabledOverlay,
   StyledSelectCardOption,
 } from './SelectCard.styles';
 import { SelectCardType } from './SelectCard.types';
@@ -20,7 +23,8 @@ interface SelectCardProps<T extends string[]>
   extends CommonInputProps<T, HTMLElement> {
   id: string;
   isMulti?: boolean;
-  options: SelectCardType[];
+  options: SelectCardType<Unarray<T>>[];
+  optionsToDisable?: { message: string; option: Unarray<T> }[];
 }
 
 export function SelectCard<T extends string[]>({
@@ -37,6 +41,7 @@ export function SelectCard<T extends string[]>({
   hidden = false,
   showLabel = false,
   inputRef,
+  optionsToDisable = [],
 }: SelectCardProps<T>) {
   const handleSelect = useCallback(
     (value: string) => {
@@ -65,6 +70,9 @@ export function SelectCard<T extends string[]>({
       )}
       <StyledSelectCard data-testid={id}>
         {options.map(({ value, label, description, bullets }) => {
+          const disableOption = optionsToDisable.find(
+            ({ option }) => option === value
+          );
           return (
             <li
               id={`${id}-${value}`}
@@ -73,6 +81,7 @@ export function SelectCard<T extends string[]>({
               className={valueProp?.includes(value) ? 'selected' : ''}
             >
               <button
+                disabled={!!disableOption}
                 onClick={() => handleSelect(value)}
                 type="button"
                 onBlur={onBlur}
@@ -80,21 +89,30 @@ export function SelectCard<T extends string[]>({
               >
                 <StyledSelectCardOption>
                   <H6 title={label} />
-                  <StyledSelectCardBulletList>
-                    {bullets.map(({ label: bulletLabel, icon }) => {
-                      return (
-                        <StyledSelectCardBullet>
-                          <StyledSelectCardBulletIcon>
-                            {icon}
-                          </StyledSelectCardBulletIcon>
-                          <Typography size="small" color="lighter">
-                            {bulletLabel}
-                          </Typography>
-                        </StyledSelectCardBullet>
-                      );
-                    })}
-                  </StyledSelectCardBulletList>
-                  <Typography>{description}</Typography>
+                  <StyledSelectBlurableSection shouldBlur={!!disableOption}>
+                    {disableOption && (
+                      <StyledSelectCardDisabledOverlay>
+                        <Typography size="small" color="lighter">
+                          {disableOption.message}
+                        </Typography>
+                      </StyledSelectCardDisabledOverlay>
+                    )}
+                    <StyledSelectCardBulletList>
+                      {bullets.map(({ label: bulletLabel, icon }) => {
+                        return (
+                          <StyledSelectCardBullet>
+                            <StyledSelectCardBulletIcon>
+                              {icon}
+                            </StyledSelectCardBulletIcon>
+                            <Typography size="small" color="lighter">
+                              {bulletLabel}
+                            </Typography>
+                          </StyledSelectCardBullet>
+                        );
+                      })}
+                    </StyledSelectCardBulletList>
+                    <Typography>{description}</Typography>
+                  </StyledSelectBlurableSection>
                 </StyledSelectCardOption>
                 <StyledCheckIconContainer
                   className={valueProp?.includes(value) ? 'selected' : ''}

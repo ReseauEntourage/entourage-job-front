@@ -1,7 +1,9 @@
 import { ExtractFormSchemaValidation } from '../../forms/FormSchema';
 import { USER_ROLES } from 'src/constants/users';
+import { FlattenUnionToOptionalIntersection, UnionKeys } from 'src/utils/Types';
 import { formRegistrationCandidateExpectations } from './forms/formRegistrationCandidateExpectations';
 import { formRegistrationCandidateInfo } from './forms/formRegistrationCandidateInfo';
+import { formRegistrationCandidateInfoCo } from './forms/formRegistrationCandidateInfoCo';
 import { formRegistrationCandidateProgram } from './forms/formRegistrationCandidateProgram';
 import { formRegistrationCoachInfo } from './forms/formRegistrationCoachInfo';
 import { formRegistrationCoachProgram } from './forms/formRegistrationCoachProgram';
@@ -13,7 +15,8 @@ export const REGISTRATION_FIRST_STEP = 'step-1' as const;
 export type CandidateRegistrationForm =
   | typeof formRegistrationCandidateExpectations
   | typeof formRegistrationCandidateInfo
-  | typeof formRegistrationCandidateProgram;
+  | typeof formRegistrationCandidateProgram
+  | typeof formRegistrationCandidateInfoCo;
 /* TODO Add other steps forms here */
 
 export type CoachRegistrationForm =
@@ -30,10 +33,14 @@ export type RegistrationForms =
 
 export type StepData = ExtractFormSchemaValidation<RegistrationForms>;
 
+export type StepDataKeys = UnionKeys<StepData>;
+
+export type FlattenedStepData = FlattenUnionToOptionalIntersection<StepData>;
+
 export type FirstStepData =
   ExtractFormSchemaValidation<FirstStepRegistrationForm>;
 
-type RegistrationStepDataByRole = Partial<{
+export type RegistrationStepDataByRole = Partial<{
   [USER_ROLES.CANDIDATE]: ExtractFormSchemaValidation<CandidateRegistrationForm>;
   [USER_ROLES.COACH]: ExtractFormSchemaValidation<CoachRegistrationForm>;
 }>;
@@ -57,6 +64,7 @@ export interface RegistrationStepContent<
   subtitle?: string;
   annotation?: RegistrationLabel;
   form: T;
+  dependsOn?: StepDataKeys[];
 }
 
 export type RegistrationStepContentByRole = Partial<{
@@ -99,6 +107,14 @@ export const RegistrationStepContents: {
       subtitle: "Choisissez le type d'accompagnement qui vous correspond",
       annotation: RegistrationLabels.FUTURE_CHANGE,
       form: formRegistrationCandidateProgram,
+    },
+  },
+  'step-5': {
+    [USER_ROLES.CANDIDATE]: {
+      subtitle:
+        "Et si on se rencontrait ? Choisissez une date d'information collective",
+      form: formRegistrationCandidateInfoCo,
+      dependsOn: ['department'],
     },
   },
   /* TODO add other steps contents here */

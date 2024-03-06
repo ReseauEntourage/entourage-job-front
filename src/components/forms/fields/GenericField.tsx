@@ -8,7 +8,6 @@ import {
   UseFormWatch,
 } from 'react-hook-form';
 
-import { SelectCard } from '../../utils/Inputs/SelectCard';
 import {
   ComponentException,
   ExtractFormSchemaValidation,
@@ -35,6 +34,7 @@ import {
 } from 'src/components/utils/Inputs';
 import { CommonInputProps } from 'src/components/utils/Inputs/Inputs.types';
 import { RadioTypes } from 'src/components/utils/Inputs/Radio/Radio.types';
+import { SelectCard } from 'src/components/utils/Inputs/SelectCard';
 
 import { SelectList } from 'src/components/utils/Inputs/SelectList';
 import { AnyCantFix } from 'src/utils/Types';
@@ -204,7 +204,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
   }
 
   if (isFormFieldSelectRequest(field)) {
-    let isMulti: boolean;
+    let isMulti = false;
     if ('isMulti' in field) {
       const isMultiDefined = field.isMulti || false;
 
@@ -218,10 +218,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
       return (
         <Select
           {...commonProps}
-          isMulti={
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            isMulti
-          }
+          isMulti={isMulti}
           // @ts-expect-error after enable TS strict mode. Please, try to fix it
           options={
             typeof field.options === 'function'
@@ -237,10 +234,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
       return (
         <SelectCreatable
           {...commonProps}
-          isMulti={
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            isMulti
-          }
+          isMulti={isMulti}
           // @ts-expect-error after enable TS strict mode. Please, try to fix it
           options={
             typeof field.options === 'function'
@@ -259,10 +253,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
       return (
         <SelectAsync
           {...commonProps}
-          isMulti={
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            isMulti
-          }
+          isMulti={isMulti}
           openMenuOnClick={field.openMenuOnClick}
           loadOptions={(callback, inputValue) =>
             // @ts-expect-error after enable TS strict mode. Please, try to fix it
@@ -276,10 +267,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
       return (
         <SelectList
           {...commonProps}
-          isMulti={
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            isMulti
-          }
+          isMulti={isMulti}
           // @ts-expect-error after enable TS strict mode. Please, try to fix it
           options={
             typeof field.options === 'function'
@@ -293,10 +281,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
       return (
         <SelectCard
           {...commonProps}
-          isMulti={
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            isMulti
-          }
+          isMulti={isMulti}
           // @ts-expect-error after enable TS strict mode. Please, try to fix it
           options={
             typeof field.options === 'function'
@@ -313,6 +298,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
       return (
         <Radio
           {...commonProps}
+          errorMessage={field.errorMessage}
           // @ts-expect-error after enable TS strict mode. Please, try to fix it
           options={field.options}
           filter={
@@ -330,6 +316,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
       return (
         <RadioAsync
           {...commonProps}
+          errorMessage={field.errorMessage}
           loadOptions={async (callback) => {
             await // @ts-expect-error after enable TS strict mode. Please, try to fix it
             field.loadOptions((radioOptions) => {

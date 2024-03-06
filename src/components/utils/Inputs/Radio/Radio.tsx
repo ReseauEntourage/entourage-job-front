@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
+import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage';
 import { StyledRadioContainer } from './Radio.styles';
 import { RadioComponentProps } from './Radio.types';
 
@@ -19,6 +20,7 @@ export function Radio({
   value: valueProp,
   limit = options.length,
   inputRef,
+  error,
 }: RadioComponentProps) {
   const [checkedRadio, setCheckedRadio] = useState<number>();
 
@@ -49,51 +51,54 @@ export function Radio({
     return null;
   }
 
+  if (options.length === 0) {
+    return (
+      <StyledRadioContainer>
+        <legend>{errorMessage}</legend>
+      </StyledRadioContainer>
+    );
+  }
+
   return (
     <StyledRadioContainer
       id={id}
       data-testid={`test-${id}`}
       disabled={disabled}
     >
-      {typeof options === null ? (
-        <legend>{errorMessage}</legend>
-      ) : (
-        <>
-          <legend>{title}</legend>
-          <div className="inputs-container">
-            {options
-              .filter(({ filterData }) => {
-                return !(filter && filterData && filter !== filterData);
-              })
-              .slice(0, limit)
-              .map(({ inputId, label, value }, i) => {
-                if (!inputId) inputId = `radio-${value.replace(/\s+/g, '')}`;
-                return (
-                  <label
-                    htmlFor={inputId}
-                    className={i === checkedRadio ? 'checked' : ''}
-                    key={`${i}-${uuidValue}`}
-                    onClick={(event) => event.stopPropagation()}
-                  >
-                    <input
-                      type="radio"
-                      value={value}
-                      id={inputId}
-                      data-testid={inputId}
-                      name={name}
-                      checked={i === checkedRadio}
-                      onChange={(e) => onHandleRadio(i, e)}
-                      disabled={disabled}
-                      onBlur={onBlur}
-                      ref={inputRef}
-                    />
-                    {label}
-                  </label>
-                );
-              })}
-          </div>
-        </>
-      )}
+      {title && <legend>{title}</legend>}
+      <div className="inputs-container">
+        {options
+          .filter(({ filterData }) => {
+            return !(filter && filterData && filter !== filterData);
+          })
+          .slice(0, limit)
+          .map(({ inputId, label, value }, i) => {
+            if (!inputId) inputId = `radio-${value.replace(/\s+/g, '')}`;
+            return (
+              <label
+                htmlFor={inputId}
+                className={i === checkedRadio ? 'checked' : ''}
+                key={`${i}-${uuidValue}`}
+                onClick={(event) => event.stopPropagation()}
+              >
+                <input
+                  type="radio"
+                  value={value}
+                  id={inputId}
+                  data-testid={inputId}
+                  name={name}
+                  checked={i === checkedRadio}
+                  onChange={(e) => onHandleRadio(i, e)}
+                  disabled={disabled}
+                  onBlur={onBlur}
+                  ref={inputRef}
+                />
+                {label}
+              </label>
+            );
+          })}
+      </div>
+      <FieldErrorMessage error={error} />
     </StyledRadioContainer>
   );
 }

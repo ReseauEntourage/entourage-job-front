@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-
-import { Card } from 'src/components/utils/Cards/Card';
 import { ProgramOptions } from 'src/constants/programs';
 import { USER_ROLES } from 'src/constants/users';
 import { SelectCard } from './SelectCard';
@@ -10,13 +8,17 @@ const meta = {
   component: SelectCard,
   parameters: {
     controls: {
-      include: ['isMulti'],
+      include: ['isMulti', 'optionsToDisable'],
     },
   },
   argTypes: {
     isMulti: {
       control: 'boolean',
       defaultValue: true,
+    },
+    optionsToDisable: {
+      control: 'array',
+      defaultValue: [],
     },
   },
   args: {
@@ -31,9 +33,7 @@ const meta = {
             maxWidth: '600px',
           }}
         >
-          <Card>
-            <Story />
-          </Card>
+          <Story />
         </div>
       );
     },

@@ -1,11 +1,13 @@
 import {
   FirstStepContent,
+  FlattenedStepData,
   REGISTRATION_FIRST_STEP,
   RegistrationErrorMessages,
   RegistrationStep,
   RegistrationStepContent,
   RegistrationStepContents,
   StepData,
+  StepDataKeys,
 } from 'src/components/registration/Registration/Registration.types';
 import { assertIsDefined } from 'src/utils/asserts';
 import { RootState } from './registration.slice';
@@ -99,4 +101,40 @@ export function selectRegistrationCurrentStepContent(
   const selectedRole = selectDefinedRegistrationSelectedRole(state);
 
   return RegistrationStepContents[currentStep]?.[selectedRole] || null;
+}
+
+export function selectRegistrationDataFromOtherStepForDefaultValue(
+  state: RootState
+): Partial<StepData> | null {
+  const isFirstStep = selectIsFirstRegistrationStep(state);
+  const stepContent = selectRegistrationCurrentStepContent(state);
+
+  if (!isFirstStep && stepContent?.dependsOn) {
+    const allData = selectRegistrationData(state);
+
+    const allSteps: RegistrationStep[] = Object.keys(
+      allData
+    ) as RegistrationStep[];
+
+    const selectedRole = selectDefinedRegistrationSelectedRole(state);
+
+    // Flatten the union of all the form values to get each key and its value, to be able to use the name of the specific field to get its value if another form in the registration process needs the value of a preceding form
+    const allStepsDataForSelectedRole = allSteps.reduce((acc, curr) => {
+      const stepDataForSelectedRole = allData[curr]?.[selectedRole];
+      if (stepDataForSelectedRole) {
+        return {
+          ...acc,
+          ...stepDataForSelectedRole,
+        };
+      }
+      return acc;
+    }, {} as FlattenedStepData);
+
+    return {
+      [stepContent.dependsOn]:
+        allStepsDataForSelectedRole[stepContent.dependsOn],
+    };
+  }
+
+  return null;
 }

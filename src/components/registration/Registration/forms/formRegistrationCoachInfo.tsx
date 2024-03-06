@@ -1,9 +1,10 @@
 import { FormSchema } from 'src/components/forms/FormSchema';
-import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { Department, DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { FilterConstant } from 'src/constants/utils';
 
 export const formRegistrationCoachInfo: FormSchema<{
   birthdate: string;
-  department: string;
+  department: FilterConstant<Department>;
 }> = {
   id: 'form-registration-coach-info',
   fields: [

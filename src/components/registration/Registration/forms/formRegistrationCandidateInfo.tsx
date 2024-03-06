@@ -5,10 +5,11 @@ import {
   CandidateYesNoNSPPValue,
 } from 'src/constants';
 import { Department, DEPARTMENTS_FILTERS } from 'src/constants/departements';
+import { FilterConstant } from "../../../../constants/utils";
 
 export const formRegistrationCandidateInfo: FormSchema<{
   birthdate: string;
-  department: Department;
+  department: FilterConstant<Department>;
   workingRight: CandidateYesNoNSPPValue;
 }> = {
   id: 'form-registration-candidate-info',

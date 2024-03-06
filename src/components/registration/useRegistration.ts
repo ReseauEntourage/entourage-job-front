@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import {
   registrationActions,
   selectIsFirstRegistrationStep,
@@ -9,9 +8,10 @@ import {
   selectIsRegistrationLoading,
   selectRegistrationCurrentStepContent,
   selectRegistrationCurrentStepData,
+  selectRegistrationDataFromOtherStepForDefaultValue,
   selectRegistrationNextStep,
 } from 'src/use-cases/registration';
-import { RegistrationForms } from './Registration/Registration.types';
+import { StepData, StepDataKeys } from './Registration/Registration.types';
 
 export function useRegistration() {
   const { push, back } = useRouter();
@@ -21,13 +21,37 @@ export function useRegistration() {
 
   const pageData = useSelector(selectRegistrationCurrentStepData);
   const pageContent = useSelector(selectRegistrationCurrentStepContent);
+  const defaultValueFromOtherStep = useSelector(
+    selectRegistrationDataFromOtherStepForDefaultValue
+  );
   const isFirstRegistrationStep = useSelector(selectIsFirstRegistrationStep);
   const isLastRegistrationStep = useSelector(selectIsLastRegistrationStep);
   const nextStep = useSelector(selectRegistrationNextStep);
 
   const onSubmitStepForm = useCallback(
-    (fields: ExtractFormSchemaValidation<RegistrationForms>) => {
-      dispatch(registrationActions.setRegistrationCurrentStepData(fields));
+    (fields: StepData) => {
+      let fieldsToSave = fields;
+
+      if (pageContent?.dependsOn) {
+        // Remove field used only for default value
+        const fieldsKeys: StepDataKeys[] = Object.keys(
+          fields
+        ) as StepDataKeys[];
+
+        fieldsToSave = fieldsKeys.reduce((acc, curr) => {
+          if (curr !== pageContent.dependsOn) {
+            return {
+              ...acc,
+              [curr]: fields[curr],
+            };
+          }
+          return acc;
+        }, {} as StepData);
+      }
+
+      dispatch(
+        registrationActions.setRegistrationCurrentStepData(fieldsToSave)
+      );
 
       if (!isLastRegistrationStep) {
         push(`/inscription/${nextStep}`, undefined, {
@@ -35,7 +59,7 @@ export function useRegistration() {
         });
       }
     },
-    [dispatch, isLastRegistrationStep, nextStep, push]
+    [dispatch, isLastRegistrationStep, nextStep, pageContent?.dependsOn, push]
   );
 
   const onBack = useCallback(back, [back]);
@@ -44,6 +68,7 @@ export function useRegistration() {
     isRegistrationLoading,
     pageContent,
     pageData,
+    defaultValueFromOtherStep,
     isFirstRegistrationStep,
     onSubmitStepForm,
     onBack,
