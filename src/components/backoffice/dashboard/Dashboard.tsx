@@ -18,6 +18,7 @@ import { DashboardAvailabilityCard } from './DashboardAvailabilityCard';
 import { DashboardLinkedUserCard } from './DashboardLinkedUserCard';
 import { DashboardOpportunitiesCard } from './DashboardOpportunitiesCard';
 import { DashboardProfileCard } from './DashboardProfileCard';
+import { DashboardReadDocumentsCard } from './DashboardReadDocumentsCard';
 import { DashboardRecommendationsCard } from './DashboardRecommendationsCard';
 import { DashboardStepsCard } from './DashboardStepsCard';
 
@@ -50,6 +51,7 @@ export const Dashboard = () => {
               user.role
             ) && (
               <>
+                <DashboardReadDocumentsCard />
                 <DashboardStepsCard />
                 <DashboardOpportunitiesCard />
                 <DashboardRecommendationsCard />
