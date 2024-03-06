@@ -2,7 +2,6 @@ import React from 'react';
 import { Layout } from 'src/components/Layout';
 import { NewsletterPartial, SharePartial } from 'src/components/partials';
 import { ImageTitle } from 'src/components/partials/ImageTitle';
-import { CoachContainer } from 'src/components/partials/pages/Aider/CoachContainer';
 import { HelpCards } from 'src/components/partials/pages/Aider/HelpCards';
 import { InfoContainer } from 'src/components/partials/pages/Aider/InfoContainer';
 import { Grid, Section } from 'src/components/utils';
@@ -20,7 +19,7 @@ const Aider = () => {
       />
       <HelpCards />
       <InfoContainer />
-      <CoachContainer />
+      {/* <CoachContainer /> */}
       <Section style="default">
         <Grid gap="large" column>
           <NewsletterPartial

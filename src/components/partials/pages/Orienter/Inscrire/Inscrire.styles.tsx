@@ -31,6 +31,9 @@ export const StyledOrienterInscrireContainer = styled.div`
         svg {
           min-width: 35px;
           margin-right: 10px;
+          rect {
+            fill: ${COLORS.primaryOrange};
+          }
         }
       }
     }

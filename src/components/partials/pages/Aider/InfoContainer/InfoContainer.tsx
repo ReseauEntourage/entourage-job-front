@@ -8,7 +8,10 @@ import {
 import { TitleSection } from 'src/components/partials/pages/Aider/TitleSection';
 import { Container, Img } from 'src/components/utils';
 import { COLORS } from 'src/constants/styles';
-import { StyledInfoContainer } from './InfoContainer.styles';
+import {
+  StyledInfoContainer,
+  StyledInfoContainerPicto,
+} from './InfoContainer.styles';
 
 const uuidValue = uuid();
 
@@ -93,7 +96,7 @@ export const InfoContainer = () => {
                 <div className="picto-h4">
                   {content.picto}
                   <h4>{content.title}</h4>
-                </div>
+                </StyledInfoContainerPicto>
                 <ul data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;">
                   {content.ul.map((li, k) => {
                     return <li key={`${k}-child-${uuidValue}`}>{li}</li>;
