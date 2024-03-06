@@ -3,13 +3,13 @@ import { COLORS } from 'src/constants/styles';
 
 const styleVariants = {
   default: css`
-    background-color: ${COLORS.hoverOrange};
-    border-color: ${COLORS.hoverOrange};
-    color: ${COLORS.primaryOrange};
+    background-color: ${COLORS.hoverBlue};
+    border-color: ${COLORS.hoverBlue};
+    color: ${COLORS.primaryBlue};
   `,
   secondary: css`
-    background-color: ${COLORS.primaryOrange};
-    border-color: ${COLORS.primaryOrange};
+    background-color: ${COLORS.primaryBlue};
+    border-color: ${COLORS.primaryBlue};
     color: ${COLORS.white};
   `,
 };

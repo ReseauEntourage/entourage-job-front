@@ -11,9 +11,9 @@ export const StyledBackLink = styled.a`
     color: ${COLORS.darkGrayFont} !important;
   }
   &:hover {
-    color: ${COLORS.primaryOrange} !important;
+    color: ${COLORS.primaryBlue} !important;
     svg {
-      fill: ${COLORS.primaryOrange} !important;
+      fill: ${COLORS.primaryBlue} !important;
     }
   }
   svg {

@@ -25,10 +25,10 @@ export const Layout = withRouter<LayoutProps>(
   ({
     children,
     router,
-    title = 'LinkedOut\xa0= partagez votre réseau avec ceux qui n’en ont pas',
-    metaTitle = 'LinkedOut\xa0= partagez votre réseau avec ceux qui n’en ont pas',
+    title = 'Entourage Pro\xa0= partagez votre réseau avec ceux qui n’en ont pas',
+    metaTitle = 'Entourage Pro\xa0= partagez votre réseau avec ceux qui n’en ont pas',
     metaImage = `${process.env.SERVER_URL}/static/img/linkedout-preview-new.jpg`,
-    metaDescription = "Lorsque l'on est exclu, les chances de trouver du travail sont proches de zéro. Avec LinkedOut, faites don de votre visibilité. Un partage peut tout changer.",
+    metaDescription = "Lorsque l'on est exclu, les chances de trouver du travail sont proches de zéro. Avec Entourage Pro, faites don de votre visibilité. Un partage peut tout changer.",
     metaUrl = process.env.SERVER_URL,
     metaType = 'website',
     noIndex = false,
@@ -48,7 +48,7 @@ export const Layout = withRouter<LayoutProps>(
             type="image/png"
             href={addPrefix('/static/img/fav.png')}
           />
-          <link rel="canonical" href="https://www.linkedout.fr/" />
+          <link rel="canonical" href="https://www.entourage-pro.fr/" />
           {isPDF && (
             // eslint-disable-next-line @next/next/no-css-tags
             <link
@@ -59,7 +59,7 @@ export const Layout = withRouter<LayoutProps>(
             />
           )}
           {noIndex && <meta name="robots" content="noindex" />}
-          <meta property="og:site_name" content="LinkedOut" />
+          <meta property="og:site_name" content="Entourage Pro" />
           <meta property="og:description" content={metaDescription} />
           <meta name="description" content={metaDescription} />
           <meta property="og:image" content={metaImage} />

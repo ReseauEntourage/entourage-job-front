@@ -17,7 +17,7 @@ export const StyledCheckIcon = styled(CheckIcon)`
   height: 14px;
   width: 14px;
   padding: 2px;
-  background-color: ${COLORS.primaryOrange};
+  background-color: ${COLORS.primaryBlue};
   color: white;
   position: absolute;
   border-radius: 14px;
@@ -33,7 +33,7 @@ export const StyledBulletListElement = styled.li`
     content: '';
     height: 12px;
     width: 12px;
-    background-color: ${COLORS.primaryOrange};
+    background-color: ${COLORS.primaryBlue};
     position: absolute;
     border-radius: 20px;
     left: 0;

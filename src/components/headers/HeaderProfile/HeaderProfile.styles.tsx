@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledProfilePlaceholder = styled.a`
-  color: ${COLORS.primaryOrange};
+  color: ${COLORS.primaryBlue};
   text-decoration: underline;
   font-style: italic;
   font-size: 14px;
@@ -18,7 +18,7 @@ export const StyledEditPictureIconContainer = styled.div`
   right: 0;
   border-radius: 50%;
   background-color: white;
-  border: 1px solid ${COLORS.primaryOrange};
+  border: 1px solid ${COLORS.primaryBlue};
   padding: 5px;
 `;
 
@@ -50,7 +50,7 @@ export const StyledHeaderProfilePicture = styled.div<{ size: number }>`
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  background-color: ${COLORS.primaryOrange};
+  background-color: ${COLORS.primaryBlue};
   overflow: hidden;
   ${({ size }) => {
     return css`

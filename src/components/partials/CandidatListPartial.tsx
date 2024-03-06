@@ -104,8 +104,8 @@ export const CandidatListPartial = () => {
               <span className="uk-text-italic uk-text-primary">
                 Journée internationale des droits des femmes
               </span>
-              , on a décidé de mettre à l&apos;honneur les candidates
-              LinkedOut&nbsp;!
+              , on a décidé de mettre à l&apos;honneur les candidates Entourage
+              Pro&nbsp;!
             </h3>
           )}
         </div>

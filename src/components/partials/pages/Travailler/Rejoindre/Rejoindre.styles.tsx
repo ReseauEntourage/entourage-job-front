@@ -12,7 +12,7 @@ export const StyledRejoindre = styled.div`
   }
 
   .text-container {
-    background-color: ${COLORS.wheat};
+    background-color: ${COLORS.hoverBlue};
     padding: 48px 60px;
 
     ul {

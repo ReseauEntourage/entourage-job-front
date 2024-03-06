@@ -70,9 +70,9 @@ export const AdminOpportunityItem = ({
   }, [candidateId, opportunityUsers]);
 
   const statusToColor: { [K in OfferStatus]: ActionLabelColor } = {
-    '-1': 'primaryOrange',
-    '0': 'primaryOrange',
-    '1': 'primaryOrange',
+    '-1': 'primaryBlue',
+    '0': 'primaryBlue',
+    '1': 'primaryBlue',
     '2': 'yesGreen',
     '3': 'noRed',
     '4': 'noRed',

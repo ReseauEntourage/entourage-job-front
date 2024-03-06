@@ -37,8 +37,8 @@ const tips = [
     text: (
       <p>
         Par du mécénat financier, de moyens ou de compétences, soutenez des
-        projets comme LinkedOut ou d&apos;autres qui accompagnent des personnes
-        fragiles.
+        projets comme Entourage Pro ou d&apos;autres qui accompagnent des
+        personnes fragiles.
       </p>
     ),
   },
@@ -69,7 +69,7 @@ const TipsGrid = () => {
                 className="uk-text-bold"
                 style={{
                   paddingLeft: '0.7rem',
-                  borderLeft: '2px solid #F55F24',
+                  borderLeft: '2px solid #47A8B9',
                 }}
               >
                 {item.title}

@@ -16,13 +16,13 @@ export const StyledSwiperContainer = styled.div`
     return props.backgroundColor;
   }};
   .swiper-pagination-bullet-active {
-    background-color: ${COLORS.primaryOrange};
+    background-color: ${COLORS.primaryBlue};
     height: 15px;
     width: 15px;
     opacity: 100%;
   }
   .swiper-pagination-bullet {
-    background-color: ${COLORS.primaryOrange};
+    background-color: ${COLORS.primaryBlue};
     height: 15px;
     width: 15px;
   }

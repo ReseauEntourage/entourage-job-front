@@ -56,7 +56,7 @@ export const StyledCheckbox = styled.div`
     }
 
     input:checked ~ .checkmark {
-      background-color: ${COLORS.primaryOrange};
+      background-color: ${COLORS.primaryBlue};
     }
 
     .checkmark:after {

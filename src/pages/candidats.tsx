@@ -9,7 +9,7 @@ import {
 
 const Candidats = () => {
   return (
-    <Layout title="Les candidats - LinkedOut">
+    <Layout title="Les candidats - Entourage Pro">
       <SearchCandidates />
       <ShareCandidatesCVTutorial />
       <CandidateTestimoniesOrientation style="default" />

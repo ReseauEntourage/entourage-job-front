@@ -3,12 +3,13 @@ import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import EntourageLogo from 'assets/icons/logo-entourage.svg';
 import { Background, Grid, Img, Section, Button } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
+import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 
 export const AssociationEntourage = () => {
   return (
-    <Background blend={{ colorHex: '#484848' }}>
+    <Background blend={{ colorHex: COLORS.black }}>
       <Section className="uk-padding-remove-top">
         <div
           style={{ borderTop: 'solid 1px rgba(255, 255, 255, 0.2)' }}

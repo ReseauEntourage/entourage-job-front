@@ -2,13 +2,17 @@ import styled from 'styled-components';
 import ChevronDownIcon from 'assets/icons/chevron-down.svg';
 import { COLORS } from 'src/constants/styles';
 
+export const StyledCVPage = styled.div`
+  background-color: ${COLORS.lightgray};
+`;
+
 export const StyledCVPageContent = styled.div`
-  background-color: ${COLORS.wheat};
+  background-color: ${COLORS.lightgray};
   display: flex;
   flex-direction: column;
   max-width: 1320px;
   margin: auto;
-  color: #484848;
+  color: ${COLORS.black};
   font-size: 14px;
   > a {
     margin: 26px 26px 0 26px;
@@ -77,7 +81,7 @@ export const StyledHeaderDetails = styled.div`
   #quote {
     svg {
       width: 18px;
-      color: ${COLORS.primaryOrange};
+      color: ${COLORS.primaryBlue};
 
       :first-of-type {
         margin-right: 8px;
@@ -135,7 +139,7 @@ export const StyledCVProfilePicture = styled.div`
     transform: translateX(-50%);
   }
   .pseudo {
-    background-color: ${COLORS.hoverOrange};
+    background-color: ${COLORS.hoverBlue};
     height: 110%;
     width: 110%;
     left: 55%;
@@ -189,8 +193,8 @@ export const StyledCVPageContentStory = styled.div`
       > div {
         display: flex;
         margin: 0 auto;
-        color: ${COLORS.primaryOrange};
-        border-bottom: ${COLORS.primaryOrange} solid 1px;
+        color: ${COLORS.primaryBlue};
+        border-bottom: ${COLORS.primaryBlue} solid 1px;
         :hover {
           cursor: pointer;
         }
@@ -255,7 +259,7 @@ export const StyledCVPageContentInformations = styled.div`
   .subtitle {
     display: flex;
     align-items: center;
-    color: ${COLORS.primaryOrange};
+    color: ${COLORS.primaryBlue};
     margin-bottom: 0;
     svg {
       width: 16px;
@@ -307,9 +311,9 @@ export const StyledSkillTag = styled.div`
   margin-right: 20px;
   padding: 3px 10px;
   border-radius: 5px;
-  background-color: ${COLORS.hoverOrange};
+  background-color: ${COLORS.hoverBlue};
   border: ${COLORS.darkHoverOrange} 1px solid;
-  color: ${COLORS.primaryOrange};
+  color: ${COLORS.primaryBlue};
   font-size: 14px;
   font-weight: 400;
 `;
@@ -357,7 +361,7 @@ export const StyledCVExperienceDescription = styled.div`
     height: 9px;
     width: 9px;
     border-radius: 9px;
-    background-color: ${COLORS.primaryOrange};
+    background-color: ${COLORS.primaryBlue};
     position: absolute;
     left: -5px;
     top: 14px;
@@ -390,7 +394,7 @@ export const StyledCVPageContentSlide = styled.div`
   padding-top: 4px;
   padding-bottom: 4px;
   svg {
-    color: ${COLORS.primaryOrange};
+    color: ${COLORS.primaryBlue};
     width: 32px;
     height: 32px;
   }
@@ -426,7 +430,7 @@ export const StyledCVPageContentFooter = styled.div`
     margin-bottom: 0;
   }
   a {
-    color: ${COLORS.primaryOrange};
+    color: ${COLORS.primaryBlue};
     text-decoration: underline;
   }
 `;
@@ -434,7 +438,7 @@ export const StyledCVPageContentFooter = styled.div`
 export const StyledChevronIcon = styled(ChevronDownIcon)`
   top: 30px;
   right: 30px;
-  color: ${COLORS.primaryOrange};
+  color: ${COLORS.primaryBlue};
   svg {
     height: 20px;
     width: 20px;

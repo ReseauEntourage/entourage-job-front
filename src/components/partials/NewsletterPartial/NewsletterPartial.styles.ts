@@ -21,7 +21,7 @@ export const StyledNLForm = styled.div`
     .group-name {
       min-width: 70px;
       margin-right: 20px;
-      color: ${COLORS.primaryOrange};
+      color: ${COLORS.primaryBlue};
       font-weight: 700;
     }
     .checkbox-container {

@@ -14,7 +14,7 @@ export const Rejoindre = ({ cta }: { cta: (label: string) => void }) => {
             title={`Vous avez envie de nous rejoindre\xa0?`}
           />
           <p>
-            LinkedOut s&apos;adresse à des personnes motivées et disponibles
+            Entourage Pro s&apos;adresse à des personnes motivées et disponibles
             pour travailler et qui en raison d&apos;un parcours de vie difficile
             peinent à retrouver un emploi.
           </p>
@@ -61,7 +61,7 @@ export const Rejoindre = ({ cta }: { cta: (label: string) => void }) => {
           <Img
             src="/static/img/travailler-rejoindre.jpg"
             cover
-            alt="Communauté LinkedOut au départ de la route du rhum"
+            alt="Communauté Entourage Pro au départ de la route du rhum"
           />
         </div>
       </StyledRejoindre>

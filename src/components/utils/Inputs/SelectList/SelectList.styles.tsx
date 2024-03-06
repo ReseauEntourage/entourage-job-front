@@ -19,7 +19,7 @@ export const StyledSelectList = styled.div`
 
     > button {
       width: 100%;
-      border: 2px solid #ffeadc;
+      border: 2px solid ${COLORS.lightgray};
       background-color: #ffffff;
       border-radius: 20px;
       padding: 11px 1px;
@@ -32,8 +32,8 @@ export const StyledSelectList = styled.div`
     &.selected {
       > button {
         padding: 10px 0px;
-        border: 3px solid #f55f24;
-        background-color: #fef8f5;
+        border: 3px solid ${COLORS.primaryBlue};
+        background-color: ${COLORS.hoverBlue};
       }
 
       position: relative;
@@ -47,7 +47,7 @@ export const StyledCheckIconContainer = styled.div`
     position: absolute;
     right: -8px;
     top: -8px;
-    background-color: ${COLORS.primaryOrange};
+    background-color: ${COLORS.primaryBlue};
     border-radius: 20px;
     display: flex;
     align-items: center;

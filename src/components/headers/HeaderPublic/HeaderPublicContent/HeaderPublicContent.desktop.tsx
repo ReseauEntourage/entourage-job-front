@@ -60,11 +60,7 @@ export const HeaderPublicContentDesktop = ({
         sticky
         left={
           <div className="uk-flex uk-flex-middle">
-            <NavbarLogo
-              href="/"
-              src="/static/img/linkedout_logo_white.png"
-              alt="LinkedOut"
-            />
+            <NavbarLogo href="/" type="secondary" />
             <div className="uk-margin-small-left uk-flex uk-flex-center uk-light">
               <Button
                 href={process.env.DONATION_LINK}

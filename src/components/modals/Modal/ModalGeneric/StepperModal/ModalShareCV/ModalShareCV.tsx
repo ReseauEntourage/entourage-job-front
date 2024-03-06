@@ -26,7 +26,7 @@ export const ModalShareCV = ({ firstName }: ModalShareCVProps) => {
                 Pour {firstName}, votre action peut tout changer !<br />
                 <br />
                 Vous souhaitez être informé(e) de la suite pour {firstName} ? Et
-                du projet LinkedOut ?<br />
+                du projet Entourage Pro ?<br />
                 <br />
                 Laissez-nous votre adresse mail :
               </p>
@@ -55,7 +55,7 @@ export const ModalShareCV = ({ firstName }: ModalShareCVProps) => {
           return (
             <div className="uk-flex uk-flex-column">
               <p className="uk-text-center uk-flex-1 uk-margin-medium-top">
-                Saviez-vous que LinkedOut est porté par l&apos;association
+                Saviez-vous que Entourage Pro est porté par l&apos;association
                 Entourage&nbsp;?
               </p>
               <div className="uk-flex uk-flex-center">

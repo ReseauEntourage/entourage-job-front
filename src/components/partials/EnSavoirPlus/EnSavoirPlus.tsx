@@ -15,7 +15,7 @@ export const EnSavoirPlus = () => {
         title={
           <>
             Vous souhaitez <span className="orange">en savoir plus</span> sur
-            LinkedOut&nbsp;?
+            Entourage Pro&nbsp;?
           </>
         }
         color="black"

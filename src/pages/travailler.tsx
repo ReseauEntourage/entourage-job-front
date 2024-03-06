@@ -35,7 +35,7 @@ const Travailler = () => {
     fbEvent(FB_TAGS.CANDIDATE_REGISTRATION_OPEN);
     openModal(
       <ModalEdit
-        title="Rejoindre LinkedOut"
+        title="Rejoindre Entourage Pro"
         description="Vous avez entre 18 et 30 ans ? Merci de répondre à ces quelques questions, cela prend moins de 5 min !"
         formSchema={formCandidateInscription}
         submitText="Valider"
@@ -99,7 +99,7 @@ const Travailler = () => {
                       <p>
                         N’oubliez pas de noter la date dans votre agenda, cette
                         réunion est indispensable pour commencer le programme
-                        LinkedOut.
+                        Entourage Pro.
                       </p>
                       <p>
                         Si vous avez un empêchement, n’oubliez pas de nous
@@ -131,15 +131,15 @@ const Travailler = () => {
   };
 
   return (
-    <Layout title="Travailler - LinkedOut">
+    <Layout title="Travailler - Entourage Pro">
       <ImageTitle
-        title="LinkedOut, un tremplin vers l’emploi"
+        title="Entourage Pro, un tremplin vers l’emploi"
         description={`Vous êtes dans une situation de précarité ou d’exclusion\xa0? Vous avez un projet professionnel mais vous n’avez pas de réseau\xa0?`}
         img="/static/img/travailler-banner.jpg"
         imgMobile="/static/img/travailler-banner.jpg"
-        alt="Candidats LinkedOut en recherche d’emploi"
+        alt="Candidats Entourage Pro en recherche d’emploi"
         cta={{
-          label: 'Rejoindre LinkedOut',
+          label: 'Rejoindre Entourage Pro',
           onClick: () => {
             openModalInscription('Header');
           },

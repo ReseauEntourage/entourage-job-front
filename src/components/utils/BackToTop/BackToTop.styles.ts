@@ -8,12 +8,12 @@ export const StyledBackToTop = styled.button`
   position: fixed;
   right: 18px;
   bottom: 18px;
-  background-color: ${COLORS.primaryOrange};
+  background-color: ${COLORS.primaryBlue};
   border-radius: 90px;
   display: none;
   opacity: 0;
   transition: 0.1s ease-in-out;
-  border: 0.5px solid ${COLORS.primaryOrange};
+  border: 0.5px solid ${COLORS.primaryBlue};
   &.visible {
     display: block;
     opacity: 1;
@@ -23,10 +23,10 @@ export const StyledBackToTop = styled.button`
     transition: 0.1s ease-in-out;
   }
   &:hover {
-    background-color: ${COLORS.hoverOrange};
+    background-color: ${COLORS.hoverBlue};
     cursor: pointer;
     svg {
-      color: ${COLORS.primaryOrange};
+      color: ${COLORS.primaryBlue};
     }
   }
 `;

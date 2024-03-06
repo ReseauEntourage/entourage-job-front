@@ -23,7 +23,7 @@ export const StyledInfoContainer = styled.section`
     line-height: 24px;
     font-size: 14px;
     .orange {
-      color: ${COLORS.primaryOrange};
+      color: ${COLORS.primaryBlue};
       font-weight: 700;
     }
     .strong {
@@ -67,7 +67,7 @@ export const StyledInfoContainer = styled.section`
           content: '';
           height: 60px;
           width: 60px;
-          background-color: ${COLORS.primaryOrange};
+          background-color: ${COLORS.primaryBlue};
           bottom: -30px;
           right: -30px;
           position: absolute;
@@ -105,5 +105,11 @@ export const StyledInfoContainer = styled.section`
         }
       }
     }
+  }
+`;
+
+export const StyledInfoContainerPicto = styled.div`
+  rect {
+    fill: ${COLORS.primaryBlue};
   }
 `;

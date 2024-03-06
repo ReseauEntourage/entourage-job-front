@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { COLORS } from 'src/constants/styles';
 
 export const StyledDecouvrirContainer = styled.div`
   display: flex;
@@ -14,7 +15,7 @@ export const StyledDecouvrirContainer = styled.div`
 export const StyledDecouvrirCard = styled.div`
   width: 40%;
   border-radius: 40px;
-  background-color: #fef8f5;
+  background-color: ${COLORS.hoverBlue};
   .image-container {
     position: relative;
     height: 320px;

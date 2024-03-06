@@ -21,7 +21,7 @@ export const Inscrire = ({ innerRef }: { innerRef: Ref<HTMLDivElement> }) => {
         {!isDesktop && (
           <H3
             title="Parcours tremplin de 6 mois et publication du CV"
-            color="primaryOrange"
+            color="primaryBlue"
           />
         )}
         <StyledOrienterInscrireContainer className={isDesktop ? '' : 'mobile'}>
@@ -32,7 +32,7 @@ export const Inscrire = ({ innerRef }: { innerRef: Ref<HTMLDivElement> }) => {
             {isDesktop && (
               <H3
                 title="Parcours tremplin de 6 mois et publication du CV"
-                color="primaryOrange"
+                color="primaryBlue"
               />
             )}
             <ul data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;">
@@ -49,7 +49,9 @@ export const Inscrire = ({ innerRef }: { innerRef: Ref<HTMLDivElement> }) => {
               </li>
             </ul>
             <div data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > p; delay: 200;">
-              <p>L’intégration du candidat au parcours LinkedOut comprend :</p>
+              <p>
+                L’intégration du candidat au parcours Entourage Pro comprend :
+              </p>
               <p>
                 <strong>
                   Un accompagnement personnalisé par un coach bénévole
@@ -69,8 +71,8 @@ export const Inscrire = ({ innerRef }: { innerRef: Ref<HTMLDivElement> }) => {
                 de pouce (conseil, contact, simulation d’entretien)
               </p>
               <p>
-                <strong>L’utilisation de la plateforme LinkedOut</strong> pour
-                créer le CV, le publier, accéder aux offres d’emploi et y
+                <strong>L’utilisation de la plateforme Entourage Pro</strong>{' '}
+                pour créer le CV, le publier, accéder aux offres d’emploi et y
                 répondre.
               </p>
             </div>

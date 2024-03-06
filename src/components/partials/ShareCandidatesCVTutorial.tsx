@@ -21,7 +21,7 @@ export const ShareCandidatesCVTutorial = () => {
   return (
     <Section style="muted" id="tutorial">
       <h2 className="uk-text-bold uk-align-center uk-text-center uk-margin-large-bottom uk-margin-remove-top">
-        LinkedOut en <span className="uk-text-primary">trois</span>
+        Entourage Pro en <span className="uk-text-primary">trois</span>
         &nbsp;étapes
       </h2>
       <MultipleCTA data={datas} showHorizontalDividers showNumbers />

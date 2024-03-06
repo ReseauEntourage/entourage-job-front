@@ -17,7 +17,7 @@ export const StyledDatePickerContainer = styled.div`
       outline: none;
     }
     &::-webkit-calendar-picker-indicator {
-      color: ${COLORS.primaryOrange};
+      color: ${COLORS.primaryBlue};
       filter: invert(56%) sepia(70%) saturate(5137%) hue-rotate(343deg)
         brightness(100%) contrast(107%);
     }

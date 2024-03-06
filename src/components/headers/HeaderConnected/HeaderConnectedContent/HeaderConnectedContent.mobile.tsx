@@ -46,8 +46,7 @@ export const HeaderConnectedContentMobile = ({
         left={
           <NavbarLogo
             href={logoLink.href + (logoLink.queryParams || '')}
-            src="/static/img/linkedout_logo_white.png"
-            alt="Linkedout"
+            type="primary"
           />
         }
         right={

@@ -7,7 +7,7 @@ import { useAuthentication } from 'src/hooks/authentication/useAuthentication';
 const CharteEthiquePage = () => {
   const { isCurrentRouteReady } = useAuthentication();
   return (
-    <Layout title="Charte Ethique - LinkedOut">
+    <Layout title="Charte Ethique - Entourage Pro">
       {isCurrentRouteReady ? <CharteEthique /> : <LoadingScreen />}
     </Layout>
   );

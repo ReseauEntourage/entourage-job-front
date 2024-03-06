@@ -14,8 +14,8 @@ const meta = {
   argTypes: {
     color: {
       control: 'select',
-      options: [COLORS.primaryOrange, COLORS.white],
-      defaultValue: COLORS.primaryOrange,
+      options: [COLORS.primaryBlue, COLORS.white],
+      defaultValue: COLORS.primaryBlue,
     },
   },
   decorators: [
@@ -24,9 +24,7 @@ const meta = {
         <div
           style={{
             backgroundColor:
-              args.color === COLORS.white
-                ? COLORS.primaryOrange
-                : 'transparent',
+              args.color === COLORS.white ? COLORS.primaryBlue : 'transparent',
             display: 'flex',
             padding: 8,
           }}
@@ -43,6 +41,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Default = {
   args: {
-    color: COLORS.primaryOrange,
+    color: COLORS.primaryBlue,
   },
 } satisfies Story;

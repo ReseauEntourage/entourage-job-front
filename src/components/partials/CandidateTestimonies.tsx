@@ -12,7 +12,7 @@ const testimonies = [
     image: '/static/img/temoignage-candidat-laith.jpg',
     author: 'Laith',
     quote:
-      'LinkedOut m’a permis d’avoir un emploi stable et un réseau vers qui me tourner. Je peux enfin être utile à la société.',
+      'Entourage Pro m’a permis d’avoir un emploi stable et un réseau vers qui me tourner. Je peux enfin être utile à la société.',
   },
   {
     image: '/static/img/temoignage-candidat-nasser.jpg',

@@ -25,7 +25,7 @@ export const StyledFooterForm = styled.div`
 
 export const StyledErrorMessage = styled.div`
   flex: 1;
-  color: ${COLORS.darkOrange};
+  color: ${COLORS.warningOrange};
   font-size: 14px;
   margin-bottom: 16px;
 `;

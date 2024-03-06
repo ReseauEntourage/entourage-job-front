@@ -54,7 +54,7 @@ export function ButtonMultiple({
   size = 'large',
   widths = [],
   dataTestId = '',
-  color = 'primaryOrange',
+  color = 'primaryBlue',
 }: ButtonMultipleProps) {
   const { componentId, isOpen, setIsOpen } =
     useCloseOnClickOutsideComponent(id);

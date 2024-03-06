@@ -6,7 +6,10 @@ import PictoRechercheCV from 'assets/icons/picto-recherche-cv.svg';
 import { TitleSection } from 'src/components/partials/pages/Aider/TitleSection';
 import { Container, Img } from 'src/components/utils';
 import { COLORS } from 'src/constants/styles';
-import { StyledInfoContainer } from './InfoContainer.styles';
+import {
+  StyledInfoContainer,
+  StyledInfoContainerPicto,
+} from './InfoContainer.styles';
 
 const uuidValue = uuid();
 
@@ -57,7 +60,7 @@ export const InfoContainer = () => {
         <TitleSection
           title="Toutes les informations sur la mission"
           titleColor="black"
-          svgColor={COLORS.primaryOrange}
+          svgColor={COLORS.primaryBlue}
         />
         <div className="text-content">
           <p>
@@ -88,10 +91,10 @@ export const InfoContainer = () => {
           {infoContent.map((content, key) => {
             return (
               <div className="informer-card" key={`${key}-parent-${uuidValue}`}>
-                <div className="picto-h4">
+                <StyledInfoContainerPicto className="picto-h4">
                   <content.picto />
                   <h4>{content.title}</h4>
-                </div>
+                </StyledInfoContainerPicto>
                 <ul data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;">
                   {content.ul.map((li, k) => {
                     return <li key={`${k}-child-${uuidValue}`}>{li}</li>;

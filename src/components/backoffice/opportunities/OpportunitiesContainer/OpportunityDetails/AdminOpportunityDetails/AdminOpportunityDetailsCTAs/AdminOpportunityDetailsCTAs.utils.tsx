@@ -8,19 +8,19 @@ import {
 
 export const allCTAs: AllCTAsType = {
   validate: {
-    color: 'primaryOrange',
+    color: 'primaryBlue',
     className: 'custom-primary-inverted',
     action: 'validateOpportunity',
     text: <>Valider</>,
   },
   reject: {
-    color: 'primaryOrange',
+    color: 'primaryBlue',
     className: 'custom-primary-inverted',
     action: 'archiveOpportunity',
     text: <>Rejeter</>,
   },
   recommand: {
-    color: 'primaryOrange',
+    color: 'primaryBlue',
     className: 'custom-primary-inverted',
     action: 'recommendOpportunity',
     text: <>Recommander</>,

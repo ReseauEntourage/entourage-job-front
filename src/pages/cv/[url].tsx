@@ -7,6 +7,7 @@ import { Layout } from 'src/components/Layout';
 import { DiscoverPartial, NewsletterPartial } from 'src/components/partials';
 import { CVList } from 'src/components/partials/CV/CVList';
 import { PageCVContent } from 'src/components/partials/CV/PageCVContent';
+import { StyledCVPage } from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
 import { Grid, Section, SimpleLink, Button } from 'src/components/utils';
 import { CV_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
@@ -24,10 +25,10 @@ const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
   const link = `${hostname}${router.asPath}`;
   const candidateExists = cv && cv.user && cv.user.candidat;
   const sharedDescription = candidateExists
-    ? `La précarité n'exclut pas les compétences\xa0! Avec LinkedOut, aidons ${cv.user.candidat.firstName} à retrouver un emploi en lui proposant un job ou en diffusant son CV\xa0!`
+    ? `La précarité n'exclut pas les compétences\xa0! Avec Entourage Pro, aidons ${cv.user.candidat.firstName} à retrouver un emploi en lui proposant un job ou en diffusant son CV\xa0!`
     : '';
   const title = candidateExists
-    ? `LinkedOut\xa0: Aidez ${cv.user.candidat.firstName} à retrouver un emploi`
+    ? `Entourage Pro\xa0: Aidez ${cv.user.candidat.firstName} à retrouver un emploi`
     : '';
 
   useEffect(() => {
@@ -39,7 +40,7 @@ const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
   if (!cv) {
     if (exists) {
       return (
-        <Layout title="Bonne nouvelle ! - LinkedOut" noIndex>
+        <Layout title="Bonne nouvelle ! - Entourage Pro" noIndex>
           <Section className="uk-text-center" style="default" size="large">
             <h3 className="uk-text-bold">
               C&apos;est une{' '}
@@ -90,7 +91,7 @@ const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
       );
     }
     return (
-      <Layout title="Page introuvable - LinkedOut" noIndex>
+      <Layout title="Page introuvable - Entourage Pro" noIndex>
         <Section className="uk-text-center" size="large">
           <h3 className="uk-text-bold">Ce profil n’est pas disponible</h3>
           <p>
@@ -123,9 +124,9 @@ const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
       }
       metaType="profile"
     >
-      <div className="uk-background-muted">
+      <StyledCVPage>
         <PageCVContent cv={cv} />
-      </div>
+      </StyledCVPage>
     </Layout>
   );
 };

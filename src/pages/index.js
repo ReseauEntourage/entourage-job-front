@@ -5,22 +5,21 @@ import {
   ActionPartial,
   CandidatListPartial,
   LandingPagePartial,
-  NumberPartial,
-  AnnouncementPartial,
-  LinkedInPartial,
+  // LinkedInPartial,
   HowItWorks,
-} from 'src/components/partials';
+} from 'src/components/partials/';
+
+import { NumberPartial } from 'src/components/partials/pages/HomePage/NumberPartial';
 
 const Index = () => {
   return (
     <Layout>
       <LandingPagePartial />
       <CandidatListPartial />
-      <AnnouncementPartial />
       <HowItWorks style="default" />
       <NumberPartial />
       <ActionPartial style="default" />
-      <LinkedInPartial />
+      {/* <LinkedInPartial /> */}
     </Layout>
   );
 };

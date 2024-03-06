@@ -4,7 +4,7 @@ import { COLORS, BREAKPOINTS } from 'src/constants/styles';
 export const StyledHeaderModal = styled.div`
   .title-container {
     width: 100%;
-    border-bottom: 1px solid ${COLORS.primaryOrange};
+    border-bottom: 1px solid ${COLORS.primaryBlue};
     h3 {
       width: 100%;
       text-align: center;

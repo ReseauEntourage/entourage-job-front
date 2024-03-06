@@ -16,12 +16,12 @@ export const Participer = ({ cta }: { cta: (label: string) => void }) => {
             <Img
               src="/static/img/travailler-participer.jpg"
               cover
-              alt="Binôme coach et candidat LinkedOut"
+              alt="Binôme coach et candidat Entourage Pro"
             />
           </div>
         )}
         <div className="text-container">
-          <H2 title="LinkedOut vous donne accès à un nouveau réseau professionnel !" />
+          <H2 title="Entourage Pro vous donne accès à un nouveau réseau professionnel !" />
           <p>
             Ce programme gratuit vous accompagne à chaque étape de votre
             recherche d’emploi
@@ -31,14 +31,14 @@ export const Participer = ({ cta }: { cta: (label: string) => void }) => {
               <Img
                 src="/static/img/travailler-participer.jpg"
                 cover
-                alt="Binôme coach et candidat LinkedOut"
+                alt="Binôme coach et candidat Entourage Pro"
               />
             </div>
           )}
           <ul>
             <CheckList>
               <H6
-                title="Un coach LinkedOut qui vous accompagne pendant 6 mois"
+                title="Un coach Entourage Pro qui vous accompagne pendant 6 mois"
                 data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;"
               />
               <p data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;">
@@ -64,9 +64,9 @@ export const Participer = ({ cta }: { cta: (label: string) => void }) => {
                 data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;"
               />
               <p data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;">
-                Le CV LinkedOut valorise votre parcours quel qu’il soit et vos
-                qualités et vous rend visible auprès des entreprises grâce aux
-                partages sur les réseaux sociaux professionnels.
+                Le CV Entourage Pro valorise votre parcours quel qu’il soit et
+                vos qualités et vous rend visible auprès des entreprises grâce
+                aux partages sur les réseaux sociaux professionnels.
               </p>
             </CheckList>
             <CheckList>

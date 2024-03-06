@@ -34,7 +34,7 @@ export const StyledDashboardProfileCardHelps = styled.div`
 export const StyledDashboardProfileCardhelpsTitle = styled.div`
   width: 100%;
   padding-bottom: 15px;
-  border-bottom: 1px solid ${COLORS.hoverOrange};
+  border-bottom: 1px solid ${COLORS.hoverBlue};
   margin-bottom: 20px;
   font-size: 16px;
 `;

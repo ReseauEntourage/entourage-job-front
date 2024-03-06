@@ -9,7 +9,7 @@ export const LayoutBackOffice = ({
   title?: string;
 }) => {
   return (
-    <Layout title={`${title} - LinkedOut`} noIndex isBackoffice>
+    <Layout title={`${title} - Entourage Pro`} noIndex isBackoffice>
       {children}
     </Layout>
   );

@@ -15,7 +15,7 @@ export const StyledDashboardLinkedUserCardCTAContainer = styled.div`
 `;
 
 export const StyledDashboardLinkedUserNameContainer = styled.h3`
-  color: ${COLORS.primaryOrange};
+  color: ${COLORS.primaryBlue};
   font-size: 18px;
   font-weight: 700;
   line-height: 27px;

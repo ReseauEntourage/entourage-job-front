@@ -22,7 +22,7 @@ const DarkColors = [
   'darkGray',
   'black',
   'noRed',
-  'darkOrange',
+  'warningOrange',
   '#A0A0A0',
 ];
 

@@ -238,7 +238,7 @@ export const formAddPrivateOpportunity: FormSchema<{
       name: 'disclaimer',
       component: 'text',
       title:
-        "Les offres font l'objet d'une validation par LinkedOut avant d'être transmises aux candidats",
+        "Les offres font l'objet d'une validation par Entourage Pro avant d'être transmises aux candidats",
     },
     {
       id: 'openNewForm',
@@ -467,7 +467,7 @@ export const formAddPublicOpportunity: FormSchema<{
       name: 'disclaimer',
       component: 'text',
       title:
-        "Les offres font l'objet d'une validation par LinkedOut avant d'être transmises aux candidats",
+        "Les offres font l'objet d'une validation par Entourage Pro avant d'être transmises aux candidats",
     },
     {
       id: 'openNewForm',

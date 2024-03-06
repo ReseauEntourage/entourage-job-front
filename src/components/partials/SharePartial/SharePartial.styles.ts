@@ -4,9 +4,9 @@ import { COLORS } from 'src/constants/styles';
 export const StyledShareButton = styled.button`
   height: 32px;
   width: 32px;
-  background-color: ${COLORS.primaryOrange};
+  background-color: ${COLORS.primaryBlue};
   border-radius: 90px;
-  border: 1px solid ${COLORS.primaryOrange};
+  border: 1px solid ${COLORS.primaryBlue};
   padding: 6px;
   display: flex;
   flex-direction: row;
@@ -25,7 +25,7 @@ export const StyledShareButton = styled.button`
     background-color: white;
     cursor: pointer;
     svg path {
-      fill: ${COLORS.primaryOrange};
+      fill: ${COLORS.primaryBlue};
     }
   }
 `;

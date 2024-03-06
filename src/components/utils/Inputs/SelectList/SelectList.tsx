@@ -77,7 +77,7 @@ export function SelectList<T extends string[]>({
                 <StyledSelectOption>
                   <div className="img-container">{icon}</div>
                   <div className="text-container">
-                    <H6 title={label} color="primaryOrange" />
+                    <H6 title={label} color="primaryBlue" />
                     <p>{description}</p>
                   </div>
                 </StyledSelectOption>

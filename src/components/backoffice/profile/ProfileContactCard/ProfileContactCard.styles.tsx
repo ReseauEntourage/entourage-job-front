@@ -30,7 +30,7 @@ export const StyledConfirmCheck = styled.div`
 `;
 
 export const StyledContactMessage = styled.div`
-  background-color: ${COLORS.hoverOrange};
+  background-color: ${COLORS.hoverBlue};
   border-radius: 10px;
   padding: 10px;
   &:not(:last-child) {

@@ -79,7 +79,7 @@ export function Button({
   newTab = false,
   scroll = true,
   dataTestId = '',
-  color = 'primaryOrange',
+  color = 'primaryBlue',
 }: ButtonProps) {
   const classBuffer = getButtonClassBuffer({
     visible,

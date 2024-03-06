@@ -1,6 +1,6 @@
-# LinkedOut Frontend
+# Entourage Pro Frontend
 
-[![LinkedOut [front-end]](https://github.com/ReseauEntourage/entourage-job-front/actions/workflows/main.yml/badge.svg?branch=chore%2Fgithub-action)](https://github.com/ReseauEntourage/entourage-job-front/actions/workflows/main.yml)
+[![Entourage Pro [front-end]](https://github.com/ReseauEntourage/entourage-job-front/actions/workflows/main.yml/badge.svg?branch=chore%2Fgithub-action)](https://github.com/ReseauEntourage/entourage-job-front/actions/workflows/main.yml)
 
 ## Sommaire
 
@@ -65,7 +65,7 @@ Construire le fichier _.env_ contenant les variables d'environnement
 make init
 ```
 
-Vérifier que le [back-end LinkedOut](https://github.com/ReseauEntourage/entourage-job-back) fonctionne correctement
+Vérifier que le [back-end Entourage Pro](https://github.com/ReseauEntourage/entourage-job-back) fonctionne correctement
 
 ```
 docker ps
@@ -226,7 +226,7 @@ Le déploiement se fait automatiquement grâce à **_Github Actions_** et **_Her
 
 Si une branche, après PR et review, est mergée à `develop` alors l'application sera automatiquement déployée sur la pre-production: **[https://entourage-job-front-preprod.herokuapp.com](https://entourage-job-front-preprod.herokuapp.com)**
 
-Si une branche, après test en pre-production, est mergée à `master`, alors l'application sera automatiquement déployée sur la production: **[https://linkedout.fr](https://linkedout.fr)**
+Si une branche, après test en pre-production, est mergée à `master`, alors l'application sera automatiquement déployée sur la production: **[https://Entourage Pro.fr](https://Entourage Pro.fr)**
 
 ## Extra.
 
@@ -240,4 +240,4 @@ npx dead-exports
 
 Dernier update: _14/12/2023_
 
-![Stack technique LinkedOut](./stack.svg)
+![Stack technique Entourage Pro](./stack.svg)

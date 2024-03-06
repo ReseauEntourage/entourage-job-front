@@ -43,13 +43,13 @@ export const CVShareButtons = ({
     ? asPath.slice(0, asPath.indexOf('?'))
     : asPath;
   const link = `${hostname}${path}`;
-  const hashtags = ['LinkedOut'];
+  const hashtags = ['EntouragePro'];
   const candidateExists = cv && cv.user && cv.user.candidat;
   const sharedDescription = candidateExists
-    ? `La précarité n'exclut pas les compétences\xa0! Avec LinkedOut, aidons ${cv.user.candidat.firstName} à retrouver un emploi en lui proposant un job ou en diffusant son CV\xa0!`
+    ? `La précarité n'exclut pas les compétences\xa0! Avec Entourage Pro, aidons ${cv.user.candidat.firstName} à retrouver un emploi en lui proposant un job ou en diffusant son CV\xa0!`
     : '';
   const title = candidateExists
-    ? `LinkedOut\xa0: Aidez ${cv.user.candidat.firstName} à retrouver un emploi`
+    ? `Entourage Pro\xa0: Aidez ${cv.user.candidat.firstName} à retrouver un emploi`
     : '';
 
   return (

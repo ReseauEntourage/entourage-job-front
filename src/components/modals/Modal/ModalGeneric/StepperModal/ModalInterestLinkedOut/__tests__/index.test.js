@@ -35,7 +35,7 @@ jest.mock('src/components/modals/Modal', () => {
   };
 });
 
-describe('Modal Interest LinkedOut', () => {
+describe('Modal Interest Entourage Pro', () => {
   Api.postContactContactUs.mockResolvedValue({});
   it('should render and next on submit, then close', async () => {
     const { container } = render(

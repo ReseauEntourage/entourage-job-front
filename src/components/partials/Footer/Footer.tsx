@@ -18,7 +18,7 @@ const pages: PageType[] = [
     title: 'Notre mission',
     children: [
       {
-        title: 'Pourquoi LinkedOut ?',
+        title: 'Pourquoi Entourage Pro ?',
         path: '/linkedout',
         props: {
           onClick: () => {
@@ -333,19 +333,7 @@ export const Footer = () => {
       {showAssociationEntourage && <AssociationEntourage />}
       <Section style="secondary" size="small" container="large" preserveColor>
         <Grid middle center column childWidths={['1-1']} gap="medium">
-          {pathname === '/' && (
-            <div className="uk-text-center uk-light">
-              <p>
-                LinkedOut est un est un projet porté par l&apos;association
-                Entourage, qui permet l’accompagnement des personnes les plus
-                précaires ou en situation d’exclusion pour un retour à l’emploi.
-                LinkedIn soutient la mission et les valeurs véhiculées par ce
-                dispositif, et a contribué au lancement de ce projet en ayant
-                accordé une utilisation limitée de sa marque LinkedOut par le
-                biais d’une licence.
-              </p>
-            </div>
-          )}
+          <div />
           <SiteMap isMobile />
           <SiteMap isMobile={false} />
           <Grid row center middle gap="medium">

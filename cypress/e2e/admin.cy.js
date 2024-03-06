@@ -701,7 +701,7 @@ describe('Admin', () => {
         .should('be.visible')
         .scrollIntoView()
         .clear()
-        .type('LinkedOut');
+        .type('Entourage Pro');
 
       cy.get('#form-add-organization-address')
         .should('be.visible')

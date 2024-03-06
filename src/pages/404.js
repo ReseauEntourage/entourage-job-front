@@ -9,7 +9,7 @@ import { GA_TAGS } from 'src/constants/tags';
 
 const Custom404 = () => {
   return (
-    <Layout title="Page introuvable - LinkedOut" noIndex>
+    <Layout title="Page introuvable - Entourage Pro" noIndex>
       <Section className="uk-text-center" style="default" size="large">
         <h3 className="uk-text-bold">Erreur</h3>
         <p>La page que vous avez demandé est malheureusement introuvable</p>

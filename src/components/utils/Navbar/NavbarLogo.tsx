@@ -1,24 +1,25 @@
 import Link from 'next/link';
 import React from 'react';
+import {
+  EntourageProLogoPrimary,
+  EntourageProLogoSecondary,
+} from 'assets/icons/icons';
 import { Img } from 'src/components/utils/Img';
 
 interface NavbarLogoProps {
   href: string;
-  src: string;
-  alt?: string;
+  type: 'primary' | 'secondary';
 }
 
-export const NavbarLogo = ({ href, src, alt }: NavbarLogoProps) => {
+export const NavbarLogo = ({ href, type }: NavbarLogoProps) => {
   return (
     <Link href={href} passHref>
       <a className="uk-margin-small-left uk-margin-small-right uk-flex-center uk-flex">
-        <Img
-          width={180}
-          height={50}
-          src={src}
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          alt={alt}
-        />
+        {type === 'primary' ? (
+          <EntourageProLogoPrimary width={180} height={60} />
+        ) : (
+          <EntourageProLogoSecondary width={180} height={60} />
+        )}
       </a>
     </Link>
   );

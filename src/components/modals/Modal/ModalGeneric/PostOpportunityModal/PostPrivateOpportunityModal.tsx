@@ -89,8 +89,8 @@ export function PostPrivateOpportunityModal({
       title: `Proposer une opportunité à ${candidateFirstName} ${candidateLastName}`,
       description: (
         <div className="uk-text-normal">
-          Contactez ici le candidat et son coach LinkedOut afin de solliciter un
-          échange.
+          Contactez ici le candidat et son coach Entourage Pro afin de
+          solliciter un échange.
           <br />
           <br />
           Si vous souhaitez échanger avec le coach bénévole qui accompagne le
@@ -99,7 +99,7 @@ export function PostPrivateOpportunityModal({
           <br />
           <br />
           <span className="uk-text-meta uk-text-italic">
-            LinkedOut est susceptible de transmettre cette opportunité à
+            Entourage Pro est susceptible de transmettre cette opportunité à
             d&apos;autres candidats dont le profil correspond à votre besoin.
           </span>
         </div>

@@ -33,7 +33,7 @@ export const StyledSubMenu = styled.ul`
       box-sizing: border-box;
       border-bottom: solid 1px ${COLORS.lightgray};
       &:hover {
-        background-color: ${COLORS.hoverOrange};
+        background-color: ${COLORS.hoverBlue};
       }
       svg {
         display: inline-block;

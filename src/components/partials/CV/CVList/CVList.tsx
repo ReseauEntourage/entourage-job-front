@@ -22,8 +22,8 @@ import { AnyToFix } from 'src/utils/Types';
 const NoCVInThisArea = () => {
   return (
     <p className="uk-text-center uk-text-italic">
-      LinkedOut se déploie dans les régions de Paris, de Lille, de Lyon, de
-      Rennes et de Lorient. Vous ne trouvez pas de candidats LinkedOut dans
+      Entourage Pro se déploie dans les régions de Paris, de Lille, de Lyon, de
+      Rennes et de Lorient. Vous ne trouvez pas de candidats Entourage Pro dans
       votre région&nbsp;? Contactez-nous à{' '}
       <SimpleLink
         isExternal
@@ -176,7 +176,7 @@ export const CVList = ({
                 Voir plus
                 {loadingMore ? (
                   <div
-                    style={{ color: COLORS.primaryOrange }}
+                    style={{ color: COLORS.primaryBlue }}
                     data-uk-spinner="ratio: .6"
                   />
                 ) : (
@@ -225,7 +225,7 @@ export const CVList = ({
               >
                 Publier une offre d’emploi
               </a>{' '}
-              qui sera visible par tous les candidats LinkedOut, certains
+              qui sera visible par tous les candidats Entourage Pro, certains
               pourraient être intéressés&nbsp;!{' '}
             </p>
             {renderCvList(cvs)}

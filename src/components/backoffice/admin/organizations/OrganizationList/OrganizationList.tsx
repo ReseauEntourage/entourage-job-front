@@ -119,7 +119,9 @@ export function OrganizationList({
               </h2>
               <p>
                 Contacte{' '}
-                <span className="uk-text-primary">l&apos;équipe LinkedOut</span>{' '}
+                <span className="uk-text-primary">
+                  l&apos;équipe Entourage Pro
+                </span>{' '}
                 pour en savoir plus.
               </p>
             </div>
@@ -153,7 +155,7 @@ export function OrganizationList({
             >
               <Button
                 style="custom-secondary"
-                color="primaryOrange"
+                color="primaryBlue"
                 onClick={() => fetchData(search, filters, offset, false)}
               >
                 Voir toutes les structures

@@ -22,8 +22,8 @@ export const StyledDetailsProgressBar = styled.div`
     }
     &.fullOrange {
       color: white;
-      background-color: ${COLORS.primaryOrange};
-      border: 1px solid ${COLORS.primaryOrange};
+      background-color: ${COLORS.primaryBlue};
+      border: 1px solid ${COLORS.primaryBlue};
     }
     &.fullRed {
       color: white;

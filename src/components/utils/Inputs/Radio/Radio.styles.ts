@@ -34,18 +34,18 @@ export const StyledRadioContainer = styled.div`
         width: 14px;
         appearance: none;
         -webkit-appearance: none;
-        border: 0.5px solid ${COLORS.primaryOrange};
+        border: 0.5px solid ${COLORS.primaryBlue};
         border-radius: 50%;
         accent-color: white;
         cursor: pointer;
       }
 
       &.checked {
-        background-color: ${COLORS.primaryOrange};
+        background-color: ${COLORS.primaryBlue};
         color: white;
 
         input[type='radio'] {
-          background-color: ${COLORS.primaryOrange};
+          background-color: ${COLORS.primaryBlue};
           position: relative;
           border-color: white;
 

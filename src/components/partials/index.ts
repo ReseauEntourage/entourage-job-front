@@ -1,5 +1,4 @@
 export * from './ActionPartial';
-export * from './AnnouncementPartial';
 export * from './AssociationEntourage';
 export * from './CandidateTestimonies';
 export * from './CandidateTestimoniesOrientation';
@@ -17,7 +16,6 @@ export * from './LogoList';
 export * from './MultipleCTA';
 export * from './NewsletterPartial';
 export * from './NumberGrid';
-export * from './NumberPartial';
 export * from './Partners';
 export * from './Reviews';
 export * from './SearchCandidates';

@@ -21,7 +21,7 @@ export const ProgressBarStatus = ({
   const hired = !archived && status === 2;
   const noStatus = _.isNil(status);
 
-  let color = 'primaryOrange';
+  let color = 'primaryBlue';
   if (abandonned) {
     color = 'noRed';
   }

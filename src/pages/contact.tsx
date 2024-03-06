@@ -14,17 +14,17 @@ const Contact = () => {
   const CONTACT_NUMBER = '07 49 69 31 12';
 
   return (
-    <Layout title="Contact - LinkedOut">
+    <Layout title="Contact - Entourage Pro">
       <Section container="small" style="default">
         <h1 className="uk-text-bold uk-align-center uk-text-center uk-margin-large-bottom uk-margin-remove-top">
           Formulaire de <span className="uk-text-primary">contact</span>
         </h1>
         <h4 className="uk-align-center uk-text-center uk-margin-large-bottom">
           Vous êtes un acteur de l&apos;insertion sociale et professionnelle
-          intéressé(e) par l’approche de LinkedOut et souhaitez coopérer avec
-          nous&nbsp;? Vous êtes un recruteur et souhaitez en savoir plus sur le
-          dispositif LinkedOut&nbsp;? Ou vous êtes simplement un particulier et
-          avez des questions sur le projet&nbsp;?
+          intéressé(e) par l’approche de Entourage Pro et souhaitez coopérer
+          avec nous&nbsp;? Vous êtes un recruteur et souhaitez en savoir plus
+          sur le dispositif Entourage Pro&nbsp;? Ou vous êtes simplement un
+          particulier et avez des questions sur le projet&nbsp;?
         </h4>
         <FormWithValidation
           innerRef={form}

@@ -246,7 +246,7 @@ PartnerItem.defaultProps = {
 
 const Partenaires = () => {
   return (
-    <Layout title="Les partenaires - LinkedOut">
+    <Layout title="Les partenaires - Entourage Pro">
       <Title overlay="primary" img="/static/img/construct.jpg">
         <>
           Ils construisent le projet{' '}
@@ -277,7 +277,7 @@ const Partenaires = () => {
       >
         <>
           Nos partenaires sur le projet{' '}
-          <span className="uk-text-primary">LinkedOut Jeunes</span>
+          <span className="uk-text-primary">Entourage Pro Jeunes</span>
         </>
       </CarouselSection>
       <CarouselSection
@@ -328,10 +328,11 @@ const Partenaires = () => {
       <SimpleSection
         title={
           <>
-            Rejoignez <span className="uk-text-primary">LinkedOut&nbsp;!</span>
+            Rejoignez{' '}
+            <span className="uk-text-primary">Entourage Pro&nbsp;!</span>
           </>
         }
-        text="Vous êtes intéressé(e) par l’approche de LinkedOut et souhaitez coopérer avec nous ? Contactez-nous pour devenir partenaire !"
+        text="Vous êtes intéressé(e) par l’approche de Entourage Pro et souhaitez coopérer avec nous ? Contactez-nous pour devenir partenaire !"
         id="give"
         style="muted"
         button={{

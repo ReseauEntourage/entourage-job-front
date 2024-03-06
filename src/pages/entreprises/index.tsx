@@ -91,7 +91,7 @@ const reviews = [
     review: (
       <>
         &ldquo;Avec Miah c’est une réussite. Là où notre compétence s’arrête, on
-        est rassurés par le fait que LinkedOut est là pour nous accompagner. Si
+        est rassurés par le fait que Entourage est là pour nous accompagner. Si
         on peut s’inscrire dans des actions comme celles-ci tout en gardant
         notre efficacité, en y ajoutant le sourire de quelqu’un qui a envie, on
         le fait&nbsp;!&ldquo;
@@ -103,7 +103,7 @@ const reviews = [
     author: 'Sylvie Lepoutre',
     authorStatus: 'Raison d’être & Projet d’entreprise',
     company: 'Advens',
-    industry: 'partenaire LinkedOut',
+    industry: '',
     review: (
       <>
         &ldquo;Nous étions à mille lieux des problématiques des personnes en
@@ -126,10 +126,10 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
   });
 
   return (
-    <Layout title="Entreprises - LinkedOut">
+    <Layout title="Entreprises - Entourage Pro">
       <ImageTitle
         img="/static/img/header_pic_hire.jpg"
-        title="LinkedOut vous accompagne pour changer de regard sur l'inclusion"
+        title="Entourage Pro vous accompagne pour changer de regard sur l'inclusion"
         description="Notre objectif ? Vous permettre de créer les conditions d’un recrutement inclusif réussi, au service de la transformation de votre entreprise."
         cta={[
           {
@@ -165,7 +165,7 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
         title={
           <>
             <span className="uk-text-primary">Pourquoi recruter</span> avec
-            LinkedOut&nbsp;?
+            Entourage Pro&nbsp;?
           </>
         }
         content={
@@ -256,7 +256,7 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
             <br />
             <br />
             Concrètement, vous adaptez votre processus de recrutement et
-            l’intégration de la personne. LinkedOut vous guide et vous
+            l’intégration de la personne. Entourage Pro vous guide et vous
             accompagne pour faire de ce recrutement un succès.
           </>
         }
@@ -290,11 +290,11 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
         }
         content={
           <>
-            L’équipe LinkedOut s&apos;appuie sur des partenaires locaux et des
-            associations pour identifier et sélectionner des personnes absentes
-            de vos canaux habituels. Les candidats LinkedOut ont des profils
-            très variés en termes de parcours, d&apos;âge, d&apos;expérience,
-            mais ont tous en commun&nbsp;:
+            L’équipe Entourage Pro s&apos;appuie sur des partenaires locaux et
+            des associations pour identifier et sélectionner des personnes
+            absentes de vos canaux habituels. Les candidats Entourage Pro ont
+            des profils très variés en termes de parcours, d&apos;âge,
+            d&apos;expérience, mais ont tous en commun&nbsp;:
             <br />
             <AnimatedList
               items={[
@@ -358,13 +358,13 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
       <Section style="default">
         <h2 className="uk-text-bold uk-text-center uk-margin-medium-bottom uk-margin-remove-top">
           <span className="uk-text-primary">L&apos;accompagnement</span>{' '}
-          LinkedOut à chaque étape
+          Entourage Pro à chaque étape
         </h2>
         <Timeline items={timeline} />
         <p className="uk-text-center uk-text-italic uk-margin-medium-top">
-          Votre conseiller LinkedOut est présent pour vous accompagner à chaque
-          étape et co-construire avec vous les conditions d’un recrutement
-          réussi.
+          Votre conseiller Entourage Pro est présent pour vous accompagner à
+          chaque étape et co-construire avec vous les conditions d’un
+          recrutement réussi.
         </p>
       </Section>
       <Section style="default">
@@ -373,19 +373,19 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
         </h2>
         <NumberGrid numbers={numbers} numbersPerRow={4} />
       </Section>
-      <Reviews reviews={reviews} title="Ce que LinkedOut leur a apporté" />
+      <Reviews reviews={reviews} title="Ce que Entourage Pro leur a apporté" />
       <Section style="default">
         <h2 className="uk-text-center uk-text-bold uk-margin-medium-bottom">
           <span className="uk-text-primary">Ils ont recruté</span> avec
-          LinkedOut
+          Entourage Pro
         </h2>
         <LogoList logos={PARTNERS.HIRED} carousel />
       </Section>
       <HowToCommitDifferently />
       <Section style="primary">
         <h2 className="uk-text-center uk-text-bold uk-margin-medium-bottom">
-          Envie d&apos;en savoir plus sur le recrutement inclusif avec
-          LinkedOut&nbsp;?
+          Envie d&apos;en savoir plus sur le recrutement inclusif avec Entourage
+          Pro&nbsp;?
         </h2>
         <div className="uk-flex uk-flex-center">
           <Button

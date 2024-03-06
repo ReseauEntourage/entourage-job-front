@@ -24,11 +24,7 @@ export const HeaderPublicContentMobile = ({
         sticky
         left={
           <div className="uk-flex uk-flex-middle uk-position-relative">
-            <NavbarLogo
-              href="/"
-              src="/static/img/linkedout_logo_white.png"
-              alt="LinkedOut"
-            />
+            <NavbarLogo href="/" type="secondary" />
           </div>
         }
         right={
