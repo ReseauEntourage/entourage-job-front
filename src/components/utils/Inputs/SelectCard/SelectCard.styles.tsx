@@ -78,12 +78,34 @@ export const StyledSelectCardOption = styled.div`
   text-align: left;
 `;
 
+export const StyledSelectCardContent = styled.div`
+  position: relative;
+`;
+
 export const StyledSelectBlurableSection = styled.div<{
   shouldBlur: boolean;
 }>`
   ${({ shouldBlur }) => shouldBlur && 'filter: blur(2px);'}
 `;
-export const StyledSelectCardDisabledOverlay = styled.div``;
+export const StyledSelectCardDisabledOverlay = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: absolute;
+  background-color: ${COLORS.hoverOrange};
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  top: -10px;
+  left: 0;
+  bottom: -10px;
+  right: 0;
+  white-space: pre-line;
+  > svg {
+    margin-bottom: 16px;
+  }
+`;
 
 export const StyledSelectCardBulletList = styled.ul`
   list-style: none;

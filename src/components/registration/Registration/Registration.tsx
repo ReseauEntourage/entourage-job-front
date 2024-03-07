@@ -9,7 +9,7 @@ import {
   StyledRegistrationFooter,
   StyledRegistrationSpinnerContainer,
   StyledRegistrationSubtitle,
-} from './Registration.styles';
+} from '../Registration.styles';
 
 export function Registration() {
   const {

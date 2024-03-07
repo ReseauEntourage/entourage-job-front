@@ -19,6 +19,5 @@ export interface RadioComponentProps
   extends CommonInputProps<string, HTMLInputElement> {
   options: RadioTypes[];
   filter?: string;
-  errorMessage?: string;
   limit?: number;
 }

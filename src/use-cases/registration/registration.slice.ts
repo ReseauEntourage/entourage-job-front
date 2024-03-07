@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-  StepData,
   FirstStepData,
   REGISTRATION_FIRST_STEP,
   RegistrationErrorMessages,
   RegistrationStep,
   RegistrationStepData,
+  StepData,
 } from 'src/components/registration/Registration/Registration.types';
 import { NormalUserRole } from 'src/constants/users';
 import { RequestState, SliceRootState } from 'src/store/utils';
@@ -33,7 +33,12 @@ export const slice = createSlice({
   initialState,
   reducers: {
     ...createUserAdapter.getReducers<State>((state) => state.createUser, {
-      // TODO on creation success, set user data
+      createUserSucceeded(state) {
+        state.isLoading = false;
+      },
+      createUserFailed(state) {
+        state.isLoading = false;
+      },
     }),
     setRegistrationCurrentStepData(state, action: PayloadAction<StepData>) {
       const { currentStep } = state;
@@ -62,6 +67,12 @@ export const slice = createSlice({
     },
     setRegistrationIsLoading(state, action: PayloadAction<boolean>) {
       state.isLoading = action.payload;
+    },
+    resetRegistrationData(state) {
+      state.currentStep = null;
+      state.selectedRole = null;
+      state.data = {};
+      state.isLoading = true;
     },
   },
 });

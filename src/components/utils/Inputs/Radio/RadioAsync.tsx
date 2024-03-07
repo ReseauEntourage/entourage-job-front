@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
+import { Spinner } from 'src/components/utils/Spinner';
 import { useMount } from 'src/hooks/utils';
 import { Radio } from './Radio';
+import {
+  StyledRadioContainer,
+  StyledRadioSpinnerContainer,
+} from './Radio.styles';
 import { RadioAsyncComponentProps } from './Radio.types';
 
 export function RadioAsync({
@@ -20,17 +25,36 @@ export function RadioAsync({
 }: RadioAsyncComponentProps) {
   const [options, setOptions] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useMount(() => {
     loadOptions((optionsLoaded) => {
       setOptions(
         // @ts-expect-error after enable TS strict mode. Please, try to fix it
         optionsLoaded
       );
+      setIsLoading(false);
     });
   });
 
   if (hidden) {
     return null;
+  }
+
+  if (isLoading) {
+    return (
+      <StyledRadioSpinnerContainer>
+        <Spinner />
+      </StyledRadioSpinnerContainer>
+    );
+  }
+
+  if (options.length === 0) {
+    return (
+      <StyledRadioContainer>
+        <legend>{errorMessage}</legend>
+      </StyledRadioContainer>
+    );
   }
 
   return (
@@ -45,7 +69,6 @@ export function RadioAsync({
       limit={limit}
       hidden={hidden}
       error={error}
-      errorMessage={errorMessage}
       value={value}
       inputRef={inputRef}
     />

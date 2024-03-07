@@ -1,11 +1,12 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import CheckIcon from 'assets/icons/check.svg';
+import WarningIcon from 'assets/icons/warning.svg';
 import { CommonInputProps } from '../Inputs.types';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage';
 import { H6 } from 'src/components/utils/Headings';
 import { StyledInputLabel } from 'src/components/utils/Inputs/Inputs.styles';
 import { Typography } from 'src/components/utils/Typography';
-import { Unarray } from 'src/utils/Types';
+import { COLORS } from 'src/constants/styles';
 import {
   StyledCheckIconContainer,
   StyledSelectBlurableSection,
@@ -14,20 +15,21 @@ import {
   StyledSelectCardBulletIcon,
   StyledSelectCardBulletList,
   StyledSelectCardContainer,
+  StyledSelectCardContent,
   StyledSelectCardDisabledOverlay,
   StyledSelectCardOption,
 } from './SelectCard.styles';
 import { SelectCardType } from './SelectCard.types';
 
-interface SelectCardProps<T extends string[]>
-  extends CommonInputProps<T, HTMLElement> {
+export interface SelectCardProps<T extends string>
+  extends CommonInputProps<T[], HTMLElement> {
   id: string;
   isMulti?: boolean;
-  options: SelectCardType<Unarray<T>>[];
-  optionsToDisable?: { message: string; option: Unarray<T> }[];
+  options: SelectCardType<T>[];
+  optionsToDisable?: { message: React.ReactNode; option: T }[];
 }
 
-export function SelectCard<T extends string[]>({
+export function SelectCard<T extends string>({
   id,
   value: valueProp,
   title,
@@ -43,15 +45,28 @@ export function SelectCard<T extends string[]>({
   inputRef,
   optionsToDisable = [],
 }: SelectCardProps<T>) {
+  useEffect(() => {
+    // Remove disabled options from the default selected values
+    const currentValue = valueProp || [];
+    const selectedDisabledOption = currentValue.find((value) =>
+      optionsToDisable.find((option) => option.option === value)
+    );
+    if (selectedDisabledOption) {
+      onChange(
+        currentValue.filter((option) => option !== selectedDisabledOption)
+      );
+    }
+  }, [onChange, optionsToDisable, valueProp]);
+
   const handleSelect = useCallback(
-    (value: string) => {
+    (value: T) => {
       const currentValue = valueProp || [];
       if (currentValue.includes(value)) {
-        onChange(currentValue.filter((option) => option !== value) as T);
+        onChange(currentValue.filter((option) => option !== value));
       } else if (isMulti) {
-        onChange([...currentValue, value] as T);
+        onChange([...currentValue, value]);
       } else {
-        onChange([value] as T);
+        onChange([value]);
       }
     },
     [valueProp, isMulti, onChange]
@@ -89,30 +104,37 @@ export function SelectCard<T extends string[]>({
               >
                 <StyledSelectCardOption>
                   <H6 title={label} />
-                  <StyledSelectBlurableSection shouldBlur={!!disableOption}>
+                  <StyledSelectCardContent>
+                    <StyledSelectBlurableSection shouldBlur={!!disableOption}>
+                      <StyledSelectCardBulletList>
+                        {bullets.map(({ label: bulletLabel, icon }) => {
+                          return (
+                            <StyledSelectCardBullet>
+                              <StyledSelectCardBulletIcon>
+                                {icon}
+                              </StyledSelectCardBulletIcon>
+                              <Typography size="small" color="lighter">
+                                {bulletLabel}
+                              </Typography>
+                            </StyledSelectCardBullet>
+                          );
+                        })}
+                      </StyledSelectCardBulletList>
+                      <Typography>{description}</Typography>
+                    </StyledSelectBlurableSection>
                     {disableOption && (
                       <StyledSelectCardDisabledOverlay>
-                        <Typography size="small" color="lighter">
-                          {disableOption.message}
-                        </Typography>
+                        <WarningIcon color={COLORS.primaryOrange} />
+                        {typeof disableOption.message === 'string' ? (
+                          <Typography size="small" weight="bold">
+                            {disableOption.message}
+                          </Typography>
+                        ) : (
+                          disableOption.message
+                        )}
                       </StyledSelectCardDisabledOverlay>
                     )}
-                    <StyledSelectCardBulletList>
-                      {bullets.map(({ label: bulletLabel, icon }) => {
-                        return (
-                          <StyledSelectCardBullet>
-                            <StyledSelectCardBulletIcon>
-                              {icon}
-                            </StyledSelectCardBulletIcon>
-                            <Typography size="small" color="lighter">
-                              {bulletLabel}
-                            </Typography>
-                          </StyledSelectCardBullet>
-                        );
-                      })}
-                    </StyledSelectCardBulletList>
-                    <Typography>{description}</Typography>
-                  </StyledSelectBlurableSection>
+                  </StyledSelectCardContent>
                 </StyledSelectCardOption>
                 <StyledCheckIconContainer
                   className={valueProp?.includes(value) ? 'selected' : ''}

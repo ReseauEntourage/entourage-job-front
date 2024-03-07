@@ -4,24 +4,30 @@ import { selectIsLastRegistrationStep } from './registration.selectors';
 import { slice } from './registration.slice';
 
 const {
+  createUserSucceeded,
+  createUserRequested,
   createUserFailed,
   setRegistrationCurrentStepData,
   setRegistrationStep,
   setRegistrationIsLoading,
 } = slice.actions;
 
+export function* createUserRequestedSaga() {
+  // const data = yield* select(selectRegistrationData);
+
+  try {
+    // TODO send info to API
+    yield* put(createUserSucceeded());
+  } catch (err) {
+    yield* put(createUserFailed());
+  }
+}
+
 export function* setRegistrationCurrentStepDataSaga() {
   const isLastRegistrationStep = yield* select(selectIsLastRegistrationStep);
   if (isLastRegistrationStep) {
     yield* put(setRegistrationIsLoading(true));
-    // const data = yield* select(sselectRegistrationData);
-
-    try {
-      // TODO send info to API
-      // yield* put(createUserSucceeded());
-    } catch (err) {
-      yield* put(createUserFailed());
-    }
+    yield* put(createUserRequested());
   }
 }
 
@@ -32,6 +38,7 @@ export function* setRegistrationStepSaga() {
 }
 
 export function* saga() {
+  yield* takeLatest(createUserRequested, createUserRequestedSaga);
   yield* takeLatest(
     setRegistrationCurrentStepData,
     setRegistrationCurrentStepDataSaga

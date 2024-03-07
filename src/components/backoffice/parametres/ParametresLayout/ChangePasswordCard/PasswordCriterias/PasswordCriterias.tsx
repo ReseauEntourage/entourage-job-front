@@ -1,9 +1,13 @@
 import React from 'react';
 import { StyledPasswordCriteriasList } from './PasswordCriterias.styles';
 
-export const PasswordCriterias = () => {
+export const PasswordCriterias = ({
+  removeMargin = false,
+}: {
+  removeMargin?: boolean;
+}) => {
   return (
-    <StyledPasswordCriteriasList>
+    <StyledPasswordCriteriasList removeMargin={removeMargin}>
       <li>Faire au moins 8 caractères de longueur</li>
       <li>Contenir des lettres majuscules et des lettres minuscules</li>
       <li>Contenir des chiffres</li>

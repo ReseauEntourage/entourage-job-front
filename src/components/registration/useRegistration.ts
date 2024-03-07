@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  createUserSelectors,
   registrationActions,
   selectIsFirstRegistrationStep,
   selectIsLastRegistrationStep,
@@ -11,7 +12,13 @@ import {
   selectRegistrationDataFromOtherStepForDefaultValue,
   selectRegistrationNextStep,
 } from 'src/use-cases/registration';
-import { StepData, StepDataKeys } from './Registration/Registration.types';
+import {
+  REGISTRATION_CONFIRMATION_STEP,
+  StepData,
+  StepDataKeys,
+} from './Registration/Registration.types';
+import { ReduxRequestEvents } from '../../constants';
+import { notificationsActions } from '../../use-cases/notifications';
 
 export function useRegistration() {
   const { push, back } = useRouter();
@@ -28,18 +35,22 @@ export function useRegistration() {
   const isLastRegistrationStep = useSelector(selectIsLastRegistrationStep);
   const nextStep = useSelector(selectRegistrationNextStep);
 
+  const createUserStatus = useSelector(
+    createUserSelectors.selectCreateUserStatus
+  );
+
   const onSubmitStepForm = useCallback(
     (fields: StepData) => {
       let fieldsToSave = fields;
 
       if (pageContent?.dependsOn) {
-        // Remove field used only for default value
+        // Remove fields used only for default value
         const fieldsKeys: StepDataKeys[] = Object.keys(
           fields
         ) as StepDataKeys[];
 
         fieldsToSave = fieldsKeys.reduce((acc, curr) => {
-          if (curr !== pageContent.dependsOn) {
+          if (!pageContent.dependsOn?.includes(curr)) {
             return {
               ...acc,
               [curr]: fields[curr],
@@ -62,6 +73,27 @@ export function useRegistration() {
     [dispatch, isLastRegistrationStep, nextStep, pageContent?.dependsOn, push]
   );
 
+  useEffect(() => {
+    if (createUserStatus === ReduxRequestEvents.SUCCEEDED) {
+      push(`/inscription/${REGISTRATION_CONFIRMATION_STEP}`, undefined, {
+        shallow: true,
+      });
+    } else if (createUserStatus === ReduxRequestEvents.FAILED) {
+      dispatch(
+        notificationsActions.addNotification({
+          type: 'danger',
+          message: `Une erreur est survenue`,
+        })
+      );
+    }
+  }, [createUserStatus, dispatch, push]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(registrationActions.createUserReset());
+    };
+  });
+
   const onBack = useCallback(back, [back]);
 
   return {
@@ -70,6 +102,7 @@ export function useRegistration() {
     pageData,
     defaultValueFromOtherStep,
     isFirstRegistrationStep,
+    isLastRegistrationStep,
     onSubmitStepForm,
     onBack,
   };

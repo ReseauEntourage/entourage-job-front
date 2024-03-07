@@ -3,26 +3,26 @@ import { Department, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { FilterConstant } from 'src/constants/utils';
 
 export const formRegistrationCoachInfo: FormSchema<{
-  birthdate: string;
+  birthDate: string;
   department: FilterConstant<Department>;
 }> = {
   id: 'form-registration-coach-info',
   fields: [
     {
-      id: 'birthdateLabel',
-      name: 'birthdateLabel',
+      id: 'birthDateLabel',
+      name: 'birthDateLabel',
       title: 'Quelle est votre date de naissance ?*',
       component: 'heading',
     },
     {
-      id: 'birthdateSubLabel',
-      name: 'birthdateSubLabel',
+      id: 'birthDateSubLabel',
+      name: 'birthDateSubLabel',
       component: 'text',
       title: 'Vous devez avoir plus de 18 ans pour participer au programme',
     },
     {
-      id: 'birthdate',
-      name: 'birthdate',
+      id: 'birthDate',
+      name: 'birthDate',
       component: 'datepicker',
       isRequired: true,
       showLabel: false,

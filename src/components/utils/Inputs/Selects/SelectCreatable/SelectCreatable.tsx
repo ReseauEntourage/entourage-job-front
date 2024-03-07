@@ -17,7 +17,7 @@ import { StyledSelect, StyledSelectContainer } from '../Selects.styles';
 import { IsArrayFilterConstant } from 'src/components/forms/FormSchema';
 import { FilterConstant } from 'src/constants/utils';
 
-interface SelectAsyncProps<T extends FilterConstant | FilterConstant[]>
+interface SelectCreatableProps<T extends FilterConstant | FilterConstant[]>
   extends CommonInputProps<T, HTMLSelectElement> {
   options: IsArrayFilterConstant<T>;
   isMulti?: boolean;
@@ -46,7 +46,7 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
   maxChar,
   maxItems,
   setIsMaxItemsReached,
-}: SelectAsyncProps<T>) {
+}: SelectCreatableProps<T>) {
   const [remainingItems, setRemainingItems] = useState<number>(
     // @ts-expect-error after enable TS strict mode. Please, try to fix it
     maxItems

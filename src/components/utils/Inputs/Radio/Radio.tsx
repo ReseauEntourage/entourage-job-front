@@ -14,7 +14,6 @@ export function Radio({
   filter,
   onChange,
   onBlur,
-  errorMessage,
   hidden = false,
   disabled = false,
   value: valueProp,
@@ -49,14 +48,6 @@ export function Radio({
 
   if (hidden) {
     return null;
-  }
-
-  if (options.length === 0) {
-    return (
-      <StyledRadioContainer>
-        <legend>{errorMessage}</legend>
-      </StyledRadioContainer>
-    );
   }
 
   return (

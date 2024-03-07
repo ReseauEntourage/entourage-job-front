@@ -1,6 +1,12 @@
-import { ExtractFormSchemaValidation } from '../../forms/FormSchema';
+import CVIllu from 'assets/icons/illu-CV.svg';
+import ConversationIllu from 'assets/icons/illu-conversation.svg';
+import TipsIllu from 'assets/icons/illu-poignee-de-main.svg';
+import RSIllu from 'assets/icons/illu-reseaux-sociaux.svg';
+import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
+import { Programs } from 'src/constants/programs';
 import { USER_ROLES } from 'src/constants/users';
 import { FlattenUnionToOptionalIntersection, UnionKeys } from 'src/utils/Types';
+import { formRegistrationAccount } from './forms/formRegistrationAccount';
 import { formRegistrationCandidateExpectations } from './forms/formRegistrationCandidateExpectations';
 import { formRegistrationCandidateInfo } from './forms/formRegistrationCandidateInfo';
 import { formRegistrationCandidateInfoCo } from './forms/formRegistrationCandidateInfoCo';
@@ -11,17 +17,20 @@ import { formRegistrationRole } from './forms/formRegistrationRole';
 
 export type RegistrationStep = `step-${number}`;
 export const REGISTRATION_FIRST_STEP = 'step-1' as const;
+export const REGISTRATION_CONFIRMATION_STEP = 'confirmation' as const;
 
 export type CandidateRegistrationForm =
   | typeof formRegistrationCandidateExpectations
   | typeof formRegistrationCandidateInfo
   | typeof formRegistrationCandidateProgram
-  | typeof formRegistrationCandidateInfoCo;
+  | typeof formRegistrationCandidateInfoCo
+  | typeof formRegistrationAccount;
 /* TODO Add other steps forms here */
 
 export type CoachRegistrationForm =
   | typeof formRegistrationCoachInfo
-  | typeof formRegistrationCoachProgram;
+  | typeof formRegistrationCoachProgram
+  | typeof formRegistrationAccount;
 /* TODO Add other steps forms here */
 
 export type FirstStepRegistrationForm = typeof formRegistrationRole;
@@ -100,6 +109,7 @@ export const RegistrationStepContents: {
       subtitle: "Choisissez le type d'accompagnement qui vous correspond",
       annotation: RegistrationLabels.FUTURE_CHANGE,
       form: formRegistrationCoachProgram,
+      dependsOn: ['department'],
     },
   },
   'step-4': {
@@ -107,6 +117,10 @@ export const RegistrationStepContents: {
       subtitle: "Choisissez le type d'accompagnement qui vous correspond",
       annotation: RegistrationLabels.FUTURE_CHANGE,
       form: formRegistrationCandidateProgram,
+      dependsOn: ['department', 'birthDate'],
+    },
+    [USER_ROLES.COACH]: {
+      form: formRegistrationAccount,
     },
   },
   'step-5': {
@@ -117,10 +131,111 @@ export const RegistrationStepContents: {
       dependsOn: ['department'],
     },
   },
-  /* TODO add other steps contents here */
+  'step-6': {
+    [USER_ROLES.CANDIDATE]: {
+      form: formRegistrationAccount,
+    },
+  },
 };
 
 export const RegistrationErrorMessages = {
   CURRENT_STEP: 'Registration current step is not set',
   SELECTED_ROLE: 'Registration selected role is not set',
+  SELECTED_PROGRAM: 'Registration selected program is not set',
+};
+
+export interface LastStepContent {
+  title: string;
+  subtitle: string;
+  bullets: {
+    icon: React.ReactNode;
+    title: string;
+    text: string;
+  }[];
+}
+
+type RegistrationLastStepContent = {
+  [USER_ROLES.CANDIDATE]: {
+    [Programs.LONG]: LastStepContent;
+    [Programs.SHORT]: LastStepContent;
+  };
+  [USER_ROLES.COACH]: {
+    [Programs.LONG]: LastStepContent;
+    [Programs.SHORT]: LastStepContent;
+  };
+};
+
+const coachLastStepContent: Pick<LastStepContent, 'title' | 'bullets'> = {
+  title: 'Vous venez de finaliser votre inscription : Bravo !',
+  bullets: [
+    {
+      icon: ConversationIllu,
+      title: 'Discutez et échangez avec des candidats et des coachs',
+      text: "Commencez à partager et développer votre réseau solidaire en prenant contact avec d'autres membres de la communauté",
+    },
+    {
+      icon: TipsIllu,
+      title: 'Donnez des coup de pouces à des candidats',
+      text: "Faites profiter de votre expérience des candidat(e)s et soutenez-les dans leurs recherches d'emploi",
+    },
+    {
+      icon: RSIllu,
+      title: 'Participez à des événements professionnels et conviviaux',
+      text: "Rejoignez-nous lors d'événements professionnels pour vivre des moments conviviaux et bâtir votre réseau solidaire",
+    },
+  ],
+};
+
+const candidateLastStepContent: Pick<LastStepContent, 'bullets'> = {
+  bullets: [
+    {
+      icon: CVIllu,
+      title: 'Mettez à jour votre CV',
+      text: "Créez votre CV en quelques clics et bénéficiez d'une meilleure visibilité sur notre site",
+    },
+    {
+      icon: ConversationIllu,
+      title: 'Discutez et échangez avec des candidats et des coachs',
+      text: 'Commencez à construire votre réseau en prenant contact avec les autres membres de la communauté',
+    },
+    {
+      icon: TipsIllu,
+      title: 'Demander des coups de pouces à des coachs',
+      text: 'Sollicitez du soutien auprès de coachs tout au long de votre recherche',
+    },
+    {
+      icon: RSIllu,
+      title: 'Participez à des événements professionnels et conviviaux',
+      text: "Rejoignez-nous lors d'événements professionnels pour vivre des moments conviviaux et bâtir votre réseau",
+    },
+  ],
+};
+
+export const LastStepContent: RegistrationLastStepContent = {
+  [USER_ROLES.CANDIDATE]: {
+    [Programs.LONG]: {
+      ...candidateLastStepContent,
+      title: 'On se voit le !',
+      subtitle:
+        'On a hâte de vous rencontrer et encore plus hâte de commencer votre accompagnement !',
+    },
+    [Programs.SHORT]: {
+      ...candidateLastStepContent,
+      title: 'Vous venez de finaliser votre inscription : Bravo !',
+      subtitle:
+        "Mais ce n'est que le début de l'aventure : bienvenue sur votre réseau pro solidaire !",
+    },
+  },
+  [USER_ROLES.COACH]: {
+    [Programs.LONG]: {
+      ...coachLastStepContent,
+      subtitle:
+        'On a hâte de vous rencontrer et encore plus hâte que vous deveniez coach !',
+    },
+    [Programs.SHORT]: {
+      ...coachLastStepContent,
+      subtitle:
+        'Vous pouvez désormais demander à votre entourage de vous appeler "coach"',
+    },
+  },
 };

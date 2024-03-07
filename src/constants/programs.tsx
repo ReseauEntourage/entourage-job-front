@@ -5,7 +5,12 @@ import ProgramTimeIcon from 'assets/icons/program-time.svg';
 import { NormalUserRole, USER_ROLES } from './users';
 import { FilterConstant } from './utils';
 
-export type Program = 'short' | 'long';
+export const Programs = {
+  SHORT: 'short',
+  LONG: 'long',
+} as const;
+
+export type Program = (typeof Programs)[keyof typeof Programs];
 
 const calendarIconSizeProps = { width: 20, height: 22 };
 const timeIconSizeProps = { width: 17, height: 17 };
@@ -60,14 +65,14 @@ export const ProgramOptions: {
 } = {
   [USER_ROLES.CANDIDATE]: [
     {
-      value: 'long',
+      value: Programs.LONG,
       label: 'Programme 360',
       bullets: ProgramBullet.long,
       description:
         "Je souhaite bénéficier d'un accompagnement personnalisé avec un coach dédié (définition de mon projet, création de mon CV, recherches, préparation aux entretiens...)",
     },
     {
-      value: 'short',
+      value: Programs.SHORT,
       label: 'Programme Coup de pouce',
       bullets: ProgramBullet.short,
       description:
@@ -76,14 +81,14 @@ export const ProgramOptions: {
   ],
   [USER_ROLES.COACH]: [
     {
-      value: 'long',
+      value: Programs.LONG,
       label: 'Programme 360',
       bullets: ProgramBullet.long,
       description:
         "Je souhaite me consacrer à l'accompagnement personnalisé d'un(e) candidat(e) : définition de son projet, création de son CV, aide dans les recherches, préparation aux entretiens...",
     },
     {
-      value: 'short',
+      value: Programs.SHORT,
       label: 'Programme Coup de pouce',
       bullets: ProgramBullet.short,
       description:
