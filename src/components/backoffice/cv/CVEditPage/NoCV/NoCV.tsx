@@ -30,8 +30,6 @@ export const NoCV = ({ candidateId, user, setCV }: NoCVProps) => {
     }
   }, [candidateId, user]);
 
-  useEffect(() => {}, [candidate]);
-  if (!candidate) return null;
   return (
     <Grid column middle>
       {isRoleIncluded(COACH_USER_ROLES, user.role) &&
