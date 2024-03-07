@@ -21,6 +21,7 @@ import {
 } from 'src/constants/departements';
 import { COLORS } from 'src/constants/styles';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
+import { StyledBlueIconContainer } from '../CVEdit/CVEdit.styles';
 
 interface InfoProfileCardProps {
   contracts: {
