@@ -6,10 +6,10 @@ import {
   CandidatListPartial,
   LandingPagePartial,
   // LinkedInPartial,
+  NumberPartial,
   HowItWorks,
-} from 'src/components/partials/';
+} from 'src/components/partials/pages/HomePage';
 
-import { NumberPartial } from 'src/components/partials/pages/HomePage/NumberPartial';
 
 const Index = () => {
   return (

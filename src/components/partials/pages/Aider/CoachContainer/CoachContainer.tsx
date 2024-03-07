@@ -8,7 +8,7 @@ import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledCoachContainer } from './CoachContainer.styles';
-import { CoachTestimony } from './CoachTestimony';
+import { Reviews } from 'src/components/partials/Reviews';
 
 const uuidValue = uuid();
 
@@ -35,18 +35,61 @@ const pictoContent = [
   },
 ];
 
+
+const reviewContent = [
+  {
+    review: (
+      <>
+        “ Entourage Pro m’apporte une ouverture d’esprit encore plus grande,
+          {' '}
+          l’envie d’aider les autres se concrétise vraiment avec ce projet !
+        {' '}
+        ”
+      </>
+    ),
+    author: 'Chloé',
+    industry: 'coach de Soraya',
+    image: '',
+  },
+  {
+    review: (
+      <>
+        “ Je me suis retrouvé confronté à un tout autre univers,
+        ça m’a fait évoluer... Zabiullah m’appelle « mon ami »
+        maintenant ! ”
+      </>
+    ),
+    author: 'Damien',
+    industry: 'coach de Zabiullah',
+    image: '',
+  },
+  {
+    review: (
+      <>
+        “ C’est hyper enrichissant humainement.{' '}
+        Chaque minute que tu passes est utile au candidat, à sa
+        progression,à la manière dont il voit les choses. ”
+      </>
+    ),
+    author: 'Marie',
+    industry: 'coach de Léo',
+    image: '',
+  },
+];
+
+
 export const CoachContainer = () => {
   return (
     <StyledCoachContainer>
       <BackgroundImage
         img="/static/img/aider-accompagner-coach.jpg"
-        alt="Un coach et un candidat LinkedOut qui rient ensemble"
+        alt="Un coach et un candidat Entourage Pro qui rient ensemble"
         imgMobile="/static/img/aider-accompagner-coach-mobile.jpg"
         mobileHeight={1200}
       >
         <Container>
           <TitleSection
-            title="LinkedOut accompagne les coachs à chaque étape"
+            title="Entourage Pro accompagne les coachs à chaque étape"
             titleColor="white"
             svgColor="white"
             svgStroke={COLORS.gray}
@@ -90,13 +133,12 @@ export const CoachContainer = () => {
             }}
             style="primary"
           >
-            Devenir Coach LinkedOut
+            Devenir Coach Entourage Pro
             <ChevronRightIcon />
           </Button>
         </div>
       </Container>
-
-      <CoachTestimony />
+      <Reviews title='Les témoignages des coachs' reviews={reviewContent}/>
     </StyledCoachContainer>
   );
 };

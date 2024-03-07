@@ -31,7 +31,7 @@ export const NumberPartial = () => {
       <div className="uk-margin-medium-top">
         <LiteYouTubeEmbed
           id="1cfmgC2IqWs"
-          title="Présentation LinkedOut"
+          title="Présentation Entourage Pro"
           aspectWidth={1280}
           aspectHeight={720}
         />

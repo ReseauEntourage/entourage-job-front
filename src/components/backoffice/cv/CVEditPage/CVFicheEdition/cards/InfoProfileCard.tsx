@@ -5,7 +5,6 @@ import DocumentIcon from 'assets/icons/document.svg';
 import EmailIcon from 'assets/icons/email.svg';
 import HomeIcon from 'assets/icons/home.svg';
 import LocationIcon from 'assets/icons/location.svg';
-import PencilIcon from 'assets/icons/pencil.svg';
 import PhoneIcon from 'assets/icons/phone.svg';
 import UserIcon from 'assets/icons/user.svg';
 import { CV } from 'src/api/types';
@@ -13,7 +12,7 @@ import { formEditUsefulInformation } from 'src/components/forms/schemas/formEdit
 
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { Grid, ButtonIcon } from 'src/components/utils';
+import { Grid, Card } from 'src/components/utils';
 import { Contract, CONTRACTS } from 'src/constants';
 import {
   AdminZone,
@@ -21,6 +20,7 @@ import {
   DEPARTMENTS_FILTERS,
 } from 'src/constants/departements';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
+import { StyledBlueIconContainer } from '../CVEdit/CVEdit.styles';
 
 interface InfoProfileCardProps {
   contracts: {
@@ -64,89 +64,94 @@ export const InfoProfileCard = ({
     locations && locations.length > 0 ? sortByOrder(locations) : [];
 
   return (
-    <div className="uk-card uk-card-primary uk-card-body">
-      <Grid between gap="small" eachWidths={['expand', 'auto']}>
-        <h3 className="uk-card-title">Infos pratiques</h3>
-        <ButtonIcon
-          icon={<PencilIcon />}
-          onClick={() => {
-            openModal(
-              <ModalEdit
-                title="Édition - Informations utiles"
-                formSchema={formEditUsefulInformation}
-                defaultValues={{
-                  userZone,
-                  availability,
-                  transport,
-                  email,
-                  phone,
-                  address,
-                  contracts: contracts.map(({ name }) => {
-                    return findConstantFromValue(name, CONTRACTS);
-                  }),
-                  languages: languages.map(({ name }) => {
-                    return { label: name, value: name };
-                  }),
-                  locations: sortByOrder(locations).map(({ name }) => {
-                    return findConstantFromValue(name, DEPARTMENTS_FILTERS);
-                  }),
-                }}
-                onSubmit={async ({ userZone: zone, ...fields }, closeModal) => {
-                  closeModal();
-                  const {
-                    email: updatedEmail,
-                    phone: updatedPhone,
-                    address: updatedAddress,
-                    ...updatedCV
-                  } = fields;
+    // <div className="uk-card uk-card-primary uk-card-body">
+    <Card
+      title="Infos pratiques"
+      editCallback={() => {
+        openModal(
+          <ModalEdit
+            title="Édition - Informations utiles"
+            formSchema={formEditUsefulInformation}
+            defaultValues={{
+              userZone,
+              availability,
+              transport,
+              email,
+              phone,
+              address,
+              contracts: contracts.map(({ name }) => {
+                return findConstantFromValue(name, CONTRACTS);
+              }),
+              languages: languages.map(({ name }) => {
+                return { label: name, value: name };
+              }),
+              locations: sortByOrder(locations).map(({ name }) => {
+                return findConstantFromValue(name, DEPARTMENTS_FILTERS);
+              }),
+            }}
+            onSubmit={async ({ userZone: zone, ...fields }, closeModal) => {
+              closeModal();
+              const {
+                email: updatedEmail,
+                phone: updatedPhone,
+                address: updatedAddress,
+                ...updatedCV
+              } = fields;
 
-                  onChange(
-                    {
-                      ...updatedCV,
-                      contracts: updatedCV.contracts.map(({ value }) => {
-                        return {
-                          name: value,
-                        };
-                      }),
-                      languages: updatedCV.languages.map(({ value }) => {
-                        return {
-                          name: value,
-                        };
-                      }),
-                      locations: updatedCV.locations.map(({ value }, index) => {
-                        return {
-                          name: value,
-                          order: index,
-                        };
-                      }),
-                    },
-                    {
-                      email: updatedEmail,
-                      phone: updatedPhone,
-                      address: updatedAddress,
-                    }
-                  );
-                }}
-              />
-            );
-          }}
-        />
-      </Grid>
+              onChange(
+                {
+                  ...updatedCV,
+                  contracts: updatedCV.contracts.map(({ value }) => {
+                    return {
+                      name: value,
+                    };
+                  }),
+                  languages: updatedCV.languages.map(({ value }) => {
+                    return {
+                      name: value,
+                    };
+                  }),
+                  locations: updatedCV.locations.map(({ value }, index) => {
+                    return {
+                      name: value,
+                      order: index,
+                    };
+                  }),
+                },
+                {
+                  email: updatedEmail,
+                  phone: updatedPhone,
+                  address: updatedAddress,
+                }
+              );
+            }}
+          />
+        );
+      }}
+    >
       <Grid column gap="small">
         <Grid row gap="small" middle>
-          <EmailIcon width={20} />
+          <StyledBlueIconContainer>
+            <EmailIcon width={20} />
+          </StyledBlueIconContainer>
           {email || 'Adresse mail non renseigné'}
         </Grid>
         <Grid row gap="small" middle>
-          <PhoneIcon width={20} />
+          <StyledBlueIconContainer>
+            <PhoneIcon width={20} />
+          </StyledBlueIconContainer>
           {phone || 'Numéro de téléphone non renseigné'}
         </Grid>
         <Grid row gap="small" middle>
-          <HomeIcon width={20} />
+          <StyledBlueIconContainer>
+            <HomeIcon width={20} />
+          </StyledBlueIconContainer>
           {address || 'Adresse postale non renseignée'}
         </Grid>
         <Grid row gap="small" middle>
-          <DocumentIcon width={20} />
+          <StyledBlueIconContainer>
+            <DocumentIcon width={20} />
+          </StyledBlueIconContainer>
           {contracts && contracts.length > 0
             ? contracts
                 .map(({ name }) => {
@@ -156,7 +161,9 @@ export const InfoProfileCard = ({
             : 'Type de contrat recherché non renseigné'}
         </Grid>
         <Grid row gap="small" middle>
-          <LocationIcon width={20} />
+          <StyledBlueIconContainer>
+            <LocationIcon width={20} />
+          </StyledBlueIconContainer>
           {sortedLocations && sortedLocations.length > 0
             ? sortedLocations
                 .map(({ name }) => {
@@ -166,13 +173,17 @@ export const InfoProfileCard = ({
             : 'Localisations non renseignées'}
         </Grid>
         <Grid row gap="small" middle>
-          <CalendarIcon width={20} />
+          <StyledBlueIconContainer>
+            <CalendarIcon width={20} />
+          </StyledBlueIconContainer>
           {availability && availability !== ''
             ? availability
             : 'Disponibilités non renseignée'}
         </Grid>
         <Grid row gap="small" middle>
-          <UserIcon width={20} />
+          <StyledBlueIconContainer>
+            <UserIcon width={20} />
+          </StyledBlueIconContainer>
           {languages && languages.length > 0
             ? languages
                 .map(({ name }) => {
@@ -182,12 +193,14 @@ export const InfoProfileCard = ({
             : 'Langues apprises non renseignées'}
         </Grid>
         <Grid row gap="small" middle>
-          <CarIcon width={20} />
+          <StyledBlueIconContainer>
+            <CarIcon width={20} />
+          </StyledBlueIconContainer>
           {transport && transport !== ''
             ? transport
             : 'Moyen de transport non renseigné'}
         </Grid>
       </Grid>
-    </div>
+      </Card>
   );
 };

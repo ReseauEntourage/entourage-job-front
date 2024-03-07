@@ -19,7 +19,7 @@ const infoContent = [
     alt: 'recherche emploi',
     title: 'Préparation à la recherche d’emploi',
     ul: [
-      'Réalisation du CV façon LinkedOut',
+      'Réalisation du CV façon Entourage Pro',
       'Relecture du parcours du candidat et formalisation des envies professionnelles',
     ],
   },
@@ -29,7 +29,7 @@ const infoContent = [
     title: "Création d'opportunités professionnelles",
     ul: [
       'Activer son réseau avec le candidat ',
-      'Rechercher et suivre des opportunités d’emploi (via LinkedOut et en dehors)',
+      'Rechercher et suivre des opportunités d’emploi (via Entourage Pro et en dehors)',
       "Préparation aux entretiens d'embauche et soutien des candidatures",
     ],
   },
@@ -65,7 +65,7 @@ export const InfoContainer = () => {
         <div className="text-content">
           <p>
             Accompagnez une personne précaire vers l&apos;emploi en devenant
-            Coach LinkedOut. <br />
+            Coach Entourage Pro. <br />
             <span className="orange">
               Le coach soutient et accompagne un candidat sur une durée de 6 à 9
               mois, à raison de 2h par semaine, en présentiel.
@@ -84,7 +84,7 @@ export const InfoContainer = () => {
               <Img
                 cover
                 src="/static/img/aider-informations-mission.jpg"
-                alt="Un coach et un candidat LinkedOut"
+                alt="Un coach et un candidat Entourage Pro"
               />
             </div>
           </div>

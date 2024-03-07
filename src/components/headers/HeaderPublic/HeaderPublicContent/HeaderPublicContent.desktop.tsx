@@ -42,14 +42,11 @@ export const HeaderPublicContentDesktop = ({
     }),
     <div>
       <Button
-        href={{
-          pathname: '/candidats',
-          query: { employed: false },
-        }}
-        style="primary"
+        href="/login"
+        style="custom-secondary-inverted"
+        size="small"
       >
-        Découvrir les CV
-        <ChevronRightIcon />
+        Inscription / Connexion
       </Button>
     </div>,
   ];
@@ -61,21 +58,6 @@ export const HeaderPublicContentDesktop = ({
         left={
           <div className="uk-flex uk-flex-middle">
             <NavbarLogo href="/" type="secondary" />
-            <div className="uk-margin-small-left uk-flex uk-flex-center uk-light">
-              <Button
-                href={process.env.DONATION_LINK}
-                isExternal
-                newTab
-                onClick={() => {
-                  gaEvent(GA_TAGS.HEADER_DON_CLIC);
-                  fbEvent(FB_TAGS.DONATION);
-                }}
-                style="default"
-              >
-                Faire un don
-                <ChevronRightIcon />
-              </Button>
-            </div>
           </div>
         }
         right={<Nav items={rightItems} color="white" />}

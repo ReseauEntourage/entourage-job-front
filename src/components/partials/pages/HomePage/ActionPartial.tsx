@@ -36,7 +36,7 @@ const datas = [
   },
 ];
 
-export const ActionPartial = ({ style }: { style?: 'default' | 'muted' }) => {
+export const ActionPartial = ({ style = 'default' }: { style?: 'default' | 'muted' }) => {
   return (
     <Section style={style} id="actions">
       <Grid gap="large" column center>
@@ -64,8 +64,4 @@ export const ActionPartial = ({ style }: { style?: 'default' | 'muted' }) => {
       </Grid>
     </Section>
   );
-};
-
-ActionPartial.defaultProps = {
-  style: 'default',
 };

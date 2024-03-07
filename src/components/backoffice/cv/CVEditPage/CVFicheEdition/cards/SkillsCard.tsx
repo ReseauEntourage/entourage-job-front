@@ -1,9 +1,8 @@
 import React from 'react';
-import PencilIcon from 'assets/icons/pencil.svg';
 import { formEditSkills } from 'src/components/forms/schemas/formEditSkills';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { Grid, ButtonIcon } from 'src/components/utils';
+import { Card } from 'src/components/utils';
 
 interface Skill {
   name: string;
@@ -15,42 +14,38 @@ interface SkillsCardProps {
 }
 export const SkillsCard = ({ list = [], onChange }: SkillsCardProps) => {
   return (
-    <div className="uk-card uk-card-default uk-card-body">
-      <Grid gap="small" between eachWidths={['expand', 'auto']}>
-        <h3 className="uk-card-title">
-          Mes <span className="uk-text-primary">atouts</span>
-        </h3>
-        <ButtonIcon
-          icon={<PencilIcon />}
-          dataTestId="test-skills-edit-icon"
-          onClick={() => {
-            openModal(
-              <ModalEdit
-                title="Édition - Mes atouts"
-                formSchema={formEditSkills}
-                defaultValues={{
-                  skills: list.map(({ name }) => ({
-                    label: name,
-                    value: name,
-                  })),
-                }}
-                onSubmit={async ({ skills }, closeModal) => {
-                  closeModal();
-                  const fieldsTransform = {
-                    skills: skills.map(({ value }, index) => {
-                      return {
-                        name: value,
-                        order: index,
-                      };
-                    }),
-                  };
-                  await onChange(fieldsTransform);
-                }}
-              />
-            );
-          }}
-        />
-      </Grid>
+    <Card
+      title="Mes atouts"
+      editCallback={
+        onChange
+          ? () =>
+              openModal(
+                <ModalEdit
+                  title="Édition - Mes atouts"
+                  formSchema={formEditSkills}
+                  defaultValues={{
+                    skills: list.map(({ name }) => ({
+                      label: name,
+                      value: name,
+                    })),
+                  }}
+                  onSubmit={async ({ skills }, closeModal) => {
+                    closeModal();
+                    const fieldsTransform = {
+                      skills: skills.map(({ value }, index) => {
+                        return {
+                          name: value,
+                          order: index,
+                        };
+                      }),
+                    };
+                    await onChange(fieldsTransform);
+                  }}
+                />
+              )
+          : undefined
+      }
+    >
       <ul className="uk-list">
         {list.length !== 0 ? (
           list.map(({ name }, i) => {
@@ -68,6 +63,6 @@ export const SkillsCard = ({ list = [], onChange }: SkillsCardProps) => {
           <li>Aucun atout renseigné</li>
         )}
       </ul>
-    </div>
+    </Card>
   );
 };

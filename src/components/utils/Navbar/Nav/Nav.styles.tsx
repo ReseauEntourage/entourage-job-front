@@ -11,7 +11,7 @@ export const StyledNav = styled.ul`
 export const StyledNavItem = styled.li`
   display: flex;
 
-  &:not(:first-child)::before {
+  /* &:not(:first-child)::before {
     content: '|';
     align-items: center;
     margin: 0 20px;
@@ -21,7 +21,7 @@ export const StyledNavItem = styled.li`
     }};
     opacity: 0.6;
     display: flex;
-  }
+  } */
 
   & > * {
     display: flex;

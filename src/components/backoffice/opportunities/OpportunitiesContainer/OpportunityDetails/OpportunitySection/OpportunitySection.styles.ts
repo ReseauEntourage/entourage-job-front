@@ -12,7 +12,7 @@ export const StyledContainer = styled.div`
 export const StyledOpportunitySectionTitleContainer = styled.div`
   flex: 1;
   flex-direction: column;
-  border-bottom: 1px ${COLORS.primaryBlue} solid;
+  border-bottom: 1px ${COLORS.gray} solid;
 `;
 
 export const StyledOpportunitySectionContentContainer = styled.div`

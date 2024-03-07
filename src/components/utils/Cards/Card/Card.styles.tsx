@@ -52,6 +52,10 @@ export const StyledEditIconContainer = styled.div`
   height: 28px;
   border-radius: 50%;
   border: ${COLORS.primaryBlue} 1px solid;
+  transition: 0.3s ease-in-out;
+  :hover {
+    background-color: ${COLORS.hoverBlue};
+  }
 `;
 
 export const StyledSpinnerContainer = styled.div`

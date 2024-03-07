@@ -9,4 +9,6 @@ export const StyledPublicItem = styled.a`
   color: ${({ color }) => {
     return COLORS[color] || COLORS.white;
   }};
+  font-size: 12px;
+  margin: 0 10px;
 `;

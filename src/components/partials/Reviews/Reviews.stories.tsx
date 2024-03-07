@@ -43,7 +43,7 @@ const reviews = [
 const Template = () => {
   return (
     <Reviews
-      title="Plus de 60 entreprises partenaires nous font confiance à LinkedOut"
+      title="Plus de 60 entreprises partenaires nous font confiance à Entourage Pro"
       reviews={reviews}
     />
   );

@@ -1,12 +1,11 @@
 import React from 'react';
 import { DefaultValues } from 'react-hook-form';
-import PencilIcon from 'assets/icons/pencil.svg';
 import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { formEditCareerPath } from 'src/components/forms/schemas/formEditCareerPath';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { ButtonIcon, Grid } from 'src/components/utils';
+import { Card } from 'src/components/utils';
 import {
   AMBITIONS_PREFIXES,
   AmbitionsPrefixesType,
@@ -65,75 +64,69 @@ export const CVEditCareerPath = ({
   };
 
   return (
-    <div className="uk-card uk-card-default uk-card-body">
-      <Grid gap="small" between eachWidths={['expand', 'auto']}>
-        <h3 className="uk-card-title">
-          Mon <span className="uk-text-primary">projet professionnel</span>
-        </h3>
-        <ButtonIcon
-          icon={<PencilIcon />}
-          onClick={() => {
-            openModal(
-              <ModalEdit
-                title="Édition - Projet professionnel"
-                description="J'aimerais travailler ..."
-                formSchema={formEditCareerPath}
-                defaultValues={defaultValues}
-                onSubmit={async (
-                  { ambition0, businessLine0, ambition1, businessLine1 },
-                  closeModal
-                ) => {
-                  closeModal();
-                  let newAmbitions = [] as {
-                    prefix: AmbitionsPrefixesType;
-                    name: string;
-                    order: number;
-                  }[];
-                  if (ambition0) {
-                    newAmbitions = [
-                      ...newAmbitions,
-                      {
-                        prefix: AMBITIONS_PREFIXES[1].label,
-                        name: ambition0,
-                        order: 0,
-                      },
-                    ];
-                  }
-                  if (ambition1) {
-                    newAmbitions = [
-                      ...newAmbitions,
-                      {
-                        prefix: AMBITIONS_PREFIXES[1].label,
-                        name: ambition1,
-                        order: 1,
-                      },
-                    ];
-                  }
-                  let newBusinessLines = [] as {
-                    name: BusinessLineValue;
-                    order: number;
-                  }[];
-                  if (businessLine0) {
-                    newBusinessLines = [
-                      { name: businessLine0.value, order: 0 },
-                    ];
-                  }
-                  if (businessLine1) {
-                    newBusinessLines = [
-                      ...newBusinessLines,
-                      { name: businessLine1.value, order: 1 },
-                    ];
-                  }
-                  onChange({
-                    businessLines: newBusinessLines,
-                    ambitions: newAmbitions,
-                  });
-                }}
-              />
-            );
-          }}
-        />
-      </Grid>
+    <Card
+      title="Mon projet professionnel"
+      editCallback={() => {
+        openModal(
+          <ModalEdit
+            title="Édition - Projet professionnel"
+            description="J'aimerais travailler ..."
+            formSchema={formEditCareerPath}
+            defaultValues={defaultValues}
+            onSubmit={async (
+              { ambition0, businessLine0, ambition1, businessLine1 },
+              closeModal
+            ) => {
+              closeModal();
+              let newAmbitions = [] as {
+                prefix: AmbitionsPrefixesType;
+                name: string;
+                order: number;
+              }[];
+              if (ambition0) {
+                newAmbitions = [
+                  ...newAmbitions,
+                  {
+                    prefix: AMBITIONS_PREFIXES[1].label,
+                    name: ambition0,
+                    order: 0,
+                  },
+                ];
+              }
+              if (ambition1) {
+                newAmbitions = [
+                  ...newAmbitions,
+                  {
+                    prefix: AMBITIONS_PREFIXES[1].label,
+                    name: ambition1,
+                    order: 1,
+                  },
+                ];
+              }
+              let newBusinessLines = [] as {
+                name: BusinessLineValue;
+                order: number;
+              }[];
+              if (businessLine0) {
+                newBusinessLines = [
+                  { name: businessLine0.value, order: 0 },
+                ];
+              }
+              if (businessLine1) {
+                newBusinessLines = [
+                  ...newBusinessLines,
+                  { name: businessLine1.value, order: 1 },
+                ];
+              }
+              onChange({
+                businessLines: newBusinessLines,
+                ambitions: newAmbitions,
+              });
+            }}
+          />
+        );
+      }}
+    >
       {!sortedAmbitions && !sortedBusinessLines ? (
         <p className="uk-text-italic">
           Aucun projet professionnel n&apos;a pas encore été créé.
@@ -146,6 +139,6 @@ export const CVEditCareerPath = ({
           />
         </p>
       )}
-    </div>
+    </Card>
   );
 };

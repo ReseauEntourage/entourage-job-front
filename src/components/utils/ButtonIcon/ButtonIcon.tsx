@@ -2,7 +2,7 @@ import React from 'react';
 import { StyledButtonIcon } from './ButtonIcon.styles';
 
 interface ButtonIconProps {
-  icon: JSX.Element;
+  icon: React.ReactNode;
   tooltip?: string;
   onClick?: () => void;
   href?: string;
