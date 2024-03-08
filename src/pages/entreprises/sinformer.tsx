@@ -48,7 +48,7 @@ const Sinformer = () => {
         </h2>
         <p className="uk-text-center">
           Chacun devrait pouvoir avoir sa place dans l’entreprise et dans la
-          société, c’est la conviction d'Entourage Pro.
+          société, c&lsquo;est la conviction d&lsquo;Entourage Pro.
         </p>
         <p className="uk-text-center">
           Il est temps de passer d’une logique d’insertion à une logique

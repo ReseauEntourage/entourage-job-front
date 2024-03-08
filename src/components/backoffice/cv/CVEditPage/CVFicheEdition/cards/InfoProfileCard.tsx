@@ -7,6 +7,7 @@ import HomeIcon from 'assets/icons/home.svg';
 import LocationIcon from 'assets/icons/location.svg';
 import PhoneIcon from 'assets/icons/phone.svg';
 import UserIcon from 'assets/icons/user.svg';
+import { StyledBlueIconContainer } from '../CVEdit/CVEdit.styles';
 import { CV } from 'src/api/types';
 import { formEditUsefulInformation } from 'src/components/forms/schemas/formEditUsefulInformation';
 
@@ -20,7 +21,6 @@ import {
   DEPARTMENTS_FILTERS,
 } from 'src/constants/departements';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
-import { StyledBlueIconContainer } from '../CVEdit/CVEdit.styles';
 
 interface InfoProfileCardProps {
   contracts: {
@@ -201,6 +201,6 @@ export const InfoProfileCard = ({
             : 'Moyen de transport non renseigné'}
         </Grid>
       </Grid>
-      </Card>
+    </Card>
   );
 };

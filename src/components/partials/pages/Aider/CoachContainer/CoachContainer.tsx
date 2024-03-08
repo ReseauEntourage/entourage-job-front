@@ -1,6 +1,7 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import ChevronRightIcon from 'assets/icons/chevron-right.svg';
+import { Reviews } from 'src/components/partials/Reviews';
 import { TitleSection } from 'src/components/partials/pages/Aider/TitleSection';
 import { BackgroundImage, Button, Container, Img } from 'src/components/utils';
 import { COLORS } from 'src/constants/styles';
@@ -8,7 +9,6 @@ import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledCoachContainer } from './CoachContainer.styles';
-import { Reviews } from 'src/components/partials/Reviews';
 
 const uuidValue = uuid();
 
@@ -35,16 +35,12 @@ const pictoContent = [
   },
 ];
 
-
 const reviewContent = [
   {
     review: (
       <>
-        “ Entourage Pro m’apporte une ouverture d’esprit encore plus grande,
-          {' '}
-          l’envie d’aider les autres se concrétise vraiment avec ce projet !
-        {' '}
-        ”
+        “ Entourage Pro m’apporte une ouverture d’esprit encore plus grande,{' '}
+        l’envie d’aider les autres se concrétise vraiment avec ce projet ! ”
       </>
     ),
     author: 'Chloé',
@@ -54,9 +50,8 @@ const reviewContent = [
   {
     review: (
       <>
-        “ Je me suis retrouvé confronté à un tout autre univers,
-        ça m’a fait évoluer... Zabiullah m’appelle « mon ami »
-        maintenant ! ”
+        “ Je me suis retrouvé confronté à un tout autre univers, ça m’a fait
+        évoluer... Zabiullah m’appelle « mon ami » maintenant ! ”
       </>
     ),
     author: 'Damien',
@@ -66,9 +61,9 @@ const reviewContent = [
   {
     review: (
       <>
-        “ C’est hyper enrichissant humainement.{' '}
-        Chaque minute que tu passes est utile au candidat, à sa
-        progression,à la manière dont il voit les choses. ”
+        “ C’est hyper enrichissant humainement. Chaque minute que tu passes est
+        utile au candidat, à sa progression,à la manière dont il voit les
+        choses. ”
       </>
     ),
     author: 'Marie',
@@ -76,7 +71,6 @@ const reviewContent = [
     image: '',
   },
 ];
-
 
 export const CoachContainer = () => {
   return (
@@ -138,7 +132,7 @@ export const CoachContainer = () => {
           </Button>
         </div>
       </Container>
-      <Reviews title='Les témoignages des coachs' reviews={reviewContent}/>
+      <Reviews title="Les témoignages des coachs" reviews={reviewContent} />
     </StyledCoachContainer>
   );
 };

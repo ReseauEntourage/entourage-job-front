@@ -10,7 +10,6 @@ import {
   HowItWorks,
 } from 'src/components/partials/pages/HomePage';
 
-
 const Index = () => {
   return (
     <Layout>

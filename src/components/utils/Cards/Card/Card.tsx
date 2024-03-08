@@ -65,7 +65,7 @@ export const Card = ({
             {!isLoading && editCallback && isDesktop && (
               <StyledEditIconContainer>
                 <ButtonIcon
-                  icon={editIcon ? editIcon : <EditIcon />}
+                  icon={editIcon || <EditIcon />}
                   onClick={editCallback}
                   dataTestId={`${dataTestId}-button-edit`}
                 />

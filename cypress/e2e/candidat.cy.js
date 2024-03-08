@@ -238,7 +238,7 @@ describe('Candidat', () => {
       cy.url().should('include', user.id);
     });
     // catchphrase
-    cy.get(`[data-testid="test-catchphrase-edit-icon"]`)
+    cy.get(`[data-testid="cv-catchphrase-button-edit"]`)
       .scrollIntoView()
       .click();
     const catchPhrase = 'hello my name is Mike';
@@ -250,14 +250,14 @@ describe('Candidat', () => {
     );
 
     // presentation
-    cy.get(`[data-testid="test-story-edit-icon"]`).scrollIntoView().click();
+    cy.get(`[data-testid="cv-story-button-edit"]`).scrollIntoView().click();
     const story = 'Here I present';
     cy.get('#form-story').clear().type(story);
     cy.get(`[data-testid="form-confirm-form-story"]`).click();
     cy.get(`[data-testid="cv-edit-story-content"]`).should('contain', story);
 
     // atouts/skills
-    cy.get(`[data-testid="test-skills-edit-icon"]`).scrollIntoView().click();
+    cy.get(`[data-testid="cv-skills-button-edit"]`).scrollIntoView().click();
     const skill1 = 'skill1';
     const skill2 = 'skill2';
     cy.get('#form-skills')
@@ -278,7 +278,7 @@ describe('Candidat', () => {
     cy.get(`[data-testid="cv-edit-skill2-content"]`).should('contain', skill2);
 
     // formations
-    cy.get(`[data-testid="button-cv-add-formations"]`).scrollIntoView().click();
+    cy.get(`[data-testid="cv-formations-button-edit"]`).scrollIntoView().click();
     cy.get(`[data-testid="form-formation-title"]`)
       .scrollIntoView()
       .type('formation title');
@@ -303,7 +303,7 @@ describe('Candidat', () => {
       .click();
 
     // experience
-    cy.get(`[data-testid="button-cv-add-experiences"]`)
+    cy.get(`[data-testid="cv-experiences-button-edit"]`)
       .scrollIntoView()
       .click();
     cy.get(`[data-testid="form-experience-title"]`)

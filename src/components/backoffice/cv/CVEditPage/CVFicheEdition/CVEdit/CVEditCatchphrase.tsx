@@ -14,6 +14,7 @@ export const CVEditCatchphrase = ({
   return (
     <Card
       title="Ma phrase d'accroche"
+      dataTestId="cv-catchphrase"
       editCallback={
         onChange
           ? () =>

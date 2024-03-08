@@ -46,7 +46,7 @@ export const HeaderConnectedContentMobile = ({
         left={
           <NavbarLogo
             href={logoLink.href + (logoLink.queryParams || '')}
-            type="primary"
+            type="secondary"
           />
         }
         right={

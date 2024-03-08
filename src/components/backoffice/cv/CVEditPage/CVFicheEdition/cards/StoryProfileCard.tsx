@@ -15,19 +15,21 @@ export const StoryProfileCard = ({
   return (
     <Card
       title="Ma présentation"
+      dataTestId="cv-story"
       editCallback={() =>
-              openModal(
-                <ModalEdit
-                  title="Édition - Ma présentation"
-                  formSchema={formEditStory}
-                  defaultValues={{ story: description }}
-                  onSubmit={(fields, closeModal) => {
-                    closeModal();
-                    onChange(fields);
-                  }}
-                />
-              )}
-    >        
+        openModal(
+          <ModalEdit
+            title="Édition - Ma présentation"
+            formSchema={formEditStory}
+            defaultValues={{ story: description }}
+            onSubmit={(fields, closeModal) => {
+              closeModal();
+              onChange(fields);
+            }}
+          />
+        )
+      }
+    >
       {description ? (
         <p data-testid="cv-edit-story-content">
           {formatParagraph(description)}

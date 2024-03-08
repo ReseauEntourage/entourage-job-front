@@ -34,6 +34,7 @@ export const FormationsProfileCard = ({
   return (
     <TimelineCard
       experiences={sortedFormations}
+      dataTestId="cv-formations"
       onChange={onChange}
       // @ts-expect-error after enable TS strict mode. Please, try to fix it
       remainingItems={remainingItems}

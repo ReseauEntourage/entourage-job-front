@@ -108,9 +108,7 @@ export const CVEditCareerPath = ({
                 order: number;
               }[];
               if (businessLine0) {
-                newBusinessLines = [
-                  { name: businessLine0.value, order: 0 },
-                ];
+                newBusinessLines = [{ name: businessLine0.value, order: 0 }];
               }
               if (businessLine1) {
                 newBusinessLines = [

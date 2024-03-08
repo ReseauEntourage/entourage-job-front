@@ -3,7 +3,7 @@ import PlusIcon from 'assets/icons/plus.svg';
 import { CVExperience, CVFormation } from 'src/api/types';
 import { formEditExperience } from 'src/components/forms/schemas/formEditExperience';
 import { formEditFormation } from 'src/components/forms/schemas/formEditFormation';
-import { Grid, ButtonIcon, Card } from 'src/components/utils';
+import { Card } from 'src/components/utils';
 import { StyledFooterCount } from './TimeLineCard.styles';
 import { TimeLineList } from './TimeLineList';
 
@@ -26,6 +26,7 @@ interface TimeLineCardProps {
   };
   type: keyof CVData;
   remainingItems: number;
+  dataTestId?: string;
 }
 
 export const TimelineCard = ({
@@ -36,12 +37,14 @@ export const TimelineCard = ({
   editProps,
   remainingItems,
   type,
+  dataTestId,
 }: TimeLineCardProps) => {
   return (
     <Card
       title={title}
-      editCallback={onAdd}
-      editIcon={<PlusIcon/>}
+      editCallback={remainingItems ? onAdd : undefined}
+      dataTestId={dataTestId}
+      editIcon={<PlusIcon />}
     >
       <TimeLineList
         items={experiences}

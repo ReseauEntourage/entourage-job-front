@@ -18,8 +18,8 @@ export const StyledDatePickerContainer = styled.div`
     }
     &::-webkit-calendar-picker-indicator {
       color: ${COLORS.primaryBlue};
-      filter: invert(70%) sepia(15%) saturate(1500%) hue-rotate(180deg) brightness(90%) contrast(85%);
-
+      filter: invert(70%) sepia(15%) saturate(1500%) hue-rotate(180deg)
+        brightness(90%) contrast(85%);
     }
   }
 `;

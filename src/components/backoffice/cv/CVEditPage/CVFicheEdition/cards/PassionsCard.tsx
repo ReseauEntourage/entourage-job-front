@@ -17,34 +17,36 @@ export const PassionsCard = ({ list, onChange }: PassionProps) => {
   return (
     <Card
       title="Mes passions"
-      editCallback={onChange ? (
-            () => openModal(
-              <ModalEdit
-                title="Édition - Mes passions"
-                formSchema={formEditPassions}
-                defaultValues={{
-                  passions: list.map(({ name }) => ({
-                    label: name,
-                    value: name,
-                  })),
-                }}
-                onSubmit={async (fields, closeModal) => {
-                  closeModal();
-                  const fieldsTransform = {
-                    passions: fields.passions.map(({ value }, index) => {
-                      return {
-                        name: value,
-                        order: index,
-                      };
-                    }),
-                  };
-                  await onChange(fieldsTransform);
-                }}
-              />
-            )
-      ) : undefined}
+      editCallback={
+        onChange
+          ? () =>
+              openModal(
+                <ModalEdit
+                  title="Édition - Mes passions"
+                  formSchema={formEditPassions}
+                  defaultValues={{
+                    passions: list.map(({ name }) => ({
+                      label: name,
+                      value: name,
+                    })),
+                  }}
+                  onSubmit={async (fields, closeModal) => {
+                    closeModal();
+                    const fieldsTransform = {
+                      passions: fields.passions.map(({ value }, index) => {
+                        return {
+                          name: value,
+                          order: index,
+                        };
+                      }),
+                    };
+                    await onChange(fieldsTransform);
+                  }}
+                />
+              )
+          : undefined
+      }
     >
-
       <ul className="uk-list">
         {list.length !== 0 ? (
           list.map(({ name }, i) => {

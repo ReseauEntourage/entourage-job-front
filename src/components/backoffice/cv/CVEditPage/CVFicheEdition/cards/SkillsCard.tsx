@@ -16,6 +16,7 @@ export const SkillsCard = ({ list = [], onChange }: SkillsCardProps) => {
   return (
     <Card
       title="Mes atouts"
+      dataTestId="cv-skills"
       editCallback={
         onChange
           ? () =>

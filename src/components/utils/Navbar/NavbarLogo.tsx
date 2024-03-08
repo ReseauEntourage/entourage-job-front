@@ -4,7 +4,6 @@ import {
   EntourageProLogoPrimary,
   EntourageProLogoSecondary,
 } from 'assets/icons/icons';
-import { Img } from 'src/components/utils/Img';
 
 interface NavbarLogoProps {
   href: string;

@@ -17,8 +17,8 @@ export const StyledNavItem = styled.li`
     margin: 0 20px;
     font-size: 14px;
     color: ${({ color }) => {
-      return COLORS[color] || COLORS.white;
-    }};
+    return COLORS[color] || COLORS.white;
+  }};
     opacity: 0.6;
     display: flex;
   } */

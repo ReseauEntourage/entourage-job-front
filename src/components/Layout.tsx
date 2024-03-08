@@ -45,8 +45,8 @@ export const Layout = withRouter<LayoutProps>(
           <title>{title}</title>
           <link
             rel="icon"
-            type="image/png"
-            href={addPrefix('/static/img/fav.png')}
+            type="image/svg+xml"
+            href={addPrefix('/static/img/favicon.svg')}
           />
           <link rel="canonical" href="https://www.entourage-pro.fr/" />
           {isPDF && (

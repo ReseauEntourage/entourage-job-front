@@ -36,7 +36,11 @@ const datas = [
   },
 ];
 
-export const ActionPartial = ({ style = 'default' }: { style?: 'default' | 'muted' }) => {
+export const ActionPartial = ({
+  style = 'default',
+}: {
+  style?: 'default' | 'muted';
+}) => {
   return (
     <Section style={style} id="actions">
       <Grid gap="large" column center>

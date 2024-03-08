@@ -222,7 +222,7 @@ const Opportunities = () => {
         </h2>
         <p className="uk-text-center">
           Il peut y avoir plusieurs raisons à ce sujet. Contacte l&apos;équipe
-          LinkedOut pour en savoir plus.
+          Entourage Pro pour en savoir plus.
         </p>
       </div>
     );

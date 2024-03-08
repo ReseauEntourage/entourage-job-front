@@ -1,5 +1,4 @@
 import React from 'react';
-import PlusIcon from 'assets/icons/plus.svg';
 import QuoteLeftIcon from 'assets/icons/quote-left.svg';
 import QuoteRightIcon from 'assets/icons/quote-right.svg';
 import { EditItemsButtons } from 'src/components/backoffice/cv/CVEditPage/CVFicheEdition/EditItemsButtons';
@@ -7,7 +6,7 @@ import { formEditTestimonial } from 'src/components/forms/schemas/formEditTestim
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { Grid, ButtonIcon, Card } from 'src/components/utils';
+import { Grid, Card } from 'src/components/utils';
 import { formatParagraph, sortByName } from 'src/utils';
 import { StyledBlueIconContainer } from './CVEdit.styles';
 
@@ -30,20 +29,24 @@ export const CVEditReviews = ({ reviews, onChange }: CVEditReviewsProps) => {
   return (
     <Card
       title="Ils me recommandent"
-      editCallback={() => {
-        openModal(
-          <ModalEdit
-            title="Ajout - Ils me recommandent"
-            formSchema={formEditTestimonial}
-            onSubmit={(fields, closeModal) => {
-              closeModal();
-              onChange({
-                reviews: [...reviews, fields],
-              });
-            }}
-          />
-        );
-      }}
+      editCallback={
+        sortedReviews.length < MAX_REVIEWS
+          ? () => {
+              openModal(
+                <ModalEdit
+                  title="Ajout - Ils me recommandent"
+                  formSchema={formEditTestimonial}
+                  onSubmit={(fields, closeModal) => {
+                    closeModal();
+                    onChange({
+                      reviews: [...reviews, fields],
+                    });
+                  }}
+                />
+              );
+            }
+          : undefined
+      }
     >
       <ul className="uk-list uk-list-divider">
         {sortedReviews.length > 0 ? (
@@ -69,9 +72,9 @@ export const CVEditReviews = ({ reviews, onChange }: CVEditReviewsProps) => {
                     <p className="uk-margin-remove">{review.status}</p>
                   </>
                   <div className="uk-flex uk-flex-column uk-flex-right uk-height-1-1">
-                <StyledBlueIconContainer>
-                    <QuoteRightIcon width={15} height={15} />
-                </StyledBlueIconContainer>
+                    <StyledBlueIconContainer>
+                      <QuoteRightIcon width={15} height={15} />
+                    </StyledBlueIconContainer>
                   </div>
                   <EditItemsButtons
                     onEditClick={() => {

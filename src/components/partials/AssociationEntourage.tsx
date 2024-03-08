@@ -25,7 +25,7 @@ export const AssociationEntourage = () => {
               <EntourageLogo width={50} height={50} />
               <h2 className="uk-text-bold uk-margin-small">
                 <span style={{ color: COLORS.white }}>L&apos;association </span>
-                <span style={{ color: COLORS.primaryOrange}}>Entourage</span>
+                <span style={{ color: COLORS.primaryOrange }}>Entourage</span>
               </h2>
               <div className="uk-light">
                 <p className="uk-text-center uk-padding-small uk-text-secondary">

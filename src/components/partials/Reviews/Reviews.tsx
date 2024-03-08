@@ -47,12 +47,14 @@ export const Reviews = ({ reviews, title }: ReviewsProps) => {
               >
                 <div>{review}</div>
                 <StyledReviewCardAuthor className={isDesktop ? '' : 'mobile'}>
-                  {image && <Img
-                    src={image}
-                    alt={`Témoignage de ${author}`}
-                    width={45}
-                    height={45}
-                  />}
+                  {image && (
+                    <Img
+                      src={image}
+                      alt={`Témoignage de ${author}`}
+                      width={45}
+                      height={45}
+                    />
+                  )}
                   <div className="legend">
                     {author}
                     {authorStatus && <span>, {authorStatus}</span>}
