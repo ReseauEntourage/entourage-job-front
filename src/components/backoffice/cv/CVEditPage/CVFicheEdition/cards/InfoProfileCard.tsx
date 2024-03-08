@@ -7,6 +7,7 @@ import HomeIcon from 'assets/icons/home.svg';
 import LocationIcon from 'assets/icons/location.svg';
 import PhoneIcon from 'assets/icons/phone.svg';
 import UserIcon from 'assets/icons/user.svg';
+import { StyledBlueIconContainer } from '../CVEdit/CVEdit.styles';
 import { CV } from 'src/api/types';
 import { formEditUsefulInformation } from 'src/components/forms/schemas/formEditUsefulInformation';
 
@@ -21,7 +22,6 @@ import {
 } from 'src/constants/departements';
 import { COLORS } from 'src/constants/styles';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
-import { StyledBlueIconContainer } from '../CVEdit/CVEdit.styles';
 
 interface InfoProfileCardProps {
   contracts: {

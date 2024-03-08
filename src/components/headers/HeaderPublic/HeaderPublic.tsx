@@ -24,11 +24,6 @@ const LINKS = [
     name: 'Nous contacter',
     tag: GA_TAGS.HEADER_CONTACT_CLIC,
   },
-  {
-    href: '/contact',
-    name: 'Nous contacter',
-    tag: GA_TAGS.HEADER_CONTACT_CLIC,
-  }
 ];
 
 export const HeaderPublic = () => {
