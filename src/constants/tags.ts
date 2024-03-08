@@ -413,6 +413,13 @@ export const GA_TAGS = {
   PAGE_DASHBOARD_DISPONIBILITE_CLIC: {
     action: 'Page_Dashboard_Disponibilite_Clic',
   },
+  BACKOFFICE_CANDIDAT_HEADER_DASHBOARD_CLIC: {
+    action: 'Backoffice_Candidat_Header_Dashboard_Clic',
+  },
+  BACKOFFICE_COACH_HEADER_DASHBOARD_CLIC: {
+    action: 'Backoffice_Coach_Header_Dashboard_Clic',
+  },
+
 } as const;
 
 export const FB_TAGS = {
