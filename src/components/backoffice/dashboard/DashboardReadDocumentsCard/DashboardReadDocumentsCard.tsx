@@ -63,8 +63,8 @@ export const DashboardReadDocumentsCard = () => {
         <StyledDashboardCardSubtitle>
           <Typography>
             {contextualRole === USER_ROLES.CANDIDATE
-              ? 'En tant que coach, nous vous invitons à prendre connaissance de ces documents essentiels pour assurer un accompagnement de qualité'
-              : 'Nous vous invitons à prendre connaissance de ces documents essentiels pour assurer un accompagnement de qualité'}
+              ? 'Nous vous invitons à prendre connaissance de ces documents essentiels pour assurer un accompagnement de qualité'
+              : "Nous vous invitons à prendre connaissance de ces documents essentiels pour permettre à tout un chacun de s'épanouir avec Entourage Pro."}
           </Typography>
         </StyledDashboardCardSubtitle>
         <StyledDashboardReadDocumentsArticlesContainer>
