@@ -11,7 +11,7 @@ interface FooterFormProps {
   error?: string;
   onCancel?: () => void;
   onSubmit: (event?: FormEvent) => Promise<void>;
-  submitText: string;
+  submitText?: string;
   cancelText?: string;
   formId: string;
   isLoadingOverride?: boolean;

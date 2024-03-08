@@ -2,7 +2,7 @@ import React from 'react';
 import { Layout } from 'src/components/Layout';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { Registration } from 'src/components/registration/Registration';
-import { useRegistrationRedirection } from 'src/components/registration/useRegistrationRedirection';
+import { useRegistrationRedirection } from 'src/components/registration/Registration/useRegistrationRedirection';
 import { Section } from 'src/components/utils';
 
 const Inscription = () => {

@@ -8,11 +8,11 @@ export const PasswordCriterias = ({
 }) => {
   return (
     <StyledPasswordCriteriasList removeMargin={removeMargin}>
-      <li>Faire au moins 8 caractères de longueur</li>
-      <li>Contenir des lettres majuscules et des lettres minuscules</li>
-      <li>Contenir des chiffres</li>
+      <li>Doit faire au moins 8 caractères de longueur</li>
+      <li>Doit contenir des lettres majuscules et des lettres minuscules</li>
+      <li>Doit contenir des chiffres</li>
       <li>
-        Contenir des caractères spéciaux parmi les suivants&nbsp;:
+        Doit contenir des caractères spéciaux parmi les suivants&nbsp;:
         <br />
         {'! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _ ` { | } ~'}
       </li>

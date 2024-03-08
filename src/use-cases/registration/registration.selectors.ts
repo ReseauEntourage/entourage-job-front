@@ -8,8 +8,8 @@ import {
   RegistrationStepContent,
   RegistrationStepContents,
   StepData,
-} from 'src/components/registration/Registration/Registration.types';
-import { flattenRegistrationData } from 'src/components/registration/Registration/Registration.utils';
+} from 'src/components/registration/Registration.types';
+import { flattenRegistrationData } from 'src/components/registration/Registration.utils';
 import { assertIsDefined } from 'src/utils/asserts';
 import { createUserAdapter } from './registration.adapters';
 import { RootState } from './registration.slice';
@@ -56,7 +56,7 @@ export function selectDefinedRegistrationSelectedRole(state: RootState) {
   return selectedRole;
 }
 
-export function selectRegistrationSelectedProgram(state: RootState) {
+export function selectDefinedRegistrationSelectedProgram(state: RootState) {
   const data = selectRegistrationData(state);
   const selectedRole = selectDefinedRegistrationSelectedRole(state);
 
@@ -130,7 +130,7 @@ export function selectRegistrationConfirmationStepContent(
 ): LastStepContent {
   const selectedRole = selectDefinedRegistrationSelectedRole(state);
 
-  const selectedProgram = selectRegistrationSelectedProgram(state);
+  const selectedProgram = selectDefinedRegistrationSelectedProgram(state);
 
   return LastStepContent[selectedRole][selectedProgram];
 }

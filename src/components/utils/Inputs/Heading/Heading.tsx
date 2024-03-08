@@ -3,7 +3,7 @@ import { StyledFormHeading } from './Heading.styles';
 
 interface HeadingProps {
   id: string;
-  title: string;
+  title: string | JSX.Element;
 }
 export function Heading({ id, title }: HeadingProps) {
   return (

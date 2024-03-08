@@ -6,7 +6,7 @@ import {
   StyledRadioContainer,
   StyledRadioSpinnerContainer,
 } from './Radio.styles';
-import { RadioAsyncComponentProps } from './Radio.types';
+import { RadioAsyncComponentProps, RadioTypes } from './Radio.types';
 
 export function RadioAsync({
   loadOptions,
@@ -23,16 +23,13 @@ export function RadioAsync({
   inputRef,
   limit,
 }: RadioAsyncComponentProps) {
-  const [options, setOptions] = useState([]);
+  const [options, setOptions] = useState<RadioTypes[]>([]);
 
   const [isLoading, setIsLoading] = useState(true);
 
   useMount(() => {
     loadOptions((optionsLoaded) => {
-      setOptions(
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        optionsLoaded
-      );
+      setOptions(optionsLoaded);
       setIsLoading(false);
     });
   });

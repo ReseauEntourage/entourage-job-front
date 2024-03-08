@@ -6,7 +6,7 @@ import {
   RegistrationStep,
   RegistrationStepData,
   StepData,
-} from 'src/components/registration/Registration/Registration.types';
+} from 'src/components/registration/Registration.types';
 import { NormalUserRole } from 'src/constants/users';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import { assertIsDefined } from 'src/utils/asserts';

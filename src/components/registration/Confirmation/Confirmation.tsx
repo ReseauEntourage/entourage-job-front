@@ -1,18 +1,19 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Button, Card, Typography } from 'src/components/utils';
 import {
-  registrationActions,
-  selectRegistrationConfirmationStepContent,
-} from 'src/use-cases/registration';
-import {
+  StyledRegistrationButtonContainer,
   StyledRegistrationContainer,
+  StyledRegistrationListItem,
+  StyledRegistrationListItemIcon,
+  StyledRegistrationListItemLabels,
   StyledRegistrationSubtitle,
 } from '../Registration.styles';
+import { Button, Card } from 'src/components/utils';
+import { H6 } from 'src/components/utils/Headings';
+import { Typography } from 'src/components/utils/Typography';
+import { useConfirmation } from './useConfirmation';
 
 export function Confirmation() {
-  const dispatch = useDispatch();
-  const pageContent = useSelector(selectRegistrationConfirmationStepContent);
+  const { pageContent } = useConfirmation();
 
   return (
     <StyledRegistrationContainer>
@@ -21,19 +22,21 @@ export function Confirmation() {
           <Typography weight="normal">{pageContent.subtitle}</Typography>
         </StyledRegistrationSubtitle>
         {pageContent.bullets.map(({ icon, title, text }) => (
-          <div key={title}>
-            {icon}
-            <Typography weight="normal">{title}</Typography>
-            <Typography weight="normal">{text}</Typography>
-          </div>
+          <StyledRegistrationListItem key={title}>
+            <StyledRegistrationListItemIcon>
+              {icon}
+            </StyledRegistrationListItemIcon>
+            <StyledRegistrationListItemLabels>
+              <H6 title={title} color="primaryOrange" />
+              <Typography size="small">{text}</Typography>
+            </StyledRegistrationListItemLabels>
+          </StyledRegistrationListItem>
         ))}
-        <Button
-          onClick={() => {
-            dispatch(registrationActions.resetRegistrationData());
-          }}
-        >
-          Accéder à mon profil
-        </Button>
+        <StyledRegistrationButtonContainer>
+          <Button style="custom-secondary-inverted" href="/login">
+            Accéder à mon profil
+          </Button>
+        </StyledRegistrationButtonContainer>
       </Card>
     </StyledRegistrationContainer>
   );

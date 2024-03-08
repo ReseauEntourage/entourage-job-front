@@ -45,19 +45,16 @@ export function TextArea({
   const { textAreaRef, remainingLines, maxLinesReached, textAreaWidth } =
     useLineLimit(value, name, onChange, maxLines?.lines);
 
-  useEffect(
-    // @ts-expect-error after enable TS strict mode. Please, try to fix it
-    () => {
-      if (!maxLines) return null;
+  useEffect(() => {
+    if (!maxLines) return;
+    if (setIsMaxLinesReached) {
       if (maxLinesReached) {
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         setIsMaxLinesReached(true);
       } else {
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         setIsMaxLinesReached(false);
       }
     }
-  );
+  }, [maxLines, maxLinesReached, setIsMaxLinesReached]);
 
   if (hidden) {
     return null;

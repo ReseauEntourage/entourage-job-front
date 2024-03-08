@@ -1,15 +1,15 @@
 import Link from 'next/link';
 import React from 'react';
-import { useRegistration } from '../useRegistration';
-import { FormWithValidation } from 'src/components/forms/FormWithValidation';
-import { Card, Typography } from 'src/components/utils';
-import { Spinner } from 'src/components/utils/Spinner';
 import {
   StyledRegistrationContainer,
   StyledRegistrationFooter,
   StyledRegistrationSpinnerContainer,
   StyledRegistrationSubtitle,
 } from '../Registration.styles';
+import { FormWithValidation } from 'src/components/forms/FormWithValidation';
+import { Card, Typography } from 'src/components/utils';
+import { Spinner } from 'src/components/utils/Spinner';
+import { useRegistration } from './useRegistration';
 
 export function Registration() {
   const {

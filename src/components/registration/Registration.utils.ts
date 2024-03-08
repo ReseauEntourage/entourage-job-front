@@ -1,9 +1,9 @@
+import { NormalUserRole } from 'src/constants/users';
 import {
   FlattenedStepData,
   RegistrationStep,
   RegistrationStepData,
 } from './Registration.types';
-import { NormalUserRole } from 'src/constants/users';
 
 export const flattenRegistrationData = (
   data: RegistrationStepData,

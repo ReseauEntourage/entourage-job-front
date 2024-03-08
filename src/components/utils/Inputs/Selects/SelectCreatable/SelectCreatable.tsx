@@ -14,12 +14,11 @@ import {
   MultiValueRemove,
 } from '../Selects';
 import { StyledSelect, StyledSelectContainer } from '../Selects.styles';
-import { IsArrayFilterConstant } from 'src/components/forms/FormSchema';
 import { FilterConstant } from 'src/constants/utils';
 
 interface SelectCreatableProps<T extends FilterConstant | FilterConstant[]>
   extends CommonInputProps<T, HTMLSelectElement> {
-  options: IsArrayFilterConstant<T>;
+  options: FilterConstant[];
   isMulti?: boolean;
   openMenuOnClick?: boolean;
   maxChar?: number;
@@ -47,19 +46,18 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
   maxItems,
   setIsMaxItemsReached,
 }: SelectCreatableProps<T>) {
-  const [remainingItems, setRemainingItems] = useState<number>(
-    // @ts-expect-error after enable TS strict mode. Please, try to fix it
-    maxItems
-  );
+  const [remainingItems, setRemainingItems] = useState<number>(maxItems || 0);
   const [shouldDisplayOptions, setShouldDisplayOptions] =
     useState<boolean>(true);
 
   useEffect(() => {
     const receivedValues = value as FilterConstant[];
-    setRemainingItems(
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      receivedValues ? maxItems - receivedValues?.length : maxItems
-    );
+    if (maxItems) {
+      setRemainingItems(
+        receivedValues ? maxItems - receivedValues?.length : maxItems
+      );
+    }
+
     if (maxItems && receivedValues) {
       setShouldDisplayOptions(receivedValues.length < maxItems);
     } else {
@@ -67,19 +65,16 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
     }
   }, [value, maxItems]);
 
-  useEffect(
-    // @ts-expect-error after enable TS strict mode. Please, try to fix it
-    () => {
-      if (!maxItems) return null;
+  useEffect(() => {
+    if (!maxItems) return;
+    if (setIsMaxItemsReached) {
       if (remainingItems < 0) {
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         setIsMaxItemsReached(true);
       } else {
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         setIsMaxItemsReached(false);
       }
     }
-  );
+  });
 
   if (hidden) {
     return null;

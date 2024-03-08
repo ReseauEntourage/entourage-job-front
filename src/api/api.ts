@@ -4,6 +4,7 @@ import axios, {
   AxiosResponse,
 } from 'axios';
 import _ from 'lodash';
+import { asyncTimeout } from '../utils/asyncTimeout';
 import { DocumentNameType } from 'src/constants';
 import { AdminZone } from 'src/constants/departements';
 import { addAxiosInterceptors } from './interceptor';
@@ -27,6 +28,7 @@ import {
   SocialMedia,
   UserDto,
   UserProfile,
+  UserRegistrationDto,
 } from './types';
 
 export class APIHandler {
@@ -208,6 +210,15 @@ export class APIHandler {
   // post
   postUser(params: UserDto): Promise<AxiosResponse> {
     return this.post('/user', params);
+  }
+
+  async postUserRegistration(
+    params: UserRegistrationDto
+  ): Promise<AxiosResponse> {
+    // TODO when backend is ready
+    // return this.post('/user/registration', params);
+    await asyncTimeout(2000);
+    return { data: params } as AxiosResponse;
   }
 
   postProfileImage(

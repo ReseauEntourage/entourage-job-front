@@ -1,6 +1,13 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
+import { flattenRegistrationData } from '../../components/registration/Registration.utils';
+import { Api } from 'src/api';
 import { asyncTimeout } from 'src/utils/asyncTimeout';
-import { selectIsLastRegistrationStep } from './registration.selectors';
+import {
+  selectDefinedRegistrationSelectedProgram,
+  selectDefinedRegistrationSelectedRole,
+  selectIsLastRegistrationStep,
+  selectRegistrationData,
+} from './registration.selectors';
 import { slice } from './registration.slice';
 
 const {
@@ -13,10 +20,22 @@ const {
 } = slice.actions;
 
 export function* createUserRequestedSaga() {
-  // const data = yield* select(selectRegistrationData);
+  const data = yield* select(selectRegistrationData);
+  const selectedRole = yield* select(selectDefinedRegistrationSelectedRole);
+  const selectedProgram = yield* select(
+    selectDefinedRegistrationSelectedProgram
+  );
+
+  const flattenedData = flattenRegistrationData(data, selectedRole);
 
   try {
-    // TODO send info to API
+    yield* call(() =>
+      Api.postUserRegistration({
+        ...flattenedData,
+        role: selectedRole,
+        program: selectedProgram,
+      })
+    );
     yield* put(createUserSucceeded());
   } catch (err) {
     yield* put(createUserFailed());

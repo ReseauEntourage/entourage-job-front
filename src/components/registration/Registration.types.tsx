@@ -1,3 +1,4 @@
+import React from 'react';
 import CVIllu from 'assets/icons/illu-CV.svg';
 import ConversationIllu from 'assets/icons/illu-conversation.svg';
 import TipsIllu from 'assets/icons/illu-poignee-de-main.svg';
@@ -5,7 +6,7 @@ import RSIllu from 'assets/icons/illu-reseaux-sociaux.svg';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { Programs } from 'src/constants/programs';
 import { USER_ROLES } from 'src/constants/users';
-import { FlattenUnionToOptionalIntersection, UnionKeys } from 'src/utils/Types';
+import { UnionToIntersection, UnionKeys } from 'src/utils/Types';
 import { formRegistrationAccount } from './forms/formRegistrationAccount';
 import { formRegistrationCandidateExpectations } from './forms/formRegistrationCandidateExpectations';
 import { formRegistrationCandidateInfo } from './forms/formRegistrationCandidateInfo';
@@ -44,7 +45,7 @@ export type StepData = ExtractFormSchemaValidation<RegistrationForms>;
 
 export type StepDataKeys = UnionKeys<StepData>;
 
-export type FlattenedStepData = FlattenUnionToOptionalIntersection<StepData>;
+export type FlattenedStepData = UnionToIntersection<StepData>;
 
 export type FirstStepData =
   ExtractFormSchemaValidation<FirstStepRegistrationForm>;
@@ -165,46 +166,48 @@ type RegistrationLastStepContent = {
   };
 };
 
-const coachLastStepContent: Pick<LastStepContent, 'title' | 'bullets'> = {
+const iconSizeProps = { width: 60, height: 60 };
+
+const CoachLastStepContent: Pick<LastStepContent, 'title' | 'bullets'> = {
   title: 'Vous venez de finaliser votre inscription : Bravo !',
   bullets: [
     {
-      icon: ConversationIllu,
+      icon: <ConversationIllu {...iconSizeProps} />,
       title: 'Discutez et échangez avec des candidats et des coachs',
       text: "Commencez à partager et développer votre réseau solidaire en prenant contact avec d'autres membres de la communauté",
     },
     {
-      icon: TipsIllu,
+      icon: <TipsIllu {...iconSizeProps} />,
       title: 'Donnez des coup de pouces à des candidats',
       text: "Faites profiter de votre expérience des candidat(e)s et soutenez-les dans leurs recherches d'emploi",
     },
     {
-      icon: RSIllu,
+      icon: <RSIllu {...iconSizeProps} />,
       title: 'Participez à des événements professionnels et conviviaux',
       text: "Rejoignez-nous lors d'événements professionnels pour vivre des moments conviviaux et bâtir votre réseau solidaire",
     },
   ],
 };
 
-const candidateLastStepContent: Pick<LastStepContent, 'bullets'> = {
+const CandidateLastStepContent: Pick<LastStepContent, 'bullets'> = {
   bullets: [
     {
-      icon: CVIllu,
+      icon: <CVIllu {...iconSizeProps} />,
       title: 'Mettez à jour votre CV',
       text: "Créez votre CV en quelques clics et bénéficiez d'une meilleure visibilité sur notre site",
     },
     {
-      icon: ConversationIllu,
+      icon: <ConversationIllu {...iconSizeProps} />,
       title: 'Discutez et échangez avec des candidats et des coachs',
       text: 'Commencez à construire votre réseau en prenant contact avec les autres membres de la communauté',
     },
     {
-      icon: TipsIllu,
+      icon: <TipsIllu {...iconSizeProps} />,
       title: 'Demander des coups de pouces à des coachs',
       text: 'Sollicitez du soutien auprès de coachs tout au long de votre recherche',
     },
     {
-      icon: RSIllu,
+      icon: <RSIllu {...iconSizeProps} />,
       title: 'Participez à des événements professionnels et conviviaux',
       text: "Rejoignez-nous lors d'événements professionnels pour vivre des moments conviviaux et bâtir votre réseau",
     },
@@ -214,13 +217,13 @@ const candidateLastStepContent: Pick<LastStepContent, 'bullets'> = {
 export const LastStepContent: RegistrationLastStepContent = {
   [USER_ROLES.CANDIDATE]: {
     [Programs.LONG]: {
-      ...candidateLastStepContent,
-      title: 'On se voit le !',
+      ...CandidateLastStepContent,
+      title: 'On se voit très bientôt !',
       subtitle:
         'On a hâte de vous rencontrer et encore plus hâte de commencer votre accompagnement !',
     },
     [Programs.SHORT]: {
-      ...candidateLastStepContent,
+      ...CandidateLastStepContent,
       title: 'Vous venez de finaliser votre inscription : Bravo !',
       subtitle:
         "Mais ce n'est que le début de l'aventure : bienvenue sur votre réseau pro solidaire !",
@@ -228,12 +231,12 @@ export const LastStepContent: RegistrationLastStepContent = {
   },
   [USER_ROLES.COACH]: {
     [Programs.LONG]: {
-      ...coachLastStepContent,
+      ...CoachLastStepContent,
       subtitle:
         'On a hâte de vous rencontrer et encore plus hâte que vous deveniez coach !',
     },
     [Programs.SHORT]: {
-      ...coachLastStepContent,
+      ...CoachLastStepContent,
       subtitle:
         'Vous pouvez désormais demander à votre entourage de vous appeler "coach"',
     },

@@ -2,6 +2,13 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  REGISTRATION_CONFIRMATION_STEP,
+  StepData,
+  StepDataKeys,
+} from '../Registration.types';
+import { ReduxRequestEvents } from 'src/constants';
+import { notificationsActions } from 'src/use-cases/notifications';
+import {
   createUserSelectors,
   registrationActions,
   selectIsFirstRegistrationStep,
@@ -12,13 +19,6 @@ import {
   selectRegistrationDataFromOtherStepForDefaultValue,
   selectRegistrationNextStep,
 } from 'src/use-cases/registration';
-import {
-  REGISTRATION_CONFIRMATION_STEP,
-  StepData,
-  StepDataKeys,
-} from './Registration/Registration.types';
-import { ReduxRequestEvents } from '../../constants';
-import { notificationsActions } from '../../use-cases/notifications';
 
 export function useRegistration() {
   const { push, back } = useRouter();
@@ -87,12 +87,6 @@ export function useRegistration() {
       );
     }
   }, [createUserStatus, dispatch, push]);
-
-  useEffect(() => {
-    return () => {
-      dispatch(registrationActions.createUserReset());
-    };
-  });
 
   const onBack = useCallback(back, [back]);
 

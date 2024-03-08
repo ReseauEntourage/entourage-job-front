@@ -36,9 +36,15 @@ import {
 } from 'src/components/utils/Inputs';
 import { CommonInputProps } from 'src/components/utils/Inputs/Inputs.types';
 import { RadioTypes } from 'src/components/utils/Inputs/Radio/Radio.types';
-import { SelectCard } from 'src/components/utils/Inputs/SelectCard';
+import {
+  SelectCard,
+  SelectCardType,
+} from 'src/components/utils/Inputs/SelectCard';
 
-import { SelectList } from 'src/components/utils/Inputs/SelectList';
+import {
+  SelectList,
+  SelectListType,
+} from 'src/components/utils/Inputs/SelectList';
 import { AnyCantFix } from 'src/utils/Types';
 
 interface GenericFieldProps<S extends FormSchema<AnyCantFix>> {
@@ -125,8 +131,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
         if (field.fieldsToReset) {
           for (let i = 0; i < field.fieldsToReset.length; i += 1) {
             resetField(field.fieldsToReset[i], {
-              // @ts-expect-error after enable TS strict mode. Please, try to fix it
-              defaultValue: null,
+              defaultValue: undefined,
             });
           }
         }
@@ -211,17 +216,17 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
         ? field.isMulti(getValue)
         : field.isMulti;
 
+    const options =
+      (typeof field.options === 'function'
+        ? field.options(getValue)
+        : field.options) || [];
+
     if (field.component === 'select') {
       return (
         <Select
           {...commonProps}
           isMulti={isMulti}
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          options={
-            typeof field.options === 'function'
-              ? field.options(getValue)
-              : field.options
-          }
+          options={options}
           openMenuOnClick={field.openMenuOnClick}
         />
       );
@@ -232,12 +237,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
         <SelectCreatable
           {...commonProps}
           isMulti={isMulti}
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          options={
-            typeof field.options === 'function'
-              ? field.options(getValue)
-              : field.options
-          }
+          options={options}
           openMenuOnClick={field.openMenuOnClick}
           maxChar={field.maxChar}
           maxItems={field.maxItems}
@@ -268,11 +268,10 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
         <SelectList
           {...commonProps}
           isMulti={field.isMulti}
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           options={
-            typeof field.options === 'function'
+            (typeof field.options === 'function'
               ? field.options(getValue)
-              : field.options
+              : field.options) as SelectListType[]
           }
         />
       );
@@ -287,11 +286,10 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
               ? field.optionsToDisable(getValue)
               : undefined
           }
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           options={
-            typeof field.options === 'function'
+            (typeof field.options === 'function'
               ? field.options(getValue)
-              : field.options
+              : field.options) as SelectCardType[]
           }
         />
       );
