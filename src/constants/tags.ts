@@ -419,7 +419,6 @@ export const GA_TAGS = {
   BACKOFFICE_COACH_HEADER_DASHBOARD_CLIC: {
     action: 'Backoffice_Coach_Header_Dashboard_Clic',
   },
-
 } as const;
 
 export const FB_TAGS = {

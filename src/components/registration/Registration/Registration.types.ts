@@ -28,7 +28,7 @@ export type RegistrationLabel =
   (typeof RegistrationLabels)[keyof typeof RegistrationLabels];
 
 export type RegistrationForms =
-  | typeof formRegistrationRole; /* TODO Add other steps forms here */
+  typeof formRegistrationRole; /* TODO Add other steps forms here */
 
 export interface RegistrationPageContent {
   subtitle: string;

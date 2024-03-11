@@ -44,7 +44,9 @@ describe('Parcours CV', () => {
   });
 
   it('Créer une offre publique', () => {
-    cy.get('[data-testid="search-candidates-post-opportunity-button"]').scrollIntoView().click();
+    cy.get('[data-testid="search-candidates-post-opportunity-button"]')
+      .scrollIntoView()
+      .click();
 
     // cy.wait('@getCandidats');
 

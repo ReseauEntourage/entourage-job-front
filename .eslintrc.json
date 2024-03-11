@@ -39,10 +39,7 @@
     "no-console": [
       1,
       {
-        "allow": [
-          "warn",
-          "error"
-        ]
+        "allow": ["warn", "error"]
       }
     ],
     "no-multiple-empty-lines": [
@@ -60,10 +57,7 @@
     "max-classes-per-file": 0,
     "camelcase": "off",
     "curly": "warn",
-    "strict": [
-      "error",
-      "global"
-    ],
+    "strict": ["error", "global"],
     "prefer-promise-reject-errors": "off",
     "no-return-assign": "off",
     "no-case-declarations": "off",
@@ -87,29 +81,20 @@
     "react/jsx-wrap-multilines": "off",
     // with TypeScript, no default props
     "react/require-default-props": 0,
-    "react/static-property-placement": [
-      "warn",
-      "static getter"
-    ],
+    "react/static-property-placement": ["warn", "static getter"],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",
     "jsx-a11y/aria-role": [
       2,
       {
-        "allowedInvalidRoles": [
-          "Candidat"
-        ],
+        "allowedInvalidRoles": ["Candidat"],
         "ignoreNonDOM": true
       }
     ],
     "react/jsx-filename-extension": [
       "warn",
       {
-        "extensions": [
-          ".js",
-          ".jsx",
-          ".tsx"
-        ]
+        "extensions": [".js", ".jsx", ".tsx"]
       }
     ],
     "prettier/prettier": [
@@ -207,19 +192,14 @@
   },
   "settings": {
     "import/parsers": {
-      "@typescript-eslint/parser": [
-        ".ts",
-        ".tsx"
-      ]
+      "@typescript-eslint/parser": [".ts", ".tsx"]
     },
     "import/resolver": {
       "typescript": {
         "project": "./tsconfig.json"
       },
       "node": {
-        "paths": [
-          "."
-        ]
+        "paths": ["."]
       }
     }
   },
@@ -231,30 +211,21 @@
   "overrides": [
     {
       // storybook use both default export and named exports
-      "files": [
-        "src/**/*.stories.tsx",
-        "./.storybook/**/*"
-      ],
+      "files": ["src/**/*.stories.tsx", "./.storybook/**/*"],
       "rules": {
         "import/no-default-export": 0
       }
     },
     {
-      "files": [
-        "src/pages/**"
-      ],
+      "files": ["src/pages/**"],
       "rules": {
         "import/no-default-export": 0,
         "import/prefer-default-export": 2
       }
     },
     {
-      "files": [
-        "./**/*.ts"
-      ],
-      "excludedFiles": [
-        "./**/*.spec.ts"
-      ],
+      "files": ["./**/*.ts"],
+      "excludedFiles": ["./**/*.spec.ts"],
       "rules": {
         "@jambit/typed-redux-saga/use-typed-effects": "error",
         "@jambit/typed-redux-saga/delegate-effects": "error"

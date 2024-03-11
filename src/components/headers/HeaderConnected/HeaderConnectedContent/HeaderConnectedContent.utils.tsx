@@ -34,7 +34,7 @@ export const renderLinks = (
 } => {
   const candidateHeaderItems: HeaderConnectedMainItem[] = [
     {
-      href:'/backoffice/dashboard',
+      href: '/backoffice/dashboard',
       name: 'Mon espace',
       tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_DASHBOARD_CLIC,
     },
@@ -136,7 +136,7 @@ export const renderLinks = (
       [USER_ROLES.CANDIDATE_EXTERNAL]: candidateHeaderItems,
       [USER_ROLES.COACH]: [
         {
-          href:'/backoffice/dashboard',
+          href: '/backoffice/dashboard',
           name: 'Mon espace',
           tag: GA_TAGS.BACKOFFICE_COACH_HEADER_DASHBOARD_CLIC,
         },
