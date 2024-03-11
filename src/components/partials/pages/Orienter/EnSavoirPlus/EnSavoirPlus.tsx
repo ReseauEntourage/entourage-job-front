@@ -1,7 +1,7 @@
 import React from 'react';
-import { MultipleCTA } from '../MultipleCTA';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
+import { MultipleCTA } from 'src/components/partials/utils/MultipleCTA';
 import { Section } from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
 import { GA_TAGS } from 'src/constants/tags';

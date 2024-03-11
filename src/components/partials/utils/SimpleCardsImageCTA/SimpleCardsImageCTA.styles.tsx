@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledDecouvrirContainer = styled.div`
+export const StyledSimpleCardsImageCTAContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -12,7 +12,12 @@ export const StyledDecouvrirContainer = styled.div`
   margin: 60px auto 40px;
 `;
 
-export const StyledDecouvrirCard = styled.div`
+export const StyledSimpleCardsImageCTASubtitle = styled.div`
+    width: 100%;
+    text-align: center;
+`;
+
+export const StyledSimpleCardsImageCTACard = styled.div`
   width: 40%;
   border-radius: 40px;
   background-color: ${COLORS.hoverBlue};

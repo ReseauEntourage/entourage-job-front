@@ -1,6 +1,6 @@
 import React from 'react';
 import ChevronRightIcon from 'assets/icons/chevron-right.svg';
-import { UIKIT_BUTTON_SIZES, UIKIT_BUTTON_STYLES_SPEC } from '../variables';
+import { UIKIT_BUTTON_SIZES, UIKIT_BUTTON_STYLES_SPEC } from '../../../variables';
 import { Button, Img, Grid } from 'src/components/utils';
 
 interface MultipleCTAProps {

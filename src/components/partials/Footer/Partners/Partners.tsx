@@ -1,6 +1,6 @@
 import React from 'react';
 import ChevronRightIcon from 'assets/icons/chevron-right.svg';
-import { LogoList } from 'src/components/partials/LogoList';
+import { LogoList } from 'src/components/partials/utils/LogoList';
 import { Background, Section } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { PARTNERS } from 'src/constants/partners';

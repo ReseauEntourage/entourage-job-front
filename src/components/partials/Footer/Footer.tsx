@@ -3,7 +3,8 @@ import React from 'react';
 import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
-import { AssociationEntourage, Partners } from 'src/components/partials';
+import { Partners } from './Partners';
+import { AssociationEntourage } from './AssociationEntourage';
 import {
   PageType,
   ChildrenType,

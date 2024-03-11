@@ -1,7 +1,7 @@
 import React from 'react';
 import { CompanyContactModal } from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
 import { openModal } from 'src/components/modals/Modal/openModal';
-import { MultipleCTA } from 'src/components/partials/MultipleCTA';
+import { MultipleCTA } from 'src/components/partials/utils/MultipleCTA';
 import { Section } from 'src/components/utils';
 import { FB_TAGS, GA_TAGS, LINK_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';

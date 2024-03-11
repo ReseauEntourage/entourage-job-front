@@ -6,7 +6,7 @@ import InstaIcon from 'assets/icons/instagram.svg';
 import LinkedInIcon from 'assets/icons/linked-in.svg';
 import TwitterIcon from 'assets/icons/twitter.svg';
 import YoutubeIcon from 'assets/icons/youtube.svg';
-import { StyledShareButton } from 'src/components/partials/SharePartial/SharePartial.styles';
+import { StyledShareButton } from './SharePartial.styles';
 import { Grid } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';

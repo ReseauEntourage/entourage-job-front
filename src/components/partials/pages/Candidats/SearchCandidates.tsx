@@ -8,7 +8,7 @@ import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { useFilters } from 'src/hooks/useFilters';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
-import { CVList } from './CV/CVList';
+import { CVList } from '../../CV/CVList';
 
 const cvFiltersWithoutGender = CV_FILTERS_DATA.slice(0, -1);
 

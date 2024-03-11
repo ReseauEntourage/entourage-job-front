@@ -4,7 +4,7 @@ import UIkit from 'uikit';
 import { v4 as uuid } from 'uuid';
 import { isEmail } from 'validator';
 import { Api } from 'src/api';
-import { StyledNLForm } from 'src/components/partials/NewsletterPartial/NewsletterPartial.styles';
+import { StyledNLForm } from './NewsletterPartial.styles';
 import { Section } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { CheckBox } from 'src/components/utils/Inputs/CheckBox';

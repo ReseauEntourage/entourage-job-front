@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Layout } from 'src/components/Layout';
-import { Chapter } from 'src/components/partials';
+import { Chapter } from 'src/components/partials/common/Chapter';
 import { Section, SimpleLink, AnimatedList, Grid } from 'src/components/utils';
 
 const Card = ({ text, number }) => {

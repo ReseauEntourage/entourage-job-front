@@ -3,10 +3,10 @@ import { Layout } from 'src/components/Layout';
 import {
   LogoList,
   // Reviews,
-} from 'src/components/partials';
-import { EnSavoirPlus } from 'src/components/partials/EnSavoirPlus';
-import { ImageTitle } from 'src/components/partials/ImageTitle';
-import { Reviews } from 'src/components/partials/Reviews';
+} from 'src/components/partials/utils/LogoList';
+import { EnSavoirPlus } from 'src/components/partials/pages/Orienter/EnSavoirPlus';
+import { ImageTitle } from 'src/components/partials/utils/ImageTitle';
+import { Reviews } from 'src/components/partials/utils/Reviews';
 
 import { Decouvrir } from 'src/components/partials/pages/Orienter/Decouvrir';
 import { Impact } from 'src/components/partials/pages/Orienter/Impact';

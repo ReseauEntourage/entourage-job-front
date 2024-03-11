@@ -1,7 +1,7 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import ChevronRightIcon from 'assets/icons/chevron-right.svg';
-import { Reviews } from 'src/components/partials/Reviews';
+import { Reviews } from 'src/components/partials/utils/Reviews';
 import { TitleSection } from 'src/components/partials/pages/Aider/TitleSection';
 import { BackgroundImage, Button, Container, Img } from 'src/components/utils';
 import { COLORS } from 'src/constants/styles';

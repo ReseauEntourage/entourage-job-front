@@ -1,6 +1,6 @@
 import React from 'react';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
-import { CarouselItem } from 'src/components/partials/CarouselItem';
+import { CarouselItem } from 'src/components/partials/utils/CarouselItem';
 import { Img, Section, Carousel } from 'src/components/utils';
 
 const testimonies = [
@@ -34,18 +34,26 @@ interface CandidateTestimoniesOrientationProps {
   style: 'muted' | 'default';
   noTitle?: boolean;
   noVideo?: boolean;
+  title?: React.ReactNode;
 }
 
 export const CandidateTestimoniesOrientation = ({
   style,
   noVideo,
   noTitle,
+  title,
 }: CandidateTestimoniesOrientationProps) => {
   return (
     <Section style={style} container="small">
       {!noTitle && (
         <h2 className="uk-text-bold uk-text-center">
-          Les candidats <span className="uk-text-primary">témoignent</span>
+          {
+            title ? title : (
+              <>
+                Les candidats <span className="uk-text-primary">témoignent</span>
+              </>
+            )
+          }
         </h2>
       )}
       <div className="uk-flex uk-flex-center">

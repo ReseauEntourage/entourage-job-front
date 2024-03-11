@@ -10,13 +10,11 @@ import { openModal } from 'src/components/modals/Modal';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { StyledModalContent } from 'src/components/modals/Modal/Modals.styles';
-import {
-  NewsletterPartial,
-  SharePartial,
-  CandidateTestimoniesOrientation,
-} from 'src/components/partials';
-import { ImageTitle } from 'src/components/partials/ImageTitle';
-import { Partners } from 'src/components/partials/PartnersNew';
+import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial/NewsletterPartial';
+import { SharePartial } from 'src/components/partials/common/SharePartial';
+import { CandidateTestimoniesOrientation } from 'src/components/partials/common/CandidateTestimoniesOrientation';
+import { ImageTitle } from 'src/components/partials/utils/ImageTitle';
+import { Partners } from 'src/components/partials/pages/Travailler/PartnersNew';
 import { Participer } from 'src/components/partials/pages/Travailler/Participer';
 import { Rejoindre } from 'src/components/partials/pages/Travailler/Rejoindre';
 import { Steps } from 'src/components/partials/pages/Travailler/Steps';
