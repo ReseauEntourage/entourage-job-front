@@ -33,9 +33,7 @@ export const slice = createSlice({
   initialState,
   reducers: {
     ...createUserAdapter.getReducers<State>((state) => state.createUser, {
-      createUserSucceeded(state) {
-        state.isLoading = false;
-      },
+      createUserSucceeded(_state) {},
       createUserFailed(state) {
         state.isLoading = false;
       },
@@ -61,7 +59,7 @@ export const slice = createSlice({
         };
       }
     },
-    setRegistrationStep(state, action: PayloadAction<RegistrationStep>) {
+    setRegistrationStep(state, action: PayloadAction<RegistrationStep | null>) {
       state.currentStep = action.payload;
       state.isLoading = true;
     },
@@ -69,7 +67,6 @@ export const slice = createSlice({
       state.isLoading = action.payload;
     },
     resetRegistrationData(state) {
-      state.currentStep = null;
       state.selectedRole = null;
       state.data = {};
       state.isLoading = true;

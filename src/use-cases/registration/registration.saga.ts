@@ -1,6 +1,6 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
-import { flattenRegistrationData } from '../../components/registration/Registration.utils';
 import { Api } from 'src/api';
+import { flattenRegistrationDataByRole } from 'src/components/registration/Registration.utils';
 import { asyncTimeout } from 'src/utils/asyncTimeout';
 import {
   selectDefinedRegistrationSelectedProgram,
@@ -26,7 +26,7 @@ export function* createUserRequestedSaga() {
     selectDefinedRegistrationSelectedProgram
   );
 
-  const flattenedData = flattenRegistrationData(data, selectedRole);
+  const flattenedData = flattenRegistrationDataByRole(data, selectedRole);
 
   try {
     yield* call(() =>

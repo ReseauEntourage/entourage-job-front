@@ -4,9 +4,9 @@ import axios, {
   AxiosResponse,
 } from 'axios';
 import _ from 'lodash';
-import { asyncTimeout } from '../utils/asyncTimeout';
 import { DocumentNameType } from 'src/constants';
 import { AdminZone } from 'src/constants/departements';
+import { asyncTimeout } from 'src/utils/asyncTimeout';
 import { addAxiosInterceptors } from './interceptor';
 import {
   APIRoute,
@@ -478,8 +478,12 @@ export class APIHandler {
   // contact /
   /// // //////
 
-  getCampaigns(): Promise<AxiosResponse> {
-    return this.get(`/contact/campaigns`);
+  getCandidateCampaigns(): Promise<AxiosResponse> {
+    return this.get(`/contact/campaigns/candidate`);
+  }
+
+  getCoachCampaigns(): Promise<AxiosResponse> {
+    return this.get(`/contact/campaigns/coach`);
   }
 
   postContactContactUs(params: ContactContactUs): Promise<AxiosResponse> {

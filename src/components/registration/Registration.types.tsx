@@ -6,7 +6,7 @@ import RSIllu from 'assets/icons/illu-reseaux-sociaux.svg';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { Programs } from 'src/constants/programs';
 import { USER_ROLES } from 'src/constants/users';
-import { UnionToIntersection, UnionKeys } from 'src/utils/Types';
+import { UnionKeys, UnionToIntersection } from 'src/utils/Types';
 import { formRegistrationAccount } from './forms/formRegistrationAccount';
 import { formRegistrationCandidateExpectations } from './forms/formRegistrationCandidateExpectations';
 import { formRegistrationCandidateInfo } from './forms/formRegistrationCandidateInfo';
@@ -14,6 +14,7 @@ import { formRegistrationCandidateInfoCo } from './forms/formRegistrationCandida
 import { formRegistrationCandidateProgram } from './forms/formRegistrationCandidateProgram';
 import { formRegistrationCoachInfo } from './forms/formRegistrationCoachInfo';
 import { formRegistrationCoachProgram } from './forms/formRegistrationCoachProgram';
+import { formRegistrationCoachWebinar } from './forms/formRegistrationCoachWebinar';
 import { formRegistrationRole } from './forms/formRegistrationRole';
 
 export type RegistrationStep = `step-${number}`;
@@ -31,6 +32,7 @@ export type CandidateRegistrationForm =
 export type CoachRegistrationForm =
   | typeof formRegistrationCoachInfo
   | typeof formRegistrationCoachProgram
+  | typeof formRegistrationCoachWebinar
   | typeof formRegistrationAccount;
 /* TODO Add other steps forms here */
 
@@ -74,7 +76,10 @@ export interface RegistrationStepContent<
   subtitle?: string;
   annotation?: RegistrationLabel;
   form: T;
+  // Used to get the values of a previous step as default values in the form of the current step
   dependsOn?: StepDataKeys[];
+  // Used to skip the step if the value of a previous step matches the value in skippedBy
+  skippedBy?: Partial<{ [K in StepDataKeys]: FlattenedStepData[K] }>;
 }
 
 export type RegistrationStepContentByRole = Partial<{
@@ -121,7 +126,13 @@ export const RegistrationStepContents: {
       dependsOn: ['department', 'birthDate'],
     },
     [USER_ROLES.COACH]: {
-      form: formRegistrationAccount,
+      subtitle:
+        'Et si on se rencontrait ? Choisissez une date pour le webinaire d’information',
+      form: formRegistrationCoachWebinar,
+      dependsOn: ['program'],
+      skippedBy: {
+        program: [Programs.SHORT],
+      },
     },
   },
   'step-5': {
@@ -129,7 +140,13 @@ export const RegistrationStepContents: {
       subtitle:
         "Et si on se rencontrait ? Choisissez une date d'information collective",
       form: formRegistrationCandidateInfoCo,
-      dependsOn: ['department'],
+      dependsOn: ['department', 'program'],
+      skippedBy: {
+        program: [Programs.SHORT],
+      },
+    },
+    [USER_ROLES.COACH]: {
+      form: formRegistrationAccount,
     },
   },
   'step-6': {
@@ -137,10 +154,13 @@ export const RegistrationStepContents: {
       form: formRegistrationAccount,
     },
   },
+  /* TODO add other steps content here */
 };
 
 export const RegistrationErrorMessages = {
   CURRENT_STEP: 'Registration current step is not set',
+  STEP_CONTENT:
+    'Registration step content was not found. You should add content for this step.',
   SELECTED_ROLE: 'Registration selected role is not set',
   SELECTED_PROGRAM: 'Registration selected program is not set',
 };

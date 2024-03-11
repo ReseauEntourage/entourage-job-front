@@ -36,6 +36,10 @@ export const StyledRegistrationListItem = styled.div`
 export const StyledRegistrationListItemLabels = styled.div`
   display: flex;
   flex-direction: column;
+
+  h6 {
+    margin-bottom: 10px;
+  }
 `;
 
 export const StyledRegistrationListItemIcon = styled.div`

@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 describe('Parcours travailler', () => {
   beforeEach(() => {
-    cy.intercept('GET', 'contact/campaigns', {
+    cy.intercept('GET', 'contact/campaigns/candidate', {
       statusCode: 201,
       fixture: 'get-campaigns-res',
     }).as('getCampaigns');

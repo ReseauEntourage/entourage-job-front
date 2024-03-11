@@ -14,36 +14,34 @@ import { useRegistration } from './useRegistration';
 export function Registration() {
   const {
     isRegistrationLoading,
-    pageContent,
-    pageData,
-    defaultValueFromOtherStep,
+    stepContent,
+    stepData,
+    defaultValues,
     isFirstRegistrationStep,
     onSubmitStepForm,
     onBack,
   } = useRegistration();
 
-  const isLoading = isRegistrationLoading || !pageContent;
-
   return (
     <StyledRegistrationContainer>
       <Card title="Créer mon compte Entourage Pro en 5 minutes">
-        {!isLoading && (
+        {!isRegistrationLoading && (
           <>
-            {pageContent.subtitle && (
+            {stepContent.subtitle && (
               <StyledRegistrationSubtitle>
-                <Typography weight="normal">{pageContent.subtitle}</Typography>
-                {pageContent.annotation && (
+                <Typography weight="normal">{stepContent.subtitle}</Typography>
+                {stepContent.annotation && (
                   <Typography weight="normal" color="lighter" variant="italic">
-                    {pageContent.annotation}
+                    {stepContent.annotation}
                   </Typography>
                 )}
               </StyledRegistrationSubtitle>
             )}
             <FormWithValidation
-              formSchema={pageContent.form}
+              formSchema={stepContent.form}
               defaultValues={{
-                ...(pageData || {}),
-                ...(defaultValueFromOtherStep || {}),
+                ...(stepData || {}),
+                ...(defaultValues || {}),
               }}
               onSubmit={onSubmitStepForm}
               submitText="Suivant"
@@ -52,7 +50,7 @@ export function Registration() {
             />
           </>
         )}
-        {isLoading && (
+        {isRegistrationLoading && (
           <StyledRegistrationSpinnerContainer>
             <Spinner />
           </StyledRegistrationSpinnerContainer>

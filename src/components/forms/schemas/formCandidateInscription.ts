@@ -251,7 +251,7 @@ export const formCandidateInscription: FormSchema<FormCandidateInscriptionSchema
           hideIfNoInfoCo(getValue, fieldOptions),
         loadOptions: async (callback) => {
           try {
-            const { data: campaigns } = await Api.getCampaigns();
+            const { data: campaigns } = await Api.getCandidateCampaigns();
             const noChoice = {
               inputId: `infoco-radio-nochoice`,
               label: 'Je ne suis pas disponible à ces dates',

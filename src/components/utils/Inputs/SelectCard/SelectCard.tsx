@@ -107,9 +107,9 @@ export function SelectCard<T extends string>({
                   <StyledSelectCardContent>
                     <StyledSelectBlurableSection shouldBlur={!!disableOption}>
                       <StyledSelectCardBulletList>
-                        {bullets.map(({ label: bulletLabel, icon }) => {
+                        {bullets.map(({ label: bulletLabel, icon }, index) => {
                           return (
-                            <StyledSelectCardBullet>
+                            <StyledSelectCardBullet key={index}>
                               <StyledSelectCardBulletIcon>
                                 {icon}
                               </StyledSelectCardBulletIcon>

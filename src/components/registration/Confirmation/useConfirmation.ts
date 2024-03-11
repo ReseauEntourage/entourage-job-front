@@ -10,9 +10,10 @@ export function useConfirmation() {
   const pageContent = useSelector(selectRegistrationConfirmationStepContent);
 
   useEffect(() => {
+    dispatch(registrationActions.setRegistrationStep(null));
+
     return () => {
       dispatch(registrationActions.resetRegistrationData());
-      dispatch(registrationActions.createUserReset());
     };
   }, [dispatch]);
 

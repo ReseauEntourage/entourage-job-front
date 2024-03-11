@@ -35,9 +35,6 @@ export type FieldValue =
   | FilterConstant
   | FilterConstant[];
 
-export type IsArrayFilterConstant<T extends AnyCantFix[] | AnyCantFix> =
-  T extends AnyCantFix[] ? T : T[];
-
 export type MultiFilterConstant<M extends boolean> = M extends true
   ? FilterConstant[]
   : FilterConstant;

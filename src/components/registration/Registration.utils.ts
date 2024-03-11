@@ -5,7 +5,7 @@ import {
   RegistrationStepData,
 } from './Registration.types';
 
-export const flattenRegistrationData = (
+export const flattenRegistrationDataByRole = (
   data: RegistrationStepData,
   selectedRole: NormalUserRole
 ) => {
@@ -22,4 +22,11 @@ export const flattenRegistrationData = (
     }
     return acc;
   }, {} as FlattenedStepData);
+};
+
+export const incrementRegistrationStep = (
+  step: RegistrationStep
+): RegistrationStep => {
+  const stepNumber: number = parseInt(step.split('-')[1], 10);
+  return `step-${stepNumber + 1}`;
 };

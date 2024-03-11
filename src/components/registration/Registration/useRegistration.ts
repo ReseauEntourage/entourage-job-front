@@ -16,24 +16,24 @@ import {
   selectIsRegistrationLoading,
   selectRegistrationCurrentStepContent,
   selectRegistrationCurrentStepData,
-  selectRegistrationDataFromOtherStepForDefaultValue,
+  selectRegistrationDataFromOtherStep,
   selectRegistrationNextStep,
+  selectRegistrationShouldSkipStep,
 } from 'src/use-cases/registration';
 
 export function useRegistration() {
-  const { push, back } = useRouter();
+  const { push, back, replace } = useRouter();
   const dispatch = useDispatch();
 
   const isRegistrationLoading = useSelector(selectIsRegistrationLoading);
 
-  const pageData = useSelector(selectRegistrationCurrentStepData);
-  const pageContent = useSelector(selectRegistrationCurrentStepContent);
-  const defaultValueFromOtherStep = useSelector(
-    selectRegistrationDataFromOtherStepForDefaultValue
-  );
+  const stepData = useSelector(selectRegistrationCurrentStepData);
+  const stepContent = useSelector(selectRegistrationCurrentStepContent);
+  const valuesFromOtherStep = useSelector(selectRegistrationDataFromOtherStep);
   const isFirstRegistrationStep = useSelector(selectIsFirstRegistrationStep);
   const isLastRegistrationStep = useSelector(selectIsLastRegistrationStep);
   const nextStep = useSelector(selectRegistrationNextStep);
+  const shouldSkipStep = useSelector(selectRegistrationShouldSkipStep);
 
   const createUserStatus = useSelector(
     createUserSelectors.selectCreateUserStatus
@@ -43,14 +43,14 @@ export function useRegistration() {
     (fields: StepData) => {
       let fieldsToSave = fields;
 
-      if (pageContent?.dependsOn) {
+      if (valuesFromOtherStep) {
         // Remove fields used only for default value
         const fieldsKeys: StepDataKeys[] = Object.keys(
           fields
         ) as StepDataKeys[];
 
         fieldsToSave = fieldsKeys.reduce((acc, curr) => {
-          if (!pageContent.dependsOn?.includes(curr)) {
+          if (!Object.keys(valuesFromOtherStep).includes(curr)) {
             return {
               ...acc,
               [curr]: fields[curr],
@@ -70,8 +70,16 @@ export function useRegistration() {
         });
       }
     },
-    [dispatch, isLastRegistrationStep, nextStep, pageContent?.dependsOn, push]
+    [dispatch, isLastRegistrationStep, nextStep, push, valuesFromOtherStep]
   );
+
+  useEffect(() => {
+    if (shouldSkipStep) {
+      replace(`/inscription/${nextStep}`, undefined, {
+        shallow: true,
+      });
+    }
+  }, [nextStep, replace, shouldSkipStep]);
 
   useEffect(() => {
     if (createUserStatus === ReduxRequestEvents.SUCCEEDED) {
@@ -90,11 +98,17 @@ export function useRegistration() {
 
   const onBack = useCallback(back, [back]);
 
+  useEffect(() => {
+    return () => {
+      dispatch(registrationActions.createUserReset());
+    };
+  }, [dispatch]);
+
   return {
     isRegistrationLoading,
-    pageContent,
-    pageData,
-    defaultValueFromOtherStep,
+    stepContent,
+    stepData,
+    defaultValues: valuesFromOtherStep,
     isFirstRegistrationStep,
     isLastRegistrationStep,
     onSubmitStepForm,
