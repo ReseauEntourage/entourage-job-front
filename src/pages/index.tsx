@@ -4,14 +4,17 @@ import { CandidateTestimoniesOrientation } from 'src/components/partials/common/
 import { ImageTitle } from 'src/components/partials/utils/ImageTitle';
 
 import {
-  ActionPartial,
+  // ActionPartial,
   CandidatListPartial,
   // LandingPagePartial,
   // LinkedInPartial,
-  NumberPartial,
+  // NumberPartial,
   // HowItWorks,
 } from 'src/components/partials/pages/HomePage';
 import { Rejoindre } from 'src/components/partials/pages/HomePage/Rejoindre';
+import { Figures } from 'src/components/partials/pages/HomePage/Figures';
+import { Decouvrir } from 'src/components/partials/pages/HomePage/Decouvrir';
+import { Engagement } from 'src/components/partials/pages/HomePage/Engagement';
 
 const Index = () => {
   return (
@@ -37,6 +40,7 @@ const Index = () => {
           ]
         }
       />
+      <Decouvrir />
 
       <Rejoindre />
       <CandidatListPartial />
@@ -44,8 +48,11 @@ const Index = () => {
 
       {/* <LandingPagePartial /> */}
       {/* <HowItWorks style="default" /> */}
-      <NumberPartial />
-      <ActionPartial style="default" />
+      {/* <NumberPartial /> */}
+      <Figures />
+      <Engagement />
+      {/* <ActionPartial style="default" /> */}
+      {/* <LinkedInPartial /> */}
     </Layout>
   );
 };

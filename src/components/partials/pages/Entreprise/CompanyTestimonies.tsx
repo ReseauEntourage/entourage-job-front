@@ -1,5 +1,5 @@
 import React from 'react';
-import { CarouselItem } from 'src/components/partials/CarouselItem';
+import { CarouselItem } from 'src/components/partials/utils/CarouselItem';
 import { Img, Section, Carousel } from 'src/components/utils';
 
 const testimonies = [
