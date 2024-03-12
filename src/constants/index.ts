@@ -727,6 +727,7 @@ export const CANDIDATE_HELP_WITH_FILTERS: FilterConstant<CandidateHelpWithValue>
 export const CandidateGenders = {
   MALE: 'male',
   FEMALE: 'female',
+  OTHER: 'other',
 } as const;
 
 export type CandidateGender =
@@ -740,6 +741,10 @@ export const CANDIDATE_GENDERS_FILTERS: FilterConstant<CandidateGender>[] = [
   {
     label: 'Femme',
     value: CandidateGenders.FEMALE,
+  },
+  {
+    label: 'Autre',
+    value: CandidateGenders.OTHER,
   },
 ];
 

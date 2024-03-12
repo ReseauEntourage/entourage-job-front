@@ -63,6 +63,7 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
     },
   },
 ];
+
 export const ParametresHelpCardTitles: {
   [K in 'card' | 'modal']: {
     [R in NormalUserRole]: string;

@@ -150,7 +150,7 @@ export const formCandidateContact: FormSchema<{
       name: 'gender',
       component: 'select-simple',
       options: CANDIDATE_GENDERS_FILTERS,
-      title: 'Son sexe*',
+      title: 'Son genre*',
       isRequired: true,
       showLabel: true,
     },

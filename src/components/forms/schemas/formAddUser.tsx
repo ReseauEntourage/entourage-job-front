@@ -15,6 +15,7 @@ import {
   UserRole,
   Gender,
   AdminRole,
+  GENDERS_FILTERS,
 } from 'src/constants/users';
 import { FilterConstant } from 'src/constants/utils';
 import { isRoleIncluded } from 'src/utils/Finding';
@@ -100,10 +101,7 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
           name: 'gender',
           title: 'Genre *',
           component: 'select-simple',
-          options: [
-            { value: 0, label: 'Homme' },
-            { value: 1, label: 'Femme' },
-          ],
+          options: GENDERS_FILTERS,
           isRequired: true,
         },
         {

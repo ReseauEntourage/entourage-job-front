@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { StyledHeaderDesktop } from 'src/components/headers/Header.styles';
-import { Navbar, NavbarLogo, Nav } from 'src/components/utils';
+import { Nav, Navbar, NavbarLogo } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledPublicItem } from './HeaderPublicContent.styles';

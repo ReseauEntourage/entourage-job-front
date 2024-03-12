@@ -4,10 +4,12 @@ import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { isEmail } from 'validator';
 import { PasswordCriterias } from 'src/components/backoffice/parametres/ParametresLayout/ChangePasswordCard/PasswordCriterias';
 import { FormSchema } from 'src/components/forms/FormSchema';
+import { Gender, GENDERS_FILTERS } from 'src/constants/users';
 
 export const formRegistrationAccount: FormSchema<{
   firstName: string;
   lastName: string;
+  gender: Gender;
   phone: string;
   email: string;
   password: string;
@@ -32,6 +34,14 @@ export const formRegistrationAccount: FormSchema<{
       placeholder: 'Entrez votre nom',
       isRequired: true,
       showLabel: true,
+    },
+    {
+      id: 'gender',
+      name: 'gender',
+      title: 'Genre *',
+      component: 'select-simple',
+      options: GENDERS_FILTERS,
+      isRequired: true,
     },
     {
       id: 'phone',

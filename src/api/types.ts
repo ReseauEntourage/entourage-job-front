@@ -19,7 +19,6 @@ import {
   NormalUserRole,
   UserRole,
 } from 'src/constants/users';
-import { FilterConstant } from 'src/constants/utils';
 
 export type SocialMedia =
   | 'facebook'
@@ -276,9 +275,9 @@ export type UserRegistrationDto = {
   phone: string;
   password: string;
   role: NormalUserRole;
-  infoCo?: string;
-  department: FilterConstant<Department>;
-  expectations?: HelpValue[];
+  campaign?: string;
+  department: Department;
+  expectations?: { name: HelpValue }[];
   workingRight?: string;
   program: Program;
   birthDate: string;

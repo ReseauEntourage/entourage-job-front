@@ -1,6 +1,7 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
 import { Api } from 'src/api';
 import { flattenRegistrationDataByRole } from 'src/components/registration/Registration.utils';
+import { authenticationActions } from 'src/use-cases/authentication';
 import { asyncTimeout } from 'src/utils/asyncTimeout';
 import {
   selectDefinedRegistrationSelectedProgram,
@@ -26,14 +27,29 @@ export function* createUserRequestedSaga() {
     selectDefinedRegistrationSelectedProgram
   );
 
-  const flattenedData = flattenRegistrationDataByRole(data, selectedRole);
+  const { confirmPassword, ...flattenedData } = flattenRegistrationDataByRole(
+    data,
+    selectedRole
+  );
 
   try {
-    yield* call(() =>
+    const response = yield* call(() =>
       Api.postUserRegistration({
         ...flattenedData,
         role: selectedRole,
         program: selectedProgram,
+        department: flattenedData.department.value,
+        expectations: flattenedData.expectations
+          ? flattenedData.expectations.map((expectation) => ({
+              name: expectation,
+            }))
+          : undefined,
+      })
+    );
+    yield* put(
+      authenticationActions.loginSucceeded({
+        accessToken: response.data.token,
+        user: response.data.user,
       })
     );
     yield* put(createUserSucceeded());

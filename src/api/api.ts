@@ -6,7 +6,6 @@ import axios, {
 import _ from 'lodash';
 import { DocumentNameType } from 'src/constants';
 import { AdminZone } from 'src/constants/departements';
-import { asyncTimeout } from 'src/utils/asyncTimeout';
 import { addAxiosInterceptors } from './interceptor';
 import {
   APIRoute,
@@ -215,10 +214,7 @@ export class APIHandler {
   async postUserRegistration(
     params: UserRegistrationDto
   ): Promise<AxiosResponse> {
-    // TODO when backend is ready
-    // return this.post('/user/registration', params);
-    await asyncTimeout(2000);
-    return { data: params } as AxiosResponse;
+    return this.post('/user/registration', params);
   }
 
   postProfileImage(

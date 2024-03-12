@@ -181,11 +181,7 @@ export const PageCVContent = ({
                 openModal(
                   <ModalEdit
                     title={`Envoyer un message à ${cv.user.candidat.firstName}`}
-                    description={`Vous pouvez envoyer un message à ${
-                      cv.user.candidat.firstName
-                    } pour l'aider et ${
-                      cv.user.candidat.gender === 0 ? 'le' : 'la'
-                    } conseiller dans sa recherche d'emploi`}
+                    description={`Vous pouvez envoyer un message à ${cv.user.candidat.firstName} pour l'aider et le/la conseiller dans sa recherche d'emploi`}
                     submitText="Envoyer"
                     formSchema={formSendExternalMessage}
                     onSubmit={async (fields, closeModal) => {
@@ -498,9 +494,9 @@ export const PageCVContent = ({
       <CVCallToActions actionDisabled={actionDisabled} cv={cv} />
       <StyledCVPageContentFooter>
         <p>
-          Je suis accompagné{cv.user.candidat.gender === 1 && 'e'} dans ma
-          recherche d&#8217;emploi et mon intégration en entreprise par le
-          projet Entourage Pro. Pour plus d&#8217;information, contactez :&nbsp;
+          Je suis accompagné(e) dans ma recherche d&#8217;emploi et mon
+          intégration en entreprise par le projet Entourage Pro. Pour plus
+          d&#8217;information, contactez :&nbsp;
           <Link href="mailto:contact-linkedout@entourage.social">
             contact-linkedout@entourage.social
           </Link>
