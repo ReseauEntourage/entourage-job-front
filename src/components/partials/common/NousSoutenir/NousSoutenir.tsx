@@ -1,8 +1,8 @@
 import React from 'react'
-import { Section, Typography } from 'src/components/utils'
+import { Button, Section, Typography } from 'src/components/utils'
 import { H2 } from 'src/components/utils/Headings'
 import { COLORS } from 'src/constants/styles'
-import { StyledNousSoutenirCard, StyledNousSoutenirCardsContainer } from './NousSoutenir.styles'
+import { StyledNousSoutenirCard, StyledNousSoutenirCardLowerPart, StyledNousSoutenirCardsContainer, StyledNousSoutenirCardUpperPart } from './NousSoutenir.styles'
 
 const content = [
     {
@@ -37,13 +37,22 @@ export const NousSoutenir = () => {
                     return (
                         <StyledNousSoutenirCard>
                             <StyledNousSoutenirCardUpperPart color={item.color}>
-
+                                {item.value}{' '}€
                             </StyledNousSoutenirCardUpperPart>
+                            <StyledNousSoutenirCardLowerPart>
+                                {item.description}
+                            </StyledNousSoutenirCardLowerPart>
                         </StyledNousSoutenirCard>
                     )
                 })
             }
         </StyledNousSoutenirCardsContainer>
+        <Button
+            style="custom-secondary-inverted"
+
+        >
+            Téléchargez la mesure d'impact
+        </Button>
     </Section>
   )
 }
