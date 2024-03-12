@@ -1,10 +1,11 @@
 import React, { Ref } from 'react';
+import { OrienterSablier } from 'assets/icons/icons';
 import CarteSolidaireIcon from 'assets/icons/orienter-carte-solidaire.svg';
-import SablierIcon from 'assets/icons/orienter-sablier.svg';
 import { openModal } from 'src/components/modals/Modal';
 import { CandidateContactModal } from 'src/components/modals/Modal/ModalGeneric/CandidateContactModal';
 import { Button, Img, Section } from 'src/components/utils';
 import { H3 } from 'src/components/utils/Headings';
+import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
 import { useIsDesktop } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
@@ -37,7 +38,7 @@ export const Inscrire = ({ innerRef }: { innerRef: Ref<HTMLDivElement> }) => {
             )}
             <ul data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;">
               <li>
-                <SablierIcon />{' '}
+                <OrienterSablier color={COLORS.primaryOrange} />{' '}
                 <div>2 heures par semaine pendant 6 mois, en présentiel</div>
               </li>
               <li>

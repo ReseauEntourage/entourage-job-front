@@ -1,21 +1,20 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import PictoCreationOpp from 'assets/icons/picto-creation-opportunite.svg';
-import PictoFaciliterInte from 'assets/icons/picto-faciliter-integration.svg';
-import PictoRechercheCV from 'assets/icons/picto-recherche-cv.svg';
+import {
+  PictoRechercheCv,
+  PictoCreationOpportunite,
+  PictoFaciliterIntegration,
+} from 'assets/icons/icons';
 import { TitleSection } from 'src/components/partials/pages/Aider/TitleSection';
 import { Container, Img } from 'src/components/utils';
 import { COLORS } from 'src/constants/styles';
-import {
-  StyledInfoContainer,
-  StyledInfoContainerPicto,
-} from './InfoContainer.styles';
+import { StyledInfoContainer } from './InfoContainer.styles';
 
 const uuidValue = uuid();
 
 const infoContent = [
   {
-    picto: PictoRechercheCV,
+    picto: <PictoRechercheCv color={COLORS.primaryBlue} />,
     alt: 'recherche emploi',
     title: 'Préparation à la recherche d’emploi',
     ul: [
@@ -24,7 +23,7 @@ const infoContent = [
     ],
   },
   {
-    picto: PictoCreationOpp,
+    picto: <PictoCreationOpportunite color={COLORS.primaryBlue} />,
     alt: 'creation opportunités professionnelles',
     title: "Création d'opportunités professionnelles",
     ul: [
@@ -34,7 +33,7 @@ const infoContent = [
     ],
   },
   {
-    picto: PictoFaciliterInte,
+    picto: <PictoFaciliterIntegration color={COLORS.primaryBlue} />,
     alt: 'faciliter intégration entreprise',
     title: "Facilitation de l'intégration en entreprise ",
     ul: [
@@ -91,10 +90,10 @@ export const InfoContainer = () => {
           {infoContent.map((content, key) => {
             return (
               <div className="informer-card" key={`${key}-parent-${uuidValue}`}>
-                <StyledInfoContainerPicto className="picto-h4">
-                  <content.picto />
+                <div className="picto-h4">
+                  {content.picto}
                   <h4>{content.title}</h4>
-                </StyledInfoContainerPicto>
+                </div>
                 <ul data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;">
                   {content.ul.map((li, k) => {
                     return <li key={`${k}-child-${uuidValue}`}>{li}</li>;

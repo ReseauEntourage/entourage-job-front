@@ -7,7 +7,6 @@ import HomeIcon from 'assets/icons/home.svg';
 import LocationIcon from 'assets/icons/location.svg';
 import PhoneIcon from 'assets/icons/phone.svg';
 import UserIcon from 'assets/icons/user.svg';
-import { StyledBlueIconContainer } from '../CVEdit/CVEdit.styles';
 import { CV } from 'src/api/types';
 import { formEditUsefulInformation } from 'src/components/forms/schemas/formEditUsefulInformation';
 
@@ -20,6 +19,7 @@ import {
   Department,
   DEPARTMENTS_FILTERS,
 } from 'src/constants/departements';
+import { COLORS } from 'src/constants/styles';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
 
 interface InfoProfileCardProps {
@@ -64,7 +64,6 @@ export const InfoProfileCard = ({
     locations && locations.length > 0 ? sortByOrder(locations) : [];
 
   return (
-    // <div className="uk-card uk-card-primary uk-card-body">
     <Card
       title="Infos pratiques"
       editCallback={() => {
@@ -131,27 +130,19 @@ export const InfoProfileCard = ({
     >
       <Grid column gap="small">
         <Grid row gap="small" middle>
-          <StyledBlueIconContainer>
-            <EmailIcon width={20} />
-          </StyledBlueIconContainer>
+          <EmailIcon width={20} color={COLORS.primaryBlue} />
           {email || 'Adresse mail non renseigné'}
         </Grid>
         <Grid row gap="small" middle>
-          <StyledBlueIconContainer>
-            <PhoneIcon width={20} />
-          </StyledBlueIconContainer>
+          <PhoneIcon width={20} color={COLORS.primaryBlue} />
           {phone || 'Numéro de téléphone non renseigné'}
         </Grid>
         <Grid row gap="small" middle>
-          <StyledBlueIconContainer>
-            <HomeIcon width={20} />
-          </StyledBlueIconContainer>
+          <HomeIcon width={20} color={COLORS.primaryBlue} />
           {address || 'Adresse postale non renseignée'}
         </Grid>
         <Grid row gap="small" middle>
-          <StyledBlueIconContainer>
-            <DocumentIcon width={20} />
-          </StyledBlueIconContainer>
+          <DocumentIcon width={20} color={COLORS.primaryBlue} />
           {contracts && contracts.length > 0
             ? contracts
                 .map(({ name }) => {
@@ -161,9 +152,7 @@ export const InfoProfileCard = ({
             : 'Type de contrat recherché non renseigné'}
         </Grid>
         <Grid row gap="small" middle>
-          <StyledBlueIconContainer>
-            <LocationIcon width={20} />
-          </StyledBlueIconContainer>
+          <LocationIcon width={20} color={COLORS.primaryBlue} />
           {sortedLocations && sortedLocations.length > 0
             ? sortedLocations
                 .map(({ name }) => {
@@ -173,17 +162,13 @@ export const InfoProfileCard = ({
             : 'Localisations non renseignées'}
         </Grid>
         <Grid row gap="small" middle>
-          <StyledBlueIconContainer>
-            <CalendarIcon width={20} />
-          </StyledBlueIconContainer>
+          <CalendarIcon width={20} color={COLORS.primaryBlue} />
           {availability && availability !== ''
             ? availability
             : 'Disponibilités non renseignée'}
         </Grid>
         <Grid row gap="small" middle>
-          <StyledBlueIconContainer>
-            <UserIcon width={20} />
-          </StyledBlueIconContainer>
+          <UserIcon width={20} color={COLORS.primaryBlue} />
           {languages && languages.length > 0
             ? languages
                 .map(({ name }) => {
@@ -193,9 +178,7 @@ export const InfoProfileCard = ({
             : 'Langues apprises non renseignées'}
         </Grid>
         <Grid row gap="small" middle>
-          <StyledBlueIconContainer>
-            <CarIcon width={20} />
-          </StyledBlueIconContainer>
+          <CarIcon width={20} color={COLORS.primaryBlue} />
           {transport && transport !== ''
             ? transport
             : 'Moyen de transport non renseigné'}

@@ -11,18 +11,6 @@ export const StyledNav = styled.ul`
 export const StyledNavItem = styled.li`
   display: flex;
 
-  /* &:not(:first-child)::before {
-    content: '|';
-    align-items: center;
-    margin: 0 20px;
-    font-size: 14px;
-    color: ${({ color }) => {
-    return COLORS[color] || COLORS.white;
-  }};
-    opacity: 0.6;
-    display: flex;
-  } */
-
   & > * {
     display: flex;
     justify-content: center;

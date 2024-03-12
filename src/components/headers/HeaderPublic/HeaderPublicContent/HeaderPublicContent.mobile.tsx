@@ -100,7 +100,7 @@ export const HeaderPublicContentMobile = ({
               style="custom-secondary-inverted"
               size="small"
             >
-              Inscription / Connextion
+              Inscription / Connexion
             </Button>
           </li>
           <li className="uk-flex uk-flex-center uk-padding-small">

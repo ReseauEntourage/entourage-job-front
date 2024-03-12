@@ -21,7 +21,6 @@ export const StyledCardContent = styled.div`
 `;
 
 export const StyledCardTitleContainer = styled.div`
-  /* border-bottom: ${COLORS.hoverBlue} solid 1px; */
   border-bottom: ${COLORS.lightgray} solid 1px;
   margin-right: 25px;
   margin-left: 25px;

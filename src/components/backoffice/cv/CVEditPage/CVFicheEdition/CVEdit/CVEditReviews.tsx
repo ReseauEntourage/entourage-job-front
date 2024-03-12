@@ -7,8 +7,8 @@ import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Grid, Card } from 'src/components/utils';
+import { COLORS } from 'src/constants/styles';
 import { formatParagraph, sortByName } from 'src/utils';
-import { StyledBlueIconContainer } from './CVEdit.styles';
 
 interface Review {
   name: string;
@@ -58,23 +58,26 @@ export const CVEditReviews = ({ reviews, onChange }: CVEditReviewsProps) => {
                   eachWidths={['auto', 'expand']}
                   className="uk-padding-small uk-padding-remove-horizontal"
                 >
-                  <StyledBlueIconContainer>
-                    <QuoteLeftIcon width={15} height={15} />
-                  </StyledBlueIconContainer>
+                  <QuoteLeftIcon
+                    width={15}
+                    height={15}
+                    color={COLORS.primaryBlue}
+                  />
 
-                  <>
-                    <p className="uk-text-small uk-margin-small">
-                      {formatParagraph(review.text)}
-                    </p>
-                    <p className="uk-text-bold uk-margin-small uk-margin-remove-bottom">
-                      {review.name}
-                    </p>
-                    <p className="uk-margin-remove">{review.status}</p>
-                  </>
+                  <p className="uk-text-small uk-margin-small">
+                    {formatParagraph(review.text)}
+                  </p>
+                  <p className="uk-text-bold uk-margin-small uk-margin-remove-bottom">
+                    {review.name}
+                  </p>
+                  <p className="uk-margin-remove">{review.status}</p>
+
                   <div className="uk-flex uk-flex-column uk-flex-right uk-height-1-1">
-                    <StyledBlueIconContainer>
-                      <QuoteRightIcon width={15} height={15} />
-                    </StyledBlueIconContainer>
+                    <QuoteRightIcon
+                      width={15}
+                      height={15}
+                      color={COLORS.primaryBlue}
+                    />
                   </div>
                   <EditItemsButtons
                     onEditClick={() => {
