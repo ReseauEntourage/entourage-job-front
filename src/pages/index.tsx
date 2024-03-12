@@ -15,6 +15,7 @@ import { Rejoindre } from 'src/components/partials/pages/HomePage/Rejoindre';
 import { Figures } from 'src/components/partials/pages/HomePage/Figures';
 import { Decouvrir } from 'src/components/partials/pages/HomePage/Decouvrir';
 import { Engagement } from 'src/components/partials/pages/HomePage/Engagement';
+import { NousSoutenir } from 'src/components/partials/common/NousSoutenir';
 
 const Index = () => {
   return (
@@ -51,6 +52,7 @@ const Index = () => {
       {/* <NumberPartial /> */}
       <Figures />
       <Engagement />
+      <NousSoutenir />
       {/* <ActionPartial style="default" /> */}
       {/* <LinkedInPartial /> */}
     </Layout>

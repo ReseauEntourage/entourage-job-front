@@ -32,6 +32,12 @@ export const COLORS = {
   hoverBlue: '#F4FDFF',
   darkHoverBlue: '#2D93A5',
 
+  //shades of blue
+  blueShade1: "#A1CED8",
+  blueShade2: "#61BECF",
+  // => primaryBlue is in between shade2 and shade3
+  blueShade3: "#427F8D",
+
   yesGreen: '#79CC6B',
   noRed: '#FE2929',
   wheat: '#FFF8F6',
