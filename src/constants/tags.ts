@@ -440,6 +440,18 @@ export const GA_TAGS = {
   HOME_ENGAGEMENT_ENTREPRISE_MECENAT_NATURE : {
     action: 'Home_Engagement_Entreprise_Mecenat_Nature',
   },
+  HOME_BANNER_CANDIDAT_CLICK : {
+    action: 'Home_Banner_Candidat_click'
+  },
+  HOME_BANNER_COACH_CLICK : {
+    action: 'Home_Banner_Coach_click'
+  },
+  HOME_REJOINDRE_CANDIDAT_CLICK : {
+    action: 'Home_Rejoindre_Candidat_Click'
+  },
+  HOME_REJOINDRE_COACH_CLICK : {
+    action: 'Home_Rejoindre_Coach_Click'
+  }
 } as const;
 
 export const FB_TAGS = {

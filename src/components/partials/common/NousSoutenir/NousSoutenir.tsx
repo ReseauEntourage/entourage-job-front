@@ -2,7 +2,8 @@ import React from 'react'
 import { Button, Section, Typography } from 'src/components/utils'
 import { H2 } from 'src/components/utils/Headings'
 import { COLORS } from 'src/constants/styles'
-import { StyledNousSoutenirCard, StyledNousSoutenirCardLowerPart, StyledNousSoutenirCardsContainer, StyledNousSoutenirCardUpperPart } from './NousSoutenir.styles'
+import { useIsDesktop } from 'src/hooks/utils'
+import { StyledNousSoutenirButton, StyledNousSoutenirCard, StyledNousSoutenirCardLowerPart, StyledNousSoutenirCardsContainer, StyledNousSoutenirCardUpperPart } from './NousSoutenir.styles'
 
 const content = [
     {
@@ -28,6 +29,7 @@ const content = [
 ] as const;
 
 export const NousSoutenir = () => {
+    const isDesktop = useIsDesktop();
   return (
     <Section>
         <H2 center color="black" title="Nous soutenir"/>
@@ -35,7 +37,7 @@ export const NousSoutenir = () => {
             {
                 content.map((item) => {
                     return (
-                        <StyledNousSoutenirCard>
+                        <StyledNousSoutenirCard className={isDesktop ? "" : "mobile"}>
                             <StyledNousSoutenirCardUpperPart color={item.color}>
                                 {item.value}{' '}€
                             </StyledNousSoutenirCardUpperPart>
@@ -47,12 +49,14 @@ export const NousSoutenir = () => {
                 })
             }
         </StyledNousSoutenirCardsContainer>
-        <Button
-            style="custom-secondary-inverted"
+        <StyledNousSoutenirButton>
+            <Button
+                style="custom-secondary-inverted"
 
-        >
-            Téléchargez la mesure d'impact
-        </Button>
+            >
+                Téléchargez la mesure d'impact
+            </Button>
+        </StyledNousSoutenirButton>
     </Section>
   )
 }

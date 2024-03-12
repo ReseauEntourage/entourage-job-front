@@ -3,7 +3,6 @@ import React from 'react';
 import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
-import { Partners } from './Partners';
 import { AssociationEntourage } from './AssociationEntourage';
 import {
   PageType,
@@ -330,7 +329,6 @@ export const Footer = () => {
 
   return (
     <footer id="footer">
-      {pathname === '/' && <Partners />}
       {showAssociationEntourage && <AssociationEntourage />}
       <Section style="secondary" size="small" container="large" preserveColor>
         <Grid middle center column childWidths={['1-1']} gap="medium">

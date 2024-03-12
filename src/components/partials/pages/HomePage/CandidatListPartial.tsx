@@ -1,47 +1,10 @@
-import React, { useContext } from 'react';
-import CountUp from 'react-countup';
+import React from 'react';
 import { CVList } from 'src/components/partials/CV/CVList';
 import { Grid, Section, Button, Typography } from 'src/components/utils';
 import { CV_FILTERS_DATA, INITIAL_NB_OF_CV_TO_DISPLAY } from 'src/constants';
-import { SharesCountContext } from 'src/store/SharesCountProvider';
 import { H2, H4 } from 'src/components/utils/Headings';
 
 export const CandidatListPartial = () => {
-  const { totalShares } = useContext(SharesCountContext);
-
-  const counter =
-    totalShares > 0 ? (
-      <CountUp
-        duration={5}
-        delay={2}
-        end={totalShares}
-        preserveValue
-        formattingFn={(number) => {
-          let stringNumber = number.toString();
-          if (stringNumber.length > 4) {
-            stringNumber = `${stringNumber.slice(
-              0,
-              -3
-            )}\xa0${stringNumber.slice(-3)}`;
-          }
-          if (stringNumber.length > 7) {
-            stringNumber = `${stringNumber.slice(
-              0,
-              -7
-            )}\xa0${stringNumber.slice(-7)}`;
-          }
-          if (stringNumber.length > 10) {
-            stringNumber = `${stringNumber.slice(
-              0,
-              -11
-            )}\xa0${stringNumber.slice(-11)}`;
-          }
-          return stringNumber;
-        }}
-      />
-    ) : (
-      0
-    );
 
   return (
     <Section id="candidat">

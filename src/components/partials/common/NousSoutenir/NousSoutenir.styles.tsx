@@ -8,11 +8,13 @@ export const StyledNousSoutenirCardsContainer = styled.div`
     justify-content: space-between;
     align-items: stretch;
     gap: 35px;
+    flex-wrap: wrap;
 `;
 
 export const StyledNousSoutenirCard = styled.div`
     background-color: ${COLORS.hoverBlue};
     flex: 1;
+    min-width: 180px;
     `;
 
 export const StyledNousSoutenirCardUpperPart = styled.div<{ color: string }>`
@@ -36,4 +38,10 @@ export const StyledNousSoutenirCardLowerPart = styled.div`
     span {
         color: ${COLORS.primaryBlue};
     }
+`;
+
+export const StyledNousSoutenirButton = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
 `;
