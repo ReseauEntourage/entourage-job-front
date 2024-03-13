@@ -13,8 +13,8 @@ export const StyledSimpleCardsImageCTAContainer = styled.div`
 `;
 
 export const StyledSimpleCardsImageCTASubtitle = styled.div`
-    width: 100%;
-    text-align: center;
+  width: 100%;
+  text-align: center;
 `;
 
 export const StyledSimpleCardsImageCTACard = styled.div`

@@ -4,13 +4,13 @@ import UIkit from 'uikit';
 import { v4 as uuid } from 'uuid';
 import { isEmail } from 'validator';
 import { Api } from 'src/api';
-import { StyledNLForm } from './NewsletterPartial.styles';
 import { Section } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { CheckBox } from 'src/components/utils/Inputs/CheckBox';
 import { TextInput } from 'src/components/utils/Inputs/TextInput';
 import { NEWSLETTER_TAGS } from 'src/constants';
 import { gaEvent } from 'src/lib/gtag';
+import { StyledNLForm } from './NewsletterPartial.styles';
 
 const uuidValue = uuid();
 

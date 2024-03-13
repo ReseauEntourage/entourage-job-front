@@ -1,7 +1,7 @@
 import React from 'react';
-import { MultipleCTA } from 'src/components/partials/utils/MultipleCTA';
 import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
 import { SharePartial } from 'src/components/partials/common/SharePartial';
+import { MultipleCTA } from 'src/components/partials/utils/MultipleCTA';
 import { Grid, Section } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';
 

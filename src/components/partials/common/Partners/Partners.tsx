@@ -2,9 +2,15 @@ import React from 'react';
 import { Button, Img, Section } from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
 import { COLORS } from 'src/constants/styles';
+import { GA_TAGS } from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
 import { StyledPartners } from './Partners.styles';
 
-export const Partners = () => {
+export const Partners = ({
+  tag,
+}: {
+  tag?: (typeof GA_TAGS)[keyof typeof GA_TAGS];
+}) => {
   return (
     <StyledPartners>
       <Section className="custom-primary" display="flex-center">
@@ -69,7 +75,13 @@ export const Partners = () => {
             />
           </div>
         </div>
-        <Button style="custom-secondary-inverted" href="/partenaires">
+        <Button
+          style="custom-secondary-inverted"
+          href="/partenaires"
+          onClick={() => {
+            if (tag) gaEvent(tag);
+          }}
+        >
           Voir tous les partenaires
         </Button>
       </Section>

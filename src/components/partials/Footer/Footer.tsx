@@ -3,7 +3,6 @@ import React from 'react';
 import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
-import { AssociationEntourage } from './AssociationEntourage';
 import {
   PageType,
   ChildrenType,
@@ -12,6 +11,7 @@ import { Grid, Section, SimpleLink, Button } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
+import { AssociationEntourage } from './AssociationEntourage';
 
 const pages: PageType[] = [
   {

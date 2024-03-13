@@ -2,6 +2,7 @@ import React from 'react';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import { CarouselItem } from 'src/components/partials/utils/CarouselItem';
 import { Img, Section, Carousel } from 'src/components/utils';
+import { H2 } from 'src/components/utils/Headings';
 
 const testimonies = [
   {
@@ -46,15 +47,18 @@ export const CandidateTestimoniesOrientation = ({
   return (
     <Section style={style} container="small">
       {!noTitle && (
-        <h2 className="uk-text-bold uk-text-center">
-          {
-            title ? title : (
+        <H2
+          title={
+            title || (
               <>
-                Les candidats <span className="uk-text-primary">témoignent</span>
+                Les candidats{' '}
+                <span className="uk-text-primary">témoignent</span>
               </>
             )
           }
-        </h2>
+          center
+          color="black"
+        />
       )}
       <div className="uk-flex uk-flex-center">
         <Carousel

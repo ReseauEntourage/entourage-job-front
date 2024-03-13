@@ -559,6 +559,7 @@ export const STORAGE_KEYS = {
   RELEASE_VERSION: 'release-version',
   ACCESS_TOKEN: 'access-token',
   TAX_MODAL_CLOSED: 'tax-modal-closed',
+  ENTOURAGE_PRO_MODAL_CLOSED: 'entourage-pro-modal-closed',
 };
 
 export const SOCKETS = {

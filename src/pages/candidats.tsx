@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { Layout } from 'src/components/Layout';
-import { SearchCandidates } from 'src/components/partials/pages/Candidats/SearchCandidates';
 import { CandidateTestimoniesOrientation } from 'src/components/partials/common/CandidateTestimoniesOrientation';
+import { SearchCandidates } from 'src/components/partials/pages/Candidats/SearchCandidates';
 import { ShareCandidatesCVTutorial } from 'src/components/partials/pages/Candidats/ShareCandidatesCVTutorial';
 
 const Candidats = () => {

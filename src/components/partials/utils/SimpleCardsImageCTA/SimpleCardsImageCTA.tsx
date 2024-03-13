@@ -1,14 +1,14 @@
 import React from 'react';
+import { v4 as uuid } from 'uuid';
 import { Button, Img, Section, Typography } from 'src/components/utils';
 import { H2, H5 } from 'src/components/utils/Headings';
 import { useIsDesktop } from 'src/hooks/utils';
+import { AnyToFix } from 'src/utils/Types';
 import {
   StyledSimpleCardsImageCTACard,
   StyledSimpleCardsImageCTAContainer,
   StyledSimpleCardsImageCTASubtitle,
 } from './SimpleCardsImageCTA.styles';
-import { v4 as uuid } from 'uuid';
-import { AnyToFix } from 'src/utils/Types';
 
 export interface SimpleCardImageCTAProps {
   title: string;
@@ -35,16 +35,10 @@ export const SimpleCardsImageCTA = ({
 
   return (
     <Section>
-      <H2
-        title={title}
-        color="black"
-        center
-      />
+      <H2 title={title} color="black" center />
       {subtitle && (
         <StyledSimpleCardsImageCTASubtitle>
-          <Typography size="large">
-            {subtitle}
-          </Typography>
+          <Typography size="large">{subtitle}</Typography>
         </StyledSimpleCardsImageCTASubtitle>
       )}
       <StyledSimpleCardsImageCTAContainer data-uk-scrollspy="cls:uk-animation-slide-bottom-small; target: .decouvrir-card; delay: 200">
@@ -59,19 +53,13 @@ export const SimpleCardsImageCTA = ({
                 <Img src={card.img} alt="" cover />
               </div>
               <div className="text-container">
-                <H5
-                  title={card.title}
-                  color="primaryBlue"
-                  center
-                />
-                <p>
-                  {card.description}
-                </p>
+                <H5 title={card.title} color="primaryBlue" center />
+                <p>{card.description}</p>
                 <Button
                   style="custom-secondary-inverted"
                   href={card.href}
                   onClick={() => {
-                    card.onClick && card.onClick();
+                    if (card.onClick) card.onClick();
                   }}
                 >
                   {card.CTAText}

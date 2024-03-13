@@ -1,12 +1,12 @@
 import React from 'react';
-import {
-  StyledImageTitle,
-  StyledImageTitleCTAsContainer,
-} from './ImageTitle.styles';
 import { Button, BackgroundImage } from 'src/components/utils';
 import { H1 } from 'src/components/utils/Headings';
 import { UIKIT_BUTTON_STYLES_SPEC } from 'src/components/variables';
 import { useIsDesktop } from 'src/hooks/utils';
+import {
+  StyledImageTitle,
+  StyledImageTitleCTAsContainer,
+} from './ImageTitle.styles';
 
 interface CTAProps {
   onClick?: () => void;
@@ -58,9 +58,11 @@ export const ImageTitle = ({
           color={textColor || 'white'}
           effect="cls: uk-animation-slide-left uk-animation-fade; delay: 200;"
         />
-        {description && <p data-uk-scrollspy="cls: uk-animation-slide-left uk-animation-fade; delay: 200;">
-          {description}
-        </p>}
+        {description && (
+          <p data-uk-scrollspy="cls: uk-animation-slide-left uk-animation-fade; delay: 200;">
+            {description}
+          </p>
+        )}
         {cta && !Array.isArray(cta) && (
           <Button
             style={cta.style}

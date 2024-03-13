@@ -1,4 +1,5 @@
 import React from 'react';
+import { CVList } from '../../CV/CVList';
 import { openModal } from 'src/components/modals/Modal';
 import { PostPublicOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { Button, Grid, Section } from 'src/components/utils';
@@ -8,7 +9,6 @@ import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { useFilters } from 'src/hooks/useFilters';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
-import { CVList } from '../../CV/CVList';
 
 const cvFiltersWithoutGender = CV_FILTERS_DATA.slice(0, -1);
 

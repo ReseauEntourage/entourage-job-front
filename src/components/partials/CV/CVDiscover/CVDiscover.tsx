@@ -7,11 +7,7 @@ import { Grid, Section } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { UIKIT_STYLES } from 'src/components/variables';
 
-export const CVDiscover = ({
-  style = 'default',
-}: {
-  style?: UIKIT_STYLES;
-}) => {
+export const CVDiscover = ({ style = 'default' }: { style?: UIKIT_STYLES }) => {
   const [cvs, setCVs] = useState(undefined);
   const [error, setError] = useState(null);
 
