@@ -99,14 +99,14 @@ export const ParametresHelpCardContents: {
       value: 'interview',
       label: 'Se préparer aux entretiens d’embauche',
       description:
-        'Préparez au mieux vos entretiens grâce aux conseils et au soutien des coachs LinkedOut.',
+        'Préparez au mieux vos entretiens grâce aux conseils et au soutien des coachs Entourage Pro.',
     },
     {
       icon: <CVIllu {...iconSizeProps} />,
       value: 'cv',
       label: 'M’aider à réaliser mon CV et mes lettres de motivation',
       description:
-        "Profitez de l'expérience des coachs LinkedOut pour créer des CV et lettres de motivation qui mettent en avant vos atouts et compétences.",
+        "Profitez de l'expérience des coachs Entourage Pro pour créer des CV et lettres de motivation qui mettent en avant vos atouts et compétences.",
     },
     {
       icon: <ConversationIllu {...iconSizeProps} />,

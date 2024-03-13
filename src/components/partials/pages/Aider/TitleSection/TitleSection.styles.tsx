@@ -16,7 +16,7 @@ export const StyledTitleSection = styled.div`
     min-width: 24px;
     rect {
       fill: ${(props) => {
-        return props.svgColor || COLORS.primaryOrange;
+        return props.svgColor || COLORS.primaryBlue;
       }};
       stroke: ${(props) => {
         return props.svgStroke || 'white';

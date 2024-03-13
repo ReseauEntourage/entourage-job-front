@@ -43,7 +43,7 @@ export const FormFooter = ({
             {onCancel && (
               <Button
                 style="custom-secondary"
-                color="primaryOrange"
+                color="primaryBlue"
                 onClick={onCancel}
                 dataTestId={`form-cancel-${formId}`}
               >

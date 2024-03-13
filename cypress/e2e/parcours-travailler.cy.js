@@ -15,7 +15,7 @@ describe('Parcours travailler', () => {
     cy.visit('/travailler');
   });
 
-  describe('Rejoindre LinkedOut', () => {
+  describe('Rejoindre Entourage Pro', () => {
     it('Remplir le formulaire, envoyer et fermer', () => {
       cy.get('[data-testid="banner-cta"]').first().click();
       cy.wait(500);

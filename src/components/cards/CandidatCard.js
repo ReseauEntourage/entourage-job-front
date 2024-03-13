@@ -54,9 +54,9 @@ export const CandidatCard = ({
   const showShareOptions = !asPath.includes('/entreprises');
 
   const link = encodeURI(`${process.env.SERVER_URL}/cv/${url}`);
-  const hashtags = ['LinkedOut'];
-  const sharedDescription = `La précarité n'exclut pas les compétences\xa0! Avec LinkedOut, aidons ${firstName} à retrouver un emploi en lui proposant un job ou en diffusant son CV\xa0!`;
-  const title = `LinkedOut\xa0: Aidez ${firstName} à retrouver un emploi`;
+  const hashtags = ['Entourage Pro'];
+  const sharedDescription = `La précarité n'exclut pas les compétences\xa0! Avec Entourage Pro, aidons ${firstName} à retrouver un emploi en lui proposant un job ou en diffusant son CV\xa0!`;
+  const title = `Entourage Pro\xa0: Aidez ${firstName} à retrouver un emploi`;
 
   const updateSharesCount = useUpdateSharesCount();
 

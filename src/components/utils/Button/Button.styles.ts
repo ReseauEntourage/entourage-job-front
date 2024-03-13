@@ -2,15 +2,15 @@ import styled, { css } from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export const colorToHoverBackgroundColor = {
-  primaryOrange: COLORS.hoverOrange,
+  primaryBlue: COLORS.hoverBlue,
   darkGrayFont: 'transparent',
   white: 'transparent',
 };
 
 export const colorToHoverColor = {
-  primaryOrange: COLORS.primaryOrange,
-  darkGrayFont: COLORS.primaryOrange,
-  white: COLORS.primaryOrange,
+  primaryBlue: COLORS.primaryBlue,
+  darkGrayFont: COLORS.primaryBlue,
+  white: COLORS.primaryBlue,
 };
 
 export const ButtonStyle = css`
@@ -36,27 +36,27 @@ export const ButtonStyle = css`
 
   &.uk-button-primary,
   &.uk-button-secondary {
-    border: 0.5px solid ${COLORS.primaryOrange};
+    border: 0.5px solid ${COLORS.primaryBlue};
 
-    &:hover {
+    &:hover, &:focus {
       background: none;
-      color: ${COLORS.primaryOrange};
+      color: ${COLORS.primaryBlue};
     }
 
     &.banner-btn {
-      &:hover {
+      &:hover, &:focus {
         background-color: rgba(250, 250, 250, 0.8);
-        border-color: ${COLORS.primaryOrange};
+        border-color: ${COLORS.primaryBlue};
       }
     }
   }
 
   &.uk-button-default {
-    &:hover {
-      /* background-color: ${COLORS.primaryOrange}; */
-      border-color: ${COLORS.primaryOrange};
+    &:hover, &:focus  {
+      /* background-color: ${COLORS.primaryBlue}; */
+      border-color: ${COLORS.primaryBlue};
       /* color: white; */
-      color: ${COLORS.primaryOrange};
+      color: ${COLORS.primaryBlue};
     }
   }
 
@@ -65,32 +65,32 @@ export const ButtonStyle = css`
     padding: 8px 20px;
     border: 0.5px solid
       ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
+        return COLORS[props.color] || COLORS.primaryBlue;
       }};
     color: white;
     background-color: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryOrange;
+      return COLORS[props.color] || COLORS.primaryBlue;
     }} !important;
 
     /*    path {
       fill: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryOrange;
+      return COLORS[props.color] || COLORS.primaryBlue;
     }} !important;
     } */
 
     border-radius: 5px;
 
-    &:hover {
+    &:hover, &:focus  {
       cursor: pointer;
       background-color: white !important;
       color: ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
+        return COLORS[props.color] || COLORS.primaryBlue;
       }} !important;
 
       path {
         transition: 0.2s ease-in-out;
         fill: ${(props) => {
-          return COLORS[props.color] || COLORS.primaryOrange;
+          return COLORS[props.color] || COLORS.primaryBlue;
         }} !important;
       }
     }
@@ -101,38 +101,38 @@ export const ButtonStyle = css`
     padding: 8px 20px;
     border: 0.5px solid
       ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
+        return COLORS[props.color] || COLORS.primaryBlue;
       }};
     color: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryOrange;
+      return COLORS[props.color] || COLORS.primaryBlue;
     }} !important;
 
     path {
       fill: ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
+        return COLORS[props.color] || COLORS.primaryBlue;
       }} !important;
     }
 
     border-radius: 5px;
     background-color: transparent;
 
-    &:hover {
+    &:hover, &:focus  {
       cursor: pointer;
       background-color: ${(props) => {
-        return colorToHoverBackgroundColor[props.color] || COLORS.hoverOrange;
+        return colorToHoverBackgroundColor[props.color] || COLORS.hoverBlue;
       }};
       color: ${(props) => {
-        return colorToHoverColor[props.color] || COLORS.primaryOrange;
+        return colorToHoverColor[props.color] || COLORS.primaryBlue;
       }} !important;
       border: 0.5px solid
         ${(props) => {
-          return colorToHoverColor[props.color] || COLORS.primaryOrange;
+          return colorToHoverColor[props.color] || COLORS.primaryBlue;
         }};
 
       path {
         transition: 0.2s ease-in-out;
         fill: ${(props) => {
-          return colorToHoverColor[props.color] || COLORS.primaryOrange;
+          return colorToHoverColor[props.color] || COLORS.primaryBlue;
         }} !important;
       }
     }
@@ -143,12 +143,12 @@ export const ButtonStyle = css`
     padding: 8px 20px;
     border: none;
     color: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryOrange;
+      return COLORS[props.color] || COLORS.primaryBlue;
     }} !important;
 
     background-color: transparent;
 
-    &:hover {
+    &:hover, &:focus  {
       cursor: pointer;
       opacity: 0.6 !important;
     }
@@ -161,27 +161,27 @@ export const ButtonStyle = css`
 
     border: 0.5px solid
       ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
+        return COLORS[props.color] || COLORS.primaryBlue;
       }};
     color: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryOrange;
+      return COLORS[props.color] || COLORS.primaryBlue;
     }} !important;
 
     border-radius: 25px;
 
-    &:hover {
+    &:hover, &:focus  {
       cursor: pointer;
       background-color: ${(props) => {
-        return colorToHoverBackgroundColor[props.color] || COLORS.hoverOrange;
+        return colorToHoverBackgroundColor[props.color] || COLORS.hoverBlue;
       }} !important;
 
       color: ${(props) => {
-        return colorToHoverColor[props.color] || COLORS.primaryOrange;
+        return colorToHoverColor[props.color] || COLORS.primaryBlue;
       }} !important;
 
       border: 0.5px solid
         ${(props) => {
-          return colorToHoverColor[props.color] || COLORS.primaryOrange;
+          return colorToHoverColor[props.color] || COLORS.primaryBlue;
         }};
     }
   }
@@ -193,32 +193,32 @@ export const ButtonStyle = css`
 
     border: 0.5px solid
       ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
+        return COLORS[props.color] || COLORS.primaryBlue;
       }};
     background-color: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryOrange;
+      return COLORS[props.color] || COLORS.primaryBlue;
     }} !important;
 
     path {
       transition: 0.2s ease-in-out;
       fill: ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
+        return COLORS[props.color] || COLORS.primaryBlue;
       }} !important;
     }
 
     border-radius: 25px;
 
-    &:hover {
+    &:hover, &:focus  {
       cursor: pointer;
       background-color: white !important;
       color: ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
+        return COLORS[props.color] || COLORS.primaryBlue;
       }} !important;
 
       path {
         transition: 0.2s ease-in-out;
         fill: ${(props) => {
-          return COLORS[props.color] || COLORS.primaryOrange;
+          return COLORS[props.color] || COLORS.primaryBlue;
         }} !important;
       }
     }
@@ -233,7 +233,7 @@ export const ButtonStyle = css`
       fill: ${COLORS.darkGray} !important;
     }
 
-    &:hover {
+    &:hover, &:focus  {
       color: ${COLORS.darkGray} !important;
       background-color: ${COLORS.lightgray} !important;
       cursor: default !important;

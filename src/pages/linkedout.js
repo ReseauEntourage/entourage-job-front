@@ -80,12 +80,13 @@ const LinkedOut = () => {
   const tempInnovations = [...innovations];
 
   return (
-    <Layout title="Pourquoi LinkedOut ? - LinkedOut">
+    <Layout title="Pourquoi Entourage Pro ? - Entourage Pro">
       <Chapter
         style="default"
         title={
           <>
-            <span className="uk-text-primary">Pourquoi</span> LinkedOut&nbsp;?
+            <span className="uk-text-primary">Pourquoi</span> Entourage
+            Pro&nbsp;?
           </>
         }
         content={
@@ -104,12 +105,12 @@ const LinkedOut = () => {
             Sans réseau, et avec un parcours difficile, il est quasiment
             impossible de retrouver un emploi par ses propres moyens.{' '}
             <span className="uk-text-bold uk-text-primary">
-              LinkedOut vise à lever ce frein en donnant un réseau professionnel
-              à ceux qui n’en ont pas&nbsp;!
+              Entourage Pro vise à lever ce frein en donnant un réseau
+              professionnel à ceux qui n’en ont pas&nbsp;!
             </span>
             <br />
             <br />
-            LinkedOut est un modèle de technologie positive pour insérer les
+            Entourage Pro est un modèle de technologie positive pour insérer les
             personnes très précaires créé en 2019 par l’association Entourage.
             <br />
             <br />
@@ -129,7 +130,8 @@ const LinkedOut = () => {
         style="muted"
         title={
           <>
-            LinkedOut, <span className="uk-text-primary">c&apos;est quoi</span>
+            Entourage Pro,{' '}
+            <span className="uk-text-primary">c&apos;est quoi</span>
             &nbsp;?
           </>
         }
@@ -149,14 +151,14 @@ const LinkedOut = () => {
             sociabilité.
             <br />
             <br />
-            Le modèle LinkedOut repose sur&nbsp;:
+            Le modèle Entourage Pro repose sur&nbsp;:
             <br />
             <AnimatedList
               items={[
                 <>
                   <span className="uk-text-bold">
                     la plateforme{' '}
-                    <SimpleLink href="/">www.linkedout.fr</SimpleLink>
+                    <SimpleLink href="/">www.entourage-pro.fr</SimpleLink>
                   </span>{' '}
                   sur laquelle les citoyens peuvent viraliser les CV de
                   candidats sur leurs réseaux, en un clic pour générer des
@@ -189,18 +191,19 @@ const LinkedOut = () => {
         style="default"
         title={
           <>
-            LinkedOut, <span className="uk-text-primary">pour qui</span>&nbsp;?
+            Entourage Pro, <span className="uk-text-primary">pour qui</span>
+            &nbsp;?
           </>
         }
         content={
           <>
             <span className="uk-text-bold">
-              LinkedOut touche des publics très divers&nbsp;:
+              Entourage Pro touche des publics très divers&nbsp;:
             </span>{' '}
             personnes hébergées en centres d’hébergement, à l&apos;hôtel social,
             réfugiés, jeunes en précarité, personnes issues de parcours
-            d’insertion, en situation de handicap,... Le modèle LinkedOut repose
-            sur&nbsp;:
+            d’insertion, en situation de handicap,... Le modèle Entourage Pro
+            repose sur&nbsp;:
             <br />
             <AnimatedList
               items={[
@@ -236,18 +239,18 @@ const LinkedOut = () => {
         style="muted"
         title={
           <>
-            LinkedOut, une{' '}
+            Entourage Pro, une{' '}
             <span className="uk-text-primary">brique supplémentaire</span> dans
             l’écosystème de l’inclusion et l’emploi
           </>
         }
         content={
           <>
-            LinkedOut vise à agir en collaboration avec les acteurs du retour
-            vers l’emploi en proposant une brique complémentaire à l’existant
-            (acteurs sociaux publics et associatifs, structures d’insertion,
-            structures d’hébergement, job-boards solidaires), fondée sur une
-            approche réseau.
+            Entourage Pro vise à agir en collaboration avec les acteurs du
+            retour vers l’emploi en proposant une brique complémentaire à
+            l’existant (acteurs sociaux publics et associatifs, structures
+            d’insertion, structures d’hébergement, job-boards solidaires),
+            fondée sur une approche réseau.
             <br />
             <br />
             Pour les personnes sortant de parcours d’insertion, il s’inscrit
@@ -265,7 +268,7 @@ const LinkedOut = () => {
           <h2 className="uk-text-bold uk-align-center uk-text-center uk-margin-large-bottom uk-margin-remove-top">
             Quelle est{' '}
             <span className="uk-text-primary">l&apos;innovation</span> de
-            LinkedOut&nbsp;?
+            Entourage Pro&nbsp;?
           </h2>
           <Grid masonry top left gap="medium" eachWidths={['1-3@m', '2-3@m']}>
             <Card

@@ -500,7 +500,7 @@ export const PageCVContent = ({
         <p>
           Je suis accompagné{cv.user.candidat.gender === 1 && 'e'} dans ma
           recherche d&#8217;emploi et mon intégration en entreprise par le
-          projet LinkedOut. Pour plus d&#8217;information, contactez :&nbsp;
+          projet Entourage Pro. Pour plus d&#8217;information, contactez :&nbsp;
           <Link href="mailto:contact-linkedout@entourage.social">
             contact-linkedout@entourage.social
           </Link>

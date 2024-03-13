@@ -109,7 +109,7 @@ export const formSendExternalMessage: FormSchema<{
       name: 'disclaimer',
       component: 'text',
       title:
-        "En continuant, j’accepte que mon message soit modéré par l'équipe LinkedOut afin de protéger les candidats d'éventuels messages indésirables",
+        "En continuant, j’accepte que mon message soit modéré par l'équipe Entourage Pro afin de protéger les candidats d'éventuels messages indésirables",
     },
   ],
 };

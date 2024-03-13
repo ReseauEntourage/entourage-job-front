@@ -28,6 +28,7 @@ interface CardProps {
   isDefaultOpen?: boolean;
   editButtonText?: string;
   dataTestId?: string;
+  editIcon?: React.ReactNode;
 }
 
 export const Card = ({
@@ -40,6 +41,7 @@ export const Card = ({
   isDefaultOpen = true,
   editButtonText,
   dataTestId,
+  editIcon,
 }: CardProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(isDefaultOpen);
 
@@ -63,7 +65,7 @@ export const Card = ({
             {!isLoading && editCallback && isDesktop && (
               <StyledEditIconContainer>
                 <ButtonIcon
-                  icon={<EditIcon />}
+                  icon={editIcon || <EditIcon />}
                   onClick={editCallback}
                   dataTestId={`${dataTestId}-button-edit`}
                 />

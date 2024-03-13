@@ -47,7 +47,7 @@ export const StyledSelect = styled.div`
   }
 
   & .Select__dropdown-indicator {
-    color: ${COLORS.primaryOrange};
+    color: ${COLORS.primaryBlue};
     padding: 0 !important;
     display: ${(props) =>
       !props.value ||
@@ -58,7 +58,7 @@ export const StyledSelect = styled.div`
         : 'none'};
 
     :hover {
-      color: ${COLORS.primaryOrange} !important;
+      color: ${COLORS.primaryBlue} !important;
       cursor: pointer;
     }
   }
@@ -116,8 +116,8 @@ export const StyledSelect = styled.div`
 
   & .Select__option {
     :hover {
-      border: 0.5px solid ${COLORS.primaryOrange};
-      color: ${COLORS.primaryOrange};
+      border: 0.5px solid ${COLORS.primaryBlue};
+      color: ${COLORS.primaryBlue};
       cursor: pointer;
     }
   }
@@ -133,7 +133,7 @@ export const StyledSelect = styled.div`
   & .Select__option--is-selected {
     color: ${COLORS.black} !important;
     :hover {
-      color: ${COLORS.primaryOrange} !important;
+      color: ${COLORS.primaryBlue} !important;
     }
   }
 
@@ -150,7 +150,7 @@ export const StyledSelect = styled.div`
   }
 
   & .Select__multi-value__remove {
-    color: ${COLORS.primaryOrange};
+    color: ${COLORS.primaryBlue};
     padding-right: 0 !important;
     :hover {
       background-color: white !important;

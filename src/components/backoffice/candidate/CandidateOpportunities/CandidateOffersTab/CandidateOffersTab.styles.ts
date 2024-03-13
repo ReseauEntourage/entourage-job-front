@@ -27,12 +27,12 @@ export const StyledTabsUl = styled.ul`
       }
     }
     &.active {
-      border-bottom: 3px solid ${COLORS.primaryOrange};
-      color: ${COLORS.primaryOrange};
+      border-bottom: 3px solid ${COLORS.primaryBlue};
+      color: ${COLORS.primaryBlue};
       &:hover {
         cursor: default;
-        border-bottom: 3px solid ${COLORS.primaryOrange};
-        color: ${COLORS.primaryOrange};
+        border-bottom: 3px solid ${COLORS.primaryBlue};
+        color: ${COLORS.primaryBlue};
       }
     }
     &:hover {
@@ -58,9 +58,9 @@ export const StyledTabsUl = styled.ul`
         color: ${COLORS.darkGray};
       }
       &.active {
-        border: 1px solid ${COLORS.primaryOrange};
+        border: 1px solid ${COLORS.primaryBlue};
         a {
-          color: ${COLORS.primaryOrange};
+          color: ${COLORS.primaryBlue};
           font-weight: 700;
         }
       }

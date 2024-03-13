@@ -22,7 +22,7 @@ const numbers = [
   {
     value: '100%',
     description:
-      'des partenaires perçoivent LinkedOut comme un apport complémentaire',
+      'des partenaires perçoivent Entourage Pro comme un apport complémentaire',
   },
 ];
 

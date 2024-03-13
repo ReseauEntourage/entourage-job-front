@@ -15,7 +15,7 @@ interface CVPDFPageProps {
 const CVPDFPage = ({ cv, page, router }: CVPDFPageProps) => {
   if (!cv) {
     return (
-      <Layout title="Page introuvable - LinkedOut">
+      <Layout title="Page introuvable - Entourage Pro">
         <Section className="uk-text-center" size="large">
           <h3 className="uk-text-bold">Ce profil n’est pas disponible</h3>
           <p>
@@ -29,7 +29,7 @@ const CVPDFPage = ({ cv, page, router }: CVPDFPageProps) => {
 
   return (
     <Layout
-      title={`${cv.user.candidat.firstName} - LinkedOut`}
+      title={`${cv.user.candidat.firstName} - Entourage Pro`}
       metaTitle={`Aidez ${cv.user.candidat.firstName} en partageant son CV.`}
       metaUrl={`${process.env.SERVER_URL}${router.asPath}`}
       metaDescription={cv.story}

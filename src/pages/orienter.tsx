@@ -62,7 +62,7 @@ const Orienter = () => {
   };
 
   return (
-    <Layout title="Orienter - LinkedOut">
+    <Layout title="Orienter - Entourage Pro">
       {/* change picture AND component */}
       <ImageTitle
         img="/static/img/orienter-banner.jpg"
@@ -77,7 +77,7 @@ const Orienter = () => {
         description={
           <>
             Vous accompagnez des personnes en situation d&lsquo;exclusion ? Avec
-            LinkedOut, accélérez leur retour à l&lsquo;emploi !
+            Entourage Pro, accélérez leur retour à l&lsquo;emploi !
           </>
         }
       />
@@ -107,7 +107,7 @@ const Orienter = () => {
       {/* change style */}
       <Reviews
         reviews={reviews}
-        title="Plus de 60 entreprises partenaires nous font confiance à LinkedOut"
+        title="Plus de 60 entreprises partenaires nous font confiance à Entourage Pro"
       />
 
       {/* already done => only remove uikit */}
@@ -116,7 +116,8 @@ const Orienter = () => {
           <H2
             title={
               <>
-                <span className="orange">Ils travaillent</span> avec LinkedOut
+                <span className="orange">Ils travaillent</span> avec Entourage
+                Pro
               </>
             }
             color="black"

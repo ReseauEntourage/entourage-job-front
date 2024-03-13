@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledOrienterBackground = styled.div`
-  background-color: #fef8f5;
+  background-color: ${COLORS.hoverBlue};
 `;
 
 export const StyledOrienterInscrireContainer = styled.div`
@@ -20,7 +20,7 @@ export const StyledOrienterInscrireContainer = styled.div`
   .text-container {
     width: 50%;
     ul {
-      color: ${COLORS.primaryOrange};
+      color: ${COLORS.darkGrayFont};
       padding: 5px 0;
       li {
         list-style: none;

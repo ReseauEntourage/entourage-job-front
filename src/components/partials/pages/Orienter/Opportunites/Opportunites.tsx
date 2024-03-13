@@ -37,7 +37,7 @@ export const Opportunites = () => {
     <StyledOrienterBackground>
       <Section>
         <H2
-          title="Ce qu'apporte LinkedOut à vos bénéficiaires"
+          title="Ce qu'Entourage Pro apporte à vos bénéficiaires"
           color="black"
           center
         />

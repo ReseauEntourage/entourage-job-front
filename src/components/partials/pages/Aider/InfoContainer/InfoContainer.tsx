@@ -1,8 +1,10 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import PictoCreationOpp from 'assets/icons/picto-creation-opportunite.svg';
-import PictoFaciliterInte from 'assets/icons/picto-faciliter-integration.svg';
-import PictoRechercheCV from 'assets/icons/picto-recherche-cv.svg';
+import {
+  PictoRechercheCv,
+  PictoCreationOpportunite,
+  PictoFaciliterIntegration,
+} from 'assets/icons/icons';
 import { TitleSection } from 'src/components/partials/pages/Aider/TitleSection';
 import { Container, Img } from 'src/components/utils';
 import { COLORS } from 'src/constants/styles';
@@ -12,26 +14,26 @@ const uuidValue = uuid();
 
 const infoContent = [
   {
-    picto: PictoRechercheCV,
+    picto: <PictoRechercheCv color={COLORS.primaryBlue} />,
     alt: 'recherche emploi',
     title: 'Préparation à la recherche d’emploi',
     ul: [
-      'Réalisation du CV façon LinkedOut',
+      'Réalisation du CV façon Entourage Pro',
       'Relecture du parcours du candidat et formalisation des envies professionnelles',
     ],
   },
   {
-    picto: PictoCreationOpp,
+    picto: <PictoCreationOpportunite color={COLORS.primaryBlue} />,
     alt: 'creation opportunités professionnelles',
     title: "Création d'opportunités professionnelles",
     ul: [
       'Activer son réseau avec le candidat ',
-      'Rechercher et suivre des opportunités d’emploi (via LinkedOut et en dehors)',
+      'Rechercher et suivre des opportunités d’emploi (via Entourage Pro et en dehors)',
       "Préparation aux entretiens d'embauche et soutien des candidatures",
     ],
   },
   {
-    picto: PictoFaciliterInte,
+    picto: <PictoFaciliterIntegration color={COLORS.primaryBlue} />,
     alt: 'faciliter intégration entreprise',
     title: "Facilitation de l'intégration en entreprise ",
     ul: [
@@ -57,12 +59,12 @@ export const InfoContainer = () => {
         <TitleSection
           title="Toutes les informations sur la mission"
           titleColor="black"
-          svgColor={COLORS.primaryOrange}
+          svgColor={COLORS.primaryBlue}
         />
         <div className="text-content">
           <p>
             Accompagnez une personne précaire vers l&apos;emploi en devenant
-            Coach LinkedOut. <br />
+            Coach Entourage Pro. <br />
             <span className="orange">
               Le coach soutient et accompagne un candidat sur une durée de 6 à 9
               mois, à raison de 2h par semaine, en présentiel.
@@ -81,7 +83,7 @@ export const InfoContainer = () => {
               <Img
                 cover
                 src="/static/img/aider-informations-mission.jpg"
-                alt="Un coach et un candidat LinkedOut"
+                alt="Un coach et un candidat Entourage Pro"
               />
             </div>
           </div>
@@ -89,7 +91,7 @@ export const InfoContainer = () => {
             return (
               <div className="informer-card" key={`${key}-parent-${uuidValue}`}>
                 <div className="picto-h4">
-                  <content.picto />
+                  {content.picto}
                   <h4>{content.title}</h4>
                 </div>
                 <ul data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;">

@@ -12,7 +12,7 @@ export const StyledContainer = styled.div`
 export const StyledOpportunitySectionTitleContainer = styled.div`
   flex: 1;
   flex-direction: column;
-  border-bottom: 1px ${COLORS.primaryOrange} solid;
+  border-bottom: 1px ${COLORS.gray} solid;
 `;
 
 export const StyledOpportunitySectionContentContainer = styled.div`
@@ -45,13 +45,13 @@ export const StyledOpportunitySectionCandidateLi = styled.li`
   &:not(.orange) {
     &:hover {
       cursor: pointer;
-      color: ${COLORS.primaryOrange} !important;
+      color: ${COLORS.primaryBlue} !important;
     }
   }
   &.orange {
     span,
     select {
-      color: ${COLORS.primaryOrange} !important;
+      color: ${COLORS.primaryBlue} !important;
     }
   }
 `;
@@ -72,5 +72,5 @@ export const StyledOpportunitySectionCandidateSelect = styled.div`
 `;
 
 export const StyledActionLabelContainer = styled.div`
-  color: ${COLORS.primaryOrange};
+  color: ${COLORS.primaryBlue};
 `;

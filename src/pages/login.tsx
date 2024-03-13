@@ -62,7 +62,7 @@ const Login = () => {
   }, [replace, requestedPath, user]);
 
   return (
-    <Layout title="Connexion - LinkedOut">
+    <Layout title="Connexion - Entourage Pro">
       <Section size="large" style="muted">
         <div className="uk-flex uk-flex-center">
           <div className="uk-width-1-2@m uk-card uk-card-default uk-card-body uk-flex uk-flex-column">

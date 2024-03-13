@@ -14,8 +14,8 @@ export const CVEditWelcome = ({ user }: { user: UserWithUserCandidate }) => {
       } ${user.firstName} !`}
       description={
         isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
-          ? "Bienvenue dans votre espace personnel, depuis lequel vous pouvez modifier les informations qui s'affichent sur votre CV sur LinkedOut."
-          : `Bienvenue dans l'espace personnel de votre candidat, depuis lequel vous pouvez modifier avec lui/elle les informations qui s'affichent sur son CV sur LinkedOut.`
+          ? "Bienvenue dans votre espace personnel, depuis lequel vous pouvez modifier les informations qui s'affichent sur votre CV sur Entourage Pro."
+          : `Bienvenue dans l'espace personnel de votre candidat, depuis lequel vous pouvez modifier avec lui/elle les informations qui s'affichent sur son CV sur Entourage Pro.`
       }
     >
       <CandidatHeader user={user} />

@@ -14,7 +14,7 @@ export const Publier = ({ innerRef }: { innerRef: Ref<HTMLDivElement> }) => {
     <Section>
       {!isDesktop && (
         <H3
-          color="primaryOrange"
+          color="primaryBlue"
           title="Publication du CV sans parcours d’accompagnement"
         />
       )}
@@ -24,7 +24,7 @@ export const Publier = ({ innerRef }: { innerRef: Ref<HTMLDivElement> }) => {
         <div className="text-container" ref={innerRef}>
           {isDesktop && (
             <H3
-              color="primaryOrange"
+              color="primaryBlue"
               title="Publication du CV sans parcours d’accompagnement"
             />
           )}
@@ -45,7 +45,7 @@ export const Publier = ({ innerRef }: { innerRef: Ref<HTMLDivElement> }) => {
               <strong>
                 Ce format inclut donc essentiellement l’accès à la plateforme
               </strong>{' '}
-              LinkedOut pour créer le CV du candidat, le publier sur la
+              Entourage Pro pour créer le CV du candidat, le publier sur la
               plateforme, accéder aux offres d’emploi de nos entreprises
               partenaires et y répondre en toute autonomie.
             </p>

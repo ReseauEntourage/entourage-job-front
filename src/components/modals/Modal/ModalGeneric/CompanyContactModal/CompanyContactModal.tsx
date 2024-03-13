@@ -12,8 +12,8 @@ export const CompanyContactModal = () => {
   return (
     <ModalEdit
       submitText="Envoyer"
-      title="Contacter un référent LinkedOut"
-      description="Contactez le référent LinkedOut de votre région pour échanger sur votre projet avant de vous lancer !"
+      title="Contacter un référent Entourage Pro"
+      description="Contactez le référent Entourage Pro de votre région pour échanger sur votre projet avant de vous lancer !"
       formSchema={formCompanyContact}
       onSubmit={async (fields, closeModal) => {
         try {

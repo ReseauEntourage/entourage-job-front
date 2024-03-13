@@ -188,7 +188,9 @@ export function MemberList({
               </h2>
               <p>
                 Contacte{' '}
-                <span className="uk-text-primary">l&apos;équipe LinkedOut</span>{' '}
+                <span className="uk-text-primary">
+                  l&apos;équipe Entourage Pro
+                </span>{' '}
                 pour en savoir plus.
               </p>
             </div>
@@ -212,7 +214,7 @@ export function MemberList({
                     style="custom-secondary-inverted"
                     size="small"
                     disabled={!hasSelection}
-                    color="primaryOrange"
+                    color="primaryBlue"
                     onClick={() => {
                       return executeAction({ hidden: true }, 'put');
                     }}
@@ -241,7 +243,7 @@ export function MemberList({
             >
               <Button
                 style="custom-secondary"
-                color="primaryOrange"
+                color="primaryBlue"
                 onClick={() => fetchData(search, filters, role, offset, false)}
               >
                 Voir tous les {roleToDisplay}

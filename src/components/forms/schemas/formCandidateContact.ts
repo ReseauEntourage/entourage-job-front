@@ -160,7 +160,7 @@ export const formCandidateContact: FormSchema<{
       name: 'birthDate',
       component: 'datepicker',
       title:
-        'Sa date de naissance (la personne doit avoir 18 et 30 ans pour rejoindre LinkedOut)',
+        'Sa date de naissance (la personne doit avoir 18 et 30 ans pour rejoindre Entourage Pro)',
       showLabel: true,
       rules: [
         {
@@ -355,7 +355,7 @@ export const formCandidateContact: FormSchema<{
       id: 'descriptionLabel',
       name: 'descriptionLabel',
       title:
-        'En quelques lignes, merci de vous présenter et détailler pourquoi vous souhaitez orienter cette personne vers LinkedOut',
+        'En quelques lignes, merci de vous présenter et détailler pourquoi vous souhaitez orienter cette personne vers Entourage Pro',
       component: 'heading',
     },
     {
@@ -370,7 +370,7 @@ export const formCandidateContact: FormSchema<{
       name: 'heardAbout',
       component: 'select-simple',
       options: HEARD_ABOUT_FILTERS,
-      title: 'Comment avez-vous connu LinkedOut ?*',
+      title: 'Comment avez-vous connu Entourage Pro ?*',
       showLabel: true,
       isRequired: true,
     },
@@ -392,7 +392,7 @@ export const formCandidateContact: FormSchema<{
       name: 'contactWithCoach',
       component: 'checkbox',
       title:
-        'Souhaitez-vous être mis en relation avec le/la Coach LinkedOut si besoin et avec l’accord de la personne ?',
+        'Souhaitez-vous être mis en relation avec le/la Coach Entourage Pro si besoin et avec l’accord de la personne ?',
     },
   ],
 };

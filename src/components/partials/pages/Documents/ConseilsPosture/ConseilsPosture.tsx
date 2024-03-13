@@ -81,7 +81,7 @@ export const ConseilsPosture = () => {
     <Section style="custom-primary">
       <H1
         title="Les conseils sur la posture à adopter"
-        color={COLORS.primaryOrange}
+        color={COLORS.primaryBlue}
         center
       />
       <StyledDocumentCenteredText>
@@ -103,11 +103,7 @@ export const ConseilsPosture = () => {
         const key = uuid();
         return (
           <StyledDocumentTitleText key={key}>
-            <H4
-              title={item.title}
-              color={COLORS.primaryOrange}
-              weight="normal"
-            />
+            <H4 title={item.title} color={COLORS.primaryBlue} weight="normal" />
             {item.description && <p>{item.description}</p>}
             {item.list && (
               <ul>

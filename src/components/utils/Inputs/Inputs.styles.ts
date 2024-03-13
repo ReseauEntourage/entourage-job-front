@@ -73,7 +73,7 @@ export const StyledLimitContainer = styled.div`
 
 export const StyledLimit = styled.div`
   color: ${({ warning }) => {
-    return warning ? COLORS.darkOrange : COLORS.darkGray;
+    return warning ? COLORS.warningOrange : COLORS.darkGray;
   }};
   font-size: 12px;
   line-height: 12px;

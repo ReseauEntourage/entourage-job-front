@@ -21,7 +21,7 @@ export const StyledCardContent = styled.div`
 `;
 
 export const StyledCardTitleContainer = styled.div`
-  border-bottom: ${COLORS.hoverOrange} solid 1px;
+  border-bottom: ${COLORS.lightgray} solid 1px;
   margin-right: 25px;
   margin-left: 25px;
   padding-bottom: 25px;
@@ -50,7 +50,11 @@ export const StyledEditIconContainer = styled.div`
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  border: ${COLORS.primaryOrange} 1px solid;
+  border: ${COLORS.primaryBlue} 1px solid;
+  transition: 0.3s ease-in-out;
+  :hover {
+    background-color: ${COLORS.hoverBlue};
+  }
 `;
 
 export const StyledSpinnerContainer = styled.div`
@@ -68,7 +72,7 @@ export const StyledChevronContainer = styled.div`
   align-items: center;
 
   svg {
-    color: ${COLORS.primaryOrange};
+    color: ${COLORS.primaryBlue};
     height: 19px;
     width: 19px;
   }

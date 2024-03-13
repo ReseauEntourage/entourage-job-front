@@ -48,7 +48,7 @@ const Merci = () => {
   const currentType = type as ThankYouMessagesType;
 
   return (
-    <Layout title="Merci ! - LinkedOut" noIndex>
+    <Layout title="Merci ! - Entourage Pro" noIndex>
       <Section className="uk-text-center" style="default" size="large">
         <>
           {ThankYouMessages[currentType] || (
@@ -58,7 +58,7 @@ const Merci = () => {
           )}
         </>
         <h3>À bientôt&nbsp;!</h3>
-        <h4 className="uk-text-italic">L&apos;équipe LinkedOut</h4>
+        <h4 className="uk-text-italic">L&apos;équipe Entourage Pro</h4>
         <Grid middle column gap="collapse">
           <Button href="/" style="secondary" className="uk-margin-large-top">
             Revenir à la page d&apos;accueil

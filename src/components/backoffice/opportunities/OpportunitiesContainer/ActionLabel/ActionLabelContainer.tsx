@@ -32,14 +32,14 @@ export const ActionLabelContainer = ({
       {isPublic && isRecommended && (
         <ActionLabel
           disabled
-          color="primaryOrange"
+          color="primaryBlue"
           label="Recommandée"
           icon={<EntourageIcon height={16} width={10} />}
         />
       )}
       {isPublic && isBookmarked && (
         <ActionLabel
-          color="primaryOrange"
+          color="primaryBlue"
           label="Favoris"
           onClick={bookmarkOpportunity}
           id="cta-unbookmark"
@@ -49,7 +49,7 @@ export const ActionLabelContainer = ({
       {isExternal && (
         <ActionLabel
           disabled
-          color="primaryOrange"
+          color="primaryBlue"
           label="Perso"
           icon={<HeartIcon />}
         />
@@ -57,7 +57,7 @@ export const ActionLabelContainer = ({
       {isPublic && !isRecommended && !isBookmarked && (
         <ActionLabel
           hoverAnimation
-          color="primaryOrange"
+          color="primaryBlue"
           label="Ajouter aux favoris"
           onClick={bookmarkOpportunity}
           id="cta-bookmark"

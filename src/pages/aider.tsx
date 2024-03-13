@@ -10,13 +10,13 @@ import { GA_TAGS } from 'src/constants/tags';
 
 const Aider = () => {
   return (
-    <Layout title="Aider - LinkedOut">
+    <Layout title="Aider - Entourage Pro">
       <ImageTitle
         title="Vous souhaitez aider&nbsp;?"
-        description="Engagez-vous et aidez les candidats LinkedOut à retrouver un réseau, que vous soyez disponibles quelques minutes ou quelques mois."
+        description="Engagez-vous et aidez les candidats Entourage Pro à retrouver un réseau, que vous soyez disponibles quelques minutes ou quelques mois."
         img="/static/img/aider-banner-desktop.jpg"
         imgMobile="/static/img/aider-banner-mobile.jpg"
-        alt="Un candidat LinkedOut et sa coach"
+        alt="Un candidat Entourage Pro et sa coach"
       />
       <HelpCards />
       <InfoContainer />

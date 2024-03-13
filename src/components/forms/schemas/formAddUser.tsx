@@ -25,7 +25,7 @@ const CREATE_NEW_ORGANIZATION_OPTION = {
   value: CREATE_NEW_ORGANIZATION_VALUE,
   label: (
     <>
-      <PlusFilledIcon color={COLORS.primaryOrange} />
+      <PlusFilledIcon color={COLORS.primaryBlue} />
       Ajouter une nouvelle structure
     </>
   ),

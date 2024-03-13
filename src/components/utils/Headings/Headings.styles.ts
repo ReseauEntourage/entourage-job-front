@@ -27,14 +27,14 @@ export const StyledH2 = styled.h2<StyledHeadingProps>`
     if (props.color) {
       return props.color;
     }
-    return `${COLORS.primaryOrange}`;
+    return `${COLORS.primaryBlue}`;
   }};
   text-align: ${(props) => (props.center ? 'center' : 'left')};
   &.big {
     font-size: ${(props) => (props.mobile ? '24px' : '36px')};
   }
   span.orange {
-    color: ${COLORS.primaryOrange};
+    color: ${COLORS.primaryBlue};
   }
 `;
 

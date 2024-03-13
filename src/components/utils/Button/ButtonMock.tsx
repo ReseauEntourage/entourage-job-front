@@ -12,7 +12,7 @@ export const ButtonMock = ({
   size = 'large',
   widths = [],
   dataTestId = '',
-  color = 'primaryOrange',
+  color = 'primaryBlue',
 }: ButtonProps) => {
   const classBuffer = getButtonClassBuffer({
     visible,

@@ -12,7 +12,7 @@ export const StyledConnectedItem = styled.li`
     border-bottom: solid transparent 4px;
   }
   &.active > a {
-    border-bottom: solid ${COLORS.primaryOrange} 4px;
+    border-bottom: solid ${COLORS.primaryBlue} 4px;
   }
   .icon-span {
     color: ${({ color }) => {

@@ -18,7 +18,7 @@ const StyledButtonContainer = styled.div`
 
 export const allCTAs = {
   apply: {
-    color: 'primaryOrange',
+    color: 'primaryBlue',
     className: 'custom-primary-inverted',
     action: 'contactEmail',
     text: (
@@ -29,7 +29,7 @@ export const allCTAs = {
     ),
   },
   applied: {
-    color: 'primaryOrange',
+    color: 'primaryBlue',
     className: 'custom-primary-inverted',
     action: 'updateToApplied',
     text: (
@@ -51,7 +51,7 @@ export const allCTAs = {
     ),
   },
   resend: {
-    color: 'primaryOrange',
+    color: 'primaryBlue',
     className: 'custom-primary-inverted',
     action: 'contactRelance',
     text: (
@@ -62,7 +62,7 @@ export const allCTAs = {
     ),
   },
   gotInterview: {
-    color: 'primaryOrange',
+    color: 'primaryBlue',
     className: 'custom-primary-inverted',
     action: 'updateToInterview',
     text: (
@@ -84,7 +84,7 @@ export const allCTAs = {
     ),
   },
   dateInterview: {
-    color: 'primaryOrange',
+    color: 'primaryBlue',
     className: 'custom-primary-inverted',
     action: 'addDateInterview',
     text: (
@@ -95,7 +95,7 @@ export const allCTAs = {
     ),
   },
   gotJob: {
-    color: 'primaryOrange',
+    color: 'primaryBlue',
     className: 'custom-primary-inverted',
     action: 'updateToHired',
     text: (
@@ -106,7 +106,7 @@ export const allCTAs = {
     ),
   },
   dateBegin: {
-    color: 'primaryOrange',
+    color: 'primaryBlue',
     className: 'custom-primary-inverted',
     action: 'addDateHired',
     text: (
@@ -117,7 +117,7 @@ export const allCTAs = {
     ),
   },
   trialValidated: {
-    color: 'primaryOrange',
+    color: 'primaryBlue',
     className: 'custom-primary-inverted',
     action: () => {},
     text: "J'ai validé ma période d'essai",

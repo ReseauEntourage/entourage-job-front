@@ -32,7 +32,7 @@ export const SearchCandidates = ({ style }: { style?: UIKIT_STYLES }) => {
             Découvrez les <span className="uk-text-primary">candidats</span>
           </h2>
           <div>
-            Découvrez ci-dessous les CV des candidats LinkedOut. Vous pouvez
+            Découvrez ci-dessous les CV des candidats Entourage Pro. Vous pouvez
             leur donner un coup de pouce en partageant leur CV, leur transmettre
             des opportunités, ou leur proposer des offres d&apos;emploi.
           </div>
@@ -49,7 +49,8 @@ export const SearchCandidates = ({ style }: { style?: UIKIT_STYLES }) => {
               }}
             >
               Vous êtes recruteur&nbsp;? Vous pouvez également publier une offre
-              d&apos;emploi qui sera visible par tous les candidats LinkedOut.
+              d&apos;emploi qui sera visible par tous les candidats Entourage
+              Pro.
             </Button>
           </p>
         </div>

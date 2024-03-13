@@ -231,7 +231,8 @@ describe('Admin', () => {
   });
 
   describe('Members', () => {
-    it('Should open backoffice members', () => {
+    
+    beforeEach(() => {
       cy.visit('/backoffice/admin/membres?role=Candidat&zone=LYON', {
         onBeforeLoad: function async(window) {
           window.localStorage.setItem('access-token', '1234');
@@ -239,6 +240,10 @@ describe('Admin', () => {
         },
       });
       cy.wait('@members');
+    });
+
+    it('Should open backoffice members', () => {
+
       // test if all members are in the table
       cy.fixture('user-members-res').then((members) => {
         cy.get('[data-testid="member-list"]')
@@ -249,6 +254,7 @@ describe('Admin', () => {
 
     describe("Remplir le formulaire de création d'un membre, envoyer et fermer", () => {
       beforeEach(() => {
+
         cy.get('[data-testid="button-admin-create"]')
           .should('be.visible')
           .first()
@@ -508,6 +514,7 @@ describe('Admin', () => {
       });
 
       describe("Creation d'un user et d'une structure", () => {
+        
         afterEach(() => {
           cy.get('#form-add-user-adminRole-container').should('not.exist');
 
@@ -607,7 +614,7 @@ describe('Admin', () => {
   });
 
   describe('Organizations', () => {
-    it('Should open backoffice organizations', () => {
+    beforeEach(() => {
       cy.visit('/backoffice/admin/structures?zone=LYON', {
         onBeforeLoad: function async(window) {
           window.localStorage.setItem('access-token', '1234');
@@ -615,6 +622,9 @@ describe('Admin', () => {
         },
       });
       cy.wait('@organizationListPage');
+    });
+
+    it('Should open backoffice organizations', () => {
       // test if all organizations are in the table
       cy.fixture('organization-search-res').then((orgs) => {
         cy.get('[data-testid="organization-list"]')
@@ -701,7 +711,7 @@ describe('Admin', () => {
         .should('be.visible')
         .scrollIntoView()
         .clear()
-        .type('LinkedOut');
+        .type('Entourage Pro');
 
       cy.get('#form-add-organization-address')
         .should('be.visible')

@@ -20,10 +20,10 @@ export const StyledContainer = styled.div`
     ${({ color, hoverAnimation }) => {
       return hoverAnimation
         ? 'transparent'
-        : COLORS[color] || COLORS.primaryOrange;
+        : COLORS[color] || COLORS.primaryBlue;
     }};
   color: ${({ color }) => {
-    return COLORS[color] || COLORS.primaryOrange;
+    return COLORS[color] || COLORS.primaryBlue;
   }} !important;
 
   .action-label {
@@ -61,7 +61,7 @@ export const StyledContainer = styled.div`
             cursor: pointer;
             transition: 0.6s ease-out;
             border-color: ${({ color }) => {
-              return COLORS[color] || COLORS.primaryOrange;
+              return COLORS[color] || COLORS.primaryBlue;
             }};
 
             .action-label {

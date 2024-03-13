@@ -11,7 +11,7 @@ const testimonyContent = [
   {
     text: (
       <>
-        “ LinkedOut m’apporte une ouverture d’esprit encore plus grande,
+        “ Entourage Pro m’apporte une ouverture d’esprit encore plus grande,
         <span>
           {' '}
           l’envie d’aider les autres se concrétise vraiment avec ce projet !

@@ -10,7 +10,7 @@ export const StyledInformationsPersonnellesList = styled.ul`
     }
     svg {
       margin-right: 10px;
-      color: ${COLORS.primaryOrange};
+      color: ${COLORS.primaryBlue};
     }
   }
   h5 {

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { COLORS } from 'src/constants/styles';
 
 const StyledReviewContainer = styled.div`
   display: flex;
@@ -12,7 +13,8 @@ const StyledReviewCard = styled.div`
   padding: 35px;
   width: 30%;
   box-sizing: border-box;
-  background-color: #fef8f5;
+  /* background-color: #fef8f5; */
+  background-color: ${COLORS.hoverBlue};
   border-radius: 60px;
   display: inline-flex;
   flex-direction: column;
@@ -35,7 +37,7 @@ const StyledReviewCardAuthor = styled.div`
   align-items: center;
   font-size: 14px;
   line-height: 21px;
-  color: #979797;
+  color: ${COLORS.darkGray};
   margin-top: 40px;
   img {
     border-radius: 50%;

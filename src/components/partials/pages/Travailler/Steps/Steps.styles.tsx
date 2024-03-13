@@ -18,20 +18,20 @@ export const StyledSteps = styled.div`
       padding-bottom: 12px;
       margin-bottom: 12px;
       height: 23px;
-      border-bottom: 0.5px solid ${COLORS.primaryOrange};
+      border-bottom: 0.5px solid ${COLORS.primaryBlue};
       &:after {
         position: absolute;
         height: 70px;
         width: 70px;
         border-radius: 70px;
-        border: 0.5px solid ${COLORS.primaryOrange};
+        border: 0.5px solid ${COLORS.primaryBlue};
         top: 0;
         display: flex;
         align-items: center;
         justify-content: center;
         background-color: white;
         font-weight: 700;
-        color: ${COLORS.primaryOrange};
+        color: ${COLORS.primaryBlue};
         font-size: 24px;
       }
     }

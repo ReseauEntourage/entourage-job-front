@@ -87,7 +87,8 @@ export const SendMailModalContent = ({
       <p>Bonjour,</p>
       <p>
         Un{genderTab[user.gender].term} candidat{genderTab[user.gender].term}{' '}
-        LinkedOut est intéressé{genderTab[user.gender].term} par votre offre !
+        Entourage Pro est intéressé{genderTab[user.gender].term} par votre offre
+        !
       </p>
       <p>{user.firstName} a postulé à votre offre.</p>
       <p>

@@ -21,7 +21,7 @@ export const StyledSelectContainer = styled.div`
       }
       svg {
         float: right;
-        color: ${COLORS.primaryOrange};
+        color: ${COLORS.primaryBlue};
       }
     }
     .placeholder {
@@ -56,8 +56,8 @@ export const StyledSelectContainer = styled.div`
           ${() => commonMenuOptionStyles}
 
           &:hover {
-            border: 0.5px solid ${COLORS.primaryOrange};
-            color: ${COLORS.primaryOrange};
+            border: 0.5px solid ${COLORS.primaryBlue};
+            color: ${COLORS.primaryBlue};
             cursor: pointer;
           }
         }

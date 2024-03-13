@@ -100,8 +100,7 @@ export const HeaderConnectedContentDesktop = ({
           <>
             <NavbarLogo
               href={logoLink.href + (logoLink.queryParams || '')}
-              src="/static/img/linkedout_logo_orange.png"
-              alt="Linkedout"
+              type="primary"
             />
             <StyledNav
               className="uk-navbar-nav"

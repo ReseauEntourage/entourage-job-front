@@ -27,7 +27,7 @@ const ResetPasswordPage = ({
     <Layout
       title={`${
         isCreation ? 'Création' : 'Réinitialisation'
-      } de mot de passe - LinkedOut`}
+      } de mot de passe - Entourage Pro`}
     >
       <Section size="large" style="muted">
         <div className="uk-flex uk-flex-center uk-flex-middle">
@@ -68,7 +68,7 @@ const ResetPasswordPage = ({
                 />
                 <p className="uk-text-lead">
                   Ce lien ne semble pas valide. Veuillez contacter l&apos;équipe
-                  LinkedOut.
+                  Entourage Pro.
                 </p>
                 <div className="uk-flex uk-flex-center">
                   <Button

@@ -9,7 +9,7 @@ type HeadingStoryProps = React.ComponentProps<
 
 const basiArgTypes = {
   color: {
-    options: [COLORS.primaryOrange, 'black'],
+    options: [COLORS.primaryBlue, 'black'],
     control: { type: 'select' },
   },
   weight: {
@@ -36,7 +36,7 @@ export default meta;
 export const h1: StoryObj<typeof H1> = {
   args: {
     title: 'Very large title',
-    color: COLORS.primaryOrange,
+    color: COLORS.primaryBlue,
     weight: 'bold',
     center: false,
   },
@@ -46,7 +46,7 @@ export const h1: StoryObj<typeof H1> = {
 export const h2: StoryObj<typeof H2> = {
   args: {
     title: 'Large title',
-    color: COLORS.primaryOrange,
+    color: COLORS.primaryBlue,
     weight: 'bold',
     variant: undefined,
     center: false,
@@ -58,7 +58,7 @@ h2.argTypes = { ...basiArgTypes, variant: variantArgType };
 export const h3: StoryObj<typeof H3> = {
   args: {
     title: 'Medium title',
-    color: COLORS.primaryOrange,
+    color: COLORS.primaryBlue,
     weight: 'bold',
     center: false,
   },
@@ -68,7 +68,7 @@ export const h3: StoryObj<typeof H3> = {
 export const h4: StoryObj<typeof H4> = {
   args: {
     title: 'Medium small title',
-    color: COLORS.primaryOrange,
+    color: COLORS.primaryBlue,
     weight: 'bold',
     center: false,
   },
@@ -78,7 +78,7 @@ export const h4: StoryObj<typeof H4> = {
 export const h5: StoryObj<typeof H5> = {
   args: {
     title: 'Small title',
-    color: COLORS.primaryOrange,
+    color: COLORS.primaryBlue,
     weight: 'bold',
     center: false,
   },
@@ -88,7 +88,7 @@ export const h5: StoryObj<typeof H5> = {
 export const h6: StoryObj<typeof H6> = {
   args: {
     title: 'Very small title',
-    color: 'primaryOrange',
+    color: 'primaryBlue',
     weight: 'bold',
     center: false,
   },

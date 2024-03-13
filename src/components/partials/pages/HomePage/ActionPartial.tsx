@@ -30,24 +30,28 @@ const datas = [
   {
     button: {
       href: '/travailler',
-      label: 'Rejoindre LinkedOut',
+      label: 'Rejoindre Entourage Pro',
     },
     title: 'Vous cherchez du travail',
   },
 ];
 
-export const ActionPartial = ({ style }: { style?: 'default' | 'muted' }) => {
+export const ActionPartial = ({
+  style = 'default',
+}: {
+  style?: 'default' | 'muted';
+}) => {
   return (
     <Section style={style} id="actions">
       <Grid gap="large" column center>
         <div className="uk-text-center uk-flex uk-flex-column uk-flex-middle">
           <h2 className="uk-text-bold">
-            <span className="uk-text-primary">Agissez</span> avec LinkedOut
+            <span className="uk-text-primary">Agissez</span> avec Entourage Pro
           </h2>
           <div className="uk-container-small">
-            Depuis son lancement en juin 2019, le programme LinkedOut a permis
-            aux bénéficiaires mais aussi aux bénévoles et aux entreprises de
-            faire des rencontres qui ont changé leur vie.
+            Depuis son lancement en juin 2019, le programme Entourage Pro a
+            permis aux bénéficiaires mais aussi aux bénévoles et aux entreprises
+            de faire des rencontres qui ont changé leur vie.
           </div>
         </div>
         <MultipleCTA
@@ -64,8 +68,4 @@ export const ActionPartial = ({ style }: { style?: 'default' | 'muted' }) => {
       </Grid>
     </Section>
   );
-};
-
-ActionPartial.defaultProps = {
-  style: 'default',
 };

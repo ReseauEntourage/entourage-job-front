@@ -7,7 +7,7 @@ import { useAuthentication } from 'src/hooks/authentication/useAuthentication';
 const ConseilsPosturePage = () => {
   const { isCurrentRouteReady } = useAuthentication();
   return (
-    <Layout title="Conseils de posture - LinkedOut">
+    <Layout title="Conseils de posture - Entourage Pro">
       {isCurrentRouteReady ? <ConseilsPosture /> : <LoadingScreen />}
     </Layout>
   );

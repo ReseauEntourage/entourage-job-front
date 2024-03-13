@@ -41,7 +41,7 @@ export const NoCV = ({ candidateId, user, setCV }: NoCVProps) => {
           </h2>
           <p className="uk-text-center">
             Il peut y avoir plusieurs raisons à ce sujet. Contactez
-            l&apos;équipe LinkedOut pour en savoir plus.
+            l&apos;équipe Entourage Pro pour en savoir plus.
           </p>
         </div>
       ) : (

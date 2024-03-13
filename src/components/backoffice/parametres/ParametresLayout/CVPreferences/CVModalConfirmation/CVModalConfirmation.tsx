@@ -36,7 +36,7 @@ export const CVModalConfirmation = ({
       closeOnNextRender={closeModal}
       description={
         <>
-          En masquant votre CV de LinkedOut, il ne sera plus visible par les
+          En masquant votre CV de Entourage Pro, il ne sera plus visible par les
           utilisateurs du site.
           <br />
           Vous pourrez le remettre en ligne à tout moment.

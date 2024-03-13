@@ -14,19 +14,19 @@ const testimonies = [
     image: '/static/img/temoignage-candidat-danny.jpg',
     author: 'Danny',
     quote:
-      'J’ai découvert que je ne savais que j’ignorais des choses sur mon CV, on m’a appris à me découvrir. LinkedOut, c’est un GPS pour être humain ! Vous nous aidez à trouver notre chemin et à le construire sans pour autant le faire pour nous.',
+      'J’ai découvert que je ne savais que j’ignorais des choses sur mon CV, on m’a appris à me découvrir. Entourage Pro, c’est un GPS pour être humain ! Vous nous aidez à trouver notre chemin et à le construire sans pour autant le faire pour nous.',
   },
   {
     image: '/static/img/temoignage-candidat-amelie.jpg',
     author: 'Amélie',
     quote:
-      "C'est vraiment un bon dispositif. Avec mon coach, on ne parle pas simplement du travail, il me donne des conseils. Ce sont des choses dont j'avais besoin, surtout que je n'ai pas de famille ici. J'ai parcouru beaucoup d'autres dispositifs et là c'est différent, LinkedOut est très présent.",
+      "C'est vraiment un bon dispositif. Avec mon coach, on ne parle pas simplement du travail, il me donne des conseils. Ce sont des choses dont j'avais besoin, surtout que je n'ai pas de famille ici. J'ai parcouru beaucoup d'autres dispositifs et là c'est différent, Entourage Pro est très présent.",
   },
   {
     image: '/static/img/temoignage-candidat-lamin.jpg',
     author: 'Lamin',
     quote:
-      'C’est très organisé, je suis très satisfait. La vie est compliquée mais on peut avancer grâce à LinkedOut.',
+      'C’est très organisé, je suis très satisfait. La vie est compliquée mais on peut avancer grâce à Entourage Pro.',
   },
 ];
 
@@ -95,7 +95,7 @@ export const CandidateTestimoniesOrientation = ({
         <div className="uk-margin-medium-top">
           <LiteYouTubeEmbed
             id="ztZB4BIBi44"
-            title="Témoignages LinkedOut"
+            title="Témoignages Entourage Pro"
             aspectWidth={1280}
             aspectHeight={720}
           />

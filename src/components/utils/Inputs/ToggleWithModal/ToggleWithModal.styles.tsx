@@ -28,11 +28,11 @@ export const StyledToggle = styled.div`
     height: 0;
 
     &:checked + .ent-slider {
-      background-color: ${COLORS.primaryOrange};
+      background-color: ${COLORS.primaryBlue};
     }
 
     &:focus + .ent-slider {
-      box-shadow: 0 0 1px ${COLORS.primaryOrange};
+      box-shadow: 0 0 1px ${COLORS.primaryBlue};
     }
 
     &:checked + .ent-slider:before {

@@ -36,13 +36,13 @@ export const NoOpportunities = ({
       </StyledTitle>
       <StyledDescription>
         Vous pouvez chercher des offres qui vous correspondent sur le site
-        LinkedOut ou renseigner des offres externes qui vous interessent.
+        Entourage Pro ou renseigner des offres externes qui vous interessent.
         Centraliser toutes vos candidatures en facilite le suivi.
       </StyledDescription>
       <StyledButtonContainer>
         <Button
           style="custom-primary-inverted"
-          color="primaryOrange"
+          color="primaryBlue"
           dataTestId="candidat-add-offer"
           onClick={() => {
             openModal(
@@ -63,7 +63,7 @@ export const NoOpportunities = ({
           shallow
         >
           <SearchIcon />
-          Trouver des offres LinkedOut
+          Trouver des offres Entourage Pro
         </Button>
       </StyledButtonContainer>
     </StyledContainer>

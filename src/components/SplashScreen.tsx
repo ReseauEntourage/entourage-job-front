@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import { Img } from 'src/components/utils';
+import { EntourageProLogoPrimary } from 'assets/icons/icons';
 
 const SplashScreenContent = () => {
   return (
@@ -15,12 +15,7 @@ const SplashScreenContent = () => {
         style={{ opacity: 0 }}
         className="uk-animation-fade uk-animation-fast"
       >
-        <Img
-          src="/static/img/linkedout_logo_orange_small.png"
-          alt="LinkedOut by Entourage"
-          width={300}
-          height={300}
-        />
+        <EntourageProLogoPrimary width={300} height={300} />
       </div>
     </div>
   );

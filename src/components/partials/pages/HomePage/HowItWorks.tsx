@@ -9,7 +9,7 @@ export const HowItWorks = ({ style }: { style?: UIKIT_STYLES }) => {
       img: '/static/img/illustrations/how1.png',
       text: (
         <div>
-          La plateforme <span className="uk-text-primary">LinkedOut</span>{' '}
+          La plateforme <span className="uk-text-primary">Entourage Pro</span>{' '}
           permet de{' '}
           <span className="uk-text-bold">viraliser les CV des candidats</span>{' '}
           sur les réseaux sociaux pour générer des opportunités d’emploi
@@ -53,7 +53,7 @@ export const HowItWorks = ({ style }: { style?: UIKIT_STYLES }) => {
     <Section id="howItWorks" style={style}>
       <h2 className="uk-text-bold uk-align-center uk-text-center uk-margin-large-bottom uk-margin-remove-top">
         Comment fonctionne{' '}
-        <span className="uk-text-primary">LinkedOut&nbsp;?</span>
+        <span className="uk-text-primary">Entourage Pro&nbsp;</span>?
       </h2>
       <MultipleCTA data={content} animate />
     </Section>

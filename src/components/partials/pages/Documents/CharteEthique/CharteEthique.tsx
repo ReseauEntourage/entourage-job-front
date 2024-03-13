@@ -65,7 +65,7 @@ export const CharteEthique = () => {
   const user = useSelector(selectCurrentUser);
   return (
     <Section style="custom-primary">
-      <H1 title="Charte Ethique" color={COLORS.primaryOrange} center />
+      <H1 title="Charte Ethique" color={COLORS.primaryBlue} center />
       <StyledDocumentCenteredText>
         Entourage Pro est un réseau professionnel solidaire qui permet le retour
         à l&lsquo;emploi des plus exclus en favorisant la rencontre entre toutes
@@ -80,11 +80,7 @@ export const CharteEthique = () => {
         const key = uuid();
         return (
           <StyledDocumentTitleText key={key}>
-            <H4
-              title={item.title}
-              color={COLORS.primaryOrange}
-              weight="normal"
-            />
+            <H4 title={item.title} color={COLORS.primaryBlue} weight="normal" />
             <p>{item.description}</p>
           </StyledDocumentTitleText>
         );

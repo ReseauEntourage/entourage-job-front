@@ -17,6 +17,8 @@ import DoubleCarres from './double-carres.svg';
 import Download from './download.svg';
 import EditIcon from './editIcon.svg';
 import Email from './email.svg';
+import EntourageProLogoPrimary from './entourage-pro-logo-primary.svg';
+import EntourageProLogoSecondary from './entourage-pro-logo-secondary.svg';
 import Entourage from './entourage.svg';
 import EyeClosed from './eye-closed.svg';
 import EyeHidden from './eye-hidden.svg';
@@ -91,6 +93,8 @@ DoubleCarres,
 Download,
 EditIcon,
 Email,
+EntourageProLogoPrimary,
+EntourageProLogoSecondary,
 Entourage,
 EyeClosed,
 EyeHidden,

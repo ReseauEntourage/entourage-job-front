@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { COLORS } from 'src/constants/styles';
 
 export const StyledHelpList = styled.ul`
   padding-left: 0;
@@ -8,7 +9,7 @@ export const StyledHelpList = styled.ul`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    color: #484848;
+    color: ${COLORS.black};
     &:not(:last-child) {
       margin-bottom: 30px;
     }

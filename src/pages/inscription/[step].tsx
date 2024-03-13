@@ -11,7 +11,7 @@ const Inscription = () => {
   const step = useStep();
 
   return (
-    <Layout title="Inscription - LinkedOut">
+    <Layout title="Inscription - Entourage Pro">
       <Section className="custom-page">
         {step ? <Registration /> : <LoadingScreen />}
       </Section>

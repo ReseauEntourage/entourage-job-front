@@ -661,7 +661,7 @@ export const COMPANY_APPROACHES_FILTERS: FilterConstant<CompanyApproach>[] = [
     value: CompanyApproaches.RECRUITMENT,
   },
   {
-    label: "Avoir plus d'informations sur LinkedOut",
+    label: "Avoir plus d'informations sur Entourage Pro",
     value: CompanyApproaches.INFORMATION,
   },
   {
@@ -1100,7 +1100,7 @@ export const EXTERNAL_MESSAGE_CONTACT_TYPE_FILTERS: FilterConstant<ExternalMessa
       value: ExternalMessageContactTypes.COMPANY,
     },
     {
-      label: 'Coach/connecteur LinkedOut',
+      label: 'Coach/connecteur Entourage Pro',
       value: ExternalMessageContactTypes.COACH_CONNECTOR,
     },
   ];

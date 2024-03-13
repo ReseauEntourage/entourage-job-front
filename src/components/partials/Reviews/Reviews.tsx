@@ -12,11 +12,11 @@ interface ReviewsProps {
   reviews: {
     author: string;
     authorStatus?: string;
-    company: string;
+    company?: string;
     industry?: string;
     companyInfo?: string;
     review: React.ReactNode;
-    image: string;
+    image?: string;
   }[];
   title: string;
 }
@@ -47,12 +47,14 @@ export const Reviews = ({ reviews, title }: ReviewsProps) => {
               >
                 <div>{review}</div>
                 <StyledReviewCardAuthor className={isDesktop ? '' : 'mobile'}>
-                  <Img
-                    src={image}
-                    alt={`Témoignage de ${author}`}
-                    width={45}
-                    height={45}
-                  />
+                  {image && (
+                    <Img
+                      src={image}
+                      alt={`Témoignage de ${author}`}
+                      width={45}
+                      height={45}
+                    />
+                  )}
                   <div className="legend">
                     {author}
                     {authorStatus && <span>, {authorStatus}</span>}

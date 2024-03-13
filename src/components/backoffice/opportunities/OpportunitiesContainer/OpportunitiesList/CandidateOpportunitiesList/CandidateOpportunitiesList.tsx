@@ -88,7 +88,7 @@ export const CandidateOpportunitiesList = ({
       {opportunityType === 'private' && hasFetchedAll && (
         <Button
           style="primary"
-          color="primaryOrange"
+          color="primaryBlue"
           dataTestId="candidat-add-offer"
           onClick={() => {
             openModal(

@@ -25,7 +25,7 @@ export const StyledTd = styled.td`
   a {
     color: ${COLORS.black};
     &:hover {
-      color: ${COLORS.primaryOrange};
+      color: ${COLORS.primaryBlue};
     }
   }
 `;
@@ -46,7 +46,7 @@ export const StyledTdMobile = styled.td`
   a {
     color: ${COLORS.black};
     &:hover {
-      color: ${COLORS.primaryOrange};
+      color: ${COLORS.primaryBlue};
     }
   }
 `;

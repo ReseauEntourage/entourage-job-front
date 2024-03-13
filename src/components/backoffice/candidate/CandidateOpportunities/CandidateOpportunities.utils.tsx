@@ -17,7 +17,7 @@ export const TextVariables = {
     [USER_ROLES.CANDIDATE]: {
       all: (
         <>
-          Retrouvez toutes les offres LinkedOut.
+          Retrouvez toutes les offres Entourage Pro.
           <br /> Vous pouvez aussi ajouter des offres que vous avez trouvé par
           vous même pour assurer un suivi complet de vos candidatures !
         </>
@@ -33,7 +33,7 @@ export const TextVariables = {
     [USER_ROLES.COACH]: {
       all: (
         <>
-          Retrouvez toutes les offres LinkedOut.
+          Retrouvez toutes les offres Entourage Pro.
           <br /> Vous pouvez aussi ajouter des offres que vous avez trouvé avec
           votre candidat pour assurer un suivi complet des candidatures !
         </>

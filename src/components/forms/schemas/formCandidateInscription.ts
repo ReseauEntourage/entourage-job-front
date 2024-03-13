@@ -53,7 +53,7 @@ export const formCandidateInscription: FormSchema<FormCandidateInscriptionSchema
       {
         id: 'generalInformation',
         name: 'generalInformation',
-        title: 'Informations pour accéder au programme LinkedOut',
+        title: 'Informations pour accéder au programme Entourage Pro',
         component: 'heading',
       },
       {
@@ -121,7 +121,7 @@ export const formCandidateInscription: FormSchema<FormCandidateInscriptionSchema
               {
                 method: (fieldValue) => fieldValue !== CandidateYesNoNSPP.NO,
                 message:
-                  'Vous devez avoir le droit de travailler en France pour participer au programme LinkedOut',
+                  'Vous devez avoir le droit de travailler en France pour participer au programme Entourage Pro',
               },
             ],
           },
@@ -200,7 +200,7 @@ export const formCandidateInscription: FormSchema<FormCandidateInscriptionSchema
       {
         id: 'heardAbout',
         name: 'heardAbout',
-        title: 'Comment avez-vous connu LinkedOut ? *',
+        title: 'Comment avez-vous connu Entourage Pro ? *',
         component: 'select-simple',
         showLabel: true,
         isRequired: true,

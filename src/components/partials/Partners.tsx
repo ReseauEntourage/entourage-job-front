@@ -4,6 +4,7 @@ import { LogoList } from 'src/components/partials/LogoList';
 import { Background, Section } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { PARTNERS } from 'src/constants/partners';
+import { COLORS } from 'src/constants/styles';
 
 export const Partners = ({
   showOrientationPartners,
@@ -12,7 +13,7 @@ export const Partners = ({
 }) => {
   return (
     <Background
-      blend={{ colorHex: showOrientationPartners ? 'white' : '#484848' }}
+      blend={{ colorHex: showOrientationPartners ? 'white' : COLORS.black }}
     >
       <Section container="large" className="uk-border-rounded">
         <div className="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
@@ -27,7 +28,7 @@ export const Partners = ({
               className="uk-text-bold uk-align-center uk-text-center uk-margin-large-bottom uk-margin-remove-top"
             >
               <span className="uk-text-primary">Les partenaires</span> du projet
-              LinkedOut
+              Entourage Pro
             </h2>
           )}
           <div
