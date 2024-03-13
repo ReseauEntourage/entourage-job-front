@@ -147,9 +147,14 @@ describe('Parcours CV', () => {
 
   describe('Page /cv/:candidat',() => {
     beforeEach(() => {
+      // to be fixed: this should only be a visit command, but sends error
+      cy.visit('/candidats?employed=false');
       cy.fixture('cv-cards-random-res').then((cvs) => {
-        cy.visit(`/cv/${cvs.cvs[0].user.url}`);
-      })
+        cy.wait(500)
+        cy.get(`[data-testid="card-${cvs.cvs[0].user.candidat.firstName}"]`)
+        .scrollIntoView()
+        .click();
+      });
     })
 
     it('Proposer une offre à un candidat', () => {
