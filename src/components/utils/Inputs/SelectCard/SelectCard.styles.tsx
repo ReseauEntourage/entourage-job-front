@@ -24,8 +24,8 @@ export const StyledSelectCard = styled.ul`
       flex: 1;
       display: flex;
       width: 100%;
-      border: 2px solid #ffeadc;
-      background-color: #ffffff;
+      border: 2px solid ${COLORS.lightgray};
+      background-color: ${COLORS.white};
       border-radius: 20px;
       padding: 11px 1px;
 
@@ -37,8 +37,8 @@ export const StyledSelectCard = styled.ul`
     &.selected {
       > button {
         padding: 10px 0px;
-        border: 3px solid #f55f24;
-        background-color: #fef8f5;
+        border: 3px solid ${COLORS.primaryBlue};
+        background-color: ${COLORS.hoverBlue};
       }
 
       position: relative;
@@ -53,7 +53,7 @@ export const StyledCheckIconContainer = styled.div`
     position: absolute;
     right: -8px;
     top: -8px;
-    background-color: ${COLORS.primaryOrange};
+    background-color: ${COLORS.primaryBlue};
     border-radius: 20px;
     display: flex;
     align-items: center;
@@ -93,7 +93,7 @@ export const StyledSelectCardDisabledOverlay = styled.div`
   justify-content: center;
   flex-direction: column;
   position: absolute;
-  background-color: ${COLORS.hoverOrange};
+  background-color: ${COLORS.hoverBlue};
   border-radius: 20px;
   padding: 20px;
   text-align: center;

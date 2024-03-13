@@ -30,7 +30,7 @@ export const COLORS = {
 
   primaryBlue: '#47A8B9',
   hoverBlue: '#F4FDFF',
-  darkHoverBlue: '2D93A5',
+  darkHoverBlue: '#2D93A5',
 
   yesGreen: '#79CC6B',
   noRed: '#FE2929',

@@ -124,7 +124,11 @@ export function SelectCard<T extends string>({
                     </StyledSelectBlurableSection>
                     {disableOption && (
                       <StyledSelectCardDisabledOverlay>
-                        <WarningIcon color={COLORS.primaryOrange} />
+                        <WarningIcon
+                          width={30}
+                          height={30}
+                          color={COLORS.primaryBlue}
+                        />
                         {typeof disableOption.message === 'string' ? (
                           <Typography size="small" weight="bold">
                             {disableOption.message}

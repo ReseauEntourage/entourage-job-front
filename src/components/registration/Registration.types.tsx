@@ -1,8 +1,10 @@
 import React from 'react';
-import CVIllu from 'assets/icons/illu-CV.svg';
-import ConversationIllu from 'assets/icons/illu-conversation.svg';
-import TipsIllu from 'assets/icons/illu-poignee-de-main.svg';
-import RSIllu from 'assets/icons/illu-reseaux-sociaux.svg';
+import {
+  IlluCalendrier,
+  IlluConversation,
+  IlluCV,
+  IlluPoigneeDeMain,
+} from 'assets/icons/icons';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { Programs } from 'src/constants/programs';
 import { USER_ROLES } from 'src/constants/users';
@@ -192,17 +194,17 @@ const CoachLastStepContent: Pick<LastStepContent, 'title' | 'bullets'> = {
   title: 'Vous venez de finaliser votre inscription : Bravo !',
   bullets: [
     {
-      icon: <ConversationIllu {...iconSizeProps} />,
+      icon: <IlluConversation {...iconSizeProps} />,
       title: 'Discutez et échangez avec des candidats et des coachs',
       text: "Commencez à partager et développer votre réseau solidaire en prenant contact avec d'autres membres de la communauté",
     },
     {
-      icon: <TipsIllu {...iconSizeProps} />,
+      icon: <IlluPoigneeDeMain {...iconSizeProps} />,
       title: 'Donnez des coup de pouces à des candidats',
       text: "Faites profiter de votre expérience des candidat(e)s et soutenez-les dans leurs recherches d'emploi",
     },
     {
-      icon: <RSIllu {...iconSizeProps} />,
+      icon: <IlluCalendrier {...iconSizeProps} />,
       title: 'Participez à des événements professionnels et conviviaux',
       text: "Rejoignez-nous lors d'événements professionnels pour vivre des moments conviviaux et bâtir votre réseau solidaire",
     },
@@ -212,22 +214,22 @@ const CoachLastStepContent: Pick<LastStepContent, 'title' | 'bullets'> = {
 const CandidateLastStepContent: Pick<LastStepContent, 'bullets'> = {
   bullets: [
     {
-      icon: <CVIllu {...iconSizeProps} />,
+      icon: <IlluCV {...iconSizeProps} />,
       title: 'Mettez à jour votre CV',
       text: "Créez votre CV en quelques clics et bénéficiez d'une meilleure visibilité sur notre site",
     },
     {
-      icon: <ConversationIllu {...iconSizeProps} />,
+      icon: <IlluConversation {...iconSizeProps} />,
       title: 'Discutez et échangez avec des candidats et des coachs',
       text: 'Commencez à construire votre réseau en prenant contact avec les autres membres de la communauté',
     },
     {
-      icon: <TipsIllu {...iconSizeProps} />,
+      icon: <IlluPoigneeDeMain {...iconSizeProps} />,
       title: 'Demander des coups de pouces à des coachs',
       text: 'Sollicitez du soutien auprès de coachs tout au long de votre recherche',
     },
     {
-      icon: <RSIllu {...iconSizeProps} />,
+      icon: <IlluCalendrier {...iconSizeProps} />,
       title: 'Participez à des événements professionnels et conviviaux',
       text: "Rejoignez-nous lors d'événements professionnels pour vivre des moments conviviaux et bâtir votre réseau",
     },

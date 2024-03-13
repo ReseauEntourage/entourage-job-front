@@ -27,7 +27,7 @@ export function Confirmation() {
               {icon}
             </StyledRegistrationListItemIcon>
             <StyledRegistrationListItemLabels>
-              <H6 title={title} color="primaryOrange" />
+              <H6 title={title} color="primaryBlue" />
               <Typography size="small">{text}</Typography>
             </StyledRegistrationListItemLabels>
           </StyledRegistrationListItem>

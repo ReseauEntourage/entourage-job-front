@@ -1,7 +1,6 @@
 import React from 'react';
-import ProgramCalendarIcon from 'assets/icons/program-calendar.svg';
-import ProgramMapIcon from 'assets/icons/program-map.svg';
-import ProgramTimeIcon from 'assets/icons/program-time.svg';
+
+import { ProgramCalendar, ProgramMap, ProgramTime } from 'assets/icons/icons';
 import { NormalUserRole, USER_ROLES } from './users';
 import { FilterConstant } from './utils';
 
@@ -26,29 +25,29 @@ const ProgramBullet: {
 } = {
   long: [
     {
-      icon: <ProgramCalendarIcon {...calendarIconSizeProps} />,
+      icon: <ProgramCalendar {...calendarIconSizeProps} />,
       label: 'Durée de 6 mois',
     },
     {
-      icon: <ProgramTimeIcon {...timeIconSizeProps} />,
+      icon: <ProgramTime {...timeIconSizeProps} />,
       label: '2 heures par semaine',
     },
     {
-      icon: <ProgramMapIcon {...mapIconSizeProps} />,
+      icon: <ProgramMap {...mapIconSizeProps} />,
       label: 'En physique',
     },
   ],
   short: [
     {
-      icon: <ProgramCalendarIcon {...calendarIconSizeProps} />,
+      icon: <ProgramCalendar {...calendarIconSizeProps} />,
       label: 'Ponctuel',
     },
     {
-      icon: <ProgramTimeIcon {...timeIconSizeProps} />,
+      icon: <ProgramTime {...timeIconSizeProps} />,
       label: 'Selon vos besoins',
     },
     {
-      icon: <ProgramMapIcon {...mapIconSizeProps} />,
+      icon: <ProgramMap {...mapIconSizeProps} />,
       label: 'En physique ou en visio',
     },
   ],

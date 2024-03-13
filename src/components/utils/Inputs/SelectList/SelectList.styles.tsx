@@ -22,7 +22,7 @@ export const StyledSelectList = styled.ul`
     > button {
       width: 100%;
       border: 2px solid ${COLORS.lightgray};
-      background-color: #ffffff;
+      background-color: ${COLORS.white};
       border-radius: 20px;
       padding: 11px 1px;
 
