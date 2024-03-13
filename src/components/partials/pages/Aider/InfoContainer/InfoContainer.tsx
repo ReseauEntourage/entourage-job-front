@@ -93,7 +93,7 @@ export const InfoContainer = () => {
           {infoContent.map((content, key) => {
             return (
               <div className="informer-card" key={`${key}-parent-${uuidValue}`}>
-                <div className="picto-h4">
+                <StyledInfoContainerPicto className="picto-h4">
                   {content.picto}
                   <h4>{content.title}</h4>
                 </StyledInfoContainerPicto>

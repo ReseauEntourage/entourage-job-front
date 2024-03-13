@@ -24,7 +24,7 @@ export const Inscrire = ({ innerRef }: { innerRef?: Ref<HTMLDivElement> }) => {
         data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;"
       >
         <li>
-          <SablierIcon />{' '}
+          <OrienterSablier />{' '}
           <div>2 heures par semaine pendant 6 mois, en présentiel</div>
         </li>
         <li>
