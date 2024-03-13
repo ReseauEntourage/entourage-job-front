@@ -39,8 +39,8 @@ export function* createUserRequestedSaga() {
         role: selectedRole,
         program: selectedProgram,
         department: flattenedData.department.value,
-        expectations: flattenedData.expectations
-          ? flattenedData.expectations.map((expectation) => ({
+        helpNeeds: flattenedData.helpNeeds
+          ? flattenedData.helpNeeds.map((expectation) => ({
               name: expectation,
             }))
           : undefined,

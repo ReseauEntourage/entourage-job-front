@@ -11,7 +11,6 @@ export * from './pages/HomePage/HowItWorks';
 export * from './HowToBeInclusive';
 export * from './HowToCommitDifferently';
 export * from './pages/HomePage/LandingPagePartial';
-export * from './LinkedInPartial';
 export * from './LogoList';
 export * from './MultipleCTA';
 export * from './NewsletterPartial';

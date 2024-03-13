@@ -742,10 +742,10 @@ export const CANDIDATE_GENDERS_FILTERS: FilterConstant<CandidateGender>[] = [
     label: 'Femme',
     value: CandidateGenders.FEMALE,
   },
-  {
+  /* {
     label: 'Autre',
     value: CandidateGenders.OTHER,
-  },
+  }, */
 ];
 
 export const CandidateAdministrativeSituations = {

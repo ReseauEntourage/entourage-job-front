@@ -277,7 +277,7 @@ export type UserRegistrationDto = {
   role: NormalUserRole;
   campaign?: string;
   department: Department;
-  expectations?: { name: HelpValue }[];
+  helpNeeds?: { name: HelpValue }[];
   workingRight?: string;
   program: Program;
   birthDate: string;

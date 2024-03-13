@@ -93,8 +93,8 @@ export const GENDERS_FILTERS = [
     label: 'Femme',
     value: GENDERS.FEMALE,
   },
-  {
-    label: 'Autre',
-    value: GENDERS.OTHER,
-  },
+  /*  {
+     label: 'Autre',
+     value: GENDERS.OTHER,
+   }, */
 ];

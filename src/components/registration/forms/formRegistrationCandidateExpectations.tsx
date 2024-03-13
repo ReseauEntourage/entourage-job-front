@@ -3,13 +3,13 @@ import { HelpValue, ParametresHelpCardContents } from 'src/constants/helps';
 import { USER_ROLES } from 'src/constants/users';
 
 export const formRegistrationCandidateExpectations: FormSchema<{
-  expectations: HelpValue[];
+  helpNeeds: HelpValue[];
 }> = {
   id: 'form-registration-candidate-expectations',
   fields: [
     {
-      id: 'expectations',
-      name: 'expectations',
+      id: 'helpNeeds',
+      name: 'helpNeeds',
       component: 'select-list',
       options: ParametresHelpCardContents[USER_ROLES.CANDIDATE],
       showLabel: false,
