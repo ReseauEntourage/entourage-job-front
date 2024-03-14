@@ -1,27 +1,68 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
+import { Api } from 'src/api';
+import { flattenRegistrationDataByRole } from 'src/components/registration/Registration.utils';
+import { authenticationActions } from 'src/use-cases/authentication';
 import { asyncTimeout } from 'src/utils/asyncTimeout';
-import { selectIsLastRegistrationStep } from './registration.selectors';
+import {
+  selectDefinedRegistrationSelectedProgram,
+  selectDefinedRegistrationSelectedRole,
+  selectIsLastRegistrationStep,
+  selectRegistrationData,
+} from './registration.selectors';
 import { slice } from './registration.slice';
 
 const {
+  createUserSucceeded,
+  createUserRequested,
   createUserFailed,
   setRegistrationCurrentStepData,
   setRegistrationStep,
   setRegistrationIsLoading,
 } = slice.actions;
 
+export function* createUserRequestedSaga() {
+  const data = yield* select(selectRegistrationData);
+  const selectedRole = yield* select(selectDefinedRegistrationSelectedRole);
+  const selectedProgram = yield* select(
+    selectDefinedRegistrationSelectedProgram
+  );
+
+  const { confirmPassword, ...flattenedData } = flattenRegistrationDataByRole(
+    data,
+    selectedRole
+  );
+
+  try {
+    const response = yield* call(() =>
+      Api.postUserRegistration({
+        ...flattenedData,
+        role: selectedRole,
+        program: selectedProgram,
+        department: flattenedData.department.value,
+        helpNeeds: flattenedData.helpNeeds
+          ? flattenedData.helpNeeds.map((expectation) => ({
+              name: expectation,
+            }))
+          : undefined,
+      })
+    );
+    yield* put(
+      authenticationActions.loginSucceeded({
+        accessToken: response.data.token,
+        user: response.data.user,
+      })
+    );
+    yield* put(createUserSucceeded());
+  } catch (err) {
+    yield* put(createUserFailed());
+  }
+}
+
 export function* setRegistrationCurrentStepDataSaga() {
   const isLastRegistrationStep = yield* select(selectIsLastRegistrationStep);
   if (isLastRegistrationStep) {
     yield* put(setRegistrationIsLoading(true));
-    // const data = yield* select(selectRegistrationData);
-
-    try {
-      // TODO send info to API
-      // yield* put(createUserSucceeded());
-    } catch (err) {
-      yield* put(createUserFailed());
-    }
+    yield* put(createUserRequested());
   }
 }
 
@@ -32,6 +73,7 @@ export function* setRegistrationStepSaga() {
 }
 
 export function* saga() {
+  yield* takeLatest(createUserRequested, createUserRequestedSaga);
   yield* takeLatest(
     setRegistrationCurrentStepData,
     setRegistrationCurrentStepDataSaga

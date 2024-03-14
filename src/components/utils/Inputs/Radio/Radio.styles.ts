@@ -67,3 +67,9 @@ export const StyledRadioContainer = styled.div`
     }
   }
 `;
+
+export const StyledRadioSpinnerContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;

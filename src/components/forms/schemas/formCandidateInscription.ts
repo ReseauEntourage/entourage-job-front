@@ -2,7 +2,7 @@ import _ from 'lodash';
 import moment from 'moment';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { isEmail } from 'validator';
-import { FormSchema, FormSchemaValidation, GetValueType } from '../FormSchema';
+import { FormSchema, GetValueType } from '../FormSchema';
 import { Api } from 'src/api';
 import 'moment/locale/fr';
 import { RadioTypes } from 'src/components/utils/Inputs/Radio/Radio.types';
@@ -17,7 +17,7 @@ import {
 } from 'src/constants';
 import { Cities, CITIES_FILTERS, City } from 'src/constants/departements';
 
-interface FormCandidateInscriptionSchema extends FormSchemaValidation {
+type FormCandidateInscriptionSchema = {
   location: City;
   birthdate: string;
   workingRight: CandidateYesNoNSPPValue;
@@ -27,13 +27,12 @@ interface FormCandidateInscriptionSchema extends FormSchemaValidation {
   email: string;
   heardAbout: HeardAboutValue;
   infoCo: string;
+  tsPrescripteur: string;
+};
 
-  // @ts-expect-error after enable TS strict mode. Please, try to fix it
-  tsPrescripteur?: string;
-}
 function hideIfNoInfoCo(
   getValue: GetValueType<FormCandidateInscriptionSchema>,
-  fieldOptions: { [p: string]: RadioTypes[] }
+  fieldOptions?: { [p: string]: RadioTypes[] }
 ) {
   const city = ANTENNE_INFO.find((antenne) => {
     return antenne.dpt === getValue('location');
@@ -174,8 +173,7 @@ export const formCandidateInscription: FormSchema<FormCandidateInscriptionSchema
             rules: [
               {
                 method: (fieldValue) =>
-                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                  fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
+                  !!fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
                 message: 'Numéro de téléphone invalide',
               },
             ],
@@ -220,11 +218,7 @@ export const formCandidateInscription: FormSchema<FormCandidateInscriptionSchema
         title: 'Prochaine étape : Nous rencontrer',
         component: 'heading',
         hide: (getValue, fieldOptions) =>
-          hideIfNoInfoCo(
-            getValue,
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            fieldOptions
-          ),
+          hideIfNoInfoCo(getValue, fieldOptions),
       },
       {
         id: 'infoCoSubtitle',
@@ -239,11 +233,7 @@ export const formCandidateInscription: FormSchema<FormCandidateInscriptionSchema
         },
         component: 'text',
         hide: (getValue, fieldOptions) =>
-          hideIfNoInfoCo(
-            getValue,
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            fieldOptions
-          ),
+          hideIfNoInfoCo(getValue, fieldOptions),
       },
       {
         id: 'infoCo',
@@ -251,43 +241,40 @@ export const formCandidateInscription: FormSchema<FormCandidateInscriptionSchema
         title:
           'Selectionnez la date de la prochaine réunion d’information à laquelle vous souhaitez participer :',
         component: 'radio-async',
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         limit: 7,
-
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         dynamicFilter: (getValue) => {
           return ANTENNE_INFO.find((antenne) => {
             return antenne.dpt === getValue('location');
           })?.city;
         },
         hide: (getValue, fieldOptions) =>
-          hideIfNoInfoCo(
-            getValue,
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            fieldOptions
-          ),
+          hideIfNoInfoCo(getValue, fieldOptions),
         loadOptions: async (callback) => {
-          const { data: campaigns } = await Api.getCampaigns();
-          const noChoice = {
-            inputId: `infoco-radio-nochoice`,
-            label: 'Je ne suis pas disponible à ces dates',
-            value: '',
-          };
-          const options = campaigns.map((record) => {
-            return {
-              inputId: `infoco-radio-${record.id}`,
-              label: _.upperFirst(
-                `${moment(record.time).format('dddd D MMMM [à] HH[h]mm')}`
-              ),
-              value: record.id,
-              filterData: record.antenne,
+          try {
+            const { data: campaigns } = await Api.getCandidateCampaigns();
+            const noChoice = {
+              inputId: `infoco-radio-nochoice`,
+              label: 'Je ne suis pas disponible à ces dates',
+              value: '',
             };
-          });
-          callback(options.length ? [...options, noChoice] : []);
+            const options = campaigns.map((record) => {
+              return {
+                inputId: `infoco-radio-${record.id}`,
+                label: _.upperFirst(
+                  `${moment(record.time).format('dddd D MMMM [à] HH[h]mm')}`
+                ),
+                value: record.id,
+                filterData: record.antenne,
+              };
+            });
+            callback(options.length ? [...options, noChoice] : []);
+          } catch (error) {
+            console.error(error);
+            callback([]);
+          }
         },
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         errorMessage:
-          'Il n’y a pas de réunion d’information organisée dans les prochains temps dans votre ville, nous allons vous recontacter rapidement',
+          'Il n’y a pas de réunion d’information organisée dans les prochains temps dans votre ville, nous allons vous recontacter rapidement.',
       },
     ],
   };

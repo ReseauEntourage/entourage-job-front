@@ -6,20 +6,20 @@ import { H6 } from 'src/components/utils/Headings';
 import { StyledInputLabel } from 'src/components/utils/Inputs/Inputs.styles';
 import {
   StyledCheckIconContainer,
+  StyledListOption,
   StyledSelectList,
   StyledSelectListContainer,
-  StyledSelectOption,
 } from './SelectList.styles';
 import { SelectListType } from './SelectList.types';
 
-interface SelectListProps<T extends string[]>
-  extends CommonInputProps<T, HTMLElement> {
+interface SelectListProps<T extends string>
+  extends CommonInputProps<T[], HTMLElement> {
   id: string;
   isMulti?: boolean;
-  options: SelectListType[];
+  options: SelectListType<T>[];
 }
 
-export function SelectList<T extends string[]>({
+export function SelectList<T extends string>({
   id,
   value: valueProp,
   title,
@@ -35,14 +35,14 @@ export function SelectList<T extends string[]>({
   inputRef,
 }: SelectListProps<T>) {
   const handleSelect = useCallback(
-    (value: string) => {
+    (value: T) => {
       const currentValue = valueProp || [];
       if (currentValue.includes(value)) {
-        onChange(currentValue.filter((option) => option !== value) as T);
+        onChange(currentValue.filter((option) => option !== value));
       } else if (isMulti) {
-        onChange([...currentValue, value] as T);
+        onChange([...currentValue, value]);
       } else {
-        onChange([value] as T);
+        onChange([value]);
       }
     },
     [valueProp, isMulti, onChange]
@@ -74,13 +74,13 @@ export function SelectList<T extends string[]>({
                 onBlur={onBlur}
                 ref={inputRef}
               >
-                <StyledSelectOption>
+                <StyledListOption>
                   <div className="img-container">{icon}</div>
                   <div className="text-container">
                     <H6 title={label} color="primaryBlue" />
                     <p>{description}</p>
                   </div>
-                </StyledSelectOption>
+                </StyledListOption>
               </button>
               <StyledCheckIconContainer
                 className={valueProp?.includes(value) ? 'selected' : ''}

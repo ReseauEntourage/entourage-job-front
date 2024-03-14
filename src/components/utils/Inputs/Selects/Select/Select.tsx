@@ -9,14 +9,13 @@ import {
 } from '../Selects';
 
 import { StyledSelect, StyledSelectContainer } from '../Selects.styles';
-import { IsArrayFilterConstant } from 'src/components/forms/FormSchema';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { FilterConstant } from 'src/constants/utils';
 
 interface SelectProps<T extends FilterConstant | FilterConstant[]>
   extends CommonInputProps<T, HTMLSelectElement> {
   isMulti?: boolean;
-  options: IsArrayFilterConstant<T>;
+  options: FilterConstant[];
   openMenuOnClick?: boolean;
 }
 
@@ -61,9 +60,8 @@ export function Select<T extends FilterConstant | FilterConstant[]>({
             return `Aucun résultat`;
           }}
           placeholder={
-            showLabel
-              ? placeholder || 'Selectionnez dans la liste...'
-              : placeholder || title
+            (showLabel ? placeholder : placeholder || title) ||
+            'Selectionnez dans la liste...'
           }
           isDisabled={disabled}
           onChange={onChange}

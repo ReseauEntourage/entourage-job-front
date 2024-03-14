@@ -11,4 +11,8 @@ export const StyledFormHeading = styled.div`
   font-weight: 700;
   line-height: 21px;
   text-align: left;
+
+  :first-child {
+    margin-top: 0;
+  }
 `;

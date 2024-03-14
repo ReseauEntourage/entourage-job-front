@@ -34,6 +34,7 @@ import History from './history.svg';
 import Home from './home.svg';
 import IlluCV from './illu-CV.svg';
 import IlluBulleQuestion from './illu-bulle-question.svg';
+import IlluCalendrier from './illu-calendrier.svg';
 import IlluCoeurMainsOuvertes from './illu-coeur-mains-ouvertes.svg';
 import IlluConversation from './illu-conversation.svg';
 import IlluMalette from './illu-malette.svg';
@@ -59,6 +60,9 @@ import PictoFaciliterIntegration from './picto-faciliter-integration.svg';
 import PictoRechercheCv from './picto-recherche-cv.svg';
 import PlusFilled from './plus-filled.svg';
 import Plus from './plus.svg';
+import ProgramCalendar from './program-calendar.svg';
+import ProgramMap from './program-map.svg';
+import ProgramTime from './program-time.svg';
 import Question from './question.svg';
 import QuoteLeft from './quote-left.svg';
 import QuoteRight from './quote-right.svg';
@@ -70,6 +74,7 @@ import Trash from './trash.svg';
 import Twitter from './twitter.svg';
 import UserEmpty from './user-empty.svg';
 import User from './user.svg';
+import Warning from './warning.svg';
 import Whatsapp from './whatsapp.svg';
 import Youtube from './youtube.svg';
 
@@ -110,6 +115,7 @@ History,
 Home,
 IlluCV,
 IlluBulleQuestion,
+IlluCalendrier,
 IlluCoeurMainsOuvertes,
 IlluConversation,
 IlluMalette,
@@ -135,6 +141,9 @@ PictoFaciliterIntegration,
 PictoRechercheCv,
 PlusFilled,
 Plus,
+ProgramCalendar,
+ProgramMap,
+ProgramTime,
 Question,
 QuoteLeft,
 QuoteRight,
@@ -146,6 +155,7 @@ Trash,
 Twitter,
 UserEmpty,
 User,
+Warning,
 Whatsapp,
 Youtube
 };

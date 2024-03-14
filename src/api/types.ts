@@ -12,7 +12,13 @@ import {
 } from 'src/constants';
 import { AdminZone, Department } from 'src/constants/departements';
 import { HelpValue } from 'src/constants/helps';
-import { AdminRole, Gender, UserRole } from 'src/constants/users';
+import { Program } from 'src/constants/programs';
+import {
+  AdminRole,
+  Gender,
+  NormalUserRole,
+  UserRole,
+} from 'src/constants/users';
 
 export type SocialMedia =
   | 'facebook'
@@ -260,6 +266,21 @@ export type PutCandidate = {
   note: string;
   url: string;
   lastModifiedBy: string;
+};
+
+export type UserRegistrationDto = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  password: string;
+  role: NormalUserRole;
+  campaign?: string;
+  department: Department;
+  helpNeeds?: { name: HelpValue }[];
+  workingRight?: string;
+  program: Program;
+  birthDate: string;
 };
 
 export type Opportunity = {

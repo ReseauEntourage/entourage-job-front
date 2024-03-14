@@ -14,6 +14,8 @@ export const fetchUserAdapter = createRequestAdapter('fetchUser').withPayloads<
 
 export type UpdateError = 'UPDATE_FAILED';
 
+export const NOT_AUTHENTICATED_USER = 'User is not authenticated';
+
 export const updateUserAdapter = createRequestAdapter(
   'updateUser'
 ).withPayloads<

@@ -3,13 +3,15 @@ import { UserWithUserCandidate } from 'src/api/types';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import { isRoleIncluded } from 'src/utils';
+import { assertIsDefined } from 'src/utils/asserts';
 import {
-  UpdateError,
   fetchUserAdapter,
-  updateUserAdapter,
-  updateCandidateAdapter,
-  updateProfileAdapter,
+  NOT_AUTHENTICATED_USER,
   readDocumentAdapter,
+  updateCandidateAdapter,
+  UpdateError,
+  updateProfileAdapter,
+  updateUserAdapter,
 } from './current-user.adapters';
 
 export interface State {
@@ -45,7 +47,8 @@ export const slice = createSlice({
     }),
     ...updateUserAdapter.getReducers<State>((state) => state.updateUser, {
       updateUserSucceeded(state, action) {
-        if (!state.user) return;
+        assertIsDefined(state.user, NOT_AUTHENTICATED_USER);
+
         state.user = { ...state.user, ...action.payload.user };
       },
       updateUserFailed(state, action) {
@@ -56,7 +59,8 @@ export const slice = createSlice({
       (state) => state.updateCandidate,
       {
         updateCandidateSucceeded(state, action) {
-          if (!state.user) return;
+          assertIsDefined(state.user, NOT_AUTHENTICATED_USER);
+
           if (
             isRoleIncluded(CANDIDATE_USER_ROLES, state.user.role) &&
             state.user.candidat
@@ -87,7 +91,8 @@ export const slice = createSlice({
     ),
     ...updateProfileAdapter.getReducers<State>((state) => state.updateProfile, {
       updateProfileSucceeded(state, action) {
-        if (!state.user?.userProfile) return;
+        assertIsDefined(state.user, NOT_AUTHENTICATED_USER);
+
         state.user.userProfile = {
           ...state.user.userProfile,
           ...action.payload.userProfile,

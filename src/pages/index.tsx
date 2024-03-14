@@ -5,7 +5,6 @@ import {
   ActionPartial,
   CandidatListPartial,
   LandingPagePartial,
-  // LinkedInPartial,
   NumberPartial,
   HowItWorks,
 } from 'src/components/partials/pages/HomePage';
@@ -18,7 +17,6 @@ const Index = () => {
       <HowItWorks style="default" />
       <NumberPartial />
       <ActionPartial style="default" />
-      {/* <LinkedInPartial /> */}
     </Layout>
   );
 };

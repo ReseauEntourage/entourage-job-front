@@ -14,18 +14,18 @@ import {
   MultiValueRemove,
 } from '../Selects';
 import { StyledSelect, StyledSelectContainer } from '../Selects.styles';
-import { IsArrayFilterConstant } from 'src/components/forms/FormSchema';
 import { FilterConstant } from 'src/constants/utils';
 
-interface SelectAsyncProps<T extends FilterConstant | FilterConstant[]>
+interface SelectCreatableProps<T extends FilterConstant | FilterConstant[]>
   extends CommonInputProps<T, HTMLSelectElement> {
-  options: IsArrayFilterConstant<T>;
+  options: FilterConstant[];
   isMulti?: boolean;
   openMenuOnClick?: boolean;
   maxChar?: number;
   maxItems?: number;
   setIsMaxItemsReached?: (isMaxItemsReached: boolean) => void;
 }
+
 export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
   id,
   name,
@@ -45,20 +45,19 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
   maxChar,
   maxItems,
   setIsMaxItemsReached,
-}: SelectAsyncProps<T>) {
-  const [remainingItems, setRemainingItems] = useState<number>(
-    // @ts-expect-error after enable TS strict mode. Please, try to fix it
-    maxItems
-  );
+}: SelectCreatableProps<T>) {
+  const [remainingItems, setRemainingItems] = useState<number>(maxItems || 0);
   const [shouldDisplayOptions, setShouldDisplayOptions] =
     useState<boolean>(true);
 
   useEffect(() => {
     const receivedValues = value as FilterConstant[];
-    setRemainingItems(
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      receivedValues ? maxItems - receivedValues?.length : maxItems
-    );
+    if (maxItems) {
+      setRemainingItems(
+        receivedValues ? maxItems - receivedValues?.length : maxItems
+      );
+    }
+
     if (maxItems && receivedValues) {
       setShouldDisplayOptions(receivedValues.length < maxItems);
     } else {
@@ -66,19 +65,16 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
     }
   }, [value, maxItems]);
 
-  useEffect(
-    // @ts-expect-error after enable TS strict mode. Please, try to fix it
-    () => {
-      if (!maxItems) return null;
+  useEffect(() => {
+    if (!maxItems) return;
+    if (setIsMaxItemsReached) {
       if (remainingItems < 0) {
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         setIsMaxItemsReached(true);
       } else {
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
         setIsMaxItemsReached(false);
       }
     }
-  );
+  });
 
   if (hidden) {
     return null;
@@ -116,9 +112,8 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
             return `Aucun résultat`;
           }}
           placeholder={
-            showLabel
-              ? placeholder || 'Selectionnez dans la liste...'
-              : placeholder || title
+            (showLabel ? placeholder : placeholder || title) ||
+            'Selectionnez dans la liste...'
           }
           isDisabled={disabled}
           onChange={(selectedOptions) => handleChange(selectedOptions)}

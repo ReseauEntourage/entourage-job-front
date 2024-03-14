@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-
-import { Card } from 'src/components/utils/Cards/Card';
 import { ParametresHelpCardContents } from 'src/constants/helps';
 import { USER_ROLES } from 'src/constants/users';
-import { SelectList as SelectListComponent } from './SelectList';
+import { SelectList } from './SelectList';
 
 const meta = {
   title: 'Select List',
-  component: SelectListComponent,
+  component: SelectList,
   parameters: {
     controls: {
       include: ['isMulti'],
@@ -31,26 +29,20 @@ const meta = {
             maxWidth: '600px',
           }}
         >
-          <Card>
-            <Story />
-          </Card>
+          <Story />
         </div>
       );
     },
   ],
 };
 const Template = (args) => {
-  const [helps, setHelps] = useState<{ name: string }[]>([]);
+  const [helps, setHelps] = useState<string[]>([]);
 
   return (
-    <SelectListComponent
-      value={helps.map(({ name }) => name)}
+    <SelectList
+      value={helps}
       onChange={(values) => {
-        setHelps(
-          values.map((help) => {
-            return { name: help };
-          })
-        );
+        setHelps(values);
       }}
       {...args}
     />

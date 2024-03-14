@@ -56,9 +56,8 @@ export function TextInput({
         disabled={disabled}
         type={type || 'text'}
         placeholder={
-          showLabel
-            ? placeholder || 'Écrivez...'
-            : placeholder || (title as string)
+          (showLabel ? placeholder : placeholder || (title as string)) ||
+          'Écrivez'
         }
         name={name}
         // maxLength={maxLength}

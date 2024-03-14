@@ -27,21 +27,15 @@ export function SelectSimple<T extends string | number | boolean>({
   value,
   inputRef,
 }: SelectSimpleProps<T>) {
-  const [selectedOption, setSelectedOption] = useState<FilterConstant<T>>({
-    label: '',
-
-    // @ts-expect-error after enable TS strict mode. Please, try to fix it
-    value: null,
-  });
+  const [selectedOption, setSelectedOption] = useState<FilterConstant<T>>(
+    {} as FilterConstant<T>
+  );
 
   useEffect(() => {
     const optionToSelect = options.find(
       ({ value: optionValue }) => optionValue === value
     );
-    setSelectedOption(
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      optionToSelect || { value: null, label: '' }
-    );
+    setSelectedOption(optionToSelect || ({} as FilterConstant<T>));
   }, [options, value]);
 
   const {

@@ -17,6 +17,7 @@ import {
   isRoleIncluded,
   mutateToArray,
 } from 'src/utils';
+import { assertIsDefined } from 'src/utils/asserts';
 import {
   fetchUserAdapter,
   readDocumentAdapter,
@@ -53,104 +54,101 @@ export function selectCurrentUser(state: RootState) {
   return state.currentUser.user;
 }
 
+export function selectAuthenticatedUser(state: RootState) {
+  const currentUser = selectCurrentUser(state);
+
+  assertIsDefined(currentUser, 'User is not authenticated');
+
+  return currentUser;
+}
+
 export function selectCurrentUserId(state: RootState) {
-  return state.currentUser.user?.id;
+  const currentUser = selectAuthenticatedUser(state);
+
+  return currentUser.id;
 }
 
 export function selectCurrentUserProfileHelps(state: RootState) {
-  if (state.currentUser.user) {
-    if (isRoleIncluded(CANDIDATE_USER_ROLES, state.currentUser.user.role)) {
-      return state.currentUser.user.userProfile.helpNeeds;
-    }
-    if (state.currentUser.user.role === USER_ROLES.COACH) {
-      return state.currentUser.user.userProfile.helpOffers;
-    }
+  const currentUser = selectAuthenticatedUser(state);
+
+  if (isRoleIncluded(CANDIDATE_USER_ROLES, currentUser.role)) {
+    return currentUser.userProfile.helpNeeds;
   }
-  return null;
+  if (currentUser.role === USER_ROLES.COACH) {
+    return currentUser.userProfile.helpOffers;
+  }
 }
 
 export function selectCurrentUserProfileBusinessLines(state: RootState) {
-  if (state.currentUser.user) {
-    if (isRoleIncluded(CANDIDATE_USER_ROLES, state.currentUser.user.role)) {
-      return state.currentUser.user.userProfile.searchBusinessLines;
-    }
-    if (state.currentUser.user.role === USER_ROLES.COACH) {
-      return state.currentUser.user.userProfile.networkBusinessLines;
-    }
+  const currentUser = selectAuthenticatedUser(state);
+
+  if (isRoleIncluded(CANDIDATE_USER_ROLES, currentUser.role)) {
+    return currentUser.userProfile.searchBusinessLines;
   }
-  return null;
+  if (currentUser.role === USER_ROLES.COACH) {
+    return currentUser.userProfile.networkBusinessLines;
+  }
 }
 
 // select candidate for the current user => doesn't work for external coach
 export function selectUserCandidateWithUsers(
   state: RootState
 ): UserCandidateWithUsers | null {
-  if (state.currentUser.user) {
-    let candidate = getUserCandidateFromCoachOrCandidate(
-      state.currentUser.user
-    );
-    if (Array.isArray(candidate)) {
-      [candidate] = candidate;
-    }
-    return candidate;
+  const currentUser = selectAuthenticatedUser(state);
+
+  let candidate = getUserCandidateFromCoachOrCandidate(currentUser);
+  if (Array.isArray(candidate)) {
+    [candidate] = candidate;
   }
-  return null;
+  return candidate;
 }
 
 // select candidate User for the current user => doesn't work for external coach
 export function selectCandidateAsUser(state: RootState): User | null {
-  const { user } = state.currentUser;
-  if (user) {
-    let candidate = getUserCandidateFromCoachOrCandidate(user);
-    if (
-      isRoleIncluded(COACH_USER_ROLES, user.role) &&
-      Array.isArray(candidate)
-    ) {
-      [candidate] = candidate;
-      if (candidate?.candidat) {
-        return candidate.candidat;
-      }
+  const currentUser = selectAuthenticatedUser(state);
+
+  let candidate = getUserCandidateFromCoachOrCandidate(currentUser);
+  if (
+    isRoleIncluded(COACH_USER_ROLES, currentUser.role) &&
+    Array.isArray(candidate)
+  ) {
+    [candidate] = candidate;
+    if (candidate?.candidat) {
+      return candidate.candidat;
     }
-    return user;
   }
-  return null;
+  return currentUser;
 }
 
 // select candidateId for the current user => doesn't work for external coach
 export function selectCandidateId(state: RootState): string | null {
-  if (state.currentUser.user) {
-    let candidateId = getCandidateIdFromCoachOrCandidate(
-      state.currentUser.user
-    );
-    if (Array.isArray(candidateId)) {
-      [candidateId] = candidateId;
-    }
-    return candidateId;
+  const currentUser = selectAuthenticatedUser(state);
+
+  let candidateId = getCandidateIdFromCoachOrCandidate(currentUser);
+  if (Array.isArray(candidateId)) {
+    [candidateId] = candidateId;
   }
-  return null;
+  return candidateId;
 }
 
 // select department and businesslines from the profile of the current user's candidate => doesn't work for external coach
 export const selectCandidateProfileDefaultFiltersForDashboardOpportunities =
   createSelector(
-    (state: RootState) => state.currentUser.user,
+    (state: RootState) => selectAuthenticatedUser(state),
     (user) => {
       let userCandidateProfile: UserProfile;
-      if (user) {
-        const candidate = getUserCandidateFromCoachOrCandidate(user);
-        if (Array.isArray(candidate) && candidate[0]?.candidat?.userProfile) {
-          userCandidateProfile = candidate[0]?.candidat?.userProfile;
-        } else {
-          userCandidateProfile = user?.userProfile;
-        }
-        return {
-          department: mutateToArray(userCandidateProfile.department),
-          businessLines: userCandidateProfile.searchBusinessLines.map(
-            (businessLine) => businessLine.name
-          ),
-        };
+      const candidate = getUserCandidateFromCoachOrCandidate(user);
+      if (Array.isArray(candidate) && candidate[0]?.candidat?.userProfile) {
+        userCandidateProfile = candidate[0]?.candidat?.userProfile;
+      } else {
+        userCandidateProfile = user?.userProfile;
       }
-      return null;
+      return {
+        department: mutateToArray(userCandidateProfile.department),
+        businessLines: userCandidateProfile.searchBusinessLines.map(
+          (businessLine) => businessLine.name
+        ),
+      };
     }
   );
 
@@ -158,18 +156,19 @@ export const selectCandidateProfileDefaultFiltersForDashboardOpportunities =
 export const selectLinkedUser = (
   state: RootState
 ): UserWithUserCandidate | null => {
-  const { user } = state.currentUser;
-  if (!user) return null;
-  if (isRoleIncluded(COACH_USER_ROLES, user.role)) {
-    const candidat: UserWithUserCandidate[] | null = getRelatedUser(user);
+  const currentUser = selectAuthenticatedUser(state);
+
+  if (isRoleIncluded(COACH_USER_ROLES, currentUser.role)) {
+    const candidat: UserWithUserCandidate[] | null =
+      getRelatedUser(currentUser);
     if (candidat) {
       const [userToSend] = candidat;
       return userToSend;
     }
     return null;
   }
-  if (isRoleIncluded(CANDIDATE_USER_ROLES, user.role)) {
-    const coach: UserWithUserCandidate[] | null = getRelatedUser(user);
+  if (isRoleIncluded(CANDIDATE_USER_ROLES, currentUser.role)) {
+    const coach: UserWithUserCandidate[] | null = getRelatedUser(currentUser);
     if (coach) {
       const [userToSend] = coach;
       return userToSend;

@@ -113,8 +113,7 @@ export const formCandidateContact: FormSchema<{
       rules: [
         {
           method: (fieldValue) =>
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
+            !!fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
           message: 'Numéro de téléphone invalide',
         },
       ],
@@ -151,7 +150,7 @@ export const formCandidateContact: FormSchema<{
       name: 'gender',
       component: 'select-simple',
       options: CANDIDATE_GENDERS_FILTERS,
-      title: 'Son sexe*',
+      title: 'Son genre*',
       isRequired: true,
       showLabel: true,
     },
@@ -228,8 +227,7 @@ export const formCandidateContact: FormSchema<{
       rules: [
         {
           method: (fieldValue) =>
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
+            !!fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
           message: 'Numéro de téléphone invalide',
         },
       ],

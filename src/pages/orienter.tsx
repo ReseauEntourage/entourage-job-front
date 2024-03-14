@@ -92,14 +92,14 @@ const Orienter = () => {
 
       <VideoSection
         videoId="gUuaeDxlqTE"
-        videoTitle="Rencontre avec Najaf, ancien candidat LinkedOut à Paris"
+        videoTitle="Rencontre avec Najaf, ancien candidat Entourage Pro à Paris"
         coloredBackground
       />
       <Publier innerRef={refPublier} />
 
       <VideoSection
         videoId="WLmDL-pB1NE"
-        videoTitle="Atelier décroche un Job - L'Accélérateur (EITI) X Linkedout"
+        videoTitle="Atelier décroche un Job - L'Accélérateur (EITI) X Entourage Pro"
       />
 
       <Opportunites />

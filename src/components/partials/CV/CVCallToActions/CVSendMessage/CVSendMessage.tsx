@@ -43,11 +43,7 @@ export const CVSendMessage = ({
           openModal(
             <ModalEdit
               title={`Envoyer un message à ${cv.user.candidat.firstName}`}
-              description={`Vous pouvez envoyer un message à ${
-                cv.user.candidat.firstName
-              } pour l'aider et ${
-                cv.user.candidat.gender === 0 ? 'le' : 'la'
-              } conseiller dans sa recherche d'emploi`}
+              description={`Vous pouvez envoyer un message à ${cv.user.candidat.firstName} pour l'aider et le/la conseiller dans sa recherche d'emploi`}
               submitText="Envoyer"
               formSchema={formSendExternalMessage}
               onSubmit={async (fields, closeModal) => {

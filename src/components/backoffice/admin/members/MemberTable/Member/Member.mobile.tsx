@@ -114,7 +114,7 @@ export function MemberMobile({
             </TdMobile>
           )}
           {columns.includes('gender') && (
-            <TdMobile title="Sexe">
+            <TdMobile title="Genre">
               <span>
                 {findConstantFromValue(member.gender, GENDERS_FILTERS).label}
               </span>

@@ -15,9 +15,11 @@ import {
   FormSchema,
   isFormFieldRadio,
   isFormFieldSelect,
+  isFormFieldSelectGraphic,
   isFormFieldSelectRequest,
   isFormFieldTextInput,
   mapFieldRules,
+  Rule,
 } from '../FormSchema';
 import {
   CheckBox,
@@ -34,8 +36,15 @@ import {
 } from 'src/components/utils/Inputs';
 import { CommonInputProps } from 'src/components/utils/Inputs/Inputs.types';
 import { RadioTypes } from 'src/components/utils/Inputs/Radio/Radio.types';
+import {
+  SelectCard,
+  SelectCardType,
+} from 'src/components/utils/Inputs/SelectCard';
 
-import { SelectList } from 'src/components/utils/Inputs/SelectList';
+import {
+  SelectList,
+  SelectListType,
+} from 'src/components/utils/Inputs/SelectList';
 import { AnyCantFix } from 'src/utils/Types';
 
 interface GenericFieldProps<S extends FormSchema<AnyCantFix>> {
@@ -65,10 +74,16 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
 }: GenericFieldProps<S>) {
   const { id: formId } = formSchema;
 
-  let rules = mapFieldRules<S, typeof field.component>(
-    // @ts-expect-error after enable TS strict mode. Please, try to fix it
-    field.rules
-  );
+  let rules = field.rules
+    ? mapFieldRules<S, typeof field.component>(
+        field.rules as Rule<
+          ExtractFormSchemaValidation<S>,
+          typeof field.component,
+          boolean
+        >[]
+      )
+    : {};
+
   const [isMaxLinesReached, setIsMaxLinesReached] = useState<boolean>();
   const [isMaxItemsReached, setIsMaxItemsReached] = useState<boolean>();
 
@@ -116,8 +131,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
         if (field.fieldsToReset) {
           for (let i = 0; i < field.fieldsToReset.length; i += 1) {
             resetField(field.fieldsToReset[i], {
-              // @ts-expect-error after enable TS strict mode. Please, try to fix it
-              defaultValue: null,
+              defaultValue: undefined,
             });
           }
         }
@@ -193,40 +207,26 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
   if (field.component === 'select-simple') {
     const { options } = field;
 
-    return (
-      <SelectSimple
-        {...commonProps}
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        options={options}
-      />
-    );
+    return <SelectSimple {...commonProps} options={options} />;
   }
 
   if (isFormFieldSelectRequest(field)) {
-    let isMulti: boolean;
-    if ('isMulti' in field) {
-      const isMultiDefined = field.isMulti || false;
+    const isMulti =
+      typeof field.isMulti === 'function'
+        ? field.isMulti(getValue)
+        : field.isMulti;
 
-      isMulti =
-        typeof isMultiDefined === 'function'
-          ? isMultiDefined(getValue)
-          : isMultiDefined;
-    }
+    const options =
+      (typeof field.options === 'function'
+        ? field.options(getValue)
+        : field.options) || [];
 
     if (field.component === 'select') {
       return (
         <Select
           {...commonProps}
-          isMulti={
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            isMulti
-          }
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          options={
-            typeof field.options === 'function'
-              ? field.options(getValue)
-              : field.options
-          }
+          isMulti={isMulti}
+          options={options}
           openMenuOnClick={field.openMenuOnClick}
         />
       );
@@ -236,16 +236,8 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
       return (
         <SelectCreatable
           {...commonProps}
-          isMulti={
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            isMulti
-          }
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          options={
-            typeof field.options === 'function'
-              ? field.options(getValue)
-              : field.options
-          }
+          isMulti={isMulti}
+          options={options}
           openMenuOnClick={field.openMenuOnClick}
           maxChar={field.maxChar}
           maxItems={field.maxItems}
@@ -258,32 +250,46 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
       return (
         <SelectAsync
           {...commonProps}
-          isMulti={
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            isMulti
-          }
+          isMulti={isMulti}
           openMenuOnClick={field.openMenuOnClick}
-          loadOptions={(callback, inputValue) =>
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            field.loadOptions(callback, inputValue, getValue)
-          }
+          loadOptions={async (callback, inputValue) => {
+            if (field.loadOptions) {
+              await field.loadOptions(callback, inputValue, getValue);
+            }
+          }}
         />
       );
     }
+  }
 
+  if (isFormFieldSelectGraphic(field)) {
     if (field.component === 'select-list') {
       return (
         <SelectList
           {...commonProps}
-          isMulti={
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            isMulti
-          }
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          isMulti={field.isMulti}
           options={
-            typeof field.options === 'function'
+            (typeof field.options === 'function'
               ? field.options(getValue)
-              : field.options
+              : field.options) as SelectListType[]
+          }
+        />
+      );
+    }
+    if (field.component === 'select-card') {
+      return (
+        <SelectCard
+          {...commonProps}
+          isMulti={field.isMulti}
+          optionsToDisable={
+            field.optionsToDisable
+              ? field.optionsToDisable(getValue)
+              : undefined
+          }
+          options={
+            (typeof field.options === 'function'
+              ? field.options(getValue)
+              : field.options) as SelectCardType[]
           }
         />
       );
@@ -295,11 +301,9 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
       return (
         <Radio
           {...commonProps}
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          options={field.options}
+          options={field.options || []}
           filter={
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            field.dynamicFilter(getValue)
+            field.dynamicFilter ? field.dynamicFilter(getValue) : undefined
           }
           hidden={
             field.hide ? field.hide(getValue, fieldOptions) : field.hidden
@@ -312,16 +316,17 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
       return (
         <RadioAsync
           {...commonProps}
+          errorMessage={field.errorMessage}
           loadOptions={async (callback) => {
-            await // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            field.loadOptions((radioOptions) => {
-              updateFieldOptions({ [field.id]: radioOptions });
-              callback(radioOptions);
-            });
+            if (field.loadOptions) {
+              await field.loadOptions((radioOptions) => {
+                updateFieldOptions({ [field.id]: radioOptions });
+                callback(radioOptions);
+              });
+            }
           }}
           filter={
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            field.dynamicFilter(getValue)
+            field.dynamicFilter ? field.dynamicFilter(getValue) : undefined
           }
           hidden={
             field.hide ? field.hide(getValue, fieldOptions) : field.hidden

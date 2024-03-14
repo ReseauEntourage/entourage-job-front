@@ -5,10 +5,12 @@ import { COLORS } from 'src/constants/styles';
 export const StyledSelectListContainer = styled.div`
   ${() => commonInputContainerStyles}
 `;
-export const StyledSelectList = styled.div`
+export const StyledSelectList = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  padding: 0;
+  margin-bottom: 8px;
 
   > li {
     list-style: none;
@@ -20,7 +22,7 @@ export const StyledSelectList = styled.div`
     > button {
       width: 100%;
       border: 2px solid ${COLORS.lightgray};
-      background-color: #ffffff;
+      background-color: ${COLORS.white};
       border-radius: 20px;
       padding: 11px 1px;
 
@@ -62,7 +64,7 @@ export const StyledCheckIconContainer = styled.div`
   }
 `;
 
-export const StyledSelectOption = styled.div`
+export const StyledListOption = styled.div`
   display: flex;
   flex-direction: row;
   font-family: Poppins, sans-serif;

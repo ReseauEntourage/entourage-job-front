@@ -27,6 +27,7 @@ import {
   SocialMedia,
   UserDto,
   UserProfile,
+  UserRegistrationDto,
 } from './types';
 
 export class APIHandler {
@@ -208,6 +209,12 @@ export class APIHandler {
   // post
   postUser(params: UserDto): Promise<AxiosResponse> {
     return this.post('/user', params);
+  }
+
+  async postUserRegistration(
+    params: UserRegistrationDto
+  ): Promise<AxiosResponse> {
+    return this.post('/user/registration', params);
   }
 
   postProfileImage(
@@ -467,8 +474,12 @@ export class APIHandler {
   // contact /
   /// // //////
 
-  getCampaigns(): Promise<AxiosResponse> {
-    return this.get(`/contact/campaigns`);
+  getCandidateCampaigns(): Promise<AxiosResponse> {
+    return this.get(`/contact/campaigns/candidate`);
+  }
+
+  getCoachCampaigns(): Promise<AxiosResponse> {
+    return this.get(`/contact/campaigns/coach`);
   }
 
   postContactContactUs(params: ContactContactUs): Promise<AxiosResponse> {

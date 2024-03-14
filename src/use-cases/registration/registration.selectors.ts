@@ -1,12 +1,27 @@
 import _ from 'lodash';
 import {
+  FirstStepContent,
+  FlattenedStepData,
+  LastStepContent,
   REGISTRATION_FIRST_STEP,
-  RegistrationPageContent,
-  RegistrationPageContents,
+  RegistrationErrorMessages,
   RegistrationStep,
-  StepsData,
-} from 'src/components/registration/Registration/Registration.types';
+  RegistrationStepContent,
+  RegistrationStepContents,
+  StepData,
+  StepDataKeys,
+} from 'src/components/registration/Registration.types';
+import {
+  flattenRegistrationDataByRole,
+  incrementRegistrationStep,
+} from 'src/components/registration/Registration.utils';
+import { assertIsDefined } from 'src/utils/asserts';
+import { createUserAdapter } from './registration.adapters';
 import { RootState } from './registration.slice';
+
+export const createUserSelectors = createUserAdapter.getSelectors<RootState>(
+  (state) => state.registration.createUser
+);
 
 export function selectIsEmptyRegistrationData(state: RootState) {
   return _.isEmpty(state.registration.data);
@@ -16,16 +31,53 @@ export function selectRegistrationData(state: RootState) {
   return state.registration.data;
 }
 
+export function selectRegistrationCurrentStep(state: RootState) {
+  return state.registration.currentStep;
+}
+
+export function selectDefinedRegistrationCurrentStep(state: RootState) {
+  const currentStep = selectRegistrationCurrentStep(state);
+
+  assertIsDefined(currentStep, RegistrationErrorMessages.CURRENT_STEP);
+
+  return currentStep;
+}
+
 export function selectRegistrationNextStep(state: RootState): RegistrationStep {
-  const currentStepNumber: number = parseInt(
-    state.registration.currentStep.split('-')[1],
-    10
-  );
-  return `step-${currentStepNumber + 1}`;
+  const currentStep = selectDefinedRegistrationCurrentStep(state);
+  return incrementRegistrationStep(currentStep);
 }
 
 export function selectRegistrationSelectedRole(state: RootState) {
-  return state.registration.data[REGISTRATION_FIRST_STEP]?.role?.[0];
+  return state.registration.selectedRole;
+}
+
+export function selectDefinedRegistrationSelectedRole(state: RootState) {
+  const selectedRole = selectRegistrationSelectedRole(state);
+
+  assertIsDefined(selectedRole, RegistrationErrorMessages.SELECTED_ROLE);
+
+  return selectedRole;
+}
+
+export function selectRegistrationSelectedProgram(state: RootState) {
+  const data = selectRegistrationData(state);
+  const selectedRole = selectDefinedRegistrationSelectedRole(state);
+
+  const allStepsDataForSelectedRole = flattenRegistrationDataByRole(
+    data,
+    selectedRole
+  );
+
+  return allStepsDataForSelectedRole.program?.[0];
+}
+
+export function selectDefinedRegistrationSelectedProgram(state: RootState) {
+  const selectedProgram = selectRegistrationSelectedProgram(state);
+
+  assertIsDefined(selectedProgram, RegistrationErrorMessages.SELECTED_PROGRAM);
+
+  return selectedProgram;
 }
 
 export function selectIsFirstRegistrationStep(state: RootState) {
@@ -34,9 +86,18 @@ export function selectIsFirstRegistrationStep(state: RootState) {
 
 export function selectIsLastRegistrationStep(state: RootState) {
   const nextStep = selectRegistrationNextStep(state);
-  const selectedRole = selectRegistrationSelectedRole(state);
+  const isFirstStep = selectIsFirstRegistrationStep(state);
 
-  return !RegistrationPageContents[nextStep]?.[selectedRole];
+  if (isFirstStep) {
+    return false;
+  }
+
+  const selectedRole = selectDefinedRegistrationSelectedRole(state);
+
+  return (
+    !RegistrationStepContents[nextStep] ||
+    !RegistrationStepContents[nextStep][selectedRole]
+  );
 }
 
 export function selectIsRegistrationLoading(state: RootState) {
@@ -45,21 +106,92 @@ export function selectIsRegistrationLoading(state: RootState) {
 
 export function selectRegistrationCurrentStepData(
   state: RootState
-): StepsData[RegistrationStep] {
+): StepData | null {
+  const currentStep = selectDefinedRegistrationCurrentStep(state);
+
   const isFirstStep = selectIsFirstRegistrationStep(state);
+
   if (isFirstStep) {
-    return state.registration.data[state.registration.currentStep];
+    const selectedRole = selectRegistrationSelectedRole(state);
+    return selectedRole ? { role: [selectedRole] } : null;
   }
 
-  const selectedRole = selectRegistrationSelectedRole(state);
+  const selectedRole = selectDefinedRegistrationSelectedRole(state);
 
-  return state.registration.data[state.registration.currentStep]?.[
-    selectedRole
-  ];
+  return state.registration.data[currentStep]?.[selectedRole] || null;
 }
 
 export function selectRegistrationCurrentStepContent(
   state: RootState
-): RegistrationPageContent {
-  return RegistrationPageContents[state.registration.currentStep];
+): RegistrationStepContent {
+  const currentStep = selectDefinedRegistrationCurrentStep(state);
+
+  const isFirstStep = selectIsFirstRegistrationStep(state);
+
+  if (isFirstStep) {
+    return FirstStepContent;
+  }
+
+  const selectedRole = selectDefinedRegistrationSelectedRole(state);
+
+  const stepContent = RegistrationStepContents[currentStep][selectedRole];
+
+  assertIsDefined(stepContent, RegistrationErrorMessages.STEP_CONTENT);
+
+  return stepContent;
+}
+
+export function selectRegistrationConfirmationStepContent(
+  state: RootState
+): LastStepContent {
+  const selectedRole = selectDefinedRegistrationSelectedRole(state);
+
+  const selectedProgram = selectDefinedRegistrationSelectedProgram(state);
+
+  return LastStepContent[selectedRole][selectedProgram];
+}
+
+export function selectRegistrationDataFromOtherStep(
+  state: RootState
+): Partial<StepData> | null {
+  const isFirstStep = selectIsFirstRegistrationStep(state);
+  const stepContent = selectRegistrationCurrentStepContent(state);
+
+  if (!isFirstStep && stepContent.dependsOn) {
+    const data = selectRegistrationData(state);
+
+    const selectedRole = selectDefinedRegistrationSelectedRole(state);
+
+    // Flatten the union of all the form values to get each key and its value
+    // That way we are able to use the name of the specific field key to get its value if another form in the registration process needs the value of a preceding form
+    const allStepsDataForSelectedRole = flattenRegistrationDataByRole(
+      data,
+      selectedRole
+    );
+
+    return stepContent.dependsOn.reduce((acc, curr) => {
+      return { ...acc, [curr]: allStepsDataForSelectedRole[curr] };
+    }, {} as FlattenedStepData);
+  }
+
+  return null;
+}
+
+export function selectRegistrationShouldSkipStep(state: RootState) {
+  const valuesFromOtherStep = selectRegistrationDataFromOtherStep(state);
+  const stepContent = selectRegistrationCurrentStepContent(state);
+
+  const skippedByArray = stepContent.skippedBy;
+
+  if (skippedByArray && valuesFromOtherStep) {
+    const keys = Object.keys(skippedByArray) as StepDataKeys[];
+
+    return keys.some((key) => {
+      if (valuesFromOtherStep[key]) {
+        return _.isEqual(valuesFromOtherStep[key], skippedByArray[key]);
+      }
+      return false;
+    });
+  }
+  return false;
 }

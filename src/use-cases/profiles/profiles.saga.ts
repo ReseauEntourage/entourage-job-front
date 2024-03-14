@@ -73,7 +73,6 @@ function* fetchProfilesRequestedSaga(
 
 function* fetchProfilesRecommendationsRequestedSaga() {
   const userId = yield* select(selectCurrentUserId);
-  if (!userId) return;
   try {
     const response = yield* call(() => Api.getProfilesRecommendations(userId));
     yield* put(fetchProfilesRecommendationsSucceeded(response.data));

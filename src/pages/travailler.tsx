@@ -52,7 +52,7 @@ const Travailler = () => {
 
             closeModal();
 
-            const { data: campaigns } = await Api.getCampaigns();
+            const { data: campaigns } = await Api.getCandidateCampaigns();
 
             const selectedCampaign = campaigns.find((campaign) => {
               return campaign.id === fields.infoCo;
