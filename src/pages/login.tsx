@@ -1,137 +1,16 @@
-import { useRouter } from 'next/router';
-import React, { useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Api } from 'src/api';
+import React from 'react';
 import { Layout } from 'src/components/Layout';
-import { FormWithValidation } from 'src/components/forms/FormWithValidation';
-import { formLogin } from 'src/components/forms/schemas/formLogin';
-import { formLostPwd } from 'src/components/forms/schemas/formLostPwd';
-import { openModal } from 'src/components/modals/Modal';
-import { StepperModal } from 'src/components/modals/Modal/ModalGeneric/StepperModal';
-import { SuccessModalContent } from 'src/components/modals/SuccessModalContent';
-import { Section, SimpleLink } from 'src/components/utils';
-import {
-  authenticationActions,
-  selectLoginError,
-} from 'src/use-cases/authentication';
-import { selectCurrentUser } from 'src/use-cases/current-user';
-import { getDefaultUrl } from 'src/utils/Redirects';
+import { Login } from 'src/components/login/Login';
+import { Section } from 'src/components/utils';
 
-const Login = () => {
-  const user = useSelector(selectCurrentUser);
-  const {
-    replace,
-    query: { requestedPath },
-  } = useRouter();
-
-  const dispatch = useDispatch();
-  const loginError = useSelector(selectLoginError);
-
-  const rateLimitErrorMessage =
-    'Trop de tentatives infructueuses.\nVeuillez ressayer dans 1 minute.';
-
-  const loginErrorMessage = useMemo(() => {
-    if (!loginError) {
-      return;
-    }
-
-    if (loginError === 'RATE_LIMIT') {
-      return rateLimitErrorMessage;
-    }
-
-    if (loginError === 'INVALID_CREDENTIALS') {
-      return 'Erreur de connexion. Identifiant ou mot de passe invalide.';
-    }
-
-    return 'Une erreur est survenue';
-  }, [loginError]);
-
-  useEffect(() => {
-    let path: string;
-
-    if (Array.isArray(requestedPath)) {
-      [path] = requestedPath;
-    } else {
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      path = requestedPath;
-    }
-
-    if (user) {
-      replace(path || getDefaultUrl(user.role));
-    }
-  }, [replace, requestedPath, user]);
-
+const LoginPage = () => {
   return (
     <Layout title="Connexion - Entourage Pro">
-      <Section size="large" style="muted">
-        <div className="uk-flex uk-flex-center">
-          <div className="uk-width-1-2@m uk-card uk-card-default uk-card-body uk-flex uk-flex-column">
-            <h1>Connexion</h1>
-            <FormWithValidation
-              formSchema={formLogin}
-              submitText="Se connecter"
-              enterToSubmit
-              onSubmit={({ email, password }) => {
-                dispatch(
-                  authenticationActions.loginRequested({ email, password })
-                );
-              }}
-              error={loginErrorMessage}
-            />
-            <SimpleLink
-              isExternal
-              className="uk-text-small uk-margin-small-top"
-              onClick={() => {
-                openModal(
-                  <StepperModal
-                    title="Mot de passe oublié ?"
-                    composers={[
-                      (closeModal, nextStep) => {
-                        return (
-                          <FormWithValidation
-                            submitText="Envoyer"
-                            formSchema={formLostPwd}
-                            onCancel={closeModal}
-                            onSubmit={({ email }, setError) => {
-                              return Api.postAuthForgot({
-                                email: email.toLowerCase(),
-                              })
-                                .then(() => {
-                                  return nextStep();
-                                })
-                                .catch((err) => {
-                                  const errorMessage =
-                                    err &&
-                                    err.response &&
-                                    err.response.status === 429
-                                      ? rateLimitErrorMessage
-                                      : "L'adresse mail ne correspond à aucun utilisateur";
-                                  setError(errorMessage);
-                                });
-                            }}
-                          />
-                        );
-                      },
-                      (closeModal) => {
-                        return (
-                          <SuccessModalContent
-                            closeModal={closeModal}
-                            text="Un e-mail vient d'être envoyé à l'adresse indiquée."
-                          />
-                        );
-                      },
-                    ]}
-                  />
-                );
-              }}
-            >
-              Mot de passe oublié ?
-            </SimpleLink>
-          </div>
-        </div>
+      <Section className="custom-page">
+        <Login />
       </Section>
     </Layout>
   );
 };
 
-export default Login;
+export default LoginPage;

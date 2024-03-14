@@ -9,7 +9,7 @@ export const formLostPwd: FormSchema<{ email: string }> = {
       name: 'email',
       type: 'email',
       component: 'text-input',
-      placeholder: 'Tapez votre adresse mail',
+      placeholder: 'Entrez votre adresse mail',
       title: 'Adresse mail*',
       showLabel: true,
       isRequired: true,
