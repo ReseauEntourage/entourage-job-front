@@ -4,7 +4,6 @@ import CarteSolidaireIcon from 'assets/icons/orienter-carte-solidaire.svg';
 import { MultipleCTA } from 'src/components/partials/utils/MultipleCTA';
 import { RowIconTitleText } from 'src/components/partials/utils/RowIconTitleText';
 import { SimpleImageText } from 'src/components/partials/utils/SimpleImageText';
-import { Button } from 'src/components/utils';
 // import { GA_TAGS } from 'src/constants/tags';
 import { COLORS } from 'src/constants/styles';
 import { useIsDesktop } from 'src/hooks/utils';

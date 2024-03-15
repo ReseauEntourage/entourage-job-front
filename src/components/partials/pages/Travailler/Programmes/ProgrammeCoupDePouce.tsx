@@ -75,11 +75,11 @@ export const ProgrammeCoupDePouce = ({
           <p>
             Le programme Coup de pouce vous permet de solliciter et de
             bénéficier de coups de pouce ponctuels pour vous aider dans votre
-            recherche d'emploi.
+            recherche d&lsquo;emploi.
           </p>
           <p>
-            Une véritable communauté d’experts bénévoles est à votre disposition
-            pour vous proposer :
+            Une véritable communauté d&lsquo;experts bénévoles est à votre
+            disposition pour vous proposer :
           </p>
           <StyledProgrammesList data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;">
             <li>
@@ -91,7 +91,7 @@ export const ProgrammeCoupDePouce = ({
               - Des conseils et une méhtodologie pour des recherches d’emploi
               efficaces
             </li>
-            <li>- Et tous autres partages d'expérience utiles !</li>
+            <li>- Et tous autres partages d&lsquo;expérience utiles !</li>
           </StyledProgrammesList>
         </div>
         <Button
@@ -103,7 +103,7 @@ export const ProgrammeCoupDePouce = ({
           dataTestId="button-inscrire-coup-de-pouce"
           href="/inscription"
         >
-          S'inscrire au programme
+          S&lsquo;inscrire au programme
         </Button>
       </SimpleImageText>
       <RowIconTitleText content={content} backgroundColor="blue" />

@@ -1,13 +1,12 @@
-import _ from 'lodash';
 import React from 'react';
 import { Layout } from 'src/components/Layout';
 import { CandidateTestimoniesOrientation } from 'src/components/partials/common/CandidateTestimoniesOrientation';
 import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial/NewsletterPartial';
 import { Partners } from 'src/components/partials/common/Partners';
 import { SharePartial } from 'src/components/partials/common/SharePartial';
-import { Participer } from 'src/components/partials/pages/Travailler/Participer';
-import { Rejoindre } from 'src/components/partials/pages/Travailler/Rejoindre';
-import { Steps } from 'src/components/partials/pages/Travailler/Steps';
+import { Participer } from 'src/components/partials/pages/Travailler/360/Participer';
+import { Rejoindre } from 'src/components/partials/pages/Travailler/360/Rejoindre';
+import { Steps } from 'src/components/partials/pages/Travailler/360/Steps';
 import { ImageTitle } from 'src/components/partials/utils/ImageTitle';
 import { Section } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';

@@ -46,9 +46,9 @@ const reviews = [
     authorStatus: "Recruteur de M'Bemba Dani Alu",
     review: (
       <>
-        “ Le recrutement de M'Bemba a ressoudé les équipes. Elles se sont
+        “ Le recrutement de M&lsquo;Bemba a ressoudé les équipes. Elles se sont
         investies dans un projet. Elles peuvent être très fières d’avoir fait en
-        sorte que M'Bemba soit épanoui et polyvalent dans l’atelier.”
+        sorte que M&lsquo;Bemba soit épanoui et polyvalent dans l’atelier.”
       </>
     ),
   },

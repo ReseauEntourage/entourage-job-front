@@ -28,10 +28,10 @@ export const RowIconTitleText = ({
         {title && <H2 title={title} color="black" center />}
         <H5 title="Des réseaux activés = plus d'opportunités" center />
         <StyledRowIconTitleTextContainer data-uk-scrollspy="cls:uk-animation-slide-bottom; target: h6, p; delay: 200;">
-          {content.map(({ title, paragraph, src }, index) => {
+          {content.map(({ title: itemTitle, paragraph, src }, index) => {
             return (
               <IconTitleTextItem
-                title={title}
+                title={itemTitle}
                 paragraph={paragraph}
                 src={src}
                 key={index}

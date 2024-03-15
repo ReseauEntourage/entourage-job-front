@@ -6,7 +6,6 @@ import {
   Section,
 } from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
-import { Subtitle } from 'src/components/utils/Subtitle';
 
 const numbers = [
   {
@@ -48,9 +47,9 @@ export const Impact = () => {
       <StyledCenteredButtonContainer>
         <Button
           style="custom-secondary-inverted"
-          href="" // lien pdf brouche mesure d'impact
+          href="" // TODO : lien pdf brochure mesure d'impact
         >
-          Télécharger la mesure d'impact
+          Télécharger la mesure d`&lsquo;impact
         </Button>
       </StyledCenteredButtonContainer>
     </Section>
