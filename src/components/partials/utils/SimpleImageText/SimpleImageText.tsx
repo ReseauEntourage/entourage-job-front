@@ -16,6 +16,7 @@ interface SimpleImageTextProps {
   title: string;
   img: string;
   children: React.ReactNode;
+  reverse?: boolean;
 }
 
 export const SimpleImageText = ({
@@ -24,13 +25,14 @@ export const SimpleImageText = ({
   title,
   img,
   children,
+  reverse = false,
 }: SimpleImageTextProps) => {
   const isDesktop = useIsDesktop();
   return (
     <StyledSimpleImageTextBackground backgroundColor={backgroundColor}>
       <Section>
         {!isDesktop && <H3 title={title} color="primaryBlue" />}
-        <StyledSimpleImageTextContainer className={isDesktop ? '' : 'mobile'}>
+        <StyledSimpleImageTextContainer className={isDesktop ? '' : 'mobile'} reverse={reverse}>
           <StyledSimpleImageTextImageContainer
             className={isDesktop ? '' : 'mobile'}
             ref={innerRef}

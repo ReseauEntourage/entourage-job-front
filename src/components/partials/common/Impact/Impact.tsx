@@ -1,6 +1,6 @@
 import React from 'react';
 import { NumberGrid } from 'src/components/partials/utils/NumberGrid';
-import { Section } from 'src/components/utils';
+import { Button, StyledCenteredButtonContainer, Section } from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
 import { Subtitle } from 'src/components/utils/Subtitle';
 
@@ -41,10 +41,14 @@ export const Impact = () => {
         center
       />
       <NumberGrid numbers={numbers} numbersPerRow={4} />
-      <Subtitle
-        text={<>Source&nbsp;: Mesure d&apos;impact 2021 Archipel & Co</>}
-        center
-      />
+      <StyledCenteredButtonContainer>
+        <Button
+          style="custom-secondary-inverted"
+          href="" // lien pdf brouche mesure d'impact
+        >
+          Télécharger la mesure d'impact
+        </Button>
+      </StyledCenteredButtonContainer>
     </Section>
   );
 };

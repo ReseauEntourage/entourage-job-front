@@ -4,6 +4,9 @@ import { COLORS } from 'src/constants/styles';
 export interface StyledSimpleImageTextBackgroundProps {
   backgroundColor: 'blue';
 }
+export interface StyledSimpleImageTextContainerProps {
+  reverse: boolean;
+}
 
 const backgroundColors: {
   [K in NonNullable<
@@ -17,9 +20,9 @@ export const StyledSimpleImageTextBackground = styled.div<StyledSimpleImageTextB
   background-color: ${({ color }) => backgroundColors[color]};
 `;
 
-export const StyledSimpleImageTextContainer = styled.div`
+export const StyledSimpleImageTextContainer = styled.div<StyledSimpleImageTextContainerProps>`
   display: flex;
-  flex-direction: row;
+  flex-direction: ${({reverse}) => reverse ? 'row-reverse': 'row'};
   flex-wrap: wrap;
   gap: 10%;
 `;

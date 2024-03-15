@@ -22,7 +22,6 @@ export const Decouvrir = ({
           onClick: () => {
             handleClick(refInscrire);
           },
-          className: 'decouvrir-card',
           CTAText: 'Découvrir',
         },
         {
@@ -33,7 +32,6 @@ export const Decouvrir = ({
           onClick: () => {
             handleClick(refPublier);
           },
-          className: 'decouvrir-card',
           CTAText: 'Découvrir',
         },
       ]}

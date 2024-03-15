@@ -4,7 +4,7 @@ import { H2, H6 } from 'src/components/utils/Headings';
 import { BulletListElement as BulletList } from 'src/components/utils/Lists';
 import { StyledRejoindre } from './Rejoindre.styles';
 
-export const Rejoindre = ({ cta }: { cta: (label: string) => void }) => {
+export const Rejoindre = () => {
   return (
     <Section className="custom-primary">
       <StyledRejoindre>
@@ -50,11 +50,9 @@ export const Rejoindre = ({ cta }: { cta: (label: string) => void }) => {
           </ul>
           <Button
             style="custom-secondary-inverted"
-            onClick={() => {
-              cta('P2_Envie_Rejoindre');
-            }}
+            href="/inscription"
           >
-            Finaliser mon inscription
+            Participer au programme
           </Button>
         </div>
         <div className="image-container">

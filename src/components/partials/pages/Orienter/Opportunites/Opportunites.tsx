@@ -1,9 +1,5 @@
 import React from 'react';
-import { StyledOrienterBackground } from '../Inscrire/Inscrire.styles';
-import { Section } from 'src/components/utils';
-import { H2, H5 } from 'src/components/utils/Headings';
-import { Opportunite } from './Opportunite';
-import { StyledOrienterOpportunitesContainer } from './Opportunites.styles';
+import { RowIconTitleText } from 'src/components/partials/utils/RowIconTitleText';
 
 const content = [
   {
@@ -34,27 +30,10 @@ const content = [
 
 export const Opportunites = () => {
   return (
-    <StyledOrienterBackground>
-      <Section>
-        <H2
-          title="Ce qu'Entourage Pro apporte à vos bénéficiaires"
-          color="black"
-          center
-        />
-        <H5 title="Des réseaux activés = plus d'opportunités" center />
-        <StyledOrienterOpportunitesContainer data-uk-scrollspy="cls:uk-animation-slide-bottom; target: h6, p; delay: 200;">
-          {content.map(({ title, paragraph, src }, index) => {
-            return (
-              <Opportunite
-                title={title}
-                paragraph={paragraph}
-                src={src}
-                key={index}
-              />
-            );
-          })}
-        </StyledOrienterOpportunitesContainer>
-      </Section>
-    </StyledOrienterBackground>
+    <RowIconTitleText
+      backgroundColor='blue'
+      title="Ce qu'Entourage Pro apporte à vos bénéficiaires"
+      content={content}
+    />
   );
 };

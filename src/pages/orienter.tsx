@@ -3,7 +3,7 @@ import { Layout } from 'src/components/Layout';
 
 import { Decouvrir } from 'src/components/partials/pages/Orienter/Decouvrir';
 import { EnSavoirPlus } from 'src/components/partials/pages/Orienter/EnSavoirPlus';
-import { Impact } from 'src/components/partials/pages/Orienter/Impact';
+import { Impact } from 'src/components/partials/common/Impact';
 import { Inscrire } from 'src/components/partials/pages/Orienter/Inscrire';
 import { Opportunites } from 'src/components/partials/pages/Orienter/Opportunites';
 import { Publier } from 'src/components/partials/pages/Orienter/Publier';

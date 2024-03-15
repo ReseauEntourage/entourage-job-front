@@ -25,6 +25,7 @@ interface MultipleCTAProps {
       size?: UIKIT_BUTTON_SIZES;
       style?: UIKIT_BUTTON_STYLES_SPEC;
       dataTestId?: string;
+      removeChevron?: boolean;
     };
   }[];
   animate?: boolean;
@@ -124,7 +125,7 @@ export const MultipleCTA = ({
                         dataTestId={item.button.dataTestId}
                       >
                         {item.button.label}
-                        <ChevronRightIcon />
+                        {!item.button.removeChevron && <ChevronRightIcon />}
                       </Button>
                     </div>
                   )}

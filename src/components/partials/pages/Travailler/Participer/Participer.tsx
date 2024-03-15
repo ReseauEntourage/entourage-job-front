@@ -5,7 +5,7 @@ import { CheckListElement as CheckList } from 'src/components/utils/Lists';
 import { useIsDesktop } from 'src/hooks/utils/usePlatforms';
 import { StyledParticiper } from './Participer.styles';
 
-export const Participer = ({ cta }: { cta: (label: string) => void }) => {
+export const Participer = () => {
   const isDesktop = useIsDesktop();
 
   return (
@@ -83,7 +83,8 @@ export const Participer = ({ cta }: { cta: (label: string) => void }) => {
           </ul>
           <Button
             style="custom-secondary-inverted"
-            onClick={() => cta('P1_Acces_Reseau')}
+            href="/inscription"
+            // onClick={() => cta('P1_Acces_Reseau')}
           >
             Participer au programme
           </Button>
