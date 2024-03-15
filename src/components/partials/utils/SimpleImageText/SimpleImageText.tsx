@@ -32,7 +32,10 @@ export const SimpleImageText = ({
     <StyledSimpleImageTextBackground backgroundColor={backgroundColor}>
       <Section>
         {!isDesktop && <H3 title={title} color="primaryBlue" />}
-        <StyledSimpleImageTextContainer className={isDesktop ? '' : 'mobile'} reverse={reverse}>
+        <StyledSimpleImageTextContainer
+          className={isDesktop ? '' : 'mobile'}
+          reverse={reverse}
+        >
           <StyledSimpleImageTextImageContainer
             className={isDesktop ? '' : 'mobile'}
             ref={innerRef}

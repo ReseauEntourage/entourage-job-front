@@ -62,10 +62,7 @@ export const Steps = () => {
           </div>
         </div>
       </StyledSteps>
-      <Button
-        href="/inscription"
-        style="custom-secondary-inverted"
-      >
+      <Button href="/inscription" style="custom-secondary-inverted">
         S&apos;inscrire au programme 360
       </Button>
     </Section>

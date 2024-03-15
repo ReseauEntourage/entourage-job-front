@@ -10,7 +10,11 @@ interface IconTitleTextItemProps {
   src: string;
 }
 
-export const IconTitleTextItem = ({ title, paragraph, src }: IconTitleTextItemProps) => {
+export const IconTitleTextItem = ({
+  title,
+  paragraph,
+  src,
+}: IconTitleTextItemProps) => {
   const isDesktop = useIsDesktop();
   return (
     <StyledIconTitleTextItem className={isDesktop ? '' : 'mobile'}>

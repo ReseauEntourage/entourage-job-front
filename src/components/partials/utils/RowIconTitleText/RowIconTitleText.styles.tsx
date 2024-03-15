@@ -1,20 +1,21 @@
-import { COLORS } from 'src/constants/styles';
 import styled from 'styled-components';
+import { COLORS } from 'src/constants/styles';
 
 export interface StyledRowIconTitleTextBackgroundProps {
-    backgroundColor: 'blue';
-  }
-  
-  const backroundColors: {
-    [K in NonNullable<
-        StyledRowIconTitleTextBackgroundProps['backgroundColor']
-    >]: string;
-  } = {
-    blue: COLORS.hoverBlue,
-  };
-  
+  backgroundColor: 'blue';
+}
+
+const backroundColors: {
+  [K in NonNullable<
+    StyledRowIconTitleTextBackgroundProps['backgroundColor']
+  >]: string;
+} = {
+  blue: COLORS.hoverBlue,
+};
+
 export const StyledRowIconTitleTextBackground = styled.div<StyledRowIconTitleTextBackgroundProps>`
-background-color: ${({ backgroundColor }) => backroundColors[backgroundColor]};
+  background-color: ${({ backgroundColor }) =>
+    backroundColors[backgroundColor]};
 `;
 
 export const StyledRowIconTitleTextContainer = styled.div`

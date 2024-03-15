@@ -27,7 +27,7 @@ export const Decouvrir = ({
         {
           title: 'Programme Coup de pouce',
           description:
-            'Je souhaite solliciter et bénéficier de coups de pouces ponctuels de la part d’une communauté bénévole de pros pour m\'aider dans ma recherche d\'emploi (atelier CV et entretiens, partage de réseau, conseils pour la recherche, partage d\'expérience...)',
+            "Je souhaite solliciter et bénéficier de coups de pouces ponctuels de la part d’une communauté bénévole de pros pour m'aider dans ma recherche d'emploi (atelier CV et entretiens, partage de réseau, conseils pour la recherche, partage d'expérience...)",
           img: '/static/img/orienter-decouvrir-2.png',
           onClick: () => {
             handleClick(refProgramme360);

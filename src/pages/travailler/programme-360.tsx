@@ -13,7 +13,6 @@ import { Section } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';
 
 const Programme360 = () => {
-
   return (
     <Layout title="Programme 360 - Entourage Pro">
       <ImageTitle
@@ -24,7 +23,7 @@ const Programme360 = () => {
         alt="Candidats Entourage Pro en recherche d’emploi"
         cta={{
           label: 'Rejoindre Entourage Pro',
-          href:"/inscription",
+          href: '/inscription',
           style: 'custom-secondary-inverted',
           dataTest: 'banner-cta',
         }}

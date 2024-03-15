@@ -31,7 +31,7 @@ const content = [
 export const Opportunites = () => {
   return (
     <RowIconTitleText
-      backgroundColor='blue'
+      backgroundColor="blue"
       title="Ce qu'Entourage Pro apporte à vos bénéficiaires"
       content={content}
     />

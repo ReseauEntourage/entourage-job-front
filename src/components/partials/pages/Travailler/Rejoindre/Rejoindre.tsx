@@ -48,10 +48,7 @@ export const Rejoindre = () => {
               </p>
             </BulletList>
           </ul>
-          <Button
-            style="custom-secondary-inverted"
-            href="/inscription"
-          >
+          <Button style="custom-secondary-inverted" href="/inscription">
             Participer au programme
           </Button>
         </div>

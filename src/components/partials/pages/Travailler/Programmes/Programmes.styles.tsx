@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
-
 export const StyledProgrammesList = styled.ul`
   color: ${COLORS.black};
   padding: 5px 0;
@@ -26,4 +25,3 @@ export const StyledProgrammesList = styled.ul`
     }
   }
 `;
-
