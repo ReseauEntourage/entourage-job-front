@@ -9,7 +9,6 @@ import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Grid, Card } from 'src/components/utils';
 import { COLORS } from 'src/constants/styles';
 import { formatParagraph, sortByName } from 'src/utils';
-import { StyledBlueIconContainer } from './CVEdit.styles';
 
 interface Review {
   name: string;
