@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 describe('Parcours CV', () => {
   beforeEach(() => {
+    window.localStorage.setItem('entourage-pro-modal-closed', 'true');
     cy.intercept('GET', '/cv/cards/random*', {
       fixture: 'cv-cards-random-res',
     }).as('getAllCV');

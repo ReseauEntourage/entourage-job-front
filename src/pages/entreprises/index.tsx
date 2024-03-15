@@ -5,17 +5,15 @@ import { openModal } from 'src/components/modals/Modal';
 import { CompanyContactModal } from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
 import { PostPublicOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { TaxModal } from 'src/components/modals/PopupModal/TaxModal';
-import {
-  LogoList,
-  HowToCommitDifferently,
-  Chapter,
-  NumberGrid,
-  Reviews,
-  Timeline,
-} from 'src/components/partials';
 import { CVList } from 'src/components/partials/CV/CVList';
-import { ImageTitle } from 'src/components/partials/ImageTitle';
-import { NewsletterPartial } from 'src/components/partials/NewsletterPartial';
+import { Chapter } from 'src/components/partials/common/Chapter';
+import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
+import { HowToCommitDifferently } from 'src/components/partials/pages/Entreprise/HowToCommitDifferently';
+import { Timeline } from 'src/components/partials/pages/Entreprise/Timeline';
+import { ImageTitle } from 'src/components/partials/utils/ImageTitle';
+import { LogoList } from 'src/components/partials/utils/LogoList';
+import { NumberGrid } from 'src/components/partials/utils/NumberGrid';
+import { Reviews } from 'src/components/partials/utils/Reviews';
 import { Button, Section, AnimatedList } from 'src/components/utils';
 import { CV_FILTERS_DATA, STORAGE_KEYS } from 'src/constants';
 import { PARTNERS } from 'src/constants/partners';

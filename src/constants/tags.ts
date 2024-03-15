@@ -425,6 +425,39 @@ export const GA_TAGS = {
   HEADER_CANDIDATS_CLIC: {
     action: 'Header_Candidats_Clic',
   },
+  HOME_DECOUVRIR_CTA_CLICK: {
+    action: 'Home_Decouvrir_CTA_Click',
+  },
+  HOME_ENGAGEMENT_ENTREPRISE_COLLABORATEURS: {
+    action: 'Home_Engagement_Entreprise_Collaborateurs',
+  },
+  HOME_ENGAGEMENT_ENTREPRISE_CANDIDATS: {
+    action: 'Home_Engagement_Entreprise_Candidats',
+  },
+  HOME_ENGAGEMENT_ENTREPRISE_MECENAT_COMPETENCES: {
+    action: 'Home_Engagement_Entreprise_Mecenat_Competences',
+  },
+  HOME_ENGAGEMENT_ENTREPRISE_MECENAT_NATURE: {
+    action: 'Home_Engagement_Entreprise_Mecenat_Nature',
+  },
+  HOME_BANNER_CANDIDAT_CLICK: {
+    action: 'Home_Banner_Candidat_click',
+  },
+  HOME_BANNER_COACH_CLICK: {
+    action: 'Home_Banner_Coach_click',
+  },
+  HOME_REJOINDRE_CANDIDAT_CLICK: {
+    action: 'Home_Rejoindre_Candidat_Click',
+  },
+  HOME_REJOINDRE_COACH_CLICK: {
+    action: 'Home_Rejoindre_Coach_Click',
+  },
+  HOME_NOUS_SOUTENIR_MESURE_D_IMPACT: {
+    action: 'Home_Nous_Soutenir_Mesure_D_Impact',
+  },
+  HOME_PARTNERS_CLICK: {
+    action: 'Home_Partners_Click',
+  },
 } as const;
 
 export const FB_TAGS = {

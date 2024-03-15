@@ -1,5 +1,5 @@
 import React from 'react';
-import { NumberGrid } from 'src/components/partials/NumberGrid';
+import { NumberGrid } from 'src/components/partials/utils/NumberGrid';
 import { Section } from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
 import { Subtitle } from 'src/components/utils/Subtitle';

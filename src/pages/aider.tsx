@@ -1,10 +1,12 @@
 import React from 'react';
 import { Layout } from 'src/components/Layout';
-import { NewsletterPartial, SharePartial } from 'src/components/partials';
-import { ImageTitle } from 'src/components/partials/ImageTitle';
+import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
+import { SharePartial } from 'src/components/partials/common/SharePartial';
+
 import { CoachContainer } from 'src/components/partials/pages/Aider/CoachContainer';
 import { HelpCards } from 'src/components/partials/pages/Aider/HelpCards';
 import { InfoContainer } from 'src/components/partials/pages/Aider/InfoContainer';
+import { ImageTitle } from 'src/components/partials/utils/ImageTitle';
 import { Grid, Section } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';
 

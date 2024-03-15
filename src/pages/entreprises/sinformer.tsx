@@ -3,13 +3,11 @@ import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import { Layout } from 'src/components/Layout';
 import { openModal } from 'src/components/modals/Modal';
 import { CompanyContactModal } from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
-import {
-  CandidateTestimonies,
-  CompanyTestimonies,
-  NewsletterPartial,
-  HowToBeInclusive,
-} from 'src/components/partials';
-import { ImageTitle } from 'src/components/partials/ImageTitle';
+import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
+import { CandidateTestimonies } from 'src/components/partials/pages/Entreprise/CandidateTestimonies';
+import { CompanyTestimonies } from 'src/components/partials/pages/Entreprise/CompanyTestimonies';
+import { HowToBeInclusive } from 'src/components/partials/pages/Entreprise/HowToBeInclusive';
+import { ImageTitle } from 'src/components/partials/utils/ImageTitle';
 import { Section } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';

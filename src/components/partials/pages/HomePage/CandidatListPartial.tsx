@@ -1,112 +1,53 @@
-import React, { useContext } from 'react';
-import CountUp from 'react-countup';
-import ChevronRightIcon from 'assets/icons/chevron-right.svg';
+import React from 'react';
 import { CVList } from 'src/components/partials/CV/CVList';
-import { Grid, Section, Button } from 'src/components/utils';
+import { Grid, Section, Button, Typography } from 'src/components/utils';
+import { H2, H4 } from 'src/components/utils/Headings';
 import { CV_FILTERS_DATA, INITIAL_NB_OF_CV_TO_DISPLAY } from 'src/constants';
-import { SharesCountContext } from 'src/store/SharesCountProvider';
 
 export const CandidatListPartial = () => {
-  const { totalShares } = useContext(SharesCountContext);
-
-  const counter =
-    totalShares > 0 ? (
-      <CountUp
-        duration={5}
-        delay={2}
-        end={totalShares}
-        preserveValue
-        formattingFn={(number) => {
-          let stringNumber = number.toString();
-          if (stringNumber.length > 4) {
-            stringNumber = `${stringNumber.slice(
-              0,
-              -3
-            )}\xa0${stringNumber.slice(-3)}`;
-          }
-          if (stringNumber.length > 7) {
-            stringNumber = `${stringNumber.slice(
-              0,
-              -7
-            )}\xa0${stringNumber.slice(-7)}`;
-          }
-          if (stringNumber.length > 10) {
-            stringNumber = `${stringNumber.slice(
-              0,
-              -11
-            )}\xa0${stringNumber.slice(-11)}`;
-          }
-          return stringNumber;
-        }}
-      />
-    ) : (
-      0
-    );
-
   return (
-    <Section style="muted" id="candidat">
+    <Section id="candidat">
       <Grid column middle eachWidths={['2-3@m', '1-1']}>
         <div className="uk-text-center">
           {process.env.WOMENS_DAY === 'true' ? (
             <>
-              <h1 className="uk-text-bold uk-margin-remove-bottom">
-                Elles sont <span className="uk-text-primary">motivées</span>{' '}
-                pour travailler
-              </h1>
-              <h3 className="uk-text-bold uk-margin-remove-top">
-                Votre partage peut tout{' '}
-                <span className="uk-text-primary">changer</span>
-              </h3>
-              <p className="uk-margin-remove-bottom">
-                Si vous pensez comme nous que chacune doit avoir sa place dans
-                la société et en entreprise, partagez votre réseau professionnel
-                avec celles qui en ont le plus besoin.
-              </p>
+              <H2
+                title="Elles sont motivées pour travailler"
+                center
+                color="black"
+              />
+              <Typography size="large">
+                Découvrez les derniers CV des nos candidates et partagez-les
+                pour leur donner la visibilité qu&lsquo;elles méritent !
+              </Typography>
             </>
           ) : (
             <>
-              <h1 className="uk-text-bold uk-margin-remove-bottom">
-                Ils sont <span className="uk-text-primary">motivés</span> pour
-                travailler
-              </h1>
-              <h3 className="uk-text-bold uk-margin-remove-top">
-                Votre partage peut tout{' '}
-                <span className="uk-text-primary">changer</span>
-              </h3>
-              <p className="uk-margin-remove-bottom">
-                Si vous pensez comme nous que chacun doit avoir sa place dans la
-                société et en entreprise, partagez votre réseau professionnel
-                avec ceux qui en ont le plus besoin.
-              </p>
+              <H2
+                title="Ils sont motivés pour travailler"
+                center
+                color="black"
+              />
+              <Typography size="large">
+                Découvrez les derniers CV des nos candidat(e)s et partagez-les
+                pour leur donner la visibilité qu&lsquo;ils méritent !
+              </Typography>
             </>
           )}
-          <h4 className="uk-text-bold">
-            Grâce à vos partages, les CV ont été rendus visibles
-            <br className="uk-visible@m" />
-            &nbsp;plus de&nbsp;
-            <div
-              className="uk-hidden@m uk-text-primary uk-text-normal uk-flex uk-flex-center uk-flex-middle"
-              style={{ fontSize: 38, fontWeight: 500 }}
-            >
-              {counter}
-            </div>
-            <span
-              className="uk-text-primary uk-text-normal uk-visible@m"
-              style={{ fontSize: 38, fontWeight: 500 }}
-            >
-              {counter}
-            </span>
-            &nbsp;fois&nbsp;!
-          </h4>
           {process.env.WOMENS_DAY === 'true' && (
-            <h3 className="uk-text-bold">
-              À l&apos;occasion du 8 mars,{' '}
-              <span className="uk-text-italic uk-text-primary">
-                Journée internationale des droits des femmes
-              </span>
-              , on a décidé de mettre à l&apos;honneur les candidates Entourage
-              Pro&nbsp;!
-            </h3>
+            <H4
+              title={
+                <>
+                  À l&apos;occasion du 8 mars,{' '}
+                  <span className="uk-text-italic uk-text-primary">
+                    Journée internationale des droits des femmes
+                  </span>
+                  , on a décidé de mettre à l&apos;honneur les candidates
+                  Entourage Pro&nbsp;!
+                </>
+              }
+              center
+            />
           )}
         </div>
         <CVList
@@ -123,12 +64,11 @@ export const CandidatListPartial = () => {
         <Grid middle column gap="collapse">
           <Button
             href={{ pathname: '/candidats', query: { employed: false } }}
-            style="secondary"
+            style="custom-secondary-inverted"
           >
             {process.env.WOMENS_DAY === 'true'
-              ? 'Voir toutes les candidates'
-              : 'Voir tous les candidats'}
-            <ChevronRightIcon />
+              ? 'Découvrir les candidates'
+              : 'Découvrir les candidats'}
           </Button>
         </Grid>
       </Grid>

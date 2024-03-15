@@ -107,3 +107,9 @@ export const StyledInfoContainer = styled.section`
     }
   }
 `;
+
+export const StyledInfoContainerPicto = styled.div`
+  rect {
+    fill: ${COLORS.primaryBlue};
+  }
+`;

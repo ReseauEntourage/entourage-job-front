@@ -7,6 +7,8 @@ const entourageOrganizationId = organizations.find(
 
 describe('Admin', () => {
   beforeEach(() => {
+    window.localStorage.setItem('entourage-pro-modal-closed', 'true');
+
     cy.intercept('GET', '/cv/shares', { total: 184222 }).as('cvShares');
 
     cy.intercept('GET', '/auth/current', {

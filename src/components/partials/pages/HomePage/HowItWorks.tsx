@@ -1,5 +1,5 @@
 import React from 'react';
-import { MultipleCTA } from 'src/components/partials/MultipleCTA';
+import { MultipleCTA } from 'src/components/partials/utils/MultipleCTA';
 import { Section } from 'src/components/utils';
 import { UIKIT_STYLES } from 'src/components/variables';
 

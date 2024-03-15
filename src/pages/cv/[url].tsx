@@ -4,10 +4,11 @@ import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { Api } from 'src/api';
 import { CV } from 'src/api/types';
 import { Layout } from 'src/components/Layout';
-import { DiscoverPartial, NewsletterPartial } from 'src/components/partials';
+import { CVDiscover } from 'src/components/partials/CV/CVDiscover';
 import { CVList } from 'src/components/partials/CV/CVList';
 import { PageCVContent } from 'src/components/partials/CV/PageCVContent';
 import { StyledCVPage } from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
+import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
 import { Grid, Section, SimpleLink, Button } from 'src/components/utils';
 import { CV_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
@@ -103,7 +104,7 @@ const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
           padding={false}
           tag={GA_TAGS.PAGE_CV_INSCRIPTION_NEWSLETTER_CLIC}
         />
-        <DiscoverPartial />
+        <CVDiscover />
       </Layout>
     );
   }
