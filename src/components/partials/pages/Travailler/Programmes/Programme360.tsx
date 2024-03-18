@@ -97,7 +97,6 @@ export const Programme360 = ({
               button: {
                 label: "S'inscrire au programme",
                 style: 'custom-secondary-inverted',
-                removeChevron: true,
                 onClick: () =>
                   gaEvent(
                     GA_TAGS.PAGE_TRAVAILLER_PROGRAMME_360_INSCRIPTION_CLICK
@@ -109,7 +108,6 @@ export const Programme360 = ({
               button: {
                 label: 'En savoir plus',
                 style: 'custom-secondary',
-                removeChevron: true,
                 onClick: () =>
                   gaEvent(
                     GA_TAGS.PAGE_TRAVAILLER_PROGRAMME_360_EN_SAVOIR_PLUS_CLICK

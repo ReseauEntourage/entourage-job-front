@@ -5,7 +5,7 @@ export interface StyledRowIconTitleTextBackgroundProps {
   backgroundColor: 'blue';
 }
 
-const backroundColors: {
+const backgroundColors: {
   [K in NonNullable<
     StyledRowIconTitleTextBackgroundProps['backgroundColor']
   >]: string;
@@ -15,7 +15,7 @@ const backroundColors: {
 
 export const StyledRowIconTitleTextBackground = styled.div<StyledRowIconTitleTextBackgroundProps>`
   background-color: ${({ backgroundColor }) =>
-    backroundColors[backgroundColor]};
+    backgroundColors[backgroundColor]};
 `;
 
 export const StyledRowIconTitleTextContainer = styled.div`

@@ -1,5 +1,4 @@
 import React from 'react';
-import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { Button, Img, Grid } from 'src/components/utils';
 import {
   UIKIT_BUTTON_SIZES,
@@ -25,7 +24,6 @@ interface MultipleCTAProps {
       size?: UIKIT_BUTTON_SIZES;
       style?: UIKIT_BUTTON_STYLES_SPEC;
       dataTestId?: string;
-      removeChevron?: boolean;
     };
   }[];
   animate?: boolean;
@@ -125,7 +123,6 @@ export const MultipleCTA = ({
                         dataTestId={item.button.dataTestId}
                       >
                         {item.button.label}
-                        {!item.button.removeChevron && <ChevronRightIcon />}
                       </Button>
                     </div>
                   )}
