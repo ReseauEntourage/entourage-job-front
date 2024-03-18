@@ -6,6 +6,8 @@ import {
   Section,
 } from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
+import { GA_TAGS } from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
 
 const numbers = [
   {
@@ -29,9 +31,11 @@ const numbers = [
   },
 ];
 
-export const Impact = () => {
-  // Component logic here
-
+export const Impact = ({
+  tag,
+}: {
+  tag?: (typeof GA_TAGS)[keyof typeof GA_TAGS];
+}) => {
   return (
     <Section style="default">
       <H2
@@ -48,6 +52,9 @@ export const Impact = () => {
         <Button
           style="custom-secondary-inverted"
           href="" // TODO : lien pdf brochure mesure d'impact
+          onClick={() => {
+            if (tag) gaEvent(tag);
+          }}
         >
           Télécharger la mesure d`&lsquo;impact
         </Button>

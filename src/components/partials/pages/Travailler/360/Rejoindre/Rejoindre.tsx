@@ -2,6 +2,8 @@ import React from 'react';
 import { Section, Button, Img } from 'src/components/utils';
 import { H2, H6 } from 'src/components/utils/Headings';
 import { BulletListElement as BulletList } from 'src/components/utils/Lists';
+import { GA_TAGS } from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
 import { StyledRejoindre } from './Rejoindre.styles';
 
 export const Rejoindre = () => {
@@ -48,7 +50,13 @@ export const Rejoindre = () => {
               </p>
             </BulletList>
           </ul>
-          <Button style="custom-secondary-inverted" href="/inscription">
+          <Button
+            style="custom-secondary-inverted"
+            href="/inscription"
+            onClick={() =>
+              gaEvent(GA_TAGS.PAGE_PROGRAMME_360_INSCRIPTION_REJOINDRE_CLICK)
+            }
+          >
             Participer au programme
           </Button>
         </div>

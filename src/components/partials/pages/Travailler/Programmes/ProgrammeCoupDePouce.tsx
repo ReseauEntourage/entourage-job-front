@@ -4,10 +4,10 @@ import CarteSolidaireIcon from 'assets/icons/orienter-carte-solidaire.svg';
 import { RowIconTitleText } from 'src/components/partials/utils/RowIconTitleText';
 import { SimpleImageText } from 'src/components/partials/utils/SimpleImageText';
 import { Button } from 'src/components/utils';
-// import { GA_TAGS } from 'src/constants/tags';
 import { COLORS } from 'src/constants/styles';
+import { GA_TAGS } from 'src/constants/tags';
 import { useIsDesktop } from 'src/hooks/utils';
-// import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag';
 import { StyledProgrammesList } from './Programmes.styles';
 
 const content = [
@@ -96,10 +96,11 @@ export const ProgrammeCoupDePouce = ({
         </div>
         <Button
           style="custom-secondary-inverted"
-          //   onClick={() => {
-          //     openModal(<CandidateContactModal />);
-          //     gaEvent(GA_TAGS.PAGE_ORIENTER_CLASSIQUE_ENVOYER_CLIC);
-          //   }}
+          onClick={() => {
+            gaEvent(
+              GA_TAGS.PAGE_TRAVAILLER_PROGRAMME_COUP_DE_POUCE_INSCRIPTION_CLICK
+            );
+          }}
           dataTestId="button-inscrire-coup-de-pouce"
           href="/inscription"
         >

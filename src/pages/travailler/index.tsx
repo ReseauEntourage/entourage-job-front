@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { Layout } from 'src/components/Layout';
 
 import { Impact } from 'src/components/partials/common/Impact';
+import { Partners } from 'src/components/partials/common/Partners';
 import { VideoSection } from 'src/components/partials/pages/Orienter/VideoSection';
 import { Decouvrir } from 'src/components/partials/pages/Travailler/Decouvrir';
 import {
@@ -9,12 +10,8 @@ import {
   ProgrammeCoupDePouce,
 } from 'src/components/partials/pages/Travailler/Programmes';
 import { ImageTitle } from 'src/components/partials/utils/ImageTitle';
-import { LogoList } from 'src/components/partials/utils/LogoList';
 import { Reviews } from 'src/components/partials/utils/Reviews';
-import { Section } from 'src/components/utils';
-import { H2 } from 'src/components/utils/Headings';
-import { PARTNERS } from 'src/constants/partners';
-import { useIsDesktop } from 'src/hooks/utils';
+import { GA_TAGS } from 'src/constants/tags';
 
 const reviews = [
   {
@@ -55,7 +52,6 @@ const reviews = [
 ];
 
 const Travailler = () => {
-  const isDesktop = useIsDesktop();
   const refCoupDePouce = useRef(null);
   const refProgramme360 = useRef(null);
   const handleClick = (element) => {
@@ -84,39 +80,23 @@ const Travailler = () => {
 
       <ProgrammeCoupDePouce innerRef={refCoupDePouce} />
       <Programme360 innerRef={refProgramme360} />
-      {/* <Inscrire innerRef={refInscrire} /> */}
+
       <VideoSection
         videoId="gUuaeDxlqTE"
         videoTitle="Rencontre avec Najaf, ancien candidat Entourage Pro à Paris"
         coloredBackground
       />
-      {/* <Publier innerRef={refPublier} /> */}
 
       <VideoSection
         videoId="WLmDL-pB1NE"
         videoTitle="Atelier décroche un Job - L'Accélérateur (EITI) X Entourage Pro"
       />
 
-      {/* change style */}
       <Reviews reviews={reviews} title="Ils nous racontent leur expérience" />
 
-      {/* already done => only remove uikit */}
-      {isDesktop && (
-        <Section style="default">
-          <H2
-            title={
-              <>
-                <span className="orange">Ils travaillent</span> avec Entourage
-                Pro
-              </>
-            }
-            color="black"
-            center
-          />
-          <LogoList logos={PARTNERS.ORIENTATION} carousel />
-        </Section>
-      )}
-      <Impact />
+      <Partners />
+
+      <Impact tag={GA_TAGS.PAGE_TRAVAILLER_MESURE_IMPACT_CLICK} />
     </Layout>
   );
 };

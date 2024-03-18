@@ -132,105 +132,105 @@ describe('Admin', () => {
     }).as('postOpportunity');
   });
 
-  // describe('Offers', () => {
-  //   it('Should open backoffice offers', () => {
-  //     cy.visit('/backoffice/admin/offres', {
-  //       onBeforeLoad: function async(window) {
-  //         window.localStorage.setItem('access-token', '1234');
-  //         window.localStorage.setItem('release-version', 'v100');
-  //       },
-  //     });
-  //     cy.wait('@offers');
-  //     cy.wait('@offer');
-  //     // test if all offer are in the table and if url contains first offer
-  //     cy.fixture('opportunities-admin-res').then((offers) => {
-  //       cy.get('[data-testid="admin-offer-list-element"]')
-  //         .its('length')
-  //         .should('eq', offers.length);
-  //       cy.url().should('include', offers[0].id);
-  //     });
+  describe('Offers', () => {
+    it('Should open backoffice offers', () => {
+      cy.visit('/backoffice/admin/offres', {
+        onBeforeLoad: function async(window) {
+          window.localStorage.setItem('access-token', '1234');
+          window.localStorage.setItem('release-version', 'v100');
+        },
+      });
+      cy.wait('@offers');
+      cy.wait('@offer');
+      // test if all offer are in the table and if url contains first offer
+      cy.fixture('opportunities-admin-res').then((offers) => {
+        cy.get('[data-testid="admin-offer-list-element"]')
+          .its('length')
+          .should('eq', offers.length);
+        cy.url().should('include', offers[0].id);
+      });
 
-  //     // change tabs
-  //     cy.get('[data-testid="admin-offer-tab-validated"]').click();
-  //     cy.url().should('include', 'validated');
-  //     cy.get('[data-testid="admin-offer-tab-external"]').click();
-  //     cy.url().should('include', 'external');
-  //     cy.get('[data-testid="admin-offer-tab-archived"]').click();
-  //     cy.url().should('include', 'archived');
+      // change tabs
+      cy.get('[data-testid="admin-offer-tab-validated"]').click();
+      cy.url().should('include', 'validated');
+      cy.get('[data-testid="admin-offer-tab-external"]').click();
+      cy.url().should('include', 'external');
+      cy.get('[data-testid="admin-offer-tab-archived"]').click();
+      cy.url().should('include', 'archived');
 
-  //     // reset filters
-  //     cy.get('[data-testid="reset-filters"]').click();
-  //     cy.url().should('not.include', 'department');
+      // reset filters
+      cy.get('[data-testid="reset-filters"]').click();
+      cy.url().should('not.include', 'department');
 
-  //     // add an offer
-  //     cy.get('[data-testid="button-admin-create"]').click();
-  //     cy.get('[data-testid="admin-add-offer-main"]').click();
-  //     cy.get('#form-add-offer-admin-title').scrollIntoView().type('test');
-  //     cy.get('#form-add-offer-admin-company').scrollIntoView().type('test');
+      // add an offer
+      cy.get('[data-testid="button-admin-create"]').click();
+      cy.get('[data-testid="admin-add-offer-main"]').click();
+      cy.get('#form-add-offer-admin-title').scrollIntoView().type('test');
+      cy.get('#form-add-offer-admin-company').scrollIntoView().type('test');
 
-  //     cy.get('#form-add-offer-admin-department')
-  //       .should('be.visible')
-  //       .scrollIntoView()
-  //       .type('Par');
+      cy.get('#form-add-offer-admin-department')
+        .should('be.visible')
+        .scrollIntoView()
+        .type('Par');
 
-  //     cy.get('#form-add-offer-admin-department')
-  //       .find('.Select__menu')
-  //       .scrollIntoView()
-  //       .should('be.visible')
-  //       .find('.Select__option')
-  //       .contains('Paris (75)')
-  //       .click();
-  //     cy.get('#form-add-offer-admin-address')
-  //       .scrollIntoView()
-  //       .should('be.visible')
-  //       .type('description');
+      cy.get('#form-add-offer-admin-department')
+        .find('.Select__menu')
+        .scrollIntoView()
+        .should('be.visible')
+        .find('.Select__option')
+        .contains('Paris (75)')
+        .click();
+      cy.get('#form-add-offer-admin-address')
+        .scrollIntoView()
+        .should('be.visible')
+        .type('description');
 
-  //     cy.get('#form-add-offer-admin-companyDescription')
-  //       .scrollIntoView()
-  //       .should('be.visible')
-  //       .type('description');
+      cy.get('#form-add-offer-admin-companyDescription')
+        .scrollIntoView()
+        .should('be.visible')
+        .type('description');
 
-  //     cy.get('#form-add-offer-admin-contract-container')
-  //       .scrollIntoView()
-  //       .should('be.visible')
-  //       .click()
-  //       .find('.option')
-  //       .contains('CDI')
-  //       .click();
+      cy.get('#form-add-offer-admin-contract-container')
+        .scrollIntoView()
+        .should('be.visible')
+        .click()
+        .find('.option')
+        .contains('CDI')
+        .click();
 
-  //     cy.get('#form-add-offer-admin-recruiterFirstName')
-  //       .scrollIntoView()
-  //       .type('test');
-  //     cy.get('#form-add-offer-admin-recruiterName')
-  //       .scrollIntoView()
-  //       .type('test');
-  //     cy.get('#form-add-offer-admin-recruiterPosition')
-  //       .scrollIntoView()
-  //       .type('test');
-  //     cy.get('#form-add-offer-admin-recruiterMail')
-  //       .scrollIntoView()
-  //       .type('test@gmail.com');
+      cy.get('#form-add-offer-admin-recruiterFirstName')
+        .scrollIntoView()
+        .type('test');
+      cy.get('#form-add-offer-admin-recruiterName')
+        .scrollIntoView()
+        .type('test');
+      cy.get('#form-add-offer-admin-recruiterPosition')
+        .scrollIntoView()
+        .type('test');
+      cy.get('#form-add-offer-admin-recruiterMail')
+        .scrollIntoView()
+        .type('test@gmail.com');
 
-  //     cy.get('#form-add-offer-admin-businessLines')
-  //       .should('be.visible')
-  //       .scrollIntoView()
-  //       .type('Agr');
+      cy.get('#form-add-offer-admin-businessLines')
+        .should('be.visible')
+        .scrollIntoView()
+        .type('Agr');
 
-  //     cy.get('#form-add-offer-admin-businessLines')
-  //       .find('.Select__menu')
-  //       .scrollIntoView()
-  //       .should('be.visible')
-  //       .find('.Select__option')
-  //       .contains('Agriculture et espaces verts')
-  //       .click();
+      cy.get('#form-add-offer-admin-businessLines')
+        .find('.Select__menu')
+        .scrollIntoView()
+        .should('be.visible')
+        .find('.Select__option')
+        .contains('Agriculture et espaces verts')
+        .click();
 
-  //     cy.get('#form-add-offer-admin-description').scrollIntoView().type('test');
-  //     cy.get('button').contains('Valider').click();
-  //     cy.wait('@postOpportunity');
+      cy.get('#form-add-offer-admin-description').scrollIntoView().type('test');
+      cy.get('button').contains('Valider').click();
+      cy.wait('@postOpportunity');
 
-  //     cy.get('.uk-modal-body').should('not.exist');
-  //   });
-  // });
+      cy.get('.uk-modal-body').should('not.exist');
+    });
+  });
 
   describe('Members', () => {
     

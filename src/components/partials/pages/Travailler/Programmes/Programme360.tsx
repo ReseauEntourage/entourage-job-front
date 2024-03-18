@@ -4,10 +4,10 @@ import CarteSolidaireIcon from 'assets/icons/orienter-carte-solidaire.svg';
 import { MultipleCTA } from 'src/components/partials/utils/MultipleCTA';
 import { RowIconTitleText } from 'src/components/partials/utils/RowIconTitleText';
 import { SimpleImageText } from 'src/components/partials/utils/SimpleImageText';
-// import { GA_TAGS } from 'src/constants/tags';
 import { COLORS } from 'src/constants/styles';
+import { GA_TAGS } from 'src/constants/tags';
 import { useIsDesktop } from 'src/hooks/utils';
-// import { gaEvent } from 'src/lib/gtag';
+import { gaEvent } from 'src/lib/gtag';
 import { StyledProgrammesList } from './Programmes.styles';
 
 const content = [
@@ -98,6 +98,10 @@ export const Programme360 = ({
                 label: "S'inscrire au programme",
                 style: 'custom-secondary-inverted',
                 removeChevron: true,
+                onClick: () =>
+                  gaEvent(
+                    GA_TAGS.PAGE_TRAVAILLER_PROGRAMME_360_INSCRIPTION_CLICK
+                  ),
                 href: '/inscription',
               },
             },
@@ -106,6 +110,10 @@ export const Programme360 = ({
                 label: 'En savoir plus',
                 style: 'custom-secondary',
                 removeChevron: true,
+                onClick: () =>
+                  gaEvent(
+                    GA_TAGS.PAGE_TRAVAILLER_PROGRAMME_360_EN_SAVOIR_PLUS_CLICK
+                  ),
                 href: '/travailler/programme-360',
               },
             },

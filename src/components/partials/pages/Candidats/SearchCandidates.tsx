@@ -1,5 +1,4 @@
 import React from 'react';
-import { CVList } from '../../CV/CVList';
 import { openModal } from 'src/components/modals/Modal';
 import { PostPublicOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { CVList } from 'src/components/partials/CV/CVList';

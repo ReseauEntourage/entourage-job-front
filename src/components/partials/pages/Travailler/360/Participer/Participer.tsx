@@ -2,7 +2,9 @@ import React from 'react';
 import { Button, Img, Section } from 'src/components/utils';
 import { H2, H6 } from 'src/components/utils/Headings';
 import { CheckListElement as CheckList } from 'src/components/utils/Lists';
+import { GA_TAGS } from 'src/constants/tags';
 import { useIsDesktop } from 'src/hooks/utils/usePlatforms';
+import { gaEvent } from 'src/lib/gtag';
 import { StyledParticiper } from './Participer.styles';
 
 export const Participer = () => {
@@ -84,7 +86,9 @@ export const Participer = () => {
           <Button
             style="custom-secondary-inverted"
             href="/inscription"
-            // onClick={() => cta('P1_Acces_Reseau')}
+            onClick={() =>
+              gaEvent(GA_TAGS.PAGE_PROGRAMME_360_INSCRIPTION_PARTICIPER_CLICK)
+            }
           >
             Participer au programme
           </Button>
