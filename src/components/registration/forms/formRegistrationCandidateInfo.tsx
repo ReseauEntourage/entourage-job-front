@@ -24,7 +24,8 @@ export const formRegistrationCandidateInfo: FormSchema<{
       id: 'birthDateSubLabel',
       name: 'birthDateSubLabel',
       component: 'text',
-      title: 'Vous devez avoir plus de 18 ans pour participer au programme',
+      title:
+        'Vous devez avoir plus de 18 ans pour participer au programme Entourage Pro',
     },
     {
       id: 'birthDate',
@@ -41,7 +42,7 @@ export const formRegistrationCandidateInfo: FormSchema<{
             return minBirthdate > realBirthdate;
           },
           message:
-            'Vous devez avoir plus de 18 ans pour participer au programme',
+            'Vous devez avoir plus de 18 ans pour participer au programme Entourage Pro',
         },
       ],
     },
@@ -78,7 +79,7 @@ export const formRegistrationCandidateInfo: FormSchema<{
       name: 'workingRightLabel',
       component: 'text',
       title:
-        'Vous devez avoir le droit de travailler en France pour participer au programme LinkedOut',
+        'Vous devez avoir le droit de travailler en France pour participer au programme Entourage Pro',
     },
     {
       id: 'workingRight',
@@ -91,7 +92,7 @@ export const formRegistrationCandidateInfo: FormSchema<{
         {
           method: (fieldValue) => fieldValue !== CandidateYesNoNSPP.NO,
           message:
-            'Vous devez avoir le droit de travailler en France pour participer au programme LinkedOut',
+            'Vous devez avoir le droit de travailler en France pour participer au programme Entourage Pro',
         },
       ],
     },

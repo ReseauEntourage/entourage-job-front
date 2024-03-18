@@ -23,6 +23,10 @@ export const createUserSelectors = createUserAdapter.getSelectors<RootState>(
   (state) => state.registration.createUser
 );
 
+export function selectCreateUserError(state: RootState) {
+  return state.registration.createUserError;
+}
+
 export function selectIsEmptyRegistrationData(state: RootState) {
   return _.isEmpty(state.registration.data);
 }

@@ -10,10 +10,11 @@ import {
 import { NormalUserRole } from 'src/constants/users';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import { assertIsDefined } from 'src/utils/asserts';
-import { createUserAdapter } from './registration.adapters';
+import { createUserAdapter, CreateUserError } from './registration.adapters';
 
 export interface State {
   createUser: RequestState<typeof createUserAdapter>;
+  createUserError: CreateUserError | null;
   currentStep: RegistrationStep | null;
   selectedRole: NormalUserRole | null;
   data: RegistrationStepData;
@@ -22,6 +23,7 @@ export interface State {
 
 const initialState: State = {
   createUser: createUserAdapter.getInitialState(),
+  createUserError: null,
   currentStep: null,
   selectedRole: null,
   data: {},
@@ -34,8 +36,12 @@ export const slice = createSlice({
   reducers: {
     ...createUserAdapter.getReducers<State>((state) => state.createUser, {
       createUserSucceeded(_state) {},
-      createUserFailed(state) {
+      createUserFailed(
+        state,
+        action: PayloadAction<{ error: CreateUserError } | null>
+      ) {
         state.isLoading = false;
+        state.createUserError = action.payload?.error || null;
       },
     }),
     setRegistrationCurrentStepData(state, action: PayloadAction<StepData>) {
