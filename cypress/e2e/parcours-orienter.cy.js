@@ -10,8 +10,9 @@ describe('Parcours Orienter', () => {
     }).as('postCandidateContact');
 
     cy.intercept('GET', '/cv/shares', { total: 184222 });
-
+    
     cy.visit('/orienter');
+    window.localStorage.setItem('entourage-pro-modal-closed', 'true');
   });
 
   describe('Orienter un candidat', () => {

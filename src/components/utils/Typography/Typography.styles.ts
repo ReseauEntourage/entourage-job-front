@@ -6,7 +6,7 @@ export interface TypographyProps {
   children: React.ReactNode;
   size?: 'small' | 'normal' | 'large';
   weight?: 'normal' | 'bold';
-  color?: 'lighter' | 'light' | 'normal';
+  color?: 'lighter' | 'light' | 'normal' | 'blue';
   variant?: 'normal' | 'italic';
 }
 
@@ -20,6 +20,7 @@ const colors: { [K in NonNullable<TypographyProps['color']>]: string } = {
   lighter: COLORS.darkGray,
   light: COLORS.darkGrayFont,
   normal: COLORS.black,
+  blue: COLORS.primaryBlue,
 };
 
 export const StyledTypography = styled.div<TypographyProps>`

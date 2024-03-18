@@ -1,19 +1,19 @@
 import React, { useRef } from 'react';
 import { Layout } from 'src/components/Layout';
-import {
-  LogoList,
-  // Reviews,
-} from 'src/components/partials';
-import { EnSavoirPlus } from 'src/components/partials/EnSavoirPlus';
-import { ImageTitle } from 'src/components/partials/ImageTitle';
-import { Reviews } from 'src/components/partials/Reviews';
 
 import { Decouvrir } from 'src/components/partials/pages/Orienter/Decouvrir';
+import { EnSavoirPlus } from 'src/components/partials/pages/Orienter/EnSavoirPlus';
 import { Impact } from 'src/components/partials/pages/Orienter/Impact';
 import { Inscrire } from 'src/components/partials/pages/Orienter/Inscrire';
 import { Opportunites } from 'src/components/partials/pages/Orienter/Opportunites';
 import { Publier } from 'src/components/partials/pages/Orienter/Publier';
 import { VideoSection } from 'src/components/partials/pages/Orienter/VideoSection';
+import { ImageTitle } from 'src/components/partials/utils/ImageTitle';
+import {
+  LogoList,
+  // Reviews,
+} from 'src/components/partials/utils/LogoList';
+import { Reviews } from 'src/components/partials/utils/Reviews';
 import { Section } from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
 import { PARTNERS } from 'src/constants/partners';

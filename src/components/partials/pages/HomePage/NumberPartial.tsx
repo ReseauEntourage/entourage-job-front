@@ -1,6 +1,6 @@
 import React from 'react';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
-import { NumberGrid } from 'src/components/partials/NumberGrid';
+import { NumberGrid } from 'src/components/partials/utils/NumberGrid';
 import { Section } from 'src/components/utils';
 
 const staticNumbers = [

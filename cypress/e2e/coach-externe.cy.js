@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 describe('Coach externe', () => {
   beforeEach(() => {
+    window.localStorage.setItem('entourage-pro-modal-closed', 'true');
     cy.intercept('GET', '/auth/current', {
       fixture: 'auth-current-coach-externe-res',
     }).as('authCheck');

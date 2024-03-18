@@ -5,9 +5,13 @@ import Script from 'next/script';
 import React from 'react';
 import { HeaderConnected } from 'src/components/headers/HeaderConnected';
 import { HeaderPublic } from 'src/components/headers/HeaderPublic/HeaderPublic';
+import { openModal } from 'src/components/modals/Modal';
+import { EntourageProModal } from 'src/components/modals/PopupModal/EntourageProModal';
 import { Footer } from 'src/components/partials/Footer';
+import { NotificationsContainer } from 'src/components/utils/Notification';
+import { STORAGE_KEYS } from 'src/constants';
+import { useMount } from 'src/hooks/utils';
 import { addPrefix } from 'src/utils';
-import { NotificationsContainer } from './utils/Notification';
 
 interface LayoutProps extends WithRouterProps {
   children: React.ReactNode;
@@ -35,10 +39,17 @@ export const Layout = withRouter<LayoutProps>(
     isBackoffice = false,
   }: LayoutProps) => {
     const isPDF = router.pathname.includes('/pdf/');
-    const domain =
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      process.env.SERVER_URL.replace(/https:\/\/|http:\/\//g, '');
-
+    const domain = process.env.SERVER_URL?.replace(/https:\/\/|http:\/\//g, '');
+    useMount(() => {
+      const entourageProModalClosed = localStorage.getItem(
+        STORAGE_KEYS.ENTOURAGE_PRO_MODAL_CLOSED
+      );
+      if (!entourageProModalClosed) {
+        setTimeout(() => {
+          openModal(<EntourageProModal />);
+        }, 1500);
+      }
+    });
     return (
       <>
         <Head>

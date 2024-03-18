@@ -5,14 +5,15 @@ describe('Parcours travailler', () => {
       statusCode: 201,
       fixture: 'get-campaigns-res',
     }).as('getCampaigns');
-
+    
     cy.intercept('POST', 'contact/candidateInscription', {
       statusCode: 201,
     }).as('postInscription');
-
+    
     cy.intercept('GET', '/cv/shares', { total: 184222 });
-
+    
     cy.visit('/travailler');
+    window.localStorage.setItem('entourage-pro-modal-closed', 'true');
   });
 
   describe('Rejoindre Entourage Pro', () => {

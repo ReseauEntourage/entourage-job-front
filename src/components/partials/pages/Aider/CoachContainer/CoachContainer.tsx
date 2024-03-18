@@ -1,8 +1,8 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import ChevronRightIcon from 'assets/icons/chevron-right.svg';
-import { Reviews } from 'src/components/partials/Reviews';
 import { TitleSection } from 'src/components/partials/pages/Aider/TitleSection';
+import { Reviews } from 'src/components/partials/utils/Reviews';
 import { BackgroundImage, Button, Container, Img } from 'src/components/utils';
 import { COLORS } from 'src/constants/styles';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';

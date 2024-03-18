@@ -5,20 +5,21 @@ describe('Parcours Entreprises', () => {
     cy.intercept('POST', '/contact/company', {
       statusCode: 201,
     }).as('postContactCompany');
-
+    
     cy.intercept('GET', '/cv/cards/random*', {
       fixture: 'cv-cards-random-res',
     });
 
     cy.intercept('GET', '/cv/shares', { total: 184222 });
-
+    
     cy.intercept('POST', '/opportunity', {
       fixture: 'opportunity-res',
     }).as('postOpportunity');
-
+    
     cy.visit('/entreprises', {
       onBeforeLoad: function async(window) {
         window.localStorage.setItem('tax-modal-closed', true);
+        window.localStorage.setItem('entourage-pro-modal-closed', 'true');
       },
     });
     cy.wait(500);
