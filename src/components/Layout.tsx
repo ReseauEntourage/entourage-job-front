@@ -5,13 +5,13 @@ import Script from 'next/script';
 import React from 'react';
 import { HeaderConnected } from 'src/components/headers/HeaderConnected';
 import { HeaderPublic } from 'src/components/headers/HeaderPublic/HeaderPublic';
+import { openModal } from 'src/components/modals/Modal';
+import { EntourageProModal } from 'src/components/modals/PopupModal/EntourageProModal';
 import { Footer } from 'src/components/partials/Footer';
+import { NotificationsContainer } from 'src/components/utils/Notification';
 import { STORAGE_KEYS } from 'src/constants';
 import { useMount } from 'src/hooks/utils';
 import { addPrefix } from 'src/utils';
-import { openModal } from './modals/Modal';
-import { EntourageProModal } from './modals/PopupModal/EntourageProModal';
-import { NotificationsContainer } from './utils/Notification';
 
 interface LayoutProps extends WithRouterProps {
   children: React.ReactNode;

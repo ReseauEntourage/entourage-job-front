@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { IlluCV } from 'assets/icons/icons';
 import { ModalGeneric } from '../Modal/ModalGeneric';
 // import { Button } from 'src/components/utils';
@@ -7,9 +7,9 @@ import { STORAGE_KEYS } from 'src/constants';
 import { StyledEntourageProModal } from './PopupModal.styles';
 
 export const EntourageProModal = () => {
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     localStorage.setItem(STORAGE_KEYS.ENTOURAGE_PRO_MODAL_CLOSED, String(true));
-  };
+  }, []);
   return (
     <ModalGeneric
       onClose={(onClose) => {

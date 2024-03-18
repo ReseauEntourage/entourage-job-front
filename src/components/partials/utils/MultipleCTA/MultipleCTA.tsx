@@ -1,10 +1,10 @@
 import React from 'react';
 import ChevronRightIcon from 'assets/icons/chevron-right.svg';
+import { Button, Img, Grid } from 'src/components/utils';
 import {
   UIKIT_BUTTON_SIZES,
   UIKIT_BUTTON_STYLES_SPEC,
-} from '../../../variables';
-import { Button, Img, Grid } from 'src/components/utils';
+} from 'src/components/variables';
 
 interface MultipleCTAProps {
   showNumbers?: boolean;

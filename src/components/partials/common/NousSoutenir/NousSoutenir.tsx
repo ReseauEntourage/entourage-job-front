@@ -70,11 +70,7 @@ export const NousSoutenir = () => {
           const uuid = uuidV4();
           return (
             <Link
-              href={
-                process.env.URL_DONATION
-                  ? new URL(process.env.URL_DONATION)
-                  : ''
-              }
+              href={process.env.URL_DONATION || ''}
               target="_blank"
               key={uuid}
             >

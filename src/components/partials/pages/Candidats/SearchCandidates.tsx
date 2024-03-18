@@ -1,7 +1,7 @@
 import React from 'react';
-import { CVList } from '../../CV/CVList';
 import { openModal } from 'src/components/modals/Modal';
 import { PostPublicOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
+import { CVList } from 'src/components/partials/CV/CVList';
 import { Button, Grid, Section } from 'src/components/utils';
 import { UIKIT_STYLES } from 'src/components/variables';
 import { CV_FILTERS_DATA } from 'src/constants';

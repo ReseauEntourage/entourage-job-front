@@ -5,7 +5,7 @@ export interface StyledSimpleImageTextBackgroundProps {
   backgroundColor: 'blue';
 }
 
-const backroundColors: {
+const backgroundColors: {
   [K in NonNullable<
     StyledSimpleImageTextBackgroundProps['backgroundColor']
   >]: string;
@@ -14,7 +14,7 @@ const backroundColors: {
 };
 
 export const StyledSimpleImageTextBackground = styled.div<StyledSimpleImageTextBackgroundProps>`
-  background-color: ${({ color }) => backroundColors[color]};
+  background-color: ${({ color }) => backgroundColors[color]};
 `;
 
 export const StyledSimpleImageTextContainer = styled.div`
