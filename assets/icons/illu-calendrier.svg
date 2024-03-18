@@ -1,10 +1,10 @@
-<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" >
 <mask id="mask0_2267_12708" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="60" height="60">
 <rect width="60" height="60" fill="#D9D9D9"/>
 </mask>
 <g mask="url(#mask0_2267_12708)">
 <path d="M3.33789 23.0046H56.3344V45.6911C56.3344 50.1094 52.7527 53.6911 48.3344 53.6911H11.3379C6.91962 53.6911 3.33789 50.1093 3.33789 45.6911V23.0046Z" fill="#E9E8E8"/>
-<path d="M3.33789 19.412C3.33789 14.9937 6.91961 11.412 11.3379 11.412H48.3344C52.7527 11.412 56.3344 14.9937 56.3344 19.412V23.0046H3.33789V19.412Z" fill="#47A8B9"/>
+<path d="M3.33789 19.412C3.33789 14.9937 6.91961 11.412 11.3379 11.412H48.3344C52.7527 11.412 56.3344 14.9937 56.3344 19.412V23.0046H3.33789V19.412Z" fill="currentColor"/>
 <rect x="47.502" y="42.7803" width="5.43554" height="5.45536" rx="2" fill="white"/>
 <rect x="39.3477" y="42.7803" width="5.43554" height="5.45536" rx="2" fill="white"/>
 <rect x="31.1953" y="42.7803" width="5.43554" height="5.45536" rx="2" fill="white"/>

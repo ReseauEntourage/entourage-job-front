@@ -20,8 +20,14 @@ export const GA_TAGS = {
   PAGE_ENTREPRISES_PROPOSER_OFFRE_CLIC: {
     action: 'Page_Entreprises_Proposer_Offre_Clic',
   },
+  PAGE_ENTREPRISES_DECOUVRIR_CANDIDATS_CLICK: {
+    action: 'Page_Entreprises_Découvrir_Candidats_Click',
+  },
   PAGE_ENTREPRISES_ENVOYER_CONTACT_REFERENT_CLIC: {
     action: 'Page_Entreprises_Envoyer_Contact_Referent_Clic',
+  },
+  PAGE_ENTREPRISES_ALL_CV_CLICK: {
+    action: 'Page_Entreprises_All_CV_Click',
   },
   PAGE_ENTREPRISES_CARROUSEL_CLIC: {
     action: 'Page_Entreprises_Carrousel_Clic',
@@ -31,6 +37,12 @@ export const GA_TAGS = {
   },
   PAGE_ENTREPRISES_SENSIBILISER_CLIC: {
     action: 'Page_Entreprises_Sensibiliser_Clic',
+  },
+  PAGE_ENTREPRISES_MESURE_D_IMPACT_CLICK: {
+    action: 'Page_Entreprises_Mesure_D_Impact_Click',
+  },
+  PAGE_ENTREPRISES_PARTNERS_CLICK: {
+    action: 'Page_Entreprises_Partners_Click',
   },
   PAGE_ENTREPRISES_MECENAT_CLIC: {
     action: 'Page_Entreprises_Mecenat_Clic',

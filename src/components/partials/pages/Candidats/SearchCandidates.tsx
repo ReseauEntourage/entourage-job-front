@@ -44,7 +44,6 @@ export const SearchCandidates = ({ style }: { style?: UIKIT_STYLES }) => {
               onClick={() => {
                 gaEvent(GA_TAGS.PAGE_GALERIE_CV_PROPOSER_OFFRE_CLIC);
                 fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER_OPEN);
-                // @ts-expect-error after enable TS strict mode. Please, try to fix it
                 openModal(<PostPublicOpportunityModal />);
               }}
             >

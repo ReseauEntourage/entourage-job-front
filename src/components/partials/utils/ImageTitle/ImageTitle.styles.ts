@@ -26,7 +26,7 @@ export const StyledImageTitle = styled.section`
     align-items: center;
   }
   &.desktop {
-    padding: 40px 55% 40px 40px;
+    padding: 40px 40% 40px 40px;
     p {
       font-size: 20px;
       line-height: 30px;
@@ -38,6 +38,7 @@ export const StyledImageTitleCTAsContainer = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  margin-top: ${(props) => (props.marginTop ? '60px' : '0')};
   button:first-child {
     margin-right: 8px;
   }

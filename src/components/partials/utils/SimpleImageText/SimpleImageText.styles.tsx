@@ -25,11 +25,13 @@ export const StyledSimpleImageTextContainer = styled.div<StyledSimpleImageTextCo
   flex-direction: ${({ reverse }) => (reverse ? 'row-reverse' : 'row')};
   flex-wrap: wrap;
   gap: 10%;
+  min-height: 400px;
 `;
 
 export const StyledSimpleImageTextImageContainer = styled.div`
   width: 40%;
   position: relative;
+
   img {
     border-radius: 40px;
   }
@@ -42,6 +44,10 @@ export const StyledSimpleImageTextImageContainer = styled.div`
 
 export const StyledSimpleImageTextTextContainer = styled.div`
   width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
   &.mobile {
     width: 100%;
   }

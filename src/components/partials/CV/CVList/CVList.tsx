@@ -3,6 +3,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import PlusIcon from 'assets/icons/plus.svg';
 import { Api } from 'src/api';
+import { CV } from 'src/api/types';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { CandidatCard } from 'src/components/cards';
 import { SearchBar } from 'src/components/filters/SearchBar';
@@ -56,7 +57,7 @@ export const CVList = ({
   setSearch = () => {},
   resetFilters = () => {},
 }: CVListProps) => {
-  const [cvs, setCVs] = useState(undefined);
+  const [cvs, setCVs] = useState<CV[] | undefined>(undefined);
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasSuggestions, setHasSuggestions] = useState(false);
@@ -85,22 +86,19 @@ export const CVList = ({
         .then(({ data }) => {
           setHasSuggestions(data.suggestions);
           if (isPagination) {
-            setCVs(
-              // @ts-expect-error after enable TS strict mode. Please, try to fix it
-              (prevCVs = []) => {
-                return [
-                  ...prevCVs,
-                  ..._.differenceWith(
-                    data.cvs,
-                    prevCVs,
-                    (cv1: AnyToFix, cv2: AnyToFix) => {
-                      // to be typed
-                      return cv1.id === cv2.id;
-                    }
-                  ),
-                ];
-              }
-            );
+            setCVs((prevCVs = []) => {
+              return [
+                ...prevCVs,
+                ..._.differenceWith(
+                  data.cvs,
+                  prevCVs,
+                  (cv1: AnyToFix, cv2: AnyToFix) => {
+                    // to be typed
+                    return cv1.id === cv2.id;
+                  }
+                ),
+              ];
+            });
           } else {
             setNbOfCVToDisplay(defaultNbOfCVs);
             setCVs(data.cvs);
@@ -219,7 +217,6 @@ export const CVList = ({
                 onClick={() => {
                   gaEvent(GA_TAGS.PAGE_GALERIE_CV_PROPOSER_OFFRE_CLIC);
                   fbEvent(FB_TAGS.COMPANY_GENERAL_OFFER_OPEN);
-                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
                   openModal(<PostPublicOpportunityModal />);
                 }}
               >
@@ -233,10 +230,7 @@ export const CVList = ({
         );
       }
 
-      if (
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        cvs.length <= 0
-      ) {
+      if (cvs.length <= 0) {
         if (
           filters &&
           filters[CV_FILTERS_DATA[1].key] &&

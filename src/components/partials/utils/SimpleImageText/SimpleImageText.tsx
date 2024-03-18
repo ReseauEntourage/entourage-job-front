@@ -13,7 +13,7 @@ import {
 interface SimpleImageTextProps {
   backgroundColor?: StyledSimpleImageTextBackgroundProps['backgroundColor'];
   innerRef?: Ref<HTMLDivElement>;
-  title: string;
+  title: React.ReactNode;
   img: string;
   children: React.ReactNode;
   reverse?: boolean;
