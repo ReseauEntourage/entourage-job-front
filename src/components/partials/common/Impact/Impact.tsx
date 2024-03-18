@@ -1,8 +1,13 @@
 import React from 'react';
 import { NumberGrid } from 'src/components/partials/utils/NumberGrid';
-import { Section } from 'src/components/utils';
+import {
+  Button,
+  StyledCenteredButtonContainer,
+  Section,
+} from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
-import { Subtitle } from 'src/components/utils/Subtitle';
+import { GA_TAGS } from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
 
 const numbers = [
   {
@@ -26,9 +31,11 @@ const numbers = [
   },
 ];
 
-export const Impact = () => {
-  // Component logic here
-
+export const Impact = ({
+  tag,
+}: {
+  tag?: (typeof GA_TAGS)[keyof typeof GA_TAGS];
+}) => {
   return (
     <Section style="default">
       <H2
@@ -41,10 +48,17 @@ export const Impact = () => {
         center
       />
       <NumberGrid numbers={numbers} numbersPerRow={4} />
-      <Subtitle
-        text={<>Source&nbsp;: Mesure d&apos;impact 2021 Archipel & Co</>}
-        center
-      />
+      <StyledCenteredButtonContainer>
+        <Button
+          style="custom-secondary-inverted"
+          href="" // TODO : lien pdf brochure mesure d'impact
+          onClick={() => {
+            if (tag) gaEvent(tag);
+          }}
+        >
+          Télécharger la mesure d`&lsquo;impact
+        </Button>
+      </StyledCenteredButtonContainer>
     </Section>
   );
 };

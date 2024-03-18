@@ -267,3 +267,10 @@ export const StyledButton = styled.button`
 export const StyledButtonMock = styled.div`
   ${ButtonStyle}
 `;
+
+export const StyledCenteredButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;

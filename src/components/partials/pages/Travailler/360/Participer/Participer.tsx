@@ -2,10 +2,12 @@ import React from 'react';
 import { Button, Img, Section } from 'src/components/utils';
 import { H2, H6 } from 'src/components/utils/Headings';
 import { CheckListElement as CheckList } from 'src/components/utils/Lists';
+import { GA_TAGS } from 'src/constants/tags';
 import { useIsDesktop } from 'src/hooks/utils/usePlatforms';
+import { gaEvent } from 'src/lib/gtag';
 import { StyledParticiper } from './Participer.styles';
 
-export const Participer = ({ cta }: { cta: (label: string) => void }) => {
+export const Participer = () => {
   const isDesktop = useIsDesktop();
 
   return (
@@ -83,7 +85,10 @@ export const Participer = ({ cta }: { cta: (label: string) => void }) => {
           </ul>
           <Button
             style="custom-secondary-inverted"
-            onClick={() => cta('P1_Acces_Reseau')}
+            href="/inscription"
+            onClick={() =>
+              gaEvent(GA_TAGS.PAGE_PROGRAMME_360_INSCRIPTION_PARTICIPER_CLICK)
+            }
           >
             Participer au programme
           </Button>

@@ -1,5 +1,4 @@
 import React from 'react';
-import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { Button, Img, Grid } from 'src/components/utils';
 import {
   UIKIT_BUTTON_SIZES,
@@ -124,7 +123,6 @@ export const MultipleCTA = ({
                         dataTestId={item.button.dataTestId}
                       >
                         {item.button.label}
-                        <ChevronRightIcon />
                       </Button>
                     </div>
                   )}

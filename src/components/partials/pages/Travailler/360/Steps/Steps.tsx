@@ -3,7 +3,7 @@ import { Section, Button } from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
 import { StyledSteps } from './Steps.styles';
 
-export const Steps = ({ cta }: { cta: (label: string) => void }) => {
+export const Steps = () => {
   return (
     <Section className="custom-primary" display="flex-center">
       <H2 title="Les grandes étapes du programme" />
@@ -62,13 +62,8 @@ export const Steps = ({ cta }: { cta: (label: string) => void }) => {
           </div>
         </div>
       </StyledSteps>
-      <Button
-        onClick={() => {
-          cta('P3_Etapes');
-        }}
-        style="custom-secondary-inverted"
-      >
-        S&apos;inscrire
+      <Button href="/inscription" style="custom-secondary-inverted">
+        S&apos;inscrire au programme 360
       </Button>
     </Section>
   );

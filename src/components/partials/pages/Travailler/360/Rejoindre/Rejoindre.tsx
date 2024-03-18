@@ -2,9 +2,11 @@ import React from 'react';
 import { Section, Button, Img } from 'src/components/utils';
 import { H2, H6 } from 'src/components/utils/Headings';
 import { BulletListElement as BulletList } from 'src/components/utils/Lists';
+import { GA_TAGS } from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
 import { StyledRejoindre } from './Rejoindre.styles';
 
-export const Rejoindre = ({ cta }: { cta: (label: string) => void }) => {
+export const Rejoindre = () => {
   return (
     <Section className="custom-primary">
       <StyledRejoindre>
@@ -50,11 +52,12 @@ export const Rejoindre = ({ cta }: { cta: (label: string) => void }) => {
           </ul>
           <Button
             style="custom-secondary-inverted"
-            onClick={() => {
-              cta('P2_Envie_Rejoindre');
-            }}
+            href="/inscription"
+            onClick={() =>
+              gaEvent(GA_TAGS.PAGE_PROGRAMME_360_INSCRIPTION_REJOINDRE_CLICK)
+            }
           >
-            Finaliser mon inscription
+            Participer au programme
           </Button>
         </div>
         <div className="image-container">
