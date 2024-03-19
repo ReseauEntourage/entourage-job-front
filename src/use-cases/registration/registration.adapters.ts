@@ -1,6 +1,7 @@
 import { createRequestAdapter } from 'src/store/utils';
 
-// TODO rename and put right types
+export type CreateUserError = 'DUPLICATE_EMAIL';
+
 export const createUserAdapter = createRequestAdapter(
   'createUser'
-).withPayloads<void, void>();
+).withPayloads<void, void, { error: CreateUserError } | null>();

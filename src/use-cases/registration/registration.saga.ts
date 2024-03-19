@@ -1,5 +1,6 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
 import { Api } from 'src/api';
+import { isConflictError } from 'src/api/axiosErrors';
 import { flattenRegistrationDataByRole } from 'src/components/registration/Registration.utils';
 import { authenticationActions } from 'src/use-cases/authentication';
 import { asyncTimeout } from 'src/utils/asyncTimeout';
@@ -54,7 +55,15 @@ export function* createUserRequestedSaga() {
     );
     yield* put(createUserSucceeded());
   } catch (err) {
-    yield* put(createUserFailed());
+    if (isConflictError(err)) {
+      yield* put(
+        createUserFailed({
+          error: 'DUPLICATE_EMAIL',
+        })
+      );
+    } else {
+      yield* put(createUserFailed(null));
+    }
   }
 }
 

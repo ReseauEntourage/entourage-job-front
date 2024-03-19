@@ -195,13 +195,13 @@ const CoachLastStepContent: Pick<LastStepContent, 'title' | 'bullets'> = {
   bullets: [
     {
       icon: <IlluConversation {...iconSizeProps} />,
-      title: 'Discutez et échangez avec des candidats et des coachs',
+      title: 'Discutez et échangez avec des candidat(e)s et des coachs',
       text: "Commencez à partager et développer votre réseau solidaire en prenant contact avec d'autres membres de la communauté",
     },
     {
       icon: <IlluPoigneeDeMain {...iconSizeProps} />,
-      title: 'Donnez des coup de pouces à des candidats',
-      text: "Faites profiter de votre expérience des candidat(e)s et soutenez-les dans leurs recherches d'emploi",
+      title: 'Donnez des coup de pouces à des candidat(e)s',
+      text: "Faites profiter de votre expérience à des candidat(e)s et soutenez-les dans leurs recherches d'emploi",
     },
     {
       icon: <IlluCalendrier {...iconSizeProps} />,
@@ -220,7 +220,7 @@ const CandidateLastStepContent: Pick<LastStepContent, 'bullets'> = {
     },
     {
       icon: <IlluConversation {...iconSizeProps} />,
-      title: 'Discutez et échangez avec des candidats et des coachs',
+      title: 'Discutez et échangez avec des candidat(e)s et des coachs',
       text: 'Commencez à construire votre réseau en prenant contact avec les autres membres de la communauté',
     },
     {

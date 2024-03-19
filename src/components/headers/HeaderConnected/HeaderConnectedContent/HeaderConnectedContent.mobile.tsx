@@ -95,7 +95,9 @@ export const HeaderConnectedContentMobile = ({
                       }}
                     >
                       <span>
-                        <span className="uk-margin-small-right">{icon}</span>
+                        {icon && (
+                          <span className="uk-margin-small-right">{icon}</span>
+                        )}
                         {name}
                       </span>
                     </a>

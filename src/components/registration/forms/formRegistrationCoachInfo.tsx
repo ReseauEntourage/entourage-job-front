@@ -18,7 +18,8 @@ export const formRegistrationCoachInfo: FormSchema<{
       id: 'birthDateSubLabel',
       name: 'birthDateSubLabel',
       component: 'text',
-      title: 'Vous devez avoir plus de 18 ans pour participer au programme',
+      title:
+        'Vous devez avoir plus de 18 ans pour participer au programme Entourage Pro',
     },
     {
       id: 'birthDate',
@@ -35,7 +36,7 @@ export const formRegistrationCoachInfo: FormSchema<{
             return minBirthdate > realBirthdate;
           },
           message:
-            'Vous devez avoir plus de 18 ans pour participer au programme',
+            'Vous devez avoir plus de 18 ans pour participer au programme Entourage Pro',
         },
       ],
     },

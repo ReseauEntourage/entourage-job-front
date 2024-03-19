@@ -6,6 +6,8 @@ export const StyledConnectedItem = styled.li`
   border-right: 1px solid ${COLORS.lightgray};
   position: relative;
 
+  text-align: center;
+
   transition: 0.1s ease-in-out;
   transition-property: color, background-color, opacity;
   & > a {

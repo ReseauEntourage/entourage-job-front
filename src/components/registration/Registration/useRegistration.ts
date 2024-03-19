@@ -11,6 +11,7 @@ import { notificationsActions } from 'src/use-cases/notifications';
 import {
   createUserSelectors,
   registrationActions,
+  selectCreateUserError,
   selectIsFirstRegistrationStep,
   selectIsLastRegistrationStep,
   selectIsRegistrationLoading,
@@ -38,6 +39,7 @@ export function useRegistration() {
   const createUserStatus = useSelector(
     createUserSelectors.selectCreateUserStatus
   );
+  const createUserError = useSelector(selectCreateUserError);
 
   const onSubmitStepForm = useCallback(
     (fields: StepData) => {
@@ -90,11 +92,14 @@ export function useRegistration() {
       dispatch(
         notificationsActions.addNotification({
           type: 'danger',
-          message: `Une erreur est survenue`,
+          message:
+            createUserError === 'DUPLICATE_EMAIL'
+              ? 'Cette adresse email est déjà utilisée'
+              : 'Une erreur est survenue',
         })
       );
     }
-  }, [createUserStatus, dispatch, push]);
+  }, [createUserError, createUserStatus, dispatch, push]);
 
   const onBack = useCallback(back, [back]);
 
