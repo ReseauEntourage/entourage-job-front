@@ -1,6 +1,9 @@
+// no need to modify a lot, it will be changed soon
+
 import React from 'react';
 import { CarouselItem } from 'src/components/partials/utils/CarouselItem';
 import { Img, Section, Carousel } from 'src/components/utils';
+import { H2 } from 'src/components/utils/Headings';
 
 const testimonies = [
   {
@@ -60,10 +63,18 @@ const testimonies = [
 
 export const CandidateTestimonies = () => {
   return (
-    <Section style="default" container="small">
-      <h2 className="uk-text-bold uk-text-center">
-        Un emploi, <span className="uk-text-primary">ça change une vie</span>
-      </h2>
+    <Section style="default">
+      <H2
+        title={
+          <>
+            {' '}
+            Un emploi,{' '}
+            <span className="uk-text-primary">ça change une vie</span>
+          </>
+        }
+        color="black"
+        center
+      />
       <p className="uk-text-center">
         Jeunes issus de l’aide sociale à l’enfance, réfugiés nouvellement
         arrivés, accidentés de la vie, familles très précaires… tous ont en
