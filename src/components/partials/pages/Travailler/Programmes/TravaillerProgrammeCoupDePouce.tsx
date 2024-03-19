@@ -4,11 +4,12 @@ import CarteSolidaireIcon from 'assets/icons/orienter-carte-solidaire.svg';
 import { RowIconTitleText } from 'src/components/partials/utils/RowIconTitleText';
 import { SimpleImageText } from 'src/components/partials/utils/SimpleImageText';
 import { Button } from 'src/components/utils';
+import { List } from 'src/components/utils/Lists';
 import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
 import { useIsDesktop } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
-import { StyledProgrammesList } from './Programmes.styles';
+import { StyledAiderProgrammesListElement } from './TravaillerProgrammes.styles';
 
 const content = [
   {
@@ -37,7 +38,7 @@ const content = [
   },
 ];
 
-export const ProgrammeCoupDePouce = ({
+export const TravaillerProgrammeCoupDePouce = ({
   innerRef,
 }: {
   innerRef?: Ref<HTMLDivElement>;
@@ -56,21 +57,24 @@ export const ProgrammeCoupDePouce = ({
         title="Programme Coup de pouce"
         img="/static/img/orientation_who.jpg"
       >
-        <StyledProgrammesList
-          className={isDesktop ? '' : 'mobile'}
-          data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;"
-        >
-          <li>
+        <List animated>
+          <StyledAiderProgrammesListElement
+            className={isDesktop ? '' : 'mobile'}
+          >
             <IlluCalendrier {...iconsProps} /> <div>Ponctuel</div>
-          </li>
-          <li>
+          </StyledAiderProgrammesListElement>
+          <StyledAiderProgrammesListElement
+            className={isDesktop ? '' : 'mobile'}
+          >
             <OrienterSablier {...iconsProps} /> <div>Selon vos besoins</div>
-          </li>
-          <li>
+          </StyledAiderProgrammesListElement>
+          <StyledAiderProgrammesListElement
+            className={isDesktop ? '' : 'mobile'}
+          >
             <CarteSolidaireIcon {...iconsProps} />{' '}
             <div>En physique ou en visio</div>
-          </li>
-        </StyledProgrammesList>
+          </StyledAiderProgrammesListElement>
+        </List>
         <div data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > p; delay: 200;">
           <p>
             Le programme Coup de pouce vous permet de solliciter et de
@@ -81,18 +85,30 @@ export const ProgrammeCoupDePouce = ({
             Une véritable communauté d&lsquo;experts bénévoles est à votre
             disposition pour vous proposer :
           </p>
-          <StyledProgrammesList data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;">
-            <li>
+          <List animated>
+            <StyledAiderProgrammesListElement
+              className={isDesktop ? '' : 'mobile'}
+            >
               - Des ateliers thématiques, autour de du CV ou des entretiens par
               exemple
-            </li>
-            <li>- De partager leur réseau et de viraliser votre CV</li>
-            <li>
+            </StyledAiderProgrammesListElement>
+            <StyledAiderProgrammesListElement
+              className={isDesktop ? '' : 'mobile'}
+            >
+              - De partager leur réseau et de viraliser votre CV
+            </StyledAiderProgrammesListElement>
+            <StyledAiderProgrammesListElement
+              className={isDesktop ? '' : 'mobile'}
+            >
               - Des conseils et une méhtodologie pour des recherches d’emploi
               efficaces
-            </li>
-            <li>- Et tous autres partages d&lsquo;expérience utiles !</li>
-          </StyledProgrammesList>
+            </StyledAiderProgrammesListElement>
+            <StyledAiderProgrammesListElement
+              className={isDesktop ? '' : 'mobile'}
+            >
+              - Et tous autres partages d&lsquo;expérience utiles !
+            </StyledAiderProgrammesListElement>
+          </List>
         </div>
         <Button
           style="custom-secondary-inverted"

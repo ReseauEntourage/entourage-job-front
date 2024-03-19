@@ -17,7 +17,8 @@ const backgroundColors: {
 };
 
 export const StyledSimpleImageTextBackground = styled.div<StyledSimpleImageTextBackgroundProps>`
-  background-color: ${({ color }) => backgroundColors[color]};
+  background-color: ${({ backgroundColor }) =>
+    backgroundColors[backgroundColor]};
 `;
 
 export const StyledSimpleImageTextContainer = styled.div<StyledSimpleImageTextContainerProps>`

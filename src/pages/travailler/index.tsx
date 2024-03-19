@@ -4,11 +4,11 @@ import { Layout } from 'src/components/Layout';
 import { Impact } from 'src/components/partials/common/Impact';
 import { Partners } from 'src/components/partials/common/Partners';
 import { VideoSection } from 'src/components/partials/pages/Orienter/VideoSection';
-import { Decouvrir } from 'src/components/partials/pages/Travailler/Decouvrir';
 import {
-  Programme360,
-  ProgrammeCoupDePouce,
+  TravaillerProgramme360,
+  TravaillerProgrammeCoupDePouce,
 } from 'src/components/partials/pages/Travailler/Programmes';
+import { TravaillerDecouvrir } from 'src/components/partials/pages/Travailler/TravaillerDecouvrir';
 import { ImageTitle } from 'src/components/partials/utils/ImageTitle';
 import { Reviews } from 'src/components/partials/utils/Reviews';
 import { GA_TAGS } from 'src/constants/tags';
@@ -72,14 +72,14 @@ const Travailler = () => {
         description={`Vous êtes dans une situation de précarité ou d’exclusion\xa0? Vous avez un projet professionnel mais vous n’avez pas de réseau\xa0?`}
       />
 
-      <Decouvrir
+      <TravaillerDecouvrir
         handleClick={handleClick}
         refCoupDePouce={refCoupDePouce}
         refProgramme360={refProgramme360}
       />
 
-      <ProgrammeCoupDePouce innerRef={refCoupDePouce} />
-      <Programme360 innerRef={refProgramme360} />
+      <TravaillerProgrammeCoupDePouce innerRef={refCoupDePouce} />
+      <TravaillerProgramme360 innerRef={refProgramme360} />
 
       <VideoSection
         videoId="gUuaeDxlqTE"
