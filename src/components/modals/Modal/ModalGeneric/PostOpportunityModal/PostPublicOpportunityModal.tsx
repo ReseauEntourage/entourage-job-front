@@ -98,5 +98,5 @@ export function PostPublicOpportunityModal() {
     };
   }, [lastFilledForm, postOpportunity]);
 
-  return !shouldHide && <ModalEdit {...modalProps} />;
+  return !shouldHide ? <ModalEdit {...modalProps} /> : null;
 }

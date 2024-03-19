@@ -73,7 +73,7 @@ export const ImageTitle = ({
           </Button>
         )}
         {cta && Array.isArray(cta) && cta.length > 0 && (
-          <StyledImageTitleCTAsContainer>
+          <StyledImageTitleCTAsContainer marginTop={!description}>
             {cta.map(({ label, style, dataTest, onClick }, index) => {
               return (
                 <Button

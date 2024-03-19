@@ -37,8 +37,15 @@ export const StyledBulletListElement = styled.li`
     position: absolute;
     border-radius: 20px;
     left: 0;
+    top: 4px;
   }
   p {
     margin: 0;
   }
+`;
+
+export const StyledList = styled.ul`
+  margin: 20px 0;
+  padding: 0;
+  list-style: none;
 `;
