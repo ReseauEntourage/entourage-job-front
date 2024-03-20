@@ -488,6 +488,27 @@ export const GA_TAGS = {
   PAGE_TRAVAILLER_MESURE_IMPACT_CLICK: {
     action: 'Page_Travailler_Mesure_Impact_Click',
   },
+  PAGE_TRAVAILLER_DECOUVRIR_PROGRAMME_360_CLICK: {
+    action: 'Page_Travailler_Decouvrir_Programme_360_Click',
+  },
+  PAGE_TRAVAILLER_DECOUVRIR_PROGRAMME_COUP_DE_POUCE_CLICK: {
+    action: 'Page_Travailler_Decouvrir_Programme_Coup_De_Pouce_Click',
+  },
+  PAGE_AIDER_DECOUVRIR_PROGRAMME_360_CLICK: {
+    action: 'Page_Aider_Decouvrir_Programme_360_Click',
+  },
+  PAGE_AIDER_DECOUVRIR_PROGRAMME_COUP_DE_POUCE_CLICK: {
+    action: 'Page_Aider_Decouvrir_Programme_Coup_De_Pouce_Click',
+  },
+  PAGE_AIDER_PROGRAMME_COUP_DE_POUCE_INSCRIPTION_CLICK: {
+    action: 'Page_Aider_Inscription_Click',
+  },
+  PAGE_AIDER_PROGRAMME_360_INSCRIPTION_CLICK: {
+    action: 'Page_Aider_Inscription_Click',
+  },
+  PAGE_AIDER_REJOINDRE_INSCRIPTION_CLICK: {
+    action: 'Page_Aider_Rejoindre_Inscription_Click',
+  },
 } as const;
 
 export const FB_TAGS = {

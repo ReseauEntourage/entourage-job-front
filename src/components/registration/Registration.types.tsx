@@ -7,6 +7,7 @@ import {
 } from 'assets/icons/icons';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { Programs } from 'src/constants/programs';
+import { COLORS } from 'src/constants/styles';
 import { USER_ROLES } from 'src/constants/users';
 import { UnionKeys, UnionToIntersection } from 'src/utils/Types';
 import { formRegistrationAccount } from './forms/formRegistrationAccount';
@@ -204,7 +205,7 @@ const CoachLastStepContent: Pick<LastStepContent, 'title' | 'bullets'> = {
       text: "Faites profiter de votre expérience à des candidat(e)s et soutenez-les dans leurs recherches d'emploi",
     },
     {
-      icon: <IlluCalendrier {...iconSizeProps} />,
+      icon: <IlluCalendrier color={COLORS.primaryBlue} {...iconSizeProps} />,
       title: 'Participez à des événements professionnels et conviviaux',
       text: "Rejoignez-nous lors d'événements professionnels pour vivre des moments conviviaux et bâtir votre réseau solidaire",
     },
@@ -229,7 +230,7 @@ const CandidateLastStepContent: Pick<LastStepContent, 'bullets'> = {
       text: 'Sollicitez du soutien auprès de coachs tout au long de votre recherche',
     },
     {
-      icon: <IlluCalendrier {...iconSizeProps} />,
+      icon: <IlluCalendrier color={COLORS.primaryBlue} {...iconSizeProps} />,
       title: 'Participez à des événements professionnels et conviviaux',
       text: "Rejoignez-nous lors d'événements professionnels pour vivre des moments conviviaux et bâtir votre réseau",
     },

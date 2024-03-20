@@ -4,11 +4,12 @@ import CarteSolidaireIcon from 'assets/icons/orienter-carte-solidaire.svg';
 import { MultipleCTA } from 'src/components/partials/utils/MultipleCTA';
 import { RowIconTitleText } from 'src/components/partials/utils/RowIconTitleText';
 import { SimpleImageText } from 'src/components/partials/utils/SimpleImageText';
+import { List } from 'src/components/utils/Lists';
 import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
 import { useIsDesktop } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
-import { StyledProgrammesList } from './Programmes.styles';
+import { StyledAiderProgrammesListElement } from './TravaillerProgrammes.styles';
 
 const content = [
   {
@@ -36,7 +37,7 @@ const content = [
   },
 ];
 
-export const Programme360 = ({
+export const TravaillerProgramme360 = ({
   innerRef,
 }: {
   innerRef?: Ref<HTMLDivElement>;
@@ -55,20 +56,23 @@ export const Programme360 = ({
         img="/static/img/orientation_who.jpg"
         reverse
       >
-        <StyledProgrammesList
-          className={isDesktop ? '' : 'mobile'}
-          data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;"
-        >
-          <li>
+        <List animated>
+          <StyledAiderProgrammesListElement
+            className={isDesktop ? '' : 'mobile'}
+          >
             <IlluCalendrier {...iconsProps} /> <div>Durée de 6 mois</div>
-          </li>
-          <li>
+          </StyledAiderProgrammesListElement>
+          <StyledAiderProgrammesListElement
+            className={isDesktop ? '' : 'mobile'}
+          >
             <OrienterSablier {...iconsProps} /> <div>2 heures par semaine</div>
-          </li>
-          <li>
+          </StyledAiderProgrammesListElement>
+          <StyledAiderProgrammesListElement
+            className={isDesktop ? '' : 'mobile'}
+          >
             <CarteSolidaireIcon {...iconsProps} /> <div>En physique</div>
-          </li>
-        </StyledProgrammesList>
+          </StyledAiderProgrammesListElement>
+        </List>
         <div data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > p; delay: 200;">
           <p>
             Le programme 360 vous propose un accompagnement personnalisé de 6
@@ -84,12 +88,28 @@ export const Programme360 = ({
             Vous pourrez compter sur votre coach pour vous conseiller notamment
             sur les thématiques suivantes :
           </p>
-          <StyledProgrammesList data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > li; delay: 200;">
-            <li>- La définition de votre projet professionnel</li>
-            <li>- La création de votre CV et de votre lettre de motivation</li>
-            <li>- La préparation aux entretiens</li>
-            <li>- L’aide dans les recherches</li>
-          </StyledProgrammesList>
+          <List animated>
+            <StyledAiderProgrammesListElement
+              className={isDesktop ? '' : 'mobile'}
+            >
+              - La définition de votre projet professionnel
+            </StyledAiderProgrammesListElement>
+            <StyledAiderProgrammesListElement
+              className={isDesktop ? '' : 'mobile'}
+            >
+              - La création de votre CV et de votre lettre de motivation
+            </StyledAiderProgrammesListElement>
+            <StyledAiderProgrammesListElement
+              className={isDesktop ? '' : 'mobile'}
+            >
+              - La préparation aux entretiens
+            </StyledAiderProgrammesListElement>
+            <StyledAiderProgrammesListElement
+              className={isDesktop ? '' : 'mobile'}
+            >
+              - L’aide dans les recherches
+            </StyledAiderProgrammesListElement>
+          </List>
         </div>
         <MultipleCTA
           data={[

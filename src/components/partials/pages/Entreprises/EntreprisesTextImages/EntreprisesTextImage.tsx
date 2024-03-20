@@ -3,7 +3,7 @@ import { SimpleImageText } from 'src/components/partials/utils/SimpleImageText';
 import { content } from './EntreprisesTextImage.utils';
 
 interface TextImageProps {
-  element: 'quoi' | 'qui' | 'pourquoi';
+  element: keyof typeof content;
 }
 
 export const EntreprisesTextImage = ({ element }: TextImageProps) => {

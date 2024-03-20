@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   StyledCheckIcon,
-  StyledCheckListElement,
+  StyledLi,
 } from 'src/components/utils/Lists/Lists.styles';
 
 export const CheckListElement = ({
@@ -10,9 +10,9 @@ export const CheckListElement = ({
   children: React.ReactNode;
 }) => {
   return (
-    <StyledCheckListElement>
+    <StyledLi>
       <StyledCheckIcon />
       {children}
-    </StyledCheckListElement>
+    </StyledLi>
   );
 };

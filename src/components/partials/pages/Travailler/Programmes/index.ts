@@ -1,2 +1,2 @@
-export * from './Programme360';
-export * from './ProgrammeCoupDePouce';
+export * from './TravaillerProgramme360';
+export * from './TravaillerProgrammeCoupDePouce';

@@ -1,7 +1,9 @@
 import React, { Ref } from 'react';
 import { SimpleCardsImageCTA } from 'src/components/partials/utils/SimpleCardsImageCTA';
+import { GA_TAGS } from 'src/constants/tags';
+import { gaEvent } from 'src/lib/gtag';
 
-export const Decouvrir = ({
+export const TravaillerDecouvrir = ({
   handleClick,
   refCoupDePouce,
   refProgramme360,
@@ -21,6 +23,7 @@ export const Decouvrir = ({
           img: '/static/img/orientation_who.jpg',
           onClick: () => {
             handleClick(refCoupDePouce);
+            gaEvent(GA_TAGS.PAGE_TRAVAILLER_DECOUVRIR_PROGRAMME_360_CLICK);
           },
           CTAText: 'Découvrir',
         },
@@ -31,6 +34,9 @@ export const Decouvrir = ({
           img: '/static/img/orienter-decouvrir-2.png',
           onClick: () => {
             handleClick(refProgramme360);
+            gaEvent(
+              GA_TAGS.PAGE_TRAVAILLER_DECOUVRIR_PROGRAMME_COUP_DE_POUCE_CLICK
+            );
           },
           CTAText: 'Découvrir',
         },
