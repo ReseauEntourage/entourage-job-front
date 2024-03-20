@@ -67,7 +67,6 @@ export const CandidateTestimonies = () => {
       <H2
         title={
           <>
-            {' '}
             Un emploi,{' '}
             <span className="uk-text-primary">ça change une vie</span>
           </>
