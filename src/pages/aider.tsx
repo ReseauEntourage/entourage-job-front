@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Layout } from 'src/components/Layout';
 import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
 import { SharePartial } from 'src/components/partials/common/SharePartial';
@@ -54,14 +54,14 @@ const reviewContent = [
 const Aider = () => {
   const refCoupDePouce = useRef(null);
   const refProgramme360 = useRef(null);
-  const handleClick = (element) => {
+  const handleClick = useCallback((element) => {
     if (element.current) {
       element.current.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
       });
     }
-  };
+  }, []);
   return (
     <Layout title="Aider - Entourage Pro">
       <ImageTitle

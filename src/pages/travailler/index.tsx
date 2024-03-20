@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Layout } from 'src/components/Layout';
 
 import { Impact } from 'src/components/partials/common/Impact';
@@ -54,14 +54,14 @@ const reviews = [
 const Travailler = () => {
   const refCoupDePouce = useRef(null);
   const refProgramme360 = useRef(null);
-  const handleClick = (element) => {
+  const handleClick = useCallback((element) => {
     if (element.current) {
       element.current.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
       });
     }
-  };
+  }, []);
 
   return (
     <Layout title="Travailler - Entourage Pro">
