@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import {
+  User,
   UserCandidateWithUsers,
   UserWithUserCandidate,
-  User,
 } from 'src/api/types';
 import { OFFER_STATUS } from 'src/constants';
 import {
