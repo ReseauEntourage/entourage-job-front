@@ -20,6 +20,7 @@ import { DashboardOpportunitiesCard } from './DashboardOpportunitiesCard';
 import { DashboardProfileCard } from './DashboardProfileCard';
 import { DashboardReadDocumentsCard } from './DashboardReadDocumentsCard';
 import { DashboardRecommendationsCard } from './DashboardRecommendationsCard';
+import { DashboardReferentCard } from './DashboardReferentCard';
 import { DashboardStepsCard } from './DashboardStepsCard';
 
 export const Dashboard = () => {
@@ -42,6 +43,7 @@ export const Dashboard = () => {
             <DashboardProfileCard />
             {shouldShowAllProfile && <DashboardAvailabilityCard />}
             <DashboardLinkedUserCard />
+            <DashboardReferentCard />
           </StyledDashboardLeftColumn>
           <StyledDashboardRightColumn
             className={`${isDesktop ? '' : 'mobile'}`}
