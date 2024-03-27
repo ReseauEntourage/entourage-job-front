@@ -108,6 +108,7 @@ export function selectCandidateAsUser(state: RootState): User | null {
   const currentUser = selectAuthenticatedUser(state);
 
   let candidate = getUserCandidateFromCoachOrCandidate(currentUser);
+
   if (
     isRoleIncluded(COACH_USER_ROLES, currentUser.role) &&
     Array.isArray(candidate)
@@ -116,6 +117,7 @@ export function selectCandidateAsUser(state: RootState): User | null {
     if (candidate?.candidat) {
       return candidate.candidat;
     }
+    return null;
   }
   return currentUser;
 }

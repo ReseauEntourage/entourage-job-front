@@ -13,11 +13,11 @@ import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop } from 'src/hooks/utils';
 import {
+  selectCandidateAsUser,
   selectCandidateId,
   selectCandidateProfileDefaultFiltersForDashboardOpportunities,
-  selectCandidateAsUser,
 } from 'src/use-cases/current-user';
-import { findConstantFromValue, buildContractLabel } from 'src/utils';
+import { buildContractLabel, findConstantFromValue } from 'src/utils';
 import {
   StyledDashboardOpportunitiesEmptyState,
   StyledDashboardOpportunitiesListContainer,
@@ -43,6 +43,11 @@ export const DashboardOpportunitiesCard = () => {
   const opportunitiesDefaultFilters = useSelector(
     selectCandidateProfileDefaultFiltersForDashboardOpportunities
   );
+
+  if (!candidate) {
+    return null;
+  }
+
   return (
     <Card
       title={
@@ -51,7 +56,7 @@ export const DashboardOpportunitiesCard = () => {
           : `Les offres qui pourraient vous intéresser`
       }
     >
-      {!isDataLoading ? (
+      {!isDataLoading && (
         <>
           {!!numberOpportunitiesInProgess &&
             numberOpportunitiesInProgess > 0 && (
@@ -165,7 +170,8 @@ export const DashboardOpportunitiesCard = () => {
             </Button>
           </StyledDashboardOpprtunityCTAOrSpinnerContainer>
         </>
-      ) : (
+      )}
+      {isDataLoading && (
         <StyledDashboardOpprtunityCTAOrSpinnerContainer>
           <Spinner />
         </StyledDashboardOpprtunityCTAOrSpinnerContainer>

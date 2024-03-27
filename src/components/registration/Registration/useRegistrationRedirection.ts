@@ -6,6 +6,7 @@ import { useStep } from 'src/hooks/queryParams/useStep';
 import {
   registrationActions,
   selectRegistrationCurrentStep,
+  selectRegistrationSelectedRole,
 } from 'src/use-cases/registration';
 
 export function useRegistrationRedirection() {
@@ -15,9 +16,11 @@ export function useRegistrationRedirection() {
   const step = useStep();
 
   const currentStep = useSelector(selectRegistrationCurrentStep);
+  const selectedRole = useSelector(selectRegistrationSelectedRole);
 
   const shouldRedirect =
-    !step || (!currentStep && step !== REGISTRATION_FIRST_STEP);
+    !step ||
+    ((!currentStep || !selectedRole) && step !== REGISTRATION_FIRST_STEP);
 
   useEffect(() => {
     if (shouldRedirect) {
