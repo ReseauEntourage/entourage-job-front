@@ -1,3 +1,5 @@
+// no need to modify a lot, it will be changed soon
+
 import React from 'react';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import { Layout } from 'src/components/Layout';
@@ -9,6 +11,7 @@ import { CompanyTestimonies } from 'src/components/partials/pages/Entreprises/Si
 import { HowToBeInclusive } from 'src/components/partials/pages/Entreprises/Sinformer/HowToBeInclusive';
 import { ImageTitle } from 'src/components/partials/utils/ImageTitle';
 import { Section } from 'src/components/utils';
+import { H2 } from 'src/components/utils/Headings';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 
@@ -17,12 +20,7 @@ const Sinformer = () => {
     <Layout title="S'informer - Entourage Pro">
       <ImageTitle
         img="/static/img/header_pic_sinformer.jpg"
-        title={
-          <mark>
-            Pourquoi et comment devenir une&nbsp;
-            <span className="uk-text-primary">entreprise inclusive</span>
-          </mark>
-        }
+        title="Pourquoi et comment devenir une entreprise inclusive"
         description={
           <>
             En tant qu&apos;entreprise, comment agir concrètement en faveur de
@@ -32,6 +30,7 @@ const Sinformer = () => {
           </>
         }
         cta={{
+          style: 'custom-secondary-inverted',
           onClick: () => {
             gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
             openModal(<CompanyContactModal />);
@@ -39,11 +38,17 @@ const Sinformer = () => {
           label: 'Nous contacter',
         }}
       />
-      <Section style="muted" container="small">
-        <h2 className="uk-text-bold uk-text-center">
-          <span className="uk-text-primary">Engager</span> mon entreprise dans
-          l’inclusion : pourquoi&nbsp;?
-        </h2>
+      <Section style="muted">
+        <H2
+          title={
+            <>
+              <span className="uk-text-primary">Engager</span> mon entreprise
+              dans l’inclusion : pourquoi&nbsp;?
+            </>
+          }
+          color="black"
+          center
+        />
         <p className="uk-text-center">
           Chacun devrait pouvoir avoir sa place dans l’entreprise et dans la
           société, c&lsquo;est la conviction d&lsquo;Entourage Pro.

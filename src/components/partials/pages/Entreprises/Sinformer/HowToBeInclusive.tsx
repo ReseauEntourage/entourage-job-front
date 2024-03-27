@@ -1,5 +1,6 @@
 import React from 'react';
 import { Section, Grid } from 'src/components/utils';
+import { H2 } from 'src/components/utils/Headings';
 
 const tips = [
   {
@@ -54,42 +55,19 @@ const tips = [
   },
 ];
 
-const TipsGrid = () => {
-  return (
-    <div>
-      <Grid
-        childWidths={[`1-${tips.length}@m`]}
-        match
-        className="uk-margin-top"
-        gap="large"
-        items={tips.map((item, index) => {
-          return (
-            <div key={index.toString()}>
-              <h4
-                className="uk-text-bold"
-                style={{
-                  paddingLeft: '0.7rem',
-                  borderLeft: '2px solid #47A8B9',
-                }}
-              >
-                {item.title}
-              </h4>
-              {item.text && <div className="uk-text-small">{item.text}</div>}
-            </div>
-          );
-        })}
-      />
-    </div>
-  );
-};
-
 export const HowToBeInclusive = () => {
   return (
-    <Section style="muted" container="small">
-      <h2 className="uk-text-bold uk-text-center">
-        <span className="uk-text-primary">Concrètement,</span>&nbsp;comment être
-        inclusif ?
-      </h2>
+    <Section style="muted">
+      <H2
+        title={
+          <>
+            <span className="uk-text-primary">Concrètement,</span>&nbsp;comment
+            être inclusif ?
+          </>
+        }
+        center
+        color="black"
+      />
       <div className="uk-flex uk-flex-center uk-margin-top uk-padding-small">
         <p className="uk-container-small uk-text-center">
           Il y a 1001 manières de s’engager dans l’inclusion. La plus impactante
@@ -98,7 +76,30 @@ export const HowToBeInclusive = () => {
           agir autrement. Les différents leviers d’actions sont les suivants :{' '}
         </p>
       </div>
-      <TipsGrid />
+      <div>
+        <Grid
+          childWidths={[`1-${tips.length}@m`]}
+          match
+          className="uk-margin-top"
+          gap="large"
+          items={tips.map((item, index) => {
+            return (
+              <div key={index.toString()}>
+                <h4
+                  className="uk-text-bold"
+                  style={{
+                    paddingLeft: '0.7rem',
+                    borderLeft: '2px solid #47A8B9',
+                  }}
+                >
+                  {item.title}
+                </h4>
+                {item.text && <div className="uk-text-small">{item.text}</div>}
+              </div>
+            );
+          })}
+        />
+      </div>
     </Section>
   );
 };
