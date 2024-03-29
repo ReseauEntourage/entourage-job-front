@@ -30,7 +30,10 @@ export const ProfileDescription = ({
         <StyledDescriptionParagraphe data-testid="profile-description">
           &ldquo;{description}&rdquo;
           {isEditable && (
-            <StyledDescriptionEditText onClick={() => openDescriptionModal()}>
+            <StyledDescriptionEditText
+              onClick={() => openDescriptionModal()}
+              data-testid="profile-description-modify-button"
+            >
               Modifier la description
             </StyledDescriptionEditText>
           )}

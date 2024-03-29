@@ -412,16 +412,16 @@ describe('Candidat', () => {
         fixture: 'user-profile-candidate-description-modified',
       }).as('putUserProfile');
     });
-    cy.get(`[data-testid="profile-description-placeholder"]`)
+    cy.get(`[data-testid="profile-description-modify-button"]`)
       .scrollIntoView()
       .click();
     cy.get(`[data-testid="form-profile-description-description"]`)
       .scrollIntoView()
-      .type('hello');
+      .type('hello sir');
     cy.get(`[data-testid="form-confirm-form-profile-description"]`)
       .scrollIntoView()
       .click();
-    cy.get(`[data-testid="profile-description"]`).should('contain', 'hello');
+    cy.get(`[data-testid="profile-description"]`).should('contain', 'hello sir');
 
     // change profile picture
     cy.get(`[data-testid="profile-picture-upload-desktop"]`).selectFile(

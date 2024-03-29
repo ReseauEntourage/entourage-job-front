@@ -6,6 +6,7 @@ import {
   StyledProfileFormTextAreaContainer,
   StyledProfileFormImageContainer,
 } from '../../Onboarding.styles';
+import { FlattenedOnboardingFormData } from '../../Onboarding.types';
 import { useContextualRole } from 'src/components/backoffice/useContextualRole';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { ButtonMock, ImgProfile } from 'src/components/utils';
@@ -21,17 +22,18 @@ import {
 } from 'src/use-cases/current-user';
 import { formOnboardingCandidateProfile } from './schemas/formOnboardingCandidateProfile';
 import { formOnboardingCoachProfile } from './schemas/formOnboardingCoachProfile';
-import { FlattenedOnboardingFormData } from '../../Onboarding.types';
-import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 
 interface OnboardingProfileFormProps {
-    onSubmit: (values: Partial<FlattenedOnboardingFormData>) => void;
-    onBeforeStep: () => void;
-};
+  onSubmit: (values: Partial<FlattenedOnboardingFormData>) => void;
+  onBeforeStep: () => void;
+}
 
 const SIZE = 146;
 
-export const OnboardingProfileForm = ({ onSubmit, onBeforeStep }: OnboardingProfileFormProps) => {
+export const OnboardingProfileForm = ({
+  onSubmit,
+  onBeforeStep,
+}: OnboardingProfileFormProps) => {
   const user = useAuthenticatedUser();
   const dispatch = useDispatch();
   const { userProfile, id, role, firstName } = user;

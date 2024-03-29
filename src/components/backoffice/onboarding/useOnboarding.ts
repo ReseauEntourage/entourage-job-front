@@ -17,7 +17,7 @@ export const useOnboarding = () => {
 
   useEffect(() => {
     dispatch(onboardingActions.launchOnboarding());
-  }, []);
+  }, [dispatch]);
 
   const onSubmitLastStepOnboarding = useCallback(
     (fields: Partial<FlattenedOnboardingFormData>) => {

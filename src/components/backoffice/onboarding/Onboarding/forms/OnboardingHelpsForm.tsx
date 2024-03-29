@@ -1,18 +1,18 @@
 import React from 'react';
-import { useContextualRole } from 'src/components/backoffice/useContextualRole';
+import { FlattenedOnboardingFormData } from '../../Onboarding.types';
 import { useHelpField } from 'src/components/backoffice/parametres/useUpdateProfile';
+import { useContextualRole } from 'src/components/backoffice/useContextualRole';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { formOnboardingCandidateHelps } from './schemas/formOnboardingCandidateHelps';
 import { formOnboardingCoachHelps } from './schemas/formOnboardingCoachHelps';
-import { FlattenedOnboardingFormData } from '../../Onboarding.types';
 
-interface OnboardingHelpsForm {
-    onSubmit: (fields: Partial<FlattenedOnboardingFormData>) => void;
+interface OnboardingHelpsFormProps {
+  onSubmit: (fields: Partial<FlattenedOnboardingFormData>) => void;
 }
 
-export const OnboardingHelpsForm = ({ onSubmit }: OnboardingHelpsForm) => {
+export const OnboardingHelpsForm = ({ onSubmit }: OnboardingHelpsFormProps) => {
   const user = useAuthenticatedUser();
   const { contextualRole } = useContextualRole(user.role);
   const { userProfile } = user;

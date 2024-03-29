@@ -1,6 +1,6 @@
 import moment from 'moment/moment';
 import React from 'react';
-import { formOnboardingCandidateJob } from 'src/components/backoffice/onboarding/Onboarding/Forms/schemas/formOnboardingCandidateJob';
+import { formOnboardingCandidateJob } from 'src/components/backoffice/onboarding/Onboarding/forms/schemas/formOnboardingCandidateJob';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import {
   AmbitionsPrefixesType,
@@ -103,7 +103,9 @@ export const formatNetworkBusinessLines = (
 };
 
 export const formatCareerPathSentence = (
-  values: Partial<ExtractFormSchemaValidation<typeof formOnboardingCandidateJob>>
+  values: Partial<
+    ExtractFormSchemaValidation<typeof formOnboardingCandidateJob>
+  >
 ): {
   searchAmbitions: {
     prefix: AmbitionsPrefixesType;
