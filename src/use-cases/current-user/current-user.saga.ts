@@ -26,6 +26,9 @@ const {
   readDocumentSucceeded,
   readDocumentRequested,
   readDocumentFailed,
+  updateUserProfilePictureRequested,
+  updateUserProfilePictureSucceeded,
+  updateUserProfilePictureFailed,
 } = slice.actions;
 
 function getIsReleaseVersionAllowed() {
@@ -138,6 +141,21 @@ function* readDocumentRequestedSaga(
   }
 }
 
+function* updateUserProfilePictureRequestedSaga(
+  action: ReturnType<typeof updateUserProfilePictureRequested>
+) {
+  const userId = yield* select(selectCurrentUserId);
+  const { profileImage } = action.payload;
+  try {
+    const formData = new FormData();
+    formData.append('profileImage', profileImage);
+    yield* call(() => Api.postProfileImage(userId, formData));
+    yield* put(updateUserProfilePictureSucceeded());
+  } catch {
+    yield* put(updateUserProfilePictureFailed());
+  }
+}
+
 function* loginSucceededSaga(
   action: ReturnType<typeof authenticationActions.loginSucceeded>
 ) {
@@ -156,4 +174,8 @@ export function* saga() {
   yield* takeLatest(updateProfileRequested, updateProfileRequestedSaga);
   yield* takeLatest(updateCandidateRequested, updateCandidateRequestedSaga);
   yield* takeLatest(readDocumentRequested, readDocumentRequestedSaga);
+  yield* takeLatest(
+    updateUserProfilePictureRequested,
+    updateUserProfilePictureRequestedSaga
+  );
 }

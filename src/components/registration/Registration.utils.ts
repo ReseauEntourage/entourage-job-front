@@ -1,6 +1,6 @@
 import { NormalUserRole } from 'src/constants/users';
 import {
-  FlattenedStepData,
+  FlattenedRegistrationFormData,
   RegistrationStep,
   RegistrationStepData,
 } from './Registration.types';
@@ -21,7 +21,7 @@ export const flattenRegistrationDataByRole = (
       };
     }
     return acc;
-  }, {} as FlattenedStepData);
+  }, {} as FlattenedRegistrationFormData);
 };
 
 export const incrementRegistrationStep = (

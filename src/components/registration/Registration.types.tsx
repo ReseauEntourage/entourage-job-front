@@ -46,13 +46,15 @@ export type RegistrationForms =
   | CandidateRegistrationForm
   | CoachRegistrationForm;
 
-export type StepData = ExtractFormSchemaValidation<RegistrationForms>;
+export type RegistrationFormData =
+  ExtractFormSchemaValidation<RegistrationForms>;
 
-export type StepDataKeys = UnionKeys<StepData>;
+export type RegistrationFormDataKeys = UnionKeys<RegistrationFormData>;
 
-export type FlattenedStepData = UnionToIntersection<StepData>;
+export type FlattenedRegistrationFormData =
+  UnionToIntersection<RegistrationFormData>;
 
-export type FirstStepData =
+export type FirstStepRegistrationFormData =
   ExtractFormSchemaValidation<FirstStepRegistrationForm>;
 
 export type RegistrationStepDataByRole = Partial<{
@@ -80,9 +82,11 @@ export interface RegistrationStepContent<
   annotation?: RegistrationLabel;
   form: T;
   // Used to get the values of a previous step as default values in the form of the current step
-  dependsOn?: StepDataKeys[];
+  dependsOn?: RegistrationFormDataKeys[];
   // Used to skip the step if the value of a previous step matches the value in skippedBy
-  skippedBy?: Partial<{ [K in StepDataKeys]: FlattenedStepData[K] }>;
+  skippedBy?: Partial<{
+    [K in RegistrationFormDataKeys]: FlattenedRegistrationFormData[K];
+  }>;
 }
 
 export type RegistrationStepContentByRole = Partial<{

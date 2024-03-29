@@ -24,6 +24,7 @@ import {
   updateCandidateAdapter,
   updateProfileAdapter,
   updateUserAdapter,
+  updateUserProfilePictureAdapter,
 } from './current-user.adapters';
 import { RootState } from './current-user.slice';
 
@@ -50,6 +51,10 @@ export const updateCandidateSelectors =
     (state) => state.currentUser.updateCandidate
   );
 
+export const updateUserProfilePictureSelectors = updateUserProfilePictureAdapter.getSelectors<RootState>(
+  (state) => state.currentUser.updateUserProfilePicture
+);
+
 export function selectCurrentUser(state: RootState) {
   return state.currentUser.user;
 }
@@ -60,6 +65,11 @@ export function selectAuthenticatedUser(state: RootState) {
   assertIsDefined(currentUser, 'User is not authenticated');
 
   return currentUser;
+}
+
+export function selectCurrentUserProfile(state: RootState) {
+  const currentUser = selectAuthenticatedUser(state);
+  return currentUser.userProfile;
 }
 
 export function selectCurrentUserId(state: RootState) {

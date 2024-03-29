@@ -8,9 +8,7 @@ import {
 import { isRoleIncluded } from 'src/utils';
 
 export function useContextualRole(role: UserRole) {
-  const [contextualRole, setContextualRole] = useState<NormalUserRole>(
-    USER_ROLES.CANDIDATE
-  );
+  const [contextualRole, setContextualRole] = useState<NormalUserRole>();
 
   useEffect(() => {
     setContextualRole(

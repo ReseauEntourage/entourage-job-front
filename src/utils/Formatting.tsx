@@ -1,6 +1,14 @@
 import moment from 'moment/moment';
 import React from 'react';
-import { CONTRACTS } from 'src/constants';
+import { formOnboardingCandidateJob } from 'src/components/backoffice/onboarding/Onboarding/Forms/schemas/formOnboardingCandidateJob';
+import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
+import {
+  AmbitionsPrefixesType,
+  AMBITIONS_PREFIXES,
+  BusinessLineValue,
+  CONTRACTS,
+} from 'src/constants';
+import { FilterConstant } from 'src/constants/utils';
 import { findConstantFromValue } from './Finding';
 
 export function formatParagraph(text: string, condense?: boolean) {
@@ -84,4 +92,68 @@ export const limitChar = (string: string, limit: number) => {
     return `${string.slice(0, limit)}...`;
   }
   return string;
+};
+
+export const formatNetworkBusinessLines = (
+  networkBusinessLines: FilterConstant<BusinessLineValue>[]
+): { name: BusinessLineValue; order: number }[] => {
+  return networkBusinessLines.map(({ value }, i) => {
+    return { name: value, order: i };
+  });
+};
+
+export const formatCareerPathSentence = (
+  values: Partial<ExtractFormSchemaValidation<typeof formOnboardingCandidateJob>>
+): {
+  searchAmbitions: {
+    prefix: AmbitionsPrefixesType;
+    name: string;
+    order: number;
+  }[];
+  searchBusinessLines: {
+    name: BusinessLineValue;
+    order: number;
+  }[];
+} => {
+  let newAmbitions = [] as {
+    prefix: AmbitionsPrefixesType;
+    name: string;
+    order: number;
+  }[];
+  if (values.searchAmbition0) {
+    newAmbitions = [
+      {
+        prefix: AMBITIONS_PREFIXES[1].label,
+        name: values.searchAmbition0,
+        order: 0,
+      },
+    ];
+  }
+  if (values.searchAmbition1) {
+    newAmbitions = [
+      ...newAmbitions,
+      {
+        prefix: AMBITIONS_PREFIXES[1].label,
+        name: values.searchAmbition1,
+        order: 1,
+      },
+    ];
+  }
+  let newBusinessLines = [] as {
+    name: BusinessLineValue;
+    order: number;
+  }[];
+  if (values.searchBusinessLine0) {
+    newBusinessLines = [{ name: values.searchBusinessLine0.value, order: 0 }];
+  }
+  if (values.searchBusinessLine1) {
+    newBusinessLines = [
+      ...newBusinessLines,
+      { name: values.searchBusinessLine1.value, order: 1 },
+    ];
+  }
+  return {
+    searchAmbitions: newAmbitions,
+    searchBusinessLines: newBusinessLines,
+  };
 };

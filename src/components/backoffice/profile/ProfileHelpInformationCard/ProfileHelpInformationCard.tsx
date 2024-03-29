@@ -11,11 +11,11 @@ import { ProfileHelpList } from './ProfileHelpList';
 
 export const ProfileHelpInformationCard = () => {
   const selectedProfile = useSelectSelectedProfile();
-  const helpField = useHelpField(selectedProfile?.role);
 
   const { contextualRole } = useContextualRole(selectedProfile.role);
+  const helpField = useHelpField(contextualRole);
 
-  if (!helpField) return null;
+  if (!helpField || !contextualRole) return null;
 
   return (
     <Card

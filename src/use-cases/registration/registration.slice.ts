@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-  FirstStepData,
+  FirstStepRegistrationFormData,
   REGISTRATION_FIRST_STEP,
   RegistrationErrorMessages,
   RegistrationStep,
   RegistrationStepData,
-  StepData,
+  RegistrationFormData,
 } from 'src/components/registration/Registration.types';
 import { NormalUserRole } from 'src/constants/users';
 import { RequestState, SliceRootState } from 'src/store/utils';
@@ -44,14 +44,17 @@ export const slice = createSlice({
         state.createUserError = action.payload?.error || null;
       },
     }),
-    setRegistrationCurrentStepData(state, action: PayloadAction<StepData>) {
+    setRegistrationCurrentStepData(
+      state,
+      action: PayloadAction<RegistrationFormData>
+    ) {
       const { currentStep } = state;
 
       assertIsDefined(currentStep, RegistrationErrorMessages.CURRENT_STEP);
 
       if (currentStep === REGISTRATION_FIRST_STEP) {
         state.selectedRole =
-          (action.payload as FirstStepData).role?.[0] || null;
+          (action.payload as FirstStepRegistrationFormData).role?.[0] || null;
       } else {
         const { selectedRole } = state;
 

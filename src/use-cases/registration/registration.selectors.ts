@@ -1,15 +1,15 @@
 import _ from 'lodash';
 import {
   FirstStepContent,
-  FlattenedStepData,
+  FlattenedRegistrationFormData,
   LastStepContent,
   REGISTRATION_FIRST_STEP,
   RegistrationErrorMessages,
   RegistrationStep,
   RegistrationStepContent,
   RegistrationStepContents,
-  StepData,
-  StepDataKeys,
+  RegistrationFormData,
+  RegistrationFormDataKeys,
 } from 'src/components/registration/Registration.types';
 import {
   flattenRegistrationDataByRole,
@@ -110,7 +110,7 @@ export function selectIsRegistrationLoading(state: RootState) {
 
 export function selectRegistrationCurrentStepData(
   state: RootState
-): StepData | null {
+): RegistrationFormData | null {
   const currentStep = selectDefinedRegistrationCurrentStep(state);
 
   const isFirstStep = selectIsFirstRegistrationStep(state);
@@ -157,7 +157,7 @@ export function selectRegistrationConfirmationStepContent(
 
 export function selectRegistrationDataFromOtherStep(
   state: RootState
-): Partial<StepData> | null {
+): Partial<RegistrationFormData> | null {
   const isFirstStep = selectIsFirstRegistrationStep(state);
   const stepContent = selectRegistrationCurrentStepContent(state);
 
@@ -175,7 +175,7 @@ export function selectRegistrationDataFromOtherStep(
 
     return stepContent.dependsOn.reduce((acc, curr) => {
       return { ...acc, [curr]: allStepsDataForSelectedRole[curr] };
-    }, {} as FlattenedStepData);
+    }, {} as FlattenedRegistrationFormData);
   }
 
   return null;
@@ -188,7 +188,7 @@ export function selectRegistrationShouldSkipStep(state: RootState) {
   const skippedByArray = stepContent.skippedBy;
 
   if (skippedByArray && valuesFromOtherStep) {
-    const keys = Object.keys(skippedByArray) as StepDataKeys[];
+    const keys = Object.keys(skippedByArray) as RegistrationFormDataKeys[];
 
     return keys.some((key) => {
       if (valuesFromOtherStep[key]) {
