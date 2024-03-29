@@ -94,16 +94,31 @@ export const HeaderPublicContentMobile = ({
                 );
               }),
           ]}
-          <li className="uk-margin-small-top uk-flex uk-flex-center uk-padding-small">
+          <li className="uk-margin-small-top uk-flex uk-flex-center">
             <Button
               href="/login"
-              style="custom-secondary-inverted"
+              style="custom-secondary"
+              onClick={() => {
+                gaEvent(GA_TAGS.HEADER_CONNEXION_CLIC);
+              }}
               size="small"
             >
-              Inscription / Connexion
+              Connexion
             </Button>
           </li>
-          <li className="uk-flex uk-flex-center uk-padding-small">
+          <li className="uk-margin-small-top uk-flex uk-flex-center">
+            <Button
+              href="/inscription"
+              style="custom-secondary-inverted"
+              size="small"
+              onClick={() => {
+                gaEvent(GA_TAGS.HEADER_INSCRIPTION_CLIC);
+              }}
+            >
+              Inscription
+            </Button>
+          </li>
+          <li className="uk-margin-small-top uk-flex uk-flex-center uk-padding-small">
             <Button
               href={process.env.DONATION_LINK}
               isExternal
