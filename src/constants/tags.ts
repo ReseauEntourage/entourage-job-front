@@ -254,6 +254,12 @@ export const GA_TAGS = {
   HEADER_ORIENTER_CLIC: {
     action: 'Header_Orienter_Clic',
   },
+  HEADER_INSCRIPTION_CLIC: {
+    action: 'Header_Inscription_Clic',
+  },
+  HEADER_CONNEXION_CLIC: {
+    action: 'Header_Connexion_Clic',
+  },
   PAGE_RECRUTER_CARROUSEL_CLIC: {
     action: 'Page_Recruter_Carrousel_Clic',
   },
