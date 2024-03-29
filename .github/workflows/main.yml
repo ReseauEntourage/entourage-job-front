@@ -8,7 +8,8 @@ on:
 
 env:
   WEBINAR_URL: 'https://google.com'
-  TOOLBOX_URL: 'https://google.com'
+  TOOLBOX_COACH_URL: 'https://google.com'
+  TOOLBOX_CANDIDATE_URL: 'https://google.com'
   TUTORIAL_CV: 'https://google.com'
   TUTORIAL_PP: 'https://google.com'
   TUTORIAL_VIDEO_FIRST_STEPS: 'https://google.com'

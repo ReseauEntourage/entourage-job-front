@@ -7,6 +7,7 @@ import {
   StyledDashboardArticleText,
   StyledDashboardCardContentContainer,
   StyledDashboardCardSubtitle,
+  StyledDashboardReadDocumentsArticlesContainer,
 } from '../Dashboard.styles';
 import { isReadDocument } from 'src/components/partials/pages/Documents/Documents.utils';
 import { Card, Img } from 'src/components/utils';
@@ -15,7 +16,6 @@ import { Typography } from 'src/components/utils/Typography';
 import { DocumentNames } from 'src/constants';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { StyledDashboardReadDocumentsArticlesContainer } from './DashboardReadDocumentsCard.styles';
 
 export const DashboardReadDocumentsCard = () => {
   const user = useAuthenticatedUser();

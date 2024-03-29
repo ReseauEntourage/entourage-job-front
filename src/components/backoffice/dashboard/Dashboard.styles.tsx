@@ -45,6 +45,15 @@ export const StyledDashboardCardSubtitle = styled.div`
   text-align: center;
 `;
 
+export const StyledDashboardReadDocumentsArticlesContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction: row;
+  gap: 20px;
+  margin-top: 20px;
+`;
+
 export const StyledDashboardArticle = styled.div`
   max-width: 280px;
   width: 280px;
