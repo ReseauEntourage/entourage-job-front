@@ -3,7 +3,7 @@
 
 describe('Navigation', () => {
   it('opens', () => {
-    
+
     cy.visit('/');
     window.localStorage.setItem('entourage-pro-modal-closed', 'true');
     cy.wait(1000);
@@ -28,21 +28,21 @@ describe('Navigation', () => {
     });
 
     cy.get('header').within(() => {
-      cy.get('a').contains("Nous contacter").click({ force: true });
-      cy.wait(1000);
-      cy.url().should('include', 'contact');
-    });
-
-    cy.get('header').within(() => {
       cy.get('a').contains('Découvrir les candidats').click({ force: true });
       cy.wait(1000);
       cy.url().should('include', 'candidats');
     });
 
     cy.get('header').within(() => {
-      cy.get('button').contains('Inscription / Connexion').click({ force: true });
+      cy.get('button').contains('Connexion').click({ force: true });
       cy.wait(1000);
       cy.url().should('include', 'login');
+    });
+
+    cy.get('header').within(() => {
+      cy.get('button').contains('Inscription').click({ force: true });
+      cy.wait(1000);
+      cy.url().should('include', 'inscription');
     });
   });
 });

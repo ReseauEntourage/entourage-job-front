@@ -4,6 +4,7 @@ import React from 'react';
 import { StyledHeaderDesktop } from 'src/components/headers/Header.styles';
 import { Nav, Navbar, NavbarLogo } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
+import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledPublicItem } from './HeaderPublicContent.styles';
 import { HeaderPublicContentProps } from './HeaderPublicContent.types';
@@ -38,8 +39,27 @@ export const HeaderPublicContentDesktop = ({
       );
     }),
     <div>
-      <Button href="/login" style="custom-secondary-inverted" size="small">
-        Inscription / Connexion
+      <Button
+        href="/login"
+        style="custom-secondary"
+        onClick={() => {
+          gaEvent(GA_TAGS.HEADER_CONNEXION_CLIC);
+        }}
+        size="small"
+      >
+        Connexion
+      </Button>
+    </div>,
+    <div>
+      <Button
+        href="/inscription"
+        style="custom-secondary-inverted"
+        size="small"
+        onClick={() => {
+          gaEvent(GA_TAGS.HEADER_INSCRIPTION_CLIC);
+        }}
+      >
+        Inscription
       </Button>
     </div>,
   ];

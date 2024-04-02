@@ -19,11 +19,6 @@ const LINKS = [
     name: 'Découvrir les candidats',
     tag: GA_TAGS.HEADER_CANDIDATS_CLIC,
   },
-  {
-    href: '/contact',
-    name: 'Nous contacter',
-    tag: GA_TAGS.HEADER_CONTACT_CLIC,
-  },
 ];
 
 export const HeaderPublic = () => {
