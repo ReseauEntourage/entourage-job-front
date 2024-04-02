@@ -66,3 +66,12 @@ export const readDocumentAdapter = createRequestAdapter(
   },
   void
 >();
+
+export const updateUserProfilePictureAdapter = createRequestAdapter(
+  'updateUserProfilePicture'
+).withPayloads<
+  {
+    profileImage: Blob;
+  },
+  void
+>();

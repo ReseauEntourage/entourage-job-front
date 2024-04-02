@@ -41,7 +41,6 @@ export function TextArea({
   setIsMaxLinesReached,
 }: TextAreaProps) {
   const isMobile = useIsMobile();
-
   const { textAreaRef, remainingLines, maxLinesReached, textAreaWidth } =
     useLineLimit(value, name, onChange, maxLines?.lines);
 

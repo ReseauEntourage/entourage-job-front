@@ -3,8 +3,8 @@ import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   REGISTRATION_CONFIRMATION_STEP,
-  StepData,
-  StepDataKeys,
+  RegistrationFormData,
+  RegistrationFormDataKeys,
 } from '../Registration.types';
 import { ReduxRequestEvents } from 'src/constants';
 import { notificationsActions } from 'src/use-cases/notifications';
@@ -42,14 +42,12 @@ export function useRegistration() {
   const createUserError = useSelector(selectCreateUserError);
 
   const onSubmitStepForm = useCallback(
-    (fields: StepData) => {
+    (fields: RegistrationFormData) => {
       let fieldsToSave = fields;
 
       if (valuesFromOtherStep) {
         // Remove fields used only for default value
-        const fieldsKeys: StepDataKeys[] = Object.keys(
-          fields
-        ) as StepDataKeys[];
+        const fieldsKeys = Object.keys(fields) as RegistrationFormDataKeys[];
 
         fieldsToSave = fieldsKeys.reduce((acc, curr) => {
           if (!Object.keys(valuesFromOtherStep).includes(curr)) {
@@ -59,7 +57,7 @@ export function useRegistration() {
             };
           }
           return acc;
-        }, {} as StepData);
+        }, {} as RegistrationFormData);
       }
 
       dispatch(

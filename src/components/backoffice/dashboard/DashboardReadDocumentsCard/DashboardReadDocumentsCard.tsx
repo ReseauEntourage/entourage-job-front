@@ -47,6 +47,7 @@ export const DashboardReadDocumentsCard = () => {
 
   useEffect(() => {
     if (
+      contextualRole &&
       articles.some(
         (article) =>
           article.roles.includes(contextualRole) &&
@@ -70,7 +71,7 @@ export const DashboardReadDocumentsCard = () => {
         <StyledDashboardReadDocumentsArticlesContainer>
           {articles.map((article) => {
             if (
-              !article.roles.includes(contextualRole) ||
+              (contextualRole && !article.roles.includes(contextualRole)) ||
               isReadDocument(user.readDocuments, article.documentName)
             ) {
               return null;

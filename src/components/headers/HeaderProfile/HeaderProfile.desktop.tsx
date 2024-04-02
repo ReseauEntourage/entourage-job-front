@@ -45,7 +45,7 @@ export const HeaderProfileDesktop = ({
     uploadProfileImage,
     shouldShowAllProfile,
     contextualRole,
-  } = useHeaderProfile(id, role);
+  } = useHeaderProfile(role);
 
   return (
     <StyledHeaderProfile>

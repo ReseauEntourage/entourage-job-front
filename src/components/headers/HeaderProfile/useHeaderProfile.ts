@@ -9,11 +9,11 @@ import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedU
 import { isRoleIncluded } from 'src/utils';
 import { useUploadProfileImage } from './useUploadProfileImage';
 
-export function useHeaderProfile(userId: string, role: UserRole) {
+export function useHeaderProfile(role: UserRole) {
   const user = useAuthenticatedUser();
   const { openCorrespondingModal } = useOpenCorrespondingModal(user);
 
-  const { imageUploading, uploadProfileImage } = useUploadProfileImage(userId);
+  const { imageUploading, uploadProfileImage } = useUploadProfileImage();
 
   const shouldShowAllProfile = isRoleIncluded(
     [...CANDIDATE_USER_ROLES, USER_ROLES.COACH],
