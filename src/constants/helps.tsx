@@ -94,7 +94,7 @@ export const ParametresHelpCardContents: {
     {
       icon: <IlluPoigneeDeMain {...iconSizeProps} />,
       value: 'tips',
-      label: 'Demander des conseils aux membre de la communauté',
+      label: 'Demander des conseils aux membres de la communauté',
       description:
         'Recevez des conseils personnalisés et un accompagnement de la part de nos coachs pour vous guider dans votre parcours professionnel.',
     },
@@ -108,7 +108,7 @@ export const ParametresHelpCardContents: {
     {
       icon: <IlluCV {...iconSizeProps} />,
       value: 'cv',
-      label: 'M’aider à réaliser mon CV et mes lettres de motivation',
+      label: 'Réaliser son CV et ses lettres de motivation',
       description:
         "Profitez de l'expérience des coachs Entourage Pro pour créer des CV et lettres de motivation qui mettent en avant vos atouts et compétences.",
     },
@@ -122,7 +122,7 @@ export const ParametresHelpCardContents: {
     {
       icon: <IlluReseauxSociaux {...iconSizeProps} />,
       value: 'network',
-      label: 'Faire grandir votre réseau professionnel',
+      label: 'Faire grandir son réseau professionnel',
       description:
         "Multipliez les opportunités professionnelles en vous connectant avec des professionnels qui peuvent vous soutenir et vous ouvrir des portes sur le marché de l'emploi.",
     },
@@ -153,14 +153,14 @@ export const ParametresHelpCardContents: {
       icon: <IlluConversation {...iconSizeProps} />,
       value: 'event',
       label:
-        'Se rencontrer lors d’événements avec les membres de la communautés',
+        'Se rencontrer lors d’événements avec les membres de la communauté',
       description:
         "Participer à des événements qui encouragent l'entraide, le partage d'expériences et le développement de réseaux professionnels enrichissants pour les candidats.",
     },
     {
       icon: <IlluReseauxSociaux {...iconSizeProps} />,
       value: 'network',
-      label: 'Partager votre réseau professionnel',
+      label: 'Partager mon réseau professionnel',
       description:
         'Mettez en relation les candidats avec des contacts pertinents et intégez-les dans des réseaux qui peuvent favoriser leur insertion professionnelle.',
     },
