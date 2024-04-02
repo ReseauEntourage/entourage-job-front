@@ -15,7 +15,7 @@ export const ProfileHelpInformationCard = () => {
   const { contextualRole } = useContextualRole(selectedProfile.role);
   const helpField = useHelpField(contextualRole);
 
-  if (!helpField || !contextualRole) return null;
+  if (!helpField) return null;
 
   return (
     <Card

@@ -59,8 +59,6 @@ export const OnboardingProfileForm = ({
     }
   }, [updateUserProfilePictureStatus]);
 
-  if (!contextualRole) return null;
-
   return (
     <StyledProfileForm>
       <StyledProfileFormImageInputsContainer>

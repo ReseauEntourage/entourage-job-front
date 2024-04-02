@@ -51,9 +51,10 @@ export const updateCandidateSelectors =
     (state) => state.currentUser.updateCandidate
   );
 
-export const updateUserProfilePictureSelectors = updateUserProfilePictureAdapter.getSelectors<RootState>(
-  (state) => state.currentUser.updateUserProfilePicture
-);
+export const updateUserProfilePictureSelectors =
+  updateUserProfilePictureAdapter.getSelectors<RootState>(
+    (state) => state.currentUser.updateUserProfilePicture
+  );
 
 export function selectCurrentUser(state: RootState) {
   return state.currentUser.user;

@@ -47,10 +47,10 @@ export const slice = createSlice({
       state.currentStep = action.payload;
     },
     increaseOnboardingStep(state) {
-      state.currentStep+=1;
+      state.currentStep += 1;
     },
     decreaseOnboardingStep(state) {
-      state.currentStep-=1;
+      state.currentStep -= 1;
     },
     endOnboarding(state) {
       state.currentStep = 0;

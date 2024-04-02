@@ -17,7 +17,7 @@ export const OnboardingHelpsForm = ({ onSubmit }: OnboardingHelpsFormProps) => {
   const { contextualRole } = useContextualRole(user.role);
   const { userProfile } = user;
   const helpField = useHelpField(contextualRole);
-  if (!contextualRole || !helpField) return null;
+  if (!helpField) return null;
   return (
     <FormWithValidation
       formSchema={

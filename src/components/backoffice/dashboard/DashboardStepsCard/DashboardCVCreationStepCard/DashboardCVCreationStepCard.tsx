@@ -81,7 +81,7 @@ export const DashboardCVCreationStepCard = () => {
     [candidate]
   );
 
-  if (!candidate || !contextualRole) return null;
+  if (!candidate) return null;
 
   return (
     <Card title={textContent.title[contextualRole][cvStatus]}>

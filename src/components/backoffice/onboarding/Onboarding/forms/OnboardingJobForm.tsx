@@ -1,4 +1,5 @@
 import React from 'react';
+import { FlattenedOnboardingFormData } from '../../Onboarding.types';
 import {
   getCandidateDefaultProfessionalValues,
   getCoachDefaultProfessionalValues,
@@ -7,21 +8,21 @@ import { useContextualRole } from 'src/components/backoffice/useContextualRole';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { FlattenedOnboardingFormData } from '../../Onboarding.types';
 import { formOnboardingCandidateJob } from './schemas/formOnboardingCandidateJob';
 import { formOnboardingCoachJob } from './schemas/formOnboardingCoachJob';
 
 interface OnboardingJobFormProps {
-    onSubmit: (values: Partial<FlattenedOnboardingFormData>) => void;
-    onBeforeStep: () => void;
+  onSubmit: (values: Partial<FlattenedOnboardingFormData>) => void;
+  onBeforeStep: () => void;
 }
 
-export const OnboardingJobForm = ({ onSubmit, onBeforeStep }: OnboardingJobFormProps) => {
+export const OnboardingJobForm = ({
+  onSubmit,
+  onBeforeStep,
+}: OnboardingJobFormProps) => {
   const user = useAuthenticatedUser();
   const { contextualRole } = useContextualRole(user.role);
   const { userProfile } = user;
-
-  if (!contextualRole) return null;
 
   return (
     <FormWithValidation
