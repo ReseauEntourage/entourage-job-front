@@ -31,14 +31,12 @@ export const ParametresHelpCard = () => {
   const helpField = useHelpField(contextualRole);
 
   const openHelpEditModal = useCallback(() => {
-    if (contextualRole) {
-      openModal(
-        <ParametresHelpModal
-          role={contextualRole}
-          title={ParametresHelpCardTitles.modal[contextualRole]}
-        />
-      );
-    }
+    openModal(
+      <ParametresHelpModal
+        role={contextualRole}
+        title={ParametresHelpCardTitles.modal[contextualRole]}
+      />
+    );
   }, [contextualRole]);
 
   if (!helpField || !userProfile) return null;
