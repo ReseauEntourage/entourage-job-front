@@ -5,8 +5,8 @@ import { NormalUserRole, USER_ROLES } from './users';
 import { FilterConstant } from './utils';
 
 export const Programs = {
-  SHORT: 'short',
-  LONG: 'long',
+  BOOST: 'boost',
+  THREE_SIXTY: 'three_sixty',
 } as const;
 
 export type Program = (typeof Programs)[keyof typeof Programs];
@@ -23,7 +23,7 @@ interface ProgramBullet {
 const ProgramBullet: {
   [K in Program]: ProgramBullet[];
 } = {
-  long: [
+  [Programs.THREE_SIXTY]: [
     {
       icon: <ProgramCalendar {...calendarIconSizeProps} />,
       label: 'Durée de 6 mois',
@@ -37,7 +37,7 @@ const ProgramBullet: {
       label: 'En physique',
     },
   ],
-  short: [
+  [Programs.BOOST]: [
     {
       icon: <ProgramCalendar {...calendarIconSizeProps} />,
       label: 'Ponctuel',
@@ -64,32 +64,32 @@ export const ProgramOptions: {
 } = {
   [USER_ROLES.CANDIDATE]: [
     {
-      value: Programs.LONG,
+      value: Programs.THREE_SIXTY,
       label: 'Programme 360',
-      bullets: ProgramBullet.long,
+      bullets: ProgramBullet.three_sixty,
       description:
         "Je souhaite bénéficier d'un accompagnement personnalisé avec un coach dédié (définition de mon projet, création de mon CV, recherches, préparation aux entretiens...)",
     },
     {
-      value: Programs.SHORT,
+      value: Programs.BOOST,
       label: 'Programme Coup de pouce',
-      bullets: ProgramBullet.short,
+      bullets: ProgramBullet.three_sixty,
       description:
         "Je souhaite profiter de coups de pouces ponctuels pour m'aider dans ma recherche d'emploi (atelier CV et entretiens, partage de réseau, conseils pour la recherche, partage d'expérience...)",
     },
   ],
   [USER_ROLES.COACH]: [
     {
-      value: Programs.LONG,
+      value: Programs.THREE_SIXTY,
       label: 'Programme 360',
-      bullets: ProgramBullet.long,
+      bullets: ProgramBullet.three_sixty,
       description:
         "Je souhaite me consacrer à l'accompagnement personnalisé d'un(e) candidat(e) : définition de son projet, création de son CV, aide dans les recherches, préparation aux entretiens...",
     },
     {
-      value: Programs.SHORT,
+      value: Programs.BOOST,
       label: 'Programme Coup de pouce',
-      bullets: ProgramBullet.short,
+      bullets: ProgramBullet.boost,
       description:
         "Je souhaite proposer des coups des pouces ponctuels pour aider des candidat(e)s dans leurs recherches : atelier CV et entretiens, partage de réseau, conseils pour les recherches, partage d'expérience...",
     },

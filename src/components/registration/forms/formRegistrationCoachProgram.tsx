@@ -30,7 +30,7 @@ export const formRegistrationCoachProgram: FormSchema<{
         if (!isDepartmentEligible) {
           return [
             {
-              option: Programs.LONG,
+              option: Programs.THREE_SIXTY,
               message: (
                 <>
                   <Typography size="small" weight="bold">
