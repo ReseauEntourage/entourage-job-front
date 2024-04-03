@@ -45,8 +45,7 @@ export const ButtonStyle = css`
     }
 
     &.banner-btn {
-      &:hover,
-      &:focus {
+      &:hover {
         background-color: rgba(250, 250, 250, 0.8);
         border-color: ${COLORS.primaryBlue};
       }
@@ -83,8 +82,7 @@ export const ButtonStyle = css`
 
     border-radius: 5px;
 
-    &:hover,
-    &:focus {
+    &:hover {
       cursor: pointer;
       background-color: white !important;
       color: ${(props) => {
@@ -120,8 +118,7 @@ export const ButtonStyle = css`
     border-radius: 5px;
     background-color: transparent;
 
-    &:hover,
-    &:focus {
+    &:hover {
       cursor: pointer;
       background-color: ${(props) => {
         return colorToHoverBackgroundColor[props.color] || COLORS.hoverBlue;
@@ -153,8 +150,7 @@ export const ButtonStyle = css`
 
     background-color: transparent;
 
-    &:hover,
-    &:focus {
+    &:hover {
       cursor: pointer;
       opacity: 0.6 !important;
     }
@@ -175,8 +171,7 @@ export const ButtonStyle = css`
 
     border-radius: 25px;
 
-    &:hover,
-    &:focus {
+    &:hover {
       cursor: pointer;
       background-color: ${(props) => {
         return colorToHoverBackgroundColor[props.color] || COLORS.hoverBlue;
@@ -215,8 +210,7 @@ export const ButtonStyle = css`
 
     border-radius: 25px;
 
-    &:hover,
-    &:focus {
+    &:hover {
       cursor: pointer;
       background-color: white !important;
       color: ${(props) => {
@@ -241,8 +235,7 @@ export const ButtonStyle = css`
       fill: ${COLORS.darkGray} !important;
     }
 
-    &:hover,
-    &:focus {
+    &:hover {
       color: ${COLORS.darkGray} !important;
       background-color: ${COLORS.lightgray} !important;
       cursor: default !important;
