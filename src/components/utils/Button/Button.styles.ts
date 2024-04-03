@@ -13,6 +13,12 @@ export const colorToHoverColor = {
   white: COLORS.primaryBlue,
 };
 
+export const colorToBackgroundColor = {
+  primaryBlue: COLORS.white,
+  darkGrayFont: COLORS.white,
+  white: 'transparent',
+};
+
 export const ButtonStyle = css`
   font-size: 14px;
   line-height: 17px;
@@ -159,7 +165,9 @@ export const ButtonStyle = css`
   &.custom-secondary {
     font-family: Poppins, sans-serif;
     padding: 6px 15px;
-    background-color: white;
+    background-color: ${(props) => {
+      return colorToBackgroundColor[props.color] || COLORS.white;
+    }} !important;
 
     border: 0.5px solid
       ${(props) => {
@@ -266,4 +274,5 @@ export const StyledCenteredButtonContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin-top: 16px;
 `;

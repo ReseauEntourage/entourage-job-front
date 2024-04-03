@@ -42,6 +42,7 @@ export const HeaderPublicContentDesktop = ({
       <Button
         href="/login"
         style="custom-secondary"
+        color="white"
         onClick={() => {
           gaEvent(GA_TAGS.HEADER_CONNEXION_CLIC);
         }}
