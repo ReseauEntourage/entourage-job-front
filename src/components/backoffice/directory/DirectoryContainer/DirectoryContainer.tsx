@@ -58,7 +58,7 @@ export function DirectoryContainer() {
 
   return (
     <StyledDirectoryContainer>
-      <Section className="custom-primary custom-fixed">
+      <Section className="custom-primary">
         <SearchBar
           filtersConstants={DirectoryFilters}
           filters={filters}
