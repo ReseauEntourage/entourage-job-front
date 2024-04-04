@@ -1215,7 +1215,7 @@ button.uk-icon:not(:disabled) {
 /* Hover + Focus */
 .uk-icon-button:hover,
 .uk-icon-button:focus {
-  background-color: #f44d0c;
+  background-color: #47a8b9;
   color: white;
   outline: none;
 }
@@ -2032,7 +2032,7 @@ select.uk-form-width-xsmall {
 /* Hover + Focus */
 .uk-button-primary:hover,
 .uk-button-primary:focus {
-  background-color: #f44d0c;
+  background-color: #47a8b9;
   color: #fff;
 }
 /* OnClick + Active */
@@ -5578,7 +5578,7 @@ ul.uk-nav-sub {
 /* Divider modifier
  ========================================================================== */
 /*
- * Set gutter 
+ * Set gutter
  */
 .uk-subnav-divider {
   margin-left: -41px;
