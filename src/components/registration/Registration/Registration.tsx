@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   StyledRegistrationContainer,
   StyledRegistrationFooter,
@@ -9,6 +9,7 @@ import {
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { Card, Typography } from 'src/components/utils';
 import { Spinner } from 'src/components/utils/Spinner';
+import { isSSR } from 'src/utils/isSSR';
 import { useRegistration } from './useRegistration';
 
 export function Registration() {
@@ -21,6 +22,12 @@ export function Registration() {
     onSubmitStepForm,
     onBack,
   } = useRegistration();
+
+  useEffect(() => {
+    if (!isSSR && !isRegistrationLoading) {
+      window.scrollTo(0, 0);
+    }
+  }, [isRegistrationLoading]);
 
   return (
     <StyledRegistrationContainer>
