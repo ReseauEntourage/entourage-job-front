@@ -16,6 +16,7 @@ interface CTAProps {
   isExternal?: boolean;
   newTab?: boolean;
   dataTest?: string;
+  color?: string;
 }
 
 interface ImageTitleProps {
@@ -74,12 +75,13 @@ export const ImageTitle = ({
         )}
         {cta && Array.isArray(cta) && cta.length > 0 && (
           <StyledImageTitleCTAsContainer marginTop={!description}>
-            {cta.map(({ label, style, dataTest, onClick }, index) => {
+            {cta.map(({ label, style, dataTest, onClick, color }, index) => {
               return (
                 <Button
                   key={index.toString()}
                   style={style}
                   onClick={onClick}
+                  color={color}
                   dataTestId={dataTest}
                 >
                   {label}
