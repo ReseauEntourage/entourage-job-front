@@ -86,18 +86,20 @@ export const ButtonStyle = css`
 
     border-radius: 5px;
 
-    &:hover {
-      cursor: pointer;
-      background-color: white !important;
-      color: ${(props) => {
-        return COLORS[props.color] || COLORS.primaryBlue;
-      }} !important;
-
-      path {
-        transition: 0.2s ease-in-out;
-        fill: ${(props) => {
+    @media (hover: hover) {
+      &:hover {
+        cursor: pointer;
+        background-color: white !important;
+        color: ${(props) => {
           return COLORS[props.color] || COLORS.primaryBlue;
         }} !important;
+
+        path {
+          transition: 0.2s ease-in-out;
+          fill: ${(props) => {
+            return COLORS[props.color] || COLORS.primaryBlue;
+          }} !important;
+        }
       }
     }
   }
@@ -122,24 +124,26 @@ export const ButtonStyle = css`
     border-radius: 5px;
     background-color: transparent;
 
-    &:hover {
-      cursor: pointer;
-      background-color: ${(props) => {
-        return colorToHoverBackgroundColor[props.color] || COLORS.hoverBlue;
-      }};
-      color: ${(props) => {
-        return colorToHoverColor[props.color] || COLORS.primaryBlue;
-      }} !important;
-      border: 0.5px solid
-        ${(props) => {
-          return colorToHoverColor[props.color] || COLORS.primaryBlue;
+    @media (hover: hover) {
+      &:hover {
+        cursor: pointer;
+        background-color: ${(props) => {
+          return colorToHoverBackgroundColor[props.color] || COLORS.hoverBlue;
         }};
-
-      path {
-        transition: 0.2s ease-in-out;
-        fill: ${(props) => {
+        color: ${(props) => {
           return colorToHoverColor[props.color] || COLORS.primaryBlue;
         }} !important;
+        border: 0.5px solid
+          ${(props) => {
+            return colorToHoverColor[props.color] || COLORS.primaryBlue;
+          }};
+
+        path {
+          transition: 0.2s ease-in-out;
+          fill: ${(props) => {
+            return colorToHoverColor[props.color] || COLORS.primaryBlue;
+          }} !important;
+        }
       }
     }
   }
@@ -154,9 +158,11 @@ export const ButtonStyle = css`
 
     background-color: transparent;
 
-    &:hover {
-      cursor: pointer;
-      opacity: 0.6 !important;
+    @media (hover: hover) {
+      &:hover {
+        cursor: pointer;
+        opacity: 0.6 !important;
+      }
     }
   }
 
@@ -177,20 +183,22 @@ export const ButtonStyle = css`
 
     border-radius: 25px;
 
-    &:hover {
-      cursor: pointer;
-      background-color: ${(props) => {
-        return colorToHoverBackgroundColor[props.color] || COLORS.hoverBlue;
-      }} !important;
+    @media (hover: hover) {
+      &:hover {
+        cursor: pointer;
+        background-color: ${(props) => {
+          return colorToHoverBackgroundColor[props.color] || COLORS.hoverBlue;
+        }} !important;
 
-      color: ${(props) => {
-        return colorToHoverColor[props.color] || COLORS.primaryBlue;
-      }} !important;
-
-      border: 0.5px solid
-        ${(props) => {
+        color: ${(props) => {
           return colorToHoverColor[props.color] || COLORS.primaryBlue;
-        }};
+        }} !important;
+
+        border: 0.5px solid
+          ${(props) => {
+            return colorToHoverColor[props.color] || COLORS.primaryBlue;
+          }};
+      }
     }
   }
 
@@ -216,18 +224,20 @@ export const ButtonStyle = css`
 
     border-radius: 25px;
 
-    &:hover {
-      cursor: pointer;
-      background-color: white !important;
-      color: ${(props) => {
-        return COLORS[props.color] || COLORS.primaryBlue;
-      }} !important;
-
-      path {
-        transition: 0.2s ease-in-out;
-        fill: ${(props) => {
+    @media (hover: hover) {
+      &:hover {
+        cursor: pointer;
+        background-color: white !important;
+        color: ${(props) => {
           return COLORS[props.color] || COLORS.primaryBlue;
         }} !important;
+
+        path {
+          transition: 0.2s ease-in-out;
+          fill: ${(props) => {
+            return COLORS[props.color] || COLORS.primaryBlue;
+          }} !important;
+        }
       }
     }
   }
@@ -241,13 +251,15 @@ export const ButtonStyle = css`
       fill: ${COLORS.darkGray} !important;
     }
 
-    &:hover {
-      color: ${COLORS.darkGray} !important;
-      background-color: ${COLORS.lightgray} !important;
-      cursor: default !important;
+    @media (hover: hover) {
+      &:hover {
+        color: ${COLORS.darkGray} !important;
+        background-color: ${COLORS.lightgray} !important;
+        cursor: default !important;
 
-      path {
-        fill: ${COLORS.darkGray} !important;
+        path {
+          fill: ${COLORS.darkGray} !important;
+        }
       }
     }
   }
