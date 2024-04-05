@@ -46,12 +46,9 @@ export const CandidatCard = ({
 
   const isCandidatsPage = asPath.includes('/candidats');
 
-  let onCvClickEvent;
-  if (isCandidatsPage) {
-    onCvClickEvent = GA_TAGS.PAGE_GALERIE_CV_CLIC;
-  } else {
-    onCvClickEvent = GA_TAGS.HOME_CV_CLIC;
-  }
+  const onCvClickEvent = isCandidatsPage
+    ? GA_TAGS.PAGE_GALERIE_CV_CLIC
+    : GA_TAGS.HOME_CV_CLIC;
 
   const showShareOptions = !asPath.includes('/entreprises');
 
@@ -218,15 +215,15 @@ export const CandidatCard = ({
                       ? _.uniqWith(sortedBusinessLines.slice(0, 2), (a, b) => {
                           // @ts-expect-error after enable TS strict mode. Please, try to fix it
                           return a.name === b.name;
-                        }).map((bl, index) => {
+                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                        }).map(({ name }, index) => {
                           return (
                             <span
                               key={index}
                               className="uk-label uk-text-lowercase ent-card-ambition"
                             >
                               {buildBusinessLineForSentence(
-                                // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                                findConstantFromValue(bl.name, BUSINESS_LINES)
+                                findConstantFromValue(name, BUSINESS_LINES)
                               )}
                             </span>
                           );

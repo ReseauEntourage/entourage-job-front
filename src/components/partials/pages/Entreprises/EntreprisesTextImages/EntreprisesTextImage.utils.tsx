@@ -107,7 +107,7 @@ export const content = {
   },
   qui: {
     title: 'Qui sont nos candidats ?',
-    img: '/static/img/entreprises-nos-candidats.png',
+    img: '/static/img/entreprises-nos-candidats.jpg',
     reverse: true,
     content: (
       <>
