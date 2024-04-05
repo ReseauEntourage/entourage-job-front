@@ -16,3 +16,16 @@ export const StyledAiderProgrammesListElement = styled.li`
     }
   }
 `;
+
+export const StyledAiderProgrammesCTAsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: ${(props) => (props.marginTop ? '60px' : '0')};
+  button:first-child {
+    margin-right: 20px;
+  }
+  button {
+    margin-top: 4px;
+  }
+`;

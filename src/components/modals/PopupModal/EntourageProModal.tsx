@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
-import { IlluCV } from 'assets/icons/icons';
+import { EntourageProLogoPrimary } from 'assets/icons/icons';
 import { ModalGeneric } from '../Modal/ModalGeneric';
-// import { Button } from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
 import { STORAGE_KEYS } from 'src/constants';
 import { StyledEntourageProModal } from './PopupModal.styles';
@@ -18,7 +17,7 @@ export const EntourageProModal = () => {
       }}
     >
       <StyledEntourageProModal>
-        <IlluCV height={220} width={220} />
+        <EntourageProLogoPrimary height={60} width={220} />
         <H2
           center
           title={

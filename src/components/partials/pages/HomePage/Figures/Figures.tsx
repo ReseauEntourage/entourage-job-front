@@ -1,13 +1,21 @@
 import React from 'react';
 import {
-  IlluCoeurMainsOuvertes,
-  IlluConversation,
+  IlluCoeurMainsOuvertesBleu,
   IlluCV,
+  IlluDossierCandidat,
   IlluMalette,
 } from 'assets/icons/icons';
-import { Section, Typography } from 'src/components/utils';
+import {
+  Button,
+  Section,
+  Typography,
+  StyledCenteredButtonContainer,
+} from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
+import { COLORS } from 'src/constants/styles';
+import { GA_TAGS } from 'src/constants/tags';
 import { useIsDesktop } from 'src/hooks/utils';
+import { gaEvent } from 'src/lib/gtag';
 import {
   StyledFigure,
   StyledFigureMobileContainer,
@@ -29,12 +37,18 @@ const staticNumbers = [
     description: 'entreprises mobilisées',
   },
   {
-    icon: <IlluConversation width={140} height={110} />,
-    value: '71%',
+    icon: <IlluDossierCandidat width={140} height={110} />,
+    value: '70%',
     description: 'de sorties positives en 2023',
   },
   {
-    icon: <IlluCoeurMainsOuvertes width={140} height={110} />,
+    icon: (
+      <IlluCoeurMainsOuvertesBleu
+        width={140}
+        height={110}
+        color={COLORS.hoverBlue}
+      />
+    ),
     value: '+ 1000',
     description: 'bénévoles engagés',
   },
@@ -80,6 +94,17 @@ export const Figures = () => {
           })}
         </StyledFigureMobileContainer>
       )}
+      <StyledCenteredButtonContainer>
+        <Button
+          style="custom-secondary-inverted"
+          onClick={() => {
+            gaEvent(GA_TAGS.HOME_CHIFFRES_MESURE_D_IMPACT_CLICK);
+          }}
+          href={process.env.URL_MESURE_D_IMPACT}
+        >
+          Téléchargez la mesure d&lsquo;impact
+        </Button>
+      </StyledCenteredButtonContainer>
     </Section>
   );
 };

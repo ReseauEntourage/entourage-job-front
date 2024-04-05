@@ -41,7 +41,7 @@ export const Impact = ({
       <H2
         title={
           <>
-            Notre <span className="orange">impact</span>
+            Notre <span className="orange">impact</span> en chiffres
           </>
         }
         color="black"

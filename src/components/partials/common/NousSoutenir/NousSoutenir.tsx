@@ -20,8 +20,8 @@ const content = [
     value: '50',
     description: (
       <Typography>
-        Vous financez <span>5 rencontres nomades</span>, nos maraudes de lien
-        social.
+        Financez des ateliers collectifs remobilisant des personnes en précarité
+        pour les aider à acquérir de nouvelles compétences.
       </Typography>
     ),
     color: COLORS.blueShade1,
@@ -30,8 +30,8 @@ const content = [
     value: '100',
     description: (
       <Typography>
-        Vous nous aidez à <span>recréer du lien social</span> autour d&lsquo;une
-        soirée jeux de société mêlant riverains et personnes en précarité.
+        Permettez à des jeunes en précarité de partir en week-end de cohésion
+        pour se remobiliser.
       </Typography>
     ),
     color: COLORS.blueShade2,
@@ -40,9 +40,8 @@ const content = [
     value: '250',
     description: (
       <Typography>
-        Vous participez au{' '}
-        <span>financement de l&lsquo;animation de la communauté</span> pour
-        faciliter la rencontre et la mise en place d&lsquo;actions solidaires.
+        Permettez à des candidats Entourage Pro de rencontrer des professionnels
+        pour trouver des opportunités d’emploi.
       </Typography>
     ),
     color: COLORS.primaryBlue,
@@ -51,9 +50,8 @@ const content = [
     value: '500',
     description: (
       <Typography>
-        Vous permettez à Entourage d&lsquo;inviter une dizaine de personnes
-        isolées à l&lsquo;un des{' '}
-        <span>prochains grands événements sportifs</span>.
+        Participez à l’accompagnement d’une personne en précarité pour qu’elle
+        retrouve un emploi.
       </Typography>
     ),
     color: COLORS.blueShade3,
@@ -90,11 +88,11 @@ export const NousSoutenir = () => {
         <Button
           style="custom-secondary-inverted"
           onClick={() => {
-            gaEvent(GA_TAGS.HOME_NOUS_SOUTENIR_MESURE_D_IMPACT);
+            gaEvent(GA_TAGS.HOME_NOUS_SOUTENIR_FAIRE_UN_DON_CLICK);
           }}
-          href={process.env.URL_MESURE_D_IMPACT}
+          href={process.env.URL_DONATION || ''}
         >
-          Téléchargez la mesure d&lsquo;impact
+          Faire un don
         </Button>
       </StyledNousSoutenirButton>
     </Section>

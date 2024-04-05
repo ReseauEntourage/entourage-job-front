@@ -13,7 +13,7 @@ export const Rejoindre = () => {
           title: 'Je cherche un emploi',
           description:
             "Vous avez besoin d'aide ? Notre communauté de coachs met son expertise à votre disposition pour vous proposer l'accompagnement qu'il vous faut.",
-          img: '/static/img/orientation_who.jpg',
+          img: '/static/img/home-rejoindre-1.jpg',
           href: '/travailler',
           CTAText: 'Devenir candidat(e)',
           onClick: () => {
@@ -24,7 +24,7 @@ export const Rejoindre = () => {
           title: 'Je veux aider',
           description:
             "Vous souhaitez accompagner nos candidat(e)s dans leur retour à l'emploi et donner du sens à votre expérience ? C'est ici que ça se passe !",
-          img: '/static/img/orienter-decouvrir-2.png',
+          img: '/static/img/home-rejoindre-2.jpg',
           href: '/aider',
           CTAText: 'Devenir coach',
           onClick: () => {

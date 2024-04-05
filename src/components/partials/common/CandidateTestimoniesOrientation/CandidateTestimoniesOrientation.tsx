@@ -7,25 +7,25 @@ import { H2 } from 'src/components/utils/Headings';
 const testimonies = [
   {
     image: '/static/img/temoignage-candidat-jordan.jpg',
-    author: 'Jordan',
+    author: 'Jordan, candidat',
     quote:
       "C'est une équipe joyeuse, qui donne de la joie, l'envie de se battre jusqu'au bout. Les personnes que j'ai rencontré ne m'ont pas fait ressentir qu’on était différent.",
   },
   {
     image: '/static/img/temoignage-candidat-danny.jpg',
-    author: 'Danny',
+    author: 'Danny, candidat',
     quote:
       'J’ai découvert que je ne savais que j’ignorais des choses sur mon CV, on m’a appris à me découvrir. Entourage Pro, c’est un GPS pour être humain ! Vous nous aidez à trouver notre chemin et à le construire sans pour autant le faire pour nous.',
   },
   {
     image: '/static/img/temoignage-candidat-amelie.jpg',
-    author: 'Amélie',
+    author: 'Amélie, candidate',
     quote:
       "C'est vraiment un bon dispositif. Avec mon coach, on ne parle pas simplement du travail, il me donne des conseils. Ce sont des choses dont j'avais besoin, surtout que je n'ai pas de famille ici. J'ai parcouru beaucoup d'autres dispositifs et là c'est différent, Entourage Pro est très présent.",
   },
   {
     image: '/static/img/temoignage-candidat-lamin.jpg',
-    author: 'Lamin',
+    author: 'Lamin, candidat',
     quote:
       'C’est très organisé, je suis très satisfait. La vie est compliquée mais on peut avancer grâce à Entourage Pro.',
   },
@@ -77,7 +77,7 @@ export const CandidateTestimoniesOrientation = ({
                       alt="guillemets"
                       width={27}
                       height={21}
-                      src="/static/img/guillemets.png"
+                      src="/static/img/guillemets-bleu.png"
                     />
                     <p className="uk-text-small uk-margin-small uk-text-italic">
                       {quote}
@@ -90,7 +90,7 @@ export const CandidateTestimoniesOrientation = ({
                         alt="guillemets-petits"
                         width={15}
                         height={12}
-                        src="/static/img/guillemetsPetits.png"
+                        src="/static/img/guillemets-gris.png"
                       />
                     </div>
                     <p className="uk-text-bold uk-margin-small uk-margin-remove-bottom">

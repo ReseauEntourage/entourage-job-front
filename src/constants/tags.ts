@@ -470,8 +470,11 @@ export const GA_TAGS = {
   HOME_REJOINDRE_COACH_CLICK: {
     action: 'Home_Rejoindre_Coach_Click',
   },
-  HOME_NOUS_SOUTENIR_MESURE_D_IMPACT: {
-    action: 'Home_Nous_Soutenir_Mesure_D_Impact',
+  HOME_CHIFFRES_MESURE_D_IMPACT_CLICK: {
+    action: 'Home_Chiffres_Mesure_D_Impact_Click',
+  },
+  HOME_NOUS_SOUTENIR_FAIRE_UN_DON_CLICK: {
+    action: 'Home_Nous_Soutenir_Faire_Un_Don_Click',
   },
   HOME_PARTNERS_CLICK: {
     action: 'Home_Partners_Click',
