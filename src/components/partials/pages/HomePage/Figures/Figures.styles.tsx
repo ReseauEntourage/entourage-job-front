@@ -11,6 +11,7 @@ export const StyledFiguresContainer = styled.div`
   box-shadow: 0px 4px 40px 0px #97979721;
   border-radius: 100px;
   margin-top: 140px;
+  margin-bottom: 40px;
 `;
 
 export const StyledFiguresSubtitle = styled.div`

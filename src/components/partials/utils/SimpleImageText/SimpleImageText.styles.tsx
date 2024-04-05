@@ -53,3 +53,36 @@ export const StyledSimpleImageTextTextContainer = styled.div`
     width: 100%;
   }
 `;
+
+export const StyledSimpleVideoTextTextContainer = styled(
+  StyledSimpleImageTextTextContainer
+)`
+  width: 40%;
+`;
+
+export const StyledSimpleVideoTextVideoContainer = styled(
+  StyledSimpleImageTextImageContainer
+)`
+  width: 50%;
+  .videoCustom {
+    border-radius: 40px;
+    .playBtnCustom {
+      background-color: ${COLORS.primaryBlue};
+      opacity: 1;
+      height: 60px;
+      width: 60px;
+      border-radius: 50px;
+    }
+    &:hover {
+      .playBtnCustom {
+        background-color: ${COLORS.blueShade3};
+        cursor: pointer;
+      }
+    }
+    &.lyt-activated {
+      .playBtnCustom {
+        opacity: 0;
+      }
+    }
+  }
+`;

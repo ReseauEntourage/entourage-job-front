@@ -1,5 +1,9 @@
 import React, { Ref } from 'react';
-import { IlluCalendrier, OrienterSablier } from 'assets/icons/icons';
+import {
+  IlluCalendrier,
+  IlluQuestionReponseOrange,
+  OrienterSablier,
+} from 'assets/icons/icons';
 import CarteSolidaireIcon from 'assets/icons/orienter-carte-solidaire.svg';
 import { RowIconTitleText } from 'src/components/partials/utils/RowIconTitleText';
 import { SimpleImageText } from 'src/components/partials/utils/SimpleImageText';
@@ -55,7 +59,7 @@ export const TravaillerProgrammeCoupDePouce = ({
         backgroundColor="blue"
         innerRef={innerRef}
         title="Programme Coup de pouce"
-        img="/static/img/orientation_who.jpg"
+        img="/static/img/orienter-publier.jpg"
       >
         <List animated>
           <StyledAiderProgrammesListElement
@@ -71,19 +75,25 @@ export const TravaillerProgrammeCoupDePouce = ({
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
+            <IlluQuestionReponseOrange {...iconsProps} />{' '}
+            <div>Prise de contact en physique ou en visio</div>
+          </StyledAiderProgrammesListElement>
+          <StyledAiderProgrammesListElement
+            className={isDesktop ? '' : 'mobile'}
+          >
             <CarteSolidaireIcon {...iconsProps} />{' '}
-            <div>En physique ou en visio</div>
+            <div>Disponible partout en France</div>
           </StyledAiderProgrammesListElement>
         </List>
         <div data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > p; delay: 200;">
           <p>
-            Le programme Coup de pouce vous permet de solliciter et de
-            bénéficier de coups de pouce ponctuels pour vous aider dans votre
-            recherche d&lsquo;emploi.
+            Le format Coup de pouce vous permet de solliciter et de bénéficier
+            de coups de pouce ponctuels pour vous aider dans votre recherche
+            d&lsquo;emploi.
           </p>
           <p>
-            Une véritable communauté d&lsquo;experts bénévoles est à votre
-            disposition pour vous proposer :
+            Une véritable communauté d’experts bénévoles est à votre disposition
+            pour vous proposer :
           </p>
           <List animated>
             <StyledAiderProgrammesListElement
@@ -120,7 +130,7 @@ export const TravaillerProgrammeCoupDePouce = ({
           dataTestId="button-inscrire-coup-de-pouce"
           href="/inscription"
         >
-          S&lsquo;inscrire au programme
+          S&lsquo;inscrire
         </Button>
       </SimpleImageText>
       <RowIconTitleText content={content} backgroundColor="blue" />

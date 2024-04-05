@@ -1,14 +1,15 @@
 import React from 'react';
-import { SimpleImageText } from 'src/components/partials/utils/SimpleImageText';
+import { SimpleVideoText } from 'src/components/partials/utils/SimpleImageText';
 import { Button } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 
 export const Decouvrir = () => {
   return (
-    <SimpleImageText
+    <SimpleVideoText
       title="Le travail est un facteur clé d'intégration et de réinsertion."
-      img="/static/img/orientation_who.jpg"
+      videoId="o6oFVuQsjwY"
+      videoTitle="reveal Entourage Pro"
     >
       <p>
         Le problème, c&lsquo;est que ce sont les personnes qui auraient le plus
@@ -36,6 +37,6 @@ export const Decouvrir = () => {
       >
         Découvrir les programmes
       </Button>
-    </SimpleImageText>
+    </SimpleVideoText>
   );
 };

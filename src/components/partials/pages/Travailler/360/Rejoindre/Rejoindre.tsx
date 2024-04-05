@@ -62,7 +62,7 @@ export const Rejoindre = () => {
         </div>
         <div className="image-container">
           <Img
-            src="/static/img/travailler-rejoindre.jpg"
+            src="/static/img/travailler-360-rejoindre.jpg"
             cover
             alt="Communauté Entourage Pro au départ de la route du rhum"
           />

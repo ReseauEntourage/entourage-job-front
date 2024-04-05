@@ -18,8 +18,8 @@ const Index = () => {
     <Layout>
       <ImageTitle
         title="Le premier réseau professionnel solidaire"
-        img="/static/img/cover-linkedout.jpg"
-        imgMobile="/static/img/cover-linkedout.jpg"
+        img="/static/img/home-banner.jpg"
+        imgMobile="/static/img/home-banner.jpg"
         alt="entourage pro réseau solidaire professionnel"
         cta={[
           {

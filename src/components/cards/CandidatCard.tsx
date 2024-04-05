@@ -46,10 +46,9 @@ export const CandidatCard = ({
 
   const isCandidatsPage = asPath.includes('/candidats');
 
-  let onCvClickEvent = GA_TAGS.HOME_CV_CLIC;
-  if (isCandidatsPage) {
-    onCvClickEvent = GA_TAGS.PAGE_GALERIE_CV_CLIC;
-  }
+  const onCvClickEvent = isCandidatsPage
+    ? GA_TAGS.PAGE_GALERIE_CV_CLIC
+    : GA_TAGS.HOME_CV_CLIC;
 
   const showShareOptions = !asPath.includes('/entreprises');
 
@@ -214,7 +213,9 @@ export const CandidatCard = ({
                   <Grid column gap="collapse" childWidths={['1-1']}>
                     {isNewCareerPath
                       ? _.uniqWith(sortedBusinessLines.slice(0, 2), (a, b) => {
+                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
                           return a.name === b.name;
+                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
                         }).map(({ name }, index) => {
                           return (
                             <span

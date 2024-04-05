@@ -15,6 +15,7 @@ export const StyledNousSoutenirCard = styled.div`
   background-color: ${COLORS.hoverBlue};
   flex: 1;
   min-width: 180px;
+  border-radius: 30px;
   transition: 0.3s ease-in-out;
   &:hover {
     cursor: pointer;
@@ -40,6 +41,7 @@ export const StyledNousSoutenirCardLowerPart = styled.div`
   padding: 20px 20px 50px;
   box-sizing: border-box;
   color: black;
+  border-radius: 0 0 30px 30px;
   span {
     color: ${COLORS.primaryBlue};
   }

@@ -16,62 +16,49 @@ export const Partners = ({
       <Section className="custom-primary" display="flex-center">
         <H2
           variant="big"
-          title="Elles ont déjà recruté"
+          title="Nos partenaires"
           weight="normal"
           color={COLORS.darkGrayFont}
         />
-        {/* <LogoList
-          logos={PARTNERS.HIRED.filter(({ key }) => {
-            return partnersToShow.includes(key);
-          })}
-        /> */}
         <div className="logos-container">
           <div>
             <Img
               width={150}
               height={70}
-              src="/static/img/partners/leroymerlin/logo.png"
-              alt="leroymerlin"
+              src="/static/img/partners/advens/logo.png"
+              alt="advens"
             />
           </div>
           <div>
             <Img
               width={200}
               height={70}
-              src="/static/img/partners/manomano/logo.png"
-              alt="manomano"
+              src="/static/img/partners/archipel/logo.png"
+              alt="archipel"
             />
           </div>
           <div>
             <Img
               width={150}
               height={70}
-              src="/static/img/partners/murfy/logo.png"
-              alt="murfy"
+              src="/static/img/partners/ares/logo.png"
+              alt="ares"
             />
           </div>
           <div>
             <Img
               width={150}
               height={70}
-              src="/static/img/partners/carrefour/logo.png"
-              alt="carrefour"
-            />
-          </div>
-          <div>
-            <Img
-              width={200}
-              height={70}
-              src="/static/img/partners/decathlon/logo.png"
-              alt="decathlon"
+              src="/static/img/partners/randstad/logo.png"
+              alt="randstad"
             />
           </div>
           <div>
             <Img
               width={150}
               height={70}
-              src="/static/img/partners/jcdecaux/logo.png"
-              alt="jcdecaux"
+              src="/static/img/partners/tbwa/logo.png"
+              alt="tbwa"
             />
           </div>
         </div>

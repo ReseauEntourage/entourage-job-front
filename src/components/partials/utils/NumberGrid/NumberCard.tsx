@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CountUp from 'react-countup';
 import VisibilitySensor from 'react-visibility-sensor';
+import { H5 } from 'src/components/utils/Headings';
 
 const AnimatedNumber = ({ value }: { value: number | string }) => {
   const [isActive, setIsActive] = useState(true);
@@ -63,7 +64,7 @@ export const NumberCard = ({
           )}
         </div>
         <div className="ent-number-description uk-text-center">
-          <h4 className="uk-text-bold uk-margin-remove">{description}</h4>
+          <H5 title={description} center />
           {subDescription && (
             <p className="uk-text-meta uk-text-small uk-text-italic uk-margin-remove">
               {subDescription}

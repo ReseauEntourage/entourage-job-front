@@ -35,11 +35,15 @@ import Home from './home.svg';
 import IlluCV from './illu-CV.svg';
 import IlluBulleQuestion from './illu-bulle-question.svg';
 import IlluCalendrier from './illu-calendrier.svg';
+import IlluCoeurMainsOuvertesBleu from './illu-coeur-mains-ouvertes-bleu.svg';
 import IlluCoeurMainsOuvertes from './illu-coeur-mains-ouvertes.svg';
 import IlluConversation from './illu-conversation.svg';
+import IlluDossierCandidat from './illu-dossier-candidat.svg';
 import IlluMalette from './illu-malette.svg';
 import IlluPoigneeDeMain from './illu-poignee-de-main.svg';
+import IlluQuestionReponseOrange from './illu-question-reponse-orange.svg';
 import IlluReseauxSociaux from './illu-reseaux-sociaux.svg';
+import IlluTeteHomme from './illu-tete-homme.svg';
 import Info from './info.svg';
 import Instagram from './instagram.svg';
 import Language from './language.svg';
@@ -116,11 +120,15 @@ Home,
 IlluCV,
 IlluBulleQuestion,
 IlluCalendrier,
+IlluCoeurMainsOuvertesBleu,
 IlluCoeurMainsOuvertes,
 IlluConversation,
+IlluDossierCandidat,
 IlluMalette,
 IlluPoigneeDeMain,
+IlluQuestionReponseOrange,
 IlluReseauxSociaux,
+IlluTeteHomme,
 Info,
 Instagram,
 Language,

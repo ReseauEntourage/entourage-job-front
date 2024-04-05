@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  IlluCoeurMainsOuvertes,
+  IlluCoeurMainsOuvertesBleu,
   IlluCV,
   IlluMalette,
   IlluPoigneeDeMain,
@@ -48,7 +48,7 @@ export const Engagement = () => {
           CTAText: 'Découvrir les formats d’engagement',
         },
         {
-          icon: <IlluCoeurMainsOuvertes height={225} width={225} />,
+          icon: <IlluCoeurMainsOuvertesBleu height={225} width={225} />,
           title: 'Proposer du mécénat en nature',
           description:
             'Soutenez-nous via des dons matériels : ordinateurs, mise à disposition de locaux, de dispositifs de communication, etc.',

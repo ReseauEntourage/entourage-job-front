@@ -87,11 +87,6 @@ const Travailler = () => {
         coloredBackground
       />
 
-      <VideoSection
-        videoId="WLmDL-pB1NE"
-        videoTitle="Atelier décroche un Job - L'Accélérateur (EITI) X Entourage Pro"
-      />
-
       <Reviews reviews={reviews} title="Ils nous racontent leur expérience" />
 
       <Partners />

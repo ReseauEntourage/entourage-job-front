@@ -1,6 +1,6 @@
 import React from 'react';
-import { NumberCard } from 'src/components/cards';
 import { Grid } from 'src/components/utils';
+import { NumberCard } from './NumberCard';
 
 interface NumberGridProps {
   numbers: {
