@@ -306,18 +306,6 @@ export const StyledCVSkillTagContainer = styled.div`
   row-gap: 10px;
 `;
 
-export const StyledSkillTag = styled.div`
-  display: inline-block;
-  margin-right: 20px;
-  padding: 3px 10px;
-  border-radius: 5px;
-  background-color: ${COLORS.hoverBlue};
-  border: ${COLORS.darkHoverOrange} 1px solid;
-  color: ${COLORS.primaryBlue};
-  font-size: 14px;
-  font-weight: 400;
-`;
-
 export const StyledCVExperienceLi = styled.div`
   padding-left: 14px;
   white-space: pre-line;

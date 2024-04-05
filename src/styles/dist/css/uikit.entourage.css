@@ -1219,7 +1219,7 @@ button.uk-icon:not(:disabled) {
 /* Hover + Focus */
 .uk-icon-button:hover,
 .uk-icon-button:focus {
-  background-color: #f44d0c;
+  background-color: #47a8b9;
   color: white;
   outline: none;
 }
@@ -2083,7 +2083,7 @@ select.uk-form-width-xsmall {
   color: #fff;
   background-color: #f2f2f2;
   background-image: none;
-  background-color: #f44d0c;
+  background-color: #47a8b9;
 }
 /* OnClick + Active */
 .uk-button-primary:active,
@@ -2123,7 +2123,7 @@ select.uk-form-width-xsmall {
 .uk-button-secondary:focus {
   background-color: #151515;
   color: #fff;
-  background-color: #f44d0c;
+  background-color: #47a8b9;
   color: white;
 }
 /* OnClick + Active */
@@ -5671,7 +5671,7 @@ ul.uk-nav-sub {
 /* Divider modifier
  ========================================================================== */
 /*
- * Set gutter 
+ * Set gutter
  */
 .uk-subnav-divider {
   margin-left: -41px;
@@ -12931,8 +12931,8 @@ mark,
   background-color: #e6e6e6;
 }
 .ent-filter-activated:hover {
-  border-color: #f44d0c;
-  background-color: #f44d0c;
+  border-color: #47a8b9;
+  background-color: #47a8b9;
 }
 .ent-filter-activated:active {
   border-color: #47A8B9;
@@ -12978,7 +12978,7 @@ mark,
   color: #fff;
 }
 .uk-offcanvas-bar .uk-button-primary:hover {
-  background-color: #f44d0c;
+  background-color: #47a8b9;
   color: #fff;
 }
 .uk-offcanvas-bar .uk-button-primary:active {

@@ -11,8 +11,8 @@ import {
   StyledCVPageContentStory,
   StyledCVProfilePicture,
   StyledCVProfilePictureContainer,
-  StyledSkillTag,
 } from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
+import { Tag } from 'src/components/utils';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledCVPDFPageContainer = styled.div`
@@ -120,7 +120,7 @@ export const StyledCVPDFExperienceDescription = styled(
   }
 `;
 
-export const StyledCVPFSkillTag = styled(StyledSkillTag)`
+export const StyledCVPFSkillTag = styled(Tag)`
   font-size: 8px;
   line-height: 10px;
   padding: 2px 5px;

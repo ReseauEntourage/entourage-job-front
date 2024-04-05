@@ -246,7 +246,7 @@ export function MemberList({
                 color="primaryBlue"
                 onClick={() => fetchData(search, filters, role, offset, false)}
               >
-                Voir tous les {roleToDisplay}
+                Voir tous les&nbsp;{roleToDisplay}
               </Button>
             </div>
           )}

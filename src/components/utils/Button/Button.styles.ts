@@ -44,8 +44,7 @@ export const ButtonStyle = css`
   &.uk-button-secondary {
     border: 0.5px solid ${COLORS.primaryBlue};
 
-    &:hover,
-    &:focus {
+    &:hover {
       background: none;
       color: ${COLORS.primaryBlue};
     }
@@ -59,8 +58,7 @@ export const ButtonStyle = css`
   }
 
   &.uk-button-default {
-    &:hover,
-    &:focus {
+    &:hover {
       /* background-color: ${COLORS.primaryBlue}; */
       border-color: ${COLORS.primaryBlue};
       /* color: white; */

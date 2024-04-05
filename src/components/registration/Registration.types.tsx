@@ -138,7 +138,7 @@ export const RegistrationStepContents: {
       form: formRegistrationCoachWebinar,
       dependsOn: ['program'],
       skippedBy: {
-        program: [Programs.SHORT],
+        program: [Programs.BOOST],
       },
     },
   },
@@ -149,7 +149,7 @@ export const RegistrationStepContents: {
       form: formRegistrationCandidateInfoCo,
       dependsOn: ['department', 'program'],
       skippedBy: {
-        program: [Programs.SHORT],
+        program: [Programs.BOOST],
       },
     },
     [USER_ROLES.COACH]: {
@@ -184,12 +184,12 @@ export interface LastStepContent {
 
 type RegistrationLastStepContent = {
   [USER_ROLES.CANDIDATE]: {
-    [Programs.LONG]: LastStepContent;
-    [Programs.SHORT]: LastStepContent;
+    [Programs.THREE_SIXTY]: LastStepContent;
+    [Programs.BOOST]: LastStepContent;
   };
   [USER_ROLES.COACH]: {
-    [Programs.LONG]: LastStepContent;
-    [Programs.SHORT]: LastStepContent;
+    [Programs.THREE_SIXTY]: LastStepContent;
+    [Programs.BOOST]: LastStepContent;
   };
 };
 
@@ -243,13 +243,13 @@ const CandidateLastStepContent: Pick<LastStepContent, 'bullets'> = {
 
 export const LastStepContent: RegistrationLastStepContent = {
   [USER_ROLES.CANDIDATE]: {
-    [Programs.LONG]: {
+    [Programs.THREE_SIXTY]: {
       ...CandidateLastStepContent,
       title: 'On se voit très bientôt !',
       subtitle:
         'On a hâte de vous rencontrer et encore plus hâte de commencer votre accompagnement !',
     },
-    [Programs.SHORT]: {
+    [Programs.BOOST]: {
       ...CandidateLastStepContent,
       title: 'Vous venez de finaliser votre inscription : Bravo !',
       subtitle:
@@ -257,12 +257,12 @@ export const LastStepContent: RegistrationLastStepContent = {
     },
   },
   [USER_ROLES.COACH]: {
-    [Programs.LONG]: {
+    [Programs.THREE_SIXTY]: {
       ...CoachLastStepContent,
       subtitle:
         'On a hâte de vous rencontrer et encore plus hâte que vous deveniez coach !',
     },
-    [Programs.SHORT]: {
+    [Programs.BOOST]: {
       ...CoachLastStepContent,
       subtitle:
         'Vous pouvez désormais demander à votre entourage de vous appeler "coach"',
