@@ -14,6 +14,7 @@ export function getFormEditHelps(role: NormalUserRole): FormSchema<{
         component: 'select-list',
         isMulti: true,
         options: ParametresHelpCardContents[role],
+        isRequired: true,
       },
     ],
   };
