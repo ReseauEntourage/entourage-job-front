@@ -41,9 +41,10 @@ import {
   StyledRightColumn,
   StyledRightQuoteContainer,
   StyledShareContainer,
+  StyledSkillTag,
   StyledTitleAccordion,
 } from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
-import { Button, Tag } from 'src/components/utils';
+import { Button } from 'src/components/utils';
 import { BackLink } from 'src/components/utils/BackLink';
 import { CarouselSwiper } from 'src/components/utils/CarouselSwiper';
 import { H1, H2, H3, H4, H5 } from 'src/components/utils/Headings';
@@ -155,7 +156,9 @@ export const PageCVContent = ({
             <StyledCVSkillTagContainer>
               {cv.skills.length > 0 &&
                 cv.skills.map(({ name, id }, key) => {
-                  return <Tag key={`${key}-${id}`} content={name} />;
+                  return (
+                    <StyledSkillTag key={`${key}-${id}`}>{name}</StyledSkillTag>
+                  );
                 })}
             </StyledCVSkillTagContainer>
           </div>

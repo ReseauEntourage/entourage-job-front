@@ -5,8 +5,8 @@ import {
   StyledCVExperienceDescription,
   StyledCVExperienceLi,
   StyledCVSkillTagContainer,
+  StyledSkillTag,
 } from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
-import { Tag } from 'src/components/utils';
 import { H5 } from 'src/components/utils/Headings';
 import { COLORS } from 'src/constants/styles';
 import { useIsDesktop } from 'src/hooks/utils';
@@ -67,7 +67,7 @@ export function CVExperienceOrFormation({
         {description && <div>{description}</div>}
         <StyledCVSkillTagContainer>
           {skills?.map(({ name, id: skillId }) => {
-            return <Tag key={skillId} content={name} />;
+            return <StyledSkillTag key={skillId}>{name}</StyledSkillTag>;
           })}
         </StyledCVSkillTagContainer>
       </StyledCVExperienceDescription>
