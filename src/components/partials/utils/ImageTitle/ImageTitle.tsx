@@ -69,25 +69,46 @@ export const ImageTitle = ({
             style={cta.style}
             onClick={cta.onClick}
             dataTestId={cta.dataTest}
+            href={cta.href}
+            isExternal={cta.isExternal}
+            newTab={cta.newTab}
+            color={cta.color}
           >
             {cta.label}
           </Button>
         )}
         {cta && Array.isArray(cta) && cta.length > 0 && (
           <StyledImageTitleCTAsContainer marginTop={!description}>
-            {cta.map(({ label, style, dataTest, onClick, color }, index) => {
-              return (
-                <Button
-                  key={index.toString()}
-                  style={style}
-                  onClick={onClick}
-                  color={color}
-                  dataTestId={dataTest}
-                >
-                  {label}
-                </Button>
-              );
-            })}
+            {cta.map(
+              (
+                {
+                  label,
+                  style,
+                  dataTest,
+                  onClick,
+                  color,
+                  href,
+                  isExternal,
+                  newTab,
+                },
+                index
+              ) => {
+                return (
+                  <Button
+                    key={index.toString()}
+                    style={style}
+                    onClick={onClick}
+                    color={color}
+                    href={href}
+                    isExternal={isExternal}
+                    dataTestId={dataTest}
+                    newTab={newTab}
+                  >
+                    {label}
+                  </Button>
+                );
+              }
+            )}
           </StyledImageTitleCTAsContainer>
         )}
       </StyledImageTitle>
