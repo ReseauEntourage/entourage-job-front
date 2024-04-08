@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { CV, UserCandidateWithUsers } from 'src/api/types';
+import { ReduxRequestEvents } from 'src/constants';
 import { CANDIDATE_USER_ROLES, UserRole } from 'src/constants/users';
+import { updateUserProfilePictureSelectors } from 'src/use-cases/current-user';
 import { isRoleIncluded } from 'src/utils';
 
 export function useImageFallback({
@@ -19,6 +22,18 @@ export function useImageFallback({
       `${process.env.AWSS3_URL}${process.env.AWSS3_IMAGE_DIRECTORY}${userId}.profile.jpg`
     );
   }, [userId]);
+
+  const updateUserProfilePictureStatus = useSelector(
+    updateUserProfilePictureSelectors.selectUpdateUserProfilePictureStatus
+  );
+
+  useEffect(() => {
+    if (updateUserProfilePictureStatus === ReduxRequestEvents.SUCCEEDED) {
+      setUrlImg(
+        `${process.env.AWSS3_URL}${process.env.AWSS3_IMAGE_DIRECTORY}${userId}.profile.jpg`
+      );
+    }
+  }, [updateUserProfilePictureStatus, userId]);
 
   const fallbackToCVImage = useCallback(() => {
     setUrlImg(null);
