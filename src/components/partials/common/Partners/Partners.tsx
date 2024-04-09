@@ -16,7 +16,7 @@ export const Partners = ({
       <Section className="custom-primary" display="flex-center">
         <H2
           variant="big"
-          title="Nos partenaires"
+          title="Ils travaillent avec Entourage Pro"
           weight="normal"
           color={COLORS.darkGrayFont}
         />

@@ -11,23 +11,22 @@ import { gaEvent } from 'src/lib/gtag';
 
 const numbers = [
   {
+    value: '440',
+    description: 'candidat(e)s accompagnés depuis le lancement',
+  },
+  {
+    value: '72%',
+    description:
+      'des candidat(e)s parvenus au bout du parcours ont retrouvé un travail',
+  },
+  {
+    value: '130',
+    description: 'entreprises ont recruté',
+  },
+  {
     value: '93%',
     description:
-      "des candidats se déclarent remobilisés dans leur recherche d'emploi",
-  },
-  {
-    value: '61%',
-    description: 'des candidats retrouvent un emploi dans les 6 mois',
-  },
-  {
-    value: '92%',
-    description:
-      'des structures sociales partenaires sont satisfaites de leur expérience',
-  },
-  {
-    value: '100%',
-    description:
-      'des partenaires perçoivent Entourage Pro comme un apport complémentaire',
+      'des candidat(e)s ont repris confiance en eux et en leurs capacités',
   },
 ];
 
@@ -51,12 +50,14 @@ export const Impact = ({
       <StyledCenteredButtonContainer>
         <Button
           style="custom-secondary-inverted"
-          href="" // TODO : lien pdf brochure mesure d'impact
+          href={process.env.URL_MESURE_D_IMPACT}
+          isExternal
+          newTab
           onClick={() => {
             if (tag) gaEvent(tag);
           }}
         >
-          Télécharger la mesure d`&lsquo;impact
+          Télécharger la mesure d&lsquo;impact
         </Button>
       </StyledCenteredButtonContainer>
     </Section>

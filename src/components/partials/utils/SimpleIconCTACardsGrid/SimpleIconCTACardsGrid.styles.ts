@@ -30,5 +30,16 @@ export const StyledSimpleIconCTACard = styled.div`
   width: 460px;
   box-sizing: border-box;
   text-align: center;
-  gap: 30px;
+  gap: 16px;
+`;
+
+export const StyledSimpleIconCTACardsTitle = styled.div`
+  > * {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+`;
+
+export const StyledSimpleIconCTACardsContent = styled.div`
+  margin-bottom: 16px;
 `;

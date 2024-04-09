@@ -61,7 +61,7 @@ export const CompanyTestimonies = () => {
                       alt="guillemets"
                       width={27}
                       height={21}
-                      src="/static/img/guillemets.png"
+                      src="/static/img/guillemets-bleu.png"
                     />
                     <p className="uk-text-small uk-margin-small uk-text-italic">
                       {quote}
@@ -74,7 +74,7 @@ export const CompanyTestimonies = () => {
                         alt="guillemets-petits"
                         width={15}
                         height={12}
-                        src="/static/img/guillemetsPetits.png"
+                        src="/static/img/guillemets-gris.png"
                       />
                     </div>
                     <p className="uk-text-bold uk-margin-small uk-margin-remove-bottom">

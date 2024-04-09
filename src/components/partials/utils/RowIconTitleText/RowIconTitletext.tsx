@@ -9,6 +9,7 @@ import {
 
 interface RowIconTitleTextProps {
   title?: React.ReactNode;
+  subtitle?: React.ReactNode;
   backgroundColor?: 'blue';
   content: {
     title: string;
@@ -19,6 +20,7 @@ interface RowIconTitleTextProps {
 
 export const RowIconTitleText = ({
   title,
+  subtitle,
   content,
   backgroundColor,
 }: RowIconTitleTextProps) => {
@@ -26,7 +28,9 @@ export const RowIconTitleText = ({
     <StyledRowIconTitleTextBackground backgroundColor={backgroundColor}>
       <Section>
         {title && <H2 title={title} color="black" center />}
-        <H5 title="Des réseaux activés = plus d'opportunités" center />
+        {subtitle && (
+          <H5 title={subtitle} color="black" weight="normal" center />
+        )}
         <StyledRowIconTitleTextContainer data-uk-scrollspy="cls:uk-animation-slide-bottom; target: h6, p; delay: 200;">
           {content.map(({ title: itemTitle, paragraph, src }, index) => {
             return (

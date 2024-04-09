@@ -60,7 +60,7 @@ export const CandidateTestimoniesOrientation = ({
           color="black"
         />
       )}
-      <div className="uk-flex uk-flex-center">
+      <div className="uk-flex uk-flex-center uk-margin-large-top">
         <Carousel
           style="default"
           containerClasses="uk-container-small uk-child-width-1-1"

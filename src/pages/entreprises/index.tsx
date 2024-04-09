@@ -83,7 +83,15 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
       <ImageTitle
         img="/static/img/header_pic_hire.jpg"
         title="Entourage Pro vous accompagne pour changer de regard sur l'inclusion"
-        description="Notre objectif ? Vous permettre de créer les conditions d’un recrutement inclusif réussi, au service de la transformation de votre entreprise."
+        description={
+          <>
+            Notre objectif&nbsp;? Vous permettre de créer les conditions
+            <br />
+            d&apos;un recrutement inclusif réussi, au service
+            <br />
+            de la transformation de votre entreprise.
+          </>
+        }
         cta={[
           {
             dataTest: 'button-contact-company-header',

@@ -191,7 +191,7 @@ const PartnerItem = ({
                         alt=""
                         width={27}
                         height={21}
-                        src="/static/img/guillemets.png"
+                        src="/static/img/guillemets-bleu.png"
                       />
                     </div>
                     <div className="uk-flex-1">
@@ -214,7 +214,7 @@ const PartnerItem = ({
                         alt=""
                         width={15}
                         height={12}
-                        src="/static/img/guillemetsPetits.png"
+                        src="/static/img/guillemets-gris.png"
                       />
                     </div>
                   </div>

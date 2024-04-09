@@ -17,7 +17,12 @@ const Index = () => {
   return (
     <Layout>
       <ImageTitle
-        title="Le premier réseau professionnel solidaire"
+        title={
+          <>
+            Le premier réseau
+            <br /> professionnel solidaire
+          </>
+        }
         img="/static/img/home-banner.jpg"
         imgMobile="/static/img/home-banner.jpg"
         alt="entourage pro réseau solidaire professionnel"

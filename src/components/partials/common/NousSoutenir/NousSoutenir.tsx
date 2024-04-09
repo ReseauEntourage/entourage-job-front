@@ -17,7 +17,7 @@ import {
 
 const content = [
   {
-    value: '50',
+    value: 20,
     description: (
       <Typography>
         Financez des ateliers collectifs remobilisant des personnes en précarité
@@ -27,7 +27,7 @@ const content = [
     color: COLORS.blueShade1,
   },
   {
-    value: '100',
+    value: 70,
     description: (
       <Typography>
         Permettez à des jeunes en précarité de partir en week-end de cohésion
@@ -37,7 +37,7 @@ const content = [
     color: COLORS.blueShade2,
   },
   {
-    value: '250',
+    value: 250,
     description: (
       <Typography>
         Permettez à des candidats Entourage Pro de rencontrer des professionnels
@@ -47,7 +47,7 @@ const content = [
     color: COLORS.primaryBlue,
   },
   {
-    value: '500',
+    value: 500,
     description: (
       <Typography>
         Participez à l’accompagnement d’une personne en précarité pour qu’elle
@@ -68,7 +68,9 @@ export const NousSoutenir = () => {
           const uuid = uuidV4();
           return (
             <Link
-              href={process.env.URL_DONATION || ''}
+              href={`${process.env.DONATION_LINK || ''}&frequency=once&amount=${
+                item.value * 100
+              }`}
               target="_blank"
               key={uuid}
             >

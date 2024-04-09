@@ -54,7 +54,7 @@ export const SimpleCardsImageCTA = ({
               </div>
               <div className="text-container">
                 <H5 title={card.title} color="primaryBlue" center />
-                <p>{card.description}</p>
+                <p className="text">{card.description}</p>
                 <Button
                   style="custom-secondary-inverted"
                   href={card.href}

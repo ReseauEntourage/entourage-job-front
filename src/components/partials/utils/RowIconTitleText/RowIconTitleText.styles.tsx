@@ -38,8 +38,8 @@ export const StyledIconTitleTextItem = styled.div`
     height: 45px;
   }
   > .image-container {
-    height: 150px;
-    width: 150px;
+    height: 100px;
+    width: 100px;
     position: relative;
   }
   &.mobile {

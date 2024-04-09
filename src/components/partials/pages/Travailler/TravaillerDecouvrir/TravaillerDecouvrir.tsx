@@ -17,9 +17,9 @@ export const TravaillerDecouvrir = ({
       title="Booster la recherche d'emploi des personnes que vous accompagnez"
       cards={[
         {
-          title: 'Programme Coup de pouce',
+          title: 'Format Coup de pouce',
           description:
-            "Je souhaite solliciter et bénéficier de coups de pouces ponctuels de la part d’une communauté bénévole de pros pour m'aider dans ma recherche d'emploi (atelier CV et entretiens, partage de réseau, conseils pour la recherche, partage d'expérience...)",
+            "Je souhaite bénéficier de coups de pouce ponctuels de la communauté pour m'aider dans ma recherche d'emploi, que cela concerne la rédaction de mon CV, une relecture de ma lettre de motivation, ou une mise en relation.",
           img: '/static/img/travailler-decouvrir-coup-de-pouce.jpg',
           onClick: () => {
             handleClick(refCoupDePouce);
@@ -30,10 +30,10 @@ export const TravaillerDecouvrir = ({
           CTAText: 'Découvrir',
         },
         {
-          title: 'Programme 360',
+          title: 'Format 360',
           description:
-            'J’ai besoin d’un accompagnement personnalisé avec un coach dédié, qui m’aidera à de la définition de mon projet pro à l’aide dans mes recherches, en passant pour la création d’un CV et la préparation aux entretiens.',
-          img: '/static/img/orientation_who.jpg',
+            "J'ai besoin d’un accompagnement personnalisé avec un coach dédié, qui pourra m'aider à clarifier mon projet professionnel, à élaborer mon CV, à me préparer aux entretiens ainsi qu' à me guider dans mes recherches d'emploi par la mobilisation de son réseau.",
+          img: '/static/img/travailler-decouvrir-360.jpg',
           onClick: () => {
             handleClick(refProgramme360);
             gaEvent(GA_TAGS.PAGE_TRAVAILLER_DECOUVRIR_PROGRAMME_360_CLICK);

@@ -199,7 +199,7 @@ module.exports = withLess({
       },
       {
         source: '/don',
-        destination: process.env.IRAISER_DONATION_LINK,
+        destination: process.env.DONATION_LINK,
         permanent: false,
       },
       {
@@ -240,6 +240,11 @@ module.exports = withLess({
       {
         source: '/boite-a-outils',
         destination: process.env.TOOLBOX_URL,
+        permanent: false,
+      },
+      {
+        source: '/linkedout',
+        destination: '/entourage-pro',
         permanent: false,
       },
     ];
