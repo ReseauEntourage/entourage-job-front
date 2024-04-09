@@ -44,7 +44,7 @@ export const Layout = withRouter<LayoutProps>(
       const entourageProModalClosed = localStorage.getItem(
         STORAGE_KEYS.ENTOURAGE_PRO_MODAL_CLOSED
       );
-      if (!entourageProModalClosed) {
+      if (!entourageProModalClosed && !isPDF) {
         setTimeout(() => {
           openModal(<EntourageProModal />);
         }, 1500);
