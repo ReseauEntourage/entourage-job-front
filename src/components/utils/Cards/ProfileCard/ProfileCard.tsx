@@ -47,7 +47,7 @@ import {
   StyledSeparator,
 } from './ProfileCard.styles';
 
-interface ProfileCardProps {
+export interface ProfileCardProps {
   userId: string;
   firstName: string;
   lastName: string;
