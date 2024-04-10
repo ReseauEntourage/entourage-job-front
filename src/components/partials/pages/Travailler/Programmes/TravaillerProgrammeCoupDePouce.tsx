@@ -31,7 +31,7 @@ const content = [
   {
     title: 'Un max d’opportunités professionnelles',
     paragraph:
-      "Des offres d'emplois des entreprises partenaires et des mise en relation adaptées selon votre projet pro",
+      "Des offres d'emplois des entreprises partenaires et des mises en relation adaptées selon votre projet pro",
     src: '/static/img/orienter-emploi.png',
   },
   {

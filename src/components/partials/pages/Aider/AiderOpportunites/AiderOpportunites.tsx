@@ -30,7 +30,7 @@ export const AiderOpportunites = () => {
     <RowIconTitleText
       backgroundColor="blue"
       title="Pourquoi devenir coach ?"
-      subtitle="360 ou Coup de pouce, nos 2 modes d’engagements ont de multiples bénéfices pour nos coachs aussi !"
+      subtitle="360 ou Coup de pouce, nos 2 modes d’engagement ont de multiples bénéfices pour nos coachs aussi !"
       content={content}
     />
   );

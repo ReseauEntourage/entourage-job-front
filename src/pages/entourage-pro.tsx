@@ -169,7 +169,7 @@ const EntouragePro = () => {
                 plus de 6 mois et alternance)
               </li>
               <li>disposer du droit de travailler en France</li>
-              <li>éêtre domicilié dans le 35, 56, 59, 69, 75, 92, 93</li>
+              <li>être domicilié dans le 35, 56, 59, 69, 75, 92, 93</li>
             </ul>
             <br />
             *Le programme 360 s’adresse uniquement aux personnes âgées de 18 à
