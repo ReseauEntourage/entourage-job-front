@@ -1,13 +1,15 @@
+import useChange from '@react-hook/change';
 import _ from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserProfile, UserWithUserCandidate } from 'src/api/types';
 import { ReduxRequestEvents } from 'src/constants';
 import { CANDIDATE_USER_ROLES, UserRole } from 'src/constants/users';
+
 import {
-  authenticationActions,
+  currentUserActions,
   updateProfileSelectors,
-} from 'src/use-cases/authentication';
+} from 'src/use-cases/current-user';
 import { isRoleIncluded } from 'src/utils';
 
 export const helpFields = {
@@ -43,17 +45,17 @@ export const useUpdateProfile = (user: UserWithUserCandidate) => {
     updateProfileSelectors.selectUpdateProfileStatus
   );
 
-  useEffect(() => {
+  useChange(updateProfileStatus, () => {
     if (updateProfileStatus === ReduxRequestEvents.SUCCEEDED) {
       setCloseModal(true);
     }
-  }, [updateProfileStatus]);
+  });
 
   const updateUserProfile = useCallback(
     (newProfileData: Partial<UserProfile>): void => {
       if (!_.isEmpty(newProfileData) && user.id) {
         dispatch(
-          authenticationActions.updateProfileRequested({
+          currentUserActions.updateProfileRequested({
             userId: user.id,
             userProfile: newProfileData,
           })

@@ -22,7 +22,7 @@ export interface ModalType {
 
 interface ToggleWithModalProps<S extends FormSchema<AnyCantFix>> {
   id: string;
-  title: string;
+  title?: string;
   subtitle?: React.ReactNode;
   modal?: ModalType | React.ReactNode;
   onToggle: (

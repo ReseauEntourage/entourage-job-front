@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import ChevronRightIcon from 'assets/icons/chevron-right.svg';
-import HomeIcon from 'assets/icons/home.svg';
 import { StyledHeaderMobile } from 'src/components/headers/Header.styles';
 import { Hamburger, Navbar, NavbarLogo } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
@@ -24,11 +23,7 @@ export const HeaderPublicContentMobile = ({
         sticky
         left={
           <div className="uk-flex uk-flex-middle uk-position-relative">
-            <NavbarLogo
-              href="/"
-              src="/static/img/linkedout_logo_white.png"
-              alt="LinkedOut"
-            />
+            <NavbarLogo href="/" type="secondary" />
           </div>
         }
         right={
@@ -48,10 +43,7 @@ export const HeaderPublicContentMobile = ({
                 push('/');
               }}
             >
-              <div className="uk-flex">
-                <HomeIcon width={16} height={16} />
-                &nbsp; Accueil
-              </div>
+              <div className="uk-flex">Accueil</div>
             </a>
           </li>
           {[
@@ -102,16 +94,31 @@ export const HeaderPublicContentMobile = ({
                 );
               }),
           ]}
-          <li className="uk-margin-small-top uk-flex uk-flex-center uk-padding-small">
+          <li className="uk-margin-small-top uk-flex uk-flex-center">
             <Button
-              href={{ pathname: '/candidats', query: { employed: false } }}
-              style="primary"
+              href="/login"
+              style="custom-secondary"
+              onClick={() => {
+                gaEvent(GA_TAGS.HEADER_CONNEXION_CLIC);
+              }}
+              size="small"
             >
-              Découvrir les CV
-              <ChevronRightIcon />
+              Connexion
             </Button>
           </li>
-          <li className="uk-flex uk-flex-center uk-padding-small">
+          <li className="uk-margin-small-top uk-flex uk-flex-center">
+            <Button
+              href="/inscription"
+              style="custom-secondary-inverted"
+              size="small"
+              onClick={() => {
+                gaEvent(GA_TAGS.HEADER_INSCRIPTION_CLIC);
+              }}
+            >
+              Inscription
+            </Button>
+          </li>
+          <li className="uk-margin-small-top uk-flex uk-flex-center uk-padding-small">
             <Button
               href={process.env.DONATION_LINK}
               isExternal

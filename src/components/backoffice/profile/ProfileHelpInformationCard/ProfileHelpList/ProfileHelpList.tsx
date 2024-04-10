@@ -1,27 +1,27 @@
 import React from 'react';
-import { HelpNames, ParametresHelpCardContents } from 'src/constants/helps';
-import { USER_ROLES } from 'src/constants/users';
+import { HelpValue, ParametresHelpCardContents } from 'src/constants/helps';
+import { NormalUserRole } from 'src/constants/users';
 import {
   StyledHelpList,
   StyledHelpListImgContainer,
 } from './ProfileHelpList.styles';
 
 interface ProfileHelpListProps {
-  helpList: { name: HelpNames }[];
-  role: typeof USER_ROLES.CANDIDATE | typeof USER_ROLES.COACH;
+  helpList: { name: HelpValue }[];
+  role: NormalUserRole;
 }
 
 export const ProfileHelpList = ({ helpList, role }: ProfileHelpListProps) => {
   return (
     <StyledHelpList data-testid="parametres-help-list">
-      {ParametresHelpCardContents[role].map(({ icon, title, value }, index) => {
+      {ParametresHelpCardContents[role].map(({ icon, label, value }, index) => {
         if (!helpList.some((help) => help.name === value)) {
           return null;
         }
         return (
           <li key={index}>
             <StyledHelpListImgContainer>{icon}</StyledHelpListImgContainer>
-            {title}
+            {label}
           </li>
         );
       })}

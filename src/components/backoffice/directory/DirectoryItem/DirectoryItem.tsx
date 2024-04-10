@@ -3,7 +3,7 @@ import { CardListItem } from 'src/components/utils/CardList';
 import { ProfileCard } from 'src/components/utils/Cards/ProfileCard';
 import { BusinessLineValue } from 'src/constants';
 import { Department } from 'src/constants/departements';
-import { HelpNames } from 'src/constants/helps';
+import { HelpValue } from 'src/constants/helps';
 import { UserRole } from 'src/constants/users';
 
 interface DirectoryItemProps {
@@ -12,7 +12,7 @@ interface DirectoryItemProps {
   lastName: string;
   role: UserRole;
   helps?: {
-    name: HelpNames;
+    name: HelpValue;
   }[];
   businessLines?: {
     name: BusinessLineValue;

@@ -11,7 +11,7 @@ export const OpportunityError = () => {
           </h2>
           <p>
             Contacte{' '}
-            <span className="uk-text-primary">l&apos;équipe LinkedOut</span>{' '}
+            <span className="uk-text-primary">l&apos;équipe Entourage Pro</span>{' '}
             pour en savoir plus.
           </p>
         </div>

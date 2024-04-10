@@ -1,19 +1,25 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export const colorToHoverBackgroundColor = {
-  primaryOrange: COLORS.hoverOrange,
+  primaryBlue: COLORS.hoverBlue,
   darkGrayFont: 'transparent',
   white: 'transparent',
 };
 
 export const colorToHoverColor = {
-  primaryOrange: COLORS.primaryOrange,
-  darkGrayFont: COLORS.primaryOrange,
-  white: COLORS.primaryOrange,
+  primaryBlue: COLORS.primaryBlue,
+  darkGrayFont: COLORS.primaryBlue,
+  white: COLORS.primaryBlue,
 };
 
-export const StyledButton = styled.button`
+export const colorToBackgroundColor = {
+  primaryBlue: COLORS.white,
+  darkGrayFont: COLORS.white,
+  white: 'transparent',
+};
+
+export const ButtonStyle = css`
   font-size: 14px;
   line-height: 17px;
   display: flex;
@@ -25,6 +31,7 @@ export const StyledButton = styled.button`
   > svg:first-child {
     margin-right: 8px;
   }
+
   > svg:last-child {
     margin-left: 8px;
   }
@@ -35,27 +42,27 @@ export const StyledButton = styled.button`
 
   &.uk-button-primary,
   &.uk-button-secondary {
-    border: 0.5px solid ${COLORS.primaryOrange};
+    border: 0.5px solid ${COLORS.primaryBlue};
 
     &:hover {
       background: none;
-      color: ${COLORS.primaryOrange};
+      color: ${COLORS.primaryBlue};
     }
 
     &.banner-btn {
       &:hover {
         background-color: rgba(250, 250, 250, 0.8);
-        border-color: ${COLORS.primaryOrange};
+        border-color: ${COLORS.primaryBlue};
       }
     }
   }
 
   &.uk-button-default {
     &:hover {
-      /* background-color: ${COLORS.primaryOrange}; */
-      border-color: ${COLORS.primaryOrange};
+      /* background-color: ${COLORS.primaryBlue}; */
+      border-color: ${COLORS.primaryBlue};
       /* color: white; */
-      color: ${COLORS.primaryOrange};
+      color: ${COLORS.primaryBlue};
     }
   }
 
@@ -64,33 +71,35 @@ export const StyledButton = styled.button`
     padding: 8px 20px;
     border: 0.5px solid
       ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
+        return COLORS[props.color] || COLORS.primaryBlue;
       }};
     color: white;
     background-color: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryOrange;
+      return COLORS[props.color] || COLORS.primaryBlue;
     }} !important;
 
     /*    path {
       fill: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryOrange;
+      return COLORS[props.color] || COLORS.primaryBlue;
     }} !important;
     } */
 
     border-radius: 5px;
 
-    &:hover {
-      cursor: pointer;
-      background-color: white !important;
-      color: ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
-      }} !important;
-
-      path {
-        transition: 0.2s ease-in-out;
-        fill: ${(props) => {
-          return COLORS[props.color] || COLORS.primaryOrange;
+    @media (hover: hover) {
+      &:hover {
+        cursor: pointer;
+        background-color: white !important;
+        color: ${(props) => {
+          return COLORS[props.color] || COLORS.primaryBlue;
         }} !important;
+
+        path {
+          transition: 0.2s ease-in-out;
+          fill: ${(props) => {
+            return COLORS[props.color] || COLORS.primaryBlue;
+          }} !important;
+        }
       }
     }
   }
@@ -100,39 +109,41 @@ export const StyledButton = styled.button`
     padding: 8px 20px;
     border: 0.5px solid
       ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
+        return COLORS[props.color] || COLORS.primaryBlue;
       }};
     color: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryOrange;
+      return COLORS[props.color] || COLORS.primaryBlue;
     }} !important;
 
     path {
       fill: ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
+        return COLORS[props.color] || COLORS.primaryBlue;
       }} !important;
     }
 
     border-radius: 5px;
     background-color: transparent;
 
-    &:hover {
-      cursor: pointer;
-      background-color: ${(props) => {
-        return colorToHoverBackgroundColor[props.color] || COLORS.hoverOrange;
-      }};
-      color: ${(props) => {
-        return colorToHoverColor[props.color] || COLORS.primaryOrange;
-      }} !important;
-      border: 0.5px solid
-        ${(props) => {
-          return colorToHoverColor[props.color] || COLORS.primaryOrange;
+    @media (hover: hover) {
+      &:hover {
+        cursor: pointer;
+        background-color: ${(props) => {
+          return colorToHoverBackgroundColor[props.color] || COLORS.hoverBlue;
         }};
-
-      path {
-        transition: 0.2s ease-in-out;
-        fill: ${(props) => {
-          return colorToHoverColor[props.color] || COLORS.primaryOrange;
+        color: ${(props) => {
+          return colorToHoverColor[props.color] || COLORS.primaryBlue;
         }} !important;
+        border: 0.5px solid
+          ${(props) => {
+            return colorToHoverColor[props.color] || COLORS.primaryBlue;
+          }};
+
+        path {
+          transition: 0.2s ease-in-out;
+          fill: ${(props) => {
+            return colorToHoverColor[props.color] || COLORS.primaryBlue;
+          }} !important;
+        }
       }
     }
   }
@@ -142,46 +153,52 @@ export const StyledButton = styled.button`
     padding: 8px 20px;
     border: none;
     color: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryOrange;
+      return COLORS[props.color] || COLORS.primaryBlue;
     }} !important;
 
     background-color: transparent;
 
-    &:hover {
-      cursor: pointer;
-      opacity: 0.6 !important;
+    @media (hover: hover) {
+      &:hover {
+        cursor: pointer;
+        opacity: 0.6 !important;
+      }
     }
   }
 
   &.custom-secondary {
     font-family: Poppins, sans-serif;
     padding: 6px 15px;
-    background-color: white;
+    background-color: ${(props) => {
+      return colorToBackgroundColor[props.color] || COLORS.white;
+    }} !important;
 
     border: 0.5px solid
       ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
+        return COLORS[props.color] || COLORS.primaryBlue;
       }};
     color: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryOrange;
+      return COLORS[props.color] || COLORS.primaryBlue;
     }} !important;
 
     border-radius: 25px;
 
-    &:hover {
-      cursor: pointer;
-      background-color: ${(props) => {
-        return colorToHoverBackgroundColor[props.color] || COLORS.hoverOrange;
-      }} !important;
+    @media (hover: hover) {
+      &:hover {
+        cursor: pointer;
+        background-color: ${(props) => {
+          return colorToHoverBackgroundColor[props.color] || COLORS.hoverBlue;
+        }} !important;
 
-      color: ${(props) => {
-        return colorToHoverColor[props.color] || COLORS.primaryOrange;
-      }} !important;
+        color: ${(props) => {
+          return colorToHoverColor[props.color] || COLORS.primaryBlue;
+        }} !important;
 
-      border: 0.5px solid
-        ${(props) => {
-          return colorToHoverColor[props.color] || COLORS.primaryOrange;
-        }};
+        border: 0.5px solid
+          ${(props) => {
+            return colorToHoverColor[props.color] || COLORS.primaryBlue;
+          }};
+      }
     }
   }
 
@@ -192,33 +209,35 @@ export const StyledButton = styled.button`
 
     border: 0.5px solid
       ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
+        return COLORS[props.color] || COLORS.primaryBlue;
       }};
     background-color: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryOrange;
+      return COLORS[props.color] || COLORS.primaryBlue;
     }} !important;
 
     path {
       transition: 0.2s ease-in-out;
       fill: ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
+        return COLORS[props.color] || COLORS.primaryBlue;
       }} !important;
     }
 
     border-radius: 25px;
 
-    &:hover {
-      cursor: pointer;
-      background-color: white !important;
-      color: ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
-      }} !important;
-
-      path {
-        transition: 0.2s ease-in-out;
-        fill: ${(props) => {
-          return COLORS[props.color] || COLORS.primaryOrange;
+    @media (hover: hover) {
+      &:hover {
+        cursor: pointer;
+        background-color: white !important;
+        color: ${(props) => {
+          return COLORS[props.color] || COLORS.primaryBlue;
         }} !important;
+
+        path {
+          transition: 0.2s ease-in-out;
+          fill: ${(props) => {
+            return COLORS[props.color] || COLORS.primaryBlue;
+          }} !important;
+        }
       }
     }
   }
@@ -232,13 +251,15 @@ export const StyledButton = styled.button`
       fill: ${COLORS.darkGray} !important;
     }
 
-    &:hover {
-      color: ${COLORS.darkGray} !important;
-      background-color: ${COLORS.lightgray} !important;
-      cursor: default !important;
+    @media (hover: hover) {
+      &:hover {
+        color: ${COLORS.darkGray} !important;
+        background-color: ${COLORS.lightgray} !important;
+        cursor: default !important;
 
-      path {
-        fill: ${COLORS.darkGray} !important;
+        path {
+          fill: ${COLORS.darkGray} !important;
+        }
       }
     }
   }
@@ -250,169 +271,18 @@ export const StyledButton = styled.button`
   }
 `;
 
+export const StyledButton = styled.button`
+  ${ButtonStyle}
+`;
+
 export const StyledButtonMock = styled.div`
-  font-size: 14px;
-  line-height: 17px;
+  ${ButtonStyle}
+`;
+
+export const StyledCenteredButtonContainer = styled.div`
   display: flex;
-  align-items: center;
   justify-content: center;
-  padding: 11px 20px !important;
-  svg:first-child {
-    margin-right: 8px;
-  }
-  svg:last-child {
-    margin-left: 8px;
-  }
-
-  &:hover {
-    transition: 0.2s ease-in-out;
-  }
-
-  &.custom-primary {
-    font-family: Poppins, sans-serif;
-    padding: 8px 20px;
-    border: 0.5px solid
-      ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
-      }};
-    color: white;
-    background-color: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryOrange;
-    }} !important;
-
-    /*    path {
-      fill: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryOrange;
-    }} !important;
-    } */
-
-    border-radius: 5px;
-
-    &:hover {
-      cursor: pointer;
-      background-color: white !important;
-      color: ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
-      }} !important;
-
-      path {
-        transition: 0.2s ease-in-out;
-        fill: ${(props) => {
-          return COLORS[props.color] || COLORS.primaryOrange;
-        }} !important;
-      }
-    }
-  }
-
-  &.custom-primary-inverted {
-    font-family: Poppins, sans-serif;
-    padding: 8px 20px;
-    border: 0.5px solid
-      ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
-      }};
-    color: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryOrange;
-    }} !important;
-
-    path {
-      fill: ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
-      }} !important;
-    }
-
-    border-radius: 5px;
-    background-color: transparent;
-
-    &:hover {
-      cursor: pointer;
-      background-color: ${(props) => {
-        return colorToHoverBackgroundColor[props.color] || COLORS.hoverOrange;
-      }};
-      color: ${(props) => {
-        return colorToHoverColor[props.color] || COLORS.primaryOrange;
-      }} !important;
-      border: 0.5px solid
-        ${(props) => {
-          return colorToHoverColor[props.color] || COLORS.primaryOrange;
-        }};
-
-      path {
-        transition: 0.2s ease-in-out;
-        fill: ${(props) => {
-          return colorToHoverColor[props.color] || COLORS.primaryOrange;
-        }} !important;
-      }
-    }
-  }
-
-  &.custom-secondary {
-    font-family: Poppins, sans-serif;
-    padding: 6px 15px;
-    background-color: white;
-
-    border: 0.5px solid
-      ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
-      }};
-    color: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryOrange;
-    }} !important;
-
-    border-radius: 25px;
-
-    &:hover {
-      cursor: pointer;
-      background-color: ${(props) => {
-        return colorToHoverBackgroundColor[props.color] || COLORS.hoverOrange;
-      }} !important;
-
-      color: ${(props) => {
-        return colorToHoverColor[props.color] || COLORS.primaryOrange;
-      }} !important;
-
-      border: 0.5px solid
-        ${(props) => {
-          return colorToHoverColor[props.color] || COLORS.primaryOrange;
-        }};
-    }
-  }
-
-  &.custom-secondary-inverted {
-    font-family: Poppins, sans-serif;
-    padding: 6px 15px;
-    color: white;
-
-    border: 0.5px solid
-      ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
-      }};
-    background-color: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryOrange;
-    }} !important;
-
-    path {
-      transition: 0.2s ease-in-out;
-      fill: ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
-      }} !important;
-    }
-
-    border-radius: 25px;
-
-    &:hover {
-      cursor: pointer;
-      background-color: white !important;
-      color: ${(props) => {
-        return COLORS[props.color] || COLORS.primaryOrange;
-      }} !important;
-
-      path {
-        transition: 0.2s ease-in-out;
-        fill: ${(props) => {
-          return COLORS[props.color] || COLORS.primaryOrange;
-        }} !important;
-      }
-    }
-  }
+  align-items: center;
+  width: 100%;
+  margin-top: 16px;
 `;

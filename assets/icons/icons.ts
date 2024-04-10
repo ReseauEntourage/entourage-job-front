@@ -17,6 +17,8 @@ import DoubleCarres from './double-carres.svg';
 import Download from './download.svg';
 import EditIcon from './editIcon.svg';
 import Email from './email.svg';
+import EntourageProLogoPrimary from './entourage-pro-logo-primary.svg';
+import EntourageProLogoSecondary from './entourage-pro-logo-secondary.svg';
 import Entourage from './entourage.svg';
 import EyeClosed from './eye-closed.svg';
 import EyeHidden from './eye-hidden.svg';
@@ -32,11 +34,16 @@ import History from './history.svg';
 import Home from './home.svg';
 import IlluCV from './illu-CV.svg';
 import IlluBulleQuestion from './illu-bulle-question.svg';
+import IlluCalendrier from './illu-calendrier.svg';
+import IlluCoeurMainsOuvertesBleu from './illu-coeur-mains-ouvertes-bleu.svg';
 import IlluCoeurMainsOuvertes from './illu-coeur-mains-ouvertes.svg';
 import IlluConversation from './illu-conversation.svg';
+import IlluDossierCandidat from './illu-dossier-candidat.svg';
 import IlluMalette from './illu-malette.svg';
 import IlluPoigneeDeMain from './illu-poignee-de-main.svg';
+import IlluQuestionReponseOrange from './illu-question-reponse-orange.svg';
 import IlluReseauxSociaux from './illu-reseaux-sociaux.svg';
+import IlluTeteHomme from './illu-tete-homme.svg';
 import Info from './info.svg';
 import Instagram from './instagram.svg';
 import Language from './language.svg';
@@ -57,6 +64,9 @@ import PictoFaciliterIntegration from './picto-faciliter-integration.svg';
 import PictoRechercheCv from './picto-recherche-cv.svg';
 import PlusFilled from './plus-filled.svg';
 import Plus from './plus.svg';
+import ProgramCalendar from './program-calendar.svg';
+import ProgramMap from './program-map.svg';
+import ProgramTime from './program-time.svg';
 import Question from './question.svg';
 import QuoteLeft from './quote-left.svg';
 import QuoteRight from './quote-right.svg';
@@ -68,6 +78,7 @@ import Trash from './trash.svg';
 import Twitter from './twitter.svg';
 import UserEmpty from './user-empty.svg';
 import User from './user.svg';
+import Warning from './warning.svg';
 import Whatsapp from './whatsapp.svg';
 import Youtube from './youtube.svg';
 
@@ -91,6 +102,8 @@ DoubleCarres,
 Download,
 EditIcon,
 Email,
+EntourageProLogoPrimary,
+EntourageProLogoSecondary,
 Entourage,
 EyeClosed,
 EyeHidden,
@@ -106,11 +119,16 @@ History,
 Home,
 IlluCV,
 IlluBulleQuestion,
+IlluCalendrier,
+IlluCoeurMainsOuvertesBleu,
 IlluCoeurMainsOuvertes,
 IlluConversation,
+IlluDossierCandidat,
 IlluMalette,
 IlluPoigneeDeMain,
+IlluQuestionReponseOrange,
 IlluReseauxSociaux,
+IlluTeteHomme,
 Info,
 Instagram,
 Language,
@@ -131,6 +149,9 @@ PictoFaciliterIntegration,
 PictoRechercheCv,
 PlusFilled,
 Plus,
+ProgramCalendar,
+ProgramMap,
+ProgramTime,
 Question,
 QuoteLeft,
 QuoteRight,
@@ -142,6 +163,7 @@ Trash,
 Twitter,
 UserEmpty,
 User,
+Warning,
 Whatsapp,
 Youtube
 };

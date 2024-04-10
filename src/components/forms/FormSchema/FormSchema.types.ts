@@ -1,3 +1,4 @@
+import React from 'react';
 import { ArrayPath, Path, UseFormGetValues } from 'react-hook-form';
 import { RadioTypes } from 'src/components/utils/Inputs/Radio/Radio.types';
 import { FilterConstant } from 'src/constants/utils';
@@ -13,6 +14,8 @@ export const FormComponents = {
   SELECT: 'select',
   SELECT_CREATABLE: 'select-creatable',
   SELECT_ASYNC: 'select-async',
+  SELECT_LIST: 'select-list',
+  SELECT_CARD: 'select-card',
   RADIO: 'radio',
   RADIO_ASYNC: 'radio-async',
   HEADING: 'heading',
@@ -26,13 +29,11 @@ export type FormComponent =
 
 export type FieldValue =
   | string
+  | string[]
   | boolean
   | number
   | FilterConstant
   | FilterConstant[];
-
-export type IsArrayFilterConstant<T extends FilterConstant | FilterConstant[]> =
-  T extends FilterConstant[] ? T : T[];
 
 export type MultiFilterConstant<M extends boolean> = M extends true
   ? FilterConstant[]
@@ -48,6 +49,8 @@ export interface FormComponentValues<M extends boolean> {
   [FormComponents.SELECT]: MultiFilterConstant<M>;
   [FormComponents.SELECT_CREATABLE]: MultiFilterConstant<M>;
   [FormComponents.SELECT_ASYNC]: MultiFilterConstant<M>;
+  [FormComponents.SELECT_LIST]: string[];
+  [FormComponents.SELECT_CARD]: string[];
   [FormComponents.RADIO]: string | number;
   [FormComponents.RADIO_ASYNC]: string | number;
   [FormComponents.HEADING]: never;
@@ -92,6 +95,13 @@ export const SelectComponents = [
 
 export type SelectComponent = (typeof SelectComponents)[number];
 
+export const SelectGraphicComponents = [
+  FormComponents.SELECT_LIST,
+  FormComponents.SELECT_CARD,
+] as const;
+
+export type SelectGraphicComponent = (typeof SelectGraphicComponents)[number];
+
 export const RadioComponents = [
   FormComponents.RADIO,
   FormComponents.RADIO_ASYNC,
@@ -117,6 +127,7 @@ export type InputComponent =
   | CheckBoxComponent
   | SelectComponent
   | SelectRequestComponent
+  | SelectGraphicComponent
   | RadioComponent;
 
 export type GetValueType<V extends FormSchemaValidation> = UseFormGetValues<V>;
@@ -150,7 +161,7 @@ interface FormFieldInputCommonProperties<
 > extends FormFieldCommonProperties<V, Path<V>> {
   isRequired?: boolean;
   rules?: Rule<V, T, M>[];
-  title: string | JSX.Element | ((getValue: GetValueType<V>) => string);
+  title?: string | JSX.Element | ((getValue: GetValueType<V>) => string);
   disabled?: boolean;
   disable?: (getValue: GetValueType<V>) => boolean;
   placeholder?: string;
@@ -177,13 +188,24 @@ export interface FormFieldSelect<V extends FormSchemaValidation>
   extends FormFieldInputCommonProperties<V, SelectComponent> {
   component: SelectComponent;
   fieldsToReset?: Path<V>[];
-  options?: FilterConstant[];
+  options: FilterConstant[];
+}
+
+export interface FormFieldSelectGraphic<V extends FormSchemaValidation>
+  extends FormFieldInputCommonProperties<V, SelectGraphicComponent> {
+  component: SelectGraphicComponent;
+  isMulti: boolean;
+  options: FilterConstant[] | ((getValue: GetValueType<V>) => FilterConstant[]);
+  optionsToDisable?: (getValue: GetValueType<V>) => {
+    option: string;
+    message: React.ReactNode;
+  }[];
 }
 
 export interface FormFieldRadio<V extends FormSchemaValidation>
   extends FormFieldInputCommonProperties<V, RadioComponent> {
   component: RadioComponent;
-  dynamicFilter?: (getValue: GetValueType<V>) => string;
+  dynamicFilter?: (getValue: GetValueType<V>) => string | undefined;
   options?: RadioTypes[];
   loadOptions?: (
     callback: (options: RadioTypes[]) => void,
@@ -211,6 +233,7 @@ export interface FormFieldSelectRequestCommon<
     getValue?: GetValueType<V>
   ) => Promise<void> | void;
   openMenuOnClick?: boolean;
+  isMulti: ((getValue: GetValueType<V>) => boolean) | boolean;
 }
 
 interface FormFieldSelectRequestMulti<V extends FormSchemaValidation>
@@ -228,20 +251,10 @@ interface FormFieldSelectRequestMethod<V extends FormSchemaValidation>
   isMulti: (getValue: GetValueType<V>) => boolean;
 }
 
-// TODO fix type depending on isMulti, should be false when no isMulti property
-
-/*
-  type FormFieldSelectRequestOmit<V extends FormSchemaValidation> = Omit<
-    FormFieldSelectRequestCommon<V, false>,
-    'isMulti'
-  >;
-*/
-
 export type FormFieldSelectRequest<V extends FormSchemaValidation> =
   StrictUnion<
     | FormFieldSelectRequestMulti<V>
     | FormFieldSelectRequestSingle<V>
-    /*  | FormFieldSelectRequestOmit<V> */
     | FormFieldSelectRequestMethod<V>
   >;
 
@@ -249,13 +262,14 @@ export type FormFieldInput<V extends FormSchemaValidation> = StrictUnion<
   | FormFieldTextInput<V>
   | FormFieldCheckBox<V>
   | FormFieldRadio<V>
+  | FormFieldSelectGraphic<V>
   | FormFieldSelect<V>
   | FormFieldSelectRequest<V>
 >;
 
 export interface FormFieldText<V extends FormSchemaValidation>
   extends FormFieldCommonProperties<V, string> {
-  title: string | ((getValue: GetValueType<V>) => string);
+  title: string | JSX.Element | ((getValue: GetValueType<V>) => string);
   component: TextComponent;
 }
 

@@ -559,6 +559,7 @@ export const STORAGE_KEYS = {
   RELEASE_VERSION: 'release-version',
   ACCESS_TOKEN: 'access-token',
   TAX_MODAL_CLOSED: 'tax-modal-closed',
+  ENTOURAGE_PRO_MODAL_CLOSED: 'entourage-pro-modal-closed',
 };
 
 export const SOCKETS = {
@@ -661,7 +662,7 @@ export const COMPANY_APPROACHES_FILTERS: FilterConstant<CompanyApproach>[] = [
     value: CompanyApproaches.RECRUITMENT,
   },
   {
-    label: "Avoir plus d'informations sur LinkedOut",
+    label: "Avoir plus d'informations sur Entourage Pro",
     value: CompanyApproaches.INFORMATION,
   },
   {
@@ -727,6 +728,7 @@ export const CANDIDATE_HELP_WITH_FILTERS: FilterConstant<CandidateHelpWithValue>
 export const CandidateGenders = {
   MALE: 'male',
   FEMALE: 'female',
+  OTHER: 'other',
 } as const;
 
 export type CandidateGender =
@@ -741,6 +743,10 @@ export const CANDIDATE_GENDERS_FILTERS: FilterConstant<CandidateGender>[] = [
     label: 'Femme',
     value: CandidateGenders.FEMALE,
   },
+  /* {
+    label: 'Autre',
+    value: CandidateGenders.OTHER,
+  }, */
 ];
 
 export const CandidateAdministrativeSituations = {
@@ -1100,7 +1106,7 @@ export const EXTERNAL_MESSAGE_CONTACT_TYPE_FILTERS: FilterConstant<ExternalMessa
       value: ExternalMessageContactTypes.COMPANY,
     },
     {
-      label: 'Coach/connecteur LinkedOut',
+      label: 'Coach/connecteur Entourage Pro',
       value: ExternalMessageContactTypes.COACH_CONNECTOR,
     },
   ];
@@ -1151,3 +1157,10 @@ export const ReduxRequestEvents = {
   IDLE: 'IDLE',
   FAILED: 'FAILED',
 } as const;
+
+export type DocumentNameType = 'CharteEthique' | 'ConseilsPosture';
+
+export const DocumentNames: { [k in DocumentNameType]: DocumentNameType } = {
+  CharteEthique: 'CharteEthique',
+  ConseilsPosture: 'ConseilsPosture',
+};

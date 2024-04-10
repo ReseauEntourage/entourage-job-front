@@ -1,41 +1,36 @@
+// no need to modify a lot, it will be changed soon
+
 import React from 'react';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import { Layout } from 'src/components/Layout';
 import { openModal } from 'src/components/modals/Modal';
 import { CompanyContactModal } from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
-import {
-  MultipleCTA,
-  CandidateTestimonies,
-  CompanyTestimonies,
-  NewsletterPartial,
-  HowToBeInclusive,
-} from 'src/components/partials';
-import { ImageTitle } from 'src/components/partials/ImageTitle';
+import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
+import { CandidateTestimonies } from 'src/components/partials/pages/Entreprises/Sinformer/CandidateTestimonies';
+import { CompanyTestimonies } from 'src/components/partials/pages/Entreprises/Sinformer/CompanyTestimonies';
+import { HowToBeInclusive } from 'src/components/partials/pages/Entreprises/Sinformer/HowToBeInclusive';
+import { ImageTitle } from 'src/components/partials/utils/ImageTitle';
 import { Section } from 'src/components/utils';
-import { CONTACT_INFO, EXTERNAL_LINKS } from 'src/constants';
+import { H2 } from 'src/components/utils/Headings';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 
 const Sinformer = () => {
   return (
-    <Layout title="S'informer - LinkedOut">
+    <Layout title="S'informer - Entourage Pro">
       <ImageTitle
         img="/static/img/header_pic_sinformer.jpg"
-        title={
-          <mark>
-            Pourquoi et comment devenir une&nbsp;
-            <span className="uk-text-primary">entreprise inclusive</span>
-          </mark>
-        }
+        title="Pourquoi et comment devenir une entreprise inclusive"
         description={
           <>
             En tant qu&apos;entreprise, comment agir concrètement en faveur de
-            l&apos;inclusion&nbsp;? LinkedOut propose plusieurs solutions selon
-            vos besoins&nbsp;: sensibilisation de vos équipes, mécénat ou bien
-            recrutement.
+            l&apos;inclusion&nbsp;? Entourage Pro propose plusieurs solutions
+            selon vos besoins&nbsp;: sensibilisation de vos équipes, mécénat ou
+            bien recrutement.
           </>
         }
         cta={{
+          style: 'custom-secondary-inverted',
           onClick: () => {
             gaEvent(GA_TAGS.PAGE_ENTREPRISES_CONTACTER_REFERENT_CLIC);
             openModal(<CompanyContactModal />);
@@ -43,14 +38,20 @@ const Sinformer = () => {
           label: 'Nous contacter',
         }}
       />
-      <Section style="muted" container="small">
-        <h2 className="uk-text-bold uk-text-center">
-          <span className="uk-text-primary">Engager</span> mon entreprise dans
-          l’inclusion : pourquoi&nbsp;?
-        </h2>
+      <Section style="muted">
+        <H2
+          title={
+            <>
+              <span className="uk-text-primary">Engager</span> mon entreprise
+              dans l’inclusion : pourquoi&nbsp;?
+            </>
+          }
+          color="black"
+          center
+        />
         <p className="uk-text-center">
           Chacun devrait pouvoir avoir sa place dans l’entreprise et dans la
-          société, c’est la conviction de LinkedOut.
+          société, c&lsquo;est la conviction d&lsquo;Entourage Pro.
         </p>
         <p className="uk-text-center">
           Il est temps de passer d’une logique d’insertion à une logique
@@ -74,14 +75,14 @@ const Sinformer = () => {
           équipe qui se fédère autour d’un projet commun.
         </p>
         <p className="uk-text-center">
-          Avec LinkedOut, nous vous aidons à devenir une entreprise du monde
+          Avec Entourage Pro, nous vous aidons à devenir une entreprise du monde
           d’après, qui apporte sa pierre dans la résolution des défis sociaux,
           et qui remet l’économie à l’endroit, au service de l’humain.
         </p>
         <div className="uk-margin-medium-top">
           <LiteYouTubeEmbed
             id="u3d3stVn1h0"
-            title="Témoignage recruteur LinkedOut"
+            title="Témoignage recruteur Entourage Pro"
             aspectWidth={1280}
             aspectHeight={720}
           />
@@ -90,7 +91,8 @@ const Sinformer = () => {
       <CandidateTestimonies />
       <HowToBeInclusive />
       <CompanyTestimonies />
-      <Section
+      {/* to be fixed */}
+      {/* <Section
         style="muted"
         container="small"
         className="uk-padding-remove-top"
@@ -139,7 +141,7 @@ const Sinformer = () => {
                   recruter&nbsp;?
                 </div>
               ),
-              text: 'Découvrez si un candidat LinkedOut correspond à votre besoin ; ou contactez nos partenaires qui cherchent aussi des emplois pour leurs candidats.',
+              text: 'Découvrez si un candidat Entourage Pro correspond à votre besoin ; ou contactez nos partenaires qui cherchent aussi des emplois pour leurs candidats.',
               button: {
                 label: 'Recruter',
                 href: '/candidats?employed=false',
@@ -148,8 +150,9 @@ const Sinformer = () => {
             },
           ]}
           showHorizontalDividers
+          className="uk-margin-large-bottom"
         />
-      </Section>
+      </Section>  */}
       <NewsletterPartial
         tag={GA_TAGS.PAGE_ENTREPRISES_INSCRIPTION_NEWSLETTER_CLIC}
       />

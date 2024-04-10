@@ -11,7 +11,7 @@ interface FooterFormProps {
   error?: string;
   onCancel?: () => void;
   onSubmit: (event?: FormEvent) => Promise<void>;
-  submitText: string;
+  submitText?: string;
   cancelText?: string;
   formId: string;
   isLoadingOverride?: boolean;
@@ -42,8 +42,8 @@ export const FormFooter = ({
           <div>
             {onCancel && (
               <Button
-                style="custom-primary-inverted"
-                color="primaryOrange"
+                style="custom-secondary"
+                color="primaryBlue"
                 onClick={onCancel}
                 dataTestId={`form-cancel-${formId}`}
               >
@@ -52,7 +52,7 @@ export const FormFooter = ({
             )}
             <ButtonPost
               text={submitText || 'Envoyer'}
-              style="custom-primary"
+              style="custom-secondary-inverted"
               action={onSubmit}
               isLoadingOverride={isLoadingOverride}
               dataTestId={`form-confirm-${formId}`}

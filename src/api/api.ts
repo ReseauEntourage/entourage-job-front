@@ -4,6 +4,7 @@ import axios, {
   AxiosResponse,
 } from 'axios';
 import _ from 'lodash';
+import { DocumentNameType } from 'src/constants';
 import { AdminZone } from 'src/constants/departements';
 import { addAxiosInterceptors } from './interceptor';
 import {
@@ -26,6 +27,7 @@ import {
   SocialMedia,
   UserDto,
   UserProfile,
+  UserRegistrationDto,
 } from './types';
 
 export class APIHandler {
@@ -200,9 +202,19 @@ export class APIHandler {
     });
   }
 
+  getProfilesRecommendations(userId: string): Promise<AxiosResponse> {
+    return this.get(`/user/profile/recommendations/${userId}`);
+  }
+
   // post
   postUser(params: UserDto): Promise<AxiosResponse> {
     return this.post('/user', params);
+  }
+
+  async postUserRegistration(
+    params: UserRegistrationDto
+  ): Promise<AxiosResponse> {
+    return this.post('/user/registration', params);
   }
 
   postProfileImage(
@@ -462,8 +474,12 @@ export class APIHandler {
   // contact /
   /// // //////
 
-  getCampaigns(): Promise<AxiosResponse> {
-    return this.get(`/contact/campaigns`);
+  getCandidateCampaigns(): Promise<AxiosResponse> {
+    return this.get(`/contact/campaigns/candidate`);
+  }
+
+  getCoachCampaigns(): Promise<AxiosResponse> {
+    return this.get(`/contact/campaigns/coach`);
   }
 
   postContactContactUs(params: ContactContactUs): Promise<AxiosResponse> {
@@ -488,9 +504,9 @@ export class APIHandler {
     return this.post('/contact/candidateInscription', params);
   }
 
-  /// // //////
-  // message /
-  /// // //////
+  /// //////////
+  // message //
+  /// //////////
 
   postExternalMessage(params: ExternalMessage): Promise<AxiosResponse> {
     return this.post('/message/external', params);
@@ -498,5 +514,16 @@ export class APIHandler {
 
   postInternalMessage(params: InternalMessage): Promise<AxiosResponse> {
     return this.post('/message/internal', params);
+  }
+
+  /// /////////////////
+  // read documents //
+  /// /////////////////
+
+  postReadDocument(
+    params: { documentName: DocumentNameType },
+    userId
+  ): Promise<AxiosResponse> {
+    return this.post(`/readDocuments/read/${userId}`, params);
   }
 }

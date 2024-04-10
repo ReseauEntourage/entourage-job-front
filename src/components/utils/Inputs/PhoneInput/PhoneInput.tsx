@@ -19,6 +19,7 @@ interface PhoneInputProps
       State<Props<DefaultInputComponentProps>>
     >
   > {}
+
 export function PhoneInput({
   id,
   name,
@@ -52,7 +53,7 @@ export function PhoneInput({
         data-testid={id}
         value={value}
         placeholder={
-          showLabel ? placeholder || 'Écrivez...' : placeholder || title
+          (showLabel ? placeholder : placeholder || title) || 'Écrivez'
         }
         onChange={onChange}
         onBlur={onBlur}

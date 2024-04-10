@@ -1,8 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
+import { Provider } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import { ProfileCard } from 'src/components/utils/Cards/ProfileCard';
 import { USER_ROLES } from 'src/constants/users';
+import { store } from 'src/store/store';
 import { CardList } from './CardList';
 import { CardListItem } from './CardListItem';
 
@@ -69,19 +71,21 @@ const list = cards.map(
     department,
     isAvailable,
   }) => (
-    <CardListItem>
-      <ProfileCard
-        userId={userId}
-        firstName={firstName}
-        lastName={lastName}
-        role={role}
-        department={department}
-        businessLines={businessLines}
-        helps={helps}
-        ambitions={ambitions}
-        isAvailable={isAvailable}
-      />
-    </CardListItem>
+    <Provider store={store}>
+      <CardListItem>
+        <ProfileCard
+          userId={userId}
+          firstName={firstName}
+          lastName={lastName}
+          role={role}
+          department={department}
+          businessLines={businessLines}
+          helps={helps}
+          ambitions={ambitions}
+          isAvailable={isAvailable}
+        />
+      </CardListItem>
+    </Provider>
   )
 );
 export const Default = {

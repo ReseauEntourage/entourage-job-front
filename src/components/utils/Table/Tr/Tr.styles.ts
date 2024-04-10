@@ -11,12 +11,12 @@ export const StyledTr = styled.tr`
     return (
       selected &&
       css`
-        background-color: ${COLORS.hoverOrange} !important;
+        background-color: ${COLORS.hoverBlue} !important;
         td {
-          border-top: 1px solid ${COLORS.primaryOrange};
-          border-bottom: 1px solid ${COLORS.primaryOrange};
+          border-top: 1px solid ${COLORS.primaryBlue};
+          border-bottom: 1px solid ${COLORS.primaryBlue};
           &:last-child {
-            border-right: 1px solid ${COLORS.primaryOrange};
+            border-right: 1px solid ${COLORS.primaryBlue};
           }
         }
       `
@@ -66,15 +66,15 @@ export const StyledTrMobile = styled.tr`
       selected &&
       css`
         .line {
-          border-right: 1px solid ${COLORS.primaryOrange};
-          border-left: 1px solid ${COLORS.primaryOrange};
-          background-color: ${COLORS.hoverOrange} !important;
+          border-right: 1px solid ${COLORS.primaryBlue};
+          border-left: 1px solid ${COLORS.primaryBlue};
+          background-color: ${COLORS.hoverBlue} !important;
         }
         .line:first-of-type {
-          border-top: 1px solid ${COLORS.primaryOrange};
+          border-top: 1px solid ${COLORS.primaryBlue};
         }
         .line:last-of-type {
-          border-bottom: 1px solid ${COLORS.primaryOrange};
+          border-bottom: 1px solid ${COLORS.primaryBlue};
         }
       `
     );

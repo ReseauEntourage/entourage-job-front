@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Button, Card, ImgProfile } from 'src/components/utils';
 import { COACH_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { selectLinkedUser } from 'src/use-cases/authentication';
+import { selectLinkedUser } from 'src/use-cases/current-user';
 import { isRoleIncluded } from 'src/utils';
 import {
   StyledDashboardLinkedUserCard,

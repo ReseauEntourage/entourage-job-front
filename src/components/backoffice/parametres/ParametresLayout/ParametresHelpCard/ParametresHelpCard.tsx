@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PlaceholderIllu from 'assets/icons/illu-coeur-mains-ouvertes.svg';
 import { helpFields, useHelpField } from '../../useUpdateProfile';
 import { ParametresPlaceholder } from '../ParametresPlaceholder';
@@ -26,21 +26,18 @@ const plaholderText = {
 
 export const ParametresHelpCard = () => {
   const user = useAuthenticatedUser();
-
   const { role, userProfile } = user;
-
-  const helpField = useHelpField(user.role);
-
   const { contextualRole } = useContextualRole(role);
+  const helpField = useHelpField(contextualRole);
 
-  const openHelpEditModal = () => {
+  const openHelpEditModal = useCallback(() => {
     openModal(
       <ParametresHelpModal
         role={contextualRole}
         title={ParametresHelpCardTitles.modal[contextualRole]}
       />
     );
-  };
+  }, [contextualRole]);
 
   if (!helpField || !userProfile) return null;
 

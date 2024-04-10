@@ -100,8 +100,7 @@ export const HeaderConnectedContentDesktop = ({
           <>
             <NavbarLogo
               href={logoLink.href + (logoLink.queryParams || '')}
-              src="/static/img/linkedout_logo_orange.png"
-              alt="Linkedout"
+              type="primary"
             />
             <StyledNav
               className="uk-navbar-nav"
@@ -146,9 +145,11 @@ export const HeaderConnectedContentDesktop = ({
                         target={external ? '_blank' : '_self'}
                         className="uk-flex uk-flex-middle menu-link"
                       >
-                        <span className="uk-margin-small-right icon-span">
-                          {icon}
-                        </span>
+                        {icon && (
+                          <span className="uk-margin-small-right icon-span">
+                            {icon}
+                          </span>
+                        )}
                         <span className="name-span">{name}</span>
                         {badge && badges[badge] > 0 && (
                           <div>

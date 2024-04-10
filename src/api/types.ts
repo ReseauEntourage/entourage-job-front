@@ -4,14 +4,21 @@ import {
   CandidateHelpWithValue,
   CompanyApproach,
   Contract as ContractValue,
+  DocumentNameType,
   ExternalMessageContactType,
   ExternalOfferOrigin,
   HeardAboutValue,
   OfferStatus,
 } from 'src/constants';
 import { AdminZone, Department } from 'src/constants/departements';
-import { HelpNames } from 'src/constants/helps';
-import { AdminRole, Gender, UserRole } from 'src/constants/users';
+import { HelpValue } from 'src/constants/helps';
+import { Program } from 'src/constants/programs';
+import {
+  AdminRole,
+  Gender,
+  NormalUserRole,
+  UserRole,
+} from 'src/constants/users';
 
 export type SocialMedia =
   | 'facebook'
@@ -28,6 +35,7 @@ export const APIRoutes = {
   CVS: 'cv',
   ORGANIZATIONS: 'organization',
   MESSAGE: 'message',
+  READ_DOCUMENTS: 'readDocuments',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -76,8 +84,8 @@ export type UserProfile = {
   description: string;
   department: Department;
   isAvailable: boolean;
-  helpNeeds: { name: HelpNames }[];
-  helpOffers: { name: HelpNames }[];
+  helpNeeds: { name: HelpValue }[];
+  helpOffers: { name: HelpValue }[];
   networkBusinessLines: {
     name: BusinessLineValue;
     order: number;
@@ -94,6 +102,7 @@ export type UserProfile = {
   lastSendMessage: string;
   lastReceivedMessage: string;
 };
+
 export type User = {
   coach: User;
   id: string;
@@ -115,6 +124,7 @@ export type User = {
   deletedAt?: string;
   userProfile: UserProfile;
   OrganizationId?: string;
+  readDocuments: { documentName: DocumentNameType }[];
 };
 
 export interface CVExperience {
@@ -256,6 +266,21 @@ export type PutCandidate = {
   note: string;
   url: string;
   lastModifiedBy: string;
+};
+
+export type UserRegistrationDto = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  password: string;
+  role: NormalUserRole;
+  campaign?: string;
+  department: Department;
+  helpNeeds?: { name: HelpValue }[];
+  workingRight?: string;
+  program: Program;
+  birthDate: string;
 };
 
 export type Opportunity = {
@@ -549,8 +574,8 @@ export type PublicProfile = {
   currentJob: string;
   description: string;
   isAvailable: boolean;
-  helpNeeds: { name: HelpNames }[];
-  helpOffers: { name: HelpNames }[];
+  helpNeeds: { name: HelpValue }[];
+  helpOffers: { name: HelpValue }[];
   networkBusinessLines: {
     name: BusinessLineValue;
     order: number;
@@ -566,12 +591,13 @@ export type PublicProfile = {
   }[];
   lastSentMessage: string;
   lastReceivedMessage: string;
+  cvUrl?: string;
 };
 
 export type ProfilesFilters = {
   role: UserRole[];
   search?: string;
-  helps: HelpNames | HelpNames[];
+  helps: HelpValue | HelpValue[];
   departments: Department | Department[];
   businessLines: BusinessLineValue | BusinessLineValue[];
 };

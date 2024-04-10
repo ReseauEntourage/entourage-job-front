@@ -1,5 +1,4 @@
 import React from 'react';
-import PlusIcon from 'assets/icons/plus.svg';
 import QuoteLeftIcon from 'assets/icons/quote-left.svg';
 import QuoteRightIcon from 'assets/icons/quote-right.svg';
 import { EditItemsButtons } from 'src/components/backoffice/cv/CVEditPage/CVFicheEdition/EditItemsButtons';
@@ -7,7 +6,8 @@ import { formEditTestimonial } from 'src/components/forms/schemas/formEditTestim
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { Grid, ButtonIcon } from 'src/components/utils';
+import { Grid, Card } from 'src/components/utils';
+import { COLORS } from 'src/constants/styles';
 import { formatParagraph, sortByName } from 'src/utils';
 
 interface Review {
@@ -27,14 +27,11 @@ export const CVEditReviews = ({ reviews, onChange }: CVEditReviewsProps) => {
   const sortedReviews = sortByName(reviews);
 
   return (
-    <div className="uk-card uk-card-default uk-card-body">
-      <Grid gap="small" between eachWidths={['expand', 'auto']}>
-        <h3 className="uk-card-title">
-          Ils me <span className="uk-text-primary">recommandent</span>
-        </h3>
-        {sortedReviews.length < MAX_REVIEWS && (
-          <ButtonIcon
-            onClick={() => {
+    <Card
+      title="Ils me recommandent"
+      editCallback={
+        sortedReviews.length < MAX_REVIEWS
+          ? () => {
               openModal(
                 <ModalEdit
                   title="Ajout - Ils me recommandent"
@@ -47,11 +44,10 @@ export const CVEditReviews = ({ reviews, onChange }: CVEditReviewsProps) => {
                   }}
                 />
               );
-            }}
-            icon={<PlusIcon />}
-          />
-        )}
-      </Grid>
+            }
+          : undefined
+      }
+    >
       <ul className="uk-list uk-list-divider">
         {sortedReviews.length > 0 ? (
           sortedReviews.map((review, i) => {
@@ -62,18 +58,26 @@ export const CVEditReviews = ({ reviews, onChange }: CVEditReviewsProps) => {
                   eachWidths={['auto', 'expand']}
                   className="uk-padding-small uk-padding-remove-horizontal"
                 >
-                  <QuoteLeftIcon width={15} height={15} />
-                  <>
-                    <p className="uk-text-small uk-margin-small">
-                      {formatParagraph(review.text)}
-                    </p>
-                    <p className="uk-text-bold uk-margin-small uk-margin-remove-bottom">
-                      {review.name}
-                    </p>
-                    <p className="uk-margin-remove">{review.status}</p>
-                  </>
+                  <QuoteLeftIcon
+                    width={15}
+                    height={15}
+                    color={COLORS.primaryBlue}
+                  />
+
+                  <p className="uk-text-small uk-margin-small">
+                    {formatParagraph(review.text)}
+                  </p>
+                  <p className="uk-text-bold uk-margin-small uk-margin-remove-bottom">
+                    {review.name}
+                  </p>
+                  <p className="uk-margin-remove">{review.status}</p>
+
                   <div className="uk-flex uk-flex-column uk-flex-right uk-height-1-1">
-                    <QuoteRightIcon width={15} height={15} />
+                    <QuoteRightIcon
+                      width={15}
+                      height={15}
+                      color={COLORS.primaryBlue}
+                    />
                   </div>
                   <EditItemsButtons
                     onEditClick={() => {
@@ -113,6 +117,6 @@ export const CVEditReviews = ({ reviews, onChange }: CVEditReviewsProps) => {
           </li>
         )}
       </ul>
-    </div>
+    </Card>
   );
 };

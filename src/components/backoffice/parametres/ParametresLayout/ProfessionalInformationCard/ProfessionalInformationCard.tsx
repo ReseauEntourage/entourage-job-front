@@ -7,21 +7,21 @@ import { formEditCoachProfessionalInformation } from 'src/components/forms/schem
 import { openModal } from 'src/components/modals/Modal';
 import { Card } from 'src/components/utils';
 import { Tag } from 'src/components/utils/Tag';
-import {
-  AMBITIONS_PREFIXES,
-  AmbitionsPrefixesType,
-  BUSINESS_LINES,
-  BusinessLineValue,
-} from 'src/constants';
+import { BUSINESS_LINES } from 'src/constants';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { findConstantFromValue, sortByOrder } from 'src/utils';
+import {
+  findConstantFromValue,
+  formatCareerPathSentence,
+  formatNetworkBusinessLines,
+  sortByOrder,
+} from 'src/utils';
 import { ModalEditProfessionalInformation } from './ModalEditProfessionalInformation';
 import { StyledProfessionalInformationList } from './ProfessionalInformationCard.styles';
 import {
   checkData,
-  getCandidateDefaultValues,
-  getCoachDefaultValues,
+  getCandidateDefaultProfessionalValues,
+  getCoachDefaultProfessionalValues,
 } from './ProfessionalInformationCard.utils';
 
 const uuidValue = uuid();
@@ -58,14 +58,12 @@ export const ProfessionalInformationCard = () => {
           title="Renseignez votre métier et les secteurs dans lesquels vous avez du réseau"
           description=""
           user={user}
-          defaultValues={getCoachDefaultValues(userProfile)}
+          defaultValues={getCoachDefaultProfessionalValues(userProfile)}
           formSchema={formEditCoachProfessionalInformation}
           getValuesToSend={(values) => {
-            const networkBusinessLines = values.networkBusinessLines.map(
-              ({ value }, i) => {
-                return { name: value, order: i };
-              }
-            ) as { name: BusinessLineValue; order: number }[];
+            const networkBusinessLines = formatNetworkBusinessLines(
+              values.networkBusinessLines
+            );
             return {
               currentJob: values.currentJob,
               networkBusinessLines,
@@ -76,53 +74,11 @@ export const ProfessionalInformationCard = () => {
         <ModalEditProfessionalInformation
           title="Renseignez votre projet professionnel"
           description="Nous vous mettrons en relation avec des professionnels qui pourront vous aider"
-          defaultValues={getCandidateDefaultValues(userProfile)}
+          defaultValues={getCandidateDefaultProfessionalValues(userProfile)}
           formSchema={formEditCandidateProfessionalInformation}
           user={user}
           getValuesToSend={(values) => {
-            let newAmbitions = [] as {
-              prefix: AmbitionsPrefixesType;
-              name: string;
-              order: number;
-            }[];
-            if (values.searchAmbition0) {
-              newAmbitions = [
-                {
-                  prefix: AMBITIONS_PREFIXES[1].label,
-                  name: values.searchAmbition0,
-                  order: 0,
-                },
-              ];
-            }
-            if (values.searchAmbition1) {
-              newAmbitions = [
-                ...newAmbitions,
-                {
-                  prefix: AMBITIONS_PREFIXES[1].label,
-                  name: values.searchAmbition1,
-                  order: 1,
-                },
-              ];
-            }
-            let newBusinessLines = [] as {
-              name: BusinessLineValue;
-              order: number;
-            }[];
-            if (values.searchBusinessLine0) {
-              newBusinessLines = [
-                { name: values.searchBusinessLine0.value, order: 0 },
-              ];
-            }
-            if (values.searchBusinessLine1) {
-              newBusinessLines = [
-                ...newBusinessLines,
-                { name: values.searchBusinessLine1.value, order: 1 },
-              ];
-            }
-            return {
-              searchAmbitions: newAmbitions,
-              searchBusinessLines: newBusinessLines,
-            };
+            return formatCareerPathSentence(values);
           }}
         />
       )

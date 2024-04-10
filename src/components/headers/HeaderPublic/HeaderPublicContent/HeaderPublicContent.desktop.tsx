@@ -1,12 +1,10 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
-import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { StyledHeaderDesktop } from 'src/components/headers/Header.styles';
-import { Navbar, NavbarLogo, Nav } from 'src/components/utils';
+import { Nav, Navbar, NavbarLogo } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
-import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { fbEvent } from 'src/lib/fb';
+import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledPublicItem } from './HeaderPublicContent.styles';
 import { HeaderPublicContentProps } from './HeaderPublicContent.types';
@@ -42,14 +40,27 @@ export const HeaderPublicContentDesktop = ({
     }),
     <div>
       <Button
-        href={{
-          pathname: '/candidats',
-          query: { employed: false },
+        href="/login"
+        style="custom-secondary"
+        color="white"
+        onClick={() => {
+          gaEvent(GA_TAGS.HEADER_CONNEXION_CLIC);
         }}
-        style="primary"
+        size="small"
       >
-        Découvrir les CV
-        <ChevronRightIcon />
+        Connexion
+      </Button>
+    </div>,
+    <div>
+      <Button
+        href="/inscription"
+        style="custom-secondary-inverted"
+        size="small"
+        onClick={() => {
+          gaEvent(GA_TAGS.HEADER_INSCRIPTION_CLIC);
+        }}
+      >
+        Inscription
       </Button>
     </div>,
   ];
@@ -60,26 +71,7 @@ export const HeaderPublicContentDesktop = ({
         sticky
         left={
           <div className="uk-flex uk-flex-middle">
-            <NavbarLogo
-              href="/"
-              src="/static/img/linkedout_logo_white.png"
-              alt="LinkedOut"
-            />
-            <div className="uk-margin-small-left uk-flex uk-flex-center uk-light">
-              <Button
-                href={process.env.DONATION_LINK}
-                isExternal
-                newTab
-                onClick={() => {
-                  gaEvent(GA_TAGS.HEADER_DON_CLIC);
-                  fbEvent(FB_TAGS.DONATION);
-                }}
-                style="default"
-              >
-                Faire un don
-                <ChevronRightIcon />
-              </Button>
-            </div>
+            <NavbarLogo href="/" type="secondary" />
           </div>
         }
         right={<Nav items={rightItems} color="white" />}

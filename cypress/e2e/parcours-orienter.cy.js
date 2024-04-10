@@ -10,8 +10,9 @@ describe('Parcours Orienter', () => {
     }).as('postCandidateContact');
 
     cy.intercept('GET', '/cv/shares', { total: 184222 });
-
+    
     cy.visit('/orienter');
+    window.localStorage.setItem('entourage-pro-modal-closed', 'true');
   });
 
   describe('Orienter un candidat', () => {
@@ -240,15 +241,11 @@ describe('Parcours Orienter', () => {
 
       cy.get('.ReactModalPortal div').should('not.exist');
     });
-  })
-  
-  
+  });
+
   describe('Nous contacter', () => {
     it('Remplir le formulaire, envoyer et fermer', () => {
-      cy.get('[data-testid="button-contact"]')
-        .scrollIntoView()
-        .first()
-        .click();
+      cy.get('[data-testid="button-contact"]').scrollIntoView().first().click();
 
       cy.wait(500);
 
@@ -286,5 +283,5 @@ describe('Parcours Orienter', () => {
 
       cy.get('[data-testid="success-modal-content"]').should('not.exist');
     });
-  });;
+  });
 });

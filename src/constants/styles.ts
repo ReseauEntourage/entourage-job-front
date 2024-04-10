@@ -18,15 +18,26 @@ export const HEIGHTS = {
 
 export const COLORS = {
   lightgray: '#F5F5F5',
-  lightGrayBackground: '#f3f3f3',
   gray: '#D9D9D9',
   darkGray: '#A0A0A0',
   darkGrayFont: '#6D6C6C',
   black: '#363636',
+  warningOrange: '#d53f00',
+
   primaryOrange: '#F55F24',
   hoverOrange: '#feeae3',
   darkHoverOrange: '#fddcd0',
-  darkOrange: '#d53f00',
+
+  primaryBlue: '#47A8B9',
+  hoverBlue: '#F4FDFF',
+  darkHoverBlue: '#2D93A5',
+
+  // shades of blue
+  blueShade1: '#A1CED8',
+  blueShade2: '#61BECF',
+  // => primaryBlue is in between shade2 and shade3
+  blueShade3: '#427F8D',
+
   yesGreen: '#79CC6B',
   noRed: '#FE2929',
   wheat: '#FFF8F6',
@@ -50,8 +61,8 @@ export const COLORS = {
       background: '#8FC4E2',
     },
     pending: {
-      border: '#F55F24',
-      background: '#F55F24',
+      border: '#47A8B9',
+      background: '#47A8B9',
     },
     published: {
       border: '#A7DB9F',

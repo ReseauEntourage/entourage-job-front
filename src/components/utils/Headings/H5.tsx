@@ -1,24 +1,23 @@
 import React from 'react';
 import { useIsDesktop } from 'src/hooks/utils';
 import { StyledH5 } from './Headings.styles';
+import { HeadingComponentProps } from './Headings.types';
 
 export const H5 = ({
   title,
-  effect = '',
+  effect,
   center = false,
   color,
-}: {
-  title: React.ReactNode;
-  effect?: string;
-  center?: boolean;
-  color?: string;
-}) => {
+  weight = 'bold',
+}: HeadingComponentProps) => {
   const isDesktop = useIsDesktop();
   return (
     <StyledH5
       color={color}
-      className={`${center ? 'center' : ''} ${isDesktop ? '' : 'mobile'}`}
       data-uk-scrollspy={effect}
+      mobile={!isDesktop}
+      center={center}
+      weight={weight}
     >
       {title}
     </StyledH5>

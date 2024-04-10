@@ -8,7 +8,6 @@ import {
   MultiValueRemove,
 } from '../Selects';
 import { StyledSelect, StyledSelectContainer } from '../Selects.styles';
-import { IsArrayFilterConstant } from 'src/components/forms/FormSchema';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { FilterConstant } from 'src/constants/utils';
 
@@ -17,7 +16,7 @@ let debounceTimeoutId;
 interface SelectAsyncProps<T extends FilterConstant | FilterConstant[]>
   extends CommonInputProps<T, HTMLSelectElement> {
   loadOptions: (
-    callback: (options: IsArrayFilterConstant<T>) => void,
+    callback: (options: FilterConstant[]) => void,
     inputValue: string
   ) => void;
   isMulti?: boolean;
@@ -41,12 +40,7 @@ export function SelectAsync<T extends FilterConstant | FilterConstant[]>({
   showLabel = false,
   inputRef,
 }: SelectAsyncProps<T>) {
-  const [defaultOptions, setDefaultOptions] = useState<
-    IsArrayFilterConstant<T>
-  >(
-    // @ts-expect-error after enable TS strict mode. Please, try to fix it
-    null
-  );
+  const [defaultOptions, setDefaultOptions] = useState<FilterConstant[]>();
   const [isLoading, setIsLoading] = useState(false);
 
   const debouncedLoadOptions = useCallback(
@@ -64,10 +58,7 @@ export function SelectAsync<T extends FilterConstant | FilterConstant[]>({
   );
 
   const onFocus = useCallback(() => {
-    setDefaultOptions(
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      [] as IsArrayFilterConstant<T>
-    );
+    setDefaultOptions([] as FilterConstant[]);
     setIsLoading(true);
     loadOptions((options) => {
       setDefaultOptions(options);
@@ -99,9 +90,8 @@ export function SelectAsync<T extends FilterConstant | FilterConstant[]>({
           value={value || null}
           isMulti={isMulti}
           placeholder={
-            showLabel
-              ? placeholder || 'Selectionnez dans la liste...'
-              : placeholder || title
+            (showLabel ? placeholder : placeholder || title) ||
+            'Selectionnez dans la liste...'
           }
           noOptionsMessage={() => {
             return `Aucun résultat`;

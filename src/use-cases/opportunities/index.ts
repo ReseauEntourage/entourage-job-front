@@ -1,12 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { Saga } from 'redux-saga';
+import { UseCaseConfigItem } from '../types';
 import { saga } from './opportunities.saga';
 import { slice } from './opportunities.slice';
-
-export type UseCaseConfigItem = {
-  slice: ReturnType<typeof createSlice>;
-  saga: Saga;
-};
 
 export * from './opportunities.selectors';
 

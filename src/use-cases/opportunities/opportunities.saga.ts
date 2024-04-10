@@ -1,10 +1,10 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
+import { selectProfilesOffset } from '../profiles';
+import { Api } from 'src/api';
 import {
   selectCandidateId,
   selectCandidateProfileDefaultFiltersForDashboardOpportunities,
-} from '../authentication';
-import { selectProfilesOffset } from '../profiles';
-import { Api } from 'src/api';
+} from 'src/use-cases/current-user';
 import { mutateToArray } from 'src/utils';
 import { slice } from './opportunities.slice';
 
@@ -54,7 +54,7 @@ function* fetchOpportunitiesAsCandidateWithFiltersSaga(
 
 function* fetchOpportunitiesTabCountsSaga() {
   const candidateId = yield* select(selectCandidateId);
-  if (!candidateId) return null;
+  if (!candidateId) return;
   try {
     const response = yield* call(() =>
       Api.getOpportunitiesTabCountByCandidate(candidateId)

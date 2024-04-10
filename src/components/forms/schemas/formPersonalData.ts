@@ -6,7 +6,12 @@ import {
   Department,
   DEPARTMENTS_FILTERS,
 } from 'src/constants/departements';
-import { ADMIN_ROLES, AdminRole, Gender } from 'src/constants/users';
+import {
+  ADMIN_ROLES,
+  AdminRole,
+  Gender,
+  GENDERS_FILTERS,
+} from 'src/constants/users';
 import { FilterConstant } from 'src/constants/utils';
 
 export const formPersonalDataAsCandidate: FormSchema<{
@@ -216,10 +221,7 @@ export const formPersonalDataAsAdmin: FormSchema<{
       title: 'Genre*',
       name: 'gender',
       component: 'select-simple',
-      options: [
-        { value: 0, label: 'Homme' },
-        { value: 1, label: 'Femme' },
-      ],
+      options: GENDERS_FILTERS,
       isRequired: true,
     },
     {

@@ -14,7 +14,7 @@ const ResetSuccessPage = () => {
     <Layout
       title={`${
         isCreation ? 'Création' : 'Réinitialisation'
-      } de mot de passe - LinkedOut`}
+      } de mot de passe - Entourage Pro`}
     >
       <Section size="large" style="muted">
         <div className="uk-flex uk-flex-center">

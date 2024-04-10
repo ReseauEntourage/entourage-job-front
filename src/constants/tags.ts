@@ -20,8 +20,14 @@ export const GA_TAGS = {
   PAGE_ENTREPRISES_PROPOSER_OFFRE_CLIC: {
     action: 'Page_Entreprises_Proposer_Offre_Clic',
   },
+  PAGE_ENTREPRISES_DECOUVRIR_CANDIDATS_CLICK: {
+    action: 'Page_Entreprises_Découvrir_Candidats_Click',
+  },
   PAGE_ENTREPRISES_ENVOYER_CONTACT_REFERENT_CLIC: {
     action: 'Page_Entreprises_Envoyer_Contact_Referent_Clic',
+  },
+  PAGE_ENTREPRISES_ALL_CV_CLICK: {
+    action: 'Page_Entreprises_All_CV_Click',
   },
   PAGE_ENTREPRISES_CARROUSEL_CLIC: {
     action: 'Page_Entreprises_Carrousel_Clic',
@@ -31,6 +37,12 @@ export const GA_TAGS = {
   },
   PAGE_ENTREPRISES_SENSIBILISER_CLIC: {
     action: 'Page_Entreprises_Sensibiliser_Clic',
+  },
+  PAGE_ENTREPRISES_MESURE_D_IMPACT_CLICK: {
+    action: 'Page_Entreprises_Mesure_D_Impact_Click',
+  },
+  PAGE_ENTREPRISES_PARTNERS_CLICK: {
+    action: 'Page_Entreprises_Partners_Click',
   },
   PAGE_ENTREPRISES_MECENAT_CLIC: {
     action: 'Page_Entreprises_Mecenat_Clic',
@@ -242,6 +254,12 @@ export const GA_TAGS = {
   HEADER_ORIENTER_CLIC: {
     action: 'Header_Orienter_Clic',
   },
+  HEADER_INSCRIPTION_CLIC: {
+    action: 'Header_Inscription_Clic',
+  },
+  HEADER_CONNEXION_CLIC: {
+    action: 'Header_Connexion_Clic',
+  },
   PAGE_RECRUTER_CARROUSEL_CLIC: {
     action: 'Page_Recruter_Carrousel_Clic',
   },
@@ -412,6 +430,93 @@ export const GA_TAGS = {
   },
   PAGE_DASHBOARD_DISPONIBILITE_CLIC: {
     action: 'Page_Dashboard_Disponibilite_Clic',
+  },
+  BACKOFFICE_CANDIDAT_HEADER_DASHBOARD_CLIC: {
+    action: 'Backoffice_Candidat_Header_Dashboard_Clic',
+  },
+  BACKOFFICE_COACH_HEADER_DASHBOARD_CLIC: {
+    action: 'Backoffice_Coach_Header_Dashboard_Clic',
+  },
+  HEADER_CONTACT_CLIC: {
+    action: 'Header_Contact_Clic',
+  },
+  HEADER_CANDIDATS_CLIC: {
+    action: 'Header_Candidats_Clic',
+  },
+  HOME_DECOUVRIR_CTA_CLICK: {
+    action: 'Home_Decouvrir_CTA_Click',
+  },
+  HOME_ENGAGEMENT_ENTREPRISE_COLLABORATEURS: {
+    action: 'Home_Engagement_Entreprise_Collaborateurs',
+  },
+  HOME_ENGAGEMENT_ENTREPRISE_CANDIDATS: {
+    action: 'Home_Engagement_Entreprise_Candidats',
+  },
+  HOME_ENGAGEMENT_ENTREPRISE_MECENAT_COMPETENCES: {
+    action: 'Home_Engagement_Entreprise_Mecenat_Competences',
+  },
+  HOME_ENGAGEMENT_ENTREPRISE_MECENAT_NATURE: {
+    action: 'Home_Engagement_Entreprise_Mecenat_Nature',
+  },
+  HOME_BANNER_CANDIDAT_CLICK: {
+    action: 'Home_Banner_Candidat_click',
+  },
+  HOME_BANNER_COACH_CLICK: {
+    action: 'Home_Banner_Coach_click',
+  },
+  HOME_REJOINDRE_CANDIDAT_CLICK: {
+    action: 'Home_Rejoindre_Candidat_Click',
+  },
+  HOME_REJOINDRE_COACH_CLICK: {
+    action: 'Home_Rejoindre_Coach_Click',
+  },
+  HOME_CHIFFRES_MESURE_D_IMPACT_CLICK: {
+    action: 'Home_Chiffres_Mesure_D_Impact_Click',
+  },
+  HOME_NOUS_SOUTENIR_FAIRE_UN_DON_CLICK: {
+    action: 'Home_Nous_Soutenir_Faire_Un_Don_Click',
+  },
+  HOME_PARTNERS_CLICK: {
+    action: 'Home_Partners_Click',
+  },
+  PAGE_PROGRAMME_360_INSCRIPTION_PARTICIPER_CLICK: {
+    action: 'Page_Travailler_Inscription_Participer_Click',
+  },
+  PAGE_PROGRAMME_360_INSCRIPTION_REJOINDRE_CLICK: {
+    action: 'Page_Travailler_Inscription_Participer_Click',
+  },
+  PAGE_TRAVAILLER_PROGRAMME_360_INSCRIPTION_CLICK: {
+    action: 'Page_Travailler_Inscription_Click',
+  },
+  PAGE_TRAVAILLER_PROGRAMME_360_EN_SAVOIR_PLUS_CLICK: {
+    action: 'Page_Travailler_En_Savoir_Plus_Click',
+  },
+  PAGE_TRAVAILLER_PROGRAMME_COUP_DE_POUCE_INSCRIPTION_CLICK: {
+    action: 'Page_Travailler_Inscription_Click',
+  },
+  PAGE_TRAVAILLER_MESURE_IMPACT_CLICK: {
+    action: 'Page_Travailler_Mesure_Impact_Click',
+  },
+  PAGE_TRAVAILLER_DECOUVRIR_PROGRAMME_360_CLICK: {
+    action: 'Page_Travailler_Decouvrir_Programme_360_Click',
+  },
+  PAGE_TRAVAILLER_DECOUVRIR_PROGRAMME_COUP_DE_POUCE_CLICK: {
+    action: 'Page_Travailler_Decouvrir_Programme_Coup_De_Pouce_Click',
+  },
+  PAGE_AIDER_DECOUVRIR_PROGRAMME_360_CLICK: {
+    action: 'Page_Aider_Decouvrir_Programme_360_Click',
+  },
+  PAGE_AIDER_DECOUVRIR_PROGRAMME_COUP_DE_POUCE_CLICK: {
+    action: 'Page_Aider_Decouvrir_Programme_Coup_De_Pouce_Click',
+  },
+  PAGE_AIDER_PROGRAMME_COUP_DE_POUCE_INSCRIPTION_CLICK: {
+    action: 'Page_Aider_Inscription_Click',
+  },
+  PAGE_AIDER_PROGRAMME_360_INSCRIPTION_CLICK: {
+    action: 'Page_Aider_Inscription_Click',
+  },
+  PAGE_AIDER_REJOINDRE_INSCRIPTION_CLICK: {
+    action: 'Page_Aider_Rejoindre_Inscription_Click',
   },
 } as const;
 

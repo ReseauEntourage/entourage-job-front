@@ -5,19 +5,19 @@ import { HeaderPublicContent } from './HeaderPublicContent';
 const LINKS = [
   {
     href: '/travailler',
-    name: 'Je cherche un emploi',
+    name: 'Devenir candidat(e)',
     tag: GA_TAGS.HEADER_TRAVAILLER_CLIC,
   },
+  { href: '/aider', name: 'Devenir coach', tag: GA_TAGS.HEADER_AIDER_CLIC },
   {
     href: '/entreprises',
-    name: 'Je recrute',
+    name: 'Engager son entreprise',
     tag: GA_TAGS.HEADER_RECRUTER_CLIC,
   },
-  { href: '/aider', name: 'Je veux aider', tag: GA_TAGS.HEADER_AIDER_CLIC },
   {
-    href: '/orienter',
-    name: "J'oriente un candidat",
-    tag: GA_TAGS.HEADER_ORIENTER_CLIC,
+    href: '/candidats',
+    name: 'Découvrir les candidat(e)s',
+    tag: GA_TAGS.HEADER_CANDIDATS_CLIC,
   },
 ];
 

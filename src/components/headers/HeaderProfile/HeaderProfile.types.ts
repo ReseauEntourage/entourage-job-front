@@ -10,4 +10,5 @@ export interface HeaderProfileProps {
   description: string;
   isAvailable: boolean;
   isEditable?: boolean;
+  cvUrl?: string;
 }

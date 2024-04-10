@@ -47,7 +47,7 @@ export const StyledCVPDFQuote = styled.div`
   align-self: center;
 
   svg {
-    color: ${COLORS.primaryOrange};
+    color: ${COLORS.primaryBlue};
     height: 10px;
     width: 15px;
     position: absolute;
@@ -164,7 +164,7 @@ export const StyledCVPDFContentInformations = styled(
     align-items: center;
 
     svg {
-      color: ${COLORS.primaryOrange};
+      color: ${COLORS.primaryBlue};
       height: 10px !important;
       width: 10px !important;
       margin-right: 5px;
@@ -202,7 +202,7 @@ export const StyledCVPDFPage = styled.div`
   height: 1122px;
   width: 794px;
   margin-bottom: 50px;
-  background-color: ${COLORS.wheat};
+  background-color: ${COLORS.lightgray};
   display: flex;
   flex-direction: column;
 

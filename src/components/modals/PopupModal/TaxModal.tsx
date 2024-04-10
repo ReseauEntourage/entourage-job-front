@@ -10,9 +10,7 @@ export function TaxModal() {
       removePadding
       onClose={(onClose) => {
         localStorage.setItem(STORAGE_KEYS.TAX_MODAL_CLOSED, String(true));
-
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        onClose();
+        if (onClose) onClose();
       }}
     >
       <SimpleLink href={EXTERNAL_LINKS.TAX} isExternal target="_blank">

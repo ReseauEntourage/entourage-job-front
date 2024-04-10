@@ -1,7 +1,10 @@
-name: LinkedOut [front-end]
+name: Entourage Pro [front-end]
 
 on:
-  pull_request: {} # events by default (open, synchronized, reopened) in any branch triggers the workflow.
+  push:
+    branches: [ master, develop ]
+  pull_request: {}
+  workflow_dispatch:
 
 env:
   WEBINAR_URL: 'https://google.com'
@@ -13,7 +16,7 @@ env:
   TUTORIAL_VIDEO_OFFERS: 'https://google.com'
   TUTORIAL_VIDEO_OFFERS_2: 'https://google.com'
   TUTORIAL_INTERVIEW_TRAINING: 'https://google.com'
-  IRAISER_DONATION_LINK: 'https://google.com'
+  DONATION_LINK: 'https://google.com'
   SERVER_URL: 'http://localhost:3000'
   API_URL: 'http://localhost:3002'
   PORT: 3000

@@ -1,19 +1,19 @@
 import React, { useRef } from 'react';
 import { Layout } from 'src/components/Layout';
-import {
-  LogoList,
-  // Reviews,
-} from 'src/components/partials';
-import { EnSavoirPlus } from 'src/components/partials/EnSavoirPlus';
-import { ImageTitle } from 'src/components/partials/ImageTitle';
-import { Reviews } from 'src/components/partials/Reviews';
 
+import { Impact } from 'src/components/partials/common/Impact';
 import { Decouvrir } from 'src/components/partials/pages/Orienter/Decouvrir';
-import { Impact } from 'src/components/partials/pages/Orienter/Impact';
+import { EnSavoirPlus } from 'src/components/partials/pages/Orienter/EnSavoirPlus';
 import { Inscrire } from 'src/components/partials/pages/Orienter/Inscrire';
 import { Opportunites } from 'src/components/partials/pages/Orienter/Opportunites';
 import { Publier } from 'src/components/partials/pages/Orienter/Publier';
 import { VideoSection } from 'src/components/partials/pages/Orienter/VideoSection';
+import { ImageTitle } from 'src/components/partials/utils/ImageTitle';
+import {
+  LogoList,
+  // Reviews,
+} from 'src/components/partials/utils/LogoList';
+import { Reviews } from 'src/components/partials/utils/Reviews';
 import { Section } from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
 import { PARTNERS } from 'src/constants/partners';
@@ -62,7 +62,7 @@ const Orienter = () => {
   };
 
   return (
-    <Layout title="Orienter - LinkedOut">
+    <Layout title="Orienter - Entourage Pro">
       {/* change picture AND component */}
       <ImageTitle
         img="/static/img/orienter-banner.jpg"
@@ -77,7 +77,7 @@ const Orienter = () => {
         description={
           <>
             Vous accompagnez des personnes en situation d&lsquo;exclusion ? Avec
-            LinkedOut, accélérez leur retour à l&lsquo;emploi !
+            Entourage Pro, accélérez leur retour à l&lsquo;emploi !
           </>
         }
       />
@@ -92,14 +92,14 @@ const Orienter = () => {
 
       <VideoSection
         videoId="gUuaeDxlqTE"
-        videoTitle="Rencontre avec Najaf, ancien candidat LinkedOut à Paris"
+        videoTitle="Rencontre avec Najaf, ancien candidat Entourage Pro à Paris"
         coloredBackground
       />
       <Publier innerRef={refPublier} />
 
       <VideoSection
         videoId="WLmDL-pB1NE"
-        videoTitle="Atelier décroche un Job - L'Accélérateur (EITI) X Linkedout"
+        videoTitle="Atelier décroche un Job - L'Accélérateur (EITI) X Entourage Pro"
       />
 
       <Opportunites />
@@ -107,7 +107,7 @@ const Orienter = () => {
       {/* change style */}
       <Reviews
         reviews={reviews}
-        title="Plus de 60 entreprises partenaires nous font confiance à LinkedOut"
+        title="Plus de 60 entreprises partenaires nous font confiance à Entourage Pro"
       />
 
       {/* already done => only remove uikit */}
@@ -116,7 +116,8 @@ const Orienter = () => {
           <H2
             title={
               <>
-                <span className="orange">Ils travaillent</span> avec LinkedOut
+                <span className="orange">Ils travaillent</span> avec Entourage
+                Pro
               </>
             }
             color="black"

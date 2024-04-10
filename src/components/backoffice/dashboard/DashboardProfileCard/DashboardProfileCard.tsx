@@ -23,7 +23,7 @@ export const DashboardProfileCard = () => {
   const helpField = useHelpField(user.role);
   const { contextualRole } = useContextualRole(user.role);
 
-  if (!helpField || !contextualRole) return null;
+  if (!helpField) return null;
 
   return (
     <Card>

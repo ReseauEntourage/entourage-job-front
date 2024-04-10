@@ -7,6 +7,7 @@ import {
   fetchSelectedProfileSelectors,
   selectSelectedProfile,
 } from 'src/use-cases/profiles/profiles.selectors';
+import { assertIsDefined } from 'src/utils/asserts';
 
 export function useSelectedProfile() {
   const userId = useUserId();
@@ -47,9 +48,7 @@ export function useSelectedProfile() {
 export function useSelectSelectedProfile() {
   const selectedProfile = useSelector(selectSelectedProfile);
 
-  if (!selectedProfile) {
-    throw new Error('No selected profile');
-  }
+  assertIsDefined(selectedProfile, 'No selected profile');
 
   return selectedProfile;
 }

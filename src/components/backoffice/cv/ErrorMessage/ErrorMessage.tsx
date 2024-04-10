@@ -7,8 +7,8 @@ export const ErrorMessage = ({ error }: { error?: string }) => {
         <h2 className="uk-text-bold uk-margin-remove">{error}</h2>
         <p>
           Contacte{' '}
-          <span className="uk-text-primary">l&apos;équipe LinkedOut</span> pour
-          en savoir plus.
+          <span className="uk-text-primary">l&apos;équipe Entourage Pro</span>{' '}
+          pour en savoir plus.
         </p>
       </div>
     </div>

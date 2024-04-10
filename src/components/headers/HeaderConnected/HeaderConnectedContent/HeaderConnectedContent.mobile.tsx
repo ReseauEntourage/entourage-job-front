@@ -46,8 +46,7 @@ export const HeaderConnectedContentMobile = ({
         left={
           <NavbarLogo
             href={logoLink.href + (logoLink.queryParams || '')}
-            src="/static/img/linkedout_logo_white.png"
-            alt="Linkedout"
+            type="secondary"
           />
         }
         right={
@@ -96,7 +95,9 @@ export const HeaderConnectedContentMobile = ({
                       }}
                     >
                       <span>
-                        <span className="uk-margin-small-right">{icon}</span>
+                        {icon && (
+                          <span className="uk-margin-small-right">{icon}</span>
+                        )}
                         {name}
                       </span>
                     </a>

@@ -1,6 +1,9 @@
 /* eslint-disable no-undef */
+import moment from 'moment';
+
 describe('Candidat', () => {
   beforeEach(() => {
+    window.localStorage.setItem('entourage-pro-modal-closed', 'true');
     cy.intercept('GET', '/cv/shares', { total: 184221 }).as('cvShares');
 
     cy.intercept('GET', '/auth/current', {
@@ -74,9 +77,11 @@ describe('Candidat', () => {
         ).as('putOffer');
       });
 
-
-      cy.intercept('POST', `/user/profile/uploadImage/${user.id}`, "/assets/image-fixture.jpg").as('uploadImage');
-
+      cy.intercept(
+        'POST',
+        `/user/profile/uploadImage/${user.id}`,
+        '/assets/image-fixture.jpg'
+      ).as('uploadImage');
     });
 
     cy.intercept('GET', `https://tarteaucitron.io/load.js*`, {});
@@ -90,36 +95,35 @@ describe('Candidat', () => {
     }).as('getUserProfile');
 
     cy.intercept('/message/internal', {}).as('postInternalMessage');
-
   });
 
-  it('should open a user\'s public profile and contact him', () => {
-      cy.fixture('public-profile-res').then((userProfile) => {
-        cy.visit(`/backoffice/profile/${userProfile.id}`, {
-          onBeforeLoad: function async(window) {
-            window.localStorage.setItem('access-token', '1234');
-            window.localStorage.setItem('release-version', 'v100');
-          },
-        });
-        cy.url().should('include', userProfile.id);
-      })
+  it("should open a user's public profile and contact him", () => {
+    cy.fixture('public-profile-res').then((userProfile) => {
+      cy.visit(`/backoffice/profile/${userProfile.id}`, {
+        onBeforeLoad: function async(window) {
+          window.localStorage.setItem('access-token', '1234');
+          window.localStorage.setItem('release-version', 'v100');
+        },
+      });
+      cy.url().should('include', userProfile.id);
+    });
 
-      cy.get('[data-testid="form-contact-internal-message-subject"]')
-        .scrollIntoView()
-        .type('test');
+    cy.get('[data-testid="form-contact-internal-message-subject"]')
+      .scrollIntoView()
+      .type('test');
 
-      cy.get('[data-testid="form-contact-internal-message-message"]')
-        .scrollIntoView()
-        .type('test');
+    cy.get('[data-testid="form-contact-internal-message-message"]')
+      .scrollIntoView()
+      .type('test');
 
+    cy.get('[data-testid="form-confirm-form-contact-internal-message"]')
+      .scrollIntoView()
+      .click();
 
-      cy.get('[data-testid="form-confirm-form-contact-internal-message"]')
-        .scrollIntoView()
-        .click();
-
-
-      cy.get('[data-testid="profile-contact-form-confirm"]')
-        .should('contain', 'Votre message a été envoyé');
+    cy.get('[data-testid="profile-contact-form-confirm"]').should(
+      'contain',
+      'Votre message a été envoyé'
+    );
   });
 
   it('should open backoffice public offers', () => {
@@ -235,7 +239,7 @@ describe('Candidat', () => {
       cy.url().should('include', user.id);
     });
     // catchphrase
-    cy.get(`[data-testid="test-catchphrase-edit-icon"]`)
+    cy.get(`[data-testid="cv-catchphrase-button-edit"]`)
       .scrollIntoView()
       .click();
     const catchPhrase = 'hello my name is Mike';
@@ -247,14 +251,14 @@ describe('Candidat', () => {
     );
 
     // presentation
-    cy.get(`[data-testid="test-story-edit-icon"]`).scrollIntoView().click();
+    cy.get(`[data-testid="cv-story-button-edit"]`).scrollIntoView().click();
     const story = 'Here I present';
     cy.get('#form-story').clear().type(story);
     cy.get(`[data-testid="form-confirm-form-story"]`).click();
     cy.get(`[data-testid="cv-edit-story-content"]`).should('contain', story);
 
     // atouts/skills
-    cy.get(`[data-testid="test-skills-edit-icon"]`).scrollIntoView().click();
+    cy.get(`[data-testid="cv-skills-button-edit"]`).scrollIntoView().click();
     const skill1 = 'skill1';
     const skill2 = 'skill2';
     cy.get('#form-skills')
@@ -275,7 +279,7 @@ describe('Candidat', () => {
     cy.get(`[data-testid="cv-edit-skill2-content"]`).should('contain', skill2);
 
     // formations
-    cy.get(`[data-testid="button-cv-add-formations"]`).scrollIntoView().click();
+    cy.get(`[data-testid="cv-formations-button-edit"]`).scrollIntoView().click();
     cy.get(`[data-testid="form-formation-title"]`)
       .scrollIntoView()
       .type('formation title');
@@ -300,7 +304,7 @@ describe('Candidat', () => {
       .click();
 
     // experience
-    cy.get(`[data-testid="button-cv-add-experiences"]`)
+    cy.get(`[data-testid="cv-experiences-button-edit"]`)
       .scrollIntoView()
       .click();
     cy.get(`[data-testid="form-experience-title"]`)
@@ -347,7 +351,7 @@ describe('Candidat', () => {
     cy.get(`[data-testid="test-toggle-hidden"]`).should('not.be.checked');
 
     // toggle is employed
-    cy.get('label[for="ent-toggle-employedToggle"]').click();
+    cy.get('label[for="ent-toggle-employedToggle"]').scrollIntoView().click();
 
     cy.get('#form-edit-employed-contract-container')
       .should('be.visible')
@@ -356,7 +360,9 @@ describe('Candidat', () => {
       .find('.option')
       .contains('Alternance')
       .click();
-    cy.get('#form-edit-employed-endOfContract').type('2024-03-03');
+    cy.get('#form-edit-employed-endOfContract').type(
+      moment().add(1, 'month').format('YYYY-MM-DD')
+    );
     cy.contains('Sauvegarder').click();
     cy.wait('@putUserCandidatParams');
     cy.get(`[data-testid="test-toggle-employedToggle"]`).should('be.checked');
@@ -374,45 +380,83 @@ describe('Candidat', () => {
 
     // check help needs and modify
     cy.fixture('auth-current-candidat-res').then((user) => {
-      cy.intercept('PUT', `/user/profile/${user.id}`, {fixture: "user-profile-candidate-help-modified"}).as('putUserProfile');
-    })
-    cy.fixture('auth-current-candidat-res').then((userCandidate) => {
-        cy.get(`[data-testid="parametres-help-list"]`).scrollIntoView().find('li').should('have.length', userCandidate.userProfile?.helpNeeds?.length);
+      cy.intercept('PUT', `/user/profile/${user.id}`, {
+        fixture: 'user-profile-candidate-help-modified',
+      }).as('putUserProfile');
     });
-    cy.get(`[data-testid="parametres-help-card-button-edit"]`).scrollIntoView().click();
-    cy.get(`[data-testid="parametres-help-option-tips"]`).scrollIntoView().click();
-    cy.get(`[data-testid="parametres-help-option-cv"]`).scrollIntoView().click();
-    cy.get(`[data-testid="parametres-help-modal-save"]`).scrollIntoView().click();
+    cy.fixture('auth-current-candidat-res').then((userCandidate) => {
+      cy.get(`[data-testid="parametres-help-list"]`)
+        .scrollIntoView()
+        .find('li')
+        .should('have.length', userCandidate.userProfile?.helpNeeds?.length);
+    });
+    cy.get(`[data-testid="parametres-help-card-button-edit"]`)
+      .scrollIntoView()
+      .click();
+    cy.get(`[data-testid="form-edit-helps-helps-tips"]`)
+      .scrollIntoView()
+      .click();
+    cy.get(`[data-testid="form-edit-helps-helps-cv"]`).scrollIntoView().click();
+    cy.contains('Sauvegarder').scrollIntoView().click();
 
     cy.fixture('user-profile-candidate-help-modified').then((userProfile) => {
-      cy.get(`[data-testid="parametres-help-list"]`).scrollIntoView().find('li').should('have.length', userProfile.helpNeeds?.length);
+      cy.get(`[data-testid="parametres-help-list"]`)
+        .scrollIntoView()
+        .find('li')
+        .should('have.length', userProfile.helpNeeds?.length);
     });
 
     // modify profile description
     cy.fixture('auth-current-candidat-res').then((user) => {
-      cy.intercept('PUT', `/user/profile/${user.id}`, {fixture: "user-profile-candidate-description-modified"}).as('putUserProfile');
-    })
-    cy.get(`[data-testid="profile-description-placeholder"]`).scrollIntoView().click();
-    cy.get(`[data-testid="form-profile-description-description"]`).scrollIntoView().type('hello');
-    cy.get(`[data-testid="form-confirm-form-profile-description"]`).scrollIntoView().click();
-    cy.get(`[data-testid="profile-description"]`).should('contain', "hello");
+      cy.intercept('PUT', `/user/profile/${user.id}`, {
+        fixture: 'user-profile-candidate-description-modified',
+      }).as('putUserProfile');
+    });
+    cy.get(`[data-testid="profile-description-modify-button"]`)
+      .scrollIntoView()
+      .click();
+    cy.get(`[data-testid="form-profile-description-description"]`)
+      .scrollIntoView()
+      .type('hello sir');
+    cy.get(`[data-testid="form-confirm-form-profile-description"]`)
+      .scrollIntoView()
+      .click();
+    cy.get(`[data-testid="profile-description"]`).should('contain', 'hello sir');
 
     // change profile picture
-    cy.get(`[data-testid="profile-picture-upload-desktop"]`).selectFile('assets/image-fixture.jpg', {force: true});
+    cy.get(`[data-testid="profile-picture-upload-desktop"]`).selectFile(
+      'assets/image-fixture.jpg',
+      { force: true }
+    );
     cy.wait('@uploadImage');
 
     // change professional information
     cy.fixture('auth-current-candidat-res').then((user) => {
-      cy.intercept('PUT', `/user/profile/${user.id}`, {fixture: "user-profile-candidate-professional-info-modified"}).as('putUserProfile');
-    })
+      cy.intercept('PUT', `/user/profile/${user.id}`, {
+        fixture: 'user-profile-candidate-professional-info-modified',
+      }).as('putUserProfile');
+    });
     const businessLine = 'Agriculture';
     const ambition = 'test';
-    cy.get(`[data-testid="parametres-professional-information-card-button-edit"]`).scrollIntoView().click();
-    cy.get(`[data-testid="form-career-path-searchBusinessLine0"]`).scrollIntoView().click();
+    cy.get(
+      `[data-testid="parametres-professional-information-card-button-edit"]`
+    )
+      .scrollIntoView()
+      .click();
+    cy.get(`[data-testid="form-career-path-searchBusinessLine0"]`)
+      .scrollIntoView()
+      .click();
     cy.get(`.Select__option`).contains(businessLine).click();
-    cy.get(`[data-testid="form-career-path-searchAmbition0"]`).scrollIntoView().type(ambition);
-    cy.get(`[data-testid="form-confirm-form-career-path"]`).scrollIntoView().click();
-    cy.get(`[data-testid="candidat-businessline-li"]`).should('contain', businessLine);
+    cy.get(`[data-testid="form-career-path-searchAmbition0"]`)
+      .scrollIntoView()
+      .type(ambition);
+    cy.get(`[data-testid="form-confirm-form-career-path"]`)
+      .scrollIntoView()
+      .click();
+    cy.get(`[data-testid="candidat-businessline-li"]`).should(
+      'contain',
+      businessLine
+    );
     cy.get(`[data-testid="candidat-ambition-li"]`).should('contain', ambition);
   });
 });

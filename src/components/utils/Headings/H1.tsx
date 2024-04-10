@@ -1,23 +1,22 @@
 import React from 'react';
 import { useIsDesktop } from 'src/hooks/utils';
 import { StyledH1 } from './Headings.styles';
+import { HeadingComponentProps } from './Headings.types';
 
 export const H1 = ({
   title,
-  effect,
   color,
   center = false,
-}: {
-  title: React.ReactNode;
-  effect?: string;
-  color: string;
-  center?: boolean;
-}) => {
+  effect,
+  weight = 'bold',
+}: HeadingComponentProps) => {
   const isDesktop = useIsDesktop();
   return (
     <StyledH1
-      className={`${center ? 'center' : ''} ${isDesktop ? '' : 'mobile'}`}
       color={color}
+      center={center}
+      weight={weight}
+      mobile={!isDesktop}
       data-uk-scrollspy={effect}
     >
       {title}

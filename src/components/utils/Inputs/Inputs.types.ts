@@ -8,7 +8,7 @@ export interface CommonInputProps<
 > {
   id: string;
   name: string;
-  title: string | JSX.Element;
+  title?: string | JSX.Element;
   value: T;
   onChange: (value: T) => void;
   onBlur?: () => void;

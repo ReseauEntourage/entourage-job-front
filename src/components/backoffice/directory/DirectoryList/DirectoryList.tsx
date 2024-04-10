@@ -1,28 +1,16 @@
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import { DirectoryItem } from '../DirectoryItem';
 import { useDirectory } from '../useDirectory';
 import { CardList } from 'src/components/utils/CardList';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
-import { fetchProfilesSelectors } from 'src/use-cases/profiles';
 import { isRoleIncluded } from 'src/utils';
 import { StyledDirectoryListContainer } from './DirectoryList.styles';
 
 export function DirectoryList() {
-  const { profiles } = useDirectory();
-
-  const isFetchProfilesIdle = useSelector(
-    fetchProfilesSelectors.selectIsFetchProfilesIdle
-  );
-
-  const isFetchProfilesRequested = useSelector(
-    fetchProfilesSelectors.selectIsFetchProfilesRequested
-  );
-
-  const isLoading = isFetchProfilesIdle || isFetchProfilesRequested;
+  const { profiles, isLoading } = useDirectory();
 
   const profileList = useMemo(() => {
-    return profiles?.map((profile) => {
+    return profiles.map((profile) => {
       const helps = isRoleIncluded(CANDIDATE_USER_ROLES, profile.role)
         ? profile.helpNeeds
         : profile.helpOffers;

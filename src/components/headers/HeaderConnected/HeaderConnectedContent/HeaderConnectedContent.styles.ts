@@ -6,13 +6,15 @@ export const StyledConnectedItem = styled.li`
   border-right: 1px solid ${COLORS.lightgray};
   position: relative;
 
+  text-align: center;
+
   transition: 0.1s ease-in-out;
   transition-property: color, background-color, opacity;
   & > a {
     border-bottom: solid transparent 4px;
   }
   &.active > a {
-    border-bottom: solid ${COLORS.primaryOrange} 4px;
+    border-bottom: solid ${COLORS.primaryBlue} 4px;
   }
   .icon-span {
     color: ${({ color }) => {

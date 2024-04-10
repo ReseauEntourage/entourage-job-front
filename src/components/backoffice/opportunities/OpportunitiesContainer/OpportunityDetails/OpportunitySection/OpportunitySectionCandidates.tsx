@@ -77,7 +77,7 @@ export const OpportunitySectionCandidates = ({
                 {recommended && (
                   <ActionLabel
                     disabled
-                    color="primaryOrange"
+                    color="primaryBlue"
                     label="Recommandé"
                     icon={<EntourageIcon height={16} width={10} />}
                   />

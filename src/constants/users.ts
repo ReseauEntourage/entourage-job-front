@@ -35,23 +35,51 @@ export const ADMIN_ROLES = {
 
 export type AdminRole = (typeof ADMIN_ROLES)[keyof typeof ADMIN_ROLES];
 
-export const NORMAL_USER_ROLES = [USER_ROLES.CANDIDATE, USER_ROLES.COACH];
-export const EXTERNAL_USER_ROLES = [
+export type NormalUserRole =
+  | typeof USER_ROLES.CANDIDATE
+  | typeof USER_ROLES.COACH;
+
+export const NORMAL_USER_ROLES: NormalUserRole[] = [
+  USER_ROLES.CANDIDATE,
+  USER_ROLES.COACH,
+];
+
+export type ExternalUserRole =
+  | typeof USER_ROLES.CANDIDATE_EXTERNAL
+  | typeof USER_ROLES.COACH_EXTERNAL;
+
+export const EXTERNAL_USER_ROLES: ExternalUserRole[] = [
   USER_ROLES.CANDIDATE_EXTERNAL,
   USER_ROLES.COACH_EXTERNAL,
 ];
 
-export const CANDIDATE_USER_ROLES = [
+export type CandidateUserRole =
+  | typeof USER_ROLES.CANDIDATE
+  | typeof USER_ROLES.CANDIDATE_EXTERNAL;
+
+export const CANDIDATE_USER_ROLES: CandidateUserRole[] = [
   USER_ROLES.CANDIDATE,
   USER_ROLES.CANDIDATE_EXTERNAL,
 ];
-export const COACH_USER_ROLES = [USER_ROLES.COACH, USER_ROLES.COACH_EXTERNAL];
 
-export const ALL_USER_ROLES = [...CANDIDATE_USER_ROLES, ...COACH_USER_ROLES];
+export type CoachUserRole =
+  | typeof USER_ROLES.COACH
+  | typeof USER_ROLES.COACH_EXTERNAL;
+
+export const COACH_USER_ROLES: CoachUserRole[] = [
+  USER_ROLES.COACH,
+  USER_ROLES.COACH_EXTERNAL,
+];
+
+export const ALL_USER_ROLES: (CandidateUserRole | CoachUserRole)[] = [
+  ...CANDIDATE_USER_ROLES,
+  ...COACH_USER_ROLES,
+];
 
 export const GENDERS = {
   MALE: 0,
   FEMALE: 1,
+  OTHER: 2,
 } as const;
 
 export type Gender = (typeof GENDERS)[keyof typeof GENDERS];
@@ -65,4 +93,8 @@ export const GENDERS_FILTERS = [
     label: 'Femme',
     value: GENDERS.FEMALE,
   },
+  /*  {
+     label: 'Autre',
+     value: GENDERS.OTHER,
+   }, */
 ];

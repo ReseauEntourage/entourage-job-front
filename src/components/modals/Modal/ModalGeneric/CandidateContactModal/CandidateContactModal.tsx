@@ -11,12 +11,12 @@ export const CandidateContactModal = () => {
   return (
     <ModalEdit
       submitText="J'envoie ma pré-inscription !"
-      title="J'inscris un·e candidat·e au programme LinkedOut"
+      title="J'inscris un·e candidat·e au programme Entourage Pro"
       description={
         <>
           Vous accompagnez une personne en situation de précarité ou
           d&apos;exclusion à la recherche d&apos;un emploi qui souhaite
-          rejoindre LinkedOut&nbsp;?
+          rejoindre Entourage Pro&nbsp;?
           <br />
           Merci pour votre démarche !
           <br />
@@ -24,7 +24,7 @@ export const CandidateContactModal = () => {
           Avant de remplir ce formulaire, vérifiez que le candidat&nbsp;:
           <ul className="uk-text-left">
             <li>
-              Réside sur les territoires suivants : 75, 93, 92, 56, 59 ou 69
+              Réside sur les territoires suivants : 75, 93, 92, 56, 35, 69 ou 59
             </li>
             <li>A entre 18 et 30 ans (inclus).</li>
             <li>
@@ -39,8 +39,8 @@ export const CandidateContactModal = () => {
             <li>
               Est prêt à adhérer aux propositions du dispositif pendant les 6
               mois du parcours : mise en avant du CV sur les réseaux, rencontres
-              hebdomadaires avec le Coach LinkedOut, rencontres mensuelles en
-              collectif, etc.
+              hebdomadaires avec le Coach Entourage Pro, rencontres mensuelles
+              en collectif, etc.
             </li>
             <li>
               Maîtrise les bases du français (capacité à mener un entretien

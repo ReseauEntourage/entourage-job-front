@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import PencilIcon from 'assets/icons/pencil.svg';
+import EditIcon from 'assets/icons/pencil.svg';
 import { ButtonIcon } from 'src/components/utils';
 import { ImageInput } from 'src/components/utils/Inputs';
 import { Spinner } from 'src/components/utils/Spinner';
@@ -54,7 +54,7 @@ export const CVEditPicture = ({
               id="cv-picture-upload"
               name="cv-picture-upload"
             >
-              <ButtonIcon icon={<PencilIcon />} />
+              <ButtonIcon icon={<EditIcon />} />
             </ImageInput>
           )}
         </StyledEditPictureButton>

@@ -5,6 +5,10 @@ export const fetchProfilesAdapter = createRequestAdapter(
   'fetchProfiles'
 ).withPayloads<ProfilesFilters, PublicProfile[]>();
 
+export const fetchProfilesRecommendationsAdapter = createRequestAdapter(
+  'fetchProfilesRecommendations'
+).withPayloads<void, PublicProfile[]>();
+
 export const fetchSelectedProfileAdapter = createRequestAdapter(
   'fetchSelectedProfile'
 ).withPayloads<

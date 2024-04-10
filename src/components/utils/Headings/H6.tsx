@@ -1,24 +1,23 @@
 import React from 'react';
-import { useIsDesktop } from 'src/hooks/utils';
+// import { useIsDesktop } from 'src/hooks/utils';
 import { StyledH6 } from './Headings.styles';
+import { HeadingComponentProps } from './Headings.types';
 
 export const H6 = ({
   title,
-  effect = '',
+  effect,
   center = false,
   color,
-}: {
-  title: React.ReactNode;
-  effect?: string;
-  center?: boolean;
-  color?: string;
-}) => {
-  const isDesktop = useIsDesktop();
+  weight = 'bold',
+}: HeadingComponentProps) => {
+  // const isDesktop = useIsDesktop();
   return (
     <StyledH6
       color={color}
-      className={`${center ? 'center' : ''} ${isDesktop ? '' : 'mobile'}`}
       data-uk-scrollspy={effect}
+      center={center}
+      weight={weight}
+      // mobile={!isDesktop}
     >
       {title}
     </StyledH6>

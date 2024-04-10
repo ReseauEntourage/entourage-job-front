@@ -49,20 +49,7 @@ export const SendMailModalContent = ({
     `Vous pouvez ci-dessous envoyer une demande de contact pour le poste de${' '}
   ${opportunity?.title} dans l’entreprise ${opportunity?.company}`
   );
-  const genderTab = [
-    // male
-    {
-      term: '',
-      pronoun: 'le',
-      indPronoun: 'lui',
-    },
-    // female
-    {
-      term: 'e',
-      pronoun: 'la',
-      indPronoun: 'elle',
-    },
-  ];
+
   const emailContent = relance ? (
     <>
       <p>Bonjour,</p>
@@ -71,34 +58,31 @@ export const SendMailModalContent = ({
         sur votre offre.
       </p>
       <p>
-        Voici son CV pour en savoir plus sur son profil et prendre contact avec{' '}
-        {genderTab[user.gender].indPronoun}.
+        Voici son CV pour en savoir plus sur son profil et prendre contact avec
+        lui/elle
       </p>
       <p>
-        Contactez-{genderTab[user.gender].pronoun} vite pour lui indiquer si
-        vous souhaitez ou non poursuivre les échanges. En cas de refus,
-        n&apos;oubliez pas de lui apporter des informations complémentaires et
-        pourquoi pas partager son CV à votre réseau !
+        Contactez-le/la vite pour lui indiquer si vous souhaitez ou non
+        poursuivre les échanges. En cas de refus, n&apos;oubliez pas de lui
+        apporter des informations complémentaires et pourquoi pas partager son
+        CV à votre réseau !
       </p>
       <p>A bientôt,</p>
     </>
   ) : (
     <>
       <p>Bonjour,</p>
-      <p>
-        Un{genderTab[user.gender].term} candidat{genderTab[user.gender].term}{' '}
-        LinkedOut est intéressé{genderTab[user.gender].term} par votre offre !
-      </p>
+      <p>Un(e) candidat(e) Entourage Pro est intéressé(e) par votre offre !</p>
       <p>{user.firstName} a postulé à votre offre.</p>
       <p>
-        Voici son CV pour en savoir plus sur son profil et prendre contact avec{' '}
-        {genderTab[user.gender].indPronoun}.
+        Voici son CV pour en savoir plus sur son profil et prendre contact avec
+        lui/elle.
       </p>
       <p>
-        Contactez-{genderTab[user.gender].pronoun} vite pour lui indiquer si
-        vous souhaitez ou non poursuivre les échanges. En cas de refus,
-        n&apos;oubliez pas de lui apporter des informations complémentaires et
-        pourquoi pas partager son CV à votre réseau !
+        Contactez-le/la vite pour lui indiquer si vous souhaitez ou non
+        poursuivre les échanges. En cas de refus, n&apos;oubliez pas de lui
+        apporter des informations complémentaires et pourquoi pas partager son
+        CV à votre réseau !
       </p>
       <p>A bientôt,</p>
     </>

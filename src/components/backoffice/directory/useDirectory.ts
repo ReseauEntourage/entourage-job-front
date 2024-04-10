@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import UIkit from 'uikit';
 import { useIsAtBottom } from 'src/hooks/useIsAtBottom';
 import { usePrevious } from 'src/hooks/utils';
+import { notificationsActions } from 'src/use-cases/notifications';
 import {
   fetchProfilesSelectors,
   profilesActions,
@@ -14,6 +14,20 @@ import { useDirectoryQueryParams } from './useDirectoryQueryParams';
 // Manage directory requests and filters
 export function useDirectory() {
   const dispatch = useDispatch();
+
+  const isFetchProfilesIdle = useSelector(
+    fetchProfilesSelectors.selectIsFetchProfilesIdle
+  );
+
+  const isFetchProfilesRequested = useSelector(
+    fetchProfilesSelectors.selectIsFetchProfilesRequested
+  );
+
+  const isLoading = isFetchProfilesIdle || isFetchProfilesRequested;
+
+  const isFetchProfileStatusFailed = useSelector(
+    fetchProfilesSelectors.selectIsFetchProfilesFailed
+  );
 
   const directoryFiltersParams = useDirectoryQueryParams();
 
@@ -27,15 +41,16 @@ export function useDirectory() {
     }
   }, [dispatch, directoryFiltersParams, prevDirectoryFiltersParams]);
 
-  const isFetchProfileStatusFailed = useSelector(
-    fetchProfilesSelectors.selectIsFetchProfilesFailed
-  );
-
   const profiles = useSelector(selectProfiles);
 
   useEffect(() => {
     if (isFetchProfileStatusFailed) {
-      UIkit.notification('Une erreur est survenue', 'danger');
+      dispatch(
+        notificationsActions.addNotification({
+          type: 'danger',
+          message: `Une erreur est survenue`,
+        })
+      );
     }
   }, [dispatch, isFetchProfileStatusFailed]);
 
@@ -52,5 +67,6 @@ export function useDirectory() {
 
   return {
     profiles,
+    isLoading,
   };
 }

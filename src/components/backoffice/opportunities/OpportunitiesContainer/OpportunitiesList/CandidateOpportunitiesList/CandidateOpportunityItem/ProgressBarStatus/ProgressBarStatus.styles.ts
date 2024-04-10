@@ -15,6 +15,6 @@ export const StyledStep = styled.div`
     margin-right: 2px;
   }
   background-color: ${({ activate, color }) => {
-    return activate ? COLORS[color] || COLORS.primaryOrange : COLORS.gray;
+    return activate ? COLORS[color] || COLORS.primaryBlue : COLORS.gray;
   }};
 `;

@@ -11,17 +11,17 @@ export const StyledCVShareButtonsContainer = styled.div`
 `;
 
 export const StyledCVShareBUtton = styled.div`
-  border: 1px solid ${COLORS.primaryOrange};
+  border: 1px solid ${COLORS.primaryBlue};
   border-radius: 500px;
   display: block;
   padding: 7px;
   svg {
-    fill: ${COLORS.primaryOrange};
+    fill: ${COLORS.primaryBlue};
     height: 25px;
     width: 25px;
   }
   &:hover {
-    background-color: ${COLORS.primaryOrange};
+    background-color: ${COLORS.primaryBlue};
     cursor: pointer;
     svg {
       color: white;

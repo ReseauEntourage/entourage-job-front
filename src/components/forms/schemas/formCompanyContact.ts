@@ -70,8 +70,7 @@ export const formCompanyContact: FormSchema<{
       rules: [
         {
           method: (fieldValue) =>
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
+            !!fieldValue && isValidPhoneNumber(fieldValue, 'FR'),
           message: 'Numéro de téléphone invalide',
         },
       ],
@@ -103,7 +102,7 @@ export const formCompanyContact: FormSchema<{
       name: 'heardAbout',
       component: 'select-simple',
       options: HEARD_ABOUT_FILTERS,
-      title: 'Comment avez-vous connu LinkedOut ?',
+      title: 'Comment avez-vous connu Entourage Pro ?',
     },
     {
       id: 'message',

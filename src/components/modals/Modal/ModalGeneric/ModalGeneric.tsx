@@ -14,6 +14,7 @@ interface ModalGenericProps {
   removePadding?: boolean;
   withCloseButton?: boolean;
   closeOnNextRender?: boolean;
+  noCloseIcon?: boolean;
 }
 
 const id = 'modal-generic';
@@ -28,6 +29,7 @@ export const ModalGeneric = ({
   removePadding = false,
   withCloseButton = false,
   closeOnNextRender = false,
+  noCloseIcon = false,
 }: ModalGenericProps) => {
   const { onClose } = useModalContext();
 
@@ -49,26 +51,26 @@ export const ModalGeneric = ({
             removePadding ? 'uk-padding-remove' : 'uk-padding'
           }`}
         >
-          <CloseButton
-            className="uk-modal-close-default"
-            dataTestId="generic-close-modal"
-            onClick={() => {
-              if (customOnClose) {
-                customOnClose(onClose);
-              } else {
-                // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                onClose();
-              }
-            }}
-          />
+          {!noCloseIcon && (
+            <CloseButton
+              className="uk-modal-close-default"
+              dataTestId="generic-close-modal"
+              onClick={() => {
+                if (customOnClose) {
+                  customOnClose(onClose);
+                } else {
+                  onClose?.();
+                }
+              }}
+            />
+          )}
           <HeaderModal title={title} description={description} />
           {children}
           {withCloseButton && (
             <StyledModalContent>
               <Button
                 onClick={() => {
-                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                  onClose();
+                  onClose?.();
                 }}
                 style="custom-primary"
               >

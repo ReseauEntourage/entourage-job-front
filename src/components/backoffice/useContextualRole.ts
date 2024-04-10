@@ -3,13 +3,16 @@ import {
   CANDIDATE_USER_ROLES,
   USER_ROLES,
   UserRole,
+  NormalUserRole,
 } from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils';
 
 export function useContextualRole(role: UserRole) {
-  const [contextualRole, setContextualRole] = useState<
-    typeof USER_ROLES.CANDIDATE | typeof USER_ROLES.COACH
-  >(USER_ROLES.CANDIDATE);
+  const [contextualRole, setContextualRole] = useState<NormalUserRole>(
+    isRoleIncluded(CANDIDATE_USER_ROLES, role)
+      ? USER_ROLES.CANDIDATE
+      : USER_ROLES.COACH
+  );
 
   useEffect(() => {
     setContextualRole(

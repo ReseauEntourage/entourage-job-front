@@ -6,9 +6,13 @@ export const StyledFormHeading = styled.div`
   font-size: 14px;
   margin: 28px 0 24px;
   padding-bottom: 4px;
-  border-bottom: 1px solid ${COLORS.primaryOrange};
+  border-bottom: 1px solid ${COLORS.primaryBlue};
   font-family: Poppins, sans-serif;
   font-weight: 700;
   line-height: 21px;
   text-align: left;
+
+  :first-child {
+    margin-top: 0;
+  }
 `;

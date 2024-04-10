@@ -32,7 +32,7 @@ export const checkData = (userProfile: userProfileParamsToCheck): boolean => {
   );
 };
 
-export const getCoachDefaultValues = (
+export const getCoachDefaultProfessionalValues = (
   userProfileParam: UserProfile
 ): DefaultValues<
   ExtractFormSchemaValidation<typeof formEditCoachProfessionalInformation>
@@ -46,7 +46,7 @@ export const getCoachDefaultValues = (
   };
 };
 
-export const getCandidateDefaultValues = (
+export const getCandidateDefaultProfessionalValues = (
   userProfileParam: UserProfile
 ): DefaultValues<
   ExtractFormSchemaValidation<typeof formEditCandidateProfessionalInformation>

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { COLORS } from 'src/constants/styles';
 
 export const StyledEditPictureContainer = styled.div`
   height: 400px;
@@ -68,5 +69,12 @@ export const StyledEditPictureButton = styled.div`
       height: 50px;
       width: 50px;
     }
+  }
+`;
+
+export const StyledBlueIconContainer = styled.div`
+  svg,
+  path {
+    fill: ${COLORS.primaryBlue};
   }
 `;

@@ -1,5 +1,11 @@
 import React from 'react';
-import { ButtonMock, ImgProfile, Section, Tag } from 'src/components/utils';
+import {
+  Button,
+  ButtonMock,
+  ImgProfile,
+  Section,
+  Tag,
+} from 'src/components/utils';
 import { AvailabilityTag } from 'src/components/utils/AvailabilityTag/AvailabilityTag';
 import { H1, H5 } from 'src/components/utils/Headings';
 import { ImageInput } from 'src/components/utils/Inputs';
@@ -10,6 +16,7 @@ import {
   StyledHeaderNameAndRole,
   StyledHeaderProfile,
   StyledHeaderProfileContent,
+  StyledHeaderProfileCVButton,
   StyledHeaderProfileInfoContainer,
   StyledHeaderProfileNameContainer,
   StyledHeaderProfilePicture,
@@ -30,6 +37,7 @@ export const HeaderProfileDesktop = ({
   description,
   isAvailable,
   isEditable = false,
+  cvUrl,
 }: HeaderProfileProps) => {
   const {
     openCorrespondingModal,
@@ -37,7 +45,7 @@ export const HeaderProfileDesktop = ({
     uploadProfileImage,
     shouldShowAllProfile,
     contextualRole,
-  } = useHeaderProfile(id, role);
+  } = useHeaderProfile(role);
 
   return (
     <StyledHeaderProfile>
@@ -59,12 +67,24 @@ export const HeaderProfileDesktop = ({
               >
                 <ButtonMock
                   style="custom-secondary"
+                  size="small"
                   className="button-mock-image-input"
                   dataTestId="button-mock-image-input"
                 >
                   Modifier
                 </ButtonMock>
               </ImageInput>
+            )}
+            {cvUrl && (
+              <StyledHeaderProfileCVButton>
+                <Button
+                  size="small"
+                  style="custom-secondary"
+                  href={`/cv/${cvUrl}`}
+                >
+                  Voir le CV
+                </Button>
+              </StyledHeaderProfileCVButton>
             )}
           </StyledHeaderProfilePictureContainer>
           <StyledHeaderProfileInfoContainer>

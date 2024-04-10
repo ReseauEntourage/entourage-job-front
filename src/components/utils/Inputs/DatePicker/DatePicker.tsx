@@ -22,6 +22,7 @@ export function DatePicker({
   min,
   max,
   inputRef,
+  showLabel = true,
 }: DatePickerProps) {
   if (hidden) {
     return null;
@@ -37,7 +38,11 @@ export function DatePicker({
         e.stopPropagation();
       }}
     >
-      <StyledInputLabel htmlFor={id}>{title}</StyledInputLabel>
+      {showLabel && (
+        <StyledInputLabel htmlFor={`form-input-${name}`}>
+          {title}
+        </StyledInputLabel>
+      )}
       <input
         id={id}
         data-testid={id}

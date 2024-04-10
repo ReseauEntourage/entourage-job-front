@@ -12,6 +12,7 @@ import {
   FormFieldMultiple,
   FormFieldRadio,
   FormFieldSelect,
+  FormFieldSelectGraphic,
   FormFieldSelectRequest,
   FormFieldText,
   FormFieldTextInput,
@@ -27,6 +28,8 @@ import {
   Rule,
   SelectComponent,
   SelectComponents,
+  SelectGraphicComponent,
+  SelectGraphicComponents,
   SelectRequestComponent,
   SelectRequestComponents,
   TextComponent,
@@ -78,8 +81,7 @@ export function mapFieldRules<
     return rules;
   }
 
-  // @ts-expect-error after enable TS strict mode. Please, try to fix it
-  return null;
+  return {};
 }
 
 export function isFormFieldTextInput<S extends FormSchemaValidation>(
@@ -114,20 +116,30 @@ export function isFormFieldSelectRequest<S extends FormSchemaValidation>(
   );
 }
 
+export function isFormFieldSelectGraphic<S extends FormSchemaValidation>(
+  field: FormField<S>
+): field is FormFieldSelectGraphic<S> {
+  return SelectGraphicComponents.includes(
+    field.component as SelectGraphicComponent
+  );
+}
+
 export function isFormFieldInput<S extends FormSchemaValidation>(
   field: FormField<S>
 ): field is
-  | FormFieldSelectRequest<S>
   | FormFieldRadio<S>
   | FormFieldTextInput<S>
   | FormFieldCheckBox<S>
-  | FormFieldSelect<S> {
+  | FormFieldSelect<S>
+  | FormFieldSelectRequest<S>
+  | FormFieldSelectGraphic<S> {
   return (
     isFormFieldTextInput(field) ||
     isFormFieldCheckbox(field) ||
-    isFormFieldSelect(field) ||
     isFormFieldRadio(field) ||
-    isFormFieldSelectRequest(field)
+    isFormFieldSelect(field) ||
+    isFormFieldSelectRequest(field) ||
+    isFormFieldSelectGraphic(field)
   );
 }
 

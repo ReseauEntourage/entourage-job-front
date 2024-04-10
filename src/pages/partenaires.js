@@ -3,7 +3,8 @@ import React from 'react';
 import { Layout } from 'src/components/Layout';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
-import { LogoList, SimpleSection } from 'src/components/partials';
+import { SimpleSection } from 'src/components/partials/pages/Partenaires/SimpleSection';
+import { LogoList } from 'src/components/partials/utils/LogoList';
 import { Img, Section, SimpleLink, Grid } from 'src/components/utils';
 import { PARTNERS } from 'src/constants/partners';
 import { GA_TAGS } from 'src/constants/tags';
@@ -190,7 +191,7 @@ const PartnerItem = ({
                         alt=""
                         width={27}
                         height={21}
-                        src="/static/img/guillemets.png"
+                        src="/static/img/guillemets-bleu.png"
                       />
                     </div>
                     <div className="uk-flex-1">
@@ -213,7 +214,7 @@ const PartnerItem = ({
                         alt=""
                         width={15}
                         height={12}
-                        src="/static/img/guillemetsPetits.png"
+                        src="/static/img/guillemets-gris.png"
                       />
                     </div>
                   </div>
@@ -246,7 +247,7 @@ PartnerItem.defaultProps = {
 
 const Partenaires = () => {
   return (
-    <Layout title="Les partenaires - LinkedOut">
+    <Layout title="Les partenaires - Entourage Pro">
       <Title overlay="primary" img="/static/img/construct.jpg">
         <>
           Ils construisent le projet{' '}
@@ -277,7 +278,7 @@ const Partenaires = () => {
       >
         <>
           Nos partenaires sur le projet{' '}
-          <span className="uk-text-primary">LinkedOut Jeunes</span>
+          <span className="uk-text-primary">Entourage Pro Jeunes</span>
         </>
       </CarouselSection>
       <CarouselSection
@@ -328,10 +329,11 @@ const Partenaires = () => {
       <SimpleSection
         title={
           <>
-            Rejoignez <span className="uk-text-primary">LinkedOut&nbsp;!</span>
+            Rejoignez{' '}
+            <span className="uk-text-primary">Entourage Pro&nbsp;!</span>
           </>
         }
-        text="Vous êtes intéressé(e) par l’approche de LinkedOut et souhaitez coopérer avec nous ? Contactez-nous pour devenir partenaire !"
+        text="Vous êtes intéressé(e) par l’approche de Entourage Pro et souhaitez coopérer avec nous ? Contactez-nous pour devenir partenaire !"
         id="give"
         style="muted"
         button={{
