@@ -189,6 +189,7 @@ module.exports = withLess({
   assetPrefix: !dev ? process.env.CDN_URL || undefined : undefined,
   images: {
     remotePatterns,
+    unoptimized: true,
   },
   async redirects() {
     return [
