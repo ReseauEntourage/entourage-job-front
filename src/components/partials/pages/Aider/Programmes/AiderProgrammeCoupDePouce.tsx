@@ -1,8 +1,12 @@
 import React, { Ref } from 'react';
-import { IlluCalendrier, OrienterSablier } from 'assets/icons/icons';
+import {
+  IlluCalendrier,
+  IlluQuestionReponseOrange,
+  OrienterSablier,
+} from 'assets/icons/icons';
 import CarteSolidaireIcon from 'assets/icons/orienter-carte-solidaire.svg';
 import { SimpleImageText } from 'src/components/partials/utils/SimpleImageText';
-import { Button } from 'src/components/utils';
+import { Button, Typography } from 'src/components/utils';
 import { List } from 'src/components/utils/Lists';
 import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
@@ -26,44 +30,63 @@ export const AiderProgrammeCoupDePouce = ({
       <SimpleImageText
         backgroundColor="blue"
         innerRef={innerRef}
-        title="Programme Coup de pouce"
-        img="/static/img/orientation_who.jpg"
+        title="Format Coup de pouce"
+        img="/static/img/aider-coup-de-pouce-tall.jpg"
       >
         <List animated>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
-            <IlluCalendrier {...iconsProps} /> <div>Ponctuel</div>
+            <IlluCalendrier {...iconsProps} />{' '}
+            <Typography color="light">Ponctuel</Typography>
           </StyledAiderProgrammesListElement>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
-            <OrienterSablier {...iconsProps} /> <div>Selon vos besoins</div>
+            <OrienterSablier {...iconsProps} />{' '}
+            <Typography color="light">Selon vos besoins</Typography>
+          </StyledAiderProgrammesListElement>
+          <StyledAiderProgrammesListElement
+            className={isDesktop ? '' : 'mobile'}
+          >
+            <IlluQuestionReponseOrange {...iconsProps} />
+            <Typography color="light">En physique ou en visio</Typography>
           </StyledAiderProgrammesListElement>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
             <CarteSolidaireIcon {...iconsProps} />{' '}
-            <div>En physique ou en visio</div>
+            <Typography color="light">Disponible partout en France</Typography>
           </StyledAiderProgrammesListElement>
         </List>
         <div data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > p; delay: 200;">
-          <p>L’intégration du candidat au parcours Entourage pro comprend :</p>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio
-            morbi quis commodo odio aenean sed adipiscing diam donec. Lacinia
-            quis vel eros donec ac odio. Commodo nulla facilisi nullam vehicula
-            ipsum. Dictum varius duis at consectetur. Duis at tellus at urna
-            condimentum mattis pellentesque id nibh
+            En tant que coach Coup de pouce, vous tenez un rôle clé dans la
+            démarche de nos candidat(e)s de retrouver un emploi ou une
+            formation.
           </p>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio
-            morbi quis commodo odio aenean sed adipiscing diam donec. Lacinia
-            quis vel eros donec ac odio. Commodo nulla facilisi nullam vehicula
-            ipsum. Dictum varius duis at consectetur. Duis at tellus at urna
-            condimentum mattis pellentesque id nibh
+            Complémentaire aux conseillers mission locale ou aux travailleurs
+            sociaux, vous êtes un compagnon de route, un véritable booster dans
+            cette période souvent challengeante pour des personnes sans réseau
+            professionnel, très éloignées du monde du travail et dont le
+            quotidien est souvent semé d&apos;embûches.
+          </p>
+          <p>
+            Votre soutien se matérialise par des coups de pouce ponctuels, selon
+            vos disponibilités et les besoins des candidat(e)s :
+          </p>
+          <p>-&nbsp;relayer une recherche d’emploi sur LinkedIn</p>
+          <p>-&nbsp;diffuser une offre</p>
+          <p>-&nbsp;partager votre expérience et vos conseils</p>
+          <p>-&nbsp;aider à l’élaboration du CV</p>
+          <p>-&nbsp;préparer un entretien</p>
+          <p>-&nbsp;etc.</p>
+          <p>
+            Chaque soutien que vous apporterez, qu’il soit par une aide concrète
+            ou par un petit mot d’encouragement sur le réseau, permettra aux
+            candidat(e)s d’avancer toujours un peu plus vers leur inclusion
+            professionnelle !
           </p>
         </div>
         <Button
@@ -76,7 +99,7 @@ export const AiderProgrammeCoupDePouce = ({
           dataTestId="button-inscrire-coup-de-pouce"
           href="/inscription"
         >
-          S&lsquo;inscrire au programme
+          Devenir coach Coup de pouce
         </Button>
       </SimpleImageText>
     </>

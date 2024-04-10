@@ -3,12 +3,12 @@ import { Layout } from 'src/components/Layout';
 import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
 import { SharePartial } from 'src/components/partials/common/SharePartial';
 import { AiderDecouvrir } from 'src/components/partials/pages/Aider/AiderDecouvrir';
+import { AiderOpportunites } from 'src/components/partials/pages/Aider/AiderOpportunites';
 import { AiderRejoindre } from 'src/components/partials/pages/Aider/AiderRejoindre';
 import {
   AiderProgramme360,
   AiderProgrammeCoupDePouce,
 } from 'src/components/partials/pages/Aider/Programmes';
-import { Opportunites } from 'src/components/partials/pages/Orienter/Opportunites';
 import { ImageTitle } from 'src/components/partials/utils/ImageTitle';
 import { Reviews } from 'src/components/partials/utils/Reviews';
 import { Section } from 'src/components/utils';
@@ -66,7 +66,13 @@ const Aider = () => {
     <Layout title="Aider - Entourage Pro">
       <ImageTitle
         title="Vous souhaitez aider&nbsp;?"
-        description="Engagez-vous et aidez les candidats Entourage Pro à retrouver un réseau, que vous soyez disponibles quelques minutes ou quelques mois."
+        description={
+          <>
+            Ça tombe bien, nos candidates et candidats
+            <br />
+            ont besoin de vous&nbsp;!
+          </>
+        }
         img="/static/img/aider-banner-desktop.jpg"
         imgMobile="/static/img/aider-banner-mobile.jpg"
         alt="Un candidat Entourage Pro et sa coach"
@@ -78,8 +84,11 @@ const Aider = () => {
       />
       <AiderProgrammeCoupDePouce innerRef={refCoupDePouce} />
       <AiderProgramme360 innerRef={refProgramme360} />
-      <Opportunites />
-      <Reviews title="Les témoignages des coachs" reviews={reviewContent} />
+      <AiderOpportunites />
+      <Reviews
+        title="Paroles de coachs ! Quelques témoignages"
+        reviews={reviewContent}
+      />
       <AiderRejoindre />
       <NewsletterPartial tag={GA_TAGS.PAGE_AIDER_INSCRIPTION_NEWSLETTER_CLIC} />
       <Section style="muted">

@@ -27,7 +27,7 @@ export const HowToCommitDifferently = () => {
         className="uk-margin-medium-top"
         data={[
           {
-            img: '/static/img/illustrations/donation.png',
+            img: '/static/img/entreprise-don.png',
             title: 'Faire un don',
             text: "Aidez-nous à développer le programme Entourage Pro et à accompagner les candidats via un don déductible de vos impôts ou un dispositif d'arrondi solidaire.",
             button: {
@@ -41,7 +41,7 @@ export const HowToCommitDifferently = () => {
             },
           },
           {
-            img: '/static/img/illustrations/scale.png',
+            img: '/static/img/entreprise-sensibilisation.png',
             title: 'Sensibiliser mes collaborateurs',
             text: 'Défi solidaire ou atelier de sensibilisation, engagez vos collaborateurs, RH et managers grâce à des formats modulables.',
             button: {
@@ -56,7 +56,7 @@ export const HowToCommitDifferently = () => {
             },
           },
           {
-            img: '/static/img/illustrations/network.png',
+            img: '/static/img/entreprise-expertise.png',
             title: 'Partager votre expertise',
             text: 'Vous pouvez nous accompagner via du mécénat de compétences ou des dons en nature (équipement informatique, etc.)',
             button: {

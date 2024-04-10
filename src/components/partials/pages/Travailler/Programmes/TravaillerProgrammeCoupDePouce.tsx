@@ -7,7 +7,7 @@ import {
 import CarteSolidaireIcon from 'assets/icons/orienter-carte-solidaire.svg';
 import { RowIconTitleText } from 'src/components/partials/utils/RowIconTitleText';
 import { SimpleImageText } from 'src/components/partials/utils/SimpleImageText';
-import { Button } from 'src/components/utils';
+import { Button, Typography } from 'src/components/utils';
 import { List } from 'src/components/utils/Lists';
 import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
@@ -23,15 +23,15 @@ const content = [
     src: '/static/img/orienter-cv.png',
   },
   {
-    title: 'Une diffusion élargie du CV',
+    title: 'Une diffusion élargie de votre profil',
     paragraph:
-      'Grâce aux partages du grand public sur les réseaux sociaux via la plateforme',
+      'Via notre réseau, celui de notre communauté de coachs mais aussi les partages du grand public sur les réseaux sociaux',
     src: '/static/img/orienter-diffuser.png',
   },
   {
-    title: 'Des opportunités d’emplois supplémentaires',
+    title: 'Un max d’opportunités professionnelles',
     paragraph:
-      "Des offres d'emplois des entreprises partenaires et des coups de pouce de citoyens engagés",
+      "Des offres d'emplois des entreprises partenaires et des mises en relation adaptées selon votre projet pro",
     src: '/static/img/orienter-emploi.png',
   },
   {
@@ -58,31 +58,35 @@ export const TravaillerProgrammeCoupDePouce = ({
       <SimpleImageText
         backgroundColor="blue"
         innerRef={innerRef}
-        title="Programme Coup de pouce"
-        img="/static/img/orienter-publier.jpg"
+        title="Format Coup de pouce"
+        img="/static/img/travailler-coup-de-pouce-tall.png"
       >
         <List animated>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
-            <IlluCalendrier {...iconsProps} /> <div>Ponctuel</div>
+            <IlluCalendrier {...iconsProps} />{' '}
+            <Typography color="light">Ponctuel</Typography>
           </StyledAiderProgrammesListElement>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
-            <OrienterSablier {...iconsProps} /> <div>Selon vos besoins</div>
+            <OrienterSablier {...iconsProps} />{' '}
+            <Typography color="light">Selon vos besoins</Typography>
           </StyledAiderProgrammesListElement>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
             <IlluQuestionReponseOrange {...iconsProps} />{' '}
-            <div>Prise de contact en physique ou en visio</div>
+            <Typography color="light">
+              Prise de contact en physique ou en visio
+            </Typography>
           </StyledAiderProgrammesListElement>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
             <CarteSolidaireIcon {...iconsProps} />{' '}
-            <div>Disponible partout en France</div>
+            <Typography color="light">Disponible partout en France</Typography>
           </StyledAiderProgrammesListElement>
         </List>
         <div data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > p; delay: 200;">
@@ -110,7 +114,7 @@ export const TravaillerProgrammeCoupDePouce = ({
             <StyledAiderProgrammesListElement
               className={isDesktop ? '' : 'mobile'}
             >
-              - Des conseils et une méhtodologie pour des recherches d’emploi
+              - Des conseils et une méthodologie pour des recherches d’emploi
               efficaces
             </StyledAiderProgrammesListElement>
             <StyledAiderProgrammesListElement

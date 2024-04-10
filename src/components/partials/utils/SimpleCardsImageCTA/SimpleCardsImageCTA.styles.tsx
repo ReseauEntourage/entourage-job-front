@@ -21,23 +21,35 @@ export const StyledSimpleCardsImageCTACard = styled.div`
   width: 40%;
   border-radius: 40px;
   background-color: ${COLORS.hoverBlue};
+  display: flex;
+  flex-direction: column;
+
   .image-container {
     position: relative;
     height: 320px;
+
     img {
       border-radius: 40px 40px 0 0;
     }
   }
+
   .text-container {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     padding: 30px;
+
     p {
       margin: 0 0 24px 0;
     }
+
+    .text {
+      flex: 1;
+    }
   }
+
   &.mobile {
     width: 100%;
     margin-bottom: 40px;

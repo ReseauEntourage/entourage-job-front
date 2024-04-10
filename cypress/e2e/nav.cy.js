@@ -10,13 +10,13 @@ describe('Navigation', () => {
 
     // cy.visit(Cypress.env('base_url'))
     cy.get('header').within(() => {
-      cy.get('a').contains('Devenir candidat').click({ force: true });
+      cy.get('a').contains('Devenir candidat(e)').click({ force: true });
       cy.wait(1000);
       cy.url().should('include', 'travailler');
     });
 
     cy.get('header').within(() => {
-      cy.get('a').contains('Sensibiliser son entreprise').click({ force: true });
+      cy.get('a').contains('Engager son entreprise').click({ force: true });
       cy.wait(1000);
       cy.url().should('include', 'entreprises');
     });
@@ -28,7 +28,7 @@ describe('Navigation', () => {
     });
 
     cy.get('header').within(() => {
-      cy.get('a').contains('Découvrir les candidats').click({ force: true });
+      cy.get('a').contains('Découvrir les candidat(e)s').click({ force: true });
       cy.wait(1000);
       cy.url().should('include', 'candidats');
     });

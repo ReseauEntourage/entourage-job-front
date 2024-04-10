@@ -101,6 +101,8 @@ export const Figures = () => {
             gaEvent(GA_TAGS.HOME_CHIFFRES_MESURE_D_IMPACT_CLICK);
           }}
           href={process.env.URL_MESURE_D_IMPACT}
+          isExternal
+          newTab
         >
           Téléchargez la mesure d&lsquo;impact
         </Button>

@@ -19,7 +19,7 @@ const pages: PageType[] = [
     children: [
       {
         title: 'Pourquoi Entourage Pro ?',
-        path: '/linkedout',
+        path: '/entourage-pro',
         props: {
           onClick: () => {
             gaEvent(GA_TAGS.FOOTER_POURQUOI_LINKEDOUT_CLIC);

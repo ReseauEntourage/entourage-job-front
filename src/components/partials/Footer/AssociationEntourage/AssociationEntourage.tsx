@@ -1,7 +1,7 @@
 import React from 'react';
 import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import EntourageLogo from 'assets/icons/logo-entourage.svg';
-import { Background, Grid, Img, Section, Button } from 'src/components/utils';
+import { Background, Button, Grid, Img, Section } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
@@ -24,21 +24,22 @@ export const AssociationEntourage = () => {
             <div>
               <EntourageLogo width={50} height={50} />
               <h2 className="uk-text-bold uk-margin-small">
-                <span style={{ color: COLORS.white }}>L&apos;association </span>
-                <span style={{ color: COLORS.primaryOrange }}>Entourage</span>
+                <span style={{ color: COLORS.white }}>
+                  A propos d&apos;Entourage
+                </span>
               </h2>
               <div className="uk-light">
                 <p className="uk-text-center uk-padding-small uk-text-secondary">
-                  Depuis 2016, l&apos;association Entourage engage la société
-                  civile à créer des relations durables et de proximité avec les
-                  personnes précaires pour leur permettre de participer à la vie
-                  de la société.
+                  Depuis 2014, l&apos;association Entourage lutte contre la
+                  précarité et l&apos;exclusion en redonnant des réseaux de
+                  soutien à celles et ceux qui n&apos;en ont plus.
                 </p>
                 <div className="uk-flex uk-flex-center">
                   <Button
                     href={EXTERNAL_LINKS.ENTOURAGE}
-                    style="default"
+                    style="custom-secondary"
                     isExternal
+                    color="white"
                     onClick={() => {
                       gaEvent(GA_TAGS.FOOTER_SITE_ENTOURAGE_CLIC);
                     }}

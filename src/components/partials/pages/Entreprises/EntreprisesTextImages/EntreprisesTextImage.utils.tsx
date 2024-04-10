@@ -106,7 +106,7 @@ export const content = {
     ),
   },
   qui: {
-    title: 'Qui sont nos candidats ?',
+    title: 'Qui sont nos candidat(e)s ?',
     img: '/static/img/entreprises-nos-candidats.jpg',
     reverse: true,
     content: (
@@ -145,7 +145,7 @@ export const content = {
             gaEvent(GA_TAGS.PAGE_ENTREPRISES_DECOUVRIR_CANDIDATS_CLICK);
           }}
         >
-          Découvrir nos candidats
+          Découvrir nos candidat(e)s
         </Button>
       </>
     ),

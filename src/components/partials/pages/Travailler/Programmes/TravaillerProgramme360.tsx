@@ -3,12 +3,12 @@ import {
   IlluCalendrier,
   IlluQuestionReponseOrange,
   IlluTeteHomme,
-  OrienterSablier,
   OrienterCarteSolidaire,
+  OrienterSablier,
 } from 'assets/icons/icons';
 import { RowIconTitleText } from 'src/components/partials/utils/RowIconTitleText';
 import { SimpleImageText } from 'src/components/partials/utils/SimpleImageText';
-import { Button } from 'src/components/utils';
+import { Button, Typography } from 'src/components/utils';
 import { List } from 'src/components/utils/Lists';
 import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
@@ -21,27 +21,28 @@ import {
 
 const content = [
   {
-    title: 'Réalisation du CV façon entourage pro',
+    title: 'Un CV sur-mesure',
     paragraph:
-      'Relecture du parcours du candidat et formalisation des envies professionnelles',
+      'Avec la relecture de votre parcours et la formalisation de vos envies professionnelles',
     src: '/static/img/orienter-cv.png',
   },
   {
-    title: "Création d'opportunités professionnelles",
-    paragraph: 'Activer son réseau avec le candidat',
+    title: 'Un réseau partagé',
+    paragraph:
+      'Grâce à l’activation et au partage de son réseau pro par votre coach',
     src: '/static/img/orienter-diffuser.png',
   },
   {
-    title: 'Préparation la recherche d’emploi',
+    title: 'Une aide personnalisée dans vos recherches',
     paragraph:
-      "Préparation aux entretiens d'embauche et soutien des candidatures",
+      "Avec la préparation aux entretiens d'embauche et le soutien de vos candidatures",
     src: '/static/img/orienter-emploi.png',
   },
   {
-    title: 'Facilitation de l’intégration en entreprise',
+    title: 'Une relation unique !',
     paragraph:
-      "Faciliter les échanges avec le recruteurs dans la phase d'intégration et soutenir le candidat dans sa prise de poste",
-    src: '/static/img/orienter-calendrier.png',
+      'Une relation de confiance avec votre coach qui peut durer bien au-delà de votre prise de poste',
+    src: '/static/img/orienter-handshake.jpg',
   },
 ];
 
@@ -61,7 +62,7 @@ export const TravaillerProgramme360 = ({
       <SimpleImageText
         innerRef={innerRef}
         title="Format 360"
-        img="/static/img/orientation_who.jpg"
+        img="/static/img/travailler-360-tall.png"
         reverse
       >
         <List animated>
@@ -69,31 +70,36 @@ export const TravaillerProgramme360 = ({
             className={isDesktop ? '' : 'mobile'}
           >
             <IlluTeteHomme {...iconsProps} />{' '}
-            <div>Pour les jeunes de moins de 30 ans</div>
+            <Typography color="light">
+              Pour les jeunes de moins de 30 ans
+            </Typography>
           </StyledAiderProgrammesListElement>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
-            <IlluCalendrier {...iconsProps} /> <div>Durée de 6 mois</div>
+            <IlluCalendrier {...iconsProps} />{' '}
+            <Typography color="light">Durée de 6 mois</Typography>
           </StyledAiderProgrammesListElement>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
-            <OrienterSablier {...iconsProps} /> <div>2 heures par semaine</div>
+            <OrienterSablier {...iconsProps} />{' '}
+            <Typography color="light">2 heures par semaine</Typography>
           </StyledAiderProgrammesListElement>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
-            <IlluQuestionReponseOrange {...iconsProps} /> <div>En physique</div>
+            <IlluQuestionReponseOrange {...iconsProps} />
+            <Typography color="light">En physique</Typography>
           </StyledAiderProgrammesListElement>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
             <OrienterCarteSolidaire {...iconsProps} />{' '}
-            <div>
+            <Typography color="light">
               Disponible à Paris (75), Hauts-de-Seine (92), Seine-Saint-Denis
               (93), Lille, Lyon, Rennes ou Lorient
-            </div>
+            </Typography>
           </StyledAiderProgrammesListElement>
         </List>
         <div data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > p; delay: 200;">

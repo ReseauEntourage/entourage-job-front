@@ -19,7 +19,7 @@ export const IconTitleTextItem = ({
   return (
     <StyledIconTitleTextItem className={isDesktop ? '' : 'mobile'}>
       <div className="image-container">
-        <Img src={src} alt={title} cover />
+        <Img src={src} alt={title} />
       </div>
       <div className="text-container">
         <H6 title={title} color="black" center />

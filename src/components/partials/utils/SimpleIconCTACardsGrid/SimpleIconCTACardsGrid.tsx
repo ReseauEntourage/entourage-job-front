@@ -1,12 +1,14 @@
 import React from 'react';
 import { v4 as uuidV4 } from 'uuid';
 import { Button, Section, Typography } from 'src/components/utils';
-import { H2, H3 } from 'src/components/utils/Headings';
+import { H3 } from 'src/components/utils/Headings';
 import {
   StyledSimpleIconCTACard,
+  StyledSimpleIconCTACardsContent,
   StyledSimpleIconCTACardsGrid,
   StyledSimpleIconCTACardsGridBackground,
   StyledSimpleIconCTACardsGridSubtitle,
+  StyledSimpleIconCTACardsTitle,
 } from './SimpleIconCTACardsGrid.styles';
 
 export interface SimpleIconCTACardProps {
@@ -32,7 +34,7 @@ export const SimpleIconCTACardsGrid = ({
   return (
     <StyledSimpleIconCTACardsGridBackground>
       <Section>
-        <H2 title={title} center color="black" />
+        <H3 title={title} center color="black" />
         {subtitle && (
           <StyledSimpleIconCTACardsGridSubtitle>
             <Typography size="large">{subtitle}</Typography>
@@ -44,8 +46,12 @@ export const SimpleIconCTACardsGrid = ({
             return (
               <StyledSimpleIconCTACard key={uuid}>
                 {card.icon}
-                <H3 title={card.title} center />
-                <Typography size="large">{card.description}</Typography>
+                <StyledSimpleIconCTACardsTitle>
+                  <H3 title={card.title} center />
+                </StyledSimpleIconCTACardsTitle>
+                <StyledSimpleIconCTACardsContent>
+                  <Typography size="large">{card.description}</Typography>
+                </StyledSimpleIconCTACardsContent>
                 <Button
                   onClick={card.onClick}
                   href={card.href}
