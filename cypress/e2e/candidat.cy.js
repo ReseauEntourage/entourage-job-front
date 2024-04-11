@@ -279,7 +279,9 @@ describe('Candidat', () => {
     cy.get(`[data-testid="cv-edit-skill2-content"]`).should('contain', skill2);
 
     // formations
-    cy.get(`[data-testid="cv-formations-button-edit"]`).scrollIntoView().click();
+    cy.get(`[data-testid="cv-formations-button-edit"]`)
+      .scrollIntoView()
+      .click();
     cy.get(`[data-testid="form-formation-title"]`)
       .scrollIntoView()
       .type('formation title');
@@ -421,7 +423,10 @@ describe('Candidat', () => {
     cy.get(`[data-testid="form-confirm-form-profile-description"]`)
       .scrollIntoView()
       .click();
-    cy.get(`[data-testid="profile-description"]`).should('contain', 'hello sir');
+    cy.get(`[data-testid="profile-description"]`).should(
+      'contain',
+      'hello sir'
+    );
 
     // change profile picture
     cy.get(`[data-testid="profile-picture-upload-desktop"]`).selectFile(

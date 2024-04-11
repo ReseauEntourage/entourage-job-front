@@ -13,7 +13,7 @@ import { Button, Card, Img } from 'src/components/utils';
 import { H6 } from 'src/components/utils/Headings';
 import { Typography } from 'src/components/utils/Typography';
 import { NormalUserRole, USER_ROLES } from 'src/constants/users';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser'; 
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 
 const coachArticles = [
   {

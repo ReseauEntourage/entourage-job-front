@@ -3,7 +3,6 @@
 
 describe('Navigation', () => {
   it('opens', () => {
-
     cy.visit('/');
     window.localStorage.setItem('entourage-pro-modal-closed', 'true');
     cy.wait(1000);

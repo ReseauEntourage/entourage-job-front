@@ -69,7 +69,7 @@ export function selectRegistrationSelectedProgram(state: RootState) {
   const selectedRole = selectRegistrationSelectedRole(state);
 
   if (!selectedRole) return null;
-  
+
   const allStepsDataForSelectedRole = flattenRegistrationDataByRole(
     data,
     selectedRole

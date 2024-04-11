@@ -87,7 +87,11 @@ export function useRegistration() {
   }, [nextStep, replace, shouldSkipStep]);
 
   useEffect(() => {
-    if (createUserStatus === ReduxRequestEvents.SUCCEEDED && selectedProgram && selectedRole) {
+    if (
+      createUserStatus === ReduxRequestEvents.SUCCEEDED &&
+      selectedProgram &&
+      selectedRole
+    ) {
       push(
         {
           pathname: `/inscription/${REGISTRATION_CONFIRMATION_STEP}`,
@@ -112,7 +116,14 @@ export function useRegistration() {
         })
       );
     }
-  }, [createUserError, createUserStatus, dispatch, push,selectedProgram,  selectedRole]);
+  }, [
+    createUserError,
+    createUserStatus,
+    dispatch,
+    push,
+    selectedProgram,
+    selectedRole,
+  ]);
 
   const onBack = useCallback(back, [back]);
 
