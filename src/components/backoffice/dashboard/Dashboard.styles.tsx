@@ -45,9 +45,19 @@ export const StyledDashboardCardSubtitle = styled.div`
   text-align: center;
 `;
 
+export const StyledDashboardArticlesContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction: row;
+  gap: 20px;
+  margin-top: 20px;
+`;
+
 export const StyledDashboardArticle = styled.div`
-  max-width: 280px;
-  width: 280px;
+  max-width: 250px;
+  width: 250px;
+  min-height: 223px;
   border: ${COLORS.gray} 1px solid;
   border-radius: 20px;
   box-shadow: 0px 4px 4px 0px #00000008;

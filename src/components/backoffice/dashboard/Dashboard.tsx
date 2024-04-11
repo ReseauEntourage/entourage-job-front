@@ -22,6 +22,7 @@ import { DashboardReadDocumentsCard } from './DashboardReadDocumentsCard';
 import { DashboardRecommendationsCard } from './DashboardRecommendationsCard';
 import { DashboardReferentCard } from './DashboardReferentCard';
 import { DashboardStepsCard } from './DashboardStepsCard';
+import { DashboardToolboxCard } from './DashboardToolboxCard';
 
 export const Dashboard = () => {
   const isDesktop = useIsDesktop();
@@ -57,6 +58,7 @@ export const Dashboard = () => {
                 <DashboardStepsCard />
                 <DashboardOpportunitiesCard />
                 <DashboardRecommendationsCard />
+                <DashboardToolboxCard />
               </>
             )}
           </StyledDashboardRightColumn>
