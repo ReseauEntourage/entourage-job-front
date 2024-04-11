@@ -7,7 +7,7 @@ import {
   StyledDashboardArticleText,
   StyledDashboardCardContentContainer,
   StyledDashboardCardSubtitle,
-  StyledDashboardReadDocumentsArticlesContainer,
+  StyledDashboardArticlesContainer,
 } from '../Dashboard.styles';
 import { isReadDocument } from 'src/components/partials/pages/Documents/Documents.utils';
 import { Card, Img } from 'src/components/utils';
@@ -68,7 +68,7 @@ export const DashboardReadDocumentsCard = () => {
               : 'Nous vous invitons à prendre connaissance de ces documents essentiels pour garantir à tout un chacun une expérience enrichissante avec Entourage Pro.'}
           </Typography>
         </StyledDashboardCardSubtitle>
-        <StyledDashboardReadDocumentsArticlesContainer>
+        <StyledDashboardArticlesContainer>
           {articles.map((article) => {
             if (
               (contextualRole && !article.roles.includes(contextualRole)) ||
@@ -96,7 +96,7 @@ export const DashboardReadDocumentsCard = () => {
               </a>
             );
           })}
-        </StyledDashboardReadDocumentsArticlesContainer>
+        </StyledDashboardArticlesContainer>
       </StyledDashboardCardContentContainer>
     </Card>
   ) : null;

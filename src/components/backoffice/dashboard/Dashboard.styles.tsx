@@ -45,7 +45,7 @@ export const StyledDashboardCardSubtitle = styled.div`
   text-align: center;
 `;
 
-export const StyledDashboardReadDocumentsArticlesContainer = styled.div`
+export const StyledDashboardArticlesContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

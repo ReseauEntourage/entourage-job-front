@@ -7,7 +7,7 @@ import {
   StyledDashboardCardContent,
   StyledDashboardCardContentContainer,
   StyledDashboardCardSubtitle,
-  StyledDashboardReadDocumentsArticlesContainer,
+  StyledDashboardArticlesContainer,
 } from '../Dashboard.styles';
 import { Button, Card, Img } from 'src/components/utils';
 import { H6 } from 'src/components/utils/Headings';
@@ -85,7 +85,7 @@ export const DashboardToolboxCard = () => {
           <Typography>{toolboxContents[user.role].subtitle}</Typography>
         </StyledDashboardCardSubtitle>
         <StyledDashboardCardContent>
-          <StyledDashboardReadDocumentsArticlesContainer>
+          <StyledDashboardArticlesContainer>
             {toolboxContents[user.role].articles.map((article) => {
               const uuidValue = uuid();
               return (
@@ -107,7 +107,7 @@ export const DashboardToolboxCard = () => {
                 </a>
               );
             })}
-          </StyledDashboardReadDocumentsArticlesContainer>
+          </StyledDashboardArticlesContainer>
         </StyledDashboardCardContent>
         <Button
           style="custom-secondary-inverted"
