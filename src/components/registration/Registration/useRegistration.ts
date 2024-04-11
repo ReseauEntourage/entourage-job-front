@@ -19,6 +19,8 @@ import {
   selectRegistrationCurrentStepData,
   selectRegistrationDataFromOtherStep,
   selectRegistrationNextStep,
+  selectRegistrationSelectedProgram,
+  selectRegistrationSelectedRole,
   selectRegistrationShouldSkipStep,
 } from 'src/use-cases/registration';
 
@@ -35,6 +37,9 @@ export function useRegistration() {
   const isLastRegistrationStep = useSelector(selectIsLastRegistrationStep);
   const nextStep = useSelector(selectRegistrationNextStep);
   const shouldSkipStep = useSelector(selectRegistrationShouldSkipStep);
+
+  const selectedRole = useSelector(selectRegistrationSelectedRole);
+  const selectedProgram = useSelector(selectRegistrationSelectedProgram);
 
   const createUserStatus = useSelector(
     createUserSelectors.selectCreateUserStatus
@@ -82,10 +87,20 @@ export function useRegistration() {
   }, [nextStep, replace, shouldSkipStep]);
 
   useEffect(() => {
-    if (createUserStatus === ReduxRequestEvents.SUCCEEDED) {
-      push(`/inscription/${REGISTRATION_CONFIRMATION_STEP}`, undefined, {
-        shallow: true,
-      });
+    if (createUserStatus === ReduxRequestEvents.SUCCEEDED && selectedProgram && selectedRole) {
+      push(
+        {
+          pathname: `/inscription/${REGISTRATION_CONFIRMATION_STEP}`,
+          query: {
+            role: selectedRole,
+            program: selectedProgram,
+          },
+        },
+        undefined,
+        {
+          shallow: true,
+        }
+      );
     } else if (createUserStatus === ReduxRequestEvents.FAILED) {
       dispatch(
         notificationsActions.addNotification({
@@ -97,7 +112,7 @@ export function useRegistration() {
         })
       );
     }
-  }, [createUserError, createUserStatus, dispatch, push]);
+  }, [createUserError, createUserStatus, dispatch, push,selectedProgram,  selectedRole]);
 
   const onBack = useCallback(back, [back]);
 
