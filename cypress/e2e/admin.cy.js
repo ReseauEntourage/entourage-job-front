@@ -233,7 +233,6 @@ describe('Admin', () => {
   });
 
   describe('Members', () => {
-    
     beforeEach(() => {
       cy.visit('/backoffice/admin/membres?role=Candidat&zone=LYON', {
         onBeforeLoad: function async(window) {
@@ -245,7 +244,6 @@ describe('Admin', () => {
     });
 
     it('Should open backoffice members', () => {
-
       // test if all members are in the table
       cy.fixture('user-members-res').then((members) => {
         cy.get('[data-testid="member-list"]')
@@ -256,7 +254,6 @@ describe('Admin', () => {
 
     describe("Remplir le formulaire de création d'un membre, envoyer et fermer", () => {
       beforeEach(() => {
-
         cy.get('[data-testid="button-admin-create"]')
           .should('be.visible')
           .first()
@@ -516,7 +513,6 @@ describe('Admin', () => {
       });
 
       describe("Creation d'un user et d'une structure", () => {
-        
         afterEach(() => {
           cy.get('#form-add-user-adminRole-container').should('not.exist');
 
