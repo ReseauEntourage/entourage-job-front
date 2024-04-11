@@ -10,24 +10,43 @@ import {
   StyledDashboardReadDocumentsArticlesContainer,
 } from '../Dashboard.styles';
 import { Button, Card, Img } from 'src/components/utils';
-import { H6 } from 'src/components/utils/Headings'; // TODO Replace with real articles
+import { H6 } from 'src/components/utils/Headings';
 import { Typography } from 'src/components/utils/Typography';
 import { NormalUserRole, USER_ROLES } from 'src/constants/users';
-import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser'; // TODO Replace with real articles
+import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser'; 
 
-// TODO Replace with real articles
-const testArticles = [
+const coachArticles = [
   {
-    title: 'La charte Ethique Entourage Pro',
-    subTitle: 'Découvrez nos valeurs qui vont guider votre accompagnement',
-    link: '/charte-ethique',
-    image: '/static/img/dashboard-article-charte-ethique.jpeg',
+    title: 'Tout savoir sur la plateforme Entourage Pro',
+    link: '/La-plateforme-Entourage-Pro-780a7bdfd3344a39870761144d0c236b',
+    image: '/static/img/dashboard-bao-coach-1.jpg',
   },
   {
-    title: 'Conseils sur la posture à adopter',
-    subTitle: 'Tout savoir pour soutenir un candidat en situation de précarité',
-    link: '/conseils-posture',
-    image: '/static/img/dashboard-article-posture.jpeg',
+    title: '10 coups de pouce à réaliser en tant que coach',
+    link: '/Point-de-d-part-du-coach-Coup-de-pouce-fe4d3ba8516e454b889184c3732604f0',
+    image: '/static/img/dashboard-bao-coach-2.jpg',
+  },
+  {
+    title: 'Le réseau, un outil essentiel pour lutter contre l’exclusion',
+    link: '/Point-de-d-part-du-coach-Coup-de-pouce-fe4d3ba8516e454b889184c3732604f0',
+    image: '/static/img/dashboard-bao-coach-3.jpg',
+  },
+];
+const candidateArticles = [
+  {
+    title: 'Tout savoir sur la plateforme Entourage Pro',
+    link: '/Prise-en-main-de-la-plateforme-361d64fe142d44ed9c74eb72607d6a4b',
+    image: '/static/img/dashboard-bao-candidat-1.jpg',
+  },
+  {
+    title: 'Bien réaliser son CV Entourage pro',
+    link: '/L-laboration-du-CV-Entourage-Pro-e814207d6a784337874df207a6bd0a49',
+    image: '/static/img/dashboard-bao-candidat-2.jpg',
+  },
+  {
+    title: 'Comment contacter un coach ?',
+    link: '/Comment-contacter-un-coach-sur-la-plateforme-0b7f66b5991c487d8a7aefe55139d806',
+    image: '/static/img/dashboard-bao-candidat-3.jpg', // Todo: change photo ?
   },
 ];
 
@@ -37,7 +56,6 @@ const toolboxContents: {
     url: string;
     articles: {
       title: string;
-      subTitle: string;
       link: string;
       image: string;
     }[];
@@ -46,14 +64,14 @@ const toolboxContents: {
   [USER_ROLES.CANDIDATE]: {
     subtitle:
       'Découvrez les contenus pédagogiques pour booster vos opportunités professionnelles',
-    url: process.env.TOOLBOX_CANDIDAT_URL as string,
-    articles: testArticles,
+    url: process.env.TOOLBOX_CANDIDATE_URL as string,
+    articles: candidateArticles,
   },
   [USER_ROLES.COACH]: {
     subtitle:
       'Découvrez les contenus pédagogiques pour vous orienter dans votre rôle de coach',
     url: process.env.TOOLBOX_COACH_URL as string,
-    articles: testArticles,
+    articles: coachArticles,
   },
 };
 
@@ -73,7 +91,7 @@ export const DashboardToolboxCard = () => {
               return (
                 <a
                   key={uuidValue}
-                  href={article.link}
+                  href={process.env.TOOLBOX_URL + article.link}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -95,6 +113,7 @@ export const DashboardToolboxCard = () => {
           style="custom-secondary-inverted"
           isExternal
           href={toolboxContents[user.role].url}
+          newTab
         >
           Voir tous les conseils
         </Button>
