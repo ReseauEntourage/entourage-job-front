@@ -23,6 +23,7 @@ import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
+import { updateSharesCount } from 'src/lib/updateSharesCount';
 import {
   buildBusinessLineForSentence,
   findConstantFromValue,
