@@ -20,9 +20,9 @@ import { ModalShareCV } from 'src/components/modals/Modal/ModalGeneric/StepperMo
 import { Grid, Img, SimpleLink } from 'src/components/utils';
 import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { useUpdateSharesCount } from 'src/hooks';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
+import { updateSharesCount } from 'src/lib/updateSharesCount';
 import {
   buildBusinessLineForSentence,
   findConstantFromValue,
@@ -56,8 +56,6 @@ export const CandidatCard = ({
   const hashtags = ['Entourage Pro'];
   const sharedDescription = `La précarité n'exclut pas les compétences\xa0! Avec Entourage Pro, aidons ${firstName} à retrouver un emploi en lui proposant un job ou en diffusant son CV\xa0!`;
   const title = `Entourage Pro\xa0: Aidez ${firstName} à retrouver un emploi`;
-
-  const updateSharesCount = useUpdateSharesCount();
 
   const openNewsletterModal = () => {
     openModal(<ModalShareCV firstName={firstName} />);

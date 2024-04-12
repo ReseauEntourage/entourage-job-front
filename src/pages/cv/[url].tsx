@@ -12,7 +12,7 @@ import { NewsletterPartial } from 'src/components/partials/common/NewsletterPart
 import { Grid, Section, SimpleLink, Button } from 'src/components/utils';
 import { CV_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
-import { useUpdateSharesCount } from 'src/hooks';
+import { updateSharesCount } from 'src/lib/updateSharesCount';
 
 interface CVPageProps {
   cv: CV;
@@ -20,8 +20,6 @@ interface CVPageProps {
   exists?: boolean;
 }
 const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
-  const updateSharesCount = useUpdateSharesCount();
-
   const hostname = process.env.SERVER_URL;
   const link = `${hostname}${router.asPath}`;
   const candidateExists = cv && cv.user && cv.user.candidat;
@@ -36,7 +34,7 @@ const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
     if (cv) {
       updateSharesCount(cv.UserId, 'other');
     }
-  }, [cv, updateSharesCount]);
+  }, [cv]);
 
   if (!cv) {
     if (exists) {
@@ -121,7 +119,7 @@ const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
               '.jpg',
               '.preview.jpg'
             )}`
-          : `${process.env.SERVER_URL}/static/img/linkedout-preview-new.jpg`
+          : `${process.env.SERVER_URL}/static/img/entourage-pro-preview.jpg`
       }
       metaType="profile"
     >

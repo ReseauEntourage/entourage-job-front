@@ -14,9 +14,9 @@ import { CV } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalShareCV } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
-import { useUpdateSharesCount } from 'src/hooks';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
+import { updateSharesCount } from 'src/lib/updateSharesCount';
 import {
   StyledCVShareBUtton,
   StyledCVShareButtonsContainer,
@@ -31,8 +31,6 @@ export const CVShareButtons = ({
   cv,
   actionDisabled = false,
 }: CVShareButtonsProps) => {
-  const updateSharesCount = useUpdateSharesCount();
-
   const openNewsletterModal = useCallback(() => {
     openModal(<ModalShareCV firstName={cv.user.candidat.firstName} />);
   }, [cv.user.candidat.firstName]);
