@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+
 describe('Coach externe', () => {
   beforeEach(() => {
     window.localStorage.setItem('entourage-pro-modal-closed', 'true');

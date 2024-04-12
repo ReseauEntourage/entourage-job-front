@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 describe('Parcours CV', () => {
   beforeEach(() => {
     window.localStorage.setItem('entourage-pro-modal-closed', 'true');

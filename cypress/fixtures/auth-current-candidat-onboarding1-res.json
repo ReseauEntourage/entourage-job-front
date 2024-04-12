@@ -18,28 +18,27 @@
     "contract": null,
     "endOfContract": null,
     "lastModifiedBy": "198e8950-d5be-4e82-aaf8-d18840dffba1",
-    "coach": null
+    "coach": {
+      "id": "65ab1daa-b65d-4c38-ab9a-b3cb8eb1e390",
+      "firstName": "Khadiata",
+      "lastName": "Sow",
+      "email": "khadiata.sow@accenture.com",
+      "phone": null,
+      "address": null,
+      "role": "Coach",
+      "adminRole": null,
+      "zone": "PARIS",
+      "gender": 1,
+      "lastConnection": null
+    }
   },
   "coach": null,
   "userProfile": {
-    "description": "hello",
-    "department": "Ain (01)",
+    "description": null,
     "currentJob": null,
+    "department": "Ain (01)",
     "networkBusinessLines": [],
-    "searchBusinessLines": [
-      {
-        "id": "8c08d1d2-9cb4-4a93-afd3-4bdaaf039093",
-        "name": "aev",
-        "order": 0,
-        "UserProfileSearchBusinessLine": {
-          "id": "54c6389c-ab98-4d02-84cc-e651164db9f7",
-          "UserProfileId": "8e2308b6-fe8e-4e68-b21f-4af8d946a503",
-          "BusinessLineI": "8c08d1d2-9cb4-4a93-afd3-4bdaaf039093",
-          "createdAt": "2023-12-28T10:22:06.388Z",
-          "updatedAt": "2023-12-28T10:22:06.388Z"
-        }
-      }
-    ],
+    "searchBusinessLines": [],
     "searchAmbitions": [],
     "helpOffers": [],
     "helpNeeds": [
