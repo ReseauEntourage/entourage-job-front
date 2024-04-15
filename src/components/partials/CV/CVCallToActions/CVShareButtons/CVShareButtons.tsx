@@ -11,12 +11,12 @@ import LinkedInIcon from 'assets/icons/linked-in.svg';
 import TwitterIcon from 'assets/icons/twitter.svg';
 import WhatsappIcon from 'assets/icons/whatsapp.svg';
 import { CV } from 'src/api/types';
+import { updateSharesCount } from 'src/components/cv/updateSharesCount';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalShareCV } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalShareCV';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
-import { updateSharesCount } from 'src/lib/updateSharesCount';
 import {
   StyledCVShareBUtton,
   StyledCVShareButtonsContainer,
