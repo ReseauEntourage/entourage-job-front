@@ -93,7 +93,7 @@ export function TextInput({
             ) : (
               <ButtonIcon
                 icon={<EyeVisible {...iconProps} />}
-                onClick={() => toggleType()}
+                onClick={toggleType}
               />
             )}
           </StyledEyeIconWrapper>
