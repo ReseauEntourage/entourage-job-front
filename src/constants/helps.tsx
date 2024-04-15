@@ -9,6 +9,7 @@ import {
 } from 'assets/icons/icons';
 import { NormalUserRole, USER_ROLES } from './users';
 import { FilterConstant } from './utils';
+import { Img } from 'src/components/utils/Img';
 
 export type HelpValue = 'tips' | 'interview' | 'cv' | 'network' | 'event';
 
@@ -127,23 +128,37 @@ export const ParametresHelpCardContents: {
         "Multipliez les opportunités professionnelles en vous connectant avec des professionnels qui peuvent vous soutenir et vous ouvrir des portes sur le marché de l'emploi.",
     },
   ],
+
+  // Using <Img /> instead of SVGs on purpose to fix the disapearing bug
   [USER_ROLES.COACH]: [
     {
-      icon: <IlluPoigneeDeMain {...iconSizeProps} />,
+      icon: <Img src={'/static/img/illu-CV.png'} alt="CV" {...iconSizeProps} />,
       value: 'tips',
       label: 'Donner des conseils aux membres de la communauté',
       description:
         'Partagez votre savoir-faire et vos conseils pour aider les candidats à naviguer sur le marché du travail et à trouver des opportunités adaptées à leurs compétences.',
     },
     {
-      icon: <IlluMalette {...iconSizeProps} />,
+      icon: (
+        <Img
+          src={'/static/img/illu-mallette.png'}
+          alt="Mallette"
+          {...iconSizeProps}
+        />
+      ),
       value: 'interview',
       label: 'Aider à préparer les entretiens d’embauche',
       description:
         "Mettez à profit votre expertise pour coacher les candidats, les aider à anticiper les questions d'entretiens et à communiquer efficacement leur motivation.",
     },
     {
-      icon: <IlluCV {...iconSizeProps} />,
+      icon: (
+        <Img
+          src={'/static/img/illu-poignee-main.png'}
+          alt="Poignée de main"
+          {...iconSizeProps}
+        />
+      ),
       value: 'cv',
       label: 'Aider à réaliser un CV et une lettre de motivation',
       description:
