@@ -28,7 +28,6 @@ describe('Parcours CV', () => {
       fixture: 'user-search-candidates-res',
     }).as('getCandidats');
 
-    cy.intercept('GET', '/cv/shares', { total: 184222 }).as('cvShares');
     cy.intercept('GET', '/cv/published', { nbPublishedCVs: 2 }).as(
       'cvPublished'
     );

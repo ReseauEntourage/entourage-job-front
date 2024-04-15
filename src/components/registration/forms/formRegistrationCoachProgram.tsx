@@ -34,8 +34,8 @@ export const formRegistrationCoachProgram: FormSchema<{
               message: (
                 <>
                   <Typography size="small" weight="bold">
-                    Pour l&apos;instant, le Programme 360 est uniquement
-                    disponible pour les coachs résidant dans certaines villes et
+                    Pour l&apos;instant, le Format 360 est uniquement disponible
+                    pour les coachs résidant dans certaines villes et
                     départements définis.
                   </Typography>
                   <Typography size="small" variant="italic">

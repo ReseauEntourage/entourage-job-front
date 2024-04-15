@@ -44,7 +44,7 @@ const meta = {
 const disabledOptionMessage = (
   <>
     <Typography size="small" weight="bold">
-      Pour l&apos;instant, le Programme 360 est uniquement disponible pour les
+      Pour l&apos;instant, le Format 360 est uniquement disponible pour les
       moins de 30 ans résidant dans certaines villes et département définies
     </Typography>
     <Typography size="small" variant="italic">

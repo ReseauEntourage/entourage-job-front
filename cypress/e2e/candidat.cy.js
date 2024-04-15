@@ -4,7 +4,6 @@ import moment from 'moment';
 describe('Candidat', () => {
   beforeEach(() => {
     window.localStorage.setItem('entourage-pro-modal-closed', 'true');
-    cy.intercept('GET', '/cv/shares', { total: 184221 }).as('cvShares');
 
     cy.intercept('GET', '/auth/current', {
       fixture: 'auth-current-candidat-res',
