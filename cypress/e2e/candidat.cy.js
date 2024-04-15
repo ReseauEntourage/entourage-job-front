@@ -4,7 +4,6 @@ import moment from 'moment';
 describe('Candidat', () => {
   beforeEach(() => {
     window.localStorage.setItem('entourage-pro-modal-closed', 'true');
-    cy.intercept('GET', '/cv/shares', { total: 184221 }).as('cvShares');
 
     cy.intercept('GET', '/auth/current', {
       fixture: 'auth-current-candidat-res',
@@ -279,7 +278,9 @@ describe('Candidat', () => {
     cy.get(`[data-testid="cv-edit-skill2-content"]`).should('contain', skill2);
 
     // formations
-    cy.get(`[data-testid="cv-formations-button-edit"]`).scrollIntoView().click();
+    cy.get(`[data-testid="cv-formations-button-edit"]`)
+      .scrollIntoView()
+      .click();
     cy.get(`[data-testid="form-formation-title"]`)
       .scrollIntoView()
       .type('formation title');
@@ -421,7 +422,10 @@ describe('Candidat', () => {
     cy.get(`[data-testid="form-confirm-form-profile-description"]`)
       .scrollIntoView()
       .click();
-    cy.get(`[data-testid="profile-description"]`).should('contain', 'hello sir');
+    cy.get(`[data-testid="profile-description"]`).should(
+      'contain',
+      'hello sir'
+    );
 
     // change profile picture
     cy.get(`[data-testid="profile-picture-upload-desktop"]`).selectFile(

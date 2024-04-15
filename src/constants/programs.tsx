@@ -65,14 +65,14 @@ export const ProgramOptions: {
   [USER_ROLES.CANDIDATE]: [
     {
       value: Programs.THREE_SIXTY,
-      label: 'Programme 360',
+      label: 'Format 360',
       bullets: ProgramBullet.three_sixty,
       description:
         "Je souhaite bénéficier d'un accompagnement personnalisé avec un coach dédié (définition de mon projet, création de mon CV, recherches, préparation aux entretiens...)",
     },
     {
       value: Programs.BOOST,
-      label: 'Programme Coup de pouce',
+      label: 'Format Coup de pouce',
       bullets: ProgramBullet.three_sixty,
       description:
         "Je souhaite profiter de coups de pouces ponctuels pour m'aider dans ma recherche d'emploi (atelier CV et entretiens, partage de réseau, conseils pour la recherche, partage d'expérience...)",
@@ -81,14 +81,14 @@ export const ProgramOptions: {
   [USER_ROLES.COACH]: [
     {
       value: Programs.THREE_SIXTY,
-      label: 'Programme 360',
+      label: 'Format 360',
       bullets: ProgramBullet.three_sixty,
       description:
         "Je souhaite me consacrer à l'accompagnement personnalisé d'un(e) candidat(e) : définition de son projet, création de son CV, aide dans les recherches, préparation aux entretiens...",
     },
     {
       value: Programs.BOOST,
-      label: 'Programme Coup de pouce',
+      label: 'Format Coup de pouce',
       bullets: ProgramBullet.boost,
       description:
         "Je souhaite proposer des coups des pouces ponctuels pour aider des candidat(e)s dans leurs recherches : atelier CV et entretiens, partage de réseau, conseils pour les recherches, partage d'expérience...",

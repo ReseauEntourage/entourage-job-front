@@ -35,8 +35,7 @@ export const Publier = ({ innerRef }: { innerRef: Ref<HTMLDivElement> }) => {
             <li>
               <CarteSolidaireIcon />{' '}
               <div>
-                Programme disponible en Ile de France, Lille, Lorient, Lyon,
-                Rennes
+                Format disponible en Ile de France, Lille, Lorient, Lyon, Rennes
               </div>
             </li>
           </ul>
