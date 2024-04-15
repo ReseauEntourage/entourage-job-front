@@ -9,8 +9,6 @@ describe('Admin', () => {
   beforeEach(() => {
     window.localStorage.setItem('entourage-pro-modal-closed', 'true');
 
-    cy.intercept('GET', '/cv/shares', { total: 184222 }).as('cvShares');
-
     cy.intercept('GET', '/auth/current', {
       fixture: 'auth-login-admin-res',
     }).as('authCheck');
@@ -240,7 +238,6 @@ describe('Admin', () => {
           window.localStorage.setItem('release-version', 'v100');
         },
       });
-      cy.wait('@members');
     });
 
     it('Should open backoffice members', () => {
