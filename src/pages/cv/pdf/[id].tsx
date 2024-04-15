@@ -39,7 +39,7 @@ const CVPDFPage = ({ cv, page, router }: CVPDFPageProps) => {
               '.jpg',
               '.preview.jpg'
             )}`
-          : `${process.env.SERVER_URL}/static/img/lentourage-pro-preview.jpg`
+          : `${process.env.SERVER_URL}/static/img/entourage-pro-preview.jpg`
       }
       metaType="profile"
     >
