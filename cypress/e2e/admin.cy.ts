@@ -1,9 +1,8 @@
-/* eslint-disable no-undef */
-import organizations from '../fixtures/organization-search-res.json';
+const organizations = require('../fixtures/organization-search-res.json');
 
 const entourageOrganizationId = organizations.find(
   ({ name }) => name === 'Entourage'
-).id;
+)?.id;
 
 describe('Admin', () => {
   beforeEach(() => {

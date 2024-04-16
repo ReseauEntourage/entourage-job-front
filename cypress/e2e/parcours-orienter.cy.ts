@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 describe('Parcours Orienter', () => {
   beforeEach(() => {
     cy.intercept('POST', '/contact/contactUs', {

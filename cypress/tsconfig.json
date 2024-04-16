@@ -1,5 +1,13 @@
 {
   "extends": "../tsconfig.json",
-  "files": ["../cypress.config.js"],
-  "include": ["../cypress/**/*.js"]
+  "compilerOptions": {
+    "allowJs": true,
+    "isolatedModules": false,
+    "module": "commonjs",
+    "types": ["cypress", "node"],
+    "sourceMap": false,
+    "resolveJsonModule": true
+  },
+  "include": ["../cypress/**/*.js", "../cypress/**/*.ts"],
+  "files": ["../cypress.config.ts"]
 }

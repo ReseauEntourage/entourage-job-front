@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 
 describe('Parcours Entreprises', () => {
   beforeEach(() => {
@@ -18,7 +17,7 @@ describe('Parcours Entreprises', () => {
 
     cy.visit('/entreprises', {
       onBeforeLoad: function async(window) {
-        window.localStorage.setItem('tax-modal-closed', true);
+        window.localStorage.setItem('tax-modal-closed', 'true');
         window.localStorage.setItem('entourage-pro-modal-closed', 'true');
       },
     });

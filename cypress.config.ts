@@ -1,6 +1,5 @@
-// eslint-disable-next-line
 require('dotenv').config();
-const { defineConfig } = require('cypress');
+import { defineConfig } from 'cypress';
 
 module.exports = defineConfig({
   video: false,
@@ -13,7 +12,8 @@ module.exports = defineConfig({
   },
   e2e: {
     baseUrl: `${process.env.SERVER_URL}`,
-    setupNodeEvents(on, config) {
+    supportFile: false,
+    setupNodeEvents(_on, _config) {
       // implement node event listeners here
     },
   },

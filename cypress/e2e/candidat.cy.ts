@@ -1,5 +1,4 @@
-/* eslint-disable no-undef */
-import moment from 'moment';
+const moment = require('moment');
 
 describe('Candidat', () => {
   beforeEach(() => {
