@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { EyeHidden, EyeVisible } from 'assets/icons/icons';
 import { ButtonIcon } from '../../ButtonIcon';
 import {
@@ -39,11 +39,9 @@ export function TextInput({
   error,
 }: TextInputProps) {
   const [contextType, setContextType] = useState(type);
-  const isPasswordContextType = useCallback(() => {
-    return contextType === 'password';
-  }, [contextType]);
-  const toggleType = () => {
-    setContextType(isPasswordContextType() ? 'text' : 'password');
+  const isPasswordContextType = contextType === 'password';
+  const toggleContextType = () => {
+    setContextType(isPasswordContextType ? 'text' : 'password');
   };
 
   if (hidden) {
@@ -85,15 +83,15 @@ export function TextInput({
         />
         {type === 'password' && (
           <StyledEyeIconWrapper>
-            {isPasswordContextType() ? (
+            {isPasswordContextType ? (
               <ButtonIcon
                 icon={<EyeHidden {...iconProps} />}
-                onClick={() => toggleType()}
+                onClick={toggleContextType}
               />
             ) : (
               <ButtonIcon
                 icon={<EyeVisible {...iconProps} />}
-                onClick={toggleType}
+                onClick={toggleContextType}
               />
             )}
           </StyledEyeIconWrapper>
