@@ -15,7 +15,6 @@ import { GA_TAGS } from 'src/constants/tags';
 
 const reviews = [
   {
-    image: '/static/img/temoignage-entreprise-stephane-danny.jpg',
     author: 'Elicia',
     authorStatus: 'accompagnée par l’Accélérateur a trouvé chez Kiko',
     review: (
@@ -27,7 +26,6 @@ const reviews = [
     ),
   },
   {
-    image: '/static/img/temoignage-entreprise-gregoire-mbemba.jpg',
     author: 'Mike',
     authorStatus: 'candidat EntouragePro',
     review: (
@@ -38,7 +36,6 @@ const reviews = [
     ),
   },
   {
-    image: '/static/img/temoignage-entreprise-gregoire-mbemba.jpg',
     author: 'Grégoire',
     authorStatus: "Recruteur de M'Bemba Dani Alu",
     review: (
