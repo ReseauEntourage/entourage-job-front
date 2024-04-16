@@ -181,7 +181,7 @@ export const formCandidateContact: FormSchema<{
           },
 
           message:
-            'Vous devez avoir entre 18 et 30 ans pour participer au programme.',
+            'Vous devez avoir entre 18 et 30 ans pour participer au format 360.',
         },
       ],
     },
