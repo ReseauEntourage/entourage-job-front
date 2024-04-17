@@ -36,8 +36,7 @@ export const DashboardReadDocumentsCard = () => {
         roles: [USER_ROLES.COACH],
         documentName: DocumentNames.ConseilsPosture,
         title: 'Conseils sur la posture à adopter',
-        subTitle:
-          'Tout savoir pour soutenir un candidat en situation de précarité',
+        subTitle: 'Tout savoir pour soutenir un candidat Entourage Pro',
         link: '/conseils-posture',
         image: '/static/img/dashboard-article-posture.jpeg',
       },
