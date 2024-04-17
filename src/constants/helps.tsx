@@ -182,7 +182,6 @@ export const ParametresHelpCardContents: {
     },
   ],
 
-  // Using <Img /> instead of SVGs on purpose to fix the disapearing bug
   [USER_ROLES.COACH]: [
     {
       icon: (
