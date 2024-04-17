@@ -1,18 +1,12 @@
 import React from 'react';
 
-import {
-  IlluConversation,
-  IlluCV,
-  IlluMalette,
-  IlluPoigneeDeMain,
-  IlluReseauxSociaux,
-} from 'assets/icons/icons';
+import { Img } from 'src/components/utils/Img';
 import { NormalUserRole, USER_ROLES } from './users';
 import { FilterConstant } from './utils';
 
 export type HelpValue = 'tips' | 'interview' | 'cv' | 'network' | 'event';
 
-const iconSizeProps = { width: 40, height: 40 };
+const iconSizeProps = { width: 45, height: 45 };
 
 export const ProfileHelps: (FilterConstant<HelpValue> & {
   icon: JSX.Element;
@@ -21,7 +15,13 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
   };
 })[] = [
   {
-    icon: <IlluPoigneeDeMain {...iconSizeProps} />,
+    icon: (
+      <Img
+        src="/static/img/illustrations/illu-poignee-main.png"
+        alt="Poignée de main"
+        {...iconSizeProps}
+      />
+    ),
     value: 'tips',
     label: 'Soutien',
     shortTitle: {
@@ -30,7 +30,13 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
     },
   },
   {
-    icon: <IlluMalette {...iconSizeProps} />,
+    icon: (
+      <Img
+        src="/static/img/illustrations/illu-mallette.png"
+        alt="Entretien"
+        {...iconSizeProps}
+      />
+    ),
     value: 'interview',
     label: 'Entretien',
     shortTitle: {
@@ -39,7 +45,13 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
     },
   },
   {
-    icon: <IlluCV {...iconSizeProps} />,
+    icon: (
+      <Img
+        src="/static/img/illustrations/illu-CV.png"
+        alt="CV"
+        {...iconSizeProps}
+      />
+    ),
     value: 'cv',
     label: 'CV',
     shortTitle: {
@@ -48,7 +60,13 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
     },
   },
   {
-    icon: <IlluConversation {...iconSizeProps} />,
+    icon: (
+      <Img
+        src="/static/img/illustrations/illu-disscution.png"
+        alt="Disscution"
+        {...iconSizeProps}
+      />
+    ),
     value: 'event',
     label: 'Événement',
     shortTitle: {
@@ -57,7 +75,13 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
     },
   },
   {
-    icon: <IlluReseauxSociaux {...iconSizeProps} />,
+    icon: (
+      <Img
+        src="/static/img/illustrations/illu-partage-RS.png"
+        alt="Réseaux sociaux"
+        {...iconSizeProps}
+      />
+    ),
     value: 'network',
     label: 'Partage',
     shortTitle: {
@@ -92,65 +116,120 @@ export const ParametresHelpCardContents: {
 } = {
   [USER_ROLES.CANDIDATE]: [
     {
-      icon: <IlluPoigneeDeMain {...iconSizeProps} />,
+      icon: (
+        <Img
+          src="/static/img/illustrations/illu-poignee-main.png"
+          alt="Poignée de main"
+          {...iconSizeProps}
+        />
+      ),
       value: 'tips',
       label: 'Demander des conseils aux membres de la communauté',
       description:
         'Recevez des conseils personnalisés et un accompagnement de la part de nos coachs pour vous guider dans votre parcours professionnel.',
     },
     {
-      icon: <IlluMalette {...iconSizeProps} />,
+      icon: (
+        <Img
+          src="/static/img/illustrations/illu-mallette.png"
+          alt="Mallette"
+          {...iconSizeProps}
+        />
+      ),
       value: 'interview',
       label: 'Se préparer aux entretiens d’embauche',
       description:
         'Préparez au mieux vos entretiens grâce aux conseils et au soutien des coachs Entourage Pro.',
     },
     {
-      icon: <IlluCV {...iconSizeProps} />,
+      icon: (
+        <Img
+          src="/static/img/illustrations/illu-CV.png"
+          alt="CV"
+          {...iconSizeProps}
+        />
+      ),
       value: 'cv',
       label: 'Réaliser son CV et ses lettres de motivation',
       description:
         "Profitez de l'expérience des coachs Entourage Pro pour créer des CV et lettres de motivation qui mettent en avant vos atouts et compétences.",
     },
     {
-      icon: <IlluConversation {...iconSizeProps} />,
+      icon: (
+        <Img
+          src="/static/img/illustrations/illu-disscution.png"
+          alt="Disscution"
+          {...iconSizeProps}
+        />
+      ),
       value: 'event',
       label: 'Se rencontrer et échanger avec les membres de la communauté',
       description:
         "Rejoignez notre communauté lors d'événements pour partager vos expériences, apprendre des autres et tisser des liens professionnels précieux.",
     },
     {
-      icon: <IlluReseauxSociaux {...iconSizeProps} />,
+      icon: (
+        <Img
+          src="/static/img/illustrations/illu-partage-RS.png"
+          alt="Réseaux sociaux"
+          {...iconSizeProps}
+        />
+      ),
       value: 'network',
       label: 'Faire grandir son réseau professionnel',
       description:
         "Multipliez les opportunités professionnelles en vous connectant avec des professionnels qui peuvent vous soutenir et vous ouvrir des portes sur le marché de l'emploi.",
     },
   ],
+
   [USER_ROLES.COACH]: [
     {
-      icon: <IlluPoigneeDeMain {...iconSizeProps} />,
+      icon: (
+        <Img
+          src="/static/img/illustrations/illu-CV.png"
+          alt="CV"
+          {...iconSizeProps}
+        />
+      ),
       value: 'tips',
       label: 'Donner des conseils aux membres de la communauté',
       description:
         'Partagez votre savoir-faire et vos conseils pour aider les candidats à naviguer sur le marché du travail et à trouver des opportunités adaptées à leurs compétences.',
     },
     {
-      icon: <IlluMalette {...iconSizeProps} />,
+      icon: (
+        <Img
+          src="/static/img/illustrations/illu-mallette.png"
+          alt="Mallette"
+          {...iconSizeProps}
+        />
+      ),
       value: 'interview',
       label: 'Aider à préparer les entretiens d’embauche',
       description:
         "Mettez à profit votre expertise pour coacher les candidats, les aider à anticiper les questions d'entretiens et à communiquer efficacement leur motivation.",
     },
     {
-      icon: <IlluCV {...iconSizeProps} />,
+      icon: (
+        <Img
+          src="/static/img/illustrations/illu-poignee-main.png"
+          alt="Poignée de main"
+          {...iconSizeProps}
+        />
+      ),
       value: 'cv',
       label: 'Aider à réaliser un CV et une lettre de motivation',
       description:
         'Utilisez votre expérience pour guider les candidats dans la création de documents professionnels qui reflètent leur potentiel et leurs expériences.',
     },
     {
-      icon: <IlluConversation {...iconSizeProps} />,
+      icon: (
+        <Img
+          src="/static/img/illustrations/illu-disscution.png"
+          alt="Disscution"
+          {...iconSizeProps}
+        />
+      ),
       value: 'event',
       label:
         'Se rencontrer lors d’événements avec les membres de la communauté',
@@ -158,7 +237,13 @@ export const ParametresHelpCardContents: {
         "Participer à des événements qui encouragent l'entraide, le partage d'expériences et le développement de réseaux professionnels enrichissants pour les candidats.",
     },
     {
-      icon: <IlluReseauxSociaux {...iconSizeProps} />,
+      icon: (
+        <Img
+          src="/static/img/illustrations/illu-partage-RS.png"
+          alt="Réseaux sociaux"
+          {...iconSizeProps}
+        />
+      ),
       value: 'network',
       label: 'Partager mon réseau professionnel',
       description:
