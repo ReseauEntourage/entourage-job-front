@@ -73,7 +73,7 @@ export const ProgramOptions: {
     {
       value: Programs.BOOST,
       label: 'Format Coup de pouce',
-      bullets: ProgramBullet.three_sixty,
+      bullets: ProgramBullet.boost,
       description:
         "Je souhaite profiter de coups de pouces ponctuels pour m'aider dans ma recherche d'emploi (atelier CV et entretiens, partage de réseau, conseils pour la recherche, partage d'expérience...)",
     },
