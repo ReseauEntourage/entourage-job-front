@@ -200,7 +200,7 @@ export const ParametresHelpCardContents: {
     {
       icon: (
         <Img
-          src="/static/img/illu-mallette.png"
+          src="/static/img/illustrations/illu-mallette.png"
           alt="Mallette"
           {...iconSizeProps}
         />
@@ -213,7 +213,7 @@ export const ParametresHelpCardContents: {
     {
       icon: (
         <Img
-          src="/static/img/illu-poignee-main.png"
+          src="/static/img/illustrations/illu-poignee-main.png"
           alt="Poignée de main"
           {...iconSizeProps}
         />
