@@ -6,6 +6,7 @@ import {
   IlluPoigneeDeMain,
 } from 'assets/icons/icons';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
+import { Typography } from 'src/components/utils';
 import { Programs } from 'src/constants/programs';
 import { COLORS } from 'src/constants/styles';
 import { USER_ROLES } from 'src/constants/users';
@@ -14,7 +15,9 @@ import { formRegistrationAccount } from './forms/formRegistrationAccount';
 import { formRegistrationCandidateExpectations } from './forms/formRegistrationCandidateExpectations';
 import { formRegistrationCandidateInfo } from './forms/formRegistrationCandidateInfo';
 import { formRegistrationCandidateInfoCo } from './forms/formRegistrationCandidateInfoCo';
+import { formRegistrationCandidateProfessionalInformation } from './forms/formRegistrationCandidateProfessionalInformation';
 import { formRegistrationCandidateProgram } from './forms/formRegistrationCandidateProgram';
+import { formRegistrationCandidateSocialSituation } from './forms/formRegistrationCandidateSocialSituation';
 import { formRegistrationCoachInfo } from './forms/formRegistrationCoachInfo';
 import { formRegistrationCoachProgram } from './forms/formRegistrationCoachProgram';
 import { formRegistrationCoachWebinar } from './forms/formRegistrationCoachWebinar';
@@ -29,6 +32,8 @@ export type CandidateRegistrationForm =
   | typeof formRegistrationCandidateInfo
   | typeof formRegistrationCandidateProgram
   | typeof formRegistrationCandidateInfoCo
+  | typeof formRegistrationCandidateSocialSituation
+  | typeof formRegistrationCandidateProfessionalInformation
   | typeof formRegistrationAccount;
 /* TODO Add other steps forms here */
 
@@ -78,7 +83,7 @@ export type RegistrationLabel =
 export interface RegistrationStepContent<
   T extends RegistrationForms = RegistrationForms
 > {
-  subtitle?: string;
+  subtitle?: React.ReactNode;
   annotation?: RegistrationLabel;
   form: T;
   // Used to get the values of a previous step as default values in the form of the current step
@@ -157,6 +162,27 @@ export const RegistrationStepContents: {
     },
   },
   'step-6': {
+    [USER_ROLES.CANDIDATE]: {
+      form: formRegistrationCandidateProfessionalInformation,
+      subtitle:
+        'Nous aimerions en savoir un peu plus sur vos informations professionnelles.',
+    },
+  },
+  'step-7': {
+    [USER_ROLES.CANDIDATE]: {
+      form: formRegistrationCandidateSocialSituation,
+      subtitle: (
+        <>
+          Nous aimerions en savoir un peu plus sur votre situation. <br />
+          <Typography variant="italic" color="lighter">
+            Ces informations sont confidentielles, optionnelles et ne seront pas
+            communiquées.
+          </Typography>
+        </>
+      ),
+    },
+  },
+  'step-8': {
     [USER_ROLES.CANDIDATE]: {
       form: formRegistrationAccount,
     },
