@@ -444,6 +444,10 @@ export class APIHandler {
     return this.get(`/auth/reset/${userId}/${token}`);
   }
 
+  getVerifyEmail(token: string): Promise<AxiosResponse> {
+    return this.get(`/auth/verify-email/${token}`);
+  }
+
   // post
 
   postAuthLogin(params: {
