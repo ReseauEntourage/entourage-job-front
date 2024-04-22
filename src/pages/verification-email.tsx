@@ -1,26 +1,46 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { Api } from 'src/api';
 
 import { Layout } from 'src/components/Layout';
-import { Section } from 'src/components/utils';
+import { Button, Section } from 'src/components/utils';
 import { Spinner } from 'src/components/utils/Spinner';
+import { COLORS } from 'src/constants/styles';
 
 const VerificationEmailPage = () => {
   const {
     query: { token },
   } = useRouter();
   const [isLoading, setIsLoading] = useState(true);
-  const [status, setStatus] = useState<number | undefined>(undefined);
+  const [isError, setIsError] = useState<boolean | undefined>(undefined);
 
   useEffect(() => {
-    if (token === undefined || typeof token !== 'string') return;
-    setIsLoading(true);
-    Api.getVerifyEmail(token as string).then((response) => {
-      setStatus(response.status);
+    if (token === undefined || typeof token !== 'string') {
+      setIsError(true);
       setIsLoading(false);
-    });
+      return;
+    }
+    setIsLoading(true);
+    Api.getVerifyEmail(token as string)
+      .then(() => {
+        setIsError(false);
+      })
+      .catch(() => setIsError(true))
+      .finally(() => setIsLoading(false));
   }, [token]);
+
+  const SuccessDiv = styled.div`
+    color: ${COLORS.yesGreen};
+  `;
+
+  const ErrorDiv = styled.div`
+    color: ${COLORS.noRed};
+    display: flex;
+    padding: 10px;
+    border: 1px solid ${COLORS.noRed};
+    border-radius: 10px;
+  `;
 
   return (
     <Layout title="Vérifier mon adresse e-email - Entourage Pro">
@@ -30,7 +50,23 @@ const VerificationEmailPage = () => {
           <span className="uk-text-primary">adresse e-mail</span>
         </h1>
         {isLoading && <Spinner />}
-        {!isLoading && status === 200 ? <div>Success</div> : <div>Error</div>};
+        {isError && (
+          <ErrorDiv>
+            Une erreur est survenue lors de la vérification de votre adresse
+            email.
+          </ErrorDiv>
+        )}
+        {!isError && (
+          <>
+            {' '}
+            <SuccessDiv>
+              Merci d&apos;avoir vérifié votre adresse email
+            </SuccessDiv>
+            <Button href="/login" style="custom-secondary" size="small">
+              Connexion
+            </Button>
+          </>
+        )}
       </Section>
     </Layout>
   );
