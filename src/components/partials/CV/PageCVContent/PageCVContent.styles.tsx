@@ -418,23 +418,6 @@ export const StyledLeftQuoteContainer = styled.div`
   }
 `;
 
-export const StyledCVPageContentFooter = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  max-width: 1320px;
-
-  padding: 0 15px 50px;
-  text-align: center;
-  p {
-    margin-bottom: 0;
-  }
-  a {
-    color: ${COLORS.primaryBlue};
-    text-decoration: underline;
-  }
-`;
-
 export const StyledChevronIcon = styled(ChevronDownIcon)`
   top: 30px;
   right: 30px;
