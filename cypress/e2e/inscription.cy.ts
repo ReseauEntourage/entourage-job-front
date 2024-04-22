@@ -47,6 +47,46 @@ describe('Inscription', () => {
     cy.contains('Suivant').click();
     // })
     // it('should fill step 4 open step 5', () => {
+    cy.get(
+      "[data-testid='form-registration-candidate-professional-information-searchBusinessLine0']"
+    )
+      .click()
+      .find('.Select__option')
+      .contains('Agriculture')
+      .click();
+    cy.contains('Suivant').click();
+    // })
+    // it('should fill step 5 open step 6', () => {
+    cy.get(
+      '[data-testid="form-registration-candidate-social-situation-nationality"]'
+    ).click();
+    cy.get('[data-testid="select-option-french"]').click();
+    cy.get(
+      '[data-testid="form-registration-candidate-social-situation-accommodation"]'
+    ).click();
+    cy.get('[data-testid="select-option-insertion"]').click();
+    cy.get(
+      '[data-testid="form-registration-candidate-social-situation-hasSocialWorker"]'
+    ).click();
+    cy.get('[data-testid="select-option-yes"]').click();
+    cy.get(
+      '[data-testid="form-registration-candidate-social-situation-resources"]'
+    ).click();
+    cy.get('[data-testid="select-option-aah"]').click();
+    cy.get(
+      '[data-testid="form-registration-candidate-social-situation-jobSearchDuration"]'
+    ).click();
+    cy.get('[data-testid="select-option-less_than_3_months"]').click();
+    cy.get(
+      '[data-testid="form-registration-candidate-social-situation-studiesLevel"]'
+    ).click();
+    cy.get('[data-testid="select-option-cap_bep"]').click();
+    cy.get(
+      '[data-testid="form-registration-candidate-social-situation-workingExperience"]'
+    ).click();
+    cy.get('[data-testid="select-option-less_than_3_year"]').click();
+    cy.contains('Suivant').click();
+    // it('should fill step 6 open confirmation', () => {
     cy.get('[data-testid="form-registration-account-firstName"]').type('John');
     cy.get('[data-testid="form-registration-account-lastName"]').type('Doe');
     cy.get('[data-testid="form-registration-account-gender"]')

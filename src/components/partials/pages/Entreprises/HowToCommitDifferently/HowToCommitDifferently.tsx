@@ -29,7 +29,7 @@ export const HowToCommitDifferently = () => {
           {
             img: '/static/img/entreprise-don.png',
             title: 'Faire un don',
-            text: "Aidez-nous à développer le programme Entourage Pro et à accompagner les candidats via un don déductible de vos impôts ou un dispositif d'arrondi solidaire.",
+            text: "Aidez-nous à développer le programme Entourage Pro et à accompagner les candidat(e)s via un don déductible de vos impôts ou un dispositif d'arrondi solidaire.",
             button: {
               label: 'Faire un don',
               href: process.env.DONATION_LINK,
