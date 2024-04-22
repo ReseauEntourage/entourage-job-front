@@ -10,17 +10,16 @@ const DECALE = '3px';
 export const StyledToggleContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  align-items: c;
+  align-items: center;
 `;
 
 export const StyledToggle = styled.div`
   position: relative;
-  display: inline-block;
-  width: ${WIDTH};
-  height: ${HEIGHT};
-  border: 2px solid white;
-  border-radius: ${HEIGHT};
-  margin-right: 10px;
+
+  label {
+    display: flex;
+    align-items: center;
+  }
 
   input {
     opacity: 0;
@@ -44,6 +43,12 @@ export const StyledToggle = styled.div`
 `;
 
 export const StyledSlider = styled.span`
+  width: ${WIDTH};
+  height: ${HEIGHT};
+  border: 2px solid white;
+  border-radius: ${HEIGHT};
+  margin-right: 10px;
+
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -79,4 +84,7 @@ export const StyledToggleLabel = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  cursor: pointer;
+  margin-left: calc(${WIDTH} + 4px);
+  min-height: calc(${HEIGHT} + 4px);
 `;

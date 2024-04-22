@@ -172,7 +172,6 @@ export function MemberDesktop({
                       member={member}
                     />
                   ) : (
-                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
                     <span
                       data-tooltip-id={tooltipId}
                       data-tooltip-content={contractLabel}
