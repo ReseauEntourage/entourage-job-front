@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import Link from 'next/link';
 import React, { useMemo } from 'react';
 import HandsIcon from 'assets/icons/illu-coeur-mains-ouvertes.svg';
 import CaseIcon from 'assets/icons/illu-malette.svg';
@@ -122,14 +121,13 @@ export function ProfileCard({
     ambitions && ambitions.length > 0 ? sortByOrder(ambitions) : null;
 
   return (
-    <Link
-      href={{
-        pathname: `/backoffice/profile/[userId]`,
-        query: { userId },
-      }}
+    <a
+      href={`/backoffice/profile/${userId}`}
+      target="_blank"
       onClick={() => {
         gaEvent(GA_TAGS.PAGE_ANNUAIRE_CARTE_CLIC);
       }}
+      rel="noreferrer"
     >
       <StyledProfileCard>
         <StyledProfileCardPictureContainer>
@@ -275,6 +273,6 @@ export function ProfileCard({
           </StyledProfileCardHelpContainer>
         </StyledProfileCardContent>
       </StyledProfileCard>
-    </Link>
+    </a>
   );
 }
