@@ -4,11 +4,13 @@ import {
   LoginError,
   loginAdapter,
   logoutAdapter,
+  verifyEmailTokenAdapter,
 } from './authentication.adapters';
 
 export interface State {
   login: RequestState<typeof loginAdapter>;
   logout: RequestState<typeof logoutAdapter>;
+  verifyEmailToken: RequestState<typeof verifyEmailTokenAdapter>;
   accessToken: string | null;
   loginError: LoginError | null;
 }
@@ -16,6 +18,7 @@ export interface State {
 const initialState: State = {
   logout: logoutAdapter.getInitialState(),
   login: loginAdapter.getInitialState(),
+  verifyEmailToken: verifyEmailTokenAdapter.getInitialState(),
   accessToken: null,
   loginError: null,
 };
@@ -37,6 +40,10 @@ export const slice = createSlice({
         state.accessToken = null;
       },
     }),
+    ...verifyEmailTokenAdapter.getReducers<State>(
+      (state) => state.verifyEmailToken,
+      {}
+    ),
     setAccessToken(state, action: PayloadAction<string | null>) {
       state.accessToken = action.payload;
     },

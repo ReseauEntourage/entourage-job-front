@@ -18,3 +18,12 @@ export const loginAdapter = createRequestAdapter('login').withPayloads<
 >();
 
 export const logoutAdapter = createRequestAdapter('logout').withPayloads();
+
+export const verifyEmailTokenAdapter = createRequestAdapter(
+  'verifyEmailToken'
+).withPayloads<
+  {
+    token: string;
+  },
+  void
+>();

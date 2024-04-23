@@ -12,6 +12,9 @@ const {
   logoutSucceeded,
   logoutFailed,
   setAccessToken,
+  verifyEmailTokenFailed,
+  verifyEmailTokenRequested,
+  verifyEmailTokenSucceeded,
 } = slice.actions;
 
 function* loginRequestedSaga(action: ReturnType<typeof loginRequested>) {
@@ -64,6 +67,19 @@ function logoutSucceededSaga() {
   localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
 }
 
+function* verifyEmailTokenSaga(
+  action: ReturnType<typeof verifyEmailTokenRequested>
+) {
+  try {
+    const res = yield* call(() => Api.postAuthVerifyEmailToken(action.payload));
+    console.log(res);
+    yield* put(verifyEmailTokenSucceeded());
+  } catch (error) {
+    console.log(error);
+    yield* put(verifyEmailTokenFailed());
+  }
+}
+
 function* initSaga() {
   const accessToken = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN) || null;
 
@@ -76,4 +92,5 @@ export function* saga() {
   yield* takeLatest(loginSucceeded, loginSucceededSaga);
   yield* takeLatest(logoutRequested, logoutRequestedSaga);
   yield* takeLatest(logoutSucceeded, logoutSucceededSaga);
+  yield* takeLatest(verifyEmailTokenRequested, verifyEmailTokenSaga);
 }

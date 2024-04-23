@@ -444,10 +444,6 @@ export class APIHandler {
     return this.get(`/auth/reset/${userId}/${token}`);
   }
 
-  getVerifyEmail(token: string): Promise<AxiosResponse> {
-    return this.get(`/auth/verify-email/${token}`);
-  }
-
   // post
 
   postAuthLogin(params: {
@@ -455,6 +451,10 @@ export class APIHandler {
     password: string;
   }): Promise<AxiosResponse> {
     return this.post('/auth/login', params);
+  }
+
+  postAuthVerifyEmailToken(params: { token: string }): void {
+    this.post('/auth/verify-email', params);
   }
 
   // no logout?
