@@ -4,6 +4,7 @@ import { useVerifyEmail } from '../useVerifyEmail';
 import { Button, Img } from 'src/components/utils';
 import { H3 } from 'src/components/utils/Headings';
 import { Spinner } from 'src/components/utils/Spinner';
+// eslint-disable-next-line import/namespace
 import { VerifyEmailTokenErrorType } from 'src/use-cases/authentication/authentication.adapters';
 import {
   StyledVerifyEmailContainer,
