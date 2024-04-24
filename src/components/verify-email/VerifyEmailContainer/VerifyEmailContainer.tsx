@@ -1,34 +1,45 @@
 import React from 'react';
 import { useVerifyEmail } from '../useVerifyEmail';
-import { Button, Section } from 'src/components/utils';
+import { Button, Img } from 'src/components/utils';
 import { Spinner } from 'src/components/utils/Spinner';
-import {
-  StyledVerifyEmailErrorDiv,
-  StyledVerifyEmailSuccessDiv,
-} from './VerifyEmailContainer.styles';
+import { StyledVerifyEmailContainer } from './VerifyEmailContainer.styles';
 
 export const VerifyEmailContainer = () => {
   const { isLoading, isError } = useVerifyEmail();
+
+  const iconSizeProps = { width: 60, height: 60 };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   return (
-    <Section>
-      {isLoading && <Spinner />}
-      {isError && (
-        <StyledVerifyEmailErrorDiv>
-          Une erreur est survenue lors de la vérification de votre adresse
-          email.
-        </StyledVerifyEmailErrorDiv>
-      )}
-      {!isError && (
-        <>
-          {' '}
-          <StyledVerifyEmailSuccessDiv>
-            Merci d&apos;avoir vérifié votre adresse email
-          </StyledVerifyEmailSuccessDiv>
+    <>
+      {isError ? (
+        <StyledVerifyEmailContainer>
+          <Img
+            src="/static/img/illustrations/illu-evenement.png"
+            alt="Evenements"
+            {...iconSizeProps}
+          />
+          <div>
+            Une erreur est survenue lors de la vérification de votre adresse
+            email.
+          </div>
+        </StyledVerifyEmailContainer>
+      ) : (
+        <StyledVerifyEmailContainer>
+          <Img
+            src="/static/img/illustrations/illu-evenement.png"
+            alt="Evenements"
+            {...iconSizeProps}
+          />
+          <div>Votre adresse email à bien été confirmée</div>
           <Button href="/login" style="custom-secondary" size="small">
-            Connexion
+            Se connecter à mon espace
           </Button>
-        </>
+        </StyledVerifyEmailContainer>
       )}
-    </Section>
+    </>
   );
 };
