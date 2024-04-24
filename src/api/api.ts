@@ -453,8 +453,8 @@ export class APIHandler {
     return this.post('/auth/login', params);
   }
 
-  postAuthVerifyEmailToken(params: { token: string }): void {
-    this.post('/auth/verify-email', params);
+  postAuthVerifyEmailToken(params: { token: string }): Promise<AxiosResponse> {
+    return this.post('/auth/verify-email', params);
   }
 
   // no logout?

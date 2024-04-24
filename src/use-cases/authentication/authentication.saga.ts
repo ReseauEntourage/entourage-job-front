@@ -71,11 +71,9 @@ function* verifyEmailTokenSaga(
   action: ReturnType<typeof verifyEmailTokenRequested>
 ) {
   try {
-    const res = yield* call(() => Api.postAuthVerifyEmailToken(action.payload));
-    console.log(res);
+    yield* call(() => Api.postAuthVerifyEmailToken(action.payload));
     yield* put(verifyEmailTokenSucceeded());
   } catch (error) {
-    console.log(error);
     yield* put(verifyEmailTokenFailed());
   }
 }
