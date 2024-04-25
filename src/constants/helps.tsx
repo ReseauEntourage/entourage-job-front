@@ -77,7 +77,7 @@ export const ProfileHelps: (FilterConstant<HelpValue> & {
   {
     icon: (
       <Img
-        src="/static/img/illustrations/illu-partage-RS.png"
+        src="/static/img/illustrations/illu-partage-rs.png"
         alt="Réseaux sociaux"
         {...iconSizeProps}
       />
@@ -170,7 +170,7 @@ export const ParametresHelpCardContents: {
     {
       icon: (
         <Img
-          src="/static/img/illustrations/illu-partage-RS.png"
+          src="/static/img/illustrations/illu-partage-rs.png"
           alt="Réseaux sociaux"
           {...iconSizeProps}
         />
@@ -239,7 +239,7 @@ export const ParametresHelpCardContents: {
     {
       icon: (
         <Img
-          src="/static/img/illustrations/illu-partage-RS.png"
+          src="/static/img/illustrations/illu-partage-rs.png"
           alt="Réseaux sociaux"
           {...iconSizeProps}
         />
