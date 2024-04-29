@@ -457,6 +457,10 @@ export class APIHandler {
     return this.post('/auth/verify-email', params);
   }
 
+  postAuthSendVerifyEmail(params: { token: string }): Promise<AxiosResponse> {
+    return this.post('/auth/send-verify-email', params);
+  }
+
   // no logout?
   // postAuthLogout(params) {
   //   return this.post('')

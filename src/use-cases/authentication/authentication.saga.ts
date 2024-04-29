@@ -1,7 +1,12 @@
 import { call, fork, put, takeLatest } from 'typed-redux-saga';
 import { Api } from 'src/api';
-import { isTooManyRequests } from 'src/api/axiosErrors';
+import {
+  isEmailAlreadyVerifiedError,
+  isTokenExpiredError,
+  isTooManyRequests,
+} from 'src/api/axiosErrors';
 import { STORAGE_KEYS } from 'src/constants';
+import { VerifyEmailTokenErrorType } from './authentication.adapters';
 import { slice } from './authentication.slice';
 
 const {
@@ -15,6 +20,9 @@ const {
   verifyEmailTokenFailed,
   verifyEmailTokenRequested,
   verifyEmailTokenSucceeded,
+  sendVerifyEmailRequested,
+  sendVerifyEmailSucceeded,
+  sendVerifyEmailFailed,
 } = slice.actions;
 
 function* loginRequestedSaga(action: ReturnType<typeof loginRequested>) {
@@ -74,7 +82,36 @@ function* verifyEmailTokenSaga(
     yield* call(() => Api.postAuthVerifyEmailToken(action.payload));
     yield* put(verifyEmailTokenSucceeded());
   } catch (error) {
-    yield* put(verifyEmailTokenFailed());
+    if (isEmailAlreadyVerifiedError(error)) {
+      yield* put(
+        verifyEmailTokenFailed({
+          error: VerifyEmailTokenErrorType.ALREADY_VERIFIED,
+        })
+      );
+    } else if (isTokenExpiredError(error)) {
+      yield* put(
+        verifyEmailTokenFailed({
+          error: VerifyEmailTokenErrorType.TOKEN_EXPIRED,
+        })
+      );
+    } else {
+      yield* put(
+        verifyEmailTokenFailed({
+          error: VerifyEmailTokenErrorType.TOKEN_INVALID,
+        })
+      );
+    }
+  }
+}
+
+function* sendVerifyEmailSaga(
+  action: ReturnType<typeof sendVerifyEmailRequested>
+) {
+  try {
+    yield* call(() => Api.postAuthSendVerifyEmail(action.payload));
+    yield* put(sendVerifyEmailSucceeded());
+  } catch {
+    yield* put(sendVerifyEmailFailed());
   }
 }
 
@@ -91,4 +128,5 @@ export function* saga() {
   yield* takeLatest(logoutRequested, logoutRequestedSaga);
   yield* takeLatest(logoutSucceeded, logoutSucceededSaga);
   yield* takeLatest(verifyEmailTokenRequested, verifyEmailTokenSaga);
+  yield* takeLatest(sendVerifyEmailRequested, sendVerifyEmailSaga);
 }
