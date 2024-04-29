@@ -3,6 +3,13 @@ import { createRequestAdapter } from 'src/store/utils';
 
 export type LoginError = 'RATE_LIMIT' | 'INVALID_CREDENTIALS';
 
+// eslint-disable-next-line no-shadow
+export enum VerifyEmailTokenErrorType {
+  TOKEN_EXPIRED,
+  TOKEN_INVALID,
+  ALREADY_VERIFIED,
+}
+
 export const loginAdapter = createRequestAdapter('login').withPayloads<
   {
     email: string;
@@ -21,6 +28,18 @@ export const logoutAdapter = createRequestAdapter('logout').withPayloads();
 
 export const verifyEmailTokenAdapter = createRequestAdapter(
   'verifyEmailToken'
+).withPayloads<
+  {
+    token: string;
+  },
+  void,
+  {
+    error: VerifyEmailTokenErrorType;
+  }
+>();
+
+export const sendVerifyEmailAdapter = createRequestAdapter(
+  'sendVerifyEmail'
 ).withPayloads<
   {
     token: string;

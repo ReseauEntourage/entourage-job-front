@@ -4,12 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ReduxRequestEvents } from 'src/constants';
 import {
   authenticationActions,
+  selectVerifyEmailTokenError,
   verifyEmailTokenSelectors,
 } from 'src/use-cases/authentication';
+import { VerifyEmailTokenErrorType } from 'src/use-cases/authentication/authentication.adapters';
 
 export function useVerifyEmail() {
   const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState<boolean | undefined>(undefined);
   const dispatch = useDispatch();
 
   const {
@@ -20,7 +21,11 @@ export function useVerifyEmail() {
   useEffect(() => {
     if (isReady) {
       if (token === undefined || typeof token !== 'string') {
-        setIsError(true);
+        dispatch(
+          authenticationActions.setVerifyEmailTokenError(
+            VerifyEmailTokenErrorType.TOKEN_INVALID
+          )
+        );
         setIsLoading(false);
       } else {
         const tokenString = token as string;
@@ -36,17 +41,16 @@ export function useVerifyEmail() {
   const verifyEmailTokenStatus = useSelector(
     verifyEmailTokenSelectors.selectVerifyEmailTokenStatus
   );
+  const verifyEmailTokenError = useSelector(selectVerifyEmailTokenError);
 
   useEffect(() => {
     if (verifyEmailTokenStatus === ReduxRequestEvents.SUCCEEDED) {
-      setIsError(false);
       setIsLoading(false);
     }
     if (verifyEmailTokenStatus === ReduxRequestEvents.FAILED) {
-      setIsError(true);
       setIsLoading(false);
     }
-  }, [verifyEmailTokenStatus]);
+  }, [verifyEmailTokenStatus, verifyEmailTokenError]);
 
   // on component unmount
   useEffect(() => {
@@ -55,5 +59,5 @@ export function useVerifyEmail() {
     };
   }, [dispatch]);
 
-  return { isLoading, isError };
+  return { isLoading, verifyEmailTokenError };
 }
