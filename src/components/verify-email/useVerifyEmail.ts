@@ -7,7 +7,6 @@ import {
   selectVerifyEmailTokenError,
   verifyEmailTokenSelectors,
 } from 'src/use-cases/authentication';
-import { VerifyEmailTokenErrorType } from 'src/use-cases/authentication/authentication.adapters';
 
 export function useVerifyEmail() {
   const [isLoading, setIsLoading] = useState(true);
