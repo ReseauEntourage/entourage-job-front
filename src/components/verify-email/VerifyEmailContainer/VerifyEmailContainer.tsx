@@ -18,60 +18,45 @@ export const VerifyEmailContainer = () => {
     return <Spinner />;
   }
 
-  if (
+  const showSendButtonAndErrorImg =
     verifyEmailTokenError === VerifyEmailTokenErrorType.TOKEN_EXPIRED ||
-    verifyEmailTokenError === VerifyEmailTokenErrorType.TOKEN_INVALID
-  ) {
-    return (
-      <StyledVerifyEmailContainer>
-        <H3 title="Vérification de mon adresse e-mail" />
-        <StyledVerifyEmailRow>
-          <Img
-            src="/static/img/illustrations/illu-evenement.png"
-            alt="Evenements"
-            {...iconSizeProps}
-          />
-          <div data-test-id="verify-email-message">
-            {verifyEmailTokenError ===
-            VerifyEmailTokenErrorType.TOKEN_EXPIRED ? (
-              <>
-                Votre lien de confirmation a expiré. Veuillez demander un
-                nouveau
-              </>
-            ) : (
-              <>
-                Une erreur est survenue lors de la vérification de votre adresse
-                email.
-              </>
-            )}
-          </div>
-        </StyledVerifyEmailRow>
-        <SendVerifyEmailButton />
-      </StyledVerifyEmailContainer>
-    );
-  }
+    verifyEmailTokenError === VerifyEmailTokenErrorType.TOKEN_INVALID;
+
+  const errorMessages = {
+    [VerifyEmailTokenErrorType.TOKEN_EXPIRED]:
+      'Votre lien de confirmation a expiré. Veuillez demander un nouveau',
+    [VerifyEmailTokenErrorType.TOKEN_INVALID]:
+      'Une erreur est survenue lors de la vérification de votre adresse email',
+    [VerifyEmailTokenErrorType.ALREADY_VERIFIED]:
+      'Votre adresse à déjà été vérifiée !',
+  };
 
   return (
     <StyledVerifyEmailContainer>
       <H3 title="Vérification de mon adresse e-mail" />
       <StyledVerifyEmailRow>
         <Img
-          src="/static/img/illustrations/illu-evenement.png"
-          alt="Evenements"
+          src={
+            showSendButtonAndErrorImg
+              ? '/static/img/illustrations/attention.png'
+              : '/static/img/illustrations/illu-evenement.png'
+          }
+          alt="illustration"
           {...iconSizeProps}
         />
         <div data-test-id="verify-email-message">
-          {verifyEmailTokenError ===
-          VerifyEmailTokenErrorType.ALREADY_VERIFIED ? (
-            <>Votre adresse à déjà été vérifiée !</>
-          ) : (
-            <>Votre adresse email à bien été vérifiée </>
-          )}
+          {verifyEmailTokenError
+            ? errorMessages[verifyEmailTokenError]
+            : 'Votre adresse email à bien été vérifiée'}
         </div>
       </StyledVerifyEmailRow>
-      <Button href="/login" style="custom-secondary">
-        Se connecter à mon espace
-      </Button>
+      {showSendButtonAndErrorImg ? (
+        <SendVerifyEmailButton />
+      ) : (
+        <Button href="/login" style="custom-secondary">
+          Se connecter à mon espace
+        </Button>
+      )}
     </StyledVerifyEmailContainer>
   );
 };

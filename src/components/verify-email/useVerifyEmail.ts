@@ -7,7 +7,6 @@ import {
   selectVerifyEmailTokenError,
   verifyEmailTokenSelectors,
 } from 'src/use-cases/authentication';
-import { VerifyEmailTokenErrorType } from 'src/use-cases/authentication/authentication.adapters';
 
 export function useVerifyEmail() {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,21 +19,12 @@ export function useVerifyEmail() {
 
   useEffect(() => {
     if (isReady) {
-      if (token === undefined || typeof token !== 'string') {
-        dispatch(
-          authenticationActions.setVerifyEmailTokenError(
-            VerifyEmailTokenErrorType.TOKEN_INVALID
-          )
-        );
-        setIsLoading(false);
-      } else {
-        const tokenString = token as string;
-        dispatch(
-          authenticationActions.verifyEmailTokenRequested({
-            token: tokenString,
-          })
-        );
-      }
+      const tokenString = token as string;
+      dispatch(
+        authenticationActions.verifyEmailTokenRequested({
+          token: tokenString,
+        })
+      );
     }
   }, [token, isReady, dispatch]);
 
@@ -44,10 +34,10 @@ export function useVerifyEmail() {
   const verifyEmailTokenError = useSelector(selectVerifyEmailTokenError);
 
   useEffect(() => {
-    if (verifyEmailTokenStatus === ReduxRequestEvents.SUCCEEDED) {
-      setIsLoading(false);
-    }
-    if (verifyEmailTokenStatus === ReduxRequestEvents.FAILED) {
+    if (
+      verifyEmailTokenStatus === ReduxRequestEvents.SUCCEEDED ||
+      verifyEmailTokenStatus === ReduxRequestEvents.FAILED
+    ) {
       setIsLoading(false);
     }
   }, [verifyEmailTokenStatus, verifyEmailTokenError]);

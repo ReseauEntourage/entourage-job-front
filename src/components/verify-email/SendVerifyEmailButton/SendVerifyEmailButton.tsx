@@ -12,7 +12,7 @@ export const SendVerifyEmailButton = () => {
           Email envoyé !
         </Button>
       ) : (
-        <Button onClick={() => sendVerifyEmail()} style="custom-secondary">
+        <Button onClick={sendVerifyEmail} style="custom-secondary">
           Me renvoyer un email de vérification
         </Button>
       )}
