@@ -3,6 +3,7 @@ import { Api } from 'src/api';
 import { isConflictError } from 'src/api/axiosErrors';
 import { flattenRegistrationDataByRole } from 'src/components/registration/Registration.utils';
 import { authenticationActions } from 'src/use-cases/authentication';
+import { formatCareerPathSentence } from 'src/utils';
 import { asyncTimeout } from 'src/utils/asyncTimeout';
 import {
   selectDefinedRegistrationSelectedProgram,
@@ -28,10 +29,14 @@ export function* createUserRequestedSaga() {
     selectDefinedRegistrationSelectedProgram
   );
 
-  const { confirmPassword, ...flattenedData } = flattenRegistrationDataByRole(
-    data,
-    selectedRole
-  );
+  const {
+    confirmPassword,
+    searchBusinessLine0,
+    searchBusinessLine1,
+    searchAmbition0,
+    searchAmbition1,
+    ...flattenedData
+  } = flattenRegistrationDataByRole(data, selectedRole);
 
   try {
     const response = yield* call(() =>
@@ -39,6 +44,16 @@ export function* createUserRequestedSaga() {
         ...flattenedData,
         role: selectedRole,
         program: selectedProgram,
+        searchAmbitions: searchBusinessLine0
+          ? formatCareerPathSentence({ searchAmbition0, searchAmbition1 })
+              .searchAmbitions
+          : undefined,
+        searchBusinessLines: searchBusinessLine0
+          ? formatCareerPathSentence({
+              searchBusinessLine0,
+              searchBusinessLine1,
+            }).searchBusinessLines
+          : undefined,
         department: flattenedData.department.value,
         helpNeeds: flattenedData.helpNeeds
           ? flattenedData.helpNeeds.map((expectation) => ({

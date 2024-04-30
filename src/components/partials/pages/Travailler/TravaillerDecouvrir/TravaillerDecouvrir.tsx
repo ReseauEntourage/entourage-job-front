@@ -14,7 +14,7 @@ export const TravaillerDecouvrir = ({
 }) => {
   return (
     <SimpleCardsImageCTA
-      title="Booster la recherche d'emploi des personnes que vous accompagnez"
+      title="Découvrez nos formats pour booster votre recherche d’emploi"
       cards={[
         {
           title: 'Format Coup de pouce',

@@ -5,7 +5,7 @@ import {
 } from '../Inputs.styles';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledTextInputContainer = styled.div`
+export const StyledTextInputGroupForm = styled.div`
   ${() => commonInputContainerStyles}
   input {
     ${() => commonInputStyles}
@@ -24,4 +24,14 @@ export const StyledTextInputContainer = styled.div`
       outline: none;
     }
   }
+`;
+
+export const StyledTextInputWrapper = styled.div`
+  position: relative;
+`;
+
+export const StyledEyeIconWrapper = styled.div`
+  position: absolute;
+  right: 0;
+  top: 4px;
 `;

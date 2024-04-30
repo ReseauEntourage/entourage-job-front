@@ -9,7 +9,7 @@ const InscriptionConfirmation = () => {
   const { isLoading } = useConfirmationRedirection();
 
   return (
-    <Layout title="Inscription - Entourage Pro">
+    <Layout title="Inscription - Entourage Pro" noFooter>
       <Section className="custom-page">
         {isLoading ? <LoadingScreen /> : <Confirmation />}
       </Section>

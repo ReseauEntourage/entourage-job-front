@@ -20,7 +20,7 @@ export const Rejoindre = () => {
             pour travailler et qui en raison d&apos;un parcours de vie difficile
             peinent à retrouver un emploi.
           </p>
-          <p>Pour participer au programme vous devez&nbsp;:</p>
+          <p>Pour participer au format 360 vous devez&nbsp;:</p>
           <ul>
             <BulletList>
               <H6
@@ -57,7 +57,7 @@ export const Rejoindre = () => {
               gaEvent(GA_TAGS.PAGE_PROGRAMME_360_INSCRIPTION_REJOINDRE_CLICK)
             }
           >
-            Participer au programme
+            Je m&apos;inscris
           </Button>
         </div>
         <div className="image-container">

@@ -6,7 +6,7 @@ import { StyledSteps } from './Steps.styles';
 export const Steps = () => {
   return (
     <Section className="custom-primary" display="flex-center">
-      <H2 title="Les grandes étapes du programme" />
+      <H2 title="Les grandes étapes du format 360" />
       <StyledSteps>
         <div className="cell">
           <div
@@ -32,7 +32,7 @@ export const Steps = () => {
           <div data-uk-scrollspy="cls:uk-animation-slide-bottom; delay: 200;">
             Après avoir participé à la reunion d’information, nous prenons un
             RDV pour approfondir vos besoins et confirmer ensemble votre
-            participation au programme.
+            participation au format 360.
           </div>
         </div>
         <div className="cell">
@@ -63,7 +63,7 @@ export const Steps = () => {
         </div>
       </StyledSteps>
       <Button href="/inscription" style="custom-secondary-inverted">
-        S&apos;inscrire au programme 360
+        S&apos;inscrire au format 360
       </Button>
     </Section>
   );

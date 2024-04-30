@@ -23,6 +23,7 @@ interface LayoutProps extends WithRouterProps {
   metaType?: string;
   noIndex?: boolean;
   isBackoffice?: boolean;
+  noFooter?: boolean;
 }
 
 export const Layout = withRouter<LayoutProps>(
@@ -37,6 +38,7 @@ export const Layout = withRouter<LayoutProps>(
     metaType = 'website',
     noIndex = false,
     isBackoffice = false,
+    noFooter = false,
   }: LayoutProps) => {
     const isPDF = router.pathname.includes('/pdf/');
     const domain = process.env.SERVER_URL?.replace(/https:\/\/|http:\/\//g, '');
@@ -92,7 +94,7 @@ export const Layout = withRouter<LayoutProps>(
         {!isPDF && <>{isBackoffice ? <HeaderConnected /> : <HeaderPublic />}</>}
         <NotificationsContainer />
         {children}
-        {!isPDF && !isBackoffice && <Footer />}
+        {!isPDF && !isBackoffice && !noFooter && <Footer />}
         {!isPDF && (
           <Script
             src={`https://tarteaucitron.io/load.js?domain=${domain}&uuid=${process.env.TARTEAUCITRON_UUID}`}

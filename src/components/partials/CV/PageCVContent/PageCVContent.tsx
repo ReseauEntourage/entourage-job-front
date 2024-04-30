@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import React, { useState } from 'react';
 import UIkit from 'uikit';
 
@@ -26,7 +25,6 @@ import {
   StyledCVPageContentCarousel,
   StyledCVPageContentDetailsContainer,
   StyledCVPageContentExperience,
-  StyledCVPageContentFooter,
   StyledCVPageContentHeader,
   StyledCVPageContentInformations,
   StyledCVPageContentPassions,
@@ -492,16 +490,6 @@ export const PageCVContent = ({
         </StyledCVPageContentCarousel>
       )}
       <CVCallToActions actionDisabled={actionDisabled} cv={cv} />
-      <StyledCVPageContentFooter>
-        <p>
-          Je suis accompagné(e) dans ma recherche d&#8217;emploi et mon
-          intégration en entreprise par le projet Entourage Pro. Pour plus
-          d&#8217;information, contactez :&nbsp;
-          <Link href="mailto:contact-linkedout@entourage.social">
-            contact-linkedout@entourage.social
-          </Link>
-        </p>
-      </StyledCVPageContentFooter>
     </StyledCVPageContent>
   );
 };

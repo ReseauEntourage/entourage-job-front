@@ -1,4 +1,6 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useState } from 'react';
+import { EyeHidden, EyeVisible } from 'assets/icons/icons';
+import { ButtonIcon } from '../../ButtonIcon';
 import {
   StyledAnnotations,
   StyledAnnotationsErrorMessage,
@@ -7,11 +9,15 @@ import {
 } from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
-import { StyledTextInputContainer } from './TextInput.styles';
+import {
+  StyledTextInputGroupForm,
+  StyledTextInputWrapper,
+  StyledEyeIconWrapper,
+} from './TextInput.styles';
 
 interface TextInputProps extends CommonInputProps<string, HTMLInputElement> {
   maxLength?: number;
-  type?: string;
+  type?: 'text' | 'password' | 'email';
   style?: 'secondary';
 }
 
@@ -32,38 +38,65 @@ export function TextInput({
   inputRef,
   error,
 }: TextInputProps) {
+  const [contextType, setContextType] = useState(type);
+  const isPasswordContextType = contextType === 'password';
+  const toggleContextType = () => {
+    setContextType(isPasswordContextType ? 'text' : 'password');
+  };
+
   if (hidden) {
     return null;
   }
+  const iconProps = {
+    height: 26,
+    width: 26,
+  };
 
   const remainingCharacters = (maxLength || 0) - (value || '').length;
 
   return (
-    <StyledTextInputContainer disabled={disabled}>
+    <StyledTextInputGroupForm disabled={disabled}>
       {showLabel && (
         <StyledInputLabel htmlFor={`form-input-${name}`}>
           {title}
         </StyledInputLabel>
       )}
-      <input
-        ref={inputRef}
-        value={value || ''}
-        className={`${value ? '' : 'empty-value'} ${style || ''}`}
-        onChange={(event: ChangeEvent<HTMLInputElement>) =>
-          onChange(event.target.value)
-        }
-        onBlur={onBlur}
-        disabled={disabled}
-        type={type || 'text'}
-        placeholder={
-          (showLabel ? placeholder : placeholder || (title as string)) ||
-          'Écrivez'
-        }
-        name={name}
-        // maxLength={maxLength}
-        id={id}
-        data-testid={id}
-      />
+      <StyledTextInputWrapper>
+        <input
+          ref={inputRef}
+          value={value || ''}
+          className={`${value ? '' : 'empty-value'} ${style || ''}`}
+          onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            onChange(event.target.value)
+          }
+          onBlur={onBlur}
+          disabled={disabled}
+          type={contextType || 'text'}
+          placeholder={
+            (showLabel ? placeholder : placeholder || (title as string)) ||
+            'Écrivez'
+          }
+          name={name}
+          // maxLength={maxLength}
+          id={id}
+          data-testid={id}
+        />
+        {type === 'password' && (
+          <StyledEyeIconWrapper>
+            {isPasswordContextType ? (
+              <ButtonIcon
+                icon={<EyeHidden {...iconProps} />}
+                onClick={toggleContextType}
+              />
+            ) : (
+              <ButtonIcon
+                icon={<EyeVisible {...iconProps} />}
+                onClick={toggleContextType}
+              />
+            )}
+          </StyledEyeIconWrapper>
+        )}
+      </StyledTextInputWrapper>
       {maxLength ? (
         <StyledAnnotations>
           <div>
@@ -82,6 +115,6 @@ export function TextInput({
       ) : (
         <FieldErrorMessage error={error} />
       )}
-    </StyledTextInputContainer>
+    </StyledTextInputGroupForm>
   );
 }
