@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ReduxRequestEvents } from 'src/constants';
 import {
   authenticationActions,
   sendVerifyEmailSelectors,
@@ -29,11 +28,9 @@ export function useSendVerifyEmail() {
     }
   };
 
-  const sendVerifyEmailStatus = useSelector(
-    sendVerifyEmailSelectors.selectSendVerifyEmailStatus
+  const isSent = useSelector(
+    sendVerifyEmailSelectors.selectIsSendVerifyEmailSucceeded
   );
-
-  const isSent = sendVerifyEmailStatus === ReduxRequestEvents.SUCCEEDED;
 
   // on component unmount
   useEffect(() => {
