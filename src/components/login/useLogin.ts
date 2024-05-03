@@ -14,6 +14,8 @@ export function useLogin() {
 
   const loginError = useSelector(selectLoginError);
 
+  const showSendVerifyEmailButton = loginError === 'INVALID_CREDENTIALS';
+
   const rateLimitErrorMessage =
     'Trop de tentatives infructueuses.\nVeuillez ressayer dans 1 minute.';
 
@@ -24,6 +26,10 @@ export function useLogin() {
 
     if (loginError === 'RATE_LIMIT') {
       return rateLimitErrorMessage;
+    }
+
+    if (loginError === 'UNVERIFIED_EMAIL') {
+      return "Votre adresse email n'a pas été vérifiée. Veuillez vérifier votre boîte mail et cliquer sur le lien de vérification.";
     }
 
     if (loginError === 'INVALID_CREDENTIALS') {
@@ -43,5 +49,9 @@ export function useLogin() {
     }
   }, [replace, requestedPath, user]);
 
-  return { rateLimitErrorMessage, loginErrorMessage };
+  return {
+    rateLimitErrorMessage,
+    loginErrorMessage,
+    showSendVerifyEmailButton,
+  };
 }
