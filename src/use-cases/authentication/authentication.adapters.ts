@@ -1,7 +1,10 @@
 import { User } from 'src/api/types';
 import { createRequestAdapter } from 'src/store/utils';
 
-export type LoginError = 'RATE_LIMIT' | 'INVALID_CREDENTIALS';
+export type LoginError =
+  | 'RATE_LIMIT'
+  | 'INVALID_CREDENTIALS'
+  | 'UNVERIFIED_EMAIL';
 
 // eslint-disable-next-line no-shadow
 export enum VerifyEmailTokenErrorType {
