@@ -45,7 +45,8 @@ export const sendVerifyEmailAdapter = createRequestAdapter(
   'sendVerifyEmail'
 ).withPayloads<
   {
-    token: string;
+    token?: string;
+    email?: string;
   },
   void
 >();

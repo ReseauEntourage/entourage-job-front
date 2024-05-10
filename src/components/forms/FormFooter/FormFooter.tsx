@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react';
+import React, { FormEvent, ReactNode } from 'react';
 import { Button } from 'src/components/utils/Button';
 import { ButtonPost } from 'src/components/utils/Button/ButtonPost';
 import {
@@ -8,7 +8,7 @@ import {
 } from './FormFooter.styles';
 
 interface FooterFormProps {
-  error?: string;
+  error?: string | ReactNode;
   onCancel?: () => void;
   onSubmit: (event?: FormEvent) => Promise<void>;
   submitText?: string;
@@ -30,7 +30,11 @@ export const FormFooter = ({
 }: FooterFormProps) => {
   return (
     <StyledFooterForm>
-      {error && <StyledErrorMessage>{error}</StyledErrorMessage>}
+      {typeof error === 'string' && error ? (
+        <StyledErrorMessage>{error}</StyledErrorMessage>
+      ) : (
+        error
+      )}
       <div>
         {!noCompulsory && (
           <StyledCompulsoryMessage>

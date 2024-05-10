@@ -2,12 +2,13 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxRequestEvents } from 'src/constants';
+
 import {
   authenticationActions,
   sendVerifyEmailSelectors,
 } from 'src/use-cases/authentication';
 
-export function useSendVerifyEmail() {
+export function useSendVerifyEmail(email?: string) {
   const dispatch = useDispatch();
 
   const {
@@ -19,10 +20,19 @@ export function useSendVerifyEmail() {
   // Dispathing
   const sendVerifyEmail = () => {
     if (isReady) {
+      // if token is set
       if (token !== undefined && typeof token === 'string') {
         dispatch(
           authenticationActions.sendVerifyEmailRequested({
             token,
+          })
+        );
+      }
+      // probably on the login page, getting the users email
+      else if (email) {
+        dispatch(
+          authenticationActions.sendVerifyEmailRequested({
+            email,
           })
         );
       }
@@ -33,7 +43,9 @@ export function useSendVerifyEmail() {
     sendVerifyEmailSelectors.selectSendVerifyEmailStatus
   );
 
-  const isSent = sendVerifyEmailStatus === ReduxRequestEvents.SUCCEEDED;
+  const isSendEmailSuccess =
+    sendVerifyEmailStatus === ReduxRequestEvents.SUCCEEDED;
+  const isSendEmailFailed = sendVerifyEmailStatus === ReduxRequestEvents.FAILED;
 
   // on component unmount
   useEffect(() => {
@@ -42,5 +54,5 @@ export function useSendVerifyEmail() {
     };
   }, [dispatch]);
 
-  return { isSent, sendVerifyEmail };
+  return { isSendEmailSuccess, isSendEmailFailed, sendVerifyEmail };
 }

@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
-import { useEffect, useMemo } from 'react';
+import React, { ReactNode, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { StyledErrorMessage } from '../forms/FormFooter/FormFooter.styles';
+import { SendVerifyEmailButton } from '../verify-email/SendVerifyEmailButton';
 import { selectLoginError } from 'src/use-cases/authentication';
 import { selectCurrentUser } from 'src/use-cases/current-user';
 import { getDefaultUrl } from 'src/utils/Redirects';
@@ -12,14 +14,16 @@ export function useLogin() {
     query: { requestedPath },
   } = useRouter();
 
-  const loginError = useSelector(selectLoginError);
+  const [email, setEmail] = useState<string | undefined>(undefined);
 
-  const showSendVerifyEmailButton = loginError === 'INVALID_CREDENTIALS';
+  const loginError = useSelector(selectLoginError);
 
   const rateLimitErrorMessage =
     'Trop de tentatives infructueuses.\nVeuillez ressayer dans 1 minute.';
 
-  const loginErrorMessage = useMemo(() => {
+  const loginErrorMessage: string | ReactNode | undefined = useMemo<
+    string | ReactNode | undefined
+  >(() => {
     if (!loginError) {
       return;
     }
@@ -27,9 +31,16 @@ export function useLogin() {
     if (loginError === 'RATE_LIMIT') {
       return rateLimitErrorMessage;
     }
-
     if (loginError === 'UNVERIFIED_EMAIL') {
-      return "Votre adresse email n'a pas été vérifiée. Veuillez vérifier votre boîte mail et cliquer sur le lien de vérification.";
+      return (
+        <>
+          <StyledErrorMessage>
+            Votre adresse email n&apos;a pas été vérifiée. Veuillez consulter
+            votre boîte mail et cliquer sur le lien de vérification.
+          </StyledErrorMessage>
+          <SendVerifyEmailButton email={email} />
+        </>
+      );
     }
 
     if (loginError === 'INVALID_CREDENTIALS') {
@@ -37,7 +48,7 @@ export function useLogin() {
     }
 
     return 'Une erreur est survenue';
-  }, [loginError]);
+  }, [email, loginError]);
 
   useEffect(() => {
     const path = Array.isArray(requestedPath)
@@ -52,6 +63,8 @@ export function useLogin() {
   return {
     rateLimitErrorMessage,
     loginErrorMessage,
-    showSendVerifyEmailButton,
+    setEmail: (value: string) => {
+      setEmail(value);
+    },
   };
 }
