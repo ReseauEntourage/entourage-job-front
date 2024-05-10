@@ -1,4 +1,10 @@
-import React, { Ref, useCallback, useImperativeHandle, useState } from 'react';
+import React, {
+  ReactNode,
+  Ref,
+  useCallback,
+  useImperativeHandle,
+  useState,
+} from 'react';
 import { DefaultValues, SubmitHandler, useForm } from 'react-hook-form';
 import { FormFooter } from 'src/components/forms/FormFooter/FormFooter';
 import { InputsContainer } from 'src/components/forms/fields/InputsContainer';
@@ -32,7 +38,7 @@ interface FormWithValidationProps<S extends FormSchema<AnyCantFix>> {
   cancelText?: string;
   enterToSubmit?: boolean;
   innerRef?: Ref<{ resetForm: () => void }>;
-  error?: string;
+  error?: string | ReactNode;
   noCompulsory?: boolean;
 }
 

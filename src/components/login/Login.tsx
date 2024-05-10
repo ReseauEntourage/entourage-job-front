@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { SendVerifyEmailButton } from '../verify-email/SendVerifyEmailButton';
 import { Api } from 'src/api';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { formLogin } from 'src/components/forms/schemas/formLogin';
@@ -16,11 +15,7 @@ import { useLogin } from './useLogin';
 
 export function Login() {
   const dispatch = useDispatch();
-  const {
-    loginErrorMessage,
-    rateLimitErrorMessage,
-    showSendVerifyEmailButton,
-  } = useLogin();
+  const { loginErrorMessage, rateLimitErrorMessage, setEmail } = useLogin();
 
   return (
     <StyledLoginContainer>
@@ -30,11 +25,11 @@ export function Login() {
           submitText="Se connecter"
           enterToSubmit
           onSubmit={({ email, password }) => {
+            setEmail(email);
             dispatch(authenticationActions.loginRequested({ email, password }));
           }}
           error={loginErrorMessage}
         />
-        {showSendVerifyEmailButton && <SendVerifyEmailButton />}
         <StyledLoginFooter>
           <Typography size="small">
             <SimpleLink

@@ -29,7 +29,7 @@ export const VerifyEmailContainer = () => {
     [VerifyEmailTokenErrorType.TOKEN_INVALID]:
       'Une erreur est survenue lors de la vérification de votre adresse email',
     [VerifyEmailTokenErrorType.ALREADY_VERIFIED]:
-      'Votre adresse à déjà été vérifiée !',
+      'Votre adresse a déjà été vérifiée !',
   };
 
   return (
@@ -48,7 +48,7 @@ export const VerifyEmailContainer = () => {
         <div data-test-id="verify-email-message">
           {verifyEmailTokenError
             ? errorMessages[verifyEmailTokenError]
-            : 'Votre adresse email à bien été vérifiée'}
+            : 'Votre adresse email a bien été vérifiée'}
         </div>
       </StyledVerifyEmailRow>
       {showSendButtonAndErrorImg ? (
