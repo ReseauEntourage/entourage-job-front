@@ -130,6 +130,7 @@ export type User = {
   userProfile: UserProfile;
   OrganizationId?: string;
   readDocuments: { documentName: DocumentNameType }[];
+  isEmailVerified: boolean;
 };
 
 export interface CVExperience {

@@ -55,7 +55,7 @@ export function useLogin() {
       ? requestedPath[0]
       : requestedPath;
 
-    if (user) {
+    if (user && user.isEmailVerified) {
       replace(path || getDefaultUrl(user.role));
     }
   }, [replace, requestedPath, user]);
