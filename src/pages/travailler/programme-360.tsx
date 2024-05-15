@@ -13,10 +13,15 @@ import { GA_TAGS } from 'src/constants/tags';
 
 const Programme360 = () => {
   return (
-    <Layout title="Programme 360 - Entourage Pro">
+    <Layout title="Format 360 - Entourage Pro">
       <ImageTitle
         title="Entourage Pro, un tremplin vers l’emploi"
-        description={`Vous êtes dans une situation de précarité ou d’exclusion\xa0? Vous avez un projet professionnel mais vous n’avez pas de réseau\xa0?`}
+        description={
+          <>
+            Vous êtes dans une situation de précarité ou d’exclusion ? <br />{' '}
+            Vous avez un projet professionnel mais vous n’avez pas de réseau ?
+          </>
+        }
         img="/static/img/travailler-banner.jpg"
         imgMobile="/static/img/travailler-banner.jpg"
         alt="Candidats Entourage Pro en recherche d’emploi"

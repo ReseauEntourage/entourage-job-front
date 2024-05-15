@@ -23,6 +23,7 @@ interface LayoutProps extends WithRouterProps {
   metaType?: string;
   noIndex?: boolean;
   isBackoffice?: boolean;
+  noFooter?: boolean;
 }
 
 export const Layout = withRouter<LayoutProps>(
@@ -31,12 +32,13 @@ export const Layout = withRouter<LayoutProps>(
     router,
     title = 'Entourage Pro\xa0= partagez votre réseau avec ceux qui n’en ont pas',
     metaTitle = 'Entourage Pro\xa0= partagez votre réseau avec ceux qui n’en ont pas',
-    metaImage = `${process.env.SERVER_URL}/static/img/linkedout-preview-new.jpg`,
+    metaImage = `${process.env.SERVER_URL}/static/img/entourage-pro-preview.jpg`,
     metaDescription = "Lorsque l'on est exclu, les chances de trouver du travail sont proches de zéro. Avec Entourage Pro, faites don de votre visibilité. Un partage peut tout changer.",
     metaUrl = process.env.SERVER_URL,
     metaType = 'website',
     noIndex = false,
     isBackoffice = false,
+    noFooter = false,
   }: LayoutProps) => {
     const isPDF = router.pathname.includes('/pdf/');
     const domain = process.env.SERVER_URL?.replace(/https:\/\/|http:\/\//g, '');
@@ -92,7 +94,7 @@ export const Layout = withRouter<LayoutProps>(
         {!isPDF && <>{isBackoffice ? <HeaderConnected /> : <HeaderPublic />}</>}
         <NotificationsContainer />
         {children}
-        {!isPDF && !isBackoffice && <Footer />}
+        {!isPDF && !isBackoffice && !noFooter && <Footer />}
         {!isPDF && (
           <Script
             src={`https://tarteaucitron.io/load.js?domain=${domain}&uuid=${process.env.TARTEAUCITRON_UUID}`}

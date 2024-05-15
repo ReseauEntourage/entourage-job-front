@@ -99,14 +99,14 @@ export const ToggleWithModal = <S extends FormSchema<AnyCantFix>>({
             }}
           />
           <StyledSlider isToggled={isToggled} />
+          {(title || subtitle) && (
+            <StyledToggleLabel>
+              {title && <span>{title}</span>}
+              {subtitle}
+            </StyledToggleLabel>
+          )}
         </label>
       </StyledToggle>
-      {(title || subtitle) && (
-        <StyledToggleLabel>
-          {title && <span>{title}</span>}
-          {subtitle}
-        </StyledToggleLabel>
-      )}
     </StyledToggleContainer>
   );
 };

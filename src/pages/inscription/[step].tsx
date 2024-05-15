@@ -9,7 +9,7 @@ const Inscription = () => {
   const { isLoading } = useRegistrationRedirection();
 
   return (
-    <Layout title="Inscription - Entourage Pro">
+    <Layout title="Inscription - Entourage Pro" noFooter>
       <Section className="custom-page">
         {isLoading ? <LoadingScreen /> : <Registration />}
       </Section>

@@ -66,7 +66,9 @@ export function selectDefinedRegistrationSelectedRole(state: RootState) {
 
 export function selectRegistrationSelectedProgram(state: RootState) {
   const data = selectRegistrationData(state);
-  const selectedRole = selectDefinedRegistrationSelectedRole(state);
+  const selectedRole = selectRegistrationSelectedRole(state);
+
+  if (!selectedRole) return null;
 
   const allStepsDataForSelectedRole = flattenRegistrationDataByRole(
     data,

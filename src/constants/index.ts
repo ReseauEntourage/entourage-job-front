@@ -12,6 +12,11 @@ import { Filter, FilterConstant } from './utils';
 
 export const PROFILES_LIMIT = 25;
 
+export const JNSPR = {
+  value: 'jnspr',
+  label: 'Je ne souhaite pas répondre',
+};
+
 export type OfferStatus = -1 | 0 | 1 | 2 | 3 | 4;
 
 export const OFFER_STATUS: (FilterConstant<OfferStatus> & {
@@ -801,6 +806,7 @@ export const CandidateAccommodations = {
   INSERTION: 'insertion',
   STREET: 'street',
   OTHER: 'other',
+  JNSPR: JNSPR.value,
 } as const;
 
 export type CandidateAccommodation =
@@ -827,11 +833,15 @@ export const CANDIDATE_ACCOMMODATIONS_FILTERS: FilterConstant<CandidateAccommoda
     },
     {
       value: CandidateAccommodations.STREET,
-      label: 'Rue ou abri de fortune (squat, voiture, camping...)',
+      label: 'Situation de rue',
     },
     {
       value: CandidateAccommodations.OTHER,
       label: 'Autre',
+    },
+    {
+      value: CandidateAccommodations.JNSPR,
+      label: JNSPR.label,
     },
   ];
 
@@ -893,6 +903,7 @@ export const CandidateResources = {
   INVALIDITY: 'invalidity',
   OTHER: 'other',
   NONE: 'none',
+  JNSPR: JNSPR.value,
 } as const;
 
 export type CandidateResource =
@@ -928,6 +939,10 @@ export const CANDIDATE_RESOURCES_FILTERS: FilterConstant<CandidateResource>[] =
       label: 'Aucune',
       value: CandidateResources.NONE,
     },
+    {
+      label: JNSPR.label,
+      value: CandidateResources.JNSPR,
+    },
   ];
 
 export const CandidateYesNo = {
@@ -949,8 +964,7 @@ export const CANDIDATE_YES_NO_FILTERS: FilterConstant<CandidateYesNoValue>[] = [
 ];
 
 export const CandidateYesNoNSPP = {
-  YES: 'yes',
-  NO: 'no',
+  ...CandidateYesNo,
   NSPP: 'dont_know',
 } as const;
 
@@ -972,6 +986,28 @@ export const CANDIDATE_YES_NO_NSPP_FILTERS: FilterConstant<CandidateYesNoNSPPVal
       value: CandidateYesNoNSPP.NSPP,
     },
   ];
+
+export const YesNoJNSPR = {
+  ...CandidateYesNo,
+  JNSPR: JNSPR.value,
+} as const;
+
+export type YesNoJNSPRValue = (typeof YesNoJNSPR)[keyof typeof YesNoJNSPR];
+
+export const YES_NO_JNSPR_FILTERS: FilterConstant<YesNoJNSPRValue>[] = [
+  {
+    value: YesNoJNSPR.YES,
+    label: 'Oui',
+  },
+  {
+    value: YesNoJNSPR.NO,
+    label: 'Non',
+  },
+  {
+    value: YesNoJNSPR.JNSPR,
+    label: JNSPR.label,
+  },
+];
 
 export const EVENT_TYPES = {
   CONTACT: 'contact',
@@ -1164,3 +1200,157 @@ export const DocumentNames: { [k in DocumentNameType]: DocumentNameType } = {
   CharteEthique: 'CharteEthique',
   ConseilsPosture: 'ConseilsPosture',
 };
+
+export const Nationalities = {
+  FRENCH: 'french',
+  EUROPEAN: 'european',
+  EXTRA_EUROPEAN: 'extra_european',
+  STATELESS: 'stateless',
+  JNSPR: JNSPR.value,
+} as const;
+export type Nationality = (typeof Nationalities)[keyof typeof Nationalities];
+
+export const NATIONALITIES_FILTERS: FilterConstant<Nationality>[] = [
+  {
+    label: 'française',
+    value: Nationalities.FRENCH,
+  },
+  {
+    label: 'européenne',
+    value: Nationalities.EUROPEAN,
+  },
+  {
+    label: 'extra-européenne',
+    value: Nationalities.EXTRA_EUROPEAN,
+  },
+  {
+    label: 'apatride',
+    value: Nationalities.STATELESS,
+  },
+  {
+    label: JNSPR.label,
+    value: Nationalities.JNSPR,
+  },
+];
+
+export const JobSearchDurations = {
+  LESS_THAN_3_MONTHS: 'less_than_3_months',
+  BETWEEN_3_AND_6_MONTHS: 'between_3_and_6_months',
+  BETWEEN_6_AND_12_MONTHS: 'between_6_and_12_months',
+  BETWEEN_12_AND_24_MONTHS: 'between_12_and_24_months',
+  BETWEEN_24_AND_36_MONTHS: 'between_24_and_36_months',
+  MORE_THAN_36_MONTHS: 'more_than_36_months',
+  JNSPR: JNSPR.value,
+} as const;
+
+export type JobSearchDuration =
+  (typeof JobSearchDurations)[keyof typeof JobSearchDurations];
+
+export const JOB_SEARCH_DURATIONS_FILTERS: FilterConstant<JobSearchDuration>[] =
+  [
+    {
+      label: 'Moins de 3 mois',
+      value: JobSearchDurations.LESS_THAN_3_MONTHS,
+    },
+    {
+      label: 'Entre 3 et 6 mois',
+      value: JobSearchDurations.BETWEEN_3_AND_6_MONTHS,
+    },
+    {
+      label: 'Entre 6 et 12 mois',
+      value: JobSearchDurations.BETWEEN_6_AND_12_MONTHS,
+    },
+    {
+      label: 'Entre 12 et 24 mois',
+      value: JobSearchDurations.BETWEEN_12_AND_24_MONTHS,
+    },
+    {
+      label: 'Entre 24 et 36 mois',
+      value: JobSearchDurations.BETWEEN_24_AND_36_MONTHS,
+    },
+    {
+      label: 'Plus de 36 mois',
+      value: JobSearchDurations.MORE_THAN_36_MONTHS,
+    },
+    {
+      label: JNSPR.label,
+      value: JobSearchDurations.JNSPR,
+    },
+  ];
+
+export const StudiesLevels = {
+  NONE: 'none',
+  CAP_BEP: 'cap_bep',
+  BAC: 'bac',
+  BAC_PLUS_2: 'bac_plus_2',
+  BAC_PLUS_3: 'bac_plus_3',
+  BAC_PLUS_5: 'bac_plus_5',
+  BAC_PLUS_8: 'bac_plus_8',
+  JNSPR: JNSPR.value,
+} as const;
+
+export type StudiesLevel = (typeof StudiesLevels)[keyof typeof StudiesLevels];
+
+export const STUDIES_LEVELS_FILTERS: FilterConstant<StudiesLevel>[] = [
+  {
+    label: 'Aucun',
+    value: StudiesLevels.NONE,
+  },
+  {
+    label: 'CAP/BEP',
+    value: StudiesLevels.CAP_BEP,
+  },
+  {
+    label: 'Bac',
+    value: StudiesLevels.BAC,
+  },
+  {
+    label: 'Bac +2',
+    value: StudiesLevels.BAC_PLUS_2,
+  },
+  {
+    label: 'Bac +3',
+    value: StudiesLevels.BAC_PLUS_3,
+  },
+  {
+    label: 'Bac +5',
+    value: StudiesLevels.BAC_PLUS_5,
+  },
+  {
+    label: 'Bac +8',
+    value: StudiesLevels.BAC_PLUS_8,
+  },
+  {
+    label: JNSPR.label,
+    value: StudiesLevels.JNSPR,
+  },
+];
+
+export const WorkingExperienceYears = {
+  LESS_THAN_1_YEAR: 'less_than_3_year',
+  BETWEEN_1_AND_3_YEARS: 'between_3_and_10_years',
+  MORE_THAN_10_YEARS: 'more_than_10_years',
+  JNSPR: JNSPR.value,
+};
+
+export type WorkingExperience =
+  (typeof WorkingExperienceYears)[keyof typeof WorkingExperienceYears];
+
+export const WORKING_EXPERIENCE_FILTERS: FilterConstant<WorkingExperience>[] = [
+  {
+    label: 'Moins de 3 ans',
+    value: WorkingExperienceYears.LESS_THAN_1_YEAR,
+  },
+  {
+    label: 'Entre 3 et 10 ans',
+    value: WorkingExperienceYears.BETWEEN_1_AND_3_YEARS,
+  },
+  {
+    label: 'Plus de 10 ans',
+    value: WorkingExperienceYears.MORE_THAN_10_YEARS,
+  },
+  {
+    label: JNSPR.label,
+    value: WorkingExperienceYears.JNSPR,
+  },
+];

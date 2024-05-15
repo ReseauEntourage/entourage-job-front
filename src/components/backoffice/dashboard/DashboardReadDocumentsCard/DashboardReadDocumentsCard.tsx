@@ -7,6 +7,7 @@ import {
   StyledDashboardArticleText,
   StyledDashboardCardContentContainer,
   StyledDashboardCardSubtitle,
+  StyledDashboardArticlesContainer,
 } from '../Dashboard.styles';
 import { isReadDocument } from 'src/components/partials/pages/Documents/Documents.utils';
 import { Card, Img } from 'src/components/utils';
@@ -15,7 +16,6 @@ import { Typography } from 'src/components/utils/Typography';
 import { DocumentNames } from 'src/constants';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { StyledDashboardReadDocumentsArticlesContainer } from './DashboardReadDocumentsCard.styles';
 
 export const DashboardReadDocumentsCard = () => {
   const user = useAuthenticatedUser();
@@ -36,8 +36,7 @@ export const DashboardReadDocumentsCard = () => {
         roles: [USER_ROLES.COACH],
         documentName: DocumentNames.ConseilsPosture,
         title: 'Conseils sur la posture à adopter',
-        subTitle:
-          'Tout savoir pour soutenir un candidat en situation de précarité',
+        subTitle: 'Tout savoir pour soutenir un candidat Entourage Pro',
         link: '/conseils-posture',
         image: '/static/img/dashboard-article-posture.jpeg',
       },
@@ -68,7 +67,7 @@ export const DashboardReadDocumentsCard = () => {
               : 'Nous vous invitons à prendre connaissance de ces documents essentiels pour garantir à tout un chacun une expérience enrichissante avec Entourage Pro.'}
           </Typography>
         </StyledDashboardCardSubtitle>
-        <StyledDashboardReadDocumentsArticlesContainer>
+        <StyledDashboardArticlesContainer>
           {articles.map((article) => {
             if (
               (contextualRole && !article.roles.includes(contextualRole)) ||
@@ -96,7 +95,7 @@ export const DashboardReadDocumentsCard = () => {
               </a>
             );
           })}
-        </StyledDashboardReadDocumentsArticlesContainer>
+        </StyledDashboardArticlesContainer>
       </StyledDashboardCardContentContainer>
     </Card>
   ) : null;

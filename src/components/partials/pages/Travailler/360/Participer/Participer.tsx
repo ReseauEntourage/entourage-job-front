@@ -90,7 +90,7 @@ export const Participer = () => {
               gaEvent(GA_TAGS.PAGE_PROGRAMME_360_INSCRIPTION_PARTICIPER_CLICK)
             }
           >
-            Participer au programme
+            Je m&apos;inscris
           </Button>
         </div>
       </StyledParticiper>

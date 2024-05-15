@@ -240,7 +240,7 @@ module.exports = withLess({
       },
       {
         source: '/boite-a-outils',
-        destination: process.env.TOOLBOX_URL,
+        destination: process.env.TOOLBOX_CANDIDATE_URL,
         permanent: false,
       },
       {

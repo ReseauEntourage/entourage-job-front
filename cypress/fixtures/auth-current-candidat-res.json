@@ -18,23 +18,12 @@
     "contract": null,
     "endOfContract": null,
     "lastModifiedBy": "198e8950-d5be-4e82-aaf8-d18840dffba1",
-    "coach": {
-      "id": "65ab1daa-b65d-4c38-ab9a-b3cb8eb1e390",
-      "firstName": "Khadiata",
-      "lastName": "Sow",
-      "email": "khadiata.sow@accenture.com",
-      "phone": null,
-      "address": null,
-      "role": "Coach",
-      "adminRole": null,
-      "zone": "PARIS",
-      "gender": 1,
-      "lastConnection": null
-    }
+    "coach": null
   },
   "coach": null,
   "userProfile": {
     "description": "hello",
+    "department": "Ain (01)",
     "currentJob": null,
     "networkBusinessLines": [],
     "searchBusinessLines": [
@@ -59,5 +48,6 @@
         "name": "interview"
       }
     ]
-  }
+  },
+  "readDocuments": []
 }

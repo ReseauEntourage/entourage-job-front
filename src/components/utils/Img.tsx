@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
-import { addPrefix } from 'src/utils';
+import { addPrefix } from 'src/utils/Prefixing';
 
 interface ImgProps {
   src: string;

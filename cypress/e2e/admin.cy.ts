@@ -1,15 +1,12 @@
-/* eslint-disable no-undef */
-import organizations from '../fixtures/organization-search-res.json';
+const organizations = require('../fixtures/organization-search-res.json');
 
 const entourageOrganizationId = organizations.find(
   ({ name }) => name === 'Entourage'
-).id;
+)?.id;
 
 describe('Admin', () => {
   beforeEach(() => {
     window.localStorage.setItem('entourage-pro-modal-closed', 'true');
-
-    cy.intercept('GET', '/cv/shares', { total: 184222 }).as('cvShares');
 
     cy.intercept('GET', '/auth/current', {
       fixture: 'auth-login-admin-res',
@@ -233,7 +230,6 @@ describe('Admin', () => {
   });
 
   describe('Members', () => {
-    
     beforeEach(() => {
       cy.visit('/backoffice/admin/membres?role=Candidat&zone=LYON', {
         onBeforeLoad: function async(window) {
@@ -241,11 +237,9 @@ describe('Admin', () => {
           window.localStorage.setItem('release-version', 'v100');
         },
       });
-      cy.wait('@members');
     });
 
     it('Should open backoffice members', () => {
-
       // test if all members are in the table
       cy.fixture('user-members-res').then((members) => {
         cy.get('[data-testid="member-list"]')
@@ -256,7 +250,6 @@ describe('Admin', () => {
 
     describe("Remplir le formulaire de création d'un membre, envoyer et fermer", () => {
       beforeEach(() => {
-
         cy.get('[data-testid="button-admin-create"]')
           .should('be.visible')
           .first()
@@ -516,7 +509,6 @@ describe('Admin', () => {
       });
 
       describe("Creation d'un user et d'une structure", () => {
-        
         afterEach(() => {
           cy.get('#form-add-user-adminRole-container').should('not.exist');
 

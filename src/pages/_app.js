@@ -22,7 +22,6 @@ import { useAuthentication } from 'src/hooks/authentication/useAuthentication';
 import { useMount } from 'src/hooks/utils';
 import * as gtag from 'src/lib/gtag';
 import { DataProvider } from 'src/store/DataProvider';
-import { SharesCountProvider } from 'src/store/SharesCountProvider';
 import { store } from 'src/store/store';
 
 Sentry.init({
@@ -107,11 +106,9 @@ const EntourageApp = ({ Component, pageProps, err }) => {
   return (
     <Sentry.ErrorBoundary fallback="An error has occurred">
       <Provider store={store}>
-        <SharesCountProvider>
-          <DataProvider>
-            <Container Component={Component} pageProps={pageProps} err={err} />
-          </DataProvider>
-        </SharesCountProvider>
+        <DataProvider>
+          <Container Component={Component} pageProps={pageProps} err={err} />
+        </DataProvider>
       </Provider>
     </Sentry.ErrorBoundary>
   );

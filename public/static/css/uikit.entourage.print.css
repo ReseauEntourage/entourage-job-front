@@ -86,7 +86,7 @@ strong {
   color: #f0506e;
   white-space: nowrap;
   padding: 2px 6px;
-  background: #F4FDFF;
+  background: #ECF8FB;
 }
 /*
  * Emphasize
@@ -846,7 +846,7 @@ a.uk-link-reset,
   border-bottom: 1px solid #e5e5e5;
 }
 .uk-list-striped > :nth-of-type(odd) {
-  background: #F4FDFF;
+  background: #ECF8FB;
 }
 .uk-list-striped > :nth-child(n+2) {
   margin-top: 0;
@@ -995,7 +995,7 @@ a.uk-link-reset,
  */
 .uk-table-striped > tr:nth-of-type(odd),
 .uk-table-striped tbody tr:nth-of-type(odd) {
-  background: #F4FDFF;
+  background: #ECF8FB;
   border-top: 1px solid #e5e5e5;
   border-bottom: 1px solid #e5e5e5;
 }
@@ -1534,7 +1534,7 @@ button.uk-icon:not(:disabled) {
 .uk-input:disabled,
 .uk-select:disabled,
 .uk-textarea:disabled {
-  background-color: #F4FDFF;
+  background-color: #ECF8FB;
   color: #999;
   border-color: #e5e5e5;
 }
@@ -1758,7 +1758,7 @@ select.uk-form-width-xsmall {
  */
 .uk-radio:disabled,
 .uk-checkbox:disabled {
-  background-color: #F4FDFF;
+  background-color: #ECF8FB;
   border-color: #e5e5e5;
 }
 .uk-radio:disabled:checked {
@@ -2230,7 +2230,7 @@ select.uk-form-width-xsmall {
   /* 4 */
   border: 0;
   /* 5 */
-  background-color: #F4FDFF;
+  background-color: #ECF8FB;
   /* 6 */
   margin-bottom: 20px;
   height: 15px;
@@ -2252,7 +2252,7 @@ select.uk-form-width-xsmall {
  * 2. Remove progress bar for indeterminate state in Firefox
  */
 .uk-progress::-webkit-progress-bar {
-  background-color: #F4FDFF;
+  background-color: #ECF8FB;
   border-radius: 500px;
   overflow: hidden;
 }
@@ -2359,7 +2359,7 @@ select.uk-form-width-xsmall {
  * Muted
  */
 .uk-section-muted {
-  background: #F4FDFF;
+  background: #ECF8FB;
 }
 /*
  * Primary
@@ -2617,7 +2617,7 @@ select.uk-form-width-xsmall {
  * Muted
  */
 .uk-tile-muted {
-  background: #F4FDFF;
+  background: #ECF8FB;
 }
 /*
  * Primary
@@ -2996,7 +2996,7 @@ select.uk-form-width-xsmall {
   position: relative;
   margin-bottom: 20px;
   padding: 15px 29px 15px 15px;
-  background: #F4FDFF;
+  background: #ECF8FB;
   color: #363636;
 }
 /* Add margin if adjacent element */
@@ -3312,7 +3312,7 @@ select.uk-form-width-xsmall {
  ========================================================================== */
 .uk-comment-primary {
   padding: 30px;
-  background-color: #F4FDFF;
+  background-color: #ECF8FB;
 }
 /* ========================================================================
    Component: Search
@@ -4409,7 +4409,7 @@ select.uk-form-width-xsmall {
 .uk-notification-message {
   position: relative;
   padding: 15px;
-  background: #F4FDFF;
+  background: #ECF8FB;
   color: #363636;
   font-size: 1.25rem;
   line-height: 1.4;
@@ -5166,7 +5166,7 @@ ul.uk-nav-sub {
 /* Container
  ========================================================================== */
 .uk-navbar-container:not(.uk-navbar-transparent) {
-  background: #F4FDFF;
+  background: #ECF8FB;
 }
 /*
  * Remove pseudo elements created by micro clearfix as precaution (if Container component is used)
@@ -5615,12 +5615,12 @@ ul.uk-nav-sub {
 /* Hover + Focus */
 .uk-subnav-pill > * > a:hover,
 .uk-subnav-pill > * > a:focus {
-  background-color: #F4FDFF;
+  background-color: #ECF8FB;
   color: #363636;
 }
 /* OnClick */
 .uk-subnav-pill > * > a:active {
-  background-color: #F4FDFF;
+  background-color: #ECF8FB;
   color: #363636;
 }
 /* Active */
@@ -7622,7 +7622,7 @@ iframe.uk-cover {
   background-color: #fff;
 }
 .uk-background-muted {
-  background-color: #F4FDFF;
+  background-color: #ECF8FB;
 }
 .uk-background-primary {
   background-color: #47A8B9;
@@ -11120,7 +11120,7 @@ iframe.uk-cover {
 .uk-card-secondary > :not([class*='uk-card-media']) .uk-marker,
 .uk-overlay-primary .uk-marker,
 .uk-offcanvas-bar .uk-marker {
-  background: #F4FDFF;
+  background: #ECF8FB;
   color: #363636;
 }
 .uk-light .uk-marker:hover,
@@ -12621,13 +12621,13 @@ iframe.uk-cover {
   background-color: white !important;
 }
 .uk-background-muted {
-  background-color: #F4FDFF !important;
+  background-color: #ECF8FB !important;
 }
 .uk-background-primary {
   background-color: #47A8B9 !important;
 }
 .uk-badge {
-  background-color: #F4FDFF !important;
+  background-color: #ECF8FB !important;
   color: #333 !important;
 }
 .uk-label {

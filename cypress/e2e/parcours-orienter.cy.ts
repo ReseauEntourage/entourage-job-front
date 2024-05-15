@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 describe('Parcours Orienter', () => {
   beforeEach(() => {
     cy.intercept('POST', '/contact/contactUs', {
@@ -9,8 +8,6 @@ describe('Parcours Orienter', () => {
       statusCode: 201,
     }).as('postCandidateContact');
 
-    cy.intercept('GET', '/cv/shares', { total: 184222 });
-    
     cy.visit('/orienter');
     window.localStorage.setItem('entourage-pro-modal-closed', 'true');
   });

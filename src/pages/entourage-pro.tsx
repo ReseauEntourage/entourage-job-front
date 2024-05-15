@@ -172,8 +172,8 @@ const EntouragePro = () => {
               <li>être domicilié dans le 35, 56, 59, 69, 75, 92, 93</li>
             </ul>
             <br />
-            *Le programme 360 s’adresse uniquement aux personnes âgées de 18 à
-            30 ans.
+            *Le format 360 s’adresse uniquement aux personnes âgées de 18 à 30
+            ans.
           </>
         }
         imgSrc="/static/img/why_3.jpg"

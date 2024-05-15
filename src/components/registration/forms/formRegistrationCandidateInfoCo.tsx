@@ -24,7 +24,7 @@ export const formRegistrationCandidateInfoCo: FormSchema<{
         })?.address;
         return `Les réunions ont lieu ${
           address ? `au ${address}` : 'dans nos locaux'
-        }. Elles permettent à nos équipes de vous donner toutes les informations et conseils nécessaires pour débuter le programme 360.`;
+        }. Elles permettent à nos équipes de vous donner toutes les informations et conseils nécessaires pour débuter le format 360.`;
       },
       component: 'text',
     },
