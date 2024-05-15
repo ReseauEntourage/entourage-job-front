@@ -1,6 +1,9 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useSendVerifyEmail } from '../useSendVerifyEmail';
 import { Button } from 'src/components/utils';
+import { ReduxRequestEvents } from 'src/constants';
+import { sendVerifyEmailSelectors } from 'src/use-cases/authentication';
 import { StyledSendEmailButtonContainer } from './SendVerifyEmailButton.styles';
 
 interface SendVerifyEmailProps {
@@ -8,8 +11,16 @@ interface SendVerifyEmailProps {
 }
 
 export const SendVerifyEmailButton = ({ email }: SendVerifyEmailProps) => {
-  const { isSendEmailSuccess, isSendEmailFailed, sendVerifyEmail } =
-    useSendVerifyEmail(email);
+  const { sendVerifyEmail } = useSendVerifyEmail(email);
+
+  const sendVerifyEmailStatus = useSelector(
+    sendVerifyEmailSelectors.selectSendVerifyEmailStatus
+  );
+
+  const isSendEmailSuccess =
+    sendVerifyEmailStatus === ReduxRequestEvents.SUCCEEDED;
+
+  const isSendEmailFailed = sendVerifyEmailStatus === ReduxRequestEvents.FAILED;
 
   const isEmailSent = isSendEmailSuccess || isSendEmailFailed;
 

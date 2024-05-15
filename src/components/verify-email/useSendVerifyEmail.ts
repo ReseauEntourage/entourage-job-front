@@ -1,11 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { ReduxRequestEvents } from 'src/constants';
-import {
-  authenticationActions,
-  sendVerifyEmailSelectors,
-} from 'src/use-cases/authentication';
+import { useDispatch } from 'react-redux';
+import { authenticationActions } from 'src/use-cases/authentication';
 
 export function useSendVerifyEmail(email?: string) {
   const dispatch = useDispatch();
@@ -38,14 +34,6 @@ export function useSendVerifyEmail(email?: string) {
     }
   };
 
-  const sendVerifyEmailStatus = useSelector(
-    sendVerifyEmailSelectors.selectSendVerifyEmailStatus
-  );
-
-  const isSendEmailSuccess =
-    sendVerifyEmailStatus === ReduxRequestEvents.SUCCEEDED;
-  const isSendEmailFailed = sendVerifyEmailStatus === ReduxRequestEvents.FAILED;
-
   // on component unmount
   useEffect(() => {
     return () => {
@@ -53,5 +41,5 @@ export function useSendVerifyEmail(email?: string) {
     };
   }, [dispatch]);
 
-  return { isSendEmailSuccess, isSendEmailFailed, sendVerifyEmail };
+  return { sendVerifyEmail };
 }

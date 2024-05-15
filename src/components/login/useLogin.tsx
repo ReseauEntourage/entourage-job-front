@@ -21,8 +21,8 @@ export function useLogin() {
   const rateLimitErrorMessage =
     'Trop de tentatives infructueuses.\nVeuillez ressayer dans 1 minute.';
 
-  const loginErrorMessage: string | ReactNode | undefined = useMemo<
-    string | ReactNode | undefined
+  const loginErrorMessage: ReactNode | undefined = useMemo<
+    ReactNode | undefined
   >(() => {
     if (!loginError) {
       return;

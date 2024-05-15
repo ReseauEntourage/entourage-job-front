@@ -8,7 +8,7 @@ import {
 } from './FormFooter.styles';
 
 interface FooterFormProps {
-  error?: string | ReactNode;
+  error?: ReactNode;
   onCancel?: () => void;
   onSubmit: (event?: FormEvent) => Promise<void>;
   submitText?: string;

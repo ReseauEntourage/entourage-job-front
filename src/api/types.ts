@@ -629,3 +629,8 @@ export type OpportunitiesFiltersForCandidate = {
   department: Department | Department[];
   businessLines: BusinessLineValue | BusinessLineValue[];
 };
+
+export type PostAuthSendVerifyEmailParams = {
+  token?: string;
+  email?: string;
+};

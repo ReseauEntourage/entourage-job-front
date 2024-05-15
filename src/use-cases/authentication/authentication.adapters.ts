@@ -1,4 +1,4 @@
-import { User } from 'src/api/types';
+import { PostAuthSendVerifyEmailParams, User } from 'src/api/types';
 import { createRequestAdapter } from 'src/store/utils';
 
 export type LoginError =
@@ -43,10 +43,4 @@ export const verifyEmailTokenAdapter = createRequestAdapter(
 
 export const sendVerifyEmailAdapter = createRequestAdapter(
   'sendVerifyEmail'
-).withPayloads<
-  {
-    token?: string;
-    email?: string;
-  },
-  void
->();
+).withPayloads<PostAuthSendVerifyEmailParams, void>();

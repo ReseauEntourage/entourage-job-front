@@ -38,7 +38,7 @@ interface FormWithValidationProps<S extends FormSchema<AnyCantFix>> {
   cancelText?: string;
   enterToSubmit?: boolean;
   innerRef?: Ref<{ resetForm: () => void }>;
-  error?: string | ReactNode;
+  error?: ReactNode;
   noCompulsory?: boolean;
 }
 
