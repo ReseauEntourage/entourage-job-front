@@ -130,6 +130,7 @@ export type User = {
   userProfile: UserProfile;
   OrganizationId?: string;
   readDocuments: { documentName: DocumentNameType }[];
+  isEmailVerified: boolean;
 };
 
 export interface CVExperience {
@@ -627,4 +628,9 @@ export type OpportunitiesFiltersForCandidate = {
   type?: OpportunityType;
   department: Department | Department[];
   businessLines: BusinessLineValue | BusinessLineValue[];
+};
+
+export type PostAuthSendVerifyEmailParams = {
+  token?: string;
+  email?: string;
 };

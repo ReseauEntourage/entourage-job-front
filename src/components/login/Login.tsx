@@ -15,7 +15,7 @@ import { useLogin } from './useLogin';
 
 export function Login() {
   const dispatch = useDispatch();
-  const { loginErrorMessage, rateLimitErrorMessage } = useLogin();
+  const { loginErrorMessage, rateLimitErrorMessage, setEmail } = useLogin();
 
   return (
     <StyledLoginContainer>
@@ -25,6 +25,7 @@ export function Login() {
           submitText="Se connecter"
           enterToSubmit
           onSubmit={({ email, password }) => {
+            setEmail(email);
             dispatch(authenticationActions.loginRequested({ email, password }));
           }}
           error={loginErrorMessage}

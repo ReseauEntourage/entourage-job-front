@@ -1,7 +1,10 @@
-import { User } from 'src/api/types';
+import { PostAuthSendVerifyEmailParams, User } from 'src/api/types';
 import { createRequestAdapter } from 'src/store/utils';
 
-export type LoginError = 'RATE_LIMIT' | 'INVALID_CREDENTIALS';
+export type LoginError =
+  | 'RATE_LIMIT'
+  | 'INVALID_CREDENTIALS'
+  | 'UNVERIFIED_EMAIL';
 
 // eslint-disable-next-line no-shadow
 export enum VerifyEmailTokenErrorType {
@@ -40,9 +43,4 @@ export const verifyEmailTokenAdapter = createRequestAdapter(
 
 export const sendVerifyEmailAdapter = createRequestAdapter(
   'sendVerifyEmail'
-).withPayloads<
-  {
-    token: string;
-  },
-  void
->();
+).withPayloads<PostAuthSendVerifyEmailParams, void>();

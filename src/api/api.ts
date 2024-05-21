@@ -21,6 +21,7 @@ import {
   OpportunityJoin,
   OpportunityUserEvent,
   OrganizationDto,
+  PostAuthSendVerifyEmailParams,
   ProfilesFilters,
   PutCandidate,
   Route,
@@ -457,7 +458,9 @@ export class APIHandler {
     return this.post('/auth/verify-email', params);
   }
 
-  postAuthSendVerifyEmail(params: { token: string }): Promise<AxiosResponse> {
+  postAuthSendVerifyEmail(
+    params: PostAuthSendVerifyEmailParams
+  ): Promise<AxiosResponse> {
     return this.post('/auth/send-verify-email', params);
   }
 
