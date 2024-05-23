@@ -36,6 +36,7 @@ export const slice = createSlice({
     ...loginAdapter.getReducers<State>((state) => state.login, {
       loginSucceeded(state, action) {
         state.accessToken = action.payload.accessToken;
+        state.loginError = null;
       },
       loginFailed(state, action) {
         state.loginError = action.payload.error;
