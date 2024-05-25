@@ -1,11 +1,5 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
-import {
-  currentUserActions,
-  selectAuthenticatedUser,
-  selectCurrentUserId,
-  selectCurrentUserProfile,
-  selectCurrentUserProfileHelps,
-} from '../current-user';
+import { currentUser as currentUserUseCase } from '../current-user';
 import { Api } from 'src/api';
 import { USER_ROLES, CANDIDATE_USER_ROLES } from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils';
@@ -25,10 +19,16 @@ const {
 } = slice.actions;
 
 export function* launchOnboardingSaga() {
-  const currentUser = yield* select(selectAuthenticatedUser);
-  const userProfile = yield* select(selectCurrentUserProfile);
+  const currentUser = yield* select(
+    currentUserUseCase.selectors.selectAuthenticatedUser
+  );
+  const userProfile = yield* select(
+    currentUserUseCase.selectors.selectCurrentUserProfile
+  );
   const userRole = currentUser.role;
-  const userHelps = yield* select(selectCurrentUserProfileHelps);
+  const userHelps = yield* select(
+    currentUserUseCase.selectors.selectCurrentUserProfileHelps
+  );
 
   // if admin or external Coach, no Onboarding
   if (isRoleIncluded([USER_ROLES.ADMIN, USER_ROLES.COACH_EXTERNAL], userRole)) {
@@ -63,12 +63,14 @@ export function* launchOnboardingSaga() {
 export function* validateFirstSecondStepOnboardingSaga(
   action: ReturnType<typeof validateFirstSecondStepOnboardingRequested>
 ) {
-  const userId = yield* select(selectCurrentUserId);
+  const userId = yield* select(
+    currentUserUseCase.selectors.selectCurrentUserId
+  );
   const userProfile = action.payload;
   try {
     yield* call(() => Api.putUserProfile(userId, userProfile));
     yield* put(validateFirstSecondStepOnboardingSucceeded());
-    yield* put(currentUserActions.fetchUserRequested());
+    yield* put(currentUserUseCase.actions.fetchUserRequested());
     yield* put(increaseOnboardingStep());
   } catch {
     yield* put(validateFirstSecondStepOnboardingFailed());
@@ -78,12 +80,14 @@ export function* validateFirstSecondStepOnboardingSaga(
 export function* validateLastStepOnboardingSaga(
   action: ReturnType<typeof validateLastStepOnboardingRequested>
 ) {
-  const userId = yield* select(selectCurrentUserId);
+  const userId = yield* select(
+    currentUserUseCase.selectors.selectCurrentUserId
+  );
   const userProfile = action.payload;
   try {
     yield* call(() => Api.putUserProfile(userId, userProfile));
     yield* put(validateLastStepOnboardingSucceeded());
-    yield* put(currentUserActions.fetchUserRequested());
+    yield* put(currentUserUseCase.actions.fetchUserRequested());
     yield* put(endOnboarding());
   } catch {
     yield* put(validateLastStepOnboardingFailed());
