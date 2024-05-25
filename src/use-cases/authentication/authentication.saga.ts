@@ -36,6 +36,7 @@ function* loginRequestedSaga(action: ReturnType<typeof loginRequested>) {
         password,
       })
     );
+
     yield* put(
       loginSucceeded({
         accessToken: response.data.token,
@@ -49,8 +50,7 @@ function* loginRequestedSaga(action: ReturnType<typeof loginRequested>) {
           error: 'RATE_LIMIT',
         })
       );
-    }
-    if (isEmailUnverifiedError(error)) {
+    } else if (isEmailUnverifiedError(error)) {
       yield* put(
         loginFailed({
           error: 'UNVERIFIED_EMAIL',

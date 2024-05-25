@@ -103,7 +103,7 @@
     "@babel/core": "^7.15.0",
     "@babel/eslint-parser": "^7.16.5",
     "@babel/preset-react": "^7.14.5",
-    "@faker-js/faker": "^8.3.1",
+    "@faker-js/faker": "^8.4.1",
     "@jambit/eslint-plugin-typed-redux-saga": "^0.4.0",
     "@next/eslint-plugin-next": "^12.0.7",
     "@simbathesailor/use-what-changed": "^2.0.0",
