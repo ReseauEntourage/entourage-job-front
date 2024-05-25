@@ -35,3 +35,13 @@ export const sendVerifyEmailSelectors =
 export function selectVerifyEmailTokenError(state: RootState) {
   return state.authentication.verifyEmailTokenError;
 }
+
+export const extraSelectors = {
+  ...loginSelectors,
+  ...logoutSelectors,
+  ...verifyEmailTokenSelectors,
+  ...sendVerifyEmailSelectors,
+  selectAccessToken,
+  selectLoginError,
+  selectVerifyEmailTokenError,
+};

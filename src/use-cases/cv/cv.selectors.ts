@@ -18,3 +18,10 @@ export function selectIsCurrentCVValidated(state: RootState) {
 export function selectCurrentCVStatus(state: RootState): CVStatus {
   return state.cv.currentCv?.status || CV_STATUS.New.value;
 }
+
+export const extraSelectors = {
+  ...fetchCVSelectors,
+  selectCurrentCV,
+  selectIsCurrentCVValidated,
+  selectCurrentCVStatus,
+};
