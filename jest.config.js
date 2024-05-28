@@ -29,6 +29,9 @@ const jestConfig = async () => {
       '\\.svg$': '<rootDir>/__mocks__/svg.js',
       ...nextJestConfig.moduleNameMapper,
     },
+    setupFilesAfterEnv: [
+      '<rootDir>/src/utils/jestAdditionalMatchers/index.ts',
+    ],
   };
 };
 
