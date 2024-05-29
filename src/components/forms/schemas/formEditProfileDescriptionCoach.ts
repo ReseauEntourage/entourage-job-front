@@ -1,14 +1,15 @@
-import { FormSchema } from 'src/components/forms/FormSchema';
+import { FormSchema } from '../FormSchema';
 
-export const formOnboardingCoachProfile: FormSchema<{ description: string }> = {
-  id: 'form-onboarding-profile',
+export const formEditProfileDescriptionCoach: FormSchema<{
+  description: string;
+}> = {
+  id: 'form-profile-description',
   fields: [
     {
       id: 'description',
       name: 'description',
       component: 'textarea',
-      title: 'Présentez-vous en quelques mots',
-      showLabel: true,
+      title: 'Description',
       placeholder:
         "Exemple: Passionné.e par le secteur de la logistique, je souhaite transmettre mon expérience et faire profiter les personnes en recherche d'emploi de mon réseau.",
       rows: 14,
