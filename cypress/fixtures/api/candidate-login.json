@@ -1,0 +1,45 @@
+{
+  "id": "cf9adb77-dc39-4790-9018-67d9c07e41e4",
+  "firstName": "Roch",
+  "lastName": "Schmitt",
+  "email": "Melodie39@example.org",
+  "phone": "+33 376926591",
+  "address": null,
+  "adminRole": null,
+  "zone": "PARIS",
+  "gender": 0,
+  "lastConnection": "",
+  "readDocuments": [],
+  "role": "Candidat",
+  "coach": null,
+  "candidat": {
+    "employed": false,
+    "hidden": false,
+    "note": "",
+    "url": "michael-198e8950",
+    "contract": null,
+    "endOfContract": null,
+    "lastModifiedBy": "",
+    "coach": null
+  },
+  "userProfile": {
+    "description": null,
+    "currentJob": null,
+    "networkBusinessLines": [],
+    "searchBusinessLines": [
+      {
+        "id": "caaa857c-7721-400c-ae16-7c886d2b6b34",
+        "name": "aev",
+        "order": 2
+      }
+    ],
+    "searchAmbitions": [],
+    "helpOffers": [],
+    "helpNeeds": [
+      {
+        "id": "34f7e8bd-247c-4017-87ae-1aa09121a85b",
+        "name": "interview"
+      }
+    ]
+  }
+}

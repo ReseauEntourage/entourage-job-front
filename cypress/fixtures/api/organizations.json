@@ -1,0 +1,210 @@
+[
+  {
+    "id": "2e85c7eb-8d5c-4392-bd02-9686cee443ea",
+    "name": "Denis SARL",
+    "address": "554 Avenue Dauphine",
+    "zone": "Aix-en-Provence",
+    "organizationReferent": {
+      "referentFirstName": "Martial",
+      "referentLastName": "Barbier",
+      "referentPhone": "0687568543",
+      "referentMail": "Arolde_Denis14@example.net",
+      "updatedAt": "2024-05-29T10:17:03.044Z",
+      "createdAt": "2024-05-28T20:19:21.064Z"
+    },
+    "updatedAt": "2024-05-29T03:47:13.135Z",
+    "createdAt": "2024-05-28T18:12:01.425Z"
+  },
+  {
+    "id": "da05ad10-4e56-4213-b50d-7d98c98301ea",
+    "name": "Andre et Fernandez",
+    "address": "792 Allée de l'Abbaye",
+    "zone": "Levallois-Perret",
+    "organizationReferent": {
+      "referentFirstName": "Julia",
+      "referentLastName": "Guerin",
+      "referentPhone": "0148756780",
+      "referentMail": "Alize.Gautier99@example.org",
+      "updatedAt": "2024-05-29T08:05:39.115Z",
+      "createdAt": "2024-05-29T08:23:42.527Z"
+    },
+    "updatedAt": "2024-05-28T20:26:24.683Z",
+    "createdAt": "2024-05-29T10:18:01.253Z"
+  },
+  {
+    "id": "ad0e6496-5a1a-4ef5-8b4a-a5e77c6a3e56",
+    "name": "Dupont EI",
+    "address": "24 Place de Tilsitt",
+    "zone": "Vitry-sur-Seine",
+    "organizationReferent": {
+      "referentFirstName": "Odette",
+      "referentLastName": "Marchand",
+      "referentPhone": "0509752502",
+      "referentMail": "Regine23@example.org",
+      "updatedAt": "2024-05-28T17:22:40.099Z",
+      "createdAt": "2024-05-28T14:55:16.253Z"
+    },
+    "updatedAt": "2024-05-29T05:37:49.664Z",
+    "createdAt": "2024-05-29T10:54:30.198Z"
+  },
+  {
+    "id": "182029eb-5e19-4155-97bb-e4c3af758ab2",
+    "name": "Meyer et Duval",
+    "address": "37 Allée Delesseux",
+    "zone": "Neuilly-sur-Seine",
+    "organizationReferent": {
+      "referentFirstName": "Scholastique",
+      "referentLastName": "Guerin",
+      "referentPhone": "0564833260",
+      "referentMail": "Xaviere14@example.com",
+      "updatedAt": "2024-05-28T22:38:19.792Z",
+      "createdAt": "2024-05-28T17:38:13.313Z"
+    },
+    "updatedAt": "2024-05-28T15:55:22.843Z",
+    "createdAt": "2024-05-29T05:08:31.613Z"
+  },
+  {
+    "id": "3398fbec-81ee-4858-87f3-8e41cd9401b9",
+    "name": "Paul et Michel",
+    "address": "14 Impasse de Richelieu",
+    "zone": "Courbevoie",
+    "organizationReferent": {
+      "referentFirstName": "Marine",
+      "referentLastName": "Baron",
+      "referentPhone": "+33 246982483",
+      "referentMail": "Gisele2@example.net",
+      "updatedAt": "2024-05-28T18:35:31.993Z",
+      "createdAt": "2024-05-29T08:25:36.185Z"
+    },
+    "updatedAt": "2024-05-29T03:52:35.838Z",
+    "createdAt": "2024-05-29T10:31:11.060Z"
+  },
+  {
+    "id": "c174d4c9-e382-45bf-af42-84f5983fb550",
+    "name": "Marie GIE",
+    "address": "526 Rue de la Harpe",
+    "zone": "Caen",
+    "organizationReferent": {
+      "referentFirstName": "Angilbe",
+      "referentLastName": "Paris",
+      "referentPhone": "0154910910",
+      "referentMail": "Albert_Laurent@example.net",
+      "updatedAt": "2024-05-28T15:01:49.282Z",
+      "createdAt": "2024-05-28T20:48:21.306Z"
+    },
+    "updatedAt": "2024-05-29T07:37:05.754Z",
+    "createdAt": "2024-05-28T18:42:32.724Z"
+  },
+  {
+    "id": "02228dc5-9859-476a-a05b-c27234f3369a",
+    "name": "Lopez et Noel",
+    "address": "869 Passage Saint-Denis",
+    "zone": "Saint-Maur-des-Fossés",
+    "organizationReferent": {
+      "referentFirstName": "Anicée",
+      "referentLastName": "Dubois",
+      "referentPhone": "0386654405",
+      "referentMail": "Oury_Dasilva15@example.com",
+      "updatedAt": "2024-05-29T02:35:17.011Z",
+      "createdAt": "2024-05-29T04:22:54.654Z"
+    },
+    "updatedAt": "2024-05-28T16:59:10.618Z",
+    "createdAt": "2024-05-29T07:15:50.609Z"
+  },
+  {
+    "id": "b379fa68-bcb9-43dd-91ec-df70106de4e8",
+    "name": "Leclerc GIE",
+    "address": "2631 Quai du Faubourg Saint-Honoré",
+    "zone": "Nanterre",
+    "organizationReferent": {
+      "referentFirstName": "Ella",
+      "referentLastName": "Lopez",
+      "referentPhone": "0754281207",
+      "referentMail": "Aliette.Lucas33@example.org",
+      "updatedAt": "2024-05-28T22:27:08.882Z",
+      "createdAt": "2024-05-29T10:05:31.606Z"
+    },
+    "updatedAt": "2024-05-28T18:13:19.318Z",
+    "createdAt": "2024-05-29T06:05:25.720Z"
+  },
+  {
+    "id": "a5baf716-8ffd-47a0-b74e-5563bf6b053d",
+    "name": "Gonzalez et Paris",
+    "address": "62 Place de l'Odéon",
+    "zone": "Lorient",
+    "organizationReferent": {
+      "referentFirstName": "Jérôme",
+      "referentLastName": "Dupuy",
+      "referentPhone": "+33 474578002",
+      "referentMail": "Alcidie54@example.org",
+      "updatedAt": "2024-05-28T13:05:36.897Z",
+      "createdAt": "2024-05-29T06:50:26.007Z"
+    },
+    "updatedAt": "2024-05-29T08:20:51.950Z",
+    "createdAt": "2024-05-28T13:36:19.689Z"
+  },
+  {
+    "id": "affecb8c-a8b9-48af-80d7-496c257b3b75",
+    "name": "Pierre et Guyot",
+    "address": "656 Boulevard de la Paix",
+    "zone": "Ivry-sur-Seine",
+    "organizationReferent": {
+      "referentFirstName": "Alberte",
+      "referentLastName": "Blanchard",
+      "referentPhone": "+33 691979979",
+      "referentMail": "Emile_Adam34@example.net",
+      "updatedAt": "2024-05-28T23:20:21.764Z",
+      "createdAt": "2024-05-28T21:16:44.023Z"
+    },
+    "updatedAt": "2024-05-28T22:17:12.407Z",
+    "createdAt": "2024-05-29T11:12:19.113Z"
+  },
+  {
+    "id": "caef93fa-e970-46df-b7d0-37313918f879",
+    "name": "Mathieu et Vasseur",
+    "address": "7839 Impasse Saint-Bernard",
+    "zone": "Nancy",
+    "organizationReferent": {
+      "referentFirstName": "Ambroisie",
+      "referentLastName": "Simon",
+      "referentPhone": "0299557064",
+      "referentMail": "Quieta_Michel80@example.net",
+      "updatedAt": "2024-05-28T18:14:11.328Z",
+      "createdAt": "2024-05-28T14:23:21.453Z"
+    },
+    "updatedAt": "2024-05-28T23:11:23.287Z",
+    "createdAt": "2024-05-29T07:46:00.220Z"
+  },
+  {
+    "id": "351afc4b-850b-412a-bb3c-65552d9a82c1",
+    "name": "Francois SCOP",
+    "address": "11 Avenue de Rivoli",
+    "zone": "Levallois-Perret",
+    "organizationReferent": {
+      "referentFirstName": "Girart",
+      "referentLastName": "Richard",
+      "referentPhone": "0116506100",
+      "referentMail": "Salome.Riviere@example.net",
+      "updatedAt": "2024-05-28T14:55:24.920Z",
+      "createdAt": "2024-05-28T19:35:19.914Z"
+    },
+    "updatedAt": "2024-05-28T14:26:08.221Z",
+    "createdAt": "2024-05-28T22:29:21.979Z"
+  },
+  {
+    "id": "7f889100-ce9e-4161-80bc-0d0f6aa96421",
+    "name": "Entourage",
+    "address": "91 Impasse d'Alésia",
+    "zone": "Rennes",
+    "organizationReferent": {
+      "referentFirstName": "Arsinoé",
+      "referentLastName": "Prevost",
+      "referentPhone": "0561974314",
+      "referentMail": "Aloise72@example.com",
+      "updatedAt": "2024-05-29T08:38:07.977Z",
+      "createdAt": "2024-05-28T17:18:03.569Z"
+    },
+    "updatedAt": "2024-05-28T18:33:26.547Z",
+    "createdAt": "2024-05-29T03:54:35.366Z"
+  }
+]

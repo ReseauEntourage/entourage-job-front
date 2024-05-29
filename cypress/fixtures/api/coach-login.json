@@ -1,0 +1,78 @@
+{
+  "id": "1a592832-4d2d-46cd-9ed2-168bee119f28",
+  "firstName": "Isabelle",
+  "lastName": "Jacquet",
+  "email": "Cleandre.Dufour16@example.com",
+  "phone": "0734979087",
+  "address": null,
+  "adminRole": null,
+  "zone": "PARIS",
+  "gender": 0,
+  "lastConnection": "",
+  "readDocuments": [],
+  "OrganizationId": "99aca0a7-3154-4fbe-b149-700a9de44871",
+  "role": "Coach externe",
+  "candidat": null,
+  "coaches": [
+    {
+      "employed": false,
+      "hidden": false,
+      "note": null,
+      "url": "arnold-93336b4d",
+      "contract": null,
+      "endOfContract": null,
+      "lastModifiedBy": null,
+      "candidat": {
+        "id": "294b5606-017e-4c43-97e7-952a07fa7eda",
+        "OrganizationId": "697bc0e5-cc6f-48ce-a6b5-234b4fc5395f",
+        "firstName": "Ariel",
+        "lastName": "Colin",
+        "email": "Asceline.Moreau30@example.net",
+        "phone": "+33 266578052",
+        "address": "694 Passage de Rivoli",
+        "role": "Candidat",
+        "adminRole": null,
+        "zone": "PARIS",
+        "gender": 1,
+        "lastConnection": null,
+        "userProfile": {
+          "description": null,
+          "currentJob": null,
+          "department": null,
+          "isAvailable": true,
+          "searchBusinessLines": [],
+          "networkBusinessLines": [],
+          "searchAmbitions": [],
+          "helpNeeds": [],
+          "helpOffers": []
+        }
+      }
+    }
+  ],
+  "organization": {
+    "id": "99aca0a7-3154-4fbe-b149-700a9de44871",
+    "name": "Jean et Schmitt",
+    "address": "923 Passage des Francs-Bourgeois",
+    "zone": "PARIS"
+  },
+  "userProfile": {
+    "description": null,
+    "currentJob": null,
+    "networkBusinessLines": [],
+    "searchBusinessLines": [],
+    "searchAmbitions": [
+      {
+        "id": "3971a46c-c111-484b-a3b5-451c40873c60",
+        "name": "aev",
+        "order": 1
+      }
+    ],
+    "helpOffers": [
+      {
+        "id": "3662aab5-596c-4cb5-a0fc-b685859c790e",
+        "name": "interview"
+      }
+    ],
+    "helpNeeds": []
+  }
+}

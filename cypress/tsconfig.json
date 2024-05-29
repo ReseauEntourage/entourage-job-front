@@ -8,6 +8,6 @@
     "sourceMap": false,
     "resolveJsonModule": true
   },
-  "include": ["../cypress/**/*.js", "../cypress/**/*.ts"],
-  "files": ["../cypress.config.ts"]
+  "include": ["../cypress/**/*.js", "../cypress/**/*.ts"]
+  // "files": ["../cypress.config.ts"]
 }
