@@ -1,7 +1,13 @@
 import { call, fork, put, takeLatest } from 'typed-redux-saga';
 import { Api } from 'src/api';
-import { isTooManyRequests } from 'src/api/axiosErrors';
+import {
+  isEmailAlreadyVerifiedError,
+  isEmailUnverifiedError,
+  isTokenExpiredError,
+  isTooManyRequests,
+} from 'src/api/axiosErrors';
 import { STORAGE_KEYS } from 'src/constants';
+import { VerifyEmailTokenErrorType } from './authentication.adapters';
 import { slice } from './authentication.slice';
 
 const {
@@ -12,6 +18,12 @@ const {
   logoutSucceeded,
   logoutFailed,
   setAccessToken,
+  verifyEmailTokenFailed,
+  verifyEmailTokenRequested,
+  verifyEmailTokenSucceeded,
+  sendVerifyEmailRequested,
+  sendVerifyEmailSucceeded,
+  sendVerifyEmailFailed,
 } = slice.actions;
 
 function* loginRequestedSaga(action: ReturnType<typeof loginRequested>) {
@@ -35,6 +47,13 @@ function* loginRequestedSaga(action: ReturnType<typeof loginRequested>) {
       yield* put(
         loginFailed({
           error: 'RATE_LIMIT',
+        })
+      );
+    }
+    if (isEmailUnverifiedError(error)) {
+      yield* put(
+        loginFailed({
+          error: 'UNVERIFIED_EMAIL',
         })
       );
     } else {
@@ -64,6 +83,46 @@ function logoutSucceededSaga() {
   localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
 }
 
+function* verifyEmailTokenSaga(
+  action: ReturnType<typeof verifyEmailTokenRequested>
+) {
+  try {
+    yield* call(() => Api.postAuthVerifyEmailToken(action.payload));
+    yield* put(verifyEmailTokenSucceeded());
+  } catch (error) {
+    if (isEmailAlreadyVerifiedError(error)) {
+      yield* put(
+        verifyEmailTokenFailed({
+          error: VerifyEmailTokenErrorType.ALREADY_VERIFIED,
+        })
+      );
+    } else if (isTokenExpiredError(error)) {
+      yield* put(
+        verifyEmailTokenFailed({
+          error: VerifyEmailTokenErrorType.TOKEN_EXPIRED,
+        })
+      );
+    } else {
+      yield* put(
+        verifyEmailTokenFailed({
+          error: VerifyEmailTokenErrorType.TOKEN_INVALID,
+        })
+      );
+    }
+  }
+}
+
+function* sendVerifyEmailSaga(
+  action: ReturnType<typeof sendVerifyEmailRequested>
+) {
+  try {
+    yield* call(() => Api.postAuthSendVerifyEmail(action.payload));
+    yield* put(sendVerifyEmailSucceeded());
+  } catch {
+    yield* put(sendVerifyEmailFailed());
+  }
+}
+
 function* initSaga() {
   const accessToken = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN) || null;
 
@@ -76,4 +135,6 @@ export function* saga() {
   yield* takeLatest(loginSucceeded, loginSucceededSaga);
   yield* takeLatest(logoutRequested, logoutRequestedSaga);
   yield* takeLatest(logoutSucceeded, logoutSucceededSaga);
+  yield* takeLatest(verifyEmailTokenRequested, verifyEmailTokenSaga);
+  yield* takeLatest(sendVerifyEmailRequested, sendVerifyEmailSaga);
 }

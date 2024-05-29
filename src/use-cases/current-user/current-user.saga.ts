@@ -6,7 +6,10 @@ import {
   selectAccessToken,
 } from 'src/use-cases/authentication';
 import { assertCondition, assertIsDefined } from 'src/utils/asserts';
-import { selectCurrentUserId } from './current-user.selectors';
+import {
+  selectCurrentUser,
+  selectCurrentUserId,
+} from './current-user.selectors';
 import { slice } from './current-user.slice';
 
 const {
@@ -68,6 +71,7 @@ function* updateUserRequestedSaga(
   action: ReturnType<typeof updateUserRequested>
 ) {
   const { userId, user } = action.payload;
+  const formerUser = yield* select(selectCurrentUser);
   try {
     yield* call(() => Api.putUser(userId, user));
     yield* put(
@@ -75,6 +79,9 @@ function* updateUserRequestedSaga(
         user,
       })
     );
+    if (user.email !== formerUser?.email) {
+      yield* put(authenticationActions.logoutRequested());
+    }
   } catch (error) {
     yield* put(
       updateUserFailed({

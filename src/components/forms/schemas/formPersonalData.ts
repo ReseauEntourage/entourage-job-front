@@ -52,6 +52,16 @@ export const formPersonalDataAsCandidate: FormSchema<{
       title: 'Confirmation nouvel email',
     },
     {
+      id: 'newEmailWarning',
+      name: 'newEmailWarning',
+      component: 'text',
+      title:
+        'Si vous modifiez votre adresse email, vous serez déconnecté. Vous devrez valider votre nouvelle adresse email pour vous reconnecter',
+      hide: (getValue) => {
+        return !getValue('oldEmail');
+      },
+    },
+    {
       id: 'phoneLabel',
       name: 'phoneLabel',
       title: 'Modifier le numéro de téléphone',
@@ -131,6 +141,16 @@ export const formPersonalDataAsCoach: FormSchema<{
       component: 'text-input',
       type: 'email',
       title: 'Confirmation nouvel email',
+    },
+    {
+      id: 'newEmailWarning',
+      name: 'newEmailWarning',
+      component: 'text',
+      title:
+        'Si vous modifiez votre adresse email, vous serez déconnecté. Vous devrez valider votre nouvelle adresse email pour vous reconnecter',
+      hide: (getValue) => {
+        return !getValue('oldEmail');
+      },
     },
     {
       id: 'phoneLabel',
@@ -250,6 +270,16 @@ export const formPersonalDataAsAdmin: FormSchema<{
       component: 'text-input',
       type: 'email',
       title: 'Confirmation nouvel email',
+    },
+    {
+      id: 'newEmailWarning',
+      name: 'newEmailWarning',
+      component: 'text',
+      title:
+        'Si vous modifiez votre adresse email, vous serez déconnecté. Vous devrez valider votre nouvelle adresse email pour vous reconnecter',
+      hide: (getValue) => {
+        return !getValue('oldEmail');
+      },
     },
     {
       id: 'phoneLabel',

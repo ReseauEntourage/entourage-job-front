@@ -7,7 +7,7 @@ export const H1 = ({
   title,
   color,
   center = false,
-  effect,
+  effect = '',
   weight = 'bold',
 }: HeadingComponentProps) => {
   const isDesktop = useIsDesktop();
@@ -23,5 +23,3 @@ export const H1 = ({
     </StyledH1>
   );
 };
-
-H1.defaultProps = { effect: '' };
