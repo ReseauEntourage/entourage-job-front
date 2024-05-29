@@ -7,6 +7,7 @@ import {
   isTooManyRequests,
 } from 'src/api/axiosErrors';
 import { STORAGE_KEYS } from 'src/constants';
+import { isSSR } from 'src/utils/isSSR';
 import { VerifyEmailTokenErrorType } from './authentication.adapters';
 import { slice } from './authentication.slice';
 
@@ -124,6 +125,10 @@ function* sendVerifyEmailSaga(
 }
 
 function* initSaga() {
+  if (isSSR) {
+    return;
+  }
+
   const accessToken = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN) || null;
 
   yield* put(setAccessToken(accessToken));
