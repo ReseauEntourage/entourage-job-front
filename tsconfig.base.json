@@ -14,7 +14,7 @@
     "resolveJsonModule": true,
     "jsx": "preserve",
     "baseUrl": "./",
-    "types": ["cypress", "node"],
+    "types": ["cypress", "jest", "node"],
     "noImplicitAny": false
   },
   "include": [
