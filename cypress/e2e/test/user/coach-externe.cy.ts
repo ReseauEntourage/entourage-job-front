@@ -1,6 +1,5 @@
-/* eslint-disable no-undef */
-import bootstrap from '../bootstrap.js';
-import { coachExtRequests } from '../../intercept/user/coach-externe.req.js';
+import bootstrap from '../bootstrap';
+import { coachExtRequests } from '../../intercept/user/coach-externe.req';
 
 /**
  * En tant que Coach externe
@@ -23,21 +22,15 @@ describe('En tant que - Coach Externe', () => {
     window.localStorage.setItem('entourage-pro-modal-closed', 'true');
     /**
      * Intercept GET requests
+     * Nous avons besoin de l'objet user de la fixture api/coach-login.json
+     * pour pouvoir intercepter les 2 requêtes suivantes [ vérifier dans 'network' (; ]
      */
-    coachExtRequests.GET.map((request) => {
-      if (request.alias)
-        cy.intercept('GET', request.path, request.data).as(request.alias);
-      else cy.intercept('GET', request.path, request.data);
-    });
-
-    // Nous avons besoin de l'objet user de la fixture api/coach-login.json
-    // pour pouvoir intercepté les 2 requêtes suivantes [ vérifier dans 'network' (; ]
     cy.fixture('api/coach-login').then((user) => {
-      // Pour /backoffice/candidat/list
-      cy.intercept('GET', `/cv/${user.coaches[0].candidat.id}`, {});
-      // Pour /backoffice/parametres
-      cy.intercept('GET', `/user/${user.id}`, {
-        fixture: 'api/coach-login',
+      const coachExtRequestsObject = coachExtRequests(user);
+      coachExtRequestsObject.GET.map((request) => {
+        if (request.alias)
+          cy.intercept('GET', request.path, request.data).as(request.alias);
+        else cy.intercept('GET', request.path, request.data);
       });
     });
   });

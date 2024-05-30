@@ -11,15 +11,25 @@
  *    alias?: string,       // Alias pour référencer cette requête dans Cypress
  * }
  */
-export const coachExtRequests = {
-  GET: [
-    {
-      path: '/auth/current',
-      data: { fixture: 'api/coach-login' },
-      alias: 'authCheck',
-    },
-    // { path: '/cv/shares', data: { total: 10000 }, alias: 'cvShares' },
-  ],
-  POST: [],
-  PUT: [],
+export const coachExtRequests = (user) => {
+  return {
+    GET: [
+      {
+        path: '/auth/current',
+        data: { fixture: 'api/coach-login' },
+        alias: 'authCheck',
+      },
+      {
+        path: `/cv/${user.coaches[0].candidat.id}`,
+        data: {},
+      },
+      {
+        path: `/user/${user.id}`,
+        data: { fixture: 'api/coach-login' },
+      },
+      // { path: '/cv/shares', data: { total: 10000 }, alias: 'cvShares' },
+    ],
+    POST: [],
+    PUT: [],
+  };
 };

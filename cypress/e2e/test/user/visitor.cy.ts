@@ -1,6 +1,5 @@
-/* eslint-disable no-undef */
-import bootstrap from '../bootstrap.js';
-import { visitorRequests } from '../../intercept/user/visitor.req.js';
+import bootstrap from '../bootstrap';
+import { visitorRequests } from '../../intercept/user/visitor.req';
 
 /**
  * Je parcours la navigation

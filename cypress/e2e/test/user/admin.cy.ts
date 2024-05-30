@@ -1,6 +1,5 @@
-/* eslint-disable no-undef */
-import bootstrap from '../bootstrap.js';
-import { adminRequests } from '../../intercept/user/admin.req.js';
+import bootstrap from '../bootstrap';
+import { adminRequests } from '../../intercept/user/admin.req';
 
 /**
  * En tant qu'Administrateur

@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import bootstrap from '../bootstrap';
 import { companyJourneyRequests } from '../../intercept/journey/company.req';
 

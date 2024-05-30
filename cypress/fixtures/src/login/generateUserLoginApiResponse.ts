@@ -57,7 +57,7 @@ export const generateUserLoginApiResponse = (roleUser) => {
   // initialize userCoach with coach info. expected
   const userCoach = {
     ...userBase,
-    OrganizationId: '99aca0a7-3154-4fbe-b149-700a9de44871',
+    OrganizationId: faker.string.uuid(),
     role: 'Coach externe',
     candidat: null,
     readDocuments: [],

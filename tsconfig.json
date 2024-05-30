@@ -15,6 +15,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "baseUrl": "./",
+    "types": ["cypress", "node"],
     "noImplicitAny": false
   },
   "include": [
@@ -27,5 +28,5 @@
     "./cypress.config.ts",
     ".storybook/**/*"
   ],
-  "exclude": ["node_modules", "./cypress/**/*"]
+  "exclude": ["node_modules"]
 }

@@ -1,17 +1,40 @@
 import { generateAdminLoginApiResponse } from '../fixtures/src/login/generateAdminLoginApiResponse';
-import { generateUserLoginApiResponse } from '../fixtures/src/login/generateUserLoginApiResponse.js';
-import { generateOpportunitiesApiResponse } from '../fixtures/src/opportunity/generateOpportunitiesApiResponse.ts';
+import { generateUserLoginApiResponse } from '../fixtures/src/login/generateUserLoginApiResponse';
+import { generateOpportunitiesApiResponse } from '../fixtures/src/opportunity/generateOpportunitiesApiResponse';
 import { generateUsersApiResponse } from '../fixtures/src/user/generateUsersApiResponse';
-import { generateOrganizationsApiResponse } from '../fixtures/src/organization/generateOrganizationsApiResponse.js';
-import { generateSearchUsersApiResponse } from '../fixtures/src/user/generateSearchUsersApiResponse.js';
-import { generateCvCandidateApiResponse } from '../fixtures/src/cv/generateCvCandidateApiResponse.js';
-import { generateTabCountApiResponse } from '../fixtures/src/tab/generateTabCountApiResponse.js';
+import { generateOrganizationsApiResponse } from '../fixtures/src/organization/generateOrganizationsApiResponse';
+import { generateSearchUsersApiResponse } from '../fixtures/src/user/generateSearchUsersApiResponse';
+import { generateCvCandidateApiResponse } from '../fixtures/src/cv/generateCvCandidateApiResponse';
+import { generateTabCountApiResponse } from '../fixtures/src/tab/generateTabCountApiResponse';
 import { generateCvCardsApiResponse } from '../fixtures/src/cv/generateCvCardsApiResponse';
 import { generateCampaignsApiResponse } from '../fixtures/src/campaign/generateCampaignsApiResponse';
+import { generateCvReadApiResponse } from '../fixtures/src/cv/generateCvReadApiResponse';
+import { generateCvUrlApiResponse } from '../fixtures/src/cv/generateCvUrlApiResponse';
 
 /**
  * Command to generate admin login
  */
+declare global {
+  namespace Cypress {
+    interface Chainable<Subject> {
+      generateAdminLoginApiResponse(): Chainable<Subject>;
+      generateOpportunitiesApiResponse(): Chainable<Subject>;
+      generateOpportunitiesWrappedApiResponse(): Chainable<Subject>;
+      generateUsersApiResponse(roleUsers: string): Chainable<Subject>;
+      generateOrganizationsApiResponse(): Chainable<Subject>;
+      generateSearchUsersApiResponse(): Chainable<Subject>;
+      generateCandidateLoginApiResponse(): Chainable<Subject>;
+      generateCvCandidateApiResponse(): Chainable<Subject>;
+      generateCoachLoginApiResponse(): Chainable<Subject>;
+      generateTabCountApiResponse(): Chainable<Subject>;
+      generateCvCardsApiResponse(): Chainable<Subject>;
+      generateCvReadApiResponse(): Chainable<Subject>;
+      generateCvUrlApiResponse(): Chainable<Subject>;
+      generateCampaignsApiResponse(): Chainable<Subject>;
+    }
+  }
+}
+
 Cypress.Commands.add('generateAdminLoginApiResponse', () => {
   cy.writeFile(
     'cypress/fixtures/api/admin-login.json',
@@ -56,10 +79,10 @@ Cypress.Commands.add('generateUsersApiResponse', (roleUsers) => {
 /**
  * Command to generate structures
  */
-Cypress.Commands.add('generateOrganizationsApiResponse', (roleUsers) => {
+Cypress.Commands.add('generateOrganizationsApiResponse', () => {
   cy.writeFile(
     'cypress/fixtures/api/organizations.json',
-    generateOrganizationsApiResponse(12, roleUsers),
+    generateOrganizationsApiResponse(12),
     'utf-8'
   );
 });

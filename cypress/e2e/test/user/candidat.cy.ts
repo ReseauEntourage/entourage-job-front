@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import moment from 'moment';
 import bootstrap from '../bootstrap';
 

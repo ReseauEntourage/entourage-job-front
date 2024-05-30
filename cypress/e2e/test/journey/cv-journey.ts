@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import bootstrap from '../bootstrap';
 import { cvJourneyRequests } from '../../intercept/journey/cv.req';
 

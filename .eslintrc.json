@@ -205,7 +205,9 @@
   },
   "globals": {
     "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
+    "SharedArrayBuffer": "readonly",
+    "cy": true,
+    "Cypress": true
   },
   "root": true,
   "overrides": [

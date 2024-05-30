@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import bootstrap from '../bootstrap';
 import { guideJourneyRequests } from '../../intercept/journey/guide.req';
 

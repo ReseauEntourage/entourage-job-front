@@ -14,7 +14,7 @@ module.exports = defineConfig({
   },
   e2e: {
     baseUrl: `${process.env.SERVER_URL}`,
-    supportFile: 'cypress/support/e2e.js',
+    supportFile: 'cypress/support/e2e.ts',
     setupNodeEvents(_on, _config) {
       // implement node event listeners here
     },
