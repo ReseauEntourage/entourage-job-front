@@ -46,6 +46,7 @@
   - `styles/` : feuilles CSS compilés à partir de **_UIkit_** + certains styles customs
   - `use-cases/` : store redux séparé en modules
   - `utils/` : fonctions utilitaires communes
+  - `tsconfig`: configuration TS pour l'app
 - `.editorconfig`: configuration par défaut de la syntaxe du code de l'éditeur
 - `Makefile`: permet l'execution de la commande `make init` créant interactivement le fichier `.env`
 - `.env.dist`: fichier de distribution
@@ -117,6 +118,18 @@ Si un bug apparait lors de l'utilisation de git ajouter l'option suivante
 
 ```
 --no-verify
+```
+
+### TS Config
+
+Du fait d'une différence nécessaire de configuration TS entre le dossier `src`et `cypress`, nous avons dû créer un fichier `tsconfig.base.json` à la racine du projet. Le dossier `src`de l'app autant que le dossier `cypress`des tests utilisent chacun leur propre `tsconfig`en extension de la base.
+
+Le path du `tsconfig`pour le build de l'app est fixé dans le fichier `next.config.ts`.
+
+Pour tester le typage du projet (app + cypress), utiliser
+
+```
+yarn run test:ts-check
 ```
 
 ### Storybook
