@@ -1,10 +1,10 @@
 {
   "cvs": [
     {
-      "id": "e6ce3c1a-af45-4dc1-8c14-e56077b8373b",
-      "catchphrase": "Ab quas dolore libero rem amet recusandae.",
+      "id": "a32c3ad7-6d50-4e49-8c3f-74a1c6c24fc0",
+      "catchphrase": "Debitis voluptatem veritatis similique natus modi id ad.",
       "urlImg": "images/33e64d73-a66b-40ad-9e81-99060243aa37.Published.jpg",
-      "updatedAt": "2023-10-20T17:08:14.235Z",
+      "updatedAt": "2024-04-14T09:43:06.349Z",
       "ambitions": [],
       "skills": [],
       "businessLines": [],
@@ -15,25 +15,25 @@
         "url": "",
         "endOfContract": null,
         "coach": {
-          "id": "a33f35a4-ef96-46c0-ab7c-cd7a0ad987ed",
-          "firstName": "Luc",
-          "lastName": "Giraud",
+          "id": "b9217f77-0f0c-418b-8fb0-59a3bc0b3a8a",
+          "firstName": "Amarande",
+          "lastName": "Vincent",
           "gender": 1
         },
         "candidat": {
-          "id": "a9c82dbc-2cc7-4498-ae37-bbc72236211b",
-          "firstName": "Turold",
-          "lastName": "Bertrand",
+          "id": "7465617a-61a7-45f6-9d86-262bd00ea780",
+          "firstName": "Philomène",
+          "lastName": "Andre",
           "gender": 1
         }
       },
-      "ranking": 0.23237498477101326
+      "ranking": 0.6888926846440881
     },
     {
-      "id": "46fad574-06d5-4d9d-a001-f8aea9fe8db5",
-      "catchphrase": "Itaque libero incidunt.",
+      "id": "58f726a8-6771-45b1-8103-f8eba48e5326",
+      "catchphrase": "Ipsum sit culpa iure quo ad officia expedita.",
       "urlImg": "images/33e64d73-a66b-40ad-9e81-99060243aa37.Published.jpg",
-      "updatedAt": "2023-07-22T09:11:09.738Z",
+      "updatedAt": "2023-11-06T18:30:08.745Z",
       "ambitions": [],
       "skills": [],
       "businessLines": [],
@@ -44,19 +44,19 @@
         "url": "",
         "endOfContract": null,
         "coach": {
-          "id": "fa2c30d6-bc87-4231-bd6c-70356a1c53bb",
-          "firstName": "Améthyste",
-          "lastName": "Le roux",
+          "id": "b443c0d9-2ea1-469c-b49e-e9f390950336",
+          "firstName": "Abondance",
+          "lastName": "Gautier",
           "gender": 0
         },
         "candidat": {
-          "id": "d37628fa-2b50-43e4-a6c3-6dee8485c923",
-          "firstName": "Hervé",
-          "lastName": "Schneider",
+          "id": "96ccdcc2-8a28-43c6-803e-a25e34676726",
+          "firstName": "Adolphie",
+          "lastName": "Laurent",
           "gender": 0
         }
       },
-      "ranking": 0.22815219638869166
+      "ranking": 0.9092274715658277
     }
   ]
 }

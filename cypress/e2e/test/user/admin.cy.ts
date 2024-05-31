@@ -341,12 +341,6 @@ describe('En tant que - Administrateur', () => {
    * Je parcours les organisations
    */
   describe('Je parcours les organisations', () => {
-    let firstOrganization;
-    // Grâce au fichier de fixture précédement généré
-    cy.fixture('api/organizations').then((organizations) => {
-      //    Ensuite je récupère la première opportunité (depuis la fixture)
-      firstOrganization = organizations[0];
-    });
     /**
      * Première partie de test - J'affiche les organisations
      */
@@ -431,6 +425,12 @@ describe('En tant que - Administrateur', () => {
      * Troisieme partie de test - J'edite une organisation
      */
     it("J'édite une organization existante", () => {
+      let firstOrganization;
+      // Grâce au fichier de fixture précédement généré
+      cy.fixture('api/organizations').then((organizations) => {
+        //    Ensuite je récupère la première opportunité (depuis la fixture)
+        firstOrganization = organizations[0];
+      });
       // Edition de chaque valeur du formulaire
       cy.get(`[data-testid="button-edit-organization-${firstOrganization.id}"]`)
         .should('be.visible')
