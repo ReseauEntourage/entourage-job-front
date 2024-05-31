@@ -1,0 +1,155 @@
+{
+  "id": "005b988f-2642-4144-b5d4-3c2fa67a067d",
+  "UserId": "8201916a-cc75-4c9c-a4bd-83cc55a57930",
+  "urlImg": "images/33e64d73-a66b-40ad-9e81-99060243aa37.Published.jpg",
+  "intro": "sushi advocate, traveler",
+  "story": "Pecus demulceo taceo vero stips.",
+  "availability": "heavy and rate",
+  "transport": "",
+  "catchphrase": "Tui volutabrum civis vulpes.",
+  "status": "",
+  "version": 1,
+  "lastModifiedBy": "2575808f-ba7e-4cf2-9840-767d33ed5f86",
+  "createdAt": "2024-05-31T02:24:18.545Z",
+  "updatedAt": "2024-05-30T14:42:29.341Z",
+  "deletedAt": null,
+  "contracts": [
+    {
+      "id": "36a5d132-8ea4-4f80-8c9e-a684be5915c5",
+      "name": "CDI",
+      "CVContract": {
+        "id": "b1e9959d-15ef-412f-99b2-cfb1c6740798",
+        "CVId": "005b988f-2642-4144-b5d4-3c2fa67a067d",
+        "ContractId": "9c2390c1-7eff-4ddb-85d8-3222b6a9d3e2",
+        "createdAt": "2024-05-30T20:29:04.123Z",
+        "updatedAt": "2024-05-31T06:34:05.947Z"
+      }
+    }
+  ],
+  "languages": [
+    {
+      "id": "2befb3e0-ec8d-42cf-8ba9-c6c234ce80aa",
+      "name": "Seychelles",
+      "CVLanguage": {
+        "id": "ad569897-4f3c-4054-88c4-88d1b018be56",
+        "CVId": "005b988f-2642-4144-b5d4-3c2fa67a067d",
+        "languageId": "c07c1917-191c-4eaf-bcb0-7f0f986b28e9",
+        "createdAt": "2024-05-31T04:21:45.545Z",
+        "updatedAt": "2024-05-31T04:19:20.145Z"
+      }
+    }
+  ],
+  "passions": [
+    {
+      "id": "48dc1683-95c6-4cd9-adc5-431b7ee94fd7",
+      "name": "facilis",
+      "CVPassion": {
+        "id": "34a26d3b-ee82-4e09-9dbc-980d37f6ee7c",
+        "CVId": "005b988f-2642-4144-b5d4-3c2fa67a067d",
+        "PassionId": "5cdf9077-b496-4ea4-92db-ae1d7b4e2d0c",
+        "createdAt": "2024-05-31T01:30:16.056Z",
+        "updatedAt": "2024-05-31T01:31:49.591Z"
+      }
+    }
+  ],
+  "skills": [
+    {
+      "id": "cf9bdb7b-0c45-42c7-b23f-747483a7e8b0",
+      "name": "repellendus",
+      "CVSkill": {
+        "id": "967d6635-1ef8-4fe1-a9c1-a3e6d7a090b6",
+        "CVId": "005b988f-2642-4144-b5d4-3c2fa67a067d",
+        "SkillId": "1d681afd-5df8-4647-85c2-8afa283d9bc7",
+        "createdAt": "2024-05-30T14:46:42.702Z",
+        "updatedAt": "2024-05-31T07:47:22.228Z"
+      }
+    }
+  ],
+  "ambitions": [
+    {
+      "id": "d02f00cf-4d01-4ad9-a98f-bef122e77d83",
+      "name": "Direct Functionality Architect",
+      "prefix": "",
+      "order": 0,
+      "CVAmbition": {
+        "id": "0b15a875-65d1-494e-a651-078eefb6383a",
+        "CVId": "005b988f-2642-4144-b5d4-3c2fa67a067d",
+        "AmbitionId": "0249206b-8dac-4b2b-847b-1a6601c79189",
+        "createdAt": "2024-05-30T11:41:52.424Z",
+        "updatedAt": "2024-05-30T21:47:38.421Z"
+      }
+    }
+  ],
+  "businessLines": [
+    {
+      "id": "484d3ef3-cf50-4f97-a587-af42ee4edb8d",
+      "name": "credo",
+      "order": 1,
+      "CVBusinessLine": {
+        "id": "62e9d34d-9d51-4374-9ea5-73c5db0b9688",
+        "CVId": "005b988f-2642-4144-b5d4-3c2fa67a067d",
+        "BusinessLineId": "33b0d22b-a67a-40a1-b347-eceab125c516",
+        "createdAt": "2024-05-30T19:43:51.320Z",
+        "updatedAt": "2024-05-30T19:34:37.551Z"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "id": "c31eac0d-71d9-4d8d-bf1a-29a617a8d1d1",
+      "name": "Shawnee",
+      "CVLocation": {
+        "id": "8253ca7a-73ca-48d8-b1fe-c929664e7b64",
+        "CVId": "005b988f-2642-4144-b5d4-3c2fa67a067d",
+        "LocationId": "eb0c2ee1-cd86-4a3c-8cf7-240df7132138",
+        "createdAt": "2024-05-30T10:53:19.791Z",
+        "updatedAt": "2024-05-30T11:02:19.519Z"
+      }
+    }
+  ],
+  "user": {
+    "employed": false,
+    "hidden": false,
+    "url": "michael-198e8950",
+    "coach": {
+      "id": "8a04e23b-f299-406b-90ac-46457e589eec",
+      "firstName": "Peyton",
+      "lastName": "O'Keefe",
+      "gender": 1,
+      "email": "Brooklyn.Bins50@example.com"
+    },
+    "candidat": {
+      "id": "5691ce45-5353-4eb0-a992-8d9791ca11d4",
+      "firstName": "Mollie",
+      "lastName": "Mraz",
+      "gender": 0,
+      "email": "Shania.Botsford@example.com",
+      "phone": "(404) 814-6052 x50069",
+      "address": "793 Hermann Causeway",
+      "zone": "PARIS"
+    }
+  },
+  "reviews": [
+    {
+      "id": "f4d33139-a801-48fd-8430-74ee9bd0c1ae",
+      "text": "Sollers celer corporis cribro aspicio.",
+      "status": "Configuration",
+      "name": "Rachael Kerluke"
+    }
+  ],
+  "experiences": [
+    {
+      "id": "f46b3ca1-e491-4173-8a4e-167960d25822",
+      "description": "Orchestrator",
+      "order": 0,
+      "skills": []
+    }
+  ],
+  "formations": [
+    {
+      "id": "5304ed59-b160-434a-9b20-2b5690438b3f",
+      "description": "Future",
+      "skills": []
+    }
+  ]
+}
