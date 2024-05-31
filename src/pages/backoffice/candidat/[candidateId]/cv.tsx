@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import UIkit from 'uikit';
+import { useDispatch } from 'react-redux';
+
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
@@ -12,11 +13,12 @@ import { COACH_USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
 import { useFetchCV } from 'src/hooks/useFetchCV';
+import { notificationsActions } from 'src/use-cases/notifications';
 import { isRoleIncluded, getRelatedUser } from 'src/utils/Finding';
 
 const Edit = () => {
   const user = useAuthenticatedUser();
-
+  const dispatch = useDispatch();
   const [userCompleteData, setUserCompleteData] =
     useState<UserWithUserCandidate>();
 
@@ -28,9 +30,14 @@ const Edit = () => {
         setUserCompleteData(data);
       })
       .catch(() => {
-        UIkit.notification('Erreur lors du chargement du suivi', 'danger');
+        dispatch(
+          notificationsActions.addNotification({
+            type: 'danger',
+            message: 'Erreur lors du chargement du suivi',
+          })
+        );
       });
-  }, [user.id]);
+  }, [user.id, dispatch]);
 
   const { cv, setCV, error, loading } = useFetchCV(candidateId);
 

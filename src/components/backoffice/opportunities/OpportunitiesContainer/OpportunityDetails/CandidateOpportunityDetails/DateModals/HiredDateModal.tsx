@@ -1,10 +1,12 @@
 import moment from 'moment';
 import React from 'react';
-import UIkit from 'uikit';
+import { useDispatch } from 'react-redux';
+
 import { Api } from 'src/api';
 import { renderSimpleDatePickerField } from 'src/components/forms/schemas/formSimpleDatePicker';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Contract, EVENT_TYPES } from 'src/constants';
+import { notificationsActions } from 'src/use-cases/notifications';
 
 interface HiredDateModalProps {
   opportunityId: string;
@@ -19,6 +21,7 @@ export const HiredDateModal = ({
   contract,
   callback,
 }: HiredDateModalProps) => {
+  const dispatch = useDispatch();
   return (
     <ModalEdit
       title="Félicitation vous avez décroché un emploi"
@@ -40,7 +43,13 @@ export const HiredDateModal = ({
           closeModal();
           callback();
         } catch (e) {
-          UIkit.notification("Une erreur s'est produite", 'danger');
+          console.error(e);
+          dispatch(
+            notificationsActions.addNotification({
+              type: 'danger',
+              message: "Une erreur s'est produite",
+            })
+          );
         }
       }}
     />

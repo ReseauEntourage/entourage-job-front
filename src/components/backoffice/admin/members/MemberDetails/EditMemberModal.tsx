@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { useCallback, useEffect, useMemo } from 'react';
-import UIkit from 'uikit';
+import { useDispatch } from 'react-redux';
 import { Api } from 'src/api';
 import { User, UserDto } from 'src/api/types';
 import { useOnMemberFormSubmit } from 'src/components/backoffice/admin/useOnMemberFormSubmit';
@@ -11,6 +11,7 @@ import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConf
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { EXTERNAL_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { Actions } from 'src/constants/utils';
+import { notificationsActions } from 'src/use-cases/notifications';
 import { getRelatedUser, isRoleIncluded } from 'src/utils/Finding';
 
 interface EditMemberModal {
@@ -18,6 +19,7 @@ interface EditMemberModal {
   setUser: (user: User) => void;
 }
 export function EditMemberModal({ user, setUser }: EditMemberModal) {
+  const dispatch = useDispatch();
   const userToLink = useMemo(() => {
     const relatedUser = getRelatedUser(user);
 
@@ -72,14 +74,17 @@ export function EditMemberModal({ user, setUser }: EditMemberModal) {
         setUser(updatedUserWithLinkedMember);
       } catch (err) {
         console.error(err);
-        UIkit.notification(
-          "Une erreur s'est produite lors de l'association à un autre membre",
-          'danger'
+        dispatch(
+          notificationsActions.addNotification({
+            type: 'danger',
+            message:
+              "Une erreur s'est produite lors de l'association à un autre membre",
+          })
         );
         setUser(updatedUser);
       }
     },
-    [onSubmit, setUser, user.id]
+    [onSubmit, setUser, dispatch, user.id]
   );
 
   const updateUserModalProps = useMemo(() => {

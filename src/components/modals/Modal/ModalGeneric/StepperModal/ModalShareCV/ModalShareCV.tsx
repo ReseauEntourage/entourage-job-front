@@ -1,5 +1,5 @@
 import React from 'react';
-import UIkit from 'uikit';
+import { useDispatch } from 'react-redux';
 
 import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { Api } from 'src/api';
@@ -10,11 +10,13 @@ import { Button, Img } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
+import { notificationsActions } from 'src/use-cases/notifications';
 
 interface ModalShareCVProps {
   firstName: string;
 }
 export const ModalShareCV = ({ firstName }: ModalShareCVProps) => {
+  const dispatch = useDispatch();
   return (
     <StepperModal
       title="Merci pour votre partage."
@@ -41,9 +43,11 @@ export const ModalShareCV = ({ firstName }: ModalShareCVProps) => {
                   })
                     .then(next)
                     .catch(() => {
-                      return UIkit.notification(
-                        'Une erreur est survenue',
-                        'danger'
+                      dispatch(
+                        notificationsActions.addNotification({
+                          type: 'danger',
+                          message: "Une erreur s'est produite ",
+                        })
                       );
                     });
                 }}
