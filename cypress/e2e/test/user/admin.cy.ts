@@ -430,12 +430,14 @@ describe('En tant que - Administrateur', () => {
       cy.fixture('api/organizations').then((organizations) => {
         //    Ensuite je récupère la première opportunité (depuis la fixture)
         firstOrganization = organizations[0];
+        // Edition de chaque valeur du formulaire
+        cy.get(
+          `[data-testid="button-edit-organization-${firstOrganization.id}"]`
+        )
+          .should('be.visible')
+          .first()
+          .click();
       });
-      // Edition de chaque valeur du formulaire
-      cy.get(`[data-testid="button-edit-organization-${firstOrganization.id}"]`)
-        .should('be.visible')
-        .first()
-        .click();
 
       cy.get('.ReactModalPortal div').first().should('be.visible');
 
