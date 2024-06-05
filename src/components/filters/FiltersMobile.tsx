@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import UIkit from 'uikit';
-
 import FilterEmptyIcon from 'assets/icons/filter-empty.svg';
 import FilterIcon from 'assets/icons/filter.svg';
 import { Button } from 'src/components/utils';

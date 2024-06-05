@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React, { useCallback, useMemo, useState } from 'react';
-import UIkit from 'uikit';
+import { useDispatch } from 'react-redux';
 
 import { Api } from 'src/api';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
@@ -9,6 +9,7 @@ import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
+import { notificationsActions } from 'src/use-cases/notifications';
 
 export function PostPublicOpportunityModal() {
   const [lastFilledForm, setLastFilledForm] = useState<
@@ -16,6 +17,8 @@ export function PostPublicOpportunityModal() {
   >({} as ExtractFormSchemaValidation<typeof formAddPublicOpportunity>);
 
   const [shouldHide, setShouldHide] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
 
   const postOpportunity = useCallback(
     async (
@@ -52,7 +55,12 @@ export function PostPublicOpportunityModal() {
           date: moment().toISOString(),
         });
 
-        UIkit.notification(successMessage, 'success');
+        dispatch(
+          notificationsActions.addNotification({
+            type: 'success',
+            message: successMessage,
+          })
+        );
 
         if (openNewForm) {
           setShouldHide(true);
@@ -72,10 +80,16 @@ export function PostPublicOpportunityModal() {
           );
         }
       } catch (err) {
-        UIkit.notification(`Une erreur est survenue.`, 'danger');
+        console.error(err);
+        dispatch(
+          notificationsActions.addNotification({
+            type: 'danger',
+            message: "Une erreur s'est produite",
+          })
+        );
       }
     },
-    []
+    [dispatch]
   );
 
   const modalProps = useMemo(() => {

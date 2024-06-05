@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import UIkit from 'uikit';
+import { useDispatch } from 'react-redux';
 
 import CalendarIcon from 'assets/icons/calendar.svg';
 import CarIcon from 'assets/icons/car.svg';
@@ -53,6 +53,7 @@ import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { useIsDesktop } from 'src/hooks/utils';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
+import { notificationsActions } from 'src/use-cases/notifications';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
 
 interface openedPanelType {
@@ -75,6 +76,8 @@ export const PageCVContent = ({
 }: PageCVContentProps) => {
   const locations =
     cv.locations && cv.locations.length > 0 ? sortByOrder(cv.locations) : [];
+
+  const dispatch = useDispatch();
 
   const isDesktop = useIsDesktop();
 
@@ -190,16 +193,20 @@ export const PageCVContent = ({
                           UserId: cv.UserId,
                           ...fields,
                         });
-                        UIkit.notification(
-                          'Le message a bien été envoyé',
-                          'success'
+                        dispatch(
+                          notificationsActions.addNotification({
+                            type: 'success',
+                            message: 'Le message a bien été envoyé',
+                          })
                         );
 
                         closeModal();
                       } catch (err) {
-                        UIkit.notification(
-                          "Une erreur s'est produite",
-                          'danger'
+                        dispatch(
+                          notificationsActions.addNotification({
+                            type: 'danger',
+                            message: "Une erreur s'est produite",
+                          })
                         );
                         console.error(err);
                       }

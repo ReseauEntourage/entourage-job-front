@@ -1,13 +1,15 @@
 import React, { useCallback, useState } from 'react';
-import UIkit from 'uikit';
+import { useDispatch } from 'react-redux';
+
 import { Api } from 'src/api';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { gaEvent } from 'src/lib/gtag';
+import { notificationsActions } from 'src/use-cases/notifications';
 
 export function useBulkActions(apiRoute, refreshElementsCallback, tag) {
   const [selectedIds, setSelectedIds] = useState([]);
-
+  const dispatch = useDispatch();
   const selectElement = useCallback(
     ({ id }) => {
       if (
@@ -66,21 +68,28 @@ export function useBulkActions(apiRoute, refreshElementsCallback, tag) {
               setSelectedIds([]);
               if (refreshElementsCallback) await refreshElementsCallback();
 
-              UIkit.notification(
-                `${nbUpdated} élément${
-                  nbUpdated > 1 ? 's ont' : ' a'
-                } été mis à jour`,
-                'success'
+              dispatch(
+                notificationsActions.addNotification({
+                  type: 'success',
+                  message: `${nbUpdated} élément${
+                    nbUpdated > 1 ? 's ont' : ' a'
+                  } été mis à jour`,
+                })
               );
             } catch (err) {
               console.error(err);
-              UIkit.notification(`Une erreur est survenue.`, 'danger');
+              dispatch(
+                notificationsActions.addNotification({
+                  type: 'danger',
+                  message: "Une erreur s'est produite",
+                })
+              );
             }
           }}
         />
       );
     },
-    [apiRoute, refreshElementsCallback, selectedIds, tag]
+    [apiRoute, refreshElementsCallback, selectedIds, tag, dispatch]
   );
 
   const isElementSelected = useCallback(

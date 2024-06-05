@@ -1,12 +1,14 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import UIkit from 'uikit';
+import { useDispatch } from 'react-redux';
+
 import { Api } from 'src/api';
 import { OFFER_STATUS } from 'src/constants';
 import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
 import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
 
 import { usePrevious } from 'src/hooks/utils';
+import { notificationsActions } from 'src/use-cases/notifications';
 
 export function useUpdateOpportunityStatus() {
   const {
@@ -22,6 +24,8 @@ export function useUpdateOpportunityStatus() {
 
   const prevUpdateStatus = usePrevious(updateStatus);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const archiveOffer = async () => {
       await Api.putJoinOpportunity({
@@ -30,7 +34,12 @@ export function useUpdateOpportunityStatus() {
         archived: true,
         status: OFFER_STATUS[4].value,
       });
-      UIkit.notification("L'offre a été archivée", 'success');
+      dispatch(
+        notificationsActions.addNotification({
+          type: 'success',
+          message: "L'offre a été archivée",
+        })
+      );
     };
 
     const updateStatusOffer = async (newStatus) => {
@@ -40,7 +49,12 @@ export function useUpdateOpportunityStatus() {
         archived: false,
         status: newStatus,
       });
-      UIkit.notification("Le statut de l'offre a été mis à jour", 'success');
+      dispatch(
+        notificationsActions.addNotification({
+          type: 'success',
+          message: "Le statut de l'offre a été mis à jour",
+        })
+      );
     };
 
     if (updateStatus && prevUpdateStatus !== updateStatus) {
@@ -67,5 +81,6 @@ export function useUpdateOpportunityStatus() {
     replace,
     restQuery,
     updateStatus,
+    dispatch,
   ]);
 }

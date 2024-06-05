@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import UIkit from 'uikit';
+import { useDispatch } from 'react-redux';
+
 import { Api } from 'src/api';
 import { StyledSendMailContent } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails/SendMailModalContent/SendMailContent.styles';
 import { useFetchCandidateOpportunity } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/useFetchOpportunity';
@@ -8,6 +9,7 @@ import { useModalContext, openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { TextArea } from 'src/components/utils/Inputs/TextArea';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { notificationsActions } from 'src/use-cases/notifications';
 
 interface SendMailModalContentProps {
   OpportunityId: string;
@@ -25,6 +27,8 @@ export const SendMailModalContent = ({
   candidateId,
 }: SendMailModalContentProps) => {
   const user = useAuthenticatedUser();
+
+  const dispatch = useDispatch();
 
   const { opportunity } = useFetchCandidateOpportunity(
     OpportunityId,
@@ -147,7 +151,12 @@ export const SendMailModalContent = ({
               candidateId,
               description: textAreaContent,
             });
-            UIkit.notification('Le recruteur a bien été contacté', 'success');
+            dispatch(
+              notificationsActions.addNotification({
+                type: 'success',
+                message: 'Le recruteur a bien été contacté',
+              })
+            );
             await onSubmit();
 
             // @ts-expect-error after enable TS strict mode. Please, try to fix it

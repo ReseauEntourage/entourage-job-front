@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import UIkit from 'uikit';
+import { useDispatch } from 'react-redux';
 
 import HistoryIcon from 'assets/icons/history.svg';
 import { Api } from 'src/api';
@@ -17,6 +17,7 @@ import {
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
 import { usePrevious } from 'src/hooks/utils';
+import { notificationsActions } from 'src/use-cases/notifications';
 import { isRoleIncluded } from 'src/utils/Finding';
 
 const Suivi = () => {
@@ -27,6 +28,7 @@ const Suivi = () => {
   const candidateId = useCandidateId();
 
   const prevUser = usePrevious(user);
+  const dispatch = useDispatch();
 
   const title = isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
     ? 'Suivez votre progression'
@@ -60,13 +62,23 @@ const Suivi = () => {
           ...prevUserCandidat,
           note,
         }));
-        UIkit.notification('Suivi sauvegardé', 'success');
+        dispatch(
+          notificationsActions.addNotification({
+            type: 'success',
+            message: 'Suivi sauvegardé',
+          })
+        );
       } catch (err) {
         console.error(err);
-        UIkit.notification('Erreur lors de la mise à jour du suivi', 'danger');
+        dispatch(
+          notificationsActions.addNotification({
+            type: 'danger',
+            message: 'Erreur lors de la mise à jour du suivi',
+          })
+        );
       }
     },
-    [userCandidat]
+    [userCandidat, dispatch]
   );
 
   const sendNoteHasBeenRead = useCallback(async () => {
@@ -102,13 +114,18 @@ const Suivi = () => {
           updateValue(data.note);
         })
         .catch(() => {
-          UIkit.notification('Erreur lors du chargement du suivi', 'danger');
+          dispatch(
+            notificationsActions.addNotification({
+              type: 'danger',
+              message: 'Erreur lors du chargement du suivi',
+            })
+          );
         })
         .finally(() => {
           return setLoading(false);
         });
     }
-  }, [prevUser, sendNoteHasBeenRead, user, candidateId, updateValue]);
+  }, [prevUser, dispatch, sendNoteHasBeenRead, user, candidateId, updateValue]);
 
   let content;
   if (loading) {

@@ -1,6 +1,7 @@
 import Link from 'next/link';
-import React from 'react';
-import UIkit from 'uikit';
+import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+
 import EntourageIcon from 'assets/icons/entourage.svg';
 import { Api } from 'src/api';
 import { AdminOpportunityWithOpportunityUsers } from 'src/api/types';
@@ -8,6 +9,7 @@ import { ActionLabel } from 'src/components/backoffice/opportunities/Opportuniti
 import { SelectSimple } from 'src/components/utils/Inputs';
 import { OFFER_STATUS } from 'src/constants';
 import { useMemberId } from 'src/hooks/queryParams/useMemberId';
+import { notificationsActions } from 'src/use-cases/notifications';
 import {
   StyledActionLabelContainer,
   StyledOpportunitySectionCandidateLi,
@@ -32,23 +34,37 @@ export const OpportunitySectionCandidates = ({
 }: OpportunitySectionCandidatesProps) => {
   const { opportunityUsers } = opportunity;
 
+  const dispatch = useDispatch();
   // check if we're on a candidate's page
   const candidateId = useMemberId();
 
-  const handleSelect = async (value, OpportunityId, UserId) => {
-    try {
-      await Api.putJoinOpportunity({
-        status: value,
-        OpportunityId,
-        UserId,
-      });
-      UIkit.notification('Statut mis à jour', 'success');
-      oppRefreshCallback();
-    } catch (err) {
-      console.error(err);
-      return UIkit.notification('Erreur', 'danger');
-    }
-  };
+  const handleSelect = useCallback(
+    async (value, OpportunityId, UserId) => {
+      try {
+        await Api.putJoinOpportunity({
+          status: value,
+          OpportunityId,
+          UserId,
+        });
+        dispatch(
+          notificationsActions.addNotification({
+            type: 'success',
+            message: 'Statut mis à jour',
+          })
+        );
+        oppRefreshCallback();
+      } catch (err) {
+        console.error(err);
+        dispatch(
+          notificationsActions.addNotification({
+            type: 'danger',
+            message: 'Erreur lors de la mise à jour du statut',
+          })
+        );
+      }
+    },
+    [dispatch, oppRefreshCallback]
+  );
 
   return (
     <StyledOpportunitySectionList>
