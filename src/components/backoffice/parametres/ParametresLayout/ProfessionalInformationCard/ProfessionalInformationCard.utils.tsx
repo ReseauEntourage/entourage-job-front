@@ -37,12 +37,13 @@ export const getCoachDefaultProfessionalValues = (
 ): DefaultValues<
   ExtractFormSchemaValidation<typeof formEditCoachProfessionalInformation>
 > => {
-  const { networkBusinessLines, currentJob } = userProfileParam;
+  const { networkBusinessLines, currentJob, linkedinUrl } = userProfileParam;
   return {
     currentJob,
     networkBusinessLines: networkBusinessLines?.map(({ name }) => {
       return findConstantFromValue(name, BUSINESS_LINES);
     }),
+    linkedinUrl: linkedinUrl || '',
   };
 };
 
@@ -51,7 +52,8 @@ export const getCandidateDefaultProfessionalValues = (
 ): DefaultValues<
   ExtractFormSchemaValidation<typeof formEditCandidateProfessionalInformation>
 > => {
-  const { searchAmbitions, searchBusinessLines } = userProfileParam;
+  const { searchAmbitions, searchBusinessLines, linkedinUrl } =
+    userProfileParam;
   const sortedAmbitions =
     searchAmbitions && searchAmbitions.length > 0
       ? sortByOrder(searchAmbitions)
@@ -76,5 +78,6 @@ export const getCandidateDefaultProfessionalValues = (
         ),
       };
     }, {}),
+    linkedinUrl: linkedinUrl || '',
   };
 };

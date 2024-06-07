@@ -36,6 +36,15 @@ export const DashboardProfileCard = () => {
               .toUpperCase()}.`}
           />
           {user.userProfile.department && <p>{user.userProfile.department}</p>}
+          {user.userProfile.linkedinUrl && (
+            <a
+              href={user.userProfile.linkedinUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Profil Linkedin
+            </a>
+          )}
         </div>
       </StyledDashboardProfileCardPictureName>
       {user.userProfile.description && (

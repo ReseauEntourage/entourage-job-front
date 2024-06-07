@@ -5,7 +5,8 @@ import { ParametresPlaceholder } from '../ParametresPlaceholder';
 import { formEditCandidateProfessionalInformation } from 'src/components/forms/schemas/formEditCandidateProfessionalInformation';
 import { formEditCoachProfessionalInformation } from 'src/components/forms/schemas/formEditCoachProfessionalInformation';
 import { openModal } from 'src/components/modals/Modal';
-import { Card } from 'src/components/utils';
+import { Card, Img, Typography } from 'src/components/utils';
+import { H5 } from 'src/components/utils/Headings';
 import { Tag } from 'src/components/utils/Tag';
 import { BUSINESS_LINES } from 'src/constants';
 import { USER_ROLES } from 'src/constants/users';
@@ -17,7 +18,11 @@ import {
   sortByOrder,
 } from 'src/utils';
 import { ModalEditProfessionalInformation } from './ModalEditProfessionalInformation';
-import { StyledProfessionalInformationList } from './ProfessionalInformationCard.styles';
+import {
+  StyledProfessionalInformationImgContainer,
+  StyledProfessionalInformationLinkedinContainer,
+  StyledProfessionalInformationList,
+} from './ProfessionalInformationCard.styles';
 import {
   checkData,
   getCandidateDefaultProfessionalValues,
@@ -67,6 +72,7 @@ export const ProfessionalInformationCard = () => {
             return {
               currentJob: values.currentJob,
               networkBusinessLines,
+              linkedinUrl: values.linkedinUrl || null,
             };
           }}
         />
@@ -78,7 +84,10 @@ export const ProfessionalInformationCard = () => {
           formSchema={formEditCandidateProfessionalInformation}
           user={user}
           getValuesToSend={(values) => {
-            return formatCareerPathSentence(values);
+            return {
+              ...formatCareerPathSentence(values),
+              linkedinUrl: values.linkedinUrl || null,
+            };
           }}
         />
       )
@@ -158,6 +167,26 @@ export const ProfessionalInformationCard = () => {
                   </li>
                 )}
             </>
+          )}
+
+          <H5 title="Votre profil Linkedin" />
+          {userProfile?.linkedinUrl ? (
+            <Typography>{userProfile.linkedinUrl}</Typography>
+          ) : (
+            <StyledProfessionalInformationLinkedinContainer>
+              <StyledProfessionalInformationImgContainer>
+                <Img
+                  src="/static/img/illustrations/illu-partage-rs.png"
+                  alt="Réseaux sociaux"
+                  height={45}
+                  width={45}
+                />
+              </StyledProfessionalInformationImgContainer>
+              <Typography>
+                Ajoutez-le à votre profil pour que les membres puissent le
+                découvrir !
+              </Typography>
+            </StyledProfessionalInformationLinkedinContainer>
           )}
         </StyledProfessionalInformationList>
       ) : (

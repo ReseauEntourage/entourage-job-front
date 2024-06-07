@@ -106,6 +106,7 @@ export type UserProfile = {
   }[];
   lastSendMessage: string;
   lastReceivedMessage: string;
+  linkedinUrl: string | null;
 };
 
 export type User = {
@@ -589,6 +590,7 @@ export type PublicProfile = {
   id: string;
   firstName: string;
   lastName: string;
+  linkedinUrl?: string;
   role: UserRole;
   department: Department;
   currentJob: string;
