@@ -1,20 +1,28 @@
 import React from 'react';
-import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import EntourageLogo from 'assets/icons/logo-entourage.svg';
-import { Background, Button, Grid, Img, Section } from 'src/components/utils';
+import {
+  Background,
+  Button,
+  Grid,
+  Img,
+  Section,
+  Typography,
+} from 'src/components/utils';
+import { H2 } from 'src/components/utils/Headings';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
+import {
+  StyledAssociationEntourageImageContainer,
+  StyledAssociationEntourageButtonContainer,
+} from './AsociationEntourage.styles';
 
 export const AssociationEntourage = () => {
   return (
     <Background blend={{ colorHex: COLORS.black }}>
-      <Section className="uk-padding-remove-top">
-        <div
-          style={{ borderTop: 'solid 1px rgba(255, 255, 255, 0.2)' }}
-          className="uk-text-center"
-        >
+      <Section>
+        <div className="uk-text-center">
           <Grid
             middle
             center
@@ -23,18 +31,14 @@ export const AssociationEntourage = () => {
           >
             <div>
               <EntourageLogo width={50} height={50} />
-              <h2 className="uk-text-bold uk-margin-small">
-                <span style={{ color: COLORS.white }}>
-                  A propos d&apos;Entourage
-                </span>
-              </h2>
+              <H2 center color="white" title={"A propos d'Entourage"} />
               <div className="uk-light">
-                <p className="uk-text-center uk-padding-small uk-text-secondary">
+                <Typography center color="white">
                   Depuis 2014, l&apos;association Entourage lutte contre la
                   précarité et l&apos;exclusion en redonnant des réseaux de
                   soutien à celles et ceux qui n&apos;en ont plus.
-                </p>
-                <div className="uk-flex uk-flex-center">
+                </Typography>
+                <StyledAssociationEntourageButtonContainer>
                   <Button
                     href={EXTERNAL_LINKS.ENTOURAGE}
                     style="custom-secondary"
@@ -46,18 +50,17 @@ export const AssociationEntourage = () => {
                     newTab
                   >
                     Voir le site
-                    <ChevronRightIcon />
                   </Button>
-                </div>
+                </StyledAssociationEntourageButtonContainer>
               </div>
             </div>
-            <div className="uk-cover-container uk-height-medium">
+            <StyledAssociationEntourageImageContainer>
               <Img
                 cover
                 src="/static/img/association_pic.jpg"
                 alt="Association Entourage"
               />
-            </div>
+            </StyledAssociationEntourageImageContainer>
           </Grid>
         </div>
       </Section>

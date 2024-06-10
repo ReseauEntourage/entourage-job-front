@@ -2,11 +2,11 @@ import React from 'react';
 
 export interface OpportunitiesContainerProps {
   isLoading: boolean;
-  list: JSX.Element;
+  list: JSX.Element | null;
   details: React.ReactNode;
   noContent: React.ReactNode;
   backButtonHref?: {
     pathname: string;
-    query: { [p: string]: string | string[] };
+    query: { [key: string]: string | string[] | undefined };
   };
 }

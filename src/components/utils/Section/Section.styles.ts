@@ -40,6 +40,16 @@ export const StyledSection = styled.section`
       padding-bottom: ${HEIGHTS.SECTION_PADDING_MOBILE}px;
     }
   }
+
+  &.custom-secondary {
+    background-color: #222;
+    padding-top: ${HEIGHTS.SECTION_PADDING}px;
+    padding-bottom: ${HEIGHTS.SECTION_PADDING}px;
+    @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
+      padding-top: ${HEIGHTS.SECTION_PADDING_MOBILE}px;
+      padding-bottom: ${HEIGHTS.SECTION_PADDING_MOBILE}px;
+    }
+  }
   &.custom-mobile-darkBG {
     padding-top: ${HEIGHTS.SECTION_PADDING}px;
     padding-bottom: ${HEIGHTS.SECTION_PADDING}px;
@@ -69,5 +79,9 @@ export const StyledSection = styled.section`
         overflow: hidden;
       }
     }
+  }
+
+  &.custom-blue-bg {
+    background: ${COLORS.hoverBlue};
   }
 `;

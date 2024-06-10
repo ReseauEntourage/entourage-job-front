@@ -13,7 +13,7 @@ export * from './Img';
 export * from './ImgProfile';
 export * from './Logo';
 export * from './SimpleLink';
-export * from './Container';
+export * from './Containers';
 
 export * from './Button';
 export * from './BackgroundImage';

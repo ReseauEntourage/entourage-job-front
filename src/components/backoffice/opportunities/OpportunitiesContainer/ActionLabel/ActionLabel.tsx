@@ -10,7 +10,7 @@ export type ActionLabelColor = 'yellow' | 'primaryBlue' | 'yesGreen' | 'noRed';
 interface ActionLabelProps {
   color: ActionLabelColor;
   icon?: JSX.Element;
-  label: string;
+  label: string | React.ReactNode;
   disabled?: boolean;
   hoverAnimation?: boolean;
   onClick?: () => void;

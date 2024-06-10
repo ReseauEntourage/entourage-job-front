@@ -182,7 +182,6 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
                 offset: 0,
               },
             });
-
             callback([
               CREATE_NEW_ORGANIZATION_OPTION,
               ...organizations.map((u) => {

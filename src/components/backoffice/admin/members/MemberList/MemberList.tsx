@@ -5,11 +5,15 @@ import { Member } from '../MemberTable/Member';
 import { MemberColumn } from '../MemberTable/Member/Member.types';
 import { Api } from 'src/api';
 
+import { UserWithUserCandidate } from 'src/api/types';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { AdminCreationButtons } from 'src/components/backoffice/admin/AdminCreationButtons';
 import { SearchBar } from 'src/components/filters/SearchBar';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
-import { BackToTop, Button, Section } from 'src/components/utils';
+import { BackToTop, Button, Section, Typography } from 'src/components/utils';
+import { ContainerWithTextCentered } from 'src/components/utils/Containers';
+import { StyledContainerWithTextCentered } from 'src/components/utils/Containers/Containers.styles';
+import { H4 } from 'src/components/utils/Headings';
 import { MEMBER_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
@@ -22,6 +26,10 @@ import {
   mutateTypeFilterDependingOnRole,
 } from 'src/utils/Filters';
 import { isRoleIncluded } from 'src/utils/Finding';
+import {
+  StyledMemberListButtonContainer,
+  StyleMemberTabContainer,
+} from './MemberList.styles';
 
 const LIMIT = 50;
 
@@ -48,7 +56,7 @@ export function MemberList({
   const [filtersConst, setFiltersConst] =
     useState<typeof MEMBER_FILTERS_DATA>(MEMBER_FILTERS_DATA);
 
-  const [members, setMembers] = useState([]);
+  const [members, setMembers] = useState<UserWithUserCandidate[]>([]);
   const [hasError, setHasError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [allLoaded, setAllLoaded] = useState(false);
@@ -77,12 +85,9 @@ export function MemberList({
           setOffset(LIMIT);
           setAllLoaded(false);
         } else {
-          setMembers(
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            (prevMembers) => {
-              return [...prevMembers, ...membersData];
-            }
-          );
+          setMembers((prevMembers) => {
+            return [...prevMembers, ...membersData];
+          });
           setOffset((prevOffset) => {
             return prevOffset + LIMIT;
           });
@@ -180,21 +185,13 @@ export function MemberList({
         />
       </HeaderBackoffice>
       {hasError ? (
-        <Section className="uk-width-1-1">
-          <div className=" uk-text-center uk-flex uk-flex-center">
-            <div className="uk-width-xlarge">
-              <h2 className="uk-margin-remove">
-                Les membres n&apos;ont pas pu etre chargés correctement.
-              </h2>
-              <p>
-                Contacte{' '}
-                <span className="uk-text-primary">
-                  l&apos;équipe Entourage Pro
-                </span>{' '}
-                pour en savoir plus.
-              </p>
-            </div>
-          </div>
+        <Section>
+          <ContainerWithTextCentered>
+            <H4 title={"Les membres n'ont pas pu etre chargés correctement."} />
+            <Typography size="large">
+              Contacte l&apos;équipe Entourage Pro pour en savoir plus.
+            </Typography>
+          </ContainerWithTextCentered>
         </Section>
       ) : (
         <>
@@ -228,32 +225,35 @@ export function MemberList({
           {loading ? (
             <LoadingScreen />
           ) : (
-            <div className="uk-overflow-auto uk-margin-top">
+            <StyleMemberTabContainer>
               <MemberTable
                 columns={memberColumns}
                 members={memberList}
                 role={role}
               />
-            </div>
+            </StyleMemberTabContainer>
           )}
           {!loading && !allLoaded && (
-            <div
-              style={{ borderTop: '1px solid #e5e5e5' }}
-              className="uk-text-center uk-width-1-1 uk-padding"
-            >
-              <Button
-                style="custom-secondary"
-                color="primaryBlue"
-                onClick={() => fetchData(search, filters, role, offset, false)}
-              >
-                Voir tous les&nbsp;{roleToDisplay}
-              </Button>
-            </div>
+            <StyledContainerWithTextCentered>
+              <StyledMemberListButtonContainer>
+                <Button
+                  style="custom-secondary"
+                  color="primaryBlue"
+                  onClick={() =>
+                    fetchData(search, filters, role, offset, false)
+                  }
+                >
+                  Voir tous les&nbsp;{roleToDisplay}
+                </Button>
+              </StyledMemberListButtonContainer>
+            </StyledContainerWithTextCentered>
           )}
           {!loading && allLoaded && members.length <= 0 && (
-            <div className="uk-height-small uk-flex uk-flex-center uk-flex-middle">
-              <p className="uk-text-italic">Aucun membre trouvé</p>
-            </div>
+            <StyledContainerWithTextCentered>
+              <Typography variant="italic" weight="bold">
+                Aucun membre trouvé
+              </Typography>
+            </StyledContainerWithTextCentered>
           )}
         </>
       )}

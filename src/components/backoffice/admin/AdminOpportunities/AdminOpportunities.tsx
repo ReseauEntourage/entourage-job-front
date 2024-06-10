@@ -75,10 +75,7 @@ export const AdminOpportunities = ({
 
   const queryParamsOpportunities = useQueryParamsOpportunities();
 
-  const [offers, setOffers] = useState<Opportunity[]>(
-    // @ts-expect-error after enable TS strict mode. Please, try to fix it
-    undefined
-  );
+  const [offers, setOffers] = useState<Opportunity[]>([]);
   const [hasError, setHasError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [offset, setOffset] = useState<number>(0);
@@ -297,21 +294,17 @@ export const AdminOpportunities = ({
           <OpportunitiesContainer
             backButtonHref={{
               pathname: '/backoffice/admin/offres',
-
-              // @ts-expect-error after enable TS strict mode. Please, try to fix it
               query: queryParamsOpportunities,
             }}
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             list={
-              offers &&
-              offers.length > 0 && (
+              offers.length > 0 ? (
                 <AdminOpportunitiesList
                   setOffset={setOffset}
                   opportunities={offers}
                   selectOpportunity={selectElement}
                   isOpportunitySelected={isElementSelected}
                 />
-              )
+              ) : null
             }
             isLoading={loading}
             details={

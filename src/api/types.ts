@@ -59,7 +59,7 @@ export type UserCandidate = {
 };
 
 export type Organization = {
-  id?: string;
+  id: string;
   name: string;
   address?: string;
   organizationReferent: {
@@ -189,7 +189,12 @@ export interface CV {
       address: string;
       zone: AdminZone;
       gender: Gender;
+      id: string;
     };
+    employed: boolean;
+    url: string;
+    hidden: boolean;
+    endOfContract?: string;
   };
   catchphrase: string;
   story: string;
