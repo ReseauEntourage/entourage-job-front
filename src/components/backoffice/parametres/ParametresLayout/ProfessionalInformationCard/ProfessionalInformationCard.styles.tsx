@@ -21,7 +21,6 @@ export const StyledProfessionalInformationList = styled.ul`
 `;
 
 export const StyledProfessionalInformationImgContainer = styled.div`
-  display: block;
   position: relative;
   height: 45px;
   margin-right: 15px;
