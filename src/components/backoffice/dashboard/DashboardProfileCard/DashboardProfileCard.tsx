@@ -2,7 +2,13 @@ import React from 'react';
 import { IlluBulleQuestion } from 'assets/icons/icons';
 import { useContextualRole } from '../../useContextualRole';
 import { useHelpField } from 'src/components/backoffice/parametres/useUpdateProfile';
-import { Button, Card, ImgProfile, Tag } from 'src/components/utils';
+import {
+  Button,
+  Card,
+  ImgProfile,
+  SimpleLink,
+  Tag,
+} from 'src/components/utils';
 import { H5 } from 'src/components/utils/Headings';
 import { ProfileHelps } from 'src/constants/helps';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
@@ -37,13 +43,13 @@ export const DashboardProfileCard = () => {
           />
           {user.userProfile.department && <p>{user.userProfile.department}</p>}
           {user.userProfile.linkedinUrl && (
-            <a
-              href={user.userProfile.linkedinUrl}
+            <SimpleLink
+              isExternal
               target="_blank"
-              rel="noreferrer"
+              href={user.userProfile.linkedinUrl}
             >
-              Profil Linkedin
-            </a>
+              Lien Linkedin
+            </SimpleLink>
           )}
         </div>
       </StyledDashboardProfileCardPictureName>
