@@ -35,7 +35,7 @@ export const Decouvrir = () => {
           gaEvent(GA_TAGS.HOME_DECOUVRIR_CTA_CLICK);
         }}
       >
-        Découvrir les programmes
+        Découvrir les formats
       </Button>
     </SimpleVideoText>
   );
