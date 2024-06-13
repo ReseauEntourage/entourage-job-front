@@ -277,7 +277,8 @@ export const LastStepContent: RegistrationLastStepContent = {
     },
     [Programs.BOOST]: {
       ...CandidateLastStepContent,
-      title: 'Vous venez de finaliser votre inscription : Bravo !',
+      title:
+        "Il ne vous reste plus qu'a valider votre adresse email en cliquant sur le lien que vous avez reçu par mail.",
       subtitle:
         "Mais ce n'est que le début de l'aventure : bienvenue sur votre réseau pro solidaire !",
     },
