@@ -40,6 +40,9 @@ export const ParametresHelpCard = () => {
   }, [contextualRole]);
 
   if (!helpField || !userProfile) return null;
+  // Had to do it it two steps for the linter to be happy
+  const userHelpField = userProfile[helpField];
+  if (!userHelpField) return null;
 
   return (
     <Card
@@ -48,11 +51,8 @@ export const ParametresHelpCard = () => {
       isMobileClosable
       dataTestId="parametres-help-card"
     >
-      {userProfile[helpField].length > 0 ? (
-        <ProfileHelpList
-          helpList={userProfile[helpField]}
-          role={contextualRole}
-        />
+      {userHelpField.length > 0 ? (
+        <ProfileHelpList helpList={userHelpField} role={contextualRole} />
       ) : (
         <ParametresPlaceholder
           image={<PlaceholderIllu />}

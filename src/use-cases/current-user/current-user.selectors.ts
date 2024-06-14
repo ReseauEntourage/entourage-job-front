@@ -158,7 +158,7 @@ export const selectCandidateProfileDefaultFiltersForDashboardOpportunities =
       }
       return {
         department: mutateToArray(userCandidateProfile.department),
-        businessLines: userCandidateProfile.searchBusinessLines.map(
+        businessLines: userCandidateProfile.searchBusinessLines?.map(
           (businessLine) => businessLine.name
         ),
       };

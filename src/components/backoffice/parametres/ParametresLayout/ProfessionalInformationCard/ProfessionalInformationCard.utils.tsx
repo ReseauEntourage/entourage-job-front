@@ -8,10 +8,10 @@ import { USER_ROLES, UserRole } from 'src/constants/users';
 import { findConstantFromValue, isRoleIncluded, sortByOrder } from 'src/utils';
 
 interface userProfileParamsToCheck {
-  currentJob?: string;
-  networkBusinessLines?: { name: string }[];
-  searchAmbitions?: { name: string; order: number }[];
-  searchBusinessLines?: { name: string; order: number }[];
+  currentJob: string | null;
+  networkBusinessLines: { name: string }[] | null;
+  searchAmbitions: { name: string; order: number }[] | null;
+  searchBusinessLines: { name: string; order: number }[] | null;
   role: UserRole;
 }
 
@@ -37,12 +37,13 @@ export const getCoachDefaultProfessionalValues = (
 ): DefaultValues<
   ExtractFormSchemaValidation<typeof formEditCoachProfessionalInformation>
 > => {
-  const { networkBusinessLines, currentJob } = userProfileParam;
+  const { networkBusinessLines, currentJob, linkedinUrl } = userProfileParam;
   return {
-    currentJob,
+    currentJob: currentJob || undefined,
     networkBusinessLines: networkBusinessLines?.map(({ name }) => {
       return findConstantFromValue(name, BUSINESS_LINES);
     }),
+    linkedinUrl: linkedinUrl || undefined,
   };
 };
 
@@ -51,7 +52,8 @@ export const getCandidateDefaultProfessionalValues = (
 ): DefaultValues<
   ExtractFormSchemaValidation<typeof formEditCandidateProfessionalInformation>
 > => {
-  const { searchAmbitions, searchBusinessLines } = userProfileParam;
+  const { searchAmbitions, searchBusinessLines, linkedinUrl } =
+    userProfileParam;
   const sortedAmbitions =
     searchAmbitions && searchAmbitions.length > 0
       ? sortByOrder(searchAmbitions)
@@ -76,5 +78,6 @@ export const getCandidateDefaultProfessionalValues = (
         ),
       };
     }, {}),
+    linkedinUrl: linkedinUrl || '',
   };
 };
