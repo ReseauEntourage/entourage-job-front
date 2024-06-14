@@ -27,7 +27,7 @@ export const OnboardingHelpsForm = ({ onSubmit }: OnboardingHelpsFormProps) => {
       }
       onSubmit={onSubmit}
       defaultValues={{
-        [helpField]: userProfile[helpField].map(({ name }) => name) || [],
+        [helpField]: userProfile[helpField]?.map(({ name }) => name) || [],
       }}
       submitText="Suivant"
     />

@@ -29,7 +29,13 @@ export const DashboardProfileCard = () => {
   const helpField = useHelpField(user.role);
   const { contextualRole } = useContextualRole(user.role);
 
-  if (!helpField) return null;
+  if (!helpField || !user.userProfile || !helpField) {
+    return null;
+  }
+
+  // Had to do it it two steps for the linter to be happy
+  const userHelpField = user.userProfile[helpField];
+  if (!userHelpField || userHelpField.length === 0) return null;
 
   return (
     <Card>
@@ -65,9 +71,9 @@ export const DashboardProfileCard = () => {
             'besoins de '}{' '}
           coups de pouce
         </StyledDashboardProfileCardhelpsTitle>
-        {user.userProfile[helpField].length > 0 ? (
+        {userHelpField.length > 0 ? (
           <StyledDashboardProfileCardHelpList>
-            {user.userProfile[helpField].slice(0, 3).map((help, index) => {
+            {userHelpField.slice(0, 3).map((help, index) => {
               const helpDetails = ProfileHelps.find(
                 (helpConstant) => helpConstant.value === help.name
               );
@@ -77,8 +83,8 @@ export const DashboardProfileCard = () => {
               }
               return null;
             })}
-            {user.userProfile[helpField].length > 3 && (
-              <Tag content={`+${user.userProfile[helpField].length - 3}`} />
+            {userHelpField.length > 3 && (
+              <Tag content={`+${userHelpField.length - 3}`} />
             )}
           </StyledDashboardProfileCardHelpList>
         ) : (

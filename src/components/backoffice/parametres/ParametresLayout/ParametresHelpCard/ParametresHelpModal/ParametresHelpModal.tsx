@@ -26,7 +26,7 @@ export const ParametresHelpModal = ({
       formSchema={getFormEditHelps(role)}
       submitText="Sauvegarder"
       defaultValues={{
-        helps: userProfile[helpField].map(({ name }) => name) || [],
+        helps: userProfile[helpField]?.map(({ name }) => name) || [],
       }}
       onSubmit={({ helps }) =>
         updateUserProfile({

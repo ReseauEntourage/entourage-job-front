@@ -72,7 +72,7 @@ export const ProfessionalInformationCard = () => {
             return {
               currentJob: values.currentJob,
               networkBusinessLines,
-              linkedinUrl: values.linkedinUrl || null,
+              linkedinUrl: values.linkedinUrl,
             };
           }}
         />
@@ -86,7 +86,7 @@ export const ProfessionalInformationCard = () => {
           getValuesToSend={(values) => {
             return {
               ...formatCareerPathSentence(values),
-              linkedinUrl: values.linkedinUrl || null,
+              linkedinUrl: values.linkedinUrl,
             };
           }}
         />
@@ -139,9 +139,9 @@ export const ProfessionalInformationCard = () => {
                       ({ name }, index) => (
                         <div key={`${uuidValue}-${name}-${index}`}>
                           <strong>{name}</strong>
-                          {index < userProfile.searchAmbitions.length - 1
-                            ? ', '
-                            : ''}
+                          {userProfile.searchAmbitions &&
+                            index !== userProfile.searchAmbitions?.length - 1 &&
+                            ', '}
                         </div>
                       )
                     )}

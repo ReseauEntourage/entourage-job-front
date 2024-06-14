@@ -35,7 +35,7 @@ export const ParametresLayout = () => {
         id={user.id}
         firstName={user.firstName}
         lastName={user.lastName}
-        description={user.userProfile.description}
+        description={user.userProfile.description ?? ''}
         role={user.role}
         department={user.userProfile.department}
         isAvailable={user.userProfile.isAvailable}

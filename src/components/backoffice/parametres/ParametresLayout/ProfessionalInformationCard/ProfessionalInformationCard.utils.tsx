@@ -8,10 +8,10 @@ import { USER_ROLES, UserRole } from 'src/constants/users';
 import { findConstantFromValue, isRoleIncluded, sortByOrder } from 'src/utils';
 
 interface userProfileParamsToCheck {
-  currentJob?: string;
-  networkBusinessLines?: { name: string }[];
-  searchAmbitions?: { name: string; order: number }[];
-  searchBusinessLines?: { name: string; order: number }[];
+  currentJob: string | null;
+  networkBusinessLines: { name: string }[] | null;
+  searchAmbitions: { name: string; order: number }[] | null;
+  searchBusinessLines: { name: string; order: number }[] | null;
   role: UserRole;
 }
 
@@ -39,11 +39,11 @@ export const getCoachDefaultProfessionalValues = (
 > => {
   const { networkBusinessLines, currentJob, linkedinUrl } = userProfileParam;
   return {
-    currentJob,
+    currentJob: currentJob || undefined,
     networkBusinessLines: networkBusinessLines?.map(({ name }) => {
       return findConstantFromValue(name, BUSINESS_LINES);
     }),
-    linkedinUrl: linkedinUrl || '',
+    linkedinUrl: linkedinUrl || undefined,
   };
 };
 
