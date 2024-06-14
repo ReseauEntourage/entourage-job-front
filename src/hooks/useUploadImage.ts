@@ -1,10 +1,8 @@
 import { useCallback } from 'react';
 import Resizer from 'react-image-file-resizer';
-import { useDispatch } from 'react-redux';
-import { notificationsActions } from 'src/use-cases/notifications';
+import UIkit from 'uikit';
 
 export function useUploadImage() {
-  const dispatch = useDispatch();
   const resizeFile = useCallback((file: File): Promise<Blob> => {
     return new Promise((resolve) => {
       Resizer.imageFileResizer(
@@ -29,12 +27,7 @@ export function useUploadImage() {
 
       if (file) {
         if (!file.type.includes('image/')) {
-          dispatch(
-            notificationsActions.addNotification({
-              type: 'danger',
-              message: 'Le fichier doit être une imagee',
-            })
-          );
+          UIkit.notification('Le fichier doit être une image', 'danger');
         }
 
         const image = await resizeFile(file);
@@ -47,6 +40,6 @@ export function useUploadImage() {
       }
       return null;
     },
-    [resizeFile, dispatch]
+    [resizeFile]
   );
 }
