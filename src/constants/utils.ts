@@ -16,7 +16,7 @@ export const ActionsLabels = {
 
 export type FilterConstant<
   T extends string | number | boolean = string | number | boolean
-> = { value: T; label: string };
+> = { value: T; label: string | React.ReactNode };
 
 export interface Filter<
   T extends string | number | boolean = string | number | boolean

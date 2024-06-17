@@ -6,6 +6,7 @@ export function Typography({
   size = 'normal',
   weight = 'normal',
   color = 'normal',
+  center = false,
   variant = 'normal',
 }: TypographyProps) {
   return (
@@ -13,6 +14,7 @@ export function Typography({
       size={size}
       weight={weight}
       color={color}
+      center={center}
       variant={variant}
     >
       {children}

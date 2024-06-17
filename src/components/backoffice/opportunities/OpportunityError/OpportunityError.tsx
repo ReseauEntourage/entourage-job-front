@@ -1,21 +1,22 @@
 import React from 'react';
-import { Section } from 'src/components/utils';
+import {
+  ContainerWithTextCentered,
+  Section,
+  Typography,
+} from 'src/components/utils';
+import { H4 } from 'src/components/utils/Headings';
 
 export const OpportunityError = () => {
   return (
-    <Section className="uk-width-1-1">
-      <div className=" uk-text-center uk-flex uk-flex-center">
-        <div className="uk-width-xlarge">
-          <h2 className="uk-margin-remove">
-            Les opportunités n&apos;ont pas pu être chargées correctement.
-          </h2>
-          <p>
-            Contacte{' '}
-            <span className="uk-text-primary">l&apos;équipe Entourage Pro</span>{' '}
-            pour en savoir plus.
-          </p>
-        </div>
-      </div>
+    <Section>
+      <ContainerWithTextCentered>
+        <H4
+          title={"Les opportunités n'ont pas pu être chargées correctement."}
+        />
+        <Typography>
+          Contacte l&apos;équipe Entourage Pro pour en savoir plus.
+        </Typography>
+      </ContainerWithTextCentered>
     </Section>
   );
 };

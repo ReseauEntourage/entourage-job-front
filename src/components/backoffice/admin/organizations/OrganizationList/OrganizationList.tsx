@@ -4,14 +4,23 @@ import { OrganizationTable } from '../OrganizationTable';
 import { Organization } from '../OrganizationTable/Organization';
 import { Api } from 'src/api';
 
+import { Organization as OrganizationType } from 'src/api/types';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { AdminCreationButtons } from 'src/components/backoffice/admin/AdminCreationButtons';
 import { SearchBar } from 'src/components/filters/SearchBar';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
-import { Section, Button, BackToTop } from 'src/components/utils';
+import {
+  Section,
+  Button,
+  BackToTop,
+  ContainerWithTextCentered,
+  Typography,
+} from 'src/components/utils';
+import { H4 } from 'src/components/utils/Headings';
 import { ORGANIZATION_FILTERS_DATA } from 'src/constants';
 import { FilterObject } from 'src/constants/utils';
 import { filtersToQueryParams } from 'src/utils/Filters';
+import { StyledOrganizationsListButtonContainer } from './OrganizationList.styles';
 
 const LIMIT = 50;
 
@@ -31,7 +40,7 @@ export function OrganizationList({
   setSearch,
   resetFilters,
 }: OrganizationListProps) {
-  const [organizations, setOrganizations] = useState([]);
+  const [organizations, setOrganizations] = useState<OrganizationType[]>([]);
   const [hasError, setHasError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [allLoaded, setAllLoaded] = useState(false);
@@ -59,12 +68,9 @@ export function OrganizationList({
           setOffset(LIMIT);
           setAllLoaded(false);
         } else {
-          setOrganizations(
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            (pevOrganizations) => {
-              return [...pevOrganizations, ...organizationsData];
-            }
-          );
+          setOrganizations((pevOrganizations) => {
+            return [...pevOrganizations, ...organizationsData];
+          });
           setOffset((prevOffset) => {
             return prevOffset + LIMIT;
           });
@@ -111,21 +117,13 @@ export function OrganizationList({
         />
       </HeaderBackoffice>
       {hasError ? (
-        <Section className="uk-width-1-1">
-          <div className=" uk-text-center uk-flex uk-flex-center">
-            <div className="uk-width-xlarge">
-              <h2 className="uk-margin-remove">
-                Les structures n&apos;ont pas pu etre chargés correctement.
-              </h2>
-              <p>
-                Contacte{' '}
-                <span className="uk-text-primary">
-                  l&apos;équipe Entourage Pro
-                </span>{' '}
-                pour en savoir plus.
-              </p>
-            </div>
-          </div>
+        <Section>
+          <ContainerWithTextCentered>
+            <H4 title="Les structures n'ont pas pu etre chargés correctement." />
+            <Typography size="large">
+              Contacte l&apos;équipe Entourage Pro pour en savoir plus.
+            </Typography>
+          </ContainerWithTextCentered>
         </Section>
       ) : (
         <>
@@ -144,15 +142,10 @@ export function OrganizationList({
           {loading ? (
             <LoadingScreen />
           ) : (
-            <div className="uk-overflow-auto uk-margin-top">
-              <OrganizationTable organizations={organizationsList} />
-            </div>
+            <OrganizationTable organizations={organizationsList} />
           )}
           {!loading && !allLoaded && (
-            <div
-              style={{ borderTop: '1px solid #e5e5e5' }}
-              className="uk-text-center uk-width-1-1 uk-padding"
-            >
+            <StyledOrganizationsListButtonContainer>
               <Button
                 style="custom-secondary"
                 color="primaryBlue"
@@ -160,12 +153,12 @@ export function OrganizationList({
               >
                 Voir toutes les structures
               </Button>
-            </div>
+            </StyledOrganizationsListButtonContainer>
           )}
           {!loading && allLoaded && organizations.length <= 0 && (
-            <div className="uk-height-small uk-flex uk-flex-center uk-flex-middle">
-              <p className="uk-text-italic">Aucune structure trouvé</p>
-            </div>
+            <ContainerWithTextCentered>
+              <Typography variant="italic">Aucune structure trouvé</Typography>
+            </ContainerWithTextCentered>
           )}
         </>
       )}

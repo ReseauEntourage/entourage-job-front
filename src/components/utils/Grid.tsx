@@ -51,13 +51,13 @@ export const Grid = ({
   let gridBuffer = '';
   if (parallax) gridBuffer += `parallax: ${parallax};`;
   if (masonry) gridBuffer += 'masonry: true';
-  classBuffer +=
-    // @ts-expect-error after enable TS strict mode. Please, try to fix it
-    childWidths
+  if (childWidths) {
+    classBuffer += childWidths
       .map((childWidth) => {
         return ` uk-child-width-${childWidth}`;
       })
       .join(' ');
+  }
   if (gap) classBuffer += ` uk-grid-${gap}`;
   if (match) classBuffer += ' uk-grid-match';
   if (divider) classBuffer += ' uk-grid-divider';

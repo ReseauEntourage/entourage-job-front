@@ -176,7 +176,13 @@ const BUSINESS_LINES_UNSORTED: (FilterConstant<BusinessLineValue> & {
 
 export const BUSINESS_LINES = BUSINESS_LINES_UNSORTED.sort(
   ({ label: labelA }, { label: labelB }) => {
-    return labelA.localeCompare(labelB);
+    /**
+     * force type because business lines are always string
+     * to fix: fix FilterConstant type
+     */
+    const first = labelA as string;
+    const second = labelB as string;
+    return first.localeCompare(second);
   }
 ) as typeof BUSINESS_LINES_UNSORTED;
 

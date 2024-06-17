@@ -1,6 +1,14 @@
 import React from 'react';
-import { Section, Grid } from 'src/components/utils';
-import { H2 } from 'src/components/utils/Headings';
+import { v4 as uuidV4 } from 'uuid';
+import {
+  Section,
+  Grid,
+  ContainerWithTextCentered,
+  Typography,
+} from 'src/components/utils';
+import { ContainerMarginY } from 'src/components/utils/Containers/ContainerMarginY';
+import { H2, H4 } from 'src/components/utils/Headings';
+import { StyledHowToBeInclusiveTitleContainer } from './Sinformer.styles';
 
 const tips = [
   {
@@ -57,49 +65,41 @@ const tips = [
 
 export const HowToBeInclusive = () => {
   return (
-    <Section style="muted">
-      <H2
-        title={
-          <>
-            <span className="uk-text-primary">Concrètement,</span>&nbsp;comment
-            être inclusif ?
-          </>
-        }
-        center
-        color="black"
-      />
-      <div className="uk-flex uk-flex-center uk-margin-top uk-padding-small">
-        <p className="uk-container-small uk-text-center">
-          Il y a 1001 manières de s’engager dans l’inclusion. La plus impactante
-          est bien sûr de vous engager en tant qu’employeur, en donnant accès à
-          l’emploi à des personnes qui en sont éloignées. Mais vous pouvez aussi
-          agir autrement. Les différents leviers d’actions sont les suivants :{' '}
-        </p>
-      </div>
-      <div>
-        <Grid
-          childWidths={[`1-${tips.length}@m`]}
-          match
-          className="uk-margin-top"
-          gap="large"
-          items={tips.map((item, index) => {
-            return (
-              <div key={index.toString()}>
-                <h4
-                  className="uk-text-bold"
-                  style={{
-                    paddingLeft: '0.7rem',
-                    borderLeft: '2px solid #47A8B9',
-                  }}
-                >
-                  {item.title}
-                </h4>
-                {item.text && <div className="uk-text-small">{item.text}</div>}
-              </div>
-            );
-          })}
+    <Section className="custom-blue-bg">
+      <ContainerMarginY>
+        <H2
+          title={<>Concrètement,&nbsp;comment être inclusif ?</>}
+          center
+          color="black"
         />
-      </div>
+        <ContainerWithTextCentered>
+          <p>
+            Il y a 1001 manières de s’engager dans l’inclusion. La plus
+            impactante est bien sûr de vous engager en tant qu’employeur, en
+            donnant accès à l’emploi à des personnes qui en sont éloignées. Mais
+            vous pouvez aussi agir autrement. Les différents leviers d’actions
+            sont les suivants :{' '}
+          </p>
+        </ContainerWithTextCentered>
+        <div>
+          <Grid
+            childWidths={[`1-${tips.length}@m`]}
+            match
+            className="uk-margin-top"
+            gap="large"
+            items={tips.map((item) => {
+              return (
+                <div key={uuidV4()}>
+                  <StyledHowToBeInclusiveTitleContainer>
+                    <H4 title={item.title} />
+                  </StyledHowToBeInclusiveTitleContainer>
+                  {item.text && <Typography>{item.text}</Typography>}
+                </div>
+              );
+            })}
+          />
+        </div>
+      </ContainerMarginY>
     </Section>
   );
 };
