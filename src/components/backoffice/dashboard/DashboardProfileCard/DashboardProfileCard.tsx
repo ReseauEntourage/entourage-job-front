@@ -54,7 +54,7 @@ export const DashboardProfileCard = () => {
               target="_blank"
               href={user.userProfile.linkedinUrl}
             >
-              Lien Linkedin
+              Profil Linkedin
             </SimpleLink>
           )}
         </div>
