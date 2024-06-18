@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledProfileContactForm = styled.div`
-  input,
   textarea {
     border: 1px solid #d8d8d8;
     border-radius: 10px;

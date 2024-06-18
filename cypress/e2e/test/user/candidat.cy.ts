@@ -122,8 +122,10 @@ describe('Candidat', () => {
     });
 
     cy.get('[data-testid="form-contact-internal-message-subject"]')
-      .scrollIntoView()
-      .type('test');
+      .click()
+      .find('.Select__option')
+      .contains('Conseils')
+      .click();
 
     cy.get('[data-testid="form-contact-internal-message-message"]')
       .scrollIntoView()
