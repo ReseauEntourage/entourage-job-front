@@ -42,7 +42,7 @@ export const formContactInternalMessage: FormSchema<FormContactInternalMessage> 
         component: 'select',
         options: INTERNAL_MESSAGE_SUBJECT_FILTER,
         isRequired: true,
-        showLabel: true,
+        showLabel: false,
         isMulti: false,
       },
       {
