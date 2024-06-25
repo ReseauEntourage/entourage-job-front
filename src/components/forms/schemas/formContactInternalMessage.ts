@@ -13,7 +13,7 @@ interface FormContactInternalMessage extends FormSchemaValidation {
 
 const getPlaceholder = (getValue: GetValueType<FormContactInternalMessage>) => {
   const subject = getValue('subject');
-  const isCoach = getValue('selectedProfileRole') === 'Coach';
+  const isCoach = getValue('selectedProfileType') === 'Coach';
   const roleKey = isCoach ? 'COACH' : 'CANDIDATE';
 
   if (!subject || !subject.value || !roleKey) {

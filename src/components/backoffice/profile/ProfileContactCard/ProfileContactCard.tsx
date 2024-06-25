@@ -28,7 +28,6 @@ export const ProfileContactCard = () => {
   const postInternalMessageStatus = useSelector(
     postInternalMessageSelectors.selectPostInternalMessageStatus
   );
-
   useEffect(
     () => () => {
       dispatch(profilesActions.postInternalMessageReset());
