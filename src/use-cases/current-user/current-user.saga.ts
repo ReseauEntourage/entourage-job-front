@@ -1,10 +1,7 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
 import { Api } from 'src/api';
 import { STORAGE_KEYS } from 'src/constants';
-import {
-  authenticationActions,
-  selectAccessToken,
-} from 'src/use-cases/authentication';
+import { authentication } from 'src/use-cases/authentication';
 import { assertCondition, assertIsDefined } from 'src/utils/asserts';
 import {
   selectCurrentUser,
@@ -55,7 +52,9 @@ function* fetchUserRequestedSaga() {
     }
     assertCondition(isReleaseVersionAllowed, 'Release version is not allowed');
 
-    const accessToken = yield* select(selectAccessToken);
+    const accessToken = yield* select(
+      authentication.selectors.selectAccessToken
+    );
 
     assertIsDefined(accessToken, 'Access token is not set');
 
@@ -80,7 +79,7 @@ function* updateUserRequestedSaga(
       })
     );
     if (user.email !== formerUser?.email) {
-      yield* put(authenticationActions.logoutRequested());
+      yield* put(authentication.actions.logoutRequested());
     }
   } catch (error) {
     yield* put(
@@ -164,7 +163,7 @@ function* updateUserProfilePictureRequestedSaga(
 }
 
 function* loginSucceededSaga(
-  action: ReturnType<typeof authenticationActions.loginSucceeded>
+  action: ReturnType<typeof authentication.actions.loginSucceeded>
 ) {
   yield* put(setUser(action.payload.user));
 }
@@ -174,8 +173,11 @@ function* logoutSucceededSaga() {
 }
 
 export function* saga() {
-  yield* takeLatest(authenticationActions.loginSucceeded, loginSucceededSaga);
-  yield* takeLatest(authenticationActions.logoutSucceeded, logoutSucceededSaga);
+  yield* takeLatest(authentication.actions.loginSucceeded, loginSucceededSaga);
+  yield* takeLatest(
+    authentication.actions.logoutSucceeded,
+    logoutSucceededSaga
+  );
   yield* takeLatest(fetchUserRequested, fetchUserRequestedSaga);
   yield* takeLatest(updateUserRequested, updateUserRequestedSaga);
   yield* takeLatest(updateProfileRequested, updateProfileRequestedSaga);

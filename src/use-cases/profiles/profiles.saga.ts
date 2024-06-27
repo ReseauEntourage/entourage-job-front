@@ -2,7 +2,7 @@ import { call, put, select, takeLatest, takeLeading } from 'typed-redux-saga';
 import { Api } from 'src/api';
 import { PROFILES_LIMIT } from 'src/constants';
 import { CANDIDATE_USER_ROLES } from 'src/constants/users';
-import { selectCurrentUserId } from 'src/use-cases/current-user';
+import { currentUser } from 'src/use-cases/current-user';
 import { isRoleIncluded, mutateToArray } from 'src/utils';
 import {
   selectProfilesHasFetchedAll,
@@ -72,7 +72,7 @@ function* fetchProfilesRequestedSaga(
 }
 
 function* fetchProfilesRecommendationsRequestedSaga() {
-  const userId = yield* select(selectCurrentUserId);
+  const userId = yield* select(currentUser.selectors.selectCurrentUserId);
   try {
     const response = yield* call(() => Api.getProfilesRecommendations(userId));
     yield* put(fetchProfilesRecommendationsSucceeded(response.data));

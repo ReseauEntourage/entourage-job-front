@@ -1,20 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { Saga } from 'redux-saga';
+import { createExtendedSlice } from 'src/store/utils';
 import { saga } from './notifications.saga';
+import { extraSelectors } from './notifications.selectors';
 import { slice } from './notifications.slice';
 
-export type UseCaseConfigItem = {
-  slice: ReturnType<typeof createSlice>;
-  saga: Saga;
-};
-
-export type UseCaseConfigType = Record<string, UseCaseConfigItem>;
-
+/**
+ * @deprecated
+ */
 export * from './notifications.selectors';
-
 export const notificationsActions = slice.actions;
 
-export const notificationsConfig = {
+export const notifications = createExtendedSlice({
   slice,
   saga,
-} as UseCaseConfigItem;
+  extraSelectors,
+});

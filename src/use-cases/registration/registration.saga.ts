@@ -2,7 +2,7 @@ import { call, put, select, takeLatest } from 'typed-redux-saga';
 import { Api } from 'src/api';
 import { isConflictError } from 'src/api/axiosErrors';
 import { flattenRegistrationDataByRole } from 'src/components/registration/Registration.utils';
-import { authenticationActions } from 'src/use-cases/authentication';
+import { authentication } from 'src/use-cases/authentication';
 import { formatCareerPathSentence } from 'src/utils';
 import { asyncTimeout } from 'src/utils/asyncTimeout';
 import {
@@ -63,7 +63,7 @@ export function* createUserRequestedSaga() {
       })
     );
     yield* put(
-      authenticationActions.loginSucceeded({
+      authentication.actions.loginSucceeded({
         accessToken: response.data.token,
         user: response.data.user,
       })

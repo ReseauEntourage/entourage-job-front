@@ -1,6 +1,9 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "isolatedModules": false
-  }
+    "isolatedModules": false,
+    "types": ["jest", "cypress", "node"]
+  },
+  "include": ["../cypress/**/*.ts", "../cypress/**/*.js"],
+  "exclude": ["../src/**/*.ts", "../src/**/*.js"]
 }

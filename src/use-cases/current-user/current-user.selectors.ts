@@ -190,3 +190,23 @@ export const selectLinkedUser = (
   }
   return null;
 };
+
+export const extraSelectors = {
+  selectCurrentUser,
+  selectAuthenticatedUser,
+  selectCurrentUserProfile,
+  selectCurrentUserId,
+  selectCurrentUserProfileHelps,
+  selectCurrentUserProfileBusinessLines,
+  selectUserCandidateWithUsers,
+  selectCandidateAsUser,
+  selectCandidateId,
+  selectCandidateProfileDefaultFiltersForDashboardOpportunities,
+  selectLinkedUser,
+  ...fetchUserSelectors,
+  ...updateProfileSelectors,
+  ...readDocumentSelectors,
+  ...updateUserSelectors,
+  ...updateCandidateSelectors,
+  ...updateUserProfilePictureSelectors,
+};
