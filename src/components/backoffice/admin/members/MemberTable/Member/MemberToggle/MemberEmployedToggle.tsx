@@ -25,10 +25,8 @@ export function MemberEmployedToggle({
 }: MemberEmployedToggleProps) {
   const contractLabel = buildContractLabel(
     // @ts-expect-error after enable TS strict mode. Please, try to fix it
-    member.candidat.contract,
-
-    // @ts-expect-error after enable TS strict mode. Please, try to fix it
-    member.candidat.endOfContract
+    member.candidat?.contract,
+    member.candidat?.endOfContract
   );
 
   const dispatch = useDispatch();
