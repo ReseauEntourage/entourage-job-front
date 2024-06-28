@@ -23,14 +23,14 @@ export function OrganizationDesktop({
 
       <TdDesktop>
         <span>
-          {`${organization.organizationReferent.referentFirstName} ${organization.organizationReferent.referentLastName}`}
+          {`${organization.organizationReferent?.referentFirstName} ${organization.organizationReferent?.referentLastName}`}
         </span>
       </TdDesktop>
       <TdDesktop>
-        <span>{organization.organizationReferent.referentMail}</span>
+        <span>{organization.organizationReferent?.referentMail}</span>
       </TdDesktop>
       <TdDesktop>
-        <span>{organization.organizationReferent.referentPhone}</span>
+        <span>{organization.organizationReferent?.referentPhone}</span>
       </TdDesktop>
       <TdDesktop>
         <span>
