@@ -11,15 +11,11 @@ const AlertIcon = ({ variant }: AlertIconProps) => {
   return <>{variant === 'info' && <IlluBulleQuestion class="icon" />}</>;
 };
 
-export function Alert({ children, variant }: AlertProps) {
+export const Alert = ({ children, variant = 'info' }: AlertProps) => {
   return (
     <StyledAlert variant={variant}>
       <AlertIcon variant={variant} />
       {children}
     </StyledAlert>
   );
-}
-
-Alert.defaultProps = {
-  variant: 'info',
 };
