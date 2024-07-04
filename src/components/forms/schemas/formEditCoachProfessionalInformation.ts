@@ -27,8 +27,7 @@ export const formEditCoachProfessionalInformation: FormSchema<{
     {
       id: 'linkedinLabel',
       name: 'linkedinLabel',
-      title:
-        'Ajoutez-le à votre profil pour que les membres puissent le découvrir !',
+      title: 'Partagez votre profil LinkedIn',
       component: 'heading',
     },
     {
