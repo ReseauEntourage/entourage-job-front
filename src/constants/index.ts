@@ -926,7 +926,7 @@ export const CANDIDATE_RESOURCES_FILTERS: FilterConstant<CandidateResource>[] =
       value: CandidateResources.UNEMPLOYMENT,
     },
     {
-      label: 'AAH',
+      label: 'Allocation Adulte Handicapé',
       value: CandidateResources.AAH,
     },
     {
