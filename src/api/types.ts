@@ -109,6 +109,7 @@ export type UserProfile = {
   lastSendMessage: string | null;
   lastReceivedMessage: string | null;
   linkedinUrl: string | null;
+  gotExternalCv: boolean;
 };
 
 export type User = {
@@ -621,6 +622,7 @@ export type PublicProfile = {
   lastSentMessage: string;
   lastReceivedMessage: string;
   cvUrl?: string;
+  gotExternalCv: boolean;
 };
 
 export type ProfilesFilters = {
@@ -642,4 +644,8 @@ export type OpportunitiesFiltersForCandidate = {
 export type PostAuthSendVerifyEmailParams = {
   token?: string;
   email?: string;
+};
+
+export type ExternalCv = {
+  url: string;
 };
