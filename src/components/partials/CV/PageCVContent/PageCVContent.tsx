@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import UIkit from 'uikit';
+// import UIkit from 'uikit';
 
 import CalendarIcon from 'assets/icons/calendar.svg';
 import CarIcon from 'assets/icons/car.svg';
@@ -10,13 +10,13 @@ import QuoteLeftIcon from 'assets/icons/quote-left.svg';
 import QuoteRightIcon from 'assets/icons/quote-right.svg';
 import { CVCallToActions } from '../CVCallToActions';
 import { CVShareButtons } from '../CVCallToActions/CVShareButtons';
-import { Api } from 'src/api';
+// import { Api } from 'src/api';
 import { CV } from 'src/api/types';
 import { CVCareerPathSentenceNew as CVCareerPathSentence } from 'src/components/cv';
 import { CVExperienceOrFormation } from 'src/components/cv/CVExperienceOrFormation';
-import { formSendExternalMessage } from 'src/components/forms/schemas/formSendExternalMessage';
-import { openModal } from 'src/components/modals/Modal';
-import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+// import { formSendExternalMessage } from 'src/components/forms/schemas/formSendExternalMessage';
+// import { openModal } from 'src/components/modals/Modal';
+// import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 
 import {
   StyledChevronIcon,
@@ -42,17 +42,17 @@ import {
   StyledSkillTag,
   StyledTitleAccordion,
 } from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
-import { Button } from 'src/components/utils';
+// import { Button } from 'src/components/utils';
 import { BackLink } from 'src/components/utils/BackLink';
 import { CarouselSwiper } from 'src/components/utils/CarouselSwiper';
 import { H1, H2, H3, H4, H5 } from 'src/components/utils/Headings';
 import { CONTRACTS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { COLORS } from 'src/constants/styles';
-import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
+// import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { useIsDesktop } from 'src/hooks/utils';
-import { fbEvent } from 'src/lib/fb';
-import { gaEvent } from 'src/lib/gtag';
+// import { fbEvent } from 'src/lib/fb';
+// import { gaEvent } from 'src/lib/gtag';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
 
 interface openedPanelType {
@@ -170,6 +170,8 @@ export const PageCVContent = ({
               d&lsquo;activité, retour d&lsquo;expérience, mise en contact, une
               opportunité&nbsp;...
             </p>
+            {/*
+            2024/07/11 -> Temporary disabled due to spamming : https://resentourage.slack.com/archives/C015K5R7DR8/p1720687185382179
             <Button
               style="custom-secondary-inverted"
               disabled={actionDisabled}
@@ -209,7 +211,7 @@ export const PageCVContent = ({
               }}
             >
               Envoyer un message
-            </Button>
+            </Button> */}
           </StyledCVMessageContainer>
           {!isDesktop && (
             <>
