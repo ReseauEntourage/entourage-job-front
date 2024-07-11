@@ -52,6 +52,11 @@ export const StyledInputLabel = styled.label`
   display: inline-block;
 `;
 
+export const StyledInputLabelOptional = styled.span`
+  color: ${COLORS.darkGray};
+  margin-left: 5px;
+`;
+
 export const StyledAnnotations = styled.div`
   display: flex;
   justify-content: space-between;

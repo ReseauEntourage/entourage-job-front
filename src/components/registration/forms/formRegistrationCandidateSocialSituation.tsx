@@ -34,6 +34,7 @@ export const formRegistrationCandidateSocialSituation: FormSchema<{
       component: 'select-simple',
       options: NATIONALITIES_FILTERS,
       showLabel: true,
+      showOptional: true,
     },
     {
       id: 'accommodation',
@@ -42,6 +43,7 @@ export const formRegistrationCandidateSocialSituation: FormSchema<{
       component: 'select-simple',
       options: CANDIDATE_ACCOMMODATIONS_FILTERS,
       showLabel: true,
+      showOptional: true,
     },
     {
       id: 'hasSocialWorker',
@@ -50,6 +52,7 @@ export const formRegistrationCandidateSocialSituation: FormSchema<{
       component: 'select-simple',
       options: YES_NO_JNSPR_FILTERS,
       showLabel: true,
+      showOptional: true,
     },
     {
       id: 'resources',
@@ -58,6 +61,7 @@ export const formRegistrationCandidateSocialSituation: FormSchema<{
       options: CANDIDATE_RESOURCES_FILTERS,
       title: 'Quelle sont vos sources de revenu ?',
       showLabel: true,
+      showOptional: true,
     },
     {
       id: 'jobSearchDuration',
@@ -66,6 +70,7 @@ export const formRegistrationCandidateSocialSituation: FormSchema<{
       component: 'select-simple',
       options: JOB_SEARCH_DURATIONS_FILTERS,
       showLabel: true,
+      showOptional: true,
     },
     {
       id: 'studiesLevel',
@@ -74,6 +79,7 @@ export const formRegistrationCandidateSocialSituation: FormSchema<{
       component: 'select-simple',
       options: STUDIES_LEVELS_FILTERS,
       showLabel: true,
+      showOptional: true,
     },
     {
       id: 'workingExperience',
@@ -82,6 +88,7 @@ export const formRegistrationCandidateSocialSituation: FormSchema<{
       component: 'select-simple',
       options: WORKING_EXPERIENCE_FILTERS,
       showLabel: true,
+      showOptional: true,
     },
   ],
 };
