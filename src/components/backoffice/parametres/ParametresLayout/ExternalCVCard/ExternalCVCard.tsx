@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Tooltip } from 'react-tooltip';
 import { Close, IlluCV } from 'assets/icons/icons';
+import QuestionIcon from 'assets/icons/question.svg';
 import { Api } from 'src/api';
 import { Button } from 'src/components/utils/Button';
 import { ButtonIcon } from 'src/components/utils/ButtonIcon';
@@ -21,6 +23,8 @@ interface ContentProps {
   externalCv: string | null;
   setExternalCv: (value: string | null) => void;
 }
+
+const tooltipId = 'external-cv-tooltip';
 
 const Content = ({ dataTestId, externalCv, setExternalCv }: ContentProps) => {
   const user = useAuthenticatedUser();
@@ -119,7 +123,20 @@ export const ExternalCVCard = ({ dataTestId }: ExternalCVCardProps) => {
   };
 
   return (
-    <Card title="Télécharger mon CV" isMobileClosable>
+    <Card
+      title="Télécharger mon CV"
+      editIcon={
+        <>
+          <QuestionIcon
+            data-tooltip-id={tooltipId}
+            data-tooltip-html="Votre CV sera consultable par tous les membres du réseau.<br>Il ne sera pas publié dans la galerie de CVs publique"
+            data-tooltip-place="left"
+          />
+          <Tooltip id={tooltipId} />
+        </>
+      }
+      editCallback={() => {}}
+    >
       <StyledCVCardContentContainer>
         <StyledCVUploadInfos>
           <IlluCV width={70} height={70} />

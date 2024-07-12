@@ -51,7 +51,9 @@ export const ParametresLayout = () => {
             <UserInformationCard title="Informations personnelles" />
             {/* Télécharger mon CV */}
             {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) &&
-              user.candidat && <ExternalCVCard />}
+              user.candidat && (
+                <ExternalCVCard dataTestId="external-cv-card-params" />
+              )}
             {/* Préférences du CV */}
             {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) &&
               user.candidat && (
