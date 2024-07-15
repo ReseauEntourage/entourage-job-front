@@ -11,6 +11,7 @@ import { StyledButton } from './Button.styles';
 
 export interface ButtonProps {
   children: React.ReactNode;
+  id?: string;
   href?: string | { pathname: string; query: AnyToFix };
   disabled?: boolean;
   visible?: UIKIT_SCREENS;
@@ -64,6 +65,7 @@ export function getButtonClassBuffer({
 }
 
 export function Button({
+  id = 'button',
   visible,
   href,
   children,
@@ -92,6 +94,7 @@ export function Button({
 
   const buttonComponent = (
     <StyledButton
+      id={id}
       className={classBuffer}
       disabled={disabled}
       type="button"

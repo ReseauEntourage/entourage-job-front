@@ -168,8 +168,8 @@ export class APIHandler {
     });
   }
 
-  getExternalCv(): Promise<AxiosResponse<ExternalCv>> {
-    return this.get(`/user/current/external-cv`);
+  getExternalCvByUser(userId: string): Promise<AxiosResponse<ExternalCv>> {
+    return this.get(`/user/${userId}/external-cv`);
   }
 
   deleteExternalCv(): Promise<AxiosResponse> {

@@ -31,6 +31,7 @@ export const Profile = () => {
         isAvailable={selectedProfile.isAvailable}
         isEditable={false}
         cvUrl={selectedProfile.cvUrl}
+        gotExternalCv={selectedProfile.gotExternalCv}
       />
       <Section className="custom-page">
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>

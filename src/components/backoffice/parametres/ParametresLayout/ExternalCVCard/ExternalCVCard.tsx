@@ -31,7 +31,7 @@ const Content = ({ dataTestId, externalCv, setExternalCv }: ContentProps) => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (user.userProfile.gotExternalCv) {
-      Api.getExternalCv().then((response) => {
+      Api.getExternalCvByUser(user.id).then((response) => {
         setExternalCv(response.data.url);
       });
     }
