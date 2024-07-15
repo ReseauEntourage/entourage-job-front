@@ -132,7 +132,7 @@ export const ExternalCVCard = ({ dataTestId }: ExternalCVCardProps) => {
             data-tooltip-html="Votre CV sera consultable par tous les membres du réseau.<br>Il ne sera pas publié dans la galerie de CVs publique"
             data-tooltip-place="left"
           />
-          <Tooltip id={tooltipId} />
+          <Tooltip id={tooltipId} style={{ zIndex: 99 }} />
         </>
       }
       editCallback={() => {}}
