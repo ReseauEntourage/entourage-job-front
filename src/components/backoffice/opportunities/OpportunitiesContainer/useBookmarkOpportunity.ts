@@ -1,13 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
-import UIkit from 'uikit';
+import { useDispatch } from 'react-redux';
+
 import { Api } from 'src/api';
 import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
+import { notificationsActions } from 'src/use-cases/notifications';
 
 export function useBookmarkOpportunity(opportunityId, opportunityUsersProp) {
   const [opportunityUsers, setOpportunityUsers] =
     useState(opportunityUsersProp);
 
   const candidateId = useCandidateId();
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setOpportunityUsers(opportunityUsersProp);
@@ -30,12 +34,15 @@ export function useBookmarkOpportunity(opportunityId, opportunityUsersProp) {
       setOpportunityUsers(updatedOpportunityUsers);
     } catch (err) {
       console.error(err);
-      UIkit.notification(
-        "Une erreur s'est produite lors de l'ajout de l'offre aux favoris",
-        'danger'
+      dispatch(
+        notificationsActions.addNotification({
+          type: 'danger',
+          message:
+            "Une erreur s'est produite lors de l'ajout de l'offre aux favoris",
+        })
       );
     }
-  }, [candidateId, opportunityId, opportunityUsers]);
+  }, [candidateId, opportunityId, dispatch, opportunityUsers]);
 
   return { opportunityUsers, bookmarkOpportunity };
 }

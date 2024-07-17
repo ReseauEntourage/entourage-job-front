@@ -7,6 +7,7 @@ export const formEditCandidateProfessionalInformation: FormSchema<{
   searchAmbition0: string;
   searchBusinessLine1: FilterConstant<BusinessLineValue>;
   searchAmbition1: string;
+  linkedinUrl: string;
 }> = {
   id: 'form-career-path',
   fields: [
@@ -77,6 +78,29 @@ export const formEditCandidateProfessionalInformation: FormSchema<{
           name: 'searchAmbition1',
           component: 'text-input',
           title: 'Métier 2',
+        },
+      ],
+    },
+    {
+      id: 'linkedinLabel',
+      name: 'linkedinLabel',
+      title: 'Partagez votre profil LinkedIn',
+      component: 'heading',
+    },
+    {
+      id: 'linkedinUrl',
+      name: 'linkedinUrl',
+      component: 'text-input',
+      title: 'Ajouter le lien LinkedIn',
+      rules: [
+        {
+          method: (fieldValue) => {
+            return (
+              !fieldValue ||
+              (!!fieldValue && fieldValue.includes('linkedin.com'))
+            );
+          },
+          message: 'Doit être un lien Linkedin valide',
         },
       ],
     },

@@ -156,8 +156,12 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
       disabled: field.disable ? field.disable(getValue) : field.disabled,
       hidden: field.hide ? field.hide(getValue) : field.hidden,
       inputRef: ref,
-      placeholder: field.placeholder,
+      placeholder:
+        typeof field.placeholder === 'function'
+          ? field.placeholder(getValue)
+          : field.placeholder,
       showLabel: field.showLabel,
+      showOptional: field.showOptional,
     };
   }, [
     field,
@@ -221,10 +225,16 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
         ? field.options(getValue)
         : field.options) || [];
 
+    const placeholder =
+      typeof field.placeholder === 'function'
+        ? field.placeholder(getValue)
+        : field.placeholder;
+
     if (field.component === 'select') {
       return (
         <Select
           {...commonProps}
+          placeholder={placeholder}
           isMulti={isMulti}
           options={options}
           openMenuOnClick={field.openMenuOnClick}
@@ -236,6 +246,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
       return (
         <SelectCreatable
           {...commonProps}
+          placeholder={placeholder}
           isMulti={isMulti}
           options={options}
           openMenuOnClick={field.openMenuOnClick}
@@ -250,6 +261,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
       return (
         <SelectAsync
           {...commonProps}
+          placeholder={placeholder}
           isMulti={isMulti}
           openMenuOnClick={field.openMenuOnClick}
           loadOptions={async (callback, inputValue) => {

@@ -6,8 +6,9 @@ export interface TypographyProps {
   children: React.ReactNode;
   size?: 'small' | 'normal' | 'large';
   weight?: 'normal' | 'bold';
-  color?: 'lighter' | 'light' | 'normal' | 'blue';
+  color?: 'lighter' | 'light' | 'normal' | 'blue' | 'white';
   variant?: 'normal' | 'italic';
+  center?: boolean;
 }
 
 const sizes: { [K in NonNullable<TypographyProps['size']>]: number } = {
@@ -17,6 +18,7 @@ const sizes: { [K in NonNullable<TypographyProps['size']>]: number } = {
 };
 
 const colors: { [K in NonNullable<TypographyProps['color']>]: string } = {
+  white: COLORS.white,
   lighter: COLORS.darkGray,
   light: COLORS.darkGrayFont,
   normal: COLORS.black,
@@ -31,4 +33,5 @@ export const StyledTypography = styled.div<TypographyProps>`
   line-height: ${({ size }) => sizes[size] * 1.5}px;
   color: ${({ color }) => colors[color]};
   font-style: ${({ variant }) => variant};
+  text-align: ${({ center }) => (center ? 'center' : 'left')};
 `;

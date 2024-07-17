@@ -1,0 +1,32 @@
+[
+  {
+    "id": "5cd51262-98fe-43b8-9cfc-81c05563d999",
+    "firstName": "Eustache",
+    "lastName": "Hubert",
+    "role": "undefined"
+  },
+  {
+    "id": "37ef219b-ebac-478e-a4f3-18312ae5e8f2",
+    "firstName": "Xavière",
+    "lastName": "Gauthier",
+    "role": "undefined"
+  },
+  {
+    "id": "4136deb4-13e5-4f82-a246-21c1839da6dc",
+    "firstName": "Archange",
+    "lastName": "Pierre",
+    "role": "undefined"
+  },
+  {
+    "id": "a9f5beea-58d2-4b78-a46e-632a06ae9ead",
+    "firstName": "Damien",
+    "lastName": "Picard",
+    "role": "undefined"
+  },
+  {
+    "id": "b4353b6f-27a2-4dbb-861d-d6887c835d82",
+    "firstName": "Acace",
+    "lastName": "Perez",
+    "role": "undefined"
+  }
+]

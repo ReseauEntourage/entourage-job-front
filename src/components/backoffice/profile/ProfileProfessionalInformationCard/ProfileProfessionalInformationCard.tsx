@@ -5,7 +5,8 @@ import { ProfilePlaceHolder } from '../ProfilePlaceholder';
 import { useSelectSelectedProfile } from '../useSelectedProfile';
 import { StyledProfessionalInformationList } from 'src/components/backoffice/parametres/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.styles';
 import { checkData } from 'src/components/backoffice/parametres/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
-import { Card } from 'src/components/utils';
+import { Button, Card } from 'src/components/utils';
+import { H5 } from 'src/components/utils/Headings';
 import { Tag } from 'src/components/utils/Tag';
 import { BUSINESS_LINES } from 'src/constants';
 import { USER_ROLES } from 'src/constants/users';
@@ -72,6 +73,19 @@ export const ProfileProfessionalInformationCard = () => {
                 ambitions={selectedProfile.searchAmbitions}
                 businessLines={selectedProfile.searchBusinessLines}
               />
+            </>
+          )}
+          {selectedProfile.linkedinUrl && (
+            <>
+              <H5 title="Mon profil Linkedin" />
+              <Button
+                href={selectedProfile.linkedinUrl}
+                isExternal
+                newTab
+                style="custom-primary-inverted"
+              >
+                Voir mon profil Linkedin
+              </Button>
             </>
           )}
         </StyledProfessionalInformationList>

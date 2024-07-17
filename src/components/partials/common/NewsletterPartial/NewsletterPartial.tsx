@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import UIkit from 'uikit';
+import { useDispatch } from 'react-redux';
 
 import { v4 as uuid } from 'uuid';
 import { isEmail } from 'validator';
@@ -10,6 +10,7 @@ import { CheckBox } from 'src/components/utils/Inputs/CheckBox';
 import { TextInput } from 'src/components/utils/Inputs/TextInput';
 import { NEWSLETTER_TAGS } from 'src/constants';
 import { gaEvent } from 'src/lib/gtag';
+import { notificationsActions } from 'src/use-cases/notifications';
 import { StyledNLForm } from './NewsletterPartial.styles';
 
 const uuidValue = uuid();
@@ -23,6 +24,7 @@ export const NewsletterPartial = ({
   padding?: boolean;
   tag?: { action: string; label?: string };
 }) => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState<string>('');
   const [zone, setZone] = useState<string | undefined>();
   const [status, setStatus] = useState<string | undefined>();
@@ -47,9 +49,12 @@ export const NewsletterPartial = ({
           zone,
           status,
         });
-        UIkit.notification(
-          'Votre inscription à la newsletter a bien été prise en compte !',
-          'success'
+        dispatch(
+          notificationsActions.addNotification({
+            type: 'success',
+            message:
+              'Votre inscription à la newsletter a bien été prise en compte !',
+          })
         );
         setEmail('');
         setZone(
@@ -62,7 +67,12 @@ export const NewsletterPartial = ({
         );
       } catch (err) {
         console.error(err);
-        UIkit.notification('Une erreur est survenue', 'danger');
+        dispatch(
+          notificationsActions.addNotification({
+            type: 'danger',
+            message: "Une erreur s'est produite",
+          })
+        );
       }
       setIsMailValid(true);
       setIsTagsValid(true);

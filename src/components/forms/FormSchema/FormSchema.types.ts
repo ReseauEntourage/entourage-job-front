@@ -164,8 +164,9 @@ interface FormFieldInputCommonProperties<
   title?: string | JSX.Element | ((getValue: GetValueType<V>) => string);
   disabled?: boolean;
   disable?: (getValue: GetValueType<V>) => boolean;
-  placeholder?: string;
+  placeholder?: ((getValue: GetValueType<V>) => string) | string;
   showLabel?: boolean;
+  showOptional?: boolean;
 }
 
 export interface FormFieldTextInput<V extends FormSchemaValidation>

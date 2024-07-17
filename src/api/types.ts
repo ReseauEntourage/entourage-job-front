@@ -59,7 +59,7 @@ export type UserCandidate = {
 };
 
 export type Organization = {
-  id?: string;
+  id: string;
   name: string;
   address?: string;
   organizationReferent: {
@@ -85,27 +85,30 @@ export type OrganizationDto = {
 };
 
 export type UserProfile = {
-  currentJob: string;
-  description: string;
+  currentJob: string | null;
+  description: string | null;
   department: Department;
   isAvailable: boolean;
-  helpNeeds: { name: HelpValue }[];
-  helpOffers: { name: HelpValue }[];
-  networkBusinessLines: {
-    name: BusinessLineValue;
-    order: number;
-  }[];
-  searchBusinessLines: {
-    name: BusinessLineValue;
-    order: number;
-  }[];
-  searchAmbitions: {
-    name: string;
-    order: number;
-    prefix: AmbitionsPrefixesType;
-  }[];
-  lastSendMessage: string;
-  lastReceivedMessage: string;
+  helpNeeds: { name: HelpValue }[] | null;
+  helpOffers: { name: HelpValue }[] | null;
+  networkBusinessLines:
+    | {
+        name: BusinessLineValue;
+        order: number;
+      }[]
+    | null;
+  searchBusinessLines:
+    | {
+        name: BusinessLineValue;
+        order: number;
+      }[]
+    | null;
+  searchAmbitions:
+    | { name: string; order: number; prefix: AmbitionsPrefixesType }[]
+    | null;
+  lastSendMessage: string | null;
+  lastReceivedMessage: string | null;
+  linkedinUrl: string | null;
 };
 
 export type User = {
@@ -186,7 +189,12 @@ export interface CV {
       address: string;
       zone: AdminZone;
       gender: Gender;
+      id: string;
     };
+    employed: boolean;
+    url: string;
+    hidden: boolean;
+    endOfContract?: string;
   };
   catchphrase: string;
   story: string;
@@ -589,6 +597,7 @@ export type PublicProfile = {
   id: string;
   firstName: string;
   lastName: string;
+  linkedinUrl?: string;
   role: UserRole;
   department: Department;
   currentJob: string;

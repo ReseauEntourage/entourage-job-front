@@ -37,7 +37,7 @@ export function OrganizationMobile({
       <div className="line">
         <TdMobile title="Contact">
           <span>
-            {`${organization.organizationReferent.referentFirstName} ${organization.organizationReferent.referentLastName}`}
+            {`${organization.organizationReferent?.referentFirstName} ${organization.organizationReferent?.referentLastName}`}
           </span>
         </TdMobile>
         <TdMobile title="Zone">
@@ -49,10 +49,10 @@ export function OrganizationMobile({
       </div>
       <div className="line">
         <TdMobile title="Mail">
-          <span>{organization.organizationReferent.referentMail}</span>
+          <span>{organization.organizationReferent?.referentMail}</span>
         </TdMobile>
         <TdMobile title="Téléphone">
-          <span>{organization.organizationReferent.referentPhone}</span>
+          <span>{organization.organizationReferent?.referentPhone}</span>
         </TdMobile>
       </div>
 

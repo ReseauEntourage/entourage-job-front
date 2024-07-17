@@ -36,7 +36,7 @@ export const Impact = ({
   tag?: (typeof GA_TAGS)[keyof typeof GA_TAGS];
 }) => {
   return (
-    <Section style="default">
+    <Section style="custom-primary">
       <H2
         title={
           <>

@@ -33,8 +33,8 @@ export const EntourageProModal = () => {
         </p>
         <p>
           Entourage Pro, c’est un nouvel outil plus simple, une expérience plus
-          personnalisée, conçue autour de 2 programmes, 360 et Coup de pouce,
-          qui s&lsquo;adaptent à tout un chacun.
+          personnalisée, conçue autour de 2 formats, 360 et Coup de pouce, qui
+          s&lsquo;adaptent à tout un chacun.
         </p>
         <p>
           Mais Entourage Pro, c’est avant tout la même ambition : accompagner

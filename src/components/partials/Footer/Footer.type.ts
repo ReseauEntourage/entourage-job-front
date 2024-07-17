@@ -1,4 +1,4 @@
-export type ChildrenType = {
+type SiteMapItem = {
   component?: React.ReactNode;
   title?: string;
   path?: string;
@@ -8,31 +8,10 @@ export type ChildrenType = {
     onClick?: () => void;
     target?: string;
   };
-  children?: {
-    component?: React.ReactNode;
-    title?: string;
-    path?: string;
-    children?: {
-      component?: React.ReactNode;
-      title?: string;
-      path?: string;
-      props?: {
-        isExternal?: boolean;
-        newTab?: boolean;
-        onClick?: () => void;
-        target?: string;
-      };
-    }[];
-    props?: {
-      isExternal?: boolean;
-      newTab?: boolean;
-      onClick?: () => void;
-      target?: string;
-    };
-  }[];
+  children?: SiteMapItem[];
 };
 
 export type PageType = {
   title?: string;
-  children?: ChildrenType[];
-};
+  children?: SiteMapItem[];
+}[];

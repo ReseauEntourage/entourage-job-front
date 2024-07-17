@@ -1,9 +1,11 @@
 import moment from 'moment/moment';
 import React from 'react';
-import UIkit from 'uikit';
+import { useDispatch } from 'react-redux';
+
 import { Api } from 'src/api';
 import { formAddExternalOpportunityCandidate } from 'src/components/forms/schemas/formAddExternalOpportunity';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { notificationsActions } from 'src/use-cases/notifications';
 
 export const ModalExternalOffer = ({
   fetchOpportunities,
@@ -12,6 +14,7 @@ export const ModalExternalOffer = ({
   fetchOpportunities: () => void;
   candidateId: string;
 }) => {
+  const dispatch = useDispatch();
   return (
     <ModalEdit
       title={"Ajouter une offre d'emploi externe à Entourage Pro"}
@@ -31,13 +34,21 @@ export const ModalExternalOffer = ({
           });
           closeModal();
           await fetchOpportunities();
-          UIkit.notification(
-            "L'offre externe a bien été ajouté à votre liste d'offres",
-            'success'
+          dispatch(
+            notificationsActions.addNotification({
+              type: 'success',
+              message:
+                "L'offre externe a bien été ajouté à votre liste d'offres",
+            })
           );
         } catch (err) {
           console.error(err);
-          UIkit.notification(`Une erreur est survenue.`, 'danger');
+          dispatch(
+            notificationsActions.addNotification({
+              type: 'danger',
+              message: 'Une erreur est survenue.',
+            })
+          );
         }
       }}
     />

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { notificationsActions } from 'src/use-cases/notifications';
 
-import UIkit from 'uikit';
 import {
   fetchProfilesRecommendationsSelectors,
   profilesActions,
@@ -39,9 +39,12 @@ export function useDashboardRecommendations() {
   // notif on error if recommendations fails
   useEffect(() => {
     if (isFetchDashboardRecommendationsFailed) {
-      UIkit.notification(
-        'Une erreur est survenue lors de la récupération des recommendations',
-        'danger'
+      dispatch(
+        notificationsActions.addNotification({
+          type: 'danger',
+          message:
+            'Une erreur est survenue lors de la récupération des recommendations',
+        })
       );
     }
   }, [dispatch, isFetchDashboardRecommendationsFailed]);

@@ -14,12 +14,14 @@ import {
   ContactCompany,
   ContactContactUs,
   ContactNewsletter,
+  CV,
   ExternalMessage,
   ExternalOpportunityDto,
   InternalMessage,
   OpportunityDto,
   OpportunityJoin,
   OpportunityUserEvent,
+  Organization,
   OrganizationDto,
   PostAuthSendVerifyEmailParams,
   ProfilesFilters,
@@ -29,6 +31,7 @@ import {
   UserDto,
   UserProfile,
   UserRegistrationDto,
+  UserWithUserCandidate,
 } from './types';
 
 export class APIHandler {
@@ -105,7 +108,9 @@ export class APIHandler {
     return this.get(`/cv/${candidateId}`, {}, headers);
   }
 
-  getCVRandom(params): Promise<AxiosResponse> {
+  getCVRandom(
+    params
+  ): Promise<AxiosResponse<{ suggestions: boolean; cvs: CV[] }>> {
     return this.get('/cv/cards/random', params);
   }
 
@@ -159,7 +164,9 @@ export class APIHandler {
 
   // get
 
-  getUsersMembers(params: object): Promise<AxiosResponse> {
+  getUsersMembers(
+    params: object
+  ): Promise<AxiosResponse<UserWithUserCandidate[]>> {
     return this.get('/user/members', params);
   }
 
@@ -287,7 +294,7 @@ export class APIHandler {
       search?: string;
       zone?: AdminZone | AdminZone[];
     };
-  }): Promise<AxiosResponse> {
+  }): Promise<AxiosResponse<Organization[]>> {
     return this.get('/organization', params);
   }
 

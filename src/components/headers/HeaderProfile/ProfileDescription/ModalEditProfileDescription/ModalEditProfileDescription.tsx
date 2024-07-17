@@ -18,7 +18,7 @@ export const ModalEditProfileDescription = ({
       title="Ecrire votre présentation"
       closeOnNextRender={closeModal}
       defaultValues={{
-        description: userProfile?.description,
+        description: userProfile?.description ?? undefined,
       }}
       formSchema={
         user.role === USER_ROLES.CANDIDATE

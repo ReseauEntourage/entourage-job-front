@@ -1,7 +1,8 @@
 import Router from 'next/router';
 import Pusher from 'pusher-js';
 import React, { useCallback, useEffect, useState } from 'react';
-import UIkit from 'uikit';
+import { useDispatch } from 'react-redux';
+
 import QuestionIcon from 'assets/icons/question.svg';
 import { Api } from 'src/api';
 import { CV } from 'src/api/types';
@@ -19,6 +20,7 @@ import {
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop, usePrevious } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
+import { notificationsActions } from 'src/use-cases/notifications';
 import { isRoleIncluded } from 'src/utils/Finding';
 import { ButtonDownload } from './ButtonDownload';
 import {
@@ -57,6 +59,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
     address: cv?.user?.candidat?.address,
   });
 
+  const dispatch = useDispatch();
   const isDesktop = useIsDesktop();
 
   const user = useAuthenticatedUser();
@@ -254,19 +257,35 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
           setCV(updatedCV);
           setCvVersion(updatedCV.version);
 
-          UIkit.notification(
-            isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
-              ? 'Votre CV a bien été sauvegardé'
-              : 'Le profil a été mis à jour',
-            'success'
+          dispatch(
+            notificationsActions.addNotification({
+              type: 'success',
+              message: isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
+                ? 'Votre CV a bien été sauvegardé'
+                : 'Le profil a été mis à jour',
+            })
           );
         } catch (err) {
           console.error(err);
-          UIkit.notification("Une erreur s'est produite", 'danger');
+          dispatch(
+            notificationsActions.addNotification({
+              type: 'danger',
+              message: "Une erreur s'est produite",
+            })
+          );
         }
       });
     },
-    [candidateId, checkIfLastVersion, cv, saveUserData, setCV, user, userData]
+    [
+      candidateId,
+      checkIfLastVersion,
+      dispatch,
+      cv,
+      saveUserData,
+      setCV,
+      user,
+      userData,
+    ]
   );
 
   const autoSaveCV = useCallback(

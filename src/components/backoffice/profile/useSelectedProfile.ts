@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import UIkit from 'uikit';
 import { useUserId } from 'src/hooks/queryParams/useUserId';
+import { notificationsActions } from 'src/use-cases/notifications';
+
 import { profilesActions } from 'src/use-cases/profiles';
 import {
   fetchSelectedProfileSelectors,
@@ -30,7 +31,12 @@ export function useSelectedProfile() {
 
   useEffect(() => {
     if (isFetchSelectedProfileFailed) {
-      UIkit.notification('Une erreur est survenue', 'danger');
+      dispatch(
+        notificationsActions.addNotification({
+          type: 'danger',
+          message: 'Une erreur est survenue',
+        })
+      );
     }
   }, [dispatch, isFetchSelectedProfileFailed]);
 

@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import React, { useRef, useState } from 'react';
-import UIkit from 'uikit';
+import { useDispatch } from 'react-redux';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import PlusIcon from 'assets/icons/plus.svg';
 import { StyledNoResult } from '../../Backoffice.styles';
@@ -27,6 +27,7 @@ import { useTag } from 'src/hooks/queryParams/useTag';
 import { useBulkActions } from 'src/hooks/useBulkActions';
 import { useAdminOpportunities } from 'src/hooks/useOpportunityList';
 import { useIsDesktop, usePrevious } from 'src/hooks/utils';
+import { notificationsActions } from 'src/use-cases/notifications';
 import { AdminOffersTab } from './AdminOffersTab';
 
 interface AdminOpportunitiesProps {
@@ -51,6 +52,7 @@ export const AdminOpportunities = ({
   isMobile = false,
 }: AdminOpportunitiesProps) => {
   const { replace, push } = useRouter();
+  const dispatch = useDispatch();
 
   const currentPath = '/backoffice/admin/offres';
 
@@ -73,10 +75,7 @@ export const AdminOpportunities = ({
 
   const queryParamsOpportunities = useQueryParamsOpportunities();
 
-  const [offers, setOffers] = useState<Opportunity[]>(
-    // @ts-expect-error after enable TS strict mode. Please, try to fix it
-    undefined
-  );
+  const [offers, setOffers] = useState<Opportunity[]>([]);
   const [hasError, setHasError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [offset, setOffset] = useState<number>(0);
@@ -233,15 +232,19 @@ export const AdminOpportunities = ({
                             });
                             closeModal();
                             await opportunityListRef?.current?.fetchData();
-                            UIkit.notification(
-                              "L'offre externe a bien été ajouté",
-                              'success'
+                            dispatch(
+                              notificationsActions.addNotification({
+                                type: 'success',
+                                message: "L'offre externe a bien été ajouté",
+                              })
                             );
                           } catch (err) {
                             console.error(err);
-                            UIkit.notification(
-                              `Une erreur est survenue.`,
-                              'danger'
+                            dispatch(
+                              notificationsActions.addNotification({
+                                type: 'danger',
+                                message: `Une erreur est survenue.`,
+                              })
                             );
                           }
                         }}
@@ -291,21 +294,17 @@ export const AdminOpportunities = ({
           <OpportunitiesContainer
             backButtonHref={{
               pathname: '/backoffice/admin/offres',
-
-              // @ts-expect-error after enable TS strict mode. Please, try to fix it
               query: queryParamsOpportunities,
             }}
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             list={
-              offers &&
-              offers.length > 0 && (
+              offers.length > 0 ? (
                 <AdminOpportunitiesList
                   setOffset={setOffset}
                   opportunities={offers}
                   selectOpportunity={selectElement}
                   isOpportunitySelected={isElementSelected}
                 />
-              )
+              ) : null
             }
             isLoading={loading}
             details={

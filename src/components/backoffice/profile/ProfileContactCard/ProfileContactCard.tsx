@@ -28,7 +28,6 @@ export const ProfileContactCard = () => {
   const postInternalMessageStatus = useSelector(
     postInternalMessageSelectors.selectPostInternalMessageStatus
   );
-
   useEffect(
     () => () => {
       dispatch(profilesActions.postInternalMessageReset());
@@ -95,11 +94,13 @@ export const ProfileContactCard = () => {
                     gaEvent(GA_TAGS.PROFILE_DETAILS_CONTACT_SEND_CLIC);
                     dispatch(
                       profilesActions.postInternalMessageRequested({
-                        ...values,
+                        message: values.message,
+                        subject: values.subject.value,
                         addresseeUserId: selectedProfile?.id,
                       })
                     );
                   }}
+                  defaultValues={{ selectedProfileType: selectedProfile?.role }}
                   noCompulsory
                 />
               </>

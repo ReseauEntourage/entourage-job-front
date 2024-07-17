@@ -24,7 +24,7 @@ export function CVMemberTab({ candidateId }: CVMemberTabProps) {
   if (error) {
     return (
       <LayoutBackOffice title="Erreur - Gestion des membres">
-        <Section className="uk-text-center" size="large">
+        <Section>
           <ErrorMessage error={error} />
         </Section>
       </LayoutBackOffice>

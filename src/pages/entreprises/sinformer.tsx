@@ -10,7 +10,8 @@ import { CandidateTestimonies } from 'src/components/partials/pages/Entreprises/
 import { CompanyTestimonies } from 'src/components/partials/pages/Entreprises/Sinformer/CompanyTestimonies';
 import { HowToBeInclusive } from 'src/components/partials/pages/Entreprises/Sinformer/HowToBeInclusive';
 import { ImageTitle } from 'src/components/partials/utils/ImageTitle';
-import { Section } from 'src/components/utils';
+import { ContainerWithTextCentered, Section } from 'src/components/utils';
+import { ContainerMarginY } from 'src/components/utils/Containers/ContainerMarginY';
 import { H2 } from 'src/components/utils/Headings';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
@@ -38,55 +39,56 @@ const Sinformer = () => {
           label: 'Nous contacter',
         }}
       />
-      <Section style="muted">
-        <H2
-          title={
-            <>
-              <span className="uk-text-primary">Engager</span> mon entreprise
-              dans l’inclusion : pourquoi&nbsp;?
-            </>
-          }
-          color="black"
-          center
-        />
-        <p className="uk-text-center">
-          Chacun devrait pouvoir avoir sa place dans l’entreprise et dans la
-          société, c&lsquo;est la conviction d&lsquo;Entourage Pro.
-        </p>
-        <p className="uk-text-center">
-          Il est temps de passer d’une logique d’insertion à une logique
-          d’inclusion : ce n’est pas qu’aux personnes exclues de faire le chemin
-          pour s’insérer mais aussi à l’entreprise de se transformer pour faire
-          une place à tous.
-        </p>
-        <p className="uk-text-center">
-          Bien sûr ce n’est pas toujours facile. Accueillir des personnes ayant
-          eu des parcours de galère nécessite une capacité d’adaptation de tous
-          les côtés. Pourtant vous avez beaucoup à y gagner&nbsp;!
-        </p>
-        <p className="uk-text-center">
-          <span className="uk-text-primary uk-text-bold">
-            Vous allez non seulement transformer la vie de quelqu’un, mais
-            également votre entreprise.
-          </span>{' '}
-          Toutes les organisations qui se sont engagées dans l’inclusion
-          témoignent des effets positifs que cela a provoqué chez elles : plus
-          d’ouverture sur le monde, développement relationnel des salariés, une
-          équipe qui se fédère autour d’un projet commun.
-        </p>
-        <p className="uk-text-center">
-          Avec Entourage Pro, nous vous aidons à devenir une entreprise du monde
-          d’après, qui apporte sa pierre dans la résolution des défis sociaux,
-          et qui remet l’économie à l’endroit, au service de l’humain.
-        </p>
-        <div className="uk-margin-medium-top">
+      <Section className="custom-blue-bg">
+        <ContainerMarginY>
+          <H2
+            title={
+              <>Engager mon entreprise dans l’inclusion : pourquoi&nbsp;?</>
+            }
+            color="black"
+            center
+          />
+          <ContainerWithTextCentered>
+            <ContainerMarginY>
+              <p>
+                Chacun devrait pouvoir avoir sa place dans l’entreprise et dans
+                la société, c&lsquo;est la conviction d&lsquo;Entourage Pro.
+              </p>
+              <p>
+                Il est temps de passer d’une logique d’insertion à une logique
+                d’inclusion : ce n’est pas qu’aux personnes exclues de faire le
+                chemin pour s’insérer mais aussi à l’entreprise de se
+                transformer pour faire une place à tous.
+              </p>
+              <p>
+                Bien sûr ce n’est pas toujours facile. Accueillir des personnes
+                ayant eu des parcours de galère nécessite une capacité
+                d’adaptation de tous les côtés. Pourtant vous avez beaucoup à y
+                gagner&nbsp;!
+              </p>
+              <p>
+                Vous allez non seulement transformer la vie de quelqu’un, mais
+                également votre entreprise. Toutes les organisations qui se sont
+                engagées dans l’inclusion témoignent des effets positifs que
+                cela a provoqué chez elles : plus d’ouverture sur le monde,
+                développement relationnel des salariés, une équipe qui se fédère
+                autour d’un projet commun.
+              </p>
+              <p>
+                Avec Entourage Pro, nous vous aidons à devenir une entreprise du
+                monde d’après, qui apporte sa pierre dans la résolution des
+                défis sociaux, et qui remet l’économie à l’endroit, au service
+                de l’humain.
+              </p>
+            </ContainerMarginY>
+          </ContainerWithTextCentered>
           <LiteYouTubeEmbed
             id="u3d3stVn1h0"
             title="Témoignage recruteur Entourage Pro"
             aspectWidth={1280}
             aspectHeight={720}
           />
-        </div>
+        </ContainerMarginY>
       </Section>
       <CandidateTestimonies />
       <HowToBeInclusive />

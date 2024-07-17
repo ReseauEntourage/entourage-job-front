@@ -12,6 +12,7 @@ const dev = process.env.NODE_ENV !== 'production';
 const hash = require('string-hash');
 const { relative } = require('path');
 const context = __dirname;
+const path = require('path');
 
 /*
 const ContentSecurityPolicy = `
@@ -116,6 +117,7 @@ if (process.env.AWSS3_URL) {
 
 module.exports = withLess({
   webpack: (config, options) => {
+    const { dir } = options;
     config.resolve.modules.push(__dirname);
 
     // @doc https://webpack.js.org/plugins/environment-plugin/
@@ -183,8 +185,16 @@ module.exports = withLess({
     if (!options.isServer) {
       config.resolve.alias['@sentry/node'] = '@sentry/react';
     }
+    config.resolve.alias = {
+      ...(config.resolve.alias || {}),
+      // Add your TypeScript config file location here
+      '@tsconfig': path.resolve(dir, 'src/tsconfig.json'),
+    };
 
     return config;
+  },
+  typescript: {
+    tsconfigPath: 'src/tsconfig.json',
   },
   assetPrefix: !dev ? process.env.CDN_URL || undefined : undefined,
   images: {

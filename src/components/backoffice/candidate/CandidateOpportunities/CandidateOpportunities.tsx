@@ -70,7 +70,7 @@ export const CandidateOpportunities = ({
   const [offset, setOffset] = useState<number>(0);
   const [hasFetchedAll, setHasFetchedAll] = useState(false);
 
-  const [offers, setOffers] = useState(undefined);
+  const [offers, setOffers] = useState([]);
   const [hasError, setHasError] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -91,8 +91,6 @@ export const CandidateOpportunities = ({
   useDeepCompareEffect(() => {
     if (
       !isMobile &&
-      offers &&
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
       offers.length > 0 &&
       ((offers !== prevOffers && !opportunityId) ||
         (opportunityId !== prevOpportunityId &&
@@ -244,13 +242,9 @@ export const CandidateOpportunities = ({
           <OpportunitiesContainer
             backButtonHref={{
               pathname: `/backoffice/candidat/${candidateId}/offres/${opportunityType}`,
-              // @ts-expect-error after enable TS strict mode. Please, try to fix it
               query: queryParamsOpportunities,
             }}
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
             list={
-              offers &&
-              // @ts-expect-error after enable TS strict mode. Please, try to fix it
               offers.length > 0 ? (
                 <CandidateOpportunitiesList
                   hasFetchedAll={hasFetchedAll}
