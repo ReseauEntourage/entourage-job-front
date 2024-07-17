@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ChevronDownIcon from 'assets/icons/chevron-down.svg';
-import { StyledInputLabel } from '../Inputs.styles';
+import { StyledInputLabel, StyledInputLabelOptional } from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
 import { FilterConstant } from 'src/constants/utils';
@@ -21,6 +21,7 @@ export function SelectSimple<T extends string | number | boolean>({
   onChange,
   onBlur,
   showLabel = false,
+  showOptional = false,
   hidden = false,
   disabled = false,
   placeholder,
@@ -53,6 +54,11 @@ export function SelectSimple<T extends string | number | boolean>({
       {showLabel && (
         <StyledInputLabel htmlFor={`form-input-${name}`}>
           {title}
+          {showOptional && (
+            <StyledInputLabelOptional>
+              &bull; Facultatif
+            </StyledInputLabelOptional>
+          )}
         </StyledInputLabel>
       )}
       <input
