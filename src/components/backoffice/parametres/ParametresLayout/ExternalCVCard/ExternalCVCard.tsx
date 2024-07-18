@@ -11,9 +11,9 @@ import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedU
 import { currentUserActions } from 'src/use-cases/current-user';
 import { notificationsActions } from 'src/use-cases/notifications';
 import {
-  StyledCVCardContentContainer,
-  StyledCVUploadInfos,
-  StyledCVUploadInfosText,
+  StyledCvCardContentContainer,
+  StyledCvUploadInfos,
+  StyledCvUploadInfosText,
   StyledDeleteIconContainer,
   StyledFilename,
 } from './ExternalCVCard.styles';
@@ -30,17 +30,17 @@ const Content = ({ dataTestId, externalCv, setExternalCv }: ContentProps) => {
   const user = useAuthenticatedUser();
   const dispatch = useDispatch();
   useEffect(() => {
-    if (user.userProfile.gotExternalCv) {
+    if (user.userProfile.hasExternalCv) {
       Api.getExternalCvByUser(user.id).then((response) => {
         setExternalCv(response.data.url);
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user.userProfile.gotExternalCv]);
+  }, [user.userProfile.hasExternalCv]);
 
   const removeCallback = () => {
     Api.deleteExternalCv().then(() => {
-      dispatch(currentUserActions.setGotExternalCv(false));
+      dispatch(currentUserActions.setHasExternalCv(false));
       setExternalCv(null);
       dispatch(
         notificationsActions.addNotification({
@@ -56,7 +56,7 @@ const Content = ({ dataTestId, externalCv, setExternalCv }: ContentProps) => {
     window.open(externalCv, '_blank');
   };
 
-  if (user.userProfile.gotExternalCv) {
+  if (user.userProfile.hasExternalCv) {
     return (
       <>
         <StyledFilename onClick={openExternalCV}>Votre CV</StyledFilename>
@@ -70,17 +70,17 @@ const Content = ({ dataTestId, externalCv, setExternalCv }: ContentProps) => {
     );
   }
   return (
-    <StyledCVUploadInfosText>
+    <StyledCvUploadInfosText>
       Vous n&apos;avez pas encore de CV Entourage Pro. Téléchargez votre propre
       CV.
-    </StyledCVUploadInfosText>
+    </StyledCvUploadInfosText>
   );
 };
 
-export interface ExternalCVCardProps {
+export interface ExternalCvCardProps {
   dataTestId?: string;
 }
-export const ExternalCVCard = ({ dataTestId }: ExternalCVCardProps) => {
+export const ExternalCVCard = ({ dataTestId }: ExternalCvCardProps) => {
   const dispatch = useDispatch();
   const user = useAuthenticatedUser();
   const [externalCv, setExternalCv] = useState<string | null>(null);
@@ -103,7 +103,7 @@ export const ExternalCVCard = ({ dataTestId }: ExternalCVCardProps) => {
       Api.postExternalCv(formData)
         .then((response) => {
           setExternalCv(response.data.url);
-          dispatch(currentUserActions.setGotExternalCv(true));
+          dispatch(currentUserActions.setHasExternalCv(true));
           dispatch(
             notificationsActions.addNotification({
               type: 'success',
@@ -137,16 +137,16 @@ export const ExternalCVCard = ({ dataTestId }: ExternalCVCardProps) => {
       }
       editCallback={() => {}}
     >
-      <StyledCVCardContentContainer>
-        <StyledCVUploadInfos>
+      <StyledCvCardContentContainer>
+        <StyledCvUploadInfos>
           <IlluCV width={70} height={70} />
           <Content
             dataTestId={dataTestId}
             externalCv={externalCv}
             setExternalCv={setExternalCv}
           />
-        </StyledCVUploadInfos>
-        {!user.userProfile.gotExternalCv && (
+        </StyledCvUploadInfos>
+        {!user.userProfile.hasExternalCv && (
           <>
             <Button onClick={openFileExplorer}>Télécharger</Button>
             <input
@@ -158,7 +158,7 @@ export const ExternalCVCard = ({ dataTestId }: ExternalCVCardProps) => {
             />
           </>
         )}
-      </StyledCVCardContentContainer>
+      </StyledCvCardContentContainer>
     </Card>
   );
 };

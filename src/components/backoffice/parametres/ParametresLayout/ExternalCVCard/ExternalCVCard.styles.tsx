@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledCVUploadInfos = styled.div`
+export const StyledCvUploadInfos = styled.div`
   display: flex;
   flex: 1;
   gap: 10px;
   align-items: center;
 `;
 
-export const StyledCVCardContentContainer = styled.div`
+export const StyledCvCardContentContainer = styled.div`
   display: flex;
   justify-items: center;
   flex-direction: column;
@@ -33,6 +33,6 @@ export const StyledDeleteIconContainer = styled.div`
   }
 `;
 
-export const StyledCVUploadInfosText = styled.p`
+export const StyledCvUploadInfosText = styled.p`
   margin: 0;
 `;

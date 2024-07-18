@@ -41,7 +41,7 @@ export const HeaderProfileDesktop = ({
   isAvailable,
   isEditable = false,
   cvUrl,
-  gotExternalCv,
+  hasExternalCv,
 }: HeaderProfileProps) => {
   const {
     openCorrespondingModal,
@@ -51,11 +51,11 @@ export const HeaderProfileDesktop = ({
     contextualRole,
   } = useHeaderProfile(role);
 
-  const gotCV = !!cvUrl || gotExternalCv;
-  const gotCVTwice = !!cvUrl && gotExternalCv;
+  const hasCv = !!cvUrl || hasExternalCv;
+  const hasTwoCv = !!cvUrl && hasExternalCv;
 
-  const openProCV = () => {
-    window.open(cvUrl, '_blank');
+  const openProCv = () => {
+    window.open(`/cv/${cvUrl}`, '_blank');
   };
 
   const openExternalCv = () => {
@@ -66,10 +66,10 @@ export const HeaderProfileDesktop = ({
   };
 
   const openCv = () => {
-    if (gotExternalCv) {
+    if (hasExternalCv) {
       openExternalCv();
     } else {
-      openProCV();
+      openProCv();
     }
   };
 
@@ -101,17 +101,17 @@ export const HeaderProfileDesktop = ({
                 </ButtonMock>
               </ImageInput>
             )}
-            {gotCV && (
+            {hasCv && (
               <StyledHeaderProfileCVButton>
                 <Button
                   id="nav-cv-button"
                   size="small"
                   style="custom-secondary"
-                  onClick={!gotCVTwice ? openCv : undefined}
+                  onClick={!hasTwoCv ? openCv : undefined}
                 >
-                  Voir le CV {gotCVTwice && <CaretDownIcon />}
+                  Voir le CV {hasTwoCv && <CaretDownIcon />}
                 </Button>
-                {gotCVTwice && (
+                {hasTwoCv && (
                   <Dropdown
                     id="nav-cv-dropdown"
                     boundaryId="nav-cv-button"
@@ -128,7 +128,7 @@ export const HeaderProfileDesktop = ({
                     <a
                       aria-hidden="true"
                       onClick={() => {
-                        openProCV();
+                        openProCv();
                       }}
                     >
                       Voir le CV Entourage Pro

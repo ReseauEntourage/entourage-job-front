@@ -40,7 +40,7 @@ export const ParametresLayout = () => {
         role={user.role}
         department={user.userProfile.department}
         isAvailable={user.userProfile.isAvailable}
-        gotExternalCv={user.userProfile.gotExternalCv}
+        hasExternalCv={user.userProfile.hasExternalCv}
         isEditable
       />
       <Section className="custom-page">

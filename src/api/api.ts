@@ -163,17 +163,17 @@ export class APIHandler {
   /// external cv //
   /// //////////////
   postExternalCv(form: FormData): Promise<AxiosResponse<ExternalCv>> {
-    return this.post(`/user/current/external-cv`, form, {
+    return this.post('/external-cv', form, {
       'Content-Type': 'multipart/form-data',
     });
   }
 
   getExternalCvByUser(userId: string): Promise<AxiosResponse<ExternalCv>> {
-    return this.get(`/user/${userId}/external-cv`);
+    return this.get(`/external-cv/${userId}`);
   }
 
   deleteExternalCv(): Promise<AxiosResponse> {
-    return this.delete(`/user/current/external-cv`);
+    return this.delete(`/external-cv`);
   }
 
   /// //////
