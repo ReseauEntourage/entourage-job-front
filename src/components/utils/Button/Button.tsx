@@ -65,7 +65,7 @@ export function getButtonClassBuffer({
 }
 
 export function Button({
-  id = 'button',
+  id,
   visible,
   href,
   children,
@@ -94,7 +94,7 @@ export function Button({
 
   const buttonComponent = (
     <StyledButton
-      id={id}
+      id={id || undefined}
       className={classBuffer}
       disabled={disabled}
       type="button"
