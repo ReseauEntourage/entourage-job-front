@@ -1,8 +1,11 @@
 import React from 'react';
+import CaretDownIcon from 'assets/icons/caret-down.svg';
 import EditIcon from 'assets/icons/editIcon.svg';
+import { Api } from 'src/api';
 import {
   Button,
   ButtonIcon,
+  Dropdown,
   ImgProfile,
   Section,
   Tag,
@@ -41,6 +44,7 @@ export const HeaderProfileMobile = ({
   isAvailable,
   isEditable,
   cvUrl,
+  hasExternalCv,
 }: HeaderProfileProps) => {
   const {
     openCorrespondingModal,
@@ -49,6 +53,27 @@ export const HeaderProfileMobile = ({
     shouldShowAllProfile,
     contextualRole,
   } = useHeaderProfile(role);
+  const hasCv = !!cvUrl || hasExternalCv;
+  const hasTwoCv = !!cvUrl && hasExternalCv;
+
+  const openProCv = () => {
+    window.open(`/cv/${cvUrl}`, '_blank');
+  };
+
+  const openExternalCv = () => {
+    Api.getExternalCvByUser(id).then((response) => {
+      const externalCvUrl = response.data;
+      window.open(externalCvUrl.url, '_blank');
+    });
+  };
+
+  const openCv = () => {
+    if (hasExternalCv) {
+      openExternalCv();
+    } else {
+      openProCv();
+    }
+  };
 
   return (
     <StyledHeaderProfile>
@@ -114,15 +139,40 @@ export const HeaderProfileMobile = ({
               description={description}
               isEditable={isEditable}
             />
-            {cvUrl && (
+            {hasCv && (
               <StyledHeaderProfileCVButton>
                 <Button
+                  id="nav-cv-button"
                   size="small"
                   style="custom-secondary"
-                  href={`/cv/${cvUrl}`}
+                  onClick={!hasTwoCv ? openCv : undefined}
                 >
-                  Voir le CV
+                  Voir le CV {hasTwoCv && <CaretDownIcon />}
                 </Button>
+                {hasTwoCv && (
+                  <Dropdown
+                    id="nav-cv-dropdown"
+                    boundaryId="nav-cv-button"
+                    dividers={[1]}
+                  >
+                    <a
+                      aria-hidden="true"
+                      onClick={() => {
+                        openExternalCv();
+                      }}
+                    >
+                      Voir le CV personnel
+                    </a>
+                    <a
+                      aria-hidden="true"
+                      onClick={() => {
+                        openProCv();
+                      }}
+                    >
+                      Voir le CV Entourage Pro
+                    </a>
+                  </Dropdown>
+                )}
               </StyledHeaderProfileCVButton>
             )}
           </StyledHeaderProfileDescription>

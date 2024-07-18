@@ -119,9 +119,9 @@ export const slice = createSlice({
     setUser(state, action: PayloadAction<UserWithUserCandidate | null>) {
       state.user = action.payload;
     },
-    setGotExternalCv(state, action: PayloadAction<boolean>) {
+    setHasExternalCv(state, action: PayloadAction<boolean>) {
       if (state.user && state.user.userProfile) {
-        state.user.userProfile.gotExternalCv = action.payload;
+        state.user.userProfile.hasExternalCv = action.payload;
       }
     },
   },

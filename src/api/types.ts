@@ -41,6 +41,7 @@ export const APIRoutes = {
   ORGANIZATIONS: 'organization',
   MESSAGE: 'message',
   READ_DOCUMENTS: 'readDocuments',
+  EXTERNAL_CVS: 'external-cv',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -109,7 +110,7 @@ export type UserProfile = {
   lastSendMessage: string | null;
   lastReceivedMessage: string | null;
   linkedinUrl: string | null;
-  gotExternalCv: boolean;
+  hasExternalCv: boolean;
 };
 
 export type User = {
@@ -622,7 +623,7 @@ export type PublicProfile = {
   lastSentMessage: string;
   lastReceivedMessage: string;
   cvUrl?: string;
-  gotExternalCv: boolean;
+  hasExternalCv: boolean;
 };
 
 export type ProfilesFilters = {
