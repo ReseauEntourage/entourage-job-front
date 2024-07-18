@@ -2,26 +2,24 @@ import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledEditPictureContainer = styled.div`
-  height: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: black;
   position: relative;
-  &.mobile {
-    height: 270px;
-  }
+  border: 1px solid #d9d9d9;
+  border-radius: 20px;
+  padding: 20px;
 `;
 
 export const StyledEditPicture = styled.div`
-  height: 400px;
-  width: 270px !important;
-  border-radius: 859px 909px 729px 909px;
-  background-position: 66% 39%;
+  height: 360px;
+  width: 360px;
+  border-radius: 50%;
+  background-position: center;
   background-size: cover;
   &.mobile {
-    width: 190px !important;
-    height: 270px;
+    width: 190px;
+    height: 190px;
   }
 `;
 

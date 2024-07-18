@@ -59,7 +59,6 @@ export const CVEditPicture = ({
           )}
         </StyledEditPictureButton>
       )}
-      ;
     </StyledEditPictureContainer>
   );
 };
