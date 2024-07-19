@@ -1,69 +1,19 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
-import { Close, IlluCV } from 'assets/icons/icons';
+import { IlluCV } from 'assets/icons/icons';
 import QuestionIcon from 'assets/icons/question.svg';
 import { Button } from 'src/components/utils/Button';
-import { ButtonIcon } from 'src/components/utils/ButtonIcon';
 import { Card } from 'src/components/utils/Cards/Card';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { useCurrentUserExternalCv } from 'src/hooks/useCurrentUserExternalCv';
 import { currentUserActions } from 'src/use-cases/current-user';
+import { Content } from './Content';
 import {
   StyledCvCardContentContainer,
   StyledCvUploadInfos,
-  StyledCvUploadInfosText,
-  StyledDeleteIconContainer,
-  StyledFilename,
 } from './ExternalCVCard.styles';
 
-interface ContentProps {
-  dataTestId?: string;
-}
-
 const tooltipId = 'external-cv-tooltip';
-
-const Content = ({ dataTestId }: ContentProps) => {
-  const user = useAuthenticatedUser();
-  const externalCv = useCurrentUserExternalCv();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (user.userProfile.hasExternalCv) {
-      dispatch(currentUserActions.getExternalCvRequested());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user.userProfile.hasExternalCv]);
-
-  const removeCallback = () => {
-    dispatch(currentUserActions.deleteExternalCvRequested());
-  };
-
-  const openExternalCV = () => {
-    if (externalCv === null) return;
-    window.open(externalCv, '_blank');
-  };
-
-  if (user.userProfile.hasExternalCv) {
-    return (
-      <>
-        <StyledFilename onClick={openExternalCV}>Votre CV</StyledFilename>
-        <StyledDeleteIconContainer onClick={removeCallback}>
-          <ButtonIcon
-            icon={<Close width={10} height={10} />}
-            dataTestId={`${dataTestId}-button-edit`}
-          />
-        </StyledDeleteIconContainer>
-      </>
-    );
-  }
-  return (
-    <StyledCvUploadInfosText>
-      Vous n&apos;avez pas encore de CV Entourage Pro. Téléchargez votre propre
-      CV.
-    </StyledCvUploadInfosText>
-  );
-};
 
 export interface ExternalCvCardProps {
   dataTestId?: string;
