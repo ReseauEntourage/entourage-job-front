@@ -103,10 +103,7 @@ export const PageCVContent = ({
           <StyledCVProfilePicture
             className={!isDesktop ? 'mobile' : ''}
             imgSrc={`${process.env.AWSS3_CDN_URL}/${cv.urlImg}`}
-          >
-            <div className="picture" />
-            <div className="pseudo" />
-          </StyledCVProfilePicture>
+          />
           {isDesktop && (
             <>
               <StyledShareContainer>
