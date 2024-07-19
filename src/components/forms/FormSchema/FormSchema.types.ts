@@ -166,6 +166,7 @@ interface FormFieldInputCommonProperties<
   disable?: (getValue: GetValueType<V>) => boolean;
   placeholder?: ((getValue: GetValueType<V>) => string) | string;
   showLabel?: boolean;
+  showOptional?: boolean;
 }
 
 export interface FormFieldTextInput<V extends FormSchemaValidation>

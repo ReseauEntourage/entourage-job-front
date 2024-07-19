@@ -161,6 +161,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
           ? field.placeholder(getValue)
           : field.placeholder,
       showLabel: field.showLabel,
+      showOptional: field.showOptional,
     };
   }, [
     field,
