@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
 import { Close, IlluCV } from 'assets/icons/icons';
 import QuestionIcon from 'assets/icons/question.svg';
-import { Api } from 'src/api';
 import { Button } from 'src/components/utils/Button';
 import { ButtonIcon } from 'src/components/utils/ButtonIcon';
 import { Card } from 'src/components/utils/Cards/Card';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
+import { useCurrentUserExternalCv } from 'src/hooks/useCurrentUserExternalCv';
 import { currentUserActions } from 'src/use-cases/current-user';
-import { notificationsActions } from 'src/use-cases/notifications';
 import {
   StyledCvCardContentContainer,
   StyledCvUploadInfos,
@@ -20,35 +19,24 @@ import {
 
 interface ContentProps {
   dataTestId?: string;
-  externalCv: string | null;
-  setExternalCv: (value: string | null) => void;
 }
 
 const tooltipId = 'external-cv-tooltip';
 
-const Content = ({ dataTestId, externalCv, setExternalCv }: ContentProps) => {
+const Content = ({ dataTestId }: ContentProps) => {
   const user = useAuthenticatedUser();
+  const externalCv = useCurrentUserExternalCv();
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (user.userProfile.hasExternalCv) {
-      Api.getExternalCvByUser(user.id).then((response) => {
-        setExternalCv(response.data.url);
-      });
+      dispatch(currentUserActions.getExternalCvRequested());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.userProfile.hasExternalCv]);
 
   const removeCallback = () => {
-    Api.deleteExternalCv().then(() => {
-      dispatch(currentUserActions.setHasExternalCv(false));
-      setExternalCv(null);
-      dispatch(
-        notificationsActions.addNotification({
-          type: 'success',
-          message: `Le CV a bien été supprimé`,
-        })
-      );
-    });
+    dispatch(currentUserActions.deleteExternalCvRequested());
   };
 
   const openExternalCV = () => {
@@ -83,7 +71,6 @@ export interface ExternalCvCardProps {
 export const ExternalCVCard = ({ dataTestId }: ExternalCvCardProps) => {
   const dispatch = useDispatch();
   const user = useAuthenticatedUser();
-  const [externalCv, setExternalCv] = useState<string | null>(null);
 
   const openFileExplorer = () => {
     const input = document.getElementById('external-cv-upload-input');
@@ -100,25 +87,7 @@ export const ExternalCVCard = ({ dataTestId }: ExternalCvCardProps) => {
       const file = input.files[0];
       const formData = new FormData();
       formData.append('file', file);
-      Api.postExternalCv(formData)
-        .then((response) => {
-          setExternalCv(response.data.url);
-          dispatch(currentUserActions.setHasExternalCv(true));
-          dispatch(
-            notificationsActions.addNotification({
-              type: 'success',
-              message: `Le CV a bien été importé`,
-            })
-          );
-        })
-        .catch(() => {
-          dispatch(
-            notificationsActions.addNotification({
-              type: 'danger',
-              message: `Une erreur est survenue lors de l'import du CV. Veuillez réessayer.`,
-            })
-          );
-        });
+      dispatch(currentUserActions.uploadExternalCvRequested(formData));
     }
   };
 
@@ -140,11 +109,7 @@ export const ExternalCVCard = ({ dataTestId }: ExternalCvCardProps) => {
       <StyledCvCardContentContainer>
         <StyledCvUploadInfos>
           <IlluCV width={70} height={70} />
-          <Content
-            dataTestId={dataTestId}
-            externalCv={externalCv}
-            setExternalCv={setExternalCv}
-          />
+          <Content dataTestId={dataTestId} />
         </StyledCvUploadInfos>
         {!user.userProfile.hasExternalCv && (
           <>
