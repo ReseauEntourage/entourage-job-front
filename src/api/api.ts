@@ -15,6 +15,7 @@ import {
   ContactContactUs,
   ContactNewsletter,
   CV,
+  ExternalCv,
   ExternalMessage,
   ExternalOpportunityDto,
   InternalMessage,
@@ -156,6 +157,23 @@ export class APIHandler {
 
   putCVRead(candidateId: string): Promise<AxiosResponse> {
     return this.put(`/cv/read/${candidateId}`);
+  }
+
+  /// //////////////
+  /// external cv //
+  /// //////////////
+  postExternalCv(form: FormData): Promise<AxiosResponse<ExternalCv>> {
+    return this.post('/external-cv', form, {
+      'Content-Type': 'multipart/form-data',
+    });
+  }
+
+  getExternalCvByUser(userId: string): Promise<AxiosResponse<ExternalCv>> {
+    return this.get(`/external-cv/${userId}`);
+  }
+
+  deleteExternalCv(): Promise<AxiosResponse> {
+    return this.delete(`/external-cv`);
   }
 
   /// //////

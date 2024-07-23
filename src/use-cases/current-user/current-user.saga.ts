@@ -1,4 +1,5 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
+import { notificationsActions } from '../notifications';
 import { Api } from 'src/api';
 import { STORAGE_KEYS } from 'src/constants';
 import {
@@ -32,6 +33,15 @@ const {
   updateUserProfilePictureRequested,
   updateUserProfilePictureSucceeded,
   updateUserProfilePictureFailed,
+  deleteExternalCvRequested,
+  deleteExternalCvSucceeded,
+  deleteExternalCvFailed,
+  uploadExternalCvRequested,
+  uploadExternalCvSucceeded,
+  uploadExternalCvFailed,
+  getExternalCvRequested,
+  getExternalCvSucceeded,
+  getExternalCvFailed,
 } = slice.actions;
 
 function getIsReleaseVersionAllowed() {
@@ -163,6 +173,54 @@ function* updateUserProfilePictureRequestedSaga(
   }
 }
 
+function* deleteExternalCvRequestedSaga() {
+  try {
+    yield* call(() => Api.deleteExternalCv());
+    yield* put(deleteExternalCvSucceeded());
+    yield* put(
+      notificationsActions.addNotification({
+        type: 'success',
+        message: `Le CV a bien été supprimé`,
+      })
+    );
+  } catch (error) {
+    yield* put(deleteExternalCvFailed());
+  }
+}
+
+function* uploadExternalCvRequestedSaga(
+  action: ReturnType<typeof uploadExternalCvRequested>
+) {
+  try {
+    yield* call(() => Api.postExternalCv(action.payload));
+    yield* put(uploadExternalCvSucceeded());
+    yield* put(
+      notificationsActions.addNotification({
+        type: 'success',
+        message: `Le CV a bien été importé`,
+      })
+    );
+  } catch (error) {
+    yield* put(uploadExternalCvFailed());
+    yield* put(
+      notificationsActions.addNotification({
+        type: 'danger',
+        message: `Une erreur est survenue lors de l'import du CV. Veuillez réessayer.`,
+      })
+    );
+  }
+}
+
+function* getExternalCvRequestedSaga() {
+  try {
+    const userId = yield* select(selectCurrentUserId);
+    const response = yield* call(() => Api.getExternalCvByUser(userId));
+    yield* put(getExternalCvSucceeded(response.data.url));
+  } catch (error) {
+    yield* put(getExternalCvFailed());
+  }
+}
+
 function* loginSucceededSaga(
   action: ReturnType<typeof authenticationActions.loginSucceeded>
 ) {
@@ -185,4 +243,7 @@ export function* saga() {
     updateUserProfilePictureRequested,
     updateUserProfilePictureRequestedSaga
   );
+  yield* takeLatest(deleteExternalCvRequested, deleteExternalCvRequestedSaga);
+  yield* takeLatest(uploadExternalCvRequested, uploadExternalCvRequestedSaga);
+  yield* takeLatest(getExternalCvRequested, getExternalCvRequestedSaga);
 }
