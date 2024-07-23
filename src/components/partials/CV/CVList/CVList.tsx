@@ -143,10 +143,10 @@ export const CVList = ({
                   firstName={cv.user.candidat.firstName}
                   ambitions={cv.ambitions}
                   locations={cv.locations}
-                  skills={cv.skills}
-                  catchphrase={cv.catchphrase}
-                  employed={cv.user.employed}
-                  endOfContract={cv.user.endOfContract}
+                  // skills={cv.skills}
+                  // catchphrase={cv.catchphrase}
+                  // employed={cv.user.employed}
+                  // endOfContract={cv.user.endOfContract}
                   id={cv.user.candidat.id}
                 />
               );
