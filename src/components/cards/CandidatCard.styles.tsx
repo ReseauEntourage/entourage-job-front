@@ -57,6 +57,7 @@ export const CandidatCardContentStyled = styled.div`
     color: ${COLORS.black};
     font-size: 18px;
     font-weight: 700;
+    margin-bottom: 10px;
   }
   > p {
     margin: 0;
