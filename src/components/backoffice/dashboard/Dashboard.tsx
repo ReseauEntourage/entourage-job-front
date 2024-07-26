@@ -5,10 +5,15 @@ import {
 } from '../Backoffice.styles';
 import { Section } from 'src/components/utils';
 import { H1 } from 'src/components/utils/Headings';
-import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
+import {
+  CANDIDATE_USER_ROLES,
+  COACH_USER_ROLES,
+  USER_ROLES,
+} from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop } from 'src/hooks/utils';
 import { isRoleIncluded } from 'src/utils';
+import { DashboardAlertWhatsappCoach } from './DahsboardAlertWhatsappCoach/DashboardAlertWhatsappCoach';
 import {
   StyledDashboardLeftColumn,
   StyledDashboardRightColumn,
@@ -38,6 +43,9 @@ export const Dashboard = () => {
       <Section className="custom-page">
         <StyledDashboardTitleContainer>
           <H1 title="Bienvenue sur votre espace personnel" color="black" />
+          {isRoleIncluded(COACH_USER_ROLES, user.role) && (
+            <DashboardAlertWhatsappCoach />
+          )}
         </StyledDashboardTitleContainer>
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
           <StyledDashboardLeftColumn className={`${isDesktop ? '' : 'mobile'}`}>
