@@ -13,3 +13,10 @@ export const validateLastStepOnboardingSelectors =
   validateLastStepOnboardingAdapter.getSelectors<RootState>(
     (state) => state.onboarding.validateLastStepOnboarding
   );
+
+export const extraSelectors = {
+  ...validateLastStepOnboardingSelectors,
+  selectOnboarding,
+  selectCurrentOnboardingStep,
+  selectShouldLaunchOnboarding,
+};

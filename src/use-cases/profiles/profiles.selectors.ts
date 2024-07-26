@@ -45,3 +45,15 @@ export function selectProfilesHasFetchedAll(state: RootState) {
 export function selectSelectedProfile(state: RootState) {
   return state.profiles.selectedProfile;
 }
+
+export const extraSelectors = {
+  ...fetchProfilesSelectors,
+  ...fetchProfilesRecommendationsSelectors,
+  ...fetchSelectedProfileSelectors,
+  ...postInternalMessageSelectors,
+  selectProfiles,
+  selectProfilesRecommendations,
+  selectProfilesOffset,
+  selectProfilesHasFetchedAll,
+  selectSelectedProfile,
+};

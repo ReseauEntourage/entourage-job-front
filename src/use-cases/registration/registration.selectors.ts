@@ -201,3 +201,25 @@ export function selectRegistrationShouldSkipStep(state: RootState) {
   }
   return false;
 }
+
+export const extraSelectors = {
+  ...createUserSelectors,
+  selectCreateUserError,
+  selectIsEmptyRegistrationData,
+  selectRegistrationData,
+  selectRegistrationCurrentStep,
+  selectDefinedRegistrationCurrentStep,
+  selectRegistrationNextStep,
+  selectRegistrationSelectedRole,
+  selectDefinedRegistrationSelectedRole,
+  selectRegistrationSelectedProgram,
+  selectDefinedRegistrationSelectedProgram,
+  selectIsFirstRegistrationStep,
+  selectIsLastRegistrationStep,
+  selectIsRegistrationLoading,
+  selectRegistrationCurrentStepData,
+  selectRegistrationCurrentStepContent,
+  selectRegistrationConfirmationStepContent,
+  selectRegistrationDataFromOtherStep,
+  selectRegistrationShouldSkipStep,
+};

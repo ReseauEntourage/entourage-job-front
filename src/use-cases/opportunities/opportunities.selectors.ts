@@ -41,3 +41,14 @@ export function selectNumberOfOpportunitiesInProgress(state: RootState) {
     (tabCount) => tabCount.status === -1
   )?.count;
 }
+
+export const extraSelectors = {
+  ...fetchOpportunitiesAsCandidateSelectors,
+  ...fetchOpportunitiesTabCountsSelectors,
+  ...fetchDashboardOpportunitiesSelectors,
+  selectOpportunities,
+  selectDashboardOpportunities,
+  selectOpportunitiesHasFetchedAll,
+  selectOpportunitiesTabCounts,
+  selectNumberOfOpportunitiesInProgress,
+};

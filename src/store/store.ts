@@ -1,48 +1,25 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, combineSlices } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
-import { all, spawn, call } from 'typed-redux-saga';
-import { useCasesConfig } from 'src/use-cases';
-import { UseCaseConfigItem } from 'src/use-cases/types';
+import { extendedSlices } from 'src/use-cases';
+import { createRootSaga } from './utils';
 
-const useCasesList = Object.values(useCasesConfig) as UseCaseConfigItem[];
+const uniqueExtendedSlices = Array.from(new Set(extendedSlices));
+const slices = uniqueExtendedSlices.map(({ slice }) => slice);
+const sagas = uniqueExtendedSlices.map(({ saga }) => saga);
 
-const reducers = useCasesList.reduce(
-  (acc, { slice }) => ({
-    ...acc,
-    [slice.name]: slice.reducer,
-  }),
-  {}
-);
+const rootReducer = combineSlices(...slices);
+
+const rootSaga = createRootSaga(sagas, (error) => {
+  console.error('Error in root saga:', error);
+});
 
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
-  reducer: reducers,
-  middleware: [sagaMiddleware],
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware().concat(sagaMiddleware);
+  },
 });
-
-function* rootSaga() {
-  yield* all(
-    useCasesList
-      .filter((useCase) => !!useCase.saga)
-      .map((useCase) =>
-        // eslint-disable-next-line func-names
-        spawn(function* () {
-          while (true) {
-            try {
-              yield* call(useCase.saga);
-              break;
-            } catch (error) {
-              store.dispatch({
-                type: 'SAGA_ERROR',
-                error: error?.toString?.(),
-                useCaseName: useCase.slice.name,
-              });
-            }
-          }
-        })
-      )
-  );
-}
 
 sagaMiddleware.run(rootSaga);

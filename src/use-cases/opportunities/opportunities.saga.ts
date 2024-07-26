@@ -1,10 +1,7 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
-import { selectProfilesOffset } from '../profiles';
+import { profiles } from '../profiles';
 import { Api } from 'src/api';
-import {
-  selectCandidateId,
-  selectCandidateProfileDefaultFiltersForDashboardOpportunities,
-} from 'src/use-cases/current-user';
+import { currentUser } from 'src/use-cases/current-user';
 import { mutateToArray } from 'src/utils';
 import { slice } from './opportunities.slice';
 
@@ -28,7 +25,7 @@ function* fetchOpportunitiesAsCandidateRequestedSaga(
   try {
     const { candidateId, department, businessLines, ...restFilters } =
       action.payload;
-    const offset = yield* select(selectProfilesOffset);
+    const offset = yield* select(profiles.selectors.selectProfilesOffset);
     const response = yield* call(() =>
       Api.getAllCandidateOpportunities(candidateId, {
         params: {
@@ -53,7 +50,7 @@ function* fetchOpportunitiesAsCandidateWithFiltersSaga(
 }
 
 function* fetchOpportunitiesTabCountsSaga() {
-  const candidateId = yield* select(selectCandidateId);
+  const candidateId = yield* select(currentUser.selectors.selectCandidateId);
   if (!candidateId) return;
   try {
     const response = yield* call(() =>
@@ -66,9 +63,10 @@ function* fetchOpportunitiesTabCountsSaga() {
 }
 
 function* fetchDashboardOpportunitiesSaga() {
-  const candidateId = yield* select(selectCandidateId);
+  const candidateId = yield* select(currentUser.selectors.selectCandidateId);
   const defaultFilters = yield* select(
-    selectCandidateProfileDefaultFiltersForDashboardOpportunities
+    currentUser.selectors
+      .selectCandidateProfileDefaultFiltersForDashboardOpportunities
   );
   if (!candidateId) return null;
   try {

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 
 function isAxiosError(error: any): error is AxiosError {
   return error?.isAxiosError === true;
@@ -59,39 +59,43 @@ export function isTokenExpiredError(error: unknown) {
 
 // ------------------------------------------------------------------
 
-function createAxiosError(status: number) {
+export function createAxiosError(
+  status?: number,
+  data?: Record<string, unknown>
+) {
   return {
     isAxiosError: true,
     response: {
       status,
-    },
+      data,
+    } as AxiosResponse,
   };
 }
 
-export function createBadRequestError() {
-  return createAxiosError(400);
+export function createBadRequestError(data?: Record<string, unknown>) {
+  return createAxiosError(400, data);
 }
 
-export function createUnauthorizedError() {
-  return createAxiosError(401);
+export function createUnauthorizedError(data?: Record<string, unknown>) {
+  return createAxiosError(401, data);
 }
 
-export function createForbiddenError() {
-  return createAxiosError(403);
+export function createForbiddenError(data?: Record<string, unknown>) {
+  return createAxiosError(403, data);
 }
 
-export function createNotFoundError() {
-  return createAxiosError(404);
+export function createNotFoundError(data?: Record<string, unknown>) {
+  return createAxiosError(404, data);
 }
 
-export function createConflictError() {
-  return createAxiosError(409);
+export function createConflictError(data?: Record<string, unknown>) {
+  return createAxiosError(409, data);
 }
 
-export function createUnprocessableEntityError() {
-  return createAxiosError(422);
+export function createUnprocessableEntityError(data?: Record<string, unknown>) {
+  return createAxiosError(422, data);
 }
 
-export function createIsTooManyRequests() {
-  return createAxiosError(429);
+export function createIsTooManyRequests(data?: Record<string, unknown>) {
+  return createAxiosError(429, data);
 }
