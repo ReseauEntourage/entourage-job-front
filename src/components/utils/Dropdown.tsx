@@ -20,7 +20,6 @@ export const Dropdown = ({
   return (
     <div
       id={id}
-      style={{ minWidth: '10px' }}
       data-uk-dropdown={`mode: click; pos: bottom-justify; ${
         boundaryId ? `boundary: #${boundaryId}; boundary-align: true ` : ''
       }`}
