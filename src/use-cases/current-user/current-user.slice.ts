@@ -27,6 +27,7 @@ export interface State {
   user: UserWithUserCandidate | null;
   userUpdateError: UpdateError | null; // TODO: Add error types
   profileUpdateError: UpdateError | null; // TODO: Add error types
+  externalCv: string | null;
 }
 
 const initialState: State = {
@@ -39,6 +40,7 @@ const initialState: State = {
   user: null,
   userUpdateError: null,
   profileUpdateError: null,
+  externalCv: null,
 };
 
 export const slice = createSlice({
@@ -119,6 +121,25 @@ export const slice = createSlice({
     setUser(state, action: PayloadAction<UserWithUserCandidate | null>) {
       state.user = action.payload;
     },
+    deleteExternalCvRequested() {},
+    deleteExternalCvSucceeded(state) {
+      if (state.user && state.user.userProfile) {
+        state.user.userProfile.hasExternalCv = false;
+      }
+    },
+    deleteExternalCvFailed() {},
+    uploadExternalCvRequested: (_state, _action: PayloadAction<FormData>) => {},
+    uploadExternalCvSucceeded(state) {
+      if (state.user && state.user.userProfile) {
+        state.user.userProfile.hasExternalCv = true;
+      }
+    },
+    uploadExternalCvFailed() {},
+    getExternalCvRequested() {},
+    getExternalCvSucceeded(state, action: PayloadAction<string>) {
+      state.externalCv = action.payload;
+    },
+    getExternalCvFailed() {},
   },
 });
 
