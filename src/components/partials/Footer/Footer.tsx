@@ -26,8 +26,11 @@ const pages: PageType = [
       },
       {
         title: 'Nos partenaires',
-        path: '/partenaires',
+        path: 'https://www.entourage.social/qui-sommes-nous/partenaires',
         props: {
+          isExternal: true,
+          newTab: true,
+          target: '_blank',
           onClick: () => {
             gaEvent(GA_TAGS.FOOTER_VOIR_PARTENAIRES_CLIC);
           },
