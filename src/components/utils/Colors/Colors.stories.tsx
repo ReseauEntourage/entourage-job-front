@@ -93,7 +93,7 @@ const ColorsTemplate = () => {
               <StyledColor color={COLORS.alert[colorKey].background}>
                 {COLORS.alert[colorKey].background}
               </StyledColor>
-              <div>{COLORS.alert[colorKey].background}</div>
+              <div>{colorKey}</div>
             </StyledColorContainer>
           );
         })}
