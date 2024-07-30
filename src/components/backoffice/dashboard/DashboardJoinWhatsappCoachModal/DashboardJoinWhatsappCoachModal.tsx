@@ -17,7 +17,7 @@ export const DashboardJoinWhatsappCoachModal = () => {
       <StyledImageContainer>
         <SimpleLink href={user.whatsappJoinUrl.url} target="_blank">
           <Img
-            src={user.whatsappJoinUrl.qrcode_url}
+            src={user.whatsappJoinUrl.qrCodePath}
             alt="QR code Whatsapp"
             width={250}
             height={250}

@@ -115,7 +115,7 @@ export type UserProfile = {
 
 export interface WhatsappJoinUrl {
   name: string;
-  qrcode_url: string;
+  qrCodePath: string;
   url: string;
 }
 
