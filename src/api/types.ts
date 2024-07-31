@@ -113,6 +113,12 @@ export type UserProfile = {
   hasExternalCv: boolean;
 };
 
+export interface WhatsappJoinUrl {
+  name: string;
+  qrCodePath: string;
+  url: string;
+}
+
 export type User = {
   coach: User;
   id: string;
@@ -130,6 +136,7 @@ export type User = {
   hashReset: string;
   saltReset: string;
   zone: AdminZone;
+  whatsappJoinUrl: WhatsappJoinUrl;
   organization: Organization;
   deletedAt?: string;
   userProfile: UserProfile;
