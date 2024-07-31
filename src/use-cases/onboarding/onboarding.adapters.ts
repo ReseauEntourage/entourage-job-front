@@ -7,4 +7,11 @@ export const validateFirstSecondStepOnboardingAdapter = createRequestAdapter(
 
 export const validateLastStepOnboardingAdapter = createRequestAdapter(
   'validateLastStepOnboarding'
-).withPayloads<Partial<UserProfile>, void, void>();
+).withPayloads<
+  {
+    userProfile: Partial<UserProfile>;
+    optinNewsletter: boolean;
+  },
+  void,
+  void
+>();
