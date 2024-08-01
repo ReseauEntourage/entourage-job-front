@@ -2,8 +2,13 @@ import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 import { AlertVariant } from './Alert.types';
 
-export const StyledAlert = styled.div<{ variant: AlertVariant }>`
-  display: flex;
+export const StyledAlert = styled.div<{
+  variant: AlertVariant;
+  visible: boolean;
+}>`
+  display: ${(props) => {
+    return props.visible ? 'flex' : 'none';
+  }};
   align-items: center;
   gap: 10px;
   border-radius: 10px;
@@ -14,7 +19,6 @@ export const StyledAlert = styled.div<{ variant: AlertVariant }>`
   color: ${(props) => {
     return COLORS.alert[props.variant]?.text || COLORS.white;
   }};
-  font-weight: 700;
   color: ${COLORS.alert.info.text};
   .icon {
     width: 46px;
