@@ -97,14 +97,21 @@ export const ModalEditUserInformation = ({
         onClose: () => void,
         requestErrorCallback: (msg: string) => void
       ) => {
-        const { oldEmail, newEmail0, newEmail1, phone } = values;
+        const { firstName, lastName, oldEmail, newEmail0, newEmail1, phone } =
+          values;
 
         let newUserData: Partial<UserWithUserCandidate> = {};
         let newUserProfileData: Partial<UserProfile> = {};
 
-        if (phone !== user.phone) {
+        if (
+          phone !== user.phone ||
+          firstName !== user.firstName ||
+          lastName !== user.lastName
+        ) {
           newUserData = {
             ...newUserData,
+            firstName,
+            lastName,
             phone,
           };
         }
@@ -132,12 +139,10 @@ export const ModalEditUserInformation = ({
         }
 
         if (isAdminForm(values)) {
-          const { firstName, lastName, gender } = values;
+          const { gender } = values;
 
           newUserData = {
             ...newUserData,
-            firstName,
-            lastName,
             gender,
           };
         }

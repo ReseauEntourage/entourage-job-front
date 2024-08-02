@@ -15,6 +15,8 @@ import {
 import { FilterConstant } from 'src/constants/utils';
 
 export const formPersonalDataAsCandidate: FormSchema<{
+  firstName: string;
+  lastName: string;
   phone: string;
   address: string;
   oldEmail: string;
@@ -24,6 +26,26 @@ export const formPersonalDataAsCandidate: FormSchema<{
 }> = {
   id: 'form-personal-data',
   fields: [
+    {
+      id: 'nameLabel',
+      name: 'nameLabel',
+      title: 'Modifier mon identité',
+      component: 'heading',
+    },
+    {
+      id: 'firstName',
+      name: 'firstName',
+      component: 'text-input',
+      title: 'Prénom*',
+      isRequired: true,
+    },
+    {
+      id: 'lastName',
+      name: 'lastName',
+      component: 'text-input',
+      title: 'Nom*',
+      isRequired: true,
+    },
     {
       id: 'mailLabel',
       name: 'mailLabel',
@@ -107,6 +129,8 @@ export const formPersonalDataAsCandidate: FormSchema<{
 };
 
 export const formPersonalDataAsCoach: FormSchema<{
+  firstName: string;
+  lastName: string;
   phone: string;
   oldEmail: string;
   newEmail0: string;
@@ -115,6 +139,26 @@ export const formPersonalDataAsCoach: FormSchema<{
 }> = {
   id: 'form-personal-data',
   fields: [
+    {
+      id: 'nameLabel',
+      name: 'nameLabel',
+      title: 'Modifier mon identité',
+      component: 'heading',
+    },
+    {
+      id: 'firstName',
+      name: 'firstName',
+      component: 'text-input',
+      title: 'Prénom',
+      isRequired: true,
+    },
+    {
+      id: 'lastName',
+      name: 'lastName',
+      component: 'text-input',
+      title: 'Nom',
+      isRequired: true,
+    },
     {
       id: 'mailLabel',
       name: 'mailLabel',
