@@ -89,7 +89,7 @@ function* updateUserRequestedSaga(
         user,
       })
     );
-    if (user.email !== formerUser?.email) {
+    if (user.email && user.email !== formerUser?.email) {
       yield* put(authenticationActions.logoutRequested());
     }
   } catch (error) {
