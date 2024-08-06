@@ -41,6 +41,7 @@ export const APIRoutes = {
   ORGANIZATIONS: 'organization',
   MESSAGE: 'message',
   READ_DOCUMENTS: 'readDocuments',
+  EXTERNAL_CVS: 'external-cv',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -109,7 +110,14 @@ export type UserProfile = {
   lastSendMessage: string | null;
   lastReceivedMessage: string | null;
   linkedinUrl: string | null;
+  hasExternalCv: boolean;
 };
+
+export interface WhatsappJoinUrl {
+  name: string;
+  qrCodePath: string;
+  url: string;
+}
 
 export type User = {
   coach: User;
@@ -128,6 +136,7 @@ export type User = {
   hashReset: string;
   saltReset: string;
   zone: AdminZone;
+  whatsappJoinUrl: WhatsappJoinUrl;
   organization: Organization;
   deletedAt?: string;
   userProfile: UserProfile;
@@ -621,6 +630,7 @@ export type PublicProfile = {
   lastSentMessage: string;
   lastReceivedMessage: string;
   cvUrl?: string;
+  hasExternalCv: boolean;
 };
 
 export type ProfilesFilters = {
@@ -642,4 +652,8 @@ export type OpportunitiesFiltersForCandidate = {
 export type PostAuthSendVerifyEmailParams = {
   token?: string;
   email?: string;
+};
+
+export type ExternalCv = {
+  url: string;
 };

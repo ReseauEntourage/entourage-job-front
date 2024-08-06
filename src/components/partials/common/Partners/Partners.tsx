@@ -64,10 +64,12 @@ export const Partners = ({
         </div>
         <Button
           style="custom-secondary-inverted"
-          href="/partenaires"
+          href="https://www.entourage.social/qui-sommes-nous/partenaires"
           onClick={() => {
             if (tag) gaEvent(tag);
           }}
+          newTab
+          isExternal
         >
           Voir tous les partenaires
         </Button>

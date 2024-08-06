@@ -11,4 +11,5 @@ export interface HeaderProfileProps {
   isAvailable: boolean;
   isEditable?: boolean;
   cvUrl?: string;
+  hasExternalCv: boolean;
 }

@@ -50,7 +50,7 @@ export function CheckBox({
         <span className="checkmark" />
         {title && <span className="label">{title}</span>}
       </label>
-      {!useOutsideOfForm && <FieldErrorMessage error={error} />}
+      {!useOutsideOfForm && error && <FieldErrorMessage error={error} />}
     </StyledCheckbox>
   );
 }

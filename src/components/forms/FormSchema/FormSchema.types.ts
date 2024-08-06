@@ -10,6 +10,7 @@ export const FormComponents = {
   TEL_INPUT: 'tel-input',
   TEXTAREA: 'textarea',
   CHECKBOX: 'checkbox',
+  CHECKBOX_ALERT: 'checkbox-alert',
   SELECT_SIMPLE: 'select-simple',
   SELECT: 'select',
   SELECT_CREATABLE: 'select-creatable',
@@ -45,6 +46,7 @@ export interface FormComponentValues<M extends boolean> {
   [FormComponents.TEL_INPUT]: string;
   [FormComponents.TEXTAREA]: string;
   [FormComponents.CHECKBOX]: boolean;
+  [FormComponents.CHECKBOX_ALERT]: boolean;
   [FormComponents.SELECT_SIMPLE]: string | number;
   [FormComponents.SELECT]: MultiFilterConstant<M>;
   [FormComponents.SELECT_CREATABLE]: MultiFilterConstant<M>;
@@ -79,6 +81,11 @@ export type TextInputComponent = (typeof TextInputComponents)[number];
 export const CheckBoxComponents = [FormComponents.CHECKBOX] as const;
 
 export type CheckBoxComponent = (typeof CheckBoxComponents)[number];
+
+export const CheckBoxAlertComponents = [FormComponents.CHECKBOX_ALERT] as const;
+
+export type CheckBoxAlertComponent = (typeof CheckBoxAlertComponents)[number];
+
 export const SelectRequestComponents = [
   FormComponents.SELECT,
   FormComponents.SELECT_CREATABLE,
@@ -125,6 +132,7 @@ export type MultipleComponent = (typeof MultipleComponents)[number];
 export type InputComponent =
   | TextInputComponent
   | CheckBoxComponent
+  | CheckBoxAlertComponent
   | SelectComponent
   | SelectRequestComponent
   | SelectGraphicComponent
@@ -183,6 +191,11 @@ export interface FormFieldTextInput<V extends FormSchemaValidation>
 export interface FormFieldCheckBox<V extends FormSchemaValidation>
   extends FormFieldInputCommonProperties<V, CheckBoxComponent> {
   component: CheckBoxComponent;
+}
+
+export interface FormFieldCheckBoxAlert<V extends FormSchemaValidation>
+  extends FormFieldInputCommonProperties<V, CheckBoxAlertComponent> {
+  component: CheckBoxAlertComponent;
 }
 
 export interface FormFieldSelect<V extends FormSchemaValidation>
@@ -262,6 +275,7 @@ export type FormFieldSelectRequest<V extends FormSchemaValidation> =
 export type FormFieldInput<V extends FormSchemaValidation> = StrictUnion<
   | FormFieldTextInput<V>
   | FormFieldCheckBox<V>
+  | FormFieldCheckBoxAlert<V>
   | FormFieldRadio<V>
   | FormFieldSelectGraphic<V>
   | FormFieldSelect<V>
