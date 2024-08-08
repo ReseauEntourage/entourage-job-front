@@ -44,10 +44,6 @@ export const CVDiscover = () => {
                 }
                 firstName={cv.user && cv.user.candidat.firstName}
                 ambitions={cv.ambitions}
-                // skills={cv.skills}
-                // catchphrase={cv.catchphrase}
-                // employed={cv.user.employed}
-                // endOfContract={cv.user.endOfContract}
                 id={cv.user.candidat.id}
                 locations={cv.locations}
               />
