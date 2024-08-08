@@ -19,10 +19,11 @@ export const Alert = ({
   closable = false,
   visible = true,
   onClose = () => {},
+  icon = <AlertIcon variant={variant} />,
 }: AlertProps) => {
   return (
     <StyledAlert variant={variant} visible={visible}>
-      <AlertIcon variant={variant} />
+      {icon}
       {children}
       {closable && <ButtonIcon icon={<CloseIcon />} onClick={onClose} />}
     </StyledAlert>
