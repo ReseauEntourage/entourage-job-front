@@ -12,6 +12,11 @@ const styleVariants = {
     border-color: ${COLORS.primaryBlue};
     color: ${COLORS.white};
   `,
+  hoverBlue: css`
+    background-color: ${COLORS.hoverBlue};
+    border-color: ${COLORS.hoverBlue};
+    color: ${COLORS.primaryBlue};
+  `,
 };
 
 const sizeVariants = {
