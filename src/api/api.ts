@@ -552,6 +552,12 @@ export class APIHandler {
     return this.post('/message/internal', params);
   }
 
+  resendInternalMessageAdmin(
+    internalMessageId: string
+  ): Promise<AxiosResponse> {
+    return this.post(`/message/internal/${internalMessageId}/send`, {});
+  }
+
   /// /////////////////
   // read documents //
   /// /////////////////
