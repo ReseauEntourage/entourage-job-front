@@ -53,7 +53,7 @@ const CVPDFPage = ({ cv, page, router }: CVPDFPageProps) => {
 CVPDFPage.getInitialProps = async ({ query }) => {
   if (query.token) {
     return Api.getCVByCandidateId(query.id, {
-      authorization: `Token ${query.token}`,
+      authorization: `Bearer ${query.token}`,
     })
       .then(({ data }) => {
         return { cv: data, page: query.page };

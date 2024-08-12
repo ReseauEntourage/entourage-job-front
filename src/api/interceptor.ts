@@ -16,7 +16,7 @@ export const addAxiosInterceptors = (api: AxiosInstance): void => {
 
         if (accessToken) {
           // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          configModified.headers.authorization = `Token ${accessToken}`;
+          configModified.headers.authorization = `Bearer ${accessToken}`;
         }
       }
       return configModified;
