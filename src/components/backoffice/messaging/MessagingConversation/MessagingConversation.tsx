@@ -1,66 +1,87 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'src/components/utils';
 import { TextInput } from 'src/components/utils/Inputs';
+import {
+  messagingActions,
+  selectSelectedConversation,
+  selectSelectedConversationId,
+} from 'src/use-cases/messaging';
 
 export const MessagingConversation = () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [messages, setMessages] = React.useState<any[]>([]);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [newMessage, setNewMessage] = React.useState<any>('');
+  const dispatch = useDispatch();
+  const selectedConversationId = useSelector(selectSelectedConversationId);
+  const selectedConversation = useSelector(selectSelectedConversation);
 
-  React.useEffect(() => {
-    setMessages([
-      {
-        id: 1,
-        content: 'Salut, comment vas-tu ?',
-        sender: {
-          id: 1,
-          name: 'John Doe',
-        },
-      },
-      {
-        id: 2,
-        content: 'Salut, je vais bien et toi ?',
-        sender: {
-          id: 1,
-          name: 'Tu réponds pas au message ?',
-        },
-      },
-    ]);
-  }, []);
+  const [newMessage, setNewMessage] = React.useState<string>('');
+
+  useEffect(() => {
+    if (selectedConversationId === null) {
+      return;
+    }
+    dispatch(
+      messagingActions.getConversationByIdRequested(selectedConversationId)
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    const intervalId = setInterval(() => {
+      dispatch(
+        messagingActions.getConversationByIdRequested(selectedConversationId)
+      );
+    }, 10000); // 10 secondes
+
+    return () => clearInterval(intervalId);
+  }, [selectedConversationId, dispatch]);
+
+  const sendNewMessage = () => {
+    if (selectedConversation === null) {
+      return;
+    }
+    dispatch(
+      messagingActions.postMessageRequested({
+        content: newMessage,
+        conversationId: selectedConversation.id,
+      })
+    );
+    setNewMessage('');
+  };
+
+  const EmptyState = () => (
+    <p>Séléctionnez une conversation pour voir les messages</p>
+  );
 
   return (
     <div>
-      <h1>Liste des messages</h1>
-      {messages.map((message) => (
-        <div key={message.id}>
-          <p>{message.content}</p>
-          <p>{message.sender.name}</p>
-        </div>
-      ))}
-      <TextInput
-        placeholder="Ecrire un message"
-        id="message-content"
-        name="message-content"
-        value={newMessage}
-        onChange={(val) => {
-          setNewMessage(val);
-        }}
-      />
-      <Button
-        onClick={() => {
-          setMessages([
-            ...messages,
-            {
-              id: messages.length + 1,
-              content: newMessage,
-              sender: { id: 1, name: 'John Doe' },
-            },
-          ]);
-        }}
-      >
-        Envoyer
-      </Button>
+      {!selectedConversationId && <EmptyState />}
+      {selectedConversation && (
+        <>
+          <h1>Conversation</h1>
+          {selectedConversation.messages && (
+            <div>
+              {selectedConversation.messages.map((message) => (
+                <div key={message.id}>
+                  <p>{message.content}</p>
+                  {message.author && (
+                    <p>
+                      {message.author.firstName} {message.author.lastName}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+          <TextInput
+            placeholder="Ecrire un message"
+            id="message-content"
+            name="message-content"
+            value={newMessage}
+            onChange={(val) => {
+              setNewMessage(val);
+            }}
+          />
+          <Button onClick={sendNewMessage}>Envoyer</Button>
+        </>
+      )}
     </div>
   );
 };

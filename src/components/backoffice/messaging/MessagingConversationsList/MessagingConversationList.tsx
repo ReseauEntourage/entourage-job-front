@@ -1,28 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { MessagingConversationListItem } from '../MessagingConversationListItem/MessagingConversationListItem';
+import { messagingActions, selectConversations } from 'src/use-cases/messaging';
 import { ContainerStyled } from './MessagingConversationList.styles';
 
 export const MessagingConversationList = () => {
-  const conversations = [
-    {
-      id: 1,
-      name: 'Adriana mirabelle',
-      role: 'Coach',
-      message: 'Salut, comment vas-tu ?',
-    },
-    {
-      id: 2,
-      name: 'Adriana mirabelle',
-      role: 'Coach',
-      message: 'Salut, comment vas-tu ?',
-    },
-    {
-      id: 3,
-      name: 'Adriana mirabelle',
-      role: 'Coach',
-      message: 'Salut, comment vas-tu ?',
-    },
-  ];
+  const dispatch = useDispatch();
+  const conversations = useSelector(selectConversations);
+
+  useEffect(() => {
+    dispatch(messagingActions.getConversationsRequested());
+  }, [dispatch]);
 
   return (
     <ContainerStyled>

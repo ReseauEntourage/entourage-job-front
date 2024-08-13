@@ -558,6 +558,21 @@ export class APIHandler {
     return this.post(`/message/internal/${internalMessageId}/send`, {});
   }
 
+  // ////////////
+  // messaging //
+  // ////////////
+  getConversations(): Promise<AxiosResponse> {
+    return this.get('/messaging/conversations');
+  }
+
+  getConversationById(conversationId: string): Promise<AxiosResponse> {
+    return this.get(`/messaging/conversations/${conversationId}`);
+  }
+
+  postMessage(params: { content: string }): Promise<AxiosResponse> {
+    return this.post('/messaging/messages', params);
+  }
+
   /// /////////////////
   // read documents //
   /// /////////////////
