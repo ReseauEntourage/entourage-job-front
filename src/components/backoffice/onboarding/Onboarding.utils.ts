@@ -5,7 +5,7 @@ import {
 } from 'src/utils';
 import { FlattenedOnboardingFormData } from './Onboarding.types';
 
-export const parseOnboadingFields = (
+export const parseOnboadingProfileFields = (
   fields: Partial<FlattenedOnboardingFormData>
 ): Partial<UserProfile> => {
   return {

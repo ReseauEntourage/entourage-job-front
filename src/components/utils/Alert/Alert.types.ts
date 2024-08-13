@@ -6,4 +6,5 @@ export interface AlertProps {
   closable?: boolean;
   visible?: boolean;
   onClose?: () => void;
+  icon?: React.ReactNode;
 }

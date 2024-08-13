@@ -37,6 +37,8 @@ export const useOpenCorrespondingModal = (user: UserWithUserCandidate) => {
       <ModalEditUserInformation
         formSchema={formPersonalDataAsCoach}
         defaultValues={{
+          firstName: user.firstName,
+          lastName: user.lastName,
           phone: user.phone,
           department: user.userProfile.department
             ? findConstantFromValue(
@@ -54,6 +56,8 @@ export const useOpenCorrespondingModal = (user: UserWithUserCandidate) => {
       <ModalEditUserInformation
         formSchema={formPersonalDataAsCandidate}
         defaultValues={{
+          firstName: user.firstName,
+          lastName: user.lastName,
           phone: user.phone,
           address: user.address,
           department: user.userProfile.department

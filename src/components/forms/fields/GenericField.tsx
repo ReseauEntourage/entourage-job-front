@@ -21,6 +21,7 @@ import {
   mapFieldRules,
   Rule,
 } from '../FormSchema';
+import { Alert } from 'src/components/utils/Alert';
 import {
   CheckBox,
   DatePicker,
@@ -206,6 +207,14 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
 
   if (field.component === 'checkbox') {
     return <CheckBox {...commonProps} />;
+  }
+
+  if (field.component === 'checkbox-alert') {
+    return (
+      <Alert icon={null}>
+        <CheckBox {...commonProps} />
+      </Alert>
+    );
   }
 
   if (field.component === 'select-simple') {
