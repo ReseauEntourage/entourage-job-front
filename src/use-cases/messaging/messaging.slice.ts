@@ -38,6 +38,11 @@ export const slice = createSlice({
       {
         postMessageSucceeded(state, action) {
           state.selectedConversation?.messages.push(action.payload);
+          state.conversations.forEach((conversation) => {
+            if (conversation.id === state.selectedConversationId) {
+              conversation.messages[0] = action.payload;
+            }
+          });
         },
       }
     ),
