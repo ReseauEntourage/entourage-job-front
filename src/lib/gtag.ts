@@ -35,3 +35,16 @@ export const gaEvent = ({
     });
   }
 };
+
+export const gaEventWithUser = (
+  action: string,
+  { zone = '', role = '', userHashId = '' } = {}
+) => {
+  if (window.gtag) {
+    window.gtag('event', action, {
+      zone,
+      role,
+      user_hash_id: userHashId,
+    });
+  }
+};
