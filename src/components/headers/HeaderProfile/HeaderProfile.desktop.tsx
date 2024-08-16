@@ -13,9 +13,11 @@ import { AvailabilityTag } from 'src/components/utils/AvailabilityTag/Availabili
 import { H1, H5 } from 'src/components/utils/Headings';
 import { ImageInput } from 'src/components/utils/Inputs';
 import { Spinner } from 'src/components/utils/Spinner';
+import { UserActions } from 'src/components/utils/UserActions/UserActions';
 import { COLORS } from 'src/constants/styles';
 import { USER_ROLES } from 'src/constants/users';
 import {
+  StyledHeaderAvailibilityAndUserActions,
   StyledHeaderNameAndRole,
   StyledHeaderProfile,
   StyledHeaderProfileContent,
@@ -158,9 +160,12 @@ export const HeaderProfileDesktop = ({
                   style="secondary"
                 />
               </StyledHeaderNameAndRole>
-              {shouldShowAllProfile && (
-                <AvailabilityTag isAvailable={isAvailable} />
-              )}
+              <StyledHeaderAvailibilityAndUserActions>
+                {shouldShowAllProfile && (
+                  <AvailabilityTag isAvailable={isAvailable} />
+                )}
+                <UserActions userId={id} />
+              </StyledHeaderAvailibilityAndUserActions>
             </StyledHeaderProfileNameContainer>
             {shouldShowAllProfile && (
               <>
