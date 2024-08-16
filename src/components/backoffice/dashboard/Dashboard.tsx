@@ -13,12 +13,12 @@ import {
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop } from 'src/hooks/utils';
 import { isRoleIncluded } from 'src/utils';
-import { DashboardAlertWhatsappCoach } from './DahsboardAlertWhatsappCoach/DashboardAlertWhatsappCoach';
 import {
   StyledDashboardLeftColumn,
   StyledDashboardRightColumn,
   StyledDashboardTitleContainer,
 } from './Dashboard.styles';
+import { DashboardAlertWhatsappCoach } from './DashboardAlertWhatsappCoach/DashboardAlertWhatsappCoach';
 import { DashboardAvailabilityCard } from './DashboardAvailabilityCard';
 import { DashboardLinkedUserCard } from './DashboardLinkedUserCard';
 import { DashboardOpportunitiesCard } from './DashboardOpportunitiesCard';
