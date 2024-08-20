@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import { combineReducers, configureStore, createSlice } from '@reduxjs/toolkit';
+import expect from 'expect';
 import { SliceRootState } from '../types';
 import { ReduxRequestEvents } from 'src/constants';
 import { createRequestAdapter, RequestState } from '.';

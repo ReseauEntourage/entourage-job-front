@@ -12,6 +12,7 @@ import { useIsDesktop } from 'src/hooks/utils';
 import { isRoleIncluded } from 'src/utils';
 import { CVPreferences } from './CVPreferences';
 import { ChangePasswordCard } from './ChangePasswordCard';
+import { ExternalCVCard } from './ExternalCVCard';
 import { ParametresHelpCard } from './ParametresHelpCard';
 import {
   StyledParametresLeftColumn,
@@ -35,10 +36,11 @@ export const ParametresLayout = () => {
         id={user.id}
         firstName={user.firstName}
         lastName={user.lastName}
-        description={user.userProfile.description}
+        description={user.userProfile.description ?? ''}
         role={user.role}
         department={user.userProfile.department}
         isAvailable={user.userProfile.isAvailable}
+        hasExternalCv={user.userProfile.hasExternalCv}
         isEditable
       />
       <Section className="custom-page">
@@ -48,6 +50,11 @@ export const ParametresLayout = () => {
           >
             {/* Informations Personnelles */}
             <UserInformationCard title="Informations personnelles" />
+            {/* Télécharger mon CV */}
+            {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) &&
+              user.candidat && (
+                <ExternalCVCard dataTestId="external-cv-card-params" />
+              )}
             {/* Préférences du CV */}
             {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) &&
               user.candidat && (

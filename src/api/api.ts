@@ -14,13 +14,17 @@ import {
   ContactCompany,
   ContactContactUs,
   ContactNewsletter,
+  CV,
+  ExternalCv,
   ExternalMessage,
   ExternalOpportunityDto,
   InternalMessage,
   OpportunityDto,
   OpportunityJoin,
   OpportunityUserEvent,
+  Organization,
   OrganizationDto,
+  PostAuthSendVerifyEmailParams,
   ProfilesFilters,
   PutCandidate,
   Route,
@@ -28,6 +32,7 @@ import {
   UserDto,
   UserProfile,
   UserRegistrationDto,
+  UserWithUserCandidate,
 } from './types';
 
 export class APIHandler {
@@ -104,7 +109,9 @@ export class APIHandler {
     return this.get(`/cv/${candidateId}`, {}, headers);
   }
 
-  getCVRandom(params): Promise<AxiosResponse> {
+  getCVRandom(
+    params
+  ): Promise<AxiosResponse<{ suggestions: boolean; cvs: CV[] }>> {
     return this.get('/cv/cards/random', params);
   }
 
@@ -152,13 +159,32 @@ export class APIHandler {
     return this.put(`/cv/read/${candidateId}`);
   }
 
+  /// //////////////
+  /// external cv //
+  /// //////////////
+  postExternalCv(form: FormData): Promise<AxiosResponse<ExternalCv>> {
+    return this.post('/external-cv', form, {
+      'Content-Type': 'multipart/form-data',
+    });
+  }
+
+  getExternalCvByUser(userId: string): Promise<AxiosResponse<ExternalCv>> {
+    return this.get(`/external-cv/${userId}`);
+  }
+
+  deleteExternalCv(): Promise<AxiosResponse> {
+    return this.delete(`/external-cv`);
+  }
+
   /// //////
   // user //
   /// //////
 
   // get
 
-  getUsersMembers(params: object): Promise<AxiosResponse> {
+  getUsersMembers(
+    params: object
+  ): Promise<AxiosResponse<UserWithUserCandidate[]>> {
     return this.get('/user/members', params);
   }
 
@@ -286,7 +312,7 @@ export class APIHandler {
       search?: string;
       zone?: AdminZone | AdminZone[];
     };
-  }): Promise<AxiosResponse> {
+  }): Promise<AxiosResponse<Organization[]>> {
     return this.get('/organization', params);
   }
 
@@ -457,7 +483,9 @@ export class APIHandler {
     return this.post('/auth/verify-email', params);
   }
 
-  postAuthSendVerifyEmail(params: { token: string }): Promise<AxiosResponse> {
+  postAuthSendVerifyEmail(
+    params: PostAuthSendVerifyEmailParams
+  ): Promise<AxiosResponse> {
     return this.post('/auth/send-verify-email', params);
   }
 
@@ -522,6 +550,12 @@ export class APIHandler {
 
   postInternalMessage(params: InternalMessage): Promise<AxiosResponse> {
     return this.post('/message/internal', params);
+  }
+
+  resendInternalMessageAdmin(
+    internalMessageId: string
+  ): Promise<AxiosResponse> {
+    return this.post(`/message/internal/${internalMessageId}/send`, {});
   }
 
   /// /////////////////

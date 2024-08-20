@@ -7,7 +7,7 @@ export const Tag = ({
   size = 'default',
 }: {
   content: React.ReactNode;
-  style?: 'default' | 'secondary';
+  style?: 'default' | 'secondary' | 'hoverBlue';
   size?: 'default' | 'small';
 }) => {
   return (

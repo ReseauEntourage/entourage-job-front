@@ -5,8 +5,9 @@ import {
   IlluCV,
   IlluPoigneeDeMain,
 } from 'assets/icons/icons';
+import { Typography } from '../utils';
+import { Alert } from '../utils/Alert';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
-import { Typography } from 'src/components/utils';
 import { Programs } from 'src/constants/programs';
 import { COLORS } from 'src/constants/styles';
 import { USER_ROLES } from 'src/constants/users';
@@ -174,10 +175,13 @@ export const RegistrationStepContents: {
       subtitle: (
         <>
           Nous aimerions en savoir un peu plus sur votre situation. <br />
-          <Typography variant="italic" color="lighter">
-            Ces informations sont confidentielles, optionnelles et ne seront pas
-            communiquées.
-          </Typography>
+          <br />
+          <Alert>
+            <Typography weight="bold">
+              Ces informations sont confidentielles, optionnelles et ne seront
+              pas communiquées.
+            </Typography>
+          </Alert>
         </>
       ),
     },
@@ -277,7 +281,8 @@ export const LastStepContent: RegistrationLastStepContent = {
     },
     [Programs.BOOST]: {
       ...CandidateLastStepContent,
-      title: 'Vous venez de finaliser votre inscription : Bravo !',
+      title:
+        "Il ne vous reste plus qu'a valider votre adresse email en cliquant sur le lien que vous avez reçu par mail.",
       subtitle:
         "Mais ce n'est que le début de l'aventure : bienvenue sur votre réseau pro solidaire !",
     },

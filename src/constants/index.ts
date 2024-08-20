@@ -176,7 +176,13 @@ const BUSINESS_LINES_UNSORTED: (FilterConstant<BusinessLineValue> & {
 
 export const BUSINESS_LINES = BUSINESS_LINES_UNSORTED.sort(
   ({ label: labelA }, { label: labelB }) => {
-    return labelA.localeCompare(labelB);
+    /**
+     * force type because business lines are always string
+     * to fix: fix FilterConstant type
+     */
+    const first = labelA as string;
+    const second = labelB as string;
+    return first.localeCompare(second);
   }
 ) as typeof BUSINESS_LINES_UNSORTED;
 
@@ -920,7 +926,7 @@ export const CANDIDATE_RESOURCES_FILTERS: FilterConstant<CandidateResource>[] =
       value: CandidateResources.UNEMPLOYMENT,
     },
     {
-      label: 'AAH',
+      label: 'Allocation Adulte Handicapé',
       value: CandidateResources.AAH,
     },
     {
@@ -1354,3 +1360,74 @@ export const WORKING_EXPERIENCE_FILTERS: FilterConstant<WorkingExperience>[] = [
     value: WorkingExperienceYears.JNSPR,
   },
 ];
+
+export const InternalMessageSubject = {
+  HELP_INTERVIEW: 'help_interview',
+  HELP_CV: 'help_cv',
+  NETWORKING: 'networking',
+  ADVICE: 'advice',
+  MEET: 'meet',
+  OTHER: 'other',
+} as const;
+
+export type InternalMessageSubject =
+  (typeof InternalMessageSubject)[keyof typeof InternalMessageSubject];
+
+export const INTERNAL_MESSAGE_SUBJECT_FILTER: FilterConstant<InternalMessageSubject>[] =
+  [
+    {
+      label: 'Aide à la préparation d’entretien',
+      value: InternalMessageSubject.HELP_INTERVIEW,
+    },
+    {
+      label: 'Aide pour réaliser le CV',
+      value: InternalMessageSubject.HELP_CV,
+    },
+    {
+      label: 'Partage de réseau / Mise en lien',
+      value: InternalMessageSubject.NETWORKING,
+    },
+    {
+      label: 'Conseils',
+      value: InternalMessageSubject.ADVICE,
+    },
+    {
+      label: 'Se rencontrer et échanger',
+      value: InternalMessageSubject.MEET,
+    },
+    {
+      label: 'Prise de contact',
+      value: InternalMessageSubject.OTHER,
+    },
+  ];
+
+export const INTERNAL_MESSAGES_PLACEHOLDERS = {
+  CANDIDATE: {
+    [InternalMessageSubject.HELP_INTERVIEW]:
+      'Bonjour X, j’ai cru comprendre que vous recherchiez de l’aide à la préparation d’entretien. Je peux vous apporter ce coup de pouce, quelles sont vos disponibilités ?',
+    [InternalMessageSubject.HELP_CV]:
+      'Bonjour X, j’ai cru comprendre que vous recherchiez de l’aide pour réaliser votre CV. Je peux vous apporter ce coup de pouce, quelles sont vos disponibilités ?',
+    [InternalMessageSubject.NETWORKING]:
+      'Bonjour X, j’ai cru comprendre que vous aimeriez des mises en relation. Il est possible que je puisse vous apporter un coup de pouce. Pouvez-vous me spécifier votre besoin ? ',
+    [InternalMessageSubject.ADVICE]:
+      'Bonjour X, j’ai cru comprendre que vous recherchiez du conseils. Il est possible que je puisse vous apporter un coup de pouce. Quels types de conseil recherchez-vous ? ',
+    [InternalMessageSubject.MEET]:
+      'Bonjour X, j’ai cru comprendre que vous recherchiez à échanger avec des professionnels. Je serai ravi.e de vous rencontrer. Quelles seraient vos disponibilités ?',
+    [InternalMessageSubject.OTHER]:
+      'Bonjour X, j’ai cru comprendre que vous aviez besoin d’un coup de pouce. Il est possible que je puisse vous apporter mon soutien. Peut-être pourrions-nous en discuter de vive voix pour mieux comprendre votre besoin ?',
+  },
+  COACH: {
+    [InternalMessageSubject.HELP_INTERVIEW]:
+      'Bonjour Y, je cherche un coup de main pour préparer un entretien. Pouvez-vous m’apporter votre expertise ? D’avance, je vous remercie',
+    [InternalMessageSubject.HELP_CV]:
+      'Bonjour Y, je recherche de l’aide pour réaliser mon CV. Pouvez-vous m’apporter votre expertise ? D’avance, je vous remercie',
+    [InternalMessageSubject.NETWORKING]:
+      'Bonjour Y, je recherche un professionnel qui pourrait me mettre en relation avec son réseau. Pourrions-nous en discuter de vive-voix afin que je vous précise ma demande ? D’avance, je vous remercie',
+    [InternalMessageSubject.ADVICE]:
+      'Bonjour Y, je recherche des conseils dans ma recherche d’emploi / d’alternance. Pourrions-nous en discuter de vive voix afin que je vous précise ma demande ? D’avance, je vous remercie',
+    [InternalMessageSubject.MEET]:
+      'Bonjour Y, je souhaiterais échanger avec un professionnel du secteur … Seriez-vous d’accord pour que l’on se rencontre ? D’avance, je vous remercie',
+    [InternalMessageSubject.OTHER]:
+      'Bonjour Y, j’ai besoin d’un coup de pouce dans ma recherche d’emploi / d’alternance. Pourrions-nous en discuter de vive-voix afin que je vous précise ma demande ? D’avance, je vous remercie ',
+  },
+};

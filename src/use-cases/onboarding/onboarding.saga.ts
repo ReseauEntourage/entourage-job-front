@@ -78,10 +78,24 @@ export function* validateFirstSecondStepOnboardingSaga(
 export function* validateLastStepOnboardingSaga(
   action: ReturnType<typeof validateLastStepOnboardingRequested>
 ) {
-  const userId = yield* select(selectCurrentUserId);
-  const userProfile = action.payload;
+  const user = yield* select(selectAuthenticatedUser);
+  const { userProfile, optinNewsletter } = action.payload;
+
   try {
-    yield* call(() => Api.putUserProfile(userId, userProfile));
+    // Update user profile with new data
+    yield* call(() => Api.putUserProfile(user.id, userProfile));
+
+    // If user optin for newsletter, call api to set OK to receive newsletter
+    if (optinNewsletter) {
+      // Call api to set OK to receive newsletter
+      yield* call(() => {
+        Api.postNewsletter({
+          email: user.email,
+          zone: user.zone,
+          status: user.candidat ? 'CANDIDAT' : 'PARTICULIER',
+        });
+      });
+    }
     yield* put(validateLastStepOnboardingSucceeded());
     yield* put(currentUserActions.fetchUserRequested());
     yield* put(endOnboarding());

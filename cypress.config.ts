@@ -7,12 +7,14 @@ module.exports = defineConfig({
   defaultCommandTimeout: 10000,
   pageLoadTimeout: 120000,
   scrollBehavior: 'center',
+  viewportWidth: 1920,
+  viewportHeight: 1080,
   env: {
     adresseLocauxParis: `${process.env.ADRESSE_LOCAUX_PARIS}`,
   },
   e2e: {
     baseUrl: `${process.env.SERVER_URL}`,
-    supportFile: false,
+    supportFile: 'cypress/support/e2e.ts',
     setupNodeEvents(_on, _config) {
       // implement node event listeners here
     },

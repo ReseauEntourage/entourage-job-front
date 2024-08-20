@@ -1,0 +1,45 @@
+{
+  "id": "10d20dad-edd9-4748-9853-efa5202603ff",
+  "firstName": "Claude",
+  "lastName": "Aubert",
+  "email": "Frederic.Mathieu@example.net",
+  "phone": "0729276490",
+  "address": null,
+  "adminRole": null,
+  "zone": "PARIS",
+  "gender": 0,
+  "lastConnection": "",
+  "readDocuments": [],
+  "role": "Candidat",
+  "coach": null,
+  "candidat": {
+    "employed": false,
+    "hidden": false,
+    "note": "",
+    "url": "michael-198e8950",
+    "contract": null,
+    "endOfContract": null,
+    "lastModifiedBy": "",
+    "coach": null
+  },
+  "userProfile": {
+    "description": null,
+    "currentJob": null,
+    "networkBusinessLines": [],
+    "searchBusinessLines": [
+      {
+        "id": "99410f66-66d6-4766-82e9-a95357db381d",
+        "name": "aev",
+        "order": 1
+      }
+    ],
+    "searchAmbitions": [],
+    "helpOffers": [],
+    "helpNeeds": [
+      {
+        "id": "ff94624f-3e7d-40f8-b22d-2f7a19ae3e34",
+        "name": "interview"
+      }
+    ]
+  }
+}

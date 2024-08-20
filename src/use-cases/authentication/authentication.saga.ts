@@ -2,6 +2,7 @@ import { call, fork, put, takeLatest } from 'typed-redux-saga';
 import { Api } from 'src/api';
 import {
   isEmailAlreadyVerifiedError,
+  isEmailUnverifiedError,
   isTokenExpiredError,
   isTooManyRequests,
 } from 'src/api/axiosErrors';
@@ -46,6 +47,13 @@ function* loginRequestedSaga(action: ReturnType<typeof loginRequested>) {
       yield* put(
         loginFailed({
           error: 'RATE_LIMIT',
+        })
+      );
+    }
+    if (isEmailUnverifiedError(error)) {
+      yield* put(
+        loginFailed({
+          error: 'UNVERIFIED_EMAIL',
         })
       );
     } else {

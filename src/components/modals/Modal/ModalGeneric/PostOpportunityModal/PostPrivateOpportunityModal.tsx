@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React, { useCallback, useMemo, useState } from 'react';
-import UIkit from 'uikit';
+import { useDispatch } from 'react-redux';
 
 import { Api } from 'src/api';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
@@ -9,6 +9,7 @@ import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
+import { notificationsActions } from 'src/use-cases/notifications';
 
 interface PostPrivateOpportunityModalProps {
   candidateId: string;
@@ -21,6 +22,7 @@ export function PostPrivateOpportunityModal({
   candidateFirstName,
   candidateLastName,
 }: PostPrivateOpportunityModalProps) {
+  const dispatch = useDispatch();
   const [lastFilledForm, setLastFilledForm] = useState<
     ExtractFormSchemaValidation<typeof formAddPrivateOpportunity>
   >({} as ExtractFormSchemaValidation<typeof formAddPrivateOpportunity>);
@@ -58,7 +60,12 @@ export function PostPrivateOpportunityModal({
           date: moment().toISOString(),
         });
 
-        UIkit.notification(successMessage, 'success');
+        dispatch(
+          notificationsActions.addNotification({
+            type: 'success',
+            message: successMessage,
+          })
+        );
 
         if (openNewForm) {
           setShouldHide(true);
@@ -78,10 +85,16 @@ export function PostPrivateOpportunityModal({
           );
         }
       } catch (err) {
-        UIkit.notification(`Une erreur est survenue.`, 'danger');
+        console.error(err);
+        dispatch(
+          notificationsActions.addNotification({
+            type: 'danger',
+            message: "Une erreur s'est produite",
+          })
+        );
       }
     },
-    [candidateId]
+    [candidateId, dispatch]
   );
 
   const modalProps = useMemo(() => {

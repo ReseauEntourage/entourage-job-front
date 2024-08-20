@@ -1,19 +1,17 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import { v4 as uuid } from 'uuid';
 import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
-import {
-  PageType,
-  ChildrenType,
-} from 'src/components/partials/Footer/Footer.type';
+import { PageType } from 'src/components/partials/Footer/Footer.type';
 import { Grid, Section, SimpleLink, Button } from 'src/components/utils';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 import { AssociationEntourage } from './AssociationEntourage';
 
-const pages: PageType[] = [
+const pages: PageType = [
   {
     title: 'Notre mission',
     children: [
@@ -28,8 +26,11 @@ const pages: PageType[] = [
       },
       {
         title: 'Nos partenaires',
-        path: '/partenaires',
+        path: 'https://www.entourage.social/qui-sommes-nous/partenaires',
         props: {
+          isExternal: true,
+          newTab: true,
+          target: '_blank',
           onClick: () => {
             gaEvent(GA_TAGS.FOOTER_VOIR_PARTENAIRES_CLIC);
           },
@@ -226,13 +227,10 @@ const SiteMap = ({ isMobile }: { isMobile: boolean }) => {
       childWidths={['1-3@m']}
       className={isMobile ? 'uk-hidden@m' : 'uk-visible@m'}
     >
-      {pages.map(({ title, children }: PageType, index: number) => {
+      {pages.map(({ title, children }) => {
         return (
           <div
-            key={
-              // @ts-expect-error after enable TS strict mode. Please, try to fix it
-              title + index
-            }
+            key={uuid()}
             className="uk-flex uk-flex-column uk-flex-middle uk-margin-small-bottom"
           >
             <div
@@ -245,33 +243,23 @@ const SiteMap = ({ isMobile }: { isMobile: boolean }) => {
               )}
               {children &&
                 children.map(
-                  (
-                    {
-                      component: childrenComponent,
-                      title: childrenTitle,
-                      path: childrenPath,
-                      children: childrenChildren,
-                      props: childrenType = {},
-                    }: ChildrenType,
-                    childrenIndex: number
-                  ) => {
+                  ({
+                    component: childrenComponent,
+                    title: childrenTitle,
+                    path: childrenPath,
+                    children: childrenChildren,
+                    props: childrenType = {},
+                  }) => {
                     if (childrenComponent) {
                       return (
-                        <div
-                          key={`component${childrenIndex}`}
-                          className="ent-site-map"
-                        >
+                        <div key={uuid()} className="ent-site-map">
                           {childrenComponent}
                         </div>
                       );
                     }
+                    if (!childrenPath) return null;
                     return (
-                      <React.Fragment
-                        key={
-                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                          childrenPath + index
-                        }
-                      >
+                      <React.Fragment key={uuid()}>
                         <SimpleLink
                           href={childrenPath}
                           className={
@@ -290,13 +278,20 @@ const SiteMap = ({ isMobile }: { isMobile: boolean }) => {
                                 title: childrenChildrenTitle,
                                 path: childrenChildrenPath,
                                 props: childrenChildrenProps = {},
-                              }: ChildrenType,
+                              },
                               childrenChildrenIndex: number
                             ) => {
+                              if (childrenComponent) {
+                                return (
+                                  <div key={uuid()} className="ent-site-map">
+                                    {childrenComponent}
+                                  </div>
+                                );
+                              }
+                              if (!childrenChildrenPath) return null;
                               return (
                                 <SimpleLink
                                   key={
-                                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
                                     childrenChildrenPath + childrenChildrenIndex
                                   }
                                   href={childrenChildrenPath}
@@ -330,7 +325,7 @@ export const Footer = () => {
   return (
     <footer id="footer">
       {showAssociationEntourage && <AssociationEntourage />}
-      <Section style="secondary" size="small" container="large" preserveColor>
+      <Section className="custom-secondary">
         <Grid middle center column childWidths={['1-1']} gap="medium">
           <div />
           <SiteMap isMobile />

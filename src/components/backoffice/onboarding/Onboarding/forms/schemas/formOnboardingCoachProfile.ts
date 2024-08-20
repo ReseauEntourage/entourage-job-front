@@ -1,6 +1,9 @@
 import { FormSchema } from 'src/components/forms/FormSchema';
 
-export const formOnboardingCoachProfile: FormSchema<{ description: string }> = {
+export const formOnboardingCoachProfile: FormSchema<{
+  description: string;
+  optinNewsletter: boolean;
+}> = {
   id: 'form-onboarding-profile',
   fields: [
     {
@@ -10,9 +13,17 @@ export const formOnboardingCoachProfile: FormSchema<{ description: string }> = {
       title: 'Présentez-vous en quelques mots',
       showLabel: true,
       placeholder:
-        "Retraité actif dans le domaine de la cybersécurité après avoir exercé différentes fonctions en finance, RH, audit et informatique chez Décathlon. Dotée d'une forte capacité d'adaptation et d'un désir d'en apprendre toujours plus, je cherche à donner d'élan à ceux qui ont besoin. ",
+        "Exemple: Passionné.e par le secteur de la logistique, je souhaite transmettre mon expérience et faire profiter les personnes en recherche d'emploi de mon réseau.",
       rows: 14,
       maxLines: { lines: 5, width: 655 },
+    },
+    {
+      id: 'optinNewsletter',
+      name: 'optinNewsletter',
+      component: 'checkbox-alert',
+      title:
+        'En cochant cette case, j’accepte de recevoir des informations et des actualités sur le programme entourage pro',
+      showLabel: true,
     },
   ],
 };

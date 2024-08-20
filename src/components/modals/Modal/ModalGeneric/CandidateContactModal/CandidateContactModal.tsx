@@ -1,13 +1,16 @@
 import React from 'react';
-import UIkit from 'uikit';
+import { useDispatch } from 'react-redux';
+
 import { Api } from 'src/api';
 import { formCandidateContact } from 'src/components/forms/schemas/formCandidateContact';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
+import { notificationsActions } from 'src/use-cases/notifications';
 
 export const CandidateContactModal = () => {
+  const dispatch = useDispatch();
   return (
     <ModalEdit
       submitText="J'envoie ma pré-inscription !"
@@ -60,15 +63,21 @@ export const CandidateContactModal = () => {
           gaEvent(GA_TAGS.PAGE_ORIENTER_ENVOYER_INSCRIPTION_CLIC);
           fbEvent(FB_TAGS.SOCIAL_WORKER_REGISTRATION_SEND);
           closeModal();
-          UIkit.notification(
-            "Merci d'avoir répondu à ce formulaire !\nNous revenons le plus rapidement possible vers vous pour convenir d'un échange.",
-            'success'
+          dispatch(
+            notificationsActions.addNotification({
+              type: 'success',
+              message:
+                "Merci d'avoir répondu à ce formulaire !\nNous revenons le plus rapidement possible vers vous pour convenir d'un échange.",
+            })
           );
         } catch (error) {
           console.error(error);
-          UIkit.notification(
-            "Une erreur s'est produite lors de l'envoie du formulaire",
-            'danger'
+          dispatch(
+            notificationsActions.addNotification({
+              type: 'success',
+              message:
+                "Une erreur s'est produite lors de l'envoie du formulaire",
+            })
           );
         }
       }}

@@ -24,7 +24,7 @@ export const useIsAtBottom = (
     ({ currPos }) => {
       if (
         !isAtBottom &&
-        currPos.y * -1 === document.body.offsetHeight - windowHeight
+        currPos.y * -1 >= document.body.offsetHeight - windowHeight
       ) {
         setIsAtBottom(true);
       } else {

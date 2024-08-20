@@ -16,6 +16,7 @@ export interface CommonInputProps<
   disabled?: boolean;
   hidden?: boolean;
   showLabel?: boolean;
+  showOptional?: boolean;
   placeholder?: string;
   inputRef?: RefCallback<K>;
 }

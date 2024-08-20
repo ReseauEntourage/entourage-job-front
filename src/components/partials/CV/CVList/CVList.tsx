@@ -18,7 +18,6 @@ import { usePrevious } from 'src/hooks/utils';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
 import { filtersToQueryParams } from 'src/utils/Filters';
-import { AnyToFix } from 'src/utils/Types';
 
 const NoCVInThisArea = () => {
   return (
@@ -57,12 +56,12 @@ export const CVList = ({
   setSearch = () => {},
   resetFilters = () => {},
 }: CVListProps) => {
-  const [cvs, setCVs] = useState<CV[] | undefined>(undefined);
+  const [cvs, setCVs] = useState<CV[]>();
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasSuggestions, setHasSuggestions] = useState(false);
 
-  const [error, setError] = useState(undefined);
+  const [error, setError] = useState<string>();
   const defaultNbOfCVs = nb || INITIAL_NB_OF_CV_TO_DISPLAY;
   const [nbOfCVToDisplay, setNbOfCVToDisplay] = useState(defaultNbOfCVs);
   const prevNbOfCVToDisplay = usePrevious(nbOfCVToDisplay);
@@ -89,14 +88,9 @@ export const CVList = ({
             setCVs((prevCVs = []) => {
               return [
                 ...prevCVs,
-                ..._.differenceWith(
-                  data.cvs,
-                  prevCVs,
-                  (cv1: AnyToFix, cv2: AnyToFix) => {
-                    // to be typed
-                    return cv1.id === cv2.id;
-                  }
-                ),
+                ..._.differenceWith(data.cvs, prevCVs, (cv1: CV, cv2: CV) => {
+                  return cv1.id === cv2.id;
+                }),
               ];
             });
           } else {
@@ -106,10 +100,7 @@ export const CVList = ({
         })
         .catch((err) => {
           console.error(err);
-          setError(
-            // @ts-expect-error after enable TS strict mode. Please, try to fix it
-            'Impossible de récupérer les CVs.'
-          );
+          setError('Impossible de récupérer les CVs.');
         })
         .finally(() => {
           setLoading(false);
@@ -152,10 +143,6 @@ export const CVList = ({
                   firstName={cv.user.candidat.firstName}
                   ambitions={cv.ambitions}
                   locations={cv.locations}
-                  skills={cv.skills}
-                  catchphrase={cv.catchphrase}
-                  employed={cv.user.employed}
-                  endOfContract={cv.user.endOfContract}
                   id={cv.user.candidat.id}
                 />
               );

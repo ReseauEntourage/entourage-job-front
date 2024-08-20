@@ -1,5 +1,6 @@
 import React from 'react';
-import UIkit from 'uikit';
+import { useDispatch } from 'react-redux';
+
 import { Api } from 'src/api';
 import { formCompanyContact } from 'src/components/forms/schemas/formCompanyContact';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
@@ -7,8 +8,10 @@ import { FB_TAGS, GA_TAGS, LINK_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
 import { linkEvent } from 'src/lib/lintrk';
+import { notificationsActions } from 'src/use-cases/notifications';
 
 export const CompanyContactModal = () => {
+  const dispatch = useDispatch();
   return (
     <ModalEdit
       submitText="Envoyer"
@@ -22,15 +25,21 @@ export const CompanyContactModal = () => {
           fbEvent(FB_TAGS.COMPANY_CONTACT_SEND);
           linkEvent(LINK_TAGS.COMPANY_CONTACT_SEND);
           closeModal();
-          UIkit.notification(
-            "Merci d'avoir répondu à ce formulaire !\nNous revenons le plus rapidement possible vers vous pour convenir d'un échange.",
-            'success'
+          dispatch(
+            notificationsActions.addNotification({
+              type: 'success',
+              message:
+                "Merci d'avoir répondu à ce formulaire !\nNous revenons le plus rapidement possible vers vous pour convenir d'un échange.",
+            })
           );
         } catch (error) {
           console.error(error);
-          UIkit.notification(
-            "Une erreur s'est produite lors de l'envoie du formulaire",
-            'danger'
+          dispatch(
+            notificationsActions.addNotification({
+              type: 'danger',
+              message:
+                "Une erreur s'est produite lors de l'envoie du formulaire",
+            })
           );
         }
       }}

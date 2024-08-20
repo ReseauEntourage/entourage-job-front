@@ -1,5 +1,6 @@
 import React from 'react';
-import UIkit from 'uikit';
+import { useDispatch } from 'react-redux';
+
 import { StyledCVCTACard } from '../CVCallToActions.styles';
 import { Api } from 'src/api';
 import { CV } from 'src/api/types';
@@ -12,6 +13,7 @@ import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { useIsDesktop } from 'src/hooks/utils';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
+import { notificationsActions } from 'src/use-cases/notifications';
 
 interface CVCallToActionsProps {
   cv: CV;
@@ -22,6 +24,7 @@ export const CVSendMessage = ({
   cv,
   actionDisabled = false,
 }: CVCallToActionsProps) => {
+  const dispatch = useDispatch();
   const isDesktop = useIsDesktop();
   return (
     <StyledCVCTACard className={`${!isDesktop ? 'mobile' : ''}`} order={1}>
@@ -54,10 +57,20 @@ export const CVSendMessage = ({
                     UserId: cv.UserId,
                     ...fields,
                   });
-                  UIkit.notification('Le message a bien été envoyé', 'success');
+                  dispatch(
+                    notificationsActions.addNotification({
+                      type: 'success',
+                      message: 'Le message a bien été envoyé',
+                    })
+                  );
                   closeModal();
                 } catch (err) {
-                  UIkit.notification("Une erreur s'est produite", 'danger');
+                  dispatch(
+                    notificationsActions.addNotification({
+                      type: 'danger',
+                      message: "Une erreur s'est produite",
+                    })
+                  );
                   console.error(err);
                 }
               }}

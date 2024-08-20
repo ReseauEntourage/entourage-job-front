@@ -15,6 +15,8 @@ import {
 import { FilterConstant } from 'src/constants/utils';
 
 export const formPersonalDataAsCandidate: FormSchema<{
+  firstName: string;
+  lastName: string;
   phone: string;
   address: string;
   oldEmail: string;
@@ -24,6 +26,26 @@ export const formPersonalDataAsCandidate: FormSchema<{
 }> = {
   id: 'form-personal-data',
   fields: [
+    {
+      id: 'nameLabel',
+      name: 'nameLabel',
+      title: 'Modifier mon identité',
+      component: 'heading',
+    },
+    {
+      id: 'firstName',
+      name: 'firstName',
+      component: 'text-input',
+      title: 'Prénom*',
+      isRequired: true,
+    },
+    {
+      id: 'lastName',
+      name: 'lastName',
+      component: 'text-input',
+      title: 'Nom*',
+      isRequired: true,
+    },
     {
       id: 'mailLabel',
       name: 'mailLabel',
@@ -50,6 +72,16 @@ export const formPersonalDataAsCandidate: FormSchema<{
       component: 'text-input',
       type: 'email',
       title: 'Confirmation nouvel email',
+    },
+    {
+      id: 'newEmailWarning',
+      name: 'newEmailWarning',
+      component: 'text',
+      title:
+        'Si vous modifiez votre adresse email, vous serez déconnecté. Vous devrez valider votre nouvelle adresse email pour vous reconnecter',
+      hide: (getValue) => {
+        return !getValue('oldEmail');
+      },
     },
     {
       id: 'phoneLabel',
@@ -97,6 +129,8 @@ export const formPersonalDataAsCandidate: FormSchema<{
 };
 
 export const formPersonalDataAsCoach: FormSchema<{
+  firstName: string;
+  lastName: string;
   phone: string;
   oldEmail: string;
   newEmail0: string;
@@ -105,6 +139,26 @@ export const formPersonalDataAsCoach: FormSchema<{
 }> = {
   id: 'form-personal-data',
   fields: [
+    {
+      id: 'nameLabel',
+      name: 'nameLabel',
+      title: 'Modifier mon identité',
+      component: 'heading',
+    },
+    {
+      id: 'firstName',
+      name: 'firstName',
+      component: 'text-input',
+      title: 'Prénom',
+      isRequired: true,
+    },
+    {
+      id: 'lastName',
+      name: 'lastName',
+      component: 'text-input',
+      title: 'Nom',
+      isRequired: true,
+    },
     {
       id: 'mailLabel',
       name: 'mailLabel',
@@ -131,6 +185,16 @@ export const formPersonalDataAsCoach: FormSchema<{
       component: 'text-input',
       type: 'email',
       title: 'Confirmation nouvel email',
+    },
+    {
+      id: 'newEmailWarning',
+      name: 'newEmailWarning',
+      component: 'text',
+      title:
+        'Si vous modifiez votre adresse email, vous serez déconnecté. Vous devrez valider votre nouvelle adresse email pour vous reconnecter',
+      hide: (getValue) => {
+        return !getValue('oldEmail');
+      },
     },
     {
       id: 'phoneLabel',
@@ -250,6 +314,16 @@ export const formPersonalDataAsAdmin: FormSchema<{
       component: 'text-input',
       type: 'email',
       title: 'Confirmation nouvel email',
+    },
+    {
+      id: 'newEmailWarning',
+      name: 'newEmailWarning',
+      component: 'text',
+      title:
+        'Si vous modifiez votre adresse email, vous serez déconnecté. Vous devrez valider votre nouvelle adresse email pour vous reconnecter',
+      hide: (getValue) => {
+        return !getValue('oldEmail');
+      },
     },
     {
       id: 'phoneLabel',

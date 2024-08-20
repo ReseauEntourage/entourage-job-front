@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
-import UIkit from 'uikit';
+import { useDispatch } from 'react-redux';
 import PencilIcon from 'assets/icons/pencil.svg';
 import TrashIcon from 'assets/icons/trash.svg';
 import { Api } from 'src/api';
@@ -21,6 +21,7 @@ import {
 } from 'src/constants/users';
 import { useMemberId } from 'src/hooks/queryParams/useMemberId';
 import { useIsMobile } from 'src/hooks/utils';
+import { notificationsActions } from 'src/use-cases/notifications';
 import { getRelatedUser, isRoleIncluded } from 'src/utils/Finding';
 import {
   StyledMemberActionsContainer,
@@ -35,6 +36,7 @@ export function ParametersMemberTab({
   user,
   setUser,
 }: ParametersMemberTabProps) {
+  const dispatch = useDispatch();
   const { replace } = useRouter();
   const memberId = useMemberId();
 
@@ -46,7 +48,12 @@ export function ParametersMemberTab({
         if (fields.confirmation === 'SUPPRIMER') {
           await Api.deleteUser(memberId);
           closeModal();
-          UIkit.notification("L'utilisateur a bien été supprimé", 'success');
+          dispatch(
+            notificationsActions.addNotification({
+              type: 'success',
+              message: "L'utilisateur a bien été supprimé",
+            })
+          );
           replace(
             {
               pathname: '/backoffice/admin/membres',
@@ -60,14 +67,24 @@ export function ParametersMemberTab({
             }
           );
         } else {
-          UIkit.notification('Erreur de confirmation', 'danger');
+          dispatch(
+            notificationsActions.addNotification({
+              type: 'danger',
+              message: 'Erreur de confirmation',
+            })
+          );
         }
       } catch (err) {
         console.error(err);
-        UIkit.notification('Une erreur est survenue', 'danger');
+        dispatch(
+          notificationsActions.addNotification({
+            type: 'danger',
+            message: 'Une erreur est survenue',
+          })
+        );
       }
     },
-    [memberId, replace, user.role]
+    [memberId, replace, user.role, dispatch]
   );
 
   const memberColumns: MemberColumn[] = useMemo(() => {

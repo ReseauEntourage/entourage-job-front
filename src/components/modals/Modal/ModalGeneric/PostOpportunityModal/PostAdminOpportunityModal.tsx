@@ -1,11 +1,12 @@
 import moment from 'moment';
 import React, { useCallback, useMemo, useState } from 'react';
-import UIkit from 'uikit';
+import { useDispatch } from 'react-redux';
 
 import { Api } from 'src/api';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { formAddOpportunityAsAdmin } from 'src/components/forms/schemas/formAddOpportunity';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { notificationsActions } from 'src/use-cases/notifications';
 
 interface PostAdminOpportunityModalProps {
   callback?: () => void;
@@ -13,6 +14,7 @@ interface PostAdminOpportunityModalProps {
 export function PostAdminOpportunityModal({
   callback,
 }: PostAdminOpportunityModalProps) {
+  const dispatch = useDispatch();
   const [lastFilledForm, setLastFilledForm] = useState<
     ExtractFormSchemaValidation<typeof formAddOpportunityAsAdmin>
   >({} as ExtractFormSchemaValidation<typeof formAddOpportunityAsAdmin>);
@@ -55,8 +57,12 @@ export function PostAdminOpportunityModal({
           date: moment().toISOString(),
         });
 
-        UIkit.notification(successMessage, 'success');
-
+        dispatch(
+          notificationsActions.addNotification({
+            type: 'success',
+            message: successMessage,
+          })
+        );
         if (adminCallback) await adminCallback();
 
         if (openNewForm) {
@@ -78,10 +84,15 @@ export function PostAdminOpportunityModal({
           );
         }
       } catch (err) {
-        UIkit.notification(`Une erreur est survenue.`, 'danger');
+        dispatch(
+          notificationsActions.addNotification({
+            type: 'danger',
+            message: "Une erreur s'est produite",
+          })
+        );
       }
     },
-    []
+    [dispatch]
   );
 
   const modalProps = useMemo(() => {

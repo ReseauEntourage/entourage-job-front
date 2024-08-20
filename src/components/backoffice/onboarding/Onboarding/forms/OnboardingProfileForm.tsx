@@ -95,7 +95,7 @@ export const OnboardingProfileForm = ({
           submitText="Finalisez"
           cancelText="Précédent"
           onCancel={onBeforeStep}
-          defaultValues={{ description: userProfile.description }}
+          defaultValues={{ description: userProfile.description ?? undefined }}
         />
       </StyledProfileFormTextAreaContainer>
     </StyledProfileForm>

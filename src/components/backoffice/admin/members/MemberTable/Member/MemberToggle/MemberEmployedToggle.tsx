@@ -1,12 +1,13 @@
 import React from 'react';
 
+import { useDispatch } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
-import UIkit from 'uikit';
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
 import { CandidateEmployedToggle } from 'src/components/backoffice/candidate/CandidateEmployedToggle';
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel/ContractLabel';
 import { CONTRACTS } from 'src/constants';
+import { notificationsActions } from 'src/use-cases/notifications';
 import { findConstantFromValue } from 'src/utils';
 import { buildContractLabel } from 'src/utils/Formatting';
 import { StyledMemberToggleLabel } from './MemberToggle.styles';
@@ -24,11 +25,11 @@ export function MemberEmployedToggle({
 }: MemberEmployedToggleProps) {
   const contractLabel = buildContractLabel(
     // @ts-expect-error after enable TS strict mode. Please, try to fix it
-    member.candidat.contract,
-
-    // @ts-expect-error after enable TS strict mode. Please, try to fix it
-    member.candidat.endOfContract
+    member.candidat?.contract,
+    member.candidat?.endOfContract
   );
+
+  const dispatch = useDispatch();
 
   return (
     <CandidateEmployedToggle
@@ -82,14 +83,22 @@ export function MemberEmployedToggle({
               },
             },
           });
-          UIkit.notification(
-            'Le profil du candidat a été mis à jour !',
-            'success'
+
+          dispatch(
+            notificationsActions.addNotification({
+              type: 'success',
+              message: 'Le profil du candidat a été mis à jour !',
+            })
           );
           if (onClose) onClose();
         } catch (error) {
           console.error(error);
-          UIkit.notification('Une erreur est survenue', 'danger');
+          dispatch(
+            notificationsActions.addNotification({
+              type: 'danger',
+              message: 'Une erreur est survenue',
+            })
+          );
         }
       }}
     />

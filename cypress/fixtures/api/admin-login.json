@@ -1,0 +1,16 @@
+{
+  "id": "1e98ec39-6963-42ad-8bd8-54ce41a634d7",
+  "email": "johndoe@mail.com",
+  "firstName": "John",
+  "lastName": "Doe",
+  "gender": 0,
+  "phone": "0393915896",
+  "address": "01 rue Acme, 75001 Paris",
+  "zone": "Paris",
+  "role": "Admin",
+  "adminRole": "Candidats",
+  "candidat": false,
+  "coach": false,
+  "lastConnection": "",
+  "sub": "b8dd006a-7545-40ec-896d-175d1b99a3f3"
+}

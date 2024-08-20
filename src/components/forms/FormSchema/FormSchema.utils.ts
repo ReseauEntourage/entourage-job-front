@@ -3,11 +3,14 @@ import { AnyCantFix } from 'src/utils/Types';
 import {
   CheckBoxComponent,
   CheckBoxComponents,
+  CheckBoxAlertComponents,
+  CheckBoxAlertComponent,
   ExtractFormSchemaValidation,
   FormComponent,
   FormComponentValues,
   FormField,
   FormFieldCheckBox,
+  FormFieldCheckBoxAlert,
   FormFieldGroup,
   FormFieldMultiple,
   FormFieldRadio,
@@ -96,6 +99,14 @@ export function isFormFieldCheckbox<S extends FormSchemaValidation>(
   return CheckBoxComponents.includes(field.component as CheckBoxComponent);
 }
 
+export function isFormFieldCheckboxAlert<S extends FormSchemaValidation>(
+  field: FormField<S>
+): field is FormFieldCheckBoxAlert<S> {
+  return CheckBoxAlertComponents.includes(
+    field.component as CheckBoxAlertComponent
+  );
+}
+
 export function isFormFieldSelect<S extends FormSchemaValidation>(
   field: FormField<S>
 ): field is FormFieldSelect<S> {
@@ -130,12 +141,14 @@ export function isFormFieldInput<S extends FormSchemaValidation>(
   | FormFieldRadio<S>
   | FormFieldTextInput<S>
   | FormFieldCheckBox<S>
+  | FormFieldCheckBoxAlert<S>
   | FormFieldSelect<S>
   | FormFieldSelectRequest<S>
   | FormFieldSelectGraphic<S> {
   return (
     isFormFieldTextInput(field) ||
     isFormFieldCheckbox(field) ||
+    isFormFieldCheckboxAlert(field) ||
     isFormFieldRadio(field) ||
     isFormFieldSelect(field) ||
     isFormFieldSelectRequest(field) ||

@@ -99,7 +99,6 @@ export const StyledHeaderDetails = styled.div`
     padding-left: 0;
     text-align: center;
     width: 100%;
-    min-width: 300px;
   }
 `;
 
@@ -119,52 +118,21 @@ export const StyledCVProfilePictureContainer = styled.div`
 `;
 
 export const StyledCVProfilePicture = styled.div`
-  height: 400px;
-  width: 270px;
-  margin-top: 8%;
+  height: 340px;
+  width: 340px;
+  background: red;
   position: relative;
-  .picture {
-    height: 100%;
-    width: 100%;
-    border-radius: 859px 909px 729px 909px;
-
-    background-image: ${(props) => {
-      return `url('${props.imgSrc}')`;
-    }};
-    background-position: 66% 39%;
-    position: absolute;
-    z-index: 2;
-    background-size: cover;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .pseudo {
-    background-color: ${COLORS.hoverBlue};
-    height: 110%;
-    width: 110%;
-    left: 55%;
-    transform: translateX(-50%) rotate(6.06deg);
-    top: -8%;
-    position: absolute;
-    border-radius: 859px 909px 729px 909px;
-    z-index: 1;
-  }
+  border-radius: 50%;
+  background-color: ${COLORS.hoverBlue};
+  background-image: ${(props) => {
+    return `url('${props.imgSrc}')`;
+  }};
+  background-size: cover;
+  background-position: center;
   &.mobile {
-    max-width: 100%;
-    height: 300px;
+    width: 190px;
+    height: 190px;
     margin-bottom: 30px;
-    .picture {
-      width: 190px;
-      height: 270px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    .pseudo {
-      height: 300px;
-      width: 200px;
-      left: 50%;
-      transform: translateX(-50%) rotate(7.94deg);
-    }
   }
 `;
 

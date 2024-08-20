@@ -1,0 +1,78 @@
+{
+  "id": "8e7e4ee6-5e6d-4254-996b-161bc14254fe",
+  "firstName": "Aimée",
+  "lastName": "Leroux",
+  "email": "Gaspar68@example.net",
+  "phone": "0378033151",
+  "address": null,
+  "adminRole": null,
+  "zone": "PARIS",
+  "gender": 0,
+  "lastConnection": "",
+  "readDocuments": [],
+  "OrganizationId": "2840b0db-7886-4a4d-bb67-ac01055a67fd",
+  "role": "Coach externe",
+  "candidat": null,
+  "coaches": [
+    {
+      "employed": false,
+      "hidden": false,
+      "note": null,
+      "url": "arnold-93336b4d",
+      "contract": null,
+      "endOfContract": null,
+      "lastModifiedBy": null,
+      "candidat": {
+        "id": "08da25d9-e84b-455f-acd6-ec2bb39309b6",
+        "OrganizationId": "700ba47d-1760-4aa1-b0b5-34a9f3547d3e",
+        "firstName": "Yvette",
+        "lastName": "Girard",
+        "email": "Ulysse_Charles@example.com",
+        "phone": "0753463506",
+        "address": "7 Place des Grands Augustins",
+        "role": "Candidat",
+        "adminRole": null,
+        "zone": "PARIS",
+        "gender": 1,
+        "lastConnection": null,
+        "userProfile": {
+          "description": null,
+          "currentJob": null,
+          "department": null,
+          "isAvailable": true,
+          "searchBusinessLines": [],
+          "networkBusinessLines": [],
+          "searchAmbitions": [],
+          "helpNeeds": [],
+          "helpOffers": []
+        }
+      }
+    }
+  ],
+  "organization": {
+    "id": "99aca0a7-3154-4fbe-b149-700a9de44871",
+    "name": "Le roux et Martin",
+    "address": "9457 Voie de la Victoire",
+    "zone": "PARIS"
+  },
+  "userProfile": {
+    "description": null,
+    "currentJob": null,
+    "networkBusinessLines": [],
+    "searchBusinessLines": [],
+    "searchAmbitions": [
+      {
+        "id": "e64d8a2a-09b2-4e43-91c8-24c921165d9e",
+        "name": "aev",
+        "order": 0
+      }
+    ],
+    "helpOffers": [
+      {
+        "id": "3fd8b70a-01f1-4082-8c86-9ebf1ee83143",
+        "name": "interview"
+      }
+    ],
+    "helpNeeds": []
+  }
+}

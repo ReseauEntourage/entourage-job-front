@@ -16,11 +16,7 @@ export function EditOrganizationModal({
 }: EditOrganizationModalProps) {
   const { onSubmit } = useOnOrganizationFormSubmit(
     async (organizationToUpdate: OrganizationDto) => {
-      return Api.putOrganization(
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        organization.id,
-        organizationToUpdate
-      );
+      return Api.putOrganization(organization.id, organizationToUpdate);
     },
     Actions.UPDATE
   );

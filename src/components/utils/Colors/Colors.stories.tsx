@@ -34,6 +34,7 @@ const ColorsTemplate = () => {
       <StyledColorsContainer>
         {Object.keys(COLORS).map((colorKey) => {
           if (colorKey === 'cvStatus') return null;
+          if (colorKey === 'alert') return null;
           const isDarkColor = DarkColors.includes(colorKey);
           return (
             <StyledColorContainer
@@ -72,6 +73,26 @@ const ColorsTemplate = () => {
               >
                 {COLORS.cvStatus[colorKey].background}
               </StyledStatusColor>
+              <div>{colorKey}</div>
+            </StyledColorContainer>
+          );
+        })}
+      </StyledColorsContainer>
+      <h4>Alert Colors</h4>
+      <StyledColorsContainer>
+        {Object.keys(COLORS.alert).map((colorKey) => {
+          return (
+            <StyledColorContainer
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  COLORS.alert[colorKey].background
+                );
+                alert(`Copied: ${COLORS.alert[colorKey].background}`); // eslint-disable-line no-alert
+              }}
+            >
+              <StyledColor color={COLORS.alert[colorKey].background}>
+                {COLORS.alert[colorKey].background}
+              </StyledColor>
               <div>{colorKey}</div>
             </StyledColorContainer>
           );

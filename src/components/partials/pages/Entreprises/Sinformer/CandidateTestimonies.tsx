@@ -2,7 +2,12 @@
 
 import React from 'react';
 import { CarouselItem } from 'src/components/partials/utils/CarouselItem';
-import { Img, Section, Carousel } from 'src/components/utils';
+import {
+  Img,
+  Section,
+  Carousel,
+  ContainerWithTextCentered,
+} from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
 
 const testimonies = [
@@ -63,32 +68,20 @@ const testimonies = [
 
 export const CandidateTestimonies = () => {
   return (
-    <Section style="default">
-      <H2
-        title={
-          <>
-            Un emploi,{' '}
-            <span className="uk-text-primary">ça change une vie</span>
-          </>
-        }
-        color="black"
-        center
-      />
-      <p className="uk-text-center">
-        Jeunes issus de l’aide sociale à l’enfance, réfugiés nouvellement
-        arrivés, accidentés de la vie, familles très précaires… tous ont en
-        commun de n’avoir que très peu de gens sur qui compter. Beaucoup ont
-        aussi des compétences, du talent, et l’envie de s’en sortir.
-      </p>
-      <p className="uk-text-center uk-margin-large-bottom">
-        Aujourd’hui,&nbsp;
-        <span className="uk-text-primary uk-text-bold">
-          2 millions de personnes sont exclues du marché de l’emploi et vivent
-          dans une grande précarité
-        </span>
-        . Pourtant, loin d’être assistés, ils rêvent de travailler !
-      </p>
-      <div className="uk-flex uk-flex-center">
+    <Section style="custom-primary">
+      <H2 title={<>Un emploi, ça change une vie</>} color="black" center />
+      <ContainerWithTextCentered>
+        <p>
+          Jeunes issus de l’aide sociale à l’enfance, réfugiés nouvellement
+          arrivés, accidentés de la vie, familles très précaires… tous ont en
+          commun de n’avoir que très peu de gens sur qui compter. Beaucoup ont
+          aussi des compétences, du talent, et l’envie de s’en sortir.
+        </p>
+        <p>
+          Aujourd’hui,&nbsp; 2 millions de personnes sont exclues du marché de
+          l’emploi et vivent dans une grande précarité . Pourtant, loin d’être
+          assistés, ils rêvent de travailler !
+        </p>
         <Carousel
           style="default"
           containerClasses="uk-container-small uk-child-width-1-1"
@@ -130,17 +123,15 @@ export const CandidateTestimonies = () => {
             );
           })}
         </Carousel>
-      </div>
-      <p className="uk-text-center">
-        On sous-estime souvent le rôle que l’emploi joue dans nos vies. Loin de
-        se résumer à sa seule dimension économique,{' '}
-        <span className="uk-text-primary uk-text-bold">
-          l’emploi est une colonne vertébrale qui tient les gens debout
-        </span>{' '}
-        : il leur rend leur dignité, apporte du lien social, permet de se
-        projeter et de se sentir utile à la société. L’emploi est une clé
-        essentielle pour l&apos;accomplissement de soi.
-      </p>
+        <p>
+          On sous-estime souvent le rôle que l’emploi joue dans nos vies. Loin
+          de se résumer à sa seule dimension économique, l’emploi est une
+          colonne vertébrale qui tient les gens debout : il leur rend leur
+          dignité, apporte du lien social, permet de se projeter et de se sentir
+          utile à la société. L’emploi est une clé essentielle pour
+          l&apos;accomplissement de soi.
+        </p>
+      </ContainerWithTextCentered>
     </Section>
   );
 };

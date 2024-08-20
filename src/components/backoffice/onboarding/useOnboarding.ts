@@ -8,7 +8,7 @@ import {
   validateLastStepOnboardingSelectors,
 } from 'src/use-cases/onboarding';
 import { FlattenedOnboardingFormData } from './Onboarding.types';
-import { parseOnboadingFields } from './Onboarding.utils';
+import { parseOnboadingProfileFields } from './Onboarding.utils';
 
 export const useOnboarding = () => {
   const dispatch = useDispatch();
@@ -21,9 +21,12 @@ export const useOnboarding = () => {
 
   const onSubmitLastStepOnboarding = useCallback(
     (fields: Partial<FlattenedOnboardingFormData>) => {
-      const fieldsToSend = parseOnboadingFields(fields);
+      const profileFieldsToSend = parseOnboadingProfileFields(fields);
       dispatch(
-        onboardingActions.validateLastStepOnboardingRequested(fieldsToSend)
+        onboardingActions.validateLastStepOnboardingRequested({
+          userProfile: profileFieldsToSend,
+          optinNewsletter: fields.optinNewsletter || false,
+        })
       );
     },
     [dispatch]
@@ -31,7 +34,7 @@ export const useOnboarding = () => {
 
   const onSubmitFirstSecondStepOnboarding = useCallback(
     (fields: Partial<FlattenedOnboardingFormData>) => {
-      const fieldsToSend = parseOnboadingFields(fields);
+      const fieldsToSend = parseOnboadingProfileFields(fields);
       dispatch(
         onboardingActions.validateFirstSecondStepOnboardingRequested(
           fieldsToSend

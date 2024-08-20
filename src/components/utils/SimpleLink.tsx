@@ -45,7 +45,7 @@ export const SimpleLink = ({
       </a>
     );
   }
-  return isExternal ? (
+  return isExternal || !href ? (
     <a
       onClick={onClick}
       href={typeof href === 'string' ? href : href?.pathname}
@@ -56,12 +56,7 @@ export const SimpleLink = ({
       {children}
     </a>
   ) : (
-    <Link
-      scroll={scroll}
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      href={href}
-      shallow={shallow}
-    >
+    <Link scroll={scroll} href={href} shallow={shallow}>
       <a
         onClick={onClick}
         target={target}

@@ -33,11 +33,21 @@ export function isTooManyRequests(error: unknown) {
   return isAxiosError(error) && error.response?.status === 429;
 }
 
+export function isEmailUnverifiedError(error: unknown) {
+  return (
+    isAxiosError(error) &&
+    error.response?.status === 401 &&
+    (error.response?.data as { message?: string })?.message ===
+      'UNVERIFIED_EMAIL'
+  );
+}
+
 export function isEmailAlreadyVerifiedError(error: unknown) {
   return (
     isAxiosError(error) &&
     error.response?.status === 400 &&
-    error.response?.data?.message === 'EMAIL_ALREADY_VERIFIED'
+    (error.response?.data as { message?: string })?.message ===
+      'EMAIL_ALREADY_VERIFIED'
   );
 }
 
@@ -45,7 +55,7 @@ export function isTokenExpiredError(error: unknown) {
   return (
     isAxiosError(error) &&
     error.response?.status === 400 &&
-    error.response?.data?.message === 'TOKEN_EXPIRED'
+    (error.response?.data as { message?: string })?.message === 'TOKEN_EXPIRED'
   );
 }
 

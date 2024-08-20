@@ -9,7 +9,7 @@ export const OpportunitiesList = React.memo(
     noContent,
   }: {
     isLoading: boolean;
-    list: JSX.Element;
+    list: JSX.Element | null;
     noContent: React.ReactNode;
   }) => {
     return (

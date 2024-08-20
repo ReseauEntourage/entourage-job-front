@@ -68,6 +68,10 @@ export function selectAuthenticatedUser(state: RootState) {
   return currentUser;
 }
 
+export function selectExternalCv(state: RootState) {
+  return state.currentUser.externalCv;
+}
+
 export function selectCurrentUserProfile(state: RootState) {
   const currentUser = selectAuthenticatedUser(state);
   return currentUser.userProfile;
@@ -158,7 +162,7 @@ export const selectCandidateProfileDefaultFiltersForDashboardOpportunities =
       }
       return {
         department: mutateToArray(userCandidateProfile.department),
-        businessLines: userCandidateProfile.searchBusinessLines.map(
+        businessLines: userCandidateProfile.searchBusinessLines?.map(
           (businessLine) => businessLine.name
         ),
       };

@@ -1,5 +1,5 @@
 import React from 'react';
-import UIkit from 'uikit';
+import { useDispatch } from 'react-redux';
 
 import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
@@ -7,10 +7,11 @@ import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { formInterestLinkedOut } from 'src/components/forms/schemas/formInterestLinkedOut';
 import { Section, SimpleLink } from 'src/components/utils';
 import { useResetForm } from 'src/hooks/utils';
+import { notificationsActions } from 'src/use-cases/notifications';
 
 const Contact = () => {
   const [form, resetForm] = useResetForm();
-
+  const dispatch = useDispatch();
   const CONTACT_NUMBER = '07 49 69 31 12';
 
   return (
@@ -33,13 +34,20 @@ const Contact = () => {
           onSubmit={(fields) => {
             return Api.postContactContactUs(fields)
               .then(() => {
-                UIkit.notification('Merci pour votre message.', 'success');
+                dispatch(
+                  notificationsActions.addNotification({
+                    type: 'danger',
+                    message: 'Merci pour votre message',
+                  })
+                );
                 resetForm();
               })
               .catch(() => {
-                return UIkit.notification(
-                  "Une erreur s'est produite",
-                  'danger'
+                dispatch(
+                  notificationsActions.addNotification({
+                    type: 'danger',
+                    message: "Une erreur s'est produite",
+                  })
                 );
               });
           }}

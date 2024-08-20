@@ -2,35 +2,32 @@ import React from 'react';
 import { openModal } from 'src/components/modals/Modal';
 import { PostPublicOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { CVList } from 'src/components/partials/CV/CVList';
-import { Button, Grid, Section } from 'src/components/utils';
-import { UIKIT_STYLES } from 'src/components/variables';
+import {
+  Button,
+  ContainerWithTextCentered,
+  Section,
+} from 'src/components/utils';
+import { H1 } from 'src/components/utils/Headings';
 import { CV_FILTERS_DATA } from 'src/constants';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { useFilters } from 'src/hooks/useFilters';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
+import { StyledCandidatsHeaderContainer } from './Candidats.styles';
 
 const cvFiltersWithoutGender = CV_FILTERS_DATA.slice(0, -1);
 
-export const SearchCandidates = ({ style }: { style?: UIKIT_STYLES }) => {
+export const SearchCandidates = () => {
   const { filters, setFilters, search, setSearch, resetFilters } = useFilters(
     cvFiltersWithoutGender,
     '/candidats'
   );
 
   return (
-    <Section style={style}>
-      <Grid
-        gap="medium"
-        column
-        middle
-        center
-        eachWidths={['2-3@s', '1-1', '1-1']}
-      >
-        <div className="uk-text-center">
-          <h2 className="uk-text-bold">
-            Découvrez les <span className="uk-text-primary">candidats</span>
-          </h2>
+    <Section className="custom-header">
+      <ContainerWithTextCentered>
+        <StyledCandidatsHeaderContainer>
+          <H1 center title="Découvrez les candidats" />
           <div>
             Découvrez ci-dessous les CV des candidats Entourage Pro. Vous pouvez
             leur donner un coup de pouce en partageant leur CV, leur transmettre
@@ -52,19 +49,15 @@ export const SearchCandidates = ({ style }: { style?: UIKIT_STYLES }) => {
               Pro.
             </Button>
           </p>
-        </div>
-        <CVList
-          search={search}
-          filters={filters}
-          resetFilters={resetFilters}
-          setSearch={setSearch}
-          setFilters={setFilters}
-        />
-      </Grid>
+        </StyledCandidatsHeaderContainer>
+      </ContainerWithTextCentered>
+      <CVList
+        search={search}
+        filters={filters}
+        resetFilters={resetFilters}
+        setSearch={setSearch}
+        setFilters={setFilters}
+      />
     </Section>
   );
-};
-
-SearchCandidates.defaultProps = {
-  style: 'default',
 };

@@ -1,6 +1,8 @@
 # Entourage Pro Frontend
 
-[![Entourage Pro [front-end]](https://github.com/ReseauEntourage/entourage-job-front/actions/workflows/main.yml/badge.svg?branch=chore%2Fgithub-action)](https://github.com/ReseauEntourage/entourage-job-front/actions/workflows/main.yml)
+Document mis à jour le 05/08/2024
+
+[![Entourage Pro [front-end]](https://github.com/ReseauEntourage/entourage-job-front/actions/workflows/main.yml/badge.svg)](https://github.com/ReseauEntourage/entourage-job-front/actions/workflows/main.yml)
 
 ## Sommaire
 
@@ -22,62 +24,76 @@
 
 | App         | Version |
 | ----------- | ------- |
-| **Node**    | 16.17.x |
-| **NPM**     | 8.15.x  |
+| **Node**    | 18.x    |
 | **YARN**    | 1.22.x  |
-| **Next.js** | 12.3.4  |
+| **Next.js** | 12.1.0  |
 | **React**   | 17.0.2  |
-| **Webpack** | 4.46.0  |
-| **esLint**  | 7.32.0  |
+| **Webpack** | 5.74.0  |
+| **esLint**  | 8.0.1   |
 
 ## Architecture
 
 - `entourage-job-front/`
 - `.github`: configuration de la CI avec **_Github Actions_**
 - `.husky` : scripts de hook de commit avec **_Husky_**
+- `.storybook` : Dossier de configuration de Storybook
 - `assets/` : fichiers de styles globaux avec **_UIkit_**
+- `cypress/` : fichiers de tests e2e **_Cypress_**
 - `public/` : stockage des ressources non dynamique accessible publiquement tels que les images, le CSS ou les fonts
 - `src/`
+  - `api/`: dossier contenant la définition de l'*_Api_*
   - `components/` : dossier contenant les composants **_React_** écrit avec les particularités de **_Next.js_**
   - `constants/` : fichiers de constantes
   - `hooks/` : hooks communs à plusieurs composants
   - `lib/` : librairies pure JS (analytics ...)
   - `pages/` : dossier contenant les composants **_React_** de rendu de pages
+  - `store/` : dossier contenant la définition du store **_reduxjs/toolkit_**
   - `styles/` : feuilles CSS compilés à partir de **_UIkit_** + certains styles customs
   - `use-cases/` : store redux séparé en modules
   - `utils/` : fonctions utilitaires communes
+  - `tsconfig`: configuration TS pour l'app
 - `.editorconfig`: configuration par défaut de la syntaxe du code de l'éditeur
-- `Makefile`: permet l'execution de la commande `make init` créant interactivement le fichier `.env`
-- `.env.dist`: fichier de distribution
+- `.env`: fichier de configuration de votre environnement local
+- `.env.dist`: fichier de distribution des variables d'env
 - `.eslintignore`: configuration pour **_ESLint_**
 - `.eslintrc.json`: configuration pour **_ESLint_**
-- `next.config.js`: fichier de configuration pour **_Next.js_**
-- `.prettierignore`: configuration pour **_Prettier_**
+- `.gitignore.json`: configuration des fichiers et dossiers ignorés dans le stage de Git
+- `.lintstagedrc.js`: fichier de configuration du lint-stage
+- `.prettierignore`: configuration des fichiers et dossiers ignorés par *_Prettier_*
 - `.prettierrc.json`: configuration pour **_Prettier_**
-- `Procfile`: configuration des process **_Heroku_** à lancer après déploiement
+- `cypress.config.ts`: configuration pour **_Cypress_**
+- `docker-compose.yml`: Définition des différents containers Docker pour le développement local
+- `Dockerfile`: configuration du container Docker de l'application
+- `jest.config.js`: configuration de *_Jest_*
+- `Makefile`: permet l'execution de la commande `make init` créant interactivement le fichier `.env`
+- `next-env.d.ts`: Fichier auto-généré par *_nextjs_*
+- `next.config.js`: configuration pour *_nexjs_*
+- `package.json`: configuration du projet et des dépendances
+- `Procfile` : configuration des process **_Heroku_** à lancer après déploiement
 - `server-next.js`: point d'entrée de lancement du serveur
+- `tracer.ts`: fichier d'initialisation de la connexion à DataDog
+- `next.config.js`: fichier de configuration pour **_Next.js_**
+- `Procfile`: configuration des process **_Heroku_** à lancer après déploiement
+- `.prettierrc.json`: configuration pour **_Prettier_**
 
-## Configuration
+## Installation
 
-Construire le fichier _.env_ contenant les variables d'environnement
+### Pré-requis
 
-```
-make init
-```
-
-Vérifier que le [back-end Entourage Pro](https://github.com/ReseauEntourage/entourage-job-back) fonctionne correctement
-
-```
-docker ps
-```
-
-[Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#debian-stable) est requis pour installer le projet
+- Avoir installé yarn [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#debian-stable) est requis pour installer le projet
 
 ```
 npm install -g yarn
 ```
 
-Installation des dépendances - décrite dans le fichier _yarn-lock.json_
+- Avoir correctement intallé et exécuté le [back-end Entourage Pro](https://github.com/ReseauEntourage/entourage-job-back)
+
+- Avoir créé un fichier avec les variables d'environnement nécessaires en utilisant .env.dist
+
+### Variables d'environnement
+
+
+Installation des dépendances
 
 ```
 yarn install
@@ -119,15 +135,29 @@ Si un bug apparait lors de l'utilisation de git ajouter l'option suivante
 --no-verify
 ```
 
+### TS Config
+
+Du fait d'une différence nécessaire de configuration TS entre le dossier `src`et `cypress`, nous avons dû créer un fichier `tsconfig.base.json` à la racine du projet. Le dossier `src`de l'app autant que le dossier `cypress`des tests utilisent chacun leur propre `tsconfig`en extension de la base.
+
+Le path du `tsconfig`pour le build de l'app est fixé dans le fichier `next.config.ts`.
+
+Pour tester le typage du projet (app + cypress), utiliser
+
+```
+yarn run test:ts-check
+```
+
 ### Storybook
 
-Pour accéder à la page documenté des composants
+Les différents composants de l'application front sont documentés dans un storybook.
+
+Pour executer Storybook en local :
 
 ```
 yarn storybook
 ```
 
-Don't forget to import icons into the storybook when adding a new one in "/assets/icons"
+Lorsque vous ajoutez de nouvelles icones dans "/assets/icons", n'oubliez pas de les intégrer au storybook grâce à cette commande :
 
 ```
 yarn add-icons
@@ -218,8 +248,6 @@ Et ici la documentation concernant l'action [Cypress.io](https://docs.cypress.io
 
 #### Pipeline CD
 
-> W.I.P.
-
 ## Déploiement
 
 Le déploiement se fait automatiquement grâce à **_Github Actions_** et **_Heroku_**.
@@ -236,8 +264,13 @@ Régulièrement, lancer la commande ci-dessous, afin de cleaner le code en suppr
 npx dead-exports
 ```
 
-## Stack technique
+## A lire également
 
-Dernier update: _14/12/2023_
+L'ensemble des documentations du répertoire : [./docs](./docs/)
+
+- [Routes Permissions](./docs/routes-permissions.md)
+- [Use Cases](./docs/use-cases.md)
+
+## Stack technique
 
 ![Stack technique Entourage Pro](./stack.svg)

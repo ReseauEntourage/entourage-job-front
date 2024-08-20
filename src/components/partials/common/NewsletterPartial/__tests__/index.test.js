@@ -7,6 +7,12 @@ import { BREAKPOINTS } from 'src/constants/styles';
 
 jest.mock('react-modal');
 jest.mock('cookies-next');
+jest.mock('react-redux', () => {
+  return {
+    useSelector: jest.fn(),
+    useDispatch: () => jest.fn(),
+  };
+});
 
 jest.mock('@react-hook/window-size', () => {
   return {

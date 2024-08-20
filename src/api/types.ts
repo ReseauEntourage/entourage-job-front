@@ -41,6 +41,7 @@ export const APIRoutes = {
   ORGANIZATIONS: 'organization',
   MESSAGE: 'message',
   READ_DOCUMENTS: 'readDocuments',
+  EXTERNAL_CVS: 'external-cv',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -59,7 +60,7 @@ export type UserCandidate = {
 };
 
 export type Organization = {
-  id?: string;
+  id: string;
   name: string;
   address?: string;
   organizationReferent: {
@@ -85,28 +86,38 @@ export type OrganizationDto = {
 };
 
 export type UserProfile = {
-  currentJob: string;
-  description: string;
+  currentJob: string | null;
+  description: string | null;
   department: Department;
   isAvailable: boolean;
-  helpNeeds: { name: HelpValue }[];
-  helpOffers: { name: HelpValue }[];
-  networkBusinessLines: {
-    name: BusinessLineValue;
-    order: number;
-  }[];
-  searchBusinessLines: {
-    name: BusinessLineValue;
-    order: number;
-  }[];
-  searchAmbitions: {
-    name: string;
-    order: number;
-    prefix: AmbitionsPrefixesType;
-  }[];
-  lastSendMessage: string;
-  lastReceivedMessage: string;
+  helpNeeds: { name: HelpValue }[] | null;
+  helpOffers: { name: HelpValue }[] | null;
+  networkBusinessLines:
+    | {
+        name: BusinessLineValue;
+        order: number;
+      }[]
+    | null;
+  searchBusinessLines:
+    | {
+        name: BusinessLineValue;
+        order: number;
+      }[]
+    | null;
+  searchAmbitions:
+    | { name: string; order: number; prefix: AmbitionsPrefixesType }[]
+    | null;
+  lastSendMessage: string | null;
+  lastReceivedMessage: string | null;
+  linkedinUrl: string | null;
+  hasExternalCv: boolean;
 };
+
+export interface WhatsappJoinUrl {
+  name: string;
+  qrCodePath: string;
+  url: string;
+}
 
 export type User = {
   coach: User;
@@ -125,11 +136,13 @@ export type User = {
   hashReset: string;
   saltReset: string;
   zone: AdminZone;
+  whatsappJoinUrl: WhatsappJoinUrl;
   organization: Organization;
   deletedAt?: string;
   userProfile: UserProfile;
   OrganizationId?: string;
   readDocuments: { documentName: DocumentNameType }[];
+  isEmailVerified: boolean;
 };
 
 export interface CVExperience {
@@ -185,7 +198,12 @@ export interface CV {
       address: string;
       zone: AdminZone;
       gender: Gender;
+      id: string;
     };
+    employed: boolean;
+    url: string;
+    hidden: boolean;
+    endOfContract?: string;
   };
   catchphrase: string;
   story: string;
@@ -588,6 +606,7 @@ export type PublicProfile = {
   id: string;
   firstName: string;
   lastName: string;
+  linkedinUrl?: string;
   role: UserRole;
   department: Department;
   currentJob: string;
@@ -611,6 +630,7 @@ export type PublicProfile = {
   lastSentMessage: string;
   lastReceivedMessage: string;
   cvUrl?: string;
+  hasExternalCv: boolean;
 };
 
 export type ProfilesFilters = {
@@ -627,4 +647,13 @@ export type OpportunitiesFiltersForCandidate = {
   type?: OpportunityType;
   department: Department | Department[];
   businessLines: BusinessLineValue | BusinessLineValue[];
+};
+
+export type PostAuthSendVerifyEmailParams = {
+  token?: string;
+  email?: string;
+};
+
+export type ExternalCv = {
+  url: string;
 };

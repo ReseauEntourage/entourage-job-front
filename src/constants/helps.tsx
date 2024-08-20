@@ -247,7 +247,7 @@ export const ParametresHelpCardContents: {
       value: 'network',
       label: 'Partager mon réseau professionnel',
       description:
-        'Mettez en relation les candidats avec des contacts pertinents et intégez-les dans des réseaux qui peuvent favoriser leur insertion professionnelle.',
+        'Mettez en relation les candidats avec des contacts pertinents et intégrez-les dans des réseaux qui peuvent favoriser leur insertion professionnelle.',
     },
   ],
 };

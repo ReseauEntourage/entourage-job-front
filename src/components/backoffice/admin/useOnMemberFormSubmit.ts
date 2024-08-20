@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { useCallback, useState } from 'react';
-import UIkit from 'uikit';
+import { useDispatch } from 'react-redux';
 import { Api } from 'src/api';
 import { UserDto } from 'src/api/types';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
@@ -11,12 +11,14 @@ import {
 import { USER_ROLES } from 'src/constants/users';
 import { Action, ActionsLabels } from 'src/constants/utils';
 import { usePrevious } from 'src/hooks/utils';
+import { notificationsActions } from 'src/use-cases/notifications';
 
 export function useOnMemberFormSubmit(
   apiCall: (user: UserDto) => Promise<AxiosResponse>,
   action: Action
 ) {
   const [filledUserFields, setFilledUserFields] = useState({});
+  const dispatch = useDispatch();
 
   const prevFilledUserFields = usePrevious(filledUserFields);
 
@@ -51,12 +53,20 @@ export function useOnMemberFormSubmit(
 
             name = fields.nameOrganization;
 
-            UIkit.notification(`La structure a bien été créée`, 'success');
+            dispatch(
+              notificationsActions.addNotification({
+                type: 'success',
+                message: 'La structure a bien été créée',
+              })
+            );
           } catch (error) {
             console.error(error);
-            UIkit.notification(
-              `Une erreur s'est produite lors de la création de la structure`,
-              'danger'
+            dispatch(
+              notificationsActions.addNotification({
+                type: 'danger',
+                message:
+                  "Une erreur s'est produite lors de la création de la structure",
+              })
             );
             return;
           }
@@ -86,9 +96,11 @@ export function useOnMemberFormSubmit(
         const { data } = await apiCall(userFields);
         setFilledUserFields({});
         closeModal();
-        UIkit.notification(
-          `Le membre a bien été ${ActionsLabels[action].VERB}`,
-          'success'
+        dispatch(
+          notificationsActions.addNotification({
+            type: 'success',
+            message: `Le membre a bien été ${ActionsLabels[action].VERB}`,
+          })
         );
         return data;
       } catch (error) {
@@ -97,11 +109,18 @@ export function useOnMemberFormSubmit(
           // @ts-expect-error after enable TS strict mode. Please, try to fix it
           error?.response?.status === 409
         ) {
-          UIkit.notification('Cette adresse email est déjà utilisée', 'danger');
+          dispatch(
+            notificationsActions.addNotification({
+              type: 'danger',
+              message: 'Cette adresse email est déjà utilisée',
+            })
+          );
         } else {
-          UIkit.notification(
-            `Une erreur s'est produite lors de la ${ActionsLabels[action].NAME} du membre`,
-            'danger'
+          dispatch(
+            notificationsActions.addNotification({
+              type: 'danger',
+              message: `Une erreur s'est produite lors de la ${ActionsLabels[action].NAME} du membre`,
+            })
           );
         }
 
@@ -123,7 +142,7 @@ export function useOnMemberFormSubmit(
         }
       }
     },
-    [action, apiCall]
+    [action, apiCall, dispatch]
   );
 
   return {
