@@ -13,3 +13,4 @@ coverage/
 /tsconfig.base.tsbuildinfo
 /storybook-static
 cypress/fixtures/api
+yarn-error.log
