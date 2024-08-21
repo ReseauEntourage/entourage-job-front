@@ -100,7 +100,7 @@ export const CandidatCard = ({
         </CandidatCardPictureOverlay>
       </CandidatCardPictureContainerStyled>
       <CandidatCardContentStyled onClick={onCardClicked}>
-        <h1>{sortedAmbitions[0].name}</h1>
+        {sortedAmbitions?.length > 0 && <h1>{sortedAmbitions[0].name}</h1>}
         <p>Je recherche un emploi dans</p>
         <CandidateCardBusinessLinesStyled>
           {isNewCareerPath
