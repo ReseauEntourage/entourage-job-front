@@ -1,5 +1,5 @@
-import bootstrap from '../bootstrap';
 import { adminRequests } from '../../intercept/user/admin.req';
+import bootstrap from '../bootstrap';
 
 /**
  * En tant qu'Administrateur
@@ -19,29 +19,26 @@ describe('En tant que - Administrateur', () => {
      * Remove modal
      */
     window.localStorage.setItem('entourage-pro-modal-closed', 'true');
+    window.localStorage.setItem('access-token', '0x1x2x3x4');
+    window.localStorage.setItem('release-version', 'v100');
+
     /**
-     * Intercept GET requests
+     * Intercept requests
      */
-    adminRequests.GET.map((request) => {
-      if (request.alias)
+    adminRequests.GET.forEach((request) => {
+      if (request.alias) {
         cy.intercept('GET', request.path, request.data).as(request.alias);
-      else cy.intercept('GET', request.path, request.data);
+      } else cy.intercept('GET', request.path, request.data);
     });
-    /**
-     * Intercept POST requests
-     */
-    adminRequests.POST.map((request) => {
-      if (request.alias)
+    adminRequests.POST.forEach((request) => {
+      if (request.alias) {
         cy.intercept('POST', request.path, request.data).as(request.alias);
-      else cy.intercept('POST', request.path, request.data);
+      } else cy.intercept('POST', request.path, request.data);
     });
-    /**
-     * Intercept PUT requests
-     */
-    adminRequests.PUT.map((request) => {
-      if (request.alias)
+    adminRequests.PUT.forEach((request) => {
+      if (request.alias) {
         cy.intercept('PUT', request.path, request.data).as(request.alias);
-      else cy.intercept('PUT', request.path, request.data);
+      } else cy.intercept('PUT', request.path, request.data);
     });
   });
 
@@ -49,6 +46,11 @@ describe('En tant que - Administrateur', () => {
    * Je parcours les opportunités
    */
   describe('Je parcours les opportunités', () => {
+    beforeEach(() => {
+      cy.visit('/backoffice/admin/offres');
+      cy.wait(1000);
+    });
+
     /**
      * Première partie de test - J'affiche les opport.
      */
@@ -94,6 +96,9 @@ describe('En tant que - Administrateur', () => {
      * Deuxième partie de test - Je créer une opportunité
      */
     it("J'ajoute une nouvelle opportunité", () => {
+      // Interceptons l'appel au détails d'opportunité et ignorons la réponse
+      cy.intercept('GET', `opportunity/**`, {}).as('opportunity');
+
       // Remplissage du formulaire d'une opportunité
       cy.get('[data-testid="button-admin-create"]').click();
       cy.get('[data-testid="admin-add-offer-main"]').click();
@@ -153,19 +158,14 @@ describe('En tant que - Administrateur', () => {
    * Je parcours les membres
    */
   describe('Je parcours les membres', () => {
+    beforeEach(() => {
+      cy.visit('/backoffice/admin/membres?role=Candidat');
+    });
+
     /**
      * Première partie de test - J'affiche les membres.
      */
     it("J'affiche les membres", () => {
-      // Accèdons à l'URL des membres
-      cy.visit('/backoffice/admin/membres?role=Candidat', {
-        // J'ajoute un fake token dans mon localStorage pour simuler l'authentification
-        onBeforeLoad: function async(window) {
-          window.localStorage.setItem('access-token', '0x1x2x3x4');
-          window.localStorage.setItem('release-version', 'v100');
-        },
-      });
-
       // Grâce au fichier de fixture précédement généré
       cy.fixture('api/users-candidat').then((candidates) => {
         cy.get('[data-testid="member-list"]')
@@ -270,7 +270,7 @@ describe('En tant que - Administrateur', () => {
 
       // Chargement du fichier de fixture search-user.json - inutile de se soucier du type (non utile)
       cy.fixture('api/search-user').then((users) => {
-        let firstUser = users[0];
+        const firstUser = users[0];
 
         // Saisie du nom de l'utilisateur
         cy.get('#form-add-user-userToLinkId')
@@ -303,7 +303,7 @@ describe('En tant que - Administrateur', () => {
 
       // Chargement du fichier de fixture organizations.json contenant les organizations
       cy.fixture('api/organizations').then((organizations) => {
-        let firstOrganization = organizations[0];
+        const firstOrganization = organizations[0];
 
         cy.get('#form-add-user-organizationId')
           .should('be.visible')
@@ -319,7 +319,7 @@ describe('En tant que - Administrateur', () => {
 
       // Puis chargement du fichier de fixture organizations.json contenant les organizations
       cy.fixture('api/search-user').then((users) => {
-        let firstUser = users[0];
+        const firstUser = users[0];
 
         cy.get('#form-add-user-userToLinkId')
           .should('be.visible')
@@ -341,18 +341,14 @@ describe('En tant que - Administrateur', () => {
    * Je parcours les organisations
    */
   describe('Je parcours les organisations', () => {
+    beforeEach(() => {
+      cy.visit('/backoffice/admin/structures');
+    });
+
     /**
      * Première partie de test - J'affiche les organisations
      */
     it("J'affiche les organisations", () => {
-      // Accèdons à l'URL des organisations
-      cy.visit('/backoffice/admin/structures', {
-        // J'ajoute un fake token dans mon localStorage pour simuler l'authentification
-        onBeforeLoad: function async(window) {
-          window.localStorage.setItem('access-token', '0x1x2x3x4');
-          window.localStorage.setItem('release-version', 'v100');
-        },
-      });
       // Grâce au fichier de fixture précédement généré
       cy.fixture('api/organizations').then((organizations) => {
         // ...je peux tester si j'obtiens, dans l'interface, le bon nombre d'opportunités
@@ -425,14 +421,11 @@ describe('En tant que - Administrateur', () => {
      * Troisieme partie de test - J'edite une organisation
      */
     it("J'édite une organization existante", () => {
-      let firstOrganization;
       // Grâce au fichier de fixture précédement généré
       cy.fixture('api/organizations').then((organizations) => {
-        //    Ensuite je récupère la première opportunité (depuis la fixture)
-        firstOrganization = organizations[0];
         // Edition de chaque valeur du formulaire
         cy.get(
-          `[data-testid="button-edit-organization-${firstOrganization.id}"]`
+          `[data-testid="button-edit-organization-${organizations[0].id}"]`
         )
           .should('be.visible')
           .first()

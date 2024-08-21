@@ -25,7 +25,7 @@ describe('Onboarding', () => {
         `[data-testid="form-onboarding-candidate-helps-helpNeeds-${user.userProfile.helpNeeds[0].name}"]`
       ).click();
 
-      //intercept the PUT request to update the user profile
+      // intercept the PUT request to update the user profile
       cy.intercept('PUT', `/user/profile/${user.id}`, {
         fixture: 'auth-current-candidat-onboarding1-res',
       });
@@ -42,7 +42,7 @@ describe('Onboarding', () => {
         .contains('Agriculture')
         .click();
 
-      //intercept the PUT request to update the user profile
+      // intercept the PUT request to update the user profile
       cy.intercept('PUT', `/user/profile/${user.id}`, {
         fixture: 'auth-current-candidat-onboarding2-res',
       });

@@ -1,5 +1,5 @@
-import bootstrap from '../bootstrap';
 import { companyJourneyRequests } from '../../intercept/journey/company.req';
+import bootstrap from '../bootstrap';
 
 describe('En tant que - Employeur/Entreprise', () => {
   /**
@@ -14,51 +14,34 @@ describe('En tant que - Employeur/Entreprise', () => {
    */
   beforeEach(() => {
     /**
-     * Remove modal
+     * Remove modals
      */
     window.localStorage.setItem('entourage-pro-modal-closed', 'true');
+    window.localStorage.setItem('tax-modal-closed', 'true');
+
     /**
-     * Intercept GET requests
+     * Intercept requests
      */
-    companyJourneyRequests.GET.map((request) => {
-      if (request.alias)
+    companyJourneyRequests.GET.forEach((request) => {
+      if (request.alias) {
         cy.intercept('GET', request.path, request.data).as(request.alias);
-      else cy.intercept('GET', request.path, request.data);
+      } else cy.intercept('GET', request.path, request.data);
     });
-    /**
-     * Intercept POST requests
-     */
-    companyJourneyRequests.POST.map((request) => {
-      if (request.alias)
+    companyJourneyRequests.POST.forEach((request) => {
+      if (request.alias) {
         cy.intercept('POST', request.path, request.data).as(request.alias);
-      else cy.intercept('POST', request.path, request.data);
+      } else cy.intercept('POST', request.path, request.data);
     });
-    /**
-     * Intercept PUT requests -- no PUT request for now
-     */
-    // companyJourneyRequests.PUT.map((request) => {
-    //   if (request.alias)
-    //     cy.intercept('PUT', request.path, request.data).as(request.alias);
-    //   else cy.intercept('PUT', request.path, request.data);
-    // });
+
+    // Visit the page /entreprises
+    cy.visit('/entreprises');
   });
 
   /**
    * Je souhaite recruter
    */
   describe('Je souhaite recruter un employé', () => {
-    // J'accède a la page /entreprise
-    it("J'accède à la page /entreprise", () => {
-      cy.visit('/entreprises', {
-        onBeforeLoad: function async(window) {
-          window.localStorage.setItem('tax-modal-closed', 'true');
-        },
-      });
-      // j'attend 0.5sec
-      cy.wait(500);
-    });
-
-    // Formulaire
+    // J'accède au formulaire de contact dans la modale
     it("J'affiche le formulaire de contact", () => {
       cy.get('[data-testid="button-contact-company-header"]')
         .should('be.visible')
@@ -68,8 +51,11 @@ describe('En tant que - Employeur/Entreprise', () => {
       cy.get('.ReactModalPortal div').first().should('be.visible');
     });
 
-    // Remplissage du formulaire
     it('Je remplis puis je valide le formulaire de contact', () => {
+      // First open the contact form
+      cy.get('[data-testid="button-contact-company-header"]').first().click();
+
+      // Fill the form
       cy.get('#form-company-contact-firstName')
         .should('be.visible')
         .type('John');
@@ -117,10 +103,13 @@ describe('En tant que - Employeur/Entreprise', () => {
         .should('be.visible')
         .type('Bonjour, je souhaite recruter.');
 
+      // Send the form
       cy.get('button').contains('Envoyer').should('be.visible').click();
 
+      // Wait for the POST request to finish
       cy.wait('@postContactCompany');
 
+      // The modal should be closed
       cy.get('.ReactModalPortal div').should('not.exist');
     });
   });
@@ -129,19 +118,9 @@ describe('En tant que - Employeur/Entreprise', () => {
    * Je souhaite partager une offre (publique et privée)
    */
   describe('Je souhaite partager des offres publique / privée', () => {
-    // J'accède a la page /entreprise
-    it("J'accède à la page /entreprise", () => {
-      cy.visit('/entreprises', {
-        onBeforeLoad: function async(window) {
-          window.localStorage.setItem('tax-modal-closed', 'true');
-        },
-      });
-      // j'attend 0.5sec
-      cy.wait(500);
-    });
-
     // Formulaire
     it("J'affiche le formulaire d'offre publique", () => {
+      // Je clique sur le bouton pour afficher le formulaire
       cy.get('[data-testid="button-offer-company-header"]')
         .should('be.visible')
         .first()
@@ -152,6 +131,10 @@ describe('En tant que - Employeur/Entreprise', () => {
 
     // Remplissage formulaire
     it("Je remplis puis je valide le formulaire de proposition d'une offre publique", () => {
+      // Je clique sur le bouton pour afficher le formulaire
+      cy.get('[data-testid="button-offer-company-header"]').first().click();
+
+      // Je remplis le formulaire
       cy.get('#form-add-public-offer-title').type('Form test');
 
       cy.get('#form-add-public-offer-company').type('Random company');

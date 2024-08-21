@@ -1,5 +1,5 @@
-import bootstrap from '../bootstrap';
 import { guideJourneyRequests } from '../../intercept/journey/guide.req';
+import bootstrap from '../bootstrap';
 
 describe('En tant que - Benevole', () => {
   /**
@@ -17,43 +17,23 @@ describe('En tant que - Benevole', () => {
      * Remove modal
      */
     window.localStorage.setItem('entourage-pro-modal-closed', 'true');
+
     /**
-     * Intercept GET requests -- no GET request for now
+     * Intercept requests
      */
-    // guideJourneyRequests.GET.map((request) => {
-    //   if (request.alias)
-    //     cy.intercept('GET', request.path, request.data).as(request.alias);
-    //   else cy.intercept('GET', request.path, request.data);
-    // });
-    /**
-     * Intercept POST requests
-     */
-    guideJourneyRequests.POST.map((request) => {
-      if (request.alias)
+    guideJourneyRequests.POST.forEach((request) => {
+      if (request.alias) {
         cy.intercept('POST', request.path, request.data).as(request.alias);
-      else cy.intercept('POST', request.path, request.data);
+      } else cy.intercept('POST', request.path, request.data);
     });
-    /**
-     * Intercept PUT requests -- no PUT request for now
-     */
-    // guideJourneyRequests.PUT.map((request) => {
-    //   if (request.alias)
-    //     cy.intercept('PUT', request.path, request.data).as(request.alias);
-    //   else cy.intercept('PUT', request.path, request.data);
-    // });
+
+    cy.visit('/orienter');
   });
 
   /**
    * Je souhaite orienter quelqu'un
    */
   describe('Je souhaite orienter', () => {
-    // J'accède a la page /orienter
-    it("J'accède à la page /orienter", () => {
-      cy.visit('/orienter', {});
-      // j'attend 0.5sec
-      cy.wait(500);
-    });
-
     // Formulaire
     it("J'affiche, remplis et valide le formulaire pour orienter", () => {
       cy.get('[data-testid="button-orienter"]').first().click();
@@ -239,13 +219,6 @@ describe('En tant que - Benevole', () => {
    * Je souhaite contacter l'association
    */
   describe("Je souhaite contacter l'association", () => {
-    // J'accède a la page /orienter
-    it("J'accède à la page /orienter", () => {
-      cy.visit('/orienter', {});
-      // j'attend 0.5sec
-      cy.wait(500);
-    });
-
     it("J'affiche, remplis et valide le formulaire de contacte", () => {
       cy.get('[data-testid="button-contact"]').first().click();
 
