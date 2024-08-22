@@ -15,7 +15,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 
-import { SplashScreen } from 'src/components/SplashScreen';
+// import { SplashScreen } from 'src/components/SplashScreen';
 import { ModalsListener } from 'src/components/modals/Modal';
 // import { OFFCANVAS_GUEST, OFFCANVAS_LOGGED } from 'src/constants/utils';
 import { useAuthentication } from 'src/hooks/authentication/useAuthentication';
@@ -114,7 +114,7 @@ const EntourageApp = (props: AppProps) => {
           }}
           id="main-container"
         >
-          <SplashScreen loading={loading} fading={fading} />
+          {/* <SplashScreen loading={loading} fading={fading} /> */}
           <RouteReadyComponent {...props} />
           <ModalsListener />
         </div>
