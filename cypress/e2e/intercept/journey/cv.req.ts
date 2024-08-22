@@ -30,24 +30,24 @@ export const cvJourneyRequests = {
     },
     {
       path: '/cv/*',
-      data: { fixture: 'api/cv-candidate' },
+      data: { fixture: 'api/generated/cv-candidate' },
       alias: 'cvCandidate',
     },
     {
       path: '/auth/current',
-      data: { fixture: 'api/coach-login' },
+      data: { fixture: 'api/generated/coach-login' },
       alias: 'authCheck',
     },
     {
       path: '/cv/cards/random*',
-      data: { fixture: 'api/cv-cards' },
+      data: { fixture: 'api/generated/cv-cards' },
       alias: 'getAllCV',
     },
   ],
   POST: [
     {
       path: '/opportunity',
-      data: { fixture: 'api/opportunity' },
+      data: { fixture: 'api/generated/opportunity' },
       alias: 'postOpportunity',
     },
 
@@ -58,12 +58,12 @@ export const cvJourneyRequests = {
     },
     {
       path: '/message/external',
-      data: { fixture: 'api/post-external-message-res' },
+      data: { fixture: 'api/generated/post-external-message-res' },
       alias: 'postMessage',
     },
     {
       path: '/user/search/candidates*',
-      data: { fixture: 'api/post-external-message-res' },
+      data: { fixture: 'api/generated/post-external-message-res' },
       alias: 'postMessage',
     },
   ],

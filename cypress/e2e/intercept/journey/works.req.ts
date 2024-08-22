@@ -16,7 +16,7 @@ export const worksJourneyRequests = {
     // { path: '/cv/shares', data: { total: 10000 }, alias: 'cvShares' },
     {
       path: '/contact/campaigns/candidate',
-      data: { fixture: 'api/campaigns' },
+      data: { fixture: 'api/generated/campaigns' },
       alias: 'getCampaigns',
     },
   ],

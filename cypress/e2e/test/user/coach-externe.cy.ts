@@ -25,7 +25,7 @@ describe('En tant que - Coach Externe', () => {
      * Nous avons besoin de l'objet user de la fixture api/coach-login.json
      * pour pouvoir intercepter les 2 requêtes suivantes [ vérifier dans 'network' (; ]
      */
-    cy.fixture('api/coach-login').then((user) => {
+    cy.fixture('api/generated/coach-login').then((user) => {
       const coachExtRequestsObject = coachExtRequests(user);
       coachExtRequestsObject.GET.map((request) => {
         if (request.alias)

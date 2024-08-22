@@ -29,19 +29,19 @@ describe('Candidat', () => {
       }).as('userCount');
 
       cy.intercept('GET', `/cv/${user.id}`, {
-        fixture: 'api/cv-candidate',
+        fixture: 'api/generated/cv-candidate',
       }).as('cvCandidat');
 
       cy.intercept('POST', `/cv/${user.id}`, {
-        fixture: 'api/cv-candidate',
+        fixture: 'api/generated/cv-candidate',
       }).as('postCvCandidat');
 
       cy.intercept('GET', `/opportunity/candidate/all/${user.id}*`, {
-        fixture: 'api/opportunities-wrapped',
+        fixture: 'api/generated/opportunities-wrapped',
       }).as('allOpportunities');
 
       cy.intercept('GET', `opportunity/candidate/tabCount/${user.id}`, {
-        fixture: 'api/tab-count',
+        fixture: 'api/generated/tab-count',
       }).as('tabCount');
 
       // to be done: use automatic generation and not static data
@@ -67,7 +67,7 @@ describe('Candidat', () => {
       // }).as('putUserParams');
 
       cy.intercept('GET', `/cv/lastVersion/${user.id}`, {
-        fixture: 'api/cv-candidate',
+        fixture: 'api/generated/cv-candidate',
       });
 
       cy.intercept('GET', `/user/candidate/checkUpdate/${user.id}`, {
@@ -78,7 +78,7 @@ describe('Candidat', () => {
         cvHasBeenModified: true,
       }).as('cvCheckUpdate');
 
-      cy.fixture('api/opportunities-wrapped').then((offersRes) => {
+      cy.fixture('api/generated/opportunities-wrapped').then((offersRes) => {
         cy.intercept(
           `opportunity/${offersRes.offers[0].id}`,
           offersRes.offers[0]
@@ -159,7 +159,7 @@ describe('Candidat', () => {
       .should('have.length', 5);
 
     // check if the right opportunity is open
-    cy.fixture('api/opportunities-wrapped').then(({ offers }) => {
+    cy.fixture('api/generated/opportunities-wrapped').then(({ offers }) => {
       cy.url().should('include', offers[0].id);
       cy.get('[data-testid="candidat-offer-details-title"]').contains(
         offers[0].title
@@ -167,7 +167,7 @@ describe('Candidat', () => {
     });
 
     // bookmark/unbookmark an offer from the list
-    cy.fixture('api/opportunities-wrapped').then(({ offers }) => {
+    cy.fixture('api/generated/opportunities-wrapped').then(({ offers }) => {
       const { bookmarked } = offers[0].opportunityUsers;
       const cta1 = bookmarked ? 'cta-unbookmark' : 'cta-bookmark';
       const cta2 = !bookmarked ? 'cta-unbookmark' : 'cta-bookmark';
@@ -194,7 +194,7 @@ describe('Candidat', () => {
       cy.url().should('include', user.id);
     });
     // check if the right opportunity is open
-    cy.fixture('api/opportunities-wrapped').then(({ offers }) => {
+    cy.fixture('api/generated/opportunities-wrapped').then(({ offers }) => {
       cy.url().should('include', offers[0].id);
       cy.wait(1000);
       cy.get('[data-testid="candidat-offer-details-title"]').contains(

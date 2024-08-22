@@ -65,7 +65,7 @@ describe('En tant que - Administrateur', () => {
       });
       cy.wait('@opportunities');
       // Grâce au fichier de fixture précédement généré
-      cy.fixture('api/opportunities').then((opportunities) => {
+      cy.fixture('api/generated/opportunities').then((opportunities) => {
         // ...je peux tester si j'obtiens, dans l'interface, le bon nombre d'opportunités
         cy.get('[data-testid="admin-offer-list-element"]')
           .its('length')
@@ -167,7 +167,7 @@ describe('En tant que - Administrateur', () => {
      */
     it("J'affiche les membres", () => {
       // Grâce au fichier de fixture précédement généré
-      cy.fixture('api/users-candidat').then((candidates) => {
+      cy.fixture('api/generated/users-candidat').then((candidates) => {
         cy.get('[data-testid="member-list"]')
           .find('tr')
           .should('have.length', candidates.length);
@@ -269,7 +269,7 @@ describe('En tant que - Administrateur', () => {
       cy.get('[id$=Organization]').should('not.exist');
 
       // Chargement du fichier de fixture search-user.json - inutile de se soucier du type (non utile)
-      cy.fixture('api/search-user').then((users) => {
+      cy.fixture('api/generated/search-user').then((users) => {
         const firstUser = users[0];
 
         // Saisie du nom de l'utilisateur
@@ -302,7 +302,7 @@ describe('En tant que - Administrateur', () => {
       cy.get('#form-add-user-userToLinkId').should('not.exist');
 
       // Chargement du fichier de fixture organizations.json contenant les organizations
-      cy.fixture('api/organizations').then((organizations) => {
+      cy.fixture('api/generated/organizations').then((organizations) => {
         const firstOrganization = organizations[0];
 
         cy.get('#form-add-user-organizationId')
@@ -318,7 +318,7 @@ describe('En tant que - Administrateur', () => {
       });
 
       // Puis chargement du fichier de fixture organizations.json contenant les organizations
-      cy.fixture('api/search-user').then((users) => {
+      cy.fixture('api/generated/search-user').then((users) => {
         const firstUser = users[0];
 
         cy.get('#form-add-user-userToLinkId')
@@ -350,7 +350,7 @@ describe('En tant que - Administrateur', () => {
      */
     it("J'affiche les organisations", () => {
       // Grâce au fichier de fixture précédement généré
-      cy.fixture('api/organizations').then((organizations) => {
+      cy.fixture('api/generated/organizations').then((organizations) => {
         // ...je peux tester si j'obtiens, dans l'interface, le bon nombre d'opportunités
         cy.get('[data-testid="organization-list"]')
           .find('tr')
@@ -422,7 +422,7 @@ describe('En tant que - Administrateur', () => {
      */
     it("J'édite une organization existante", () => {
       // Grâce au fichier de fixture précédement généré
-      cy.fixture('api/organizations').then((organizations) => {
+      cy.fixture('api/generated/organizations').then((organizations) => {
         // Edition de chaque valeur du formulaire
         cy.get(
           `[data-testid="button-edit-organization-${organizations[0].id}"]`
