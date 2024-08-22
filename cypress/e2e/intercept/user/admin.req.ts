@@ -22,17 +22,17 @@ export const adminRequests = {
     },
     {
       path: '/auth/current',
-      data: { fixture: 'api/admin-login' },
+      data: { fixture: 'api/generated/admin-login' },
       alias: 'authCheck',
     },
     {
       path: '/opportunity/admin**',
-      data: { fixture: 'api/opportunities' },
+      data: { fixture: 'api/generated/opportunities' },
       alias: 'opportunities',
     },
     {
       path: '/user/members*',
-      data: { fixture: 'api/users-candidat' },
+      data: { fixture: 'api/generated/users-candidat' },
       alias: 'candidates',
     },
     // la creation de membre est tricky - de nombreux type sont créés
@@ -41,18 +41,18 @@ export const adminRequests = {
     {
       path: '/user/search?**',
       data: {
-        fixture: 'api/search-user',
+        fixture: 'api/generated/search-user',
       },
       alias: 'userSearch',
     },
     {
       path: '/organization?**',
-      data: { fixture: 'api/organizations' },
+      data: { fixture: 'api/generated/organizations' },
       alias: 'organizationSearch',
     },
     {
       path: '/organization?search=&limit=50&offset=0',
-      data: { fixture: 'api/organizations' },
+      data: { fixture: 'api/generated/organizations' },
       alias: 'organizations',
     },
     // ICI NOUS COMPRENONS QUE LES FIXTURES SONT IDENTIQUES POUR CES ROUTES
