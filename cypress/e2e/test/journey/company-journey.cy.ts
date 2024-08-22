@@ -35,6 +35,7 @@ describe('En tant que - Employeur/Entreprise', () => {
 
     // Visit the page /entreprises
     cy.visit('/entreprises');
+    cy.get('[data-testid="app-splash-screen"]').should('not.visible');
   });
 
   /**

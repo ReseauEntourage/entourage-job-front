@@ -16,6 +16,8 @@ describe('Candidat', () => {
      * Remove modal
      */
     window.localStorage.setItem('entourage-pro-modal-closed', 'true');
+    window.localStorage.setItem('access-token', '1234');
+    window.localStorage.setItem('release-version', 'v100');
 
     // to be done: use automatic generation and not static data
     cy.intercept('GET', '/auth/current', {
@@ -112,12 +114,7 @@ describe('Candidat', () => {
 
   it("should open a user's public profile and contact him", () => {
     cy.fixture('public-profile-res').then((userProfile) => {
-      cy.visit(`/backoffice/profile/${userProfile.id}`, {
-        onBeforeLoad: function async(window) {
-          window.localStorage.setItem('access-token', '1234');
-          window.localStorage.setItem('release-version', 'v100');
-        },
-      });
+      cy.visit(`/backoffice/profile/${userProfile.id}`);
       cy.url().should('include', userProfile.id);
     });
 
@@ -144,12 +141,7 @@ describe('Candidat', () => {
   it('should open backoffice public offers', () => {
     // to be done: use automatic generation and not static data
     cy.fixture('auth-current-candidat-onboarding3-res').then((user) => {
-      cy.visit(`/backoffice/candidat/${user.id}/offres/public`, {
-        onBeforeLoad: function async(window) {
-          window.localStorage.setItem('access-token', '1234');
-          window.localStorage.setItem('release-version', 'v100');
-        },
-      });
+      cy.visit(`/backoffice/candidat/${user.id}/offres/public`);
       cy.url().should('include', user.id);
     });
 
@@ -185,12 +177,7 @@ describe('Candidat', () => {
   it('should open backoffice private offers and add new opportunity', () => {
     // to be done: use automatic generation and not static data
     cy.fixture('auth-current-candidat-onboarding3-res').then((user) => {
-      cy.visit(`/backoffice/candidat/${user.id}/offres/private`, {
-        onBeforeLoad: function async(window) {
-          window.localStorage.setItem('access-token', '1234');
-          window.localStorage.setItem('release-version', 'v100');
-        },
-      });
+      cy.visit(`/backoffice/candidat/${user.id}/offres/private`);
       cy.url().should('include', user.id);
     });
     // check if the right opportunity is open
@@ -249,12 +236,7 @@ describe('Candidat', () => {
   it('should open backoffice cv candidat', () => {
     // to be done: use automatic generation and not static data
     cy.fixture('auth-current-candidat-onboarding3-res').then((user) => {
-      cy.visit(`/backoffice/candidat/${user.id}/cv`, {
-        onBeforeLoad: function async(window) {
-          window.localStorage.setItem('access-token', '1234');
-          window.localStorage.setItem('release-version', 'v100');
-        },
-      });
+      cy.visit(`/backoffice/candidat/${user.id}/cv`);
       cy.url().should('include', user.id);
     });
     // catchphrase
@@ -356,12 +338,8 @@ describe('Candidat', () => {
   });
 
   it('should open backoffice candidate parameters', () => {
-    cy.visit('/backoffice/parametres', {
-      onBeforeLoad: function async(window) {
-        window.localStorage.setItem('access-token', '1234');
-        window.localStorage.setItem('release-version', 'v100');
-      },
-    });
+    cy.visit('/backoffice/parametres');
+    cy.get('[data-testid="app-splash-screen"]').should('not.visible');
 
     // toggle hide CV
     cy.get('label[for="ent-toggle-hidden"]').click();

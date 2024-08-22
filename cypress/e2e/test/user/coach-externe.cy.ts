@@ -20,6 +20,8 @@ describe('En tant que - Coach Externe', () => {
      * Remove modal
      */
     window.localStorage.setItem('entourage-pro-modal-closed', 'true');
+    window.localStorage.setItem('access-token', '0x1x2x3x4');
+    window.localStorage.setItem('release-version', 'v100');
     /**
      * Intercept GET requests
      * Nous avons besoin de l'objet user de la fixture api/coach-login.json
@@ -40,13 +42,8 @@ describe('En tant que - Coach Externe', () => {
    */
   it("J'affiche les candidats", () => {
     // Accèdons à l'URL des membres
-    cy.visit('/backoffice/candidat/list', {
-      // J'ajoute un fake token dans mon localStorage pour simuler l'authentification
-      onBeforeLoad: function async(window) {
-        window.localStorage.setItem('access-token', '0x1x2x3x4');
-        window.localStorage.setItem('release-version', 'v100');
-      },
-    });
+    cy.visit('/backoffice/candidat/list');
+    cy.get('[data-testid="app-splash-screen"]').should('not.visible');
 
     // Possible d'augmenter ici la taille de la liste tester en augmentant
     // également le nombre de candidat - coaches: [...] - au sein de la fixture api/coach-login.json
@@ -58,12 +55,8 @@ describe('En tant que - Coach Externe', () => {
    */
   it("J'affiche les paramètres du compte", () => {
     // Accèdons à l'URL des paramètres du compte
-    cy.visit('/backoffice/parametres', {
-      onBeforeLoad: function async(window) {
-        window.localStorage.setItem('access-token', '0x1x2x3x4');
-        window.localStorage.setItem('release-version', 'v100');
-      },
-    });
+    cy.visit('/backoffice/parametres');
+    cy.get('[data-testid="app-splash-screen"]').should('not.visible');
 
     cy.get('[data-testid="linkeduser-email-span"]').should('not.exist');
   });

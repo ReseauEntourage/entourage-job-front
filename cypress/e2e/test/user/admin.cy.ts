@@ -48,21 +48,13 @@ describe('En tant que - Administrateur', () => {
   describe('Je parcours les opportunités', () => {
     beforeEach(() => {
       cy.visit('/backoffice/admin/offres');
-      cy.wait(1000);
+      cy.get('[data-testid="app-splash-screen"]').should('not.visible');
     });
 
     /**
      * Première partie de test - J'affiche les opport.
      */
     it("J'affiche les opportunités", () => {
-      // Accèdons à l'URL des opportunités
-      cy.visit('/backoffice/admin/offres', {
-        // J'ajoute un fake token dans mon localStorage pour simuler l'authentification
-        onBeforeLoad: function async(window) {
-          window.localStorage.setItem('access-token', '0x1x2x3x4');
-          window.localStorage.setItem('release-version', 'v100');
-        },
-      });
       cy.wait('@opportunities');
       // Grâce au fichier de fixture précédement généré
       cy.fixture('api/generated/opportunities').then((opportunities) => {
@@ -160,6 +152,7 @@ describe('En tant que - Administrateur', () => {
   describe('Je parcours les membres', () => {
     beforeEach(() => {
       cy.visit('/backoffice/admin/membres?role=Candidat');
+      cy.get('[data-testid="app-splash-screen"]').should('not.visible');
     });
 
     /**
@@ -343,6 +336,7 @@ describe('En tant que - Administrateur', () => {
   describe('Je parcours les organisations', () => {
     beforeEach(() => {
       cy.visit('/backoffice/admin/structures');
+      cy.get('[data-testid="app-splash-screen"]').should('not.visible');
     });
 
     /**

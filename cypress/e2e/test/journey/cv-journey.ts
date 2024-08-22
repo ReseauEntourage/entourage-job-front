@@ -60,6 +60,7 @@ describe('Parcours CV', () => {
    */
   describe('Page /candidats', () => {
     cy.visit('/candidats?employed=false');
+    cy.get('[data-testid="app-splash-screen"]').should('not.visible');
 
     cy.contains('Où ?').click();
 
