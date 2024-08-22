@@ -3,19 +3,16 @@
 describe('Onboarding', () => {
   beforeEach(() => {
     window.localStorage.setItem('entourage-pro-modal-closed', 'true');
+    window.localStorage.setItem('access-token', '1234');
+    window.localStorage.setItem('release-version', 'v100');
+    cy.visit(`/backoffice/dashboard`);
+    cy.get('[data-testid="app-splash-screen"]').should('not.visible');
   });
 
   it('should complete onboarding', () => {
     // first interception: without onboarding infos
     cy.intercept('GET', '/auth/current', {
       fixture: 'auth-current-candidat-onboarding0-res',
-    });
-
-    cy.visit(`/backoffice/dashboard`, {
-      onBeforeLoad: function async(window) {
-        window.localStorage.setItem('access-token', '1234');
-        window.localStorage.setItem('release-version', 'v100');
-      },
     });
 
     // need of fixture content to fill the forms
@@ -25,7 +22,7 @@ describe('Onboarding', () => {
         `[data-testid="form-onboarding-candidate-helps-helpNeeds-${user.userProfile.helpNeeds[0].name}"]`
       ).click();
 
-      //intercept the PUT request to update the user profile
+      // intercept the PUT request to update the user profile
       cy.intercept('PUT', `/user/profile/${user.id}`, {
         fixture: 'auth-current-candidat-onboarding1-res',
       });
@@ -42,7 +39,7 @@ describe('Onboarding', () => {
         .contains('Agriculture')
         .click();
 
-      //intercept the PUT request to update the user profile
+      // intercept the PUT request to update the user profile
       cy.intercept('PUT', `/user/profile/${user.id}`, {
         fixture: 'auth-current-candidat-onboarding2-res',
       });

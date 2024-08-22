@@ -80,5 +80,5 @@ jobs:
           start: yarn dev # run dev script to enable cypress execution
           config: e2e.baseUrl=http://localhost:3000
           browser: chrome
-          command: npx cypress run --key ${{ secrets.CYPRESS_IO_KEY }}
+          command: npx cypress run --key ${{ secrets.CYPRESS_IO_KEY }} --record
           wait-on: http://localhost:3000

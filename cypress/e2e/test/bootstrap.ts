@@ -6,7 +6,7 @@
 const bootstrap = () => {
   /**
    * Une fois seulement:
-   * - génération les fixtures (fichiers JSON) dans '../fixtures/api/*'
+   * - génération les fixtures (fichiers JSON) dans '../fixtures/api/generated/*'
    * - interceptions d'une unique requête "problématiques" (nécessaire pour /login)
    * - affichage de la page login
    */
