@@ -430,55 +430,55 @@ describe('En tant que - Administrateur', () => {
           .should('be.visible')
           .first()
           .click();
+
+        cy.get('.ReactModalPortal div').first().should('be.visible');
+
+        cy.get('#form-add-organization-name')
+          .should('be.visible')
+          .clear()
+          .type('Entourage Pro');
+
+        cy.get('#form-add-organization-address')
+          .should('be.visible')
+          .clear()
+          .type('15 Avenue Lacassagne, 69003 Lyon');
+
+        cy.get('#form-add-organization-zone-container')
+          .should('be.visible')
+          .click()
+          .find('.option')
+          .contains('Lyon')
+          .click();
+
+        cy.get('#form-add-organization-referentFirstName')
+          .should('be.visible')
+          .clear()
+          .type('Jane');
+
+        cy.get('#form-add-organization-referentLastName')
+          .should('be.visible')
+          .clear()
+          .type('Fonda');
+
+        cy.get('#form-add-organization-referentPhone')
+          .should('be.visible')
+          .clear()
+          .type('+330666059439');
+
+        cy.get('#form-add-organization-referentMail')
+          .should('be.visible')
+          .clear()
+          .type('janefonda@gmail.com');
+
+        cy.get('button')
+          .contains('Modifier la structure')
+          .should('be.visible')
+          .click();
+
+        cy.wait('@putOrganization');
+
+        cy.get('.ReactModalPortal div').should('not.exist');
       });
-
-      cy.get('.ReactModalPortal div').first().should('be.visible');
-
-      cy.get('#form-add-organization-name')
-        .should('be.visible')
-        .clear()
-        .type('Entourage Pro');
-
-      cy.get('#form-add-organization-address')
-        .should('be.visible')
-        .clear()
-        .type('15 Avenue Lacassagne, 69003 Lyon');
-
-      cy.get('#form-add-organization-zone-container')
-        .should('be.visible')
-        .click()
-        .find('.option')
-        .contains('Lyon')
-        .click();
-
-      cy.get('#form-add-organization-referentFirstName')
-        .should('be.visible')
-        .clear()
-        .type('Jane');
-
-      cy.get('#form-add-organization-referentLastName')
-        .should('be.visible')
-        .clear()
-        .type('Fonda');
-
-      cy.get('#form-add-organization-referentPhone')
-        .should('be.visible')
-        .clear()
-        .type('+330666059439');
-
-      cy.get('#form-add-organization-referentMail')
-        .should('be.visible')
-        .clear()
-        .type('janefonda@gmail.com');
-
-      cy.get('button')
-        .contains('Modifier la structure')
-        .should('be.visible')
-        .click();
-
-      cy.wait('@putOrganization');
-
-      cy.get('.ReactModalPortal div').should('not.exist');
     });
   });
 });
