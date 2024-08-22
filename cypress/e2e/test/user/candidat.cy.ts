@@ -115,6 +115,7 @@ describe('Candidat', () => {
   it("should open a user's public profile and contact him", () => {
     cy.fixture('public-profile-res').then((userProfile) => {
       cy.visit(`/backoffice/profile/${userProfile.id}`);
+      cy.get('[data-testid="app-splash-screen"]').should('not.visible');
       cy.url().should('include', userProfile.id);
     });
 
@@ -142,6 +143,7 @@ describe('Candidat', () => {
     // to be done: use automatic generation and not static data
     cy.fixture('auth-current-candidat-onboarding3-res').then((user) => {
       cy.visit(`/backoffice/candidat/${user.id}/offres/public`);
+      cy.get('[data-testid="app-splash-screen"]').should('not.visible');
       cy.url().should('include', user.id);
     });
 
@@ -178,6 +180,7 @@ describe('Candidat', () => {
     // to be done: use automatic generation and not static data
     cy.fixture('auth-current-candidat-onboarding3-res').then((user) => {
       cy.visit(`/backoffice/candidat/${user.id}/offres/private`);
+      cy.get('[data-testid="app-splash-screen"]').should('not.visible');
       cy.url().should('include', user.id);
     });
     // check if the right opportunity is open
@@ -237,6 +240,7 @@ describe('Candidat', () => {
     // to be done: use automatic generation and not static data
     cy.fixture('auth-current-candidat-onboarding3-res').then((user) => {
       cy.visit(`/backoffice/candidat/${user.id}/cv`);
+      cy.get('[data-testid="app-splash-screen"]').should('not.visible');
       cy.url().should('include', user.id);
     });
     // catchphrase
