@@ -417,16 +417,19 @@ describe('En tant que - Administrateur', () => {
     it("J'édite une organization existante", () => {
       // Grâce au fichier de fixture précédement généré
       cy.fixture('api/generated/organizations').then((organizations) => {
-        // Edition de chaque valeur du formulaire
+        // Open the form with the first organization button edit
         cy.get(
           `[data-testid="button-edit-organization-${organizations[0].id}"]`
         )
+          .as(`button-edit-organization-${organizations[0].id}`)
           .should('be.visible')
-          .first()
-          .click();
+          .first();
+        cy.get(`@button-edit-organization-${organizations[0].id}`).click();
 
+        // Wait modale to be visible
         cy.get('.ReactModalPortal div').first().should('be.visible');
 
+        // Edition de chaque valeur du formulaire
         cy.get('#form-add-organization-name')
           .should('be.visible')
           .clear()
