@@ -16,7 +16,7 @@ export const companyJourneyRequests = {
     // { path: '/cv/shares', data: { total: 10000 }, alias: 'cvShares' },
     {
       path: '/cv/cards/random?nb=3&employed[]=false&employed[]=true',
-      data: { fixture: 'api/cv-cards' },
+      data: { fixture: 'api/generated/cv-cards' },
       alias: 'cvCardsRandom',
     },
   ],
