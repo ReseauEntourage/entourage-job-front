@@ -20,7 +20,7 @@ export const LayoutBackOffice = ({
   useEffect(() => {
     if (currentUser) {
       gaEventWithUser(GA_TAGS.BACKOFFICE_OPEN.action, {
-        userHashId: currentUser.id,
+        userId: currentUser.id,
         zone: currentUser.zone,
         role: currentUser.role,
       });
