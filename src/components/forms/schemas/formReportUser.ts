@@ -19,8 +19,8 @@ export const formReportUser: FormSchema<{
       id: 'comment',
       name: 'comment',
       component: 'text-input',
-      title: 'Commentaire',
-      isRequired: false,
+      title: 'Commentaire *',
+      isRequired: true,
     },
   ],
 };
