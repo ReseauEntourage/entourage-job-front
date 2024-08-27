@@ -32,8 +32,8 @@ export function UserActions({
           </StyledUserActionsBtnContainer>
         </Dropdown.Toggle>
         <Dropdown.Menu openDirection={openDirection}>
-          {actions.map((action) => (
-            <Dropdown.Item onClick={action.handler}>
+          {actions.map((action, idx) => (
+            <Dropdown.Item onClick={action.handler} key={`item-${idx}`}>
               {action.name}
             </Dropdown.Item>
           ))}

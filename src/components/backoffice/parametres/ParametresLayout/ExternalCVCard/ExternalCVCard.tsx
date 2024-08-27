@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
-import { IlluCV } from 'assets/icons/icons';
 import QuestionIcon from 'assets/icons/question.svg';
 import { Button } from 'src/components/utils/Button';
 import { Card } from 'src/components/utils/Cards/Card';
@@ -16,7 +15,7 @@ import {
 const tooltipId = 'external-cv-tooltip';
 
 export interface ExternalCvCardProps {
-  dataTestId?: string;
+  dataTestId: string;
 }
 export const ExternalCVCard = ({ dataTestId }: ExternalCvCardProps) => {
   const dispatch = useDispatch();
@@ -58,7 +57,6 @@ export const ExternalCVCard = ({ dataTestId }: ExternalCvCardProps) => {
     >
       <StyledCvCardContentContainer>
         <StyledCvUploadInfos>
-          <IlluCV width={70} height={70} />
           <Content dataTestId={dataTestId} />
         </StyledCvUploadInfos>
         {!user.userProfile.hasExternalCv && (

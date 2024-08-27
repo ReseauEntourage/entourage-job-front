@@ -23,16 +23,24 @@ export const FormComponents = {
   TEXT: 'text',
   FIELDGROUP: 'fieldgroup',
   MULTIPLE_FIELDS: 'multiple-fields',
+  FILE: 'file-input',
+} as const;
+
+export const FileTypes = {
+  CV: 'cv',
 } as const;
 
 export type FormComponent =
   (typeof FormComponents)[keyof typeof FormComponents];
+
+export type FileType = (typeof FileTypes)[keyof typeof FileTypes];
 
 export type FieldValue =
   | string
   | string[]
   | boolean
   | number
+  | File
   | FilterConstant
   | FilterConstant[];
 
@@ -59,6 +67,7 @@ export interface FormComponentValues<M extends boolean> {
   [FormComponents.TEXT]: never;
   [FormComponents.FIELDGROUP]: never;
   [FormComponents.MULTIPLE_FIELDS]: never;
+  [FormComponents.FILE]: File;
 }
 
 export type MultipleFieldValue = {
@@ -114,6 +123,9 @@ export const RadioComponents = [
   FormComponents.RADIO_ASYNC,
 ] as const;
 
+export const FileInputComponents = [FormComponents.FILE] as const;
+export type FileInputComponent = (typeof FileInputComponents)[number];
+
 export type RadioComponent = (typeof RadioComponents)[number];
 
 export const TextComponents = [
@@ -136,7 +148,8 @@ export type InputComponent =
   | SelectComponent
   | SelectRequestComponent
   | SelectGraphicComponent
-  | RadioComponent;
+  | RadioComponent
+  | FileInputComponent;
 
 export type GetValueType<V extends FormSchemaValidation> = UseFormGetValues<V>;
 
@@ -191,6 +204,13 @@ export interface FormFieldTextInput<V extends FormSchemaValidation>
 export interface FormFieldCheckBox<V extends FormSchemaValidation>
   extends FormFieldInputCommonProperties<V, CheckBoxComponent> {
   component: CheckBoxComponent;
+}
+
+export interface FormFieldFile<V extends FormSchemaValidation>
+  extends FormFieldInputCommonProperties<V, FileInputComponent> {
+  component: FileInputComponent;
+  fileType: FileType;
+  accept: string;
 }
 
 export interface FormFieldCheckBoxAlert<V extends FormSchemaValidation>
@@ -280,6 +300,7 @@ export type FormFieldInput<V extends FormSchemaValidation> = StrictUnion<
   | FormFieldSelectGraphic<V>
   | FormFieldSelect<V>
   | FormFieldSelectRequest<V>
+  | FormFieldFile<V>
 >;
 
 export interface FormFieldText<V extends FormSchemaValidation>
