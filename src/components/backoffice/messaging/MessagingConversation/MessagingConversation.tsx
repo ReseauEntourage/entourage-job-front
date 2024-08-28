@@ -7,6 +7,8 @@ import {
   selectSelectedConversation,
   selectSelectedConversationId,
 } from 'src/use-cases/messaging';
+import { MessagingConversationContainer } from './MessagingConversation.styles';
+import { MessagingConversationHeader } from './MessagingConversationHeader/MessagingConversationHeader';
 
 export const MessagingConversation = () => {
   const dispatch = useDispatch();
@@ -50,38 +52,36 @@ export const MessagingConversation = () => {
     <p>Séléctionnez une conversation pour voir les messages</p>
   );
 
+  if (!selectedConversationId || !selectedConversation) {
+    return <EmptyState />;
+  }
   return (
-    <div>
-      {!selectedConversationId && <EmptyState />}
-      {selectedConversation && (
-        <>
-          <h1>Conversation</h1>
-          {selectedConversation.messages && (
-            <div>
-              {selectedConversation.messages.map((message) => (
-                <div key={message.id}>
-                  <p>{message.content}</p>
-                  {message.author && (
-                    <p>
-                      {message.author.firstName} {message.author.lastName}
-                    </p>
-                  )}
-                </div>
-              ))}
+    <MessagingConversationContainer>
+      <MessagingConversationHeader />
+      {selectedConversation.messages && (
+        <div>
+          {selectedConversation.messages.map((message) => (
+            <div key={message.id}>
+              <p>{message.content}</p>
+              {message.author && (
+                <p>
+                  {message.author.firstName} {message.author.lastName}
+                </p>
+              )}
             </div>
-          )}
-          <TextInput
-            placeholder="Ecrire un message"
-            id="message-content"
-            name="message-content"
-            value={newMessage}
-            onChange={(val) => {
-              setNewMessage(val);
-            }}
-          />
-          <Button onClick={sendNewMessage}>Envoyer</Button>
-        </>
+          ))}
+        </div>
       )}
-    </div>
+      <TextInput
+        placeholder="Ecrire un message"
+        id="message-content"
+        name="message-content"
+        value={newMessage}
+        onChange={(val) => {
+          setNewMessage(val);
+        }}
+      />
+      <Button onClick={sendNewMessage}>Envoyer</Button>
+    </MessagingConversationContainer>
   );
 };

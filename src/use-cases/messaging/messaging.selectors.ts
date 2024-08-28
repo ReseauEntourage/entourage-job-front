@@ -8,3 +8,5 @@ export const selectSelectedConversation = (state: RootState) =>
 
 export const selectSelectedConversationId = (state: RootState) =>
   state.messaging.selectedConversationId;
+
+export const selectQuery = (state: RootState) => state.messaging.query;

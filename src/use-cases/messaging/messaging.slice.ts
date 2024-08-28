@@ -12,6 +12,7 @@ export interface State {
   conversations: Conversation[];
   selectedConversationId: string | null;
   selectedConversation: Conversation | null;
+  query: string;
 }
 
 const initialState: State = {
@@ -19,6 +20,7 @@ const initialState: State = {
   conversations: [],
   selectedConversationId: null,
   selectedConversation: null,
+  query: '',
 };
 
 export const slice = createSlice({
@@ -56,6 +58,9 @@ export const slice = createSlice({
     ),
     selectConversation(state, action) {
       state.selectedConversationId = action.payload;
+    },
+    setQuery(state, action) {
+      state.query = action.payload;
     },
   },
 });
