@@ -5,6 +5,7 @@ import CaretDownIcon from 'assets/icons/caret-down.svg';
 import { HeaderConnectedMainItemDefaultProps } from '../HeaderConnected.types';
 import { StyledHeaderDesktop } from 'src/components/headers/Header.styles';
 import {
+  ButtonIcon,
   Dropdown,
   Nav,
   Navbar,
@@ -33,6 +34,7 @@ export const HeaderConnectedContentDesktop = ({
     [USER_ROLES.COACH_EXTERNAL]: [HeaderConnectedMainItemDefaultProps],
   },
   dropdown = [HeaderConnectedMainItemDefaultProps],
+  messaging = HeaderConnectedMainItemDefaultProps,
 }: HeaderConnectedContentProps) => {
   const user = useAuthenticatedUser();
 
@@ -40,10 +42,11 @@ export const HeaderConnectedContentDesktop = ({
   const logoLink = links[user?.role][0];
 
   const rightItems = [
-    <div
-      className="uk-flex uk-flex-middle"
-      style={{ borderLeft: '1px solid lightgray' }}
-    >
+    <div className="uk-flex uk-flex-middle">
+      {/* Messages */}
+      <ButtonIcon icon={messaging.icon} href={messaging.href} />
+
+      {/* Profile */}
       <a
         id="nav-profile"
         className="uk-padding-small uk-padding-remove-vertical"

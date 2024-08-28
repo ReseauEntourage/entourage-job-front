@@ -28,6 +28,7 @@ export function useNotifBadges(
     note: 0,
     cv: 0,
     members: 0,
+    messaging: 1,
   });
 
   const prevUser = usePrevious(user);
@@ -66,6 +67,7 @@ export function useNotifBadges(
                 ...prevBadges,
                 members: pendingCVs || 0,
                 offers: pendingOpportunities || 0,
+                messages: 42 || 0,
               };
             });
           })
@@ -91,6 +93,7 @@ export function useNotifBadges(
                 offers: unseenOpportunities || 0,
                 note: noteHasBeenModified ? 1 : 0,
                 cv: cvHasBeenModified ? 1 : 0,
+                messages: 1,
               };
             });
           })

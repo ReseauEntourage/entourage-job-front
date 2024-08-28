@@ -54,6 +54,7 @@ import Location from './location.svg';
 import LogOut from './log-out.svg';
 import LogoEntourage from './logo-entourage.svg';
 import Menu from './menu.svg';
+import Messages from './messages.svg';
 import More from './more.svg';
 import OrienterCarteSolidaire from './orienter-carte-solidaire.svg';
 import OrienterSablier from './orienter-sablier.svg';
@@ -165,5 +166,6 @@ UserEmpty,
 User,
 Warning,
 Whatsapp,
-Youtube
+Youtube,
+Messages
 };
