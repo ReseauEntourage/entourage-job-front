@@ -561,8 +561,8 @@ export class APIHandler {
   // ////////////
   // messaging //
   // ////////////
-  getConversations(): Promise<AxiosResponse> {
-    return this.get('/messaging/conversations');
+  getConversations(query?: string): Promise<AxiosResponse> {
+    return this.get(`/messaging/conversations?query=${encodeURI(query || '')}`);
   }
 
   getConversationById(conversationId: string): Promise<AxiosResponse> {
