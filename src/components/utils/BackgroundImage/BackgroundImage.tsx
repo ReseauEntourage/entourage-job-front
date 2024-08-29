@@ -3,7 +3,7 @@ import { StyledBackground } from 'src/components/utils/BackgroundImage/Backgroun
 import { Img } from 'src/components/utils/Img';
 import { useIsDesktop } from 'src/hooks/utils';
 
-interface BackgroundImageProps {
+export interface BackgroundImageProps {
   img: string;
   imgMobile: string;
   alt: string;
