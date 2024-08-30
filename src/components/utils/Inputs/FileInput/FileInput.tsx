@@ -11,7 +11,7 @@ import {
 } from './FileInput.styles';
 import { FilePreviewCV } from './FilePreview';
 
-interface FileInputProps
+export interface FileInputProps
   extends CommonInputProps<File | null, HTMLInputElement> {
   accept: string;
   fileType: FileType;
