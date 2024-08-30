@@ -6,9 +6,9 @@ import { formReportUser } from 'src/components/forms/schemas/formReportUser';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Actions } from 'src/constants/utils';
 
-type ProfileReportUserModalProps = {
+interface ProfileReportUserModalProps {
   userId: string;
-};
+}
 
 export const ProfileReportUserModal = ({
   userId,
