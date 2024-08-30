@@ -5,7 +5,7 @@ import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 
-interface CarouselProps {
+export interface CarouselProps {
   style?: string;
   children: React.ReactNode;
   containerClasses: string;
