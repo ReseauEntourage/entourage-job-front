@@ -299,7 +299,7 @@ export class APIHandler {
     userId: string,
     userReportDto: UserReportDto
   ): Promise<AxiosResponse> {
-    return this.post(`/user/profile/${userId}/abuse`, userReportDto);
+    return this.post(`/user/profile/${userId}/report`, userReportDto);
   }
 
   // delete
