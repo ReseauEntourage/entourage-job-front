@@ -3,6 +3,7 @@ export interface NotifBadges {
   note: number;
   offers: number;
   members: number;
+  messaging: number;
 }
 
 export type NotifBadge = keyof NotifBadges;

@@ -3,7 +3,7 @@ import { COLORS } from 'src/constants/styles';
 import { StyledHeadingProps } from './Headings.types';
 
 export const StyledH1 = styled.h1<StyledHeadingProps>`
-  font-size: ${(props) => (props.mobile ? '24px' : '32px')};
+  font-size: ${(props) => (props.mobile ? '24px' : '35px')};
   font-weight: ${(props) => props.weight};
   color: ${(props) => {
     if (COLORS[props.color]) {
