@@ -1,3 +1,4 @@
+import { createHash } from 'crypto';
 import { AnyCantFix } from 'src/utils/Types';
 
 declare global {
@@ -32,6 +33,24 @@ export const gaEvent = ({
       event_category: category,
       event_label: label,
       value,
+    });
+  }
+};
+
+export type GaEventUserParams = {
+  zone: string;
+  role: string;
+  userId: string;
+};
+export const gaEventWithUser = (action: string, user: GaEventUserParams) => {
+  if (window.gtag && user.userId) {
+    const hash = createHash('sha256');
+    hash.update(user.userId);
+    const userHashId = hash.digest('hex');
+    window.gtag('event', action, {
+      zone: user.zone,
+      role: user.role,
+      user_hash_id: userHashId,
     });
   }
 };
