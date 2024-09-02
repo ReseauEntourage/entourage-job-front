@@ -72,38 +72,40 @@ export const CandidatCard = ({
             ? sortedAmbitions[0].name
             : 'Ouvert à toutes les opportunités'}
         </h1>
-        <div>
-          <p>Je recherche un emploi dans :</p>
-          <CandidateCardBusinessLinesStyled>
-            {isNewCareerPath
-              ? _.uniqWith(sortedBusinessLines.slice(0, 2), (a, b) => {
-                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                  return a.name === b.name;
-                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                }).map(({ name }, index) => {
-                  return (
-                    <Tag
-                      key={index}
-                      size="small"
-                      style="hoverBlue"
-                      content={
-                        findConstantFromValue(name, BUSINESS_LINES).label
-                      }
-                    />
-                  );
-                })
-              : sortedAmbitions?.slice(0, 2).map(({ name }, index) => {
-                  return (
-                    <Tag
-                      key={index}
-                      size="small"
-                      style="hoverBlue"
-                      content={name}
-                    />
-                  );
-                })}
-          </CandidateCardBusinessLinesStyled>
-        </div>
+        {sortedBusinessLines?.length > 0 && (
+          <>
+            <p>Je recherche un emploi dans :</p>
+            <CandidateCardBusinessLinesStyled>
+              {isNewCareerPath
+                ? _.uniqWith(sortedBusinessLines.slice(0, 2), (a, b) => {
+                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                    return a.name === b.name;
+                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                  }).map(({ name }, index) => {
+                    return (
+                      <Tag
+                        key={index}
+                        size="small"
+                        style="hoverBlue"
+                        content={
+                          findConstantFromValue(name, BUSINESS_LINES).label
+                        }
+                      />
+                    );
+                  })
+                : sortedAmbitions?.slice(0, 2).map(({ name }, index) => {
+                    return (
+                      <Tag
+                        key={index}
+                        size="small"
+                        style="hoverBlue"
+                        content={name}
+                      />
+                    );
+                  })}
+            </CandidateCardBusinessLinesStyled>
+          </>
+        )}
       </CandidatCardContentStyled>
     </CandidatCardStyled>
   );
