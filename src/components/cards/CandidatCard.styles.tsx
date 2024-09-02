@@ -4,7 +4,7 @@ import { COLORS } from 'src/constants/styles';
 export const CandidatCardStyled = styled.div`
   display: flex;
   flex-direction: column;
-  height: 425px;
+  height: 400px;
   background: ${COLORS.white};
   border-radius: 20px;
   overflow: hidden;
@@ -27,7 +27,7 @@ export const CandidatCardContentStyled = styled.div`
   color: ${COLORS.darkGrayFont};
   align-items: space-between;
   cursor: pointer;
-  > h1 {
+  h1 {
     color: ${COLORS.black};
     font-size: 16px;
     font-weight: 600;
@@ -78,23 +78,4 @@ export const CandidateCardBusinessLinesStyled = styled.div`
   > * {
     margin-top: 10px;
   }
-`;
-
-export const CandidatCardFooterStyled = styled.div`
-  border-top: 1px solid #f3f3f3;
-  font-size: 14px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  > a {
-    text-decoration: underline;
-  }
-  padding: 10px 20px 10px 20px;
-  box-sizing: border-box;
-`;
-
-export const CandidatCardSharerStyled = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
 `;
