@@ -31,11 +31,7 @@ import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
 import { gaEvent } from 'src/lib/gtag';
-import {
-  buildBusinessLineForSentence,
-  findConstantFromValue,
-  sortByOrder,
-} from 'src/utils';
+import { findConstantFromValue, sortByOrder } from 'src/utils';
 
 export const CandidatCard = ({
   url,
@@ -96,41 +92,47 @@ export const CandidatCard = ({
         <Img src={imgSrc} alt={firstName} cover />
         <CandidatCardPictureOverlay>
           <p className="name">{firstName}</p>
-          <p>{sortedLocations?.length > 0 ? sortedLocations[0].name : ''}</p>
+          {sortedLocations?.length > 0 && <p>{sortedLocations[0].name}</p>}
         </CandidatCardPictureOverlay>
       </CandidatCardPictureContainerStyled>
       <CandidatCardContentStyled onClick={onCardClicked}>
-        {sortedAmbitions?.length > 0 && <h1>{sortedAmbitions[0].name}</h1>}
-        <p>Je recherche un emploi dans</p>
-        <CandidateCardBusinessLinesStyled>
-          {isNewCareerPath
-            ? _.uniqWith(sortedBusinessLines.slice(0, 2), (a, b) => {
-                // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                return a.name === b.name;
-                // @ts-expect-error after enable TS strict mode. Please, try to fix it
-              }).map(({ name }, index) => {
-                return (
-                  <Tag
-                    key={index}
-                    size="default"
-                    style="hoverBlue"
-                    content={buildBusinessLineForSentence(
-                      findConstantFromValue(name, BUSINESS_LINES)
-                    )}
-                  />
-                );
-              })
-            : sortedAmbitions?.slice(0, 2).map(({ name }, index) => {
-                return (
-                  <Tag
-                    key={index}
-                    size="default"
-                    style="hoverBlue"
-                    content={name}
-                  />
-                );
-              })}
-        </CandidateCardBusinessLinesStyled>
+        <h1>
+          {sortedAmbitions?.length > 0
+            ? sortedAmbitions[0].name
+            : 'Ouvert à toutes les opportunités'}
+        </h1>
+        <div>
+          <p>Je recherche un emploi dans :</p>
+          <CandidateCardBusinessLinesStyled>
+            {isNewCareerPath
+              ? _.uniqWith(sortedBusinessLines.slice(0, 2), (a, b) => {
+                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                  return a.name === b.name;
+                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                }).map(({ name }, index) => {
+                  return (
+                    <Tag
+                      key={index}
+                      size="small"
+                      style="hoverBlue"
+                      content={
+                        findConstantFromValue(name, BUSINESS_LINES).label
+                      }
+                    />
+                  );
+                })
+              : sortedAmbitions?.slice(0, 2).map(({ name }, index) => {
+                  return (
+                    <Tag
+                      key={index}
+                      size="small"
+                      style="hoverBlue"
+                      content={name}
+                    />
+                  );
+                })}
+          </CandidateCardBusinessLinesStyled>
+        </div>
       </CandidatCardContentStyled>
       <CandidatCardFooterStyled>
         <SimpleLink
