@@ -1,35 +1,44 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MessagingConversationListItem } from '../MessagingConversationListItem/MessagingConversationListItem';
+import { SearchBar } from 'src/components/filters/SearchBar/SearchBar';
+import { useIsMobile } from 'src/hooks/utils';
 import {
   messagingActions,
   selectConversations,
   selectQuery,
 } from 'src/use-cases/messaging';
-import { ContainerStyled } from './MessagingConversationList.styles';
+import {
+  ContainerStyled,
+  StyledConversationsContainer,
+} from './MessagingConversationList.styles';
 
 export const MessagingConversationList = () => {
   const dispatch = useDispatch();
   const conversations = useSelector(selectConversations);
   const query = useSelector(selectQuery);
-
-  useEffect(() => {
-    dispatch(messagingActions.getConversationsRequested());
-  }, [dispatch, query]);
-
-  const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(messagingActions.setQuery(event.target.value));
-  };
+  const isMobile = useIsMobile();
 
   return (
     <ContainerStyled>
-      <input type="text" onChange={onSearchChange} />
-      {conversations.map((conversation) => (
-        <MessagingConversationListItem
-          key={conversation.id}
-          conversation={conversation}
+      {!isMobile && (
+        <SearchBar
+          search={query}
+          setSearch={(search) => dispatch(messagingActions.setQuery(search))}
+          placeholder="Rechercher"
+          smallSelectors
         />
-      ))}
+      )}
+      <StyledConversationsContainer>
+        {conversations &&
+          conversations.length > 0 &&
+          conversations.map((conversation) => (
+            <MessagingConversationListItem
+              key={conversation.id}
+              conversation={conversation}
+            />
+          ))}
+      </StyledConversationsContainer>
     </ContainerStyled>
   );
 };

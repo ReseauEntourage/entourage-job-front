@@ -9,7 +9,7 @@ import {
 
 export interface State {
   getConversations: RequestState<typeof getConversationsAdapter>;
-  conversations: Conversation[];
+  conversations: Conversation[] | null;
   selectedConversationId: string | null;
   selectedConversation: Conversation | null;
   query: string;
@@ -17,7 +17,7 @@ export interface State {
 
 const initialState: State = {
   getConversations: getConversationsAdapter.getInitialState(),
-  conversations: [],
+  conversations: null,
   selectedConversationId: null,
   selectedConversation: null,
   query: '',
@@ -40,11 +40,13 @@ export const slice = createSlice({
       {
         postMessageSucceeded(state, action) {
           state.selectedConversation?.messages.push(action.payload);
-          state.conversations.forEach((conversation) => {
-            if (conversation.id === state.selectedConversationId) {
-              conversation.messages[0] = action.payload;
-            }
-          });
+          if (state.conversations) {
+            state.conversations.forEach((conversation) => {
+              if (conversation.id === state.selectedConversationId) {
+                conversation.messages[0] = action.payload;
+              }
+            });
+          }
         },
       }
     ),

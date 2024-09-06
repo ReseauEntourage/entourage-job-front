@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { MessagingEmptyState } from '../MessagingEmptyState';
 import { Button } from 'src/components/utils';
 import { TextInput } from 'src/components/utils/Inputs';
+import { DELAY_REFRESH_CONVERSATIONS } from 'src/constants';
 import {
   messagingActions,
   selectSelectedConversation,
@@ -30,7 +32,7 @@ export const MessagingConversation = () => {
       dispatch(
         messagingActions.getConversationByIdRequested(selectedConversationId)
       );
-    }, 10000); // 10 secondes
+    }, DELAY_REFRESH_CONVERSATIONS);
 
     return () => clearInterval(intervalId);
   }, [selectedConversationId, dispatch]);
@@ -48,12 +50,12 @@ export const MessagingConversation = () => {
     setNewMessage('');
   };
 
-  const EmptyState = () => (
-    <p>Séléctionnez une conversation pour voir les messages</p>
-  );
-
   if (!selectedConversationId || !selectedConversation) {
-    return <EmptyState />;
+    return (
+      <MessagingConversationContainer>
+        <MessagingEmptyState title="Cliquer sur une conversation pour la lire" />
+      </MessagingConversationContainer>
+    );
   }
   return (
     <MessagingConversationContainer>

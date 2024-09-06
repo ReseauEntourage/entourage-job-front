@@ -613,12 +613,20 @@ export type Message = {
   author: Partial<User>;
 };
 
+export type ConversationParticipants = (Partial<User> & {
+  ConversationParticipant: {
+    id: string;
+    seenAt: string;
+  };
+})[];
+
 export type Conversation = {
   id: string;
   createdAt: string;
   updatedAt: string;
   messages: Partial<Message>[];
-  participants: Partial<User>[];
+  participants: ConversationParticipants;
+  seenAt: string;
 };
 
 export type PublicProfile = {
