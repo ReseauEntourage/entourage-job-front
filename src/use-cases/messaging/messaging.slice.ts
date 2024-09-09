@@ -2,13 +2,15 @@ import { createSlice } from '@reduxjs/toolkit';
 import { Conversation } from 'src/api/types';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import {
-  getConversationByIdAdapter,
+  getSelectedConversationAdapter,
   getConversationsAdapter,
   postMessageAdapter,
 } from './messaging.adapter';
 
 export interface State {
   getConversations: RequestState<typeof getConversationsAdapter>;
+  getSelectedConversation: RequestState<typeof getSelectedConversationAdapter>;
+  postMessage: RequestState<typeof postMessageAdapter>;
   conversations: Conversation[] | null;
   selectedConversationId: string | null;
   selectedConversation: Conversation | null;
@@ -17,6 +19,8 @@ export interface State {
 
 const initialState: State = {
   getConversations: getConversationsAdapter.getInitialState(),
+  getSelectedConversation: getSelectedConversationAdapter.getInitialState(),
+  postMessage: postMessageAdapter.getInitialState(),
   conversations: null,
   selectedConversationId: null,
   selectedConversation: null,
@@ -35,26 +39,43 @@ export const slice = createSlice({
         },
       }
     ),
-    ...postMessageAdapter.getReducers<State>(
-      (state) => state.getConversations,
-      {
-        postMessageSucceeded(state, action) {
-          state.selectedConversation?.messages.push(action.payload);
-          if (state.conversations) {
-            state.conversations.forEach((conversation) => {
-              if (conversation.id === state.selectedConversationId) {
-                conversation.messages[0] = action.payload;
+    ...postMessageAdapter.getReducers<State>((state) => state.postMessage, {
+      postMessageSucceeded(state, action) {
+        // Append the new message to the selected conversation
+        state.selectedConversation?.messages.push(action.payload);
+
+        if (state.conversations) {
+          // Append the new message to the conversation list
+          const idxSelectedConversation = state.conversations?.findIndex(
+            (conversation) => conversation.id === state.selectedConversationId
+          );
+          state.conversations[idxSelectedConversation].messages.push(
+            action.payload
+          );
+
+          // Set the conversation as seen
+          state.conversations[idxSelectedConversation].participants.forEach(
+            (participant) => {
+              if (participant.id === action.payload.authorId) {
+                participant.ConversationParticipant.seenAt =
+                  action.payload.createdAt;
               }
-            });
-          }
-        },
-      }
-    ),
-    ...getConversationByIdAdapter.getReducers<State>(
-      (state) => state.getConversations,
+            }
+          );
+        }
+      },
+    }),
+    ...getSelectedConversationAdapter.getReducers<State>(
+      (state) => state.getSelectedConversation,
       {
-        getConversationByIdSucceeded(state, action) {
+        getSelectedConversationSucceeded(state, action) {
           state.selectedConversation = action.payload;
+          if (state.conversations) {
+            const idxSelectedConversation = state.conversations?.findIndex(
+              (conversation) => conversation.id === state.selectedConversationId
+            );
+            state.conversations[idxSelectedConversation] = action.payload;
+          }
         },
       }
     ),

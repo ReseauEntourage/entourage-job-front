@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { MessagingConversationListItem } from '../MessagingConversationListItem/MessagingConversationListItem';
 import { SearchBar } from 'src/components/filters/SearchBar/SearchBar';
 import { useIsMobile } from 'src/hooks/utils';
 import {
@@ -12,6 +11,7 @@ import {
   ContainerStyled,
   StyledConversationsContainer,
 } from './MessagingConversationList.styles';
+import { MessagingConversationListItem } from './MessagingConversationListItem/MessagingConversationListItem';
 
 export const MessagingConversationList = () => {
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ export const MessagingConversationList = () => {
           smallSelectors
         />
       )}
-      <StyledConversationsContainer>
+      <StyledConversationsContainer className={isMobile ? 'mobile' : ''}>
         {conversations &&
           conversations.length > 0 &&
           conversations.map((conversation) => (

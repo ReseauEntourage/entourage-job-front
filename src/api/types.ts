@@ -610,10 +610,10 @@ export type Message = {
   createdAt: string;
   updatedAt: string;
   conversationId: string;
-  author: Partial<User>;
+  author: User;
 };
 
-export type ConversationParticipants = (Partial<User> & {
+export type ConversationParticipants = (User & {
   ConversationParticipant: {
     id: string;
     seenAt: string;
@@ -624,7 +624,7 @@ export type Conversation = {
   id: string;
   createdAt: string;
   updatedAt: string;
-  messages: Partial<Message>[];
+  messages: Message[];
   participants: ConversationParticipants;
   seenAt: string;
 };

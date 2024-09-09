@@ -9,9 +9,9 @@ const {
   postMessageRequested,
   postMessageSucceeded,
   postMessageFailed,
-  getConversationByIdRequested,
-  getConversationByIdSucceeded,
-  getConversationByIdFailed,
+  getSelectedConversationRequested,
+  getSelectedConversationSucceeded,
+  getSelectedConversationFailed,
 } = slice.actions;
 
 function* getConversationsSagaRequested() {
@@ -24,17 +24,21 @@ function* getConversationsSagaRequested() {
   }
 }
 
-function* getConversationByIdSagaRequested() {
+function* getSelectedConversationSagaRequested() {
   const selectedConversationId = yield* select(
     (state) => state.messaging.selectedConversationId
   );
-  try {
-    const response = yield* call(() =>
-      Api.getConversationById(selectedConversationId)
-    );
-    yield* put(getConversationByIdSucceeded(response.data));
-  } catch {
-    yield* put(getConversationByIdFailed());
+  if (selectedConversationId) {
+    try {
+      const response = yield* call(() =>
+        Api.getConversationById(selectedConversationId)
+      );
+      yield* put(getSelectedConversationSucceeded(response.data));
+    } catch {
+      yield* put(getSelectedConversationFailed());
+    }
+  } else {
+    yield* put(getSelectedConversationFailed());
   }
 }
 
@@ -53,7 +57,7 @@ export function* saga() {
   yield* takeLatest(getConversationsRequested, getConversationsSagaRequested);
   yield* takeLatest(postMessageRequested, postMessageSagaRequested);
   yield* takeLatest(
-    getConversationByIdRequested,
-    getConversationByIdSagaRequested
+    getSelectedConversationRequested,
+    getSelectedConversationSagaRequested
   );
 }

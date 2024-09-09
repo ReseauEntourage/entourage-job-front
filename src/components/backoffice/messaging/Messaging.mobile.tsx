@@ -1,10 +1,9 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { StyledBackofficeBackground } from '../Backoffice.styles';
-import { Button, Section } from 'src/components/utils';
+import { Section } from 'src/components/utils';
 import { H1 } from 'src/components/utils/Headings';
 import {
-  messagingActions,
   selectConversations,
   selectSelectedConversationId,
 } from 'src/use-cases/messaging';
@@ -18,13 +17,8 @@ import { MessagingConversationList } from './MessagingConversationsList/Messagin
 import { MessagingEmptyState } from './MessagingEmptyState';
 
 export const MessagingMobile = () => {
-  const dispatch = useDispatch();
   const selectedConversationId = useSelector(selectSelectedConversationId);
   const conversations = useSelector(selectConversations);
-
-  const onClickBackBtn = () => {
-    dispatch(messagingActions.selectConversation(null));
-  };
 
   return (
     <>
@@ -39,9 +33,6 @@ export const MessagingMobile = () => {
         </MessagingEmptyStateContainerMobile>
       ) : (
         <StyledMessagingGridMobile>
-          {selectedConversationId && (
-            <Button onClick={onClickBackBtn}>Back</Button>
-          )}
           {!selectedConversationId && (
             <StyledMessagingConversationContainerMobile>
               <StyledBackofficeBackground>

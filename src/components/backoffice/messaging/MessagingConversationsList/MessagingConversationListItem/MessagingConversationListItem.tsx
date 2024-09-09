@@ -31,13 +31,13 @@ export const MessagingConversationListItem = ({
   const addresee = conversation.participants.find(
     (participant) => participant.id !== currentUserId
   ) as User;
-  const lastMessage = conversation.messages[0];
+  const lastMessage = conversation.messages[conversation.messages.length - 1];
   const userParticipantConversation = conversation.participants.find(
     (participant) => participant.id === currentUserId
   );
   const seenAt = userParticipantConversation?.ConversationParticipant.seenAt;
   const userHasSeenConversation =
-    seenAt && moment(seenAt).isAfter(lastMessage.createdAt);
+    seenAt && moment(seenAt).isSameOrAfter(lastMessage.createdAt);
 
   useEffect(() => {
     setIsActivated(selectedConversationId === conversation.id);

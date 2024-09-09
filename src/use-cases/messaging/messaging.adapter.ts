@@ -15,6 +15,6 @@ export const postMessageAdapter = createRequestAdapter(
   Message
 >();
 
-export const getConversationByIdAdapter = createRequestAdapter(
-  'getConversationById'
-).withPayloads<string, Conversation>();
+export const getSelectedConversationAdapter = createRequestAdapter(
+  'getSelectedConversation'
+).withPayloads<void, Conversation>();
