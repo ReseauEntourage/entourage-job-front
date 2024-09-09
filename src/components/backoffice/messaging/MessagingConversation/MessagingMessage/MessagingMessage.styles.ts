@@ -35,6 +35,7 @@ export const StyledMessage = styled.div`
   font-size: 12px;
   font-weight: 400;
   color: ${COLORS.black};
+  white-space: pre-line;
 
   &.own-message {
     background: ${COLORS.lightgray};

@@ -29,7 +29,33 @@ export const MessagingMessagesContainer = styled.div`
 
 export const MessagingMessageForm = styled.form`
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   background: ${COLORS.lightgray};
   padding: 30px 20px;
+  gap: 25px;
+`;
+
+export const MessagingInputContainer = styled.div`
+  display: flex;
+  flex: 1;
+  background: ${COLORS.white};
+  padding: 15px 20px;
+  width: 100%;
+  border-radius: 30px;
+`;
+
+export const MessagingInput = styled.textarea`
+  // Make the textarea 1 line but can grow with the content max 4 lines
+  min-height: 20px;
+  max-height: 120px;
+  width: 100%;
+  border: none;
+  resize: none;
+  outline: none;
+  font-size: 14px;
+  font-family: Poppins, sans-serif;
+  padding: 0;
+  margin: 0
+  box-sizing: border-box;
+  background: transparent;
 `;
