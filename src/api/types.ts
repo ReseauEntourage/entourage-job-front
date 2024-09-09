@@ -114,6 +114,11 @@ export type UserProfile = {
   hasExternalCv: boolean;
 };
 
+export type UserReportDto = {
+  reason: string;
+  comment: string;
+};
+
 export interface WhatsappJoinUrl {
   name: string;
   qrCodePath: string;
