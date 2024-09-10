@@ -13,6 +13,9 @@ export const MessagingConversationContainer = styled.div`
   &:not(.mobile) {
     border-radius: 30px 30px 5px 5px;
   }
+  &:mobile {
+    height: 100vh;
+  }
 `;
 
 export const MessagingMessagesContainer = styled.div`
@@ -20,11 +23,13 @@ export const MessagingMessagesContainer = styled.div`
   flex-direction: column;
   gap: 30px;
   width: 100%;
-  height: 450px;
   overflow-y: auto;
   padding: 20px;
   box-sizing: border-box;
   align-items: flex-start;
+  &:not(.mobile) {
+    height: 450px;
+  }
 `;
 
 export const MessagingMessageForm = styled.form`
@@ -33,6 +38,10 @@ export const MessagingMessageForm = styled.form`
   background: ${COLORS.lightgray};
   padding: 30px 20px;
   gap: 25px;
+  &.mobile {
+    position: sticky;
+    bottom: 0;
+  }
 `;
 
 export const MessagingInputContainer = styled.div`
@@ -45,7 +54,6 @@ export const MessagingInputContainer = styled.div`
 `;
 
 export const MessagingInput = styled.textarea`
-  // Make the textarea 1 line but can grow with the content max 4 lines
   min-height: 20px;
   max-height: 120px;
   width: 100%;
