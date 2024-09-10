@@ -74,7 +74,7 @@ export const MessagingConversation = () => {
       ) : (
         <>
           <MessagingConversationHeader />
-          <MessagingMessagesContainer>
+          <MessagingMessagesContainer className={isMobile ? 'mobile' : ''}>
             {selectedConversation && selectedConversation.messages && (
               <>
                 {selectedConversation.messages.map((message) => (
@@ -85,12 +85,12 @@ export const MessagingConversation = () => {
             )}
           </MessagingMessagesContainer>
           {/* Bloc de rédaction d'un message */}
-          <MessagingMessageForm>
+          <MessagingMessageForm className={isMobile ? 'mobile' : ''}>
             <MessagingInputContainer>
               <MessagingInput
                 rows={1}
                 ref={messageInputRef}
-                placeholder="Écrivez votre message ici..."
+                placeholder="Ecrivez votre message"
                 value={newMessage}
                 onChange={(e) => {
                   setNewMessage(e.target.value);

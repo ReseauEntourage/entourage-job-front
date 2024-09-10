@@ -39,21 +39,11 @@ export const Messaging: React.FC<MessagingProps> = (props) => {
   useEffect(() => {
     const interval = setInterval(() => {
       dispatch(messagingActions.getSelectedConversationRequested());
-    }, DELAY_REFRESH_CONVERSATIONS);
-
-    return () => clearInterval(interval);
-  }, [dispatch, selectedConversationId]);
-
-  /**
-   * Refresh the conversations every DELAY_REFRESH_CONVERSATIONS ms
-   */
-  useEffect(() => {
-    const interval = setInterval(() => {
       dispatch(messagingActions.getConversationsRequested());
     }, DELAY_REFRESH_CONVERSATIONS);
 
     return () => clearInterval(interval);
-  }, [dispatch]);
+  }, [dispatch, selectedConversationId]);
 
   const Component = plateform({
     Desktop: MessagingDesktop,
