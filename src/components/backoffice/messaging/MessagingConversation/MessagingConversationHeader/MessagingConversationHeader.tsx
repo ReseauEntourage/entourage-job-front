@@ -1,16 +1,22 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ChevronLeft } from 'assets/icons/icons';
+import { More, ChevronLeft } from 'assets/icons/icons';
+import { MessagingConversationReportModal } from '../MessagingConversationReport/MessagingConversationReportModal';
 import { ConversationParticipants, User } from 'src/api/types';
+import { openModal } from 'src/components/modals/Modal';
 import { ButtonIcon, ImgProfile } from 'src/components/utils';
+import { Dropdown } from 'src/components/utils/Dropdown/Dropdown';
+import { DropdownToggle } from 'src/components/utils/Dropdown/DropdownToggle';
 import { useIsMobile } from 'src/hooks/utils';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import {
   messagingActions,
   selectSelectedConversation,
+  selectSelectedConversationId,
 } from 'src/use-cases/messaging';
 import {
+  ActionMenuIconStyled,
   AddreseeInfosContainer,
   ConversationAddresee,
   LeftColumn,
@@ -21,6 +27,7 @@ export const MessagingConversationHeader = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const isMobile = useIsMobile();
+  const selectedConversationId = useSelector(selectSelectedConversationId);
   const selectedConversation = useSelector(selectSelectedConversation);
   const currentUserId = useSelector(selectCurrentUserId);
   const addresees = selectedConversation?.participants.filter(
@@ -36,8 +43,18 @@ export const MessagingConversationHeader = () => {
     router.push(`/backoffice/profile/${addresee.id}`);
   };
 
+  const onClickReportUser = () => {
+    if (selectedConversationId) {
+      openModal(
+        <MessagingConversationReportModal
+          conversationId={selectedConversationId}
+        />
+      );
+    }
+  };
+
   return (
-    <MessagingConversationHeaderContainer>
+    <MessagingConversationHeaderContainer className={isMobile ? 'mobile' : ''}>
       <LeftColumn>
         {isMobile && selectedConversation && (
           <ButtonIcon
@@ -56,7 +73,22 @@ export const MessagingConversationHeader = () => {
         </AddreseeInfosContainer>
       </LeftColumn>
       {/* TODO Implement new dropdown in mobile to report a user */}
-      {isMobile ? <>...</> : <a className="report-link">Signaler</a>}
+      {isMobile ? (
+        <Dropdown>
+          <DropdownToggle>
+            <ActionMenuIconStyled>
+              <More width={25} height={25} />
+            </ActionMenuIconStyled>
+          </DropdownToggle>
+          <Dropdown.Menu openDirection="left">
+            <Dropdown.Item onClick={onClickReportUser}>Signaler</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+      ) : (
+        <a className="report-link" onClick={onClickReportUser}>
+          Signaler
+        </a>
+      )}
     </MessagingConversationHeaderContainer>
   );
 };

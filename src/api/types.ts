@@ -119,6 +119,11 @@ export type UserReportDto = {
   comment: string;
 };
 
+export type ConversationReportDto = {
+  reason: string;
+  comment: string;
+};
+
 export interface WhatsappJoinUrl {
   name: string;
   qrCodePath: string;

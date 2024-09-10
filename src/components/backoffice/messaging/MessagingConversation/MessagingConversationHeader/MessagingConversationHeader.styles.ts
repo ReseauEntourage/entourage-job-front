@@ -41,3 +41,13 @@ export const ConversationAddresee = styled.div`
     font-size: 16px;
   }
 `;
+
+export const ActionMenuIconStyled = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  border-radius: 50%;
+  border: ${COLORS.gray} 1px solid;
+  transition: 0.3s ease-in-out;
+  color: ${COLORS.gray};
+`;
