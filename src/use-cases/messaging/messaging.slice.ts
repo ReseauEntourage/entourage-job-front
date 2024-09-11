@@ -7,6 +7,8 @@ import {
   postMessageAdapter,
 } from './messaging.adapter';
 
+export type MessagingPinnedInfo = 'ADDRESSEE_UNAVAILABLE' | null;
+
 export interface State {
   getConversations: RequestState<typeof getConversationsAdapter>;
   getSelectedConversation: RequestState<typeof getSelectedConversationAdapter>;
@@ -14,6 +16,7 @@ export interface State {
   conversations: Conversation[] | null;
   selectedConversationId: string | null;
   selectedConversation: Conversation | null;
+  pinnedInfo: MessagingPinnedInfo;
   query: string;
 }
 
@@ -24,6 +27,7 @@ const initialState: State = {
   conversations: null,
   selectedConversationId: null,
   selectedConversation: null,
+  pinnedInfo: null,
   query: '',
 };
 
@@ -84,6 +88,9 @@ export const slice = createSlice({
     },
     setQuery(state, action) {
       state.query = action.payload;
+    },
+    setPinnedInfo(state, action) {
+      state.pinnedInfo = action.payload;
     },
   },
 });

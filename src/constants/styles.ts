@@ -74,5 +74,9 @@ export const COLORS = {
       background: '#F4FDFF',
       text: '#484848',
     },
+    lightGray: {
+      background: '#F5F5F5',
+      text: '#484848',
+    },
   },
 };
