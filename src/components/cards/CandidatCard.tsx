@@ -70,7 +70,7 @@ export const CandidatCard = ({
         <h1>
           {sortedAmbitions?.length > 0
             ? sortedAmbitions[0].name
-            : 'Ouvert à toutes les opportunités'}
+            : "A l'écoute de toutes les opportunités"}
         </h1>
         {sortedBusinessLines?.length > 0 && (
           <>
