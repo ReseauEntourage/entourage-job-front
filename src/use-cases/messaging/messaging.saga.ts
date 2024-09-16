@@ -47,7 +47,12 @@ function* postMessageSagaRequested(
 ) {
   try {
     const response = yield* call(() => Api.postMessage(action.payload));
-    yield* put(postMessageSucceeded(response.data));
+    yield* put(
+      postMessageSucceeded({
+        message: response.data,
+        isNewConversation: !action.payload.conversationId,
+      })
+    );
   } catch {
     yield* put(postMessageFailed());
   }

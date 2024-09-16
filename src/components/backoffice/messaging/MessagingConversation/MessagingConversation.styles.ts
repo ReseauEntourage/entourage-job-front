@@ -13,7 +13,7 @@ export const MessagingConversationContainer = styled.div`
   &:not(.mobile) {
     border-radius: 30px 30px 5px 5px;
   }
-  &:mobile {
+  &.mobile {
     height: 100vh;
   }
 `;

@@ -50,16 +50,18 @@ export const MessagingConversationListItem = ({
   return (
     <ContainerStyled onClick={selectConversation} isActive={isActivated}>
       <ContainerAvatarStyled>
-        <ImgProfile user={addresee} size={35} />
+        {addresee && <ImgProfile user={addresee} size={35} />}
       </ContainerAvatarStyled>
       <RightColumn seen={userHasSeenConversation}>
         <MainInfos>
-          <ConversationAddresee>
-            <p className="addresee-name">
-              {addresee.firstName} {addresee.lastName}
-            </p>
-            <p>{addresee.role}</p>
-          </ConversationAddresee>
+          {addresee && (
+            <ConversationAddresee>
+              <p className="addresee-name">
+                {addresee.firstName} {addresee.lastName}
+              </p>
+              <p>{addresee.role}</p>
+            </ConversationAddresee>
+          )}
           <p>{moment(lastMessage.createdAt).format('DD/MM/YYYY')}</p>
         </MainInfos>
         <p className="preview-last-message">{lastMessage.content}</p>

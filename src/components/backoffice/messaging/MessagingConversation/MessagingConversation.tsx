@@ -29,6 +29,9 @@ export const MessagingConversation = () => {
   const selectedConversation = useSelector(selectSelectedConversation);
   const pinnedInfo = useSelector(selectPinnedInfo);
   const [newMessage, setNewMessage] = React.useState<string>('');
+  const [scrollBehavior, setScrollBehavior] = React.useState<ScrollBehavior>(
+    'instant' as ScrollBehavior
+  );
 
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
   const messageInputRef = React.useRef<HTMLTextAreaElement>(null);
@@ -43,20 +46,35 @@ export const MessagingConversation = () => {
 
   useLayoutEffect(adjustMessageHeight, []);
 
+  useEffect(() => {
+    setScrollBehavior('instant' as ScrollBehavior);
+  }, [selectedConversationId]);
+
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView();
+    messagesEndRef.current?.scrollIntoView({ behavior: scrollBehavior });
+    setTimeout(() => {
+      setScrollBehavior('smooth' as ScrollBehavior);
+    }, 1000);
   };
 
   const sendNewMessage = () => {
     if (selectedConversation === null) {
       return;
     }
-    dispatch(
-      messagingActions.postMessageRequested({
-        content: newMessage,
-        conversationId: selectedConversation.id,
-      })
-    );
+    // Send the message by providing the conversationId if the conversation is not new
+    // or the participantIds if the conversation is new
+    const body = {
+      content: newMessage,
+      participantIds:
+        selectedConversationId === 'new'
+          ? selectedConversation.participants.map(
+              (participant) => participant.id
+            )
+          : undefined,
+      conversationId:
+        selectedConversationId === 'new' ? undefined : selectedConversation.id,
+    };
+    dispatch(messagingActions.postMessageRequested(body));
     setNewMessage('');
     adjustMessageHeight();
   };
@@ -89,7 +107,7 @@ export const MessagingConversation = () => {
 
   return (
     <MessagingConversationContainer className={isMobile ? 'mobile' : ''}>
-      {!selectedConversationId || !selectedConversation ? (
+      {!selectedConversationId ? (
         <MessagingEmptyState title="Cliquer sur une conversation pour la lire" />
       ) : (
         <>

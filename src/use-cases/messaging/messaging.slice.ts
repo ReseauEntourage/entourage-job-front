@@ -39,30 +39,39 @@ export const slice = createSlice({
       (state) => state.getConversations,
       {
         getConversationsSucceeded(state, action) {
+          // Only change the state if the conversations are different
           state.conversations = action.payload;
         },
       }
     ),
     ...postMessageAdapter.getReducers<State>((state) => state.postMessage, {
       postMessageSucceeded(state, action) {
-        // Append the new message to the selected conversation
-        state.selectedConversation?.messages.push(action.payload);
+        const { message } = action.payload;
+        const { isNewConversation } = action.payload;
 
-        if (state.conversations) {
+        if (isNewConversation) {
+          // Append the new conversation to the conversation list at the top
+          if (state.conversations) {
+            const newConversation = {
+              ...message.conversation,
+              messages: [message],
+            };
+            state.conversations.unshift(newConversation);
+            state.selectedConversationId = message.conversation.id;
+          }
+        } else if (state.conversations) {
           // Append the new message to the conversation list
           const idxSelectedConversation = state.conversations?.findIndex(
             (conversation) => conversation.id === state.selectedConversationId
           );
-          state.conversations[idxSelectedConversation].messages.push(
-            action.payload
-          );
+          state.conversations[idxSelectedConversation].messages.push(message);
+          state.selectedConversation?.messages.push(message);
 
           // Set the conversation as seen
           state.conversations[idxSelectedConversation].participants.forEach(
             (participant) => {
-              if (participant.id === action.payload.authorId) {
-                participant.ConversationParticipant.seenAt =
-                  action.payload.createdAt;
+              if (participant.id === message.authorId) {
+                participant.ConversationParticipant.seenAt = message.createdAt;
               }
             }
           );
@@ -91,6 +100,29 @@ export const slice = createSlice({
     },
     setPinnedInfo(state, action) {
       state.pinnedInfo = action.payload;
+    },
+    selectConversationByParticipants(state, action) {
+      // action.payload is an array of participants
+      const conversation = state.conversations?.find(
+        (conv) =>
+          conv.participants.length === 2 && // Only 1-1 conversations
+          conv.participants.find((p) => p.id === action.payload[0].id) // The required user is in the conversation
+      );
+
+      if (conversation) {
+        // state.selectedConversation = conversation;
+        state.selectedConversationId = conversation.id;
+      } else {
+        const newConversation: Conversation = {
+          id: 'new',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          messages: [],
+          participants: action.payload,
+        };
+        state.selectedConversationId = 'new';
+        state.selectedConversation = newConversation;
+      }
     },
   },
 });

@@ -3,7 +3,11 @@ import { useSelector } from 'react-redux';
 import { StyledBackofficeBackground } from '../Backoffice.styles';
 import { Section } from 'src/components/utils';
 import { H1 } from 'src/components/utils/Headings';
-import { selectConversations, selectQuery } from 'src/use-cases/messaging';
+import {
+  selectConversations,
+  selectQuery,
+  selectSelectedConversationId,
+} from 'src/use-cases/messaging';
 import {
   StyledMessagingGridDesktop,
   StyledMessagingLeftPanel,
@@ -16,6 +20,7 @@ import { MessagingEmptyState } from './MessagingEmptyState';
 export const MessagingDesktop = () => {
   const conversations = useSelector(selectConversations);
   const query = useSelector(selectQuery);
+  const selectedConversationId = useSelector(selectSelectedConversationId);
 
   return (
     <>
@@ -26,7 +31,10 @@ export const MessagingDesktop = () => {
         </Section>
       </StyledBackofficeBackground>
       <Section>
-        {conversations !== null && conversations.length <= 0 && query === '' ? (
+        {conversations !== null &&
+        conversations.length <= 0 &&
+        query === '' &&
+        selectedConversationId === null ? (
           <MessagingEmptyState
             title="Aucun message dans votre messagerie"
             subtitle="Contactez les membres de la communauté à partir du réseau d’entraide"

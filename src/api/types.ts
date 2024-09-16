@@ -632,11 +632,15 @@ export type ConversationParticipants = (User & {
 
 export type Conversation = {
   id: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
   messages: Message[];
   participants: ConversationParticipants;
-  seenAt: string;
+  seenAt?: string;
+};
+
+export type MessageWithConversation = Message & {
+  conversation: Conversation;
 };
 
 export type PublicProfile = {

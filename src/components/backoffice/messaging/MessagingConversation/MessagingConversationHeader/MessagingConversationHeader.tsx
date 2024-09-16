@@ -33,13 +33,16 @@ export const MessagingConversationHeader = () => {
   const addresees = selectedConversation?.participants.filter(
     (participant) => participant.id !== currentUserId
   ) as ConversationParticipants;
-  const addresee = addresees[0] as User;
+  const addresee = addresees ? (addresees[0] as User) : null;
 
   const onClickBackBtn = () => {
     dispatch(messagingActions.selectConversation(null));
   };
 
   const onClickAddresseeInfos = () => {
+    if (!addresee) {
+      return;
+    }
     router.push(`/backoffice/profile/${addresee.id}`);
   };
 
@@ -62,15 +65,17 @@ export const MessagingConversationHeader = () => {
             onClick={onClickBackBtn}
           />
         )}
-        <AddreseeInfosContainer onClick={onClickAddresseeInfos}>
-          <ImgProfile user={addresee} size={35} />
-          <ConversationAddresee>
-            <p className="addresee-name">
-              {addresee.firstName} {addresee.lastName}
-            </p>
-            <p>{addresee.role}</p>
-          </ConversationAddresee>
-        </AddreseeInfosContainer>
+        {addresee && (
+          <AddreseeInfosContainer onClick={onClickAddresseeInfos}>
+            <ImgProfile user={addresee} size={35} />
+            <ConversationAddresee>
+              <p className="addresee-name">
+                {addresee.firstName} {addresee.lastName}
+              </p>
+              <p>{addresee.role}</p>
+            </ConversationAddresee>
+          </AddreseeInfosContainer>
+        )}
       </LeftColumn>
       {/* TODO Implement new dropdown in mobile to report a user */}
       {isMobile ? (

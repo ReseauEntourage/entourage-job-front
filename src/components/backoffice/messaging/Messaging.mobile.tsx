@@ -22,7 +22,9 @@ export const MessagingMobile = () => {
 
   return (
     <>
-      {conversations !== null && conversations.length <= 0 ? (
+      {conversations !== null &&
+      conversations.length <= 0 &&
+      !selectedConversationId ? (
         <MessagingEmptyStateContainerMobile>
           <MessagingEmptyState
             title="Aucun message dans votre messagerie"

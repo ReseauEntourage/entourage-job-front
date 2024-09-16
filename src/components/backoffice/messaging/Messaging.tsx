@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { Api } from 'src/api';
 import { DELAY_REFRESH_CONVERSATIONS } from 'src/constants';
 import {
   messagingActions,
@@ -16,29 +17,47 @@ export const Messaging: React.FC<MessagingProps> = (props) => {
   const dispatch = useDispatch();
   const query = useSelector(selectQuery);
   const selectedConversationId = useSelector(selectSelectedConversationId);
+  const requiredConvUserId = new URLSearchParams(window.location.search).get(
+    'userId'
+  );
 
   /**
-   * Fetch the conversations every time the query changes
+   * Fetch the conversations when the component is mounted
    */
   useEffect(() => {
     dispatch(messagingActions.getConversationsRequested());
-  }, [dispatch, query]);
+    if (requiredConvUserId) {
+      Api.getPublicUserProfile(requiredConvUserId).then((response) => {
+        const profile = response.data;
+        const user = {
+          id: profile.id,
+          firstName: profile.firstName,
+          lastName: profile.lastName,
+          role: profile.role,
+          userProfile: profile,
+        };
+        dispatch(messagingActions.selectConversationByParticipants([user]));
+      });
+    }
+  }, [dispatch, query, requiredConvUserId]);
 
   /**
    * Fetch the selected Conversation when a conversation is selected
-   * and refresh it every DELAY_REFRESH_CONVERSATIONS ms
    */
   useEffect(() => {
-    dispatch(messagingActions.getSelectedConversationRequested());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedConversationId]);
+    if (selectedConversationId && selectedConversationId !== 'new') {
+      dispatch(messagingActions.getSelectedConversationRequested());
+    }
+  }, [dispatch, selectedConversationId]);
 
   /**
    * Refresh the selected conversation every DELAY_REFRESH_CONVERSATIONS ms
    */
   useEffect(() => {
     const interval = setInterval(() => {
-      dispatch(messagingActions.getSelectedConversationRequested());
+      if (selectedConversationId && selectedConversationId !== 'new') {
+        dispatch(messagingActions.getSelectedConversationRequested());
+      }
       dispatch(messagingActions.getConversationsRequested());
     }, DELAY_REFRESH_CONVERSATIONS);
 
