@@ -8,7 +8,7 @@ export const CandidatCardStyled = styled.div`
   background: ${COLORS.white};
   border-radius: 20px;
   overflow: hidden;
-  border: 3px solid #f5f5f5;
+  border: 3px solid ${COLORS.lightgray};
 `;
 
 export const CandidatCardPictureContainerStyled = styled.div`
@@ -16,7 +16,7 @@ export const CandidatCardPictureContainerStyled = styled.div`
   width: 100%;
   cursor: pointer;
   height: 245px;
-  background: #f5f5f5;
+  background: ${COLORS.lightgray};
 `;
 
 export const CandidatCardContentStyled = styled.div`
