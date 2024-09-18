@@ -4,7 +4,6 @@ import { COLORS } from 'src/constants/styles';
 export const StyledDescriptionContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
 `;
 
 export const StyledDescriptionParagraphe = styled.div`
