@@ -71,8 +71,8 @@ export const COLORS = {
   },
   alert: {
     info: {
-      background: '#F4FDFF',
-      text: '#484848',
+      background: '#ECF8FB',
+      text: '#363636',
     },
   },
 };
