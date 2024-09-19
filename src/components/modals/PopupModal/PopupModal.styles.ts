@@ -5,10 +5,3 @@ export const Container = styled.div`
   width: 100%;
   height: 100%;
 `;
-
-export const StyledEntourageProModal = styled.div`
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
