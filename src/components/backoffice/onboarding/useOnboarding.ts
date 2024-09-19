@@ -36,9 +36,10 @@ export const useOnboarding = () => {
     (fields: Partial<FlattenedOnboardingFormData>) => {
       const fieldsToSend = parseOnboadingProfileFields(fields);
       dispatch(
-        onboardingActions.validateFirstSecondStepOnboardingRequested(
-          fieldsToSend
-        )
+        onboardingActions.validateFirstSecondStepOnboardingRequested({
+          userProfile: fieldsToSend,
+          externalCv: fields.externalCv || undefined,
+        })
       );
     },
     [dispatch]
