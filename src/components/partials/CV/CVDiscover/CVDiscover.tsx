@@ -44,7 +44,6 @@ export const CVDiscover = () => {
                 }
                 firstName={cv.user && cv.user.candidat.firstName}
                 ambitions={cv.ambitions}
-                id={cv.user.candidat.id}
                 locations={cv.locations}
               />
             );

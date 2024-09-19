@@ -299,6 +299,9 @@ export const GA_TAGS = {
   PAGE_PARTENAIRES_NOUS_ECRIRE_CLIC: {
     action: 'Page_Partenaires_Nous_ecrire_Clic',
   },
+  BACKOFFICE_OPEN: {
+    action: 'Backoffice_Open',
+  },
   BACKOFFICE_ADMIN_ARCHIVER_MASSE_CLIC: {
     action: 'Backoffice_Admin_Archiver_Masse_Clic',
   },
