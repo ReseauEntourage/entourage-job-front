@@ -143,7 +143,6 @@ export const CVList = ({
                   firstName={cv.user.candidat.firstName}
                   ambitions={cv.ambitions}
                   locations={cv.locations}
-                  id={cv.user.candidat.id}
                 />
               );
             })}
