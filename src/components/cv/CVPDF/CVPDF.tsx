@@ -36,6 +36,10 @@ import {
 import { CVProfilePicturePDF } from './CVProfilePicturePDF';
 import 'moment/locale/fr';
 
+const BASE_NB_ITEM_PER_PAGE = 5;
+const MAX_LINES_BY_ITEM = 9;
+const MAX_CHAR_BY_LINE = 105;
+
 interface CVPDFProps {
   cv: CV;
   page: number;
@@ -58,58 +62,80 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
     secondPageFormations: [],
   });
 
-  useEffect(() => {
-    if (
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      cv.experiences?.length >= 4
-    ) {
-      setItems({
-        firstPageExperiences:
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          cv.experiences.slice(0, 4),
-        secondPageExperiences:
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          cv.experiences.slice(4),
-        firstPageFormations: [],
+  const countSmallDescriptionInCVItemList = (
+    expFormaList: CVExperience[] | CVFormation[]
+  ) => {
+    let smallItemCounter = 0;
 
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        secondPageFormations: cv.formations,
-      });
+    expFormaList.forEach((experience) => {
+      if (!experience.description) {
+        // When no description, we consider it as a small item
+        smallItemCounter += 1;
+      } else {
+        // When description lines are < MAX_LINES_BY_ITEM / 2, we consider it as a small item
+        // We split the description in lines and count the number of lines
+        const descriptionLines = experience.description
+          .split('\n')
+          .map((line) => {
+            const lines: string[] = [];
+            let currentLine = '';
+            line.split(' ').forEach((word) => {
+              if (currentLine.length + word.length > MAX_CHAR_BY_LINE) {
+                lines.push(currentLine);
+                currentLine = word;
+              } else {
+                currentLine += ` ${word}`;
+              }
+            });
+            lines.push(currentLine);
+            return lines;
+          })
+          .flat();
+
+        if (descriptionLines.length < MAX_LINES_BY_ITEM / 2) {
+          smallItemCounter += 1;
+        }
+      }
+    });
+    return smallItemCounter;
+  };
+
+  useEffect(() => {
+    // Compute the number of experiences and formations to display on the first page
+    let nbItemsOnFirstPage = BASE_NB_ITEM_PER_PAGE;
+
+    // Add 0.5 item on the first page for each formation or experience where the content is < MAX_LINES_BY_ITEM / 2
+    if (cv.experiences) {
+      nbItemsOnFirstPage +=
+        countSmallDescriptionInCVItemList(cv.experiences) / 2;
     }
-    if (cv.experiences?.length === 3) {
-      setItems({
-        firstPageExperiences: cv.experiences,
-        secondPageExperiences: [],
-        firstPageFormations:
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          cv.formations.slice(0, 1),
-        secondPageFormations:
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          cv.formations.slice(1),
-      });
+    if (cv.formations) {
+      nbItemsOnFirstPage +=
+        countSmallDescriptionInCVItemList(cv.formations) / 2;
     }
-    if (cv.experiences?.length === 2) {
+    if (
+      cv.experiences !== null &&
+      cv.experiences !== undefined &&
+      cv.formations !== undefined &&
+      cv.formations !== null
+    ) {
+      const nbOfExperienceFirstPage = Math.min(
+        cv.experiences.length,
+        nbItemsOnFirstPage
+      );
+      const availableSpaceOnFirstPage = Math.max(
+        nbItemsOnFirstPage - nbOfExperienceFirstPage,
+        0
+      );
+      const nbOfFormationFirstPage = Math.min(
+        cv.formations.length,
+        availableSpaceOnFirstPage
+      );
       setItems({
-        firstPageExperiences: cv.experiences,
-        secondPageExperiences: [],
-        firstPageFormations:
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          cv.formations.slice(0, 2),
-        secondPageFormations:
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          cv.formations.slice(2),
-      });
-    }
-    if (cv.experiences?.length === 1) {
-      setItems({
-        firstPageExperiences: cv.experiences,
-        secondPageExperiences: [],
-        firstPageFormations:
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          cv.formations.slice(0, 3),
-        secondPageFormations:
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
-          cv.formations.slice(3),
+        firstPageExperiences: cv.experiences.slice(0, nbOfExperienceFirstPage),
+        firstPageFormations: cv.formations.slice(0, nbOfFormationFirstPage),
+        secondPageExperiences: cv.formations.slice(nbOfExperienceFirstPage),
+        secondPageFormations: cv.formations.slice(nbOfFormationFirstPage),
       });
     }
   }, [cv]);

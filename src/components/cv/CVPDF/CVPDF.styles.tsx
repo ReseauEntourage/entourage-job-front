@@ -192,6 +192,13 @@ export const StyledCVPDFCareerPath = styled.div`
 `;
 
 export const StyledCVPDFTitle = styled.h6`
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 700;
+  margin-bottom: 5px;
+`;
+
+export const StyledCVPDFXpFormaTitle = styled.h6`
   font-size: 10px;
   line-height: 12px;
   font-weight: 700;

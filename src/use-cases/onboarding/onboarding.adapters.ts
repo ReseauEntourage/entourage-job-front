@@ -3,7 +3,14 @@ import { createRequestAdapter } from 'src/store/utils';
 
 export const validateFirstSecondStepOnboardingAdapter = createRequestAdapter(
   'validateFirstSecondStepOnboarding'
-).withPayloads<Partial<UserProfile>, void, void>();
+).withPayloads<
+  {
+    userProfile: Partial<UserProfile>;
+    externalCv: File | undefined;
+  },
+  void,
+  void
+>();
 
 export const validateLastStepOnboardingAdapter = createRequestAdapter(
   'validateLastStepOnboarding'

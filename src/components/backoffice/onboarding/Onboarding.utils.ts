@@ -26,5 +26,6 @@ export const parseOnboadingProfileFields = (
     helpOffers: fields.helpOffers?.map((help) => {
       return { name: help };
     }),
+    linkedinUrl: fields.linkedinUrl ? fields.linkedinUrl : undefined,
   };
 };
