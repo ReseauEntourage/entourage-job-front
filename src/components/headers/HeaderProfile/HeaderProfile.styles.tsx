@@ -105,6 +105,11 @@ export const StyledHeaderNameAndRole = styled.div`
   }
 `;
 
+export const StyledHeaderAvailibilityAndUserActions = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
 export const StyledHeaderNameAndRoleMobile = styled(StyledHeaderNameAndRole)`
   margin-bottom: 10px;
 `;

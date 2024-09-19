@@ -64,10 +64,16 @@ export function* validateFirstSecondStepOnboardingSaga(
   action: ReturnType<typeof validateFirstSecondStepOnboardingRequested>
 ) {
   const userId = yield* select(selectCurrentUserId);
-  const userProfile = action.payload;
+  const { userProfile } = action.payload;
   try {
     yield* call(() => Api.putUserProfile(userId, userProfile));
     yield* put(validateFirstSecondStepOnboardingSucceeded());
+    // If user has uploaded an external CV, upload it
+    if (action.payload.externalCv) {
+      const formData = new FormData();
+      formData.append('file', action.payload.externalCv);
+      yield* put(currentUserActions.uploadExternalCvRequested(formData));
+    }
     yield* put(currentUserActions.fetchUserRequested());
     yield* put(increaseOnboardingStep());
   } catch {

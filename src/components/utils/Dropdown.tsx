@@ -9,6 +9,10 @@ interface DropdownProps {
   boundaryId?: string;
 }
 
+/**
+ * Dropdown component (using UIKit)
+ * @deprecated This component is deprecated. Please use the Dropdown component in the ./Dropdown folder
+ */
 export const Dropdown = ({
   id = 'dropdown',
   children,
