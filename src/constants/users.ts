@@ -98,3 +98,11 @@ export const GENDERS_FILTERS = [
      value: GENDERS.OTHER,
    }, */
 ];
+
+export const USER_REPORT_REASONS = [
+  { value: 'SPAM', label: 'Spam' },
+  { value: 'FRAUD', label: 'Arnaque' },
+  { value: 'INSULTS', label: 'Propos déplacés' },
+  { value: 'IN_DANGER', label: 'Mise en danger' },
+  { value: 'OTHER', label: 'Autre' },
+];
