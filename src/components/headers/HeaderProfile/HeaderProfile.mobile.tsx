@@ -14,10 +14,12 @@ import { AvailabilityTag } from 'src/components/utils/AvailabilityTag/Availabili
 import { H2, H6 } from 'src/components/utils/Headings';
 import { ImageInput } from 'src/components/utils/Inputs';
 import { Spinner } from 'src/components/utils/Spinner';
+import { UserActions } from 'src/components/utils/UserActions/UserActions';
 import { COLORS } from 'src/constants/styles';
 import { USER_ROLES } from 'src/constants/users';
 import {
   StyledEditPictureIconContainer,
+  StyledHeaderAvailibilityAndUserActions,
   StyledHeaderNameAndRoleMobile,
   StyledHeaderProfile,
   StyledHeaderProfileContent,
@@ -134,7 +136,10 @@ export const HeaderProfileMobile = ({
         </StyledHeaderProfileContent>
         {shouldShowAllProfile && (
           <StyledHeaderProfileDescription>
-            <AvailabilityTag isAvailable={isAvailable} />
+            <StyledHeaderAvailibilityAndUserActions>
+              <AvailabilityTag isAvailable={isAvailable} />
+              <UserActions userId={id} openDirection="right" />
+            </StyledHeaderAvailibilityAndUserActions>
             <ProfileDescription
               description={description}
               isEditable={isEditable}

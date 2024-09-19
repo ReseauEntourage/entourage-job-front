@@ -39,6 +39,7 @@ import {
   TextComponents,
   TextInputComponent,
   TextInputComponents,
+  FormFieldFile,
 } from './FormSchema.types';
 
 export function mapFieldRules<
@@ -135,6 +136,12 @@ export function isFormFieldSelectGraphic<S extends FormSchemaValidation>(
   );
 }
 
+export function isFormFieldFile<S extends FormSchemaValidation>(
+  field: FormField<S>
+): field is FormFieldFile<S> {
+  return field.component === 'file-input';
+}
+
 export function isFormFieldInput<S extends FormSchemaValidation>(
   field: FormField<S>
 ): field is
@@ -144,7 +151,8 @@ export function isFormFieldInput<S extends FormSchemaValidation>(
   | FormFieldCheckBoxAlert<S>
   | FormFieldSelect<S>
   | FormFieldSelectRequest<S>
-  | FormFieldSelectGraphic<S> {
+  | FormFieldSelectGraphic<S>
+  | FormFieldFile<S> {
   return (
     isFormFieldTextInput(field) ||
     isFormFieldCheckbox(field) ||
@@ -152,7 +160,8 @@ export function isFormFieldInput<S extends FormSchemaValidation>(
     isFormFieldRadio(field) ||
     isFormFieldSelect(field) ||
     isFormFieldSelectRequest(field) ||
-    isFormFieldSelectGraphic(field)
+    isFormFieldSelectGraphic(field) ||
+    isFormFieldFile(field)
   );
 }
 
