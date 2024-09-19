@@ -114,6 +114,16 @@ export type UserProfile = {
   hasExternalCv: boolean;
 };
 
+export type UserReportDto = {
+  reason: string;
+  comment: string;
+};
+
+export type ConversationReportDto = {
+  reason: string;
+  comment: string;
+};
+
 export interface WhatsappJoinUrl {
   name: string;
   qrCodePath: string;
@@ -610,15 +620,27 @@ export type Message = {
   createdAt: string;
   updatedAt: string;
   conversationId: string;
-  author: Partial<User>;
+  author: User;
 };
+
+export type ConversationParticipants = (User & {
+  ConversationParticipant: {
+    id: string;
+    seenAt: string;
+  };
+})[];
 
 export type Conversation = {
   id: string;
-  createdAt: string;
-  updatedAt: string;
-  messages: Partial<Message>[];
-  participants: Partial<User>[];
+  createdAt?: string;
+  updatedAt?: string;
+  messages: Message[];
+  participants: ConversationParticipants;
+  seenAt?: string;
+};
+
+export type MessageWithConversation = Message & {
+  conversation: Conversation;
 };
 
 export type PublicProfile = {

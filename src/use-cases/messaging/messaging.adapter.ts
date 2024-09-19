@@ -1,4 +1,4 @@
-import { Conversation, Message } from 'src/api/types';
+import { Conversation, MessageWithConversation } from 'src/api/types';
 import { createRequestAdapter } from 'src/store/utils';
 
 export const getConversationsAdapter = createRequestAdapter(
@@ -10,11 +10,15 @@ export const postMessageAdapter = createRequestAdapter(
 ).withPayloads<
   {
     content: string;
-    conversationId: string;
+    conversationId?: string;
+    participantIds?: string[];
   },
-  Message
+  {
+    message: MessageWithConversation;
+    isNewConversation: boolean;
+  }
 >();
 
-export const getConversationByIdAdapter = createRequestAdapter(
-  'getConversationById'
-).withPayloads<string, Conversation>();
+export const getSelectedConversationAdapter = createRequestAdapter(
+  'getSelectedConversation'
+).withPayloads<void, Conversation>();

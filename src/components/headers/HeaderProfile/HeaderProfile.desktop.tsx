@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React from 'react';
 import CaretDownIcon from 'assets/icons/caret-down.svg';
 import { Api } from 'src/api';
@@ -13,9 +14,11 @@ import { AvailabilityTag } from 'src/components/utils/AvailabilityTag/Availabili
 import { H1, H5 } from 'src/components/utils/Headings';
 import { ImageInput } from 'src/components/utils/Inputs';
 import { Spinner } from 'src/components/utils/Spinner';
+import { UserActions } from 'src/components/utils/UserActions/UserActions';
 import { COLORS } from 'src/constants/styles';
 import { USER_ROLES } from 'src/constants/users';
 import {
+  StyledHeaderAvailibilityAndUserActions,
   StyledHeaderNameAndRole,
   StyledHeaderProfile,
   StyledHeaderProfileContent,
@@ -50,6 +53,7 @@ export const HeaderProfileDesktop = ({
     shouldShowAllProfile,
     contextualRole,
   } = useHeaderProfile(role);
+  const router = useRouter();
 
   const hasCv = !!cvUrl || hasExternalCv;
   const hasTwoCv = !!cvUrl && hasExternalCv;
@@ -63,6 +67,10 @@ export const HeaderProfileDesktop = ({
       const externalCvUrl = response.data;
       window.open(externalCvUrl.url, '_blank');
     });
+  };
+
+  const openConversation = () => {
+    router.push(`/backoffice/messaging?userId=${id}`);
   };
 
   const openCv = () => {
@@ -158,9 +166,12 @@ export const HeaderProfileDesktop = ({
                   style="secondary"
                 />
               </StyledHeaderNameAndRole>
-              {shouldShowAllProfile && (
-                <AvailabilityTag isAvailable={isAvailable} />
-              )}
+              <StyledHeaderAvailibilityAndUserActions>
+                {shouldShowAllProfile && (
+                  <AvailabilityTag isAvailable={isAvailable} />
+                )}
+                <UserActions userId={id} />
+              </StyledHeaderAvailibilityAndUserActions>
             </StyledHeaderProfileNameContainer>
             {shouldShowAllProfile && (
               <>
@@ -176,6 +187,14 @@ export const HeaderProfileDesktop = ({
                 />
               </>
             )}
+            <div>
+              <Button
+                onClick={openConversation}
+                style="custom-primary-inverted"
+              >
+                Envoyer un message
+              </Button>
+            </div>
           </StyledHeaderProfileInfoContainer>
         </StyledHeaderProfileContent>
       </Section>

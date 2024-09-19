@@ -1,87 +1,145 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { MessagingEmptyState } from '../MessagingEmptyState';
 import { Button } from 'src/components/utils';
-import { TextInput } from 'src/components/utils/Inputs';
+import { useIsMobile } from 'src/hooks/utils';
+import { selectCurrentUserId } from 'src/use-cases/current-user';
 import {
   messagingActions,
   selectSelectedConversation,
   selectSelectedConversationId,
+  selectPinnedInfo,
 } from 'src/use-cases/messaging';
-import { MessagingConversationContainer } from './MessagingConversation.styles';
+import {
+  MessagingConversationContainer,
+  MessagingInput,
+  MessagingInputContainer,
+  MessagingMessageForm,
+  MessagingMessagesContainer,
+} from './MessagingConversation.styles';
 import { MessagingConversationHeader } from './MessagingConversationHeader/MessagingConversationHeader';
+import { MessagingMessage } from './MessagingMessage/MessagingMessage';
+import { MessagingPinnedInfo } from './MessagingPinnedInfo/MessagingPinnedInfo';
 
 export const MessagingConversation = () => {
   const dispatch = useDispatch();
+  const isMobile = useIsMobile();
+  const currentUserId = useSelector(selectCurrentUserId);
   const selectedConversationId = useSelector(selectSelectedConversationId);
   const selectedConversation = useSelector(selectSelectedConversation);
-
+  const pinnedInfo = useSelector(selectPinnedInfo);
   const [newMessage, setNewMessage] = React.useState<string>('');
+  const [scrollBehavior, setScrollBehavior] = React.useState<ScrollBehavior>(
+    'instant' as ScrollBehavior
+  );
 
-  useEffect(() => {
-    if (selectedConversationId === null) {
+  const messagesEndRef = React.useRef<HTMLDivElement>(null);
+  const messageInputRef = React.useRef<HTMLTextAreaElement>(null);
+
+  function adjustMessageHeight() {
+    if (!messageInputRef.current) {
       return;
     }
-    dispatch(
-      messagingActions.getConversationByIdRequested(selectedConversationId)
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    messageInputRef.current.style.height = 'inherit';
+    messageInputRef.current.style.height = `${messageInputRef.current.scrollHeight}px`;
+  }
 
-    const intervalId = setInterval(() => {
-      dispatch(
-        messagingActions.getConversationByIdRequested(selectedConversationId)
-      );
-    }, 10000); // 10 secondes
+  useLayoutEffect(adjustMessageHeight, []);
 
-    return () => clearInterval(intervalId);
-  }, [selectedConversationId, dispatch]);
+  useEffect(() => {
+    setScrollBehavior('instant' as ScrollBehavior);
+  }, [selectedConversationId]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: scrollBehavior });
+    setTimeout(() => {
+      setScrollBehavior('smooth' as ScrollBehavior);
+    }, 1000);
+  };
 
   const sendNewMessage = () => {
     if (selectedConversation === null) {
       return;
     }
-    dispatch(
-      messagingActions.postMessageRequested({
-        content: newMessage,
-        conversationId: selectedConversation.id,
-      })
-    );
+    // Send the message by providing the conversationId if the conversation is not new
+    // or the participantIds if the conversation is new
+    const body = {
+      content: newMessage,
+      participantIds:
+        selectedConversationId === 'new'
+          ? selectedConversation.participants.map(
+              (participant) => participant.id
+            )
+          : undefined,
+      conversationId:
+        selectedConversationId === 'new' ? undefined : selectedConversation.id,
+    };
+    dispatch(messagingActions.postMessageRequested(body));
     setNewMessage('');
+    adjustMessageHeight();
   };
 
-  const EmptyState = () => (
-    <p>Séléctionnez une conversation pour voir les messages</p>
-  );
+  useEffect(() => {
+    // Set a pinned info when the conversation is one to one and the other participant is not available
+    const addressees = selectedConversation?.participants.filter(
+      (participant) => participant.id !== currentUserId
+    );
+    const addresseesAreUnavailable = addressees?.some(
+      (addressee) => addressee.userProfile.isAvailable === false
+    );
+    if (addresseesAreUnavailable) {
+      dispatch(messagingActions.setPinnedInfo('ADDRESSEE_UNAVAILABLE'));
+    } else {
+      dispatch(messagingActions.setPinnedInfo(null));
+    }
+  }, [currentUserId, dispatch, selectedConversation]);
 
-  if (!selectedConversationId || !selectedConversation) {
-    return <EmptyState />;
-  }
+  useEffect(() => {
+    adjustMessageHeight();
+  }, [newMessage]);
+
+  useEffect(() => {
+    if (selectedConversation && selectedConversation.messages) {
+      scrollToBottom();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedConversation]);
+
   return (
-    <MessagingConversationContainer>
-      <MessagingConversationHeader />
-      {selectedConversation.messages && (
-        <div>
-          {selectedConversation.messages.map((message) => (
-            <div key={message.id}>
-              <p>{message.content}</p>
-              {message.author && (
-                <p>
-                  {message.author.firstName} {message.author.lastName}
-                </p>
-              )}
-            </div>
-          ))}
-        </div>
+    <MessagingConversationContainer className={isMobile ? 'mobile' : ''}>
+      {!selectedConversationId ? (
+        <MessagingEmptyState title="Cliquer sur une conversation pour la lire" />
+      ) : (
+        <>
+          <MessagingConversationHeader />
+          {pinnedInfo && <MessagingPinnedInfo pinnedInfo={pinnedInfo} />}
+          <MessagingMessagesContainer className={isMobile ? 'mobile' : ''}>
+            {selectedConversation && selectedConversation.messages && (
+              <>
+                {selectedConversation.messages.map((message) => (
+                  <MessagingMessage key={message.id} message={message} />
+                ))}
+                <div ref={messagesEndRef} />
+              </>
+            )}
+          </MessagingMessagesContainer>
+          {/* Bloc de rédaction d'un message */}
+          <MessagingMessageForm className={isMobile ? 'mobile' : ''}>
+            <MessagingInputContainer>
+              <MessagingInput
+                rows={1}
+                ref={messageInputRef}
+                placeholder="Ecrivez votre message"
+                value={newMessage}
+                onChange={(e) => {
+                  setNewMessage(e.target.value);
+                }}
+              />
+            </MessagingInputContainer>
+            <Button onClick={sendNewMessage}>Envoyer</Button>
+          </MessagingMessageForm>
+        </>
       )}
-      <TextInput
-        placeholder="Ecrire un message"
-        id="message-content"
-        name="message-content"
-        value={newMessage}
-        onChange={(val) => {
-          setNewMessage(val);
-        }}
-      />
-      <Button onClick={sendNewMessage}>Envoyer</Button>
     </MessagingConversationContainer>
   );
 };

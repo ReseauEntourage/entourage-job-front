@@ -2,29 +2,23 @@ import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledProfileContactForm = styled.div`
-  textarea {
-    border: 1px solid #d8d8d8;
-    border-radius: 10px;
-    margin-top: 15px;
-    min-height: 50px;
-    padding: 15px;
-  }
-`;
-
-export const StyledConfirmCheck = styled.div`
-  height: 16px;
-  width: 16px;
-  background-color: ${COLORS.yesGreen};
-  border-radius: 50%;
-  display: inline-flex;
-  flex-direction: row;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  margin-right: 15px;
+  gap: 30px;
+`;
+export const StyledConversationInviteToContact = styled.div`
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: flex-start;
+  p {
+    flex: auto;
+    margin: 0;
+  }
   svg {
-    height: 10px;
-    width: 10px;
-    color: white;
+    flex: none;
   }
 `;
 

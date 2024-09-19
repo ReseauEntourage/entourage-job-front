@@ -14,6 +14,7 @@ import {
   ContactCompany,
   ContactContactUs,
   ContactNewsletter,
+  ConversationReportDto,
   CV,
   ExternalCv,
   ExternalMessage,
@@ -32,6 +33,7 @@ import {
   UserDto,
   UserProfile,
   UserRegistrationDto,
+  UserReportDto,
   UserWithUserCandidate,
 } from './types';
 
@@ -292,6 +294,13 @@ export class APIHandler {
     userProfile: Partial<UserProfile>
   ): Promise<AxiosResponse> {
     return this.put(`/user/profile/${userId}`, userProfile);
+  }
+
+  postProfileUserAbuse(
+    userId: string,
+    userReportDto: UserReportDto
+  ): Promise<AxiosResponse> {
+    return this.post(`/user/profile/${userId}/report`, userReportDto);
   }
 
   // delete
@@ -571,6 +580,13 @@ export class APIHandler {
 
   postMessage(params: { content: string }): Promise<AxiosResponse> {
     return this.post('/messaging/messages', params);
+  }
+
+  reportMessage(conversationId: string, params: ConversationReportDto) {
+    return this.post(
+      `/messaging/conversations/${conversationId}/report`,
+      params
+    );
   }
 
   /// /////////////////
