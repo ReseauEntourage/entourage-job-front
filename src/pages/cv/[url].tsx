@@ -11,7 +11,7 @@ import { PageCVContent } from 'src/components/partials/CV/PageCVContent';
 import { StyledCVPage } from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
 import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
 import { Grid, Section, SimpleLink, Button } from 'src/components/utils';
-import { CV_FILTERS_DATA } from 'src/constants';
+import { CV_FILTERS_DATA, CV_STATUS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 
 interface CVPageProps {
@@ -29,6 +29,7 @@ const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
   const title = candidateExists
     ? `Entourage Pro\xa0: Aidez ${cv.user.candidat.firstName} à retrouver un emploi`
     : '';
+  const urlImg = `${process.env.AWSS3_URL}${process.env.AWSS3_IMAGE_DIRECTORY}${cv.user.candidat.id}.${CV_STATUS.Published.value}.jpg`;
 
   useEffect(() => {
     if (cv) {
@@ -113,14 +114,7 @@ const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
       metaTitle={title}
       metaUrl={link}
       metaDescription={sharedDescription}
-      metaImage={
-        cv.urlImg
-          ? `${process.env.AWSS3_CDN_URL}/${cv.urlImg.replace(
-              '.jpg',
-              '.preview.jpg'
-            )}`
-          : `${process.env.SERVER_URL}/static/img/entourage-pro-preview.jpg`
-      }
+      metaImage={urlImg}
       metaType="profile"
     >
       <StyledCVPage>
