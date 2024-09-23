@@ -20,6 +20,7 @@ export const VideoSection = ({
         id={videoId}
         title={videoTitle}
         poster="maxresdefault"
+        params="rel=0&showinfo=0&iv_load_policy=3"
       />
     </Section>
   );

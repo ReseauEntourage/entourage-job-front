@@ -34,6 +34,7 @@ import {
   SelectSimple,
   TextArea,
   TextInput,
+  FileInput,
 } from 'src/components/utils/Inputs';
 import { CommonInputProps } from 'src/components/utils/Inputs/Inputs.types';
 import { RadioTypes } from 'src/components/utils/Inputs/Radio/Radio.types';
@@ -186,6 +187,16 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
         {...commonProps}
         type={field.type}
         maxLength={field.maxLength}
+      />
+    );
+  }
+
+  if (field.component === 'file-input') {
+    return (
+      <FileInput
+        {...commonProps}
+        accept={field.accept}
+        fileType={field.fileType}
       />
     );
   }
