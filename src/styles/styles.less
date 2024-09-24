@@ -1,13 +1,19 @@
-@orange: #47A8B9;
+@orange: #47a8b9;
 @black: #363636;
 @light-grey: #e5e5e5;
-@lighter-grey: #f3f3f3;
-@white: #FFF;
+@lighter-grey: #f5f5f5;
+@white: #fff;
 @disabled: #999;
 
 // permet de créer un ellipsis sur un text à plusieurs lignes
 body {
   overflow-wrap: anywhere;
+}
+
+#__next {
+  position: absolute;
+  inset: 0;
+  height: 100%;
 }
 
 .ent-card-ambition {
@@ -21,8 +27,8 @@ body {
 }
 
 .ent-logo-hover:hover {
-  opacity: .7;
-  transition: .1s;
+  opacity: 0.7;
+  transition: 0.1s;
 }
 
 .ent-line-clamp-1,
@@ -49,19 +55,19 @@ body {
 // Margin supplémentaire
 
 .ent-margin-top-xsmall {
-  margin-top: 5px !important
+  margin-top: 5px !important;
 }
 
 .ent-margin-right-xsmall {
-  margin-right: 5px !important
+  margin-right: 5px !important;
 }
 
 .ent-margin-left-xsmall {
-  margin-left: 5px !important
+  margin-left: 5px !important;
 }
 
 .ent-margin-bottom-xsmall {
-  margin-bottom: 5px !important
+  margin-bottom: 5px !important;
 }
 
 hr.uk-divider-small::after {
@@ -69,7 +75,7 @@ hr.uk-divider-small::after {
 }
 
 .ent-text-white {
-  color: #fff
+  color: #fff;
 }
 
 .ent-quote-after {
@@ -88,7 +94,7 @@ hr.uk-divider-small::after {
 .ent-profile-inactive {
   position: absolute;
   left: 0;
-  top: 110px
+  top: 110px;
 }
 
 .ent-profile-inactive .uk-sticky-placeholder {
@@ -97,18 +103,18 @@ hr.uk-divider-small::after {
 
 .ent-profile-inactive img {
   opacity: 0;
-  transition: opacity .1s ease-in;
+  transition: opacity 0.1s ease-in;
 }
 
 .ent-profile-active img {
   opacity: 1;
-  transition: opacity .1s ease-in;
+  transition: opacity 0.1s ease-in;
 }
 
 .ent-profile-active {
   z-index: 980;
   left: 10px !important;
-  width: calc((100vw - 1280px) / 2) !important
+  width: calc((100vw - 1280px) / 2) !important;
 }
 
 .ent-site-map {
@@ -119,7 +125,6 @@ hr.uk-divider-small::after {
 .ent-site-map:not(:first-child) {
   margin-top: 10px;
 }
-
 
 .ent-timeline-number {
   border-radius: 5px;
@@ -169,7 +174,7 @@ hr.uk-divider-small::after {
   border-top: 34px solid transparent;
   border-bottom: 34px solid transparent;
   border-left: 17px solid @light-grey;
-  content: "";
+  content: '';
   height: 0;
   position: absolute;
   right: -17px;
@@ -182,7 +187,7 @@ hr.uk-divider-small::after {
   border-top: 34px solid transparent;
   border-bottom: 34px solid transparent;
   border-left: 17px solid @white;
-  content: "";
+  content: '';
   height: 0;
   position: absolute;
   left: 0;
@@ -191,8 +196,8 @@ hr.uk-divider-small::after {
   z-index: 2;
 }
 
-.ent-timeline-arrow > span{
-  flex: 1
+.ent-timeline-arrow > span {
+  flex: 1;
 }
 
 .ent-timeline-arrow-mobile {
@@ -226,15 +231,11 @@ hr.uk-divider-small::after {
   border-top-color: @white;
 }
 
-
 .ent-review-card {
   background-color: @lighter-grey;
 }
-
 
 // overwrite YT lite player start button
 .yt-lite > .lty-playbtn {
   border: none;
 }
-
-

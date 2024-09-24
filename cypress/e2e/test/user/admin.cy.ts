@@ -1,5 +1,5 @@
-import bootstrap from '../bootstrap';
 import { adminRequests } from '../../intercept/user/admin.req';
+import bootstrap from '../bootstrap';
 
 /**
  * En tant qu'Administrateur
@@ -19,29 +19,26 @@ describe('En tant que - Administrateur', () => {
      * Remove modal
      */
     window.localStorage.setItem('entourage-pro-modal-closed', 'true');
+    window.localStorage.setItem('access-token', '0x1x2x3x4');
+    window.localStorage.setItem('release-version', 'v100');
+
     /**
-     * Intercept GET requests
+     * Intercept requests
      */
-    adminRequests.GET.map((request) => {
-      if (request.alias)
+    adminRequests.GET.forEach((request) => {
+      if (request.alias) {
         cy.intercept('GET', request.path, request.data).as(request.alias);
-      else cy.intercept('GET', request.path, request.data);
+      } else cy.intercept('GET', request.path, request.data);
     });
-    /**
-     * Intercept POST requests
-     */
-    adminRequests.POST.map((request) => {
-      if (request.alias)
+    adminRequests.POST.forEach((request) => {
+      if (request.alias) {
         cy.intercept('POST', request.path, request.data).as(request.alias);
-      else cy.intercept('POST', request.path, request.data);
+      } else cy.intercept('POST', request.path, request.data);
     });
-    /**
-     * Intercept PUT requests
-     */
-    adminRequests.PUT.map((request) => {
-      if (request.alias)
+    adminRequests.PUT.forEach((request) => {
+      if (request.alias) {
         cy.intercept('PUT', request.path, request.data).as(request.alias);
-      else cy.intercept('PUT', request.path, request.data);
+      } else cy.intercept('PUT', request.path, request.data);
     });
   });
 
@@ -49,21 +46,18 @@ describe('En tant que - Administrateur', () => {
    * Je parcours les opportunités
    */
   describe('Je parcours les opportunités', () => {
+    beforeEach(() => {
+      cy.visit('/backoffice/admin/offres');
+      cy.get('[data-testid="app-splash-screen"]').should('not.visible');
+    });
+
     /**
      * Première partie de test - J'affiche les opport.
      */
     it("J'affiche les opportunités", () => {
-      // Accèdons à l'URL des opportunités
-      cy.visit('/backoffice/admin/offres', {
-        // J'ajoute un fake token dans mon localStorage pour simuler l'authentification
-        onBeforeLoad: function async(window) {
-          window.localStorage.setItem('access-token', '0x1x2x3x4');
-          window.localStorage.setItem('release-version', 'v100');
-        },
-      });
       cy.wait('@opportunities');
       // Grâce au fichier de fixture précédement généré
-      cy.fixture('api/opportunities').then((opportunities) => {
+      cy.fixture('api/generated/opportunities').then((opportunities) => {
         // ...je peux tester si j'obtiens, dans l'interface, le bon nombre d'opportunités
         cy.get('[data-testid="admin-offer-list-element"]')
           .its('length')
@@ -94,6 +88,9 @@ describe('En tant que - Administrateur', () => {
      * Deuxième partie de test - Je créer une opportunité
      */
     it("J'ajoute une nouvelle opportunité", () => {
+      // Interceptons l'appel au détails d'opportunité et ignorons la réponse
+      cy.intercept('GET', `opportunity/**`, {}).as('opportunity');
+
       // Remplissage du formulaire d'une opportunité
       cy.get('[data-testid="button-admin-create"]').click();
       cy.get('[data-testid="admin-add-offer-main"]').click();
@@ -153,21 +150,17 @@ describe('En tant que - Administrateur', () => {
    * Je parcours les membres
    */
   describe('Je parcours les membres', () => {
+    beforeEach(() => {
+      cy.visit('/backoffice/admin/membres?role=Candidat');
+      cy.get('[data-testid="app-splash-screen"]').should('not.visible');
+    });
+
     /**
      * Première partie de test - J'affiche les membres.
      */
     it("J'affiche les membres", () => {
-      // Accèdons à l'URL des membres
-      cy.visit('/backoffice/admin/membres?role=Candidat', {
-        // J'ajoute un fake token dans mon localStorage pour simuler l'authentification
-        onBeforeLoad: function async(window) {
-          window.localStorage.setItem('access-token', '0x1x2x3x4');
-          window.localStorage.setItem('release-version', 'v100');
-        },
-      });
-
       // Grâce au fichier de fixture précédement généré
-      cy.fixture('api/users-candidat').then((candidates) => {
+      cy.fixture('api/generated/users-candidat').then((candidates) => {
         cy.get('[data-testid="member-list"]')
           .find('tr')
           .should('have.length', candidates.length);
@@ -269,8 +262,8 @@ describe('En tant que - Administrateur', () => {
       cy.get('[id$=Organization]').should('not.exist');
 
       // Chargement du fichier de fixture search-user.json - inutile de se soucier du type (non utile)
-      cy.fixture('api/search-user').then((users) => {
-        let firstUser = users[0];
+      cy.fixture('api/generated/search-user').then((users) => {
+        const firstUser = users[0];
 
         // Saisie du nom de l'utilisateur
         cy.get('#form-add-user-userToLinkId')
@@ -302,8 +295,8 @@ describe('En tant que - Administrateur', () => {
       cy.get('#form-add-user-userToLinkId').should('not.exist');
 
       // Chargement du fichier de fixture organizations.json contenant les organizations
-      cy.fixture('api/organizations').then((organizations) => {
-        let firstOrganization = organizations[0];
+      cy.fixture('api/generated/organizations').then((organizations) => {
+        const firstOrganization = organizations[0];
 
         cy.get('#form-add-user-organizationId')
           .should('be.visible')
@@ -318,8 +311,8 @@ describe('En tant que - Administrateur', () => {
       });
 
       // Puis chargement du fichier de fixture organizations.json contenant les organizations
-      cy.fixture('api/search-user').then((users) => {
-        let firstUser = users[0];
+      cy.fixture('api/generated/search-user').then((users) => {
+        const firstUser = users[0];
 
         cy.get('#form-add-user-userToLinkId')
           .should('be.visible')
@@ -341,20 +334,17 @@ describe('En tant que - Administrateur', () => {
    * Je parcours les organisations
    */
   describe('Je parcours les organisations', () => {
+    beforeEach(() => {
+      cy.visit('/backoffice/admin/structures');
+      cy.get('[data-testid="app-splash-screen"]').should('not.visible');
+    });
+
     /**
      * Première partie de test - J'affiche les organisations
      */
     it("J'affiche les organisations", () => {
-      // Accèdons à l'URL des organisations
-      cy.visit('/backoffice/admin/structures', {
-        // J'ajoute un fake token dans mon localStorage pour simuler l'authentification
-        onBeforeLoad: function async(window) {
-          window.localStorage.setItem('access-token', '0x1x2x3x4');
-          window.localStorage.setItem('release-version', 'v100');
-        },
-      });
       // Grâce au fichier de fixture précédement généré
-      cy.fixture('api/organizations').then((organizations) => {
+      cy.fixture('api/generated/organizations').then((organizations) => {
         // ...je peux tester si j'obtiens, dans l'interface, le bon nombre d'opportunités
         cy.get('[data-testid="organization-list"]')
           .find('tr')
@@ -425,67 +415,67 @@ describe('En tant que - Administrateur', () => {
      * Troisieme partie de test - J'edite une organisation
      */
     it("J'édite une organization existante", () => {
-      let firstOrganization;
       // Grâce au fichier de fixture précédement généré
-      cy.fixture('api/organizations').then((organizations) => {
-        //    Ensuite je récupère la première opportunité (depuis la fixture)
-        firstOrganization = organizations[0];
-        // Edition de chaque valeur du formulaire
+      cy.fixture('api/generated/organizations').then((organizations) => {
+        // Open the form with the first organization button edit
         cy.get(
-          `[data-testid="button-edit-organization-${firstOrganization.id}"]`
+          `[data-testid="button-edit-organization-${organizations[0].id}"]`
         )
+          .as(`button-edit-organization-${organizations[0].id}`)
           .should('be.visible')
-          .first()
+          .first();
+        cy.get(`@button-edit-organization-${organizations[0].id}`).click();
+
+        // Wait modale to be visible
+        cy.get('.ReactModalPortal div').first().should('be.visible');
+
+        // Edition de chaque valeur du formulaire
+        cy.get('#form-add-organization-name')
+          .should('be.visible')
+          .clear()
+          .type('Entourage Pro');
+
+        cy.get('#form-add-organization-address')
+          .should('be.visible')
+          .clear()
+          .type('15 Avenue Lacassagne, 69003 Lyon');
+
+        cy.get('#form-add-organization-zone-container')
+          .should('be.visible')
+          .click()
+          .find('.option')
+          .contains('Lyon')
           .click();
+
+        cy.get('#form-add-organization-referentFirstName')
+          .should('be.visible')
+          .clear()
+          .type('Jane');
+
+        cy.get('#form-add-organization-referentLastName')
+          .should('be.visible')
+          .clear()
+          .type('Fonda');
+
+        cy.get('#form-add-organization-referentPhone')
+          .should('be.visible')
+          .clear()
+          .type('+330666059439');
+
+        cy.get('#form-add-organization-referentMail')
+          .should('be.visible')
+          .clear()
+          .type('janefonda@gmail.com');
+
+        cy.get('button')
+          .contains('Modifier la structure')
+          .should('be.visible')
+          .click();
+
+        cy.wait('@putOrganization');
+
+        cy.get('.ReactModalPortal div').should('not.exist');
       });
-
-      cy.get('.ReactModalPortal div').first().should('be.visible');
-
-      cy.get('#form-add-organization-name')
-        .should('be.visible')
-        .clear()
-        .type('Entourage Pro');
-
-      cy.get('#form-add-organization-address')
-        .should('be.visible')
-        .clear()
-        .type('15 Avenue Lacassagne, 69003 Lyon');
-
-      cy.get('#form-add-organization-zone-container')
-        .should('be.visible')
-        .click()
-        .find('.option')
-        .contains('Lyon')
-        .click();
-
-      cy.get('#form-add-organization-referentFirstName')
-        .should('be.visible')
-        .clear()
-        .type('Jane');
-
-      cy.get('#form-add-organization-referentLastName')
-        .should('be.visible')
-        .clear()
-        .type('Fonda');
-
-      cy.get('#form-add-organization-referentPhone')
-        .should('be.visible')
-        .clear()
-        .type('+330666059439');
-
-      cy.get('#form-add-organization-referentMail')
-        .should('be.visible')
-        .clear()
-        .type('janefonda@gmail.com');
-
-      cy.get('button')
-        .contains('Modifier la structure')
-        .should('be.visible')
-        .click();
-
-      cy.wait('@putOrganization');
-
-      cy.get('.ReactModalPortal div').should('not.exist');
     });
   });
 });

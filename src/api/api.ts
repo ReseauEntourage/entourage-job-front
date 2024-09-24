@@ -32,6 +32,7 @@ import {
   UserDto,
   UserProfile,
   UserRegistrationDto,
+  UserReportDto,
   UserWithUserCandidate,
 } from './types';
 
@@ -292,6 +293,13 @@ export class APIHandler {
     userProfile: Partial<UserProfile>
   ): Promise<AxiosResponse> {
     return this.put(`/user/profile/${userId}`, userProfile);
+  }
+
+  postProfileUserAbuse(
+    userId: string,
+    userReportDto: UserReportDto
+  ): Promise<AxiosResponse> {
+    return this.post(`/user/profile/${userId}/report`, userReportDto);
   }
 
   // delete

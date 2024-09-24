@@ -8,3 +8,4 @@ export * from './Heading';
 export * from './Radio';
 export * from './Selects';
 export * from './ImageInput';
+export * from './FileInput';

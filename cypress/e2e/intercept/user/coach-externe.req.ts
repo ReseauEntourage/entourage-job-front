@@ -16,7 +16,7 @@ export const coachExtRequests = (user) => {
     GET: [
       {
         path: '/auth/current',
-        data: { fixture: 'api/coach-login' },
+        data: { fixture: 'api/generated/coach-login' },
         alias: 'authCheck',
       },
       {
@@ -25,7 +25,7 @@ export const coachExtRequests = (user) => {
       },
       {
         path: `/user/${user.id}`,
-        data: { fixture: 'api/coach-login' },
+        data: { fixture: 'api/generated/coach-login' },
       },
       // { path: '/cv/shares', data: { total: 10000 }, alias: 'cvShares' },
     ],

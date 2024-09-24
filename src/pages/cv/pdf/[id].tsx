@@ -5,6 +5,7 @@ import { CV } from 'src/api/types';
 import { Layout } from 'src/components/Layout';
 import { CVPDF } from 'src/components/cv';
 import { Section } from 'src/components/utils';
+import { CV_STATUS } from 'src/constants';
 
 interface CVPDFPageProps {
   cv: CV;
@@ -13,6 +14,8 @@ interface CVPDFPageProps {
 }
 
 const CVPDFPage = ({ cv, page, router }: CVPDFPageProps) => {
+  const urlImg = `${process.env.AWSS3_URL}${process.env.AWSS3_IMAGE_DIRECTORY}${cv.user.candidat.id}.${CV_STATUS.Published.value}.jpg`;
+
   if (!cv) {
     return (
       <Layout title="Page introuvable - Entourage Pro">
@@ -33,14 +36,7 @@ const CVPDFPage = ({ cv, page, router }: CVPDFPageProps) => {
       metaTitle={`Aidez ${cv.user.candidat.firstName} en partageant son CV.`}
       metaUrl={`${process.env.SERVER_URL}${router.asPath}`}
       metaDescription={cv.story}
-      metaImage={
-        cv.urlImg
-          ? `${process.env.AWSS3_URL}/${cv.urlImg.replace(
-              '.jpg',
-              '.preview.jpg'
-            )}`
-          : `${process.env.SERVER_URL}/static/img/entourage-pro-preview.jpg`
-      }
+      metaImage={urlImg}
       metaType="profile"
     >
       <div>
@@ -53,7 +49,7 @@ const CVPDFPage = ({ cv, page, router }: CVPDFPageProps) => {
 CVPDFPage.getInitialProps = async ({ query }) => {
   if (query.token) {
     return Api.getCVByCandidateId(query.id, {
-      authorization: `Token ${query.token}`,
+      authorization: `Bearer ${query.token}`,
     })
       .then(({ data }) => {
         return { cv: data, page: query.page };

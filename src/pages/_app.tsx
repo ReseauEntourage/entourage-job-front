@@ -13,16 +13,19 @@ import 'react-tooltip/dist/react-tooltip.css';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 
 import { SplashScreen } from 'src/components/SplashScreen';
 import { ModalsListener } from 'src/components/modals/Modal';
 // import { OFFCANVAS_GUEST, OFFCANVAS_LOGGED } from 'src/constants/utils';
+import { GA_TAGS } from 'src/constants/tags';
 import { useAuthentication } from 'src/hooks/authentication/useAuthentication';
 import { useMount } from 'src/hooks/utils';
 import * as gtag from 'src/lib/gtag';
+import { gaEventWithUser } from 'src/lib/gtag';
 import { DataProvider } from 'src/store/DataProvider';
 import { store } from 'src/store/store';
+import { selectCurrentUser } from 'src/use-cases/current-user';
 
 // sentry is only commented untill we're sure we won't use it again
 // Sentry.init({
@@ -34,6 +37,18 @@ import { store } from 'src/store/store';
  * This component is detached because it needs Redux content to work properly
  */
 const RouteReadyComponent = ({ Component, pageProps }: AppProps) => {
+  const currentUser = useSelector(selectCurrentUser);
+
+  useEffect(() => {
+    if (currentUser) {
+      gaEventWithUser(GA_TAGS.BACKOFFICE_OPEN.action, {
+        userId: currentUser.id,
+        zone: currentUser.zone,
+        role: currentUser.role,
+      });
+    }
+  }, [currentUser]);
+
   const { isCurrentRouteReady } = useAuthentication();
   return isCurrentRouteReady ? <Component {...pageProps} /> : null;
 };
@@ -98,22 +113,7 @@ const EntourageApp = (props: AppProps) => {
     // <Sentry.ErrorBoundary fallback="An error has occurred">
     <Provider store={store}>
       <DataProvider>
-        <div
-          style={{
-            height: loading ? '100vh' : 'inherit',
-            overflow: loading ? 'hidden' : 'auto',
-            display: 'inline-block',
-            position: 'relative',
-            maxWidth: '100%',
-            verticalAlign: 'middle',
-            backfaceVisibility: 'hidden',
-            flex: '1 1',
-            minWidth: '1px',
-            boxSizing: 'border-box',
-            width: '100%',
-          }}
-          id="main-container"
-        >
+        <div id="main-container">
           <SplashScreen loading={loading} fading={fading} />
           <RouteReadyComponent {...props} />
           <ModalsListener />
