@@ -208,7 +208,6 @@ export const StyledCVPDFXpFormaTitle = styled.h6`
 export const StyledCVPDFPage = styled.div`
   height: 1122px;
   width: 794px;
-  margin-bottom: 50px;
   background-color: ${COLORS.lightgray};
   display: flex;
   flex-direction: column;
@@ -250,4 +249,8 @@ export const StyledCVPDFProfilePictureContainer = styled(
   margin-right: 10px;
   height: 100%;
   align-items: flex-start;
+`;
+
+export const StyledBreakPage = styled.div`
+  page-break-before: always;
 `;
