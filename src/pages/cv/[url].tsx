@@ -29,7 +29,9 @@ const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
   const title = candidateExists
     ? `Entourage Pro\xa0: Aidez ${cv.user.candidat.firstName} à retrouver un emploi`
     : '';
-  const urlImg = `${process.env.AWSS3_URL}${process.env.AWSS3_IMAGE_DIRECTORY}${cv.user.candidat.id}.${CV_STATUS.Published.value}.jpg`;
+  const urlImg = candidateExists
+    ? `${process.env.AWSS3_URL}${process.env.AWSS3_IMAGE_DIRECTORY}${cv.user.candidat.id}.${CV_STATUS.Published.value}.jpg`
+    : '';
 
   useEffect(() => {
     if (cv) {
