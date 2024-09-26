@@ -14,7 +14,10 @@ interface CVPDFPageProps {
 }
 
 const CVPDFPage = ({ cv, page, router }: CVPDFPageProps) => {
-  const urlImg = `${process.env.AWSS3_URL}${process.env.AWSS3_IMAGE_DIRECTORY}${cv.user.candidat.id}.${CV_STATUS.Published.value}.jpg`;
+  const candidatExists = cv && cv.user && cv.user.candidat;
+  const urlImg = candidatExists
+    ? `${process.env.AWSS3_URL}${process.env.AWSS3_IMAGE_DIRECTORY}${cv.user.candidat.id}.${CV_STATUS.Published.value}.jpg`
+    : '';
 
   if (!cv) {
     return (
