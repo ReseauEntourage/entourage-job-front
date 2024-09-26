@@ -7,6 +7,18 @@ declare global {
   }
 }
 
+export interface PageViewAdditionalParams {
+  zone?: string;
+  role?: string;
+  user_hash_id?: string;
+}
+
+export const setParams = (params: PageViewAdditionalParams) => {
+  if (window.gtag) {
+    window.gtag('set', params);
+  }
+};
+
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
 export const pageview = (url: string) => {
   if (window.gtag) {

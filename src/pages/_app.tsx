@@ -41,6 +41,11 @@ const RouteReadyComponent = ({ Component, pageProps }: AppProps) => {
 
   useEffect(() => {
     if (currentUser) {
+      gtag.setParams({
+        user_hash_id: currentUser.id,
+        zone: currentUser.zone,
+        role: currentUser.role,
+      });
       gaEventWithUser(GA_TAGS.BACKOFFICE_OPEN.action, {
         userId: currentUser.id,
         zone: currentUser.zone,
