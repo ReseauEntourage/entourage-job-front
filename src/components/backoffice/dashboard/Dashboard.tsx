@@ -21,10 +21,10 @@ import {
 import { DashboardAlertWhatsappCoach } from './DashboardAlertWhatsappCoach/DashboardAlertWhatsappCoach';
 import { DashboardAvailabilityCard } from './DashboardAvailabilityCard';
 import { DashboardLinkedUserCard } from './DashboardLinkedUserCard';
+import { DashboardNetworkDiscoveryCard } from './DashboardNetworkDiscoverCard';
 import { DashboardOpportunitiesCard } from './DashboardOpportunitiesCard';
 import { DashboardProfileCard } from './DashboardProfileCard';
 import { DashboardReadDocumentsCard } from './DashboardReadDocumentsCard';
-import { DashboardRecommendationsCard } from './DashboardRecommendationsCard';
 import { DashboardReferentCard } from './DashboardReferentCard';
 import { DashboardStepsCard } from './DashboardStepsCard';
 import { DashboardToolboxCard } from './DashboardToolboxCard';
@@ -64,8 +64,10 @@ export const Dashboard = () => {
               <>
                 <DashboardReadDocumentsCard />
                 <DashboardStepsCard />
+                {/* Todo: Replace with DashboardRecommendationsCard when the query is fixed */}
+                {/* <DashboardRecommendationsCard /> */}
+                <DashboardNetworkDiscoveryCard />
                 <DashboardOpportunitiesCard />
-                <DashboardRecommendationsCard />
                 <DashboardToolboxCard />
               </>
             )}
