@@ -113,22 +113,7 @@ const EntourageApp = (props: AppProps) => {
     // <Sentry.ErrorBoundary fallback="An error has occurred">
     <Provider store={store}>
       <DataProvider>
-        <div
-          style={{
-            height: loading ? '100vh' : 'inherit',
-            overflow: loading ? 'hidden' : 'auto',
-            display: 'inline-block',
-            position: 'relative',
-            maxWidth: '100%',
-            verticalAlign: 'middle',
-            backfaceVisibility: 'hidden',
-            flex: '1 1',
-            minWidth: '1px',
-            boxSizing: 'border-box',
-            width: '100%',
-          }}
-          id="main-container"
-        >
+        <div id="main-container">
           <SplashScreen loading={loading} fading={fading} />
           <RouteReadyComponent {...props} />
           <ModalsListener />
