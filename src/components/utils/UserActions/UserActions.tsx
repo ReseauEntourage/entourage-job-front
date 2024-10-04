@@ -1,7 +1,7 @@
 import React from 'react';
-import MoreIcon from 'assets/icons/more.svg';
 import { ButtonIcon } from '../ButtonIcon';
 import { Dropdown } from '../Dropdown/Dropdown';
+import { LucidIcon } from '../Icons/LucidIcon';
 import { ProfileReportUserModal } from 'src/components/backoffice/profile/ProfileReportUserModal/ProfileReportUserModal';
 import { openModal } from 'src/components/modals/Modal';
 import { StyledUserActionsBtnContainer } from './UserActions.styles';
@@ -26,7 +26,7 @@ export function UserActions({
         <Dropdown.Toggle>
           <StyledUserActionsBtnContainer>
             <ButtonIcon
-              icon={<MoreIcon width={20} height={20} />}
+              icon={<LucidIcon name="Ellipsis" size={20} />}
               onClick={() => {}}
             />
           </StyledUserActionsBtnContainer>

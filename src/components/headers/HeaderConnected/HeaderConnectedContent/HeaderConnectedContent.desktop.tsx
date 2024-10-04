@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import CaretDownIcon from 'assets/icons/caret-down.svg';
 import { HeaderConnectedMainItemDefaultProps } from '../HeaderConnected.types';
 import { StyledHeaderDesktop } from 'src/components/headers/Header.styles';
 import {
@@ -11,6 +10,7 @@ import {
   NavbarLogo,
   SimpleLink,
 } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { ImgProfile } from 'src/components/utils/ImgProfile';
 import { StyledNav } from 'src/components/utils/Navbar/Nav/Nav.styles';
 import { Tag } from 'src/components/utils/Tag';
@@ -61,7 +61,7 @@ export const HeaderConnectedContentDesktop = ({
         <span className="uk-margin-small-left uk-margin-small-right">
           Bonjour {user.firstName}
         </span>
-        <CaretDownIcon />
+        <LucidIcon name="ChevronDown" />
       </a>
       <Dropdown
         dividers={[2]}

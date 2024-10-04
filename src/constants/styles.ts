@@ -43,6 +43,9 @@ export const COLORS = {
   wheat: '#FFF8F6',
   white: '#FFF',
   yellow: '#F89D34',
+
+  transparent: 'transparent',
+
   cvStatus: {
     none: {
       border: '#F5F5F5',

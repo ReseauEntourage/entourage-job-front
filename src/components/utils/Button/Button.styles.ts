@@ -78,12 +78,6 @@ export const ButtonStyle = css`
       return COLORS[props.color] || COLORS.primaryBlue;
     }} !important;
 
-    /*    path {
-      fill: ${(props) => {
-      return COLORS[props.color] || COLORS.primaryBlue;
-    }} !important;
-    } */
-
     border-radius: 5px;
 
     @media (hover: hover) {
@@ -93,13 +87,6 @@ export const ButtonStyle = css`
         color: ${(props) => {
           return COLORS[props.color] || COLORS.primaryBlue;
         }} !important;
-
-        path {
-          transition: 0.2s ease-in-out;
-          fill: ${(props) => {
-            return COLORS[props.color] || COLORS.primaryBlue;
-          }} !important;
-        }
       }
     }
   }
@@ -114,12 +101,6 @@ export const ButtonStyle = css`
     color: ${(props) => {
       return COLORS[props.color] || COLORS.primaryBlue;
     }} !important;
-
-    path {
-      fill: ${(props) => {
-        return COLORS[props.color] || COLORS.primaryBlue;
-      }} !important;
-    }
 
     border-radius: 5px;
     background-color: transparent;
@@ -137,13 +118,6 @@ export const ButtonStyle = css`
           ${(props) => {
             return colorToHoverColor[props.color] || COLORS.primaryBlue;
           }};
-
-        path {
-          transition: 0.2s ease-in-out;
-          fill: ${(props) => {
-            return colorToHoverColor[props.color] || COLORS.primaryBlue;
-          }} !important;
-        }
       }
     }
   }
@@ -215,13 +189,6 @@ export const ButtonStyle = css`
       return COLORS[props.color] || COLORS.primaryBlue;
     }} !important;
 
-    path {
-      transition: 0.2s ease-in-out;
-      fill: ${(props) => {
-        return COLORS[props.color] || COLORS.primaryBlue;
-      }} !important;
-    }
-
     border-radius: 25px;
 
     @media (hover: hover) {
@@ -231,13 +198,6 @@ export const ButtonStyle = css`
         color: ${(props) => {
           return COLORS[props.color] || COLORS.primaryBlue;
         }} !important;
-
-        path {
-          transition: 0.2s ease-in-out;
-          fill: ${(props) => {
-            return COLORS[props.color] || COLORS.primaryBlue;
-          }} !important;
-        }
       }
     }
   }
@@ -247,19 +207,11 @@ export const ButtonStyle = css`
     color: ${COLORS.darkGray} !important;
     background-color: ${COLORS.lightgray} !important;
 
-    path {
-      fill: ${COLORS.darkGray} !important;
-    }
-
     @media (hover: hover) {
       &:hover {
         color: ${COLORS.darkGray} !important;
         background-color: ${COLORS.lightgray} !important;
         cursor: default !important;
-
-        path {
-          fill: ${COLORS.darkGray} !important;
-        }
       }
     }
   }

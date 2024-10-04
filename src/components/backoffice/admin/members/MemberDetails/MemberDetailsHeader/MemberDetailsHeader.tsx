@@ -1,9 +1,8 @@
 import _ from 'lodash';
 import React from 'react';
-import LinkIcon from 'assets/icons/link.svg';
-import UserIcon from 'assets/icons/user.svg';
 import { UserWithUserCandidate } from 'src/api/types';
 import { SimpleLink } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { ImgProfile } from 'src/components/utils/ImgProfile';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -12,7 +11,6 @@ import {
   StyledContainer,
   StyledInfoContainer,
   StyledNameContainer,
-  StyledRole,
   StyledRoleContainer,
 } from './MemberDetailsHeader.styles';
 
@@ -50,15 +48,17 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
           {user.zone ? _.capitalize(user.zone) : 'Non renseignée'}
         </span>
         <StyledRoleContainer>
-          <UserIcon width={30} />
-          <StyledRole>
+          <LucidIcon name="User" size={20} />
+          &nbsp;
+          <div>
             <span className="bold">{`${_.capitalize(user.role)}`}</span>
             {` de ${relatedUserText}`}
-          </StyledRole>
+          </div>
         </StyledRoleContainer>
         {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) && (
           <StyledRoleContainer>
-            <LinkIcon width={30} />
+            <LucidIcon name="Link" size={20} />
+            &nbsp;
             <SimpleLink
               className="uk-link-text"
               target="_blank"

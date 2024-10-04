@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ChevronDownIcon from 'assets/icons/chevron-down.svg';
-import ChevronUpIcon from 'assets/icons/chevron-up.svg';
-import EditIcon from 'assets/icons/editIcon.svg';
+import { LucidIcon } from '../../Icons/LucidIcon';
 import { Button } from 'src/components/utils/Button';
 import { ButtonIcon } from 'src/components/utils/ButtonIcon';
 import { H5 } from 'src/components/utils/Headings';
@@ -65,7 +63,7 @@ export const Card = ({
             {!isLoading && editCallback && isDesktop && (
               <StyledEditIconContainer>
                 <ButtonIcon
-                  icon={editIcon || <EditIcon />}
+                  icon={editIcon || <LucidIcon name="Pencil" size={15} />}
                   onClick={editCallback}
                   dataTestId={`${dataTestId}-button-edit`}
                 />
@@ -74,7 +72,13 @@ export const Card = ({
             {isMobileClosable && !isDesktop && (
               <StyledChevronContainer>
                 <ButtonIcon
-                  icon={isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                  icon={
+                    isOpen ? (
+                      <LucidIcon name="ChevronUp" />
+                    ) : (
+                      <LucidIcon name="ChevronDown" />
+                    )
+                  }
                   onClick={() => {
                     setIsOpen(!isOpen);
                   }}

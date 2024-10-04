@@ -24,7 +24,6 @@ export const StyledRoleContainer = styled.div`
   justify-content: center;
   margin-top: 18px;
 `;
-export const StyledRole = styled.div``;
 
 export const StyledInfoContainer = styled.div`
   display: flex;

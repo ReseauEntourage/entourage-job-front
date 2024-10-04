@@ -2,12 +2,10 @@ import moment from 'moment';
 import React from 'react';
 
 import { Tooltip } from 'react-tooltip';
-import EyeHiddenIcon from 'assets/icons/eye-hidden.svg';
-import EyeVisibleIcon from 'assets/icons/eye-visible.svg';
-import LinkIcon from 'assets/icons/link.svg';
 import { translateStatusCV } from 'src/components/backoffice/admin/members/MemberList/MemberList.utils';
 import { renderCVStatus } from 'src/components/backoffice/admin/members/MemberTable/Member/Member.utils';
 import { SimpleLink } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { ImgProfile } from 'src/components/utils/ImgProfile';
 import { CheckBox, useCheckBox } from 'src/components/utils/Inputs/CheckBox';
 import { TrDesktop, TdDesktop } from 'src/components/utils/Table';
@@ -157,7 +155,7 @@ export function MemberDesktop({
                     isExternal
                     target="_blank"
                   >
-                    <LinkIcon width={20} height={20} />
+                    <LucidIcon name="Link" size={20} />
                   </SimpleLink>
                 </span>
               </TdDesktop>
@@ -207,9 +205,9 @@ export function MemberDesktop({
                   ) : (
                     <>
                       {userCandidate?.hidden ? (
-                        <EyeHiddenIcon className="eye-hidden" />
+                        <LucidIcon name="EyeOff" stroke="thin" />
                       ) : (
-                        <EyeVisibleIcon />
+                        <LucidIcon name="Eye" stroke="thin" />
                       )}
                     </>
                   )}
