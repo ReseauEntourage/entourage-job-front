@@ -123,23 +123,19 @@ export const InfoProfileCard = ({
     >
       <Grid column gap="small">
         <Grid row gap="small" middle>
-          <LucidIcon
-            name="MessageCircle"
-            size={20}
-            color={COLORS.primaryBlue}
-          />
+          <LucidIcon name="MessageCircle" color={COLORS.primaryBlue} />
           {email || 'Adresse mail non renseigné'}
         </Grid>
         <Grid row gap="small" middle>
-          <LucidIcon name="Phone" size={20} color={COLORS.primaryBlue} />
+          <LucidIcon name="Phone" color={COLORS.primaryBlue} />
           {phone || 'Numéro de téléphone non renseigné'}
         </Grid>
         <Grid row gap="small" middle>
-          <LucidIcon name="House" size={20} color={COLORS.primaryBlue} />
+          <LucidIcon name="House" color={COLORS.primaryBlue} />
           {address || 'Adresse postale non renseignée'}
         </Grid>
         <Grid row gap="small" middle>
-          <LucidIcon name="FileText" size={20} color={COLORS.primaryBlue} />
+          <LucidIcon name="FileText" color={COLORS.primaryBlue} />
           {contracts && contracts.length > 0
             ? contracts
                 .map(({ name }) => {
@@ -149,7 +145,7 @@ export const InfoProfileCard = ({
             : 'Type de contrat recherché non renseigné'}
         </Grid>
         <Grid row gap="small" middle>
-          <LucidIcon name="MapPin" size={20} color={COLORS.primaryBlue} />
+          <LucidIcon name="MapPin" color={COLORS.primaryBlue} />
           {sortedLocations && sortedLocations.length > 0
             ? sortedLocations
                 .map(({ name }) => {
@@ -159,13 +155,13 @@ export const InfoProfileCard = ({
             : 'Localisations non renseignées'}
         </Grid>
         <Grid row gap="small" middle>
-          <LucidIcon name="Calendar" size={20} color={COLORS.primaryBlue} />
+          <LucidIcon name="Calendar" color={COLORS.primaryBlue} />
           {availability && availability !== ''
             ? availability
             : 'Disponibilités non renseignée'}
         </Grid>
         <Grid row gap="small" middle>
-          <LucidIcon name="Globe" size={20} color={COLORS.primaryBlue} />
+          <LucidIcon name="Globe" color={COLORS.primaryBlue} />
           {languages && languages.length > 0
             ? languages
                 .map(({ name }) => {
@@ -175,7 +171,7 @@ export const InfoProfileCard = ({
             : 'Langues apprises non renseignées'}
         </Grid>
         <Grid row gap="small" middle>
-          <LucidIcon name="CarFront" size={20} color={COLORS.primaryBlue} />
+          <LucidIcon name="CarFront" color={COLORS.primaryBlue} />
           {transport && transport !== ''
             ? transport
             : 'Moyen de transport non renseigné'}

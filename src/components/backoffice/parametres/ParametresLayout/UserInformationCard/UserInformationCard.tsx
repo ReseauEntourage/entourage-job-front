@@ -33,19 +33,19 @@ export const UserInformationCard = ({ title }: UserInformationCardProps) => {
     >
       <StyledInformationsPersonnellesList>
         <li>
-          <LucidIcon name="User" size={20} />
+          <LucidIcon name="User" />
           {` ${user.firstName} ${user.lastName}`}
         </li>
         <li>
-          <LucidIcon name="User" size={20} />
+          <LucidIcon name="User" />
           {findConstantFromValue(user.gender, GENDERS_FILTERS).label}
         </li>
         <li>
-          <LucidIcon name="MessageCircle" size={20} />
+          <LucidIcon name="MessageCircle" />
           {user.email}
         </li>
         <li>
-          <LucidIcon name="Phone" size={20} />
+          <LucidIcon name="Phone" />
           {user.phone ? (
             <>{user.phone}</>
           ) : (
@@ -55,7 +55,7 @@ export const UserInformationCard = ({ title }: UserInformationCardProps) => {
         {user.role !== USER_ROLES.ADMIN && (
           <>
             <li>
-              <LucidIcon name="MapPin" size={20} />
+              <LucidIcon name="MapPin" />
               {user.userProfile.department ? (
                 <>{user.userProfile.department}</>
               ) : (
@@ -64,7 +64,7 @@ export const UserInformationCard = ({ title }: UserInformationCardProps) => {
             </li>
             {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) && (
               <li>
-                <LucidIcon name="House" size={20} />
+                <LucidIcon name="House" />
                 {user.address ? (
                   <>{user.address}</>
                 ) : (

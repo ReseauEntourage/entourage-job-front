@@ -43,7 +43,7 @@ export function RecommendedOffersButton({
       }}
     >
       Voir les offres qui pourraient intéresser le candidat
-      <LucidIcon name="ChevronRight" size={20} />
+      <LucidIcon name="ChevronRight" />
     </Button>
   );
 }

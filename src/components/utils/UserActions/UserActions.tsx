@@ -26,7 +26,7 @@ export function UserActions({
         <Dropdown.Toggle>
           <StyledUserActionsBtnContainer>
             <ButtonIcon
-              icon={<LucidIcon name="Ellipsis" size={20} />}
+              icon={<LucidIcon name="Ellipsis" />}
               onClick={() => {}}
             />
           </StyledUserActionsBtnContainer>

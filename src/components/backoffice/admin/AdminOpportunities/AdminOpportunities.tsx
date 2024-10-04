@@ -255,7 +255,7 @@ export const AdminOpportunities = ({
                 },
               ]}
             >
-              <LucidIcon name="Plus" size={20} />
+              <LucidIcon name="Plus" />
               Créer
             </ButtonMultiple>
           </HeaderBackoffice>

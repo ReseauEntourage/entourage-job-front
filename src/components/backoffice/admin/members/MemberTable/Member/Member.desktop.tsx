@@ -155,7 +155,7 @@ export function MemberDesktop({
                     isExternal
                     target="_blank"
                   >
-                    <LucidIcon name="Link" size={20} />
+                    <LucidIcon name="Link" />
                   </SimpleLink>
                 </span>
               </TdDesktop>

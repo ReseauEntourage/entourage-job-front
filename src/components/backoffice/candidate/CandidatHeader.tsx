@@ -60,14 +60,14 @@ export const CandidatHeader = ({
           {relatedUser && (
             <>
               <Grid row gap="small" middle className="uk-margin-small-top">
-                <LucidIcon name="User" size={20} />
+                <LucidIcon name="User" />
                 &nbsp;
                 <span className="uk-text-italic">
                   {relatedUser.firstName} {relatedUser.lastName}
                 </span>
               </Grid>
               <Grid row gap="small" middle className="uk-margin-small-top">
-                <LucidIcon name="Link" size={20} />
+                <LucidIcon name="Link" />
                 &nbsp;
                 <SimpleLink
                   className="uk-link-text"

@@ -207,7 +207,7 @@ export const CandidateOpportunities = ({
                 );
               }}
             >
-              <LucidIcon name="Plus" size={20} />
+              <LucidIcon name="Plus" />
               Ajouter une offre
             </Button>
           </HeaderBackoffice>

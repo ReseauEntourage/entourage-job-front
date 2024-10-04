@@ -48,7 +48,7 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
           {user.zone ? _.capitalize(user.zone) : 'Non renseignée'}
         </span>
         <StyledRoleContainer>
-          <LucidIcon name="User" size={20} />
+          <LucidIcon name="User" />
           &nbsp;
           <div>
             <span className="bold">{`${_.capitalize(user.role)}`}</span>
@@ -57,7 +57,7 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
         </StyledRoleContainer>
         {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) && (
           <StyledRoleContainer>
-            <LucidIcon name="Link" size={20} />
+            <LucidIcon name="Link" />
             &nbsp;
             <SimpleLink
               className="uk-link-text"

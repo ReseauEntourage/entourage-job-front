@@ -44,7 +44,7 @@ export const TimelineCard = ({
       title={title}
       editCallback={remainingItems ? onAdd : undefined}
       dataTestId={dataTestId}
-      editIcon={<LucidIcon name="Plus" size={20} />}
+      editIcon={<LucidIcon name="Plus" />}
     >
       <TimeLineList
         items={experiences}

@@ -101,7 +101,7 @@ export function AdminCreationButtons({
         },
       ]}
     >
-      <LucidIcon name="Plus" size={20} />
+      <LucidIcon name="Plus" />
       Créer
     </ButtonMultiple>
   );
