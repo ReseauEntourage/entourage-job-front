@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { LucidIcon } from '../../Icons/LucidIcon';
+import { Typography } from '../../Typography';
 import { Button } from 'src/components/utils/Button';
 import { ButtonIcon } from 'src/components/utils/ButtonIcon';
 import { H5 } from 'src/components/utils/Headings';
@@ -19,6 +20,8 @@ import {
 interface CardProps {
   children: React.ReactNode;
   title?: React.ReactNode;
+  subtitle?: string;
+  centerTitle?: boolean;
   onClick?: () => void;
   editCallback?: () => void;
   isLoading?: boolean;
@@ -31,6 +34,7 @@ interface CardProps {
 
 export const Card = ({
   title,
+  subtitle,
   onClick,
   children,
   editCallback,
@@ -40,6 +44,7 @@ export const Card = ({
   editButtonText,
   dataTestId,
   editIcon,
+  centerTitle = false,
 }: CardProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(isDefaultOpen);
 
@@ -90,8 +95,12 @@ export const Card = ({
               onClick={() => {
                 if (!isDesktop && isMobileClosable) setIsOpen(!isOpen);
               }}
+              centerTitle={centerTitle}
             >
-              <H5 title={title} />
+              <H5 title={title} center={centerTitle} />
+              {subtitle && (
+                <Typography center={centerTitle}>{subtitle}</Typography>
+              )}
             </StyledCardTitleContainer>
           </StyledCardTopContainer>
           {!closedMode && (
