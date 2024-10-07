@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import ChevronDownIcon from 'assets/icons/chevron-down.svg';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledCVPage = styled.div`
@@ -219,7 +218,6 @@ export const StyledCVPageContentInformations = styled.div`
   margin-bottom: 30px;
   border-radius: 30px;
   margin-right: 30px;
-
   position: relative;
   h6 {
     margin-block-start: 0;
@@ -235,7 +233,7 @@ export const StyledCVPageContentInformations = styled.div`
     }
   }
   .content {
-    padding-left: 30px;
+    padding-left: 25px;
     margin-top: 5px;
   }
   &.mobile {
@@ -383,16 +381,6 @@ export const StyledLeftQuoteContainer = styled.div`
   svg {
     margin-right: 8px;
     transform: translateY(-8px);
-  }
-`;
-
-export const StyledChevronIcon = styled(ChevronDownIcon)`
-  top: 30px;
-  right: 30px;
-  color: ${COLORS.primaryBlue};
-  svg {
-    height: 20px;
-    width: 20px;
   }
 `;
 

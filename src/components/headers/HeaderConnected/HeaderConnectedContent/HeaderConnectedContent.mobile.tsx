@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import HomeIcon from 'assets/icons/home.svg';
 import { HeaderConnectedMainItemDefaultProps } from '../HeaderConnected.types';
 import { StyledHeaderMobile } from 'src/components/headers/Header.styles';
 import {
@@ -10,6 +9,7 @@ import {
   NavbarLogo,
   SimpleLink,
 } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { Offcanvas } from 'src/components/utils/Offcanvas';
 import { Tag } from 'src/components/utils/Tag';
 import { USER_ROLES } from 'src/constants/users';
@@ -59,7 +59,7 @@ export const HeaderConnectedContentMobile = ({
         <ul className="uk-nav uk-nav-default uk-margin-medium-top">
           <li>
             <SimpleLink href="/">
-              <HomeIcon width={16} height={16} />
+              <LucidIcon name="House" />
               &nbsp; Accueil
             </SimpleLink>
           </li>

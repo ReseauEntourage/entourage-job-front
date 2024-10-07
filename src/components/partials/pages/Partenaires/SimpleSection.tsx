@@ -1,6 +1,6 @@
 import React from 'react';
-import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { Button, Section } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { UIKIT_STYLES } from 'src/components/variables';
 
 interface SimpleSectionProps {
@@ -60,7 +60,7 @@ export const SimpleSection = ({
             onClick={button.onClick}
           >
             {button.label}
-            <ChevronRightIcon />
+            <LucidIcon name="ChevronRight" />
           </Button>
         )}
         {children}

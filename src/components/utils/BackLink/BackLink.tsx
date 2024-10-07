@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import ChevronLeftIcon from 'assets/icons/chevron-left.svg';
+import { LucidIcon } from '../Icons/LucidIcon';
 import { StyledBackLink } from './BackLink.styles';
 
 interface BackLinkProps {
@@ -16,7 +16,7 @@ export function BackLink({ label, url }: BackLinkProps) {
   return (
     <Link href={url} scroll={false} shallow passHref>
       <StyledBackLink>
-        <ChevronLeftIcon />
+        <LucidIcon name="ChevronLeft" />
         {label}
       </StyledBackLink>
     </Link>

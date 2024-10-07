@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import CheckIcon from 'assets/icons/check.svg';
-import WarningIcon from 'assets/icons/warning.svg';
+import { LucidIcon } from '../../Icons/LucidIcon';
 import { CommonInputProps } from '../Inputs.types';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage';
 import { H6 } from 'src/components/utils/Headings';
@@ -124,9 +123,9 @@ export function SelectCard<T extends string>({
                     </StyledSelectBlurableSection>
                     {disableOption && (
                       <StyledSelectCardDisabledOverlay>
-                        <WarningIcon
-                          width={30}
-                          height={30}
+                        <LucidIcon
+                          name="TriangleAlert"
+                          size={30}
                           color={COLORS.primaryBlue}
                         />
                         {typeof disableOption.message === 'string' ? (
@@ -143,7 +142,7 @@ export function SelectCard<T extends string>({
                 <StyledCheckIconContainer
                   className={valueProp?.includes(value) ? 'selected' : ''}
                 >
-                  <CheckIcon />
+                  <LucidIcon name="Check" />
                 </StyledCheckIconContainer>
               </button>
             </li>

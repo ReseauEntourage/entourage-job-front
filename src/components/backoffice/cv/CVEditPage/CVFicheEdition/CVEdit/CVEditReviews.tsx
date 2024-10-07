@@ -1,13 +1,10 @@
 import React from 'react';
-import QuoteLeftIcon from 'assets/icons/quote-left.svg';
-import QuoteRightIcon from 'assets/icons/quote-right.svg';
 import { EditItemsButtons } from 'src/components/backoffice/cv/CVEditPage/CVFicheEdition/EditItemsButtons';
 import { formEditTestimonial } from 'src/components/forms/schemas/formEditTestimonial';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Grid, Card } from 'src/components/utils';
-import { COLORS } from 'src/constants/styles';
 import { formatParagraph, sortByName } from 'src/utils';
 
 interface Review {
@@ -58,12 +55,6 @@ export const CVEditReviews = ({ reviews, onChange }: CVEditReviewsProps) => {
                   eachWidths={['auto', 'expand']}
                   className="uk-padding-small uk-padding-remove-horizontal"
                 >
-                  <QuoteLeftIcon
-                    width={15}
-                    height={15}
-                    color={COLORS.primaryBlue}
-                  />
-
                   <p className="uk-text-small uk-margin-small">
                     {formatParagraph(review.text)}
                   </p>
@@ -71,14 +62,6 @@ export const CVEditReviews = ({ reviews, onChange }: CVEditReviewsProps) => {
                     {review.name}
                   </p>
                   <p className="uk-margin-remove">{review.status}</p>
-
-                  <div className="uk-flex uk-flex-column uk-flex-right uk-height-1-1">
-                    <QuoteRightIcon
-                      width={15}
-                      height={15}
-                      color={COLORS.primaryBlue}
-                    />
-                  </div>
                   <EditItemsButtons
                     onEditClick={() => {
                       openModal(

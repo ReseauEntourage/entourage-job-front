@@ -4,11 +4,9 @@ import { IlluCV } from 'assets/icons/icons';
 import {
   StyledDashboardCardContent,
   StyledDashboardCardContentContainer,
-  StyledDashboardCardSubtitle,
 } from '../../Dashboard.styles';
 import { useContextualRole } from 'src/components/backoffice/useContextualRole';
 import { Button, Card } from 'src/components/utils';
-import { Typography } from 'src/components/utils/Typography';
 import { CV_STATUS } from 'src/constants';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -84,13 +82,12 @@ export const DashboardCVCreationStepCard = () => {
   if (!candidate) return null;
 
   return (
-    <Card title={textContent.title[contextualRole][cvStatus]}>
+    <Card
+      title={textContent.title[contextualRole][cvStatus]}
+      subtitle={textContent.subTitle[contextualRole][cvStatus]}
+      centerTitle
+    >
       <StyledDashboardCardContentContainer>
-        <StyledDashboardCardSubtitle>
-          <Typography>
-            {textContent.subTitle[contextualRole][cvStatus]}
-          </Typography>
-        </StyledDashboardCardSubtitle>
         <StyledDashboardCardContent>
           <StyledDashboardCVCreationStepContent>
             {isDesktop && (

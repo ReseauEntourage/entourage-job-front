@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import UIkit from 'uikit';
-import FilterEmptyIcon from 'assets/icons/filter-empty.svg';
-import FilterIcon from 'assets/icons/filter.svg';
+import { LucidIcon } from '../utils/Icons/LucidIcon';
 import { Button } from 'src/components/utils';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
@@ -45,9 +44,9 @@ export const FiltersMobile = ({
       >
         <div className="uk-position-relative">
           {filterMenuOpened ? (
-            <FilterIcon width={15} height={15} />
+            <LucidIcon name="Filter" style="solid" />
           ) : (
-            <FilterEmptyIcon width={15} height={15} />
+            <LucidIcon name="Filter" />
           )}
           {
             // @ts-expect-error after enable TS strict mode. Please, try to fix it

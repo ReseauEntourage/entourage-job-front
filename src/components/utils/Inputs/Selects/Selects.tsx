@@ -1,12 +1,11 @@
 import React from 'react';
 import { components } from 'react-select';
-import ChevronDownIcon from 'assets/icons/chevron-down.svg';
-import CloseIcon from 'assets/icons/close.svg';
+import { LucidIcon } from '../../Icons/LucidIcon';
 
 export const DropdownIndicator = (props) => {
   return (
     <components.DropdownIndicator {...props}>
-      <ChevronDownIcon />
+      <LucidIcon name="ChevronDown" />
     </components.DropdownIndicator>
   );
 };
@@ -14,7 +13,7 @@ export const DropdownIndicator = (props) => {
 export const ClearIndicator = (props) => {
   return (
     <components.ClearIndicator {...props}>
-      <CloseIcon />
+      <LucidIcon name="X" size={14} />
     </components.ClearIndicator>
   );
 };
@@ -22,7 +21,7 @@ export const ClearIndicator = (props) => {
 export const MultiValueRemove = (props) => {
   return (
     <components.MultiValueRemove {...props}>
-      <CloseIcon width={10} heigth={10} />
+      <LucidIcon name="X" size={14} />
     </components.MultiValueRemove>
   );
 };

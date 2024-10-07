@@ -7,5 +7,5 @@ interface SpinnerProps {
 }
 
 export const Spinner = ({ color }: SpinnerProps) => {
-  return <ClipLoader size={20} color={color || COLORS.primaryBlue} />;
+  return <ClipLoader color={color || COLORS.primaryBlue} />;
 };

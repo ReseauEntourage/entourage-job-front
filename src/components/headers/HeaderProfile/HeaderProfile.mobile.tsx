@@ -1,6 +1,4 @@
 import React from 'react';
-import CaretDownIcon from 'assets/icons/caret-down.svg';
-import EditIcon from 'assets/icons/editIcon.svg';
 import { Api } from 'src/api';
 import {
   Button,
@@ -12,6 +10,7 @@ import {
 } from 'src/components/utils';
 import { AvailabilityTag } from 'src/components/utils/AvailabilityTag/AvailabilityTag';
 import { H2, H6 } from 'src/components/utils/Headings';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { ImageInput } from 'src/components/utils/Inputs';
 import { Spinner } from 'src/components/utils/Spinner';
 import { UserActions } from 'src/components/utils/UserActions/UserActions';
@@ -96,7 +95,7 @@ export const HeaderProfileMobile = ({
                   id="profile-picture-upload-mobile"
                   name="profile-picture-upload-mobile"
                 >
-                  <ButtonIcon icon={<EditIcon />} />
+                  <ButtonIcon icon={<LucidIcon name="Pencil" size={14} />} />
                 </ImageInput>
               </StyledEditPictureIconContainer>
             )}
@@ -152,7 +151,7 @@ export const HeaderProfileMobile = ({
                   style="custom-secondary"
                   onClick={!hasTwoCv ? openCv : undefined}
                 >
-                  Voir le CV {hasTwoCv && <CaretDownIcon />}
+                  Voir le CV {hasTwoCv && <LucidIcon name="ChevronDown" />}
                 </Button>
                 {hasTwoCv && (
                   <Dropdown

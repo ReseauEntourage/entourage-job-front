@@ -6,7 +6,6 @@ import {
   StyledDashboardArticleText,
   StyledDashboardCardContent,
   StyledDashboardCardContentContainer,
-  StyledDashboardCardSubtitle,
   StyledDashboardArticlesContainer,
 } from '../Dashboard.styles';
 import { Button, Card, Img } from 'src/components/utils';
@@ -79,11 +78,12 @@ export const DashboardToolboxCard = () => {
   const user = useAuthenticatedUser();
 
   return (
-    <Card title="Guides et conseils">
+    <Card
+      title="Guides et conseils"
+      subtitle={toolboxContents[user.role].subtitle}
+      centerTitle
+    >
       <StyledDashboardCardContentContainer>
-        <StyledDashboardCardSubtitle>
-          <Typography>{toolboxContents[user.role].subtitle}</Typography>
-        </StyledDashboardCardSubtitle>
         <StyledDashboardCardContent>
           <StyledDashboardArticlesContainer>
             {toolboxContents[user.role].articles.map((article) => {

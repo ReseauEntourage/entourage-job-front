@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import CheckIcon from 'assets/icons/check.svg';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledLi = styled.li`
@@ -31,10 +30,11 @@ export const StyledList = styled.ul`
   list-style: none;
 `;
 
-export const StyledCheckIcon = styled(CheckIcon)`
-  height: 14px;
-  width: 14px;
+export const StyledCheckIconContainer = styled.div`
+  display: flex;
   padding: 2px;
+  align-items: center;
+  justify-content: center;
   background-color: ${COLORS.primaryBlue};
   color: white;
   position: absolute;

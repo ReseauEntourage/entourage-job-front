@@ -1,8 +1,5 @@
 import React from 'react';
-import EmailIcon from 'assets/icons/email.svg';
-import HomeIcon from 'assets/icons/home.svg';
-import LocationIcon from 'assets/icons/location.svg';
-import PhoneIcon from 'assets/icons/phone.svg';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { Department, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
 import {
@@ -36,7 +33,7 @@ export function CVContactInformationPDF({
           <li>
             <div>
               <p className="subtitle">
-                <PhoneIcon /> <span>Numéro de téléphone</span>
+                <LucidIcon name="Phone" /> <span>Numéro de téléphone</span>
               </p>
               <p className="content">{phone}</p>
             </div>
@@ -46,7 +43,7 @@ export function CVContactInformationPDF({
           <li>
             <div>
               <p className="subtitle">
-                <EmailIcon /> <span>Email</span>
+                <LucidIcon name="MessageCircle" /> <span>Email</span>
               </p>
               <p className="content">{email}</p>
             </div>
@@ -57,7 +54,7 @@ export function CVContactInformationPDF({
             <li>
               <div>
                 <p className="subtitle">
-                  <HomeIcon /> <span>Adresse</span>
+                  <LucidIcon name="House" /> <span>Adresse</span>
                 </p>
                 <p className="content">{address}</p>
               </div>
@@ -68,7 +65,7 @@ export function CVContactInformationPDF({
           <li>
             <div>
               <p className="subtitle">
-                <LocationIcon /> <span>Localisation</span>
+                <LucidIcon name="MapPin" /> <span>Localisation</span>
               </p>
               <p className="content">
                 {locations

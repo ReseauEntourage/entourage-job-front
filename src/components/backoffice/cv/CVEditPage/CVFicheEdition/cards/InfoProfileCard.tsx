@@ -1,18 +1,11 @@
 import React from 'react';
-import CalendarIcon from 'assets/icons/calendar.svg';
-import CarIcon from 'assets/icons/car.svg';
-import DocumentIcon from 'assets/icons/document.svg';
-import EmailIcon from 'assets/icons/email.svg';
-import HomeIcon from 'assets/icons/home.svg';
-import LocationIcon from 'assets/icons/location.svg';
-import PhoneIcon from 'assets/icons/phone.svg';
-import UserIcon from 'assets/icons/user.svg';
 import { CV } from 'src/api/types';
 import { formEditUsefulInformation } from 'src/components/forms/schemas/formEditUsefulInformation';
 
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Grid, Card } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { Contract, CONTRACTS } from 'src/constants';
 import {
   AdminZone,
@@ -130,19 +123,19 @@ export const InfoProfileCard = ({
     >
       <Grid column gap="small">
         <Grid row gap="small" middle>
-          <EmailIcon width={20} color={COLORS.primaryBlue} />
+          <LucidIcon name="MessageCircle" color={COLORS.primaryBlue} />
           {email || 'Adresse mail non renseigné'}
         </Grid>
         <Grid row gap="small" middle>
-          <PhoneIcon width={20} color={COLORS.primaryBlue} />
+          <LucidIcon name="Phone" color={COLORS.primaryBlue} />
           {phone || 'Numéro de téléphone non renseigné'}
         </Grid>
         <Grid row gap="small" middle>
-          <HomeIcon width={20} color={COLORS.primaryBlue} />
+          <LucidIcon name="House" color={COLORS.primaryBlue} />
           {address || 'Adresse postale non renseignée'}
         </Grid>
         <Grid row gap="small" middle>
-          <DocumentIcon width={20} color={COLORS.primaryBlue} />
+          <LucidIcon name="FileText" color={COLORS.primaryBlue} />
           {contracts && contracts.length > 0
             ? contracts
                 .map(({ name }) => {
@@ -152,7 +145,7 @@ export const InfoProfileCard = ({
             : 'Type de contrat recherché non renseigné'}
         </Grid>
         <Grid row gap="small" middle>
-          <LocationIcon width={20} color={COLORS.primaryBlue} />
+          <LucidIcon name="MapPin" color={COLORS.primaryBlue} />
           {sortedLocations && sortedLocations.length > 0
             ? sortedLocations
                 .map(({ name }) => {
@@ -162,13 +155,13 @@ export const InfoProfileCard = ({
             : 'Localisations non renseignées'}
         </Grid>
         <Grid row gap="small" middle>
-          <CalendarIcon width={20} color={COLORS.primaryBlue} />
+          <LucidIcon name="Calendar" color={COLORS.primaryBlue} />
           {availability && availability !== ''
             ? availability
             : 'Disponibilités non renseignée'}
         </Grid>
         <Grid row gap="small" middle>
-          <UserIcon width={20} color={COLORS.primaryBlue} />
+          <LucidIcon name="Globe" color={COLORS.primaryBlue} />
           {languages && languages.length > 0
             ? languages
                 .map(({ name }) => {
@@ -178,7 +171,7 @@ export const InfoProfileCard = ({
             : 'Langues apprises non renseignées'}
         </Grid>
         <Grid row gap="small" middle>
-          <CarIcon width={20} color={COLORS.primaryBlue} />
+          <LucidIcon name="CarFront" color={COLORS.primaryBlue} />
           {transport && transport !== ''
             ? transport
             : 'Moyen de transport non renseigné'}

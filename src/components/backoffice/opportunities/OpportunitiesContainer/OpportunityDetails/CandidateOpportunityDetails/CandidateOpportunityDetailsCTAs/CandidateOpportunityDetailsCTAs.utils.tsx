@@ -1,9 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import CalendarIcon from 'assets/icons/calendar.svg';
-import CheckIcon from 'assets/icons/check.svg';
-import EmailIcon from 'assets/icons/email.svg';
-import TrashIcon from 'assets/icons/trash.svg';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 
 const StyledButtonContainer = styled.div`
   display: flex;
@@ -23,7 +20,7 @@ export const allCTAs = {
     action: 'contactEmail',
     text: (
       <StyledButtonContainer>
-        <EmailIcon />
+        <LucidIcon name="Mail" />
         Je postule
       </StyledButtonContainer>
     ),
@@ -34,7 +31,7 @@ export const allCTAs = {
     action: 'updateToApplied',
     text: (
       <StyledButtonContainer>
-        <EmailIcon />
+        <LucidIcon name="MailCheck" />
         J&apos;ai déjà postulé
       </StyledButtonContainer>
     ),
@@ -45,7 +42,7 @@ export const allCTAs = {
     action: 'archive',
     text: (
       <StyledButtonContainer>
-        <TrashIcon />
+        <LucidIcon name="Trash" />
         Je ne suis pas intéressé
       </StyledButtonContainer>
     ),
@@ -56,7 +53,7 @@ export const allCTAs = {
     action: 'contactRelance',
     text: (
       <StyledButtonContainer>
-        <EmailIcon />
+        <LucidIcon name="Mail" />
         Je veux relancer l&apos;entreprise
       </StyledButtonContainer>
     ),
@@ -67,7 +64,7 @@ export const allCTAs = {
     action: 'updateToInterview',
     text: (
       <StyledButtonContainer>
-        <CheckIcon />
+        <LucidIcon name="Check" />
         J&apos;ai décroché un entretien
       </StyledButtonContainer>
     ),
@@ -78,7 +75,7 @@ export const allCTAs = {
     action: 'abandon',
     text: (
       <StyledButtonContainer>
-        <TrashIcon />
+        <LucidIcon name="Trash" />
         J&apos;abandonne cette offre
       </StyledButtonContainer>
     ),
@@ -89,7 +86,7 @@ export const allCTAs = {
     action: 'addDateInterview',
     text: (
       <StyledButtonContainer>
-        <CalendarIcon />
+        <LucidIcon name="Calendar" />
         Je note une date d&apos;entretien
       </StyledButtonContainer>
     ),
@@ -100,7 +97,7 @@ export const allCTAs = {
     action: 'updateToHired',
     text: (
       <StyledButtonContainer>
-        <CheckIcon />
+        <LucidIcon name="Check" />
         J&apos;ai décroché le job
       </StyledButtonContainer>
     ),
@@ -111,7 +108,7 @@ export const allCTAs = {
     action: 'addDateHired',
     text: (
       <StyledButtonContainer>
-        <CalendarIcon />
+        <LucidIcon name="Trash" />
         Je note ma date d&apos;embauche
       </StyledButtonContainer>
     ),

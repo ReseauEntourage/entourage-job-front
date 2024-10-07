@@ -1,6 +1,4 @@
 import React from 'react';
-import PlusIcon from 'assets/icons/plus.svg';
-import SearchIcon from 'assets/icons/search.svg';
 import {
   formatPlural,
   tabs,
@@ -9,6 +7,7 @@ import {
 import { openModal } from 'src/components/modals/Modal';
 import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
 import { Button } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
 
 import {
@@ -53,7 +52,7 @@ export const NoOpportunities = ({
             );
           }}
         >
-          <PlusIcon />
+          <LucidIcon name="Plus" />
           Ajouter une offre externe
         </Button>
         <Button
@@ -62,7 +61,7 @@ export const NoOpportunities = ({
           href={`/backoffice/candidat/${candidateId}/offres/public`}
           shallow
         >
-          <SearchIcon />
+          <LucidIcon name="Search" />
           Trouver des offres Entourage Pro
         </Button>
       </StyledButtonContainer>

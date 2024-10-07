@@ -1,6 +1,7 @@
 import React from 'react';
-import { Close, IlluCV } from 'assets/icons/icons';
+import { IlluCV } from 'assets/icons/icons';
 import { ButtonIcon } from 'src/components/utils/ButtonIcon';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import {
   StyledDeleteIconContainer,
   StyledFileInfosContainer,
@@ -26,7 +27,7 @@ export function FilePreviewCV({
       <StyledFilename onClick={onOpenFile}>{filename}</StyledFilename>
       <StyledDeleteIconContainer onClick={onRemoveFile}>
         <ButtonIcon
-          icon={<Close width={10} height={10} />}
+          icon={<LucidIcon name="X" size={15} />}
           dataTestId={`${dataTestId}-cv-delete`}
         />
       </StyledDeleteIconContainer>

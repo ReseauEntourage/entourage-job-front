@@ -2,14 +2,13 @@ import Router from 'next/router';
 import Pusher from 'pusher-js';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-
-import QuestionIcon from 'assets/icons/question.svg';
 import { Api } from 'src/api';
 import { CV } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { Button, ButtonIcon } from 'src/components/utils';
 import { ButtonPost } from 'src/components/utils/Button/ButtonPost';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { CV_STATUS, SOCKETS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import {
@@ -412,7 +411,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
           )}
           {user.role !== USER_ROLES.ADMIN && (
             <ButtonIcon
-              icon={<QuestionIcon />}
+              icon={<LucidIcon name="CircleHelp" />}
               href={process.env.TUTORIAL_CV}
               newTab
               onClick={() => {

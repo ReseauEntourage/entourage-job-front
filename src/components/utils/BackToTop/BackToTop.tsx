@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ChevronUpIcon from 'assets/icons/chevron-up.svg';
+import { LucidIcon } from '../Icons/LucidIcon';
 import { StyledBackToTop } from 'src/components/utils/BackToTop/BackToTop.styles';
 import { isSSR } from 'src/utils/isSSR';
 
@@ -33,7 +33,7 @@ export const BackToTop = () => {
   };
   return (
     <StyledBackToTop className={iconClass} onClick={handleClick}>
-      <ChevronUpIcon width={30} height={30} />
+      <LucidIcon name="ChevronUp" size={30} />
     </StyledBackToTop>
   );
 };

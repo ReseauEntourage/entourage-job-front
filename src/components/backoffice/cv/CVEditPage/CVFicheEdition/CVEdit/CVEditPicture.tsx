@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import EditIcon from 'assets/icons/pencil.svg';
 import { ButtonIcon } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { ImageInput } from 'src/components/utils/Inputs';
 import { Spinner } from 'src/components/utils/Spinner';
 import { useIsDesktop } from 'src/hooks/utils';
@@ -54,7 +54,7 @@ export const CVEditPicture = ({
               id="cv-picture-upload"
               name="cv-picture-upload"
             >
-              <ButtonIcon icon={<EditIcon />} />
+              <ButtonIcon icon={<LucidIcon name="Pencil" />} />
             </ImageInput>
           )}
         </StyledEditPictureButton>

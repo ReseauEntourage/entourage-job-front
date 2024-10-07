@@ -1,7 +1,8 @@
 import React from 'react';
+import { LucidIcon } from '../Icons/LucidIcon';
 import {
-  StyledCheckIcon,
   StyledLi,
+  StyledCheckIconContainer,
 } from 'src/components/utils/Lists/Lists.styles';
 
 export const CheckListElement = ({
@@ -11,7 +12,9 @@ export const CheckListElement = ({
 }) => {
   return (
     <StyledLi>
-      <StyledCheckIcon />
+      <StyledCheckIconContainer>
+        <LucidIcon name="Check" size={15} />
+      </StyledCheckIconContainer>
       {children}
     </StyledLi>
   );

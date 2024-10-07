@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 
 import { v4 as uuid } from 'uuid';
-import CaretDownIcon from 'assets/icons/caret-down.svg';
+import { LucidIcon } from '../utils/Icons/LucidIcon';
 import { Button, Tag } from 'src/components/utils';
 import { Filter, FilterConstant, FilterObject } from 'src/constants/utils';
 import { useIsDesktop } from 'src/hooks/utils';
@@ -147,7 +147,7 @@ export const FiltersDropdowns = ({
                           &nbsp;
                         </div>
                       )}
-                      <CaretDownIcon />
+                      <LucidIcon name="ChevronDown" />
                     </Button>
                     <div
                       id={`dropdown-filters-toggle-${key}`}

@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
-import { EyeHidden, EyeVisible } from 'assets/icons/icons';
 import { ButtonIcon } from '../../ButtonIcon';
+import { LucidIcon } from '../../Icons/LucidIcon';
 import {
   StyledAnnotations,
   StyledAnnotationsErrorMessage,
@@ -47,11 +47,6 @@ export function TextInput({
   if (hidden) {
     return null;
   }
-  const iconProps = {
-    height: 26,
-    width: 26,
-  };
-
   const remainingCharacters = (maxLength || 0) - (value || '').length;
 
   return (
@@ -85,12 +80,12 @@ export function TextInput({
           <StyledEyeIconWrapper>
             {isPasswordContextType ? (
               <ButtonIcon
-                icon={<EyeHidden {...iconProps} />}
+                icon={<LucidIcon name="EyeOff" size={15} />}
                 onClick={toggleContextType}
               />
             ) : (
               <ButtonIcon
-                icon={<EyeVisible {...iconProps} />}
+                icon={<LucidIcon name="Eye" size={15} />}
                 onClick={toggleContextType}
               />
             )}

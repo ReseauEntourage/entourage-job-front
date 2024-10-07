@@ -6,7 +6,6 @@ import {
   StyledDashboardArticleImage,
   StyledDashboardArticleText,
   StyledDashboardCardContentContainer,
-  StyledDashboardCardSubtitle,
   StyledDashboardArticlesContainer,
 } from '../Dashboard.styles';
 import { isReadDocument } from 'src/components/partials/pages/Documents/Documents.utils';
@@ -44,6 +43,11 @@ export const DashboardReadDocumentsCard = () => {
     []
   );
 
+  const subtitle =
+    contextualRole === USER_ROLES.CANDIDATE
+      ? 'Nous vous invitons à prendre connaissance de ces documents essentiels pour assurer un accompagnement de qualité'
+      : 'Nous vous invitons à prendre connaissance de ces documents essentiels pour garantir à tout un chacun une expérience enrichissante avec Entourage Pro.';
+
   useEffect(() => {
     if (
       contextualRole &&
@@ -58,15 +62,12 @@ export const DashboardReadDocumentsCard = () => {
   }, [user, contextualRole, articles]);
 
   return shouldRendCard ? (
-    <Card title="Articles à lire pour commencer sur de bonnes bases">
+    <Card
+      title="Articles à lire pour commencer sur de bonnes bases"
+      subtitle={subtitle}
+      centerTitle
+    >
       <StyledDashboardCardContentContainer>
-        <StyledDashboardCardSubtitle>
-          <Typography>
-            {contextualRole === USER_ROLES.CANDIDATE
-              ? 'Nous vous invitons à prendre connaissance de ces documents essentiels pour assurer un accompagnement de qualité'
-              : 'Nous vous invitons à prendre connaissance de ces documents essentiels pour garantir à tout un chacun une expérience enrichissante avec Entourage Pro.'}
-          </Typography>
-        </StyledDashboardCardSubtitle>
         <StyledDashboardArticlesContainer>
           {articles.map((article) => {
             if (

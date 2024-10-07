@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import CalendarIcon from 'assets/icons/calendar.svg';
-import CarIcon from 'assets/icons/car.svg';
-import DocumentIcon from 'assets/icons/document.svg';
-import LanguageIcon from 'assets/icons/language.svg';
-import LocationIcon from 'assets/icons/location.svg';
 import QuoteLeftIcon from 'assets/icons/quote-left.svg';
 import QuoteRightIcon from 'assets/icons/quote-right.svg';
 import { CVCallToActions } from '../CVCallToActions';
@@ -19,7 +14,6 @@ import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 
 import {
-  StyledChevronIcon,
   StyledCVMessageContainer,
   StyledCVPageContent,
   StyledCVPageContentCarousel,
@@ -46,6 +40,7 @@ import { Button } from 'src/components/utils';
 import { BackLink } from 'src/components/utils/BackLink';
 import { CarouselSwiper } from 'src/components/utils/CarouselSwiper';
 import { H1, H2, H3, H4, H5 } from 'src/components/utils/Headings';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { CONTRACTS } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { COLORS } from 'src/constants/styles';
@@ -253,7 +248,11 @@ export const PageCVContent = ({
                 }}
               >
                 <H2 title="Informations" color={COLORS.black} />
-                <StyledChevronIcon name="chevron-down" />
+                <LucidIcon
+                  name="ChevronDown"
+                  color={COLORS.primaryBlue}
+                  size={25}
+                />
               </StyledTitleAccordion>
             )}
             <ul>
@@ -261,7 +260,7 @@ export const PageCVContent = ({
                 <li>
                   <div>
                     <p className="subtitle">
-                      <DocumentIcon /> <span>Type de contrat</span>
+                      <LucidIcon name="FileText" /> <span>Type de contrat</span>
                     </p>
                     <p className="content">
                       {cv.contracts
@@ -277,7 +276,7 @@ export const PageCVContent = ({
                 <li>
                   <div>
                     <p className="subtitle">
-                      <LocationIcon /> <span>Localisation</span>
+                      <LucidIcon name="MapPin" /> <span>Localisation</span>
                     </p>
                     <p className="content">
                       {locations
@@ -296,7 +295,7 @@ export const PageCVContent = ({
                 <li>
                   <div>
                     <p className="subtitle">
-                      <CalendarIcon /> <span>Disponibilité</span>
+                      <LucidIcon name="Calendar" /> <span>Disponibilité</span>
                     </p>
                     <p className="content">{cv.availability}</p>
                   </div>
@@ -306,7 +305,7 @@ export const PageCVContent = ({
                 <li>
                   <div>
                     <p className="subtitle">
-                      <LanguageIcon /> <span>Langues</span>
+                      <LucidIcon name="Globe" /> <span>Langues</span>
                     </p>
                     <p className="content">
                       {cv.languages
@@ -322,7 +321,7 @@ export const PageCVContent = ({
                 <li>
                   <div>
                     <p className="subtitle">
-                      <CarIcon /> <span>Mobilité</span>
+                      <LucidIcon name="CarFront" /> <span>Mobilité</span>
                     </p>
                     <p className="content">{cv.transport}</p>
                   </div>
@@ -359,7 +358,13 @@ export const PageCVContent = ({
                   }}
                 >
                   <H2 title="Expériences" color={COLORS.black} />
-                  {!isDesktop && <StyledChevronIcon name="chevron-down" />}
+                  {!isDesktop && (
+                    <LucidIcon
+                      name="ChevronDown"
+                      color={COLORS.primaryBlue}
+                      size={25}
+                    />
+                  )}
                 </StyledTitleAccordion>
                 <ul>
                   {
@@ -406,7 +411,13 @@ export const PageCVContent = ({
                   }}
                 >
                   <H2 title="Formation" color={COLORS.black} />
-                  {!isDesktop && <StyledChevronIcon name="chevron-down" />}
+                  {!isDesktop && (
+                    <LucidIcon
+                      name="ChevronDown"
+                      color={COLORS.primaryBlue}
+                      size={25}
+                    />
+                  )}
                 </StyledTitleAccordion>
                 <ul>
                   {
@@ -453,7 +464,11 @@ export const PageCVContent = ({
                   }}
                 >
                   <H2 title="Mes passions" color={COLORS.black} />
-                  <StyledChevronIcon name="chevron-down" />
+                  <LucidIcon
+                    name="ChevronDown"
+                    color={COLORS.primaryBlue}
+                    size={25}
+                  />
                 </StyledTitleAccordion>
               )}
               <ul>

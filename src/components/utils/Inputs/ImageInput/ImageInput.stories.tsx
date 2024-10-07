@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PencilIcon from 'assets/icons/pencil.svg';
+import { LucidIcon } from '../../Icons/LucidIcon';
 import { ButtonIcon } from 'src/components/utils/ButtonIcon';
 import { ImageInput } from './ImageInput';
 
@@ -59,7 +59,7 @@ export const Default = {
 export const Icon = {
   render: Template,
   args: {
-    children: <ButtonIcon icon={<PencilIcon />} />,
+    children: <ButtonIcon icon={<LucidIcon name="Pencil" />} />,
   },
 };
 

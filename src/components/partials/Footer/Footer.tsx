@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import { PageType } from 'src/components/partials/Footer/Footer.type';
 import { Grid, Section, SimpleLink, Button } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
@@ -210,7 +210,7 @@ const pages: PageType = [
             className="uk-margin-medium-top"
           >
             Espace coach & candidat
-            <ChevronRightIcon />
+            <LucidIcon name="ChevronRight" />
           </Button>
         ),
       },

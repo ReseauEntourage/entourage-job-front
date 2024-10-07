@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import SearchIcon from 'assets/icons/search.svg';
+import { LucidIcon } from '../utils/Icons/LucidIcon';
 import { FiltersCheckboxes } from 'src/components/filters/FiltersCheckboxes';
 import { FiltersDropdowns } from 'src/components/filters/FiltersDropdowns';
 import { FiltersMobile } from 'src/components/filters/FiltersMobile';
 import { FiltersOptions } from 'src/components/filters/FiltersOptions';
 import { FiltersSideBar } from 'src/components/filters/FiltersSideBar';
-import { HEIGHTS } from 'src/constants/styles';
+import { COLORS, HEIGHTS } from 'src/constants/styles';
 import { Filter, FilterConstant, FilterObject } from 'src/constants/utils';
 import { gaEvent } from 'src/lib/gtag';
 
@@ -102,7 +102,7 @@ export const SearchBar = ({
           className="ent-search-icon uk-background-primary uk-light"
           onClick={startSearch}
         >
-          <SearchIcon className="uk-text-secondary" />
+          <LucidIcon name="Search" color={COLORS.white} />
         </a>
       </div>
       <FiltersSideBar

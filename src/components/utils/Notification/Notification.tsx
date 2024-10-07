@@ -1,5 +1,5 @@
 import React from 'react';
-import { Check, Close } from 'assets/icons/icons';
+import { LucidIcon } from '../Icons/LucidIcon';
 import {
   StyledFailedNotification,
   StyledSuccessNotification,
@@ -14,12 +14,12 @@ export const Notification = ({ type, message }: NotificationProps) => {
     <>
       {type === 'success' ? (
         <StyledSuccessNotification>
-          <Check />
+          <LucidIcon name="Check" />
           {message}
         </StyledSuccessNotification>
       ) : (
         <StyledFailedNotification>
-          <Close />
+          <LucidIcon name="X" />
           {message}
         </StyledFailedNotification>
       )}

@@ -1,7 +1,8 @@
 import React from 'react';
 import UIkit from 'uikit';
-import MenuIcon from 'assets/icons/menu.svg';
 import { ButtonIcon } from 'src/components/utils/ButtonIcon/ButtonIcon';
+import { COLORS } from 'src/constants/styles';
+import { LucidIcon } from './Icons/LucidIcon';
 
 interface HamburgerProps {
   targetId: string;
@@ -13,7 +14,7 @@ export const Hamburger = ({ targetId }: HamburgerProps) => {
       onClick={() => {
         UIkit.offcanvas(`#${targetId}`).show();
       }}
-      icon={<MenuIcon style={{ color: 'white' }} height={26} width={26} />}
+      icon={<LucidIcon name="Menu" size={30} color={COLORS.white} />}
     />
   );
 };

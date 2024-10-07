@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
-import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { Button } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { OFFER_ADMIN_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { useFetchCV } from 'src/hooks/useFetchCV';
@@ -43,7 +43,7 @@ export function RecommendedOffersButton({
       }}
     >
       Voir les offres qui pourraient intéresser le candidat
-      <ChevronRightIcon />
+      <LucidIcon name="ChevronRight" />
     </Button>
   );
 }

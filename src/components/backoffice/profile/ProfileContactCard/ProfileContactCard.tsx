@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AvionPapier, Check } from 'assets/icons/icons';
 import { useIsProfileContacted } from '../usIsProfileContacted';
 import { useSelectSelectedProfile } from '../useSelectedProfile';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { formContactInternalMessage } from 'src/components/forms/schemas/formContactInternalMessage';
 import { Card } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { ReduxRequestEvents } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
@@ -76,7 +76,7 @@ export const ProfileContactCard = () => {
             {isFormSent ? (
               <div data-testid="profile-contact-form-confirm">
                 <StyledConfirmCheck>
-                  <Check />
+                  <LucidIcon name="Check" />
                 </StyledConfirmCheck>
                 Votre message a été envoyé
               </div>
@@ -84,7 +84,7 @@ export const ProfileContactCard = () => {
               <>
                 {existingContactMessage && (
                   <StyledContactMessage>
-                    <AvionPapier />
+                    <LucidIcon name="Send" />
                     {existingContactMessage}
                   </StyledContactMessage>
                 )}

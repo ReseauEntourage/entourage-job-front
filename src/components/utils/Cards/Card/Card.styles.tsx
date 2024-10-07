@@ -21,10 +21,13 @@ export const StyledCardContent = styled.div`
 `;
 
 export const StyledCardTitleContainer = styled.div`
-  border-bottom: ${COLORS.lightgray} solid 1px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border-bottom: ${COLORS.gray} solid 1px;
   margin-right: 25px;
   margin-left: 25px;
-  padding-bottom: 25px;
+  padding-bottom: 15px;
   margin-bottom: 0;
 
   h5 {

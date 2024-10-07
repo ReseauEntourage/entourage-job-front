@@ -1,7 +1,7 @@
 import React from 'react';
-import DownloadIcon from 'assets/icons/download.svg';
 import { Api } from 'src/api';
 import { ButtonPost } from 'src/components/utils/Button/ButtonPost';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { gaEvent } from 'src/lib/gtag';
 
 interface ButtonDownloadProps {
@@ -30,7 +30,7 @@ export const ButtonDownload = ({
         pdfGenerating ? 'Génération du fichier PDF ...' : 'Télécharger le CV'
       }
       // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      icon={pdfGenerating ? null : <DownloadIcon />}
+      icon={pdfGenerating ? null : <LucidIcon name="Download" size={17} />}
       action={async () => {
         if (tag) gaEvent(tag);
         try {

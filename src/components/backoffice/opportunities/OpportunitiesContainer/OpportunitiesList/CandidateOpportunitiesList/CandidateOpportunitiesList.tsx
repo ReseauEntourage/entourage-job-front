@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import PlusIcon from 'assets/icons/plus.svg';
 import {
   StyledLinkCard,
   StyledListContent,
@@ -12,6 +11,7 @@ import { OpportunityWithOpportunityUsers } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer/ModalExternalOffer';
 import { Button } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
 import { useOpportunityType } from 'src/hooks/queryParams/useOpportunityType';
 import { useQueryParamsOpportunities } from 'src/hooks/queryParams/useQueryParamsOpportunities';
@@ -99,7 +99,7 @@ export const CandidateOpportunitiesList = ({
             );
           }}
         >
-          <PlusIcon />
+          <LucidIcon name="Plus" />
           Ajouter une offre externe
         </Button>
       )}
