@@ -18,6 +18,7 @@ export interface RadioAsyncComponentProps
 export interface RadioComponentProps
   extends CommonInputProps<string, HTMLInputElement> {
   options: RadioTypes[];
+  subtitle?: string;
   filter?: string;
   limit?: number;
 }

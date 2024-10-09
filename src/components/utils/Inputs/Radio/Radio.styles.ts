@@ -9,6 +9,7 @@ export const StyledRadioContainer = styled.div`
   legend {
     color: ${COLORS.darkGray};
     margin-bottom: 24px;
+    margin-top: 20px;
   }
 
   .inputs-container {
@@ -17,7 +18,8 @@ export const StyledRadioContainer = styled.div`
     align-items: flex-start;
 
     label {
-      margin-bottom: 20px;
+      margin-top: 10px;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
       line-height: 16px;
@@ -38,6 +40,7 @@ export const StyledRadioContainer = styled.div`
         border-radius: 50%;
         accent-color: white;
         cursor: pointer;
+        align: middle;
       }
 
       &.checked {

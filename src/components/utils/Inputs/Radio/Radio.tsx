@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
+import { Typography } from '../../Typography';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage';
 import { StyledRadioContainer } from './Radio.styles';
 import { RadioComponentProps } from './Radio.types';
@@ -10,6 +11,7 @@ export function Radio({
   options,
   id,
   title,
+  subtitle,
   name,
   filter,
   onChange,
@@ -56,7 +58,12 @@ export function Radio({
       data-testid={`test-${id}`}
       disabled={disabled}
     >
-      {title && <legend>{title}</legend>}
+      {title && (
+        <Typography weight="bold" size="large">
+          {title}
+        </Typography>
+      )}
+      {subtitle && <legend>{subtitle}</legend>}
       <div className="inputs-container">
         {options
           .filter(({ filterData }) => {
