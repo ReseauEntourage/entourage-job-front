@@ -118,12 +118,6 @@ export type UserReportDto = {
   comment: string;
 };
 
-export interface WhatsappJoinUrl {
-  name: string;
-  qrCodePath: string;
-  url: string;
-}
-
 export type User = {
   coach: User;
   id: string;
@@ -141,7 +135,9 @@ export type User = {
   hashReset: string;
   saltReset: string;
   zone: AdminZone;
-  whatsappJoinUrl: WhatsappJoinUrl;
+  whatsappZoneCoachQR: string;
+  whatsappZoneCoachName: string;
+  whatsappZoneCoachUrl: string;
   organization: Organization;
   deletedAt?: string;
   userProfile: UserProfile;
