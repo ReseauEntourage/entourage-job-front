@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React from 'react';
 import CaretDownIcon from 'assets/icons/caret-down.svg';
 import { Api } from 'src/api';
@@ -52,6 +53,7 @@ export const HeaderProfileDesktop = ({
     shouldShowAllProfile,
     contextualRole,
   } = useHeaderProfile(role);
+  const router = useRouter();
 
   const hasCv = !!cvUrl || hasExternalCv;
   const hasTwoCv = !!cvUrl && hasExternalCv;
@@ -65,6 +67,10 @@ export const HeaderProfileDesktop = ({
       const externalCvUrl = response.data;
       window.open(externalCvUrl.url, '_blank');
     });
+  };
+
+  const openConversation = () => {
+    router.push(`/backoffice/messaging?userId=${id}`);
   };
 
   const openCv = () => {
@@ -181,6 +187,14 @@ export const HeaderProfileDesktop = ({
                 />
               </>
             )}
+            <div>
+              <Button
+                onClick={openConversation}
+                style="custom-primary-inverted"
+              >
+                Envoyer un message
+              </Button>
+            </div>
           </StyledHeaderProfileInfoContainer>
         </StyledHeaderProfileContent>
       </Section>
