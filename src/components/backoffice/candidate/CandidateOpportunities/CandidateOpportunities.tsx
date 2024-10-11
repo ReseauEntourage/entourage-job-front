@@ -28,7 +28,7 @@ import { useOpportunityType } from 'src/hooks/queryParams/useOpportunityType';
 import { useQueryParamsOpportunities } from 'src/hooks/queryParams/useQueryParamsOpportunities';
 import { useCandidateOpportunities } from 'src/hooks/useOpportunityList';
 import { usePrevious } from 'src/hooks/utils';
-import { getUserCandidateFromCoach, isRoleIncluded } from 'src/utils/Finding';
+import { isRoleIncluded } from 'src/utils/Finding';
 import { tabs } from './CandidateOffersTab/CandidateOffersTab.utils';
 import { useTabsCount } from './useTabsCount';
 import { useUpdateOpportunityStatus } from './useUpdateOpportunityStatus';
@@ -175,16 +175,6 @@ export const CandidateOpportunities = ({
                   ? USER_ROLES.CANDIDATE
                   : USER_ROLES.COACH
               ][isPublic ? 'all' : 'mine']
-            } ${
-              USER_ROLES.COACH_EXTERNAL === user.role
-                ? `- ${
-                    getUserCandidateFromCoach(user, candidateId)?.candidat
-                      ?.firstName
-                  } ${
-                    getUserCandidateFromCoach(user, candidateId)?.candidat
-                      ?.lastName
-                  }`
-                : ''
             }`}
             description={
               TextVariables.description[

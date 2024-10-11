@@ -63,6 +63,9 @@ export function OrganizationMobile({
         <TdMobile title="Nb. de coachs">
           <span>{organization.coachesCount}</span>
         </TdMobile>
+        <TdMobile title="Nb. d'orienteurs">
+          <span>{organization.referrersCount}</span>
+        </TdMobile>
       </div>
     </TrMobile>
   );

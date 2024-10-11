@@ -21,10 +21,7 @@ export const checkData = (userProfile: userProfileParamsToCheck): boolean => {
       (!!userProfile?.currentJob ||
         (!!userProfile?.networkBusinessLines &&
           userProfile.networkBusinessLines?.length > 0))) ||
-    (isRoleIncluded(
-      [USER_ROLES.CANDIDATE, USER_ROLES.CANDIDATE_EXTERNAL],
-      userProfile.role
-    ) &&
+    (isRoleIncluded([USER_ROLES.CANDIDATE], userProfile.role) &&
       ((!!userProfile?.searchAmbitions &&
         userProfile.searchAmbitions?.length > 0) ||
         (!!userProfile?.searchBusinessLines &&

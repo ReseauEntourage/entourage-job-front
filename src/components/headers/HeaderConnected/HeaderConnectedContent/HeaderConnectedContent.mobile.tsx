@@ -27,9 +27,8 @@ export const HeaderConnectedContentMobile = ({
   links = {
     [USER_ROLES.ADMIN]: [HeaderConnectedMainItemDefaultProps],
     [USER_ROLES.CANDIDATE]: [HeaderConnectedMainItemDefaultProps],
-    [USER_ROLES.CANDIDATE_EXTERNAL]: [HeaderConnectedMainItemDefaultProps],
     [USER_ROLES.COACH]: [HeaderConnectedMainItemDefaultProps],
-    [USER_ROLES.COACH_EXTERNAL]: [HeaderConnectedMainItemDefaultProps],
+    [USER_ROLES.REFERRER]: [HeaderConnectedMainItemDefaultProps],
   },
   dropdown = [HeaderConnectedMainItemDefaultProps],
 }: HeaderConnectedContentProps) => {

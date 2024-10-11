@@ -20,9 +20,9 @@ import { TdMobile } from 'src/components/utils/Table';
 import { ADMIN_ZONES } from 'src/constants/departements';
 import {
   COACH_USER_ROLES,
-  EXTERNAL_USER_ROLES,
   USER_ROLES,
   GENDERS_FILTERS,
+  ROLES_WITH_ORGANIZATION,
 } from 'src/constants/users';
 import {
   getUserCandidateFromCoachOrCandidate,
@@ -72,7 +72,7 @@ export function MemberMobile({
             email={member.email}
             // @ts-expect-error after enable TS strict mode. Please, try to fix it
             organizationName={
-              isRoleIncluded(EXTERNAL_USER_ROLES, member.role)
+              isRoleIncluded(ROLES_WITH_ORGANIZATION, member.role)
                 ? member.organization?.name
                 : null
             }
@@ -102,7 +102,7 @@ export function MemberMobile({
                 : USER_ROLES.COACH
             }
           >
-            <RelatedMemberInfo relatedUser={relatedUser} role={member.role} />
+            <RelatedMemberInfo relatedUser={relatedUser} />
           </TdMobile>
         </div>
       )}
@@ -124,15 +124,6 @@ export function MemberMobile({
       )}
 
       <div className="line">
-        {columns.includes('type') && (
-          <TdMobile title="Type">
-            <span>
-              {isRoleIncluded(EXTERNAL_USER_ROLES, member.role)
-                ? 'Externe'
-                : 'LKO'}
-            </span>
-          </TdMobile>
-        )}
         {columns.includes('address') && (
           <TdMobile title="Adresse">
             <span>{member.address || '-'}</span>

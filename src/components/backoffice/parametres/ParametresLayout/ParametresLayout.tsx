@@ -73,11 +73,7 @@ export const ParametresLayout = () => {
             className={`${isDesktop ? '' : 'mobile'}`}
           >
             {isRoleIncluded(
-              [
-                USER_ROLES.COACH,
-                USER_ROLES.CANDIDATE,
-                USER_ROLES.CANDIDATE_EXTERNAL,
-              ],
+              [USER_ROLES.COACH, USER_ROLES.CANDIDATE],
               user.role
             ) && (
               <>

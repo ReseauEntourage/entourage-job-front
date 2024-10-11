@@ -145,7 +145,6 @@ export function MemberList({
     () => [
       'associatedUser',
       'zone',
-      'type',
       'lastConnection',
       'employed',
       'cvStatus',
