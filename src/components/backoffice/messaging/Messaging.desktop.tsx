@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { StyledBackofficeBackground } from '../Backoffice.styles';
 import { Section } from 'src/components/utils';
@@ -21,6 +21,16 @@ export const MessagingDesktop = () => {
   const conversations = useSelector(selectConversations);
   const query = useSelector(selectQuery);
   const selectedConversationId = useSelector(selectSelectedConversationId);
+  const [hasMessage, setHasMessage] = React.useState(false);
+
+  useEffect(() => {
+    setHasMessage(
+      conversations === null ||
+        conversations.length > 0 ||
+        query !== '' ||
+        selectedConversationId !== null
+    );
+  }, [conversations, query, selectedConversationId]);
 
   return (
     <>
@@ -31,10 +41,7 @@ export const MessagingDesktop = () => {
         </Section>
       </StyledBackofficeBackground>
       <Section>
-        {conversations !== null &&
-        conversations.length <= 0 &&
-        query === '' &&
-        selectedConversationId === null ? (
+        {!hasMessage ? (
           <MessagingEmptyState
             title="Aucun message dans votre messagerie"
             subtitle="Contactez les membres de la communauté à partir du réseau d’entraide"

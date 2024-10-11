@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { StyledBackofficeBackground } from '../Backoffice.styles';
 import { Section } from 'src/components/utils';
@@ -19,12 +19,19 @@ import { MessagingEmptyState } from './MessagingEmptyState';
 export const MessagingMobile = () => {
   const selectedConversationId = useSelector(selectSelectedConversationId);
   const conversations = useSelector(selectConversations);
+  const [hasMessage, setHasMessage] = React.useState(false);
+
+  useEffect(() => {
+    setHasMessage(
+      conversations === null ||
+        conversations.length > 0 ||
+        selectedConversationId !== null
+    );
+  }, [conversations, selectedConversationId]);
 
   return (
     <>
-      {conversations !== null &&
-      conversations.length <= 0 &&
-      !selectedConversationId ? (
+      {!hasMessage ? (
         <MessagingEmptyStateContainerMobile>
           <MessagingEmptyState
             title="Aucun message dans votre messagerie"
