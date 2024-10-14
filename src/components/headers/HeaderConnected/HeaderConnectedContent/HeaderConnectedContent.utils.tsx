@@ -28,6 +28,7 @@ export const renderLinks = (
   candidateId: string
 ): {
   links: { [K in UserRole]: HeaderConnectedMainItem[] };
+  messaging: HeaderConnectedMainItem;
   dropdown: HeaderConnectedMainItem[];
 } => {
   const candidateHeaderItems: HeaderConnectedMainItem[] = [
@@ -241,6 +242,12 @@ export const renderLinks = (
           tag: GA_TAGS.BACKOFFICE_COACH_HEADER_BAO_CLIC,
         },
       ],
+    },
+    messaging: {
+      href: '/backoffice/messaging',
+      icon: <LucidIcon size={27} name="MessageCircleMore" />,
+      name: 'Messages',
+      badge: 'messaging',
     },
     dropdown: [
       {

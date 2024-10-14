@@ -7,7 +7,7 @@ export const HEIGHTS = {
   HEADER_MOBILE: 80,
   TABS_HEIGHT_WITHOUT_NUMBERS: 55,
   TABS_HEIGHT: 79.5,
-  SEARCH_BAR_HEIGHT: 94,
+  SEARCH_BAR_HEIGHT: 52,
   OFFER_ADMIN_INFO_HEIGHT: 176,
   OFFER_INFO_HEIGHT: 156,
   OFFER_CTA_HEIGHT: 55,
@@ -76,6 +76,10 @@ export const COLORS = {
     info: {
       background: '#ECF8FB',
       text: '#363636',
+    },
+    lightGray: {
+      background: '#F5F5F5',
+      text: '#484848',
     },
   },
 };

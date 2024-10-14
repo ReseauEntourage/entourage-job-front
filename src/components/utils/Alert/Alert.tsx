@@ -10,11 +10,15 @@ interface AlertIconProps {
 }
 
 const AlertIcon = ({ variant }: AlertIconProps) => {
-  return <>{variant === 'info' && <IlluBulleQuestion class="icon" />}</>;
+  if (variant === 'info') {
+    return <IlluBulleQuestion />;
+  }
+  return null;
 };
 
 export const Alert = ({
   children,
+  rounded = true,
   variant = 'info',
   closable = false,
   visible = true,
@@ -22,7 +26,7 @@ export const Alert = ({
   icon = <AlertIcon variant={variant} />,
 }: AlertProps) => {
   return (
-    <StyledAlert variant={variant} visible={visible}>
+    <StyledAlert variant={variant} visible={visible} rounded={rounded}>
       {icon}
       <StyledAlertContainer>{children}</StyledAlertContainer>
       {closable && (

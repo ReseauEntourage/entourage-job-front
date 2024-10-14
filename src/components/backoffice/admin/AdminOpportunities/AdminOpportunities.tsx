@@ -10,7 +10,7 @@ import { OpportunitiesContainer } from 'src/components/backoffice/opportunities/
 import { AdminOpportunitiesList } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/AdminOpportunitiesList';
 import { AdminOpportunityDetailsContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/AdminOpportunityDetails/AdminOpportunityDetailsContainer';
 import { OpportunityError } from 'src/components/backoffice/opportunities/OpportunityError';
-import { SearchBar } from 'src/components/filters/SearchBar';
+import { SearchBar } from 'src/components/filters/SearchBar/SearchBar';
 import { formAddExternalOpportunityAsAdmin } from 'src/components/forms/schemas/formAddExternalOpportunity';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { openModal } from 'src/components/modals/Modal';

@@ -5,7 +5,7 @@ import { Api } from 'src/api';
 import { CV } from 'src/api/types';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { CandidatCard } from 'src/components/cards';
-import { SearchBar } from 'src/components/filters/SearchBar';
+import { SearchBar } from 'src/components/filters/SearchBar/SearchBar';
 import { openModal } from 'src/components/modals/Modal';
 import { PostPublicOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { Button, Grid, SimpleLink } from 'src/components/utils';

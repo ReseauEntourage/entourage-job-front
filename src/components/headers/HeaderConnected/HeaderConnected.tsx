@@ -37,6 +37,7 @@ export const HeaderConnected = () => {
       badges={badges}
       links={linksConnected.links}
       dropdown={linksConnected.dropdown}
+      messaging={linksConnected.messaging}
     />
   );
 };

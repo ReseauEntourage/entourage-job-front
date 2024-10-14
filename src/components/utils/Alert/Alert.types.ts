@@ -1,4 +1,4 @@
-export type AlertVariant = 'info';
+export type AlertVariant = 'info' | 'lightGray';
 
 export interface AlertProps {
   children: React.ReactNode;
@@ -7,4 +7,5 @@ export interface AlertProps {
   visible?: boolean;
   onClose?: () => void;
   icon?: React.ReactNode;
+  rounded?: boolean;
 }
