@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { StyledBackofficeBackground } from '../Backoffice.styles';
 import { Section } from 'src/components/utils';
@@ -19,7 +19,7 @@ import { MessagingEmptyState } from './MessagingEmptyState';
 export const MessagingMobile = () => {
   const selectedConversationId = useSelector(selectSelectedConversationId);
   const conversations = useSelector(selectConversations);
-  const [hasMessage, setHasMessage] = React.useState(false);
+  const [hasMessage, setHasMessage] = useState(false);
 
   useEffect(() => {
     setHasMessage(
