@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { StyledBackofficeBackground } from '../Backoffice.styles';
 import { Section } from 'src/components/utils';
 import { H1 } from 'src/components/utils/Headings';
 import {
-  selectConversations,
+  selectHasMessages,
   selectSelectedConversationId,
 } from 'src/use-cases/messaging';
 import {
@@ -18,16 +18,7 @@ import { MessagingEmptyState } from './MessagingEmptyState';
 
 export const MessagingMobile = () => {
   const selectedConversationId = useSelector(selectSelectedConversationId);
-  const conversations = useSelector(selectConversations);
-  const [hasMessage, setHasMessage] = useState(false);
-
-  useEffect(() => {
-    setHasMessage(
-      conversations === null ||
-        conversations.length > 0 ||
-        selectedConversationId !== null
-    );
-  }, [conversations, selectedConversationId]);
+  const hasMessage = useSelector(selectHasMessages);
 
   return (
     <>

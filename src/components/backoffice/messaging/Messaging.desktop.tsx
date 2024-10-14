@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { StyledBackofficeBackground } from '../Backoffice.styles';
 import { Section } from 'src/components/utils';
 import { H1 } from 'src/components/utils/Headings';
-import {
-  selectConversations,
-  selectQuery,
-  selectSelectedConversationId,
-} from 'src/use-cases/messaging';
+import { selectHasMessages } from 'src/use-cases/messaging';
 import {
   StyledMessagingGridDesktop,
   StyledMessagingLeftPanel,
@@ -18,19 +14,7 @@ import { MessagingConversationList } from './MessagingConversationsList/Messagin
 import { MessagingEmptyState } from './MessagingEmptyState';
 
 export const MessagingDesktop = () => {
-  const conversations = useSelector(selectConversations);
-  const query = useSelector(selectQuery);
-  const selectedConversationId = useSelector(selectSelectedConversationId);
-  const [hasMessage, setHasMessage] = useState(false);
-
-  useEffect(() => {
-    setHasMessage(
-      conversations === null ||
-        conversations.length > 0 ||
-        query !== '' ||
-        selectedConversationId !== null
-    );
-  }, [conversations, query, selectedConversationId]);
+  const hasMessage = useSelector(selectHasMessages);
 
   return (
     <>
