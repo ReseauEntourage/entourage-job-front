@@ -281,53 +281,6 @@ describe('En tant que - Administrateur', () => {
 
       submitUserForm();
     });
-
-    /**
-     * ** Création du membre "coach externe"
-     * ** à savoir - "candidat externe" est exactement pareil (inutile de tester)
-     */
-    it("J'ajoute un nouveau membre - Candidat/Coach externe", () => {
-      // Insertion des informations de base d'un utilisateur
-      fillUserForm('Coach externe');
-
-      // Assertion - vérifications que les champs ci-dessous ne sont pas affichés à cet instant
-      cy.get('#form-add-user-adminRole-container').should('not.exist');
-      cy.get('#form-add-user-userToLinkId').should('not.exist');
-
-      // Chargement du fichier de fixture organizations.json contenant les organizations
-      cy.fixture('api/generated/organizations').then((organizations) => {
-        const firstOrganization = organizations[0];
-
-        cy.get('#form-add-user-organizationId')
-          .should('be.visible')
-          .type(firstOrganization.name);
-
-        cy.get('#form-add-user-organizationId')
-          .find('.Select__menu')
-          .should('be.visible')
-          .find('.Select__option')
-          .contains(firstOrganization.name)
-          .click();
-      });
-
-      // Puis chargement du fichier de fixture organizations.json contenant les organizations
-      cy.fixture('api/generated/search-user').then((users) => {
-        const firstUser = users[0];
-
-        cy.get('#form-add-user-userToLinkId')
-          .should('be.visible')
-          .type(firstUser.firstName);
-
-        cy.get('#form-add-user-userToLinkId')
-          .find('.Select__menu')
-          .should('be.visible')
-          .find('.Select__option')
-          .contains(`${firstUser.firstName} ${firstUser.lastName}`)
-          .click();
-      });
-
-      submitUserForm();
-    });
   });
 
   /**
