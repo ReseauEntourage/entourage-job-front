@@ -13,3 +13,14 @@ export const selectPinnedInfo = (state: RootState) =>
   state.messaging.pinnedInfo;
 
 export const selectQuery = (state: RootState) => state.messaging.query;
+
+export const selectConversationParticipantsAreDeleted = (state: RootState) => {
+  const selectedConversation = selectSelectedConversation(state);
+  if (!selectedConversation) {
+    return false;
+  }
+
+  return selectedConversation.participants.some(
+    (participant) => participant.deletedAt !== null
+  );
+};

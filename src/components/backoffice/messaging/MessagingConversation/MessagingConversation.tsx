@@ -10,6 +10,7 @@ import {
   selectSelectedConversationId,
   selectPinnedInfo,
 } from 'src/use-cases/messaging';
+import { selectConversationParticipantsAreDeleted } from 'src/use-cases/messaging/messaging.selectors';
 import {
   MessagingConversationContainer,
   MessagingInput,
@@ -27,6 +28,9 @@ export const MessagingConversation = () => {
   const currentUserId = useSelector(selectCurrentUserId);
   const selectedConversationId = useSelector(selectSelectedConversationId);
   const selectedConversation = useSelector(selectSelectedConversation);
+  const conversationParticipantsAreDeleted = useSelector(
+    selectConversationParticipantsAreDeleted
+  );
   const pinnedInfo = useSelector(selectPinnedInfo);
   const [newMessage, setNewMessage] = React.useState<string>('');
   const [scrollBehavior, setScrollBehavior] = React.useState<ScrollBehavior>(
@@ -85,14 +89,21 @@ export const MessagingConversation = () => {
       (participant) => participant.id !== currentUserId
     );
     const addresseesAreUnavailable = addressees?.some(
-      (addressee) => addressee.userProfile.isAvailable === false
+      (addressee) => addressee.userProfile?.isAvailable === false
     );
     if (addresseesAreUnavailable) {
       dispatch(messagingActions.setPinnedInfo('ADDRESSEE_UNAVAILABLE'));
+    } else if (conversationParticipantsAreDeleted) {
+      dispatch(messagingActions.setPinnedInfo('ADDRESSEE_DELETED'));
     } else {
       dispatch(messagingActions.setPinnedInfo(null));
     }
-  }, [currentUserId, dispatch, selectedConversation]);
+  }, [
+    conversationParticipantsAreDeleted,
+    currentUserId,
+    dispatch,
+    selectedConversation,
+  ]);
 
   useEffect(() => {
     adjustMessageHeight();
@@ -134,9 +145,15 @@ export const MessagingConversation = () => {
                 onChange={(e) => {
                   setNewMessage(e.target.value);
                 }}
+                disabled={conversationParticipantsAreDeleted}
               />
             </MessagingInputContainer>
-            <Button onClick={sendNewMessage}>Envoyer</Button>
+            <Button
+              onClick={sendNewMessage}
+              disabled={conversationParticipantsAreDeleted}
+            >
+              Envoyer
+            </Button>
           </MessagingMessageForm>
         </>
       )}
