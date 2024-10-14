@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { StyledBackofficeBackground } from '../Backoffice.styles';
 import { Section } from 'src/components/utils';
@@ -21,7 +21,7 @@ export const MessagingDesktop = () => {
   const conversations = useSelector(selectConversations);
   const query = useSelector(selectQuery);
   const selectedConversationId = useSelector(selectSelectedConversationId);
-  const [hasMessage, setHasMessage] = React.useState(false);
+  const [hasMessage, setHasMessage] = useState(false);
 
   useEffect(() => {
     setHasMessage(
