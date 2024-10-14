@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import CheckIcon from 'assets/icons/check.svg';
+import { LucidIcon } from '../../Icons/LucidIcon';
 import { CommonInputProps } from '../Inputs.types';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage';
 import { H6 } from 'src/components/utils/Headings';
@@ -85,7 +85,7 @@ export function SelectList<T extends string>({
               <StyledCheckIconContainer
                 className={valueProp?.includes(value) ? 'selected' : ''}
               >
-                <CheckIcon />
+                <LucidIcon name="Check" />
               </StyledCheckIconContainer>
             </li>
           );

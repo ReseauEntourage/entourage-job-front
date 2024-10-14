@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ChevronDownIcon from 'assets/icons/chevron-down.svg';
+import { LucidIcon } from '../../Icons/LucidIcon';
 import { StyledInputLabel, StyledInputLabelOptional } from '../Inputs.styles';
 import { CommonInputProps } from '../Inputs.types';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage/FieldErrorMessage';
@@ -82,12 +82,12 @@ export function SelectSimple<T extends string | number | boolean>({
             {showLabel || !title ? (
               <div>
                 {placeholder || 'Selectionnez dans la liste...'}{' '}
-                <ChevronDownIcon width={15} height={15} />
+                <LucidIcon name="ChevronDown" />
               </div>
             ) : (
               <>
                 <label htmlFor={id}>{title}</label>
-                <ChevronDownIcon width={15} height={15} />
+                <LucidIcon name="ChevronDown" />
               </>
             )}
           </button>
@@ -100,7 +100,7 @@ export function SelectSimple<T extends string | number | boolean>({
             }}
           >
             {selectedOption.label}
-            <ChevronDownIcon width={15} height={15} />
+            <LucidIcon name="ChevronDown" />
           </button>
         )}
         {optionsOpen && (

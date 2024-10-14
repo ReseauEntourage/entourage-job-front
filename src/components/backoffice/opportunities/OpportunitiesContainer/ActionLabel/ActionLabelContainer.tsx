@@ -1,9 +1,8 @@
 import React from 'react';
 import EntourageIcon from 'assets/icons/entourage.svg';
-import HeartEmptyIcon from 'assets/icons/heart-empty.svg';
-import HeartIcon from 'assets/icons/heart.svg';
-import StarIcon from 'assets/icons/star.svg';
 import { ActionLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel/ActionLabel';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
+import { COLORS } from 'src/constants/styles';
 
 interface ActionLabelContainerProps {
   isPublic: boolean;
@@ -26,7 +25,7 @@ export const ActionLabelContainer = ({
           disabled
           color="yellow"
           label="À traiter rapidement"
-          icon={<StarIcon />}
+          icon={<LucidIcon name="Star" size={16} />}
         />
       )}
       {isPublic && isRecommended && (
@@ -43,7 +42,14 @@ export const ActionLabelContainer = ({
           label="Favoris"
           onClick={bookmarkOpportunity}
           id="cta-unbookmark"
-          icon={<HeartIcon />}
+          icon={
+            <LucidIcon
+              name="Heart"
+              size={16}
+              style="solid"
+              color={COLORS.primaryBlue}
+            />
+          }
         />
       )}
       {isExternal && (
@@ -51,7 +57,7 @@ export const ActionLabelContainer = ({
           disabled
           color="primaryBlue"
           label="Perso"
-          icon={<HeartIcon />}
+          icon={<LucidIcon name="Heart" size={16} />}
         />
       )}
       {isPublic && !isRecommended && !isBookmarked && (
@@ -61,7 +67,7 @@ export const ActionLabelContainer = ({
           label="Ajouter aux favoris"
           onClick={bookmarkOpportunity}
           id="cta-bookmark"
-          icon={<HeartEmptyIcon />}
+          icon={<LucidIcon name="Heart" size={16} />}
         />
       )}
     </>

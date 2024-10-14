@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import SearchIcon from 'assets/icons/search.svg';
 import { FiltersCheckboxes } from 'src/components/filters/FiltersCheckboxes';
 import { FiltersDropdowns } from 'src/components/filters/FiltersDropdowns';
 import { FiltersMobile } from 'src/components/filters/FiltersMobile';
 import { FiltersOptions } from 'src/components/filters/FiltersOptions';
 import { FiltersSideBar } from 'src/components/filters/FiltersSideBar';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { Filter, FilterConstant, FilterObject } from 'src/constants/utils';
 import { gaEvent } from 'src/lib/gtag';
 import {
@@ -105,7 +105,7 @@ export const SearchBar = ({
           />
         )}
         <StyledSearchBarSubmitButton onClick={startSearch}>
-          <SearchIcon />
+          <LucidIcon name="Search" />
         </StyledSearchBarSubmitButton>
       </StyledSearchBar>
 
