@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import CaretDownIcon from 'assets/icons/caret-down.svg';
 import { Api } from 'src/api';
 import {
   Button,
@@ -12,6 +11,7 @@ import {
 } from 'src/components/utils';
 import { AvailabilityTag } from 'src/components/utils/AvailabilityTag/AvailabilityTag';
 import { H1, H5 } from 'src/components/utils/Headings';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { ImageInput } from 'src/components/utils/Inputs';
 import { Spinner } from 'src/components/utils/Spinner';
 import { UserActions } from 'src/components/utils/UserActions/UserActions';
@@ -117,7 +117,7 @@ export const HeaderProfileDesktop = ({
                   style="custom-secondary"
                   onClick={!hasTwoCv ? openCv : undefined}
                 >
-                  Voir le CV {hasTwoCv && <CaretDownIcon />}
+                  Voir le CV {hasTwoCv && <LucidIcon name="ChevronDown" />}
                 </Button>
                 {hasTwoCv && (
                   <Dropdown

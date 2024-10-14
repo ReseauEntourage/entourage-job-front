@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { StyledHeaderMobile } from 'src/components/headers/Header.styles';
 import { Hamburger, Navbar, NavbarLogo } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { Offcanvas } from 'src/components/utils/Offcanvas';
 import { FB_TAGS, GA_TAGS } from 'src/constants/tags';
 import { OFFCANVAS_GUEST } from 'src/constants/utils';
@@ -130,7 +130,7 @@ export const HeaderPublicContentMobile = ({
               style="default"
             >
               Faire un don
-              <ChevronRightIcon />
+              <LucidIcon name="ChevronRight" />
             </Button>
           </li>
         </ul>
