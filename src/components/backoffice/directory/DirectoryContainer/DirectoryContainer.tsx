@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import React, { useMemo } from 'react';
 import { DirectoryList } from '../DirectoryList';
 import { useDirectoryQueryParams } from '../useDirectoryQueryParams';
-import { SearchBar } from 'src/components/filters/SearchBar';
+import { SearchBar } from 'src/components/filters/SearchBar/SearchBar';
 import { Button, Section } from 'src/components/utils';
 import { BUSINESS_LINES, DirectoryFilters } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';

@@ -2,7 +2,7 @@ import React from 'react';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { Dashboard } from 'src/components/backoffice/dashboard';
 
-const Parametres = () => {
+const DashboardPage = () => {
   return (
     <LayoutBackOffice title="Mon espace personnel">
       <Dashboard />
@@ -10,4 +10,4 @@ const Parametres = () => {
   );
 };
 
-export default Parametres;
+export default DashboardPage;

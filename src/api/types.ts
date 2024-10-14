@@ -42,6 +42,7 @@ export const APIRoutes = {
   MESSAGE: 'message',
   READ_DOCUMENTS: 'readDocuments',
   EXTERNAL_CVS: 'external-cv',
+  MESSAGING: 'messaging',
 } as const;
 
 export type APIRoute = (typeof APIRoutes)[keyof typeof APIRoutes];
@@ -115,6 +116,11 @@ export type UserProfile = {
 };
 
 export type UserReportDto = {
+  reason: string;
+  comment: string;
+};
+
+export type ConversationReportDto = {
   reason: string;
   comment: string;
 };
@@ -603,6 +609,36 @@ export type InternalMessage = {
   senderUserId?: string;
   createdAt?: string;
   id?: string;
+};
+
+export type Message = {
+  id: string;
+  content: string;
+  authorId: string;
+  createdAt: string;
+  updatedAt: string;
+  conversationId: string;
+  author: User;
+};
+
+export type ConversationParticipants = (User & {
+  ConversationParticipant: {
+    id: string;
+    seenAt: string;
+  };
+})[];
+
+export type Conversation = {
+  id: string;
+  createdAt?: string;
+  updatedAt?: string;
+  messages: Message[];
+  participants: ConversationParticipants;
+  seenAt?: string;
+};
+
+export type MessageWithConversation = Message & {
+  conversation: Conversation;
 };
 
 export type PublicProfile = {

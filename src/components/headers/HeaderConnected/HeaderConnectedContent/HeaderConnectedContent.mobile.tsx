@@ -24,6 +24,7 @@ const uuidValue = uuid();
 
 export const HeaderConnectedContentMobile = ({
   badges,
+  messaging,
   links = {
     [USER_ROLES.ADMIN]: [HeaderConnectedMainItemDefaultProps],
     [USER_ROLES.CANDIDATE]: [HeaderConnectedMainItemDefaultProps],
@@ -117,6 +118,26 @@ export const HeaderConnectedContentMobile = ({
                 );
               }
             )}
+          <hr style={{ opacity: '.5' }} />
+          <StyledConnectedItemMobile>
+            <a
+              aria-hidden="true"
+              onClick={() => {
+                if (messaging.tag) gaEvent(messaging.tag);
+                if (messaging.href) {
+                  push(messaging.href);
+                }
+                if (messaging.onClick) {
+                  messaging.onClick();
+                }
+              }}
+            >
+              <span>
+                <span className="uk-margin-small-right">{messaging.icon}</span>
+                {messaging.name}
+              </span>
+            </a>
+          </StyledConnectedItemMobile>
           <hr style={{ opacity: '.5' }} />
           {dropdown.map(({ href, icon, name, onClick, tag }, index) => {
             return (
