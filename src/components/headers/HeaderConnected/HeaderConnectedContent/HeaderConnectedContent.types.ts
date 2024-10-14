@@ -6,6 +6,7 @@ export interface HeaderConnectedContentProps {
     [K in UserRole]: HeaderConnectedMainItem[];
   };
   dropdown: HeaderConnectedMainItem[];
+  messaging: HeaderConnectedMainItem;
   badges: NotifBadges;
   isEmpty?: boolean;
 }

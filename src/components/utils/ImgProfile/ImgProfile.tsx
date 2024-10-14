@@ -55,7 +55,6 @@ export const ImgProfile = ({ user, size = 40 }: ImgProfileProps) => {
             onError={fallbackToCVImage}
             src={`${urlImg}?${hash}`}
             alt={`photo de ${user.firstName}`}
-            id="parametres-profile-picture"
           />
         </div>
       ) : (

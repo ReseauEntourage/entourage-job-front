@@ -14,7 +14,7 @@ import { TrDesktop, TdDesktop } from 'src/components/utils/Table';
 import { ADMIN_ZONES } from 'src/constants/departements';
 import {
   CANDIDATE_USER_ROLES,
-  EXTERNAL_USER_ROLES,
+  ROLES_WITH_ORGANIZATION,
   GENDERS_FILTERS,
 } from 'src/constants/users';
 import {
@@ -72,7 +72,7 @@ export function MemberDesktop({
           // @ts-expect-error after enable TS strict mode. Please, try to fix it
           organizationName={
             !columns.includes('organization') &&
-            isRoleIncluded(EXTERNAL_USER_ROLES, member.role)
+            isRoleIncluded(ROLES_WITH_ORGANIZATION, member.role)
               ? member.organization?.name
               : null
           }
@@ -84,18 +84,7 @@ export function MemberDesktop({
 
       {columns.includes('associatedUser') && (
         <TdDesktop>
-          <RelatedMemberInfo relatedUser={relatedUser} role={member.role} />
-        </TdDesktop>
-      )}
-      {columns.includes('type') && (
-        <TdDesktop>
-          <StyledNoWrapCellContent>
-            <span>
-              {isRoleIncluded(EXTERNAL_USER_ROLES, member.role)
-                ? 'Externe'
-                : 'LKO'}
-            </span>
-          </StyledNoWrapCellContent>
+          <RelatedMemberInfo relatedUser={relatedUser} />
         </TdDesktop>
       )}
       {columns.includes('phone') && (

@@ -25,7 +25,7 @@ export const ButtonStyle = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 11px 20px !important;
+  padding: 11px 22px !important;
   scroll-behavior: smooth;
 
   > svg:first-child {
@@ -84,7 +84,7 @@ export const ButtonStyle = css`
     }} !important;
     } */
 
-    border-radius: 5px;
+    border-radius: 40px;
 
     @media (hover: hover) {
       &:hover {
@@ -121,7 +121,7 @@ export const ButtonStyle = css`
       }} !important;
     }
 
-    border-radius: 5px;
+    border-radius: 40px;
     background-color: transparent;
 
     @media (hover: hover) {
@@ -181,7 +181,7 @@ export const ButtonStyle = css`
       return COLORS[props.color] || COLORS.primaryBlue;
     }} !important;
 
-    border-radius: 25px;
+    border-radius: 40px;
 
     @media (hover: hover) {
       &:hover {
@@ -222,7 +222,7 @@ export const ButtonStyle = css`
       }} !important;
     }
 
-    border-radius: 25px;
+    border-radius: 40px;
 
     @media (hover: hover) {
       &:hover {

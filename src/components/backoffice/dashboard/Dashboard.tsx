@@ -21,6 +21,7 @@ import {
 import { DashboardAlertWhatsappCoach } from './DashboardAlertWhatsappCoach/DashboardAlertWhatsappCoach';
 import { DashboardAvailabilityCard } from './DashboardAvailabilityCard';
 import { DashboardLinkedUserCard } from './DashboardLinkedUserCard';
+import { DashboardMessagingConversation } from './DashboardMessagingConversation';
 import { DashboardOpportunitiesCard } from './DashboardOpportunitiesCard';
 import { DashboardProfileCard } from './DashboardProfileCard';
 import { DashboardReadDocumentsCard } from './DashboardReadDocumentsCard';
@@ -58,11 +59,12 @@ export const Dashboard = () => {
             className={`${isDesktop ? '' : 'mobile'}`}
           >
             {!isRoleIncluded(
-              [USER_ROLES.COACH_EXTERNAL, USER_ROLES.ADMIN],
+              [USER_ROLES.REFERRER, USER_ROLES.ADMIN],
               user.role
             ) && (
               <>
                 <DashboardReadDocumentsCard />
+                <DashboardMessagingConversation />
                 <DashboardStepsCard />
                 <DashboardOpportunitiesCard />
                 <DashboardRecommendationsCard />

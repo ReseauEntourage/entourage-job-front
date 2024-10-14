@@ -1,6 +1,7 @@
 import React from 'react';
 import ChevronLeftIcon from 'assets/icons/chevron-left.svg';
 import LogOutIcon from 'assets/icons/log-out.svg';
+import MessagesIcon from 'assets/icons/messages.svg';
 import SettingsIcon from 'assets/icons/settings.svg';
 import { HeaderConnectedMainItem } from '../HeaderConnected.types';
 import { UserWithUserCandidate } from 'src/api/types';
@@ -30,6 +31,7 @@ export const renderLinks = (
   candidateId: string
 ): {
   links: { [K in UserRole]: HeaderConnectedMainItem[] };
+  messaging: HeaderConnectedMainItem;
   dropdown: HeaderConnectedMainItem[];
 } => {
   const candidateHeaderItems: HeaderConnectedMainItem[] = [
@@ -133,7 +135,6 @@ export const renderLinks = (
         },
       ],
       [USER_ROLES.CANDIDATE]: candidateHeaderItems,
-      [USER_ROLES.CANDIDATE_EXTERNAL]: candidateHeaderItems,
       [USER_ROLES.COACH]: [
         {
           href: '/backoffice/dashboard',
@@ -188,7 +189,7 @@ export const renderLinks = (
           tag: GA_TAGS.BACKOFFICE_COACH_HEADER_BAO_CLIC,
         },
       ],
-      [USER_ROLES.COACH_EXTERNAL]: [
+      [USER_ROLES.REFERRER]: [
         {
           href: `/backoffice/candidat/list`,
           disabled: !candidateId,
@@ -243,6 +244,12 @@ export const renderLinks = (
           tag: GA_TAGS.BACKOFFICE_COACH_HEADER_BAO_CLIC,
         },
       ],
+    },
+    messaging: {
+      href: '/backoffice/messaging',
+      icon: <MessagesIcon width={27} height={27} />,
+      name: 'Messages',
+      badge: 'messaging',
     },
     dropdown: [
       {

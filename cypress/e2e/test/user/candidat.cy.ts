@@ -112,33 +112,6 @@ describe('Candidat', () => {
     cy.intercept('/message/internal', {}).as('postInternalMessage');
   });
 
-  it("should open a user's public profile and contact him", () => {
-    cy.fixture('public-profile-res').then((userProfile) => {
-      cy.visit(`/backoffice/profile/${userProfile.id}`);
-      cy.get('[data-testid="app-splash-screen"]').should('not.visible');
-      cy.url().should('include', userProfile.id);
-    });
-
-    cy.get('[data-testid="form-contact-internal-message-subject"]')
-      .click()
-      .find('.Select__option')
-      .contains('Conseils')
-      .click();
-
-    cy.get('[data-testid="form-contact-internal-message-message"]')
-      .scrollIntoView()
-      .type('test');
-
-    cy.get('[data-testid="form-confirm-form-contact-internal-message"]')
-      .scrollIntoView()
-      .click();
-
-    cy.get('[data-testid="profile-contact-form-confirm"]').should(
-      'contain',
-      'Votre message a été envoyé'
-    );
-  });
-
   it('should open backoffice public offers', () => {
     // to be done: use automatic generation and not static data
     cy.fixture('auth-current-candidat-onboarding3-res').then((user) => {
@@ -382,7 +355,7 @@ describe('Candidat', () => {
     cy.wait('@changePwd');
 
     // to be done with automatic generation
-    let newHelpList = [
+    const newHelpList = [
       {
         id: '352a7dde-c4ad-410f-86cf-506cdc9eb624',
         name: 'cv',

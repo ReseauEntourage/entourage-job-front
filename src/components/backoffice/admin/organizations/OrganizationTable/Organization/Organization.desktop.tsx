@@ -45,6 +45,9 @@ export function OrganizationDesktop({
         <span>{organization.coachesCount}</span>
       </TdDesktop>
       <TdDesktop>
+        <span>{organization.referrersCount}</span>
+      </TdDesktop>
+      <TdDesktop>
         <span>
           <ButtonIcon
             icon={<PencilIcon />}
