@@ -71,6 +71,26 @@ export const StyledRadioContainer = styled.div`
   }
 `;
 
+export const StyledRadioDisabledOverlay = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  /* position: absolute; */
+  background-color: ${COLORS.hoverBlue};
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  top: -10px;
+  left: 0;
+  bottom: -10px;
+  right: 0;
+  white-space: pre-line;
+  > svg {
+    margin-bottom: 16px;
+  }
+`;
+
 export const StyledRadioSpinnerContainer = styled.div`
   display: flex;
   align-items: center;

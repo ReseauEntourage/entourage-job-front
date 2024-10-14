@@ -18,6 +18,7 @@ export interface RadioAsyncComponentProps
 export interface RadioComponentProps
   extends CommonInputProps<string, HTMLInputElement> {
   options: RadioTypes[];
+  optionsToDisable?: { message: React.ReactNode; option: string }[];
   subtitle?: string;
   filter?: string;
   limit?: number;

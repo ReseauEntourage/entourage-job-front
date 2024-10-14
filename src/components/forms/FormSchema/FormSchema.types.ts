@@ -241,6 +241,10 @@ export interface FormFieldRadio<V extends FormSchemaValidation>
   component: RadioComponent;
   dynamicFilter?: (getValue: GetValueType<V>) => string | undefined;
   options?: RadioTypes[];
+  optionsToDisable?: (getValue: GetValueType<V>) => {
+    option: string;
+    message: React.ReactNode;
+  }[];
   subtitle?: string;
   loadOptions?: (
     callback: (options: RadioTypes[]) => void,
