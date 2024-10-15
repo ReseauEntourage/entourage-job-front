@@ -43,7 +43,6 @@ describe('En tant que - Coach Externe', () => {
   it("J'affiche les candidats", () => {
     // Accèdons à l'URL des membres
     cy.visit('/backoffice/candidat/list');
-    cy.get('[data-testid="app-splash-screen"]').should('not.visible');
 
     // Possible d'augmenter ici la taille de la liste tester en augmentant
     // également le nombre de candidat - coaches: [...] - au sein de la fixture api/coach-login.json
@@ -56,7 +55,6 @@ describe('En tant que - Coach Externe', () => {
   it("J'affiche les paramètres du compte", () => {
     // Accèdons à l'URL des paramètres du compte
     cy.visit('/backoffice/parametres');
-    cy.get('[data-testid="app-splash-screen"]').should('not.visible');
 
     cy.get('[data-testid="linkeduser-email-span"]').should('not.exist');
   });

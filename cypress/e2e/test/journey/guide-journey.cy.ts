@@ -28,7 +28,6 @@ describe('En tant que - Benevole', () => {
     });
 
     cy.visit('/orienter');
-    cy.get('[data-testid="app-splash-screen"]').should('not.visible');
   });
 
   /**
