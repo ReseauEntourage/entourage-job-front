@@ -27,6 +27,9 @@ export const StyledDashboardRightColumn = styled.div`
 
 export const StyledDashboardTitleContainer = styled.div`
   padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;
 
 export const StyledDashboardCardContentContainer = styled.div`
