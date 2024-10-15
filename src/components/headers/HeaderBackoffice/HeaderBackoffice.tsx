@@ -30,7 +30,7 @@ export const HeaderBackoffice = ({
         eachWidths={['expand@m', 'auto@m']}
       >
         <div>
-          <h2 className="uk-text-bold uk-margin-small-bottom">{title}</h2>
+          <h2 className="uk-text-bold">{title}</h2>
           <p className="uk-text-lead">{description}</p>
         </div>
         <div>{children}</div>
