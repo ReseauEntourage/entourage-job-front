@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import HomeIcon from 'assets/icons/home.svg';
 import { HeaderConnectedMainItemDefaultProps } from '../HeaderConnected.types';
 import { StyledHeaderMobile } from 'src/components/headers/Header.styles';
 import {
@@ -10,6 +9,7 @@ import {
   NavbarLogo,
   SimpleLink,
 } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { Offcanvas } from 'src/components/utils/Offcanvas';
 import { Tag } from 'src/components/utils/Tag';
 import { USER_ROLES } from 'src/constants/users';
@@ -24,6 +24,7 @@ const uuidValue = uuid();
 
 export const HeaderConnectedContentMobile = ({
   badges,
+  messaging,
   links = {
     [USER_ROLES.ADMIN]: [HeaderConnectedMainItemDefaultProps],
     [USER_ROLES.CANDIDATE]: [HeaderConnectedMainItemDefaultProps],
@@ -59,7 +60,7 @@ export const HeaderConnectedContentMobile = ({
         <ul className="uk-nav uk-nav-default uk-margin-medium-top">
           <li>
             <SimpleLink href="/">
-              <HomeIcon width={16} height={16} />
+              <LucidIcon name="House" />
               &nbsp; Accueil
             </SimpleLink>
           </li>
@@ -118,6 +119,26 @@ export const HeaderConnectedContentMobile = ({
                 );
               }
             )}
+          <hr style={{ opacity: '.5' }} />
+          <StyledConnectedItemMobile>
+            <a
+              aria-hidden="true"
+              onClick={() => {
+                if (messaging.tag) gaEvent(messaging.tag);
+                if (messaging.href) {
+                  push(messaging.href);
+                }
+                if (messaging.onClick) {
+                  messaging.onClick();
+                }
+              }}
+            >
+              <span>
+                <span className="uk-margin-small-right">{messaging.icon}</span>
+                {messaging.name}
+              </span>
+            </a>
+          </StyledConnectedItemMobile>
           <hr style={{ opacity: '.5' }} />
           {dropdown.map(({ href, icon, name, onClick, tag }, index) => {
             return (

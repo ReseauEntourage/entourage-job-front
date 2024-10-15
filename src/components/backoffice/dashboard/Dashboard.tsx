@@ -21,6 +21,7 @@ import {
 import { DashboardAlertWhatsappCoach } from './DashboardAlertWhatsappCoach/DashboardAlertWhatsappCoach';
 import { DashboardAvailabilityCard } from './DashboardAvailabilityCard';
 import { DashboardLinkedUserCard } from './DashboardLinkedUserCard';
+import { DashboardMessagingConversation } from './DashboardMessagingConversation';
 import { DashboardOpportunitiesCard } from './DashboardOpportunitiesCard';
 import { DashboardProfileCard } from './DashboardProfileCard';
 import { DashboardReadDocumentsCard } from './DashboardReadDocumentsCard';
@@ -63,6 +64,7 @@ export const Dashboard = () => {
             ) && (
               <>
                 <DashboardReadDocumentsCard />
+                <DashboardMessagingConversation />
                 <DashboardStepsCard />
                 <DashboardOpportunitiesCard />
                 <DashboardRecommendationsCard />
