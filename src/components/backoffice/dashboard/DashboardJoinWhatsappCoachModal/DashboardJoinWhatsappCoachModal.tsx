@@ -15,15 +15,15 @@ export const DashboardJoinWhatsappCoachModal = () => {
       Pour recevoir des actualités et échanger avec les coachs de votre région,
       scannez le QR code
       <StyledImageContainer>
-        <SimpleLink href={user.whatsappJoinUrl.url} target="_blank">
+        <SimpleLink href={user.whatsappZoneCoachUrl} target="_blank">
           <Img
-            src={user.whatsappJoinUrl.qrCodePath}
+            src={user.whatsappZoneCoachQR}
             alt="QR code Whatsapp"
             width={250}
             height={250}
           />
         </SimpleLink>
-        <p>{user.whatsappJoinUrl.name}</p>
+        <p>{user.whatsappZoneCoachName}</p>
       </StyledImageContainer>
       <div className="uk-modal-footer uk-padding-remove-horizontal uk-padding-remove-bottom uk-margin-medium-top">
         <Button onClick={onClose} style="default">

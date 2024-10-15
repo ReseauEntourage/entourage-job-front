@@ -55,6 +55,7 @@ export const DashboardOpportunitiesCard = () => {
           ? `Les offres qui pourraient intéresser ${candidate?.firstName}`
           : `Les offres qui pourraient vous intéresser`
       }
+      centerTitle
     >
       {!isDataLoading && (
         <>

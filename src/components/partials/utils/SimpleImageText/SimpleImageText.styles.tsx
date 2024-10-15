@@ -24,6 +24,7 @@ export const StyledSimpleImageTextBackground = styled.div<StyledSimpleImageTextB
 export const StyledSimpleImageTextContainer = styled.div<StyledSimpleImageTextContainerProps>`
   display: flex;
   flex-direction: ${({ reverse }) => (reverse ? 'row-reverse' : 'row')};
+  align-items: center;
   flex-wrap: wrap;
   gap: 10%;
   min-height: 400px;

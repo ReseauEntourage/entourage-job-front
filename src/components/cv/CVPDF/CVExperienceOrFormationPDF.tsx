@@ -5,7 +5,7 @@ import {
   StyledCVPDFExperienceDate,
   StyledCVPDFExperienceDescription,
   StyledCVPDFExperienceLi,
-  StyledCVPDFTitle,
+  StyledCVPDFXpFormaTitle,
   StyledCVPFSkillTag,
 } from './CVPDF.styles';
 
@@ -40,7 +40,7 @@ export function CVExperienceOrFormationPDF({
         {dateStart && <CVDate experienceOrFormation={{ dateStart, dateEnd }} />}
       </StyledCVPDFExperienceDate>
       <StyledCVPDFExperienceDescription>
-        {title && <StyledCVPDFTitle>{title}</StyledCVPDFTitle>}
+        {title && <StyledCVPDFXpFormaTitle>{title}</StyledCVPDFXpFormaTitle>}
         {(structure || location) && (
           <div className="name-gray">
             {structure}

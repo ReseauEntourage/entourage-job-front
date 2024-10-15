@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { COLORS } from 'src/constants/styles';
 
 export const StyledIconsContainer = styled.div`
   display: flex;
@@ -16,7 +17,7 @@ export const StyledIconContainer = styled.div`
   height: 150px;
   width: 150px;
   text-align: center;
-  border: 1px solid #f5f5f5;
+  border: 1px solid ${COLORS.lightgray};
   padding: 10px;
   box-sizing: border-box;
   svg {

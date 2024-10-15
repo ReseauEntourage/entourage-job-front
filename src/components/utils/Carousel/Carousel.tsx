@@ -1,11 +1,10 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import ChevronLeftIcon from 'assets/icons/chevron-left.svg';
-import ChevronRightIcon from 'assets/icons/chevron-right.svg';
+import { LucidIcon } from '../Icons/LucidIcon';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 
-interface CarouselProps {
+export interface CarouselProps {
   style?: string;
   children: React.ReactNode;
   containerClasses: string;
@@ -64,7 +63,7 @@ export const Carousel = ({
             }
           }}
         >
-          <ChevronLeftIcon width={30} height={30} />
+          <LucidIcon name="ChevronLeft" size={30} />
         </a>
         <a
           href="#"
@@ -76,7 +75,7 @@ export const Carousel = ({
             }
           }}
         >
-          <ChevronRightIcon width={30} height={30} />
+          <LucidIcon name="ChevronRight" size={30} />
         </a>
       </div>
       <div className="uk-visible@m">
@@ -90,7 +89,7 @@ export const Carousel = ({
             }
           }}
         >
-          <ChevronLeftIcon width={40} height={40} />
+          <LucidIcon name="ChevronLeft" size={30} />
         </a>
         <a
           href="#"
@@ -102,7 +101,7 @@ export const Carousel = ({
             }
           }}
         >
-          <ChevronRightIcon width={40} height={40} />
+          <LucidIcon name="ChevronRight" size={30} />
         </a>
       </div>
     </div>
