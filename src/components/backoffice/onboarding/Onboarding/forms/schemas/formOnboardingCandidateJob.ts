@@ -1,4 +1,8 @@
-import { FormSchema } from 'src/components/forms/FormSchema';
+import {
+  FileTypes,
+  FormComponents,
+  FormSchema,
+} from 'src/components/forms/FormSchema';
 import { BUSINESS_LINES, BusinessLineValue } from 'src/constants';
 import { FilterConstant } from 'src/constants/utils';
 
@@ -7,6 +11,8 @@ export const formOnboardingCandidateJob: FormSchema<{
   searchAmbition0: string;
   searchBusinessLine1: FilterConstant<BusinessLineValue>;
   searchAmbition1: string;
+  linkedinUrl: string;
+  externalCv: File;
 }> = {
   id: 'form-onboarding-candidate-job',
   fields: [
@@ -19,7 +25,7 @@ export const formOnboardingCandidateJob: FormSchema<{
           id: 'searchBusinessLine0',
           name: 'searchBusinessLine0',
           title: 'Secteur(s) recherché(s)',
-          component: 'select',
+          component: FormComponents.SELECT,
           showLabel: true,
           options: BUSINESS_LINES,
           isMulti: false,
@@ -29,7 +35,7 @@ export const formOnboardingCandidateJob: FormSchema<{
         {
           id: 'searchAmbition0',
           name: 'searchAmbition0',
-          component: 'text-input',
+          component: FormComponents.TEXT_INPUT,
           showLabel: true,
           title: 'Métier(s) recherché(s)',
           placeholder: 'Métier 1',
@@ -45,7 +51,7 @@ export const formOnboardingCandidateJob: FormSchema<{
           id: 'searchBusinessLine1',
           name: 'searchBusinessLine1',
           title: 'Secteur 2',
-          component: 'select',
+          component: FormComponents.SELECT,
           isMulti: false,
           options: BUSINESS_LINES,
           rules: [
@@ -60,8 +66,38 @@ export const formOnboardingCandidateJob: FormSchema<{
         {
           id: 'searchAmbition1',
           name: 'searchAmbition1',
-          component: 'text-input',
+          component: FormComponents.TEXT_INPUT,
           title: 'Métier 2',
+        },
+      ],
+    },
+    {
+      id: 'externalCv',
+      name: 'externalCv',
+      title:
+        'Télécharger votre CV pour que les membres puissent le découvrir !',
+      component: FormComponents.FILE,
+      fileType: FileTypes.CV,
+      showLabel: true,
+      accept: '.pdf',
+    },
+    {
+      id: 'linkedinUrl',
+      name: 'linkedinUrl',
+      component: FormComponents.TEXT_INPUT,
+      title:
+        'Ajouter votre profil Linkedin pour que les membres puissent le découvrir !',
+      placeholder: 'Ajouter le lien LinkedIn',
+      showLabel: true,
+      rules: [
+        {
+          method: (fieldValue) => {
+            return (
+              !fieldValue ||
+              (!!fieldValue && fieldValue.includes('linkedin.com'))
+            );
+          },
+          message: 'Doit être un lien Linkedin valide',
         },
       ],
     },

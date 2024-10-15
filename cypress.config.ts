@@ -1,4 +1,4 @@
-require('dotenv').config();
+import 'dotenv/config';
 import { defineConfig } from 'cypress';
 
 module.exports = defineConfig({
@@ -15,9 +15,6 @@ module.exports = defineConfig({
   e2e: {
     baseUrl: `${process.env.SERVER_URL}`,
     supportFile: 'cypress/support/e2e.ts',
-    setupNodeEvents(_on, _config) {
-      // implement node event listeners here
-    },
   },
   retries: 3,
 });

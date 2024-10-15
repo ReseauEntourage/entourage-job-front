@@ -5,13 +5,16 @@ import { AlertVariant } from './Alert.types';
 export const StyledAlert = styled.div<{
   variant: AlertVariant;
   visible: boolean;
+  rounded: boolean;
 }>`
   display: ${(props) => {
     return props.visible ? 'flex' : 'none';
   }};
   align-items: center;
   gap: 10px;
-  border-radius: 10px;
+  border-radius: ${(props) => {
+    return props.rounded ? '10px' : '0';
+  }};
   padding: 10px 20px;
   background-color: ${(props) => {
     return COLORS.alert[props.variant]?.background || COLORS.white;
@@ -27,4 +30,8 @@ export const StyledAlert = styled.div<{
   p {
     margin: 0;
   }
+`;
+
+export const StyledAlertContainer = styled.div`
+  flex: auto;
 `;

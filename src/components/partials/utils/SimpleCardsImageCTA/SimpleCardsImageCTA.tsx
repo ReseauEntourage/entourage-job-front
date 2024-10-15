@@ -38,7 +38,9 @@ export const SimpleCardsImageCTA = ({
       <H2 title={title} color="black" center />
       {subtitle && (
         <StyledSimpleCardsImageCTASubtitle>
-          <Typography size="large">{subtitle}</Typography>
+          <Typography size="large" center>
+            {subtitle}
+          </Typography>
         </StyledSimpleCardsImageCTASubtitle>
       )}
       <StyledSimpleCardsImageCTAContainer data-uk-scrollspy="cls:uk-animation-slide-bottom-small; target: .decouvrir-card; delay: 200">

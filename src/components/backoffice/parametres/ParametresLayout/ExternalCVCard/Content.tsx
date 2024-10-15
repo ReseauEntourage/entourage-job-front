@@ -1,18 +1,14 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Close } from 'assets/icons/icons';
-import { ButtonIcon } from 'src/components/utils';
+import { IlluCV } from 'assets/icons/icons';
+import { FilePreviewCV } from 'src/components/utils/Inputs/FileInput/FilePreview';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useCurrentUserExternalCv } from 'src/hooks/useCurrentUserExternalCv';
 import { currentUserActions } from 'src/use-cases/current-user';
-import {
-  StyledCvUploadInfosText,
-  StyledDeleteIconContainer,
-  StyledFilename,
-} from './ExternalCVCard.styles';
+import { StyledCvUploadInfosText } from './ExternalCVCard.styles';
 
 interface ContentProps {
-  dataTestId?: string;
+  dataTestId: string;
 }
 
 export const Content = ({ dataTestId }: ContentProps) => {
@@ -38,21 +34,21 @@ export const Content = ({ dataTestId }: ContentProps) => {
 
   if (user.userProfile.hasExternalCv) {
     return (
-      <>
-        <StyledFilename onClick={openExternalCV}>Votre CV</StyledFilename>
-        <StyledDeleteIconContainer onClick={removeCallback}>
-          <ButtonIcon
-            icon={<Close width={10} height={10} />}
-            dataTestId={`${dataTestId}-button-edit`}
-          />
-        </StyledDeleteIconContainer>
-      </>
+      <FilePreviewCV
+        filename="Votre CV"
+        onRemoveFile={removeCallback}
+        onOpenFile={openExternalCV}
+        dataTestId={dataTestId}
+      />
     );
   }
   return (
-    <StyledCvUploadInfosText>
-      Vous n&apos;avez pas encore de CV Entourage Pro. Téléchargez votre propre
-      CV.
-    </StyledCvUploadInfosText>
+    <>
+      <IlluCV width={70} height={70} />
+      <StyledCvUploadInfosText>
+        Vous n&apos;avez pas encore de CV Entourage Pro. Téléchargez votre
+        propre propre CV.
+      </StyledCvUploadInfosText>
+    </>
   );
 };

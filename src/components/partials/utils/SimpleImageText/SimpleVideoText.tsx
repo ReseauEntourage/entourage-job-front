@@ -48,9 +48,10 @@ export const SimpleVideoText = ({
               poster="maxresdefault"
               title={videoTitle}
               aspectWidth={662}
-              aspectHeight={484}
+              aspectHeight={370}
               wrapperClass="yt-lite videoCustom"
               playerClass="lty-playbtn playBtnCustom"
+              params="rel=0&showinfo=0&iv_load_policy=3"
             />
           </StyledSimpleVideoTextVideoContainer>
           <StyledSimpleVideoTextTextContainer

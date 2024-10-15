@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import { Check } from 'assets/icons/icons';
 import {
   StyledResetPasswordButtonContainer,
   StyledResetPasswordContainer,
 } from '../ResetPassword/ResetPassword.styles';
 import { Layout } from 'src/components/Layout';
 import { Button, Section, Typography } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { COLORS } from 'src/constants/styles';
 
 export const ResetPasswordSuccess = () => {
@@ -22,7 +22,7 @@ export const ResetPasswordSuccess = () => {
     >
       <Section size="large" style="muted">
         <StyledResetPasswordContainer>
-          <Check color={COLORS.primaryBlue} width={100} height={100} />
+          <LucidIcon name="Check" size={100} color={COLORS.primaryBlue} />
           <Typography size="large">
             Votre mot de passe a bien été {isCreation ? 'crée' : 'réinitialisé'}
             .

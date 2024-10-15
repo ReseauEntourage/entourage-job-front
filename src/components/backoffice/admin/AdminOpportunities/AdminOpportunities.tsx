@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import PlusIcon from 'assets/icons/plus.svg';
 import { StyledNoResult } from '../../Backoffice.styles';
 import { Api } from 'src/api';
 import { Opportunity } from 'src/api/types';
@@ -11,13 +10,14 @@ import { OpportunitiesContainer } from 'src/components/backoffice/opportunities/
 import { AdminOpportunitiesList } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/AdminOpportunitiesList';
 import { AdminOpportunityDetailsContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/AdminOpportunityDetails/AdminOpportunityDetailsContainer';
 import { OpportunityError } from 'src/components/backoffice/opportunities/OpportunityError';
-import { SearchBar } from 'src/components/filters/SearchBar';
+import { SearchBar } from 'src/components/filters/SearchBar/SearchBar';
 import { formAddExternalOpportunityAsAdmin } from 'src/components/forms/schemas/formAddExternalOpportunity';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { PostAdminOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
 import { Button, ButtonMultiple, Section } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { FilterObject } from 'src/constants/utils';
@@ -255,7 +255,7 @@ export const AdminOpportunities = ({
                 },
               ]}
             >
-              <PlusIcon />
+              <LucidIcon name="Plus" />
               Créer
             </ButtonMultiple>
           </HeaderBackoffice>
