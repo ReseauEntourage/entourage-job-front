@@ -70,6 +70,7 @@ export const StyledHeaderProfileInfoContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
+  gap: 5px;
 
   h1,
   h2,
@@ -97,12 +98,16 @@ export const StyledHeaderNameAndRole = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 20px;
 
   h1,
   h2 {
     margin-right: 16px;
   }
+`;
+
+export const StyledHeaderAvailibilityAndUserActions = styled.div`
+  display: flex;
+  gap: 10px;
 `;
 
 export const StyledHeaderNameAndRoleMobile = styled(StyledHeaderNameAndRole)`
@@ -114,6 +119,7 @@ export const StyledHeaderProfileDescription = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  gap: 15px;
 `;
 
 export const StyledHeaderProfileCVButton = styled.div`

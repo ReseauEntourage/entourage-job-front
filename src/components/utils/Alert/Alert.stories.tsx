@@ -4,14 +4,12 @@ import { Typography } from '../Typography';
 import { Alert } from './Alert';
 import { AlertProps } from './Alert.types';
 
-const AlertContent = () => {
-  return <Typography>This is an information</Typography>;
-};
-
-const AlertWithContent = ({ variant }: AlertProps) => {
+const AlertWithContent = ({ variant, closable }: AlertProps) => {
   return (
-    <Alert variant={variant}>
-      <AlertContent />
+    <Alert variant={variant} closable={closable}>
+      <div>
+        <Typography>This is an information</Typography>
+      </div>
     </Alert>
   );
 };
@@ -27,5 +25,6 @@ type Story = StoryObj<typeof Alert>;
 export const Info: Story = {
   args: {
     variant: 'info',
+    closable: true,
   },
 };

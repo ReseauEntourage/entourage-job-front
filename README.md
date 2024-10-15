@@ -41,7 +41,7 @@ Document mis à jour le 05/08/2024
 - `cypress/` : fichiers de tests e2e **_Cypress_**
 - `public/` : stockage des ressources non dynamique accessible publiquement tels que les images, le CSS ou les fonts
 - `src/`
-  - `api/`: dossier contenant la définition de l'*_Api_*
+  - `api/`: dossier contenant la définition de l'_*Api*_
   - `components/` : dossier contenant les composants **_React_** écrit avec les particularités de **_Next.js_**
   - `constants/` : fichiers de constantes
   - `hooks/` : hooks communs à plusieurs composants
@@ -59,15 +59,15 @@ Document mis à jour le 05/08/2024
 - `.eslintrc.json`: configuration pour **_ESLint_**
 - `.gitignore.json`: configuration des fichiers et dossiers ignorés dans le stage de Git
 - `.lintstagedrc.js`: fichier de configuration du lint-stage
-- `.prettierignore`: configuration des fichiers et dossiers ignorés par *_Prettier_*
+- `.prettierignore`: configuration des fichiers et dossiers ignorés par _*Prettier*_
 - `.prettierrc.json`: configuration pour **_Prettier_**
 - `cypress.config.ts`: configuration pour **_Cypress_**
 - `docker-compose.yml`: Définition des différents containers Docker pour le développement local
 - `Dockerfile`: configuration du container Docker de l'application
-- `jest.config.js`: configuration de *_Jest_*
+- `jest.config.js`: configuration de _*Jest*_
 - `Makefile`: permet l'execution de la commande `make init` créant interactivement le fichier `.env`
-- `next-env.d.ts`: Fichier auto-généré par *_nextjs_*
-- `next.config.js`: configuration pour *_nexjs_*
+- `next-env.d.ts`: Fichier auto-généré par _*nextjs*_
+- `next.config.js`: configuration pour _*nexjs*_
 - `package.json`: configuration du projet et des dépendances
 - `Procfile` : configuration des process **_Heroku_** à lancer après déploiement
 - `server-next.js`: point d'entrée de lancement du serveur
@@ -91,7 +91,6 @@ npm install -g yarn
 - Avoir créé un fichier avec les variables d'environnement nécessaires en utilisant .env.dist
 
 ### Variables d'environnement
-
 
 Installation des dépendances
 

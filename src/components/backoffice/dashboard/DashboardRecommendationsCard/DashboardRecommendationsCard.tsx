@@ -3,12 +3,10 @@ import { useSelector } from 'react-redux';
 import {
   StyledDashboardCardContent,
   StyledDashboardCardContentContainer,
-  StyledDashboardCardSubtitle,
 } from '../Dashboard.styles';
 import { DirectoryItem } from 'src/components/backoffice/directory/DirectoryItem';
 import { Button, Card } from 'src/components/utils';
 import { CardList } from 'src/components/utils/CardList';
-import { Typography } from 'src/components/utils/Typography';
 import {
   CANDIDATE_USER_ROLES,
   NormalUserRole,
@@ -101,11 +99,12 @@ export const DashboardRecommendationsCard = () => {
   }
 
   return (
-    <Card title={recommendationsLabels[user.role].title}>
+    <Card
+      title={recommendationsLabels[user.role].title}
+      subtitle={recommendationsLabels[user.role].subtitle}
+      centerTitle
+    >
       <StyledDashboardCardContentContainer>
-        <StyledDashboardCardSubtitle>
-          <Typography>{recommendationsLabels[user.role].subtitle}</Typography>
-        </StyledDashboardCardSubtitle>
         <StyledDashboardCardContent>
           <StyledDashboardRecommendationsList>
             <CardList list={recommendationsList} isLoading={isLoading} />

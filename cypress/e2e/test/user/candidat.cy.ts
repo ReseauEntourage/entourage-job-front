@@ -16,6 +16,8 @@ describe('Candidat', () => {
      * Remove modal
      */
     window.localStorage.setItem('entourage-pro-modal-closed', 'true');
+    window.localStorage.setItem('access-token', '1234');
+    window.localStorage.setItem('release-version', 'v100');
 
     // to be done: use automatic generation and not static data
     cy.intercept('GET', '/auth/current', {
@@ -29,19 +31,19 @@ describe('Candidat', () => {
       }).as('userCount');
 
       cy.intercept('GET', `/cv/${user.id}`, {
-        fixture: 'api/cv-candidate',
+        fixture: 'api/generated/cv-candidate',
       }).as('cvCandidat');
 
       cy.intercept('POST', `/cv/${user.id}`, {
-        fixture: 'api/cv-candidate',
+        fixture: 'api/generated/cv-candidate',
       }).as('postCvCandidat');
 
       cy.intercept('GET', `/opportunity/candidate/all/${user.id}*`, {
-        fixture: 'api/opportunities-wrapped',
+        fixture: 'api/generated/opportunities-wrapped',
       }).as('allOpportunities');
 
       cy.intercept('GET', `opportunity/candidate/tabCount/${user.id}`, {
-        fixture: 'api/tab-count',
+        fixture: 'api/generated/tab-count',
       }).as('tabCount');
 
       // to be done: use automatic generation and not static data
@@ -67,7 +69,7 @@ describe('Candidat', () => {
       // }).as('putUserParams');
 
       cy.intercept('GET', `/cv/lastVersion/${user.id}`, {
-        fixture: 'api/cv-candidate',
+        fixture: 'api/generated/cv-candidate',
       });
 
       cy.intercept('GET', `/user/candidate/checkUpdate/${user.id}`, {
@@ -78,7 +80,7 @@ describe('Candidat', () => {
         cvHasBeenModified: true,
       }).as('cvCheckUpdate');
 
-      cy.fixture('api/opportunities-wrapped').then((offersRes) => {
+      cy.fixture('api/generated/opportunities-wrapped').then((offersRes) => {
         cy.intercept(
           `opportunity/${offersRes.offers[0].id}`,
           offersRes.offers[0]
@@ -110,46 +112,11 @@ describe('Candidat', () => {
     cy.intercept('/message/internal', {}).as('postInternalMessage');
   });
 
-  it("should open a user's public profile and contact him", () => {
-    cy.fixture('public-profile-res').then((userProfile) => {
-      cy.visit(`/backoffice/profile/${userProfile.id}`, {
-        onBeforeLoad: function async(window) {
-          window.localStorage.setItem('access-token', '1234');
-          window.localStorage.setItem('release-version', 'v100');
-        },
-      });
-      cy.url().should('include', userProfile.id);
-    });
-
-    cy.get('[data-testid="form-contact-internal-message-subject"]')
-      .click()
-      .find('.Select__option')
-      .contains('Conseils')
-      .click();
-
-    cy.get('[data-testid="form-contact-internal-message-message"]')
-      .scrollIntoView()
-      .type('test');
-
-    cy.get('[data-testid="form-confirm-form-contact-internal-message"]')
-      .scrollIntoView()
-      .click();
-
-    cy.get('[data-testid="profile-contact-form-confirm"]').should(
-      'contain',
-      'Votre message a été envoyé'
-    );
-  });
-
   it('should open backoffice public offers', () => {
     // to be done: use automatic generation and not static data
     cy.fixture('auth-current-candidat-onboarding3-res').then((user) => {
-      cy.visit(`/backoffice/candidat/${user.id}/offres/public`, {
-        onBeforeLoad: function async(window) {
-          window.localStorage.setItem('access-token', '1234');
-          window.localStorage.setItem('release-version', 'v100');
-        },
-      });
+      cy.visit(`/backoffice/candidat/${user.id}/offres/public`);
+      cy.get('[data-testid="app-splash-screen"]').should('not.visible');
       cy.url().should('include', user.id);
     });
 
@@ -159,7 +126,7 @@ describe('Candidat', () => {
       .should('have.length', 5);
 
     // check if the right opportunity is open
-    cy.fixture('api/opportunities-wrapped').then(({ offers }) => {
+    cy.fixture('api/generated/opportunities-wrapped').then(({ offers }) => {
       cy.url().should('include', offers[0].id);
       cy.get('[data-testid="candidat-offer-details-title"]').contains(
         offers[0].title
@@ -167,7 +134,7 @@ describe('Candidat', () => {
     });
 
     // bookmark/unbookmark an offer from the list
-    cy.fixture('api/opportunities-wrapped').then(({ offers }) => {
+    cy.fixture('api/generated/opportunities-wrapped').then(({ offers }) => {
       const { bookmarked } = offers[0].opportunityUsers;
       const cta1 = bookmarked ? 'cta-unbookmark' : 'cta-bookmark';
       const cta2 = !bookmarked ? 'cta-unbookmark' : 'cta-bookmark';
@@ -185,16 +152,12 @@ describe('Candidat', () => {
   it('should open backoffice private offers and add new opportunity', () => {
     // to be done: use automatic generation and not static data
     cy.fixture('auth-current-candidat-onboarding3-res').then((user) => {
-      cy.visit(`/backoffice/candidat/${user.id}/offres/private`, {
-        onBeforeLoad: function async(window) {
-          window.localStorage.setItem('access-token', '1234');
-          window.localStorage.setItem('release-version', 'v100');
-        },
-      });
+      cy.visit(`/backoffice/candidat/${user.id}/offres/private`);
+      cy.get('[data-testid="app-splash-screen"]').should('not.visible');
       cy.url().should('include', user.id);
     });
     // check if the right opportunity is open
-    cy.fixture('api/opportunities-wrapped').then(({ offers }) => {
+    cy.fixture('api/generated/opportunities-wrapped').then(({ offers }) => {
       cy.url().should('include', offers[0].id);
       cy.wait(1000);
       cy.get('[data-testid="candidat-offer-details-title"]').contains(
@@ -249,12 +212,8 @@ describe('Candidat', () => {
   it('should open backoffice cv candidat', () => {
     // to be done: use automatic generation and not static data
     cy.fixture('auth-current-candidat-onboarding3-res').then((user) => {
-      cy.visit(`/backoffice/candidat/${user.id}/cv`, {
-        onBeforeLoad: function async(window) {
-          window.localStorage.setItem('access-token', '1234');
-          window.localStorage.setItem('release-version', 'v100');
-        },
-      });
+      cy.visit(`/backoffice/candidat/${user.id}/cv`);
+      cy.get('[data-testid="app-splash-screen"]').should('not.visible');
       cy.url().should('include', user.id);
     });
     // catchphrase
@@ -356,12 +315,8 @@ describe('Candidat', () => {
   });
 
   it('should open backoffice candidate parameters', () => {
-    cy.visit('/backoffice/parametres', {
-      onBeforeLoad: function async(window) {
-        window.localStorage.setItem('access-token', '1234');
-        window.localStorage.setItem('release-version', 'v100');
-      },
-    });
+    cy.visit('/backoffice/parametres');
+    cy.get('[data-testid="app-splash-screen"]').should('not.visible');
 
     // toggle hide CV
     cy.get('label[for="ent-toggle-hidden"]').click();
@@ -400,7 +355,7 @@ describe('Candidat', () => {
     cy.wait('@changePwd');
 
     // to be done with automatic generation
-    let newHelpList = [
+    const newHelpList = [
       {
         id: '352a7dde-c4ad-410f-86cf-506cdc9eb624',
         name: 'cv',

@@ -12,4 +12,4 @@ coverage/
 /tsconfig.tsbuildinfo
 /tsconfig.base.tsbuildinfo
 /storybook-static
-cypress/fixtures/api
+cypress/fixtures/api/generated/*.json

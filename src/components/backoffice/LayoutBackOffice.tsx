@@ -12,6 +12,7 @@ export const LayoutBackOffice = ({
   title?: string;
 }) => {
   const shouldLaunchOnboarding = useSelector(selectShouldLaunchOnboarding);
+
   return (
     <Layout title={`${title} - Entourage Pro`} noIndex isBackoffice>
       {shouldLaunchOnboarding && <Onboarding />}

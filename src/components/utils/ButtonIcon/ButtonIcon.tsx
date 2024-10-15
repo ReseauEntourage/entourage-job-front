@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyledButtonIcon } from './ButtonIcon.styles';
 
-interface ButtonIconProps {
+export interface ButtonIconProps {
   icon: React.ReactNode;
   tooltip?: string;
   onClick?: () => void;

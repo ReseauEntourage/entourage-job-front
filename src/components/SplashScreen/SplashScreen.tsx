@@ -13,6 +13,7 @@ export const SplashScreen = ({ loading, fading }: SplashScreenProps) => {
     <StyledSplashScreenContainer
       loading={loading}
       fading={fading} // fading was used for uk-animation-fade
+      data-testid="app-splash-screen"
     >
       <EntourageProLogoPrimary width={300} height={300} />
     </StyledSplashScreenContainer>
