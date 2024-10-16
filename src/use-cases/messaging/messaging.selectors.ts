@@ -13,3 +13,6 @@ export const selectPinnedInfo = (state: RootState) =>
   state.messaging.pinnedInfo;
 
 export const selectQuery = (state: RootState) => state.messaging.query;
+
+export const selectUnseenConversationCount = (state: RootState) =>
+  state.messaging.unseenConversationCount;
