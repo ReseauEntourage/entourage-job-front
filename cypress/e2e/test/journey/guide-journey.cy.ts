@@ -140,9 +140,13 @@ describe('En tant que - Benevole', () => {
         .contains('RSA')
         .click();
 
+      // Weird bug, option is not available
       cy.get('#form-candidate-contact-domiciliation-container')
         .should('be.visible')
-        .click()
+        .find('button')
+        .click();
+
+      cy.get('#form-candidate-contact-domiciliation-container')
         .find('.option')
         .contains('Oui')
         .click();
