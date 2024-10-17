@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MessagingEmptyState } from '../MessagingEmptyState';
 import { Button } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { useIsMobile } from 'src/hooks/utils';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import {
@@ -148,12 +149,23 @@ export const MessagingConversation = () => {
                 disabled={conversationParticipantsAreDeleted}
               />
             </MessagingInputContainer>
-            <Button
-              onClick={sendNewMessage}
-              disabled={conversationParticipantsAreDeleted}
-            >
-              Envoyer
-            </Button>
+            {isMobile ? (
+              <Button
+                style="custom-secondary-inverted"
+                onClick={sendNewMessage}
+                disabled={conversationParticipantsAreDeleted}
+                rounded
+              >
+                <LucidIcon name="Send" size={25} />
+              </Button>
+            ) : (
+              <Button
+                onClick={sendNewMessage}
+                disabled={conversationParticipantsAreDeleted}
+              >
+                Envoyer
+              </Button>
+            )}
           </MessagingMessageForm>
         </>
       )}
