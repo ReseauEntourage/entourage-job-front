@@ -9,6 +9,7 @@ export interface IconProps {
   stroke?: 'thin' | 'regular' | 'bold';
   style?: 'solid' | 'outline';
   fill?: string;
+  absoluteStrokeWidth?: boolean;
 }
 
 export const LucidIcon = ({
@@ -18,17 +19,26 @@ export const LucidIcon = ({
   stroke = 'regular',
   style = 'outline',
   fill = color,
+  absoluteStrokeWidth = false,
 }: IconProps) => {
   const Icon = icons[name];
 
   const lucidStrokeWidth = {
-    thin: 1.3,
-    regular: 2,
-    bold: 2.7,
+    thin: 1.5,
+    regular: 1.8,
+    bold: 2.5,
   };
 
   if (style === 'solid') {
-    return <Icon color={color} size={size} strokeWidth={0} fill={fill} />;
+    return (
+      <Icon
+        color={color}
+        size={size}
+        strokeWidth={0}
+        fill={fill}
+        absoluteStrokeWidth={absoluteStrokeWidth}
+      />
+    );
   }
 
   return (

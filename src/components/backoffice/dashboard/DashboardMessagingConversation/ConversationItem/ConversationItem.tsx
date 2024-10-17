@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Conversation, User } from 'src/api/types';
+import { conversationHasUnreadMessages } from 'src/components/backoffice/messaging/messaging.utils';
 import { ImgProfile } from 'src/components/utils';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import {
@@ -22,13 +23,10 @@ export const ConversationItem = ({ conversation }: ConversationItemProps) => {
   const addresee = conversation.participants.find(
     (participant) => participant.id !== currentUserId
   ) as User;
-  const userParticipantConversation = conversation.participants.find(
-    (participant) => participant.id === currentUserId
+  const userHasSeenConversation = conversationHasUnreadMessages(
+    conversation,
+    currentUserId
   );
-  const lastMessage = conversation.messages[conversation.messages.length - 1];
-  const seenAt = userParticipantConversation?.ConversationParticipant.seenAt;
-  const userHasSeenConversation =
-    seenAt && moment(seenAt).isSameOrAfter(lastMessage.createdAt);
 
   const openConversation = () => {
     router.push(`/backoffice/messaging?userId=${addresee.id}`);

@@ -5,12 +5,16 @@ import {
   getSelectedConversationAdapter,
   getConversationsAdapter,
   postMessageAdapter,
+  getUnseenConversationsCountAdapter,
 } from './messaging.adapter';
 
 export type MessagingPinnedInfo = 'ADDRESSEE_UNAVAILABLE' | null;
 
 export interface State {
   getConversations: RequestState<typeof getConversationsAdapter>;
+  getUnseenConversationsCount: RequestState<
+    typeof getUnseenConversationsCountAdapter
+  >;
   getSelectedConversation: RequestState<typeof getSelectedConversationAdapter>;
   postMessage: RequestState<typeof postMessageAdapter>;
   conversations: Conversation[] | null;
@@ -18,10 +22,13 @@ export interface State {
   selectedConversation: Conversation | null;
   pinnedInfo: MessagingPinnedInfo;
   query: string;
+  unseenConversationCount: number;
 }
 
 const initialState: State = {
   getConversations: getConversationsAdapter.getInitialState(),
+  getUnseenConversationsCount:
+    getUnseenConversationsCountAdapter.getInitialState(),
   getSelectedConversation: getSelectedConversationAdapter.getInitialState(),
   postMessage: postMessageAdapter.getInitialState(),
   conversations: null,
@@ -29,6 +36,7 @@ const initialState: State = {
   selectedConversation: null,
   pinnedInfo: null,
   query: '',
+  unseenConversationCount: 0,
 };
 
 export const slice = createSlice({
@@ -41,6 +49,14 @@ export const slice = createSlice({
         getConversationsSucceeded(state, action) {
           // Only change the state if the conversations are different
           state.conversations = action.payload;
+        },
+      }
+    ),
+    ...getUnseenConversationsCountAdapter.getReducers<State>(
+      (state) => state.getUnseenConversationsCount,
+      {
+        getUnseenConversationsCountSucceeded(state, action) {
+          state.unseenConversationCount = action.payload;
         },
       }
     ),
@@ -110,7 +126,6 @@ export const slice = createSlice({
       );
 
       if (conversation) {
-        // state.selectedConversation = conversation;
         state.selectedConversationId = conversation.id;
       } else {
         const newConversation: Conversation = {

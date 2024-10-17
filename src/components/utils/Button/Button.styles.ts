@@ -25,15 +25,19 @@ export const ButtonStyle = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 11px 22px !important;
+  :not(.rounded) {
+    padding: 11px 22px !important;
+  }
   scroll-behavior: smooth;
 
-  > svg:first-child {
-    margin-right: 8px;
-  }
+  :not(.rounded) {
+    > svg:first-child {
+      margin-right: 8px;
+    }
 
-  > svg:last-child {
-    margin-left: 8px;
+    > svg:last-child {
+      margin-left: 8px;
+    }
   }
 
   &:hover {
@@ -217,9 +221,16 @@ export const ButtonStyle = css`
   }
 
   &.small {
-    padding: 6px 10px !important;
+    :not(.rounded) {
+      padding: 6px 10px !important;
+    }
     font-size: 13px;
     line-height: 16px;
+  }
+
+  &.rounded {
+    border-radius: 50%;
+    padding: 11px !important;
   }
 `;
 

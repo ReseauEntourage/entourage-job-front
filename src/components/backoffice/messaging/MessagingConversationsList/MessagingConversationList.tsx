@@ -10,6 +10,7 @@ import {
 import {
   ContainerStyled,
   StyledConversationsContainer,
+  StyledSearchBarContainer,
 } from './MessagingConversationList.styles';
 import { MessagingConversationListItem } from './MessagingConversationListItem/MessagingConversationListItem';
 
@@ -22,12 +23,14 @@ export const MessagingConversationList = () => {
   return (
     <ContainerStyled>
       {!isMobile && (
-        <SearchBar
-          search={query}
-          setSearch={(search) => dispatch(messagingActions.setQuery(search))}
-          placeholder="Rechercher"
-          smallSelectors
-        />
+        <StyledSearchBarContainer>
+          <SearchBar
+            search={query}
+            setSearch={(search) => dispatch(messagingActions.setQuery(search))}
+            placeholder="Rechercher"
+            smallSelectors
+          />
+        </StyledSearchBarContainer>
       )}
       <StyledConversationsContainer className={isMobile ? 'mobile' : ''}>
         {conversations &&

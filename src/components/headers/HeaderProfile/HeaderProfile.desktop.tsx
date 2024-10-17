@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Api } from 'src/api';
 import {
   Button,
@@ -17,6 +18,7 @@ import { Spinner } from 'src/components/utils/Spinner';
 import { UserActions } from 'src/components/utils/UserActions/UserActions';
 import { COLORS } from 'src/constants/styles';
 import { USER_ROLES } from 'src/constants/users';
+import { selectCurrentUserId } from 'src/use-cases/current-user';
 import {
   StyledHeaderAvailibilityAndUserActions,
   StyledHeaderNameAndRole,
@@ -54,9 +56,13 @@ export const HeaderProfileDesktop = ({
     contextualRole,
   } = useHeaderProfile(role);
   const router = useRouter();
+  const currentUserId = useSelector(selectCurrentUserId);
 
   const hasCv = !!cvUrl || hasExternalCv;
   const hasTwoCv = !!cvUrl && hasExternalCv;
+  const ownProfile = currentUserId === id;
+  const displayMessageButton =
+    shouldShowAllProfile && isAvailable && !ownProfile;
 
   const openProCv = () => {
     window.open(`/cv/${cvUrl}`, '_blank');
@@ -187,14 +193,16 @@ export const HeaderProfileDesktop = ({
                 />
               </>
             )}
-            <div>
-              <Button
-                onClick={openConversation}
-                style="custom-primary-inverted"
-              >
-                Envoyer un message
-              </Button>
-            </div>
+            {displayMessageButton && (
+              <div>
+                <Button
+                  onClick={openConversation}
+                  style="custom-primary-inverted"
+                >
+                  Envoyer un message
+                </Button>
+              </div>
+            )}
           </StyledHeaderProfileInfoContainer>
         </StyledHeaderProfileContent>
       </Section>
