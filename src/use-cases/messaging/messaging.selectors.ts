@@ -19,3 +19,6 @@ export const selectHasMessages = (state: RootState) =>
   state.messaging.conversations.length > 0 ||
   state.messaging.query !== '' ||
   state.messaging.selectedConversationId !== null;
+
+export const selectUnseenConversationCount = (state: RootState) =>
+  state.messaging.unseenConversationCount;

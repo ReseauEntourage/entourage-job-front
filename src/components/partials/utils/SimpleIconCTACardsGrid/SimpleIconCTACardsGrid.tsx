@@ -37,7 +37,9 @@ export const SimpleIconCTACardsGrid = ({
         <H3 title={title} center color="black" />
         {subtitle && (
           <StyledSimpleIconCTACardsGridSubtitle>
-            <Typography size="large">{subtitle}</Typography>
+            <Typography size="large" center>
+              {subtitle}
+            </Typography>
           </StyledSimpleIconCTACardsGridSubtitle>
         )}
         <StyledSimpleIconCTACardsGrid>

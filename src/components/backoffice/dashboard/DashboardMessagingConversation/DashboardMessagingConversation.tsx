@@ -27,7 +27,7 @@ export const DashboardMessagingConversation = () => {
   };
 
   return (
-    <Card title="Mes derniers messages">
+    <Card title="Mes derniers messages" centerTitle>
       <CardContent>
         <ConversationList>
           {conversations &&

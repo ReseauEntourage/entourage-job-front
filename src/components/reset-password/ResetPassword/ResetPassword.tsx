@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import { Close } from 'assets/icons/icons';
 import { Api } from 'src/api';
 import { Layout } from 'src/components/Layout';
 import { PasswordCriterias } from 'src/components/backoffice/parametres/ParametresLayout/ChangePasswordCard/PasswordCriterias';
@@ -8,6 +7,7 @@ import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { formResetPassword } from 'src/components/forms/schemas/formResetPassword';
 import { Button, Section, Typography } from 'src/components/utils';
 import { Card } from 'src/components/utils/Cards/Card';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { COLORS } from 'src/constants/styles';
 import {
   StyledResetPasswordButtonContainer,
@@ -64,7 +64,7 @@ export const ResetPassword = ({
             </Card>
           ) : (
             <>
-              <Close width={100} height={100} color={COLORS.primaryBlue} />
+              <LucidIcon name="X" size={100} color={COLORS.primaryBlue} />
               <Typography size="large">
                 Ce lien ne semble pas valide. Veuillez contacter l&apos;équipe
                 Entourage Pro.
