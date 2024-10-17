@@ -29,7 +29,7 @@ export const selectConversationParticipantsAreDeleted = (state: RootState) => {
     return false;
   }
 
-  return selectedConversation.participants.some(
-    (participant) => participant.deletedAt !== null
-  );
+  return selectedConversation.participants.some((participant) => {
+    return participant.userProfile === null;
+  });
 };

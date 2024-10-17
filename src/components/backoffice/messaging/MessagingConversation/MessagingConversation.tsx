@@ -112,10 +112,12 @@ export const MessagingConversation = () => {
 
   useEffect(() => {
     if (selectedConversation && selectedConversation.messages) {
-      scrollToBottom();
+      setTimeout(() => {
+        scrollToBottom();
+      }, 50);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedConversation]);
+  }, [selectedConversation?.id, selectedConversation?.messages.length]);
 
   return (
     <MessagingConversationContainer className={isMobile ? 'mobile' : ''}>
@@ -126,14 +128,12 @@ export const MessagingConversation = () => {
           <MessagingConversationHeader />
           {pinnedInfo && <MessagingPinnedInfo pinnedInfo={pinnedInfo} />}
           <MessagingMessagesContainer className={isMobile ? 'mobile' : ''}>
-            {selectedConversation && selectedConversation.messages && (
-              <>
-                {selectedConversation.messages.map((message) => (
-                  <MessagingMessage key={message.id} message={message} />
-                ))}
-                <div ref={messagesEndRef} />
-              </>
-            )}
+            {selectedConversation &&
+              selectedConversation.messages &&
+              selectedConversation.messages.map((message) => (
+                <MessagingMessage key={message.id} message={message} />
+              ))}
+            <div ref={messagesEndRef} />
           </MessagingMessagesContainer>
           {/* Bloc de rédaction d'un message */}
           <MessagingMessageForm className={isMobile ? 'mobile' : ''}>

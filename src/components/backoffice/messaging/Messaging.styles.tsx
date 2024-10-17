@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { COLORS, HEIGHTS } from 'src/constants/styles';
 
 /**
  * General Messaging Styles
@@ -6,9 +7,11 @@ import styled from 'styled-components';
 export const StyledMessagingGridDesktop = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 40px;
-  align-items: flex-start;
-  width: 100%;
+  height: calc(100vh - ${HEIGHTS.HEADER}px);
+  flex: 1;
+  border-top: ${HEIGHTS.MESSAGING_DESKTOP_BORDER_SIZE}px solid
+    ${COLORS.lightgray};
+  box-sizing: border-box;
 `;
 
 export const StyledMessagingGridMobile = styled.div`
@@ -17,6 +20,7 @@ export const StyledMessagingGridMobile = styled.div`
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
+  height: calc(100vh - ${HEIGHTS.HEADER_MOBILE}px);
 `;
 
 export const StyledMessagingLeftPanel = styled.div`
@@ -25,6 +29,8 @@ export const StyledMessagingLeftPanel = styled.div`
   flex: 1;
   min-width: 430px;
   max-width: 400px;
+  border-right: ${HEIGHTS.MESSAGING_DESKTOP_BORDER_SIZE}px solid
+    ${COLORS.lightgray};
 `;
 
 export const StyledMessagingRightPanel = styled.div`
@@ -43,6 +49,12 @@ export const StyledMessagingConversationContainerMobile = styled.div`
 /**
  * Empty state styles
  */
+export const MessagingEmptyStateContainerDesktop = styled.div`
+  flex: 1;
+  height: calc(100vh - ${HEIGHTS.HEADER}px);
+  padding: 20px 50px;
+`;
+
 export const MessagingEmptyStateContainerMobile = styled.div`
   padding: 20px 50px;
 `;
@@ -55,6 +67,9 @@ export const MessagingEmptyStateContainer = styled.div`
   align-items: center;
   height: 100%;
   gap: 20px;
+  h3 {
+    margin: 0;
+  }
   p {
     margin: 0;
     text-align: center;
