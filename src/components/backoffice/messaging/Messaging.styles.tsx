@@ -28,7 +28,7 @@ export const StyledMessagingLeftPanel = styled.div`
   flex-direction: column;
   flex: 1;
   min-width: 430px;
-  max-width: 400px;
+  max-width: 430px;
   border-right: ${HEIGHTS.MESSAGING_DESKTOP_BORDER_SIZE}px solid
     ${COLORS.lightgray};
 `;
@@ -36,7 +36,7 @@ export const StyledMessagingLeftPanel = styled.div`
 export const StyledMessagingRightPanel = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: auto;
 `;
 
 export const StyledMessagingConversationContainerMobile = styled.div`
