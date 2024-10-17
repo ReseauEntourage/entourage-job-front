@@ -75,7 +75,9 @@ export function selectRegistrationSelectedProgram(state: RootState) {
     selectedRole
   );
 
-  return allStepsDataForSelectedRole.program?.[0];
+  return Array.isArray(allStepsDataForSelectedRole.program)
+    ? allStepsDataForSelectedRole.program?.[0]
+    : allStepsDataForSelectedRole.program;
 }
 
 export function selectDefinedRegistrationSelectedProgram(state: RootState) {
@@ -194,7 +196,14 @@ export function selectRegistrationShouldSkipStep(state: RootState) {
 
     return keys.some((key) => {
       if (valuesFromOtherStep[key]) {
-        return _.isEqual(valuesFromOtherStep[key], skippedByArray[key]);
+        // check if skippedByArray[key] contains a value from valuesFromOtherStep[key]
+        if (Array.isArray(valuesFromOtherStep[key])) {
+          return _.isEqual(valuesFromOtherStep[key], skippedByArray[key]);
+        }
+        return _.includes(
+          skippedByArray[key] as string[],
+          valuesFromOtherStep[key]
+        );
       }
       return false;
     });
