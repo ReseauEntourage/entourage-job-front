@@ -22,3 +22,14 @@ export const selectHasMessages = (state: RootState) =>
 
 export const selectUnseenConversationCount = (state: RootState) =>
   state.messaging.unseenConversationCount;
+
+export const selectConversationParticipantsAreDeleted = (state: RootState) => {
+  const selectedConversation = selectSelectedConversation(state);
+  if (!selectedConversation) {
+    return false;
+  }
+
+  return selectedConversation.participants.some(
+    (participant) => participant.deletedAt !== null
+  );
+};
