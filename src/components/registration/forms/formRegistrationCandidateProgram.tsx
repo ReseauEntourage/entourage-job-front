@@ -18,6 +18,7 @@ export const formRegistrationCandidateProgram: FormSchema<{
       id: 'program',
       name: 'program',
       component: 'radio',
+      isRequired: true,
       title:
         'Souhaitez vous bénéficier d’un accompagnement avec un coach  personnalisé (gratuit) ? *',
       subtitle:
