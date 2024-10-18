@@ -203,8 +203,10 @@ export function selectRegistrationShouldSkipStep(state: RootState) {
 
       // Keys with custom logic
       if (key === 'notEligibleFor360') {
-        const { birthDate } = valuesFromOtherStep;
-        const { department } = valuesFromOtherStep;
+        const { birthDate } =
+          valuesFromOtherStep as FlattenedRegistrationFormData;
+        const { department } =
+          valuesFromOtherStep as FlattenedRegistrationFormData;
 
         const isDepartmentEligible = !!ANTENNE_INFO.find((antenne) => {
           return department.value.includes(antenne.dpt);

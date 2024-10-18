@@ -10,7 +10,7 @@ interface AlertIconProps {
 }
 
 const AlertIcon = ({ variant }: AlertIconProps) => {
-  return <>{variant === 'info' && <IlluBulleQuestion class="icon" />}</>;
+  return <>{variant === 'info' && <IlluBulleQuestion />}</>;
 };
 
 export const Alert = ({

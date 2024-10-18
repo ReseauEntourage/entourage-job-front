@@ -5,6 +5,7 @@ import {
   REGISTRATION_CONFIRMATION_STEP,
   RegistrationFormData,
   RegistrationFormDataKeys,
+  FlattenedRegistrationFormData,
 } from '../Registration.types';
 import { ReduxRequestEvents } from 'src/constants';
 import { Programs } from 'src/constants/programs';
@@ -88,7 +89,8 @@ export function useRegistration() {
         stepContent.skippedBy.notEligibleFor360
       ) {
         if (valuesFromOtherStep) {
-          const { department } = valuesFromOtherStep;
+          const { department } =
+            valuesFromOtherStep as FlattenedRegistrationFormData;
           dispatch(
             registrationActions.setRegistrationCurrentStepData({
               program: [Programs.BOOST],
