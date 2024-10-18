@@ -9,6 +9,8 @@ export interface MessagingPinnedInfoProps {
 const pinnedInfosText = {
   ADDRESSEE_UNAVAILABLE:
     'Cet utilisateur n’est plus disponible, le temps de réponse peut être plus long ',
+  ADDRESSEE_DELETED:
+    'Ce profil n’est plus disponible, vous ne pouvez plus lui envoyer de message',
 };
 
 export const MessagingPinnedInfo = ({

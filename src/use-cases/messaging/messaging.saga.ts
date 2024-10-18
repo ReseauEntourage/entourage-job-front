@@ -12,6 +12,9 @@ const {
   getSelectedConversationRequested,
   getSelectedConversationSucceeded,
   getSelectedConversationFailed,
+  getUnseenConversationsCountRequested,
+  getUnseenConversationsCountSucceeded,
+  getUnseenConversationsCountFailed,
 } = slice.actions;
 
 function* getConversationsSagaRequested() {
@@ -21,6 +24,15 @@ function* getConversationsSagaRequested() {
     yield* put(getConversationsSucceeded(response.data));
   } catch {
     yield* put(getConversationsFailed());
+  }
+}
+
+function* getUnseenConversationsCountSagaRequested() {
+  try {
+    const response = yield* call(() => Api.getUnseenConversationsCount());
+    yield* put(getUnseenConversationsCountSucceeded(response.data));
+  } catch {
+    yield* put(getUnseenConversationsCountFailed());
   }
 }
 
@@ -64,5 +76,9 @@ export function* saga() {
   yield* takeLatest(
     getSelectedConversationRequested,
     getSelectedConversationSagaRequested
+  );
+  yield* takeLatest(
+    getUnseenConversationsCountRequested,
+    getUnseenConversationsCountSagaRequested
   );
 }

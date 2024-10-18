@@ -159,3 +159,28 @@ export const formatCareerPathSentence = (
     searchBusinessLines: newBusinessLines,
   };
 };
+
+export const linkify = (content: string): string => {
+  const urlPattern =
+    /(\b((https?:\/\/)?(www\.)?[\w-]+(\.[\w.-]+)+(:\d+)?(\/[^\s]*)?))/gi;
+
+  return content.replace(urlPattern, (url) => {
+    let normalizedUrl = url;
+
+    if (!/^https?:\/\//i.test(url)) {
+      normalizedUrl = `http://${url}`;
+    }
+
+    // Escape special characters to prevent XSS attacks
+    const safeUrl = normalizedUrl
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+    const safeDisplayUrl = url
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+    return `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${safeDisplayUrl}</a>`;
+  });
+};

@@ -5,6 +5,10 @@ export const getConversationsAdapter = createRequestAdapter(
   'getConversations'
 ).withPayloads<void, Conversation[]>();
 
+export const getUnseenConversationsCountAdapter = createRequestAdapter(
+  'getUnseenConversationsCount'
+).withPayloads<void, number>();
+
 export const postMessageAdapter = createRequestAdapter(
   'postMessage'
 ).withPayloads<

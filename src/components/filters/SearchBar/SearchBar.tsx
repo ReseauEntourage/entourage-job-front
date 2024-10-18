@@ -9,8 +9,10 @@ import { Filter, FilterConstant, FilterObject } from 'src/constants/utils';
 import { gaEvent } from 'src/lib/gtag';
 import {
   StyledSearchBar,
+  StyledSearchBarClearButton,
   StyledSearchBarContainer,
   StyledSearchBarInput,
+  StyledSearchBarInputContainer,
   StyledSearchBarSubmitButton,
 } from './SearchBar.styles';
 
@@ -28,6 +30,7 @@ export interface SearchBarProps {
   };
   additionalButtons?: React.ReactNode;
   light?: boolean;
+  cleareable?: boolean;
 }
 
 export const SearchBar = ({
@@ -42,12 +45,18 @@ export const SearchBar = ({
   smallSelectors = false,
   additionalButtons,
   light = false,
+  cleareable = true,
 }: SearchBarProps) => {
   const [searchBuffer, setSearchBuffer] = useState(search || '');
 
   useEffect(() => {
     setSearchBuffer(search || '');
   }, [search]);
+
+  const clearSearchBuffer = useCallback(() => {
+    setSearchBuffer('');
+    setSearch();
+  }, [setSearch]);
 
   const startSearch = useCallback(() => {
     if (searchBuffer) {
@@ -75,22 +84,29 @@ export const SearchBar = ({
     <StyledSearchBarContainer>
       <StyledSearchBar light={light}>
         <form className="uk-width-expand">
-          <StyledSearchBarInput
-            type="text"
-            data-testid="search-input"
-            placeholder={placeholder}
-            value={searchBuffer}
-            onKeyDown={(ev) => {
-              if (ev.key === 'Enter') {
-                ev.preventDefault();
-                startSearch();
-              }
-            }}
-            onChange={(ev) => {
-              const { value } = ev.target;
-              setSearchBuffer(value);
-            }}
-          />
+          <StyledSearchBarInputContainer>
+            <StyledSearchBarInput
+              type="text"
+              data-testid="search-input"
+              placeholder={placeholder}
+              value={searchBuffer}
+              onKeyDown={(ev) => {
+                if (ev.key === 'Enter') {
+                  ev.preventDefault();
+                  startSearch();
+                }
+              }}
+              onChange={(ev) => {
+                const { value } = ev.target;
+                setSearchBuffer(value);
+              }}
+            />
+            {cleareable && searchBuffer && (
+              <StyledSearchBarClearButton onClick={clearSearchBuffer}>
+                <LucidIcon name="X" size={14} />
+              </StyledSearchBarClearButton>
+            )}
+          </StyledSearchBarInputContainer>
         </form>
         {filtersConstants.length > 0 && (
           <FiltersMobile numberOfFilters={numberOfFilters} />
