@@ -1,6 +1,6 @@
 {
   "name": "entourage-pro-front",
-  "version": "2.19.0",
+  "version": "2.19.1",
   "description": "",
   "main": "index.js",
   "engines": {
@@ -58,12 +58,13 @@
     "dd-trace": "^3.3.1",
     "dotenv": "^10.0.0",
     "expect": "^29.7.0",
-    "express": "^4.17.1",
+    "express": "^4.20.0",
     "express-sslify": "^1.2.0",
     "google-maps-react": "^2.0.6",
     "less": "^4.1.2",
     "less-loader": "^10.2.0",
     "lodash": "^4.17.21",
+    "lucide-react": "^0.447.0",
     "mobile-detect": "^1.4.5",
     "moment": "^2.29.4",
     "next": "^12.1.0",
@@ -147,7 +148,7 @@
     "prettier": "^2.1.2",
     "storybook": "^7.6.7",
     "typescript": "^4.8.4",
-    "webpack": "^5.74.0"
+    "webpack": "^5.94.0"
   },
   "resolutions": {
     "jackspeak": "2.1.1"
