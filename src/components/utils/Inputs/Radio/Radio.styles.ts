@@ -9,6 +9,7 @@ export const StyledRadioContainer = styled.div`
   legend {
     color: ${COLORS.darkGray};
     margin-bottom: 24px;
+    margin-top: 20px;
   }
 
   .inputs-container {
@@ -17,7 +18,8 @@ export const StyledRadioContainer = styled.div`
     align-items: flex-start;
 
     label {
-      margin-bottom: 20px;
+      margin-top: 10px;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
       line-height: 16px;
@@ -38,6 +40,7 @@ export const StyledRadioContainer = styled.div`
         border-radius: 50%;
         accent-color: white;
         cursor: pointer;
+        align: middle;
       }
 
       &.checked {
@@ -65,6 +68,26 @@ export const StyledRadioContainer = styled.div`
         }
       }
     }
+  }
+`;
+
+export const StyledRadioDisabledOverlay = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  /* position: absolute; */
+  background-color: ${COLORS.hoverBlue};
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  top: -10px;
+  left: 0;
+  bottom: -10px;
+  right: 0;
+  white-space: pre-line;
+  > svg {
+    margin-bottom: 16px;
   }
 `;
 

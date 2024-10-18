@@ -333,7 +333,13 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
       return (
         <Radio
           {...commonProps}
+          subtitle={field.subtitle || ''}
           options={field.options || []}
+          optionsToDisable={
+            field.optionsToDisable
+              ? field.optionsToDisable(getValue)
+              : undefined
+          }
           filter={
             field.dynamicFilter ? field.dynamicFilter(getValue) : undefined
           }

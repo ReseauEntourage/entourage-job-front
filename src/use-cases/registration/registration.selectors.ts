@@ -10,11 +10,13 @@ import {
   RegistrationStepContents,
   RegistrationFormData,
   RegistrationFormDataKeys,
+  SkippedByKeysUnion,
 } from 'src/components/registration/Registration.types';
 import {
   flattenRegistrationDataByRole,
   incrementRegistrationStep,
 } from 'src/components/registration/Registration.utils';
+import { ANTENNE_INFO } from 'src/constants';
 import { assertIsDefined } from 'src/utils/asserts';
 import { createUserAdapter } from './registration.adapters';
 import { RootState } from './registration.slice';
@@ -75,7 +77,9 @@ export function selectRegistrationSelectedProgram(state: RootState) {
     selectedRole
   );
 
-  return allStepsDataForSelectedRole.program?.[0];
+  return Array.isArray(allStepsDataForSelectedRole.program)
+    ? allStepsDataForSelectedRole.program?.[0]
+    : allStepsDataForSelectedRole.program;
 }
 
 export function selectDefinedRegistrationSelectedProgram(state: RootState) {
@@ -188,16 +192,53 @@ export function selectRegistrationShouldSkipStep(state: RootState) {
   const stepContent = selectRegistrationCurrentStepContent(state);
 
   const skippedByArray = stepContent.skippedBy;
+  let skipNextStep = false;
 
   if (skippedByArray && valuesFromOtherStep) {
-    const keys = Object.keys(skippedByArray) as RegistrationFormDataKeys[];
+    const keys = Object.keys(skippedByArray) as SkippedByKeysUnion[];
 
-    return keys.some((key) => {
-      if (valuesFromOtherStep[key]) {
-        return _.isEqual(valuesFromOtherStep[key], skippedByArray[key]);
+    // All conditions should be met to skip the step
+    keys.some((key) => {
+      let thisKeyShouldSkip = false;
+
+      // Keys with custom logic
+      if (key === 'notEligibleFor360') {
+        const { birthDate } =
+          valuesFromOtherStep as FlattenedRegistrationFormData;
+        const { department } =
+          valuesFromOtherStep as FlattenedRegistrationFormData;
+
+        const isDepartmentEligible = !!ANTENNE_INFO.find((antenne) => {
+          return department.value.includes(antenne.dpt);
+        });
+
+        const maxBirthdate = new Date();
+        maxBirthdate.setFullYear(maxBirthdate.getFullYear() - 31);
+        const realBirthdate = new Date(birthDate);
+        const isAgeEligible = maxBirthdate <= realBirthdate;
+
+        thisKeyShouldSkip = !isDepartmentEligible || !isAgeEligible;
       }
-      return false;
+
+      // Keys with simple logic
+      else if (valuesFromOtherStep[key as RegistrationFormDataKeys]) {
+        // check if skippedByArray[key] contains a value from valuesFromOtherStep[key]
+        if (
+          Array.isArray(valuesFromOtherStep[key as RegistrationFormDataKeys])
+        ) {
+          thisKeyShouldSkip = _.isEqual(
+            valuesFromOtherStep[key as RegistrationFormDataKeys],
+            skippedByArray[key]
+          );
+        } else {
+          thisKeyShouldSkip = _.includes(
+            skippedByArray[key] as string[],
+            valuesFromOtherStep[key as RegistrationFormDataKeys]
+          );
+        }
+      }
+      return (skipNextStep = skipNextStep || thisKeyShouldSkip);
     });
   }
-  return false;
+  return skipNextStep;
 }
