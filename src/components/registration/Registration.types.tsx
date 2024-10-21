@@ -237,8 +237,7 @@ type RegistrationLastStepContent = {
 
 const iconSizeProps = { width: 60, height: 60 };
 
-const CoachLastStepContent: Pick<LastStepContent, 'title' | 'bullets'> = {
-  title: 'Vous venez de finaliser votre inscription : Bravo !',
+const CoachLastStepContent: Pick<LastStepContent, 'bullets'> = {
   bullets: [
     {
       icon: <IlluConversation {...iconSizeProps} />,
@@ -287,7 +286,8 @@ export const LastStepContent: RegistrationLastStepContent = {
   [USER_ROLES.CANDIDATE]: {
     [Programs.THREE_SIXTY]: {
       ...CandidateLastStepContent,
-      title: 'On se voit très bientôt !',
+      title:
+        "Il ne vous reste plus qu'a valider votre adresse email en cliquant sur le lien que vous avez reçu par mail.",
       subtitle:
         'On a hâte de vous rencontrer et encore plus hâte de commencer votre accompagnement !',
     },
@@ -302,11 +302,15 @@ export const LastStepContent: RegistrationLastStepContent = {
   [USER_ROLES.COACH]: {
     [Programs.THREE_SIXTY]: {
       ...CoachLastStepContent,
+      title:
+        "Il ne vous reste plus qu'a valider votre adresse email en cliquant sur le lien que vous avez reçu par mail.",
       subtitle:
         'On a hâte de vous rencontrer et encore plus hâte que vous deveniez coach !',
     },
     [Programs.BOOST]: {
       ...CoachLastStepContent,
+      title:
+        "Il ne vous reste plus qu'a valider votre adresse email en cliquant sur le lien que vous avez reçu par mail.",
       subtitle:
         'Vous pouvez désormais demander à votre entourage de vous appeler "coach"',
     },
