@@ -2,8 +2,12 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { HeaderConnectedMainItemDefaultProps } from '../HeaderConnected.types';
-import { StyledHeaderMobile } from 'src/components/headers/Header.styles';
 import {
+  StyledHeaderMobile,
+  StyledMessagingIconContainer,
+} from 'src/components/headers/Header.styles';
+import {
+  ButtonIcon,
   Hamburger,
   Navbar,
   NavbarLogo,
@@ -52,6 +56,17 @@ export const HeaderConnectedContentMobile = ({
         }
         right={
           <div className="uk-padding-small uk-flex uk-flex-middle">
+            {/* Messages */}
+            <StyledMessagingIconContainer>
+              <ButtonIcon
+                icon={messaging.icon}
+                href={messaging.href}
+                color="white"
+              />
+              {messaging.badge && badges[messaging.badge] > 0 && (
+                <div className="pin-notification" />
+              )}
+            </StyledMessagingIconContainer>
             <Hamburger targetId={OFFCANVAS_LOGGED} />
           </div>
         }

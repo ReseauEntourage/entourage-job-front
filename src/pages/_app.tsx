@@ -92,7 +92,7 @@ const EntourageApp = (props: AppProps) => {
 
       if (!shallow && shouldScrollToTop) {
         setShouldScrollToTop(true);
-        document?.getElementById('main-container')?.scrollTo(0, 0);
+        document?.getElementById('body')?.scrollTo(0, 0);
       }
     };
     events.on('routeChangeComplete', scrollToTop);
@@ -113,11 +113,11 @@ const EntourageApp = (props: AppProps) => {
     // <Sentry.ErrorBoundary fallback="An error has occurred">
     <Provider store={store}>
       <DataProvider>
-        <div id="main-container">
+        <>
           <SplashScreen loading={loading} fading={fading} />
           <RouteReadyComponent {...props} />
           <ModalsListener />
-        </div>
+        </>
       </DataProvider>
     </Provider>
     // </Sentry.ErrorBoundary>
