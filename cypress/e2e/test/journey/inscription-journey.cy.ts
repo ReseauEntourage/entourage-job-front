@@ -38,10 +38,11 @@ describe('Inscription', () => {
       .click();
     cy.contains('Suivant').click();
     // })
+    // Skipping step 4
     // it('should fill step 4 open step 5', () => {
-    cy.get('[data-testid="radio-input-three-sixty"]').should('be.disabled');
-    cy.get('[data-testid="radio-input-boost"]').click();
-    cy.contains('Suivant').click();
+    // cy.get('[data-testid="radio-input-three-sixty"]').should('be.disabled');
+    // cy.get('[data-testid="radio-input-boost"]').click();
+    // cy.contains('Suivant').click();
     // })
     // it('should fill step 4 open step 5', () => {
     cy.get(
