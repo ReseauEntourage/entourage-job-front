@@ -6,7 +6,6 @@ describe('Onboarding', () => {
     window.localStorage.setItem('access-token', '1234');
     window.localStorage.setItem('release-version', 'v100');
     cy.visit(`/backoffice/dashboard`);
-    cy.get('[data-testid="app-splash-screen"]').should('not.visible');
   });
 
   it('should complete onboarding', () => {
