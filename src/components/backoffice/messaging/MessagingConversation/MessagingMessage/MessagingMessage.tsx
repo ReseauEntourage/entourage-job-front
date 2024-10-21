@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { Message } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
-import { linkify } from 'src/utils';
+import { escapeHtml, linkify } from 'src/utils';
 import { MessageContainer, StyledMessage } from './MessagingMessage.styles';
 import { MessagingMessageSuspiciousModal } from './MessagingMessageSuspiciousModal/MessagingMessageSuspiciousModal';
 
@@ -39,7 +39,9 @@ export const MessagingMessage = ({ message }: MessagingMessageProps) => {
     <MessageContainer className={isOwnMessage ? 'own-message' : ''}>
       <StyledMessage className={isOwnMessage ? 'own-message' : ''}>
         <p
-          dangerouslySetInnerHTML={{ __html: linkify(message.content) }}
+          dangerouslySetInnerHTML={{
+            __html: linkify(escapeHtml(message.content)),
+          }}
           onClick={handleClick}
         />
       </StyledMessage>

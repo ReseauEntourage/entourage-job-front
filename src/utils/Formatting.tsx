@@ -160,6 +160,13 @@ export const formatCareerPathSentence = (
   };
 };
 
+export const escapeHtml = (unsafe: string): string => {
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+};
+
 export const linkify = (content: string): string => {
   const urlPattern =
     /(\b((https?:\/\/)?(www\.)?[\w-]+(\.[\w.-]+)+(:\d+)?(\/[^\s]*)?))/gi;
@@ -172,14 +179,8 @@ export const linkify = (content: string): string => {
     }
 
     // Escape special characters to prevent XSS attacks
-    const safeUrl = normalizedUrl
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
-    const safeDisplayUrl = url
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
+    const safeUrl = escapeHtml(normalizedUrl);
+    const safeDisplayUrl = escapeHtml(url);
 
     return `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${safeDisplayUrl}</a>`;
   });
