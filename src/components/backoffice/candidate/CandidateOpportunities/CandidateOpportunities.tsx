@@ -2,7 +2,6 @@ import _ from 'lodash';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import PlusIcon from 'assets/icons/plus.svg';
 import { StyledNoResult } from 'src/components/backoffice/Backoffice.styles';
 import { CandidateOffersTab } from 'src/components/backoffice/candidate/CandidateOpportunities/CandidateOffersTab';
 import {
@@ -14,11 +13,12 @@ import { NoOpportunities } from 'src/components/backoffice/opportunities/Opportu
 import { CandidateOpportunitiesList } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunitiesList/CandidateOpportunitiesList';
 import { CandidateOpportunityDetailsContainer } from 'src/components/backoffice/opportunities/OpportunitiesContainer/OpportunityDetails/CandidateOpportunityDetails';
 import { OpportunityError } from 'src/components/backoffice/opportunities/OpportunityError';
-import { SearchBar } from 'src/components/filters/SearchBar';
+import { SearchBar } from 'src/components/filters/SearchBar/SearchBar';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer';
 import { Button, Section } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { FilterObject } from 'src/constants/utils';
@@ -207,7 +207,7 @@ export const CandidateOpportunities = ({
                 );
               }}
             >
-              <PlusIcon />
+              <LucidIcon name="Plus" />
               Ajouter une offre
             </Button>
           </HeaderBackoffice>

@@ -1,16 +1,20 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import CaretDownIcon from 'assets/icons/caret-down.svg';
 import { HeaderConnectedMainItemDefaultProps } from '../HeaderConnected.types';
-import { StyledHeaderDesktop } from 'src/components/headers/Header.styles';
 import {
+  StyledHeaderDesktop,
+  StyledMessagingIconContainer,
+} from 'src/components/headers/Header.styles';
+import {
+  ButtonIcon,
   Dropdown,
   Nav,
   Navbar,
   NavbarLogo,
   SimpleLink,
 } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { ImgProfile } from 'src/components/utils/ImgProfile';
 import { StyledNav } from 'src/components/utils/Navbar/Nav/Nav.styles';
 import { Tag } from 'src/components/utils/Tag';
@@ -33,6 +37,7 @@ export const HeaderConnectedContentDesktop = ({
     [USER_ROLES.COACH_EXTERNAL]: [HeaderConnectedMainItemDefaultProps],
   },
   dropdown = [HeaderConnectedMainItemDefaultProps],
+  messaging = HeaderConnectedMainItemDefaultProps,
 }: HeaderConnectedContentProps) => {
   const user = useAuthenticatedUser();
 
@@ -40,10 +45,16 @@ export const HeaderConnectedContentDesktop = ({
   const logoLink = links[user?.role][0];
 
   const rightItems = [
-    <div
-      className="uk-flex uk-flex-middle"
-      style={{ borderLeft: '1px solid lightgray' }}
-    >
+    <div className="uk-flex uk-flex-middle">
+      {/* Messages */}
+      <StyledMessagingIconContainer>
+        <ButtonIcon icon={messaging.icon} href={messaging.href} />
+        {messaging.badge && badges[messaging.badge] > 0 && (
+          <div className="pin-notification" />
+        )}
+      </StyledMessagingIconContainer>
+
+      {/* Profile */}
       <a
         id="nav-profile"
         className="uk-padding-small uk-padding-remove-vertical"
@@ -61,7 +72,7 @@ export const HeaderConnectedContentDesktop = ({
         <span className="uk-margin-small-left uk-margin-small-right">
           Bonjour {user.firstName}
         </span>
-        <CaretDownIcon />
+        <LucidIcon name="ChevronDown" />
       </a>
       <Dropdown
         dividers={[2]}

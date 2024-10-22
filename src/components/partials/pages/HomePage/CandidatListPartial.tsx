@@ -16,7 +16,7 @@ export const CandidatListPartial = () => {
                 center
                 color="black"
               />
-              <Typography size="large">
+              <Typography size="large" center>
                 Découvrez les derniers CV des nos candidates et partagez-les
                 pour leur donner la visibilité qu&lsquo;elles méritent !
               </Typography>
@@ -28,7 +28,7 @@ export const CandidatListPartial = () => {
                 center
                 color="black"
               />
-              <Typography size="large">
+              <Typography size="large" center>
                 Découvrez les derniers CV des nos candidat(e)s et partagez-les
                 pour leur donner la visibilité qu&lsquo;ils méritent !
               </Typography>
