@@ -5,7 +5,6 @@ import { Api } from 'src/api';
 import { DELAY_REFRESH_CONVERSATIONS } from 'src/constants';
 import {
   messagingActions,
-  selectQuery,
   selectSelectedConversationId,
 } from 'src/use-cases/messaging';
 import { plateform } from 'src/utils/Device';
@@ -15,7 +14,6 @@ import { MessagingProps } from './Messaging.types';
 
 export const Messaging: React.FC<MessagingProps> = (props) => {
   const dispatch = useDispatch();
-  const query = useSelector(selectQuery);
   const selectedConversationId = useSelector(selectSelectedConversationId);
   const requiredConvUserId = new URLSearchParams(window.location.search).get(
     'userId'
@@ -25,7 +23,6 @@ export const Messaging: React.FC<MessagingProps> = (props) => {
    * Fetch the conversations when the component is mounted
    */
   useEffect(() => {
-    dispatch(messagingActions.getConversationsRequested());
     if (requiredConvUserId) {
       Api.getPublicUserProfile(requiredConvUserId).then((response) => {
         const profile = response.data;
@@ -39,7 +36,7 @@ export const Messaging: React.FC<MessagingProps> = (props) => {
         dispatch(messagingActions.selectConversationByParticipants([user]));
       });
     }
-  }, [dispatch, query, requiredConvUserId]);
+  }, [dispatch, requiredConvUserId]);
 
   /**
    * Fetch the selected Conversation when a conversation is selected
