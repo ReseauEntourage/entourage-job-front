@@ -2,7 +2,10 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { HeaderConnectedMainItemDefaultProps } from '../HeaderConnected.types';
-import { StyledHeaderDesktop } from 'src/components/headers/Header.styles';
+import {
+  StyledHeaderDesktop,
+  StyledMessagingIconContainer,
+} from 'src/components/headers/Header.styles';
 import {
   ButtonIcon,
   Dropdown,
@@ -44,7 +47,12 @@ export const HeaderConnectedContentDesktop = ({
   const rightItems = [
     <div className="uk-flex uk-flex-middle">
       {/* Messages */}
-      <ButtonIcon icon={messaging.icon} href={messaging.href} />
+      <StyledMessagingIconContainer>
+        <ButtonIcon icon={messaging.icon} href={messaging.href} />
+        {messaging.badge && badges[messaging.badge] > 0 && (
+          <div className="pin-notification" />
+        )}
+      </StyledMessagingIconContainer>
 
       {/* Profile */}
       <a

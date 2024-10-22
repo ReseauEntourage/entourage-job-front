@@ -245,7 +245,7 @@ export const renderLinks = (
     },
     messaging: {
       href: '/backoffice/messaging',
-      icon: <LucidIcon size={27} name="MessageCircleMore" />,
+      icon: <LucidIcon size={35} name="MessageCircleMore" stroke="thin" />,
       name: 'Messages',
       badge: 'messaging',
     },

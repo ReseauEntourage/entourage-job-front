@@ -1,9 +1,11 @@
 import { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
 import { NotifBadges } from 'src/components/headers/HeaderConnected/HeaderConnected.types';
 import { ADMIN_ROLES, USER_ROLES } from 'src/constants/users';
+import { selectUnseenConversationCount } from 'src/use-cases/messaging';
 import { usePrevious } from './utils';
 
 const reducePromisesResults = (data) => {
@@ -28,8 +30,9 @@ export function useNotifBadges(
     note: 0,
     cv: 0,
     members: 0,
-    messaging: 1,
+    messaging: 0,
   });
+  const unseenConversationCount = useSelector(selectUnseenConversationCount);
 
   const prevUser = usePrevious(user);
 
@@ -67,7 +70,6 @@ export function useNotifBadges(
                 ...prevBadges,
                 members: pendingCVs || 0,
                 offers: pendingOpportunities || 0,
-                messages: 42 || 0,
               };
             });
           })
@@ -93,7 +95,6 @@ export function useNotifBadges(
                 offers: unseenOpportunities || 0,
                 note: noteHasBeenModified ? 1 : 0,
                 cv: cvHasBeenModified ? 1 : 0,
-                messages: 1,
               };
             });
           })
@@ -103,6 +104,15 @@ export function useNotifBadges(
       }
     }
   }, [user, path, prevUser, candidateId]);
+
+  useEffect(() => {
+    setBadges((prevBadges) => {
+      return {
+        ...prevBadges,
+        messaging: unseenConversationCount,
+      };
+    });
+  }, [unseenConversationCount]);
 
   return badges;
 }

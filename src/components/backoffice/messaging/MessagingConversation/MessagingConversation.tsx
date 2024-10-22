@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MessagingEmptyState } from '../MessagingEmptyState';
 import { Button } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { useIsMobile } from 'src/hooks/utils';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import {
@@ -10,6 +11,7 @@ import {
   selectSelectedConversationId,
   selectPinnedInfo,
 } from 'src/use-cases/messaging';
+import { selectConversationParticipantsAreDeleted } from 'src/use-cases/messaging/messaging.selectors';
 import {
   MessagingConversationContainer,
   MessagingInput,
@@ -27,6 +29,9 @@ export const MessagingConversation = () => {
   const currentUserId = useSelector(selectCurrentUserId);
   const selectedConversationId = useSelector(selectSelectedConversationId);
   const selectedConversation = useSelector(selectSelectedConversation);
+  const conversationParticipantsAreDeleted = useSelector(
+    selectConversationParticipantsAreDeleted
+  );
   const pinnedInfo = useSelector(selectPinnedInfo);
   const [newMessage, setNewMessage] = React.useState<string>('');
   const [scrollBehavior, setScrollBehavior] = React.useState<ScrollBehavior>(
@@ -85,14 +90,21 @@ export const MessagingConversation = () => {
       (participant) => participant.id !== currentUserId
     );
     const addresseesAreUnavailable = addressees?.some(
-      (addressee) => addressee.userProfile.isAvailable === false
+      (addressee) => addressee.userProfile?.isAvailable === false
     );
     if (addresseesAreUnavailable) {
       dispatch(messagingActions.setPinnedInfo('ADDRESSEE_UNAVAILABLE'));
+    } else if (conversationParticipantsAreDeleted) {
+      dispatch(messagingActions.setPinnedInfo('ADDRESSEE_DELETED'));
     } else {
       dispatch(messagingActions.setPinnedInfo(null));
     }
-  }, [currentUserId, dispatch, selectedConversation]);
+  }, [
+    conversationParticipantsAreDeleted,
+    currentUserId,
+    dispatch,
+    selectedConversation,
+  ]);
 
   useEffect(() => {
     adjustMessageHeight();
@@ -100,10 +112,12 @@ export const MessagingConversation = () => {
 
   useEffect(() => {
     if (selectedConversation && selectedConversation.messages) {
-      scrollToBottom();
+      setTimeout(() => {
+        scrollToBottom();
+      }, 50);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedConversation]);
+  }, [selectedConversation?.id, selectedConversation?.messages.length]);
 
   return (
     <MessagingConversationContainer className={isMobile ? 'mobile' : ''}>
@@ -114,14 +128,12 @@ export const MessagingConversation = () => {
           <MessagingConversationHeader />
           {pinnedInfo && <MessagingPinnedInfo pinnedInfo={pinnedInfo} />}
           <MessagingMessagesContainer className={isMobile ? 'mobile' : ''}>
-            {selectedConversation && selectedConversation.messages && (
-              <>
-                {selectedConversation.messages.map((message) => (
-                  <MessagingMessage key={message.id} message={message} />
-                ))}
-                <div ref={messagesEndRef} />
-              </>
-            )}
+            {selectedConversation &&
+              selectedConversation.messages &&
+              selectedConversation.messages.map((message) => (
+                <MessagingMessage key={message.id} message={message} />
+              ))}
+            <div ref={messagesEndRef} />
           </MessagingMessagesContainer>
           {/* Bloc de rédaction d'un message */}
           <MessagingMessageForm className={isMobile ? 'mobile' : ''}>
@@ -134,9 +146,26 @@ export const MessagingConversation = () => {
                 onChange={(e) => {
                   setNewMessage(e.target.value);
                 }}
+                disabled={conversationParticipantsAreDeleted}
               />
             </MessagingInputContainer>
-            <Button onClick={sendNewMessage}>Envoyer</Button>
+            {isMobile ? (
+              <Button
+                style="custom-secondary-inverted"
+                onClick={sendNewMessage}
+                disabled={conversationParticipantsAreDeleted}
+                rounded
+              >
+                <LucidIcon name="Send" size={25} />
+              </Button>
+            ) : (
+              <Button
+                onClick={sendNewMessage}
+                disabled={conversationParticipantsAreDeleted}
+              >
+                Envoyer
+              </Button>
+            )}
           </MessagingMessageForm>
         </>
       )}
