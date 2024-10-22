@@ -29,3 +29,10 @@ export const StyledAiderProgrammesCTAsContainer = styled.div`
     margin-top: 4px;
   }
 `;
+
+export const FlexContainer = styled.div`
+  display: flex;
+  align-items: left;
+  gap: 20px;
+  flex-wrap: wrap;
+`;

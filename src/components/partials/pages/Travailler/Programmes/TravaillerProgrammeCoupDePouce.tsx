@@ -13,7 +13,10 @@ import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
 import { useIsDesktop } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
-import { StyledAiderProgrammesListElement } from './TravaillerProgrammes.styles';
+import {
+  FlexContainer,
+  StyledAiderProgrammesListElement,
+} from './TravaillerProgrammes.styles';
 
 const content = [
   {
@@ -124,18 +127,28 @@ export const TravaillerProgrammeCoupDePouce = ({
             </StyledAiderProgrammesListElement>
           </List>
         </div>
-        <Button
-          style="custom-secondary-inverted"
-          onClick={() => {
-            gaEvent(
-              GA_TAGS.PAGE_TRAVAILLER_PROGRAMME_COUP_DE_POUCE_INSCRIPTION_CLICK
-            );
-          }}
-          dataTestId="button-inscrire-coup-de-pouce"
-          href="/inscription"
-        >
-          S&lsquo;inscrire
-        </Button>
+        <FlexContainer>
+          <Button
+            style="custom-secondary-inverted"
+            onClick={() => {
+              gaEvent(
+                GA_TAGS.PAGE_TRAVAILLER_PROGRAMME_COUP_DE_POUCE_INSCRIPTION_CLICK
+              );
+            }}
+            dataTestId="button-inscrire-coup-de-pouce"
+            href="/inscription"
+          >
+            S&lsquo;inscrire
+          </Button>
+          {/* Todo: gaEvent and url tbd */}
+          <Button
+            style="custom-secondary"
+            dataTestId="button-orienter-candidat"
+            href="/orienter-candidat"
+          >
+            Orienter un candidat
+          </Button>
+        </FlexContainer>
       </SimpleImageText>
       <RowIconTitleText content={content} backgroundColor="blue" />
     </>
