@@ -4,10 +4,13 @@ import { COLORS } from 'src/constants/styles';
 export const ContainerStyled = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 30px;
   flex: 1;
   width: 100%;
   color: ${COLORS.black};
+`;
+
+export const StyledSearchBarContainer = styled.div`
+  padding: 30px 15px;
 `;
 
 export const StyledConversationsContainer = styled.div`
@@ -18,7 +21,6 @@ export const StyledConversationsContainer = styled.div`
     border-bottom: 1px solid #e0e0e0;
   }
   :not(.mobile) {
-    height: 555px;
-    border-radius: 30px;
+    height: 100%;
   }
 `;

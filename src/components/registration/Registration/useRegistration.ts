@@ -5,8 +5,10 @@ import {
   REGISTRATION_CONFIRMATION_STEP,
   RegistrationFormData,
   RegistrationFormDataKeys,
+  FlattenedRegistrationFormData,
 } from '../Registration.types';
 import { ReduxRequestEvents } from 'src/constants';
+import { Programs } from 'src/constants/programs';
 import { notificationsActions } from 'src/use-cases/notifications';
 import {
   createUserSelectors,
@@ -80,11 +82,35 @@ export function useRegistration() {
 
   useEffect(() => {
     if (shouldSkipStep) {
+      // If the user is not eligible for 360, we assign the Boost program to him
+      if (
+        stepContent &&
+        stepContent.skippedBy &&
+        stepContent.skippedBy.notEligibleFor360
+      ) {
+        if (valuesFromOtherStep) {
+          const { department } =
+            valuesFromOtherStep as FlattenedRegistrationFormData;
+          dispatch(
+            registrationActions.setRegistrationCurrentStepData({
+              program: [Programs.BOOST],
+              department,
+            })
+          );
+        }
+      }
       replace(`/inscription/${nextStep}`, undefined, {
         shallow: true,
       });
     }
-  }, [nextStep, replace, shouldSkipStep]);
+  }, [
+    nextStep,
+    replace,
+    shouldSkipStep,
+    dispatch,
+    stepContent,
+    valuesFromOtherStep,
+  ]);
 
   useEffect(() => {
     if (
