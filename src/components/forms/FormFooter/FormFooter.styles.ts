@@ -6,19 +6,14 @@ export const StyledFooterForm = styled.div`
   flex-direction: column;
   .cta-container {
     padding-top: 24px;
-    // max-width: 440px;
-    display: block;
     margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
-    > div {
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-
-      button:last-child:not(:only-child) {
-        margin-left: 20px;
-      }
+    button:last-child:not(:only-child) {
+      margin-left: 20px;
     }
   }
 `;

@@ -1,12 +1,20 @@
 import styled from 'styled-components';
+import { COLORS } from 'src/constants/styles';
+
+export const StyledRegistrationPage = styled.div`
+  background: ${COLORS.lightgray};
+  min-height: 100vh;
+`;
 
 export const StyledRegistrationContainer = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
-
+  justify-self: center;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  width: 795px;
   > * {
-    max-width: 700px;
+    max-width: 795px;
   }
 `;
 

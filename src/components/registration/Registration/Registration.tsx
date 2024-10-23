@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import React, { useEffect } from 'react';
+import { EntourageProLogoPrimary } from 'assets/icons/icons';
 import {
   StyledRegistrationContainer,
   StyledRegistrationFooter,
+  StyledRegistrationPage,
   StyledRegistrationSpinnerContainer,
   StyledRegistrationSubtitle,
 } from '../Registration.styles';
@@ -30,44 +32,54 @@ export function Registration() {
   }, [isRegistrationLoading]);
 
   return (
-    <StyledRegistrationContainer>
-      <Card title="Créer mon compte Entourage Pro en 5 minutes">
-        {!isRegistrationLoading && (
-          <>
-            {stepContent.subtitle && (
-              <StyledRegistrationSubtitle>
-                <Typography weight="normal">{stepContent.subtitle}</Typography>
-                {stepContent.annotation && (
-                  <Typography weight="normal" color="lighter" variant="italic">
-                    {stepContent.annotation}
+    <StyledRegistrationPage>
+      <StyledRegistrationContainer>
+        <EntourageProLogoPrimary width={226} height={78} />
+        <Card title="Créer mon compte Entourage Pro en 5 minutes">
+          {!isRegistrationLoading && (
+            <>
+              {stepContent.subtitle && (
+                <StyledRegistrationSubtitle>
+                  <Typography weight="normal" size="large">
+                    {stepContent.subtitle}
                   </Typography>
-                )}
-              </StyledRegistrationSubtitle>
-            )}
-            <FormWithValidation
-              formSchema={stepContent.form}
-              defaultValues={{
-                ...(stepData || {}),
-                ...(defaultValues || {}),
-              }}
-              onSubmit={onSubmitStepForm}
-              submitText="Suivant"
-              cancelText="Précédent"
-              {...(!isFirstRegistrationStep ? { onCancel: onBack } : {})}
-            />
-          </>
-        )}
-        {isRegistrationLoading && (
-          <StyledRegistrationSpinnerContainer>
-            <Spinner />
-          </StyledRegistrationSpinnerContainer>
-        )}
-        <StyledRegistrationFooter>
-          <Typography size="small">
-            Vous avez déjà un compte ? <Link href="/login">Connectez-vous</Link>
-          </Typography>
-        </StyledRegistrationFooter>
-      </Card>
-    </StyledRegistrationContainer>
+                  {stepContent.annotation && (
+                    <Typography
+                      weight="normal"
+                      color="lighter"
+                      variant="italic"
+                    >
+                      {stepContent.annotation}
+                    </Typography>
+                  )}
+                </StyledRegistrationSubtitle>
+              )}
+              <FormWithValidation
+                formSchema={stepContent.form}
+                defaultValues={{
+                  ...(stepData || {}),
+                  ...(defaultValues || {}),
+                }}
+                onSubmit={onSubmitStepForm}
+                submitText="Suivant"
+                cancelText={isFirstRegistrationStep ? 'Annuler' : 'Précédent'}
+                {...{ onCancel: onBack }}
+              />
+            </>
+          )}
+          {isRegistrationLoading && (
+            <StyledRegistrationSpinnerContainer>
+              <Spinner />
+            </StyledRegistrationSpinnerContainer>
+          )}
+          <StyledRegistrationFooter>
+            <Typography size="small">
+              Vous avez déjà un compte ?{' '}
+              <Link href="/login">Connectez-vous</Link>
+            </Typography>
+          </StyledRegistrationFooter>
+        </Card>
+      </StyledRegistrationContainer>
+    </StyledRegistrationPage>
   );
 }

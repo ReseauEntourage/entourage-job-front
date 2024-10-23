@@ -43,25 +43,23 @@ export const FormFooter = ({
         )}
 
         <div className="cta-container">
-          <div>
-            {onCancel && (
-              <Button
-                style="custom-secondary"
-                color="primaryBlue"
-                onClick={onCancel}
-                dataTestId={`form-cancel-${formId}`}
-              >
-                {cancelText || 'Annuler'}
-              </Button>
-            )}
-            <ButtonPost
-              text={submitText || 'Envoyer'}
-              style="custom-secondary-inverted"
-              action={onSubmit}
-              isLoadingOverride={isLoadingOverride}
-              dataTestId={`form-confirm-${formId}`}
-            />
-          </div>
+          {onCancel && (
+            <Button
+              style="custom-secondary"
+              color="primaryBlue"
+              onClick={onCancel}
+              dataTestId={`form-cancel-${formId}`}
+            >
+              {cancelText || 'Annuler'}
+            </Button>
+          )}
+          <ButtonPost
+            text={submitText || 'Envoyer'}
+            style="custom-secondary-inverted"
+            action={onSubmit}
+            isLoadingOverride={isLoadingOverride}
+            dataTestId={`form-confirm-${formId}`}
+          />
         </div>
       </div>
     </StyledFooterForm>
