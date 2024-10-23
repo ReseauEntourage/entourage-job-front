@@ -103,7 +103,7 @@ const Suivi = () => {
       setLoading(true);
       Api.getUserCandidate()
         .then(({ data }) => {
-          if (USER_ROLES.COACH_EXTERNAL === user.role) {
+          if (USER_ROLES.REFERRER === user.role) {
             setUserCandidat(
               data.find((usCand) => usCand.candidat.id === candidateId)
             );

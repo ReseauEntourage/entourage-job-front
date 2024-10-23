@@ -19,16 +19,11 @@ export const authenticatedPermissions = [
       '/backoffice/candidat/[candidateId]/cv',
       '/backoffice/admin/offres',
     ],
-    roles: [
-      USER_ROLES.CANDIDATE,
-      USER_ROLES.CANDIDATE_EXTERNAL,
-      USER_ROLES.COACH,
-      USER_ROLES.COACH_EXTERNAL,
-    ],
+    roles: [USER_ROLES.CANDIDATE, USER_ROLES.COACH, USER_ROLES.REFERRER],
   },
   {
     paths: ['/backoffice/candidat/list'],
-    roles: [USER_ROLES.COACH_EXTERNAL],
+    roles: [USER_ROLES.REFERRER],
   },
   {
     paths: ['/backoffice/admin', '/backoffice/candidat/[candidateId]/offres'],

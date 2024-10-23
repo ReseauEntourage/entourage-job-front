@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
-import { ExternalCoachMemberList } from 'src/components/backoffice/candidate/ExternalCoach/ExternalCoachMemberList';
+import { ReferrerMemberList } from 'src/components/backoffice/candidate/Referrer/ReferrerMemberList';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { Section } from 'src/components/utils';
 
@@ -14,7 +14,7 @@ const List = () => {
           title="Consulter la liste de mes candidats"
           description="Retrouvez ici tous les candidats"
         />
-        <ExternalCoachMemberList />
+        <ReferrerMemberList />
       </Section>
     </LayoutBackOffice>
   );

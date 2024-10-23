@@ -132,7 +132,6 @@ export const renderLinks = (
         },
       ],
       [USER_ROLES.CANDIDATE]: candidateHeaderItems,
-      [USER_ROLES.CANDIDATE_EXTERNAL]: candidateHeaderItems,
       [USER_ROLES.COACH]: [
         {
           href: '/backoffice/dashboard',
@@ -187,7 +186,7 @@ export const renderLinks = (
           tag: GA_TAGS.BACKOFFICE_COACH_HEADER_BAO_CLIC,
         },
       ],
-      [USER_ROLES.COACH_EXTERNAL]: [
+      [USER_ROLES.REFERRER]: [
         {
           href: `/backoffice/candidat/list`,
           disabled: !candidateId,
