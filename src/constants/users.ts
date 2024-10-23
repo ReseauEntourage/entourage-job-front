@@ -35,6 +35,11 @@ export type NormalUserRole =
   | typeof USER_ROLES.CANDIDATE
   | typeof USER_ROLES.COACH;
 
+export type RegistrableUserRole =
+  | typeof USER_ROLES.CANDIDATE
+  | typeof USER_ROLES.COACH
+  | typeof USER_ROLES.REFERRER;
+
 export const NORMAL_USER_ROLES: NormalUserRole[] = [
   USER_ROLES.CANDIDATE,
   USER_ROLES.COACH,

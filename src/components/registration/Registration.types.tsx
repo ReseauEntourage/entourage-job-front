@@ -74,7 +74,7 @@ export type RegistrationStepData = Partial<{
 
 const RegistrationLabels = {
   MULTIPLE_CHOICE: 'Plusieurs choix possible',
-  SINGLE_CHOICE: 'Sélectionnez une des deux options',
+  SINGLE_CHOICE: 'Sélectionnez une des options',
   FUTURE_CHANGE: 'Vous pourrez modifier votre choix à tout moment',
 } as const;
 
