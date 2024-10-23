@@ -53,7 +53,6 @@ export const ExternalCVCard = ({ dataTestId }: ExternalCvCardProps) => {
           <Tooltip id={tooltipId} style={{ zIndex: 99 }} />
         </>
       }
-      editCallback={() => {}}
     >
       <StyledCvCardContentContainer>
         <StyledCvUploadInfos>
