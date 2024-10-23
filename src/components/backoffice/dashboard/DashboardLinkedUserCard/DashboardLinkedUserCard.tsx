@@ -19,7 +19,7 @@ export const DashboardLinkedUserCard = () => {
   const linkedUser = useSelector(selectLinkedUser);
   if (
     !linkedUser ||
-    isRoleIncluded([USER_ROLES.COACH_EXTERNAL, USER_ROLES.ADMIN], user.role)
+    isRoleIncluded([USER_ROLES.REFERRER, USER_ROLES.ADMIN], user.role)
   ) {
     return null;
   }

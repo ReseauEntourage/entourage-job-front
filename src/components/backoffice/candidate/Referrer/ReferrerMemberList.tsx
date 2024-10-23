@@ -10,7 +10,7 @@ import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedU
 
 const uuidValue = uuid();
 
-export const ExternalCoachMemberList = () => {
+export const ReferrerMemberList = () => {
   const user = useAuthenticatedUser();
 
   const [loading, setLoading] = useState(true);
@@ -23,13 +23,16 @@ export const ExternalCoachMemberList = () => {
 
   useEffect(() => {
     const getRelatedUsers = async () => {
-      const relatedUsersPromises = user.coaches
-        ? user.coaches.map(async (relatedUser) => {
+      const relatedUsersPromises = user.referredCandidates
+        ? user.referredCandidates.map(async (relatedUser) => {
             const { candidat, ...relatedUserWithoutCandidate } = relatedUser;
+            const candidatWithCandidat = candidat as UserWithUserCandidate;
             try {
-              const response = await Api.getCVByCandidateId(candidat?.id);
+              const response = await Api.getCVByCandidateId(
+                candidatWithCandidat?.candidat?.id
+              );
               return {
-                ...candidat,
+                ...candidatWithCandidat.candidat,
                 candidat: {
                   ...relatedUserWithoutCandidate,
                   cvs: [response.data],
@@ -48,7 +51,7 @@ export const ExternalCoachMemberList = () => {
       setLoading(false);
     };
     getRelatedUsers();
-  }, [user.coaches]);
+  }, [user.referredCandidates]);
 
   const updateMembers = useCallback(
     (newUser: UserWithUserCandidate) => {

@@ -13,11 +13,7 @@ import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Button } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { Heading } from 'src/components/utils/Inputs/Heading';
-import {
-  EXTERNAL_USER_ROLES,
-  RELATED_ROLES,
-  USER_ROLES,
-} from 'src/constants/users';
+import { RELATED_ROLES, ROLES_WITH_ORGANIZATION } from 'src/constants/users';
 import { useMemberId } from 'src/hooks/queryParams/useMemberId';
 import { useIsMobile } from 'src/hooks/utils';
 import { notificationsActions } from 'src/use-cases/notifications';
@@ -97,7 +93,7 @@ export function ParametersMemberTab({
       'cvHidden',
     ];
 
-    if (user && isRoleIncluded(EXTERNAL_USER_ROLES, user.role)) {
+    if (user && isRoleIncluded(ROLES_WITH_ORGANIZATION, user.role)) {
       return [...columnsToShow, 'organization'];
     }
 
@@ -105,9 +101,6 @@ export function ParametersMemberTab({
   }, [user]);
 
   const relatedUser = getRelatedUser(user);
-
-  const pluralForm = relatedUser && relatedUser.length > 1 ? 's' : '';
-  const externalCoachTitle = `des candidat${pluralForm} externe${pluralForm}`;
 
   const relatedMembers = useMemo(() => {
     return relatedUser?.map((member) => {
@@ -190,11 +183,7 @@ export function ParametersMemberTab({
         <StyledRelatedMemberList>
           <Heading
             id="related-user-title"
-            title={`Information ${
-              user.role === USER_ROLES.COACH_EXTERNAL
-                ? externalCoachTitle
-                : `du ${RELATED_ROLES[user.role].toLowerCase()}`
-            } `}
+            title={`Information du ${RELATED_ROLES[user.role].toLowerCase()}`}
           />
           <MemberTable
             columns={memberColumns}

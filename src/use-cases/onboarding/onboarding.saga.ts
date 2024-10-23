@@ -31,7 +31,7 @@ export function* launchOnboardingSaga() {
   const userHelps = yield* select(selectCurrentUserProfileHelps);
 
   // if admin or external Coach, no Onboarding
-  if (isRoleIncluded([USER_ROLES.ADMIN, USER_ROLES.COACH_EXTERNAL], userRole)) {
+  if (isRoleIncluded([USER_ROLES.ADMIN, USER_ROLES.REFERRER], userRole)) {
     yield* put(endOnboarding());
   }
 
