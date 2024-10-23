@@ -574,6 +574,10 @@ export class APIHandler {
     return this.get(`/messaging/conversations?query=${encodeURI(query || '')}`);
   }
 
+  getUnseenConversationsCount(): Promise<AxiosResponse> {
+    return this.get('/messaging/conversations/unseen-count');
+  }
+
   getConversationById(conversationId: string): Promise<AxiosResponse> {
     return this.get(`/messaging/conversations/${conversationId}`);
   }

@@ -1,15 +1,17 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Api } from 'src/api';
 import {
   Button,
   ButtonMock,
-  Dropdown,
   ImgProfile,
   Section,
   Tag,
 } from 'src/components/utils';
 import { AvailabilityTag } from 'src/components/utils/AvailabilityTag/AvailabilityTag';
+import { Dropdown } from 'src/components/utils/Dropdown/Dropdown';
+import { DropdownToggle } from 'src/components/utils/Dropdown/DropdownToggle';
 import { H1, H5 } from 'src/components/utils/Headings';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { ImageInput } from 'src/components/utils/Inputs';
@@ -17,6 +19,7 @@ import { Spinner } from 'src/components/utils/Spinner';
 import { UserActions } from 'src/components/utils/UserActions/UserActions';
 import { COLORS } from 'src/constants/styles';
 import { USER_ROLES } from 'src/constants/users';
+import { selectCurrentUserId } from 'src/use-cases/current-user';
 import {
   StyledHeaderAvailibilityAndUserActions,
   StyledHeaderNameAndRole,
@@ -54,9 +57,13 @@ export const HeaderProfileDesktop = ({
     contextualRole,
   } = useHeaderProfile(role);
   const router = useRouter();
+  const currentUserId = useSelector(selectCurrentUserId);
 
   const hasCv = !!cvUrl || hasExternalCv;
   const hasTwoCv = !!cvUrl && hasExternalCv;
+  const ownProfile = currentUserId === id;
+  const displayMessageButton =
+    shouldShowAllProfile && isAvailable && !ownProfile;
 
   const openProCv = () => {
     window.open(`/cv/${cvUrl}`, '_blank');
@@ -111,36 +118,35 @@ export const HeaderProfileDesktop = ({
             )}
             {hasCv && (
               <StyledHeaderProfileCVButton>
-                <Button
-                  id="nav-cv-button"
-                  size="small"
-                  style="custom-secondary"
-                  onClick={!hasTwoCv ? openCv : undefined}
-                >
-                  Voir le CV {hasTwoCv && <LucidIcon name="ChevronDown" />}
-                </Button>
-                {hasTwoCv && (
-                  <Dropdown
-                    id="nav-cv-dropdown"
-                    boundaryId="nav-cv-button"
-                    dividers={[1]}
+                {!hasTwoCv ? (
+                  <Button
+                    id="nav-cv-button"
+                    size="small"
+                    style="custom-secondary"
+                    onClick={openCv}
                   >
-                    <a
-                      aria-hidden="true"
-                      onClick={() => {
-                        openExternalCv();
-                      }}
-                    >
-                      Voir le CV personnel
-                    </a>
-                    <a
-                      aria-hidden="true"
-                      onClick={() => {
-                        openProCv();
-                      }}
-                    >
-                      Voir le CV Entourage Pro
-                    </a>
+                    Voir le CV
+                  </Button>
+                ) : (
+                  <Dropdown>
+                    <DropdownToggle>
+                      <Button
+                        id="nav-cv-button"
+                        size="small"
+                        style="custom-secondary"
+                      >
+                        Voir le CV{' '}
+                        {hasTwoCv && <LucidIcon name="ChevronDown" />}
+                      </Button>
+                    </DropdownToggle>
+                    <Dropdown.Menu openDirection="right">
+                      <Dropdown.Item onClick={openExternalCv}>
+                        Voir le CV personnel
+                      </Dropdown.Item>
+                      <Dropdown.Item onClick={openProCv}>
+                        Voir le CV Entourage Pro
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
                   </Dropdown>
                 )}
               </StyledHeaderProfileCVButton>
@@ -187,14 +193,16 @@ export const HeaderProfileDesktop = ({
                 />
               </>
             )}
-            <div>
-              <Button
-                onClick={openConversation}
-                style="custom-primary-inverted"
-              >
-                Envoyer un message
-              </Button>
-            </div>
+            {displayMessageButton && (
+              <div>
+                <Button
+                  onClick={openConversation}
+                  style="custom-primary-inverted"
+                >
+                  Envoyer un message
+                </Button>
+              </div>
+            )}
           </StyledHeaderProfileInfoContainer>
         </StyledHeaderProfileContent>
       </Section>

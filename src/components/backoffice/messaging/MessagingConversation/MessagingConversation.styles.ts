@@ -10,12 +10,7 @@ export const MessagingConversationContainer = styled.div`
   flex-grow: 1;
   border: ${COLORS.lightgray} 1px solid;
   box-sizing: border-box;
-  &:not(.mobile) {
-    border-radius: 30px 30px 5px 5px;
-  }
-  &.mobile {
-    height: 100vh;
-  }
+  height: 100%;
 `;
 
 export const MessagingMessagesContainer = styled.div`
@@ -27,9 +22,7 @@ export const MessagingMessagesContainer = styled.div`
   padding: 20px;
   box-sizing: border-box;
   align-items: flex-start;
-  &:not(.mobile) {
-    height: 450px;
-  }
+  flex: auto;
 `;
 
 export const MessagingMessageForm = styled.form`
@@ -37,6 +30,7 @@ export const MessagingMessageForm = styled.form`
   align-items: flex-end;
   background: ${COLORS.lightgray};
   padding: 30px 20px;
+  box-sizing: border-box;
   gap: 25px;
   &.mobile {
     position: sticky;
@@ -49,6 +43,7 @@ export const MessagingInputContainer = styled.div`
   flex: 1;
   background: ${COLORS.white};
   padding: 15px 20px;
+  box-sizing: border-box;
   width: 100%;
   border-radius: 30px;
 `;
@@ -63,6 +58,7 @@ export const MessagingInput = styled.textarea`
   font-size: 14px;
   font-family: Poppins, sans-serif;
   padding: 0;
+  box-sizing: border-box;
   margin: 0
   box-sizing: border-box;
   background: transparent;
