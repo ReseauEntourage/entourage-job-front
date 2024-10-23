@@ -1,8 +1,28 @@
 import React, { useState } from 'react';
 import { Typography } from 'src/components/utils';
-import { Program, ProgramOptions, Programs } from 'src/constants/programs';
-import { USER_ROLES } from 'src/constants/users';
+import { Program, ProgramBullet, Programs } from 'src/constants/programs';
 import { SelectCard, SelectCardProps } from './SelectCard';
+
+// Cannot use ProgramOptions[USER_ROLES.CANDIDATE] because we switched to usinghg radio component
+// Keeping the story if we need it later
+const candidateProgramOptions = [
+  {
+    value: Programs.THREE_SIXTY,
+    label: 'Format 360',
+    bullets: ProgramBullet.three_sixty,
+    description:
+      "Je souhaite bénéficier d'un accompagnement personnalisé avec un coach dédié (définition de mon projet, création de mon CV, recherches, préparation aux entretiens...)",
+    inputId: 'radio-input-three-sixty',
+  },
+  {
+    value: Programs.BOOST,
+    label: 'Format Coup de pouce',
+    bullets: ProgramBullet.boost,
+    description:
+      "Je souhaite profiter de coups de pouces ponctuels pour m'aider dans ma recherche d'emploi (atelier CV et entretiens, partage de réseau, conseils pour la recherche, partage d'expérience...)",
+    inputId: 'radio-input-boost',
+  },
+];
 
 const meta = {
   title: 'Select Card',
@@ -24,7 +44,7 @@ const meta = {
   },
   args: {
     id: 'select-list-stories',
-    options: ProgramOptions[USER_ROLES.CANDIDATE],
+    options: candidateProgramOptions,
   },
   decorators: [
     (Story) => {

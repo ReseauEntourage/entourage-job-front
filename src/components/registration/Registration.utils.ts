@@ -8,7 +8,7 @@ import {
 export const flattenRegistrationDataByRole = (
   data: RegistrationStepData,
   selectedRole: NormalUserRole
-) => {
+): FlattenedRegistrationFormData => {
   const allSteps: RegistrationStep[] = Object.keys(data) as RegistrationStep[];
 
   return allSteps.reduce((acc, curr) => {
@@ -16,10 +16,11 @@ export const flattenRegistrationDataByRole = (
 
     if (stepDataForSelectedRole) {
       return {
-        ...acc,
         ...stepDataForSelectedRole,
+        ...acc,
       };
     }
+
     return acc;
   }, {} as FlattenedRegistrationFormData);
 };

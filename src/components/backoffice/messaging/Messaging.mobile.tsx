@@ -4,7 +4,7 @@ import { StyledBackofficeBackground } from '../Backoffice.styles';
 import { Section } from 'src/components/utils';
 import { H1 } from 'src/components/utils/Headings';
 import {
-  selectConversations,
+  selectHasMessages,
   selectSelectedConversationId,
 } from 'src/use-cases/messaging';
 import {
@@ -18,13 +18,11 @@ import { MessagingEmptyState } from './MessagingEmptyState';
 
 export const MessagingMobile = () => {
   const selectedConversationId = useSelector(selectSelectedConversationId);
-  const conversations = useSelector(selectConversations);
+  const hasMessage = useSelector(selectHasMessages);
 
   return (
     <>
-      {conversations !== null &&
-      conversations.length <= 0 &&
-      !selectedConversationId ? (
+      {!hasMessage ? (
         <MessagingEmptyStateContainerMobile>
           <MessagingEmptyState
             title="Aucun message dans votre messagerie"
