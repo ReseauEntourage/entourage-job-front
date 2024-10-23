@@ -133,16 +133,12 @@ export const RegistrationStepContents: {
       form: formRegistrationCandidateInfo,
     },
     [USER_ROLES.COACH]: {
-      subtitle: "Choisissez le type d'accompagnement qui vous correspond",
-      annotation: RegistrationLabels.FUTURE_CHANGE,
       form: formRegistrationCoachProgram,
       dependsOn: ['department'],
     },
   },
   'step-4': {
     [USER_ROLES.CANDIDATE]: {
-      subtitle: "Choisissez le type d'accompagnement qui vous correspond",
-      annotation: RegistrationLabels.FUTURE_CHANGE,
       form: formRegistrationCandidateProgram,
       dependsOn: ['department', 'birthDate'],
       // Pour un candidat qui n'a pas le choix, on skip cette etape
