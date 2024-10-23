@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SearchBar } from 'src/components/filters/SearchBar/SearchBar';
 import { useIsMobile } from 'src/hooks/utils';
@@ -20,15 +20,27 @@ export const MessagingConversationList = () => {
   const query = useSelector(selectQuery);
   const isMobile = useIsMobile();
 
+  useEffect(() => {
+    dispatch(messagingActions.getConversationsRequested());
+  }, [dispatch, query]);
+
+  const setSearch = useCallback(
+    (search) => {
+      dispatch(messagingActions.setQuery(search));
+    },
+    [dispatch]
+  );
+
   return (
     <ContainerStyled>
       {!isMobile && (
         <StyledSearchBarContainer>
           <SearchBar
             search={query}
-            setSearch={(search) => dispatch(messagingActions.setQuery(search))}
+            setSearch={setSearch}
             placeholder="Rechercher"
             smallSelectors
+            instantSearch
           />
         </StyledSearchBarContainer>
       )}

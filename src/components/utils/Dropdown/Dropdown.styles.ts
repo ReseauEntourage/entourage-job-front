@@ -29,7 +29,7 @@ export const StyledDropdownMenu = styled.div`
 
 export const StyledDropdownMenuItem = styled.div`
   color: #484848;
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
   :hover {
     color: ${COLORS.primaryBlue};
