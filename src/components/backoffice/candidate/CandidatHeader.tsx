@@ -1,9 +1,8 @@
 import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
-import LinkIcon from 'assets/icons/link.svg';
-import UserIcon from 'assets/icons/user.svg';
 import { UserWithUserCandidate } from 'src/api/types';
 import { Grid, SimpleLink } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { ImgProfile } from 'src/components/utils/ImgProfile';
 import { COACH_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
@@ -61,14 +60,14 @@ export const CandidatHeader = ({
           {relatedUser && (
             <>
               <Grid row gap="small" middle className="uk-margin-small-top">
-                <UserIcon />
+                <LucidIcon name="User" />
                 &nbsp;
                 <span className="uk-text-italic">
                   {relatedUser.firstName} {relatedUser.lastName}
                 </span>
               </Grid>
               <Grid row gap="small" middle className="uk-margin-small-top">
-                <LinkIcon />
+                <LucidIcon name="Link" />
                 &nbsp;
                 <SimpleLink
                   className="uk-link-text"

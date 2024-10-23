@@ -19,7 +19,7 @@ export const MessagingEmptyState = ({
 }: MessagingEmptyStateProps) => {
   return (
     <MessagingEmptyStateContainer>
-      <IlluConversation width="180" height="140" />
+      <IlluConversation width="226" height="226" />
       <H3 title={title} />
       {subtitle && <p>{subtitle}</p>}
       {action && <Button href={actionHref}>{action}</Button>}

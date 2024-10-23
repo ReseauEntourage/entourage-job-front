@@ -8,11 +8,13 @@ export interface ButtonIconProps {
   href?: string;
   dataTestId?: string;
   newTab?: boolean;
+  color?: string;
 }
 
 export const ButtonIcon = ({
   icon,
   onClick = () => {},
+  color = 'primaryBlue',
   href,
   tooltip,
   dataTestId,
@@ -26,6 +28,7 @@ export const ButtonIcon = ({
       data-testid={dataTestId}
       target={newTab ? '_blank' : ''}
       rel="noreferrer"
+      color={color}
     >
       {icon}
     </StyledButtonIcon>

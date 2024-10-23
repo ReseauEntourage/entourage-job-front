@@ -1,8 +1,8 @@
 import React from 'react';
 
-import PencilIcon from 'assets/icons/pencil.svg';
 import { openModal } from 'src/components/modals/Modal';
 import { ButtonIcon } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { TrDesktop, TdDesktop } from 'src/components/utils/Table';
 import { EditOrganizationModal } from './EditOrganizationModal';
 import { OrganizationProps } from './Organization.types';
@@ -50,7 +50,7 @@ export function OrganizationDesktop({
       <TdDesktop>
         <span>
           <ButtonIcon
-            icon={<PencilIcon />}
+            icon={<LucidIcon name="Pencil" />}
             dataTestId={`button-edit-organization-${organization.id}`}
             onClick={() => {
               openModal(

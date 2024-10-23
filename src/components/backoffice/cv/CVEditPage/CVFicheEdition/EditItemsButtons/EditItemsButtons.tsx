@@ -1,7 +1,6 @@
 import React from 'react';
-import EditIcon from 'assets/icons/pencil.svg';
-import TrashIcon from 'assets/icons/trash.svg';
 import { ButtonIcon } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { StyledEditItemsButtons } from './EditItemsButtons.styles';
 
 interface EditItemsButtonsProps {
@@ -14,8 +13,8 @@ export function EditItemsButtons({
 }: EditItemsButtonsProps) {
   return (
     <StyledEditItemsButtons>
-      <ButtonIcon icon={<EditIcon />} onClick={onEditClick} />
-      <ButtonIcon icon={<TrashIcon />} onClick={onDeleteClick} />
+      <ButtonIcon icon={<LucidIcon name="Pencil" />} onClick={onEditClick} />
+      <ButtonIcon icon={<LucidIcon name="Trash" />} onClick={onDeleteClick} />
     </StyledEditItemsButtons>
   );
 }

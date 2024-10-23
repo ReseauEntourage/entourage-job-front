@@ -1,13 +1,13 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { More, ChevronLeft } from 'assets/icons/icons';
 import { MessagingConversationReportModal } from '../MessagingConversationReport/MessagingConversationReportModal';
 import { ConversationParticipants, User } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
 import { ButtonIcon, ImgProfile } from 'src/components/utils';
 import { Dropdown } from 'src/components/utils/Dropdown/Dropdown';
 import { DropdownToggle } from 'src/components/utils/Dropdown/DropdownToggle';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { useIsMobile } from 'src/hooks/utils';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import {
@@ -61,7 +61,7 @@ export const MessagingConversationHeader = () => {
       <LeftColumn>
         {isMobile && selectedConversation && (
           <ButtonIcon
-            icon={<ChevronLeft height={25} />}
+            icon={<LucidIcon name="ChevronLeft" size={25} />}
             onClick={onClickBackBtn}
           />
         )}
@@ -82,7 +82,7 @@ export const MessagingConversationHeader = () => {
         <Dropdown>
           <DropdownToggle>
             <ActionMenuIconStyled>
-              <More width={25} height={25} />
+              <LucidIcon name="Ellipsis" size={25} />
             </ActionMenuIconStyled>
           </DropdownToggle>
           <Dropdown.Menu openDirection="left">

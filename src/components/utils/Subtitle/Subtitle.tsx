@@ -9,7 +9,9 @@ interface SubtitleProps extends TypographyProps {
 export const Subtitle = ({ children, center, ...restProps }: SubtitleProps) => {
   return (
     <StyledSubtitle center={center}>
-      <Typography {...restProps}>{children}</Typography>
+      <Typography {...restProps} center={center}>
+        {children}
+      </Typography>
     </StyledSubtitle>
   );
 };
