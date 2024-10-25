@@ -4,10 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   REGISTRATION_CONFIRMATION_STEP,
   RegistrationFormData,
-  RegistrationFormDataKeys,
   FlattenedRegistrationFormData,
+  RegistrationFormWithOrganizationField,
 } from '../Registration.types';
+import { CREATE_NEW_ORGANIZATION_VALUE } from '../forms/formRegistrationReferrerAccount';
+import { Api } from 'src/api';
+import { OrganizationDto } from 'src/api/types';
+import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { ReduxRequestEvents } from 'src/constants';
+import { DEPARTMENTS } from 'src/constants/departements';
 import { Programs } from 'src/constants/programs';
 import { notificationsActions } from 'src/use-cases/notifications';
 import {
@@ -49,15 +54,73 @@ export function useRegistration() {
   const createUserError = useSelector(selectCreateUserError);
 
   const onSubmitStepForm = useCallback(
-    (fields: RegistrationFormData) => {
-      let fieldsToSave = fields;
+    async (fields: RegistrationFormData) => {
+      const fieldsKeys = Object.keys(fields);
 
+      // Handle organizationId field
+      if (fieldsKeys.includes('organizationId')) {
+        const fieldsWithOrganisation =
+          fields as ExtractFormSchemaValidation<RegistrationFormWithOrganizationField>;
+        const shouldTryToCreateOrganization =
+          fieldsWithOrganisation.organizationId.value ===
+          CREATE_NEW_ORGANIZATION_VALUE;
+
+        // Create organization if needed
+        if (shouldTryToCreateOrganization) {
+          let { nameOrganization } = fieldsWithOrganisation;
+          const organizationFields = {
+            name: nameOrganization,
+            zone: DEPARTMENTS.find((deptObj) => {
+              return deptObj.name === fieldsWithOrganisation.department.value;
+            })?.zone,
+            referentFirstName: fieldsWithOrganisation.firstName,
+            referentLastName: fieldsWithOrganisation.lastName,
+            referentPhone: fieldsWithOrganisation.phone,
+            referentMail: fieldsWithOrganisation.email,
+          } as OrganizationDto;
+
+          let newOrganizationId: string;
+          try {
+            ({
+              data: { id: newOrganizationId, name: nameOrganization },
+            } = await Api.postOrganization(organizationFields));
+
+            // Update organizationId field with the new organization id
+            fieldsWithOrganisation.organizationId = {
+              label: nameOrganization as string,
+              value: newOrganizationId,
+            };
+          } catch (error) {
+            console.error(error);
+            dispatch(
+              notificationsActions.addNotification({
+                type: 'danger',
+                message:
+                  "Une erreur s'est produite lors de la création de l'association",
+              })
+            );
+            return;
+          }
+        }
+      }
+
+      const organizationFieldsKeys = ['nameOrganization'];
+      // Compute registration fields to store but exclude organization fields
+      let registrationFields = fieldsKeys.reduce((acc, curr) => {
+        if (!organizationFieldsKeys.includes(curr)) {
+          return {
+            ...acc,
+            [curr]: fields[curr],
+          };
+        }
+        return acc;
+      }, {} as RegistrationFormData);
       if (valuesFromOtherStep) {
-        // Remove fields used only for default value
-        const fieldsKeys = Object.keys(fields) as RegistrationFormDataKeys[];
-
-        fieldsToSave = fieldsKeys.reduce((acc, curr) => {
-          if (!Object.keys(valuesFromOtherStep).includes(curr)) {
+        registrationFields = fieldsKeys.reduce((acc, curr) => {
+          if (
+            !Object.keys(valuesFromOtherStep).includes(curr) &&
+            !organizationFieldsKeys.includes(curr)
+          ) {
             return {
               ...acc,
               [curr]: fields[curr],
@@ -67,8 +130,9 @@ export function useRegistration() {
         }, {} as RegistrationFormData);
       }
 
+      // Store registration fields
       dispatch(
-        registrationActions.setRegistrationCurrentStepData(fieldsToSave)
+        registrationActions.setRegistrationCurrentStepData(registrationFields)
       );
 
       if (!isLastRegistrationStep) {
@@ -113,11 +177,7 @@ export function useRegistration() {
   ]);
 
   useEffect(() => {
-    if (
-      createUserStatus === ReduxRequestEvents.SUCCEEDED &&
-      selectedProgram &&
-      selectedRole
-    ) {
+    if (createUserStatus === ReduxRequestEvents.SUCCEEDED && selectedRole) {
       push(
         {
           pathname: `/inscription/${REGISTRATION_CONFIRMATION_STEP}`,

@@ -4,11 +4,7 @@ import CVIllu from 'assets/icons/illu-CV.svg';
 import TipsIllu from 'assets/icons/illu-poignee-de-main.svg';
 import { FormSchema } from 'src/components/forms/FormSchema';
 import { SelectListType } from 'src/components/utils/Inputs/SelectList/SelectList.types';
-import {
-  NormalUserRole,
-  RegistrableUserRole,
-  USER_ROLES,
-} from 'src/constants/users';
+import { RegistrableUserRole, USER_ROLES } from 'src/constants/users';
 
 const RoleOptions: SelectListType<RegistrableUserRole>[] = [
   {
@@ -27,12 +23,12 @@ const RoleOptions: SelectListType<RegistrableUserRole>[] = [
     value: USER_ROLES.REFERRER,
     label: 'Je souhaite orienter des candidats de ma structure',
     icon: <IlluCandidatFolder width={50} height={50} />,
-    description: 'Nous rejoindre en tant qu’association ou travailleurs social',
+    description: 'Nous rejoindre en tant qu’association ou travailleur social',
   },
 ];
 
 export const formRegistrationRole: FormSchema<{
-  role: NormalUserRole[];
+  role: RegistrableUserRole[];
 }> = {
   id: 'form-registration-role',
   fields: [

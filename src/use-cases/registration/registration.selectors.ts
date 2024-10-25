@@ -17,6 +17,7 @@ import {
   incrementRegistrationStep,
 } from 'src/components/registration/Registration.utils';
 import { ANTENNE_INFO } from 'src/constants';
+import { USER_ROLES, UserRole } from 'src/constants/users';
 import { assertIsDefined } from 'src/utils/asserts';
 import { createUserAdapter } from './registration.adapters';
 import { RootState } from './registration.slice';
@@ -70,7 +71,7 @@ export function selectRegistrationSelectedProgram(state: RootState) {
   const data = selectRegistrationData(state);
   const selectedRole = selectRegistrationSelectedRole(state);
 
-  if (!selectedRole) return null;
+  if (!selectedRole) return undefined;
 
   const allStepsDataForSelectedRole = flattenRegistrationDataByRole(
     data,
@@ -84,8 +85,6 @@ export function selectRegistrationSelectedProgram(state: RootState) {
 
 export function selectDefinedRegistrationSelectedProgram(state: RootState) {
   const selectedProgram = selectRegistrationSelectedProgram(state);
-
-  assertIsDefined(selectedProgram, RegistrationErrorMessages.SELECTED_PROGRAM);
 
   return selectedProgram;
 }
@@ -154,10 +153,13 @@ export function selectRegistrationCurrentStepContent(
 export function selectRegistrationConfirmationStepContent(
   state: RootState
 ): LastStepContent {
-  const selectedRole = selectDefinedRegistrationSelectedRole(state);
+  const selectedRole = selectDefinedRegistrationSelectedRole(state) as UserRole;
 
   const selectedProgram = selectDefinedRegistrationSelectedProgram(state);
 
+  if (selectedRole === USER_ROLES.REFERRER) {
+    return LastStepContent[selectedRole];
+  }
   return LastStepContent[selectedRole][selectedProgram];
 }
 
