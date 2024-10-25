@@ -4,10 +4,12 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Conversation, User } from 'src/api/types';
 import { conversationHasUnreadMessages } from 'src/components/backoffice/messaging/messaging.utils';
-import { ImgProfile } from 'src/components/utils';
+import { ImgProfile, Typography } from 'src/components/utils';
+import { useIsDesktop } from 'src/hooks/utils';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import {
   StyledContainer,
+  StyledConversationMainInfos,
   StyledConversationParticipants,
   StyledMessageDate,
   StyledMessagePreview,
@@ -19,6 +21,7 @@ export interface ConversationItemProps {
 
 export const ConversationItem = ({ conversation }: ConversationItemProps) => {
   const router = useRouter();
+  const isDesktop = useIsDesktop();
   const currentUserId = useSelector(selectCurrentUserId);
   const addresee = conversation.participants.find(
     (participant) => participant.id !== currentUserId
@@ -34,16 +37,33 @@ export const ConversationItem = ({ conversation }: ConversationItemProps) => {
 
   return (
     <StyledContainer onClick={openConversation}>
-      <StyledConversationParticipants>
-        <ImgProfile user={addresee} size={25} />
-        {`${addresee.firstName} ${addresee.lastName}`}
-      </StyledConversationParticipants>
-      <StyledMessagePreview hasSeen={userHasSeenConversation}>
-        {conversation.messages[0].content}
-      </StyledMessagePreview>
-      <StyledMessageDate>
-        {moment(conversation.messages[0].createdAt).format('DD/MM/YYYY')}
-      </StyledMessageDate>
+      <StyledConversationMainInfos>
+        <StyledConversationParticipants>
+          <ImgProfile user={addresee} size={25} />
+          <Typography weight="bold">
+            {`${addresee.firstName} ${addresee.lastName}`}
+          </Typography>
+        </StyledConversationParticipants>
+        {isDesktop && (
+          <StyledMessagePreview hasSeen={userHasSeenConversation}>
+            <Typography>{conversation.messages[0].content}</Typography>
+          </StyledMessagePreview>
+        )}
+        <StyledMessageDate>
+          <Typography>
+            {moment(conversation.messages[0].createdAt).format('DD/MM/YYYY')}
+          </Typography>
+        </StyledMessageDate>
+      </StyledConversationMainInfos>
+      {!isDesktop && (
+        <StyledMessagePreview
+          weight={userHasSeenConversation ? 'bold' : undefined}
+        >
+          <Typography size="small">
+            {conversation.messages[0].content}
+          </Typography>
+        </StyledMessagePreview>
+      )}
     </StyledContainer>
   );
 };
