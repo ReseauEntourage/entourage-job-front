@@ -20,7 +20,7 @@ interface ProgramBullet {
   icon: React.ReactNode;
 }
 
-const ProgramBullet: {
+export const ProgramBullet: {
   [K in Program]: ProgramBullet[];
 } = {
   [Programs.THREE_SIXTY]: [

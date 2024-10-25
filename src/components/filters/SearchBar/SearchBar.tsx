@@ -31,6 +31,7 @@ export interface SearchBarProps {
   additionalButtons?: React.ReactNode;
   light?: boolean;
   cleareable?: boolean;
+  instantSearch?: boolean;
 }
 
 export const SearchBar = ({
@@ -46,8 +47,25 @@ export const SearchBar = ({
   additionalButtons,
   light = false,
   cleareable = true,
+  instantSearch = false,
 }: SearchBarProps) => {
   const [searchBuffer, setSearchBuffer] = useState(search || '');
+  const [debouncedSearchBuffer, setDebouncedSearchBuffer] = useState(
+    search || ''
+  );
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebouncedSearchBuffer(searchBuffer);
+    }, 500);
+    return () => clearTimeout(timeout);
+  }, [searchBuffer]);
+
+  useEffect(() => {
+    if (instantSearch) {
+      setSearch(debouncedSearchBuffer);
+    }
+  }, [debouncedSearchBuffer, instantSearch, setSearch]);
 
   useEffect(() => {
     setSearchBuffer(search || '');
