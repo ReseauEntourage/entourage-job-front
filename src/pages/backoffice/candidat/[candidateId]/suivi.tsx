@@ -100,13 +100,7 @@ const Suivi = () => {
       setLoading(true);
       Api.getUserCandidate()
         .then(({ data }) => {
-          if (USER_ROLES.REFERRER === user.role) {
-            setUserCandidat(
-              data.find((usCand) => usCand.candidat.id === candidateId)
-            );
-          } else {
-            setUserCandidat(data);
-          }
+          setUserCandidat(data);
           sendNoteHasBeenRead();
           updateValue(data.note);
         })
