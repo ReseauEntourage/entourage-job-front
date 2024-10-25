@@ -91,6 +91,11 @@ export const slice = createSlice({
               }
             }
           );
+
+          // Move the conversation to the first position
+          const conversation = state.conversations[idxSelectedConversation];
+          state.conversations.splice(idxSelectedConversation, 1);
+          state.conversations.unshift(conversation);
         }
       },
     }),
