@@ -1,11 +1,10 @@
 import React from 'react';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { isEmail } from 'validator';
-import PlusFilledIcon from 'assets/icons/plus-filled.svg';
 import { FormSchema, FormSchemaValidation, GetValueType } from '../FormSchema';
 import { Api } from 'src/api';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { ADMIN_ZONES_FILTERS, AdminZone } from 'src/constants/departements';
-import { COLORS } from 'src/constants/styles';
 import {
   ADMIN_ROLES,
   USER_ROLES,
@@ -26,7 +25,7 @@ const CREATE_NEW_ORGANIZATION_OPTION = {
   value: CREATE_NEW_ORGANIZATION_VALUE,
   label: (
     <>
-      <PlusFilledIcon color={COLORS.primaryBlue} />
+      <LucidIcon name="Plus" />
       Ajouter une nouvelle structure
     </>
   ),

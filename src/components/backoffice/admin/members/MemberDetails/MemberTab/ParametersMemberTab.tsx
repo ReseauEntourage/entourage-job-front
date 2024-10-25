@@ -1,8 +1,6 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import PencilIcon from 'assets/icons/pencil.svg';
-import TrashIcon from 'assets/icons/trash.svg';
 import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
 import { EditMemberModal } from 'src/components/backoffice/admin/members/MemberDetails/EditMemberModal';
@@ -13,6 +11,7 @@ import { formDeleteUser } from 'src/components/forms/schemas/formDeleteUser';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Button } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { Heading } from 'src/components/utils/Inputs/Heading';
 import { RELATED_ROLES, ROLES_WITH_ORGANIZATION } from 'src/constants/users';
 import { useMemberId } from 'src/hooks/queryParams/useMemberId';
@@ -147,7 +146,7 @@ export function ParametersMemberTab({
             );
           }}
         >
-          <TrashIcon />
+          <LucidIcon name="Trash" size={15} />
           Supprimer l&apos;utilisateur
         </Button>
         <Button
@@ -157,7 +156,7 @@ export function ParametersMemberTab({
             openModal(<EditMemberModal user={user} setUser={setUser} />)
           }
         >
-          <PencilIcon />
+          <LucidIcon name="Pencil" size={15} />
           Modifier le membre
         </Button>
       </StyledMemberActionsContainer>

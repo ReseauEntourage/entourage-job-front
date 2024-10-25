@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import HistoryIcon from 'assets/icons/history.svg';
 import { Api } from 'src/api';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { Button, Grid, Section } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 
 import { TextArea } from 'src/components/utils/Inputs';
 import { USER_ROLES } from 'src/constants/users';
@@ -170,7 +170,7 @@ const Suivi = () => {
               userCandidat.note
             }
           >
-            <HistoryIcon />
+            <LucidIcon name="History" />
           </Button>
           <Button
             style="default"

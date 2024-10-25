@@ -1,13 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import EmailIcon from 'assets/icons/email.svg';
-import HomeIcon from 'assets/icons/home.svg';
-import LinkIcon from 'assets/icons/link.svg';
-import PhoneIcon from 'assets/icons/phone.svg';
-import UserIcon from 'assets/icons/user.svg';
 import { CVPreferences } from '../CVPreferences';
 import { Card, SimpleLink } from 'src/components/utils';
 import { H5 } from 'src/components/utils/Headings';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { selectLinkedUser } from 'src/use-cases/current-user';
@@ -40,7 +36,7 @@ export const LinkedUserInformationCard = ({
     <>
       <StyledInformationsPersonnellesList>
         <li>
-          <UserIcon />
+          <LucidIcon name="User" />
           <span>{`${linkedUser.firstName} ${linkedUser.lastName}`}</span>
         </li>
         {!linkedUser.deletedAt && (
@@ -51,7 +47,7 @@ export const LinkedUserInformationCard = ({
                 isExternal
                 target="_blank"
               >
-                <EmailIcon />
+                <LucidIcon name="MessageCircle" />
                 <span data-testid="linkeduser-email-span">
                   {linkedUser.email}
                 </span>
@@ -60,12 +56,12 @@ export const LinkedUserInformationCard = ({
             {linkedUser.phone ? (
               <li>
                 <SimpleLink href={`tel:${linkedUser.phone}`} isExternal>
-                  <PhoneIcon /> <span>{linkedUser.phone}</span>
+                  <LucidIcon name="Phone" /> <span>{linkedUser.phone}</span>
                 </SimpleLink>
               </li>
             ) : (
               <li>
-                <PhoneIcon />
+                <LucidIcon name="Phone" />
                 <span className="uk-text-italic">
                   Numéro de téléphone non renseigné
                 </span>
@@ -74,11 +70,11 @@ export const LinkedUserInformationCard = ({
             {user.role === USER_ROLES.COACH &&
               (linkedUser.address ? (
                 <li>
-                  <HomeIcon /> <span>{linkedUser.address}</span>
+                  <LucidIcon name="House" /> <span>{linkedUser.address}</span>
                 </li>
               ) : (
                 <li>
-                  <HomeIcon />{' '}
+                  <LucidIcon name="House" />{' '}
                   <span className="uk-text-italic">
                     Adresse postale non renseignée
                   </span>
@@ -91,7 +87,7 @@ export const LinkedUserInformationCard = ({
                 href={`/cv/${userCandidat.url}`}
               >
                 <li>
-                  <LinkIcon width={20} height={20} />
+                  <LucidIcon name="Link" />
                   <span className="uk-text-italic">{userCandidat.url}</span>
                 </li>
               </SimpleLink>

@@ -1,12 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
-import EmailIcon from 'assets/icons/email.svg';
-import GenderIcon from 'assets/icons/gender.svg';
-import HomeIcon from 'assets/icons/home.svg';
-import LocationIcon from 'assets/icons/location.svg';
-import PhoneIcon from 'assets/icons/phone.svg';
-import UserIcon from 'assets/icons/user.svg';
 import { Card } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { Tag } from 'src/components/utils/Tag';
 import { GENDERS_FILTERS, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -34,19 +29,19 @@ export const UserInformationCard = ({ title }: UserInformationCardProps) => {
     >
       <StyledInformationsPersonnellesList>
         <li>
-          <UserIcon width={20} />
+          <LucidIcon name="User" />
           {` ${user.firstName} ${user.lastName}`}
         </li>
         <li>
-          <GenderIcon width={20} />
+          <LucidIcon name="User" />
           {findConstantFromValue(user.gender, GENDERS_FILTERS).label}
         </li>
         <li>
-          <EmailIcon width={20} />
+          <LucidIcon name="MessageCircle" />
           {user.email}
         </li>
         <li>
-          <PhoneIcon width={20} />
+          <LucidIcon name="Phone" />
           {user.phone ? (
             <>{user.phone}</>
           ) : (
@@ -56,7 +51,7 @@ export const UserInformationCard = ({ title }: UserInformationCardProps) => {
         {user.role !== USER_ROLES.ADMIN && (
           <>
             <li>
-              <LocationIcon width={20} />
+              <LucidIcon name="MapPin" />
               {user.userProfile.department ? (
                 <>{user.userProfile.department}</>
               ) : (
@@ -65,7 +60,7 @@ export const UserInformationCard = ({ title }: UserInformationCardProps) => {
             </li>
             {user.role === USER_ROLES.CANDIDATE && (
               <li>
-                <HomeIcon width={20} />
+                <LucidIcon name="House" />
                 {user.address ? (
                   <>{user.address}</>
                 ) : (
