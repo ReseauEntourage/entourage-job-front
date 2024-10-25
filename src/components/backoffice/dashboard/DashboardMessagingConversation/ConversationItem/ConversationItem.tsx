@@ -46,7 +46,9 @@ export const ConversationItem = ({ conversation }: ConversationItemProps) => {
         </StyledConversationParticipants>
         {isDesktop && (
           <StyledMessagePreview hasSeen={userHasSeenConversation}>
-            <Typography>{conversation.messages[0].content}</Typography>
+            <Typography weight={!userHasSeenConversation ? 'bold' : undefined}>
+              {conversation.messages[0].content}
+            </Typography>
           </StyledMessagePreview>
         )}
         <StyledMessageDate>
@@ -56,10 +58,11 @@ export const ConversationItem = ({ conversation }: ConversationItemProps) => {
         </StyledMessageDate>
       </StyledConversationMainInfos>
       {!isDesktop && (
-        <StyledMessagePreview
-          weight={userHasSeenConversation ? 'bold' : undefined}
-        >
-          <Typography size="small">
+        <StyledMessagePreview>
+          <Typography
+            size="small"
+            weight={!userHasSeenConversation ? 'bold' : undefined}
+          >
             {conversation.messages[0].content}
           </Typography>
         </StyledMessagePreview>
