@@ -4,7 +4,7 @@ import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { MemberList } from 'src/components/backoffice/admin/members/MemberList';
 import { Section } from 'src/components/utils';
-import { ALL_USER_ROLES, CANDIDATE_USER_ROLES } from 'src/constants/users';
+import { ALL_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useRole } from 'src/hooks/queryParams/useRole';
 import { useFilters } from 'src/hooks/useFilters';
@@ -27,7 +27,7 @@ const MembersAdmin = () => {
       if (!role || role.length === 0 || !isRoleIncluded(ALL_USER_ROLES, role)) {
         const params = {
           ...query,
-          role: CANDIDATE_USER_ROLES,
+          role: [USER_ROLES.CANDIDATE],
           ...(user.zone ? { zone: user.zone } : {}),
         };
         replace(

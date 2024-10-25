@@ -8,11 +8,7 @@ import { BUSINESS_LINES, DirectoryFilters } from 'src/constants';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { ProfileHelps } from 'src/constants/helps';
 import { GA_TAGS } from 'src/constants/tags';
-import {
-  CANDIDATE_USER_ROLES,
-  COACH_USER_ROLES,
-  USER_ROLES,
-} from 'src/constants/users';
+import { USER_ROLES } from 'src/constants/users';
 import { useFilters } from 'src/hooks';
 import { useIsMobile } from 'src/hooks/utils';
 import {
@@ -74,14 +70,16 @@ export function DirectoryContainer() {
               <Button
                 size={isMobile ? 'small' : 'large'}
                 style={`custom-secondary${
-                  isRoleIncluded(CANDIDATE_USER_ROLES, role) ? '-inverted' : ''
+                  isRoleIncluded([USER_ROLES.CANDIDATE], role)
+                    ? '-inverted'
+                    : ''
                 }`}
                 onClick={() => {
                   push({
                     pathname: route,
                     query: {
                       ...directoryFiltersParams,
-                      role: CANDIDATE_USER_ROLES,
+                      role: [USER_ROLES.CANDIDATE],
                     },
                   });
                 }}
@@ -91,7 +89,7 @@ export function DirectoryContainer() {
               <Button
                 size={isMobile ? 'small' : 'large'}
                 style={`custom-secondary${
-                  isRoleIncluded(COACH_USER_ROLES, role) ? '-inverted' : ''
+                  isRoleIncluded([USER_ROLES.COACH], role) ? '-inverted' : ''
                 }`}
                 onClick={() => {
                   push({

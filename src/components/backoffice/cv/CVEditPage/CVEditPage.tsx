@@ -12,11 +12,7 @@ import { Button, ButtonIcon } from 'src/components/utils';
 import { ButtonPost } from 'src/components/utils/Button/ButtonPost';
 import { CV_STATUS, SOCKETS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
-import {
-  ALL_USER_ROLES,
-  CANDIDATE_USER_ROLES,
-  USER_ROLES,
-} from 'src/constants/users';
+import { ALL_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop, usePrevious } from 'src/hooks/utils';
 import { gaEvent } from 'src/lib/gtag';
@@ -260,9 +256,10 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
           dispatch(
             notificationsActions.addNotification({
               type: 'success',
-              message: isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
-                ? 'Votre CV a bien été sauvegardé'
-                : 'Le profil a été mis à jour',
+              message:
+                user.role === USER_ROLES.CANDIDATE
+                  ? 'Votre CV a bien été sauvegardé'
+                  : 'Le profil a été mis à jour',
             })
           );
         } catch (err) {

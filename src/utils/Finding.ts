@@ -5,11 +5,7 @@ import {
   UserWithUserCandidate,
 } from 'src/api/types';
 import { OFFER_STATUS } from 'src/constants';
-import {
-  CANDIDATE_USER_ROLES,
-  COACH_USER_ROLES,
-  UserRole,
-} from 'src/constants/users';
+import { USER_ROLES, UserRole } from 'src/constants/users';
 import { FilterConstant } from 'src/constants/utils';
 
 export function findOfferStatus(status, isPublic, isRecommended) {
@@ -91,14 +87,11 @@ export function getUserCandidateFromCoachOrCandidate(
   member: UserWithUserCandidate
 ): UserCandidateWithUsers | UserCandidateWithUsers[] | null {
   if (member) {
-    if (
-      isRoleIncluded(CANDIDATE_USER_ROLES, member.role) &&
-      !!member.candidat
-    ) {
+    if (member.role === USER_ROLES.CANDIDATE && !!member.candidat) {
       return member.candidat;
     }
 
-    if (isRoleIncluded(COACH_USER_ROLES, member.role) && !!member.coaches) {
+    if (member.role === USER_ROLES.COACH && !!member.coaches) {
       return member.coaches;
     }
   }
@@ -124,7 +117,7 @@ export function getRelatedUser(
 export function getCoachFromCandidate(
   candidate: UserWithUserCandidate
 ): UserWithUserCandidate | null {
-  if (candidate && isRoleIncluded(CANDIDATE_USER_ROLES, candidate.role)) {
+  if (candidate && candidate.role === USER_ROLES.CANDIDATE) {
     if (candidate.candidat && candidate.candidat.coach) {
       return candidate.candidat.coach;
     }
@@ -136,7 +129,7 @@ export function getUserCandidateFromCoach(
   coach: UserWithUserCandidate,
   candidateId: string
 ): UserCandidateWithUsers | null {
-  if (coach && isRoleIncluded(COACH_USER_ROLES, coach.role)) {
+  if (coach && coach.role === USER_ROLES.COACH) {
     if (coach.coaches && coach.coaches.length > 0) {
       const candidate = coach.coaches.find(({ candidat }) => {
         return candidat?.id === candidateId;
@@ -160,12 +153,12 @@ export function getCandidateIdFromCoachOrCandidate(
   member: UserWithUserCandidate
 ): string | string[] | null {
   if (member) {
-    if (isRoleIncluded(CANDIDATE_USER_ROLES, member.role)) {
+    if (member.role === USER_ROLES.CANDIDATE) {
       return member.id;
     }
 
     if (
-      isRoleIncluded(COACH_USER_ROLES, member.role) &&
+      member.role === USER_ROLES.COACH &&
       member.coaches &&
       member.coaches.length > 0
     ) {

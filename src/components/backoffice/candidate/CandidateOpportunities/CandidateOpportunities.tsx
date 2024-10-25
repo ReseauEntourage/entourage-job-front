@@ -20,7 +20,6 @@ import { openModal } from 'src/components/modals/Modal';
 import { ModalExternalOffer } from 'src/components/modals/Modal/ModalGeneric/OfferModals/ModalOffer';
 import { Button, Section } from 'src/components/utils';
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
-import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { FilterObject } from 'src/constants/utils';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
@@ -28,7 +27,6 @@ import { useOpportunityType } from 'src/hooks/queryParams/useOpportunityType';
 import { useQueryParamsOpportunities } from 'src/hooks/queryParams/useQueryParamsOpportunities';
 import { useCandidateOpportunities } from 'src/hooks/useOpportunityList';
 import { usePrevious } from 'src/hooks/utils';
-import { isRoleIncluded } from 'src/utils/Finding';
 import { tabs } from './CandidateOffersTab/CandidateOffersTab.utils';
 import { useTabsCount } from './useTabsCount';
 import { useUpdateOpportunityStatus } from './useUpdateOpportunityStatus';
@@ -170,18 +168,10 @@ export const CandidateOpportunities = ({
         <>
           <HeaderBackoffice
             title={`${
-              TextVariables.title[
-                isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
-                  ? USER_ROLES.CANDIDATE
-                  : USER_ROLES.COACH
-              ][isPublic ? 'all' : 'mine']
+              TextVariables.title[user.role][isPublic ? 'all' : 'mine']
             }`}
             description={
-              TextVariables.description[
-                isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
-                  ? USER_ROLES.CANDIDATE
-                  : USER_ROLES.COACH
-              ][isPublic ? 'all' : 'mine']
+              TextVariables.description[user.role][isPublic ? 'all' : 'mine']
             }
             noSeparator
           >

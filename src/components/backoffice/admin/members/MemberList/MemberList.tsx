@@ -16,7 +16,7 @@ import { StyledContainerWithTextCentered } from 'src/components/utils/Containers
 import { H4 } from 'src/components/utils/Headings';
 import { MEMBER_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
-import { CANDIDATE_USER_ROLES } from 'src/constants/users';
+import { USER_ROLES } from 'src/constants/users';
 import { FilterObject } from 'src/constants/utils';
 import { useRole } from 'src/hooks/queryParams/useRole';
 import { useBulkActions } from 'src/hooks/useBulkActions';
@@ -137,7 +137,7 @@ export function MemberList({
     [selectElement]
   );
 
-  const roleToDisplay = isRoleIncluded(CANDIDATE_USER_ROLES, role)
+  const roleToDisplay = isRoleIncluded([USER_ROLES.CANDIDATE], role)
     ? 'candidats'
     : 'coachs';
 
@@ -175,7 +175,7 @@ export function MemberList({
         title={`Gestion des ${roleToDisplay}`}
         description={`Ici vous pouvez accéder à tous les profils des ${roleToDisplay} afin d'effectuer un suivi individuel de leur avancée.`}
         shouldDisplayAdminNotifications={isRoleIncluded(
-          CANDIDATE_USER_ROLES,
+          [USER_ROLES.CANDIDATE],
           role
         )}
       >
@@ -205,7 +205,7 @@ export function MemberList({
               placeholder="Rechercher..."
               smallSelectors
               additionalButtons={
-                isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
+                isRoleIncluded([USER_ROLES.CANDIDATE], role) && (
                   <Button
                     style="custom-secondary-inverted"
                     size="small"

@@ -40,23 +40,11 @@ export const NORMAL_USER_ROLES: NormalUserRole[] = [
   USER_ROLES.COACH,
 ];
 
-// export type ExternalUserRole = typeof USER_ROLES.COACH_EXTERNAL;
-
-// export const EXTERNAL_USER_ROLES: ExternalUserRole[] = [
-//   USER_ROLES.COACH_EXTERNAL,
-// ];
-
 export type CandidateUserRole = typeof USER_ROLES.CANDIDATE;
 
-export const CANDIDATE_USER_ROLES: CandidateUserRole[] = [USER_ROLES.CANDIDATE];
-
 export type CoachUserRole = typeof USER_ROLES.COACH;
-export const COACH_USER_ROLES: CoachUserRole[] = [USER_ROLES.COACH];
 
-export const ALL_USER_ROLES: (CandidateUserRole | CoachUserRole)[] = [
-  ...CANDIDATE_USER_ROLES,
-  ...COACH_USER_ROLES,
-];
+export const ALL_USER_ROLES = [USER_ROLES.CANDIDATE, USER_ROLES.COACH];
 
 export const GENDERS = {
   MALE: 0,

@@ -1,9 +1,8 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
+import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useRole } from 'src/hooks/queryParams/useRole';
-import { isRoleIncluded } from 'src/utils';
 
 const route = '/backoffice/annuaire';
 
@@ -16,7 +15,7 @@ export function useDirectoryRoleRedirection() {
 
   useEffect(() => {
     if (!role) {
-      if (isRoleIncluded(CANDIDATE_USER_ROLES, userRole)) {
+      if (userRole === USER_ROLES.CANDIDATE) {
         replace(
           {
             pathname: route,
@@ -34,7 +33,7 @@ export function useDirectoryRoleRedirection() {
             pathname: route,
             query: {
               ...query,
-              role: CANDIDATE_USER_ROLES,
+              role: [USER_ROLES.CANDIDATE],
             },
           },
           undefined,

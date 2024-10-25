@@ -8,10 +8,10 @@ import UserIcon from 'assets/icons/user.svg';
 import { CVPreferences } from '../CVPreferences';
 import { Card, SimpleLink } from 'src/components/utils';
 import { H5 } from 'src/components/utils/Headings';
-import { COACH_USER_ROLES } from 'src/constants/users';
+import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { selectLinkedUser } from 'src/use-cases/current-user';
-import { isRoleIncluded, getUserCandidateFromCoach } from 'src/utils/Finding';
+import { getUserCandidateFromCoach } from 'src/utils/Finding';
 import { StyledInformationsPersonnellesList } from './UserInformationCard.styles';
 
 export const LinkedUserInformationCard = ({
@@ -26,7 +26,7 @@ export const LinkedUserInformationCard = ({
     return (
       <Card
         title={`Information du${
-          isRoleIncluded(COACH_USER_ROLES, user.role) ? ' candidat' : ' coach'
+          user.role === USER_ROLES.COACH ? ' candidat' : ' coach'
         }`}
       >
         Aucun membre lié
@@ -71,7 +71,7 @@ export const LinkedUserInformationCard = ({
                 </span>
               </li>
             )}
-            {isRoleIncluded(COACH_USER_ROLES, user.role) &&
+            {user.role === USER_ROLES.COACH &&
               (linkedUser.address ? (
                 <li>
                   <HomeIcon /> <span>{linkedUser.address}</span>
@@ -84,7 +84,7 @@ export const LinkedUserInformationCard = ({
                   </span>
                 </li>
               ))}
-            {isRoleIncluded(COACH_USER_ROLES, user.role) && userCandidat && (
+            {user.role === USER_ROLES.COACH && userCandidat && (
               <SimpleLink
                 className="uk-link-muted"
                 target="_blank"
@@ -100,7 +100,7 @@ export const LinkedUserInformationCard = ({
         )}
       </StyledInformationsPersonnellesList>
       {!isAdmin &&
-        isRoleIncluded(COACH_USER_ROLES, user.role) &&
+        user.role === USER_ROLES.COACH &&
         userCandidat &&
         !linkedUser.deletedAt && (
           <StyledInformationsPersonnellesList>
@@ -120,7 +120,7 @@ export const LinkedUserInformationCard = ({
   return (
     <Card
       title={`Information du${
-        isRoleIncluded(COACH_USER_ROLES, user.role) ? ' candidat' : ' coach'
+        user.role === USER_ROLES.COACH ? ' candidat' : ' coach'
       }`}
       key={linkedUser.id}
       isMobileClosable

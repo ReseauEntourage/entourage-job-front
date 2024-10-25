@@ -5,9 +5,9 @@ import UserIcon from 'assets/icons/user.svg';
 import { UserWithUserCandidate } from 'src/api/types';
 import { SimpleLink } from 'src/components/utils';
 import { ImgProfile } from 'src/components/utils/ImgProfile';
-import { CANDIDATE_USER_ROLES } from 'src/constants/users';
+import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { getRelatedUser, isRoleIncluded } from 'src/utils/Finding';
+import { getRelatedUser } from 'src/utils/Finding';
 import {
   StyledContainer,
   StyledInfoContainer,
@@ -51,7 +51,7 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
             {` de ${relatedUserText}`}
           </StyledRole>
         </StyledRoleContainer>
-        {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) && (
+        {user.role === USER_ROLES.CANDIDATE && (
           <StyledRoleContainer>
             <LinkIcon width={30} />
             <SimpleLink

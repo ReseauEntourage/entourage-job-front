@@ -11,9 +11,8 @@ import {
 } from 'src/components/utils';
 import { H5 } from 'src/components/utils/Headings';
 import { ProfileHelps } from 'src/constants/helps';
-import { CANDIDATE_USER_ROLES } from 'src/constants/users';
+import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { isRoleIncluded } from 'src/utils';
 import {
   StyledDashboardCTAContainer,
   StyledDashboardProfileCardDescription,
@@ -66,10 +65,8 @@ export const DashboardProfileCard = () => {
       )}
       <StyledDashboardProfileCardHelps>
         <StyledDashboardProfileCardhelpsTitle>
-          Mes{' '}
-          {isRoleIncluded(CANDIDATE_USER_ROLES, contextualRole) &&
-            'besoins de '}{' '}
-          coups de pouce
+          Mes {contextualRole === USER_ROLES.CANDIDATE && 'besoins de '} coups
+          de pouce
         </StyledDashboardProfileCardhelpsTitle>
         {userHelpField.length > 0 ? (
           <StyledDashboardProfileCardHelpList>

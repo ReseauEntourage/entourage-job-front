@@ -2,9 +2,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CV, UserCandidateWithUsers } from 'src/api/types';
 import { ReduxRequestEvents } from 'src/constants';
-import { CANDIDATE_USER_ROLES, UserRole } from 'src/constants/users';
+import { USER_ROLES, UserRole } from 'src/constants/users';
 import { updateUserProfilePictureSelectors } from 'src/use-cases/current-user';
-import { isRoleIncluded } from 'src/utils';
 
 export function useImageFallback({
   userId,
@@ -38,8 +37,7 @@ export function useImageFallback({
   const fallbackToCVImage = useCallback(() => {
     setUrlImg(null);
     if (
-      role &&
-      isRoleIncluded(CANDIDATE_USER_ROLES, role) &&
+      role === USER_ROLES.CANDIDATE &&
       userCandidate?.cvs &&
       userCandidate?.cvs?.length > 0
     ) {

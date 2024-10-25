@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Button, Card, ImgProfile } from 'src/components/utils';
-import { COACH_USER_ROLES, USER_ROLES } from 'src/constants/users';
+import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { selectLinkedUser } from 'src/use-cases/current-user';
 import { isRoleIncluded } from 'src/utils';
@@ -26,7 +26,7 @@ export const DashboardLinkedUserCard = () => {
   return (
     <Card
       title={
-        isRoleIncluded(COACH_USER_ROLES, user.role)
+        user.role === USER_ROLES.COACH
           ? "Le candidat que j'accompagne"
           : "Le coach qui m'accompagne"
       }
@@ -52,7 +52,7 @@ export const DashboardLinkedUserCard = () => {
           >
             Voir le profil
           </Button>
-          {isRoleIncluded(COACH_USER_ROLES, user.role) && (
+          {user.role === USER_ROLES.COACH && (
             <Button
               style="custom-secondary-inverted"
               href={`/backoffice/candidat/${linkedUser.id}/cv`}

@@ -8,13 +8,9 @@ import PhoneIcon from 'assets/icons/phone.svg';
 import UserIcon from 'assets/icons/user.svg';
 import { Card } from 'src/components/utils';
 import { Tag } from 'src/components/utils/Tag';
-import {
-  CANDIDATE_USER_ROLES,
-  GENDERS_FILTERS,
-  USER_ROLES,
-} from 'src/constants/users';
+import { GENDERS_FILTERS, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { findConstantFromValue, isRoleIncluded } from 'src/utils';
+import { findConstantFromValue } from 'src/utils';
 import {
   StyledInformationsPersonnellesList,
   StyledUserInformationCardTags,
@@ -67,7 +63,7 @@ export const UserInformationCard = ({ title }: UserInformationCardProps) => {
                 <>Département non renseigné</>
               )}
             </li>
-            {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) && (
+            {user.role === USER_ROLES.CANDIDATE && (
               <li>
                 <HomeIcon width={20} />
                 {user.address ? (

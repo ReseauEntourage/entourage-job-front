@@ -5,7 +5,7 @@ import UserIcon from 'assets/icons/user.svg';
 import { UserWithUserCandidate } from 'src/api/types';
 import { Grid, SimpleLink } from 'src/components/utils';
 import { ImgProfile } from 'src/components/utils/ImgProfile';
-import { COACH_USER_ROLES, USER_ROLES } from 'src/constants/users';
+import { USER_ROLES } from 'src/constants/users';
 import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
 import { isRoleIncluded } from 'src/utils/Finding';
 
@@ -22,7 +22,7 @@ export const CandidatHeader = ({
   const [candidateCVUrl, setCandidateCVUrl] = useState<string>('');
 
   useEffect(() => {
-    if (isRoleIncluded(COACH_USER_ROLES, user.role)) {
+    if (user.role === USER_ROLES.COACH) {
       const cand = user.coaches?.find(
         ({ candidat }) => candidat.id === candidateId
       );

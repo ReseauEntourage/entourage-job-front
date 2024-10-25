@@ -6,12 +6,7 @@ import SettingsIcon from 'assets/icons/settings.svg';
 import { HeaderConnectedMainItem } from '../HeaderConnected.types';
 import { UserWithUserCandidate } from 'src/api/types';
 import { GA_TAGS } from 'src/constants/tags';
-import {
-  CANDIDATE_USER_ROLES,
-  COACH_USER_ROLES,
-  USER_ROLES,
-  UserRole,
-} from 'src/constants/users';
+import { USER_ROLES, UserRole } from 'src/constants/users';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils/Finding';
 
 const rolesToParams = (roles) => {
@@ -22,8 +17,8 @@ const rolesToParams = (roles) => {
     .join('')}`;
 };
 
-const candidateRolesParams = rolesToParams(CANDIDATE_USER_ROLES);
-const coachRolesParams = rolesToParams(COACH_USER_ROLES);
+const candidateRolesParams = rolesToParams([USER_ROLES.CANDIDATE]);
+const coachRolesParams = rolesToParams([USER_ROLES.COACH]);
 
 export const renderLinks = (
   user: UserWithUserCandidate,
