@@ -40,10 +40,6 @@ export const NORMAL_USER_ROLES: NormalUserRole[] = [
   USER_ROLES.COACH,
 ];
 
-export type CandidateUserRole = typeof USER_ROLES.CANDIDATE;
-
-export type CoachUserRole = typeof USER_ROLES.COACH;
-
 export const ALL_USER_ROLES = [USER_ROLES.CANDIDATE, USER_ROLES.COACH];
 
 export const GENDERS = {
