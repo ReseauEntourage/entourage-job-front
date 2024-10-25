@@ -49,7 +49,7 @@ export function Radio({
 
   useEffect(() => {
     const optionIndexToSelect = options.findIndex(
-      ({ value: optionValue }) => optionValue === valueProp
+      (option) => option.value === valueProp[0]
     );
     setCheckedRadio(optionIndexToSelect);
   }, [options, valueProp]);
@@ -82,7 +82,7 @@ export function Radio({
             );
             if (!inputId) inputId = `radio-${value.replace(/\s+/g, '')}`;
             return (
-              <>
+              <div key={`$div-${i}-${uuidValue}`}>
                 <label
                   htmlFor={inputId}
                   className={i === checkedRadio ? 'checked' : ''}
@@ -119,7 +119,7 @@ export function Radio({
                     )}
                   </StyledRadioDisabledOverlay>
                 )}
-              </>
+              </div>
             );
           })}
       </div>
