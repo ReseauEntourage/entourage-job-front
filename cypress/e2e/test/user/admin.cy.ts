@@ -418,10 +418,10 @@ describe('En tant que - Administrateur', () => {
         cy.get(
           `[data-testid="button-edit-organization-${organizations[0].id}"]`
         )
-          .as(`button-edit-organization-${organizations[0].id}`)
+          .as(`organization-id`)
           .should('be.visible')
           .first();
-        cy.get(`@button-edit-organization-${organizations[0].id}`).click();
+        cy.get(`@organization-id`).first().click();
 
         // Wait modale to be visible
         cy.get('.ReactModalPortal div').first().should('be.visible');

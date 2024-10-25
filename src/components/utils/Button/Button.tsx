@@ -27,6 +27,7 @@ export interface ButtonProps {
   scroll?: boolean;
   dataTestId?: string;
   color?: string;
+  rounded?: boolean;
 }
 
 export function getButtonClassBuffer({
@@ -36,9 +37,10 @@ export function getButtonClassBuffer({
   style,
   size,
   widths,
+  rounded,
 }: Pick<
   ButtonProps,
-  'visible' | 'className' | 'disabled' | 'style' | 'size' | 'widths'
+  'visible' | 'className' | 'disabled' | 'style' | 'size' | 'widths' | 'rounded'
 >) {
   let classBuffer = 'uk-button';
   if (visible) classBuffer += ` uk-visible@${visible}`;
@@ -60,6 +62,7 @@ export function getButtonClassBuffer({
       classBuffer += ` uk-width-${width}`;
     });
   }
+  if (rounded) classBuffer += ' rounded';
 
   return classBuffer;
 }
@@ -82,6 +85,7 @@ export function Button({
   scroll = true,
   dataTestId = '',
   color = 'primaryBlue',
+  rounded = false,
 }: ButtonProps) {
   const classBuffer = getButtonClassBuffer({
     visible,
@@ -90,6 +94,7 @@ export function Button({
     style,
     size,
     widths,
+    rounded,
   });
 
   const buttonComponent = (

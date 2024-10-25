@@ -17,6 +17,13 @@ export const StyledSearchBar = styled.div`
   min-height: ${HEIGHTS.SEARCH_BAR_HEIGHT}px;
 `;
 
+export const StyledSearchBarInputContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+`;
+
 export const StyledSearchBarInput = styled.input`
   box-sizing: border-box;
   margin: 0;
@@ -45,6 +52,18 @@ export const StyledSearchBarInput = styled.input`
   &::placeholder {
     color: #999;
   }
+`;
+
+export const StyledSearchBarClearButton = styled.div`
+  position: absolute;
+  display: flex;
+  right: 10px;
+  background: ${COLORS.white};
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  justify-content: center;
+  cursor: pointer;
 `;
 
 export const StyledSearchBarSubmitButton = styled.a`
