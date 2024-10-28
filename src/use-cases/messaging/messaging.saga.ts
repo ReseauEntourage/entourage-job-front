@@ -18,9 +18,8 @@ const {
 } = slice.actions;
 
 function* getConversationsSagaRequested() {
-  const query = yield* select((state) => state.messaging.query);
   try {
-    const response = yield* call(() => Api.getConversations(query));
+    const response = yield* call(() => Api.getConversations());
     yield* put(getConversationsSucceeded(response.data));
   } catch {
     yield* put(getConversationsFailed());
