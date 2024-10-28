@@ -77,20 +77,25 @@ export const slice = createSlice({
           }
         } else if (state.conversations) {
           // Append the new message to the conversation list
-          const idxSelectedConversation = state.conversations?.findIndex(
+          const selectedConvIdx = state.conversations?.findIndex(
             (conversation) => conversation.id === state.selectedConversationId
           );
-          state.conversations[idxSelectedConversation].messages.push(message);
+          state.conversations[selectedConvIdx].messages.push(message);
           state.selectedConversation?.messages.push(message);
 
           // Set the conversation as seen
-          state.conversations[idxSelectedConversation].participants.forEach(
+          state.conversations[selectedConvIdx].participants.forEach(
             (participant) => {
               if (participant.id === message.authorId) {
                 participant.ConversationParticipant.seenAt = message.createdAt;
               }
             }
           );
+
+          // Move the conversation to the first position
+          const conversation = state.conversations[selectedConvIdx];
+          state.conversations.splice(selectedConvIdx, 1);
+          state.conversations.unshift(conversation);
         }
       },
     }),
