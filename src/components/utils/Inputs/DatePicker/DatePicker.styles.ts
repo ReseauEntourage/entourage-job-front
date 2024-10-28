@@ -10,7 +10,7 @@ export const StyledDatePickerContainer = styled.div`
   input {
     ${() => commonInputStyles}
     &.empty-value {
-      color: ${COLORS.darkGray};
+      color: ${COLORS.mediumGray};
       font-style: italic;
     }
     &:focus-visible {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { COLORS } from 'src/constants/styles';
+import { ALERT_COLORS, COLORS, CV_STATUS_COLORS } from 'src/constants/styles';
 import {
   StyledColor,
   StyledColorContainer,
@@ -18,11 +18,11 @@ const meta = {
 };
 
 const DarkColors = [
-  'darkGrayFont',
   'darkGray',
+  'mediumGray',
   'black',
-  'noRed',
-  'warningOrange',
+  'red',
+  'darkOrange',
   '#A0A0A0',
 ];
 
@@ -33,8 +33,6 @@ const ColorsTemplate = () => {
       <h4>Main Colors</h4>
       <StyledColorsContainer>
         {Object.keys(COLORS).map((colorKey) => {
-          if (colorKey === 'cvStatus') return null;
-          if (colorKey === 'alert') return null;
           const isDarkColor = DarkColors.includes(colorKey);
           return (
             <StyledColorContainer
@@ -53,25 +51,25 @@ const ColorsTemplate = () => {
       </StyledColorsContainer>
       <h4>Status Colors (with borders)</h4>
       <StyledColorsContainer>
-        {Object.keys(COLORS.cvStatus).map((colorKey) => {
+        {Object.keys(CV_STATUS_COLORS).map((colorKey) => {
           const isDarkColor = DarkColors.includes(
-            COLORS.cvStatus[colorKey].background
+            CV_STATUS_COLORS[colorKey].background
           );
           return (
             <StyledColorContainer
               onClick={() => {
                 navigator.clipboard.writeText(
-                  COLORS.cvStatus[colorKey].background
+                  CV_STATUS_COLORS[colorKey].background
                 );
-                alert(`Copied: ${COLORS.cvStatus[colorKey].background}`); // eslint-disable-line no-alert
+                alert(`Copied: ${CV_STATUS_COLORS[colorKey].background}`); // eslint-disable-line no-alert
               }}
             >
               <StyledStatusColor
-                color={COLORS.cvStatus[colorKey].background}
+                color={CV_STATUS_COLORS[colorKey].background}
                 isDarkColor={isDarkColor}
-                borderColor={COLORS.cvStatus[colorKey].border}
+                borderColor={CV_STATUS_COLORS[colorKey].border}
               >
-                {COLORS.cvStatus[colorKey].background}
+                {CV_STATUS_COLORS[colorKey].background}
               </StyledStatusColor>
               <div>{colorKey}</div>
             </StyledColorContainer>
@@ -80,18 +78,18 @@ const ColorsTemplate = () => {
       </StyledColorsContainer>
       <h4>Alert Colors</h4>
       <StyledColorsContainer>
-        {Object.keys(COLORS.alert).map((colorKey) => {
+        {Object.keys(ALERT_COLORS).map((colorKey) => {
           return (
             <StyledColorContainer
               onClick={() => {
                 navigator.clipboard.writeText(
-                  COLORS.alert[colorKey].background
+                  ALERT_COLORS[colorKey].background
                 );
-                alert(`Copied: ${COLORS.alert[colorKey].background}`); // eslint-disable-line no-alert
+                alert(`Copied: ${ALERT_COLORS[colorKey].background}`); // eslint-disable-line no-alert
               }}
             >
-              <StyledColor color={COLORS.alert[colorKey].background}>
-                {COLORS.alert[colorKey].background}
+              <StyledColor color={ALERT_COLORS[colorKey].background}>
+                {ALERT_COLORS[colorKey].background}
               </StyledColor>
               <div>{colorKey}</div>
             </StyledColorContainer>

@@ -38,17 +38,13 @@ export const CVCallToActions = ({
       />
       <StyledCVCTAContainer>
         <StyledCVCTACard className={`${!isDesktop ? 'mobile' : ''}`} order={3}>
-          <H5
-            title="Partagez son CV sur vos réseaux"
-            center
-            color="darkGrayFont"
-          />
+          <H5 title="Partagez son CV sur vos réseaux" center color="darkGray" />
           <p>Et offrez lui une visibilité qui peut tout changer.</p>
           <CVShareButtons cv={cv} actionDisabled={actionDisabled} />
         </StyledCVCTACard>
         <CVSendMessage cv={cv} actionDisabled={actionDisabled} />
         <StyledCVCTACard className={`${!isDesktop ? 'mobile' : ''}`} order={2}>
-          <H5 title="Vous recrutez&nbsp;?" center color="darkGrayFont" />
+          <H5 title="Vous recrutez&nbsp;?" center color="darkGray" />
           <p>
             Si vous avez une offre qui correspond au profil de{' '}
             {cv?.user?.candidat?.firstName}, envoyez-lui.

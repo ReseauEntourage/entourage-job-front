@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledBackofficeBackground = styled.div`
-  background-color: ${COLORS.lightgray};
+  background-color: ${COLORS.lightGray};
 `;
 
 export const StyledBackofficeGrid = styled.div`
@@ -26,6 +26,6 @@ export const StyledNoResult = styled.div`
   justify-content: center;
   font-size: 14px;
   font-style: italic;
-  color: ${COLORS.darkGray};
+  color: ${COLORS.mediumGray};
   margin-top: 16px;
 `;

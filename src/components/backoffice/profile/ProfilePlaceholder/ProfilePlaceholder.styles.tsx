@@ -9,7 +9,7 @@ export const StyledProfileCardPlaceholder = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    color: ${COLORS.darkGrayFont};
+    color: ${COLORS.darkGray};
     font-style: italic;
     p {
       margin-bottom: 0;

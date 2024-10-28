@@ -25,12 +25,12 @@ export const StyledFooterForm = styled.div`
 
 export const StyledErrorMessage = styled.div`
   flex: 1;
-  color: ${COLORS.warningOrange};
+  color: ${COLORS.darkOrange};
   font-size: 14px;
   margin-bottom: 16px;
 `;
 
 export const StyledCompulsoryMessage = styled.div`
-  color: ${COLORS.darkGrayFont};
+  color: ${COLORS.darkGray};
   font-size: 12px;
 `;

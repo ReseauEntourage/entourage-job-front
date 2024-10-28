@@ -27,13 +27,13 @@ export const StyledDetailsProgressBar = styled.div`
     }
     &.fullRed {
       color: white;
-      background-color: ${COLORS.noRed};
-      border: 1px solid ${COLORS.noRed};
+      background-color: ${COLORS.red};
+      border: 1px solid ${COLORS.red};
     }
     &.fullGreen {
       color: white;
-      background-color: ${COLORS.yesGreen};
-      border: 1px solid ${COLORS.yesGreen};
+      background-color: ${COLORS.green};
+      border: 1px solid ${COLORS.green};
     }
     @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
       font-size: 10px;

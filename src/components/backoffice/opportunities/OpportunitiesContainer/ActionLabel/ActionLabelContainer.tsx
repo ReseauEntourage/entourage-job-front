@@ -23,7 +23,7 @@ export const ActionLabelContainer = ({
       {!isPublic && !isExternal && (
         <ActionLabel
           disabled
-          color="yellow"
+          color="darkYellow"
           label="À traiter rapidement"
           icon={<LucidIcon name="Star" size={16} />}
         />
