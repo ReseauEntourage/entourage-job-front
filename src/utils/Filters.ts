@@ -1,16 +1,10 @@
 import _ from 'lodash';
 import { MEMBER_FILTERS_DATA } from 'src/constants';
-import {
-  CANDIDATE_USER_ROLES,
-  COACH_USER_ROLES,
-  UserRole,
-} from 'src/constants/users';
+import { USER_ROLES, UserRole } from 'src/constants/users';
 import { Filter } from 'src/constants/utils';
 import { isRoleIncluded } from './Finding';
 
-const filterMemberTypeConstantsByRole = (
-  roles: typeof CANDIDATE_USER_ROLES | typeof COACH_USER_ROLES
-): Filter => {
+const filterMemberTypeConstantsByRole = (roles: UserRole[]): Filter => {
   return {
     ...MEMBER_FILTERS_DATA[0],
     constants: MEMBER_FILTERS_DATA[0].constants.filter(({ value }) => {
@@ -22,16 +16,16 @@ const filterMemberTypeConstantsByRole = (
 export const mutateTypeFilterDependingOnRole = (
   role: UserRole | UserRole[]
 ) => {
-  if (isRoleIncluded(COACH_USER_ROLES, role)) {
+  if (role === USER_ROLES.COACH) {
     return [
-      filterMemberTypeConstantsByRole(COACH_USER_ROLES),
+      filterMemberTypeConstantsByRole([USER_ROLES.COACH]),
       MEMBER_FILTERS_DATA[1],
       MEMBER_FILTERS_DATA[3],
     ];
   }
-  if (isRoleIncluded(CANDIDATE_USER_ROLES, role)) {
+  if (role === USER_ROLES.CANDIDATE) {
     return [
-      filterMemberTypeConstantsByRole(CANDIDATE_USER_ROLES),
+      filterMemberTypeConstantsByRole([USER_ROLES.CANDIDATE]),
       ...MEMBER_FILTERS_DATA.slice(1),
     ];
   }

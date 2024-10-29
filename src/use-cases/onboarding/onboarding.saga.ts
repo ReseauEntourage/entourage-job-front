@@ -7,7 +7,7 @@ import {
   selectCurrentUserProfileHelps,
 } from '../current-user';
 import { Api } from 'src/api';
-import { USER_ROLES, CANDIDATE_USER_ROLES } from 'src/constants/users';
+import { USER_ROLES } from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils';
 import { slice } from './onboarding.slice';
 
@@ -41,7 +41,7 @@ export function* launchOnboardingSaga() {
   }
   // if is coach and no sector or if candidate and no sector, step 2
   else if (
-    (isRoleIncluded(CANDIDATE_USER_ROLES, userRole) &&
+    (userRole === USER_ROLES.CANDIDATE &&
       (!userProfile.searchBusinessLines ||
         userProfile.searchBusinessLines.length === 0)) ||
     (USER_ROLES.COACH === userRole &&

@@ -9,16 +9,11 @@ import { Button, Grid, Section } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 
 import { TextArea } from 'src/components/utils/Inputs';
-import {
-  CANDIDATE_USER_ROLES,
-  COACH_USER_ROLES,
-  USER_ROLES,
-} from 'src/constants/users';
+import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
 import { usePrevious } from 'src/hooks/utils';
 import { notificationsActions } from 'src/use-cases/notifications';
-import { isRoleIncluded } from 'src/utils/Finding';
 
 const Suivi = () => {
   const user = useAuthenticatedUser();
@@ -30,18 +25,20 @@ const Suivi = () => {
   const prevUser = usePrevious(user);
   const dispatch = useDispatch();
 
-  const title = isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
-    ? 'Suivez votre progression'
-    : `Suivi du candidat - ${`${
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        userCandidat?.candidat?.firstName
-      } ${
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        userCandidat?.candidat?.lastName
-      }`}`;
-  const description = isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
-    ? "Ici, vous pouvez prendre des notes sur la progression de vos recherches, noter vos différents rendez-vous, etc. et échanger avec votre coach. Profitez de cet espace d'écriture libre qui vous est dédié !"
-    : "Ici, vous pouvez suivre la progression de votre candidat.e grâce à ses notes, et échanger avec lui/elle. Profitez de cet espace d'échange libre qui vous est dédié !";
+  const title =
+    user.role === USER_ROLES.CANDIDATE
+      ? 'Suivez votre progression'
+      : `Suivi du candidat - ${`${
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          userCandidat?.candidat?.firstName
+        } ${
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          userCandidat?.candidat?.lastName
+        }`}`;
+  const description =
+    user.role === USER_ROLES.CANDIDATE
+      ? "Ici, vous pouvez prendre des notes sur la progression de vos recherches, noter vos différents rendez-vous, etc. et échanger avec votre coach. Profitez de cet espace d'écriture libre qui vous est dédié !"
+      : "Ici, vous pouvez suivre la progression de votre candidat.e grâce à ses notes, et échanger avec lui/elle. Profitez de cet espace d'échange libre qui vous est dédié !";
 
   const updateValue = useCallback((text) => {
     setValue(text || '');
@@ -103,13 +100,7 @@ const Suivi = () => {
       setLoading(true);
       Api.getUserCandidate()
         .then(({ data }) => {
-          if (USER_ROLES.REFERRER === user.role) {
-            setUserCandidat(
-              data.find((usCand) => usCand.candidat.id === candidateId)
-            );
-          } else {
-            setUserCandidat(data);
-          }
+          setUserCandidat(data);
           sendNoteHasBeenRead();
           updateValue(data.note);
         })
@@ -135,7 +126,7 @@ const Suivi = () => {
       <div className="uk-flex uk-flex-column uk-flex-middle">
         <h2 className="uk-text-bold">
           <span className="uk-text-primary">
-            {isRoleIncluded(COACH_USER_ROLES, user.role)
+            {user.role === USER_ROLES.COACH
               ? 'Aucun candidat'
               : 'Aucun bénévole coach'}
           </span>{' '}

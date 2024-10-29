@@ -12,7 +12,7 @@ import { Section } from 'src/components/utils';
 import { OPPORTUNITY_FILTERS_DATA } from 'src/constants';
 import { ADMIN_ZONES, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { GA_TAGS } from 'src/constants/tags';
-import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
+import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
 import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
@@ -20,7 +20,7 @@ import { useOpportunityType } from 'src/hooks/queryParams/useOpportunityType';
 import { useQueryParamsOpportunities } from 'src/hooks/queryParams/useQueryParamsOpportunities';
 import { useFilters } from 'src/hooks/useFilters';
 import { usePrevious } from 'src/hooks/utils';
-import { getCandidateFromCoach, isRoleIncluded } from 'src/utils/Finding';
+import { getCandidateFromCoach } from 'src/utils/Finding';
 
 // filters for the query
 const candidateQueryFilters = OPPORTUNITY_FILTERS_DATA.slice(1);
@@ -146,17 +146,15 @@ const Opportunities = () => {
           );
         } else {
           // On a déja le paramètre status
-          // const candidate = isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
-          // ? user
-          // : getCandidateFromCoach(user, candidateId);
           setLoading(false);
         }
       } else if (opportunityType === 'public') {
         // Cas pour les offres publiques
         const { status, ...restQueryParams } = queryParamsOpportunities;
-        const candidate = isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
-          ? user
-          : getCandidateFromCoach(user, candidateId);
+        const candidate =
+          user.role === USER_ROLES.CANDIDATE
+            ? user
+            : getCandidateFromCoach(user, candidateId);
 
         if (
           candidate &&
@@ -242,7 +240,7 @@ const Opportunities = () => {
   return (
     <LayoutBackOffice
       title={
-        isRoleIncluded(CANDIDATE_USER_ROLES, user.role)
+        user.role === USER_ROLES.CANDIDATE
           ? 'Mes opportunités'
           : 'Opportunités du candidat'
       }

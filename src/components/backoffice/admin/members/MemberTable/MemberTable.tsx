@@ -1,11 +1,6 @@
 import React, { useMemo } from 'react';
 import { Table, Th } from 'src/components/utils/Table';
-import {
-  CANDIDATE_USER_ROLES,
-  COACH_USER_ROLES,
-  UserRole,
-} from 'src/constants/users';
-import { isRoleIncluded } from 'src/utils/Finding';
+import { USER_ROLES, UserRole } from 'src/constants/users';
 import { MemberColumn } from './Member/Member.types';
 
 interface MemberTableProps {
@@ -18,23 +13,20 @@ export function MemberTable({ columns, members, role }: MemberTableProps) {
   const columnsHeaders = useMemo<JSX.Element[]>(() => {
     let columnsArray = [];
 
-    if (isRoleIncluded(CANDIDATE_USER_ROLES, role)) {
+    if (role === USER_ROLES.CANDIDATE) {
       columnsArray = [
         // @ts-expect-error after enable TS strict mode. Please, try to fix it
         <Th key="memberRole">Candidat</Th>,
       ];
     }
-    if (isRoleIncluded(COACH_USER_ROLES, role)) {
+    if (role === USER_ROLES.COACH) {
       columnsArray = [
         // @ts-expect-error after enable TS strict mode. Please, try to fix it
         <Th key="memberRole">Coach</Th>,
       ];
     }
 
-    if (
-      columns.includes('associatedUser') &&
-      isRoleIncluded(CANDIDATE_USER_ROLES, role)
-    ) {
+    if (columns.includes('associatedUser') && role === USER_ROLES.CANDIDATE) {
       columnsArray = [
         // @ts-expect-error after enable TS strict mode. Please, try to fix it
         ...columnsArray,
@@ -43,10 +35,7 @@ export function MemberTable({ columns, members, role }: MemberTableProps) {
         <Th key="memberAssociatedRole">Coach</Th>,
       ];
     }
-    if (
-      columns.includes('associatedUser') &&
-      isRoleIncluded(COACH_USER_ROLES, role)
-    ) {
+    if (columns.includes('associatedUser') && role === USER_ROLES.COACH) {
       columnsArray = [
         // @ts-expect-error after enable TS strict mode. Please, try to fix it
         ...columnsArray,
@@ -118,7 +107,7 @@ export function MemberTable({ columns, members, role }: MemberTableProps) {
       ];
     }
 
-    if (isRoleIncluded(CANDIDATE_USER_ROLES, role)) {
+    if (role === USER_ROLES.CANDIDATE) {
       if (columns.includes('cvUrl')) {
         columnsArray = [
           // @ts-expect-error after enable TS strict mode. Please, try to fix it

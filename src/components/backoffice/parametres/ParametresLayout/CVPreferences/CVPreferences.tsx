@@ -5,9 +5,8 @@ import { CandidateEmployedToggle } from 'src/components/backoffice/candidate/Can
 import { ContractLabel } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ContractLabel';
 import { ToggleWithModal } from 'src/components/utils/Inputs/ToggleWithModal';
 import { Contract } from 'src/constants';
-import { CANDIDATE_USER_ROLES, UserRole } from 'src/constants/users';
+import { USER_ROLES, UserRole } from 'src/constants/users';
 import { currentUserActions } from 'src/use-cases/current-user';
-import { isRoleIncluded } from 'src/utils';
 import { CVModalConfirmation } from './CVModalConfirmation';
 import { CVModalEdit } from './CVModalEdit';
 import { StyledCVPreferenceLine } from './CVPreferences.styles';
@@ -46,7 +45,7 @@ export const CVPreferences = ({
       <StyledCVPreferenceLine>
         <CandidateEmployedToggle
           title={
-            isRoleIncluded(CANDIDATE_USER_ROLES, userRole)
+            userRole === USER_ROLES.CANDIDATE
               ? "J'ai retrouvé un emploi"
               : 'Le candidat a retrouvé un emploi'
           }
@@ -54,7 +53,7 @@ export const CVPreferences = ({
           modal={
             <CVModalEdit
               title={
-                isRoleIncluded(CANDIDATE_USER_ROLES, userRole)
+                userRole === USER_ROLES.CANDIDATE
                   ? 'Vous avez retrouvé un emploi ?'
                   : 'Le candidat a-t-il retrouvé un emploi ?'
               }

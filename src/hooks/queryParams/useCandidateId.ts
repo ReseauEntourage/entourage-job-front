@@ -1,10 +1,7 @@
 import { useRouter } from 'next/router';
-import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
+import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import {
-  getCandidateIdFromCoachOrCandidate,
-  isRoleIncluded,
-} from 'src/utils/Finding';
+import { getCandidateIdFromCoachOrCandidate } from 'src/utils/Finding';
 
 export function useCandidateId() {
   const user = useAuthenticatedUser();
@@ -16,7 +13,5 @@ export function useCandidateId() {
     return getCandidateIdFromCoachOrCandidate(user)?.[0] as string;
   }
 
-  return (
-    isRoleIncluded(CANDIDATE_USER_ROLES, user.role) ? user.id : candidateId
-  ) as string;
+  return (user.role === USER_ROLES.CANDIDATE ? user.id : candidateId) as string;
 }

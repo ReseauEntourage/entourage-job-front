@@ -1,10 +1,6 @@
 import { useOpenCorrespondingModal } from 'src/components/backoffice/parametres/ParametresLayout/UserInformationCard/useOpenModal';
 import { useContextualRole } from 'src/components/backoffice/useContextualRole';
-import {
-  CANDIDATE_USER_ROLES,
-  USER_ROLES,
-  UserRole,
-} from 'src/constants/users';
+import { USER_ROLES, UserRole } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { isRoleIncluded } from 'src/utils';
 import { useUploadProfileImage } from './useUploadProfileImage';
@@ -16,7 +12,7 @@ export function useHeaderProfile(role: UserRole) {
   const { imageUploading, uploadProfileImage } = useUploadProfileImage();
 
   const shouldShowAllProfile = isRoleIncluded(
-    [...CANDIDATE_USER_ROLES, USER_ROLES.COACH],
+    [USER_ROLES.CANDIDATE, USER_ROLES.COACH],
     role
   );
 

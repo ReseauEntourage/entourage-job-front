@@ -5,8 +5,7 @@ import { useSelectSelectedProfile } from '../useSelectedProfile';
 import { useHelpField } from 'src/components/backoffice/parametres/useUpdateProfile';
 import { useContextualRole } from 'src/components/backoffice/useContextualRole';
 import { Card } from 'src/components/utils';
-import { CANDIDATE_USER_ROLES } from 'src/constants/users';
-import { isRoleIncluded } from 'src/utils';
+import { USER_ROLES } from 'src/constants/users';
 import { ProfileHelpList } from './ProfileHelpList';
 
 export const ProfileHelpInformationCard = () => {
@@ -20,7 +19,7 @@ export const ProfileHelpInformationCard = () => {
   return (
     <Card
       title={
-        isRoleIncluded(CANDIDATE_USER_ROLES, selectedProfile.role)
+        selectedProfile.role === USER_ROLES.CANDIDATE
           ? "Le candidat aurait besoin d'aide pour..."
           : 'Propositions de coups de pouce'
       }

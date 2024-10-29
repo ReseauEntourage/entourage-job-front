@@ -5,7 +5,7 @@ import { formEditCandidateProfessionalInformation } from 'src/components/forms/s
 import { formEditCoachProfessionalInformation } from 'src/components/forms/schemas/formEditCoachProfessionalInformation';
 import { BUSINESS_LINES } from 'src/constants';
 import { USER_ROLES, UserRole } from 'src/constants/users';
-import { findConstantFromValue, isRoleIncluded, sortByOrder } from 'src/utils';
+import { findConstantFromValue, sortByOrder } from 'src/utils';
 
 interface userProfileParamsToCheck {
   currentJob: string | null;
@@ -21,7 +21,7 @@ export const checkData = (userProfile: userProfileParamsToCheck): boolean => {
       (!!userProfile?.currentJob ||
         (!!userProfile?.networkBusinessLines &&
           userProfile.networkBusinessLines?.length > 0))) ||
-    (isRoleIncluded([USER_ROLES.CANDIDATE], userProfile.role) &&
+    (userProfile.role === USER_ROLES.CANDIDATE &&
       ((!!userProfile?.searchAmbitions &&
         userProfile.searchAmbitions?.length > 0) ||
         (!!userProfile?.searchBusinessLines &&

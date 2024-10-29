@@ -2,8 +2,7 @@ import React, { useMemo } from 'react';
 import { DirectoryItem } from '../DirectoryItem';
 import { useDirectory } from '../useDirectory';
 import { CardList } from 'src/components/utils/CardList';
-import { CANDIDATE_USER_ROLES } from 'src/constants/users';
-import { isRoleIncluded } from 'src/utils';
+import { USER_ROLES } from 'src/constants/users';
 import { StyledDirectoryListContainer } from './DirectoryList.styles';
 
 export function DirectoryList() {
@@ -11,13 +10,15 @@ export function DirectoryList() {
 
   const profileList = useMemo(() => {
     return profiles.map((profile) => {
-      const helps = isRoleIncluded(CANDIDATE_USER_ROLES, profile.role)
-        ? profile.helpNeeds
-        : profile.helpOffers;
+      const helps =
+        profile.role === USER_ROLES.CANDIDATE
+          ? profile.helpNeeds
+          : profile.helpOffers;
 
-      const businessLines = isRoleIncluded(CANDIDATE_USER_ROLES, profile.role)
-        ? profile.searchBusinessLines
-        : profile.networkBusinessLines;
+      const businessLines =
+        profile.role === USER_ROLES.CANDIDATE
+          ? profile.searchBusinessLines
+          : profile.networkBusinessLines;
 
       return (
         <DirectoryItem

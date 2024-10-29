@@ -14,14 +14,10 @@ import { Department } from 'src/constants/departements';
 import { HelpValue, ProfileHelps } from 'src/constants/helps';
 import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
-import {
-  CANDIDATE_USER_ROLES,
-  COACH_USER_ROLES,
-  UserRole,
-} from 'src/constants/users';
+import { USER_ROLES, UserRole } from 'src/constants/users';
 import { useImageFallback } from 'src/hooks/useImageFallback';
 import { gaEvent } from 'src/lib/gtag';
-import { findConstantFromValue, isRoleIncluded, sortByOrder } from 'src/utils';
+import { findConstantFromValue, sortByOrder } from 'src/utils';
 import {
   StyledProfileCard,
   StyledProfileCardAvailability,
@@ -70,14 +66,14 @@ export interface ProfileCardProps {
 }
 
 const getLabelsDependingOnRole = (role: UserRole) => {
-  if (isRoleIncluded(CANDIDATE_USER_ROLES, role)) {
+  if (role === USER_ROLES.CANDIDATE) {
     return {
       businessLines: 'Je recherche un emploi dans\xa0:',
       helps: "Je souhaite avoir de l'aide dans\xa0:",
       role: 'Candidat',
     };
   }
-  if (isRoleIncluded(COACH_USER_ROLES, role)) {
+  if (role === USER_ROLES.COACH) {
     return {
       businessLines: "J'ai du réseau dans\xa0:",
       helps: 'Je peux aider à\xa0:',
@@ -175,7 +171,7 @@ export function ProfileCard({
           </StyledProfileCardPictureContainer>
           <StyledProfileCardContent>
             <StyledProfileCardProfessionalSituation>
-              {isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
+              {role === USER_ROLES.CANDIDATE && (
                 <>
                   {sortedAmbitions && sortedAmbitions.length > 0 ? (
                     <StyledProfileCardJobContainer>
@@ -196,7 +192,7 @@ export function ProfileCard({
                   )}
                 </>
               )}
-              {isRoleIncluded(COACH_USER_ROLES, role) && (
+              {role === USER_ROLES.COACH && (
                 <>
                   {job ? (
                     <StyledProfileCardJobContainer>
@@ -227,7 +223,7 @@ export function ProfileCard({
                         />
                       );
                     })}
-                    {!isRoleIncluded(CANDIDATE_USER_ROLES, role) &&
+                    {role !== USER_ROLES.CANDIDATE &&
                       sortedBusinessLines.length > 2 && (
                         <Tag content={`+${sortedBusinessLines.length - 2}`} />
                       )}
