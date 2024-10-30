@@ -17,9 +17,7 @@ export const formRegistrationCandidateProgram: FormSchema<{
       component: 'radio',
       isRequired: true,
       title:
-        'Souhaitez vous bénéficier d’un accompagnement avec un coach personnalisé (gratuit) ? *',
-      subtitle:
-        'Vous pouvez bénéficier de l’accompagnement d’un coach personnel, une heures ou deux par semaine pendant 3 à 6 mois',
+        'Souhaitez-vous bénéficier gratuitement d’un accompagnement par un coach personnel pendant 3 à 6 mois ?',
       errorMessage: 'Veuillez sélectionner une des réponses',
       options: ProgramOptions[USER_ROLES.CANDIDATE],
     },
