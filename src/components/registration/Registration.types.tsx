@@ -60,6 +60,16 @@ export type RegistrationFormDataKeys = UnionKeys<RegistrationFormData>;
 export type FlattenedRegistrationFormData =
   UnionToIntersection<RegistrationFormData>;
 
+export type SkippedByKeys = Partial<
+  {
+    [K in RegistrationFormDataKeys]: FlattenedRegistrationFormData[K];
+  } & {
+    notEligibleFor360?: boolean;
+  }
+>;
+
+export type SkippedByKeysUnion = UnionKeys<SkippedByKeys>;
+
 export type FirstStepRegistrationFormData =
   ExtractFormSchemaValidation<FirstStepRegistrationForm>;
 
@@ -90,9 +100,7 @@ export interface RegistrationStepContent<
   // Used to get the values of a previous step as default values in the form of the current step
   dependsOn?: RegistrationFormDataKeys[];
   // Used to skip the step if the value of a previous step matches the value in skippedBy
-  skippedBy?: Partial<{
-    [K in RegistrationFormDataKeys]: FlattenedRegistrationFormData[K];
-  }>;
+  skippedBy?: SkippedByKeys;
 }
 
 export type RegistrationStepContentByRole = Partial<{
@@ -125,24 +133,24 @@ export const RegistrationStepContents: {
       form: formRegistrationCandidateInfo,
     },
     [USER_ROLES.COACH]: {
-      subtitle: "Choisissez le type d'accompagnement qui vous correspond",
-      annotation: RegistrationLabels.FUTURE_CHANGE,
       form: formRegistrationCoachProgram,
       dependsOn: ['department'],
     },
   },
   'step-4': {
     [USER_ROLES.CANDIDATE]: {
-      subtitle: "Choisissez le type d'accompagnement qui vous correspond",
-      annotation: RegistrationLabels.FUTURE_CHANGE,
       form: formRegistrationCandidateProgram,
       dependsOn: ['department', 'birthDate'],
+      // Pour un candidat qui n'a pas le choix, on skip cette etape
+      skippedBy: {
+        notEligibleFor360: true,
+      },
     },
     [USER_ROLES.COACH]: {
       subtitle:
         'Et si on se rencontrait ? Choisissez une date pour le webinaire d’information',
       form: formRegistrationCoachWebinar,
-      dependsOn: ['program'],
+      dependsOn: ['department', 'program'],
       skippedBy: {
         program: [Programs.BOOST],
       },
@@ -225,8 +233,7 @@ type RegistrationLastStepContent = {
 
 const iconSizeProps = { width: 60, height: 60 };
 
-const CoachLastStepContent: Pick<LastStepContent, 'title' | 'bullets'> = {
-  title: 'Vous venez de finaliser votre inscription : Bravo !',
+const CoachLastStepContent: Pick<LastStepContent, 'bullets'> = {
   bullets: [
     {
       icon: <IlluConversation {...iconSizeProps} />,
@@ -275,7 +282,8 @@ export const LastStepContent: RegistrationLastStepContent = {
   [USER_ROLES.CANDIDATE]: {
     [Programs.THREE_SIXTY]: {
       ...CandidateLastStepContent,
-      title: 'On se voit très bientôt !',
+      title:
+        "Il ne vous reste plus qu'a valider votre adresse email en cliquant sur le lien que vous avez reçu par mail.",
       subtitle:
         'On a hâte de vous rencontrer et encore plus hâte de commencer votre accompagnement !',
     },
@@ -290,11 +298,15 @@ export const LastStepContent: RegistrationLastStepContent = {
   [USER_ROLES.COACH]: {
     [Programs.THREE_SIXTY]: {
       ...CoachLastStepContent,
+      title:
+        "Il ne vous reste plus qu'a valider votre adresse email en cliquant sur le lien que vous avez reçu par mail.",
       subtitle:
         'On a hâte de vous rencontrer et encore plus hâte que vous deveniez coach !',
     },
     [Programs.BOOST]: {
       ...CoachLastStepContent,
+      title:
+        "Il ne vous reste plus qu'a valider votre adresse email en cliquant sur le lien que vous avez reçu par mail.",
       subtitle:
         'Vous pouvez désormais demander à votre entourage de vous appeler "coach"',
     },

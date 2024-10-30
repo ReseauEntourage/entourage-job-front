@@ -1,9 +1,7 @@
 import React from 'react';
-import ChevronLeftIcon from 'assets/icons/chevron-left.svg';
-import LogOutIcon from 'assets/icons/log-out.svg';
-import SettingsIcon from 'assets/icons/settings.svg';
 import { HeaderConnectedMainItem } from '../HeaderConnected.types';
 import { UserWithUserCandidate } from 'src/api/types';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { GA_TAGS } from 'src/constants/tags';
 import {
   CANDIDATE_USER_ROLES,
@@ -30,6 +28,7 @@ export const renderLinks = (
   candidateId: string
 ): {
   links: { [K in UserRole]: HeaderConnectedMainItem[] };
+  messaging: HeaderConnectedMainItem;
   dropdown: HeaderConnectedMainItem[];
 } => {
   const candidateHeaderItems: HeaderConnectedMainItem[] = [
@@ -193,7 +192,7 @@ export const renderLinks = (
           href: `/backoffice/candidat/list`,
           disabled: !candidateId,
           name: 'Retour à la liste des candidats',
-          icon: <ChevronLeftIcon />,
+          icon: <LucidIcon name="ChevronLeft" />,
         },
         {
           href: `/backoffice/candidat/${candidateId}/cv`,
@@ -244,16 +243,22 @@ export const renderLinks = (
         },
       ],
     },
+    messaging: {
+      href: '/backoffice/messaging',
+      icon: <LucidIcon size={35} name="MessageCircleMore" stroke="thin" />,
+      name: 'Messages',
+      badge: 'messaging',
+    },
     dropdown: [
       {
         href: '/backoffice/parametres',
-        icon: <SettingsIcon />,
+        icon: <LucidIcon name="Settings2" />,
         name: 'Paramètres',
       },
       {
         href: '',
         onClick: logout,
-        icon: <LogOutIcon />,
+        icon: <LucidIcon name="LogOut" />,
         name: 'Se déconnecter',
       },
     ],

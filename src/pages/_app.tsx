@@ -3,7 +3,7 @@
 
 import 'src/styles/dist/css/uikit.entourage.min.css';
 import 'src/styles/styles.less';
-import 'src/components/filters/SearchBar.less';
+import 'src/components/filters/Filters.less';
 import 'src/components/modals/Modal/Modal.less';
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 import 'react-phone-number-input/style.css';
@@ -15,7 +15,6 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { Provider, useSelector } from 'react-redux';
 
-import { SplashScreen } from 'src/components/SplashScreen';
 import { ModalsListener } from 'src/components/modals/Modal';
 // import { OFFCANVAS_GUEST, OFFCANVAS_LOGGED } from 'src/constants/utils';
 import { GA_TAGS } from 'src/constants/tags';
@@ -56,17 +55,11 @@ const RouteReadyComponent = ({ Component, pageProps }: AppProps) => {
 const EntourageApp = (props: AppProps) => {
   const [shouldScrollToTop, setShouldScrollToTop] = useState(true);
   const { events, beforePopState } = useRouter();
-  const [loading, setLoading] = useState(true);
-  const [fading, setFading] = useState(false);
 
   useMount(() => {
     events.on('routeChangeComplete', (url) => {
       gtag.pageview(url);
     });
-
-    setTimeout(() => {
-      setFading(true); // if animation still okay => should be deleted
-    }, 1000);
   });
 
   useEffect(() => {
@@ -92,7 +85,7 @@ const EntourageApp = (props: AppProps) => {
 
       if (!shallow && shouldScrollToTop) {
         setShouldScrollToTop(true);
-        document?.getElementById('main-container')?.scrollTo(0, 0);
+        document?.getElementById('body')?.scrollTo(0, 0);
       }
     };
     events.on('routeChangeComplete', scrollToTop);
@@ -101,23 +94,14 @@ const EntourageApp = (props: AppProps) => {
     };
   }, [events, shouldScrollToTop]);
 
-  useEffect(() => {
-    if (fading) {
-      setTimeout(() => {
-        setLoading(false); // if animation still okay => should be deleted
-      }, 500);
-    }
-  }, [fading]);
-
   return (
     // <Sentry.ErrorBoundary fallback="An error has occurred">
     <Provider store={store}>
       <DataProvider>
-        <div id="main-container">
-          <SplashScreen loading={loading} fading={fading} />
+        <>
           <RouteReadyComponent {...props} />
           <ModalsListener />
-        </div>
+        </>
       </DataProvider>
     </Provider>
     // </Sentry.ErrorBoundary>

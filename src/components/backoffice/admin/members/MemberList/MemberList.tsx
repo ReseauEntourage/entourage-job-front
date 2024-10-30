@@ -8,7 +8,7 @@ import { Api } from 'src/api';
 import { UserWithUserCandidate } from 'src/api/types';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { AdminCreationButtons } from 'src/components/backoffice/admin/AdminCreationButtons';
-import { SearchBar } from 'src/components/filters/SearchBar';
+import { SearchBar } from 'src/components/filters/SearchBar/SearchBar';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import { BackToTop, Button, Section, Typography } from 'src/components/utils';
 import { ContainerWithTextCentered } from 'src/components/utils/Containers';

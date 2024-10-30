@@ -1,9 +1,9 @@
 import React from 'react';
-import PlusIcon from 'assets/icons/plus.svg';
 import { CVExperience, CVFormation } from 'src/api/types';
 import { formEditExperience } from 'src/components/forms/schemas/formEditExperience';
 import { formEditFormation } from 'src/components/forms/schemas/formEditFormation';
 import { Card } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { StyledFooterCount } from './TimeLineCard.styles';
 import { TimeLineList } from './TimeLineList';
 
@@ -44,7 +44,7 @@ export const TimelineCard = ({
       title={title}
       editCallback={remainingItems ? onAdd : undefined}
       dataTestId={dataTestId}
-      editIcon={<PlusIcon />}
+      editIcon={<LucidIcon name="Plus" />}
     >
       <TimeLineList
         items={experiences}

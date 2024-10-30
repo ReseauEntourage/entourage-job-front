@@ -1431,3 +1431,5 @@ export const INTERNAL_MESSAGES_PLACEHOLDERS = {
       'Bonjour Y, j’ai besoin d’un coup de pouce dans ma recherche d’emploi / d’alternance. Pourrions-nous en discuter de vive-voix afin que je vous précise ma demande ? D’avance, je vous remercie ',
   },
 };
+
+export const DELAY_REFRESH_CONVERSATIONS = 30000;

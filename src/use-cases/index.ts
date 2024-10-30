@@ -1,6 +1,7 @@
 import { authenticationConfig } from './authentication';
 import { currentUserConfig } from './current-user';
 import { cvConfig } from './cv';
+import { messagingConfig } from './messaging';
 import { notificationsConfig } from './notifications';
 import { onboardingConfig } from './onboarding';
 import { opportunitiesConfig } from './opportunities';
@@ -17,4 +18,5 @@ export const useCasesConfig: UseCaseConfigType = {
   registrationConfig,
   notificationsConfig,
   onboardingConfig,
+  messagingConfig,
 };

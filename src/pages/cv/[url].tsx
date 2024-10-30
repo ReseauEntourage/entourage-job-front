@@ -1,6 +1,5 @@
 import { NextRouter, withRouter } from 'next/router';
 import React, { useEffect } from 'react';
-import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { Api } from 'src/api';
 import { CV } from 'src/api/types';
 import { Layout } from 'src/components/Layout';
@@ -11,6 +10,7 @@ import { PageCVContent } from 'src/components/partials/CV/PageCVContent';
 import { StyledCVPage } from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
 import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
 import { Grid, Section, SimpleLink, Button } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { CV_FILTERS_DATA, CV_STATUS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 
@@ -81,7 +81,7 @@ const CVPage = ({ cv, exists = false, router }: CVPageProps) => {
                 className="uk-margin-large-top"
               >
                 Voir tous les candidats
-                <ChevronRightIcon />
+                <LucidIcon name="ChevronRight" />
               </Button>
             </Grid>
           </Section>

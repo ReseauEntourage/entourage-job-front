@@ -9,7 +9,6 @@ describe('Inscription', () => {
 
     // it('should open step-1', () => {
     cy.visit('/inscription');
-    cy.get('[data-testid="app-splash-screen"]').should('not.visible');
     cy.url().should('include', 'step-1');
     // })
     // it('should fill step 1 and open step 2', () => {
@@ -38,16 +37,11 @@ describe('Inscription', () => {
       .click();
     cy.contains('Suivant').click();
     // })
+    // Skipping step 4
     // it('should fill step 4 open step 5', () => {
-    cy.get(
-      '[data-testid="form-registration-candidate-program-program-three_sixty"]'
-    )
-      .get('button')
-      .should('be.disabled');
-    cy.get(
-      '[data-testid="form-registration-candidate-program-program-boost"]'
-    ).click();
-    cy.contains('Suivant').click();
+    // cy.get('[data-testid="radio-input-three-sixty"]').should('be.disabled');
+    // cy.get('[data-testid="radio-input-boost"]').click();
+    // cy.contains('Suivant').click();
     // })
     // it('should fill step 4 open step 5', () => {
     cy.get(

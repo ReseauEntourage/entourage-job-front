@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 import { Api } from 'src/api';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { formGetEmail } from 'src/components/forms/schemas/formGetEmail';
 import { StepperModal } from 'src/components/modals/Modal/ModalGeneric/StepperModal';
 import { Button, Img } from 'src/components/utils';
+import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { EXTERNAL_LINKS } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
@@ -82,7 +82,7 @@ export const ModalShareCV = ({ firstName }: ModalShareCVProps) => {
                   style="primary"
                 >
                   En savoir plus
-                  <ChevronRightIcon />
+                  <LucidIcon name="ChevronRight" />
                 </Button>
               </div>
 
