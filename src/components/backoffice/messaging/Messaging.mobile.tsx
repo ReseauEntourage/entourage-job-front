@@ -1,8 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { StyledBackofficeBackground } from '../Backoffice.styles';
-import { Section } from 'src/components/utils';
-import { H1 } from 'src/components/utils/Headings';
 import {
   selectHasMessages,
   selectSelectedConversationId,
@@ -35,12 +32,6 @@ export const MessagingMobile = () => {
         <StyledMessagingGridMobile>
           {!selectedConversationId && (
             <StyledMessagingConversationContainerMobile>
-              <StyledBackofficeBackground>
-                <Section>
-                  <H1 title="Messagerie" color="black" />
-                  <p>Echanger avec les membres de la communauté</p>
-                </Section>
-              </StyledBackofficeBackground>
               <MessagingConversationList />
             </StyledMessagingConversationContainerMobile>
           )}

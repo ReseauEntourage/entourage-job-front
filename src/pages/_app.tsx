@@ -15,7 +15,6 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { Provider, useSelector } from 'react-redux';
 
-import { SplashScreen } from 'src/components/SplashScreen';
 import { ModalsListener } from 'src/components/modals/Modal';
 // import { OFFCANVAS_GUEST, OFFCANVAS_LOGGED } from 'src/constants/utils';
 import { GA_TAGS } from 'src/constants/tags';
@@ -56,17 +55,11 @@ const RouteReadyComponent = ({ Component, pageProps }: AppProps) => {
 const EntourageApp = (props: AppProps) => {
   const [shouldScrollToTop, setShouldScrollToTop] = useState(true);
   const { events, beforePopState } = useRouter();
-  const [loading, setLoading] = useState(true);
-  const [fading, setFading] = useState(false);
 
   useMount(() => {
     events.on('routeChangeComplete', (url) => {
       gtag.pageview(url);
     });
-
-    setTimeout(() => {
-      setFading(true); // if animation still okay => should be deleted
-    }, 1000);
   });
 
   useEffect(() => {
@@ -101,20 +94,11 @@ const EntourageApp = (props: AppProps) => {
     };
   }, [events, shouldScrollToTop]);
 
-  useEffect(() => {
-    if (fading) {
-      setTimeout(() => {
-        setLoading(false); // if animation still okay => should be deleted
-      }, 500);
-    }
-  }, [fading]);
-
   return (
     // <Sentry.ErrorBoundary fallback="An error has occurred">
     <Provider store={store}>
       <DataProvider>
         <>
-          <SplashScreen loading={loading} fading={fading} />
           <RouteReadyComponent {...props} />
           <ModalsListener />
         </>
