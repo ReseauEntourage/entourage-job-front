@@ -1,12 +1,9 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SearchBar } from 'src/components/filters/SearchBar/SearchBar';
 import { useIsMobile } from 'src/hooks/utils';
-import {
-  messagingActions,
-  selectConversations,
-  selectQuery,
-} from 'src/use-cases/messaging';
+import { selectCurrentUserId } from 'src/use-cases/current-user';
+import { messagingActions, selectConversations } from 'src/use-cases/messaging';
 import {
   ContainerStyled,
   StyledConversationsContainer,
@@ -16,20 +13,37 @@ import { MessagingConversationListItem } from './MessagingConversationListItem/M
 
 export const MessagingConversationList = () => {
   const dispatch = useDispatch();
-  const conversations = useSelector(selectConversations);
-  const query = useSelector(selectQuery);
+  const allConversations = useSelector(selectConversations);
+  const currentUserId = useSelector(selectCurrentUserId);
+  const [conversations, setConversations] = useState(allConversations);
+  const [query, setQuery] = useState('');
   const isMobile = useIsMobile();
 
   useEffect(() => {
     dispatch(messagingActions.getConversationsRequested());
-  }, [dispatch, query]);
+  }, [dispatch]);
 
-  const setSearch = useCallback(
-    (search) => {
-      dispatch(messagingActions.setQuery(search));
-    },
-    [dispatch]
-  );
+  useEffect(() => {
+    if (!allConversations) return setConversations(null);
+    if (!query) return setConversations(allConversations);
+    setConversations(
+      allConversations.filter((conversation) =>
+        conversation.participants
+          .filter((participant) => participant.id !== currentUserId)
+          .some(
+            (participant) =>
+              participant.firstName
+                .toLowerCase()
+                .includes(query.toLowerCase()) ||
+              participant.lastName.toLowerCase().includes(query.toLowerCase())
+          )
+      )
+    );
+  }, [allConversations, currentUserId, query]);
+
+  const setSearch = useCallback((search) => {
+    setQuery(search);
+  }, []);
 
   return (
     <ContainerStyled>

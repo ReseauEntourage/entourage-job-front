@@ -1,3 +1,4 @@
+import IlluBulleQuestionCheck from './Illu-bulle-question-check.svg';
 import Archive from './archive.svg';
 import AvionPapier from './avion-papier.svg';
 import Bolt from './bolt.svg';
@@ -130,6 +131,7 @@ IlluPoigneeDeMain,
 IlluQuestionReponseOrange,
 IlluReseauxSociaux,
 IlluTeteHomme,
+IlluBulleQuestionCheck,
 Info,
 Instagram,
 Language,
