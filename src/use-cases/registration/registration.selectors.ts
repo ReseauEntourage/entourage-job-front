@@ -157,7 +157,7 @@ export function selectRegistrationConfirmationStepContent(
 
   const selectedProgram = selectDefinedRegistrationSelectedProgram(state);
 
-  if (selectedRole === USER_ROLES.REFERRER) {
+  if (selectedRole === USER_ROLES.REFERER) {
     return LastStepContent[selectedRole];
   }
   return LastStepContent[selectedRole][selectedProgram];

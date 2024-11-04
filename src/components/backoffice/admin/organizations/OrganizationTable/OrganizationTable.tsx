@@ -14,7 +14,7 @@ export function OrganizationTable({ organizations }: OrganizationTableProps) {
       <Th key="organizationZone">Zone</Th>,
       <Th key="organizationNbCandidates">Nombre de candidats</Th>,
       <Th key="organizationNbCoach">Nombre de coachs</Th>,
-      <Th key="organizationNbReferrer">Nombre d&apos;orienteurs</Th>,
+      <Th key="organizationNbReferer">Nombre d&apos;orienteurs</Th>,
       <Th key="organizationEdition">Édition</Th>,
     ];
   }, []);

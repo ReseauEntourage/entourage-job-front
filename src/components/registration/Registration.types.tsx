@@ -22,7 +22,7 @@ import { formRegistrationCandidateSocialSituation } from './forms/formRegistrati
 import { formRegistrationCoachInfo } from './forms/formRegistrationCoachInfo';
 import { formRegistrationCoachProgram } from './forms/formRegistrationCoachProgram';
 import { formRegistrationCoachWebinar } from './forms/formRegistrationCoachWebinar';
-import { formRegistrationReferrerAccount } from './forms/formRegistrationReferrerAccount';
+import { formRegistrationRefererAccount } from './forms/formRegistrationRefererAccount';
 import { formRegistrationRole } from './forms/formRegistrationRole';
 
 export type RegistrationStep = `step-${number}`;
@@ -46,10 +46,10 @@ export type CoachRegistrationForm =
   | typeof formRegistrationAccount;
 /* TODO Add other steps forms here */
 
-export type ReferrerRegistrationForm = typeof formRegistrationReferrerAccount;
+export type RefererRegistrationForm = typeof formRegistrationRefererAccount;
 
 export type RegistrationFormWithOrganizationField =
-  typeof formRegistrationReferrerAccount;
+  typeof formRegistrationRefererAccount;
 
 export type FirstStepRegistrationForm = typeof formRegistrationRole;
 
@@ -57,7 +57,7 @@ export type RegistrationForms =
   | FirstStepRegistrationForm
   | CandidateRegistrationForm
   | CoachRegistrationForm
-  | ReferrerRegistrationForm;
+  | RefererRegistrationForm;
 
 export type RegistrationFormData =
   ExtractFormSchemaValidation<RegistrationForms>;
@@ -113,7 +113,7 @@ export interface RegistrationStepContent<
 export type RegistrationStepContentByRole = Partial<{
   [USER_ROLES.CANDIDATE]: RegistrationStepContent<CandidateRegistrationForm>;
   [USER_ROLES.COACH]: RegistrationStepContent<CoachRegistrationForm>;
-  [USER_ROLES.REFERRER]: RegistrationStepContent<ReferrerRegistrationForm>;
+  [USER_ROLES.REFERER]: RegistrationStepContent<RefererRegistrationForm>;
 }>;
 
 export const FirstStepContent: RegistrationStepContent<FirstStepRegistrationForm> =
@@ -135,8 +135,8 @@ export const RegistrationStepContents: {
     [USER_ROLES.COACH]: {
       form: formRegistrationCoachInfo,
     },
-    [USER_ROLES.REFERRER]: {
-      form: formRegistrationReferrerAccount,
+    [USER_ROLES.REFERER]: {
+      form: formRegistrationRefererAccount,
     },
   },
   'step-3': {
@@ -243,7 +243,7 @@ type RegistrationLastStepContent = {
     [Programs.THREE_SIXTY]: LastStepContent;
     [Programs.BOOST]: LastStepContent;
   };
-  [USER_ROLES.REFERRER]: LastStepContent;
+  [USER_ROLES.REFERER]: LastStepContent;
 };
 
 const iconSizeProps = { width: 60, height: 60 };
@@ -293,7 +293,7 @@ const CandidateLastStepContent: Pick<LastStepContent, 'bullets'> = {
   ],
 };
 
-const ReferrerLastStepContent: Pick<LastStepContent, 'bullets'> = {
+const RefererLastStepContent: Pick<LastStepContent, 'bullets'> = {
   bullets: [
     {
       icon: <IlluPoigneeDeMain {...iconSizeProps} />,
@@ -348,8 +348,8 @@ export const LastStepContent: RegistrationLastStepContent = {
         'Vous pouvez désormais demander à votre entourage de vous appeler "coach"',
     },
   },
-  [USER_ROLES.REFERRER]: {
-    ...ReferrerLastStepContent,
+  [USER_ROLES.REFERER]: {
+    ...RefererLastStepContent,
     title:
       'Il ne vous reste plus qu’à valider votre adresse email en cliquant sur le lien que vous avez reçu par mail',
     subtitle:

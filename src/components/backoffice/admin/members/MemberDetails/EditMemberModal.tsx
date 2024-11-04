@@ -57,9 +57,7 @@ export function EditMemberModal({ user, setUser }: EditMemberModal) {
     ) => {
       const updatedUser = await onSubmit(fields, closeModal);
       try {
-        const userToLinkId = Array.isArray(fields.userToLinkId)
-          ? fields.userToLinkId.map(({ value }) => value)
-          : fields.userToLinkId?.value;
+        const userToLinkId = fields.userToLinkId?.value;
         const { data: updatedUserWithLinkedMember } = await Api.putLinkUser(
           user.id,
 

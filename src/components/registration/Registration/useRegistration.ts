@@ -7,7 +7,7 @@ import {
   FlattenedRegistrationFormData,
   RegistrationFormWithOrganizationField,
 } from '../Registration.types';
-import { CREATE_NEW_ORGANIZATION_VALUE } from '../forms/formRegistrationReferrerAccount';
+import { CREATE_NEW_ORGANIZATION_VALUE } from '../forms/formRegistrationRefererAccount';
 import { Api } from 'src/api';
 import { OrganizationDto } from 'src/api/types';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';

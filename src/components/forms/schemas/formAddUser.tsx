@@ -39,7 +39,7 @@ interface FormAddUserSchema extends FormSchemaValidation {
   zone: AdminZone;
   phone: string;
   email: string;
-  userToLinkId: FilterConstant<string> | FilterConstant<string>[];
+  userToLinkId: FilterConstant<string>;
   adminRole: AdminRole;
   organizationId: FilterConstant<string>;
   nameOrganization: string;

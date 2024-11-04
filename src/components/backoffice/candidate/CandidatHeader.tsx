@@ -30,7 +30,7 @@ export const CandidatHeader = ({
         // @ts-expect-error after enable TS strict mode. Please, try to fix it
         cand?.url
       );
-    } else if (isRoleIncluded([USER_ROLES.REFERRER], user.role)) {
+    } else if (isRoleIncluded([USER_ROLES.REFERER], user.role)) {
       const cand = user.referredCandidates?.find(
         ({ candidat }) => candidat.id === candidateId
       );

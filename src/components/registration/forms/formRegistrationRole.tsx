@@ -20,7 +20,7 @@ const RoleOptions: SelectListType<RegistrableUserRole>[] = [
     description: 'Nous rejoindre en tant que coach',
   },
   {
-    value: USER_ROLES.REFERRER,
+    value: USER_ROLES.REFERER,
     label: 'Je souhaite orienter des candidats de ma structure',
     icon: <IlluCandidatFolder width={50} height={50} />,
     description: 'Nous rejoindre en tant qu’association ou travailleur social',

@@ -282,10 +282,7 @@ export class APIHandler {
     return this.put(`/user/candidate/read/${candidateId}`);
   }
 
-  putLinkUser(
-    userId: string,
-    userToLinkId?: string | string[]
-  ): Promise<AxiosResponse> {
+  putLinkUser(userId: string, userToLinkId?: string): Promise<AxiosResponse> {
     return this.put(`/user/linkUser/${userId}`, { userToLinkId });
   }
 

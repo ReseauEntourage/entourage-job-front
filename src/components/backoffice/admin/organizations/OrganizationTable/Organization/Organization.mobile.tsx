@@ -64,7 +64,7 @@ export function OrganizationMobile({
           <span>{organization.coachesCount}</span>
         </TdMobile>
         <TdMobile title="Nb. d'orienteurs">
-          <span>{organization.referrersCount}</span>
+          <span>{organization.referersCount}</span>
         </TdMobile>
       </div>
     </TrMobile>

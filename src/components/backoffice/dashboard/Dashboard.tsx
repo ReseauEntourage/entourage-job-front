@@ -52,7 +52,7 @@ export const Dashboard = () => {
             className={`${isDesktop ? '' : 'mobile'}`}
           >
             {!isRoleIncluded(
-              [USER_ROLES.REFERRER, USER_ROLES.ADMIN],
+              [USER_ROLES.REFERER, USER_ROLES.ADMIN],
               user.role
             ) && (
               <>

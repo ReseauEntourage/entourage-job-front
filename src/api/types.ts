@@ -73,7 +73,7 @@ export type Organization = {
   zone: AdminZone;
   candidatesCount: number;
   coachesCount: number;
-  referrersCount: number;
+  referersCount: number;
 };
 
 export type OrganizationDto = {
@@ -282,7 +282,7 @@ export type UserDto = {
   gender: Gender;
   zone: AdminZone;
   phone: string;
-  userToLinkId?: string | string[];
+  userToLinkId?: string;
   email: string;
   adminRole?: AdminRole;
   OrganizationId?: string;

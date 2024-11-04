@@ -26,7 +26,7 @@ const CREATE_NEW_ORGANIZATION_OPTION = {
   ),
 };
 
-interface formRegistrationReferrerAccountSchema extends FormSchemaValidation {
+interface formRegistrationRefererAccountSchema extends FormSchemaValidation {
   firstName: string;
   lastName: string;
   phone: string;
@@ -38,13 +38,13 @@ interface formRegistrationReferrerAccountSchema extends FormSchemaValidation {
 }
 
 const hideOrganizationFields = (
-  getValue: GetValueType<formRegistrationReferrerAccountSchema>
+  getValue: GetValueType<formRegistrationRefererAccountSchema>
 ) => {
   const organizationId = getValue('organizationId')?.value;
   return organizationId !== CREATE_NEW_ORGANIZATION_VALUE;
 };
 
-export const formRegistrationReferrerAccount: FormSchema<formRegistrationReferrerAccountSchema> =
+export const formRegistrationRefererAccount: FormSchema<formRegistrationRefererAccountSchema> =
   {
     id: 'form-registration-account',
     fields: [

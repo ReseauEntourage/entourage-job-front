@@ -10,7 +10,7 @@ import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedU
 
 const uuidValue = uuid();
 
-export const ReferrerMemberList = () => {
+export const RefererMemberList = () => {
   const user = useAuthenticatedUser();
 
   const [loading, setLoading] = useState(true);
