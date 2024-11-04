@@ -29,6 +29,17 @@ export function* launchOnboardingSaga() {
   const userProfile = yield* select(selectCurrentUserProfile);
   const userRole = currentUser.role;
   const userHelps = yield* select(selectCurrentUserProfileHelps);
+  const candidateWithBusinessLine =
+    userRole === USER_ROLES.CANDIDATE &&
+    userProfile.searchBusinessLines &&
+    userProfile.searchBusinessLines.length > 0;
+  const coachWithBusinessLine =
+    userRole === USER_ROLES.COACH &&
+    userProfile.networkBusinessLines &&
+    userProfile.networkBusinessLines.length > 0;
+  const onBoardingDone =
+    (candidateWithBusinessLine || coachWithBusinessLine) &&
+    userProfile.description;
 
   // if admin or external Coach, no Onboarding
   if (isRoleIncluded([USER_ROLES.ADMIN, USER_ROLES.REFERER], userRole)) {
@@ -38,25 +49,10 @@ export function* launchOnboardingSaga() {
   // if no helps, step 1
   if (!userHelps || userHelps.length === 0) {
     yield* put(setOnboardingStep(1));
-  }
-  // if is coach and no sector or if candidate and no sector, step 2
-  else if (
-    (userRole === USER_ROLES.CANDIDATE &&
-      (!userProfile.searchBusinessLines ||
-        userProfile.searchBusinessLines.length === 0)) ||
-    (USER_ROLES.COACH === userRole &&
-      (!userProfile.networkBusinessLines ||
-        userProfile.networkBusinessLines.length === 0))
-  ) {
-    yield* put(setOnboardingStep(2));
-  }
-  // if no description, step 3
-  else if (!userProfile.description) {
-    yield* put(setOnboardingStep(3));
-  }
-  // else no step
-  else {
+  } else if (onBoardingDone) {
     yield* put(endOnboarding());
+  } else {
+    yield* put(setOnboardingStep(2));
   }
 }
 

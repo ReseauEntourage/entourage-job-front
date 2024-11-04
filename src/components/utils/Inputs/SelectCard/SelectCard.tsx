@@ -83,7 +83,7 @@ export function SelectCard<T extends string>({
         </StyledInputLabel>
       )}
       <StyledSelectCard data-testid={id}>
-        {options.map(({ value, label, description, bullets }) => {
+        {options?.map(({ value, label, description, bullets }) => {
           const disableOption = optionsToDisable.find(
             ({ option }) => option === value
           );
@@ -106,7 +106,7 @@ export function SelectCard<T extends string>({
                   <StyledSelectCardContent>
                     <StyledSelectBlurableSection shouldBlur={!!disableOption}>
                       <StyledSelectCardBulletList>
-                        {bullets.map(({ label: bulletLabel, icon }, index) => {
+                        {bullets?.map(({ label: bulletLabel, icon }, index) => {
                           return (
                             <StyledSelectCardBullet key={index}>
                               <StyledSelectCardBulletIcon>
