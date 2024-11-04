@@ -281,6 +281,35 @@ describe('En tant que - Administrateur', () => {
 
       submitUserForm();
     });
+
+    /**
+     * ** Création du membre "orienteur"
+     */
+    it("J'ajoute un nouveau membre - Referer", () => {
+      // Insertion des informations de base d'un utilisateur
+      fillUserForm('Orienteur');
+
+      // Assertion - vérifications que le champs organizationId est affiché
+      cy.get('#form-add-user-organizationId').should('be.visible');
+
+      // Chargement du fichier de fixture organizations.json contenant les organizations
+      cy.fixture('api/generated/organizations').then((organizations) => {
+        const firstOrganization = organizations[0];
+
+        cy.get('#form-add-user-organizationId')
+          .should('be.visible')
+          .type(firstOrganization.name);
+
+        cy.get('#form-add-user-organizationId')
+          .find('.Select__menu')
+          .should('be.visible')
+          .find('.Select__option')
+          .contains(firstOrganization.name)
+          .click();
+      });
+
+      submitUserForm();
+    });
   });
 
   /**
