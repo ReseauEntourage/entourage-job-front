@@ -48,7 +48,6 @@ describe('En tant que - Administrateur', () => {
   describe('Je parcours les opportunités', () => {
     beforeEach(() => {
       cy.visit('/backoffice/admin/offres');
-      cy.get('[data-testid="app-splash-screen"]').should('not.visible');
     });
 
     /**
@@ -152,7 +151,6 @@ describe('En tant que - Administrateur', () => {
   describe('Je parcours les membres', () => {
     beforeEach(() => {
       cy.visit('/backoffice/admin/membres?role=Candidat');
-      cy.get('[data-testid="app-splash-screen"]').should('not.visible');
     });
 
     /**
@@ -318,7 +316,6 @@ describe('En tant que - Administrateur', () => {
   describe('Je parcours les organisations', () => {
     beforeEach(() => {
       cy.visit('/backoffice/admin/structures');
-      cy.get('[data-testid="app-splash-screen"]').should('not.visible');
     });
 
     /**

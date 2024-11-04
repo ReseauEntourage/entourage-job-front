@@ -11,7 +11,7 @@ interface AlertIconProps {
 
 const AlertIcon = ({ variant }: AlertIconProps) => {
   if (variant === 'info') {
-    return <IlluBulleQuestion />;
+    return <IlluBulleQuestion width={35} height={30} />;
   }
   return null;
 };
