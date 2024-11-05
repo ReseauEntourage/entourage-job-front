@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import ChevronDownIcon from 'assets/icons/chevron-down.svg';
-import ChevronUpIcon from 'assets/icons/chevron-up.svg';
-import EditIcon from 'assets/icons/editIcon.svg';
+import { LucidIcon } from '../../Icons/LucidIcon';
+import { Typography } from '../../Typography';
 import { Button } from 'src/components/utils/Button';
 import { ButtonIcon } from 'src/components/utils/ButtonIcon';
 import { H5 } from 'src/components/utils/Headings';
@@ -21,6 +20,8 @@ import {
 interface CardProps {
   children: React.ReactNode;
   title?: React.ReactNode;
+  subtitle?: string;
+  centerTitle?: boolean;
   onClick?: () => void;
   editCallback?: () => void;
   isLoading?: boolean;
@@ -33,6 +34,7 @@ interface CardProps {
 
 export const Card = ({
   title,
+  subtitle,
   onClick,
   children,
   editCallback,
@@ -42,6 +44,7 @@ export const Card = ({
   editButtonText,
   dataTestId,
   editIcon,
+  centerTitle = false,
 }: CardProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(isDefaultOpen);
 
@@ -65,7 +68,7 @@ export const Card = ({
             {!isLoading && editCallback && isDesktop && (
               <StyledEditIconContainer>
                 <ButtonIcon
-                  icon={editIcon || <EditIcon />}
+                  icon={editIcon || <LucidIcon name="Pencil" size={15} />}
                   onClick={editCallback}
                   dataTestId={`${dataTestId}-button-edit`}
                 />
@@ -74,7 +77,13 @@ export const Card = ({
             {isMobileClosable && !isDesktop && (
               <StyledChevronContainer>
                 <ButtonIcon
-                  icon={isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                  icon={
+                    isOpen ? (
+                      <LucidIcon name="ChevronUp" />
+                    ) : (
+                      <LucidIcon name="ChevronDown" />
+                    )
+                  }
                   onClick={() => {
                     setIsOpen(!isOpen);
                   }}
@@ -86,8 +95,12 @@ export const Card = ({
               onClick={() => {
                 if (!isDesktop && isMobileClosable) setIsOpen(!isOpen);
               }}
+              centerTitle={centerTitle}
             >
-              <H5 title={title} />
+              <H5 title={title} center={centerTitle} />
+              {subtitle && (
+                <Typography center={centerTitle}>{subtitle}</Typography>
+              )}
             </StyledCardTitleContainer>
           </StyledCardTopContainer>
           {!closedMode && (

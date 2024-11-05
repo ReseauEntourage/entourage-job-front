@@ -7,7 +7,7 @@ import { Api } from 'src/api';
 import { Organization as OrganizationType } from 'src/api/types';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { AdminCreationButtons } from 'src/components/backoffice/admin/AdminCreationButtons';
-import { SearchBar } from 'src/components/filters/SearchBar';
+import { SearchBar } from 'src/components/filters/SearchBar/SearchBar';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
 import {
   Section,

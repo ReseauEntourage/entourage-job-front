@@ -3,7 +3,7 @@ import { COLORS } from 'src/constants/styles';
 import { StyledHeadingProps } from './Headings.types';
 
 export const StyledH1 = styled.h1<StyledHeadingProps>`
-  font-size: ${(props) => (props.mobile ? '24px' : '32px')};
+  font-size: ${(props) => (props.mobile ? '24px' : '35px')};
   font-weight: ${(props) => props.weight};
   color: ${(props) => {
     if (COLORS[props.color]) {
@@ -75,7 +75,6 @@ export const StyledH5 = styled.h5<StyledHeadingProps>`
   font-weight: ${(props) => props.weight};
   line-height: 24px;
   margin-top: 0;
-  /* margin-bottom: 24px; */
   color: ${(props) => {
     if (COLORS[props.color]) {
       return COLORS[props.color];
@@ -93,7 +92,6 @@ export const StyledH6 = styled.h6<StyledHeadingProps>`
   font-size: 14px;
   font-weight: ${(props) => props.weight};
   line-height: 14px;
-  margin-bottom: 24px;
   color: ${(props) => {
     if (COLORS[props.color]) {
       return COLORS[props.color];

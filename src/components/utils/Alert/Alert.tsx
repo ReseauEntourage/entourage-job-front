@@ -1,7 +1,7 @@
 import React from 'react';
-import CloseIcon from 'assets/icons/close.svg';
 import { IlluBulleQuestion } from 'assets/icons/icons';
 import { ButtonIcon } from '../ButtonIcon';
+import { LucidIcon } from '../Icons/LucidIcon';
 import { StyledAlert, StyledAlertContainer } from './Alert.styles';
 import { AlertProps, AlertVariant } from './Alert.types';
 
@@ -10,11 +10,15 @@ interface AlertIconProps {
 }
 
 const AlertIcon = ({ variant }: AlertIconProps) => {
-  return <>{variant === 'info' && <IlluBulleQuestion class="icon" />}</>;
+  if (variant === 'info') {
+    return <IlluBulleQuestion width={35} height={30} />;
+  }
+  return null;
 };
 
 export const Alert = ({
   children,
+  rounded = true,
   variant = 'info',
   closable = false,
   visible = true,
@@ -22,10 +26,12 @@ export const Alert = ({
   icon = <AlertIcon variant={variant} />,
 }: AlertProps) => {
   return (
-    <StyledAlert variant={variant} visible={visible}>
+    <StyledAlert variant={variant} visible={visible} rounded={rounded}>
       {icon}
       <StyledAlertContainer>{children}</StyledAlertContainer>
-      {closable && <ButtonIcon icon={<CloseIcon />} onClick={onClose} />}
+      {closable && (
+        <ButtonIcon icon={<LucidIcon name="X" />} onClick={onClose} />
+      )}
     </StyledAlert>
   );
 };

@@ -48,7 +48,6 @@ describe('En tant que - Administrateur', () => {
   describe('Je parcours les opportunités', () => {
     beforeEach(() => {
       cy.visit('/backoffice/admin/offres');
-      cy.get('[data-testid="app-splash-screen"]').should('not.visible');
     });
 
     /**
@@ -152,7 +151,6 @@ describe('En tant que - Administrateur', () => {
   describe('Je parcours les membres', () => {
     beforeEach(() => {
       cy.visit('/backoffice/admin/membres?role=Candidat');
-      cy.get('[data-testid="app-splash-screen"]').should('not.visible');
     });
 
     /**
@@ -336,7 +334,6 @@ describe('En tant que - Administrateur', () => {
   describe('Je parcours les organisations', () => {
     beforeEach(() => {
       cy.visit('/backoffice/admin/structures');
-      cy.get('[data-testid="app-splash-screen"]').should('not.visible');
     });
 
     /**
@@ -421,10 +418,10 @@ describe('En tant que - Administrateur', () => {
         cy.get(
           `[data-testid="button-edit-organization-${organizations[0].id}"]`
         )
-          .as(`button-edit-organization-${organizations[0].id}`)
+          .as(`organization-id`)
           .should('be.visible')
           .first();
-        cy.get(`@button-edit-organization-${organizations[0].id}`).click();
+        cy.get(`@organization-id`).first().click();
 
         // Wait modale to be visible
         cy.get('.ReactModalPortal div').first().should('be.visible');

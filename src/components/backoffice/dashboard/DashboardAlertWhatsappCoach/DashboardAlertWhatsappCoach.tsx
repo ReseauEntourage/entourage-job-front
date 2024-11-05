@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { IlluBulleQuestionCheck } from 'assets/icons/icons';
 import { DashboardJoinWhatsappCoachModal } from '../DashboardJoinWhatsappCoachModal/DashboardJoinWhatsappCoachModal';
 import { openModal } from 'src/components/modals/Modal';
 import { Button } from 'src/components/utils';
@@ -13,6 +14,7 @@ export const DashboardAlertWhatsappCoach = () => {
 
   return (
     <Alert
+      icon={<IlluBulleQuestionCheck width={35} height={30} />}
       closable
       visible={alertVisible}
       onClose={() => {
