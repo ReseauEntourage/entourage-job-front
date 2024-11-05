@@ -500,23 +500,23 @@ export const EXTERNAL_OFFERS_ORIGINS: FilterConstant<ExternalOfferOrigin>[] = [
 export const EXTERNAL_LINKS = {
   LKO_VG: 'https://www.linkedout-vendeeglobe.com',
   LKO_VG_CONTEST: 'https://www.linkedout-vendeeglobe.com/vendeearctique',
-  LKO_BLOG: 'https://site.entourage.social/blog',
+  LKO_BLOG: 'https://entourage.social/blog',
   ENTOURAGE: 'https://www.entourage.social',
   LEGAL_MENTIONS:
     'https://docs.google.com/document/d/1a1IU9Y6qVDr4pvWJRE5XMVZ2fNhg0rhXMTL_lqY_f1M/pub',
   ARTICLE_BC: 'https://blog.entourage.social/2020/06/22/benevole-coach/',
   ARTICLE_TJV:
-    'https://site.entourage.social/blog/le-bateau-linkedout-vainqueur-de-la-transat-jacques-vabre',
+    'https://entourage.social/blog/le-bateau-linkedout-vainqueur-de-la-transat-jacques-vabre',
   ARTICLE_RDR:
-    'https://site.entourage.social/blog/retour-sur-le-week-end-de-depart-de-la-route-du-rhum',
+    'https://entourage.social/blog/retour-sur-le-week-end-de-depart-de-la-route-du-rhum',
   CAMPUS_INCLUSION: 'https://campus-inclusion.fr',
   FRANCE_UNE_CHANCE:
     'https://lafrance-unechance.fr/carte-des-clubs-la-france-une-chance/',
   REPAIRS_75: 'https://www.repairs75.org/',
   REDSTAR:
-    'https://site.entourage.social/blog/apres-la-voile-le-foot-linkedout-nouveau-partenaire-maillot-du-red-star-fc-avec-le-soutien-de-randstad',
+    'https://entourage.social/blog/apres-la-voile-le-foot-linkedout-nouveau-partenaire-maillot-du-red-star-fc-avec-le-soutien-de-randstad',
   RECRUITMENTS: 'https://www.welcometothejungle.com/fr/companies/entourage',
-  TAX: 'https://taxe-apprentissage.linkedout.fr',
+  TAX: 'https://www.entourage.social/lataxequifaitplaiz',
 };
 
 export const NEWSLETTER_TAGS = {
