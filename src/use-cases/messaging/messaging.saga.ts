@@ -48,7 +48,6 @@ function* getConversationsSagaRequested() {
   try {
     const response = yield* call(() => Api.getConversations());
     yield* put(getConversationsSucceeded(response.data));
-    // yield* put(bindNewConversationRequested());
   } catch {
     yield* put(getConversationsFailed());
   }
