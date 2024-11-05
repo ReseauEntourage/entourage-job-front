@@ -18,7 +18,6 @@ import { StyledFinalizeReferedUserContainer } from './FinalizeReferedUserContain
 
 export const FinalizeReferedUserContainer = () => {
   const [tokenString, setToken] = useState<string | null>(null);
-  // const [isLoading, setIsLoading] = useState<boolean>(false);
   const {
     query: { token },
     isReady,
@@ -52,12 +51,9 @@ export const FinalizeReferedUserContainer = () => {
             token: tokenString,
             password: setPassword,
           };
-
-          // setIsLoading(true);
           try {
             const response = await Api.postAuthFinalizeReferedUser(params);
             setError('');
-            // setIsLoading(true);
             dispatch(
               authenticationActions.loginRequested({
                 email: response.data,
@@ -72,7 +68,6 @@ export const FinalizeReferedUserContainer = () => {
             if (isEmailAlreadyVerifiedError(err)) {
               setError('Vous avez déja défini un mot de passe');
             }
-            // setIsLoading(false);
           }
         }}
       />
