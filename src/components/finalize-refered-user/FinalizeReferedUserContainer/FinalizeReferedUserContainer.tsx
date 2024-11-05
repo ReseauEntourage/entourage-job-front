@@ -1,0 +1,81 @@
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Api } from 'src/api';
+import {
+  isEmailAlreadyVerifiedError,
+  isInvalidTokenError,
+  isTokenExpiredError,
+} from 'src/api/axiosErrors';
+import { PostAuthFinalizeReferedUserParams } from 'src/api/types';
+import { PasswordCriterias } from 'src/components/backoffice/parametres/ParametresLayout/ChangePasswordCard/PasswordCriterias';
+import { FormWithValidation } from 'src/components/forms/FormWithValidation';
+import { formFinalizeReferedUser } from 'src/components/forms/schemas/formFinalizeReferedUser';
+import { H3 } from 'src/components/utils/Headings';
+import { Spinner } from 'src/components/utils/Spinner';
+import { authenticationActions } from 'src/use-cases/authentication';
+import { StyledFinalizeReferedUserContainer } from './FinalizeReferedUserContainer.styles';
+
+export const FinalizeReferedUserContainer = () => {
+  const [tokenString, setToken] = useState<string | null>(null);
+  // const [isLoading, setIsLoading] = useState<boolean>(false);
+  const {
+    query: { token },
+    isReady,
+    push,
+  } = useRouter();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isReady) {
+      setToken(token as string);
+    }
+  }, [token, isReady]);
+
+  if (!isReady) {
+    return <Spinner />;
+  }
+
+  if (!tokenString) {
+    return <div>Pas de token</div>;
+  }
+
+  return (
+    <StyledFinalizeReferedUserContainer>
+      <H3 title="Définir votre mot de passe" />
+      <PasswordCriterias />
+      <FormWithValidation
+        submitText="Se connecter"
+        formSchema={formFinalizeReferedUser}
+        onSubmit={async ({ setPassword }, setError) => {
+          const params: PostAuthFinalizeReferedUserParams = {
+            token: tokenString,
+            password: setPassword,
+          };
+
+          // setIsLoading(true);
+          try {
+            const response = await Api.postAuthFinalizeReferedUser(params);
+            setError('');
+            // setIsLoading(true);
+            dispatch(
+              authenticationActions.loginRequested({
+                email: response.data,
+                password: setPassword,
+              })
+            );
+            await push('/backoffice/dashboard');
+          } catch (err) {
+            if (isTokenExpiredError(err) || isInvalidTokenError(err)) {
+              setError('Le token est invalide, veuillez réessayer');
+            }
+            if (isEmailAlreadyVerifiedError(err)) {
+              setError('Vous avez déja défini un mot de passe');
+            }
+            // setIsLoading(false);
+          }
+        }}
+      />
+    </StyledFinalizeReferedUserContainer>
+  );
+};

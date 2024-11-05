@@ -25,6 +25,7 @@ import {
   OpportunityUserEvent,
   Organization,
   OrganizationDto,
+  PostAuthFinalizeReferedUserParams,
   PostAuthSendVerifyEmailParams,
   ProfilesFilters,
   PutCandidate,
@@ -496,6 +497,12 @@ export class APIHandler {
     params: PostAuthSendVerifyEmailParams
   ): Promise<AxiosResponse> {
     return this.post('/auth/send-verify-email', params);
+  }
+
+  postAuthFinalizeReferedUser(
+    params: PostAuthFinalizeReferedUserParams
+  ): Promise<AxiosResponse<string>> {
+    return this.post('/auth/finalize-refered-user', params);
   }
 
   // no logout?

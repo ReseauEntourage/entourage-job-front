@@ -691,6 +691,11 @@ export type PostAuthSendVerifyEmailParams = {
   email?: string;
 };
 
+export type PostAuthFinalizeReferedUserParams = {
+  token: string;
+  password: string;
+};
+
 export type ExternalCv = {
   url: string;
 };

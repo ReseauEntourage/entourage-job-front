@@ -1,0 +1,24 @@
+import styled from 'styled-components';
+import { COLORS } from 'src/constants/styles';
+
+export const StyledFinalizeReferedUserContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+  background-color: ${COLORS.lightgray};
+  border-radius: 10px;
+  padding: 40px;
+  align-items: flex-start;
+  gap: 20px;
+  justify-content: flex-start;
+  height: 100%;
+`;
+
+// export const StyledFinalizeReferedUserRow = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   gap: 20px;
+//   vertical-align: middle;
+//   align-items: center;
+//   justify-content: flex-start;
+// `;
