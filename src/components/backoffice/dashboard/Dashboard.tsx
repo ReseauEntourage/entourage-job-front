@@ -66,7 +66,6 @@ export const Dashboard = () => {
                 <DashboardStepsCard />
                 <DashboardMessagingConversation />
                 <DashboardRecommendationsCard />
-                <DashboardOpportunitiesCard />
                 <DashboardToolboxCard />
               </>
             )}
