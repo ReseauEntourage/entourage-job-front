@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 import { AlertVariant } from './Alert.types';
 
 export const StyledAlert = styled.div<{
@@ -15,17 +15,16 @@ export const StyledAlert = styled.div<{
   border-radius: ${(props) => {
     return props.rounded ? '10px' : '0';
   }};
-  padding: 10px 20px;
   background-color: ${(props) => {
     return COLORS.alert[props.variant]?.background || COLORS.white;
   }};
   color: ${(props) => {
     return COLORS.alert[props.variant]?.text || COLORS.white;
   }};
-  color: ${COLORS.alert.info.text};
-  .icon {
-    width: 46px;
-    height: 46px;
+  padding: 10px 20px;
+
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    padding: 14px 20px;
   }
   p {
     margin: 0;
@@ -33,5 +32,5 @@ export const StyledAlert = styled.div<{
 `;
 
 export const StyledAlertContainer = styled.div`
-  flex: auto;
+  flex: 1;
 `;
