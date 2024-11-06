@@ -15,7 +15,7 @@ export const StyledTabsUl = styled.ul`
     text-align: center;
     border-bottom: 1px solid ${COLORS.gray};
     padding: 12px 0;
-    color: ${COLORS.darkGray};
+    color: ${COLORS.mediumGray};
     div {
       span {
         /* font-weight: 700; */
@@ -51,11 +51,11 @@ export const StyledTabsUl = styled.ul`
       width: fit-content;
       font-size: 12px;
       margin: 0 8px 0 0;
-      border: 1px solid ${COLORS.darkGray};
+      border: 1px solid ${COLORS.mediumGray};
       padding: 4px 8px;
       border-radius: 4px;
       a {
-        color: ${COLORS.darkGray};
+        color: ${COLORS.mediumGray};
       }
       &.active {
         border: 1px solid ${COLORS.primaryBlue};

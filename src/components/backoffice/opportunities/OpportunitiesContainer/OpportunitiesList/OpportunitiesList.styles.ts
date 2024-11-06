@@ -15,7 +15,7 @@ export const StyledLinkCard = styled.a``;
 export const StyledListItem = styled.div`
   border: 1px solid
     ${({ isSelected }) => {
-      return isSelected ? COLORS.primaryBlue : COLORS.lightgray;
+      return isSelected ? COLORS.primaryBlue : COLORS.lightGray;
     }};
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
   border-radius: 5px;

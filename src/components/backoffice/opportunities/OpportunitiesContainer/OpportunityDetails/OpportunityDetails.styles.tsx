@@ -59,7 +59,7 @@ export const StyledOpportunityDetailsContainer = styled.div`
   flex-direction: column;
   padding: 4px;
   border-radius: 5px;
-  background-color: ${COLORS.lightgray};
+  background-color: ${COLORS.lightGray};
 `;
 
 export const StyledOpportunityDetailsDetailsContentContainer = styled.div`

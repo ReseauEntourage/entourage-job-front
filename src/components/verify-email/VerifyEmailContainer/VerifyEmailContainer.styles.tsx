@@ -5,7 +5,7 @@ export const StyledVerifyEmailContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 40px;
-  background-color: ${COLORS.lightgray};
+  background-color: ${COLORS.lightGray};
   border-radius: 10px;
   padding: 40px;
   align-items: flex-start;

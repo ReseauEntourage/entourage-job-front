@@ -74,7 +74,7 @@ export const StyledCVPDFContentPassions = styled(StyledCVPageContentPassions)`
   margin-top: 10px;
 
   p {
-    color: ${COLORS.darkGrayFont};
+    color: ${COLORS.darkGray};
     font-size: 10px;
   }
 `;
@@ -158,7 +158,7 @@ export const StyledCVPDFContentInformations = styled(
   margin-top: 10px;
 
   .subtitle {
-    color: ${COLORS.darkGray};
+    color: ${COLORS.mediumGray};
     font-size: 10px;
     display: flex;
     align-items: center;
@@ -208,7 +208,7 @@ export const StyledCVPDFXpFormaTitle = styled.h6`
 export const StyledCVPDFPage = styled.div`
   height: 1122px;
   width: 794px;
-  background-color: ${COLORS.lightgray};
+  background-color: ${COLORS.lightGray};
   display: flex;
   flex-direction: column;
 
@@ -226,7 +226,7 @@ export const StyledCVPDFPage = styled.div`
   }
 
   .name-gray {
-    color: ${COLORS.darkGray};
+    color: ${COLORS.mediumGray};
   }
 `;
 

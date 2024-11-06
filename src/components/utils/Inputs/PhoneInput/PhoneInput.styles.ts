@@ -23,7 +23,7 @@ export const StyledPhoneInput = styled.div`
     border: none;
     &::placeholder {
       font-style: italic;
-      color: ${COLORS.darkGray};
+      color: ${COLORS.mediumGray};
     }
     &:focus-visible {
       outline: none;

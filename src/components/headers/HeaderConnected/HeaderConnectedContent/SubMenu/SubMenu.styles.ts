@@ -20,7 +20,7 @@ export const StyledSubMenu = styled.ul`
     width: 300px;
     padding: 0;
     background-color: white;
-    border: solid 1px ${COLORS.lightgray};
+    border: solid 1px ${COLORS.lightGray};
     box-shadow: 0 5px 15px rgb(0 0 0 / 8%);
     .subMenu-item {
       width: 100%;
@@ -31,7 +31,7 @@ export const StyledSubMenu = styled.ul`
       color: black;
       padding: 12px 24px;
       box-sizing: border-box;
-      border-bottom: solid 1px ${COLORS.lightgray};
+      border-bottom: solid 1px ${COLORS.lightGray};
       &:hover {
         background-color: ${COLORS.hoverBlue};
       }
