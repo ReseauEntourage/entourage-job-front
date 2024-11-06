@@ -8,12 +8,13 @@ import {
 } from 'src/components/headers/Header.styles';
 import {
   ButtonIcon,
-  Dropdown,
   Nav,
   Navbar,
   NavbarLogo,
   SimpleLink,
 } from 'src/components/utils';
+import { Dropdown } from 'src/components/utils/Dropdown/Dropdown';
+import { DropdownToggle } from 'src/components/utils/Dropdown/DropdownToggle';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { ImgProfile } from 'src/components/utils/ImgProfile';
 import { StyledNav } from 'src/components/utils/Navbar/Nav/Nav.styles';
@@ -54,49 +55,48 @@ export const HeaderConnectedContentDesktop = ({
       </StyledMessagingIconContainer>
 
       {/* Profile */}
-      <a
-        id="nav-profile"
-        className="uk-padding-small uk-padding-remove-vertical"
-        style={{
-          height: 80,
-          fontWeight: 500,
-          fontSize: '1rem',
-          textTransform: 'none',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <ImgProfile user={user} size={40} />
-        <span className="uk-margin-small-left uk-margin-small-right">
-          Bonjour {user.firstName}
-        </span>
-        <LucidIcon name="ChevronDown" />
-      </a>
-      <Dropdown
-        dividers={[2]}
-        id="dropdown-nav-profile"
-        boundaryId="nav-profile"
-      >
-        {dropdown.map(({ href, name, onClick, tag }, index) => {
-          return (
-            <a
-              key={`${index}-right-${uuidValue}`}
-              aria-hidden="true"
-              onClick={() => {
-                if (tag) gaEvent(tag);
-                if (href) {
-                  push(href);
-                }
-                if (onClick) {
-                  onClick();
-                }
-              }}
-            >
-              {name}
-            </a>
-          );
-        })}
+      <Dropdown>
+        <DropdownToggle>
+          <a
+            id="nav-profile"
+            className="uk-padding-small uk-padding-remove-vertical"
+            style={{
+              height: 80,
+              fontWeight: 500,
+              fontSize: '1rem',
+              textTransform: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <ImgProfile user={user} size={40} />
+            <span className="uk-margin-small-left uk-margin-small-right">
+              Bonjour {user.firstName}
+            </span>
+            <LucidIcon name="ChevronDown" />
+          </a>
+        </DropdownToggle>
+        <Dropdown.Menu openDirection="left">
+          {dropdown.map(({ href, name, onClick, tag }, index) => {
+            return (
+              <Dropdown.Item
+                key={`${index}-right-${uuidValue}`}
+                onClick={() => {
+                  if (tag) gaEvent(tag);
+                  if (href) {
+                    push(href);
+                  }
+                  if (onClick) {
+                    onClick();
+                  }
+                }}
+              >
+                {name}
+              </Dropdown.Item>
+            );
+          })}
+        </Dropdown.Menu>
       </Dropdown>
     </div>,
   ];

@@ -1,14 +1,19 @@
 import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 
 export const StyledContainer = styled.div`
   display: flex;
+  flex-direction: column;
   background: ${COLORS.hoverBlue};
   padding: 18px 20px;
   gap: 20px;
   flex: 1;
   cursor: pointer;
-  align-items: center;
+`;
+
+export const StyledConversationMainInfos = styled.div`
+  display: flex;
+  gap: 20px;
 `;
 
 export const StyledConversationParticipants = styled.div`
@@ -18,6 +23,10 @@ export const StyledConversationParticipants = styled.div`
   gap: 10px;
   align-items: center;
   font-weight: bold;
+
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    flex: auto;
+  }
 `;
 
 export const StyledMessagePreview = styled.div<{ hasSeen: boolean }>`
@@ -27,6 +36,11 @@ export const StyledMessagePreview = styled.div<{ hasSeen: boolean }>`
   overflow: hidden;
   flex: auto;
   ${({ hasSeen }) => !hasSeen && `font-weight: 700;`}
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    font-size: 12px;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
 `;
 
 export const StyledMessageDate = styled.div`

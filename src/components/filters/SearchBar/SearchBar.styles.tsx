@@ -63,6 +63,7 @@ export const StyledSearchBarClearButton = styled.div`
   height: 20px;
   border-radius: 50%;
   justify-content: center;
+  cursor: pointer;
 `;
 
 export const StyledSearchBarSubmitButton = styled.a`

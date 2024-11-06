@@ -5,12 +5,13 @@ import { Api } from 'src/api';
 import {
   Button,
   ButtonIcon,
-  Dropdown,
   ImgProfile,
   Section,
   Tag,
 } from 'src/components/utils';
 import { AvailabilityTag } from 'src/components/utils/AvailabilityTag/AvailabilityTag';
+import { Dropdown } from 'src/components/utils/Dropdown/Dropdown';
+import { DropdownToggle } from 'src/components/utils/Dropdown/DropdownToggle';
 import { H2, H6 } from 'src/components/utils/Headings';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { ImageInput } from 'src/components/utils/Inputs';
@@ -158,36 +159,35 @@ export const HeaderProfileMobile = ({
             />
             {hasCv && (
               <StyledHeaderProfileCVButton>
-                <Button
-                  id="nav-cv-button"
-                  size="small"
-                  style="custom-secondary"
-                  onClick={!hasTwoCv ? openCv : undefined}
-                >
-                  Voir le CV {hasTwoCv && <LucidIcon name="ChevronDown" />}
-                </Button>
-                {hasTwoCv && (
-                  <Dropdown
-                    id="nav-cv-dropdown"
-                    boundaryId="nav-cv-button"
-                    dividers={[1]}
+                {!hasTwoCv ? (
+                  <Button
+                    id="nav-cv-button"
+                    size="small"
+                    style="custom-secondary"
+                    onClick={openCv}
                   >
-                    <a
-                      aria-hidden="true"
-                      onClick={() => {
-                        openExternalCv();
-                      }}
-                    >
-                      Voir le CV personnel
-                    </a>
-                    <a
-                      aria-hidden="true"
-                      onClick={() => {
-                        openProCv();
-                      }}
-                    >
-                      Voir le CV Entourage Pro
-                    </a>
+                    Voir le CV
+                  </Button>
+                ) : (
+                  <Dropdown>
+                    <DropdownToggle>
+                      <Button
+                        id="nav-cv-button"
+                        size="small"
+                        style="custom-secondary"
+                      >
+                        Voir le CV{' '}
+                        {hasTwoCv && <LucidIcon name="ChevronDown" />}
+                      </Button>
+                    </DropdownToggle>
+                    <Dropdown.Menu openDirection="right">
+                      <Dropdown.Item onClick={openExternalCv}>
+                        Voir le CV personnel
+                      </Dropdown.Item>
+                      <Dropdown.Item onClick={openProCv}>
+                        Voir le CV Entourage Pro
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
                   </Dropdown>
                 )}
               </StyledHeaderProfileCVButton>
