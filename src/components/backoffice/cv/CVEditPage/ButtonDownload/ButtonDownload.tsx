@@ -25,7 +25,7 @@ export const ButtonDownload = ({
     <ButtonPost
       disabled={disabled || pdfGenerating}
       style="custom-primary-inverted"
-      color="darkGrayFont"
+      color="darkGray"
       text={
         pdfGenerating ? 'Génération du fichier PDF ...' : 'Télécharger le CV'
       }

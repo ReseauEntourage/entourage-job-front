@@ -21,7 +21,7 @@ export const AiderProgramme360 = ({
 }) => {
   const isDesktop = useIsDesktop();
   const iconsProps = {
-    color: COLORS.primaryOrange,
+    color: COLORS.orangeSocial,
     width: 35,
     height: 35,
   };

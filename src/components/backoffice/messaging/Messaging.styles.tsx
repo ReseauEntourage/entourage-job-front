@@ -10,7 +10,7 @@ export const StyledMessagingGridDesktop = styled.div`
   height: calc(100vh - ${HEIGHTS.HEADER}px);
   flex: 1;
   border-top: ${HEIGHTS.MESSAGING_DESKTOP_BORDER_SIZE}px solid
-    ${COLORS.lightgray};
+    ${COLORS.lightGray};
   box-sizing: border-box;
 `;
 
@@ -30,7 +30,7 @@ export const StyledMessagingLeftPanel = styled.div`
   min-width: 430px;
   max-width: 430px;
   border-right: ${HEIGHTS.MESSAGING_DESKTOP_BORDER_SIZE}px solid
-    ${COLORS.lightgray};
+    ${COLORS.lightGray};
 `;
 
 export const StyledMessagingRightPanel = styled.div`

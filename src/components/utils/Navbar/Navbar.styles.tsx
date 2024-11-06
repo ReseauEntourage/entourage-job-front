@@ -4,10 +4,10 @@ import { COLORS, HEIGHTS } from 'src/constants/styles';
 export const StyledNavbar = styled.nav`
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
   background-color: ${({ backgroundColor }) => {
-    return COLORS[backgroundColor] || COLORS.black;
+    return COLORS[backgroundColor] || COLORS.navBlack;
   }};
   color: ${({ color }) => {
-    return COLORS[color] || COLORS.black;
+    return COLORS[color] || COLORS.navBlack;
   }};
   position: ${({ sticky }) => {
     return sticky ? 'fixed' : 'inherit';

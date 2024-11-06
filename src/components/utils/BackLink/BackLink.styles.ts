@@ -6,9 +6,9 @@ export const StyledBackLink = styled.a`
   flex-direction: row;
   align-items: center;
   margin-bottom: 16px;
-  color: ${COLORS.darkGrayFont} !important;
+  color: ${COLORS.darkGray} !important;
   &:visited {
-    color: ${COLORS.darkGrayFont} !important;
+    color: ${COLORS.darkGray} !important;
   }
   &:hover {
     color: ${COLORS.primaryBlue} !important;
@@ -19,6 +19,6 @@ export const StyledBackLink = styled.a`
   svg {
     width: 8px;
     margin-right: 8px;
-    fill: ${COLORS.darkGrayFont};
+    fill: ${COLORS.darkGray};
   }
 `;

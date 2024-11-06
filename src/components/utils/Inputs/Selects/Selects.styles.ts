@@ -10,7 +10,7 @@ export const StyledSelectContainer = styled.div`
 `;
 export const StyledSelect = styled.div`
   & .Select__control--is-disabled {
-    background-color: ${COLORS.lightgray} !important;
+    background-color: ${COLORS.lightGray} !important;
 
     & .Select__loading-indicator {
       display: none;
@@ -84,7 +84,7 @@ export const StyledSelect = styled.div`
   }
 
   & .Select__clear-indicator {
-    color: ${COLORS.darkGray};
+    color: ${COLORS.mediumGray};
     visibility: visible;
     cursor: pointer;
     padding-bottom: 0 !important;
@@ -96,7 +96,7 @@ export const StyledSelect = styled.div`
   }
 
   & .Select__placeholder {
-    color: ${COLORS.darkGray};
+    color: ${COLORS.mediumGray};
     font-style: italic;
     font-size: 14px;
     font-family: Poppins, sans-serif !important;

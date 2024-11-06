@@ -31,7 +31,7 @@ export const CVSendMessage = ({
       <H5
         title={`Echangez avec ${cv.user.candidat.firstName}`}
         center
-        color="darkGrayFont"
+        color="darkGray"
       />
       <p>
         Conseils, informations sur le secteur d&#8217;activité, mise en
