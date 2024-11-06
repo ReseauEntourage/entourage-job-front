@@ -12,8 +12,10 @@ export const formFinalizeReferedUser: FormSchema<{
       name: 'setPassword',
       type: 'password',
       component: 'text-input',
-      title: 'Définissez un mot de passe*',
+      title: 'Mot de passe',
+      placeholder: 'Entrez votre mot de passe',
       isRequired: true,
+      showLabel: true,
       rules: [
         {
           method: (fieldValue) => passwordStrength(fieldValue).id >= 2,
@@ -26,8 +28,10 @@ export const formFinalizeReferedUser: FormSchema<{
       name: 'confirmPassword',
       type: 'password',
       component: 'text-input',
-      title: 'Confirmation du mot de passe*',
+      title: 'Confirmation du mot de passe',
+      placeholder: 'Entrez votre mot de passe',
       isRequired: true,
+      showLabel: true,
       rules: [
         {
           method: (fieldValue) => passwordStrength(fieldValue).id >= 2,
