@@ -113,22 +113,27 @@ export const formRegistrationRefererAccount: FormSchema<formRegistrationRefererA
         component: 'select-async',
         isRequired: true,
         loadOptions: async (callback, inputValue) => {
-          const { data: organizations } = await Api.getAllOrganizations({
-            params: {
-              search: inputValue,
-              limit: 50,
-              offset: 0,
-            },
-          });
-          callback([
-            ...organizations.map((u) => {
-              return {
-                value: u.id,
-                label: u.name,
-              };
-            }),
-            CREATE_NEW_ORGANIZATION_OPTION,
-          ]);
+          try {
+            const { data: organizations } = await Api.getAllOrganizations({
+              params: {
+                search: inputValue,
+                limit: 50,
+                offset: 0,
+              },
+            });
+            callback([
+              ...organizations.map((u) => {
+                return {
+                  value: u.id,
+                  label: u.name,
+                };
+              }),
+              CREATE_NEW_ORGANIZATION_OPTION,
+            ]);
+          } catch (error) {
+            console.error(error);
+            callback([]);
+          }
         },
         title: 'Séléctionnez votre association *',
         isMulti: false,
