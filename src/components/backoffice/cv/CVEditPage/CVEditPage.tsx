@@ -379,7 +379,7 @@ export const CVEditPage = ({ candidateId, cv, setCV }: CVEditPageProps) => {
                 />
               );
             }}
-            color="darkGrayFont"
+            color="darkGray"
             style="custom-primary-inverted"
           >
             Prévisualiser

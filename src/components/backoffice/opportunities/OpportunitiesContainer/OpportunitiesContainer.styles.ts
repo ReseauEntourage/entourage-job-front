@@ -45,7 +45,7 @@ export const SubtitleText = styled.span`
 export const InfoText = styled.span`
   font-size: 14px;
   line-height: 17px;
-  color: ${COLORS.darkGray};
+  color: ${COLORS.mediumGray};
 
   &:not(:last-child) {
     margin-bottom: 8px;

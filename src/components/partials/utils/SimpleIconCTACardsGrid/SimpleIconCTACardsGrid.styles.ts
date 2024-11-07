@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledSimpleIconCTACardsGridBackground = styled.div`
-  background-color: ${COLORS.lightgray};
+  background-color: ${COLORS.lightGray};
 `;
 
 export const StyledSimpleIconCTACardsGridSubtitle = styled.div`

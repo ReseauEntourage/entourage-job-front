@@ -18,7 +18,7 @@ export const StyledFileInputGroupForm = styled.div`
     }
     &::placeholder {
       font-style: italic;
-      color: ${COLORS.darkGray};
+      color: ${COLORS.mediumGray};
     }
     &:focus-visible {
       outline: none;

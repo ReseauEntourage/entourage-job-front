@@ -30,9 +30,9 @@ const StyledNotification = styled.div`
 `;
 
 export const StyledSuccessNotification = styled(StyledNotification)`
-  background-color: ${COLORS.yesGreen};
+  background-color: ${COLORS.green};
 `;
 
 export const StyledFailedNotification = styled(StyledNotification)`
-  background-color: ${COLORS.noRed};
+  background-color: ${COLORS.red};
 `;

@@ -29,7 +29,7 @@ export const StyledNLForm = styled.div`
       flex-direction: column;
       justify-content: space-between;
       width: 100%;
-      color: ${COLORS.darkGrayFont};
+      color: ${COLORS.darkGray};
       .input-label {
         display: flex;
         flex-direction: row;
