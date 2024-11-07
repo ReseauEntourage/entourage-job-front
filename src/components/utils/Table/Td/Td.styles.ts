@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledTd = styled.td`
-  border-top: 1px solid ${COLORS.lightgray};
-  border-bottom: 1px solid ${COLORS.lightgray};
+  border-top: 1px solid ${COLORS.lightGray};
+  border-bottom: 1px solid ${COLORS.lightGray};
   padding: 15px;
 
   button {
@@ -11,10 +11,10 @@ export const StyledTd = styled.td`
   }
 
   &:last-child {
-    border-right: 1px solid ${COLORS.lightgray};
+    border-right: 1px solid ${COLORS.lightGray};
   }
   &:first-child {
-    border-left: 1px solid ${COLORS.lightgray};
+    border-left: 1px solid ${COLORS.lightGray};
     padding-left: 24px;
   }
 
@@ -54,6 +54,6 @@ export const StyledTdMobile = styled.td`
 export const StyledTdMobileTitle = styled.span`
   overflow-wrap: normal;
   margin-bottom: 4px;
-  color: ${COLORS.darkGray};
+  color: ${COLORS.mediumGray};
   font-size: 12px;
 `;

@@ -56,7 +56,7 @@ export const StyledSlider = styled.span`
   right: 0;
   bottom: 0;
   background-color: ${(props) => {
-    return props.isToggled ? COLORS.yesGreen : 'black';
+    return props.isToggled ? COLORS.green : 'black';
   }};
   -webkit-transition: 0.4s;
   transition: 0.4s;

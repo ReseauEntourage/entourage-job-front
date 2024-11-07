@@ -6,6 +6,6 @@ export const StyledCardCommon = styled.div`
   flex: 1;
   flex-direction: column;
   background-color: ${COLORS.white};
-  box-shadow: 0 4px 8px 0 ${COLORS.lightgray};
+  box-shadow: 0 4px 8px 0 ${COLORS.lightGray};
   position: relative;
 `;

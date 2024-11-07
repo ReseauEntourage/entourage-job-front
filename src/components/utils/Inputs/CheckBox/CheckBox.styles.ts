@@ -48,7 +48,7 @@ export const StyledCheckbox = styled.div`
       width: 16px;
       border-radius: 4px;
       background-color: white;
-      border: 0.5px solid ${COLORS.darkGray};
+      border: 0.5px solid ${COLORS.mediumGray};
     }
 
     &:hover input ~ .checkmark {

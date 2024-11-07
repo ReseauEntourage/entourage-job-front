@@ -5,7 +5,7 @@ import {
   StyledLabelContainer,
 } from 'src/components/backoffice/opportunities/OpportunitiesContainer/ActionLabel/ActionLabel.styles';
 
-export type ActionLabelColor = 'yellow' | 'primaryBlue' | 'yesGreen' | 'noRed';
+export type ActionLabelColor = 'darkYellow' | 'primaryBlue' | 'green' | 'red';
 
 interface ActionLabelProps {
   color: ActionLabelColor;

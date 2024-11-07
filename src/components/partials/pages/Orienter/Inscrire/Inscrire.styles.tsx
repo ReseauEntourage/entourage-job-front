@@ -6,7 +6,7 @@ export const StyledOrienterBackground = styled.div`
 `;
 
 export const StyledInscrireList = styled.ul`
-  color: ${COLORS.darkGrayFont};
+  color: ${COLORS.darkGray};
   padding: 5px 0;
   li {
     list-style: none;
@@ -18,7 +18,7 @@ export const StyledInscrireList = styled.ul`
       min-width: 35px;
       margin-right: 10px;
       rect {
-        fill: ${COLORS.primaryOrange};
+        fill: ${COLORS.orangeSocial};
       }
     }
   }
@@ -32,7 +32,7 @@ export const StyledInscrireList = styled.ul`
 
 export const StyledOrienterInscrireContainer = styled.div`
   ul {
-    color: ${COLORS.darkGrayFont};
+    color: ${COLORS.darkGray};
     padding: 5px 0;
     li {
       list-style: none;
@@ -44,7 +44,7 @@ export const StyledOrienterInscrireContainer = styled.div`
         min-width: 35px;
         margin-right: 10px;
         rect {
-          fill: ${COLORS.primaryOrange};
+          fill: ${COLORS.orangeSocial};
         }
       }
     }

@@ -25,7 +25,7 @@ export const StyledSelectContainer = styled.div`
       }
     }
     .placeholder {
-      color: ${COLORS.darkGray};
+      color: ${COLORS.mediumGray};
       font-style: italic;
       font-family: Poppins, sans-serif !important;
       label {

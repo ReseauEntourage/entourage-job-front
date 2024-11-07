@@ -18,69 +18,94 @@ export const HEIGHTS = {
 };
 
 export const COLORS = {
-  lightgray: '#F5F5F5',
+  // B&W colors
+  transparent: 'transparent',
+  white: '#FFFFFF',
+  lightGray: '#F5F5F5',
   gray: '#D9D9D9',
-  darkGray: '#A0A0A0',
-  darkGrayFont: '#6D6C6C',
+  mediumGray: '#A0A0A0',
+  darkGray: '#6D6C6C',
   black: '#363636',
-  warningOrange: '#d53f00',
+  navBlack: '#222222',
 
-  primaryOrange: '#F55F24',
-  hoverOrange: '#feeae3',
-  darkHoverOrange: '#fddcd0',
+  // Brown
+  lightBrownGray: '#918080',
+  extraLightBrown: '#FFB096',
+  lightBrown: '#BB826B',
+  mediumBrown: '#A65E48',
+  brown: '#653825',
+  darkBrown: '#20090A',
 
-  primaryBlue: '#47A8B9',
-  hoverBlue: '#ECF8FB',
-  darkHoverBlue: '#2D93A5',
+  // Orange
+  extraExtraLightOrange: '#FFF8F6',
+  extraLightOrange: '#FEEAE3',
+  lightOrange: '#FDDCD0',
+  mediumOrange: '#FF9C5D',
+  orangeLocal: '#FF9739',
+  orangeSocial: '#F55F24',
+  darkOrange: '#D53F00',
 
-  // shades of blue
+  // Yellow
+  lightYellow: '#FFF2D7',
+  yellowSport: '#FFC449',
+  darkYellow: '#FFB00D',
+
+  // Red
+  lightRed: '#F1545D',
+  red: '#FE2929',
+
+  // Blue
   blueShade1: '#A1CED8',
   blueShade2: '#61BECF',
-  // => primaryBlue is in between shade2 and shade3
+  primaryBlue: '#47A8B9',
   blueShade3: '#427F8D',
+  hoverBlue: '#ECF8FB',
+  lightBlueGreen: '#C1E9DF',
+  blue: '#8FC4E2',
+  darkBlue: '#267D8C',
+  extraDarkBlue: '#2A4C72',
 
-  yesGreen: '#79CC6B',
-  noRed: '#FE2929',
-  wheat: '#FFF8F6',
-  white: '#FFF',
-  yellow: '#F89D34',
+  // Green
+  lightGreen: '#A7DB9F',
+  green: '#79CC6B',
+  mediumGreen: '#1E7F51',
+  darkGreen: '#1F4946',
+};
 
-  transparent: 'transparent',
-
-  cvStatus: {
-    none: {
-      border: '#F5F5F5',
-      background: 'white',
-    },
-    new: {
-      border: '#8FC4E2',
-      background: 'white',
-    },
-    draft: {
-      border: '#A0A0A0',
-      background: '#A0A0A0',
-    },
-    progress: {
-      border: '#8FC4E2',
-      background: '#8FC4E2',
-    },
-    pending: {
-      border: '#47A8B9',
-      background: '#47A8B9',
-    },
-    published: {
-      border: '#A7DB9F',
-      background: '#A7DB9F',
-    },
+export const CV_STATUS_COLORS = {
+  none: {
+    border: COLORS.lightGray,
+    background: COLORS.white,
   },
-  alert: {
-    info: {
-      background: '#ECF8FB',
-      text: '#363636',
-    },
-    lightGray: {
-      background: '#F5F5F5',
-      text: '#484848',
-    },
+  new: {
+    border: COLORS.blue,
+    background: COLORS.white,
+  },
+  draft: {
+    border: COLORS.mediumGray,
+    background: COLORS.mediumGray,
+  },
+  progress: {
+    border: COLORS.blue,
+    background: COLORS.blue,
+  },
+  pending: {
+    border: COLORS.primaryBlue,
+    background: COLORS.primaryBlue,
+  },
+  published: {
+    border: COLORS.lightGreen,
+    background: COLORS.lightGreen,
+  },
+};
+
+export const ALERT_COLORS = {
+  info: {
+    background: COLORS.hoverBlue,
+    text: COLORS.black,
+  },
+  lightGray: {
+    background: COLORS.lightGray,
+    text: COLORS.black,
   },
 };

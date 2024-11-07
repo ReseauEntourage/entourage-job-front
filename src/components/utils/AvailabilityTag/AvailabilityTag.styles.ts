@@ -16,7 +16,7 @@ export const StyledAvailabilityTagDot = styled.div<{ isAvailable: boolean }>`
   height: 10px;
   width: 10px;
   background-color: ${({ isAvailable }) => {
-    return isAvailable ? COLORS.yesGreen : COLORS.noRed;
+    return isAvailable ? COLORS.green : COLORS.red;
   }};
   border-radius: 50%;
   margin-right: 8px;
