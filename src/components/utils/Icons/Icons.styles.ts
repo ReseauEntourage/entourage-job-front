@@ -17,7 +17,7 @@ export const StyledIconContainer = styled.div`
   height: 150px;
   width: 150px;
   text-align: center;
-  border: 1px solid ${COLORS.lightgray};
+  border: 1px solid ${COLORS.lightGray};
   padding: 10px;
   box-sizing: border-box;
   svg {

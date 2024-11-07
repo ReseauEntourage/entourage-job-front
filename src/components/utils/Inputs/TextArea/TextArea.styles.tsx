@@ -20,7 +20,7 @@ export const StyledTextArea = styled.textarea`
   }};
   &::placeholder {
     font-style: italic;
-    color: ${COLORS.darkGray};
+    color: ${COLORS.mediumGray};
     background-color: transparent;
     font-family: Poppins, sans-serif;
   }

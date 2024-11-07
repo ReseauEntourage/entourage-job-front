@@ -73,9 +73,9 @@ export const AdminOpportunityItem = ({
     '-1': 'primaryBlue',
     '0': 'primaryBlue',
     '1': 'primaryBlue',
-    '2': 'yesGreen',
-    '3': 'noRed',
-    '4': 'noRed',
+    '2': 'green',
+    '3': 'red',
+    '4': 'red',
   };
 
   const handleCheckbox = useCallback(() => {

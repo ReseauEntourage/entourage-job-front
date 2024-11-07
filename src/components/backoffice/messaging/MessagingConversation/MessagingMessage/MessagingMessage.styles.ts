@@ -9,7 +9,7 @@ export const MessageContainer = styled.div`
   }
   p.message-date {
     font-size: 12px;
-    color: ${COLORS.darkGray};
+    color: ${COLORS.mediumGray};
   }
   &.own-message {
     padding-left: 100px;
@@ -38,7 +38,7 @@ export const StyledMessage = styled.div`
   white-space: pre-line;
 
   &.own-message {
-    background: ${COLORS.lightgray};
+    background: ${COLORS.lightGray};
   }
   &:not(.own-message) {
     background: ${COLORS.hoverBlue};

@@ -31,7 +31,7 @@ export const RightColumn = styled.div<{ seen: boolean }>`
 
   p.preview-last-message {
     color: ${(props) => {
-      return props.seen ? COLORS.darkGray : COLORS.black;
+      return props.seen ? COLORS.mediumGray : COLORS.black;
     }};
     font-size: 12px;
     text-overflow: ellipsis;

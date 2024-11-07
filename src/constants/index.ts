@@ -1093,16 +1093,9 @@ export const ANTENNE_INFO = [
     address: ADDRESSES.PARIS,
   },
   {
-    dpt: '56',
+    dpt: '35',
     mailCoordo: process.env.ADMIN_CANDIDATES_RENNES,
     mailEntreprise: process.env.ADMIN_COMPANIES_RENNES,
-    city: 'Lorient',
-    address: ADDRESSES.LORIENT,
-  },
-  {
-    dpt: '35',
-    mailCoordo: process.env.ADMIN_CANDIDATES_LORIENT,
-    mailEntreprise: process.env.ADMIN_COMPANIES_LORIENT,
     city: 'Rennes',
     address: ADDRESSES.RENNES,
   },

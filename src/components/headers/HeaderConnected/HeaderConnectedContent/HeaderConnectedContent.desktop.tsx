@@ -114,7 +114,7 @@ export const HeaderConnectedContentDesktop = ({
             />
             <StyledNav
               className="uk-navbar-nav"
-              style={{ borderLeft: '1px solid lightgray' }}
+              style={{ borderLeft: '1px solid lightGray' }}
             >
               {links[user.role].map(
                 (

@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledCVPage = styled.div`
-  background-color: ${COLORS.lightgray};
+  background-color: ${COLORS.lightGray};
 `;
 
 export const StyledCVPageContent = styled.div`
-  background-color: ${COLORS.lightgray};
+  background-color: ${COLORS.lightGray};
   display: flex;
   flex-direction: column;
   max-width: 1320px;
@@ -17,7 +17,7 @@ export const StyledCVPageContent = styled.div`
     margin: 26px 26px 0 26px;
   }
   p {
-    color: ${COLORS.darkGrayFont};
+    color: ${COLORS.darkGray};
   }
 
   .strong {
@@ -48,7 +48,7 @@ export const StyledCVPageContent = styled.div`
     }
   }
   .name-gray {
-    color: ${COLORS.darkGray};
+    color: ${COLORS.mediumGray};
   }
 `;
 
@@ -139,7 +139,7 @@ export const StyledCVPageContentStory = styled.div`
   margin-bottom: 20px;
   position: relative;
   white-space: pre-line;
-  color: ${COLORS.darkGrayFont};
+  color: ${COLORS.darkGray};
   p {
     margin-bottom: 0;
   }
@@ -302,12 +302,12 @@ export const StyledCVExperienceDate = styled.div`
   min-width: 150px;
   max-width: 150px;
   padding: 0 15px;
-  color: ${COLORS.darkGrayFont};
+  color: ${COLORS.darkGray};
   text-align: right;
 `;
 
 export const StyledCVExperienceDateMobile = styled.div`
-  color: ${COLORS.darkGrayFont};
+  color: ${COLORS.darkGray};
   text-align: left;
   font-size: 13px;
 `;
@@ -316,7 +316,7 @@ export const StyledCVExperienceDescription = styled.div`
   position: relative;
   border-left: 1px solid #d4d4d4;
   padding-bottom: 20px;
-  color: ${COLORS.darkGrayFont};
+  color: ${COLORS.darkGray};
 
   > div,
   h5 {
@@ -341,7 +341,7 @@ export const StyledCVPageContentCarousel = styled.div`
 
   span.name {
     /* font-weight: 600; */
-    color: ${COLORS.darkGray};
+    color: ${COLORS.mediumGray};
   }
 `;
 
