@@ -76,7 +76,7 @@ export const slice = createSlice({
             state.selectedConversationId = conversation.id;
           } else {
             const newConversation: Conversation = {
-              id: 'new',
+              id: '',
               createdAt: new Date().toISOString(),
               updatedAt: new Date().toISOString(),
               messages: [],
