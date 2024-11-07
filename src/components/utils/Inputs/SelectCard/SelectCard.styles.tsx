@@ -24,7 +24,7 @@ export const StyledSelectCard = styled.ul`
       flex: 1;
       display: flex;
       width: 100%;
-      border: 2px solid ${COLORS.lightgray};
+      border: 2px solid ${COLORS.lightGray};
       background-color: ${COLORS.white};
       border-radius: 20px;
       padding: 11px 1px;

@@ -18,7 +18,7 @@ export const Partners = ({
           variant="big"
           title="Ils travaillent avec Entourage Pro"
           weight="normal"
-          color={COLORS.darkGrayFont}
+          color={COLORS.darkGray}
         />
         <div className="logos-container">
           <div>

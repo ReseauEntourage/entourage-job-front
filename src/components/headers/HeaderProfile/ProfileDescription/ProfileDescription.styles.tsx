@@ -15,13 +15,13 @@ export const StyledDescriptionParagraphe = styled.div`
 `;
 
 export const StyledDescriptionEditText = styled.a`
-  color: ${COLORS.darkGray};
+  color: ${COLORS.mediumGray};
   text-decoration: underline;
   margin-top: 20px;
   margin-left: 8px;
   font-size: 14px;
   &:hover {
     text-decoration: underline;
-    color: ${COLORS.darkGrayFont};
+    color: ${COLORS.darkGray};
   }
 `;

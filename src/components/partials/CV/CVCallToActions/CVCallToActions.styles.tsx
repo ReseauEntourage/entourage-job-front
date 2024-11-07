@@ -27,7 +27,7 @@ export const StyledCVCTACard = styled.div`
   box-sizing: border-box;
   p {
     text-align: center;
-    color: ${COLORS.darkGrayFont};
+    color: ${COLORS.darkGray};
   }
   &.mobile {
     width: 100%;

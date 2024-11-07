@@ -19,8 +19,8 @@ const sizes: { [K in NonNullable<TypographyProps['size']>]: number } = {
 
 const colors: { [K in NonNullable<TypographyProps['color']>]: string } = {
   white: COLORS.white,
-  lighter: COLORS.darkGray,
-  light: COLORS.darkGrayFont,
+  lighter: COLORS.mediumGray,
+  light: COLORS.darkGray,
   normal: COLORS.black,
   blue: COLORS.primaryBlue,
 };

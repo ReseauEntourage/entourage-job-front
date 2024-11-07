@@ -86,7 +86,7 @@ export const StyledSteps = styled.div`
         }
       }
       > div:not(.strong) {
-        color: ${COLORS.darkGrayFont};
+        color: ${COLORS.darkGray};
       }
       &:nth-child(even) {
         border-left: none;

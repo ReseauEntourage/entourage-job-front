@@ -16,7 +16,7 @@ export const StyledOrienterPublierContainer = styled.div`
   .text-container {
     width: 50%;
     ul {
-      color: ${COLORS.darkGrayFont};
+      color: ${COLORS.darkGray};
       padding: 5px 0;
       li {
         list-style: none;
@@ -28,7 +28,7 @@ export const StyledOrienterPublierContainer = styled.div`
           min-width: 35px;
           margin-right: 10px;
           rect {
-            fill: ${COLORS.primaryOrange};
+            fill: ${COLORS.orangeSocial};
           }
         }
       }

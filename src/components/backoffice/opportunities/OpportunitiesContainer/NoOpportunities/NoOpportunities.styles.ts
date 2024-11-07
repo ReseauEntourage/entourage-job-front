@@ -23,7 +23,7 @@ export const StyledButtonContainer = styled.div`
 `;
 
 export const StyledTitle = styled.h4`
-  color: ${COLORS.darkGray};
+  color: ${COLORS.mediumGray};
   margin: 0;
 `;
 
