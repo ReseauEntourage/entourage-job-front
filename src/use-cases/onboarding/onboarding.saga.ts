@@ -42,7 +42,7 @@ export function* launchOnboardingSaga() {
     userProfile.description;
 
   // if admin or external Coach, no Onboarding
-  if (isRoleIncluded([USER_ROLES.ADMIN, USER_ROLES.REFERRER], userRole)) {
+  if (isRoleIncluded([USER_ROLES.ADMIN, USER_ROLES.REFERER], userRole)) {
     yield* put(endOnboarding());
   }
 

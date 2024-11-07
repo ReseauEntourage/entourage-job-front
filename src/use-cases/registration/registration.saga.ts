@@ -35,6 +35,7 @@ export function* createUserRequestedSaga() {
     searchBusinessLine1,
     searchAmbition0,
     searchAmbition1,
+    organizationId,
     ...flattenedData
   } = flattenRegistrationDataByRole(data, selectedRole);
 
@@ -55,6 +56,7 @@ export function* createUserRequestedSaga() {
             }).searchBusinessLines
           : undefined,
         department: flattenedData.department.value,
+        organizationId: organizationId ? organizationId.value : undefined,
         helpNeeds: flattenedData.helpNeeds
           ? flattenedData.helpNeeds.map((expectation) => ({
               name: expectation,

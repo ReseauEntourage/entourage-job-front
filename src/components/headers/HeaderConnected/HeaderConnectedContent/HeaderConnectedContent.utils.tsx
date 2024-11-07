@@ -181,7 +181,7 @@ export const renderLinks = (
           tag: GA_TAGS.BACKOFFICE_COACH_HEADER_BAO_CLIC,
         },
       ],
-      [USER_ROLES.REFERRER]: [
+      [USER_ROLES.REFERER]: [
         {
           href: `/backoffice/candidat/list`,
           disabled: !candidateId,

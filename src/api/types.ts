@@ -21,7 +21,7 @@ import { Program } from 'src/constants/programs';
 import {
   AdminRole,
   Gender,
-  NormalUserRole,
+  RegistrableUserRole,
   UserRole,
 } from 'src/constants/users';
 
@@ -73,13 +73,13 @@ export type Organization = {
   zone: AdminZone;
   candidatesCount: number;
   coachesCount: number;
-  referrersCount: number;
+  referersCount: number;
 };
 
 export type OrganizationDto = {
   id?: string;
   name: string;
-  address: string;
+  address?: string;
   referentFirstName: string;
   referentLastName: string;
   referentMail: string;
@@ -282,7 +282,7 @@ export type UserDto = {
   gender: Gender;
   zone: AdminZone;
   phone: string;
-  userToLinkId?: string | string[];
+  userToLinkId?: string;
   email: string;
   adminRole?: AdminRole;
   OrganizationId?: string;
@@ -306,12 +306,13 @@ export type UserRegistrationDto = {
   email: string;
   phone: string;
   password: string;
-  role: NormalUserRole;
+  role: RegistrableUserRole;
   campaign?: string;
   department: Department;
   helpNeeds?: { name: HelpValue }[];
   workingRight?: string;
-  program: Program;
+  program?: Program;
+  organizationId?: string;
   birthDate: string;
   searchAmbitions?: {
     name: string;

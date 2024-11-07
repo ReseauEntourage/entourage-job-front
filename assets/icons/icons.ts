@@ -36,6 +36,7 @@ import Home from './home.svg';
 import IlluCV from './illu-CV.svg';
 import IlluBulleQuestion from './illu-bulle-question.svg';
 import IlluCalendrier from './illu-calendrier.svg';
+import IlluCandidatFolder from './illu-candidat-folder.svg';
 import IlluCoeurMainsOuvertesBleu from './illu-coeur-mains-ouvertes-bleu.svg';
 import IlluCoeurMainsOuvertes from './illu-coeur-mains-ouvertes.svg';
 import IlluConversation from './illu-conversation.svg';
@@ -120,6 +121,7 @@ Heart,
 History,
 Home,
 IlluCV,
+IlluCandidatFolder,
 IlluBulleQuestion,
 IlluCalendrier,
 IlluCoeurMainsOuvertesBleu,

@@ -7,7 +7,7 @@ import {
   RegistrationStepData,
   RegistrationFormData,
 } from 'src/components/registration/Registration.types';
-import { NormalUserRole } from 'src/constants/users';
+import { RegistrableUserRole } from 'src/constants/users';
 import { RequestState, SliceRootState } from 'src/store/utils';
 import { assertIsDefined } from 'src/utils/asserts';
 import { createUserAdapter, CreateUserError } from './registration.adapters';
@@ -16,7 +16,7 @@ export interface State {
   createUser: RequestState<typeof createUserAdapter>;
   createUserError: CreateUserError | null;
   currentStep: RegistrationStep | null;
-  selectedRole: NormalUserRole | null;
+  selectedRole: RegistrableUserRole | null;
   data: RegistrationStepData;
   isLoading: boolean;
 }

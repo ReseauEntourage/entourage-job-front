@@ -26,7 +26,7 @@ export function useFetchCandidateOpportunity(
       const { data: fetchedOpportunity } = await Api.getOpportunityById(
         opportunityId
       );
-      if (user.role === USER_ROLES.REFERRER) {
+      if (user.role === USER_ROLES.REFERER) {
         const [fetchedOppUser] = fetchedOpportunity.opportunityUsers.filter(
           (oppUser) => {
             return oppUser.UserId === candidateId;

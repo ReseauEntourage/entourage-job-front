@@ -34,7 +34,7 @@ export const HeaderConnectedContentDesktop = ({
     [USER_ROLES.ADMIN]: [HeaderConnectedMainItemDefaultProps],
     [USER_ROLES.CANDIDATE]: [HeaderConnectedMainItemDefaultProps],
     [USER_ROLES.COACH]: [HeaderConnectedMainItemDefaultProps],
-    [USER_ROLES.REFERRER]: [HeaderConnectedMainItemDefaultProps],
+    [USER_ROLES.REFERER]: [HeaderConnectedMainItemDefaultProps],
   },
   dropdown = [HeaderConnectedMainItemDefaultProps],
   messaging = HeaderConnectedMainItemDefaultProps,

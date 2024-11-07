@@ -82,9 +82,7 @@ export function useOnMemberFormSubmit(
           email: fields.email,
           ...(fields.userToLinkId
             ? {
-                userToLinkId: Array.isArray(fields.userToLinkId)
-                  ? fields.userToLinkId.map(({ value }) => value)
-                  : fields.userToLinkId.value,
+                userToLinkId: fields.userToLinkId.value,
               }
             : {}),
           ...(fields.role === USER_ROLES.ADMIN

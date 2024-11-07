@@ -1,4 +1,4 @@
-import { NormalUserRole } from 'src/constants/users';
+import { RegistrableUserRole } from 'src/constants/users';
 import {
   FlattenedRegistrationFormData,
   RegistrationStep,
@@ -7,7 +7,7 @@ import {
 
 export const flattenRegistrationDataByRole = (
   data: RegistrationStepData,
-  selectedRole: NormalUserRole
+  selectedRole: RegistrableUserRole
 ): FlattenedRegistrationFormData => {
   const allSteps: RegistrationStep[] = Object.keys(data) as RegistrationStep[];
 

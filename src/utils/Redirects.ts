@@ -4,7 +4,7 @@ const defaultPages = {
   [USER_ROLES.ADMIN]: '/backoffice/admin/offres',
   [USER_ROLES.CANDIDATE]: '/backoffice/dashboard',
   [USER_ROLES.COACH]: '/backoffice/dashboard',
-  [USER_ROLES.REFERRER]: '/backoffice/candidat/list',
+  [USER_ROLES.REFERER]: '/backoffice/candidat/list',
 } as const;
 
 // export const redirectBackOfficeToDefault: (
