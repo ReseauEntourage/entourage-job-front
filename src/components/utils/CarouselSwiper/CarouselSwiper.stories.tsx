@@ -42,7 +42,7 @@ const CarouselSwiperTemplate = (args) => {
         height: '200px',
         width: '600px',
         padding: '20px',
-        backgroundColor: 'lightgray',
+        backgroundColor: 'lightGray',
       }}
     >
       <CS {...args} slides={slides} backgroundColor="white" />

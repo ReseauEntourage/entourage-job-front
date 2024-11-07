@@ -52,7 +52,7 @@ export const StyledInputLabel = styled.label`
 `;
 
 export const StyledInputLabelOptional = styled.span`
-  color: ${COLORS.darkGray};
+  color: ${COLORS.mediumGray};
   margin-left: 5px;
 `;
 
@@ -77,7 +77,7 @@ export const StyledLimitContainer = styled.div`
 
 export const StyledLimit = styled.div`
   color: ${({ warning }) => {
-    return warning ? COLORS.warningOrange : COLORS.darkGray;
+    return warning ? COLORS.darkOrange : COLORS.mediumGray;
   }};
   font-size: 12px;
   line-height: 12px;

@@ -19,7 +19,7 @@ const meta = {
     },
     color: {
       control: 'select',
-      options: ['primaryBlue', 'darkGrayFont'],
+      options: ['primaryBlue', 'darkGray'],
       defaultValue: 'primaryBlue',
     },
     size: {
@@ -81,7 +81,7 @@ export const PrimaryInverted = {
   argTypes: {
     color: {
       control: 'select',
-      options: ['primaryBlue', 'darkGrayFont', 'white'],
+      options: ['primaryBlue', 'darkGray', 'white'],
       defaultValue: 'primaryBlue',
     },
   },

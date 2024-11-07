@@ -6,13 +6,13 @@ export const MessagingConversationHeaderContainer = styled.div`
   width: 100%;
   justify-content: space-between;
   padding: 17px 21px;
-  border-bottom: 1px solid ${COLORS.lightgray};
+  border-bottom: 1px solid ${COLORS.lightGray};
   box-sizing: border-box;
   font-size: 14px;
   align-items: center;
 
   a.report-link {
-    color: ${COLORS.darkGray};
+    color: ${COLORS.mediumGray};
   }
   &.mobile {
     background: ${COLORS.white};

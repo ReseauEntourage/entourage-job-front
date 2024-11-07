@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 
 export const StyledEditItemsButtons = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
-
-  svg:first-of-type {
-    margin-bottom: 8px;
-  }
+  gap: 8px;
 `;

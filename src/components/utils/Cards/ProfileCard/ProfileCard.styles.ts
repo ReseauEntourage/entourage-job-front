@@ -138,7 +138,7 @@ export const StyledProfileCardLabel = styled.div`
 export const StyledSeparator = styled.div`
   margin-bottom: 20px;
   margin-top: 20px;
-  border-bottom: 1px solid ${COLORS.lightgray};
+  border-bottom: 1px solid ${COLORS.lightGray};
 `;
 
 export const StyledProfileCardBusinessLines = styled.div`
@@ -170,7 +170,7 @@ export const StyledProfileCardHelp = styled.div`
 
 export const StyledProfileCardHelpLabel = styled.div`
   font-size: 10px;
-  color: ${COLORS.darkGray};
+  color: ${COLORS.mediumGray};
 `;
 
 export const StyledProfileCardEmptyBusinessLinesContainer = styled.div`
