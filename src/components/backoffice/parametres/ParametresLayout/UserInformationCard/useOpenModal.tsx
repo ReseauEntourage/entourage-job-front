@@ -7,11 +7,7 @@ import {
 } from 'src/components/forms/schemas/formPersonalData';
 import { openModal } from 'src/components/modals/Modal';
 import { DEPARTMENTS_FILTERS } from 'src/constants/departements';
-import {
-  ALL_USER_ROLES,
-  CANDIDATE_USER_ROLES,
-  COACH_USER_ROLES,
-} from 'src/constants/users';
+import { ALL_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { findConstantFromValue, isRoleIncluded } from 'src/utils';
 import { ModalEditUserInformation } from './ModalEditUserInformation';
 
@@ -73,11 +69,11 @@ export const useOpenCorrespondingModal = (user: UserWithUserCandidate) => {
 
   const openCorrespondingModal = useCallback(() => {
     if (isRoleIncluded(ALL_USER_ROLES, user.role)) {
-      if (isRoleIncluded(CANDIDATE_USER_ROLES, user.role)) {
+      if (user.role === USER_ROLES.CANDIDATE) {
         openPersonalDataModalAsCandidate();
         return;
       }
-      if (isRoleIncluded(COACH_USER_ROLES, user.role)) {
+      if (user.role === USER_ROLES.COACH) {
         openPersonalDataModalAsCoach();
         return;
       }

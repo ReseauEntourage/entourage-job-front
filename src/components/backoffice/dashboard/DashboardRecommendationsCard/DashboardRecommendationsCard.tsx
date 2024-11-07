@@ -7,18 +7,14 @@ import {
 import { DirectoryItem } from 'src/components/backoffice/directory/DirectoryItem';
 import { Button, Card } from 'src/components/utils';
 import { CardList } from 'src/components/utils/CardList';
-import {
-  CANDIDATE_USER_ROLES,
-  NormalUserRole,
-  USER_ROLES,
-} from 'src/constants/users';
+import { NormalUserRole, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import {
   selectCurrentUserProfileBusinessLines,
   selectCurrentUserProfileHelps,
   selectLinkedUser,
 } from 'src/use-cases/current-user';
-import { isRoleIncluded, mutateToArray } from 'src/utils';
+import { mutateToArray } from 'src/utils';
 import { StyledDashboardRecommendationsList } from './DashboardRecommendationsCard.styles';
 import { useDashboardRecommendations } from './useDashboardRecommendations';
 
@@ -49,7 +45,7 @@ export const DashboardRecommendationsCard = () => {
   const linkedUser = useSelector(selectLinkedUser);
 
   const isAlreadyLinkedCandidate =
-    isRoleIncluded(CANDIDATE_USER_ROLES, user.role) && linkedUser;
+    user.role === USER_ROLES.CANDIDATE && linkedUser;
 
   const { recommendations, isLoading } = useDashboardRecommendations();
 
@@ -68,13 +64,15 @@ export const DashboardRecommendationsCard = () => {
 
   const recommendationsList = useMemo(() => {
     return recommendations.map((profile) => {
-      const helps = isRoleIncluded(CANDIDATE_USER_ROLES, profile.role)
-        ? profile.helpNeeds
-        : profile.helpOffers;
+      const helps =
+        profile.role === USER_ROLES.CANDIDATE
+          ? profile.helpNeeds
+          : profile.helpOffers;
 
-      const businessLines = isRoleIncluded(CANDIDATE_USER_ROLES, profile.role)
-        ? profile.searchBusinessLines
-        : profile.networkBusinessLines;
+      const businessLines =
+        profile.role === USER_ROLES.CANDIDATE
+          ? profile.searchBusinessLines
+          : profile.networkBusinessLines;
 
       return (
         <DirectoryItem

@@ -73,6 +73,7 @@ export type Organization = {
   zone: AdminZone;
   candidatesCount: number;
   coachesCount: number;
+  referrersCount: number;
 };
 
 export type OrganizationDto = {
@@ -271,6 +272,7 @@ export interface UserCandidateWithUsers extends UserCandidate {
 export interface UserWithUserCandidate extends User {
   candidat?: UserCandidateWithUsers;
   coaches?: UserCandidateWithUsers[];
+  referredCandidates?: UserCandidateWithUsers[];
 }
 
 export type UserDto = {

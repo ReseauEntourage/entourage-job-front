@@ -4,7 +4,7 @@ import { UserWithUserCandidate } from 'src/api/types';
 import { Grid, SimpleLink } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { ImgProfile } from 'src/components/utils/ImgProfile';
-import { USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
+import { USER_ROLES } from 'src/constants/users';
 import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
 import { isRoleIncluded } from 'src/utils/Finding';
 
@@ -21,8 +21,17 @@ export const CandidatHeader = ({
   const [candidateCVUrl, setCandidateCVUrl] = useState<string>('');
 
   useEffect(() => {
-    if (isRoleIncluded(COACH_USER_ROLES, user.role)) {
+    if (user.role === USER_ROLES.COACH) {
       const cand = user.coaches?.find(
+        ({ candidat }) => candidat.id === candidateId
+      );
+      setRelatedUser(cand?.candidat);
+      setCandidateCVUrl(
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        cand?.url
+      );
+    } else if (isRoleIncluded([USER_ROLES.REFERRER], user.role)) {
+      const cand = user.referredCandidates?.find(
         ({ candidat }) => candidat.id === candidateId
       );
       setRelatedUser(cand?.candidat);
@@ -47,15 +56,6 @@ export const CandidatHeader = ({
           {user.firstName} {user.lastName}
           {user.organization ? ` - ${user.organization.name}` : ''}
         </h3>
-        {USER_ROLES.COACH_EXTERNAL !== user.role && (
-          <Grid row gap="small" middle className="uk-margin-small-top">
-            <>{`${_.capitalize(user.role)} de ${
-              !relatedUser
-                ? 'personne'
-                : `${relatedUser.firstName} ${relatedUser.lastName}`
-            }`}</>
-          </Grid>
-        )}
         <>
           {relatedUser && (
             <>

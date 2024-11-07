@@ -42,20 +42,6 @@ const cards: ProfileCardProps[] = new Array(4)
       department: 'Paris (75)',
       isAvailable: false,
     },
-    {
-      userId: uuid(),
-      firstName: 'John',
-      lastName: 'Doe',
-      role: USER_ROLES.CANDIDATE_EXTERNAL,
-      helps: [{ name: 'network' }, { name: 'cv' }],
-      businessLines: [
-        { name: 'id', order: 0 },
-        { name: 'bat', order: 1 },
-      ],
-      ambitions: [{ name: 'développeur', order: 0 }],
-      department: 'Paris (75)',
-      isAvailable: true,
-    },
   ])
   .reduce((acc, val) => [...acc, ...val], []);
 

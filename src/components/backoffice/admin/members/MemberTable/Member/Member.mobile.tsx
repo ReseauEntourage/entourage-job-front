@@ -17,10 +17,9 @@ import { CheckBox, useCheckBox } from 'src/components/utils/Inputs/CheckBox';
 import { TdMobile } from 'src/components/utils/Table';
 import { ADMIN_ZONES } from 'src/constants/departements';
 import {
-  COACH_USER_ROLES,
-  EXTERNAL_USER_ROLES,
   USER_ROLES,
   GENDERS_FILTERS,
+  ROLES_WITH_ORGANIZATION,
 } from 'src/constants/users';
 import {
   getUserCandidateFromCoachOrCandidate,
@@ -70,7 +69,7 @@ export function MemberMobile({
             email={member.email}
             // @ts-expect-error after enable TS strict mode. Please, try to fix it
             organizationName={
-              isRoleIncluded(EXTERNAL_USER_ROLES, member.role)
+              isRoleIncluded(ROLES_WITH_ORGANIZATION, member.role)
                 ? member.organization?.name
                 : null
             }
@@ -79,7 +78,7 @@ export function MemberMobile({
           {columns.includes('selection') &&
             selectionCallback &&
             !Array.isArray(userCandidate) &&
-            !isRoleIncluded(COACH_USER_ROLES, role) && (
+            role !== USER_ROLES.COACH && (
               <CheckBox
                 id={`member-${member.id}-check`}
                 name={`member-${member.id}-check`}
@@ -95,12 +94,12 @@ export function MemberMobile({
         <div className="line">
           <TdMobile
             title={
-              isRoleIncluded(COACH_USER_ROLES, role)
+              role === USER_ROLES.COACH
                 ? USER_ROLES.CANDIDATE
                 : USER_ROLES.COACH
             }
           >
-            <RelatedMemberInfo relatedUser={relatedUser} role={member.role} />
+            <RelatedMemberInfo relatedUser={relatedUser} />
           </TdMobile>
         </div>
       )}
@@ -122,15 +121,6 @@ export function MemberMobile({
       )}
 
       <div className="line">
-        {columns.includes('type') && (
-          <TdMobile title="Type">
-            <span>
-              {isRoleIncluded(EXTERNAL_USER_ROLES, member.role)
-                ? 'Externe'
-                : 'LKO'}
-            </span>
-          </TdMobile>
-        )}
         {columns.includes('address') && (
           <TdMobile title="Adresse">
             <span>{member.address || '-'}</span>
@@ -164,72 +154,71 @@ export function MemberMobile({
           </TdMobile>
         )}
       </div>
-      {!isRoleIncluded(COACH_USER_ROLES, role) &&
-        !Array.isArray(userCandidate) && (
-          <div className="line">
-            {columns.includes('cvUrl') && (
-              <TdMobile title="Lien CV">
-                <span>
-                  <SimpleLink
-                    href={`/cv/${userCandidate?.url}`}
-                    isExternal
-                    target="_blank"
-                  >
-                    <LucidIcon name="Link" />
-                  </SimpleLink>
-                </span>
-              </TdMobile>
-            )}
-            {columns.includes('employed') && (
-              <TdMobile title="En emploi">
-                <StyledEmployedCellContent>
-                  {isEditable ? (
-                    <MemberEmployedToggle
-                      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                      setMember={setMember}
-                      member={member}
-                    />
-                  ) : (
-                    <span
-                      data-tooltip-id={tooltipId}
-                      data-tooltip-content={contractLabel}
-                      data-tooltip-place="bottom"
-                    >
-                      {userCandidate?.employed ? (
-                        <span className="yes">Oui</span>
-                      ) : (
-                        <span className="no">Non</span>
-                      )}
-                      <Tooltip id={tooltipId} />
-                    </span>
-                  )}
-                </StyledEmployedCellContent>
-              </TdMobile>
-            )}
-            {columns.includes('cvStatus') && (
-              <TdMobile title="Statut du CV">
-                <StyledCVStatusCellContent cvStatus={cvStatus.toLowerCase()}>
-                  {cvStatus === 'none' ? 'Aucun' : translateStatusCV(cvStatus)}
-                </StyledCVStatusCellContent>
-              </TdMobile>
-            )}
-            {columns.includes('cvHidden') && (
-              <TdMobile title="CV masqué">
+      {role !== USER_ROLES.COACH && !Array.isArray(userCandidate) && (
+        <div className="line">
+          {columns.includes('cvUrl') && (
+            <TdMobile title="Lien CV">
+              <span>
+                <SimpleLink
+                  href={`/cv/${userCandidate?.url}`}
+                  isExternal
+                  target="_blank"
+                >
+                  <LucidIcon name="Link" />
+                </SimpleLink>
+              </span>
+            </TdMobile>
+          )}
+          {columns.includes('employed') && (
+            <TdMobile title="En emploi">
+              <StyledEmployedCellContent>
                 {isEditable ? (
-                  <MemberHiddenToggle setMember={setMember} member={member} />
+                  <MemberEmployedToggle
+                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
+                    setMember={setMember}
+                    member={member}
+                  />
                 ) : (
-                  <span>
-                    {userCandidate?.hidden ? (
-                      <LucidIcon name="EyeOff" stroke="thin" />
+                  <span
+                    data-tooltip-id={tooltipId}
+                    data-tooltip-content={contractLabel}
+                    data-tooltip-place="bottom"
+                  >
+                    {userCandidate?.employed ? (
+                      <span className="yes">Oui</span>
                     ) : (
-                      <LucidIcon name="Eye" stroke="thin" />
+                      <span className="no">Non</span>
                     )}
+                    <Tooltip id={tooltipId} />
                   </span>
                 )}
-              </TdMobile>
-            )}
-          </div>
-        )}
+              </StyledEmployedCellContent>
+            </TdMobile>
+          )}
+          {columns.includes('cvStatus') && (
+            <TdMobile title="Statut du CV">
+              <StyledCVStatusCellContent cvStatus={cvStatus.toLowerCase()}>
+                {cvStatus === 'none' ? 'Aucun' : translateStatusCV(cvStatus)}
+              </StyledCVStatusCellContent>
+            </TdMobile>
+          )}
+          {columns.includes('cvHidden') && (
+            <TdMobile title="CV masqué">
+              {isEditable ? (
+                <MemberHiddenToggle setMember={setMember} member={member} />
+              ) : (
+                <span>
+                  {userCandidate?.hidden ? (
+                    <LucidIcon name="EyeOff" stroke="thin" />
+                  ) : (
+                    <LucidIcon name="Eye" stroke="thin" />
+                  )}
+                </span>
+              )}
+            </TdMobile>
+          )}
+        </div>
+      )}
     </StyledMobileMember>
   );
 }

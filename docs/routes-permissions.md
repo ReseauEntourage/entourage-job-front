@@ -48,7 +48,7 @@ Règles:
 },
 {
   paths: ['/backoffice/parametres', '/backoffice/candidat'],
-  roles: [USER_ROLES.CANDIDAT],
+  roles: [USER_ROLES.CANDIDATE],
 },
 ```
 

@@ -9,12 +9,12 @@ import { CVEditPage } from 'src/components/backoffice/cv/CVEditPage';
 import { CVEditWelcome } from 'src/components/backoffice/cv/CVEditPage/CVFicheEdition/CVEdit/CVEditWelcome';
 import { ErrorMessage } from 'src/components/backoffice/cv/ErrorMessage';
 import { Section } from 'src/components/utils';
-import { COACH_USER_ROLES } from 'src/constants/users';
+import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useCandidateId } from 'src/hooks/queryParams/useCandidateId';
 import { useFetchCV } from 'src/hooks/useFetchCV';
 import { notificationsActions } from 'src/use-cases/notifications';
-import { isRoleIncluded, getRelatedUser } from 'src/utils/Finding';
+import { getRelatedUser } from 'src/utils/Finding';
 
 const Edit = () => {
   const user = useAuthenticatedUser();
@@ -48,7 +48,7 @@ const Edit = () => {
   } else if (error) {
     return <ErrorMessage error={error} />;
   } else if (
-    isRoleIncluded(COACH_USER_ROLES, user.role) &&
+    user.role === USER_ROLES.COACH &&
     !getRelatedUser(userCompleteData)
   ) {
     content = (
