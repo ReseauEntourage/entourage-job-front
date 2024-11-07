@@ -24,28 +24,28 @@ export const SharePartial = ({ padding }: { padding?: boolean }) => {
         {[
           {
             picto: FacebookIcon,
-            href: 'https://www.facebook.com/linkedout.byentouragee',
+            href: 'https://www.facebook.com/entouragereseaupro/',
             tag: isCVPage
               ? GA_TAGS.PAGE_CV_SUIVRE_SUR_FACEBOOK_CLIC
               : GA_TAGS.HOME_SUIVRE_SUR_FACEBOOK_CLIC,
           },
           {
             picto: TwitterIcon,
-            href: 'https://twitter.com/LinkedOut',
+            href: 'https://x.com/Entourage__Pro',
             tag: isCVPage
               ? GA_TAGS.PAGE_CV_SUIVRE_SUR_TWITTER_CLIC
               : GA_TAGS.HOME_SUIVRE_SUR_TWITTER_CLIC,
           },
           {
             picto: LinkedInIcon,
-            href: 'https://www.linkedin.com/company/linkedout-byentourage',
+            href: 'https://www.linkedin.com/company/entouragepro/',
             tag: isCVPage
               ? GA_TAGS.PAGE_CV_SUIVRE_SUR_LINKEDIN_CLIC
               : GA_TAGS.HOME_SUIVRE_SUR_LINKEDIN_CLIC,
           },
           {
             picto: InstaIcon,
-            href: 'https://www.instagram.com/linkedout_byentourage',
+            href: 'https://www.instagram.com/entourage_pro/',
             tag: isCVPage
               ? GA_TAGS.PAGE_CV_SUIVRE_SUR_INSTAGRAM_CLIC
               : GA_TAGS.HOME_SUIVRE_SUR_INSTAGRAM_CLIC,
