@@ -20,8 +20,8 @@ const reviews = [
     review: (
       <>
         “ Maintenant j’arrive à plus parler aux gens, à aller vers les autres,
-        c’est grâce à LinkedOut. Je faisais la paresseuse avant, et là, ça m’a
-        donné envie de me donner à fond.”
+        c’est grâce à Entourage Pro. Je faisais la paresseuse avant, et là, ça
+        m’a donné envie de me donner à fond.”
       </>
     ),
   },
@@ -30,7 +30,7 @@ const reviews = [
     authorStatus: 'candidat EntouragePro',
     review: (
       <>
-        “ LinkedOut vous vous êtes bougés pour moi, et par le réseau j’ai pu
+        “ Entourage Pro vous vous êtes bougés pour moi, et par le réseau j’ai pu
         rencontrer plein de professionnels qui m’ont motivés dans ma recherche”
       </>
     ),
