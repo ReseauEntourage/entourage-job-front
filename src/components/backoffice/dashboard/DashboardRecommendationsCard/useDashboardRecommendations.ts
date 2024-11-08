@@ -29,6 +29,8 @@ export function useDashboardRecommendations() {
     fetchProfilesRecommendationsSelectors.selectIsFetchProfilesRecommendationsFailed
   );
 
+  const isError = isFetchDashboardRecommendationsFailed;
+
   // fetch recommendations
   useEffect(() => {
     if (isFetchProfilesRecommendationsIdle) {
@@ -56,5 +58,5 @@ export function useDashboardRecommendations() {
     };
   }, [dispatch]);
 
-  return { recommendations, isLoading };
+  return { recommendations, isLoading, isError };
 }

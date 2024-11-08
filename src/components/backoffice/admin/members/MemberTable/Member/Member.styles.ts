@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { TdDesktop, TdMobile, TrMobile } from 'src/components/utils/Table';
-import { COLORS } from 'src/constants/styles';
+import { COLORS, CV_STATUS_COLORS } from 'src/constants/styles';
 
 export const StyledNameCell = styled(TdDesktop)`
   border-left: solid 3px
     ${(props) => {
-      return COLORS.cvStatus[props.cvStatus]?.border || COLORS.white;
+      return CV_STATUS_COLORS[props.cvStatus]?.border || COLORS.white;
     }} !important;
 
   .profileImage {
@@ -26,11 +26,11 @@ export const StyledCVStatusCellContent = styled.div`
     top: calc(50% - 6px);
     border-radius: 12px;
     background-color: ${(props) => {
-      return COLORS.cvStatus[props.cvStatus]?.background || COLORS.white;
+      return CV_STATUS_COLORS[props.cvStatus]?.background || COLORS.white;
     }};
     border: 2px solid
       ${(props) => {
-        return COLORS.cvStatus[props.cvStatus]?.border || COLORS.white;
+        return CV_STATUS_COLORS[props.cvStatus]?.border || COLORS.white;
       }};
   }
 
@@ -47,17 +47,17 @@ export const StyledNoWrapCellContent = styled.div`
 
 export const StyledEmployedCellContent = styled.div`
   .yes {
-    color: ${COLORS.yesGreen};
+    color: ${COLORS.green};
   }
   .no {
-    color: ${COLORS.noRed};
+    color: ${COLORS.red};
   }
 `;
 
 export const StyledHiddenCVCellContent = styled.div`
   color: ${COLORS.black};
   .eye-hidden {
-    color: ${COLORS.darkGray};
+    color: ${COLORS.mediumGray};
   }
 `;
 
@@ -71,7 +71,7 @@ export const StyledMobileMember = styled(TrMobile)`
   .line {
     border-left: solid 3px
       ${(props) => {
-        return COLORS.cvStatus[props.cvStatus]?.border || COLORS.white;
+        return CV_STATUS_COLORS[props.cvStatus]?.border || COLORS.white;
       }} !important;
   }
 `;

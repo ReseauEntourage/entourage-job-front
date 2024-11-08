@@ -13,7 +13,7 @@ export const StyledSearchBar = styled.div`
   justify-content: center;
   align-items: center;
   // keep this background for better visibility
-  background-color: ${({ light }) => (light ? COLORS.white : COLORS.lightgray)};
+  background-color: ${({ light }) => (light ? COLORS.white : COLORS.lightGray)};
   min-height: ${HEIGHTS.SEARCH_BAR_HEIGHT}px;
 `;
 

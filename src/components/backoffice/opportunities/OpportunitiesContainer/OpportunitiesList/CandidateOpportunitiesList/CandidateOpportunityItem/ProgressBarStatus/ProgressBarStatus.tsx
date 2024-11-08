@@ -23,10 +23,10 @@ export const ProgressBarStatus = ({
 
   let color = 'primaryBlue';
   if (abandonned) {
-    color = 'noRed';
+    color = 'red';
   }
   if (hired) {
-    color = 'yesGreen';
+    color = 'green';
   }
 
   return (

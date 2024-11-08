@@ -3,19 +3,19 @@ import { COLORS } from 'src/constants/styles';
 
 export const colorToHoverBackgroundColor = {
   primaryBlue: COLORS.hoverBlue,
-  darkGrayFont: 'transparent',
+  darkGray: 'transparent',
   white: 'transparent',
 };
 
 export const colorToHoverColor = {
   primaryBlue: COLORS.primaryBlue,
-  darkGrayFont: COLORS.primaryBlue,
+  darkGray: COLORS.primaryBlue,
   white: COLORS.primaryBlue,
 };
 
 export const colorToBackgroundColor = {
   primaryBlue: COLORS.white,
-  darkGrayFont: COLORS.white,
+  darkGray: COLORS.white,
   white: 'transparent',
 };
 
@@ -208,13 +208,13 @@ export const ButtonStyle = css`
 
   &.disabled {
     border-color: ${COLORS.gray} !important;
-    color: ${COLORS.darkGray} !important;
-    background-color: ${COLORS.lightgray} !important;
+    color: ${COLORS.mediumGray} !important;
+    background-color: ${COLORS.lightGray} !important;
 
     @media (hover: hover) {
       &:hover {
-        color: ${COLORS.darkGray} !important;
-        background-color: ${COLORS.lightgray} !important;
+        color: ${COLORS.mediumGray} !important;
+        background-color: ${COLORS.lightGray} !important;
         cursor: default !important;
       }
     }
