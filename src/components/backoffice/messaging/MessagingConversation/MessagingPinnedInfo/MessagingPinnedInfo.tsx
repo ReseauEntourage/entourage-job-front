@@ -1,6 +1,7 @@
 import React from 'react';
 import { IlluBulleQuestion } from 'assets/icons/icons';
 import { Alert } from 'src/components/utils/Alert/Alert';
+import { useIsDesktop } from 'src/hooks/utils';
 
 export interface MessagingPinnedInfoProps {
   pinnedInfo: string;
@@ -17,13 +18,18 @@ export const MessagingPinnedInfo = ({
   pinnedInfo,
 }: MessagingPinnedInfoProps) => {
   const [visible, setVisible] = React.useState(true);
+  const isDesktop = useIsDesktop();
 
   return (
     <Alert
       visible={visible}
       variant="lightGray"
       rounded={false}
-      icon={<IlluBulleQuestion className="icon" />}
+      icon={
+        isDesktop ? (
+          <IlluBulleQuestion className="icon" width={35} height={30} />
+        ) : null
+      }
       onClose={() => setVisible(false)}
       closable
     >

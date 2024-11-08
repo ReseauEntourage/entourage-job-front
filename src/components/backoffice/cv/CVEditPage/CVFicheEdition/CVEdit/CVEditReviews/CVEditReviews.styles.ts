@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
-export const StyledEditItemsButtons = styled.div`
-  flex: 1;
+export const ReviewItemList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 30px;
 `;

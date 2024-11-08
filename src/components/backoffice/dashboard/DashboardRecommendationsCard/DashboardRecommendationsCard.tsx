@@ -4,6 +4,7 @@ import {
   StyledDashboardCardContent,
   StyledDashboardCardContentContainer,
 } from '../Dashboard.styles';
+import { DashboardNetworkDiscoveryCard } from '../DashboardNetworkDiscoverCard';
 import { DirectoryItem } from 'src/components/backoffice/directory/DirectoryItem';
 import { Button, Card } from 'src/components/utils';
 import { CardList } from 'src/components/utils/CardList';
@@ -47,7 +48,7 @@ export const DashboardRecommendationsCard = () => {
   const isAlreadyLinkedCandidate =
     user.role === USER_ROLES.CANDIDATE && linkedUser;
 
-  const { recommendations, isLoading } = useDashboardRecommendations();
+  const { recommendations, isLoading, isError } = useDashboardRecommendations();
 
   const currentUserHelps = useSelector(selectCurrentUserProfileHelps);
   const currentUserBusinessLines = useSelector(
@@ -92,7 +93,11 @@ export const DashboardRecommendationsCard = () => {
     });
   }, [recommendations]);
 
-  if (isAlreadyLinkedCandidate || recommendations.length === 0) {
+  if ((recommendations.length === 0 && !isLoading) || isError) {
+    return <DashboardNetworkDiscoveryCard />;
+  }
+
+  if (isAlreadyLinkedCandidate) {
     return null;
   }
 
