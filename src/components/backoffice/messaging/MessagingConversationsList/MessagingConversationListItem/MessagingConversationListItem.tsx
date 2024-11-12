@@ -1,7 +1,7 @@
 import moment from 'moment';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Conversation, User } from 'src/api/types';
+import { Conversation, ConversationParticipant } from 'src/api/types';
 import { ImgProfile } from 'src/components/utils';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import {
@@ -30,7 +30,7 @@ export const MessagingConversationListItem = ({
   const [isActivated, setIsActivated] = React.useState(false);
   const addresee = conversation.participants.find(
     (participant) => participant.id !== currentUserId
-  ) as User;
+  ) as ConversationParticipant;
   const lastMessage = conversation.messages[conversation.messages.length - 1];
   const userParticipantConversation = conversation.participants.find(
     (participant) => participant.id === currentUserId
