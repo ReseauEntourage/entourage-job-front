@@ -2,7 +2,10 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MessagingConversationReportModal } from '../MessagingConversationReport/MessagingConversationReportModal';
-import { ConversationParticipants, User } from 'src/api/types';
+import {
+  ConversationParticipant,
+  ConversationParticipants,
+} from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
 import { ButtonIcon, ImgProfile } from 'src/components/utils';
 import { Dropdown } from 'src/components/utils/Dropdown/Dropdown';
@@ -33,7 +36,7 @@ export const MessagingConversationHeader = () => {
   const addresees = selectedConversation?.participants.filter(
     (participant) => participant.id !== currentUserId
   ) as ConversationParticipants;
-  const addresee = addresees ? (addresees[0] as User) : null;
+  const addresee = addresees ? (addresees[0] as ConversationParticipant) : null;
 
   const onClickBackBtn = () => {
     dispatch(messagingActions.selectConversation(null));
