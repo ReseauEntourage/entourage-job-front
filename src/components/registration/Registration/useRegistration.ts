@@ -140,7 +140,7 @@ export function useRegistration() {
 
       // Store is not updated yet, so we need to get the role from the fields
       if (Object.keys(registrationFields).includes('role')) {
-        [role] = registrationFields.role;
+        [role] = registrationFields.role as RegistrableUserRole[];
       } else if (selectedRole) {
         role = selectedRole;
       }
