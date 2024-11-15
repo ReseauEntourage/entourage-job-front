@@ -1,5 +1,6 @@
-import { call, put, select, takeLatest } from 'typed-redux-saga';
+import { call, put, select, take, takeLatest } from 'typed-redux-saga';
 import { Api } from 'src/api';
+import { ConversationParticipant } from 'src/api/types';
 import { slice } from './messaging.slice';
 
 const {
@@ -15,7 +16,33 @@ const {
   getUnseenConversationsCountRequested,
   getUnseenConversationsCountSucceeded,
   getUnseenConversationsCountFailed,
+  bindNewConversationRequested,
+  bindNewConversationSucceeded,
 } = slice.actions;
+
+function* bindNewConversationSagaRequested(
+  action: ReturnType<typeof bindNewConversationRequested>
+) {
+  const { payload: requiredConvUserId } = action;
+  yield* put(getConversationsRequested());
+  yield* take(getConversationsSucceeded.type);
+
+  if (requiredConvUserId) {
+    const response = yield* call(() =>
+      Api.getPublicUserProfile(requiredConvUserId)
+    );
+    const profile = response.data;
+    const user = {
+      id: profile.id,
+      firstName: profile.firstName,
+      lastName: profile.lastName,
+      role: profile.role,
+      userProfile: profile,
+    } as ConversationParticipant;
+
+    yield* put(bindNewConversationSucceeded([user]));
+  }
+}
 
 function* getConversationsSagaRequested() {
   try {
@@ -79,5 +106,9 @@ export function* saga() {
   yield* takeLatest(
     getUnseenConversationsCountRequested,
     getUnseenConversationsCountSagaRequested
+  );
+  yield* takeLatest(
+    bindNewConversationRequested,
+    bindNewConversationSagaRequested
   );
 }

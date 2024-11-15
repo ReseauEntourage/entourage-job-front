@@ -622,12 +622,23 @@ export type Message = {
   author: User;
 };
 
-export type ConversationParticipants = (User & {
+export type ConversationParticipant = Pick<
+  User,
+  | 'id'
+  | 'firstName'
+  | 'lastName'
+  | 'role'
+  | 'userProfile'
+  | 'gender'
+  | 'zone'
+  | 'email'
+> & {
   ConversationParticipant: {
     id: string;
     seenAt: string;
   };
-})[];
+};
+export type ConversationParticipants = ConversationParticipant[];
 
 export type Conversation = {
   id: string;

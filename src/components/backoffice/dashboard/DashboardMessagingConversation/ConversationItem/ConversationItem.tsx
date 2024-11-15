@@ -2,7 +2,7 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Conversation, User } from 'src/api/types';
+import { Conversation, ConversationParticipant } from 'src/api/types';
 import { conversationHasUnreadMessages } from 'src/components/backoffice/messaging/messaging.utils';
 import { ImgProfile, Typography } from 'src/components/utils';
 import { useIsDesktop } from 'src/hooks/utils';
@@ -25,7 +25,7 @@ export const ConversationItem = ({ conversation }: ConversationItemProps) => {
   const currentUserId = useSelector(selectCurrentUserId);
   const addresee = conversation.participants.find(
     (participant) => participant.id !== currentUserId
-  ) as User;
+  ) as ConversationParticipant;
   const userHasSeenConversation = conversationHasUnreadMessages(
     conversation,
     currentUserId
