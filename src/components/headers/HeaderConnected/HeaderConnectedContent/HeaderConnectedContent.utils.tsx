@@ -183,6 +183,15 @@ export const renderLinks = (
       ],
       [USER_ROLES.REFERER]: [
         {
+          href: '/backoffice/dashboard',
+          name: 'Mon espace',
+          tag: GA_TAGS.BACKOFFICE_REFERER_HEADER_DASHBOARD_CLIC,
+        },
+        {
+          href: '/backoffice/referer/orienter/step-1',
+          name: 'Orienter un candidat',
+        },
+        {
           href: `/backoffice/candidat/list`,
           disabled: !candidateId,
           name: 'Retour à la liste des candidats',
