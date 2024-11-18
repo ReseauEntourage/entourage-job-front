@@ -14,6 +14,7 @@ import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { ReduxRequestEvents } from 'src/constants';
 import { DEPARTMENTS } from 'src/constants/departements';
 import { Programs } from 'src/constants/programs';
+import { RegistrableUserRole } from 'src/constants/users';
 import { notificationsActions } from 'src/use-cases/notifications';
 import {
   createUserSelectors,
@@ -135,13 +136,37 @@ export function useRegistration() {
         registrationActions.setRegistrationCurrentStepData(registrationFields)
       );
 
+      let role: RegistrableUserRole | null = null;
+
+      // Store is not updated yet, so we need to get the role from the fields
+      if (Object.keys(registrationFields).includes('role')) {
+        // eslint-disable-next-line dot-notation
+        [role] = registrationFields['role'] as RegistrableUserRole[];
+      } else if (selectedRole) {
+        role = selectedRole;
+      }
+
       if (!isLastRegistrationStep) {
-        push(`/inscription/${nextStep}`, undefined, {
-          shallow: true,
-        });
+        push(
+          {
+            pathname: `/inscription/${nextStep}`,
+            query: role ? { role } : {},
+          },
+          undefined,
+          {
+            shallow: true,
+          }
+        );
       }
     },
-    [dispatch, isLastRegistrationStep, nextStep, push, valuesFromOtherStep]
+    [
+      dispatch,
+      isLastRegistrationStep,
+      nextStep,
+      push,
+      valuesFromOtherStep,
+      selectedRole,
+    ]
   );
 
   useEffect(() => {
@@ -163,9 +188,16 @@ export function useRegistration() {
           );
         }
       }
-      replace(`/inscription/${nextStep}`, undefined, {
-        shallow: true,
-      });
+      replace(
+        {
+          pathname: `/inscription/${nextStep}`,
+          query: { role: selectedRole },
+        },
+        undefined,
+        {
+          shallow: true,
+        }
+      );
     }
   }, [
     nextStep,
@@ -174,6 +206,7 @@ export function useRegistration() {
     dispatch,
     stepContent,
     valuesFromOtherStep,
+    selectedRole,
   ]);
 
   useEffect(() => {
