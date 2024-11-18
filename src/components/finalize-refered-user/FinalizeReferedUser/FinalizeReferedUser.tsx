@@ -11,12 +11,10 @@ import { PostAuthFinalizeReferedUserParams } from 'src/api/types';
 import { PasswordCriterias } from 'src/components/backoffice/parametres/ParametresLayout/ChangePasswordCard/PasswordCriterias';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { formFinalizeReferedUser } from 'src/components/forms/schemas/formFinalizeReferedUser';
-import { H3 } from 'src/components/utils/Headings';
 import { Spinner } from 'src/components/utils/Spinner';
 import { authenticationActions } from 'src/use-cases/authentication';
-import { StyledFinalizeReferedUserContainer } from './FinalizeReferedUserContainer.styles';
 
-export const FinalizeReferedUserContainer = () => {
+export const FinalizeReferedUser = () => {
   const [tokenString, setToken] = useState<string | null>(null);
   const {
     query: { token },
@@ -40,8 +38,7 @@ export const FinalizeReferedUserContainer = () => {
   }
 
   return (
-    <StyledFinalizeReferedUserContainer>
-      <H3 title="Définir votre mot de passe" />
+    <>
       <PasswordCriterias />
       <FormWithValidation
         submitText="Se connecter"
@@ -71,6 +68,6 @@ export const FinalizeReferedUserContainer = () => {
           }
         }}
       />
-    </StyledFinalizeReferedUserContainer>
+    </>
   );
 };

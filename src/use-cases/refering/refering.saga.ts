@@ -1,7 +1,14 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
+import { Api } from 'src/api';
 import { isConflictError } from 'src/api/axiosErrors';
+import { flattenReferingData } from 'src/components/backoffice/referer/Refering/Refering.utils';
+import { formatCareerPathSentence } from 'src/utils/Formatting';
 import { asyncTimeout } from 'src/utils/asyncTimeout';
-import { selectIsLastReferingStep } from './refering.selectors';
+import {
+  selectDefinedReferingSelectedProgram,
+  selectIsLastReferingStep,
+  selectReferingData,
+} from './refering.selectors';
 import { slice } from './refering.slice';
 
 const {
@@ -14,33 +21,41 @@ const {
 } = slice.actions;
 
 export function* referCandidateSagaRequested() {
-  //   const data = yield* select(selectReferingData);
-  //   const selectedProgram = yield* select(selectDefinedReferingSelectedProgram);
+  const data = yield* select(selectReferingData);
+  const selectedProgram = yield* select(selectDefinedReferingSelectedProgram);
+
+  const {
+    searchBusinessLine0,
+    searchBusinessLine1,
+    searchAmbition0,
+    searchAmbition1,
+    confirmReferingRules,
+    ...flattenedData
+  } = flattenReferingData(data);
 
   try {
-    // const response = yield* call(() =>
-    //   Api.referCandidate({
-    //     ...data,
-    //     program: selectedProgram,
-    //     searchAmbitions: searchBusinessLine0
-    //       ? formatCareerPathSentence({ searchAmbition0, searchAmbition1 })
-    //           .searchAmbitions
-    //       : undefined,
-    //     searchBusinessLines: searchBusinessLine0
-    //       ? formatCareerPathSentence({
-    //           searchBusinessLine0,
-    //           searchBusinessLine1,
-    //         }).searchBusinessLines
-    //       : undefined,
-    //     department: flattenedData.department.value,
-    //     organizationId: organizationId ? organizationId.value : undefined,
-    //     helpNeeds: flattenedData.helpNeeds
-    //       ? flattenedData.helpNeeds.map((expectation) => ({
-    //           name: expectation,
-    //         }))
-    //       : undefined,
-    //   })
-    // );
+    yield* call(() =>
+      Api.postUserRefering({
+        ...flattenedData,
+        program: selectedProgram,
+        searchAmbitions: searchBusinessLine0
+          ? formatCareerPathSentence({ searchAmbition0, searchAmbition1 })
+              .searchAmbitions
+          : undefined,
+        searchBusinessLines: searchBusinessLine0
+          ? formatCareerPathSentence({
+              searchBusinessLine0,
+              searchBusinessLine1,
+            }).searchBusinessLines
+          : undefined,
+        department: flattenedData.department.value,
+        helpNeeds: flattenedData.helpNeeds
+          ? flattenedData.helpNeeds.map((expectation) => ({
+              name: expectation,
+            }))
+          : undefined,
+      })
+    );
     yield* put(referCandidateSucceeded());
   } catch (err) {
     if (isConflictError(err)) {

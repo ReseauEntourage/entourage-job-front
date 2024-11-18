@@ -6,6 +6,7 @@ import {
   ReferingErrorMessages,
   ReferingFormData,
   ReferingFormDataKeys,
+  ReferingLastStepContent,
   ReferingStep,
   ReferingStepContent,
   ReferingStepContents,
@@ -37,7 +38,9 @@ export function selectReferingData(state: RootState) {
   return state.refering.data;
 }
 
-export function selectReferingCurrentStep(state: RootState): ReferingStep {
+export function selectReferingCurrentStep(
+  state: RootState
+): ReferingStep | null {
   return state.refering.currentStep;
 }
 
@@ -108,11 +111,8 @@ export function selectReferingCurrentStepContent(
   return stepContent;
 }
 
-export function selectReferingConfirmationStepContent(
-  state: RootState
-): LastStepContent {
-  const selectedProgram = selectDefinedReferingSelectedProgram(state);
-  return LastStepContent[selectedProgram];
+export function selectReferingConfirmationStepContent(): ReferingLastStepContent {
+  return LastStepContent;
 }
 
 export function selectReferingDataFromOtherStep(
@@ -126,7 +126,7 @@ export function selectReferingDataFromOtherStep(
     const allStepsData = flattenReferingData(data);
 
     // Flatten the union of all the form values to get each key and its value
-    // That way we are able to use the name of the specific field key to get its value if another form in the registration process needs the value of a preceding form
+    // That way we are able to use the name of the specific field key to get its value if another form in the refering process needs the value of a preceding form
     const res = stepContent.dependsOn.reduce((acc, curr) => {
       return { ...acc, [curr]: allStepsData[curr] };
     }, {} as ReferingFormData);

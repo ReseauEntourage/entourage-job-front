@@ -22,7 +22,11 @@ export const authenticatedPermissions = [
     roles: [USER_ROLES.CANDIDATE, USER_ROLES.COACH, USER_ROLES.REFERER],
   },
   {
-    paths: ['/backoffice/candidat/list', '/backoffice/referer/orienter/[step]'],
+    paths: [
+      '/backoffice/candidat/list',
+      '/backoffice/referer/orienter/[step]',
+      '/backoffice/referer/orienter/confirmation',
+    ],
     roles: [USER_ROLES.REFERER],
   },
   {

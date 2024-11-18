@@ -16,7 +16,8 @@ export function useReferingRedirection() {
 
   const currentStep = useSelector(selectReferingCurrentStep);
 
-  const shouldRedirect = !step;
+  const shouldRedirect =
+    !step || (!currentStep && step !== REFERING_FIRST_STEP);
 
   useEffect(() => {
     if (shouldRedirect) {

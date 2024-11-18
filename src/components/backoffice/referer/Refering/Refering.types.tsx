@@ -123,7 +123,7 @@ export type ReferingStepData = Partial<{
   [K in number]: ExtractFormSchemaValidation<ReferingForms>;
 }>;
 
-export interface LastStepContent {
+export type ReferingLastStepContent = {
   title: string;
   subtitle: string;
   bullets: {
@@ -131,28 +131,12 @@ export interface LastStepContent {
     title: string;
     text: string;
   }[];
-}
-
-type ReferingLastStepContent = {
-  [Programs.THREE_SIXTY]: LastStepContent;
-  [Programs.BOOST]: LastStepContent;
 };
 
 export const LastStepContent: ReferingLastStepContent = {
-  [Programs.THREE_SIXTY]: {
-    // By default it's the same as the candidate last step content (from classic registration)
-    ...CandidateLastStepContent,
-    title:
-      "Il ne vous reste plus qu'a valider votre adresse email en cliquant sur le lien que vous avez reçu par mail.",
-    subtitle:
-      'On a hâte de vous rencontrer et encore plus hâte de commencer votre accompagnement !',
-  },
-  [Programs.BOOST]: {
-    // By default it's the same as the candidate last step content (from classic registration)
-    ...CandidateLastStepContent,
-    title:
-      "Il ne vous reste plus qu'a valider votre adresse email en cliquant sur le lien que vous avez reçu par mail.",
-    subtitle:
-      "Mais ce n'est que le début de l'aventure : bienvenue sur votre réseau pro solidaire !",
-  },
+  // By default it's the same as the candidate last step content (from classic registration)
+  ...CandidateLastStepContent,
+  title:
+    "Vous venez de pré-inscrire votre candidat, il doit maintenant cliquer sur le lien d'activation que nous avons envoyé à son adresse e-mail pour accéder au réseau Entourage Pro !",
+  subtitle: 'Voici les fonctionnalités auxquelles votre candidat aura accès',
 };

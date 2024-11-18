@@ -15,7 +15,7 @@ import {
 export interface State {
   referCandate: RequestState<typeof referCandidateAdapter>;
   referCandidateError: ReferCandidateError | null;
-  currentStep: ReferingStep;
+  currentStep: ReferingStep | null;
   data: ReferingStepData;
   isLoading: boolean;
 }
@@ -23,7 +23,7 @@ export interface State {
 const initialState: State = {
   referCandate: referCandidateAdapter.getInitialState(),
   referCandidateError: null,
-  currentStep: 'step-1',
+  currentStep: null,
   data: {},
   isLoading: false,
 };
@@ -54,7 +54,7 @@ export const slice = createSlice({
         ...action.payload,
       };
     },
-    setReferingStep(state, action: PayloadAction<ReferingStep>) {
+    setReferingStep(state, action: PayloadAction<ReferingStep | null>) {
       state.currentStep = action.payload;
       state.isLoading = true;
     },
