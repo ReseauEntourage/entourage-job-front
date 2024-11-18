@@ -5,7 +5,7 @@ import { USER_ROLES } from 'src/constants/users';
 export const formReferingExpectations: FormSchema<{
   helpNeeds: HelpValue[];
 }> = {
-  id: 'form-registration-candidate-expectations',
+  id: 'form-refering-candidate-expectations',
   fields: [
     {
       id: 'helpNeeds',

@@ -12,7 +12,7 @@ export const formReferingInfoCo: FormSchema<{
   department: FilterConstant<Department>;
   campaign: string;
 }> = {
-  id: 'form-registration-candidate-info-co',
+  id: 'form-refering-candidate-info-co',
   fields: [
     {
       id: 'infoCoSubtitle',

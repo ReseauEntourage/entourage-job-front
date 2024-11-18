@@ -11,13 +11,13 @@ export const formReferingAccountReferedCandidate: FormSchema<{
   email: string;
   confirmReferingRules: boolean;
 }> = {
-  id: 'form-registration-account',
+  id: 'form-refering-account',
   fields: [
     {
       id: 'firstName',
       name: 'firstName',
       component: 'text-input',
-      title: 'Prénom du candidat',
+      title: 'Prénom du candidat *',
       placeholder: 'Entrez le prénom',
       isRequired: true,
       showLabel: true,
@@ -26,7 +26,7 @@ export const formReferingAccountReferedCandidate: FormSchema<{
       id: 'lastName',
       name: 'lastName',
       component: 'text-input',
-      title: 'Nom du candidat',
+      title: 'Nom du candidat *',
       placeholder: 'Entrez le nom',
       isRequired: true,
       showLabel: true,
@@ -44,7 +44,7 @@ export const formReferingAccountReferedCandidate: FormSchema<{
       id: 'phone',
       name: 'phone',
       component: 'tel-input',
-      title: 'Numéro de téléphone du candidat',
+      title: 'Numéro de téléphone du candidat *',
       placeholder: 'Entrez le numéro de téléphone',
       isRequired: true,
       showLabel: true,
@@ -60,7 +60,7 @@ export const formReferingAccountReferedCandidate: FormSchema<{
       id: 'email',
       name: 'email',
       component: 'text-input',
-      title: 'Email du candidat',
+      title: 'Email du candidat *',
       placeholder: "Entrez l'email",
       isRequired: true,
       showLabel: true,
@@ -76,7 +76,7 @@ export const formReferingAccountReferedCandidate: FormSchema<{
       name: 'confirmReferingRules',
       component: 'checkbox',
       title:
-        "Je certifie avoir informé le candidat ou la candidate que j'orienté, de sa pré-inscription au programme Entourage pro",
+        "Je certifie avoir informé le candidat ou la candidate que j'orienté, de sa pré-inscription au programme Entourage pro *",
       showLabel: true,
       isRequired: true,
     },

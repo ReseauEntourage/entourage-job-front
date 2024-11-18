@@ -5,7 +5,7 @@ import { USER_ROLES } from 'src/constants/users';
 export const formReferingProgram: FormSchema<{
   program: Program[];
 }> = {
-  id: 'form-registration-candidate-program',
+  id: 'form-refering-candidate-program',
   fields: [
     {
       id: 'program',

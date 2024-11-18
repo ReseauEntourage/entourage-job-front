@@ -12,7 +12,7 @@ export const formReferingInfo: FormSchema<{
   department: FilterConstant<Department>;
   workingRight: CandidateYesNoNSPPValue;
 }> = {
-  id: 'form-registration-candidate-info',
+  id: 'form-refering-candidate-info',
   fields: [
     {
       id: 'birthDateLabel',
