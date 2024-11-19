@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 
 export const StyledDashboardLeftColumn = styled.div`
   display: flex;
@@ -26,7 +26,9 @@ export const StyledDashboardRightColumn = styled.div`
 `;
 
 export const StyledDashboardTitleContainer = styled.div`
-  padding-bottom: 20px;
+  @media (min-width: ${BREAKPOINTS.desktop}px) {
+    padding-bottom: 20px;
+  }
 `;
 
 export const StyledDashboardCardContentContainer = styled.div`
@@ -35,10 +37,11 @@ export const StyledDashboardCardContentContainer = styled.div`
   align-items: center;
   justify-content: center;
   padding: 20px 0;
+  gap: 30px;
 `;
 
 export const StyledDashboardCardContent = styled.div`
-  margin: 30px 0;
+  width: 100%;
 `;
 
 export const StyledDashboardCardSubtitle = styled.div`
@@ -46,18 +49,14 @@ export const StyledDashboardCardSubtitle = styled.div`
 `;
 
 export const StyledDashboardArticlesContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  flex-direction: row;
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(223px, 250px));
   gap: 20px;
-  margin-top: 20px;
+  justify-content: center;
 `;
 
 export const StyledDashboardArticle = styled.div`
-  max-width: 250px;
-  width: 250px;
-  min-height: 223px;
   border: ${COLORS.gray} 1px solid;
   border-radius: 20px;
   box-shadow: 0px 4px 4px 0px #00000008;

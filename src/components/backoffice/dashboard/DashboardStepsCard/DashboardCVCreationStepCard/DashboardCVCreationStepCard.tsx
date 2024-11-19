@@ -1,10 +1,7 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { IlluCV } from 'assets/icons/icons';
-import {
-  StyledDashboardCardContent,
-  StyledDashboardCardContentContainer,
-} from '../../Dashboard.styles';
+import { StyledDashboardCardContentContainer } from '../../Dashboard.styles';
 import { useContextualRole } from 'src/components/backoffice/useContextualRole';
 import { Button, Card } from 'src/components/utils';
 import { CV_STATUS } from 'src/constants';
@@ -88,27 +85,25 @@ export const DashboardCVCreationStepCard = () => {
       centerTitle
     >
       <StyledDashboardCardContentContainer>
-        <StyledDashboardCardContent>
-          <StyledDashboardCVCreationStepContent>
-            {isDesktop && (
-              <div>
-                <IlluCV height="140" width="140" />
-              </div>
-            )}
-            <StyledDashboardCVCreationStepContentText>
-              <StyledDashboardCVCreationStepCandidateName>
-                {candidate?.firstName?.toUpperCase()}{' '}
-                {candidate.lastName.toUpperCase()}{' '}
-                <span>&#8226; {candidate.userProfile.department}</span>
-              </StyledDashboardCVCreationStepCandidateName>
-              <p>
-                {USER_ROLES.CANDIDATE === contextualRole
-                  ? 'L’objectif du CV Entourage Pro est de rendre visible et valoriser votre projet professionnel auprès des entreprises mais aussi vos qualités et votre parcours de vie.'
-                  : 'L’objectif du CV Entourage Pro est de rendre visible et valoriser le projet professionnel du candidat auprès des entreprises mais aussi ses qualités et son parcours de vie.'}
-              </p>
-            </StyledDashboardCVCreationStepContentText>
-          </StyledDashboardCVCreationStepContent>
-        </StyledDashboardCardContent>
+        <StyledDashboardCVCreationStepContent>
+          {isDesktop && (
+            <div>
+              <IlluCV height="140" width="140" />
+            </div>
+          )}
+          <StyledDashboardCVCreationStepContentText>
+            <StyledDashboardCVCreationStepCandidateName>
+              {candidate?.firstName?.toUpperCase()}{' '}
+              {candidate.lastName.toUpperCase()}{' '}
+              <span>&#8226; {candidate.userProfile.department}</span>
+            </StyledDashboardCVCreationStepCandidateName>
+            <p>
+              {USER_ROLES.CANDIDATE === contextualRole
+                ? 'L’objectif du CV Entourage Pro est de rendre visible et valoriser votre projet professionnel auprès des entreprises mais aussi vos qualités et votre parcours de vie.'
+                : 'L’objectif du CV Entourage Pro est de rendre visible et valoriser le projet professionnel du candidat auprès des entreprises mais aussi ses qualités et son parcours de vie.'}
+            </p>
+          </StyledDashboardCVCreationStepContentText>
+        </StyledDashboardCVCreationStepContent>
         <Button
           style="custom-secondary-inverted"
           href={`/backoffice/candidat/${candidate.id}/cv`}
