@@ -717,7 +717,6 @@ export type ProfilesFilters = {
   helps: HelpValue | HelpValue[];
   departments: Department | Department[];
   businessLines: BusinessLineValue | BusinessLineValue[];
-  refererId?: string;
 };
 
 export type OpportunitiesFiltersForCandidate = {

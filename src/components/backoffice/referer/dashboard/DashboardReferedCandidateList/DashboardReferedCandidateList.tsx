@@ -22,14 +22,9 @@ export const DashboardReferedCandidateList = () => {
   useEffect(() => {
     if (user) {
       setLoading(true);
-      Api.getAllUsersProfiles({
-        departments: [],
-        businessLines: [],
-        helps: [],
+      Api.getReferedCandidateProfiles({
         offset,
         limit,
-        refererId: user.id,
-        role: [USER_ROLES.CANDIDATE],
       })
         .then((response) => {
           setReferedCandidates(response.data);
@@ -72,10 +67,7 @@ export const DashboardReferedCandidateList = () => {
   }, [referedCandidates]);
 
   return (
-    <Card
-      title="Les candidats ayant créé leur compte Entourage pro"
-      centerTitle
-    >
+    <Card title="Les candidats que vous avez orientés" centerTitle>
       <StyledDashboardCardContentContainer>
         <StyledDashboardReferedCandidateList>
           <CardList list={referedList} isLoading={loading} />
