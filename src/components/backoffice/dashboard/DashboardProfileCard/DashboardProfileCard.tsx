@@ -42,7 +42,9 @@ export const DashboardProfileCard = () => {
           {user.organization && (
             <Typography>{user.organization.name}</Typography>
           )}
-          {user.userProfile.department && <p>{user.userProfile.department}</p>}
+          {user.userProfile.department && (
+            <Typography>{user.userProfile.department}</Typography>
+          )}
           {user.userProfile.linkedinUrl && (
             <SimpleLink
               isExternal

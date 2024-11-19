@@ -72,7 +72,10 @@ export const DashboardReferedCandidateList = () => {
   }, [referedCandidates]);
 
   return (
-    <Card title="Les candidats que vous avez orienté" centerTitle>
+    <Card
+      title="Les candidats ayant créé leur compte Entourage pro"
+      centerTitle
+    >
       <StyledDashboardCardContentContainer>
         <StyledDashboardReferedCandidateList>
           <CardList list={referedList} isLoading={loading} />
