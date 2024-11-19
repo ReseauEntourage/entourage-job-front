@@ -8,10 +8,12 @@ import { useOnReportMessagingConversationFormSubmit } from './useOnReportMessagi
 
 interface MessagingConversationReportModalProps {
   conversationId: string;
+  content?: string | null;
 }
 
 export const MessagingConversationReportModal = ({
   conversationId,
+  content = null,
 }: MessagingConversationReportModalProps) => {
   const { onSubmit } = useOnReportMessagingConversationFormSubmit(
     async (conversationReportDto: ConversationReportDto) => {
@@ -39,10 +41,10 @@ export const MessagingConversationReportModal = ({
       onSubmit: handleReportUserSubmit,
       defaultValues: {
         reason: '',
-        comment: '',
+        comment: content || '',
       },
     };
-  }, [handleReportUserSubmit]);
+  }, [content, handleReportUserSubmit]);
 
   return <ModalEdit {...updateUserModalProps} />;
 };

@@ -5,7 +5,7 @@ export const formReportUser: FormSchema<{
   reason: string;
   comment: string;
 }> = {
-  id: 'form-add-organization',
+  id: 'form-report-user',
   fields: [
     {
       id: 'reason',
@@ -14,6 +14,7 @@ export const formReportUser: FormSchema<{
       title: 'Raison du signalement *',
       options: USER_REPORT_REASONS,
       isRequired: true,
+      showLabel: true,
     },
     {
       id: 'comment',
@@ -21,6 +22,7 @@ export const formReportUser: FormSchema<{
       component: 'text-input',
       title: 'Commentaire *',
       isRequired: true,
+      showLabel: true,
     },
   ],
 };
