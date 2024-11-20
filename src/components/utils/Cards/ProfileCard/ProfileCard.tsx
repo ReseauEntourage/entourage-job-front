@@ -113,9 +113,10 @@ export function ProfileCard({
 
   const labels = useMemo(() => getLabelsDependingOnRole(role), [role]);
 
+  const uniqBusinessLines = _.uniqBy(businessLines, 'name');
   const sortedBusinessLines =
     businessLines && businessLines.length > 0
-      ? sortByOrder(businessLines)
+      ? sortByOrder(uniqBusinessLines)
       : null;
 
   const sortedAmbitions =
