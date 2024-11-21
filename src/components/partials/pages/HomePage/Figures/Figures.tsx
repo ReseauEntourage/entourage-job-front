@@ -8,7 +8,7 @@ import {
 import {
   Button,
   Section,
-  Typography,
+  Text,
   StyledCenteredButtonContainer,
 } from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
@@ -60,10 +60,10 @@ export const Figures = () => {
     <Section id="profiles">
       <H2 title="Et le mieux c'est que ça marche" color="black" center />
       <StyledFiguresSubtitle>
-        <Typography size="large">
+        <Text size="large">
           Nos candidat(e)s et nos coachs peuvent en témoigner. Les chiffres
           aussi !
-        </Typography>
+        </Text>
       </StyledFiguresSubtitle>
       {isDesktop ? (
         <StyledFiguresContainer>
@@ -72,9 +72,9 @@ export const Figures = () => {
               <StyledFigure key={number.description}>
                 {number.icon}
                 <StyledFigureNumber>{number.value}</StyledFigureNumber>
-                <Typography size="large" color="blue">
+                <Text size="large" color="blue">
                   {number.description}
-                </Typography>
+                </Text>
               </StyledFigure>
             );
           })}
@@ -86,9 +86,9 @@ export const Figures = () => {
               <StyledMobileFigure key={number.description}>
                 {number.icon}
                 <StyledFigureNumber>{number.value}</StyledFigureNumber>
-                <Typography size="large" color="blue">
+                <Text size="large" color="blue">
                   {number.description}
-                </Typography>
+                </Text>
               </StyledMobileFigure>
             );
           })}

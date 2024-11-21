@@ -8,7 +8,7 @@ import { AvailabilityTag } from 'src/components/utils/AvailabilityTag';
 import { H3, H5 } from 'src/components/utils/Headings';
 import { Img } from 'src/components/utils/Img';
 import { Tag } from 'src/components/utils/Tag';
-import { Typography } from 'src/components/utils/Typography';
+import { Text } from 'src/components/utils/Text';
 import { BUSINESS_LINES, BusinessLineValue } from 'src/constants';
 import { Department } from 'src/constants/departements';
 import { HelpValue, ProfileHelps } from 'src/constants/helps';
@@ -165,7 +165,7 @@ export function ProfileCard({
               </StyledProfileCardName>
               {department && (
                 <StyledProfileCardDepartment>
-                  <Typography>{department}</Typography>
+                  <Text>{department}</Text>
                 </StyledProfileCardDepartment>
               )}
             </StyledProfileCardInfoContainer>
@@ -210,7 +210,7 @@ export function ProfileCard({
                 </>
               )}
               <StyledProfileCardLabel>
-                <Typography color="light">{labels.businessLines}</Typography>{' '}
+                <Text color="light">{labels.businessLines}</Text>{' '}
               </StyledProfileCardLabel>
               <StyledProfileCardBusinessLines>
                 {sortedBusinessLines && sortedBusinessLines.length > 0 ? (
@@ -237,9 +237,9 @@ export function ProfileCard({
                     <StyledProfileCardEmptyIcon>
                       <CaseIcon {...iconSizeProps} />
                     </StyledProfileCardEmptyIcon>
-                    <Typography color="lighter" size="small" variant="italic">
+                    <Text color="lighter" size="small" variant="italic">
                       {EMPTY_INFO}
-                    </Typography>
+                    </Text>
                   </StyledProfileCardEmptyBusinessLinesContainer>
                 )}
               </StyledProfileCardBusinessLines>
@@ -248,7 +248,7 @@ export function ProfileCard({
             <StyledProfileCardHelpContainer>
               <StyledSeparator />
               <StyledProfileCardLabel>
-                <Typography color="light">{labels.helps}</Typography>
+                <Text color="light">{labels.helps}</Text>
               </StyledProfileCardLabel>
               <StyledProfileCardHelps>
                 {helps && helps.length > 0 ? (
@@ -268,9 +268,9 @@ export function ProfileCard({
                     <StyledProfileCardEmptyIcon>
                       <HandsIcon {...iconSizeProps} />
                     </StyledProfileCardEmptyIcon>
-                    <Typography color="lighter" size="small" variant="italic">
+                    <Text color="lighter" size="small" variant="italic">
                       {EMPTY_INFO}
-                    </Typography>
+                    </Text>
                   </StyledProfileCardEmptyHelpsContainer>
                 )}
               </StyledProfileCardHelps>

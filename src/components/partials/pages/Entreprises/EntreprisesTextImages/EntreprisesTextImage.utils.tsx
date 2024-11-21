@@ -2,7 +2,7 @@ import React from 'react';
 import { openModal } from 'src/components/modals/Modal';
 import { CompanyContactModal } from 'src/components/modals/Modal/ModalGeneric/CompanyContactModal';
 import { PostPublicOpportunityModal } from 'src/components/modals/Modal/ModalGeneric/PostOpportunityModal';
-import { Button, Typography } from 'src/components/utils';
+import { Button, Text } from 'src/components/utils';
 import { BulletListElement, List } from 'src/components/utils/Lists';
 import { FB_TAGS, GA_TAGS, LINK_TAGS } from 'src/constants/tags';
 import { fbEvent } from 'src/lib/fb';
@@ -18,46 +18,44 @@ export const content = {
       <>
         <List animated>
           <BulletListElement>
-            <Typography weight="bold">
-              Répondre à vos besoins en recrutement
-            </Typography>
-            <Typography>
+            <Text weight="bold">Répondre à vos besoins en recrutement</Text>
+            <Text>
               Vous identifiez et rencontrez de nouveaux profils, sur tous types
               de métiers
-            </Typography>
+            </Text>
           </BulletListElement>
           <BulletListElement>
-            <Typography weight="bold">
+            <Text weight="bold">
               Agir concrètement en faveur de l’inclusion
-            </Typography>
-            <Typography>
+            </Text>
+            <Text>
               Il existe plusieurs façons pour une entreprise de s’engager en
               faveur de l’inclusion. Nous pensons que le recrutement est
               l&apos;expérience la plus impactante pour votre entreprise en vous
               faisant vivre une rencontre unique, et en vous offrant la
               possibilité de renouveler votre approche du recrutement et de
               l&apos;intégration.
-            </Typography>
+            </Text>
           </BulletListElement>
           <BulletListElement>
-            <Typography weight="bold">
+            <Text weight="bold">
               Engager vos collaborateurs dans une démarche d’inclusion
-            </Typography>
-            <Typography>
+            </Text>
+            <Text>
               Vous embarquez dans un projet collectif tout en renforçant votre
               marque employeur
-            </Typography>
+            </Text>
           </BulletListElement>
           <BulletListElement>
-            <Typography weight="bold">
+            <Text weight="bold">
               Soutenir la transformation de votre entreprise
-            </Typography>
-            <Typography>
+            </Text>
+            <Text>
               En donnant sa chance à une personne qui en a besoin et en créant
               les conditions pour l&apos;accueillir, c&apos;est vous-même qui
               allez vivre une transformation, enrichir votre collectif et votre
               projet d’entreprise&nbsp;!
-            </Typography>
+            </Text>
           </BulletListElement>
         </List>
         <Button
@@ -111,31 +109,31 @@ export const content = {
     reverse: true,
     content: (
       <>
-        <Typography>
+        <Text>
           L’équipe Entourage Pro s&apos;appuie sur des partenaires locaux et des
           associations pour identifier et sélectionner des personnes absentes de
           vos canaux habituels. Les candidats Entourage Pro ont des profils très
           variés en termes de parcours, d&apos;âge, d&apos;expérience, mais ont
           tous en commun&nbsp;:
-        </Typography>
+        </Text>
         <List>
           <BulletListElement>
-            <Typography>
+            <Text>
               L&apos;absence de réseau et le fait d&apos;avoir vécu la précarité
               et/ou l&apos;exclusion
-            </Typography>
+            </Text>
           </BulletListElement>
           <BulletListElement>
-            <Typography>
+            <Text>
               Une grande motivation pour trouver un emploi stable et construire
               un avenir
-            </Typography>
+            </Text>
           </BulletListElement>
           <BulletListElement>
-            <Typography>
+            <Text>
               La capacité à travailler&nbsp;: les freins à l’emploi ont été
               levés
-            </Typography>
+            </Text>
           </BulletListElement>
         </List>
         <Button

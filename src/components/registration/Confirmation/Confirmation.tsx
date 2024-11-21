@@ -9,7 +9,7 @@ import {
 } from '../Registration.styles';
 import { Button, Card } from 'src/components/utils';
 import { H6 } from 'src/components/utils/Headings';
-import { Typography } from 'src/components/utils/Typography';
+import { Text } from 'src/components/utils/Text';
 import { useConfirmation } from './useConfirmation';
 
 export function Confirmation() {
@@ -19,7 +19,7 @@ export function Confirmation() {
     <StyledRegistrationContainer>
       <Card title={pageContent.title}>
         <StyledRegistrationSubtitle>
-          <Typography weight="normal">{pageContent.subtitle}</Typography>
+          <Text weight="normal">{pageContent.subtitle}</Text>
         </StyledRegistrationSubtitle>
         {pageContent.bullets.map(({ icon, title, text }) => (
           <StyledRegistrationListItem key={title}>
@@ -28,7 +28,7 @@ export function Confirmation() {
             </StyledRegistrationListItemIcon>
             <StyledRegistrationListItemLabels>
               <H6 title={title} color="primaryBlue" />
-              <Typography size="small">{text}</Typography>
+              <Text size="small">{text}</Text>
             </StyledRegistrationListItemLabels>
           </StyledRegistrationListItem>
         ))}

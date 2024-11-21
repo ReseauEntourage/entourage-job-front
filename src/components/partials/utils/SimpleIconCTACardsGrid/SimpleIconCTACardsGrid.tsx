@@ -1,6 +1,6 @@
 import React from 'react';
 import { v4 as uuidV4 } from 'uuid';
-import { Button, Section, Typography } from 'src/components/utils';
+import { Button, Section, Text } from 'src/components/utils';
 import { H3 } from 'src/components/utils/Headings';
 import {
   StyledSimpleIconCTACard,
@@ -37,9 +37,9 @@ export const SimpleIconCTACardsGrid = ({
         <H3 title={title} center color="black" />
         {subtitle && (
           <StyledSimpleIconCTACardsGridSubtitle>
-            <Typography size="large" center>
+            <Text size="large" center>
               {subtitle}
-            </Typography>
+            </Text>
           </StyledSimpleIconCTACardsGridSubtitle>
         )}
         <StyledSimpleIconCTACardsGrid>
@@ -52,7 +52,7 @@ export const SimpleIconCTACardsGrid = ({
                   <H3 title={card.title} center />
                 </StyledSimpleIconCTACardsTitle>
                 <StyledSimpleIconCTACardsContent>
-                  <Typography size="large">{card.description}</Typography>
+                  <Text size="large">{card.description}</Text>
                 </StyledSimpleIconCTACardsContent>
                 <Button
                   onClick={card.onClick}

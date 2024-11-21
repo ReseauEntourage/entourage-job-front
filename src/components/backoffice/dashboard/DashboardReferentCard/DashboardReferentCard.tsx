@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { StyledDashboardCardContentContainer } from '../Dashboard.styles';
 import { Card, Img, SimpleLink } from 'src/components/utils';
 import { H3 } from 'src/components/utils/Headings';
-import { Typography } from 'src/components/utils/Typography';
+import { Text } from 'src/components/utils/Text';
 import { DEPARTMENTS } from 'src/constants/departements';
 import { Referents } from 'src/constants/referents';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -42,23 +42,23 @@ export const DashboardReferentCard = () => {
           <H3 color="primaryBlue" title={referent.name} />
         </StyledDashboardReferentName>
         <StyledDashboardReferentRole>
-          <Typography variant="italic">
+          <Text variant="italic">
             Référent(e) Entourage Pro {referentRegion || ''}
-          </Typography>
+          </Text>
         </StyledDashboardReferentRole>
         <StyledDashboardReferentMail>
-          <Typography weight="bold">
+          <Text weight="bold">
             <SimpleLink isExternal href={`mailto:${referent.mail}`}>
               {referent.mail}
             </SimpleLink>
-          </Typography>
+          </Text>
         </StyledDashboardReferentMail>
         <StyledDashboardReferentText>
-          <Typography>
+          <Text>
             Vous souhaitez obtenir plus d&apos;informations sur le programme,
             vous rencontrez des difficultés sur la plateforme, ou autre demande,
             contactez nous&nbsp;!
-          </Typography>
+          </Text>
         </StyledDashboardReferentText>
       </StyledDashboardCardContentContainer>
     </Card>

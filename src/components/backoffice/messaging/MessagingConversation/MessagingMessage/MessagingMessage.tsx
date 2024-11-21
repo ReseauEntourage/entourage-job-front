@@ -6,7 +6,7 @@ import { MessagingConversationReportModal } from '../MessagingConversationReport
 import { Message } from 'src/api/types';
 import { openModal } from 'src/components/modals/Modal';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
-import { Typography } from 'src/components/utils/Typography';
+import { Text } from 'src/components/utils/Text';
 import { COLORS } from 'src/constants/styles';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import { selectSelectedConversationId } from 'src/use-cases/messaging';
@@ -78,11 +78,11 @@ export const MessagingMessage = ({ message }: MessagingMessageProps) => {
       {!isOwnMessage && isSuspicious && (
         <StyledWarning>
           <LucidIcon name="TriangleAlert" color={COLORS.lightRed} />
-          <Typography size="small" color="lightRed">
+          <Text size="small" color="lightRed">
             Attention, ce message est peut-être malveillant. Nous vous
             recommandons de ne pas communiquer vos coordonnées et de nous&nbsp;
             <a onClick={reportMessage}>signaler ce message</a> en cas de doute
-          </Typography>
+          </Text>
         </StyledWarning>
       )}
       <p className="message-date">{moment(message.createdAt).format('LLL')}</p>

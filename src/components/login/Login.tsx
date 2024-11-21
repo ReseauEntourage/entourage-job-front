@@ -8,7 +8,7 @@ import { formLostPwd } from 'src/components/forms/schemas/formLostPwd';
 import { openModal } from 'src/components/modals/Modal';
 import { StepperModal } from 'src/components/modals/Modal/ModalGeneric/StepperModal';
 import { SuccessModalContent } from 'src/components/modals/SuccessModalContent';
-import { Card, SimpleLink, Typography } from 'src/components/utils';
+import { Card, SimpleLink, Text } from 'src/components/utils';
 import { authenticationActions } from 'src/use-cases/authentication';
 import { StyledLoginContainer, StyledLoginFooter } from './Login.styles';
 import { useLogin } from './useLogin';
@@ -31,7 +31,7 @@ export function Login() {
           error={loginErrorMessage}
         />
         <StyledLoginFooter>
-          <Typography size="small">
+          <Text size="small">
             <SimpleLink
               isExternal
               onClick={() => {
@@ -80,11 +80,11 @@ export function Login() {
             >
               Mot de passe oublié ?
             </SimpleLink>
-          </Typography>
-          <Typography size="small">
+          </Text>
+          <Text size="small">
             Vous n&apos;avez pas de compte&nbsp;?{' '}
             <Link href="/inscription">Inscrivez-vous</Link>
-          </Typography>
+          </Text>
         </StyledLoginFooter>
       </Card>
     </StyledLoginContainer>
