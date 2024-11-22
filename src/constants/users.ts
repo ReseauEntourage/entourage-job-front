@@ -9,8 +9,8 @@ export const USER_ROLES = {
 
 export type UserRole = (typeof USER_ROLES)[keyof typeof USER_ROLES];
 export const USER_ROLES_FILTERS: FilterConstant<UserRole>[] = [
-  { value: USER_ROLES.CANDIDATE, label: `${USER_ROLES.CANDIDATE} LKO` },
-  { value: USER_ROLES.COACH, label: `${USER_ROLES.COACH} LKO` },
+  { value: USER_ROLES.CANDIDATE, label: `${USER_ROLES.CANDIDATE}` },
+  { value: USER_ROLES.COACH, label: `${USER_ROLES.COACH}` },
   { value: USER_ROLES.REFERER, label: USER_ROLES.REFERER },
   { value: USER_ROLES.ADMIN, label: USER_ROLES.ADMIN },
 ];
