@@ -247,12 +247,12 @@ describe('En tant que - Administrateur', () => {
     });
 
     /**
-     * ** Création du nouveau membre "candidat lko"
+     * ** Création du nouveau membre "candidate"
      * ** à savoir - "coach lko" est exactement pareil (inutile de tester)
      */
     it("J'ajoute un nouveau membre - Candidat/Coach LKO", () => {
-      // Insertion des informations de base d'un utilisateur - role Candidat LKO
-      fillUserForm('Candidat LKO');
+      // Insertion des informations de base d'un utilisateur - role Candidat
+      fillUserForm('Candidat');
 
       // Assertion - vérifications que les champs ci-dessous ne sont pas affichés à cet instant
       cy.get('#form-add-user-organizationId').should('not.exist');
