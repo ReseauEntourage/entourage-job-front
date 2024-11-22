@@ -99,6 +99,13 @@ export function MemberDesktop({
           </StyledNoWrapCellContent>
         </TdDesktop>
       )}
+      {columns.includes('organization') && (
+        <TdDesktop>
+          <StyledNoWrapCellContent>
+            <span>{member.organization?.name || '-'}</span>
+          </StyledNoWrapCellContent>
+        </TdDesktop>
+      )}
       {columns.includes('address') && (
         <TdDesktop>
           <span>{member.address || '-'}</span>
@@ -117,11 +124,9 @@ export function MemberDesktop({
           </StyledNoWrapCellContent>
         </TdDesktop>
       )}
-      {columns.includes('organization') && (
+      {columns.includes('countRefered') && (
         <TdDesktop>
-          <StyledNoWrapCellContent>
-            <span>{member.organization?.name || '-'}</span>
-          </StyledNoWrapCellContent>
+          <span>{member.referredCandidates?.length || 0}</span>
         </TdDesktop>
       )}
       {columns.includes('lastConnection') && (

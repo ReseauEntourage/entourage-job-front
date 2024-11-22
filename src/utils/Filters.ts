@@ -29,6 +29,9 @@ export const mutateTypeFilterDependingOnRole = (
       ...MEMBER_FILTERS_DATA.slice(1),
     ];
   }
+  if (role === USER_ROLES.REFERER) {
+    return [filterMemberTypeConstantsByRole([USER_ROLES.REFERER])];
+  }
 
   return MEMBER_FILTERS_DATA;
 };

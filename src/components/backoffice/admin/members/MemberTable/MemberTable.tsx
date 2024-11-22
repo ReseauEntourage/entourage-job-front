@@ -25,6 +25,12 @@ export function MemberTable({ columns, members, role }: MemberTableProps) {
         <Th key="memberRole">Coach</Th>,
       ];
     }
+    if (role === USER_ROLES.REFERER) {
+      columnsArray = [
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        <Th key="memberRole">Prescripteur</Th>,
+      ];
+    }
 
     if (columns.includes('associatedUser') && role === USER_ROLES.CANDIDATE) {
       columnsArray = [
@@ -80,6 +86,15 @@ export function MemberTable({ columns, members, role }: MemberTableProps) {
       ];
     }
 
+    if (columns.includes('organization')) {
+      columnsArray = [
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        ...columnsArray,
+
+        // @ts-expect-error after enable TS strict mode. Please, try to fix it
+        <Th key="memberOrganization">Structure</Th>,
+      ];
+    }
     if (columns.includes('zone')) {
       columnsArray = [
         // @ts-expect-error after enable TS strict mode. Please, try to fix it
@@ -88,13 +103,13 @@ export function MemberTable({ columns, members, role }: MemberTableProps) {
         <Th key="memberZone">Zone</Th>,
       ];
     }
-    if (columns.includes('organization')) {
+    if (columns.includes('countRefered')) {
       columnsArray = [
         // @ts-expect-error after enable TS strict mode. Please, try to fix it
         ...columnsArray,
 
         // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        <Th key="memberOrganization">Structure</Th>,
+        <Th key="memberCountRefered">Nb. candidats</Th>,
       ];
     }
     if (columns.includes('lastConnection')) {

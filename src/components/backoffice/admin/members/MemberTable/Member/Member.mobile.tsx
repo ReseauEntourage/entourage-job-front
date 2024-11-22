@@ -121,6 +121,11 @@ export function MemberMobile({
       )}
 
       <div className="line">
+        {columns.includes('organization') && (
+          <TdMobile title="Structure">
+            <span>{member.organization?.name || '-'}</span>
+          </TdMobile>
+        )}
         {columns.includes('address') && (
           <TdMobile title="Adresse">
             <span>{member.address || '-'}</span>
@@ -137,9 +142,10 @@ export function MemberMobile({
             </span>
           </TdMobile>
         )}
-        {columns.includes('organization') && (
-          <TdMobile title="Structure">
-            <span>{member.organization?.name || '-'}</span>
+
+        {columns.includes('countRefered') && (
+          <TdMobile title="Nb. candidats">
+            <span>{member.referredCandidates?.length || 0}</span>
           </TdMobile>
         )}
         {columns.includes('lastConnection') && (
