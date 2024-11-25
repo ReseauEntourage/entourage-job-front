@@ -30,7 +30,7 @@ export const formReferingSocialSituation: FormSchema<{
     {
       id: 'nationality',
       name: 'nationality',
-      title: 'Quelle est votre nationalité ?',
+      title: 'Quelle est votre nationalité du candidat ?',
       component: 'select-simple',
       options: NATIONALITIES_FILTERS,
       showLabel: true,
@@ -39,7 +39,7 @@ export const formReferingSocialSituation: FormSchema<{
     {
       id: 'accommodation',
       name: 'accommodation',
-      title: "Dans quelle situation d'hébergement êtes-vous ?",
+      title: "Dans quelle situation d'hébergement est le candidat ?",
       component: 'select-simple',
       options: CANDIDATE_ACCOMMODATIONS_FILTERS,
       showLabel: true,
@@ -48,7 +48,7 @@ export const formReferingSocialSituation: FormSchema<{
     {
       id: 'hasSocialWorker',
       name: 'hasSocialWorker',
-      title: 'Bénéficiez-vous d’un accompagnement social ?',
+      title: 'Votre candidat bénéficie-t-il d’un accompagnement social ?',
       component: 'select-simple',
       options: YES_NO_JNSPR_FILTERS,
       showLabel: true,
@@ -59,14 +59,15 @@ export const formReferingSocialSituation: FormSchema<{
       name: 'resources',
       component: 'select-simple',
       options: CANDIDATE_RESOURCES_FILTERS,
-      title: 'Quelle sont vos sources de revenu ?',
+      title: 'Quelle sont ses sources de revenu ?',
       showLabel: true,
       showOptional: true,
     },
     {
       id: 'jobSearchDuration',
       name: 'jobSearchDuration',
-      title: "Depuis combien de temps êtes-vous en recherche d'emploi ?",
+      title:
+        "Depuis combien de temps le candidat est-il en recherche d'emploi ?",
       component: 'select-simple',
       options: JOB_SEARCH_DURATIONS_FILTERS,
       showLabel: true,
@@ -75,7 +76,7 @@ export const formReferingSocialSituation: FormSchema<{
     {
       id: 'studiesLevel',
       name: 'studiesLevel',
-      title: 'Quel est votre niveau d’études ?',
+      title: 'Quel est son niveau d’études ?',
       component: 'select-simple',
       options: STUDIES_LEVELS_FILTERS,
       showLabel: true,

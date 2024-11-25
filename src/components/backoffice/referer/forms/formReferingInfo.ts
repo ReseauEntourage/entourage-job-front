@@ -17,7 +17,7 @@ export const formReferingInfo: FormSchema<{
     {
       id: 'birthDateLabel',
       name: 'birthDateLabel',
-      title: 'Quelle est votre date de naissance ?*',
+      title: 'Quelle est la date de naissance de votre candidat ?*',
       component: 'heading',
     },
     {
@@ -25,7 +25,7 @@ export const formReferingInfo: FormSchema<{
       name: 'birthDateSubLabel',
       component: 'text',
       title:
-        'Vous devez avoir plus de 18 ans pour participer au programme Entourage Pro',
+        'Le candidate doit avoir plus de 18 ans pour participer au programme Entourage Pro',
     },
     {
       id: 'birthDate',
@@ -42,14 +42,14 @@ export const formReferingInfo: FormSchema<{
             return minBirthdate > realBirthdate;
           },
           message:
-            'Vous devez avoir plus de 18 ans pour participer au programme Entourage Pro',
+            'Le candidat doit avoir plus de 18 ans pour participer au programme Entourage Pro',
         },
       ],
     },
     {
       id: 'departmentLabel',
       name: 'departmentLabel',
-      title: 'Dans quel département habitez-vous ?*',
+      title: 'Dans quel département habite le candidat ?*',
       component: 'heading',
     },
     {
@@ -57,7 +57,7 @@ export const formReferingInfo: FormSchema<{
       name: 'departmentSubLabel',
       component: 'text',
       title:
-        'En renseignant votre département, nous pourrons vous conseiller des coachs à proximité',
+        'En renseignant le département, nous pourrons conseiller des coachs à proximité du candidat',
     },
     {
       id: 'department',
@@ -71,7 +71,7 @@ export const formReferingInfo: FormSchema<{
     {
       id: 'workingRightLabel',
       name: 'workingRightLabel',
-      title: 'Avez-vous le droit de travailler en France ?*',
+      title: 'Le candidat a-t-il le droit de travailler en France ?*',
       component: 'heading',
     },
     {
@@ -79,7 +79,7 @@ export const formReferingInfo: FormSchema<{
       name: 'workingRightLabel',
       component: 'text',
       title:
-        'Vous devez avoir le droit de travailler en France pour participer au programme Entourage Pro',
+        'Le candidat doit avoir le droit de travailler en France pour participer au programme Entourage Pro',
     },
     {
       id: 'workingRight',
@@ -92,7 +92,7 @@ export const formReferingInfo: FormSchema<{
         {
           method: (fieldValue) => fieldValue !== CandidateYesNoNSPP.NO,
           message:
-            'Vous devez avoir le droit de travailler en France pour participer au programme Entourage Pro',
+            'Le candidat doit avoir le droit de travailler en France pour participer au programme Entourage Pro',
         },
       ],
     },

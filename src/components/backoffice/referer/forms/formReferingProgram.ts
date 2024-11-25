@@ -13,7 +13,7 @@ export const formReferingProgram: FormSchema<{
       component: 'radio',
       isRequired: true,
       title:
-        'Souhaitez-vous bénéficier gratuitement d’un accompagnement par un coach personnel pendant 3 à 6 mois ?',
+        'Le candidat souhaite-t-il bénéficier gratuitement d’un accompagnement par un coach personnel pendant 3 à 6 mois ?',
       errorMessage: 'Veuillez sélectionner une des réponses',
       options: ProgramOptions[USER_ROLES.CANDIDATE],
     },
