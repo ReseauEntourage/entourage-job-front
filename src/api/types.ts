@@ -72,7 +72,6 @@ export type Organization = {
   };
   zone: AdminZone;
   candidatesCount: number;
-  coachesCount: number;
   referersCount: number;
 };
 
