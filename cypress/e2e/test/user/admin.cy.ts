@@ -281,11 +281,11 @@ describe('En tant que - Administrateur', () => {
     });
 
     /**
-     * ** Création du membre "orienteur"
+     * ** Création du membre "Prescripteur"
      */
     it("J'ajoute un nouveau membre - Referer", () => {
       // Insertion des informations de base d'un utilisateur
-      fillUserForm('Orienteur');
+      fillUserForm('Prescripteur');
 
       // Assertion - vérifications que le champs organizationId est affiché
       cy.get('#form-add-user-organizationId').should('be.visible');

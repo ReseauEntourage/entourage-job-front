@@ -21,7 +21,7 @@ export const LinkedUserInformationCard = ({
   if (!linkedUser) {
     return (
       <Card
-        title={`Information du${
+        title={`Informations du${
           user.role === USER_ROLES.COACH ? ' candidat' : ' coach'
         }`}
       >
@@ -115,7 +115,7 @@ export const LinkedUserInformationCard = ({
 
   return (
     <Card
-      title={`Information du${
+      title={`Informations du${
         user.role === USER_ROLES.COACH ? ' candidat' : ' coach'
       }`}
       key={linkedUser.id}

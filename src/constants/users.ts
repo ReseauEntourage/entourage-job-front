@@ -4,7 +4,7 @@ export const USER_ROLES = {
   COACH: 'Coach',
   CANDIDATE: 'Candidat',
   ADMIN: 'Admin',
-  REFERER: 'Orienteur',
+  REFERER: 'Prescripteur',
 } as const;
 
 export type UserRole = (typeof USER_ROLES)[keyof typeof USER_ROLES];
@@ -19,7 +19,7 @@ export const RELATED_ROLES = {
   [USER_ROLES.CANDIDATE]: USER_ROLES.COACH,
   [USER_ROLES.COACH]: USER_ROLES.CANDIDATE,
   [USER_ROLES.ADMIN]: USER_ROLES.ADMIN,
-  [USER_ROLES.REFERER]: USER_ROLES.REFERER,
+  [USER_ROLES.REFERER]: USER_ROLES.CANDIDATE,
 } as const;
 
 export const ADMIN_ROLES = {

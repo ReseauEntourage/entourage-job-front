@@ -1,4 +1,4 @@
-// page uniquement utilisée pour les orienteur: liste des candidats qui lui sont rattachés
+// page uniquement utilisée pour les Prescripteur: liste des candidats qui lui sont rattachés
 
 import React from 'react';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
