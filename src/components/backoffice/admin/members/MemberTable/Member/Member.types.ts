@@ -1,5 +1,5 @@
 import { UserWithUserCandidate } from 'src/api/types';
-import { UserRole } from 'src/constants/users';
+import { USER_ROLES, UserRole } from 'src/constants/users';
 
 export type MemberColumn =
   | 'associatedUser'
@@ -14,7 +14,35 @@ export type MemberColumn =
   | 'cvStatus'
   | 'cvHidden'
   | 'organization'
+  | 'countRefered'
   | 'selection';
+
+export const MemberTableByRole = {
+  [USER_ROLES.CANDIDATE]: [
+    'zone',
+    'associatedUser',
+    'lastConnection',
+    'employed',
+    'cvStatus',
+    'cvHidden',
+    'selection',
+  ],
+  [USER_ROLES.COACH]: [
+    'zone',
+    'associatedUser',
+    'lastConnection',
+    'employed',
+    'cvStatus',
+    'cvHidden',
+    'selection',
+  ],
+  [USER_ROLES.REFERER]: [
+    'organization',
+    'zone',
+    'countRefered',
+    'lastConnection',
+  ],
+};
 
 export interface MemberProps {
   columns: MemberColumn[];

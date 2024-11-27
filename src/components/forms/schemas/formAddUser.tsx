@@ -66,7 +66,7 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
     {
       id: 'memberInformation',
       name: 'memberInformation',
-      title: 'Information du membre',
+      title: 'Informations du membre',
       component: 'heading',
     },
     {

@@ -16,6 +16,7 @@ const rolesToParams = (roles) => {
 
 const candidateRolesParams = rolesToParams([USER_ROLES.CANDIDATE]);
 const coachRolesParams = rolesToParams([USER_ROLES.COACH]);
+const refererRolesParams = rolesToParams([USER_ROLES.REFERER]);
 
 export const renderLinks = (
   user: UserWithUserCandidate,
@@ -107,6 +108,15 @@ export const renderLinks = (
               name: 'Les coachs',
               // icon: <UserEmptyIcon />,
               tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_COACHS_CLIC,
+            },
+            {
+              href: '/backoffice/admin/membres',
+              queryParams: `?${refererRolesParams}${
+                user?.zone ? `zone=${user?.zone}` : ''
+              }`,
+              name: 'Les prescripteurs',
+              // icon: <UserEmptyIcon />,
+              tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_REFERERS_CLIC,
             },
           ],
         },

@@ -97,7 +97,7 @@ describe('Inscription', () => {
     });
   });
 
-  describe('Orienteur', () => {
+  describe('Prescripteur', () => {
     it('should complete registration', () => {
       window.localStorage.setItem('entourage-pro-modal-closed', 'true');
 
@@ -113,14 +113,16 @@ describe('Inscription', () => {
       cy.visit('/inscription');
       cy.url().should('include', 'step-1');
 
-      // Select the role "Orienteur" and go to the next step
-      cy.get('[data-testid="form-registration-role-role-Orienteur"]').click();
+      // Select the role "Prescripteur" and go to the next step
+      cy.get(
+        '[data-testid="form-registration-role-role-Prescripteur"]'
+      ).click();
       cy.contains('Suivant').click();
 
       // Check that the URL now includes "step-2"
       cy.url().should('include', 'step-2');
 
-      // Fill the form with the Orienteur's expectations and go to the next step
+      // Fill the form with the Prescripteur's expectations and go to the next step
       cy.get('[data-testid="form-registration-account-firstName"]').type(
         'John'
       );
@@ -160,10 +162,10 @@ describe('Inscription', () => {
         'Azerty123!'
       );
 
-      // Go to the next step and check that the URL now includes "confirmation" and "Orienteur"
+      // Go to the next step and check that the URL now includes "confirmation" and "Prescripteur"
       cy.contains('Suivant').click();
       cy.url().should('include', 'confirmation');
-      cy.url().should('include', 'Orienteur');
+      cy.url().should('include', 'Prescripteur');
     });
   });
 });

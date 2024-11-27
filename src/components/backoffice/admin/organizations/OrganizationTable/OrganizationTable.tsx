@@ -12,9 +12,8 @@ export function OrganizationTable({ organizations }: OrganizationTableProps) {
       <Th key="organizationReferentMail">Mail</Th>,
       <Th key="organizationReferentPhone">Téléphone</Th>,
       <Th key="organizationZone">Zone</Th>,
-      <Th key="organizationNbCandidates">Nombre de candidats</Th>,
-      <Th key="organizationNbCoach">Nombre de coachs</Th>,
-      <Th key="organizationNbReferer">Nombre d&apos;orienteurs</Th>,
+      <Th key="organizationNbReferer">Prescripteurs</Th>,
+      <Th key="organizationNbCandidates">Candidats</Th>,
       <Th key="organizationEdition">Édition</Th>,
     ];
   }, []);

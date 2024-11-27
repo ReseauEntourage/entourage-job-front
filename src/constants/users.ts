@@ -4,13 +4,13 @@ export const USER_ROLES = {
   COACH: 'Coach',
   CANDIDATE: 'Candidat',
   ADMIN: 'Admin',
-  REFERER: 'Orienteur',
+  REFERER: 'Prescripteur',
 } as const;
 
 export type UserRole = (typeof USER_ROLES)[keyof typeof USER_ROLES];
 export const USER_ROLES_FILTERS: FilterConstant<UserRole>[] = [
-  { value: USER_ROLES.CANDIDATE, label: `${USER_ROLES.CANDIDATE} LKO` },
-  { value: USER_ROLES.COACH, label: `${USER_ROLES.COACH} LKO` },
+  { value: USER_ROLES.CANDIDATE, label: `${USER_ROLES.CANDIDATE}` },
+  { value: USER_ROLES.COACH, label: `${USER_ROLES.COACH}` },
   { value: USER_ROLES.REFERER, label: USER_ROLES.REFERER },
   { value: USER_ROLES.ADMIN, label: USER_ROLES.ADMIN },
 ];
@@ -19,7 +19,7 @@ export const RELATED_ROLES = {
   [USER_ROLES.CANDIDATE]: USER_ROLES.COACH,
   [USER_ROLES.COACH]: USER_ROLES.CANDIDATE,
   [USER_ROLES.ADMIN]: USER_ROLES.ADMIN,
-  [USER_ROLES.REFERER]: USER_ROLES.REFERER,
+  [USER_ROLES.REFERER]: USER_ROLES.CANDIDATE,
 } as const;
 
 export const ADMIN_ROLES = {

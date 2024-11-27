@@ -392,6 +392,9 @@ export const GA_TAGS = {
   BACKOFFICE_ADMIN_HEADER_COACHS_CLIC: {
     action: 'Backoffice_Admin_Header_Coachs_Clic',
   },
+  BACKOFFICE_ADMIN_HEADER_REFERERS_CLIC: {
+    action: 'Backoffice_Admin_Header_Referers_Clic',
+  },
   SHOW_PASSWORD_CLIC: {
     action: 'Show_Password_Clic',
   },
