@@ -33,6 +33,7 @@ import {
   SocialMedia,
   UserDto,
   UserProfile,
+  UserReferingDto,
   UserRegistrationDto,
   UserReportDto,
   UserWithUserCandidate,
@@ -244,6 +245,10 @@ export class APIHandler {
     params: UserRegistrationDto
   ): Promise<AxiosResponse> {
     return this.post('/user/registration', params);
+  }
+
+  async postUserRefering(params: UserReferingDto): Promise<AxiosResponse> {
+    return this.post('/user/refering', params);
   }
 
   postProfileImage(

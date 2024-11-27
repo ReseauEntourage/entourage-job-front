@@ -3,9 +3,10 @@ import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,
 } from '../Backoffice.styles';
+import { RefererMemberList } from '../candidate/Referer/RefererMemberList';
 import { Section } from 'src/components/utils';
 import { H1 } from 'src/components/utils/Headings';
-import { USER_ROLES } from 'src/constants/users';
+import { NORMAL_USER_ROLES, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop } from 'src/hooks/utils';
 import { isRoleIncluded } from 'src/utils';
@@ -29,10 +30,8 @@ export const Dashboard = () => {
   const isDesktop = useIsDesktop();
   const user = useAuthenticatedUser();
 
-  const shouldShowAllProfile = isRoleIncluded(
-    [USER_ROLES.CANDIDATE, USER_ROLES.COACH],
-    user.role
-  );
+  const isNormalUser = isRoleIncluded(NORMAL_USER_ROLES, user.role);
+  const isReferer = user.role === USER_ROLES.REFERER;
 
   return (
     <StyledBackofficeBackground>
@@ -44,25 +43,23 @@ export const Dashboard = () => {
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
           <StyledDashboardLeftColumn className={`${isDesktop ? '' : 'mobile'}`}>
             <DashboardProfileCard />
-            {shouldShowAllProfile && <DashboardAvailabilityCard />}
+            {isNormalUser && <DashboardAvailabilityCard />}
             <DashboardLinkedUserCard />
             <DashboardReferentCard />
           </StyledDashboardLeftColumn>
           <StyledDashboardRightColumn
             className={`${isDesktop ? '' : 'mobile'}`}
           >
-            {!isRoleIncluded(
-              [USER_ROLES.REFERER, USER_ROLES.ADMIN],
-              user.role
-            ) && (
+            {isNormalUser && (
               <>
                 <DashboardReadDocumentsCard />
                 <DashboardStepsCard />
-                <DashboardMessagingConversation />
-                <DashboardRecommendationsCard />
-                <DashboardToolboxCard />
               </>
             )}
+            <DashboardMessagingConversation />
+            {isNormalUser && <DashboardRecommendationsCard />}
+            {isReferer && <RefererMemberList />}
+            <DashboardToolboxCard />
           </StyledDashboardRightColumn>
         </StyledBackofficeGrid>
       </Section>

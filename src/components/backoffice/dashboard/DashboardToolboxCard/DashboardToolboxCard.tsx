@@ -10,8 +10,7 @@ import {
 } from '../Dashboard.styles';
 import { Button, Card, Img } from 'src/components/utils';
 import { H6 } from 'src/components/utils/Headings';
-import { Typography } from 'src/components/utils/Typography';
-import { NormalUserRole, USER_ROLES } from 'src/constants/users';
+import { USER_ROLES, UserRole } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 
 const coachArticles = [
@@ -50,7 +49,7 @@ const candidateArticles = [
 ];
 
 const toolboxContents: {
-  [K in NormalUserRole]: {
+  [K in UserRole]?: {
     subtitle: string;
     url: string;
     articles: {
@@ -72,21 +71,26 @@ const toolboxContents: {
     url: process.env.TOOLBOX_COACH_URL as string,
     articles: coachArticles,
   },
+  [USER_ROLES.REFERER]: {
+    subtitle:
+      'Découvrez les contenus pédagogique pour aider les candidats dans leur recherche d’emploi',
+    url: process.env.TOOLBOX_COACH_URL as string,
+    articles: coachArticles,
+  },
 };
 
 export const DashboardToolboxCard = () => {
   const user = useAuthenticatedUser();
-
+  const toolbox = toolboxContents[user.role];
+  if (!toolbox) {
+    return null;
+  }
   return (
-    <Card
-      title="Guides et conseils"
-      subtitle={toolboxContents[user.role].subtitle}
-      centerTitle
-    >
+    <Card title="Guides et conseils" subtitle={toolbox.subtitle} centerTitle>
       <StyledDashboardCardContentContainer>
         <StyledDashboardCardContent>
           <StyledDashboardArticlesContainer>
-            {toolboxContents[user.role].articles.map((article) => {
+            {toolbox.articles.map((article) => {
               const uuidValue = uuid();
               return (
                 <a
@@ -101,7 +105,6 @@ export const DashboardToolboxCard = () => {
                     </StyledDashboardArticleImage>
                     <StyledDashboardArticleText>
                       <H6 title={article.title} center />
-                      <Typography>{article.subTitle}</Typography>
                     </StyledDashboardArticleText>
                   </StyledDashboardArticle>
                 </a>
@@ -112,7 +115,7 @@ export const DashboardToolboxCard = () => {
         <Button
           style="custom-secondary-inverted"
           isExternal
-          href={toolboxContents[user.role].url}
+          href={toolbox.url}
           newTab
         >
           Voir tous les conseils

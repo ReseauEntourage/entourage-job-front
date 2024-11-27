@@ -6,13 +6,13 @@ export const authenticatedPermissions = [
       '/backoffice/parametres',
       '/backoffice/profile/[userId]',
       '/backoffice/annuaire',
-      '/backoffice/dashboard',
       '/backoffice/messaging',
     ],
     roles: '*',
   },
   {
     paths: [
+      '/backoffice/dashboard',
       '/backoffice/candidat/[candidateId]',
       '/backoffice/candidat/[candidateId]/offres',
       '/backoffice/candidat/[candidateId]/suivi',
@@ -22,7 +22,11 @@ export const authenticatedPermissions = [
     roles: [USER_ROLES.CANDIDATE, USER_ROLES.COACH, USER_ROLES.REFERER],
   },
   {
-    paths: ['/backoffice/candidat/list'],
+    paths: [
+      '/backoffice/candidat/list',
+      '/backoffice/referer/orienter/[step]',
+      '/backoffice/referer/orienter/confirmation',
+    ],
     roles: [USER_ROLES.REFERER],
   },
   {

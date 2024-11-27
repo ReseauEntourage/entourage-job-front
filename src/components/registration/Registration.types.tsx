@@ -264,7 +264,7 @@ const CoachLastStepContent: Pick<LastStepContent, 'bullets'> = {
   ],
 };
 
-const CandidateLastStepContent: Pick<LastStepContent, 'bullets'> = {
+export const CandidateLastStepContent: Pick<LastStepContent, 'bullets'> = {
   bullets: [
     {
       icon: <IlluCV {...iconSizeProps} />,

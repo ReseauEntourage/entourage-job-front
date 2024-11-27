@@ -330,6 +330,33 @@ export type UserRegistrationDto = {
   workingExperience?: WorkingExperience;
 };
 
+export type UserReferingDto = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  campaign?: string;
+  department: Department;
+  helpNeeds?: { name: HelpValue }[];
+  workingRight?: string;
+  program?: Program;
+  birthDate: string;
+  searchAmbitions?: {
+    name: string;
+    order: number;
+    prefix: AmbitionsPrefixesType;
+  }[];
+  searchBusinessLines?: {
+    name: BusinessLineValue;
+    order: number;
+  }[];
+  studiesLevel?: StudiesLevel;
+  nationality?: Nationality;
+  jobSearchDuration?: JobSearchDuration;
+  resources?: CandidateResource;
+  workingExperience?: WorkingExperience;
+};
+
 export type Opportunity = {
   id?: string;
   title: string;
