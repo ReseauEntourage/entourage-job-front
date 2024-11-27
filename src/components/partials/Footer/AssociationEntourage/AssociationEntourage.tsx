@@ -6,7 +6,7 @@ import {
   Grid,
   Img,
   Section,
-  Typography,
+  Text,
 } from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
 import { EXTERNAL_LINKS } from 'src/constants';
@@ -33,11 +33,11 @@ export const AssociationEntourage = () => {
               <EntourageLogo width={50} height={50} />
               <H2 center color="white" title={"A propos d'Entourage"} />
               <div className="uk-light">
-                <Typography center color="white">
+                <Text center color="white">
                   Depuis 2014, l&apos;association Entourage lutte contre la
                   précarité et l&apos;exclusion en redonnant des réseaux de
                   soutien à celles et ceux qui n&apos;en ont plus.
-                </Typography>
+                </Text>
                 <StyledAssociationEntourageButtonContainer>
                   <Button
                     href={EXTERNAL_LINKS.ENTOURAGE}

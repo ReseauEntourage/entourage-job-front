@@ -3,7 +3,7 @@ import { ReviewItem } from '../ReviewItem/ReviewItem';
 import { formEditTestimonial } from 'src/components/forms/schemas/formEditTestimonial';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { Card, Typography } from 'src/components/utils';
+import { Card, Text } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { sortByName } from 'src/utils';
 import { ReviewItemList } from './CVEditReviews.styles';
@@ -77,9 +77,9 @@ export const CVEditReviews = ({ reviews, onChange }: CVEditReviewsProps) => {
             );
           })
         ) : (
-          <Typography variant="italic">
+          <Text variant="italic">
             Aucune recommandation n&apos;a encore été ajoutée
-          </Typography>
+          </Text>
         )}
       </ReviewItemList>
     </Card>
