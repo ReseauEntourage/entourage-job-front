@@ -24,7 +24,7 @@ export const useHelpField = (userRole: UserRole | undefined) => {
     if (!helpField && userRole) {
       if (userRole === USER_ROLES.CANDIDATE) {
         setHelpField('helpNeeds');
-      } else {
+      } else if (userRole === USER_ROLES.COACH) {
         setHelpField('helpOffers');
       }
     }

@@ -1,8 +1,9 @@
 import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { COLORS, HEIGHTS } from 'src/constants/styles';
 
 export const StyledBackofficeBackground = styled.div`
   background-color: ${COLORS.lightGray};
+  min-height: calc(100vh - ${HEIGHTS.HEADER}px);
 `;
 
 export const StyledBackofficeGrid = styled.div`
@@ -13,7 +14,6 @@ export const StyledBackofficeGrid = styled.div`
   width: 100%;
 
   &.mobile {
-    margin-top: 30px;
     flex-direction: column;
     gap: 0;
   }

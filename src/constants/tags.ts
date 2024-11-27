@@ -443,6 +443,9 @@ export const GA_TAGS = {
   BACKOFFICE_COACH_HEADER_DASHBOARD_CLIC: {
     action: 'Backoffice_Coach_Header_Dashboard_Clic',
   },
+  BACKOFFICE_REFERER_HEADER_DASHBOARD_CLIC: {
+    action: 'Backoffice_Referer_Header_Dashboard_Clic',
+  },
   HEADER_CONTACT_CLIC: {
     action: 'Header_Contact_Clic',
   },

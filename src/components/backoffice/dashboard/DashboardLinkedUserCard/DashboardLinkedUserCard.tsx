@@ -30,6 +30,7 @@ export const DashboardLinkedUserCard = () => {
           ? "Le candidat que j'accompagne"
           : "Le coach qui m'accompagne"
       }
+      centerTitle
     >
       <StyledDashboardLinkedUserCard>
         <ImgProfile user={linkedUser} size={107} />

@@ -1,9 +1,6 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import {
-  StyledDashboardCardContent,
-  StyledDashboardCardContentContainer,
-} from '../Dashboard.styles';
+import { StyledDashboardCardContentContainer } from '../Dashboard.styles';
 import { DashboardNetworkDiscoveryCard } from '../DashboardNetworkDiscoverCard';
 import { DirectoryItem } from 'src/components/backoffice/directory/DirectoryItem';
 import { Button, Card } from 'src/components/utils';
@@ -108,11 +105,9 @@ export const DashboardRecommendationsCard = () => {
       centerTitle
     >
       <StyledDashboardCardContentContainer>
-        <StyledDashboardCardContent>
-          <StyledDashboardRecommendationsList>
-            <CardList list={recommendationsList} isLoading={isLoading} />
-          </StyledDashboardRecommendationsList>
-        </StyledDashboardCardContent>
+        <StyledDashboardRecommendationsList>
+          <CardList list={recommendationsList} isLoading={isLoading} />
+        </StyledDashboardRecommendationsList>
         <Button
           style="custom-secondary-inverted"
           href={{ pathname: '/backoffice/annuaire', query }}
