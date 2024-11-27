@@ -5,7 +5,7 @@ import { Layout } from 'src/components/Layout';
 import { PasswordCriterias } from 'src/components/backoffice/parametres/ParametresLayout/ChangePasswordCard/PasswordCriterias';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { formResetPassword } from 'src/components/forms/schemas/formResetPassword';
-import { Button, Section, Typography } from 'src/components/utils';
+import { Button, Section, Text } from 'src/components/utils';
 import { Card } from 'src/components/utils/Cards/Card';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { COLORS } from 'src/constants/styles';
@@ -65,10 +65,10 @@ export const ResetPassword = ({
           ) : (
             <>
               <LucidIcon name="X" size={100} color={COLORS.primaryBlue} />
-              <Typography size="large">
+              <Text size="large">
                 Ce lien ne semble pas valide. Veuillez contacter l&apos;équipe
                 Entourage Pro.
-              </Typography>
+              </Text>
               <StyledResetPasswordButtonContainer>
                 <Button
                   style="custom-primary"

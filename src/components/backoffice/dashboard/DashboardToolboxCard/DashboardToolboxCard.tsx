@@ -10,7 +10,7 @@ import {
 } from '../Dashboard.styles';
 import { Button, Card, Img } from 'src/components/utils';
 import { H6 } from 'src/components/utils/Headings';
-import { Typography } from 'src/components/utils/Typography';
+import { Text } from 'src/components/utils/Text';
 import { NormalUserRole, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 
@@ -101,7 +101,7 @@ export const DashboardToolboxCard = () => {
                     </StyledDashboardArticleImage>
                     <StyledDashboardArticleText>
                       <H6 title={article.title} center />
-                      <Typography>{article.subTitle}</Typography>
+                      <Text>{article.subTitle}</Text>
                     </StyledDashboardArticleText>
                   </StyledDashboardArticle>
                 </a>

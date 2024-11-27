@@ -14,7 +14,7 @@ import {
   Button,
   BackToTop,
   ContainerWithTextCentered,
-  Typography,
+  Text,
 } from 'src/components/utils';
 import { H4 } from 'src/components/utils/Headings';
 import { ORGANIZATION_FILTERS_DATA } from 'src/constants';
@@ -120,9 +120,9 @@ export function OrganizationList({
         <Section>
           <ContainerWithTextCentered>
             <H4 title="Les structures n'ont pas pu etre chargés correctement." />
-            <Typography size="large">
+            <Text size="large">
               Contacte l&apos;équipe Entourage Pro pour en savoir plus.
-            </Typography>
+            </Text>
           </ContainerWithTextCentered>
         </Section>
       ) : (
@@ -157,7 +157,7 @@ export function OrganizationList({
           )}
           {!loading && allLoaded && organizations.length <= 0 && (
             <ContainerWithTextCentered>
-              <Typography variant="italic">Aucune structure trouvé</Typography>
+              <Text variant="italic">Aucune structure trouvé</Text>
             </ContainerWithTextCentered>
           )}
         </>

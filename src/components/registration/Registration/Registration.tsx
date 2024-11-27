@@ -7,7 +7,7 @@ import {
   StyledRegistrationSubtitle,
 } from '../Registration.styles';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
-import { Card, Typography } from 'src/components/utils';
+import { Card, Text } from 'src/components/utils';
 import { Spinner } from 'src/components/utils/Spinner';
 import { isSSR } from 'src/utils/isSSR';
 import { useRegistration } from './useRegistration';
@@ -36,11 +36,11 @@ export function Registration() {
           <>
             {stepContent.subtitle && (
               <StyledRegistrationSubtitle>
-                <Typography weight="normal">{stepContent.subtitle}</Typography>
+                <Text weight="normal">{stepContent.subtitle}</Text>
                 {stepContent.annotation && (
-                  <Typography weight="normal" color="lighter" variant="italic">
+                  <Text weight="normal" color="lighter" variant="italic">
                     {stepContent.annotation}
-                  </Typography>
+                  </Text>
                 )}
               </StyledRegistrationSubtitle>
             )}
@@ -63,9 +63,9 @@ export function Registration() {
           </StyledRegistrationSpinnerContainer>
         )}
         <StyledRegistrationFooter>
-          <Typography size="small">
+          <Text size="small">
             Vous avez déjà un compte ? <Link href="/login">Connectez-vous</Link>
-          </Typography>
+          </Text>
         </StyledRegistrationFooter>
       </Card>
     </StyledRegistrationContainer>

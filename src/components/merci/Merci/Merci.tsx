@@ -1,5 +1,5 @@
 import React from 'react';
-import { ContainerWithTextCentered, Typography } from 'src/components/utils';
+import { ContainerWithTextCentered, Text } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { H3 } from 'src/components/utils/Headings';
 import { StyledMerciButtonContainer } from './Merci.styles';
@@ -24,13 +24,13 @@ export const Merci = ({
       {currentType ? (
         <>
           <H3 title="Merci beaucoup pour votre inscription !" center />
-          <Typography>{ThankYouMessages[currentType]}</Typography>
+          <Text>{ThankYouMessages[currentType]}</Text>
         </>
       ) : (
         <H3 title={"Merci beaucoup d'avoir répondu au formulaire !"} />
       )}
-      <Typography size="large">À bientôt&nbsp;!</Typography>
-      <Typography size="large">L&apos;équipe Entourage Pro</Typography>
+      <Text size="large">À bientôt&nbsp;!</Text>
+      <Text size="large">L&apos;équipe Entourage Pro</Text>
       <StyledMerciButtonContainer>
         <Button href="/" style="secondary" className="uk-margin-large-top">
           Revenir à la page d&apos;accueil

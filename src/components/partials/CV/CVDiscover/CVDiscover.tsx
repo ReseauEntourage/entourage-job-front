@@ -3,7 +3,7 @@ import { Api } from 'src/api';
 import { CV } from 'src/api/types';
 import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { CandidatCard } from 'src/components/cards';
-import { Grid, Section, Typography } from 'src/components/utils';
+import { Grid, Section, Text } from 'src/components/utils';
 import { Button } from 'src/components/utils/Button';
 import { H2 } from 'src/components/utils/Headings';
 import { StyledCVDiscoverButtonContainer } from './CVDiscover.styles';
@@ -28,7 +28,7 @@ export const CVDiscover = () => {
     <Section id="discover" className="custom-primary">
       <H2 center title="Découvrez les candidats" />
       {error ? (
-        <Typography variant="italic">{error}</Typography>
+        <Text variant="italic">{error}</Text>
       ) : (
         <Grid
           childWidths={['1-3@m']}
