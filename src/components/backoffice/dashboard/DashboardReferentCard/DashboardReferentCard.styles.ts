@@ -10,6 +10,12 @@ export const StyledDashboardReferentPicture = styled.div`
   margin-bottom: 16px;
 `;
 
+export const StyledDashboardReferentNameContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 export const StyledDashboardReferentName = styled.div`
   text-align: center;
 
@@ -23,7 +29,6 @@ export const StyledDashboardReferentRole = styled.div`
 `;
 export const StyledDashboardReferentMail = styled.div`
   text-align: center;
-  margin-top: 20px;
   a {
     color: ${COLORS.black};
     text-decoration: underline;
@@ -32,5 +37,4 @@ export const StyledDashboardReferentMail = styled.div`
 
 export const StyledDashboardReferentText = styled.div`
   text-align: center;
-  margin-top: 20px;
 `;

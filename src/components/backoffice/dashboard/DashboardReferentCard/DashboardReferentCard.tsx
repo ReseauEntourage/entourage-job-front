@@ -10,6 +10,7 @@ import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedU
 import {
   StyledDashboardReferentMail,
   StyledDashboardReferentName,
+  StyledDashboardReferentNameContainer,
   StyledDashboardReferentPicture,
   StyledDashboardReferentRole,
   StyledDashboardReferentText,
@@ -38,14 +39,16 @@ export const DashboardReferentCard = () => {
             cover
           />
         </StyledDashboardReferentPicture>
-        <StyledDashboardReferentName>
-          <H3 color="primaryBlue" title={referent.name} />
-        </StyledDashboardReferentName>
-        <StyledDashboardReferentRole>
-          <Text variant="italic">
-            Référent(e) Entourage Pro {referentRegion || ''}
-          </Text>
-        </StyledDashboardReferentRole>
+        <StyledDashboardReferentNameContainer>
+          <StyledDashboardReferentName>
+            <H3 color="primaryBlue" title={referent.name} />
+          </StyledDashboardReferentName>
+          <StyledDashboardReferentRole>
+            <Text variant="italic">
+              Référent(e) Entourage Pro {referentRegion || ''}
+            </Text>
+          </StyledDashboardReferentRole>
+        </StyledDashboardReferentNameContainer>
         <StyledDashboardReferentMail>
           <Text weight="bold">
             <SimpleLink isExternal href={`mailto:${referent.mail}`}>
