@@ -7,6 +7,7 @@ export const ContainerStyled = styled.div`
   flex: 1;
   width: 100%;
   color: ${COLORS.black};
+  height: 100%;
 `;
 
 export const StyledSearchBarContainer = styled.div`

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import { v4 as uuidV4 } from 'uuid';
-import { Button, Section, Typography } from 'src/components/utils';
+import { Button, Section, Text } from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
 import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
@@ -19,40 +19,40 @@ const content = [
   {
     value: 20,
     description: (
-      <Typography>
+      <Text>
         Financez des ateliers collectifs remobilisant des personnes en précarité
         pour les aider à acquérir de nouvelles compétences.
-      </Typography>
+      </Text>
     ),
     color: COLORS.blueShade1,
   },
   {
     value: 70,
     description: (
-      <Typography>
+      <Text>
         Permettez à des jeunes en précarité de partir en week-end de cohésion
         pour se remobiliser.
-      </Typography>
+      </Text>
     ),
     color: COLORS.blueShade2,
   },
   {
     value: 250,
     description: (
-      <Typography>
+      <Text>
         Permettez à des candidats Entourage Pro de rencontrer des professionnels
         pour trouver des opportunités d’emploi.
-      </Typography>
+      </Text>
     ),
     color: COLORS.primaryBlue,
   },
   {
     value: 500,
     description: (
-      <Typography>
+      <Text>
         Participez à l’accompagnement d’une personne en précarité pour qu’elle
         retrouve un emploi.
-      </Typography>
+      </Text>
     ),
     color: COLORS.blueShade3,
   },

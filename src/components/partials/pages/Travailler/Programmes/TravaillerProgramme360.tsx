@@ -9,7 +9,7 @@ import {
 } from 'assets/icons/icons';
 import { RowIconTitleText } from 'src/components/partials/utils/RowIconTitleText';
 import { SimpleImageText } from 'src/components/partials/utils/SimpleImageText';
-import { Button, Typography } from 'src/components/utils';
+import { Button, Text } from 'src/components/utils';
 import { List } from 'src/components/utils/Lists';
 import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
@@ -71,36 +71,34 @@ export const TravaillerProgramme360 = ({
             className={isDesktop ? '' : 'mobile'}
           >
             <IlluTeteHomme {...iconsProps} />{' '}
-            <Typography color="light">
-              Pour les jeunes de moins de 30 ans
-            </Typography>
+            <Text color="light">Pour les jeunes de moins de 30 ans</Text>
           </StyledAiderProgrammesListElement>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
             <IlluCalendrier {...iconsProps} />{' '}
-            <Typography color="light">Durée de 6 mois</Typography>
+            <Text color="light">Durée de 6 mois</Text>
           </StyledAiderProgrammesListElement>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
             <OrienterSablier {...iconsProps} />{' '}
-            <Typography color="light">2 heures par semaine</Typography>
+            <Text color="light">2 heures par semaine</Text>
           </StyledAiderProgrammesListElement>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
             <IlluQuestionReponseOrange {...iconsProps} />
-            <Typography color="light">En physique</Typography>
+            <Text color="light">En physique</Text>
           </StyledAiderProgrammesListElement>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
             <OrienterCarteSolidaire {...iconsProps} />{' '}
-            <Typography color="light">
+            <Text color="light">
               Disponible à Paris (75), Hauts-de-Seine (92), Seine-Saint-Denis
               (93), Lille, Lyon, Rennes ou Lorient
-            </Typography>
+            </Text>
           </StyledAiderProgrammesListElement>
         </List>
         <div data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > p; delay: 200;">

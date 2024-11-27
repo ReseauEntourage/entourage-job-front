@@ -7,7 +7,7 @@ import {
 import CarteSolidaireIcon from 'assets/icons/orienter-carte-solidaire.svg';
 import { RowIconTitleText } from 'src/components/partials/utils/RowIconTitleText';
 import { SimpleImageText } from 'src/components/partials/utils/SimpleImageText';
-import { Button, Typography } from 'src/components/utils';
+import { Button, Text } from 'src/components/utils';
 import { List } from 'src/components/utils/Lists';
 import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
@@ -69,27 +69,25 @@ export const TravaillerProgrammeCoupDePouce = ({
             className={isDesktop ? '' : 'mobile'}
           >
             <IlluCalendrier {...iconsProps} />{' '}
-            <Typography color="light">Ponctuel</Typography>
+            <Text color="light">Ponctuel</Text>
           </StyledAiderProgrammesListElement>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
             <OrienterSablier {...iconsProps} />{' '}
-            <Typography color="light">Selon vos besoins</Typography>
+            <Text color="light">Selon vos besoins</Text>
           </StyledAiderProgrammesListElement>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
             <IlluQuestionReponseOrange {...iconsProps} />{' '}
-            <Typography color="light">
-              Prise de contact en physique ou en visio
-            </Typography>
+            <Text color="light">Prise de contact en physique ou en visio</Text>
           </StyledAiderProgrammesListElement>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
             <CarteSolidaireIcon {...iconsProps} />{' '}
-            <Typography color="light">Disponible partout en France</Typography>
+            <Text color="light">Disponible partout en France</Text>
           </StyledAiderProgrammesListElement>
         </List>
         <div data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > p; delay: 200;">

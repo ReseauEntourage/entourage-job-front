@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Typography } from 'src/components/utils';
+import { Text } from 'src/components/utils';
 import { Program, ProgramBullet, Programs } from 'src/constants/programs';
 import { SelectCard, SelectCardProps } from './SelectCard';
 
@@ -63,13 +63,13 @@ const meta = {
 
 const disabledOptionMessage = (
   <>
-    <Typography size="small" weight="bold">
+    <Text size="small" weight="bold">
       Pour l&apos;instant, le Format 360 est uniquement disponible pour les
       moins de 30 ans résidant dans certaines villes et département définies
-    </Typography>
-    <Typography size="small" variant="italic">
+    </Text>
+    <Text size="small" variant="italic">
       (Paris, Seine-Saint-Denis, Hauts-de-Seine, Lille, Lyon et Rennes).
-    </Typography>
+    </Text>
   </>
 );
 

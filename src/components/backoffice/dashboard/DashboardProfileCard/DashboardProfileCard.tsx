@@ -8,7 +8,7 @@ import {
   ImgProfile,
   SimpleLink,
   Tag,
-  Typography,
+  Text,
 } from 'src/components/utils';
 import { ProfileHelps } from 'src/constants/helps';
 import { USER_ROLES } from 'src/constants/users';
@@ -36,14 +36,12 @@ export const DashboardProfileCard = () => {
       <StyledDashboardProfileCardPictureName>
         <ImgProfile user={user} size={69} />
         <div>
-          <Typography size="xlarge" weight="bold">
+          <Text size="xlarge" weight="bold">
             {`${user.firstName} ${user.lastName.charAt(0).toUpperCase()}.`}
-          </Typography>
-          {user.organization && (
-            <Typography>{user.organization.name}</Typography>
-          )}
+          </Text>
+          {user.organization && <Text>{user.organization.name}</Text>}
           {user.userProfile.department && (
-            <Typography>{user.userProfile.department}</Typography>
+            <Text>{user.userProfile.department}</Text>
           )}
           {user.userProfile.linkedinUrl && (
             <SimpleLink

@@ -2,7 +2,7 @@ import React from 'react';
 import { EditItemsButtons } from '../../EditItemsButtons';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
-import { Typography } from 'src/components/utils';
+import { Text } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { COLORS } from 'src/constants/styles';
 import { formatParagraph } from 'src/utils';
@@ -30,11 +30,11 @@ export const ReviewItem = ({
       <StyledReviewContent>
         <div>
           <LucidIcon name="Quote" style="solid" color={COLORS.primaryBlue} />
-          <Typography>{formatParagraph(review.text)}</Typography>
+          <Text>{formatParagraph(review.text)}</Text>
         </div>
         <div>
-          <Typography weight="bold">{review.name}</Typography>
-          <Typography variant="italic">{review.status}</Typography>
+          <Text weight="bold">{review.name}</Text>
+          <Text variant="italic">{review.status}</Text>
         </div>
       </StyledReviewContent>
       <div className="edit-buttons">

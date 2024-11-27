@@ -5,7 +5,7 @@ import { ParametresPlaceholder } from '../ParametresPlaceholder';
 import { formEditCandidateProfessionalInformation } from 'src/components/forms/schemas/formEditCandidateProfessionalInformation';
 import { formEditCoachProfessionalInformation } from 'src/components/forms/schemas/formEditCoachProfessionalInformation';
 import { openModal } from 'src/components/modals/Modal';
-import { Card, Img, Typography } from 'src/components/utils';
+import { Card, Img, Text } from 'src/components/utils';
 import { H5 } from 'src/components/utils/Headings';
 import { Tag } from 'src/components/utils/Tag';
 import { BUSINESS_LINES } from 'src/constants';
@@ -171,7 +171,7 @@ export const ProfessionalInformationCard = () => {
 
           <H5 title="Votre profil Linkedin" />
           {userProfile?.linkedinUrl ? (
-            <Typography>{userProfile.linkedinUrl}</Typography>
+            <Text>{userProfile.linkedinUrl}</Text>
           ) : (
             <StyledProfessionalInformationLinkedinContainer>
               <StyledProfessionalInformationImgContainer>
@@ -182,10 +182,10 @@ export const ProfessionalInformationCard = () => {
                   width={45}
                 />
               </StyledProfessionalInformationImgContainer>
-              <Typography>
+              <Text>
                 Ajoutez-le à votre profil pour que les membres puissent le
                 découvrir !
-              </Typography>
+              </Text>
             </StyledProfessionalInformationLinkedinContainer>
           )}
         </StyledProfessionalInformationList>

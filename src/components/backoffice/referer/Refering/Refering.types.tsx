@@ -9,7 +9,7 @@ import { formReferingSocialSituation } from '../forms/formReferingSocialSituatio
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { CandidateLastStepContent } from 'src/components/registration/Registration.types';
 import { Alert } from 'src/components/utils/Alert';
-import { Typography } from 'src/components/utils/Typography';
+import { Text } from 'src/components/utils/Text';
 import { Programs } from 'src/constants/programs';
 import { UnionKeys, UnionToIntersection } from 'src/utils/Types';
 
@@ -103,10 +103,10 @@ export const ReferingStepContents: {
         Nous aimerions en savoir un peu plus sur votre situation. <br />
         <br />
         <Alert>
-          <Typography weight="bold">
+          <Text weight="bold">
             Ces informations sont confidentielles, optionnelles et ne seront pas
             communiquées.
-          </Typography>
+          </Text>
         </Alert>
       </>
     ),

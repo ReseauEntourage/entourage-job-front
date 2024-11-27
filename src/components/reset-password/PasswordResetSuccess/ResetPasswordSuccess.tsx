@@ -5,7 +5,7 @@ import {
   StyledResetPasswordContainer,
 } from '../ResetPassword/ResetPassword.styles';
 import { Layout } from 'src/components/Layout';
-import { Button, Section, Typography } from 'src/components/utils';
+import { Button, Section, Text } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { COLORS } from 'src/constants/styles';
 
@@ -23,10 +23,10 @@ export const ResetPasswordSuccess = () => {
       <Section size="large" style="muted">
         <StyledResetPasswordContainer>
           <LucidIcon name="Check" size={100} color={COLORS.primaryBlue} />
-          <Typography size="large">
+          <Text size="large">
             Votre mot de passe a bien été {isCreation ? 'crée' : 'réinitialisé'}
             .
-          </Typography>
+          </Text>
           <StyledResetPasswordButtonContainer>
             <Button
               style="custom-primary"

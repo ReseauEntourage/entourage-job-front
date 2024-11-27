@@ -5,7 +5,7 @@ import {
   IlluCV,
   IlluPoigneeDeMain,
 } from 'assets/icons/icons';
-import { Typography } from '../utils';
+import { Text } from '../utils';
 import { Alert } from '../utils/Alert';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { Programs } from 'src/constants/programs';
@@ -196,10 +196,10 @@ export const RegistrationStepContents: {
           Nous aimerions en savoir un peu plus sur votre situation. <br />
           <br />
           <Alert>
-            <Typography weight="bold">
+            <Text weight="bold">
               Ces informations sont confidentielles, optionnelles et ne seront
               pas communiquées.
-            </Typography>
+            </Text>
           </Alert>
         </>
       ),

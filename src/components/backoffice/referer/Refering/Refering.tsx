@@ -1,7 +1,7 @@
 import React from 'react';
 import { EntourageProLogoPrimary } from 'assets/icons/icons';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
-import { Card, Typography } from 'src/components/utils';
+import { Card, Text } from 'src/components/utils';
 import { Spinner } from 'src/components/utils/Spinner';
 import {
   StyledReferingContainer,
@@ -31,17 +31,11 @@ export function Refering() {
             <>
               {stepContent.subtitle && (
                 <StyledReferingSubtitle>
-                  <Typography weight="normal">
-                    {stepContent.subtitle}
-                  </Typography>
+                  <Text weight="normal">{stepContent.subtitle}</Text>
                   {stepContent.annotation && (
-                    <Typography
-                      weight="normal"
-                      color="lighter"
-                      variant="italic"
-                    >
+                    <Text weight="normal" color="lighter" variant="italic">
                       {stepContent.annotation}
-                    </Typography>
+                    </Text>
                   )}
                 </StyledReferingSubtitle>
               )}

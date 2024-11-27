@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { IlluCandidatFolder } from 'assets/icons/icons';
-import { Button, Typography } from 'src/components/utils';
+import { Button, Text } from 'src/components/utils';
 import { Card } from 'src/components/utils/Cards/Card';
 import {
   StyledContainer,
@@ -22,10 +22,10 @@ export const DashboardInviteToReferCandidate = () => {
       <StyledContainer>
         <StyledDescriptionContainer>
           <IlluCandidatFolder width={136} height={136} />
-          <Typography>
+          <Text>
             Pré-inscrivez un candidat en renseignant ses informations pour
             qu&apos;il puisse accéder à la plateforme Entourage pro.
-          </Typography>
+          </Text>
         </StyledDescriptionContainer>
         <Button onClick={referCandidate}>Orienter un candidat</Button>
       </StyledContainer>

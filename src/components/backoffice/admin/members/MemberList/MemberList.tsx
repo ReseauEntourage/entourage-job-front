@@ -14,7 +14,7 @@ import { LoadingScreen } from 'src/components/backoffice/LoadingScreen';
 import { AdminCreationButtons } from 'src/components/backoffice/admin/AdminCreationButtons';
 import { SearchBar } from 'src/components/filters/SearchBar/SearchBar';
 import { HeaderBackoffice } from 'src/components/headers/HeaderBackoffice';
-import { BackToTop, Button, Section, Typography } from 'src/components/utils';
+import { BackToTop, Button, Section, Text } from 'src/components/utils';
 import { ContainerWithTextCentered } from 'src/components/utils/Containers';
 import { StyledContainerWithTextCentered } from 'src/components/utils/Containers/Containers.styles';
 import { H4 } from 'src/components/utils/Headings';
@@ -189,9 +189,9 @@ export function MemberList({
         <Section>
           <ContainerWithTextCentered>
             <H4 title={"Les membres n'ont pas pu etre chargés correctement."} />
-            <Typography size="large">
+            <Text size="large">
               Contacte l&apos;équipe Entourage Pro pour en savoir plus.
-            </Typography>
+            </Text>
           </ContainerWithTextCentered>
         </Section>
       ) : (
@@ -251,9 +251,9 @@ export function MemberList({
           )}
           {!loading && allLoaded && members.length <= 0 && (
             <StyledContainerWithTextCentered>
-              <Typography variant="italic" weight="bold">
+              <Text variant="italic" weight="bold">
                 Aucun membre trouvé
-              </Typography>
+              </Text>
             </StyledContainerWithTextCentered>
           )}
         </>

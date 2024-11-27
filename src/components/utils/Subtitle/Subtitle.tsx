@@ -1,17 +1,17 @@
 import React from 'react';
-import { Typography, TypographyProps } from 'src/components/utils/Typography';
+import { Text, TextProps } from 'src/components/utils/Text';
 import { StyledSubtitle } from './Subtitle.styles';
 
-interface SubtitleProps extends TypographyProps {
+interface SubtitleProps extends TextProps {
   center?: boolean;
 }
 
 export const Subtitle = ({ children, center, ...restProps }: SubtitleProps) => {
   return (
     <StyledSubtitle center={center}>
-      <Typography {...restProps} center={center}>
+      <Text {...restProps} center={center}>
         {children}
-      </Typography>
+      </Text>
     </StyledSubtitle>
   );
 };

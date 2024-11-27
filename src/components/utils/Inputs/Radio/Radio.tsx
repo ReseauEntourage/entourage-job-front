@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import WarningIcon from 'assets/icons/warning.svg';
-import { Typography } from '../../Typography';
+import { Text } from '../../Text';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage';
 import { COLORS } from 'src/constants/styles';
 import {
@@ -58,9 +58,9 @@ export function Radio({
       disabled={disabled}
     >
       {title && (
-        <Typography weight="bold" size="large">
+        <Text weight="bold" size="large">
           {title}
-        </Typography>
+        </Text>
       )}
       {subtitle && <legend>{subtitle}</legend>}
       <div className="inputs-container">
@@ -104,9 +104,9 @@ export function Radio({
                       color={COLORS.primaryBlue}
                     />
                     {typeof disabledOption.message === 'string' ? (
-                      <Typography size="small" weight="bold">
+                      <Text size="small" weight="bold">
                         {disabledOption.message}
-                      </Typography>
+                      </Text>
                     ) : (
                       disabledOption.message
                     )}

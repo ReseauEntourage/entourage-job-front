@@ -4,7 +4,7 @@ import {
   Section,
   Grid,
   ContainerWithTextCentered,
-  Typography,
+  Text,
 } from 'src/components/utils';
 import { ContainerMarginY } from 'src/components/utils/Containers/ContainerMarginY';
 import { H2, H4 } from 'src/components/utils/Headings';
@@ -93,7 +93,7 @@ export const HowToBeInclusive = () => {
                   <StyledHowToBeInclusiveTitleContainer>
                     <H4 title={item.title} />
                   </StyledHowToBeInclusiveTitleContainer>
-                  {item.text && <Typography>{item.text}</Typography>}
+                  {item.text && <Text>{item.text}</Text>}
                 </div>
               );
             })}

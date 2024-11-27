@@ -7,11 +7,7 @@ import { Button, Card } from 'src/components/utils';
 import { CardList } from 'src/components/utils/CardList';
 import { NormalUserRole, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import {
-  selectCurrentUserProfileBusinessLines,
-  selectCurrentUserProfileHelps,
-  selectLinkedUser,
-} from 'src/use-cases/current-user';
+import { selectLinkedUser } from 'src/use-cases/current-user';
 import { mutateToArray } from 'src/utils';
 import { StyledDashboardRecommendationsList } from './DashboardRecommendationsCard.styles';
 import { useDashboardRecommendations } from './useDashboardRecommendations';
@@ -47,16 +43,7 @@ export const DashboardRecommendationsCard = () => {
 
   const { recommendations, isLoading, isError } = useDashboardRecommendations();
 
-  const currentUserHelps = useSelector(selectCurrentUserProfileHelps);
-  const currentUserBusinessLines = useSelector(
-    selectCurrentUserProfileBusinessLines
-  );
-
   const query = {
-    businessLines: currentUserBusinessLines
-      ? currentUserBusinessLines.map(({ name }) => name)
-      : [],
-    helps: currentUserHelps ? currentUserHelps.map(({ name }) => name) : [],
     departments: mutateToArray(user.userProfile.department),
   };
 

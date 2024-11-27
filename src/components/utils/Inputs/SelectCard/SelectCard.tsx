@@ -4,7 +4,7 @@ import { CommonInputProps } from '../Inputs.types';
 import { FieldErrorMessage } from 'src/components/forms/fields/FieldErrorMessage';
 import { H6 } from 'src/components/utils/Headings';
 import { StyledInputLabel } from 'src/components/utils/Inputs/Inputs.styles';
-import { Typography } from 'src/components/utils/Typography';
+import { Text } from 'src/components/utils/Text';
 import { COLORS } from 'src/constants/styles';
 import {
   StyledCheckIconContainer,
@@ -112,14 +112,14 @@ export function SelectCard<T extends string>({
                               <StyledSelectCardBulletIcon>
                                 {icon}
                               </StyledSelectCardBulletIcon>
-                              <Typography size="small" color="lighter">
+                              <Text size="small" color="lighter">
                                 {bulletLabel}
-                              </Typography>
+                              </Text>
                             </StyledSelectCardBullet>
                           );
                         })}
                       </StyledSelectCardBulletList>
-                      <Typography>{description}</Typography>
+                      <Text>{description}</Text>
                     </StyledSelectBlurableSection>
                     {disableOption && (
                       <StyledSelectCardDisabledOverlay>
@@ -129,9 +129,9 @@ export function SelectCard<T extends string>({
                           color={COLORS.primaryBlue}
                         />
                         {typeof disableOption.message === 'string' ? (
-                          <Typography size="small" weight="bold">
+                          <Text size="small" weight="bold">
                             {disableOption.message}
-                          </Typography>
+                          </Text>
                         ) : (
                           disableOption.message
                         )}

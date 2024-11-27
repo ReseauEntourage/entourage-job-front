@@ -11,7 +11,7 @@ import {
 } from '../Refering.styles';
 import { Button, Card } from 'src/components/utils';
 import { H6 } from 'src/components/utils/Headings';
-import { Typography } from 'src/components/utils/Typography';
+import { Text } from 'src/components/utils/Text';
 import { useConfirmation } from './useConfirmation';
 
 export function Confirmation() {
@@ -24,14 +24,14 @@ export function Confirmation() {
 
         <Card title={pageContent.title}>
           <StyledReferingSubtitle>
-            <Typography weight="normal">{pageContent.subtitle}</Typography>
+            <Text weight="normal">{pageContent.subtitle}</Text>
           </StyledReferingSubtitle>
           {pageContent.bullets.map(({ icon, title, text }) => (
             <StyledReferingListItem key={title}>
               <StyledReferingListItemIcon>{icon}</StyledReferingListItemIcon>
               <StyledReferingListItemLabels>
                 <H6 title={title} color="primaryBlue" />
-                <Typography size="small">{text}</Typography>
+                <Text size="small">{text}</Text>
               </StyledReferingListItemLabels>
             </StyledReferingListItem>
           ))}
