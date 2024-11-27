@@ -232,6 +232,15 @@ export class APIHandler {
     });
   }
 
+  getReferedCandidateProfiles(params: {
+    offset: number;
+    limit: number;
+  }): Promise<AxiosResponse> {
+    return this.get('/user/profile/refered', {
+      params,
+    });
+  }
+
   getProfilesRecommendations(userId: string): Promise<AxiosResponse> {
     return this.get(`/user/profile/recommendations/${userId}`);
   }

@@ -4,7 +4,6 @@ import {
   StyledDashboardArticle,
   StyledDashboardArticleImage,
   StyledDashboardArticleText,
-  StyledDashboardCardContent,
   StyledDashboardCardContentContainer,
   StyledDashboardArticlesContainer,
 } from '../Dashboard.styles';
@@ -88,30 +87,28 @@ export const DashboardToolboxCard = () => {
   return (
     <Card title="Guides et conseils" subtitle={toolbox.subtitle} centerTitle>
       <StyledDashboardCardContentContainer>
-        <StyledDashboardCardContent>
-          <StyledDashboardArticlesContainer>
-            {toolbox.articles.map((article) => {
-              const uuidValue = uuid();
-              return (
-                <a
-                  key={uuidValue}
-                  href={process.env.TOOLBOX_URL + article.link}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <StyledDashboardArticle>
-                    <StyledDashboardArticleImage>
-                      <Img src={article.image} alt={article.title} cover />
-                    </StyledDashboardArticleImage>
-                    <StyledDashboardArticleText>
-                      <H6 title={article.title} center />
-                    </StyledDashboardArticleText>
-                  </StyledDashboardArticle>
-                </a>
-              );
-            })}
-          </StyledDashboardArticlesContainer>
-        </StyledDashboardCardContent>
+        <StyledDashboardArticlesContainer>
+          {toolbox.articles.map((article) => {
+            const uuidValue = uuid();
+            return (
+              <a
+                key={uuidValue}
+                href={process.env.TOOLBOX_URL + article.link}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <StyledDashboardArticle>
+                  <StyledDashboardArticleImage>
+                    <Img src={article.image} alt={article.title} cover />
+                  </StyledDashboardArticleImage>
+                  <StyledDashboardArticleText>
+                    <H6 title={article.title} center />
+                  </StyledDashboardArticleText>
+                </StyledDashboardArticle>
+              </a>
+            );
+          })}
+        </StyledDashboardArticlesContainer>
         <Button
           style="custom-secondary-inverted"
           isExternal

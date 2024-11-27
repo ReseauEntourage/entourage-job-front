@@ -188,54 +188,9 @@ export const renderLinks = (
           tag: GA_TAGS.BACKOFFICE_REFERER_HEADER_DASHBOARD_CLIC,
         },
         {
-          href: '/backoffice/referer/orienter/step-1',
-          name: 'Orienter un candidat',
+          href: '/backoffice/annuaire',
+          name: "Réseau d'entraide",
         },
-        {
-          href: `/backoffice/candidat/list`,
-          disabled: !candidateId,
-          name: 'Retour à la liste des candidats',
-          icon: <LucidIcon name="ChevronLeft" />,
-        },
-        {
-          href: `/backoffice/candidat/${candidateId}/cv`,
-          name: 'CV',
-          badge: 'cv',
-          disabled: !candidateId,
-          tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_CV_CLIC,
-        },
-        {
-          href: `/backoffice/candidat/${candidateId}/offres/private`,
-          name: 'Les offres',
-          queryParams: `?status=-1`,
-          disabled: !candidateId,
-          tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_OFFRES_CLIC,
-          subMenu: [
-            {
-              href: `/backoffice/candidat/${candidateId}/offres/private`,
-              name: 'Offres du candidat',
-              queryParams: `?status=-1`,
-              badge: 'offers',
-              tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_MES_OFFRES_CLIC,
-            },
-            {
-              href: `/backoffice/candidat/${candidateId}/offres/public`,
-              name: 'Toutes les offres',
-              tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_OFFRES_GENERALES_CLIC,
-            },
-          ],
-        },
-        {
-          href: `/backoffice/candidat/${candidateId}/suivi`,
-          name: 'Suivi',
-          badge: 'note',
-          disabled: !candidateId,
-          tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_SUIVI_CLIC,
-        },
-        // {
-        //   href: '/backoffice/annuaire',
-        //   name: "Réseau d'entraide",
-        // },
         {
           href: `${process.env.TOOLBOX_COACH_URL}${
             candidateId ? `?id=${candidateId}` : ''

@@ -4,7 +4,7 @@ import { COLORS } from 'src/constants/styles';
 
 export interface TypographyProps {
   children: React.ReactNode;
-  size?: 'small' | 'normal' | 'large';
+  size?: 'small' | 'normal' | 'large' | 'xlarge';
   weight?: 'normal' | 'bold';
   color?: 'lighter' | 'light' | 'normal' | 'blue' | 'white';
   variant?: 'normal' | 'italic';
@@ -15,6 +15,7 @@ const sizes: { [K in NonNullable<TypographyProps['size']>]: number } = {
   small: 12,
   normal: 14,
   large: 16,
+  xlarge: 18,
 };
 
 const colors: { [K in NonNullable<TypographyProps['color']>]: string } = {

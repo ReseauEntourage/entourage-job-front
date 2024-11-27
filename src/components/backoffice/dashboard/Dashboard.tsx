@@ -3,7 +3,8 @@ import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,
 } from '../Backoffice.styles';
-import { RefererMemberList } from '../candidate/Referer/RefererMemberList';
+import { DashboardInviteToReferCandidate } from '../referer/dashboard/DashboardInviteToReferCandidate/DashboardInviteToReferCandidate';
+import { DashboardReferedCandidateList } from '../referer/dashboard/DashboardReferedCandidateList/DashboardReferedCandidateList';
 import { Section } from 'src/components/utils';
 import { H1 } from 'src/components/utils/Headings';
 import { NORMAL_USER_ROLES, USER_ROLES } from 'src/constants/users';
@@ -58,7 +59,8 @@ export const Dashboard = () => {
             )}
             <DashboardMessagingConversation />
             {isNormalUser && <DashboardRecommendationsCard />}
-            {isReferer && <RefererMemberList />}
+            {isReferer && <DashboardInviteToReferCandidate />}
+            {isReferer && <DashboardReferedCandidateList />}
             <DashboardToolboxCard />
           </StyledDashboardRightColumn>
         </StyledBackofficeGrid>

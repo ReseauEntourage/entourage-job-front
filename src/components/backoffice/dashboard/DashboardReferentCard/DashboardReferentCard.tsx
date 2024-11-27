@@ -29,7 +29,7 @@ export const DashboardReferentCard = () => {
   }, [user.userProfile.department]);
 
   return (
-    <Card title="Votre contact Entourage Pro">
+    <Card title="Votre contact Entourage Pro" centerTitle>
       <StyledDashboardCardContentContainer>
         <StyledDashboardReferentPicture>
           <Img
@@ -54,7 +54,7 @@ export const DashboardReferentCard = () => {
           </Typography>
         </StyledDashboardReferentMail>
         <StyledDashboardReferentText>
-          <Typography>
+          <Typography center>
             Vous souhaitez obtenir plus d&apos;informations sur le programme,
             vous rencontrez des difficultés sur la plateforme, ou autre demande,
             contactez nous&nbsp;!
