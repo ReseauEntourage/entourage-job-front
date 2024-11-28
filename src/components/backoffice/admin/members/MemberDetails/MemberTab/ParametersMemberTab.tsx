@@ -13,11 +13,7 @@ import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
 import { Button } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { Heading } from 'src/components/utils/Inputs/Heading';
-import {
-  EXTERNAL_USER_ROLES,
-  RELATED_ROLES,
-  USER_ROLES,
-} from 'src/constants/users';
+import { RELATED_ROLES, ROLES_WITH_ORGANIZATION } from 'src/constants/users';
 import { useMemberId } from 'src/hooks/queryParams/useMemberId';
 import { useIsMobile } from 'src/hooks/utils';
 import { notificationsActions } from 'src/use-cases/notifications';
@@ -97,7 +93,7 @@ export function ParametersMemberTab({
       'cvHidden',
     ];
 
-    if (user && isRoleIncluded(EXTERNAL_USER_ROLES, user.role)) {
+    if (user && isRoleIncluded(ROLES_WITH_ORGANIZATION, user.role)) {
       return [...columnsToShow, 'organization'];
     }
 
@@ -105,9 +101,18 @@ export function ParametersMemberTab({
   }, [user]);
 
   const relatedUser = getRelatedUser(user);
-
-  const pluralForm = relatedUser && relatedUser.length > 1 ? 's' : '';
-  const externalCoachTitle = `des candidat${pluralForm} externe${pluralForm}`;
+  const referredCandidates = useMemo(() => {
+    if (user) {
+      if (user.referredCandidates && user.referredCandidates.length > 0) {
+        return user.referredCandidates.map(({ candidat }) => {
+          const userWithCandidate = candidat;
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          return userWithCandidate.candidat;
+        });
+      }
+    }
+    return null;
+  }, [user]);
 
   const relatedMembers = useMemo(() => {
     return relatedUser?.map((member) => {
@@ -122,6 +127,19 @@ export function ParametersMemberTab({
     });
   }, [relatedUser, user.candidat, user.coaches, user.organization]);
 
+  const referedMembers = useMemo(() => {
+    return referredCandidates?.map((member) => {
+      return {
+        ...member,
+        candidat:
+          // @ts-expect-error after enable TS strict mode. Please, try to fix it
+          user.coaches.find(({ candidat: { id } }) => member.id === id),
+        coaches: user.candidat ? [user.candidat] : [],
+        organization: user.organization,
+      };
+    });
+  }, [referredCandidates, user.candidat, user.coaches, user.organization]);
+
   const relatedMemberList = useMemo(() => {
     return relatedMembers?.map((member, key) => {
       return (
@@ -134,6 +152,19 @@ export function ParametersMemberTab({
       );
     });
   }, [memberColumns, relatedMembers, user.role]);
+
+  const referedMembersList = useMemo(() => {
+    return referedMembers?.map((member, key) => {
+      return (
+        <Member
+          columns={memberColumns}
+          role={RELATED_ROLES[user.role]}
+          member={member}
+          key={key}
+        />
+      );
+    });
+  }, [memberColumns, referedMembers, user.role]);
 
   return (
     <>
@@ -170,7 +201,7 @@ export function ParametersMemberTab({
 
       <Heading
         id="user-title"
-        title={`Information du ${user.role.toLowerCase()}`}
+        title={`Informations du ${user.role.toLowerCase()}`}
       />
       <MemberTable
         columns={memberColumns}
@@ -186,19 +217,40 @@ export function ParametersMemberTab({
         ]}
         role={user.role}
       />
+
+      {
+        // Liste des membres liés en binome
+      }
       {relatedMemberList && relatedMemberList.length > 0 && (
         <StyledRelatedMemberList>
           <Heading
             id="related-user-title"
-            title={`Information ${
-              user.role === USER_ROLES.COACH_EXTERNAL
-                ? externalCoachTitle
-                : `du ${RELATED_ROLES[user.role].toLowerCase()}`
-            } `}
+            title={`Informations des ${RELATED_ROLES[
+              user.role
+            ].toLowerCase()}s binomes`}
           />
           <MemberTable
             columns={memberColumns}
             members={relatedMemberList}
+            role={RELATED_ROLES[user.role]}
+          />
+        </StyledRelatedMemberList>
+      )}
+
+      {
+        // Liste des membres liés en orienté
+      }
+      {referredCandidates && referredCandidates.length > 0 && (
+        <StyledRelatedMemberList>
+          <Heading
+            id="related-user-title"
+            title={`Informations des ${RELATED_ROLES[
+              user.role
+            ].toLowerCase()}s orientés`}
+          />
+          <MemberTable
+            columns={memberColumns}
+            members={referedMembersList || []}
             role={RELATED_ROLES[user.role]}
           />
         </StyledRelatedMemberList>

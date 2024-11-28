@@ -3,12 +3,7 @@ import { HeaderConnectedMainItem } from '../HeaderConnected.types';
 import { UserWithUserCandidate } from 'src/api/types';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { GA_TAGS } from 'src/constants/tags';
-import {
-  CANDIDATE_USER_ROLES,
-  COACH_USER_ROLES,
-  USER_ROLES,
-  UserRole,
-} from 'src/constants/users';
+import { USER_ROLES, UserRole } from 'src/constants/users';
 import { getCandidateIdFromCoachOrCandidate } from 'src/utils/Finding';
 
 const rolesToParams = (roles) => {
@@ -19,8 +14,9 @@ const rolesToParams = (roles) => {
     .join('')}`;
 };
 
-const candidateRolesParams = rolesToParams(CANDIDATE_USER_ROLES);
-const coachRolesParams = rolesToParams(COACH_USER_ROLES);
+const candidateRolesParams = rolesToParams([USER_ROLES.CANDIDATE]);
+const coachRolesParams = rolesToParams([USER_ROLES.COACH]);
+const refererRolesParams = rolesToParams([USER_ROLES.REFERER]);
 
 export const renderLinks = (
   user: UserWithUserCandidate,
@@ -113,6 +109,15 @@ export const renderLinks = (
               // icon: <UserEmptyIcon />,
               tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_COACHS_CLIC,
             },
+            {
+              href: '/backoffice/admin/membres',
+              queryParams: `?${refererRolesParams}${
+                user?.zone ? `zone=${user?.zone}` : ''
+              }`,
+              name: 'Les prescripteurs',
+              // icon: <UserEmptyIcon />,
+              tag: GA_TAGS.BACKOFFICE_ADMIN_HEADER_REFERERS_CLIC,
+            },
           ],
         },
         {
@@ -132,7 +137,6 @@ export const renderLinks = (
         },
       ],
       [USER_ROLES.CANDIDATE]: candidateHeaderItems,
-      [USER_ROLES.CANDIDATE_EXTERNAL]: candidateHeaderItems,
       [USER_ROLES.COACH]: [
         {
           href: '/backoffice/dashboard',
@@ -187,52 +191,16 @@ export const renderLinks = (
           tag: GA_TAGS.BACKOFFICE_COACH_HEADER_BAO_CLIC,
         },
       ],
-      [USER_ROLES.COACH_EXTERNAL]: [
+      [USER_ROLES.REFERER]: [
         {
-          href: `/backoffice/candidat/list`,
-          disabled: !candidateId,
-          name: 'Retour à la liste des candidats',
-          icon: <LucidIcon name="ChevronLeft" />,
+          href: '/backoffice/dashboard',
+          name: 'Mon espace',
+          tag: GA_TAGS.BACKOFFICE_REFERER_HEADER_DASHBOARD_CLIC,
         },
         {
-          href: `/backoffice/candidat/${candidateId}/cv`,
-          name: 'CV',
-          badge: 'cv',
-          disabled: !candidateId,
-          tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_CV_CLIC,
+          href: '/backoffice/annuaire',
+          name: "Réseau d'entraide",
         },
-        {
-          href: `/backoffice/candidat/${candidateId}/offres/private`,
-          name: 'Les offres',
-          queryParams: `?status=-1`,
-          disabled: !candidateId,
-          tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_OFFRES_CLIC,
-          subMenu: [
-            {
-              href: `/backoffice/candidat/${candidateId}/offres/private`,
-              name: 'Offres du candidat',
-              queryParams: `?status=-1`,
-              badge: 'offers',
-              tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_MES_OFFRES_CLIC,
-            },
-            {
-              href: `/backoffice/candidat/${candidateId}/offres/public`,
-              name: 'Toutes les offres',
-              tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_OFFRES_GENERALES_CLIC,
-            },
-          ],
-        },
-        {
-          href: `/backoffice/candidat/${candidateId}/suivi`,
-          name: 'Suivi',
-          badge: 'note',
-          disabled: !candidateId,
-          tag: GA_TAGS.BACKOFFICE_CANDIDAT_HEADER_SUIVI_CLIC,
-        },
-        // {
-        //   href: '/backoffice/annuaire',
-        //   name: "Réseau d'entraide",
-        // },
         {
           href: `${process.env.TOOLBOX_COACH_URL}${
             candidateId ? `?id=${candidateId}` : ''

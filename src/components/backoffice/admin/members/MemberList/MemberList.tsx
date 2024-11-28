@@ -1,8 +1,12 @@
+import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { MemberTable } from '../MemberTable';
 import { Member } from '../MemberTable/Member';
-import { MemberColumn } from '../MemberTable/Member/Member.types';
+import {
+  MemberColumn,
+  MemberTableByRole,
+} from '../MemberTable/Member/Member.types';
 import { Api } from 'src/api';
 
 import { UserWithUserCandidate } from 'src/api/types';
@@ -16,9 +20,8 @@ import { StyledContainerWithTextCentered } from 'src/components/utils/Containers
 import { H4 } from 'src/components/utils/Headings';
 import { MEMBER_FILTERS_DATA } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
-import { CANDIDATE_USER_ROLES } from 'src/constants/users';
+import { USER_ROLES, UserRole } from 'src/constants/users';
 import { FilterObject } from 'src/constants/utils';
-import { useRole } from 'src/hooks/queryParams/useRole';
 import { useBulkActions } from 'src/hooks/useBulkActions';
 import { usePrevious } from 'src/hooks/utils';
 import {
@@ -50,7 +53,10 @@ export function MemberList({
   setSearch,
   resetFilters,
 }: MemberListProps) {
-  const role = useRole();
+  const router = useRouter();
+  const role = useMemo(() => {
+    return router.query.role as UserRole;
+  }, [router]);
 
   const prevRole = usePrevious(role);
   const [filtersConst, setFiltersConst] =
@@ -137,23 +143,18 @@ export function MemberList({
     [selectElement]
   );
 
-  const roleToDisplay = isRoleIncluded(CANDIDATE_USER_ROLES, role)
-    ? 'candidats'
-    : 'coachs';
+  let roleToDisplay;
+  if (isRoleIncluded([USER_ROLES.COACH], role)) {
+    roleToDisplay = 'coachs';
+  } else if (isRoleIncluded([USER_ROLES.REFERER], role)) {
+    roleToDisplay = 'prescripteurs';
+  } else {
+    roleToDisplay = 'candidats';
+  }
 
-  const memberColumns: MemberColumn[] = useMemo(
-    () => [
-      'associatedUser',
-      'zone',
-      'type',
-      'lastConnection',
-      'employed',
-      'cvStatus',
-      'cvHidden',
-      'selection',
-    ],
-    []
-  );
+  const memberColumns = useMemo(() => {
+    return MemberTableByRole[role] as MemberColumn[];
+  }, [role]);
 
   const memberList = useMemo(() => {
     return members.map((member, key) => {
@@ -176,7 +177,7 @@ export function MemberList({
         title={`Gestion des ${roleToDisplay}`}
         description={`Ici vous pouvez accéder à tous les profils des ${roleToDisplay} afin d'effectuer un suivi individuel de leur avancée.`}
         shouldDisplayAdminNotifications={isRoleIncluded(
-          CANDIDATE_USER_ROLES,
+          [USER_ROLES.CANDIDATE],
           role
         )}
       >
@@ -206,7 +207,7 @@ export function MemberList({
               placeholder="Rechercher..."
               smallSelectors
               additionalButtons={
-                isRoleIncluded(CANDIDATE_USER_ROLES, role) && (
+                isRoleIncluded([USER_ROLES.CANDIDATE], role) && (
                   <Button
                     style="custom-secondary-inverted"
                     size="small"

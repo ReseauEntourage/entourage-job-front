@@ -4,11 +4,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   REGISTRATION_CONFIRMATION_STEP,
   RegistrationFormData,
-  RegistrationFormDataKeys,
   FlattenedRegistrationFormData,
+  RegistrationFormWithOrganizationField,
 } from '../Registration.types';
+import { CREATE_NEW_ORGANIZATION_VALUE } from '../forms/formRegistrationRefererAccount';
+import { Api } from 'src/api';
+import { OrganizationDto } from 'src/api/types';
+import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { ReduxRequestEvents } from 'src/constants';
+import { DEPARTMENTS } from 'src/constants/departements';
 import { Programs } from 'src/constants/programs';
+import { RegistrableUserRole } from 'src/constants/users';
 import { notificationsActions } from 'src/use-cases/notifications';
 import {
   createUserSelectors,
@@ -49,15 +55,73 @@ export function useRegistration() {
   const createUserError = useSelector(selectCreateUserError);
 
   const onSubmitStepForm = useCallback(
-    (fields: RegistrationFormData) => {
-      let fieldsToSave = fields;
+    async (fields: RegistrationFormData) => {
+      const fieldsKeys = Object.keys(fields);
 
+      // Handle organizationId field
+      if (fieldsKeys.includes('organizationId')) {
+        const fieldsWithOrganisation =
+          fields as ExtractFormSchemaValidation<RegistrationFormWithOrganizationField>;
+        const shouldTryToCreateOrganization =
+          fieldsWithOrganisation.organizationId.value ===
+          CREATE_NEW_ORGANIZATION_VALUE;
+
+        // Create organization if needed
+        if (shouldTryToCreateOrganization) {
+          let { nameOrganization } = fieldsWithOrganisation;
+          const organizationFields = {
+            name: nameOrganization,
+            zone: DEPARTMENTS.find((deptObj) => {
+              return deptObj.name === fieldsWithOrganisation.department.value;
+            })?.zone,
+            referentFirstName: fieldsWithOrganisation.firstName,
+            referentLastName: fieldsWithOrganisation.lastName,
+            referentPhone: fieldsWithOrganisation.phone,
+            referentMail: fieldsWithOrganisation.email,
+          } as OrganizationDto;
+
+          let newOrganizationId: string;
+          try {
+            ({
+              data: { id: newOrganizationId, name: nameOrganization },
+            } = await Api.postOrganization(organizationFields));
+
+            // Update organizationId field with the new organization id
+            fieldsWithOrganisation.organizationId = {
+              label: nameOrganization as string,
+              value: newOrganizationId,
+            };
+          } catch (error) {
+            console.error(error);
+            dispatch(
+              notificationsActions.addNotification({
+                type: 'danger',
+                message:
+                  "Une erreur s'est produite lors de la création de l'association",
+              })
+            );
+            return;
+          }
+        }
+      }
+
+      const organizationFieldsKeys = ['nameOrganization'];
+      // Compute registration fields to store but exclude organization fields
+      let registrationFields = fieldsKeys.reduce((acc, curr) => {
+        if (!organizationFieldsKeys.includes(curr)) {
+          return {
+            ...acc,
+            [curr]: fields[curr],
+          };
+        }
+        return acc;
+      }, {} as RegistrationFormData);
       if (valuesFromOtherStep) {
-        // Remove fields used only for default value
-        const fieldsKeys = Object.keys(fields) as RegistrationFormDataKeys[];
-
-        fieldsToSave = fieldsKeys.reduce((acc, curr) => {
-          if (!Object.keys(valuesFromOtherStep).includes(curr)) {
+        registrationFields = fieldsKeys.reduce((acc, curr) => {
+          if (
+            !Object.keys(valuesFromOtherStep).includes(curr) &&
+            !organizationFieldsKeys.includes(curr)
+          ) {
             return {
               ...acc,
               [curr]: fields[curr],
@@ -67,17 +131,42 @@ export function useRegistration() {
         }, {} as RegistrationFormData);
       }
 
+      // Store registration fields
       dispatch(
-        registrationActions.setRegistrationCurrentStepData(fieldsToSave)
+        registrationActions.setRegistrationCurrentStepData(registrationFields)
       );
 
+      let role: RegistrableUserRole | null = null;
+
+      // Store is not updated yet, so we need to get the role from the fields
+      if (Object.keys(registrationFields).includes('role')) {
+        // eslint-disable-next-line dot-notation
+        [role] = registrationFields['role'] as RegistrableUserRole[];
+      } else if (selectedRole) {
+        role = selectedRole;
+      }
+
       if (!isLastRegistrationStep) {
-        push(`/inscription/${nextStep}`, undefined, {
-          shallow: true,
-        });
+        push(
+          {
+            pathname: `/inscription/${nextStep}`,
+            query: role ? { role } : {},
+          },
+          undefined,
+          {
+            shallow: true,
+          }
+        );
       }
     },
-    [dispatch, isLastRegistrationStep, nextStep, push, valuesFromOtherStep]
+    [
+      dispatch,
+      isLastRegistrationStep,
+      nextStep,
+      push,
+      valuesFromOtherStep,
+      selectedRole,
+    ]
   );
 
   useEffect(() => {
@@ -99,9 +188,16 @@ export function useRegistration() {
           );
         }
       }
-      replace(`/inscription/${nextStep}`, undefined, {
-        shallow: true,
-      });
+      replace(
+        {
+          pathname: `/inscription/${nextStep}`,
+          query: { role: selectedRole },
+        },
+        undefined,
+        {
+          shallow: true,
+        }
+      );
     }
   }, [
     nextStep,
@@ -110,14 +206,11 @@ export function useRegistration() {
     dispatch,
     stepContent,
     valuesFromOtherStep,
+    selectedRole,
   ]);
 
   useEffect(() => {
-    if (
-      createUserStatus === ReduxRequestEvents.SUCCEEDED &&
-      selectedProgram &&
-      selectedRole
-    ) {
+    if (createUserStatus === ReduxRequestEvents.SUCCEEDED && selectedRole) {
       push(
         {
           pathname: `/inscription/${REGISTRATION_CONFIRMATION_STEP}`,

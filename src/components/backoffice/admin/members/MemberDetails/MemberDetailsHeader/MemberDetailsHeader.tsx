@@ -4,9 +4,9 @@ import { UserWithUserCandidate } from 'src/api/types';
 import { SimpleLink } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { ImgProfile } from 'src/components/utils/ImgProfile';
-import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
+import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { getRelatedUser, isRoleIncluded } from 'src/utils/Finding';
+import { getRelatedUser } from 'src/utils/Finding';
 import {
   StyledContainer,
   StyledInfoContainer,
@@ -25,16 +25,11 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
 
   const relatedUser = getRelatedUser(user);
 
-  const relatedUserText =
-    user.role === USER_ROLES.COACH_EXTERNAL
-      ? `${relatedUser ? relatedUser.length : 0} candidat${
-          relatedUser && relatedUser.length > 1 ? 's' : ''
-        }`
-      : `${
-          relatedUser && relatedUser.length > 0
-            ? `${relatedUser[0].firstName} ${relatedUser[0].lastName}`
-            : `personne`
-        }`;
+  const relatedUserText = `${
+    relatedUser && relatedUser.length > 0
+      ? `${relatedUser[0].firstName} ${relatedUser[0].lastName}`
+      : `personne`
+  }`;
 
   return (
     <StyledContainer>
@@ -55,7 +50,7 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
             {` de ${relatedUserText}`}
           </div>
         </StyledRoleContainer>
-        {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) && (
+        {user.role === USER_ROLES.CANDIDATE && (
           <StyledRoleContainer>
             <LucidIcon name="Link" />
             &nbsp;

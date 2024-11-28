@@ -22,6 +22,7 @@ import { formRegistrationCandidateSocialSituation } from './forms/formRegistrati
 import { formRegistrationCoachInfo } from './forms/formRegistrationCoachInfo';
 import { formRegistrationCoachProgram } from './forms/formRegistrationCoachProgram';
 import { formRegistrationCoachWebinar } from './forms/formRegistrationCoachWebinar';
+import { formRegistrationRefererAccount } from './forms/formRegistrationRefererAccount';
 import { formRegistrationRole } from './forms/formRegistrationRole';
 
 export type RegistrationStep = `step-${number}`;
@@ -45,12 +46,18 @@ export type CoachRegistrationForm =
   | typeof formRegistrationAccount;
 /* TODO Add other steps forms here */
 
+export type RefererRegistrationForm = typeof formRegistrationRefererAccount;
+
+export type RegistrationFormWithOrganizationField =
+  typeof formRegistrationRefererAccount;
+
 export type FirstStepRegistrationForm = typeof formRegistrationRole;
 
 export type RegistrationForms =
   | FirstStepRegistrationForm
   | CandidateRegistrationForm
-  | CoachRegistrationForm;
+  | CoachRegistrationForm
+  | RefererRegistrationForm;
 
 export type RegistrationFormData =
   ExtractFormSchemaValidation<RegistrationForms>;
@@ -84,7 +91,7 @@ export type RegistrationStepData = Partial<{
 
 const RegistrationLabels = {
   MULTIPLE_CHOICE: 'Plusieurs choix possible',
-  SINGLE_CHOICE: 'Sélectionnez une des deux options',
+  SINGLE_CHOICE: 'Sélectionnez une des options',
   FUTURE_CHANGE: 'Vous pourrez modifier votre choix à tout moment',
 } as const;
 
@@ -106,6 +113,7 @@ export interface RegistrationStepContent<
 export type RegistrationStepContentByRole = Partial<{
   [USER_ROLES.CANDIDATE]: RegistrationStepContent<CandidateRegistrationForm>;
   [USER_ROLES.COACH]: RegistrationStepContent<CoachRegistrationForm>;
+  [USER_ROLES.REFERER]: RegistrationStepContent<RefererRegistrationForm>;
 }>;
 
 export const FirstStepContent: RegistrationStepContent<FirstStepRegistrationForm> =
@@ -126,6 +134,9 @@ export const RegistrationStepContents: {
     },
     [USER_ROLES.COACH]: {
       form: formRegistrationCoachInfo,
+    },
+    [USER_ROLES.REFERER]: {
+      form: formRegistrationRefererAccount,
     },
   },
   'step-3': {
@@ -207,7 +218,6 @@ export const RegistrationErrorMessages = {
   STEP_CONTENT:
     'Registration step content was not found. You should add content for this step.',
   SELECTED_ROLE: 'Registration selected role is not set',
-  SELECTED_PROGRAM: 'Registration selected program is not set',
 };
 
 export interface LastStepContent {
@@ -229,6 +239,7 @@ type RegistrationLastStepContent = {
     [Programs.THREE_SIXTY]: LastStepContent;
     [Programs.BOOST]: LastStepContent;
   };
+  [USER_ROLES.REFERER]: LastStepContent;
 };
 
 const iconSizeProps = { width: 60, height: 60 };
@@ -253,7 +264,7 @@ const CoachLastStepContent: Pick<LastStepContent, 'bullets'> = {
   ],
 };
 
-const CandidateLastStepContent: Pick<LastStepContent, 'bullets'> = {
+export const CandidateLastStepContent: Pick<LastStepContent, 'bullets'> = {
   bullets: [
     {
       icon: <IlluCV {...iconSizeProps} />,
@@ -274,6 +285,28 @@ const CandidateLastStepContent: Pick<LastStepContent, 'bullets'> = {
       icon: <IlluCalendrier color={COLORS.primaryBlue} {...iconSizeProps} />,
       title: 'Participez à des événements professionnels et conviviaux',
       text: "Rejoignez-nous lors d'événements professionnels pour vivre des moments conviviaux et bâtir votre réseau",
+    },
+  ],
+};
+
+const RefererLastStepContent: Pick<LastStepContent, 'bullets'> = {
+  bullets: [
+    {
+      icon: <IlluPoigneeDeMain {...iconSizeProps} />,
+      title:
+        'Facilitez l’inscription et le suivi des personnes que vous accompagnez',
+      text: "Faites profiter de votre expérience des candidat(e)s et soutenez-les dans leurs recherches d'emploi",
+    },
+    {
+      icon: <IlluConversation {...iconSizeProps} />,
+      title: 'Discutez et échangez avec les membres de la communauté',
+      text: "Commencez à partager et développer votre réseau solidaire en prenant contact avec d'autres membres de la communauté",
+    },
+    // TODO: Définir si on garde ce bullet -> https://www.figma.com/design/TVYUtyCO1mjJ2moDFvmzf2?node-id=1447-3526#997840400
+    {
+      icon: <IlluCalendrier color={COLORS.primaryBlue} {...iconSizeProps} />,
+      title: 'Participez à des événements professionnels et conviviaux',
+      text: "Rejoignez-nous lors d'événements professionnels pour vivre des moments conviviaux et bâtir votre réseau solidaire",
     },
   ],
 };
@@ -310,5 +343,12 @@ export const LastStepContent: RegistrationLastStepContent = {
       subtitle:
         'Vous pouvez désormais demander à votre entourage de vous appeler "coach"',
     },
+  },
+  [USER_ROLES.REFERER]: {
+    ...RefererLastStepContent,
+    title:
+      'Il ne vous reste plus qu’à valider votre adresse email en cliquant sur le lien que vous avez reçu par mail',
+    subtitle:
+      'Vous pouvez désormais accéder à votre compte entourage pro et orienter un ou plusieurs candidat',
   },
 };

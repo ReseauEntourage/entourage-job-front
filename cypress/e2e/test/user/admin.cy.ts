@@ -247,12 +247,12 @@ describe('En tant que - Administrateur', () => {
     });
 
     /**
-     * ** Création du nouveau membre "candidat lko"
+     * ** Création du nouveau membre "candidate"
      * ** à savoir - "coach lko" est exactement pareil (inutile de tester)
      */
     it("J'ajoute un nouveau membre - Candidat/Coach LKO", () => {
-      // Insertion des informations de base d'un utilisateur - role Candidat LKO
-      fillUserForm('Candidat LKO');
+      // Insertion des informations de base d'un utilisateur - role Candidat
+      fillUserForm('Candidat');
 
       // Assertion - vérifications que les champs ci-dessous ne sont pas affichés à cet instant
       cy.get('#form-add-user-organizationId').should('not.exist');
@@ -281,16 +281,14 @@ describe('En tant que - Administrateur', () => {
     });
 
     /**
-     * ** Création du membre "coach externe"
-     * ** à savoir - "candidat externe" est exactement pareil (inutile de tester)
+     * ** Création du membre "Prescripteur"
      */
-    it("J'ajoute un nouveau membre - Candidat/Coach externe", () => {
+    it("J'ajoute un nouveau membre - Referer", () => {
       // Insertion des informations de base d'un utilisateur
-      fillUserForm('Coach externe');
+      fillUserForm('Prescripteur');
 
-      // Assertion - vérifications que les champs ci-dessous ne sont pas affichés à cet instant
-      cy.get('#form-add-user-adminRole-container').should('not.exist');
-      cy.get('#form-add-user-userToLinkId').should('not.exist');
+      // Assertion - vérifications que le champs organizationId est affiché
+      cy.get('#form-add-user-organizationId').should('be.visible');
 
       // Chargement du fichier de fixture organizations.json contenant les organizations
       cy.fixture('api/generated/organizations').then((organizations) => {
@@ -305,22 +303,6 @@ describe('En tant que - Administrateur', () => {
           .should('be.visible')
           .find('.Select__option')
           .contains(firstOrganization.name)
-          .click();
-      });
-
-      // Puis chargement du fichier de fixture organizations.json contenant les organizations
-      cy.fixture('api/generated/search-user').then((users) => {
-        const firstUser = users[0];
-
-        cy.get('#form-add-user-userToLinkId')
-          .should('be.visible')
-          .type(firstUser.firstName);
-
-        cy.get('#form-add-user-userToLinkId')
-          .find('.Select__menu')
-          .should('be.visible')
-          .find('.Select__option')
-          .contains(`${firstUser.firstName} ${firstUser.lastName}`)
           .click();
       });
 

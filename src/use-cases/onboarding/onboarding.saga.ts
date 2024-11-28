@@ -7,7 +7,7 @@ import {
   selectCurrentUserProfileHelps,
 } from '../current-user';
 import { Api } from 'src/api';
-import { USER_ROLES, CANDIDATE_USER_ROLES } from 'src/constants/users';
+import { USER_ROLES } from 'src/constants/users';
 import { isRoleIncluded } from 'src/utils';
 import { slice } from './onboarding.slice';
 
@@ -30,11 +30,11 @@ export function* launchOnboardingSaga() {
   const userRole = currentUser.role;
   const userHelps = yield* select(selectCurrentUserProfileHelps);
   const candidateWithBusinessLine =
-    isRoleIncluded(CANDIDATE_USER_ROLES, userRole) &&
+    userRole === USER_ROLES.CANDIDATE &&
     userProfile.searchBusinessLines &&
     userProfile.searchBusinessLines.length > 0;
   const coachWithBusinessLine =
-    USER_ROLES.COACH === userRole &&
+    userRole === USER_ROLES.COACH &&
     userProfile.networkBusinessLines &&
     userProfile.networkBusinessLines.length > 0;
   const onBoardingDone =
@@ -42,7 +42,7 @@ export function* launchOnboardingSaga() {
     userProfile.description;
 
   // if admin or external Coach, no Onboarding
-  if (isRoleIncluded([USER_ROLES.ADMIN, USER_ROLES.COACH_EXTERNAL], userRole)) {
+  if (isRoleIncluded([USER_ROLES.ADMIN, USER_ROLES.REFERER], userRole)) {
     yield* put(endOnboarding());
   }
 

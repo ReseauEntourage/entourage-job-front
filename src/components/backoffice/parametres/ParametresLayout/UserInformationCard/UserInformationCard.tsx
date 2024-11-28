@@ -3,13 +3,9 @@ import React from 'react';
 import { Card } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { Tag } from 'src/components/utils/Tag';
-import {
-  CANDIDATE_USER_ROLES,
-  GENDERS_FILTERS,
-  USER_ROLES,
-} from 'src/constants/users';
+import { GENDERS_FILTERS, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { findConstantFromValue, isRoleIncluded } from 'src/utils';
+import { findConstantFromValue } from 'src/utils';
 import {
   StyledInformationsPersonnellesList,
   StyledUserInformationCardTags,
@@ -62,7 +58,7 @@ export const UserInformationCard = ({ title }: UserInformationCardProps) => {
                 <>Département non renseigné</>
               )}
             </li>
-            {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) && (
+            {user.role === USER_ROLES.CANDIDATE && (
               <li>
                 <LucidIcon name="House" />
                 {user.address ? (

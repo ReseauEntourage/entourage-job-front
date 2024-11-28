@@ -59,6 +59,14 @@ export function isTokenExpiredError(error: unknown) {
   );
 }
 
+export function isInvalidTokenError(error: unknown) {
+  return (
+    isAxiosError(error) &&
+    error.response?.status === 400 &&
+    (error.response?.data as { message?: string })?.message === 'INVALID_TOKEN'
+  );
+}
+
 // ------------------------------------------------------------------
 
 function createAxiosError(status: number) {

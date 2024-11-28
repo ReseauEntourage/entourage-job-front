@@ -3,11 +3,8 @@ import { Api } from 'src/api';
 import { CV, User, UserCandidateWithUsers } from 'src/api/types';
 import { Button, Grid } from 'src/components/utils';
 import { CV_STATUS } from 'src/constants';
-import { COACH_USER_ROLES } from 'src/constants/users';
-import {
-  isRoleIncluded,
-  getUserCandidateFromCoachOrCandidate,
-} from 'src/utils';
+import { USER_ROLES } from 'src/constants/users';
+import { getUserCandidateFromCoachOrCandidate } from 'src/utils';
 
 interface NoCVProps {
   candidateId: string;
@@ -32,7 +29,7 @@ export const NoCV = ({ candidateId, user, setCV }: NoCVProps) => {
 
   return (
     <Grid column middle>
-      {isRoleIncluded(COACH_USER_ROLES, user.role) &&
+      {user.role === USER_ROLES.COACH &&
       (!candidate || (candidate && candidate.deletedAt)) ? (
         <div className="uk-flex uk-flex-column uk-flex-middle">
           <h2 className="uk-text-bold uk-text-center">

@@ -1,39 +1,18 @@
 import _ from 'lodash';
 import { MEMBER_FILTERS_DATA } from 'src/constants';
-import {
-  CANDIDATE_USER_ROLES,
-  COACH_USER_ROLES,
-  UserRole,
-} from 'src/constants/users';
-import { Filter } from 'src/constants/utils';
-import { isRoleIncluded } from './Finding';
-
-const filterMemberTypeConstantsByRole = (
-  roles: typeof CANDIDATE_USER_ROLES | typeof COACH_USER_ROLES
-): Filter => {
-  return {
-    ...MEMBER_FILTERS_DATA[0],
-    constants: MEMBER_FILTERS_DATA[0].constants.filter(({ value }) => {
-      return isRoleIncluded(roles, value as UserRole);
-    }),
-  };
-};
+import { USER_ROLES, UserRole } from 'src/constants/users';
 
 export const mutateTypeFilterDependingOnRole = (
   role: UserRole | UserRole[]
 ) => {
-  if (isRoleIncluded(COACH_USER_ROLES, role)) {
-    return [
-      filterMemberTypeConstantsByRole(COACH_USER_ROLES),
-      MEMBER_FILTERS_DATA[1],
-      MEMBER_FILTERS_DATA[3],
-    ];
+  if (role === USER_ROLES.COACH) {
+    return [MEMBER_FILTERS_DATA[0], MEMBER_FILTERS_DATA[2]];
   }
-  if (isRoleIncluded(CANDIDATE_USER_ROLES, role)) {
-    return [
-      filterMemberTypeConstantsByRole(CANDIDATE_USER_ROLES),
-      ...MEMBER_FILTERS_DATA.slice(1),
-    ];
+  if (role === USER_ROLES.CANDIDATE) {
+    return [...MEMBER_FILTERS_DATA];
+  }
+  if (role === USER_ROLES.REFERER) {
+    return [MEMBER_FILTERS_DATA[0]];
   }
 
   return MEMBER_FILTERS_DATA;
