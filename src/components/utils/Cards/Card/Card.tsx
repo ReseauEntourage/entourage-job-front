@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { LucidIcon } from '../../Icons/LucidIcon';
-import { Typography } from '../../Typography';
+import { Text } from '../../Text';
 import { Button } from 'src/components/utils/Button';
 import { ButtonIcon } from 'src/components/utils/ButtonIcon';
 import { H5 } from 'src/components/utils/Headings';
@@ -98,9 +98,7 @@ export const Card = ({
               centerTitle={centerTitle}
             >
               <H5 title={title} center={centerTitle} />
-              {subtitle && (
-                <Typography center={centerTitle}>{subtitle}</Typography>
-              )}
+              {subtitle && <Text center={centerTitle}>{subtitle}</Text>}
             </StyledCardTitleContainer>
           </StyledCardTopContainer>
           {!closedMode && (

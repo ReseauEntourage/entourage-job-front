@@ -1,6 +1,6 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import { Button, Img, Section, Typography } from 'src/components/utils';
+import { Button, Img, Section, Text } from 'src/components/utils';
 import { H2, H5 } from 'src/components/utils/Headings';
 import { useIsDesktop } from 'src/hooks/utils';
 import { AnyToFix } from 'src/utils/Types';
@@ -38,9 +38,9 @@ export const SimpleCardsImageCTA = ({
       <H2 title={title} color="black" center />
       {subtitle && (
         <StyledSimpleCardsImageCTASubtitle>
-          <Typography size="large" center>
+          <Text size="large" center>
             {subtitle}
-          </Typography>
+          </Text>
         </StyledSimpleCardsImageCTASubtitle>
       )}
       <StyledSimpleCardsImageCTAContainer data-uk-scrollspy="cls:uk-animation-slide-bottom-small; target: .decouvrir-card; delay: 200">

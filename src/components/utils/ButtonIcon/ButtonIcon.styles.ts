@@ -8,8 +8,4 @@ export const StyledButtonIcon = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  &:hover {
-    /* opacity: 0.6; */
-  }
 `;

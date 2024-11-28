@@ -2,9 +2,9 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Conversation, User } from 'src/api/types';
+import { Conversation, ConversationParticipant } from 'src/api/types';
 import { conversationHasUnreadMessages } from 'src/components/backoffice/messaging/messaging.utils';
-import { ImgProfile, Typography } from 'src/components/utils';
+import { ImgProfile, Text } from 'src/components/utils';
 import { useIsDesktop } from 'src/hooks/utils';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
 import {
@@ -25,7 +25,7 @@ export const ConversationItem = ({ conversation }: ConversationItemProps) => {
   const currentUserId = useSelector(selectCurrentUserId);
   const addresee = conversation.participants.find(
     (participant) => participant.id !== currentUserId
-  ) as User;
+  ) as ConversationParticipant;
   const userHasSeenConversation = conversationHasUnreadMessages(
     conversation,
     currentUserId
@@ -40,31 +40,31 @@ export const ConversationItem = ({ conversation }: ConversationItemProps) => {
       <StyledConversationMainInfos>
         <StyledConversationParticipants>
           <ImgProfile user={addresee} size={25} />
-          <Typography weight="bold">
+          <Text weight="bold">
             {`${addresee.firstName} ${addresee.lastName}`}
-          </Typography>
+          </Text>
         </StyledConversationParticipants>
         {isDesktop && (
           <StyledMessagePreview hasSeen={userHasSeenConversation}>
-            <Typography weight={!userHasSeenConversation ? 'bold' : undefined}>
+            <Text weight={!userHasSeenConversation ? 'bold' : undefined}>
               {conversation.messages[0].content}
-            </Typography>
+            </Text>
           </StyledMessagePreview>
         )}
         <StyledMessageDate>
-          <Typography>
+          <Text>
             {moment(conversation.messages[0].createdAt).format('DD/MM/YYYY')}
-          </Typography>
+          </Text>
         </StyledMessageDate>
       </StyledConversationMainInfos>
       {!isDesktop && (
         <StyledMessagePreview>
-          <Typography
+          <Text
             size="small"
             weight={!userHasSeenConversation ? 'bold' : undefined}
           >
             {conversation.messages[0].content}
-          </Typography>
+          </Text>
         </StyledMessagePreview>
       )}
     </StyledContainer>

@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import { Typography } from '../Typography';
+import { Text } from '../Text';
 import { Alert } from './Alert';
 import { AlertProps } from './Alert.types';
 
@@ -8,7 +8,7 @@ const AlertWithContent = ({ variant, closable }: AlertProps) => {
   return (
     <Alert variant={variant} closable={closable}>
       <div>
-        <Typography>This is an information</Typography>
+        <Text>This is an information</Text>
       </div>
     </Alert>
   );

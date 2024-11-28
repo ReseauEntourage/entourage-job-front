@@ -21,5 +21,5 @@ export * from './Navbar';
 export * from './Navbar/NavbarLogo';
 export * from './Section';
 export * from './Offcanvas';
-export * from './Typography';
+export * from './Text';
 export * from './Dropdown/Dropdown';

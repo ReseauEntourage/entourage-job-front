@@ -6,6 +6,7 @@ import {
   getConversationsAdapter,
   postMessageAdapter,
   getUnseenConversationsCountAdapter,
+  bindNewConversationAdapter,
 } from './messaging.adapter';
 
 export type MessagingPinnedInfo = 'ADDRESSEE_UNAVAILABLE' | null;
@@ -15,6 +16,7 @@ export interface State {
   getUnseenConversationsCount: RequestState<
     typeof getUnseenConversationsCountAdapter
   >;
+  bindNewConversation: RequestState<typeof bindNewConversationAdapter>;
   getSelectedConversation: RequestState<typeof getSelectedConversationAdapter>;
   postMessage: RequestState<typeof postMessageAdapter>;
   conversations: Conversation[] | null;
@@ -29,6 +31,7 @@ const initialState: State = {
   getConversations: getConversationsAdapter.getInitialState(),
   getUnseenConversationsCount:
     getUnseenConversationsCountAdapter.getInitialState(),
+  bindNewConversation: bindNewConversationAdapter.getInitialState(),
   getSelectedConversation: getSelectedConversationAdapter.getInitialState(),
   postMessage: postMessageAdapter.getInitialState(),
   conversations: null,
@@ -47,7 +50,6 @@ export const slice = createSlice({
       (state) => state.getConversations,
       {
         getConversationsSucceeded(state, action) {
-          // Only change the state if the conversations are different
           state.conversations = action.payload;
         },
       }
@@ -57,6 +59,32 @@ export const slice = createSlice({
       {
         getUnseenConversationsCountSucceeded(state, action) {
           state.unseenConversationCount = action.payload;
+        },
+      }
+    ),
+    ...bindNewConversationAdapter.getReducers<State>(
+      (state) => state.bindNewConversation,
+      {
+        bindNewConversationSucceeded(state, action) {
+          const conversation = state.conversations?.find(
+            (conv) =>
+              conv.participants.length === 2 && // Only 1-1 conversations
+              conv.participants.find((p) => p.id === action.payload[0].id) // The required user is in the conversation
+          );
+
+          if (conversation) {
+            state.selectedConversationId = conversation.id;
+          } else {
+            const newConversation: Conversation = {
+              id: '',
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+              messages: [],
+              participants: action.payload,
+            };
+            state.selectedConversationId = 'new';
+            state.selectedConversation = newConversation;
+          }
         },
       }
     ),
@@ -121,28 +149,6 @@ export const slice = createSlice({
     },
     setPinnedInfo(state, action) {
       state.pinnedInfo = action.payload;
-    },
-    selectConversationByParticipants(state, action) {
-      // action.payload is an array of participants
-      const conversation = state.conversations?.find(
-        (conv) =>
-          conv.participants.length === 2 && // Only 1-1 conversations
-          conv.participants.find((p) => p.id === action.payload[0].id) // The required user is in the conversation
-      );
-
-      if (conversation) {
-        state.selectedConversationId = conversation.id;
-      } else {
-        const newConversation: Conversation = {
-          id: 'new',
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          messages: [],
-          participants: action.payload,
-        };
-        state.selectedConversationId = 'new';
-        state.selectedConversation = newConversation;
-      }
     },
   },
 });

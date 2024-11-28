@@ -3,7 +3,7 @@ import { COLORS } from 'src/constants/styles';
 
 export const StyledConnectedItem = styled.li`
   display: list-item;
-  border-right: 1px solid ${COLORS.lightgray};
+  border-right: 1px solid ${COLORS.lightGray};
   position: relative;
 
   text-align: center;

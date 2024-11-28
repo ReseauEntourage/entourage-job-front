@@ -37,7 +37,7 @@ export const allCTAs = {
     ),
   },
   notInterested: {
-    color: 'darkGrayFont',
+    color: 'darkGray',
     className: 'custom-primary-inverted',
     action: 'archive',
     text: (
@@ -70,7 +70,7 @@ export const allCTAs = {
     ),
   },
   abandon: {
-    color: 'darkGrayFont',
+    color: 'darkGray',
     className: 'custom-primary-inverted',
     action: 'abandon',
     text: (
@@ -120,13 +120,13 @@ export const allCTAs = {
     text: "J'ai validé ma période d'essai",
   },
   trialUnvalidated: {
-    color: 'darkGrayFont',
+    color: 'darkGray',
     className: 'custom-primary-inverted',
     action: () => {},
     text: "Je n'ai pas validé la période d'essai",
   },
   feedback: {
-    color: 'darkGrayFont',
+    color: 'darkGray',
     className: 'custom-primary-inverted',
     action: () => {},
     text: 'Je demande un retour du recruteur',

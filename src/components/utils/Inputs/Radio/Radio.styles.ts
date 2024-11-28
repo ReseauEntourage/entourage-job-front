@@ -7,7 +7,7 @@ export const StyledRadioContainer = styled.div`
   font-family: Poppins, sans-serif;
 
   legend {
-    color: ${COLORS.darkGray};
+    color: ${COLORS.mediumGray};
     margin-bottom: 24px;
     margin-top: 20px;
   }

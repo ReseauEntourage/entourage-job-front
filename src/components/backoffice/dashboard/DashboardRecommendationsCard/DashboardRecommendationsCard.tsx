@@ -4,6 +4,7 @@ import {
   StyledDashboardCardContent,
   StyledDashboardCardContentContainer,
 } from '../Dashboard.styles';
+import { DashboardNetworkDiscoveryCard } from '../DashboardNetworkDiscoverCard';
 import { DirectoryItem } from 'src/components/backoffice/directory/DirectoryItem';
 import { Button, Card } from 'src/components/utils';
 import { CardList } from 'src/components/utils/CardList';
@@ -13,11 +14,7 @@ import {
   USER_ROLES,
 } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import {
-  selectCurrentUserProfileBusinessLines,
-  selectCurrentUserProfileHelps,
-  selectLinkedUser,
-} from 'src/use-cases/current-user';
+import { selectLinkedUser } from 'src/use-cases/current-user';
 import { isRoleIncluded, mutateToArray } from 'src/utils';
 import { StyledDashboardRecommendationsList } from './DashboardRecommendationsCard.styles';
 import { useDashboardRecommendations } from './useDashboardRecommendations';
@@ -51,18 +48,9 @@ export const DashboardRecommendationsCard = () => {
   const isAlreadyLinkedCandidate =
     isRoleIncluded(CANDIDATE_USER_ROLES, user.role) && linkedUser;
 
-  const { recommendations, isLoading } = useDashboardRecommendations();
-
-  const currentUserHelps = useSelector(selectCurrentUserProfileHelps);
-  const currentUserBusinessLines = useSelector(
-    selectCurrentUserProfileBusinessLines
-  );
+  const { recommendations, isLoading, isError } = useDashboardRecommendations();
 
   const query = {
-    businessLines: currentUserBusinessLines
-      ? currentUserBusinessLines.map(({ name }) => name)
-      : [],
-    helps: currentUserHelps ? currentUserHelps.map(({ name }) => name) : [],
     departments: mutateToArray(user.userProfile.department),
   };
 
@@ -94,7 +82,11 @@ export const DashboardRecommendationsCard = () => {
     });
   }, [recommendations]);
 
-  if (isAlreadyLinkedCandidate || recommendations.length === 0) {
+  if ((recommendations.length === 0 && !isLoading) || isError) {
+    return <DashboardNetworkDiscoveryCard />;
+  }
+
+  if (isAlreadyLinkedCandidate) {
     return null;
   }
 

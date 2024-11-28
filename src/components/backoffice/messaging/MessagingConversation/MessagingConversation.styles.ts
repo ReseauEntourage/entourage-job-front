@@ -8,7 +8,7 @@ export const MessagingConversationContainer = styled.div`
   width: 100%;
   min-height: 450px;
   flex-grow: 1;
-  border: ${COLORS.lightgray} 1px solid;
+  border: ${COLORS.lightGray} 1px solid;
   box-sizing: border-box;
   height: 100%;
 `;
@@ -28,7 +28,7 @@ export const MessagingMessagesContainer = styled.div`
 export const MessagingMessageForm = styled.form`
   display: flex;
   align-items: flex-end;
-  background: ${COLORS.lightgray};
+  background: ${COLORS.lightGray};
   padding: 30px 20px;
   box-sizing: border-box;
   gap: 25px;
