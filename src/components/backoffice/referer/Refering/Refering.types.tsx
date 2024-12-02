@@ -100,7 +100,8 @@ export const ReferingStepContents: {
     form: formReferingSocialSituation,
     subtitle: (
       <>
-        Nous aimerions en savoir un peu plus sur votre situation. <br />
+        Nous aimerions en savoir un peu plus sur la situation du candidat.
+        <br />
         <br />
         <Alert>
           <Text weight="bold">
