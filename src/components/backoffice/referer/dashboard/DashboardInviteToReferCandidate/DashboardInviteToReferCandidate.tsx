@@ -27,7 +27,12 @@ export const DashboardInviteToReferCandidate = () => {
             qu&apos;il puisse accéder à la plateforme Entourage pro.
           </Text>
         </StyledDescriptionContainer>
-        <Button onClick={referCandidate}>Orienter un candidat</Button>
+        <Button
+          onClick={referCandidate}
+          dataTestId="dashboard-invite-to-refer-btn"
+        >
+          Orienter un candidat
+        </Button>
       </StyledContainer>
     </Card>
   );
