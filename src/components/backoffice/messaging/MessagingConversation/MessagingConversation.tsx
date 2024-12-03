@@ -1,18 +1,31 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MessagingEmptyState } from '../MessagingEmptyState';
 import { Button } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { DELAY_REFRESH_CONVERSATIONS } from 'src/constants';
+import { USER_ROLES } from 'src/constants/users';
 import { useIsMobile } from 'src/hooks/utils';
-import { selectCurrentUserId } from 'src/use-cases/current-user';
+import {
+  selectCurrentUser,
+  selectCurrentUserId,
+} from 'src/use-cases/current-user';
 import {
   messagingActions,
   selectSelectedConversation,
   selectSelectedConversationId,
   selectPinnedInfo,
 } from 'src/use-cases/messaging';
-import { selectConversationParticipantsAreDeleted } from 'src/use-cases/messaging/messaging.selectors';
+import {
+  selectConversationParticipantsAreDeleted,
+  selectNewMessage,
+} from 'src/use-cases/messaging/messaging.selectors';
 import {
   MessagingConversationContainer,
   MessagingInput,
@@ -23,10 +36,12 @@ import {
 import { MessagingConversationHeader } from './MessagingConversationHeader/MessagingConversationHeader';
 import { MessagingMessage } from './MessagingMessage/MessagingMessage';
 import { MessagingPinnedInfo } from './MessagingPinnedInfo/MessagingPinnedInfo';
+import { MessagingSuggestions } from './MessagingSuggestions/MessagingSuggestions';
 
 export const MessagingConversation = () => {
   const dispatch = useDispatch();
   const isMobile = useIsMobile();
+  const currentUser = useSelector(selectCurrentUser);
   const currentUserId = useSelector(selectCurrentUserId);
   const selectedConversationId = useSelector(selectSelectedConversationId);
   const selectedConversation = useSelector(selectSelectedConversation);
@@ -34,10 +49,17 @@ export const MessagingConversation = () => {
     selectConversationParticipantsAreDeleted
   );
   const pinnedInfo = useSelector(selectPinnedInfo);
-  const [newMessage, setNewMessage] = useState<string>('');
+  const newMessage = useSelector(selectNewMessage);
   const [scrollBehavior, setScrollBehavior] = useState<ScrollBehavior>(
     'instant' as ScrollBehavior
   );
+  const displaySuggestions = useMemo(() => {
+    return (
+      selectedConversationId === 'new' &&
+      currentUser &&
+      currentUser.role === USER_ROLES.CANDIDATE
+    );
+  }, [currentUser, selectedConversationId]);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
@@ -81,7 +103,6 @@ export const MessagingConversation = () => {
         selectedConversationId === 'new' ? undefined : selectedConversation.id,
     };
     dispatch(messagingActions.postMessageRequested(body));
-    setNewMessage('');
     adjustMessageHeight();
   };
 
@@ -146,14 +167,20 @@ export const MessagingConversation = () => {
         <>
           <MessagingConversationHeader />
           {pinnedInfo && <MessagingPinnedInfo pinnedInfo={pinnedInfo} />}
-          <MessagingMessagesContainer className={isMobile ? 'mobile' : ''}>
-            {selectedConversation &&
-              selectedConversation.messages &&
-              selectedConversation.messages.map((message) => (
-                <MessagingMessage key={message.id} message={message} />
-              ))}
-            <div ref={messagesEndRef} />
-          </MessagingMessagesContainer>
+
+          {displaySuggestions ? (
+            <MessagingSuggestions />
+          ) : (
+            <MessagingMessagesContainer className={isMobile ? 'mobile' : ''}>
+              {selectedConversation &&
+                selectedConversation.messages &&
+                selectedConversation.messages.map((message) => (
+                  <MessagingMessage key={message.id} message={message} />
+                ))}
+              <div ref={messagesEndRef} />
+            </MessagingMessagesContainer>
+          )}
+
           {/* Bloc de rédaction d'un message */}
           <MessagingMessageForm className={isMobile ? 'mobile' : ''}>
             <MessagingInputContainer>
@@ -163,7 +190,7 @@ export const MessagingConversation = () => {
                 placeholder="Ecrivez votre message"
                 value={newMessage}
                 onChange={(e) => {
-                  setNewMessage(e.target.value);
+                  dispatch(messagingActions.setNewMessage(e.target.value));
                 }}
                 disabled={conversationParticipantsAreDeleted}
               />
