@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 
 export const StyledReferingPage = styled.div`
   background: ${COLORS.lightGray};
@@ -13,9 +13,16 @@ export const StyledReferingContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 20px;
-  width: 795px;
-  margin-top: 50px;
+  max-width: 795px;
+
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 0 20px;
+  @media (min-width: ${BREAKPOINTS.desktop}px) {
+    margin-top: 50px;
+    margin-bottom: 15px;
+    padding: 0 15px;
+  }
 `;
 
 export const StyledReferingSpinnerContainer = styled.div`
