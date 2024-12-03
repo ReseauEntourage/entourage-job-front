@@ -32,5 +32,6 @@ export const StyledErrorMessage = styled.div`
 
 export const StyledCompulsoryMessage = styled.div`
   color: ${COLORS.darkGray};
+  margin-top: 20px;
   font-size: 12px;
 `;

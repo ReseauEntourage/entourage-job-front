@@ -81,7 +81,7 @@ export function SelectSimple<T extends string | number | boolean>({
           >
             {showLabel || !title ? (
               <div>
-                {placeholder || 'Selectionnez dans la liste...'}{' '}
+                {placeholder || 'Sélectionnez dans la liste...'}{' '}
                 <LucidIcon name="ChevronDown" />
               </div>
             ) : (
