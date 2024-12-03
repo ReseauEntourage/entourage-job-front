@@ -13,11 +13,13 @@ export const StyledReferingContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 100%;
   max-width: 795px;
 
   margin-top: 20px;
   margin-bottom: 20px;
   padding: 0 20px;
+  box-sizing: border-box;
   @media (min-width: ${BREAKPOINTS.desktop}px) {
     margin-top: 50px;
     margin-bottom: 15px;
