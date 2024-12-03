@@ -45,7 +45,11 @@ export const NORMAL_USER_ROLES: NormalUserRole[] = [
   USER_ROLES.COACH,
 ];
 
-export const ALL_USER_ROLES = [USER_ROLES.CANDIDATE, USER_ROLES.COACH];
+export const ALL_USER_ROLES = [
+  USER_ROLES.CANDIDATE,
+  USER_ROLES.COACH,
+  USER_ROLES.REFERER,
+];
 
 export const GENDERS = {
   MALE: 0,
