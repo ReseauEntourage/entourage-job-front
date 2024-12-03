@@ -12,7 +12,7 @@ import { gaEvent } from 'src/lib/gtag';
 const numbers = [
   {
     value: '440',
-    description: 'candidat(e)s accompagnés depuis le lancement',
+    description: 'candidat(e)s accompagné(e)s depuis le lancement',
   },
   {
     value: '72%',

@@ -69,7 +69,7 @@ export const ReferingStepContents: {
   'step-2': {
     form: formReferingExpectations,
     subtitle:
-      'Quelles sont les attentes de votre candidats en rejoignant Entourage Pro ?',
+      'Quelles sont les attentes de votre candidat en rejoignant Entourage Pro ?',
     annotation: ReferingLabels.MULTIPLE_CHOICE,
   },
   'step-3': {

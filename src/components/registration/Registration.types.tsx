@@ -278,7 +278,7 @@ export const CandidateLastStepContent: Pick<LastStepContent, 'bullets'> = {
     },
     {
       icon: <IlluPoigneeDeMain {...iconSizeProps} />,
-      title: 'Demander des coups de pouces à des coachs',
+      title: 'Demandez des coups de pouces à des coachs',
       text: 'Sollicitez du soutien auprès de coachs tout au long de votre recherche',
     },
     {
