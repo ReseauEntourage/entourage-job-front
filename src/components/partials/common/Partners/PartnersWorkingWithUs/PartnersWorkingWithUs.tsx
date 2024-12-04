@@ -44,7 +44,6 @@ export const PartnersWorkingWithUs = ({
     },
   ] as PartnersListItem[];
 
-  // Ils travaillent avec Entourage Pro
   return (
     <Partners
       title="Ils travaillent avec Entourage Pro"

@@ -50,7 +50,6 @@ export const PartnersSupportUs = ({
     },
   ] as PartnersListItem[];
 
-  // Ils travaillent avec Entourage Pro
   return (
     <Partners
       title="Ils soutiennent Entourage Pro"
