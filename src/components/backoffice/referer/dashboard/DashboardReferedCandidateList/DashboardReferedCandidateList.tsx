@@ -61,6 +61,7 @@ export const DashboardReferedCandidateList = () => {
           ambitions={profile.searchAmbitions}
           job={profile.currentJob}
           isAvailable={profile.isAvailable}
+          displayHelps={false}
         />
       );
     });
@@ -70,7 +71,7 @@ export const DashboardReferedCandidateList = () => {
     <Card title="Les candidats que vous avez orientés" centerTitle>
       <StyledDashboardCardContentContainer>
         <StyledDashboardReferedCandidateList>
-          <CardList list={referedList} isLoading={loading} />
+          <CardList list={referedList} isLoading={loading} condensed />
         </StyledDashboardReferedCandidateList>
       </StyledDashboardCardContentContainer>
     </Card>

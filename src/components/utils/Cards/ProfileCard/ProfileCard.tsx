@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React, { useMemo } from 'react';
 import HandsIcon from 'assets/icons/illu-coeur-mains-ouvertes.svg';
 import CaseIcon from 'assets/icons/illu-malette.svg';
+import { Button } from '../../Button';
 import { UserCandidateWithUsers } from 'src/api/types';
 import { AvailabilityTag } from 'src/components/utils/AvailabilityTag';
 import { H3, H5 } from 'src/components/utils/Headings';
@@ -19,6 +20,7 @@ import { useImageFallback } from 'src/hooks/useImageFallback';
 import { gaEvent } from 'src/lib/gtag';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
 import {
+  StyledCTAContainer,
   StyledProfileCard,
   StyledProfileCardAvailability,
   StyledProfileCardBusinessLines,
@@ -63,6 +65,7 @@ export interface ProfileCardProps {
   department?: Department;
   job?: string;
   isAvailable: boolean;
+  displayHelps?: boolean;
 }
 
 const getLabelsDependingOnRole = (role: UserRole) => {
@@ -100,6 +103,7 @@ export function ProfileCard({
   userCandidate,
   job,
   isAvailable,
+  displayHelps,
 }: ProfileCardProps) {
   const { urlImg, fallbackToCVImage } = useImageFallback({
     userId,
@@ -241,37 +245,42 @@ export function ProfileCard({
                 )}
               </StyledProfileCardBusinessLines>
             </StyledProfileCardProfessionalSituation>
-
-            <StyledProfileCardHelpContainer>
-              <StyledSeparator />
-              <StyledProfileCardLabel>
-                <Text color="light">{labels.helps}</Text>
-              </StyledProfileCardLabel>
-              <StyledProfileCardHelps>
-                {helps && helps.length > 0 ? (
-                  helps.map(({ name }) => {
-                    const help = findConstantFromValue(name, ProfileHelps);
-                    return (
-                      <StyledProfileCardHelp key={help.value}>
-                        {help.icon}
-                        <StyledProfileCardHelpLabel>
-                          {help.label}
-                        </StyledProfileCardHelpLabel>
-                      </StyledProfileCardHelp>
-                    );
-                  })
-                ) : (
-                  <StyledProfileCardEmptyHelpsContainer>
-                    <StyledProfileCardEmptyIcon>
-                      <HandsIcon {...iconSizeProps} />
-                    </StyledProfileCardEmptyIcon>
-                    <Text color="lighter" size="small" variant="italic">
-                      {EMPTY_INFO}
-                    </Text>
-                  </StyledProfileCardEmptyHelpsContainer>
-                )}
-              </StyledProfileCardHelps>
-            </StyledProfileCardHelpContainer>
+            <StyledSeparator />
+            {displayHelps ? (
+              <StyledProfileCardHelpContainer>
+                <StyledProfileCardLabel>
+                  <Text color="light">{labels.helps}</Text>
+                </StyledProfileCardLabel>
+                <StyledProfileCardHelps>
+                  {helps && helps.length > 0 ? (
+                    helps.map(({ name }) => {
+                      const help = findConstantFromValue(name, ProfileHelps);
+                      return (
+                        <StyledProfileCardHelp key={help.value}>
+                          {help.icon}
+                          <StyledProfileCardHelpLabel>
+                            {help.label}
+                          </StyledProfileCardHelpLabel>
+                        </StyledProfileCardHelp>
+                      );
+                    })
+                  ) : (
+                    <StyledProfileCardEmptyHelpsContainer>
+                      <StyledProfileCardEmptyIcon>
+                        <HandsIcon {...iconSizeProps} />
+                      </StyledProfileCardEmptyIcon>
+                      <Text color="lighter" size="small" variant="italic">
+                        {EMPTY_INFO}
+                      </Text>
+                    </StyledProfileCardEmptyHelpsContainer>
+                  )}
+                </StyledProfileCardHelps>
+              </StyledProfileCardHelpContainer>
+            ) : (
+              <StyledCTAContainer>
+                <Button style="custom-primary-inverted">Voir le profil</Button>
+              </StyledCTAContainer>
+            )}
           </StyledProfileCardContent>
         </StyledProfileCard>
       </a>

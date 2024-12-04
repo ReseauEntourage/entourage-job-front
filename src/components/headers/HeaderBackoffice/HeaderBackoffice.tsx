@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyledHeaderBackOffice } from 'src/components/headers/HeaderBackoffice/HeaderBackoffice.styles';
 import { Grid } from 'src/components/utils';
+import { H1 } from 'src/components/utils/Headings';
 import { Tag } from 'src/components/utils/Tag';
 import { usePendingMembers } from './usePendingMembers';
 
@@ -30,7 +31,7 @@ export const HeaderBackoffice = ({
         eachWidths={['expand@m', 'auto@m']}
       >
         <div>
-          <h2 className="uk-text-bold">{title}</h2>
+          <H1 title={title} />
           <p className="uk-text-lead">{description}</p>
         </div>
         <div>{children}</div>
