@@ -10561,9 +10561,6 @@ mark {
 .ent-subnav {
   margin-bottom: 30px !important;
 }
-.ent-subnav li.uk-active {
-  font-weight: 500;
-}
 .ent-subnav > * {
   padding-left: 40px;
 }
