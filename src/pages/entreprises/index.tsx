@@ -7,7 +7,7 @@ import { PostPublicOpportunityModal } from 'src/components/modals/Modal/ModalGen
 import { TaxModal } from 'src/components/modals/PopupModal/TaxModal';
 import { Impact } from 'src/components/partials/common/Impact';
 import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
-import { Partners } from 'src/components/partials/common/Partners';
+import { PartnersWorkingWithUs } from 'src/components/partials/common/Partners/PartnersWorkingWithUs/PartnersWorkingWithUs';
 import { EntreprisesCVLIst } from 'src/components/partials/pages/Entreprises/EntreprisesCVList';
 import { EntreprisesEnSavoirPlus } from 'src/components/partials/pages/Entreprises/EntreprisesEnSavoirPlus';
 import { EntreprisesTextImage } from 'src/components/partials/pages/Entreprises/EntreprisesTextImages';
@@ -130,7 +130,7 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
 
       <Reviews reviews={reviews} title="Ce que Entourage Pro leur a apporté" />
 
-      <Partners tag={GA_TAGS.PAGE_ENTREPRISES_PARTNERS_CLICK} />
+      <PartnersWorkingWithUs tag={GA_TAGS.PAGE_ENTREPRISES_PARTNERS_CLICK} />
 
       <HowToCommitDifferently />
 
