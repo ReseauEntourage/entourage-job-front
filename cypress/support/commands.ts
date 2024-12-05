@@ -32,6 +32,7 @@ declare global {
       generateCvReadApiResponse(): Chainable<Subject>;
       generateCvUrlApiResponse(): Chainable<Subject>;
       generateCampaignsApiResponse(): Chainable<Subject>;
+      generateUserProfileReferedApiResponse(): Chainable<Subject>;
     }
   }
 }
@@ -193,6 +194,17 @@ Cypress.Commands.add('generateCvUrlApiResponse', () => {
 Cypress.Commands.add('generateCampaignsApiResponse', () => {
   cy.writeFile(
     'cypress/fixtures/api/generated/campaigns.json',
+    generateCampaignsApiResponse(2),
+    'utf-8'
+  );
+});
+
+/**
+ * Command to generate user profile refered
+ */
+Cypress.Commands.add('generateUserProfileReferedApiResponse', () => {
+  cy.writeFile(
+    'cypress/fixtures/api/generated/user-profile-refered.json',
     generateCampaignsApiResponse(2),
     'utf-8'
   );
