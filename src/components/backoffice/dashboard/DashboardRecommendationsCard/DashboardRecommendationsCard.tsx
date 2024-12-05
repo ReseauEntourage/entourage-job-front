@@ -72,6 +72,7 @@ export const DashboardRecommendationsCard = () => {
           ambitions={profile.searchAmbitions}
           job={profile.currentJob}
           isAvailable={profile.isAvailable}
+          displayHelps={false}
         />
       );
     });
@@ -93,7 +94,11 @@ export const DashboardRecommendationsCard = () => {
     >
       <StyledDashboardCardContentContainer>
         <StyledDashboardRecommendationsList>
-          <CardList list={recommendationsList} isLoading={isLoading} />
+          <CardList
+            list={recommendationsList}
+            isLoading={isLoading}
+            condensed
+          />
         </StyledDashboardRecommendationsList>
         <Button
           style="custom-secondary-inverted"

@@ -11,18 +11,21 @@ interface CardListProps {
   list: JSX.Element[];
   isLoading?: boolean;
   dataTestId?: string;
+  condensed?: boolean;
 }
 
 export function CardList({
   list,
   isLoading = false,
+  condensed = false,
   dataTestId,
 }: CardListProps) {
   return (
     <StyledCardListContainer>
       <StyledCardList
-        data-uk-scrollspy="cls:uk-animation-slide-bottom-small; target: li;"
+        data-uk-scrollspy="cls:uk-animation-slide-bottom-small; target: a;"
         data-testid={dataTestId}
+        condensed={condensed}
       >
         {list.length > 0 && list}
         {list.length === 0 && !isLoading && (
