@@ -3,7 +3,8 @@ import { Layout } from 'src/components/Layout';
 import { CandidateTestimoniesOrientation } from 'src/components/partials/common/CandidateTestimoniesOrientation';
 import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
 import { NousSoutenir } from 'src/components/partials/common/NousSoutenir';
-import { Partners } from 'src/components/partials/common/Partners';
+import { PartnersSupportUs } from 'src/components/partials/common/Partners/PartnersSupportUs/PartnersSupportUs';
+import { PartnersWorkingWithUs } from 'src/components/partials/common/Partners/PartnersWorkingWithUs/PartnersWorkingWithUs';
 import { CandidatListPartial } from 'src/components/partials/pages/HomePage';
 import { Decouvrir } from 'src/components/partials/pages/HomePage/Decouvrir';
 import { Engagement } from 'src/components/partials/pages/HomePage/Engagement';
@@ -57,7 +58,8 @@ const Index = () => {
       />
       <Figures />
       <Engagement />
-      <Partners tag={GA_TAGS.HOME_PARTNERS_CLICK} />
+      <PartnersSupportUs tag={GA_TAGS.HOME_PARTNERS_CLICK} displayCta={false} />
+      <PartnersWorkingWithUs tag={GA_TAGS.HOME_PARTNERS_CLICK} />
       <NousSoutenir />
       <NewsletterPartial tag={GA_TAGS.HOME_INSCRIPTION_NEWSLETTER_CLIC} />
     </Layout>

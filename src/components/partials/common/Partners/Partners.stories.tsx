@@ -1,5 +1,7 @@
 import React from 'react';
 import { Partners } from './Partners';
+import { PartnersSupportUs } from './PartnersSupportUs/PartnersSupportUs';
+import { PartnersWorkingWithUs } from './PartnersWorkingWithUs/PartnersWorkingWithUs';
 
 const meta = {
   title: 'Partials',
@@ -16,7 +18,12 @@ const meta = {
 };
 
 const Template = () => {
-  return <Partners />;
+  return (
+    <>
+      <PartnersWorkingWithUs />
+      <PartnersSupportUs />
+    </>
+  );
 };
 
 export const PartialPartners = {
