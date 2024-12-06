@@ -128,6 +128,7 @@ export function ProfileCard({
       onClick={() => {
         gaEvent(GA_TAGS.PAGE_ANNUAIRE_CARTE_CLIC);
       }}
+      legacyBehavior
     >
       <a target="_blank">
         <StyledProfileCard>
