@@ -1,7 +1,13 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import {
+  act,
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+} from '@testing-library/react';
 
 import React from 'react';
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 import { NewsletterPartial } from '../NewsletterPartial';
 import { BREAKPOINTS } from 'src/constants/styles';
 
@@ -89,7 +95,9 @@ describe('Newsletter Partial', () => {
       const { emailInput, submitBtn } = setup;
       fireEvent.change(emailInput, { target: { value: 'test@gmail.com' } });
       expect(emailInput.value).toBe('test@gmail.com');
-      await fireEvent.click(submitBtn);
+      await act(async () => {
+        fireEvent.click(submitBtn);
+      });
       // check if email input is reset to empty => the request has been sent
       expect(emailInput.value).toEqual('');
     });

@@ -3,7 +3,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 
 import React from 'react';
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 import { ModalInterestLinkedOut } from '../ModalInterestLinkedOut';
 import { Api } from 'src/api';
 import { ModalsListener, openModal } from 'src/components/modals/Modal';
