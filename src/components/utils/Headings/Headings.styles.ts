@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { COLORS } from 'src/constants/styles';
-import { StyledHeadingProps } from './Headings.types';
+import { FONT_WEIGHTS, StyledHeadingProps } from './Headings.types';
 
 export const StyledH1 = styled.h1<StyledHeadingProps>`
   font-size: ${(props) => (props.mobile ? '24px' : '35px')};
-  font-weight: ${(props) => props.weight};
+  font-weight: ${(props) => FONT_WEIGHTS[props.weight]};
   color: ${(props) => {
     if (COLORS[props.color]) {
       return COLORS[props.color];
@@ -19,7 +19,7 @@ export const StyledH1 = styled.h1<StyledHeadingProps>`
 
 export const StyledH2 = styled.h2<StyledHeadingProps>`
   font-size: ${(props) => (props.mobile ? '20px' : '28px')};
-  font-weight: ${(props) => props.weight};
+  font-weight: ${(props) => FONT_WEIGHTS[props.weight]};
   color: ${(props) => {
     if (COLORS[props.color]) {
       return COLORS[props.color];
@@ -39,7 +39,7 @@ export const StyledH2 = styled.h2<StyledHeadingProps>`
 `;
 
 export const StyledH3 = styled.h3<StyledHeadingProps>`
-  font-weight: ${(props) => props.weight};
+  font-weight: ${(props) => FONT_WEIGHTS[props.weight]};
   line-height: 36px;
   color: black;
   color: ${(props) => {
@@ -56,7 +56,7 @@ export const StyledH3 = styled.h3<StyledHeadingProps>`
 `;
 
 export const StyledH4 = styled.h4<StyledHeadingProps>`
-  font-weight: ${(props) => props.weight};
+  font-weight: ${(props) => FONT_WEIGHTS[props.weight]};
   line-height: 24px;
   color: ${(props) => {
     if (COLORS[props.color]) {
@@ -72,7 +72,7 @@ export const StyledH4 = styled.h4<StyledHeadingProps>`
 `;
 
 export const StyledH5 = styled.h5<StyledHeadingProps>`
-  font-weight: ${(props) => props.weight};
+  font-weight: ${(props) => FONT_WEIGHTS[props.weight]};
   line-height: 24px;
   margin-top: 0;
   color: ${(props) => {
@@ -90,7 +90,7 @@ export const StyledH5 = styled.h5<StyledHeadingProps>`
 
 export const StyledH6 = styled.h6<StyledHeadingProps>`
   font-size: 14px;
-  font-weight: ${(props) => props.weight};
+  font-weight: ${(props) => FONT_WEIGHTS[props.weight]};
   line-height: 14px;
   color: ${(props) => {
     if (COLORS[props.color]) {

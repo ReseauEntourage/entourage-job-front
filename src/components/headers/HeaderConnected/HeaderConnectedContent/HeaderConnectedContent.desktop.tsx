@@ -62,7 +62,6 @@ export const HeaderConnectedContentDesktop = ({
             className="uk-padding-small uk-padding-remove-vertical"
             style={{
               height: 80,
-              fontWeight: 500,
               fontSize: '1rem',
               textTransform: 'none',
               display: 'flex',
