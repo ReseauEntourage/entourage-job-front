@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import CreatableSelect from 'react-select/creatable';
+import React, { useEffect, useRef, useState } from 'react';
+import { SelectInstance } from 'react-select';
+import AsyncCreatableSelect from 'react-select/async-creatable';
+
 import {
   StyledAnnotations,
   StyledAnnotationsErrorMessage,
@@ -41,7 +43,6 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
   onBlur,
   openMenuOnClick = false,
   showLabel = false,
-  inputRef,
   maxChar,
   maxItems,
   setIsMaxItemsReached,
@@ -49,6 +50,7 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
   const [remainingItems, setRemainingItems] = useState<number>(maxItems || 0);
   const [shouldDisplayOptions, setShouldDisplayOptions] =
     useState<boolean>(true);
+  const selectRef = useRef<SelectInstance<FilterConstant, boolean>>(null);
 
   useEffect(() => {
     const receivedValues = value as FilterConstant[];
@@ -100,7 +102,7 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
         </StyledInputLabel>
       )}
       <StyledSelect>
-        <CreatableSelect
+        <AsyncCreatableSelect
           id={id}
           components={{ ClearIndicator, DropdownIndicator, MultiValueRemove }}
           classNamePrefix="Select"
@@ -124,9 +126,9 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
               ? `Créer "${userInput}"`
               : 'Vous avez atteint le maximum';
           }}
-          ref={inputRef}
-          max={maxItems}
-          maxLength={maxChar}
+          ref={selectRef}
+          // max={maxItems}
+          // maxLength={maxChar}
           isValidNewOption={(inputValue) => {
             const isEmpty = inputValue.trim().length === 0;
             return maxChar ? inputValue.length < maxChar && !isEmpty : !isEmpty;

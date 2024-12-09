@@ -1,6 +1,5 @@
 import { AxiosInstance } from 'axios';
 import { STORAGE_KEYS } from 'src/constants';
-import { isSSR } from 'src/utils/isSSR';
 
 export const addAxiosInterceptors = (api: AxiosInstance): void => {
   api.interceptors.request.use(
@@ -11,7 +10,7 @@ export const addAxiosInterceptors = (api: AxiosInstance): void => {
        * A vérifier si une optimisation est possible.
        * Source : https://spectrum.chat/next-js/general/localstorage-is-not-defined~6a6798f7-63b0-4184-9861-e66f5dce3934
        */
-      if (!isSSR && localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN)) {
+      if (localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN)) {
         const accessToken = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
 
         if (accessToken) {
