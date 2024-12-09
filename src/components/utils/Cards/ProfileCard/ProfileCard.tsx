@@ -131,7 +131,7 @@ export function ProfileCard({
       legacyBehavior
     >
       <a target="_blank">
-        <StyledProfileCard>
+        <StyledProfileCard className="profile-card">
           <StyledProfileCardPictureContainer>
             <StyledProfileCardPicture>
               {urlImg ? (

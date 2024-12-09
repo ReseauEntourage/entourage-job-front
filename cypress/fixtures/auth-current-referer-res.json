@@ -1,0 +1,26 @@
+{
+  "id": "198e8950-d5be-4e82-aaf8-d18840dffba1",
+  "firstName": "Mike",
+  "lastName": "Fleuri",
+  "email": "m.fleuri@interflora.fr",
+  "phone": "0123456789",
+  "address": "3 rue des caribous",
+  "role": "Prescripteur",
+  "adminRole": null,
+  "zone": "PARIS",
+  "gender": 0,
+  "lastConnection": "2022-10-31T16:32:17.127Z",
+  "candidat": null,
+  "coach": null,
+  "userProfile": {
+    "description": "hello",
+    "department": "Ain (01)",
+    "currentJob": null,
+    "networkBusinessLines": [],
+    "searchBusinessLines": [],
+    "searchAmbitions": [],
+    "helpOffers": [],
+    "helpNeeds": []
+  },
+  "readDocuments": []
+}

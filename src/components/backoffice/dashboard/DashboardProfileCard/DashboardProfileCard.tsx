@@ -32,7 +32,7 @@ export const DashboardProfileCard = () => {
   const userHelpField = helpField ? user.userProfile[helpField] : null;
 
   return (
-    <Card>
+    <Card dataTestId="dashboard-profile-card">
       <StyledDashboardProfileCardPictureName>
         <ImgProfile user={user} size={69} />
         <div>
