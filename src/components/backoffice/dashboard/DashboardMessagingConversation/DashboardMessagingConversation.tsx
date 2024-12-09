@@ -32,7 +32,12 @@ export const DashboardMessagingConversation = () => {
         <ConversationList>
           {conversations &&
             conversations.slice(0, 3).map((conversation) => {
-              return <ConversationItem conversation={conversation} />;
+              return (
+                <ConversationItem
+                  key={conversation.id}
+                  conversation={conversation}
+                />
+              );
             })}
         </ConversationList>
         <Button onClick={openMessaging}>Accéder à la messagerie</Button>
