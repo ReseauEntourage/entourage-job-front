@@ -127,8 +127,6 @@ export function SelectCreatable<T extends FilterConstant | FilterConstant[]>({
               : 'Vous avez atteint le maximum';
           }}
           ref={selectRef}
-          // max={maxItems}
-          // maxLength={maxChar}
           isValidNewOption={(inputValue) => {
             const isEmpty = inputValue.trim().length === 0;
             return maxChar ? inputValue.length < maxChar && !isEmpty : !isEmpty;
