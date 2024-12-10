@@ -7,16 +7,17 @@ const config: StorybookConfig = {
     name: '@storybook/nextjs',
     options: {},
   },
+
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)'],
 
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
+    '@chromatic-com/storybook',
   ],
 
   core: {},
-
   staticDirs: ['../public'],
 
   webpackFinal: async (webpackConfig) => {
@@ -56,8 +57,10 @@ const config: StorybookConfig = {
     return webpackConfig;
   },
 
-  docs: {
-    autodocs: false,
+  docs: {},
+
+  typescript: {
+    reactDocgen: 'react-docgen-typescript',
   },
 };
 
