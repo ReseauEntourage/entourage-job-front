@@ -15,7 +15,7 @@ services:
       - /app/.next
     ports:
       - 3001:3001
-    command: yarn dev
+    command: pnpm run dev
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true

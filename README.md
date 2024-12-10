@@ -25,7 +25,7 @@ Document mis à jour le 05/08/2024
 | App         | Version |
 | ----------- | ------- |
 | **Node**    | 18.x    |
-| **YARN**    | 1.22.x  |
+| **PNPM**    | 9.15.0  |
 | **Next.js** | 12.1.0  |
 | **React**   | 17.0.2  |
 | **Webpack** | 5.74.0  |
@@ -80,10 +80,12 @@ Document mis à jour le 05/08/2024
 
 ### Pré-requis
 
-- Avoir installé yarn [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#debian-stable) est requis pour installer le projet
+- Avoir installé Node est requis pour installer le projet
+- Installer PNPM (inclus dans le corepack de Node)
 
 ```
-npm install -g yarn
+corepack enable
+pnpm -v
 ```
 
 - Avoir correctement intallé et exécuté le [back-end Entourage Pro](https://github.com/ReseauEntourage/entourage-job-back)
@@ -95,13 +97,13 @@ npm install -g yarn
 Installation des dépendances
 
 ```
-yarn install
+pnpm install
 ```
 
 ### Lancement en mode développement
 
 ```
-yarn dev
+pnpm run dev
 ```
 
 ### Lancement en mode production
@@ -109,19 +111,19 @@ yarn dev
 Pour le moment sans Docker
 
 ```
-yarn build
+pnpm run build
 ```
 
 Puis
 
 ```
-npm start
+pnpm start
 ```
 
 ### Prettier + Linter
 
 ```
-yarn lint && yarn format
+pnpm run lint && pnpm run format
 ```
 
 Avec docker, précéder chaque commande par `docker exec front ${cmd}`
@@ -143,7 +145,7 @@ Le path du `tsconfig`pour le build de l'app est fixé dans le fichier `next.conf
 Pour tester le typage du projet (app + cypress), utiliser
 
 ```
-yarn run test:ts-check
+pnpm run test:ts-check
 ```
 
 ### Storybook
@@ -153,13 +155,13 @@ Les différents composants de l'application front sont documentés dans un story
 Pour executer Storybook en local :
 
 ```
-yarn storybook
+pnpm run storybook
 ```
 
 Lorsque vous ajoutez de nouvelles icones dans "/assets/icons", n'oubliez pas de les intégrer au storybook grâce à cette commande :
 
 ```
-yarn add-icons
+pnpm run add-icons
 ```
 
 ## Styles
@@ -174,27 +176,7 @@ Les fichiers du thème globale, qui utilisent la librairie <strike>**_UIkit_**</
 
 - `/icons` : icônes en SVG rajoutés aux icônes <strike>**_UIkit_**</strike>
 
-Après avoir modifié les fichiers du thème, ou après avoir rajouté un icône, il faut recompiler les fichiers en CSS
-
-- Installer d'abord <strike>**_UIkit_**</strike> au sein de son propre module
-
-```
-yarn uikit-install
-```
-
-- Si le module est déjà installé, le mettre à jour
-
-```
-yarn uikit-update
-```
-
-- Ensuite, compiler les fichiers SCSS en CSS
-
-```
-yarn uikit-compile
-```
-
-Les fichiers se retrouvent dans le dossier _/src/styles/dist_.
+Les fichiers compilés se retrouvent dans le dossier _/src/styles/dist_.
 
 ## Tests
 
@@ -203,13 +185,13 @@ Les fichiers se retrouvent dans le dossier _/src/styles/dist_.
 La commande pour lancer les tests une fois
 
 ```
-yarn test
+pnpm run test
 ```
 
 La commande pour lancer les tests en mode watch
 
 ```
-yarn test:watch
+pnpm run test:watch
 ```
 
 Si vous souhaitez obtenir le code coverage
@@ -225,13 +207,13 @@ Un dossier coverage sera créé. Afin de pouvoir le consulter dans le navigateur
 La commande suivante permet de lancer les tests Cypress:
 
 ```
-yarn cypress:local
+pnpm run cypress:local
 ```
 
 Pour obtenir la vidéo des tests sur cypress.io, utilisez la commande suivante:
 
 ```
-yarn cypress:io
+pnpm run cypress:io
 ```
 
 ## Pipeline CI/CD
@@ -260,7 +242,7 @@ Si une branche, après test en pre-production, est mergée à `master`, alors l'
 Régulièrement, lancer la commande ci-dessous, afin de cleaner le code en supprimant les dependances, imports, et exports qui ne sont plus utilisés
 
 ```
-npx dead-exports
+pnpm dlx dead-exports
 ```
 
 ## A lire également
