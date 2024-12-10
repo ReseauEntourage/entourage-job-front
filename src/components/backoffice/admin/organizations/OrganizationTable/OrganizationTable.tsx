@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, type JSX } from 'react';
 import { Table, Th } from 'src/components/utils/Table';
 
 interface OrganizationTableProps {

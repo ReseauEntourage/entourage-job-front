@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import { Spinner } from '../Spinner';
 import { StyledNoResult } from 'src/components/backoffice/Backoffice.styles';
 import {

@@ -89,7 +89,7 @@ export const CharteEthique = () => {
         !isReadDocument(user.readDocuments, DocumentNames.CharteEthique) && (
           <SignDocument
             documentName={DocumentNames.CharteEthique}
-            label={"J'accepte la charte éthique Entourage pro"}
+            label="J'accepte la charte éthique Entourage pro"
           />
         )}
     </Section>

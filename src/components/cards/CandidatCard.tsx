@@ -1,8 +1,8 @@
 import _ from 'lodash';
-// import moment from 'moment';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import React from 'react';
+import DefaultProfilePic from 'public/static/img/arthur.jpg';
 import {
   CandidatCardContentStyled,
   CandidatCardPictureContainerStyled,
@@ -60,7 +60,7 @@ export const CandidatCard = ({
   return (
     <CandidatCardStyled>
       <CandidatCardPictureContainerStyled onClick={onCardClicked}>
-        <Img src={imgSrc} alt={firstName} cover />
+        <Img src={imgSrc || DefaultProfilePic} alt={firstName} cover />
         <CandidatCardPictureOverlay>
           <p className="name">{firstName}</p>
           {sortedLocations?.length > 0 && <p>{sortedLocations[0].name}</p>}
@@ -78,9 +78,7 @@ export const CandidatCard = ({
             <CandidateCardBusinessLinesStyled>
               {isNewCareerPath
                 ? _.uniqWith(sortedBusinessLines.slice(0, 2), (a, b) => {
-                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
                     return a.name === b.name;
-                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
                   }).map(({ name }, index) => {
                     return (
                       <Tag
