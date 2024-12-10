@@ -52,24 +52,22 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
           cache: 'pnpm'
 
       # Get node module from cache
-      - name: Cache Node Modules
-        id: pnpm-cache-deps
-        uses: actions/cache@v3 # action to cache node modules
-        with:
-          # pnpm cache files are stored in `/node_modules` on Linux/macOS
-          path: '**/node_modules'
-          key: linux-node-modules-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            linux-node-modules-
-            linux-node-
-
+      # - name: Cache Node Modules
+      #   id: pnpm-cache-deps
+      #   uses: actions/cache@v3 # action to cache node modules
+      #   with:
+      #     # pnpm cache files are stored in `/node_modules` on Linux/macOS
+      #     path: '**/node_modules'
+      #     key: linux-node-modules-${{ hashFiles('**/pnpm-lock.yaml') }}
+      #     restore-keys: |
+      #       linux-node-modules-
+      #       linux-node-
       - name: Install dependencies
         run: pnpm install
-        if: steps.pnpm-cache-deps.outputs.cache-hit != 'true'
+        # if: steps.pnpm-cache-deps.outputs.cache-hit != 'true'
 
       # Run ts-check test then eslint test
       - name: Run ts-check & eslint - Code Quality Test
