@@ -322,7 +322,7 @@ importers:
         specifier: ^8.4.7
         version: 8.4.7(prettier@2.8.8)
       typescript:
-        specifier: ^4.8.4
+        specifier: ^4.9.5
         version: 4.9.5
       webpack:
         specifier: ^5.94.0
