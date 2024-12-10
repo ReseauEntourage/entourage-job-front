@@ -30,3 +30,6 @@ export const selectConversationParticipantsAreDeleted = (state: RootState) => {
     return participant.userProfile === null;
   });
 };
+
+export const selectNewMessage = (state: RootState) =>
+  state.messaging.newMessage;
