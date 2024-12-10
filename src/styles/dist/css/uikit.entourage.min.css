@@ -10496,6 +10496,12 @@ iframe.uk-cover {
   src: url('/static/fonts/Poppins-Light.ttf') format('truetype');
   font-display: swap;
 }
+@font-face {
+  font-family: 'Poppins';
+  font-weight: 500;
+  src: url('/static/fonts/Poppins-SemiBold.ttf') format('truetype');
+  font-display: swap;
+}
 @media print {
   * {
     -webkit-print-color-adjust: exact !important;
@@ -10554,9 +10560,6 @@ mark {
 }
 .ent-subnav {
   margin-bottom: 30px !important;
-}
-.ent-subnav li.uk-active {
-  font-weight: 500;
 }
 .ent-subnav > * {
   padding-left: 40px;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { FONT_WEIGHTS } from '../Headings/Headings.types';
 import { COLORS } from 'src/constants/styles';
 import { TextProps } from './Text.types';
 
@@ -21,7 +22,7 @@ const colors: { [K in NonNullable<TextProps['color']>]: string } = {
 export const StyledText = styled.div<TextProps>`
   padding: 0;
   margin: 0;
-  font-weight: ${({ weight }) => weight};
+  font-weight: ${(props) => FONT_WEIGHTS[props.weight]};
   font-size: ${({ size }) => sizes[size]}px;
   line-height: ${({ size }) => sizes[size] * 1.5}px;
   color: ${({ color }) => colors[color]};

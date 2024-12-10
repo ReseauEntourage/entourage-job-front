@@ -65,7 +65,6 @@ export const CandidatCardPictureOverlay = styled.div`
     margin: 0;
     &.name {
       font-size: 25px;
-      font-weight: 500;
     }
   }
 `;
