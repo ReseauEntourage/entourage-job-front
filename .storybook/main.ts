@@ -3,10 +3,7 @@ import { StorybookConfig } from '@storybook/nextjs';
 import { AnyCantFix } from '../src/utils/Types';
 
 const config: StorybookConfig = {
-  framework: {
-    name: '@storybook/nextjs',
-    options: {},
-  },
+  framework: '@storybook/nextjs',
 
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)'],
 
@@ -58,10 +55,6 @@ const config: StorybookConfig = {
   },
 
   docs: {},
-
-  typescript: {
-    reactDocgen: 'react-docgen-typescript',
-  },
 };
 
 export default config;

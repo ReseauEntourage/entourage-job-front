@@ -12,7 +12,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "baseUrl": "./",
     "types": ["cypress", "jest", "node"],
     "noImplicitAny": false
@@ -24,7 +24,8 @@
     "**/*.js",
     "**/*.jsx",
     "src/components/utils/CarouselSwiper/swiper-augmentation.d.ts",
-    "./cypress.config.ts"
+    "./cypress.config.ts",
+    ".storybook/**/*"
   ],
-  "exclude": ["node_modules/**/**"]
+  "exclude": ["node_modules"]
 }
