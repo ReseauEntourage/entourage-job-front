@@ -174,7 +174,9 @@ export const AdminOpportunities = ({
     executeAction({ isArchived: true }, 'put');
   };
 
-  const opportunityListRef = useRef<{ fetchData: () => Promise<void> }>();
+  const opportunityListRef = useRef<{ fetchData: () => Promise<void> }>(
+    undefined
+  );
 
   const isDesktop = useIsDesktop();
 

@@ -26,7 +26,7 @@ export const CandidateOpportunityDetailsContainer = ({
       fetchOpportunities
     );
 
-  const ref = useRef();
+  const ref = useRef(undefined);
 
   const [hasCTAContainer, setHasCTAContainer] = useState(true);
 

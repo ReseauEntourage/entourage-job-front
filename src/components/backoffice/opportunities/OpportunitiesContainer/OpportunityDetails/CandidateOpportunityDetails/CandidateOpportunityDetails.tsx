@@ -130,7 +130,6 @@ export const CandidateOpportunityDetails = ({
             opportunityUsers.status,
             opportunityUsers.archived
           )}
-          // @ts-expect-error after enable TS strict mode. Please, try to fix it
           noProcess={
             _.isNil(opportunityUsers.status) ||
             (opportunityUsers.status === -1 &&

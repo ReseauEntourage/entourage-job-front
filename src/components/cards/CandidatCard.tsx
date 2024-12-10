@@ -78,9 +78,7 @@ export const CandidatCard = ({
             <CandidateCardBusinessLinesStyled>
               {isNewCareerPath
                 ? _.uniqWith(sortedBusinessLines.slice(0, 2), (a, b) => {
-                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
                     return a.name === b.name;
-                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
                   }).map(({ name }, index) => {
                     return (
                       <Tag

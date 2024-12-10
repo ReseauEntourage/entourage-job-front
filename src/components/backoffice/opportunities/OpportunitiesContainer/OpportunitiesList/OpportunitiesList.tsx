@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import { OverlayLoader } from 'src/components/utils/OverlayLoader';
 import { StyledListContainer } from './OpportunitiesList.styles';
 

@@ -258,7 +258,7 @@ export const CandidateOpportunityDetailsCTAs = ({
       },
       contactEmail: () => {
         openModal(
-          <ModalGeneric title={"Contacter l'entreprise"}>
+          <ModalGeneric title="Contacter l'entreprise">
             <SendMailModalContent
               OpportunityId={OpportunityId}
               fetchOpportunities={fetchOpportunities}
@@ -294,7 +294,7 @@ export const CandidateOpportunityDetailsCTAs = ({
       },
       contactRelance: () => {
         openModal(
-          <ModalGeneric title={"Contacter l'entreprise"}>
+          <ModalGeneric title="Contacter l'entreprise">
             <SendMailModalContent
               OpportunityId={OpportunityId}
               relance
