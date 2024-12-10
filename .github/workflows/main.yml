@@ -2,7 +2,7 @@ name: Entourage Pro [front-end]
 
 on:
   push:
-    branches: [ master, develop ]
+    branches: [master, develop]
   pull_request: {}
   workflow_dispatch:
 
@@ -42,43 +42,52 @@ jobs:
     steps:
       # Move on the ref
       - name: Checkout on PR
-        uses: actions/checkout@v3 # action to checkout on the ref
+        uses: actions/checkout@v4 # action to checkout on the ref
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
 
       # Get node module from cache
       - name: Cache Node Modules
-        id: yarn-cache-deps
+        id: pnpm-cache-deps
         uses: actions/cache@v3 # action to cache node modules
         with:
-          # npm cache files are stored in `/node_modules` on Linux/macOS
+          # pnpm cache files are stored in `/node_modules` on Linux/macOS
           path: '**/node_modules'
-          key: linux-node-modules-${{ hashFiles('**/yarn.lock') }}
+          key: linux-node-modules-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             linux-node-modules-
             linux-node-
 
-      # Run `yarn install` if cache no exist
-      - name: Yarn Install Deps
-        continue-on-error: true
-        run: |
-          yarn install --frozen-lockfile
-        if: steps.yarn-cache-deps.outputs.cache-hit != 'true'
+      - name: Install dependencies
+        run: pnpm install
+        if: steps.pnpm-cache-deps.outputs.cache-hit != 'true'
 
       # Run ts-check test then eslint test
       - name: Run ts-check & eslint - Code Quality Test
         run: |
-          yarn test:ts-check
-          yarn test:eslint
+          pnpm run test:ts-check
+          pnpm run test:eslint
 
       # Run jest test
       - name: Run Jest - Integration Test
-        run: yarn test:integ
+        run: pnpm run test:integ
 
       # Run cypress test
       - name: Run Cypress - End to End Test
         uses: cypress-io/github-action@v4 # action to exec cypress-io
         with:
-          start: yarn dev # run dev script to enable cypress execution
+          start: pnpm run dev # run dev script to enable cypress execution
           config: e2e.baseUrl=http://localhost:3000
           browser: chrome
-          command: npx cypress run --key ${{ secrets.CYPRESS_IO_KEY }} --record
+          command: pnpm dlx cypress run --key ${{ secrets.CYPRESS_IO_KEY }} --record
           wait-on: http://localhost:3000
