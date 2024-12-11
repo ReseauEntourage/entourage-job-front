@@ -156,9 +156,30 @@ describe('En tant que - Administrateur', () => {
     /**
      * Première partie de test - J'affiche les membres.
      */
-    it("J'affiche les membres", () => {
+    it("J'affiche les candidats", () => {
+      cy.visit('/backoffice/admin/membres?role=Candidat');
       // Grâce au fichier de fixture précédement généré
       cy.fixture('api/generated/users-candidat').then((candidates) => {
+        cy.get('[data-testid="member-list"]')
+          .find('tr')
+          .should('have.length', candidates.length);
+      });
+    });
+
+    it("J'affiche les coachs", () => {
+      cy.visit('/backoffice/admin/membres?role=Coach');
+      // Grâce au fichier de fixture précédement généré
+      cy.fixture('api/generated/users-coach').then((candidates) => {
+        cy.get('[data-testid="member-list"]')
+          .find('tr')
+          .should('have.length', candidates.length);
+      });
+    });
+
+    it("J'affiche les prescripteurs", () => {
+      cy.visit('/backoffice/admin/membres?role=Prescripteur');
+      // Grâce au fichier de fixture précédement généré
+      cy.fixture('api/generated/users-referer').then((candidates) => {
         cy.get('[data-testid="member-list"]')
           .find('tr')
           .should('have.length', candidates.length);

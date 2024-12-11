@@ -22,6 +22,8 @@ const bootstrap = () => {
 
     cy.generateSearchUsersApiResponse(); // search-user.json
     cy.generateUsersApiResponse('candidat'); // users-candidat.json
+    cy.generateUsersApiResponse('coach'); // users-coach.json
+    cy.generateUsersApiResponse('referer'); // users-referer.json
 
     cy.generateOpportunitiesApiResponse(); // opportunities.json
     cy.generateOpportunitiesWrappedApiResponse(); // opportunities-wrapped.json
