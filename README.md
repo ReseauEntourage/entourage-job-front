@@ -24,12 +24,12 @@ Document mis à jour le 05/08/2024
 
 | App         | Version |
 | ----------- | ------- |
-| **Node**    | 18.x    |
+| **Node**    | 20.x    |
 | **PNPM**    | 9.15.0  |
-| **Next.js** | 12.1.0  |
-| **React**   | 17.0.2  |
+| **Next.js** | 15.0.4  |
+| **React**   | 19.0.0  |
 | **Webpack** | 5.74.0  |
-| **esLint**  | 8.0.1   |
+| **esLint**  | 8.57.1  |
 
 ## Architecture
 
