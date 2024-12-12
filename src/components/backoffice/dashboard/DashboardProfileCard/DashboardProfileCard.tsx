@@ -8,12 +8,11 @@ import {
   ImgProfile,
   SimpleLink,
   Tag,
+  Text,
 } from 'src/components/utils';
-import { H5 } from 'src/components/utils/Headings';
 import { ProfileHelps } from 'src/constants/helps';
-import { CANDIDATE_USER_ROLES } from 'src/constants/users';
+import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
-import { isRoleIncluded } from 'src/utils';
 import {
   StyledDashboardCTAContainer,
   StyledDashboardProfileCardDescription,
@@ -29,25 +28,21 @@ export const DashboardProfileCard = () => {
   const helpField = useHelpField(user.role);
   const { contextualRole } = useContextualRole(user.role);
 
-  if (!helpField || !user.userProfile || !helpField) {
-    return null;
-  }
-
   // Had to do it it two steps for the linter to be happy
-  const userHelpField = user.userProfile[helpField];
-  if (!userHelpField || userHelpField.length === 0) return null;
+  const userHelpField = helpField ? user.userProfile[helpField] : null;
 
   return (
-    <Card>
+    <Card dataTestId="dashboard-profile-card">
       <StyledDashboardProfileCardPictureName>
         <ImgProfile user={user} size={69} />
         <div>
-          <H5
-            title={`${user.firstName} ${user.lastName
-              .charAt(0)
-              .toUpperCase()}.`}
-          />
-          {user.userProfile.department && <p>{user.userProfile.department}</p>}
+          <Text size="xlarge" weight="bold">
+            {`${user.firstName} ${user.lastName.charAt(0).toUpperCase()}.`}
+          </Text>
+          {user.organization && <Text>{user.organization.name}</Text>}
+          {user.userProfile.department && (
+            <Text>{user.userProfile.department}</Text>
+          )}
           {user.userProfile.linkedinUrl && (
             <SimpleLink
               isExternal
@@ -64,36 +59,37 @@ export const DashboardProfileCard = () => {
           {user.userProfile.description}
         </StyledDashboardProfileCardDescription>
       )}
-      <StyledDashboardProfileCardHelps>
-        <StyledDashboardProfileCardhelpsTitle>
-          Mes{' '}
-          {isRoleIncluded(CANDIDATE_USER_ROLES, contextualRole) &&
-            'besoins de '}{' '}
-          coups de pouce
-        </StyledDashboardProfileCardhelpsTitle>
-        {userHelpField.length > 0 ? (
-          <StyledDashboardProfileCardHelpList>
-            {userHelpField.slice(0, 3).map((help, index) => {
-              const helpDetails = ProfileHelps.find(
-                (helpConstant) => helpConstant.value === help.name
-              );
-              if (helpDetails) {
-                const tagContent = helpDetails.shortTitle[contextualRole];
-                return <Tag key={index} content={tagContent} />;
-              }
-              return null;
-            })}
-            {userHelpField.length > 3 && (
-              <Tag content={`+${userHelpField.length - 3}`} />
-            )}
-          </StyledDashboardProfileCardHelpList>
-        ) : (
-          <StyledDashboardProfileCardHelpListEmptyState>
-            <IlluBulleQuestion />
-            <div>Informations pas encore renseignées</div>
-          </StyledDashboardProfileCardHelpListEmptyState>
-        )}
-      </StyledDashboardProfileCardHelps>
+
+      {userHelpField && (
+        <StyledDashboardProfileCardHelps>
+          <StyledDashboardProfileCardhelpsTitle>
+            Mes {contextualRole === USER_ROLES.CANDIDATE && 'besoins de '} coups
+            de pouce
+          </StyledDashboardProfileCardhelpsTitle>
+          {userHelpField.length > 0 ? (
+            <StyledDashboardProfileCardHelpList>
+              {userHelpField.slice(0, 3).map((help, index) => {
+                const helpDetails = ProfileHelps.find(
+                  (helpConstant) => helpConstant.value === help.name
+                );
+                if (helpDetails) {
+                  const tagContent = helpDetails.shortTitle[contextualRole];
+                  return <Tag key={index} content={tagContent} />;
+                }
+                return null;
+              })}
+              {userHelpField.length > 3 && (
+                <Tag content={`+${userHelpField.length - 3}`} />
+              )}
+            </StyledDashboardProfileCardHelpList>
+          ) : (
+            <StyledDashboardProfileCardHelpListEmptyState>
+              <IlluBulleQuestion />
+              <div>Informations pas encore renseignées</div>
+            </StyledDashboardProfileCardHelpListEmptyState>
+          )}
+        </StyledDashboardProfileCardHelps>
+      )}
       <StyledDashboardCTAContainer>
         <Button style="custom-secondary" href="/backoffice/parametres">
           Modifier

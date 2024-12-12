@@ -6,6 +6,7 @@ const sizes: { [K in NonNullable<TextProps['size']>]: number } = {
   small: 12,
   normal: 14,
   large: 16,
+  xlarge: 18,
 };
 
 const colors: { [K in NonNullable<TextProps['color']>]: string } = {

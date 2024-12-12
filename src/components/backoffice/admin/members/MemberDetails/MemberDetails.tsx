@@ -4,10 +4,9 @@ import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { Grid, Section, SimpleLink } from 'src/components/utils';
 import { BackLink } from 'src/components/utils/BackLink';
 import { MEMBER_TABS } from 'src/constants';
-import { CANDIDATE_USER_ROLES } from 'src/constants/users';
+import { USER_ROLES } from 'src/constants/users';
 import { useTab } from 'src/hooks/queryParams/useTab';
 
-import { isRoleIncluded } from 'src/utils/Finding';
 import { MemberDetailsHeader } from './MemberDetailsHeader';
 import { CVMemberTab, OffersMemberTab, ParametersMemberTab } from './MemberTab';
 import { RecommendedOffersButton } from './RecommendedOffersButton';
@@ -31,13 +30,13 @@ export function MemberDetails({ user, setUser }: MemberDetailsProps) {
               }`}
               label="Retour à la liste"
             />
-            {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) && (
+            {user.role === USER_ROLES.CANDIDATE && (
               <RecommendedOffersButton candidateId={user.id} />
             )}
           </Grid>
           <MemberDetailsHeader user={user} />
           <ul className="uk-subnav">
-            {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) && (
+            {user.role === USER_ROLES.CANDIDATE && (
               <>
                 <li className={tab === MEMBER_TABS.CV ? 'uk-active' : ''}>
                   <SimpleLink href={`/backoffice/admin/membres/${user.id}/cv`}>

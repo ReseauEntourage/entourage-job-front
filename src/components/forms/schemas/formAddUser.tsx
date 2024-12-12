@@ -10,11 +10,11 @@ import {
   USER_ROLES,
   USER_ROLES_FILTERS,
   RELATED_ROLES,
-  EXTERNAL_USER_ROLES,
   UserRole,
   Gender,
   AdminRole,
   GENDERS_FILTERS,
+  ROLES_WITH_ORGANIZATION,
 } from 'src/constants/users';
 import { FilterConstant } from 'src/constants/utils';
 import { isRoleIncluded } from 'src/utils/Finding';
@@ -39,7 +39,7 @@ interface FormAddUserSchema extends FormSchemaValidation {
   zone: AdminZone;
   phone: string;
   email: string;
-  userToLinkId: FilterConstant<string> | FilterConstant<string>[];
+  userToLinkId: FilterConstant<string>;
   adminRole: AdminRole;
   organizationId: FilterConstant<string>;
   nameOrganization: string;
@@ -55,7 +55,7 @@ const hideMethod = (getValue: GetValueType<FormAddUserSchema>) => {
   const role = getValue('role');
   const organizationId = getValue('organizationId')?.value;
   return !(
-    isRoleIncluded(EXTERNAL_USER_ROLES, role) &&
+    isRoleIncluded(ROLES_WITH_ORGANIZATION, role) &&
     organizationId === CREATE_NEW_ORGANIZATION_VALUE
   );
 };
@@ -66,7 +66,7 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
     {
       id: 'memberInformation',
       name: 'memberInformation',
-      title: 'Information du membre',
+      title: 'Informations du membre',
       component: 'heading',
     },
     {
@@ -171,7 +171,7 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
           component: 'select-async',
           isMulti: false,
           hide: (getValue) => {
-            return !isRoleIncluded(EXTERNAL_USER_ROLES, getValue('role'));
+            return !isRoleIncluded(ROLES_WITH_ORGANIZATION, getValue('role'));
           },
           loadOptions: async (callback, inputValue) => {
             const { data: organizations } = await Api.getAllOrganizations({
@@ -208,40 +208,40 @@ export const formAddUser: FormSchema<FormAddUserSchema> = {
           id: 'userToLinkId',
           name: 'userToLinkId',
           component: 'select-async',
-          isMulti: (getValue) => {
-            const role = getValue('role');
-            return role === USER_ROLES.COACH_EXTERNAL;
-          },
+          isMulti: false,
           hide: (getValue) => {
             const role = getValue('role');
             const organizationId = getValue('organizationId')?.value;
             return (
               role === USER_ROLES.ADMIN ||
-              (isRoleIncluded(EXTERNAL_USER_ROLES, role) && !organizationId) ||
+              (isRoleIncluded(ROLES_WITH_ORGANIZATION, role) &&
+                !organizationId) ||
               organizationId === CREATE_NEW_ORGANIZATION_VALUE
             );
           },
           loadOptions: async (callback, inputValue, getValue) => {
-            const role = RELATED_ROLES[getValue('role')];
+            if (getValue) {
+              const role = RELATED_ROLES[getValue('role')];
 
-            const organizationId = getValue('organizationId')?.value;
+              const organizationId = getValue('organizationId')?.value;
 
-            const { data: users } = await Api.getUsersSearch({
-              params: {
-                query: inputValue,
-                role,
-                organizationId,
-              },
-            });
+              const { data: users } = await Api.getUsersSearch({
+                params: {
+                  query: inputValue,
+                  role,
+                  organizationId,
+                },
+              });
 
-            callback(
-              users.map((u) => {
-                return {
-                  value: u.id,
-                  label: `${u.firstName} ${u.lastName}`,
-                };
-              })
-            );
+              callback(
+                users.map((u) => {
+                  return {
+                    value: u.id,
+                    label: `${u.firstName} ${u.lastName}`,
+                  };
+                })
+              );
+            }
           },
           title: 'Nom du coach ou candidat lié',
         },

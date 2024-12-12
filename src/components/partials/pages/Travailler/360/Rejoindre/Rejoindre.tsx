@@ -1,4 +1,5 @@
 import React from 'react';
+import { FlexContainer } from '../../Programmes/TravaillerProgrammes.styles';
 import { Section, Button, Img } from 'src/components/utils';
 import { H2, H6 } from 'src/components/utils/Headings';
 import { BulletListElement as BulletList } from 'src/components/utils/Lists';
@@ -50,15 +51,25 @@ export const Rejoindre = () => {
               </p>
             </BulletList>
           </ul>
-          <Button
-            style="custom-secondary-inverted"
-            href="/inscription"
-            onClick={() =>
-              gaEvent(GA_TAGS.PAGE_PROGRAMME_360_INSCRIPTION_REJOINDRE_CLICK)
-            }
-          >
-            Je m&apos;inscris
-          </Button>
+          <FlexContainer>
+            <Button
+              style="custom-secondary-inverted"
+              href="/inscription"
+              onClick={() =>
+                gaEvent(GA_TAGS.PAGE_PROGRAMME_360_INSCRIPTION_REJOINDRE_CLICK)
+              }
+            >
+              Je m&apos;inscris
+            </Button>
+            {/* Todo: gaEvent and url tbd */}
+            <Button
+              style="custom-secondary"
+              dataTestId="button-orienter-candidat"
+              href="/inscription"
+            >
+              Orienter un candidat
+            </Button>
+          </FlexContainer>
         </div>
         <div className="image-container">
           <Img

@@ -25,6 +25,7 @@ import {
   OpportunityUserEvent,
   Organization,
   OrganizationDto,
+  PostAuthFinalizeReferedUserParams,
   PostAuthSendVerifyEmailParams,
   ProfilesFilters,
   PutCandidate,
@@ -32,6 +33,7 @@ import {
   SocialMedia,
   UserDto,
   UserProfile,
+  UserReferingDto,
   UserRegistrationDto,
   UserReportDto,
   UserWithUserCandidate,
@@ -230,6 +232,15 @@ export class APIHandler {
     });
   }
 
+  getReferedCandidateProfiles(params: {
+    offset: number;
+    limit: number;
+  }): Promise<AxiosResponse> {
+    return this.get('/user/profile/refered', {
+      params,
+    });
+  }
+
   getProfilesRecommendations(userId: string): Promise<AxiosResponse> {
     return this.get(`/user/profile/recommendations/${userId}`);
   }
@@ -243,6 +254,10 @@ export class APIHandler {
     params: UserRegistrationDto
   ): Promise<AxiosResponse> {
     return this.post('/user/registration', params);
+  }
+
+  async postUserRefering(params: UserReferingDto): Promise<AxiosResponse> {
+    return this.post('/user/refering', params);
   }
 
   postProfileImage(
@@ -282,10 +297,7 @@ export class APIHandler {
     return this.put(`/user/candidate/read/${candidateId}`);
   }
 
-  putLinkUser(
-    userId: string,
-    userToLinkId?: string | string[]
-  ): Promise<AxiosResponse> {
+  putLinkUser(userId: string, userToLinkId?: string): Promise<AxiosResponse> {
     return this.put(`/user/linkUser/${userId}`, { userToLinkId });
   }
 
@@ -496,6 +508,12 @@ export class APIHandler {
     params: PostAuthSendVerifyEmailParams
   ): Promise<AxiosResponse> {
     return this.post('/auth/send-verify-email', params);
+  }
+
+  postAuthFinalizeReferedUser(
+    params: PostAuthFinalizeReferedUserParams
+  ): Promise<AxiosResponse<string>> {
+    return this.post('/auth/finalize-refered-user', params);
   }
 
   // no logout?

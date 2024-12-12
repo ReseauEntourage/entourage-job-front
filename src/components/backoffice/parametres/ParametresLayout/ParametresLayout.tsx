@@ -6,7 +6,7 @@ import {
 import { useConfirmationToaster } from '../useConfirmationToaster';
 import { HeaderProfile } from 'src/components/headers/HeaderProfile';
 import { Card, Section } from 'src/components/utils';
-import { CANDIDATE_USER_ROLES, USER_ROLES } from 'src/constants/users';
+import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import { useIsDesktop } from 'src/hooks/utils';
 import { isRoleIncluded } from 'src/utils';
@@ -51,21 +51,19 @@ export const ParametresLayout = () => {
             {/* Informations Personnelles */}
             <UserInformationCard title="Informations personnelles" />
             {/* Télécharger mon CV */}
-            {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) &&
-              user.candidat && (
-                <ExternalCVCard dataTestId="external-cv-card-params" />
-              )}
+            {user.role === USER_ROLES.CANDIDATE && user.candidat && (
+              <ExternalCVCard dataTestId="external-cv-card-params" />
+            )}
             {/* Préférences du CV */}
-            {isRoleIncluded(CANDIDATE_USER_ROLES, user.role) &&
-              user.candidat && (
-                <Card title="Préférences du CV" isMobileClosable>
-                  <CVPreferences
-                    userRole={user.role}
-                    candidat={user.candidat}
-                    candidatId={user.id}
-                  />
-                </Card>
-              )}
+            {user.role === USER_ROLES.CANDIDATE && user.candidat && (
+              <Card title="Préférences du CV" isMobileClosable>
+                <CVPreferences
+                  userRole={user.role}
+                  candidat={user.candidat}
+                  candidatId={user.id}
+                />
+              </Card>
+            )}
             {/* Changement de mot de passe */}
             <ChangePasswordCard />
           </StyledParametresLeftColumn>
@@ -73,11 +71,7 @@ export const ParametresLayout = () => {
             className={`${isDesktop ? '' : 'mobile'}`}
           >
             {isRoleIncluded(
-              [
-                USER_ROLES.COACH,
-                USER_ROLES.CANDIDATE,
-                USER_ROLES.CANDIDATE_EXTERNAL,
-              ],
+              [USER_ROLES.COACH, USER_ROLES.CANDIDATE],
               user.role
             ) && (
               <>

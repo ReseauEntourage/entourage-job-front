@@ -1,4 +1,5 @@
 import React from 'react';
+import { FlexContainer } from '../../Programmes/TravaillerProgrammes.styles';
 import { Section, Button } from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
 import { StyledSteps } from './Steps.styles';
@@ -62,9 +63,19 @@ export const Steps = () => {
           </div>
         </div>
       </StyledSteps>
-      <Button href="/inscription" style="custom-secondary-inverted">
-        S&apos;inscrire au format 360
-      </Button>
+      <FlexContainer>
+        <Button href="/inscription" style="custom-secondary-inverted">
+          S&apos;inscrire au format 360
+        </Button>
+        {/* Todo: gaEvent and url tbd */}
+        <Button
+          style="custom-secondary"
+          dataTestId="button-orienter-candidat"
+          href="/inscription"
+        >
+          Orienter un candidat
+        </Button>
+      </FlexContainer>
     </Section>
   );
 };

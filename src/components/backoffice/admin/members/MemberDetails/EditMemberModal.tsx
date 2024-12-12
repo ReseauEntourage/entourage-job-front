@@ -9,7 +9,7 @@ import { formAddUser } from 'src/components/forms/schemas/formAddUser';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalConfirm } from 'src/components/modals/Modal/ModalGeneric/ModalConfirm';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
-import { EXTERNAL_USER_ROLES, USER_ROLES } from 'src/constants/users';
+import { ROLES_WITH_ORGANIZATION } from 'src/constants/users';
 import { Actions } from 'src/constants/utils';
 import { notificationsActions } from 'src/use-cases/notifications';
 import { getRelatedUser, isRoleIncluded } from 'src/utils/Finding';
@@ -20,15 +20,10 @@ interface EditMemberModal {
 }
 export function EditMemberModal({ user, setUser }: EditMemberModal) {
   const dispatch = useDispatch();
+
   const userToLink = useMemo(() => {
     const relatedUser = getRelatedUser(user);
-
     if (relatedUser) {
-      if (user.role === USER_ROLES.COACH_EXTERNAL) {
-        return relatedUser.map(({ id, firstName, lastName }) => {
-          return { value: id, label: `${firstName} ${lastName}` };
-        });
-      }
       return {
         value: relatedUser[0].id,
         label: `${relatedUser[0].firstName} ${relatedUser[0].lastName}`,
@@ -37,7 +32,8 @@ export function EditMemberModal({ user, setUser }: EditMemberModal) {
   }, [user]);
 
   const organization = useMemo(() => {
-    return isRoleIncluded(EXTERNAL_USER_ROLES, user.role) && user.organization
+    return isRoleIncluded(ROLES_WITH_ORGANIZATION, user.role) &&
+      user.organization
       ? {
           value: user.organization.id,
           label: user.organization.name,
@@ -61,9 +57,7 @@ export function EditMemberModal({ user, setUser }: EditMemberModal) {
     ) => {
       const updatedUser = await onSubmit(fields, closeModal);
       try {
-        const userToLinkId = Array.isArray(fields.userToLinkId)
-          ? fields.userToLinkId.map(({ value }) => value)
-          : fields.userToLinkId?.value;
+        const userToLinkId = fields.userToLinkId?.value;
         const { data: updatedUserWithLinkedMember } = await Api.putLinkUser(
           user.id,
 

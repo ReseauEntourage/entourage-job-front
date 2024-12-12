@@ -32,7 +32,7 @@ export const TravaillerDecouvrir = ({
         {
           title: 'Format 360',
           description:
-            "J'ai besoin d’un accompagnement personnalisé avec un coach dédié, qui pourra m'aider à clarifier mon projet professionnel, à élaborer mon CV, à me préparer aux entretiens ainsi qu' à me guider dans mes recherches d'emploi par la mobilisation de son réseau.",
+            "J'ai besoin d’un accompagnement personnalisé avec un coach dédié pour clarifier mon projet professionnel, élaborer mon CV, me préparer aux entretiens ainsi que me guider dans mes recherches d'emploi par la mobilisation de son réseau.",
           img: '/static/img/travailler-decouvrir-360.jpg',
           onClick: () => {
             handleClick(refProgramme360);

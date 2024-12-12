@@ -39,10 +39,10 @@ export function OrganizationDesktop({
         </span>
       </TdDesktop>
       <TdDesktop>
-        <span>{organization.candidatesCount}</span>
+        <span>{organization.referersCount}</span>
       </TdDesktop>
       <TdDesktop>
-        <span>{organization.coachesCount}</span>
+        <span>{organization.candidatesCount}</span>
       </TdDesktop>
       <TdDesktop>
         <span>

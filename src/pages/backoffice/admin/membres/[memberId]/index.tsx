@@ -1,21 +1,20 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Api } from 'src/api';
-import { User } from 'src/api/types';
+import { User as UserType } from 'src/api/types';
 import { LayoutBackOffice } from 'src/components/backoffice/LayoutBackOffice';
 import { MemberDetails } from 'src/components/backoffice/admin/members/MemberDetails';
 import { Grid, Section } from 'src/components/utils';
 import { BackLink } from 'src/components/utils/BackLink';
 import { MEMBER_TABS } from 'src/constants';
-import { CANDIDATE_USER_ROLES, COACH_USER_ROLES } from 'src/constants/users';
+import { USER_ROLES } from 'src/constants/users';
 import { useMemberId } from 'src/hooks/queryParams/useMemberId';
 import { useOpportunityId } from 'src/hooks/queryParams/useOpportunityId';
 import { useTab } from 'src/hooks/queryParams/useTab';
 import { usePrevious } from 'src/hooks/utils';
-import { isRoleIncluded } from 'src/utils/Finding';
 
 const User = () => {
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<UserType>();
 
   const prevUser = usePrevious(user);
 
@@ -32,7 +31,7 @@ const User = () => {
   useEffect(() => {
     if (user && user !== prevUser) {
       if (
-        isRoleIncluded(COACH_USER_ROLES, user.role) &&
+        (user.role === USER_ROLES.COACH || user.role === USER_ROLES.REFERER) &&
         (!tab || tab !== MEMBER_TABS.PARAMETERS)
       ) {
         replace(
@@ -42,7 +41,7 @@ const User = () => {
             shallow: true,
           }
         );
-      } else if (isRoleIncluded(CANDIDATE_USER_ROLES, user.role)) {
+      } else if (user.role === USER_ROLES.CANDIDATE) {
         if (!tab) {
           replace(`/backoffice/admin/membres/${user.id}/cv`, undefined, {
             shallow: true,

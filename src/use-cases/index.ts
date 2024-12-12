@@ -6,6 +6,7 @@ import { notificationsConfig } from './notifications';
 import { onboardingConfig } from './onboarding';
 import { opportunitiesConfig } from './opportunities';
 import { profilesConfig } from './profiles';
+import { referingConfig } from './refering';
 import { registrationConfig } from './registration';
 import { UseCaseConfigType } from './types';
 
@@ -19,4 +20,5 @@ export const useCasesConfig: UseCaseConfigType = {
   notificationsConfig,
   onboardingConfig,
   messagingConfig,
+  referingConfig,
 };

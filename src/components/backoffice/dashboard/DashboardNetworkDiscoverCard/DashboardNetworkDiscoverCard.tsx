@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  StyledDashboardCardContent,
-  StyledDashboardCardContentContainer,
-} from '../Dashboard.styles';
+import { StyledDashboardCardContentContainer } from '../Dashboard.styles';
 import { Button, Card, Img } from 'src/components/utils';
 import { NormalUserRole, USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -47,30 +44,28 @@ export const DashboardNetworkDiscoveryCard = () => {
   return (
     <Card title={cardVariables[user.role].title}>
       <StyledDashboardCardContentContainer>
-        <StyledDashboardCardContent>
-          <StyledDashboardNetworkDiscoverContent>
-            {isDesktop && (
-              <StyledDashboardNetworkImageContainer>
-                <Img
-                  src={cardVariables[user.role].imageUrl}
-                  alt="Illustration réseau d'entraide"
-                  width={138}
-                  height={168}
-                />
-              </StyledDashboardNetworkImageContainer>
-            )}
-            <div>
-              <StyledDashboardNetworkDiscoverText>
-                Le réseau d&apos;entraide est un espace qui vous permet de
-                découvrir l&apos;ensemble des membres de la communauté, coachs
-                et candidats
-              </StyledDashboardNetworkDiscoverText>
-              <StyledDashboardNetworkDiscoverText>
-                {cardVariables[user.role].content}
-              </StyledDashboardNetworkDiscoverText>
-            </div>
-          </StyledDashboardNetworkDiscoverContent>
-        </StyledDashboardCardContent>
+        <StyledDashboardNetworkDiscoverContent>
+          {isDesktop && (
+            <StyledDashboardNetworkImageContainer>
+              <Img
+                src={cardVariables[user.role].imageUrl}
+                alt="Illustration réseau d'entraide"
+                width={138}
+                height={168}
+              />
+            </StyledDashboardNetworkImageContainer>
+          )}
+          <div>
+            <StyledDashboardNetworkDiscoverText>
+              Le réseau d&apos;entraide est un espace qui vous permet de
+              découvrir l&apos;ensemble des membres de la communauté, coachs et
+              candidats
+            </StyledDashboardNetworkDiscoverText>
+            <StyledDashboardNetworkDiscoverText>
+              {cardVariables[user.role].content}
+            </StyledDashboardNetworkDiscoverText>
+          </div>
+        </StyledDashboardNetworkDiscoverContent>
 
         <Button
           style="custom-secondary-inverted"

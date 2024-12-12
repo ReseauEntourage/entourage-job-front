@@ -1,4 +1,5 @@
 import React from 'react';
+import { FlexContainer } from '../../Programmes/TravaillerProgrammes.styles';
 import { Button, Img, Section } from 'src/components/utils';
 import { H2, H6 } from 'src/components/utils/Headings';
 import { CheckListElement as CheckList } from 'src/components/utils/Lists';
@@ -83,15 +84,25 @@ export const Participer = () => {
               </p>
             </CheckList>
           </ul>
-          <Button
-            style="custom-secondary-inverted"
-            href="/inscription"
-            onClick={() =>
-              gaEvent(GA_TAGS.PAGE_PROGRAMME_360_INSCRIPTION_PARTICIPER_CLICK)
-            }
-          >
-            Je m&apos;inscris
-          </Button>
+          <FlexContainer>
+            <Button
+              style="custom-secondary-inverted"
+              href="/inscription"
+              onClick={() =>
+                gaEvent(GA_TAGS.PAGE_PROGRAMME_360_INSCRIPTION_PARTICIPER_CLICK)
+              }
+            >
+              Je m&apos;inscris
+            </Button>
+            {/* Todo: gaEvent and url tbd */}
+            <Button
+              style="custom-secondary"
+              dataTestId="button-orienter-candidat"
+              href="/inscription"
+            >
+              Orienter un candidat
+            </Button>
+          </FlexContainer>
         </div>
       </StyledParticiper>
     </Section>

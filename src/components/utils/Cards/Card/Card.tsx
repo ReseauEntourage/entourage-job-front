@@ -56,7 +56,11 @@ export const Card = ({
   }, [isDesktop, isMobileClosable, isOpen]);
 
   return (
-    <StyledCard className={isDesktop ? '' : 'mobile'} onClick={onClick}>
+    <StyledCard
+      className={isDesktop ? '' : 'mobile'}
+      onClick={onClick}
+      data-testid={dataTestId}
+    >
       {title ? (
         <>
           <StyledCardTopContainer>

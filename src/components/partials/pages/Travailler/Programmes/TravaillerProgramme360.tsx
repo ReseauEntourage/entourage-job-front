@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React, { Ref } from 'react';
 import {
   IlluCalendrier,
@@ -137,34 +138,22 @@ export const TravaillerProgramme360 = ({
             >
               - L’aide dans les recherches et la mobilisation de son réseau
             </StyledAiderProgrammesListElement>
-          </List>
-        </div>
-        {/* <MultipleCTA
-          data={[
-            {
-              button: {
-                label: "S'inscrire",
-                style: 'custom-secondary-inverted',
-                onClick: () =>
-                  gaEvent(
-                    GA_TAGS.PAGE_TRAVAILLER_PROGRAMME_360_INSCRIPTION_CLICK
-                  ),
-                href: '/inscription',
-              },
-            },
-            {
-              button: {
-                label: 'En savoir plus',
-                style: 'custom-secondary',
-                onClick: () =>
+            <StyledAiderProgrammesListElement
+              className={isDesktop ? '' : 'mobile'}
+            >
+              <Link
+                href="/travailler/programme-360"
+                onClick={() =>
                   gaEvent(
                     GA_TAGS.PAGE_TRAVAILLER_PROGRAMME_360_EN_SAVOIR_PLUS_CLICK
-                  ),
-                href: '/travailler/programme-360',
-              },
-            },
-          ]}
-        /> */}
+                  )
+                }
+              >
+                En savoir plus
+              </Link>
+            </StyledAiderProgrammesListElement>
+          </List>
+        </div>
         <StyledAiderProgrammesCTAsContainer>
           <Button
             style="custom-secondary-inverted"
@@ -175,16 +164,13 @@ export const TravaillerProgramme360 = ({
           >
             S&lsquo;inscrire
           </Button>
+          {/* Todo: gaEvent and url tbd */}
           <Button
             style="custom-secondary"
-            onClick={() =>
-              gaEvent(
-                GA_TAGS.PAGE_TRAVAILLER_PROGRAMME_360_EN_SAVOIR_PLUS_CLICK
-              )
-            }
-            href="/travailler/programme-360"
+            dataTestId="button-orienter-candidat"
+            href="/inscription"
           >
-            En savoir plus
+            Orienter un candidat
           </Button>
         </StyledAiderProgrammesCTAsContainer>
       </SimpleImageText>

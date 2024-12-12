@@ -4,13 +4,12 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserProfile, UserWithUserCandidate } from 'src/api/types';
 import { ReduxRequestEvents } from 'src/constants';
-import { CANDIDATE_USER_ROLES, UserRole } from 'src/constants/users';
+import { USER_ROLES, UserRole } from 'src/constants/users';
 
 import {
   currentUserActions,
   updateProfileSelectors,
 } from 'src/use-cases/current-user';
-import { isRoleIncluded } from 'src/utils';
 
 export const helpFields = {
   HELP_NEEDS: 'helpNeeds',
@@ -23,9 +22,9 @@ export const useHelpField = (userRole: UserRole | undefined) => {
 
   useEffect(() => {
     if (!helpField && userRole) {
-      if (isRoleIncluded(CANDIDATE_USER_ROLES, userRole)) {
+      if (userRole === USER_ROLES.CANDIDATE) {
         setHelpField('helpNeeds');
-      } else {
+      } else if (userRole === USER_ROLES.COACH) {
         setHelpField('helpOffers');
       }
     }

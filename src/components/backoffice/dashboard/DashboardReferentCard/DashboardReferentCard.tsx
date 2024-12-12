@@ -10,6 +10,7 @@ import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedU
 import {
   StyledDashboardReferentMail,
   StyledDashboardReferentName,
+  StyledDashboardReferentNameContainer,
   StyledDashboardReferentPicture,
   StyledDashboardReferentRole,
   StyledDashboardReferentText,
@@ -29,7 +30,7 @@ export const DashboardReferentCard = () => {
   }, [user.userProfile.department]);
 
   return (
-    <Card title="Votre contact Entourage Pro">
+    <Card title="Votre contact Entourage Pro" centerTitle>
       <StyledDashboardCardContentContainer>
         <StyledDashboardReferentPicture>
           <Img
@@ -38,14 +39,16 @@ export const DashboardReferentCard = () => {
             cover
           />
         </StyledDashboardReferentPicture>
-        <StyledDashboardReferentName>
-          <H3 color="primaryBlue" title={referent.name} />
-        </StyledDashboardReferentName>
-        <StyledDashboardReferentRole>
-          <Text variant="italic">
-            Référent(e) Entourage Pro {referentRegion || ''}
-          </Text>
-        </StyledDashboardReferentRole>
+        <StyledDashboardReferentNameContainer>
+          <StyledDashboardReferentName>
+            <H3 color="primaryBlue" title={referent.name} />
+          </StyledDashboardReferentName>
+          <StyledDashboardReferentRole>
+            <Text variant="italic">
+              Référent(e) Entourage Pro {referentRegion || ''}
+            </Text>
+          </StyledDashboardReferentRole>
+        </StyledDashboardReferentNameContainer>
         <StyledDashboardReferentMail>
           <Text weight="bold">
             <SimpleLink isExternal href={`mailto:${referent.mail}`}>
@@ -54,10 +57,10 @@ export const DashboardReferentCard = () => {
           </Text>
         </StyledDashboardReferentMail>
         <StyledDashboardReferentText>
-          <Text>
+          <Text center>
             Vous souhaitez obtenir plus d&apos;informations sur le programme,
             vous rencontrez des difficultés sur la plateforme, ou autre demande,
-            contactez nous&nbsp;!
+            contactez-nous&nbsp;!
           </Text>
         </StyledDashboardReferentText>
       </StyledDashboardCardContentContainer>

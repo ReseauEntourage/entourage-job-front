@@ -5,16 +5,11 @@ import {
   UserProfile,
   UserWithUserCandidate,
 } from 'src/api/types';
-import {
-  CANDIDATE_USER_ROLES,
-  COACH_USER_ROLES,
-  USER_ROLES,
-} from 'src/constants/users';
+import { USER_ROLES } from 'src/constants/users';
 import {
   getCandidateIdFromCoachOrCandidate,
   getRelatedUser,
   getUserCandidateFromCoachOrCandidate,
-  isRoleIncluded,
   mutateToArray,
 } from 'src/utils';
 import { assertIsDefined } from 'src/utils/asserts';
@@ -86,7 +81,7 @@ export function selectCurrentUserId(state: RootState) {
 export function selectCurrentUserProfileHelps(state: RootState) {
   const currentUser = selectAuthenticatedUser(state);
 
-  if (isRoleIncluded(CANDIDATE_USER_ROLES, currentUser.role)) {
+  if (currentUser.role === USER_ROLES.CANDIDATE) {
     return currentUser.userProfile.helpNeeds;
   }
   if (currentUser.role === USER_ROLES.COACH) {
@@ -97,7 +92,7 @@ export function selectCurrentUserProfileHelps(state: RootState) {
 export function selectCurrentUserProfileBusinessLines(state: RootState) {
   const currentUser = selectAuthenticatedUser(state);
 
-  if (isRoleIncluded(CANDIDATE_USER_ROLES, currentUser.role)) {
+  if (currentUser.role === USER_ROLES.CANDIDATE) {
     return currentUser.userProfile.searchBusinessLines;
   }
   if (currentUser.role === USER_ROLES.COACH) {
@@ -124,10 +119,7 @@ export function selectCandidateAsUser(state: RootState): User | null {
 
   let candidate = getUserCandidateFromCoachOrCandidate(currentUser);
 
-  if (
-    isRoleIncluded(COACH_USER_ROLES, currentUser.role) &&
-    Array.isArray(candidate)
-  ) {
+  if (currentUser.role === USER_ROLES.COACH && Array.isArray(candidate)) {
     [candidate] = candidate;
     if (candidate?.candidat) {
       return candidate.candidat;
@@ -175,7 +167,7 @@ export const selectLinkedUser = (
 ): UserWithUserCandidate | null => {
   const currentUser = selectAuthenticatedUser(state);
 
-  if (isRoleIncluded(COACH_USER_ROLES, currentUser.role)) {
+  if (currentUser.role === USER_ROLES.COACH) {
     const candidat: UserWithUserCandidate[] | null =
       getRelatedUser(currentUser);
     if (candidat) {
@@ -184,7 +176,7 @@ export const selectLinkedUser = (
     }
     return null;
   }
-  if (isRoleIncluded(CANDIDATE_USER_ROLES, currentUser.role)) {
+  if (currentUser.role === USER_ROLES.CANDIDATE) {
     const coach: UserWithUserCandidate[] | null = getRelatedUser(currentUser);
     if (coach) {
       const [userToSend] = coach;

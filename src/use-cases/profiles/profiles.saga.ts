@@ -1,9 +1,9 @@
 import { call, put, select, takeLatest, takeLeading } from 'typed-redux-saga';
 import { Api } from 'src/api';
 import { PROFILES_LIMIT } from 'src/constants';
-import { CANDIDATE_USER_ROLES } from 'src/constants/users';
+import { USER_ROLES } from 'src/constants/users';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
-import { isRoleIncluded, mutateToArray } from 'src/utils';
+import { mutateToArray } from 'src/utils';
 import {
   selectProfilesHasFetchedAll,
   selectProfilesOffset,
@@ -90,7 +90,7 @@ function* fetchSelectedProfileSaga(
       Api.getPublicUserProfile(userId)
     );
 
-    if (isRoleIncluded(CANDIDATE_USER_ROLES, profile.role) && profile.cvUrl) {
+    if (profile.role === USER_ROLES.CANDIDATE && profile.cvUrl) {
       try {
         const {
           data: { cv },

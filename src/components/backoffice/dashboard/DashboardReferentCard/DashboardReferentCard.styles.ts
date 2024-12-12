@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { COLORS } from 'src/constants/styles';
 
 export const StyledDashboardReferentPicture = styled.div`
   border-radius: 50%;
@@ -7,6 +8,12 @@ export const StyledDashboardReferentPicture = styled.div`
   height: 100px;
   position: relative;
   margin-bottom: 16px;
+`;
+
+export const StyledDashboardReferentNameContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const StyledDashboardReferentName = styled.div`
@@ -22,10 +29,12 @@ export const StyledDashboardReferentRole = styled.div`
 `;
 export const StyledDashboardReferentMail = styled.div`
   text-align: center;
-  margin-top: 20px;
+  a {
+    color: ${COLORS.black};
+    text-decoration: underline;
+  }
 `;
 
 export const StyledDashboardReferentText = styled.div`
   text-align: center;
-  margin-top: 20px;
 `;

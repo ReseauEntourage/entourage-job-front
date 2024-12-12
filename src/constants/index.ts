@@ -7,7 +7,7 @@ import {
 } from 'src/constants/departements';
 import { GA_TAGS } from 'src/constants/tags';
 import { ProfileHelps } from './helps';
-import { GENDERS_FILTERS, USER_ROLES_FILTERS } from './users';
+import { GENDERS_FILTERS } from './users';
 import { Filter, FilterConstant } from './utils';
 
 export const PROFILES_LIMIT = 25;
@@ -400,13 +400,6 @@ export const ORGANIZATION_FILTERS_DATA: Filter[] = [
 ];
 
 export const MEMBER_FILTERS_DATA: Filter[] = [
-  {
-    key: 'role',
-    constants: USER_ROLES_FILTERS,
-    title: 'Type',
-    mandatory: true,
-    tag: GA_TAGS.BACKOFFICE_MEMBERS_FILTRE_TYPE_CLIC,
-  },
   {
     key: 'zone',
     constants: ADMIN_ZONES_FILTERS,
