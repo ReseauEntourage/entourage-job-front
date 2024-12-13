@@ -125,7 +125,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
     },
   });
 
-  watch();
+  const allWatch = watch();
 
   const onChangeCustom = useCallback(
     (updatedValue) => {
@@ -165,6 +165,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
       showLabel: field.showLabel,
       showOptional: field.showOptional,
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     field,
     error,
@@ -175,6 +176,7 @@ export function GenericField<S extends FormSchema<AnyCantFix>>({
     onChangeCustom,
     ref,
     value,
+    allWatch,
   ]);
 
   if (field.component === 'datepicker') {

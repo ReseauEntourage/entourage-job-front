@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useMemo, type JSX } from 'react';
 
 interface GridProps {
-  parallax?: number;
   match?: boolean;
   center?: boolean;
   between?: boolean;
@@ -26,30 +25,28 @@ interface GridProps {
 
 export const Grid = ({
   items,
-  childWidths,
-  match,
-  divider,
-  center,
-  between,
-  around,
-  parallax,
+  childWidths = [],
+  match = false,
+  divider = false,
+  center = false,
+  between = false,
+  around = false,
   className,
-  eachWidths,
+  eachWidths = [],
   gap,
   children,
-  top,
-  middle,
-  bottom,
-  column,
-  row,
-  masonry,
+  top = false,
+  middle = false,
+  bottom = false,
+  column = false,
+  row = false,
+  masonry = false,
   style,
-  reverse,
-  dataTestId,
+  reverse = false,
+  dataTestId = '',
 }: GridProps) => {
   let classBuffer = '';
   let gridBuffer = '';
-  if (parallax) gridBuffer += `parallax: ${parallax};`;
   if (masonry) gridBuffer += 'masonry: true';
   if (childWidths) {
     classBuffer += childWidths
@@ -72,16 +69,16 @@ export const Grid = ({
   if (reverse) classBuffer += ' uk-flex-row-reverse';
 
   if (className) classBuffer += ` ${className}`;
-  const content = (() => {
-    if (items !== null) {
+  const content = useMemo(() => {
+    if (items !== undefined) {
       return items;
     }
     if (Array.isArray(children)) {
       return children;
     }
     return [children];
-  })();
-  // on filtre les elemnt vide
+  }, [children, items]);
+
   return (
     <div
       className={classBuffer}
@@ -89,56 +86,24 @@ export const Grid = ({
       style={style}
       data-testid={dataTestId}
     >
-      {
-        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-        content
-          .filter((_) => {
-            return _;
-          })
-          .map((item, index) => {
-            return (
-              <div
-                // todo optimize
-                className={
-                  index <
-                  // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                  eachWidths.length
-                    ? `uk-width-${
-                        // @ts-expect-error after enable TS strict mode. Please, try to fix it
-                        eachWidths[index]
-                      }`
-                    : undefined
-                }
-                key={index}
-              >
-                {item}
-              </div>
-            );
-          })
-      }
+      {content
+        .filter((_) => {
+          return _;
+        })
+        .map((item, index) => {
+          return (
+            <div
+              className={
+                index < eachWidths.length
+                  ? `uk-width-${eachWidths[index]}`
+                  : undefined
+              }
+              key={index}
+            >
+              {item}
+            </div>
+          );
+        })}
     </div>
   );
-};
-Grid.defaultProps = {
-  match: false,
-  center: false,
-  between: false,
-  divider: false,
-  parallax: null,
-  childWidths: [],
-  eachWidths: [],
-  gap: null,
-  items: null,
-  className: null,
-  around: false,
-  top: false,
-  middle: false,
-  bottom: false,
-  column: false,
-  row: false,
-  masonry: false,
-  style: null,
-  reverse: false,
-  children: null,
-  dataTestId: '',
 };

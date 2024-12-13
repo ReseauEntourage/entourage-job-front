@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 
 import { Img } from 'src/components/utils/Img';
 import { NormalUserRole, USER_ROLES } from './users';

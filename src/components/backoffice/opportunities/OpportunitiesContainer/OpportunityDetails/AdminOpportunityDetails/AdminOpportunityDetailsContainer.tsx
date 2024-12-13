@@ -22,7 +22,7 @@ export function AdminOpportunityDetailsContainer({
   const { opportunity, isLoading, refreshOpportunity } =
     useFetchAdminOpportunity(opportunityId, fetchOpportunities);
 
-  const ref = useRef();
+  const ref = useRef(undefined);
 
   const [hasCTAContainer, setHasCTAContainer] = useState(true);
 

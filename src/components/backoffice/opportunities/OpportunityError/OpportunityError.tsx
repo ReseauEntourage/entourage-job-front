@@ -6,9 +6,7 @@ export const OpportunityError = () => {
   return (
     <Section>
       <ContainerWithTextCentered>
-        <H4
-          title={"Les opportunités n'ont pas pu être chargées correctement."}
-        />
+        <H4 title="Les opportunités n'ont pas pu être chargées correctement." />
         <Text>Contacte l&apos;équipe Entourage Pro pour en savoir plus.</Text>
       </ContainerWithTextCentered>
     </Section>
