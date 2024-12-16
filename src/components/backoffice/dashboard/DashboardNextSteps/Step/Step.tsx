@@ -31,7 +31,7 @@ export const Step = ({ step }: StepProps) => {
         title={step.title}
         center
         color={COLORS.primaryBlue}
-        weight="normal"
+        weight="semibold"
       />
       <Text center>{step.content}</Text>
       <StyledStepBtnContainer>
