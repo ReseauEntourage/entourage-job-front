@@ -6,7 +6,7 @@ import { FilterConstant } from './utils';
 
 export type HelpValue = 'tips' | 'interview' | 'cv' | 'network' | 'event';
 
-const iconSizeProps = { width: 45, height: 45 };
+const iconSizeProps = { width: 40, height: 40 };
 
 export const ProfileHelps: (FilterConstant<HelpValue> & {
   icon: JSX.Element;
