@@ -18,18 +18,20 @@ export const DashboardNextSteps = () => {
   const candidateId = useCandidateId();
   const currentUser = useSelector(selectCurrentUser);
 
+  const webinarStep = {
+    title: "S'inscrire au webinaire d'information",
+    icon: <IlluBulleQuestion {...iconSizeProps} />,
+    content:
+      'Envie d’en savoir plus sur la plateforme Entourage pro. Inscrivez-vous au prochain webinaire d’information',
+    cta: {
+      label: "S'inscrire",
+      href: process.env.WEBINAR_URL,
+    },
+  };
+
   const stepsByRole = {
     [USER_ROLES.CANDIDATE]: [
-      {
-        title: "S'inscrire au webinaire d'information",
-        icon: <IlluBulleQuestion {...iconSizeProps} />,
-        content:
-          'Envie d’en savoir plus sur la plateforme Entourage pro. Inscrivez-vous au prochain webinaire d’information',
-        cta: {
-          label: "S'inscrire",
-          href: '/webinaire-d-information',
-        },
-      },
+      webinarStep,
       {
         title: 'Faire mon CV Entourage pro',
         icon: <IlluCV {...iconSizeProps} />,
@@ -44,32 +46,23 @@ export const DashboardNextSteps = () => {
         title: 'Découvrir le réseau d’entraide ',
         icon: <IlluCoeurMainsOuvertesBleu {...iconSizeProps} />,
         content:
-          'Retrouvez tous les coachs de la communauté et contactez les pour leur demander de l’aide et des conseils',
+          'Retrouvez tous les coachs de la communauté et contactez-les pour leur demander de l’aide et des conseils',
         cta: {
           label: 'Découvrir',
-          href: '/webinaire-d-information',
+          href: '/backoffice/annuaire?role=Coach',
         },
       },
     ],
     [USER_ROLES.COACH]: [
-      {
-        title: "S'inscrire au webinaire d'information",
-        icon: <IlluBulleQuestion {...iconSizeProps} />,
-        content:
-          'Envie d’en savoir plus sur la plateforme Entourage pro. Inscrivez-vous au prochain webinaire d’information',
-        cta: {
-          label: "S'inscrire",
-          href: '/webinaire-d-information',
-        },
-      },
+      webinarStep,
       {
         title: 'Découvrir le réseau d’entraide ',
         icon: <IlluCoeurMainsOuvertesBleu {...iconSizeProps} />,
         content:
-          'Retrouvez tous les coachs de la communauté et contactez les pour leur demander de l’aide et des conseils',
+          'Retrouvez tous les candidats de la communauté et contactez-les pour leur proposer de l’aide et des conseils',
         cta: {
           label: 'Découvrir',
-          href: '/webinaire-d-information',
+          href: '/backoffice/annuaire?role=Candidat',
         },
       },
     ],
