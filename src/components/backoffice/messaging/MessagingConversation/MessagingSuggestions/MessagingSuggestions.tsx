@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { IlluConversation } from 'assets/icons/icons';
 import { H3 } from 'src/components/utils/Headings/H3';
 import { selectCurrentUser } from 'src/use-cases/current-user';
-import { messagingActions, selectNewMessage } from 'src/use-cases/messaging';
 import { Item } from './Item/Item';
 import {
   MessagingSuggestionsContainer,
@@ -12,9 +11,15 @@ import {
 } from './MessagingSuggestions.styles';
 import { MessagingSuggestionItem } from './MessagingSuggestions.types';
 
-export const MessagingSuggestions = () => {
-  const dispatch = useDispatch();
-  const newMessage = useSelector(selectNewMessage);
+export interface MessagingSuggestionProps {
+  newMessage: string;
+  onSuggestionClick: (suggestion: MessagingSuggestionItem) => void;
+}
+
+export const MessagingSuggestions = ({
+  newMessage,
+  onSuggestionClick,
+}: MessagingSuggestionProps) => {
   const currentUser = useSelector(selectCurrentUser);
 
   const suggestions = useMemo(() => {
@@ -52,7 +57,7 @@ export const MessagingSuggestions = () => {
   }, [currentUser]);
 
   const bindSelectedSuggestion = (suggestion: MessagingSuggestionItem) => {
-    dispatch(messagingActions.setNewMessage(suggestion.message));
+    onSuggestionClick(suggestion);
   };
 
   return (

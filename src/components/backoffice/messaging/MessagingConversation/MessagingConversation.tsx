@@ -22,10 +22,7 @@ import {
   selectSelectedConversationId,
   selectPinnedInfo,
 } from 'src/use-cases/messaging';
-import {
-  selectConversationParticipantsAreDeleted,
-  selectNewMessage,
-} from 'src/use-cases/messaging/messaging.selectors';
+import { selectConversationParticipantsAreDeleted } from 'src/use-cases/messaging/messaging.selectors';
 import {
   MessagingConversationContainer,
   MessagingInput,
@@ -49,7 +46,7 @@ export const MessagingConversation = () => {
     selectConversationParticipantsAreDeleted
   );
   const pinnedInfo = useSelector(selectPinnedInfo);
-  const newMessage = useSelector(selectNewMessage);
+  const [newMessage, setNewMessage] = useState<string>('');
   const [scrollBehavior, setScrollBehavior] = useState<ScrollBehavior>(
     'instant' as ScrollBehavior
   );
@@ -76,6 +73,7 @@ export const MessagingConversation = () => {
 
   useEffect(() => {
     setScrollBehavior('instant' as ScrollBehavior);
+    setNewMessage('');
   }, [selectedConversationId]);
 
   const scrollToBottom = () => {
@@ -83,6 +81,10 @@ export const MessagingConversation = () => {
     setTimeout(() => {
       setScrollBehavior('smooth' as ScrollBehavior);
     }, 1000);
+  };
+
+  const onSuggestionClick = (suggestion) => {
+    setNewMessage(suggestion.message);
   };
 
   const sendNewMessage = () => {
@@ -103,6 +105,7 @@ export const MessagingConversation = () => {
         selectedConversationId === 'new' ? undefined : selectedConversation.id,
     };
     dispatch(messagingActions.postMessageRequested(body));
+    setNewMessage('');
     adjustMessageHeight();
   };
 
@@ -169,7 +172,10 @@ export const MessagingConversation = () => {
           {pinnedInfo && <MessagingPinnedInfo pinnedInfo={pinnedInfo} />}
 
           {displaySuggestions ? (
-            <MessagingSuggestions />
+            <MessagingSuggestions
+              onSuggestionClick={onSuggestionClick}
+              newMessage={newMessage}
+            />
           ) : (
             <MessagingMessagesContainer className={isMobile ? 'mobile' : ''}>
               {selectedConversation &&
@@ -190,7 +196,7 @@ export const MessagingConversation = () => {
                 placeholder="Ecrivez votre message"
                 value={newMessage}
                 onChange={(e) => {
-                  dispatch(messagingActions.setNewMessage(e.target.value));
+                  setNewMessage(e.target.value);
                 }}
                 disabled={conversationParticipantsAreDeleted}
               />
