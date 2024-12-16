@@ -8,7 +8,7 @@ export const formReferingProfessionalInformation: FormSchema<{
   searchBusinessLine1: FilterConstant<BusinessLineValue>;
   searchAmbition1: string;
 }> = {
-  id: 'form-refering-professional-information',
+  id: 'form-refering-candidate-professional-information',
   fields: [
     {
       id: 'carreerPath0',

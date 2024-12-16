@@ -21,6 +21,7 @@ const bootstrap = () => {
     cy.generateCvCardsApiResponse(); // cv-cards.json
 
     cy.generateSearchUsersApiResponse(); // search-user.json
+    cy.generateUserProfileReferedApiResponse(); // user-profile-refered.json
     cy.generateUsersApiResponse('candidat'); // users-candidat.json
 
     cy.generateOpportunitiesApiResponse(); // opportunities.json

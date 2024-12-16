@@ -202,12 +202,12 @@ export const renderLinks = (
           name: "Réseau d'entraide",
         },
         {
-          href: `${process.env.TOOLBOX_COACH_URL}${
+          href: `${process.env.TOOLBOX_CANDIDATE_URL}${
             candidateId ? `?id=${candidateId}` : ''
           }}`,
           name: 'Boîte à outils',
           external: true,
-          tag: GA_TAGS.BACKOFFICE_COACH_HEADER_BAO_CLIC,
+          tag: GA_TAGS.BACKOFFICE_REFERER_HEADER_BAO_CLIC,
         },
       ],
     },

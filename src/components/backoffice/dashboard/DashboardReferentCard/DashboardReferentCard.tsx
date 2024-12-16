@@ -60,7 +60,7 @@ export const DashboardReferentCard = () => {
           <Text center>
             Vous souhaitez obtenir plus d&apos;informations sur le programme,
             vous rencontrez des difficultés sur la plateforme, ou autre demande,
-            contactez nous&nbsp;!
+            contactez-nous&nbsp;!
           </Text>
         </StyledDashboardReferentText>
       </StyledDashboardCardContentContainer>

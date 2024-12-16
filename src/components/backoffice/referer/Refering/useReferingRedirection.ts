@@ -21,7 +21,7 @@ export function useReferingRedirection() {
 
   useEffect(() => {
     if (shouldRedirect) {
-      replace(`/inscription/${REFERING_FIRST_STEP}`);
+      replace(`/backoffice/referer/orienter/${REFERING_FIRST_STEP}`);
     } else {
       dispatch(referingActions.setReferingStep(step));
     }

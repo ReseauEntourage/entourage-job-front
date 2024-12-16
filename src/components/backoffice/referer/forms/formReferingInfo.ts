@@ -25,7 +25,7 @@ export const formReferingInfo: FormSchema<{
       name: 'birthDateSubLabel',
       component: 'text',
       title:
-        'Le candidate doit avoir plus de 18 ans pour participer au programme Entourage Pro',
+        'Les candidats doivent avoir plus de 18 ans pour participer au programme Entourage Pro',
     },
     {
       id: 'birthDate',
@@ -57,7 +57,7 @@ export const formReferingInfo: FormSchema<{
       name: 'departmentSubLabel',
       component: 'text',
       title:
-        'En renseignant le département, nous pourrons conseiller des coachs à proximité du candidat',
+        'Indiquer le département nous permettra de proposer des coachs à proximité du candidat.',
     },
     {
       id: 'department',

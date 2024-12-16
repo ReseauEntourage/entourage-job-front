@@ -2,7 +2,7 @@ import React, { useCallback, useRef } from 'react';
 import { Layout } from 'src/components/Layout';
 
 import { Impact } from 'src/components/partials/common/Impact';
-import { Partners } from 'src/components/partials/common/Partners';
+import { PartnersWorkingWithUs } from 'src/components/partials/common/Partners/PartnersWorkingWithUs/PartnersWorkingWithUs';
 import { VideoSection } from 'src/components/partials/pages/Orienter/VideoSection';
 import {
   TravaillerProgramme360,
@@ -86,7 +86,7 @@ const Travailler = () => {
 
       <Reviews reviews={reviews} title="Ils nous racontent leur expérience" />
 
-      <Partners />
+      <PartnersWorkingWithUs />
 
       <Impact tag={GA_TAGS.PAGE_TRAVAILLER_MESURE_IMPACT_CLICK} />
     </Layout>

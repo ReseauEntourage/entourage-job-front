@@ -15,7 +15,7 @@ const testimonies = [
     image: '/static/img/temoignage-candidat-danny.jpg',
     author: 'Danny, candidat',
     quote:
-      'J’ai découvert que je ne savais que j’ignorais des choses sur mon CV, on m’a appris à me découvrir. Entourage Pro, c’est un GPS pour être humain ! Vous nous aidez à trouver notre chemin et à le construire sans pour autant le faire pour nous.',
+      'J’ai découvert que j’ignorais des choses sur mon CV, on m’a appris à me découvrir. Entourage Pro, c’est un GPS pour être humain ! Vous nous aidez à trouver notre chemin et à le construire sans pour autant le faire pour nous.',
   },
   {
     image: '/static/img/temoignage-candidat-amelie.jpg',

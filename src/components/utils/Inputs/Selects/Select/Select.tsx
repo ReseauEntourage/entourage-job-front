@@ -61,7 +61,7 @@ export function Select<T extends FilterConstant | FilterConstant[]>({
           }}
           placeholder={
             (showLabel ? placeholder : placeholder || title) ||
-            'Selectionnez dans la liste...'
+            'Sélectionnez dans la liste...'
           }
           isDisabled={disabled}
           onChange={onChange}

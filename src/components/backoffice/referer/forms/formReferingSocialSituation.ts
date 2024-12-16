@@ -59,7 +59,7 @@ export const formReferingSocialSituation: FormSchema<{
       name: 'resources',
       component: 'select-simple',
       options: CANDIDATE_RESOURCES_FILTERS,
-      title: 'Quelle sont ses sources de revenu ?',
+      title: 'Quelles sont ses sources de revenus ?',
       showLabel: true,
       showOptional: true,
     },

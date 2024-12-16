@@ -135,7 +135,7 @@ export const formRegistrationRefererAccount: FormSchema<formRegistrationRefererA
             callback([]);
           }
         },
-        title: 'Séléctionnez votre association *',
+        title: 'Sélectionnez votre association *',
         isMulti: false,
         showLabel: true,
       },

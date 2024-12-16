@@ -74,8 +74,7 @@ export const formOnboardingCandidateJob: FormSchema<{
     {
       id: 'externalCv',
       name: 'externalCv',
-      title:
-        'Télécharger votre CV pour que les membres puissent le découvrir !',
+      title: 'Ajoutez votre CV pour mettre en avant vos compétences',
       component: FormComponents.FILE,
       fileType: FileTypes.CV,
       showLabel: true,
@@ -86,7 +85,7 @@ export const formOnboardingCandidateJob: FormSchema<{
       name: 'linkedinUrl',
       component: FormComponents.TEXT_INPUT,
       title:
-        'Ajouter votre profil Linkedin pour que les membres puissent le découvrir !',
+        'Ajoutez votre profil LinkedIn pour que les membres le découvrent et vous y soutiennent aussi',
       placeholder: 'Ajouter le lien LinkedIn',
       showLabel: true,
       rules: [

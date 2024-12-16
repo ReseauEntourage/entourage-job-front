@@ -72,7 +72,7 @@ const toolboxContents: {
   },
   [USER_ROLES.REFERER]: {
     subtitle:
-      'Découvrez les contenus pédagogique pour aider les candidats dans leur recherche d’emploi',
+      'Découvrez les contenus pédagogiques pour accompagner les candidats dans leur recherche d’emploi',
     url: process.env.TOOLBOX_COACH_URL as string,
     articles: coachArticles,
   },
