@@ -42,7 +42,7 @@ export const DashboardNetworkDiscoveryCard = () => {
   const isDesktop = useIsDesktop();
 
   return (
-    <Card title={cardVariables[user.role].title}>
+    <Card title={cardVariables[user.role].title} centerTitle>
       <StyledDashboardCardContentContainer>
         <StyledDashboardNetworkDiscoverContent>
           {isDesktop && (
