@@ -1,5 +1,7 @@
 import { call, put, select, take, takeLatest } from 'typed-redux-saga';
+import { notificationsActions } from '../notifications';
 import { Api } from 'src/api';
+import { isMessagingDailyConversationLimitReachedError } from 'src/api/axiosErrors';
 import { ConversationParticipant } from 'src/api/types';
 import { slice } from './messaging.slice';
 
@@ -91,8 +93,16 @@ function* postMessageSagaRequested(
         isNewConversation: !action.payload.conversationId,
       })
     );
-  } catch {
+  } catch (error: unknown) {
     yield* put(postMessageFailed());
+    if (isMessagingDailyConversationLimitReachedError(error)) {
+      yield* put(
+        notificationsActions.addNotification({
+          type: 'danger',
+          message: `Nous sommes désolés, vous avez déjà contacté le maximum de membres aujourd’hui. Laissez le temps aux membres de vous répondre ! Si besoin, vous pourrez en contacter plus à partir de demain !`,
+        })
+      );
+    }
   }
 }
 

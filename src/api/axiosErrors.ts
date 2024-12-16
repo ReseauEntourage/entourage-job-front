@@ -51,6 +51,15 @@ export function isEmailAlreadyVerifiedError(error: unknown) {
   );
 }
 
+export function isMessagingDailyConversationLimitReachedError(error: unknown) {
+  return (
+    isAxiosError(error) &&
+    error.response?.status === 429 &&
+    (error.response?.data as { message?: string })?.message ===
+      'DAILY_CONVERSATION_LIMIT_REACHED'
+  );
+}
+
 export function isTokenExpiredError(error: unknown) {
   return (
     isAxiosError(error) &&
