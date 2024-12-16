@@ -76,7 +76,7 @@ export const formReferingAccountReferedCandidate: FormSchema<{
       name: 'confirmReferingRules',
       component: 'checkbox',
       title:
-        "Je certifie avoir informé le candidat ou la candidate que j'orienté, de sa pré-inscription au programme Entourage pro *",
+        "Je certifie avoir informé le candidat ou la candidate que j'oriente, de sa pré-inscription au programme Entourage pro *",
       showLabel: true,
       isRequired: true,
     },

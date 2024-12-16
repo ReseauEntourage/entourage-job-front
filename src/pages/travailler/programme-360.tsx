@@ -2,7 +2,7 @@ import React from 'react';
 import { Layout } from 'src/components/Layout';
 import { CandidateTestimoniesOrientation } from 'src/components/partials/common/CandidateTestimoniesOrientation';
 import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial/NewsletterPartial';
-import { Partners } from 'src/components/partials/common/Partners';
+import { PartnersWorkingWithUs } from 'src/components/partials/common/Partners/PartnersWorkingWithUs/PartnersWorkingWithUs';
 import { SharePartial } from 'src/components/partials/common/SharePartial';
 import { Participer } from 'src/components/partials/pages/Travailler/360/Participer';
 import { Rejoindre } from 'src/components/partials/pages/Travailler/360/Rejoindre';
@@ -36,7 +36,7 @@ const Programme360 = () => {
       <Rejoindre />
       <Steps />
       <CandidateTestimoniesOrientation noTitle noVideo style="muted" />
-      <Partners />
+      <PartnersWorkingWithUs />
       <Section style="custom-primary">
         <NewsletterPartial
           padding={false}

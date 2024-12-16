@@ -278,7 +278,7 @@ export const CandidateLastStepContent: Pick<LastStepContent, 'bullets'> = {
     },
     {
       icon: <IlluPoigneeDeMain {...iconSizeProps} />,
-      title: 'Demander des coups de pouces à des coachs',
+      title: 'Demandez des coups de pouces à des coachs',
       text: 'Sollicitez du soutien auprès de coachs tout au long de votre recherche',
     },
     {
@@ -295,14 +295,13 @@ const RefererLastStepContent: Pick<LastStepContent, 'bullets'> = {
       icon: <IlluPoigneeDeMain {...iconSizeProps} />,
       title:
         'Facilitez l’inscription et le suivi des personnes que vous accompagnez',
-      text: "Faites profiter de votre expérience des candidat(e)s et soutenez-les dans leurs recherches d'emploi",
+      text: "Consultez les profils de vos candidats et soutenez-les dans leur recherche d'emploi",
     },
     {
       icon: <IlluConversation {...iconSizeProps} />,
-      title: 'Discutez et échangez avec les membres de la communauté',
-      text: "Commencez à partager et développer votre réseau solidaire en prenant contact avec d'autres membres de la communauté",
+      title: "Découvrez le réseau d'entraide et adressez lui vos candidats",
+      text: 'Consultez le réseau d’entraide pour orienter au mieux vos candidats vers les coachs qui peuvent leur donner un coup de pouce dans leur recherche d’emploi',
     },
-    // TODO: Définir si on garde ce bullet -> https://www.figma.com/design/TVYUtyCO1mjJ2moDFvmzf2?node-id=1447-3526#997840400
     {
       icon: <IlluCalendrier color={COLORS.primaryBlue} {...iconSizeProps} />,
       title: 'Participez à des événements professionnels et conviviaux',

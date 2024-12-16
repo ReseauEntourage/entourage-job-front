@@ -42,14 +42,36 @@ export function MemberDetailsHeader({ user }: MemberDetailsHeaderProps) {
         <span className="uk-label">
           {user.zone ? _.capitalize(user.zone) : 'Non renseignée'}
         </span>
-        <StyledRoleContainer>
-          <LucidIcon name="User" />
-          &nbsp;
-          <div>
-            <span className="bold">{`${_.capitalize(user.role)}`}</span>
-            {` de ${relatedUserText}`}
-          </div>
-        </StyledRoleContainer>
+        {(user.role === USER_ROLES.COACH ||
+          user.role === USER_ROLES.CANDIDATE) && (
+          <StyledRoleContainer>
+            <LucidIcon name="User" />
+            &nbsp;
+            <div>
+              <span className="bold">{`${_.capitalize(user.role)}`}</span>
+              {` de ${relatedUserText}`}
+            </div>
+          </StyledRoleContainer>
+        )}
+        {user.role === USER_ROLES.REFERER && (
+          <StyledRoleContainer>
+            <LucidIcon name="User" />
+            &nbsp;
+            {user.referredCandidates && user.referredCandidates.length > 0 ? (
+              <div>
+                <span className="bold">{`${_.capitalize(user.role)}`}</span>
+                {` de ${user.referredCandidates?.length} candidat${
+                  (user.referredCandidates.length > 1 && 's') || ''
+                }`}
+              </div>
+            ) : (
+              <div>
+                <span className="bold">{`${_.capitalize(user.role)}`}</span>
+                {` d'aucun candidat`}
+              </div>
+            )}
+          </StyledRoleContainer>
+        )}
         {user.role === USER_ROLES.CANDIDATE && (
           <StyledRoleContainer>
             <LucidIcon name="Link" />

@@ -152,7 +152,7 @@ export const ParametresHelpCardContents: {
       value: 'cv',
       label: 'Réaliser son CV et ses lettres de motivation',
       description:
-        "Profitez de l'expérience des coachs Entourage Pro pour créer des CV et lettres de motivation qui mettent en avant vos atouts et compétences.",
+        'Profitez de l’expertise des coachs Entourage Pro pour concevoir un CV et des lettres de motivation qui valorisent vos atouts et compétences.',
     },
     {
       icon: (

@@ -31,7 +31,7 @@ const User = () => {
   useEffect(() => {
     if (user && user !== prevUser) {
       if (
-        user.role === USER_ROLES.COACH &&
+        (user.role === USER_ROLES.COACH || user.role === USER_ROLES.REFERER) &&
         (!tab || tab !== MEMBER_TABS.PARAMETERS)
       ) {
         replace(

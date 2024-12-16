@@ -65,7 +65,7 @@ export const Rejoindre = () => {
             <Button
               style="custom-secondary"
               dataTestId="button-orienter-candidat"
-              href="/orienter-candidat"
+              href="/inscription"
             >
               Orienter un candidat
             </Button>

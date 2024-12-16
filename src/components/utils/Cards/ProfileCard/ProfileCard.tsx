@@ -134,7 +134,7 @@ export function ProfileCard({
       }}
     >
       <a target="_blank">
-        <StyledProfileCard>
+        <StyledProfileCard className="profile-card">
           <StyledProfileCardPictureContainer>
             <StyledProfileCardPicture>
               {urlImg ? (

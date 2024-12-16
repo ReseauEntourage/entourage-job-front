@@ -6,73 +6,62 @@ import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledPartners } from './Partners.styles';
 
-export const Partners = ({
-  tag,
-}: {
+export interface PartnersListItem {
+  name: string;
+  logo: string;
+  width: number;
+  height: number;
+}
+
+export interface PartnersProps {
+  title: string;
   tag?: (typeof GA_TAGS)[keyof typeof GA_TAGS];
-}) => {
+  list: PartnersListItem[];
+  displayCta: boolean;
+}
+
+export const Partners = ({
+  title,
+  tag,
+  list,
+  displayCta = true,
+}: PartnersProps) => {
   return (
     <StyledPartners>
       <Section className="custom-primary" display="flex-center">
         <H2
           variant="big"
-          title="Ils travaillent avec Entourage Pro"
+          title={title}
           weight="normal"
           color={COLORS.darkGray}
         />
         <div className="logos-container">
-          <div>
-            <Img
-              width={150}
-              height={70}
-              src="/static/img/partners/advens/logo.png"
-              alt="advens"
-            />
-          </div>
-          <div>
-            <Img
-              width={200}
-              height={70}
-              src="/static/img/partners/archipel/logo.png"
-              alt="archipel"
-            />
-          </div>
-          <div>
-            <Img
-              width={150}
-              height={70}
-              src="/static/img/partners/ares/logo.png"
-              alt="ares"
-            />
-          </div>
-          <div>
-            <Img
-              width={150}
-              height={70}
-              src="/static/img/partners/randstad/logo.png"
-              alt="randstad"
-            />
-          </div>
-          <div>
-            <Img
-              width={150}
-              height={70}
-              src="/static/img/partners/tbwa/logo.png"
-              alt="tbwa"
-            />
-          </div>
+          {list.map((partner) => {
+            return (
+              <div key={partner.name}>
+                <Img
+                  width={partner.width}
+                  height={partner.height}
+                  src={partner.logo}
+                  alt={partner.name}
+                />
+              </div>
+            );
+          })}
         </div>
-        <Button
-          style="custom-secondary-inverted"
-          href="https://www.entourage.social/qui-sommes-nous/partenaires"
-          onClick={() => {
-            if (tag) gaEvent(tag);
-          }}
-          newTab
-          isExternal
-        >
-          Voir tous les partenaires
-        </Button>
+        {displayCta && (
+          <Button
+            style="custom-secondary-inverted"
+            href="https://www.entourage.social/qui-sommes-nous/partenaires"
+            onClick={() => {
+              if (tag) gaEvent(tag);
+            }}
+            newTab
+            isExternal
+          >
+            Voir tous les partenaires
+          </Button>
+        )}
       </Section>
     </StyledPartners>
   );
