@@ -22,7 +22,6 @@ import { DashboardLinkedUserCard } from './DashboardLinkedUserCard';
 import { DashboardMessagingConversation } from './DashboardMessagingConversation';
 import { DashboardNextSteps } from './DashboardNextSteps/DashboardNextSteps';
 import { DashboardProfileCard } from './DashboardProfileCard';
-import { DashboardReadDocumentsCard } from './DashboardReadDocumentsCard';
 import { DashboardRecommendationsCard } from './DashboardRecommendationsCard';
 import { DashboardReferentCard } from './DashboardReferentCard';
 import { DashboardToolboxCard } from './DashboardToolboxCard';
@@ -51,12 +50,7 @@ export const Dashboard = () => {
           <StyledDashboardRightColumn
             className={`${isDesktop ? '' : 'mobile'}`}
           >
-            {isNormalUser && (
-              <>
-                <DashboardReadDocumentsCard />
-                <DashboardNextSteps />
-              </>
-            )}
+            {isNormalUser && <DashboardNextSteps />}
             <DashboardMessagingConversation />
             {isNormalUser && <DashboardRecommendationsCard />}
             {isReferer && <DashboardInviteToReferCandidate />}
