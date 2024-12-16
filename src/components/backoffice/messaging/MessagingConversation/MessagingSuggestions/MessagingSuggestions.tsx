@@ -33,7 +33,7 @@ export const MessagingSuggestions = ({
       },
       {
         name: 'Préparer un entretien',
-        message: `Bonjour, je suis ${currentUser.firstName},\nJ’ai passé un entretien récemment, mais je ne suis pas sûr de ma prestation. Pouvez-vous m’aider à m’améliorer pour les prochains ?\nMerci d'avance`,
+        message: `Bonjour, je suis ${currentUser.firstName},\nJe vais passé ou j'ai passé un entretien récemment, mais je ne suis pas sûr de ma prestation. Pouvez-vous m’aider à m’améliorer pour les prochains ?\nMerci d'avance`,
       },
       {
         name: "M'orienter professionnellement",
@@ -45,13 +45,7 @@ export const MessagingSuggestions = ({
       },
       {
         name: 'Comprendre le marché du travail',
-        message: `Bonjour, je suis ${
-          currentUser.firstName
-        },\nPourriez-vous m’en dire plus sur les métiers qui recrutent dans mon secteur ${
-          currentUser.userProfile?.department
-            ? `- ${currentUser.userProfile.department}`
-            : ''
-        } ? Je veux maximiser mes chances.\nMerci d'avance`,
+        message: `Bonjour, je suis ${currentUser.firstName},\nPourriez-vous m’en dire plus sur les métiers qui recrutent dans mon secteur ? Je veux maximiser mes chances.\nMerci d'avance`,
       },
     ] as MessagingSuggestionItem[];
   }, [currentUser]);
