@@ -81,6 +81,12 @@ export const formOnboardingCandidateJob: FormSchema<{
       accept: '.pdf',
     },
     {
+      id: 'infoExternalCv',
+      name: 'infoExternalCv',
+      component: FormComponents.TEXT,
+      title: 'Seul un CV au format PDF est accepté',
+    },
+    {
       id: 'linkedinUrl',
       name: 'linkedinUrl',
       component: FormComponents.TEXT_INPUT,
