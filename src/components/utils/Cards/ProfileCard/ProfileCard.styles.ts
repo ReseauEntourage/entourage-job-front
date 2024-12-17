@@ -3,12 +3,13 @@ import { StyledCardCommon } from '../Cards.styles';
 import { COLORS } from 'src/constants/styles';
 
 export const StyledProfileCard = styled(StyledCardCommon)`
-  width: 270px;
+  width: 100%;
+  height: 100%;
   border-radius: 10px;
   border: 1px solid ${COLORS.gray};
   cursor: pointer;
   transition: box-shadow 0.2s ease-in-out;
-
+  box-sizing: border-box;
   &:hover {
     box-shadow: 0 8px 16px 0 ${COLORS.gray};
   }
@@ -152,13 +153,8 @@ export const StyledProfileCardHelpContainer = styled.div``;
 
 export const StyledProfileCardHelps = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-right: -8px;
-  margin-left: -8px;
+  gap: 8px;
 `;
 
 export const StyledProfileCardHelp = styled.div`
@@ -169,7 +165,7 @@ export const StyledProfileCardHelp = styled.div`
 `;
 
 export const StyledProfileCardHelpLabel = styled.div`
-  font-size: 10px;
+  font-size: 8px;
   color: ${COLORS.mediumGray};
 `;
 
@@ -193,4 +189,9 @@ export const StyledProfileCardEmptyIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+export const StyledCTAContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
 `;
