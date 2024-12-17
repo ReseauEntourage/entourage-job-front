@@ -108,6 +108,77 @@ export const ParametresHelpCardTitles: {
   },
 } as const;
 
+export const ReferingCandidateHelpCardContents: (FilterConstant<HelpValue> & {
+  icon: React.ReactNode;
+  description: string;
+})[] = [
+  {
+    icon: (
+      <Img
+        src="/static/img/illustrations/illu-poignee-main.png"
+        alt="Poignée de main"
+        {...iconSizeProps}
+      />
+    ),
+    value: 'tips',
+    label: 'Demander des conseils aux membres de la communauté',
+    description:
+      "Recevoir des conseils personnalisés et un accompagnement de la part de nos coachs pour l'aider dans son parcours professionnel.",
+  },
+  {
+    icon: (
+      <Img
+        src="/static/img/illustrations/illu-mallette.png"
+        alt="Mallette"
+        {...iconSizeProps}
+      />
+    ),
+    value: 'interview',
+    label: 'Se préparer aux entretiens d’embauche',
+    description:
+      'Se préparer à ses entretiens grâce aux conseils et au soutien des coachs Entourage Pro.',
+  },
+  {
+    icon: (
+      <Img
+        src="/static/img/illustrations/illu-CV.png"
+        alt="CV"
+        {...iconSizeProps}
+      />
+    ),
+    value: 'cv',
+    label: 'Réaliser son CV et ses lettres de motivation',
+    description:
+      'Profiter de l’expertise des coachs Entourage Pro pour concevoir un CV et des lettres de motivation qui valorisent ses atouts et compétences.',
+  },
+  {
+    icon: (
+      <Img
+        src="/static/img/illustrations/illu-disscution.png"
+        alt="Disscution"
+        {...iconSizeProps}
+      />
+    ),
+    value: 'event',
+    label: 'Se rencontrer et échanger avec les membres de la communauté',
+    description:
+      "Rejoindre notre communauté lors d'événements pour partager ses expériences, apprendre des autres et tisser des liens professionnels précieux.",
+  },
+  {
+    icon: (
+      <Img
+        src="/static/img/illustrations/illu-partage-rs.png"
+        alt="Réseaux sociaux"
+        {...iconSizeProps}
+      />
+    ),
+    value: 'network',
+    label: 'Faire grandir son réseau professionnel',
+    description:
+      "Multiplier les opportunités professionnelles en entrant en lien avec des professionnels qui peuvent le soutenir et lui ouvrir des portes sur le marché de l'emploi.",
+  },
+];
+
 export const ParametresHelpCardContents: {
   [K in NormalUserRole]: (FilterConstant<HelpValue> & {
     icon: React.ReactNode;
