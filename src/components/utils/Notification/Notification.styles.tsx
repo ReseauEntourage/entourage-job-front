@@ -1,9 +1,14 @@
 import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { BREAKPOINTS, STATUS_COLORS } from 'src/constants/styles';
 
-export const NOTIF_WIDTH = '600px';
+export const NOTIF_WIDTH = '500px';
 
 export const StyledNotificationWrapper = styled.div``;
+
+const backgroundColor = {
+  success: STATUS_COLORS.success,
+  danger: STATUS_COLORS.error,
+};
 
 export const StyledNotificationsContainer = styled.div`
   display: flex;
@@ -13,26 +18,37 @@ export const StyledNotificationsContainer = styled.div`
   position: fixed;
   right: 0;
   z-index: 100;
-`;
-
-const StyledNotification = styled.div`
-  box-sizing: border-box;
-  width: ${NOTIF_WIDTH};
-  color: white;
-  height: 50px;
-  line-height: 50px;
-  padding-left: 20px;
-  border-radius: 5px 0 0 5px;
-  svg {
-    margin-right: 20px;
-    height: 25px;
+  @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
+    width: 100%;
   }
 `;
 
-export const StyledSuccessNotification = styled(StyledNotification)`
-  background-color: ${COLORS.green};
+export const StyledNotification = styled.div`
+  background-color: ${(props) => {
+    return backgroundColor[props.type];
+  }};
+  display: flex;
+  width: ${NOTIF_WIDTH};
+  color: white;
+  border-radius: 5px 0 0 5px;
+  padding: 10px 10px 10px 0;
+
+  @media screen and (max-width: ${BREAKPOINTS.desktop}px) {
+    width: 100%;
+  }
 `;
 
-export const StyledFailedNotification = styled(StyledNotification)`
-  background-color: ${COLORS.red};
+export const StyledIconContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 5px 10px;
+  justify-content: center;
+  align-items: center;
+  flex: 0 0 25px;
+`;
+
+export const StyledTextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
