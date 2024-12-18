@@ -45,7 +45,7 @@ export function useDashboardRecommendations() {
         notificationsActions.addNotification({
           type: 'danger',
           message:
-            'Une erreur est survenue lors de la récupération des recommendations',
+            'Une erreur est survenue lors de la récupération des recommandations',
         })
       );
     }
