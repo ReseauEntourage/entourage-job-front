@@ -108,7 +108,7 @@ export const ParametresHelpCardTitles: {
   },
 } as const;
 
-export const ReferingCandidateHelpCardContents: (FilterConstant<HelpValue> & {
+export const ReferedCandidateHelpCardContents: (FilterConstant<HelpValue> & {
   icon: React.ReactNode;
   description: string;
 })[] = [

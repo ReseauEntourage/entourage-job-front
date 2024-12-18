@@ -1,7 +1,7 @@
 import { FormSchema } from 'src/components/forms/FormSchema';
 import {
   HelpValue,
-  ReferingCandidateHelpCardContents,
+  ReferedCandidateHelpCardContents,
 } from 'src/constants/helps';
 
 export const formReferingExpectations: FormSchema<{
@@ -13,7 +13,7 @@ export const formReferingExpectations: FormSchema<{
       id: 'helpNeeds',
       name: 'helpNeeds',
       component: 'select-list',
-      options: ReferingCandidateHelpCardContents,
+      options: ReferedCandidateHelpCardContents,
       showLabel: false,
       isRequired: true,
       isMulti: true,
