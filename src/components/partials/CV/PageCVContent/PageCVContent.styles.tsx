@@ -119,7 +119,6 @@ export const StyledCVProfilePictureContainer = styled.div`
 export const StyledCVProfilePicture = styled.div`
   height: 340px;
   width: 340px;
-  background: red;
   position: relative;
   border-radius: 50%;
   background-color: ${COLORS.hoverBlue};

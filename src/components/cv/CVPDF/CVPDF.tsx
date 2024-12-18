@@ -123,9 +123,9 @@ export const CVPDF = ({ cv, page }: CVPDFProps) => {
       availableSpaceOnFirstPage
     );
     setItems({
-      firstPageExperiences: cv.experiences.slice(0, nbOfExperienceFirstPage),
+      firstPageExperiences: cv.experiences, // all the xp on first page
       firstPageFormations: cv.formations.slice(0, nbOfFormationFirstPage),
-      secondPageExperiences: cv.formations.slice(nbOfExperienceFirstPage),
+      secondPageExperiences: [], // no xp on second page
       secondPageFormations: cv.formations.slice(nbOfFormationFirstPage),
     });
   }, [cv]);
