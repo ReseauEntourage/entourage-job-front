@@ -72,6 +72,11 @@ export const COLORS = {
   darkGreen: '#1F4946',
 };
 
+export const STATUS_COLORS = {
+  success: COLORS.green,
+  error: COLORS.lightRed,
+};
+
 export const CV_STATUS_COLORS = {
   none: {
     border: COLORS.lightGray,

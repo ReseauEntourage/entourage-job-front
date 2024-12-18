@@ -1,4 +1,11 @@
-export type WeightProps = 'normal' | 'bold' | 'lighter';
+export const FONT_WEIGHTS = {
+  lighter: 'lighter',
+  normal: 'normal',
+  semibold: '500',
+  bold: 'bold',
+};
+
+export type WeightProps = (typeof FONT_WEIGHTS)[keyof typeof FONT_WEIGHTS];
 
 interface HeadingBasicProps {
   color?: string;

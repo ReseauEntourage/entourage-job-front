@@ -29,7 +29,6 @@ export const StyledConnectedItem = styled.li`
     color: ${({ color }) => {
       return COLORS[color] || COLORS.black;
     }};
-    font-weight: 500;
   }
 
   &.hasSubMenu {
