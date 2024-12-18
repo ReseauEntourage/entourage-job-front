@@ -145,14 +145,18 @@ export const RegistrationStepContents: {
     },
     [USER_ROLES.COACH]: {
       form: formRegistrationCoachProgram,
-      dependsOn: ['department'],
+      dependsOn: ['department', 'birthDate'],
+      // Pour un coach qui n'a pas le choix, on skip cette etape et on lui assigne le programme CDP
+      skippedBy: {
+        notEligibleFor360: true,
+      },
     },
   },
   'step-4': {
     [USER_ROLES.CANDIDATE]: {
       form: formRegistrationCandidateProgram,
       dependsOn: ['department', 'birthDate'],
-      // Pour un candidat qui n'a pas le choix, on skip cette etape
+      // Pour un candidat qui n'a pas le choix, on skip cette etape et on lui assigne le programme CDP
       skippedBy: {
         notEligibleFor360: true,
       },
