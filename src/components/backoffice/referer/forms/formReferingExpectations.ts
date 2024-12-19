@@ -1,6 +1,8 @@
 import { FormSchema } from 'src/components/forms/FormSchema';
-import { HelpValue, ParametresHelpCardContents } from 'src/constants/helps';
-import { USER_ROLES } from 'src/constants/users';
+import {
+  HelpValue,
+  ReferedCandidateHelpCardContents,
+} from 'src/constants/helps';
 
 export const formReferingExpectations: FormSchema<{
   helpNeeds: HelpValue[];
@@ -11,7 +13,7 @@ export const formReferingExpectations: FormSchema<{
       id: 'helpNeeds',
       name: 'helpNeeds',
       component: 'select-list',
-      options: ParametresHelpCardContents[USER_ROLES.CANDIDATE],
+      options: ReferedCandidateHelpCardContents,
       showLabel: false,
       isRequired: true,
       isMulti: true,
