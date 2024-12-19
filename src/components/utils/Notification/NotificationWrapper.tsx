@@ -23,7 +23,7 @@ export const NotificationWrapper = ({
   const handleNotification = useCallback(async () => {
     await asyncTimeout(100);
     setInProp(true);
-    await asyncTimeout(3000);
+    await asyncTimeout(10000);
     setInProp(false);
     await asyncTimeout(500);
     dispatch(notificationsActions.removeNotification({ id }));

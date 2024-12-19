@@ -1,8 +1,10 @@
 import React from 'react';
 import { LucidIcon } from '../Icons/LucidIcon';
+import { Text } from '../Text';
 import {
-  StyledFailedNotification,
-  StyledSuccessNotification,
+  StyledIconContainer,
+  StyledNotification,
+  StyledTextContainer,
 } from './Notification.styles';
 
 interface NotificationProps {
@@ -11,18 +13,16 @@ interface NotificationProps {
 }
 export const Notification = ({ type, message }: NotificationProps) => {
   return (
-    <>
-      {type === 'success' ? (
-        <StyledSuccessNotification>
-          <LucidIcon name="Check" />
+    <StyledNotification type={type}>
+      <StyledIconContainer>
+        <LucidIcon name="CircleCheck" size={100} />
+      </StyledIconContainer>
+
+      <StyledTextContainer>
+        <Text color="white" size="large">
           {message}
-        </StyledSuccessNotification>
-      ) : (
-        <StyledFailedNotification>
-          <LucidIcon name="X" />
-          {message}
-        </StyledFailedNotification>
-      )}
-    </>
+        </Text>
+      </StyledTextContainer>
+    </StyledNotification>
   );
 };

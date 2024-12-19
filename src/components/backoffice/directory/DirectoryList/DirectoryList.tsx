@@ -33,6 +33,7 @@ export function DirectoryList() {
           ambitions={profile.searchAmbitions}
           job={profile.currentJob}
           isAvailable={profile.isAvailable}
+          displayHelps
         />
       );
     });

@@ -20,11 +20,10 @@ import { DashboardAlertWhatsappCoach } from './DashboardAlertWhatsappCoach/Dashb
 import { DashboardAvailabilityCard } from './DashboardAvailabilityCard';
 import { DashboardLinkedUserCard } from './DashboardLinkedUserCard';
 import { DashboardMessagingConversation } from './DashboardMessagingConversation';
+import { DashboardNextSteps } from './DashboardNextSteps/DashboardNextSteps';
 import { DashboardProfileCard } from './DashboardProfileCard';
-import { DashboardReadDocumentsCard } from './DashboardReadDocumentsCard';
 import { DashboardRecommendationsCard } from './DashboardRecommendationsCard';
 import { DashboardReferentCard } from './DashboardReferentCard';
-import { DashboardStepsCard } from './DashboardStepsCard';
 import { DashboardToolboxCard } from './DashboardToolboxCard';
 
 export const Dashboard = () => {
@@ -51,12 +50,7 @@ export const Dashboard = () => {
           <StyledDashboardRightColumn
             className={`${isDesktop ? '' : 'mobile'}`}
           >
-            {isNormalUser && (
-              <>
-                <DashboardReadDocumentsCard />
-                <DashboardStepsCard />
-              </>
-            )}
+            {isNormalUser && <DashboardNextSteps />}
             <DashboardMessagingConversation />
             {isNormalUser && <DashboardRecommendationsCard />}
             {isReferer && <DashboardInviteToReferCandidate />}
