@@ -71,7 +71,7 @@ export const TravaillerProgramme360 = ({
             className={isDesktop ? '' : 'mobile'}
           >
             <IlluTeteHomme {...iconsProps} />{' '}
-            <Text color="light">Pour les jeunes de moins de 30 ans</Text>
+            <Text color="light">Pour les jeunes de moins de 25 ans</Text>
           </StyledAiderProgrammesListElement>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
