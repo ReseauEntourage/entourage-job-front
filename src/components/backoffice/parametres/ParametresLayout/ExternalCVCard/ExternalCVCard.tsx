@@ -42,7 +42,7 @@ export const ExternalCVCard = ({ dataTestId }: ExternalCvCardProps) => {
 
   return (
     <Card
-      title="Télécharger mon CV"
+      title="Importer mon CV"
       editIcon={
         <>
           <QuestionIcon
@@ -60,7 +60,7 @@ export const ExternalCVCard = ({ dataTestId }: ExternalCvCardProps) => {
         </StyledCvUploadInfos>
         {!user.userProfile.hasExternalCv && (
           <>
-            <Button onClick={openFileExplorer}>Télécharger</Button>
+            <Button onClick={openFileExplorer}>Importer</Button>
             <input
               type="file"
               id="external-cv-upload-input"
