@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import moment from 'moment';
 import React, { Ref } from 'react';
 import { OpportunityWithOpportunityUsers, Event } from 'src/api/types';
@@ -131,12 +130,14 @@ export const CandidateOpportunityDetails = ({
             opportunityUsers.archived
           )}
           noProcess={
-            _.isNil(opportunityUsers.status) ||
-            (opportunityUsers.status === -1 &&
+            opportunityUsers.status === null ||
+            !!(
+              opportunityUsers.status === -1 &&
               isPublic &&
               !opportunityUsers.bookmarked &&
               !opportunityUsers.recommended &&
-              !opportunityUsers.archived)
+              !opportunityUsers.archived
+            )
           }
         />
       </StyledOpportunityDetailsTopContainer>
