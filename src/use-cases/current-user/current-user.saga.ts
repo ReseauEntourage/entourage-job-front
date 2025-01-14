@@ -46,13 +46,15 @@ const {
 
 function getIsReleaseVersionAllowed() {
   const releaseVersion = localStorage.getItem(STORAGE_KEYS.RELEASE_VERSION);
-  const herokuReleaseVersion = process.env.HEROKU_RELEASE_VERSION as string;
+  const herokuReleaseVersion =
+    (process.env.HEROKU_RELEASE_VERSION as string) || '';
 
   return releaseVersion === herokuReleaseVersion;
 }
 
 function setReleaseVersion() {
-  const herokuReleaseVersion = process.env.HEROKU_RELEASE_VERSION as string;
+  const herokuReleaseVersion =
+    (process.env.HEROKU_RELEASE_VERSION as string) || '';
 
   localStorage.setItem(STORAGE_KEYS.RELEASE_VERSION, herokuReleaseVersion);
 }

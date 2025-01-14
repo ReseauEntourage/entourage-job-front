@@ -51,7 +51,7 @@ export const Publier = ({ innerRef }: { innerRef: Ref<HTMLDivElement> }) => {
           </div>
           <Button
             style="custom-secondary-inverted"
-            href={process.env.EXTERNAL_CANDIDATE_FORM_SF_URL}
+            href={process.env.NEXT_PUBLIC_EXTERNAL_CANDIDATE_FORM_SF_URL}
             onClick={() => {
               gaEvent(GA_TAGS.PAGE_ORIENTER_CLASSIQUE_ENVOYER_CLIC);
             }}

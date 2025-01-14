@@ -71,7 +71,7 @@ const reviews = [
 const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
   useMount(() => {
     const taxModalClosed = localStorage.getItem(STORAGE_KEYS.TAX_MODAL_CLOSED);
-    if (process.env.SHOW_POPUP === 'true' && !taxModalClosed) {
+    if (process.env.NEXT_PUBLIC_SHOW_POPUP === 'true' && !taxModalClosed) {
       setTimeout(() => {
         openModal(<TaxModal />);
       }, 1500);

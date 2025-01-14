@@ -37,7 +37,7 @@ export const EnSavoirPlus = () => {
             {
               button: {
                 label: 'Télécharger la brochure',
-                href: process.env.ASSOCIATION_BROCHURE,
+                href: process.env.NEXT_PUBLIC_ASSOCIATION_BROCHURE,
                 external: true,
                 onClick: () => {
                   gaEvent(GA_TAGS.PAGE_ORIENTER_BROCHURE_CLIC);

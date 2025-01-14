@@ -7,28 +7,27 @@ on:
   workflow_dispatch:
 
 env:
-  WEBINAR_URL: 'https://google.com'
-  TOOLBOX_COACH_URL: 'https://google.com'
-  TOOLBOX_CANDIDATE_URL: 'https://google.com'
-  TUTORIAL_CV: 'https://google.com'
-  TUTORIAL_PP: 'https://google.com'
-  TUTORIAL_VIDEO_FIRST_STEPS: 'https://google.com'
-  TUTORIAL_VIDEO_CV: 'https://google.com'
-  TUTORIAL_VIDEO_OFFERS: 'https://google.com'
-  TUTORIAL_VIDEO_OFFERS_2: 'https://google.com'
-  TUTORIAL_INTERVIEW_TRAINING: 'https://google.com'
-  DONATION_LINK: 'https://google.com'
-  SERVER_URL: 'http://localhost:3000'
-  API_URL: 'http://localhost:3002'
-  PORT: 3000
-  AWSS3_URL: https://entourage-job-preprod.s3.amazonaws.com
-  AWSS3_CDN_URL: https://d3s4t580ymtqme.cloudfront.net
-  CDN_URL: https://d280vsj7wg1qqw.cloudfront.net
-  AWSS3_IMAGE_DIRECTORY: /images/
-  CYPRESS_IO_PROJECT_ID: ${{ secrets.CYPRESS_IO_PROJECT_ID }}
-  PUSHER_API_KEY: ${{ secrets.PUSHER_API_KEY }}
-  ADRESSE_LOCAUX_PARIS: '174 Rue Championnet 75018, Paris'
   HEROKU_RELEASE_VERSION: 'v100'
+  NEXT_PUBLIC_WEBINAR_URL: 'https://google.com'
+  NEXT_PUBLIC_TOOLBOX_COACH_URL: 'https://google.com'
+  NEXT_PUBLIC_TOOLBOX_CANDIDATE_URL: 'https://google.com'
+  NEXT_PUBLIC_TUTORIAL_CV: 'https://google.com'
+  NEXT_PUBLIC_TUTORIAL_PP: 'https://google.com'
+  NEXT_PUBLIC_TUTORIAL_VIDEO_FIRST_STEPS: 'https://google.com'
+  NEXT_PUBLIC_TUTORIAL_VIDEO_CV: 'https://google.com'
+  NEXT_PUBLIC_TUTORIAL_VIDEO_OFFERS: 'https://google.com'
+  NEXT_PUBLIC_TUTORIAL_VIDEO_OFFERS_2: 'https://google.com'
+  NEXT_PUBLIC_TUTORIAL_INTERVIEW_TRAINING: 'https://google.com'
+  NEXT_PUBLIC_DONATION_LINK: 'https://google.com'
+  NEXT_PUBLIC_SERVER_URL: 'http://localhost:3000'
+  NEXT_PUBLIC_API_URL: 'http://localhost:3002'
+  NEXT_PUBLIC_AWSS3_URL: https://entourage-job-preprod.s3.amazonaws.com
+  NEXT_PUBLIC_AWSS3_CDN_URL: https://d3s4t580ymtqme.cloudfront.net
+  NEXT_PUBLIC_CDN_URL: https://d280vsj7wg1qqw.cloudfront.net
+  NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY: /images/
+  CYPRESS_IO_PROJECT_ID: ${{ secrets.CYPRESS_IO_PROJECT_ID }}
+  NEXT_PUBLIC_PUSHER_API_KEY: ${{ secrets.PUSHER_API_KEY }}
+  NEXT_PUBLIC_ADRESSE_LOCAUX_PARIS: '174 Rue Championnet 75018, Paris'
   NEXT_TELEMETRY_DISABLED: 1
 
 jobs:

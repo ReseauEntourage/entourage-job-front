@@ -30,7 +30,7 @@ export const LandingPagePartial = () => {
                 <span>
                   {' '}
                   avec{' '}
-                  {process.env.WOMENS_DAY === 'true'
+                  {process.env.NEXT_PUBLIC_WOMENS_DAY === 'true'
                     ? 'celles'
                     : 'celles et ceux'}{' '}
                   qui n&apos;en ont pas
