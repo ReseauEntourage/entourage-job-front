@@ -91,6 +91,7 @@ export type UserProfile = {
   description: string | null;
   department: Department;
   isAvailable: boolean;
+  unavailabilityReason: string | null;
   helpNeeds: { name: HelpValue }[] | null;
   helpOffers: { name: HelpValue }[] | null;
   networkBusinessLines:
