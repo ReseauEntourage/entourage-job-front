@@ -85,7 +85,7 @@ describe('En tant que - Benevole', () => {
         .contains('Femme')
         .click();
 
-      cy.get('#form-candidate-contact-birthDate').type('1996-04-24');
+      cy.get('#form-candidate-contact-birthDate').type('2005-04-24');
 
       cy.get('#form-candidate-contact-address').type('15 Rue du Port');
 
