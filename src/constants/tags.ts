@@ -302,6 +302,9 @@ export const GA_TAGS = {
   BACKOFFICE_OPEN: {
     action: 'Backoffice_Open',
   },
+  BACKOFFICE_MESSAGING_MESSAGE_SEND: {
+    action: 'Backoffice_Messaging_Message_Send',
+  },
   BACKOFFICE_ADMIN_ARCHIVER_MASSE_CLIC: {
     action: 'Backoffice_Admin_Archiver_Masse_Clic',
   },
