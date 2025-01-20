@@ -371,6 +371,15 @@ export const GA_TAGS = {
   BACKOFFICE_CANDIDAT_HEADER_CV_CLIC: {
     action: 'Backoffice_Candidat_Header_Cv_Clic',
   },
+  BACKOFFICE_MEMBER_PROFILE_LINKDIN_CLIC: {
+    action: 'Backoffice_MemberProfile_LinkedIn_Clic',
+  },
+  BACKOFFICE_MEMBER_PROFILE_VIEWCV_PRO_CLIC: {
+    action: 'Backoffice_MemberProfile_ViewCVPro_Clic',
+  },
+  BACKOFFICE_MEMBER_PROFILE_VIEWCV_PERSO_CLIC: {
+    action: 'Backoffice_MemberProfile_ViewCVPerso_Clic',
+  },
   BACKOFFICE_CANDIDAT_CONTACTER_RECRUTEUR_CLIC: {
     action: 'Backoffice_Candidat_Contacter_Recruteur_Clic',
   },
