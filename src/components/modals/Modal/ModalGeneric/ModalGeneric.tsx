@@ -36,39 +36,41 @@ export const ModalGeneric = ({
 
   return (
     <Modal
+      id={`${id}-container`}
       className={className}
       size={size}
       closeOnNextRender={closeOnNextRender}
       data-testid={id}
-      id={id}
       removePadding={removePadding}
     >
-      {!noCloseIcon && (
-        <CloseButton
-          dataTestId="generic-close-modal"
-          onClick={() => {
-            if (customOnClose) {
-              customOnClose(onClose);
-            } else {
-              onClose?.();
-            }
-          }}
-        />
-      )}
-      <HeaderModal title={title} description={description} />
-      {children}
-      {withCloseButton && (
-        <StyledModalContent>
-          <Button
+      <div id={id} data-testid={id}>
+        {!noCloseIcon && (
+          <CloseButton
+            dataTestId="generic-close-modal"
             onClick={() => {
-              onClose?.();
+              if (customOnClose) {
+                customOnClose(onClose);
+              } else {
+                onClose?.();
+              }
             }}
-            style="custom-primary"
-          >
-            Fermer
-          </Button>
-        </StyledModalContent>
-      )}
+          />
+        )}
+        <HeaderModal title={title} description={description} />
+        {children}
+        {withCloseButton && (
+          <StyledModalContent>
+            <Button
+              onClick={() => {
+                onClose?.();
+              }}
+              style="custom-primary"
+            >
+              Fermer
+            </Button>
+          </StyledModalContent>
+        )}
+      </div>
     </Modal>
   );
 };
