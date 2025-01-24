@@ -71,31 +71,31 @@ export const TravaillerProgramme360 = ({
             className={isDesktop ? '' : 'mobile'}
           >
             <IlluTeteHomme {...iconsProps} />{' '}
-            <Text color="light">Pour les jeunes de moins de 30 ans</Text>
+            <Text color="darkGray">Pour les jeunes de moins de 30 ans</Text>
           </StyledAiderProgrammesListElement>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
             <IlluCalendrier {...iconsProps} />{' '}
-            <Text color="light">Durée de 6 mois</Text>
+            <Text color="darkGray">Durée de 6 mois</Text>
           </StyledAiderProgrammesListElement>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
             <OrienterSablier {...iconsProps} />{' '}
-            <Text color="light">2 heures par semaine</Text>
+            <Text color="darkGray">2 heures par semaine</Text>
           </StyledAiderProgrammesListElement>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
             <IlluQuestionReponseOrange {...iconsProps} />
-            <Text color="light">En physique</Text>
+            <Text color="darkGray">En physique</Text>
           </StyledAiderProgrammesListElement>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
             <OrienterCarteSolidaire {...iconsProps} />{' '}
-            <Text color="light">
+            <Text color="darkGray">
               Disponible à Paris (75), Hauts-de-Seine (92), Seine-Saint-Denis
               (93), Lille, Lyon, Rennes ou Lorient
             </Text>

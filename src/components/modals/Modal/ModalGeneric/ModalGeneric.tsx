@@ -1,4 +1,5 @@
 import React from 'react';
+import { ModalSize } from '../Modal.types';
 import { Modal, useModalContext } from 'src/components/modals/Modal';
 import { StyledModalContent } from 'src/components/modals/Modal/Modals.styles';
 import { CloseButton, Button } from 'src/components/utils';
@@ -10,7 +11,7 @@ interface ModalGenericProps {
   description?: React.ReactNode;
   onClose?: (onClose?: () => void) => void;
   className?: string;
-  fullWidth?: boolean;
+  size?: ModalSize;
   removePadding?: boolean;
   withCloseButton?: boolean;
   closeOnNextRender?: boolean;
@@ -25,61 +26,49 @@ export const ModalGeneric = ({
   children,
   onClose: customOnClose,
   className,
-  fullWidth = false,
-  removePadding = false,
+  size = 'medium',
   withCloseButton = false,
   closeOnNextRender = false,
   noCloseIcon = false,
+  removePadding = false,
 }: ModalGenericProps) => {
   const { onClose } = useModalContext();
 
   return (
     <Modal
       className={className}
-      fullWidth={fullWidth}
+      size={size}
       closeOnNextRender={closeOnNextRender}
+      data-testid={id}
+      id={id}
+      removePadding={removePadding}
     >
-      <div
-        id={id}
-        className={`uk-margin-auto-vertical ${
-          fullWidth ? 'uk-width-expand' : 'uk-width-2xlarge@m'
-        }`}
-        data-testid={id}
-      >
-        <div
-          className={`uk-modal-body ${
-            removePadding ? 'uk-padding-remove' : 'uk-padding'
-          }`}
-        >
-          {!noCloseIcon && (
-            <CloseButton
-              className="uk-modal-close-default"
-              dataTestId="generic-close-modal"
-              onClick={() => {
-                if (customOnClose) {
-                  customOnClose(onClose);
-                } else {
-                  onClose?.();
-                }
-              }}
-            />
-          )}
-          <HeaderModal title={title} description={description} />
-          {children}
-          {withCloseButton && (
-            <StyledModalContent>
-              <Button
-                onClick={() => {
-                  onClose?.();
-                }}
-                style="custom-primary"
-              >
-                Fermer
-              </Button>
-            </StyledModalContent>
-          )}
-        </div>
-      </div>
+      {!noCloseIcon && (
+        <CloseButton
+          dataTestId="generic-close-modal"
+          onClick={() => {
+            if (customOnClose) {
+              customOnClose(onClose);
+            } else {
+              onClose?.();
+            }
+          }}
+        />
+      )}
+      <HeaderModal title={title} description={description} />
+      {children}
+      {withCloseButton && (
+        <StyledModalContent>
+          <Button
+            onClick={() => {
+              onClose?.();
+            }}
+            style="custom-primary"
+          >
+            Fermer
+          </Button>
+        </StyledModalContent>
+      )}
     </Modal>
   );
 };

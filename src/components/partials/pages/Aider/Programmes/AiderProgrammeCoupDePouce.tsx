@@ -38,25 +38,25 @@ export const AiderProgrammeCoupDePouce = ({
             className={isDesktop ? '' : 'mobile'}
           >
             <IlluCalendrier {...iconsProps} />{' '}
-            <Text color="light">Ponctuel</Text>
+            <Text color="darkGray">Ponctuel</Text>
           </StyledAiderProgrammesListElement>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
             <OrienterSablier {...iconsProps} />{' '}
-            <Text color="light">Selon vos besoins</Text>
+            <Text color="darkGray">Selon vos besoins</Text>
           </StyledAiderProgrammesListElement>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
             <IlluQuestionReponseOrange {...iconsProps} />
-            <Text color="light">En physique ou en visio</Text>
+            <Text color="darkGray">En physique ou en visio</Text>
           </StyledAiderProgrammesListElement>
           <StyledAiderProgrammesListElement
             className={isDesktop ? '' : 'mobile'}
           >
             <CarteSolidaireIcon {...iconsProps} />{' '}
-            <Text color="light">Disponible partout en France</Text>
+            <Text color="darkGray">Disponible partout en France</Text>
           </StyledAiderProgrammesListElement>
         </List>
         <div data-uk-scrollspy="cls:uk-animation-slide-bottom; target: > p; delay: 200;">

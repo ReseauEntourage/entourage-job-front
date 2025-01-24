@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+import { COLORS } from 'src/constants/styles';
 import { Text } from './Text';
 
 const meta = {
@@ -12,12 +13,12 @@ const meta = {
   argTypes: {
     color: {
       control: 'select',
-      options: ['lighter', 'light', 'normal'],
+      options: COLORS,
       defaultValue: 'normal',
     },
     size: {
       control: 'select',
-      options: ['small', 'normal', 'large'],
+      options: ['small', 'normal', 'large', 'xlarge', 'xxlarge'],
       defaultValue: 'normal',
     },
     weight: {
@@ -41,7 +42,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default = {
   args: {
-    color: 'normal',
+    color: 'black',
     size: 'normal',
     weight: 'normal',
     variant: 'normal',
