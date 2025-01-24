@@ -43,11 +43,7 @@ export type FlattenedOnboardingFormData =
   UnionToIntersection<OnboardingFormData>;
 
 export const fieldRequiredToNotLaunchOnboarding = {
-  [USER_ROLES.CANDIDATE]: [
-    'hasAcceptEthicsCharter',
-    'description',
-    'hasExternalCv',
-  ],
+  [USER_ROLES.CANDIDATE]: ['hasAcceptEthicsCharter', 'description'],
   [USER_ROLES.COACH]: ['hasAcceptEthicsCharter', 'description'],
 };
 
