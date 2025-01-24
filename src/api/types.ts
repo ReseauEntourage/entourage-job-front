@@ -112,6 +112,7 @@ export type UserProfile = {
   lastReceivedMessage: string | null;
   linkedinUrl: string | null;
   hasExternalCv: boolean;
+  hasAcceptEthicsCharter: boolean;
 };
 
 export type UserReportDto = {
