@@ -66,8 +66,10 @@ export function* sendStepDataOnboardingSaga() {
       yield* put(endOnboarding());
     }
 
-    // Refresh the user to get the updated data
-    yield* put(currentUserActions.fetchUserRequested());
+    if (nextStep === currentStep) {
+      // Refresh the user to get the updated data
+      yield* put(currentUserActions.fetchUserRequested());
+    }
   } catch {
     yield* put(
       sendStepDataOnboardingFailed({

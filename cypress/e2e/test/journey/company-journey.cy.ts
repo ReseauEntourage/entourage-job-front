@@ -62,9 +62,10 @@ describe('En tant que - Employeur/Entreprise', () => {
 
       cy.get('#form-company-contact-lastName').should('be.visible').type('Doe');
 
-      cy.get('#form-company-contact-approach-container')
+      cy.get('#form-company-contact-approach-container button')
         .should('be.visible')
-        .click()
+        .click();
+      cy.get('#form-company-contact-approach-container')
         .find('.option')
         .contains('Recruter inclusif')
         .click();

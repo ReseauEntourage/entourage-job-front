@@ -22,6 +22,7 @@
   },
   "coach": null,
   "userProfile": {
+    "hasAcceptEthicsCharter": true,
     "description": "hello",
     "department": "Ain (01)",
     "currentJob": null,

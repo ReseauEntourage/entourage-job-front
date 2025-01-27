@@ -179,10 +179,11 @@ describe('Candidat', () => {
       .contains('Paris (75)')
       .click();
 
-    cy.get('#form-add-offer-external-contract-container')
+    cy.get('#form-add-offer-external-contract-container button')
       .should('be.visible')
       .scrollIntoView()
-      .click()
+      .click();
+    cy.get('#form-add-offer-external-contract-container')
       .find('.option')
       .contains('CDI')
       .click();
@@ -325,10 +326,11 @@ describe('Candidat', () => {
     // toggle is employed
     cy.get('label[for="ent-toggle-employedToggle"]').scrollIntoView().click();
 
-    cy.get('#form-edit-employed-contract-container')
+    cy.get('#form-edit-employed-contract-container button')
       .should('be.visible')
       .scrollIntoView()
-      .click()
+      .click();
+    cy.get('#form-edit-employed-contract-container')
       .find('.option')
       .contains('Alternance')
       .click();

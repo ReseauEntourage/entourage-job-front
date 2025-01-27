@@ -115,10 +115,11 @@ describe('En tant que - Administrateur', () => {
         .should('be.visible')
         .type('description');
 
-      cy.get('#form-add-offer-admin-contract-container')
+      cy.get('#form-add-offer-admin-contract-container button')
         .scrollIntoView()
         .should('be.visible')
-        .click()
+        .click();
+      cy.get('#form-add-offer-admin-contract-container')
         .find('.option')
         .contains('CDI')
         .click();
@@ -186,16 +187,18 @@ describe('En tant que - Administrateur', () => {
 
       cy.get('#form-add-user-lastName').should('be.visible').type('Doe');
 
-      cy.get('#form-add-user-gender-container')
+      cy.get('#form-add-user-gender-container button')
         .should('be.visible')
-        .click()
-        .get('button')
+        .click();
+      cy.get('#form-add-user-gender-container')
+        .get('.option')
         .contains('Homme')
         .click();
 
-      cy.get('#form-add-user-zone-container')
+      cy.get('#form-add-user-zone-container button')
         .should('be.visible')
-        .click()
+        .click();
+      cy.get('#form-add-user-zone-container')
         .find('.option')
         .contains('Paris')
         .click();
@@ -232,9 +235,10 @@ describe('En tant que - Administrateur', () => {
       cy.get('#form-add-user-userToLinkId').should('not.exist');
       cy.get('[id$=Organization]').should('not.exist');
 
-      cy.get('#form-add-user-adminRole-container')
+      cy.get('#form-add-user-adminRole-container button')
         .should('be.visible')
-        .click()
+        .click();
+      cy.get('#form-add-user-adminRole-container')
         .find('.option')
         .contains('Candidats')
         .click();
@@ -357,9 +361,10 @@ describe('En tant que - Administrateur', () => {
         .should('be.visible')
         .type('174 rue Championnet, 75015 Paris');
 
-      cy.get('#form-add-organization-zone-container')
+      cy.get('#form-add-organization-zone-container button')
         .should('be.visible')
-        .click()
+        .click();
+      cy.get('#form-add-organization-zone-container')
         .find('.option')
         .contains('Paris')
         .click();
@@ -419,9 +424,10 @@ describe('En tant que - Administrateur', () => {
           .clear()
           .type('15 Avenue Lacassagne, 69003 Lyon');
 
-        cy.get('#form-add-organization-zone-container')
+        cy.get('#form-add-organization-zone-container button')
           .should('be.visible')
-          .click()
+          .click();
+        cy.get('#form-add-organization-zone-container')
           .find('.option')
           .contains('Lyon')
           .click();
