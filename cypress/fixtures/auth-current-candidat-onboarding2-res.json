@@ -34,7 +34,6 @@
   },
   "coach": null,
   "userProfile": {
-    "hasAcceptEthicsCharter": true,
     "description": null,
     "department": "Ain (01)",
     "currentJob": null,
@@ -62,5 +61,10 @@
       }
     ]
   },
-  "readDocuments": []
+  "readDocuments": [
+    {
+      "documentName": "CharteEthique",
+      "createdAt": "2022-11-01T10:18:22.111Z"
+    }
+  ]
 }

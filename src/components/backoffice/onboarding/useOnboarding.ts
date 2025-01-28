@@ -15,7 +15,7 @@ import {
   findPreviousNotSkippableStep,
 } from 'src/use-cases/onboarding/onboarding.utils';
 import {
-  fieldRequiredToNotLaunchOnboarding,
+  onboardingAlreadyCompleted,
   OnboardingFormData,
 } from './Onboarding.types';
 
@@ -36,9 +36,8 @@ export const useOnboarding = () => {
 
   useEffect(() => {
     // If user is not an admin, launch onboarding
-    const hasAllRequiredFields = fieldRequiredToNotLaunchOnboarding[
-      authenticatedUser.role
-    ].every((field) => Boolean(authenticatedUser?.userProfile[field]));
+    const hasAllRequiredFields =
+      onboardingAlreadyCompleted[authenticatedUser.role](authenticatedUser);
     if (
       authenticatedUser?.role &&
       ['Candidat', 'Coach'].includes(authenticatedUser.role) &&
@@ -90,7 +89,7 @@ export const useOnboarding = () => {
 
   const defaultValues = {
     ...valuesFromOtherStep,
-    ...(stepContent?.defaultValues?.(authenticatedUser.userProfile) || {}),
+    ...(stepContent?.defaultValues?.(authenticatedUser) || {}),
   };
 
   return {

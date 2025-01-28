@@ -46,18 +46,15 @@ export const shouldSkipStepOnboardingStep = (
   if (!stepContent.skippedBy) {
     return false;
   }
-  return stepContent?.skippedBy(user.userProfile);
+  return stepContent?.skippedBy(user);
 };
 
 export const parseOnboadingProfileFields = (
   fields: Partial<FlattenedOnboardingFormData>
 ): Partial<UserProfile> => {
   return {
-    description: fields.description ? fields.description : undefined,
-    linkedinUrl: fields.linkedinUrl ? fields.linkedinUrl : undefined,
-    hasAcceptEthicsCharter: fields.hasAcceptEthicsCharter
-      ? fields.hasAcceptEthicsCharter
-      : undefined,
+    description: fields.description ?? undefined,
+    linkedinUrl: fields.linkedinUrl ?? undefined,
     currentJob: fields.currentJob ? fields.currentJob : undefined,
     networkBusinessLines: fields.networkBusinessLines
       ? formatNetworkBusinessLines(fields.networkBusinessLines)

@@ -1,11 +1,13 @@
 import React from 'react';
-import { UserProfile } from '../../../api/types';
+import { User } from '../../../api/types';
 import {
   getCandidateDefaultProfessionalValues,
   getCoachDefaultProfessionalValues,
 } from '../parametres/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
+import { isReadDocument } from 'src/components/partials/pages/Documents/Documents.utils';
 import { EthicsCharter } from 'src/components/utils/EthicsCharter/EthicsCharter';
+import { DocumentNames } from 'src/constants';
 import { USER_ROLES } from 'src/constants/users';
 import { UnionKeys, UnionToIntersection } from 'src/utils/Types';
 import { OnboardingProfileForm } from './Onboarding/forms/OnboardingProfileForm';
@@ -42,9 +44,29 @@ export type OnboardingFormDataKeys = UnionKeys<OnboardingFormData>;
 export type FlattenedOnboardingFormData =
   UnionToIntersection<OnboardingFormData>;
 
-export const fieldRequiredToNotLaunchOnboarding = {
-  [USER_ROLES.CANDIDATE]: ['hasAcceptEthicsCharter', 'description'],
-  [USER_ROLES.COACH]: ['hasAcceptEthicsCharter', 'description'],
+export const onboardingAlreadyCompleted = {
+  [USER_ROLES.CANDIDATE]: (user: User) => {
+    const userProfileRequired = ['description'];
+    const userProfileCompleted = userProfileRequired.every((field) =>
+      Boolean(user.userProfile[field])
+    );
+    const readDocumentCompleted = isReadDocument(
+      user.readDocuments,
+      DocumentNames.CharteEthique
+    );
+    return userProfileCompleted && readDocumentCompleted;
+  },
+  [USER_ROLES.COACH]: (user: User) => {
+    const userProfileRequired = ['description'];
+    const userProfileCompleted = userProfileRequired.every((field) =>
+      Boolean(user.userProfile[field])
+    );
+    const readDocumentCompleted = isReadDocument(
+      user.readDocuments,
+      DocumentNames.CharteEthique
+    );
+    return userProfileCompleted && readDocumentCompleted;
+  },
 };
 
 const OnboardingLabels = {
@@ -67,8 +89,8 @@ export interface OnboardingStepContent<
   // Used to get the values of a previous step as default values in the form of the current step
   dependsOn?: OnboardingFormDataKeys[];
   // Used to skip the step if the value of a previous step matches the value in skippedBy
-  skippedBy?: (userProfile: UserProfile) => boolean;
-  defaultValues?: (userProfile: UserProfile) => Partial<OnboardingFormData>;
+  skippedBy?: (user: User) => boolean;
+  defaultValues?: (user: User) => Partial<OnboardingFormData>;
 }
 
 export type OnboardingStepContentByRole = Partial<{
@@ -82,26 +104,33 @@ export const OnboardingStepContents: {
   1: {
     [USER_ROLES.CANDIDATE]: {
       title: 'Charte éthique',
-      skippedBy: ({ hasAcceptEthicsCharter }: UserProfile) =>
-        hasAcceptEthicsCharter === true,
+      skippedBy: (user: User) => {
+        return isReadDocument(user.readDocuments, DocumentNames.CharteEthique);
+      },
       content: <EthicsCharter />,
       form: formOnboardingEthicsCharter,
-      defaultValues: (userProfile) => ({
-        hasAcceptEthicsCharter: userProfile.hasAcceptEthicsCharter ?? undefined,
+      defaultValues: (user) => ({
+        hasAcceptEthicsCharter: isReadDocument(
+          user.readDocuments,
+          DocumentNames.CharteEthique
+        ),
       }),
     },
     [USER_ROLES.COACH]: {
       title: 'Charte éthique',
-      skippedBy: ({ hasAcceptEthicsCharter }: UserProfile) =>
-        hasAcceptEthicsCharter === true,
+      skippedBy: (user: User) => {
+        return isReadDocument(user.readDocuments, DocumentNames.CharteEthique);
+      },
       content: <EthicsCharter />,
       form: formOnboardingEthicsCharter,
-      defaultValues: (userProfile) => ({
-        hasAcceptEthicsCharter: userProfile.hasAcceptEthicsCharter ?? undefined,
+      defaultValues: (user) => ({
+        hasAcceptEthicsCharter: isReadDocument(
+          user.readDocuments,
+          DocumentNames.CharteEthique
+        ),
       }),
     },
   },
-  // TODO: Add social questions
   2: {
     [USER_ROLES.CANDIDATE]: {
       title: 'Complétez votre profil',
@@ -109,35 +138,39 @@ export const OnboardingStepContents: {
         "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur vous",
       form: formOnboardingCandidateProfile,
       content: <OnboardingProfileForm />,
-      defaultValues: (userProfile: UserProfile) => ({
-        description: userProfile.description ?? undefined,
+      defaultValues: (user) => ({
+        description: user.userProfile.description ?? undefined,
       }),
-      skippedBy: ({ description }: UserProfile) => !!description,
+      skippedBy: ({ userProfile }: User) => !!userProfile.description,
     },
     [USER_ROLES.COACH]: {
       title: 'Complétez votre profil',
       subtitle:
         "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur vous",
       form: formOnboardingCoachProfile,
-      defaultValues: (userProfile: UserProfile) => ({
-        description: userProfile.description ?? undefined,
+      defaultValues: (user) => ({
+        description: user.userProfile.description ?? undefined,
       }),
-      skippedBy: ({ description }: UserProfile) => !!description,
+      skippedBy: ({ userProfile }: User) => !!userProfile.description,
     },
   },
   3: {
     [USER_ROLES.CANDIDATE]: {
       title: 'Dites-nous en plus sur votre activité professionnelle',
       form: formOnboardingCandidateJob,
-      defaultValues: getCandidateDefaultProfessionalValues,
-      skippedBy: ({ hasExternalCv }: UserProfile) => !!hasExternalCv,
+      defaultValues: (user) => {
+        return getCandidateDefaultProfessionalValues(user.userProfile);
+      },
+      skippedBy: ({ userProfile }: User) => !!userProfile.hasExternalCv,
     },
     [USER_ROLES.COACH]: {
       title: 'Complétez votre profil',
       subtitle:
         "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur vous",
       form: formOnboardingCoachJob,
-      defaultValues: getCoachDefaultProfessionalValues,
+      defaultValues: (user) => {
+        return getCoachDefaultProfessionalValues(user.userProfile);
+      },
     },
   },
 };

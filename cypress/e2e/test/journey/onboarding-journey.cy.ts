@@ -32,6 +32,11 @@ describe('Onboarding', () => {
         fixture: 'auth-current-candidat-onboarding2-res',
       });
 
+      // intercept the PUT request to update the user profile
+      cy.intercept('POST', `/readDocuments/read/${user.id}`, {
+        fixture: 'user-read-document-ethics-charter',
+      });
+
       // Click on the button to confirm the form
       cy.get(
         '[data-testid="form-confirm-form-onboarding-ethics-charter"]'

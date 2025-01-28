@@ -1,6 +1,7 @@
 import { call, put, select, takeLatest } from 'typed-redux-saga';
 import { currentUserActions, selectAuthenticatedUser } from '../current-user';
 import { Api } from 'src/api';
+import { DocumentNames } from 'src/constants';
 import {
   selectOnboardingCurrentStep,
   selectOnboardingData,
@@ -9,7 +10,6 @@ import {
 import { slice } from './onboarding.slice';
 import {
   findNextNotSkippableStep,
-  flattenOnboardingDataByRole,
   parseOnboadingProfileFields,
 } from './onboarding.utils';
 
@@ -43,12 +43,10 @@ export function* sendStepDataOnboardingSaga() {
     throw new Error('User role is not defined in onboarding state');
   }
 
-  const { externalCv, ...flattenedData } = flattenOnboardingDataByRole(
-    data,
-    userRole
-  );
+  const stepData = data[currentStep]?.[userRole];
+  const { externalCv, hasAcceptEthicsCharter, ...otherData } = stepData;
 
-  const userProfileFields = parseOnboadingProfileFields(flattenedData);
+  const userProfileFields = parseOnboadingProfileFields(otherData);
   try {
     yield* call(() => Api.putUserProfile(userId, userProfileFields));
 
@@ -57,6 +55,15 @@ export function* sendStepDataOnboardingSaga() {
       const formData = new FormData();
       formData.append('file', externalCv);
       yield* put(currentUserActions.uploadExternalCvRequested(formData));
+    }
+
+    if (hasAcceptEthicsCharter === true) {
+      yield* call(() =>
+        Api.postReadDocument(
+          { documentName: DocumentNames.CharteEthique },
+          userId
+        )
+      );
     }
 
     yield* put(sendStepDataOnboardingSucceeded());
