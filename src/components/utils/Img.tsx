@@ -1,9 +1,10 @@
-import Image from 'next/image';
+import { StaticImageData } from 'next/image';
+import Image from 'next/legacy/image';
 import React from 'react';
 import { addPrefix } from 'src/utils/Prefixing';
 
 interface ImgProps {
-  src: string;
+  src: string | StaticImageData;
   alt: string;
   width?: number;
   height?: number;
@@ -26,7 +27,7 @@ export const Img = ({
       <Image
         onError={onError}
         alt={alt}
-        src={addPrefix(src)}
+        src={typeof src === 'string' ? addPrefix(src) : src}
         layout="fill"
         objectFit="cover"
         objectPosition="center"
@@ -39,7 +40,7 @@ export const Img = ({
       <Image
         onError={onError}
         alt={alt}
-        src={addPrefix(src)}
+        src={typeof src === 'string' ? addPrefix(src) : src}
         width={width}
         height={height}
         objectFit="contain"
@@ -51,7 +52,7 @@ export const Img = ({
     <Image
       onError={onError}
       alt={alt}
-      src={addPrefix(src)}
+      src={typeof src === 'string' ? addPrefix(src) : src}
       layout="fill"
       objectFit="contain"
       id={id}

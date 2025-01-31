@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { plateform } from 'src/utils/Device';
 import { OrganizationDesktop } from './Organization.desktop';
 import { OrganizationMobile } from './Organization.mobile';

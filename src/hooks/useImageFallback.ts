@@ -18,7 +18,7 @@ export function useImageFallback({
 
   useEffect(() => {
     setUrlImg(
-      `${process.env.AWSS3_URL}${process.env.AWSS3_IMAGE_DIRECTORY}${userId}.profile.jpg`
+      `${process.env.NEXT_PUBLIC_AWSS3_URL}${process.env.NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY}${userId}.profile.jpg`
     );
   }, [userId]);
 
@@ -29,7 +29,7 @@ export function useImageFallback({
   useEffect(() => {
     if (updateUserProfilePictureStatus === ReduxRequestEvents.SUCCEEDED) {
       setUrlImg(
-        `${process.env.AWSS3_URL}${process.env.AWSS3_IMAGE_DIRECTORY}${userId}.profile.jpg`
+        `${process.env.NEXT_PUBLIC_AWSS3_URL}${process.env.NEXT_PUBLIC_AWSS3_IMAGE_DIRECTORY}${userId}.profile.jpg`
       );
     }
   }, [updateUserProfilePictureStatus, userId]);
@@ -47,7 +47,7 @@ export function useImageFallback({
       }, cvs[0]);
 
       if (latestCV.urlImg) {
-        setUrlImg(`${process.env.AWSS3_URL}/${latestCV.urlImg}`);
+        setUrlImg(`${process.env.NEXT_PUBLIC_AWSS3_URL}/${latestCV.urlImg}`);
       }
     }
   }, [role, userCandidate]);

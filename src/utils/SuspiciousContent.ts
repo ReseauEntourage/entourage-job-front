@@ -1,6 +1,6 @@
 export const isSuspiciousMessage = (message: string): boolean => {
   const forbiddenExpressions =
-    process.env.MESSAGING_FORBIDDEN_EXPRESSIONS?.split(',') || [];
+    process.env.NEXT_PUBLIC_MESSAGING_FORBIDDEN_EXPRESSIONS?.split(',') || [];
 
   if (forbiddenExpressions.length === 0) {
     return false;

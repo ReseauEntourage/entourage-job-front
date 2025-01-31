@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import { StyledSection } from 'src/components/utils/Section/Section.styles';
 import { UIKIT_SECTION_SIZES, UIKIT_STYLES } from 'src/components/variables';
 

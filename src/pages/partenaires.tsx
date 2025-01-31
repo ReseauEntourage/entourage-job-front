@@ -72,7 +72,13 @@ CarouselSection.defaultProps = {
   forwardAnimation: false,
 };
 
-const Title = ({ children, overlay = false, img }) => {
+interface TitleProps {
+  children: React.ReactNode;
+  overlay: string | null;
+  img: string;
+}
+
+const Title = ({ children, overlay = null, img }: TitleProps) => {
   return (
     <div
       className="uk-inline uk-cover-container uk-flex uk-flex-center uk-flex-middle"

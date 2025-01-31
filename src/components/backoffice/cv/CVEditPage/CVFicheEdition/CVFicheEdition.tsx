@@ -54,7 +54,7 @@ export const CVFicheEdition = ({
   const updateImage = useCallback(() => {
     // Use hash to reload image if an update is done
     const previewHash = Date.now();
-    const baseUrl = `${process.env.AWSS3_URL}${process.env.AWSS3_IMAGE_DIRECTORY}${cv.UserId}.${cv.status}`;
+    const baseUrl = `${process.env.NEXT_PUBLIC_AWSS3_URL}${process.env.AWSS3_IMAGE_DIRECTORY}${cv.UserId}.${cv.status}`;
     setImageUrl(`${baseUrl}.jpg?${previewHash}`);
   }, [cv.UserId, cv.status]);
 

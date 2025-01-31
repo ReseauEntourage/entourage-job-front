@@ -14,7 +14,7 @@ interface BackLinkProps {
 }
 export function BackLink({ label, url }: BackLinkProps) {
   return (
-    <Link href={url} scroll={false} shallow passHref>
+    <Link href={url} scroll={false} shallow passHref legacyBehavior>
       <StyledBackLink>
         <LucidIcon name="ChevronLeft" />
         {label}

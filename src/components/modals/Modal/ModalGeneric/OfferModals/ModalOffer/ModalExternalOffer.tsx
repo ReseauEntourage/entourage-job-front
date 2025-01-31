@@ -17,7 +17,7 @@ export const ModalExternalOffer = ({
   const dispatch = useDispatch();
   return (
     <ModalEdit
-      title={"Ajouter une offre d'emploi externe à Entourage Pro"}
+      title="Ajouter une offre d'emploi externe à Entourage Pro"
       description="J'ai décroché un entretien à l'extérieur : j'informe Entourage Pro de mes avancées !"
       submitText="Envoyer"
       formSchema={formAddExternalOpportunityCandidate}

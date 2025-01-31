@@ -1,8 +1,7 @@
 import _ from 'lodash';
-// import moment from 'moment';
 import { useRouter } from 'next/router';
-import PropTypes from 'prop-types';
 import React from 'react';
+import DefaultProfilePic from 'public/static/img/arthur.jpg';
 import {
   CandidatCardContentStyled,
   CandidatCardPictureContainerStyled,
@@ -12,19 +11,38 @@ import {
 } from 'src/components/cards/CandidatCard.styles';
 
 import { Img, Tag } from 'src/components/utils';
-import { AMBITIONS_PREFIXES, BUSINESS_LINES } from 'src/constants';
+import { AmbitionsPrefixesType, BUSINESS_LINES } from 'src/constants';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 import { findConstantFromValue, sortByOrder } from 'src/utils';
 
+interface CandidatCardProps {
+  url: string;
+  imgSrc: string;
+  firstName: string;
+  ambitions: {
+    name: string;
+    order: number;
+    prefix: AmbitionsPrefixesType;
+  }[];
+  businessLines: {
+    name: string;
+    order: number;
+  }[];
+  locations: {
+    name: string;
+    order: number;
+  }[];
+}
+
 export const CandidatCard = ({
   url,
-  imgSrc,
+  imgSrc = '/static/img/arthur.jpg',
   firstName,
   ambitions,
   businessLines,
   locations,
-}) => {
+}: CandidatCardProps) => {
   const { asPath, push } = useRouter();
 
   const isCandidatsPage = asPath.includes('/candidats');
@@ -60,27 +78,27 @@ export const CandidatCard = ({
   return (
     <CandidatCardStyled>
       <CandidatCardPictureContainerStyled onClick={onCardClicked}>
-        <Img src={imgSrc} alt={firstName} cover />
+        <Img src={imgSrc || DefaultProfilePic} alt={firstName} cover />
         <CandidatCardPictureOverlay>
           <p className="name">{firstName}</p>
-          {sortedLocations?.length > 0 && <p>{sortedLocations[0].name}</p>}
+          {sortedLocations && sortedLocations.length > 0 && (
+            <p>{sortedLocations[0].name}</p>
+          )}
         </CandidatCardPictureOverlay>
       </CandidatCardPictureContainerStyled>
       <CandidatCardContentStyled onClick={onCardClicked}>
         <h1>
-          {sortedAmbitions?.length > 0
+          {sortedAmbitions && sortedAmbitions.length > 0
             ? sortedAmbitions[0].name
             : "A l'écoute de toutes les opportunités"}
         </h1>
-        {sortedBusinessLines?.length > 0 && (
+        {sortedBusinessLines && sortedBusinessLines.length > 0 && (
           <>
             <p>Je recherche un emploi dans :</p>
             <CandidateCardBusinessLinesStyled>
               {isNewCareerPath
                 ? _.uniqWith(sortedBusinessLines.slice(0, 2), (a, b) => {
-                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
                     return a.name === b.name;
-                    // @ts-expect-error after enable TS strict mode. Please, try to fix it
                   }).map(({ name }, index) => {
                     return (
                       <Tag
@@ -109,46 +127,4 @@ export const CandidatCard = ({
       </CandidatCardContentStyled>
     </CandidatCardStyled>
   );
-};
-CandidatCard.propTypes = {
-  url: PropTypes.string.isRequired,
-  firstName: PropTypes.string.isRequired,
-  ambitions: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      order: PropTypes.number.isRequired,
-      prefix: PropTypes.oneOf(
-        AMBITIONS_PREFIXES.map(({ value }) => {
-          return value;
-        })
-      ),
-    })
-  ).isRequired,
-  businessLines: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      order: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-  locations: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  imgSrc: PropTypes.string,
-  // skills: PropTypes.arrayOf(
-  //   PropTypes.shape({
-  //     name: PropTypes.string.isRequired,
-  //   })
-  // ).isRequired,
-  // catchphrase: PropTypes.string,
-  // employed: PropTypes.bool,
-  // endOfContract: PropTypes.string,
-};
-
-CandidatCard.defaultProps = {
-  imgSrc: '/static/img/arthur.jpg',
-  // employed: false,
-  // endOfContract: undefined,
-  // catchphrase: "cherche un job pour s'en sortir",
 };

@@ -1,4 +1,4 @@
-import { Component, RefCallback } from 'react';
+import { Component, RefCallback, type JSX } from 'react';
 import { FieldError } from 'react-hook-form';
 import { AnyCantFix } from 'src/utils/Types';
 

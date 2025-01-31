@@ -29,9 +29,9 @@ export const Layout = withRouter<LayoutProps>(
     router,
     title = 'Entourage Pro\xa0= partagez votre réseau avec ceux qui n’en ont pas',
     metaTitle = 'Entourage Pro\xa0= partagez votre réseau avec ceux qui n’en ont pas',
-    metaImage = `${process.env.SERVER_URL}/static/img/entourage-pro-preview.jpg`,
+    metaImage = `${process.env.NEXT_PUBLIC_SERVER_URL}/static/img/entourage-pro-preview.jpg`,
     metaDescription = "Lorsque l'on est exclu, les chances de trouver du travail sont proches de zéro. Avec Entourage Pro, faites don de votre visibilité. Un partage peut tout changer.",
-    metaUrl = process.env.SERVER_URL,
+    metaUrl = process.env.NEXT_PUBLIC_SERVER_URL,
     metaType = 'website',
     noIndex = false,
     isBackoffice = false,
@@ -39,7 +39,10 @@ export const Layout = withRouter<LayoutProps>(
     noFooter = false,
   }: LayoutProps) => {
     const isPDF = router.pathname.includes('/pdf/');
-    const domain = process.env.SERVER_URL?.replace(/https:\/\/|http:\/\//g, '');
+    const domain = process.env.NEXT_PUBLIC_SERVER_URL?.replace(
+      /https:\/\/|http:\/\//g,
+      ''
+    );
     return (
       <>
         <Head>
@@ -77,10 +80,10 @@ export const Layout = withRouter<LayoutProps>(
           <meta name="twitter:description" content={metaDescription} />
           <meta name="twitter:site" content="@R_Entourage" />
           <meta name="twitter:image" content={metaImage} />
-          <meta name="fb:app_id" content={process.env.FB_APP_ID} />
+          <meta name="fb:app_id" content={process.env.NEXT_PUBLIC_FB_APP_ID} />
           <meta
             name="facebook-domain-verification"
-            content={process.env.FB_DOMAIN_VERIFICATION}
+            content={process.env.NEXT_PUBLIC_FB_DOMAIN_VERIFICATION}
           />
         </Head>
         {!noHeader && !isPDF && (
@@ -89,9 +92,9 @@ export const Layout = withRouter<LayoutProps>(
         <NotificationsContainer />
         {children}
         {!isPDF && !isBackoffice && !noFooter && <Footer />}
-        {!isPDF && (
+        {!isPDF && process.env.NEXT_PUBLIC_TARTEAUCITRON_UUID && (
           <Script
-            src={`https://tarteaucitron.io/load.js?domain=${domain}&uuid=${process.env.TARTEAUCITRON_UUID}`}
+            src={`https://tarteaucitron.io/load.js?domain=${domain}&uuid=${process.env.NEXT_PUBLIC_TARTEAUCITRON_UUID}`}
             strategy="afterInteractive"
           />
         )}

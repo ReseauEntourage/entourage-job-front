@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { UIKIT_BUTTON_STYLES_SPEC } from 'src/components/variables';
 import { AdminOffersTags } from 'src/constants';
 

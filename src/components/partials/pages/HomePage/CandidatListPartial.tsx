@@ -9,7 +9,7 @@ export const CandidatListPartial = () => {
     <Section id="candidat">
       <Grid column middle eachWidths={['2-3@m', '1-1']}>
         <div className="uk-text-center">
-          {process.env.WOMENS_DAY === 'true' ? (
+          {process.env.NEXT_PUBLIC_WOMENS_DAY === 'true' ? (
             <>
               <H2
                 title="Elles sont motivées pour travailler"
@@ -34,7 +34,7 @@ export const CandidatListPartial = () => {
               </Text>
             </>
           )}
-          {process.env.WOMENS_DAY === 'true' && (
+          {process.env.NEXT_PUBLIC_WOMENS_DAY === 'true' && (
             <H4
               title={
                 <>
@@ -54,7 +54,7 @@ export const CandidatListPartial = () => {
           hideSearchBar
           nb={INITIAL_NB_OF_CV_TO_DISPLAY}
           filters={
-            process.env.WOMENS_DAY === 'true'
+            process.env.NEXT_PUBLIC_WOMENS_DAY === 'true'
               ? {
                   [CV_FILTERS_DATA[3].key]: [CV_FILTERS_DATA[3].constants[1]],
                 }
@@ -66,7 +66,7 @@ export const CandidatListPartial = () => {
             href={{ pathname: '/candidats', query: { employed: false } }}
             style="custom-secondary-inverted"
           >
-            {process.env.WOMENS_DAY === 'true'
+            {process.env.NEXT_PUBLIC_WOMENS_DAY === 'true'
               ? 'Découvrir les candidates'
               : 'Découvrir les candidats'}
           </Button>

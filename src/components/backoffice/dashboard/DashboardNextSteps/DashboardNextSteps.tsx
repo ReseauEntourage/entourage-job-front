@@ -25,7 +25,7 @@ export const DashboardNextSteps = () => {
       'Envie d’en savoir plus sur la plateforme Entourage pro. Inscrivez-vous au prochain webinaire d’information',
     cta: {
       label: "S'inscrire",
-      href: process.env.WEBINAR_URL,
+      href: process.env.NEXT_PUBLIC_WEBINAR_URL,
     },
   };
 

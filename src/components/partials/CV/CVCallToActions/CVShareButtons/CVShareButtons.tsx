@@ -36,7 +36,7 @@ export const CVShareButtons = ({
   }, [cv.user.candidat.firstName]);
 
   const { asPath } = useRouter();
-  const hostname = process.env.SERVER_URL;
+  const hostname = process.env.NEXT_PUBLIC_SERVER_URL;
   const path = asPath.includes('?')
     ? asPath.slice(0, asPath.indexOf('?'))
     : asPath;

@@ -36,7 +36,8 @@ export const MessagingMessage = ({ message }: MessagingMessageProps) => {
   }, [message.content]);
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    const whitelist = process.env.LINKIFY_SAFE_DOMAINS?.split(',') || [];
+    const whitelist =
+      process.env.NEXT_PUBLIC_LINKIFY_SAFE_DOMAINS?.split(',') || [];
     const target = event.target as HTMLAnchorElement;
 
     if (target.tagName === 'A') {

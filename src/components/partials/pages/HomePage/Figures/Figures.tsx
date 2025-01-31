@@ -60,7 +60,7 @@ export const Figures = () => {
     <Section id="profiles">
       <H2 title="Et le mieux c'est que ça marche" color="black" center />
       <StyledFiguresSubtitle>
-        <Text size="large">
+        <Text size="large" center>
           Nos candidat(e)s et nos coachs peuvent en témoigner. Les chiffres
           aussi !
         </Text>

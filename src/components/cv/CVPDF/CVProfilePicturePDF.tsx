@@ -10,7 +10,7 @@ export function CVProfilePicturePDF({
 }) {
   return (
     <StyledCVPDFProfilePicture
-      imgSrc={`${process.env.AWSS3_CDN_URL}/${urlImg}`}
+      imgSrc={`${process.env.NEXT_PUBLIC_AWSS3_CDN_URL}/${urlImg}`}
       verticalMargin={verticalMargin}
     >
       <div className="picture" />

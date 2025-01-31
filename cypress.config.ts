@@ -10,10 +10,10 @@ module.exports = defineConfig({
   viewportWidth: 1920,
   viewportHeight: 1080,
   env: {
-    adresseLocauxParis: `${process.env.ADRESSE_LOCAUX_PARIS}`,
+    adresseLocauxParis: `${process.env.NEXT_PUBLIC_ADRESSE_LOCAUX_PARIS}`,
   },
   e2e: {
-    baseUrl: `${process.env.SERVER_URL}`,
+    baseUrl: `${process.env.NEXT_PUBLIC_SERVER_URL}`,
     supportFile: 'cypress/support/e2e.ts',
   },
   retries: 3,

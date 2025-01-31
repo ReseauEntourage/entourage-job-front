@@ -120,7 +120,7 @@ export const HeaderPublicContentMobile = ({
           </li>
           <li className="uk-margin-small-top uk-flex uk-flex-center uk-padding-small">
             <Button
-              href={process.env.DONATION_LINK}
+              href={process.env.NEXT_PUBLIC_DONATION_LINK}
               isExternal
               newTab
               onClick={() => {
