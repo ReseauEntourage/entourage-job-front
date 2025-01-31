@@ -160,7 +160,7 @@ export function selectReferingShouldSkipStep(state: RootState) {
         });
 
         const maxBirthdate = new Date();
-        maxBirthdate.setFullYear(maxBirthdate.getFullYear() - 31);
+        maxBirthdate.setFullYear(maxBirthdate.getFullYear() - 26);
         const realBirthdate = new Date(birthDate);
         const isAgeEligible = maxBirthdate <= realBirthdate;
 
