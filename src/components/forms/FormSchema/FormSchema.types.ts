@@ -222,7 +222,9 @@ export interface FormFieldSelect<V extends FormSchemaValidation>
   extends FormFieldInputCommonProperties<V, SelectComponent> {
   component: SelectComponent;
   fieldsToReset?: Path<V>[];
-  options: FilterConstant[];
+  options: (FilterConstant & {
+    inputId?: string;
+  })[];
 }
 
 export interface FormFieldSelectGraphic<V extends FormSchemaValidation>
