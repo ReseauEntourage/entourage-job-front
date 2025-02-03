@@ -166,10 +166,9 @@ describe('En tant que - Prescripteur', () => {
           .find('.Select__option')
           .contains('Paris')
           .click();
-        cy.get('[data-testid="form-refering-candidate-info-workingRight"]')
-          .click()
-          .get('[data-testid="select-option-yes"]')
-          .click();
+        cy.get('[data-testid="working-right-yes"]').click();
+        cy.get('[data-testid="material-insecurity-yes"]').click();
+        cy.get('[data-testid="network-insecurity-no"]').click();
         cy.contains('Suivant').click();
 
         // Should skip the step 4 and 5
@@ -183,40 +182,6 @@ describe('En tant que - Prescripteur', () => {
           .find('.Select__option')
           .contains('Agriculture')
           .click();
-        cy.contains('Suivant').click();
-
-        // Check that the URL is now /backoffice/referer/orienter/step-7
-        cy.url().should('include', 'step-7');
-
-        // Fill the form
-        cy.get(
-          '[data-testid="form-refering-candidate-social-situation-nationality"]'
-        ).click();
-        cy.get('[data-testid="select-option-french"]').click();
-        cy.get(
-          '[data-testid="form-refering-candidate-social-situation-accommodation"]'
-        ).click();
-        cy.get('[data-testid="select-option-insertion"]').click();
-        cy.get(
-          '[data-testid="form-refering-candidate-social-situation-hasSocialWorker"]'
-        ).click();
-        cy.get('[data-testid="select-option-yes"]').click();
-        cy.get(
-          '[data-testid="form-refering-candidate-social-situation-resources"]'
-        ).click();
-        cy.get('[data-testid="select-option-aah"]').click();
-        cy.get(
-          '[data-testid="form-refering-candidate-social-situation-jobSearchDuration"]'
-        ).click();
-        cy.get('[data-testid="select-option-less_than_3_months"]').click();
-        cy.get(
-          '[data-testid="form-refering-candidate-social-situation-studiesLevel"]'
-        ).click();
-        cy.get('[data-testid="select-option-cap_bep"]').click();
-        cy.get(
-          '[data-testid="form-refering-candidate-social-situation-workingExperience"]'
-        ).click();
-        cy.get('[data-testid="select-option-less_than_3_year"]').click();
         cy.contains('Suivant').click();
       });
 
@@ -260,10 +225,9 @@ describe('En tant que - Prescripteur', () => {
           .find('.Select__option')
           .contains('Paris')
           .click();
-        cy.get('[data-testid="form-refering-candidate-info-workingRight"]')
-          .click()
-          .get('[data-testid="select-option-yes"]')
-          .click();
+        cy.get('[data-testid="working-right-yes"]').click();
+        cy.get('[data-testid="material-insecurity-yes"]').click();
+        cy.get('[data-testid="network-insecurity-no"]').click();
         cy.contains('Suivant').click();
 
         // Check that the URL is now /backoffice/referer/orienter/step-4
@@ -283,40 +247,6 @@ describe('En tant que - Prescripteur', () => {
           .find('.Select__option')
           .contains('Agriculture')
           .click();
-        cy.contains('Suivant').click();
-
-        // Check that the URL is now /backoffice/referer/orienter/step-7
-        cy.url().should('include', 'step-7');
-
-        // Fill the form
-        cy.get(
-          '[data-testid="form-refering-candidate-social-situation-nationality"]'
-        ).click();
-        cy.get('[data-testid="select-option-french"]').click();
-        cy.get(
-          '[data-testid="form-refering-candidate-social-situation-accommodation"]'
-        ).click();
-        cy.get('[data-testid="select-option-insertion"]').click();
-        cy.get(
-          '[data-testid="form-refering-candidate-social-situation-hasSocialWorker"]'
-        ).click();
-        cy.get('[data-testid="select-option-yes"]').click();
-        cy.get(
-          '[data-testid="form-refering-candidate-social-situation-resources"]'
-        ).click();
-        cy.get('[data-testid="select-option-aah"]').click();
-        cy.get(
-          '[data-testid="form-refering-candidate-social-situation-jobSearchDuration"]'
-        ).click();
-        cy.get('[data-testid="select-option-less_than_3_months"]').click();
-        cy.get(
-          '[data-testid="form-refering-candidate-social-situation-studiesLevel"]'
-        ).click();
-        cy.get('[data-testid="select-option-cap_bep"]').click();
-        cy.get(
-          '[data-testid="form-refering-candidate-social-situation-workingExperience"]'
-        ).click();
-        cy.get('[data-testid="select-option-less_than_3_year"]').click();
         cy.contains('Suivant').click();
       });
     });
@@ -361,10 +291,9 @@ describe('En tant que - Prescripteur', () => {
           .find('.Select__option')
           .contains('Paris')
           .click();
-        cy.get('[data-testid="form-refering-candidate-info-workingRight"]')
-          .click()
-          .get('[data-testid="select-option-yes"]')
-          .click();
+        cy.get('[data-testid="working-right-yes"]').click();
+        cy.get('[data-testid="material-insecurity-yes"]').click();
+        cy.get('[data-testid="network-insecurity-no"]').click();
         cy.contains('Suivant').click();
 
         // Check that the URL is now /backoffice/referer/orienter/step-4
@@ -388,40 +317,6 @@ describe('En tant que - Prescripteur', () => {
           .find('.Select__option')
           .contains('Agriculture')
           .click();
-        cy.contains('Suivant').click();
-
-        // Check that the URL is now /backoffice/referer/orienter/step-7
-        cy.url().should('include', 'step-7');
-
-        // Fill the form
-        cy.get(
-          '[data-testid="form-refering-candidate-social-situation-nationality"]'
-        ).click();
-        cy.get('[data-testid="select-option-french"]').click();
-        cy.get(
-          '[data-testid="form-refering-candidate-social-situation-accommodation"]'
-        ).click();
-        cy.get('[data-testid="select-option-insertion"]').click();
-        cy.get(
-          '[data-testid="form-refering-candidate-social-situation-hasSocialWorker"]'
-        ).click();
-        cy.get('[data-testid="select-option-yes"]').click();
-        cy.get(
-          '[data-testid="form-refering-candidate-social-situation-resources"]'
-        ).click();
-        cy.get('[data-testid="select-option-aah"]').click();
-        cy.get(
-          '[data-testid="form-refering-candidate-social-situation-jobSearchDuration"]'
-        ).click();
-        cy.get('[data-testid="select-option-less_than_3_months"]').click();
-        cy.get(
-          '[data-testid="form-refering-candidate-social-situation-studiesLevel"]'
-        ).click();
-        cy.get('[data-testid="select-option-cap_bep"]').click();
-        cy.get(
-          '[data-testid="form-refering-candidate-social-situation-workingExperience"]'
-        ).click();
-        cy.get('[data-testid="select-option-less_than_3_year"]').click();
         cy.contains('Suivant').click();
       });
     });
