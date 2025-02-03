@@ -35,7 +35,7 @@ export const Rejoindre = () => {
             </BulletList>
             <BulletList>
               <H6
-                title="Avoir entre 18 et 30 ans"
+                title="Avoir entre 18 et 25 ans"
                 effect="cls:uk-animation-slide-bottom; delay: 200;"
               />
             </BulletList>
