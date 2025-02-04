@@ -105,7 +105,7 @@ export const formReferingInfo: FormSchema<{
     {
       id: 'materialInsecurityLabel',
       name: 'materialInsecurityLabel',
-      title: 'Estimez-vous être en situation de précarité matérielle ?*',
+      title: 'Le candidat est-il en situation de précarité matérielle ?*',
       component: 'heading',
     },
     {
@@ -113,7 +113,7 @@ export const formReferingInfo: FormSchema<{
       name: 'materialInsecurityLabel',
       component: 'text',
       title:
-        'Rencontrez-vous des difficultés pour subvenir à vos besoins de base (se loger, se nourrir, ...) ?',
+        'Rencontre-t-il des difficultés pour subvenir à ses besoins de base (se loger, se nourrir, ...) ?',
     },
     {
       id: 'materialInsecurity',
@@ -129,7 +129,8 @@ export const formReferingInfo: FormSchema<{
     {
       id: 'networkInsecurityLabel',
       name: 'networkInsecurityLabel',
-      title: "Estimez vous être isolé dans votre recherche d'emploi ?*",
+      title:
+        "Le candidat est-il en situation d'isolement dans sa recherche d'emploi ?*",
       component: 'heading',
     },
     {
@@ -137,7 +138,7 @@ export const formReferingInfo: FormSchema<{
       name: 'networkInsecurityLabel',
       component: 'text',
       title:
-        'Est-ce que des amis ou des personnes que vous connaissez peuvent vous aider à trouver un travail ?',
+        "Est-ce que des amis ou des personnes qu'il connait peuvent l'aider à trouver un travail ?",
     },
     {
       id: 'networkInsecurity',
