@@ -231,8 +231,8 @@ export const StyledCVPDFPage = styled.div`
 `;
 
 export const StyledCVPDFProfilePicture = styled(StyledCVProfilePicture)`
-  width: 128px;
-  height: 128px;
+  width: 128px !important;
+  height: 128px !important;
   margin-top: ${({ verticalMargin }) => {
     return verticalMargin ? '20px' : 0;
   }};
