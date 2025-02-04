@@ -302,6 +302,9 @@ export const GA_TAGS = {
   BACKOFFICE_OPEN: {
     action: 'Backoffice_Open',
   },
+  BACKOFFICE_MESSAGING_MESSAGE_SEND: {
+    action: 'Backoffice_Messaging_Message_Send',
+  },
   BACKOFFICE_ADMIN_ARCHIVER_MASSE_CLIC: {
     action: 'Backoffice_Admin_Archiver_Masse_Clic',
   },
@@ -367,6 +370,15 @@ export const GA_TAGS = {
   },
   BACKOFFICE_CANDIDAT_HEADER_CV_CLIC: {
     action: 'Backoffice_Candidat_Header_Cv_Clic',
+  },
+  BACKOFFICE_MEMBER_PROFILE_LINKDIN_CLIC: {
+    action: 'Backoffice_MemberProfile_LinkedIn_Clic',
+  },
+  BACKOFFICE_MEMBER_PROFILE_VIEWCV_PRO_CLIC: {
+    action: 'Backoffice_MemberProfile_ViewCVPro_Clic',
+  },
+  BACKOFFICE_MEMBER_PROFILE_VIEWCV_PERSO_CLIC: {
+    action: 'Backoffice_MemberProfile_ViewCVPerso_Clic',
   },
   BACKOFFICE_CANDIDAT_CONTACTER_RECRUTEUR_CLIC: {
     action: 'Backoffice_Candidat_Contacter_Recruteur_Clic',

@@ -10,8 +10,10 @@ import { MessagingEmptyState } from '../MessagingEmptyState';
 import { Button } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { DELAY_REFRESH_CONVERSATIONS } from 'src/constants';
+import { GA_TAGS } from 'src/constants/tags';
 import { USER_ROLES } from 'src/constants/users';
 import { useIsMobile } from 'src/hooks/utils';
+import { gaEvent } from 'src/lib/gtag';
 import {
   selectCurrentUser,
   selectCurrentUserId,
@@ -105,6 +107,7 @@ export const MessagingConversation = () => {
         selectedConversationId === 'new' ? undefined : selectedConversation.id,
     };
     dispatch(messagingActions.postMessageRequested(body));
+    gaEvent(GA_TAGS.BACKOFFICE_MESSAGING_MESSAGE_SEND);
     setNewMessage('');
     adjustMessageHeight();
   };
