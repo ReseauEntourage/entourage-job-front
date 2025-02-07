@@ -69,7 +69,7 @@ const testimonies = [
 export const CandidateTestimonies = () => {
   return (
     <Section style="custom-primary">
-      <H2 title={<>Un emploi, ça change une vie</>} color="black" center />
+      <H2 title={<>Un emploi, ça change une vie</>} center />
       <ContainerWithTextCentered>
         <p>
           Jeunes issus de l’aide sociale à l’enfance, réfugiés nouvellement

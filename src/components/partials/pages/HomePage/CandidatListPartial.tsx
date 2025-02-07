@@ -11,11 +11,7 @@ export const CandidatListPartial = () => {
         <div className="uk-text-center">
           {process.env.WOMENS_DAY === 'true' ? (
             <>
-              <H2
-                title="Elles sont motivées pour travailler"
-                center
-                color="black"
-              />
+              <H2 title="Elles sont motivées pour travailler" center />
               <Text size="large" center>
                 Découvrez les derniers CV des nos candidates et partagez-les
                 pour leur donner la visibilité qu&lsquo;elles méritent !
@@ -23,11 +19,7 @@ export const CandidatListPartial = () => {
             </>
           ) : (
             <>
-              <H2
-                title="Ils sont motivés pour travailler"
-                center
-                color="black"
-              />
+              <H2 title="Ils sont motivés pour travailler" center />
               <Text size="large" center>
                 Découvrez les derniers CV des nos candidat(e)s et partagez-les
                 pour leur donner la visibilité qu&lsquo;ils méritent !

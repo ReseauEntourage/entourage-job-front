@@ -1,19 +1,28 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { Button, Img, Section, Text } from 'src/components/utils';
-import { H2, H5 } from 'src/components/utils/Headings';
+import { H2, H3 } from 'src/components/utils/Headings';
 import { useIsDesktop } from 'src/hooks/utils';
 import { AnyToFix } from 'src/utils/Types';
 import {
+  StyledCriteria,
+  StyledCriteriasContainer,
   StyledSimpleCardsImageCTACard,
   StyledSimpleCardsImageCTAContainer,
   StyledSimpleCardsImageCTASubtitle,
+  StyledTitleContainer,
 } from './SimpleCardsImageCTA.styles';
+
+interface Criteria {
+  illu: React.ReactNode;
+  text: string;
+}
 
 export interface SimpleCardImageCTAProps {
   title: string;
   description: string;
   img: string;
+  criterias?: Criteria[];
   onClick?: () => void;
   href?: string | { pathname: string; query: AnyToFix };
   className?: string;
@@ -35,15 +44,17 @@ export const SimpleCardsImageCTA = ({
 
   return (
     <Section>
-      <H2 title={title} color="black" center />
-      {subtitle && (
-        <StyledSimpleCardsImageCTASubtitle>
-          <Text size="large" center>
-            {subtitle}
-          </Text>
-        </StyledSimpleCardsImageCTASubtitle>
-      )}
-      <StyledSimpleCardsImageCTAContainer data-uk-scrollspy="cls:uk-animation-slide-bottom-small; target: .decouvrir-card; delay: 200">
+      <StyledTitleContainer>
+        <H2 title={title} center />
+        {subtitle && (
+          <StyledSimpleCardsImageCTASubtitle>
+            <Text size="xlarge" center>
+              {subtitle}
+            </Text>
+          </StyledSimpleCardsImageCTASubtitle>
+        )}
+      </StyledTitleContainer>
+      <StyledSimpleCardsImageCTAContainer>
         {cards.map((card) => {
           const uuidValue = uuid();
           return (
@@ -54,18 +65,32 @@ export const SimpleCardsImageCTA = ({
               <div className="image-container">
                 <Img src={card.img} alt="" cover />
               </div>
-              <div className="text-container">
-                <H5 title={card.title} color="primaryBlue" center />
-                <p className="text">{card.description}</p>
-                <Button
-                  style="custom-secondary-inverted"
-                  href={card.href}
-                  onClick={() => {
-                    if (card.onClick) card.onClick();
-                  }}
-                >
-                  {card.CTAText}
-                </Button>
+              <div className="content">
+                <div className="text-container">
+                  <H3 title={card.title} />
+                  <StyledCriteriasContainer>
+                    {card.criterias?.map((criteria) => (
+                      <StyledCriteria>
+                        {criteria.illu}
+                        <Text size="large" color="darkGray">
+                          {criteria.text}
+                        </Text>
+                      </StyledCriteria>
+                    ))}
+                  </StyledCriteriasContainer>
+                  <Text size="xlarge">{card.description}</Text>
+                </div>
+                <div>
+                  <Button
+                    style="custom-secondary"
+                    href={card.href}
+                    onClick={() => {
+                      if (card.onClick) card.onClick();
+                    }}
+                  >
+                    {card.CTAText}
+                  </Button>
+                </div>
               </div>
             </StyledSimpleCardsImageCTACard>
           );

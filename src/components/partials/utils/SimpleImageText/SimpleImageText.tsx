@@ -1,6 +1,6 @@
 import React, { Ref } from 'react';
 import { Img, Section } from 'src/components/utils';
-import { H3 } from 'src/components/utils/Headings';
+import { H2 } from 'src/components/utils/Headings';
 import { useIsDesktop } from 'src/hooks/utils';
 import {
   StyledSimpleImageTextBackground,
@@ -31,7 +31,8 @@ export const SimpleImageText = ({
   return (
     <StyledSimpleImageTextBackground backgroundColor={backgroundColor}>
       <Section>
-        {!isDesktop && <H3 title={title} color="primaryBlue" />}
+        {!isDesktop && <H2 title={title} />}
+        <br />
         <StyledSimpleImageTextContainer
           className={isDesktop ? '' : 'mobile'}
           reverse={reverse}
@@ -42,10 +43,8 @@ export const SimpleImageText = ({
           >
             <Img src={img} alt="" cover />
           </StyledSimpleImageTextImageContainer>
-          <StyledSimpleImageTextTextContainer
-            className={isDesktop ? '' : 'mobile'}
-          >
-            {isDesktop && <H3 title={title} color="primaryBlue" />}
+          <StyledSimpleImageTextTextContainer>
+            {isDesktop && <H2 title={title} />}
             {children}
           </StyledSimpleImageTextTextContainer>
         </StyledSimpleImageTextContainer>

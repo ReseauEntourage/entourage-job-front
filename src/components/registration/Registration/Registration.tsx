@@ -38,7 +38,7 @@ export function Registration() {
               <StyledRegistrationSubtitle>
                 <Text weight="normal">{stepContent.subtitle}</Text>
                 {stepContent.annotation && (
-                  <Text weight="normal" color="lighter" variant="italic">
+                  <Text weight="normal" color="mediumGray" variant="italic">
                     {stepContent.annotation}
                   </Text>
                 )}
