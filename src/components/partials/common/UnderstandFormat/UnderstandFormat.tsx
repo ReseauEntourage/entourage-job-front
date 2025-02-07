@@ -2,12 +2,14 @@ import React from 'react';
 import {
   IlluBulleQuestionCheck,
   IlluCalendrier,
+  IlluQuestionReponseOrange,
   OrienterCarteSolidaire,
   OrienterSablier,
 } from 'assets/icons/icons';
 import { Button, Text } from '../../../utils';
 import { SimpleImageText } from '../../utils/SimpleImageText';
 import { StyledCTAsContainer } from '../../utils/SimpleImageText/SimpleImageText.styles';
+import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 import {
@@ -50,15 +52,19 @@ const contentByRole: { [K in Role]: Content } = {
     img: '/static/img/front-office/understand-format/understand-format-common.jpg',
     criterias: [
       {
-        illu: <IlluCalendrier width={30} height={30} />,
+        illu: (
+          <IlluCalendrier width={30} height={30} color={COLORS.orangeSocial} />
+        ),
         text: 'Ponctuel',
       },
       {
-        illu: <OrienterSablier width={30} height={30} />,
+        illu: (
+          <OrienterSablier width={30} height={30} color={COLORS.orangeSocial} />
+        ),
         text: 'Selon vos besoins',
       },
       {
-        illu: <IlluBulleQuestionCheck width={30} height={30} />,
+        illu: <IlluQuestionReponseOrange width={30} height={30} />,
         text: 'En physique ou en visio',
       },
       {
