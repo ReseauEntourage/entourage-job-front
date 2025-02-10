@@ -69,11 +69,11 @@ const Aider = () => {
         alt="Un candidat Entourage Pro et sa coach"
       />
 
-      <WhyUseEp role="Coach" />
+      <UnderstandFormat asRole="Coach" />
 
       <FormatBenefits role="Coach" title="Les avantages de devenir coach" />
 
-      <UnderstandFormat asRole="Coach" />
+      <WhyUseEp role="Coach" />
 
       <ContactUsSection
         onClick={() => {

@@ -33,7 +33,7 @@ export interface Content {
   title: string;
   img: string;
   criterias?: Criteria[];
-  content: string;
+  content: React.ReactNode;
   cta: {
     text: string;
     gaTag: {
@@ -49,7 +49,7 @@ export interface Content {
 const contentByRole: { [K in Role]: Content } = {
   Candidat: {
     title: 'Boostez votre recherche d’emploi',
-    img: '/static/img/front-office/understand-format/understand-format-common.jpg',
+    img: '/static/img/front-office/understand-format/understand-format-candidate.jpg',
     criterias: [
       {
         illu: (
@@ -84,15 +84,19 @@ const contentByRole: { [K in Role]: Content } = {
   },
   Coach: {
     title: 'Vous engager et soutenir nos candidat(e)s ',
-    img: '/static/img/front-office/understand-format/understand-format-common.jpg',
+    img: '/static/img/front-office/understand-format/understand-format-coach.png',
     criterias: [
       {
-        illu: <IlluCalendrier width={30} height={30} />,
-        text: 'Ponctuel',
+        illu: (
+          <IlluCalendrier width={30} height={30} color={COLORS.orangeSocial} />
+        ),
+        text: 'Selon vos disponibilités',
       },
       {
-        illu: <OrienterSablier width={30} height={30} />,
-        text: 'Selon vos besoins',
+        illu: (
+          <OrienterSablier width={30} height={30} color={COLORS.orangeSocial} />
+        ),
+        text: 'En fonction de votre expertise',
       },
       {
         illu: <IlluBulleQuestionCheck width={30} height={30} />,
@@ -103,8 +107,18 @@ const contentByRole: { [K in Role]: Content } = {
         text: 'Partout en France',
       },
     ],
-    content:
-      'Donnez des coups de pouce variés et ponctuels à nos candidat(e)s : améliorer un CV, préparer un entretien d’embauche, être mis en relation, etc. Relayer une recherche d’emploi sur LinkedIn, aider à la rédaction d’un CV ou d’une lettre de motivation, préparer un entretien, partager un conseil ou un contact.',
+    content: (
+      <>
+        Avec Entourage Pro, il n’a jamais été aussi facile d’oeuvrer pour
+        l’inclusion.
+        <br />
+        Selon vos compétences et votre disponibilité, vous donnez des coups de
+        pouce à nos candidat(e)s : relayer une recherche d’emploi sur LinkedIn,
+        aider à la rédaction d’un CV ou d’une lettre de motivation, préparer un
+        entretien, partager un conseil ou un contact, etc.
+      </>
+    ),
+
     cta: [
       {
         text: "S'inscrire",
@@ -115,14 +129,18 @@ const contentByRole: { [K in Role]: Content } = {
   },
   Referer: {
     title: 'Booster la recherche d’emploi de vos bénéficiaires',
-    img: '/static/img/front-office/understand-format/understand-format-common.jpg',
+    img: '/static/img/front-office/understand-format/understand-format-referer.jpg',
     criterias: [
       {
-        illu: <IlluCalendrier width={30} height={30} />,
+        illu: (
+          <IlluCalendrier width={30} height={30} color={COLORS.orangeSocial} />
+        ),
         text: 'Ponctuel',
       },
       {
-        illu: <OrienterSablier width={30} height={30} />,
+        illu: (
+          <OrienterSablier width={30} height={30} color={COLORS.orangeSocial} />
+        ),
         text: 'Selon ses besoins',
       },
       {
@@ -173,7 +191,7 @@ export const UnderstandFormat = ({
       <StyledCTAsContainer>
         {contentByRole[asRole].cta.map((cta) => (
           <Button
-            style="custom-secondary"
+            style="custom-secondary-inverted"
             size="large"
             onClick={() => gaEvent(cta.gaTag)}
             href={cta.href}

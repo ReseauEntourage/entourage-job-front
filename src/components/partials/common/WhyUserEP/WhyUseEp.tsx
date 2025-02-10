@@ -1,9 +1,10 @@
 import React, { Ref } from 'react';
-import { IlluCV, IlluReseauxSociaux } from 'assets/icons/icons';
+import { IlluCalendrier, IlluTeteHomme } from 'assets/icons/icons';
 import { StyledCTAsContainer } from '../../utils/SimpleImageText/SimpleImageText.styles';
 import { SimpleImageText } from 'src/components/partials/utils/SimpleImageText';
 import { Button, Text } from 'src/components/utils';
 
+import { COLORS } from 'src/constants/styles';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledCriteria, StyledCriteriasContainer } from './WhyUseEp.styles';
@@ -47,7 +48,7 @@ const criteriasIlluSizes = {
 const contentByRole: { [K in Role]: Content } = {
   Candidat: {
     title: 'Pourquoi devenir candidat ?',
-    img: '/static/img/why-become-candidate.png',
+    img: '/static/img/front-office/why/why-become-candidate.png',
     content: (
       <>
         Le travail est un facteur clé d&apos;intégration.
@@ -81,7 +82,7 @@ const contentByRole: { [K in Role]: Content } = {
   },
   Coach: {
     title: 'Pourquoi devenir coach ?',
-    img: '/static/img/why-become-coach.png',
+    img: '/static/img/front-office/why/why-become-coach.jpg',
     content: (
       <>
         Recréer un réseau professionnel avec les personnes en précarité et
@@ -108,16 +109,18 @@ const contentByRole: { [K in Role]: Content } = {
     ],
   },
   Referer: {
-    title: 'Pourquoi devenir candidat ?',
-    img: '/static/img/why-become-candidate.png',
+    title: 'Pourquoi rejoindre notre espace asso ?',
+    img: '/static/img/front-office/why/why-refer-candidate.jpg',
     criterias: [
       {
-        text: 'Orienter un candidat',
-        illu: <IlluCV {...criteriasIlluSizes} />,
+        text: 'Recevoir et suivre leurs actualités ',
+        illu: <IlluTeteHomme {...criteriasIlluSizes} />,
       },
       {
         text: 'Suivre les grandes étapes',
-        illu: <IlluReseauxSociaux {...criteriasIlluSizes} />,
+        illu: (
+          <IlluCalendrier {...criteriasIlluSizes} color={COLORS.orangeSocial} />
+        ),
       },
     ],
     content: (
@@ -146,7 +149,7 @@ const contentByRole: { [K in Role]: Content } = {
     ),
     ctas: [
       {
-        text: 'Orienter un candidat',
+        text: 'Orienter un(e) candidat(e)',
         gaTag: GA_TAGS.PAGE_ORIENTER_INSCRIPTION_CLIC,
         href: '/inscription',
       },

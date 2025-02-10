@@ -71,14 +71,12 @@ const Travailler = () => {
         }
       />
 
-      <WhyUseEp role="Candidat" />
-
+      <UnderstandFormat asRole="Candidat" />
       <FormatBenefits
         role="Candidat"
         title="Les avantages de devenir candidats"
       />
-
-      <UnderstandFormat asRole="Candidat" />
+      <WhyUseEp role="Candidat" />
 
       <ContactUsSection
         onClick={() => {
