@@ -13,7 +13,7 @@ export const StyledImageTitle = styled.section`
   gap: 15px;
 
   @media (min-width: ${BREAKPOINTS.desktop}px) {
-    padding: 60px 45% 60px 50px;
+    padding: 60px 50% 60px 50px;
     gap: 20px;
   }
 `;

@@ -53,7 +53,7 @@ export const StyledSimpleCardsImageCTACard = styled.div`
     .text-container {
       display: flex;
       flex-direction: column;
-      gap: 30px;
+      gap: 18px;
     }
   }
 

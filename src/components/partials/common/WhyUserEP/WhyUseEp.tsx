@@ -51,22 +51,18 @@ const contentByRole: { [K in Role]: Content } = {
     img: '/static/img/front-office/why/why-become-candidate.png',
     content: (
       <>
-        Le travail est un facteur clé d&apos;intégration.
+        Le travail est un facteur clé d&apos;intégration. Le problème c’est d’y
+        accéder, surtout quand on n’a pas de réseau.
         <br />
-        Le problème c’est d’y accéder, surtout quand on n’a pas de réseau.
         <br />
         C’est pour cela qu’on a créé Entourage Pro : une plateforme qui vous met
-        en relation avec des coachs, selon vos besoins.
+        en relation avec des coachs bénévoles, selon vos besoins.
         <br />
         <br />
-        Vous pourrez clarifier votre projet professionnel, élaborer un CV et une
-        lettre de motivation, vous préparer aux entretiens, vous soutenir dans
-        vos recherches et vous aider à constituer votre réseau : grâce à nos
-        coachs, vous serez prêt(e)s à intégrer le monde professionnel.
-        <br />
-        <br />
-        Dans tous les cas, nos équipes vous accompagnent et vous orientent vers
-        les coachs qui pourront le mieux vous aider !
+        Que ce soit pour améliorer votre CV, rédiger une lettre de motivation,
+        être mis en relation, préparer un entretien ou se constituer un réseau,
+        nos équipes vous accompagnent et vous orientent vers les coachs qui
+        pourront le mieux vous aider.
         <br />
         <br />
         Bienvenue sur le réseau professionnel, solidaire et inclusif !
@@ -89,15 +85,19 @@ const contentByRole: { [K in Role]: Content } = {
         isolées est crucial dans le combat pour l’inclusion.
         <br />
         <br />
-        Nos candidats ont besoin de vous : devenez coach bénévole !
+        Pour y arriver, nous avons besoin de vous !En devenant coach bénévole,
+        vous donnez des coups de pouce à des candidat(e)s afin qu’ils aient
+        toutes les cartes en main pour appréhender le monde professionnel et y
+        trouver leur place.
         <br />
         <br />
-        Grâce à vous, nos candidat(e)s auront toutes les cartes en main pour
-        appréhender le monde professionnel et y trouver leur place.
+        Un format d’engagement souple, qui s’adapte à vos disponibilités et
+        permet de s’engager à son rythme.
         <br />
         <br />
-        Nos équipes vous orientent vers les candidats que vous pourrez le mieux
-        accompagner !
+        Bien sûr, nos équipes ne vous laissent pas seuls ! Nous assurons un
+        suivi et vous orientons vers les candidats que vous pourrez le mieux
+        accompagner.
       </>
     ),
     ctas: [
@@ -125,26 +125,23 @@ const contentByRole: { [K in Role]: Content } = {
     ],
     content: (
       <>
-        Inscrivez votre structure à l’espace asso de notre plateforme pour{' '}
+        Rejoignez l’espace asso de notre plateforme pour{' '}
         <span style={{ fontWeight: 'bold' }}>
           orienter les personnes que vous accompagnez
         </span>
         .<br />
         <br />
-        En inscrivant un candidat via l’espace asso, il aura bien sûr accès à la
-        plateforme et à toutes ses fonctionnalités. Mais vous pourrez également{' '}
+        Clarifier son projet professionnel, élaborer un CV et une lettre de
+        motivation, se préparer aux entretiens, être soutenu dans ses
+        recherches, se constituer un réseau : grâce à nos coachs bénévoles, vos
+        publics seront préparés à intégrer le monde professionnel.
+        <br />
+        <br />
+        En inscrivant un candidat via l’espace asso, vous pourrez bien sûr&nbsp;
         <span style={{ fontWeight: 'bold' }}>
           suivre les grandes étapes d’avancement
         </span>{' '}
-        de sa recherche d’emploi et continuer à l’accompagner.
-        <br />
-        <br />
-        Nos coachs bénévoles accompagnent les candidats vers l’emploi et suivent
-        vos bénéficiaires à vos côtés.
-        <br />
-        <br />
-        Nos équipes orientent chaque candidat avec le coach qui répondra le
-        mieux à leurs besoins.
+        de sa recherche d’emploi.
       </>
     ),
     ctas: [

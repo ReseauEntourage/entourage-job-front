@@ -38,7 +38,7 @@ const contentByRole: { [K in Role]: Content } = {
     {
       title: 'Un nouveau réseau professionnel',
       paragraph:
-        "l'accès à un réseau de professionnels expérimentés et disponibles pour vous aider",
+        "L'accès à un réseau de professionnels expérimentés et disponibles pour vous aider",
       illu: <IlluMalette {...opportunitiesIlluSizes} />,
     },
     {
@@ -49,24 +49,24 @@ const contentByRole: { [K in Role]: Content } = {
   ],
   Coach: [
     {
-      title: 'Donnez du sens à sa vie professionnelle',
+      title: 'Donner du sens à sa vie professionnelle',
       paragraph: 'Grâce à une expérience humaine fédératrice et positive',
       illu: <IlluMalette {...opportunitiesIlluSizes} />,
     },
     {
-      title: 'Découvrez le coaching et l’associatif.',
-      paragraph: 'En faisant vos premiers pas à votre rythme. ',
+      title: 'Découvrir le coaching et l’associatif',
+      paragraph: 'En faisant ses premiers pas à son rythme.',
       illu: <IlluPoigneeDeMain {...opportunitiesIlluSizes} />,
     },
     {
-      title: 'Ajoutez une  ligne à  votre CV ',
+      title: 'Ajouter une ligne à  son CV',
       paragraph:
         'Qui a dit qu’on ne pouvait pas valoriser le fait d’aider les autres ? Pas nous.',
       illu: <IlluCV {...opportunitiesIlluSizes} />,
     },
     {
-      title: 'Rejoignez une communauté d’experts',
-      paragraph: '... et élargissez votre propre réseau pro !',
+      title: 'Rejoindre une communauté d’experts',
+      paragraph: '... et élargir son propre réseau pro !',
       illu: <IlluReseauxSociaux {...opportunitiesIlluSizes} />,
     },
   ],
@@ -85,7 +85,7 @@ const contentByRole: { [K in Role]: Content } = {
     {
       title: 'Un nouveau réseau professionnel',
       paragraph:
-        "l'accès à un réseau de professionnels expérimentés et disponibles pour vous aider",
+        "L'accès à un réseau de professionnels expérimentés et disponibles pour vous aider",
       illu: <IlluMalette {...opportunitiesIlluSizes} />,
     },
     {

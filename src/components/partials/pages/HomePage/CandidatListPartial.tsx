@@ -20,6 +20,7 @@ export const CandidatListPartial = () => {
           ) : (
             <>
               <H2 title="Ils sont motivés pour travailler" center />
+              <br />
               <Text size="large" center>
                 Découvrez les derniers CV des nos candidat(e)s et partagez-les
                 pour leur donner la visibilité qu&lsquo;ils méritent !

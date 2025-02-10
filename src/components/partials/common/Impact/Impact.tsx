@@ -4,6 +4,7 @@ import {
   IlluCoachEtCandidat,
   IlluCoeurMainsOuvertes,
   IlluCoeurSurLaMain,
+  IlluCV,
   IlluMalette,
   IlluPoigneeDeMain,
 } from 'assets/icons/icons';
@@ -65,7 +66,7 @@ const contentByRole: { [K in Role]: Content } = {
       {
         value: '75%',
         description: 'des candidats sont plus à l’aise en milieu professionnel',
-        illu: <IlluCoeurMainsOuvertes {...illuSizes} />,
+        illu: <IlluCV {...illuSizes} />,
       },
     ],
   },
@@ -73,7 +74,7 @@ const contentByRole: { [K in Role]: Content } = {
     title: 'Quelques chiffres',
     insights: [
       {
-        value: 'XXX',
+        value: '777',
         description: 'coachs se sont engagés depuis le lancement',
         illu: <IlluPoigneeDeMain {...illuSizes} />,
       },

@@ -6,6 +6,7 @@ import { ContactUsSection } from 'src/components/partials/common/ContactUsSectio
 import { FormatBenefits } from 'src/components/partials/common/FormatBenefits/FormatBenefits';
 import { Impact } from 'src/components/partials/common/Impact';
 import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
+import { PartnersWorkingWithUs } from 'src/components/partials/common/Partners/PartnersWorkingWithUs/PartnersWorkingWithUs';
 import { SharePartial } from 'src/components/partials/common/SharePartial';
 import { UnderstandFormat } from 'src/components/partials/common/UnderstandFormat/UnderstandFormat';
 import { WhyUseEp } from 'src/components/partials/common/WhyUserEP/WhyUseEp';
@@ -63,7 +64,7 @@ const Aider = () => {
     <Layout title="Aider - Entourage Pro">
       <ImageTitle
         title="Avec Entourage Pro, s’engager se fait en toute flexibilité"
-        description="Devenir coach, c’est une façon de concilier l’envie de s’engager avec un agenda chargé."
+        description="Devenir coach bénévole ? Une façon de concilier agenda chargé et envie de s’engager."
         img="/static/img/aider-banner-desktop.jpg"
         imgMobile="/static/img/aider-banner-mobile.jpg"
         alt="Un candidat Entourage Pro et sa coach"
@@ -84,6 +85,7 @@ const Aider = () => {
 
       <Reviews title="Nos coachs témoignent" reviews={reviewContent} />
       <Impact role="Coach" />
+      <PartnersWorkingWithUs tag={GA_TAGS.HOME_PARTNERS_CLICK} />
       <NewsletterPartial tag={GA_TAGS.PAGE_AIDER_INSCRIPTION_NEWSLETTER_CLIC} />
       <Section style="muted">
         <SharePartial />

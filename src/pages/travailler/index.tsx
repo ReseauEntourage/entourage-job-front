@@ -74,7 +74,7 @@ const Travailler = () => {
       <UnderstandFormat asRole="Candidat" />
       <FormatBenefits
         role="Candidat"
-        title="Les avantages de devenir candidats"
+        title="Les avantages de devenir candidat"
       />
       <WhyUseEp role="Candidat" />
 

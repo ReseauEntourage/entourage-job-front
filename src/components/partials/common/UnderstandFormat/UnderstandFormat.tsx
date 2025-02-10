@@ -2,6 +2,7 @@ import React from 'react';
 import {
   IlluBulleQuestionCheck,
   IlluCalendrier,
+  IlluMalette,
   IlluQuestionReponseOrange,
   OrienterCarteSolidaire,
   OrienterSablier,
@@ -48,7 +49,7 @@ export interface Content {
 
 const contentByRole: { [K in Role]: Content } = {
   Candidat: {
-    title: 'Boostez votre recherche d’emploi',
+    title: 'Devenez candiat et boostez votre recherche d’emploi !',
     img: '/static/img/front-office/understand-format/understand-format-candidate.jpg',
     criterias: [
       {
@@ -72,8 +73,22 @@ const contentByRole: { [K in Role]: Content } = {
         text: 'Partout en France',
       },
     ],
-    content:
-      "Je souhaite bénéficier de coups de pouce ponctuels de la communauté pour m'aider dans ma recherche d'emploi, que cela concerne la rédaction demon CV, une relecture de ma lettre de motivation, ou une mise en relation.",
+    content: (
+      <>
+        En devenant candidat Entourage Pro, vous rejoignez une communauté
+        solidaire et bienveillante.
+        <br />
+        <br />
+        Vous bénéficiez gratuitement de coups de pouce de coachs bénévoles
+        expérimentés : clarifier votre projet professionnel, élaborer un CV et
+        une lettre de motivation, vous préparer aux entretiens, vous soutenir
+        dans vos recherches vous aider à constituer votre réseau, etc.
+        <br />
+        <br />
+        Grâce à nos coachs, vous serez prêt(e)s à intégrer le monde
+        professionnel !
+      </>
+    ),
     cta: [
       {
         text: "S'inscrire",
@@ -83,7 +98,7 @@ const contentByRole: { [K in Role]: Content } = {
     ],
   },
   Coach: {
-    title: 'Vous engager et soutenir nos candidat(e)s ',
+    title: 'Rejoignez notre communauté de coachs bénévoles !',
     img: '/static/img/front-office/understand-format/understand-format-coach.png',
     criterias: [
       {
@@ -94,7 +109,7 @@ const contentByRole: { [K in Role]: Content } = {
       },
       {
         illu: (
-          <OrienterSablier width={30} height={30} color={COLORS.orangeSocial} />
+          <IlluMalette width={30} height={30} color={COLORS.orangeSocial} />
         ),
         text: 'En fonction de votre expertise',
       },
@@ -128,7 +143,7 @@ const contentByRole: { [K in Role]: Content } = {
     ],
   },
   Referer: {
-    title: 'Booster la recherche d’emploi de vos bénéficiaires',
+    title: 'Inscrire un(e) candidat(e), c’est booster sa recherche d’emploi !',
     img: '/static/img/front-office/understand-format/understand-format-referer.jpg',
     criterias: [
       {
@@ -141,7 +156,7 @@ const contentByRole: { [K in Role]: Content } = {
         illu: (
           <OrienterSablier width={30} height={30} color={COLORS.orangeSocial} />
         ),
-        text: 'Selon ses besoins',
+        text: 'Selon les besoins',
       },
       {
         illu: <IlluBulleQuestionCheck width={30} height={30} />,
@@ -152,8 +167,22 @@ const contentByRole: { [K in Role]: Content } = {
         text: 'Partout en France',
       },
     ],
-    content:
-      "La personne que je souhaite inscrire a besoin de bénéficier de coups de pouce ponctuels de la communauté pour l'aider dans sa recherche d'emploi, que cela concerne la rédaction de mon CV, une relecture de ma lettre de motivation, ou une mise en relation.",
+    content: (
+      <>
+        En devenant candidat(e) Entourage Pro, la personne que vous inscrivez
+        rejoint une communauté solidaire et bienveillante.
+        <br />
+        <br />
+        Nos candidat(e)s bnéficient gratuitement de coups de pouce de coachs
+        bénévoles expérimentés : clarifier son projet professionnel, élaborer
+        son CV et sa lettre de motivation, se préparer aux entretiens, être
+        soutenu dans ses recherches, se constituer son réseau, etc.
+        <br />
+        <br />
+        Grâce à nos coachs, vos publics seront prêts à intégrer le monde
+        professionnel !
+      </>
+    ),
     cta: [
       {
         text: 'Orienter un(e) candidat(e)',

@@ -68,16 +68,18 @@ export const SimpleCardsImageCTA = ({
               <div className="content">
                 <div className="text-container">
                   <H3 title={card.title} />
-                  <StyledCriteriasContainer>
-                    {card.criterias?.map((criteria) => (
-                      <StyledCriteria>
-                        {criteria.illu}
-                        <Text size="large" color="darkGray">
-                          {criteria.text}
-                        </Text>
-                      </StyledCriteria>
-                    ))}
-                  </StyledCriteriasContainer>
+                  {card.criterias && (
+                    <StyledCriteriasContainer>
+                      {card.criterias?.map((criteria) => (
+                        <StyledCriteria>
+                          {criteria.illu}
+                          <Text size="large" color="darkGray">
+                            {criteria.text}
+                          </Text>
+                        </StyledCriteria>
+                      ))}
+                    </StyledCriteriasContainer>
+                  )}
                   <Text size="xlarge">{card.description}</Text>
                 </div>
                 <div>
