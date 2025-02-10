@@ -1,11 +1,5 @@
 import React, { Ref } from 'react';
-import {
-  IlluCV,
-  IlluMalette,
-  IlluPoigneeDeMain,
-  IlluReseauxSociaux,
-} from 'assets/icons/icons';
-import { RowIconTitleText } from '../../utils/RowIconTitleText';
+import { IlluCV, IlluReseauxSociaux } from 'assets/icons/icons';
 import { StyledCTAsContainer } from '../../utils/SimpleImageText/SimpleImageText.styles';
 import { SimpleImageText } from 'src/components/partials/utils/SimpleImageText';
 import { Button, Text } from 'src/components/utils';
@@ -43,21 +37,11 @@ export interface Content {
   criterias?: Criteria[];
   content: React.ReactNode;
   ctas?: Cta[];
-  opportunities?: {
-    title: string;
-    paragraph: string;
-    illu: React.ReactNode;
-  }[];
 }
 
 const criteriasIlluSizes = {
   width: 30,
   height: 30,
-};
-
-const opportunitiesIlluSizes = {
-  width: 100,
-  height: 100,
 };
 
 const contentByRole: { [K in Role]: Content } = {
@@ -94,30 +78,6 @@ const contentByRole: { [K in Role]: Content } = {
         href: '/inscription',
       },
     ],
-    opportunities: [
-      {
-        title: 'Un CV humain et convaincant',
-        paragraph: 'Un CV qui casse les codes en valorisant votre parcours',
-        illu: <IlluCV {...opportunitiesIlluSizes} />,
-      },
-      {
-        title: 'Une diffusion élargie de votre profil',
-        paragraph:
-          'Via notre réseau, celui des coachs et les partages du grand public',
-        illu: <IlluReseauxSociaux {...opportunitiesIlluSizes} />,
-      },
-      {
-        title: 'Un nouveau réseau professionnel',
-        paragraph:
-          "l'accès à un réseau de professionnels aux compétences et secteurs variés",
-        illu: <IlluMalette {...opportunitiesIlluSizes} />,
-      },
-      {
-        title: 'Des temps forts collectifs',
-        paragraph: 'Des expériences humaines et fédératrices !',
-        illu: <IlluPoigneeDeMain {...opportunitiesIlluSizes} />,
-      },
-    ],
   },
   Coach: {
     title: 'Pourquoi devenir coach ?',
@@ -144,29 +104,6 @@ const contentByRole: { [K in Role]: Content } = {
         text: "S'inscrire",
         gaTag: GA_TAGS.PAGE_AIDER_INSCRIPTION_COACH_CLIC,
         href: '/inscription',
-      },
-    ],
-    opportunities: [
-      {
-        title: 'Ajoutez une  ligne à  votre CV ',
-        paragraph:
-          'Qui a dit qu’on ne pouvait pas valoriser le fait d’aider les autres ? Pas nous.',
-        illu: <IlluCV {...opportunitiesIlluSizes} />,
-      },
-      {
-        title: 'Rejoignez une communauté d’experts',
-        paragraph: '... et élargissez votre propre réseau pro !',
-        illu: <IlluReseauxSociaux {...opportunitiesIlluSizes} />,
-      },
-      {
-        title: 'Donnez du sens à sa vie professionnelle',
-        paragraph: 'Grâce à une expérience humaine fédératrice et positive',
-        illu: <IlluMalette {...opportunitiesIlluSizes} />,
-      },
-      {
-        title: 'Découvrez le coaching et l’associatif.',
-        paragraph: 'En faisant vos premiers pas à votre rythme. ',
-        illu: <IlluPoigneeDeMain {...opportunitiesIlluSizes} />,
       },
     ],
   },
@@ -214,30 +151,6 @@ const contentByRole: { [K in Role]: Content } = {
         href: '/inscription',
       },
     ],
-    opportunities: [
-      {
-        title: 'Un CV humain et convaincant',
-        paragraph: 'Un CV qui casse les codes en valorisant votre parcours',
-        illu: <IlluCV {...opportunitiesIlluSizes} />,
-      },
-      {
-        title: 'Une diffusion élargie de votre profil',
-        paragraph:
-          'Via notre réseau, celui des coachs et les partages du grand public',
-        illu: <IlluReseauxSociaux {...opportunitiesIlluSizes} />,
-      },
-      {
-        title: 'Un nouveau réseau professionnel',
-        paragraph:
-          "l'accès à un réseau de professionnels aux compétences et secteurs variés",
-        illu: <IlluMalette {...opportunitiesIlluSizes} />,
-      },
-      {
-        title: 'Des temps forts collectifs',
-        paragraph: 'Des expériences humaines et fédératrices !',
-        illu: <IlluPoigneeDeMain {...opportunitiesIlluSizes} />,
-      },
-    ],
   },
 };
 
@@ -249,48 +162,39 @@ export const WhyUseEp = ({
   role: Role;
 }) => {
   return (
-    <>
-      <SimpleImageText
-        innerRef={innerRef}
-        title={contentByRole[role].title}
-        img={contentByRole[role].img}
-        reverse
-      >
-        {contentByRole[role].criterias && (
-          <StyledCriteriasContainer>
-            {contentByRole[role].criterias?.map((criteria) => (
-              <StyledCriteria>
-                {criteria.illu}
-                <Text size="large" color="darkGray">
-                  {criteria.text}
-                </Text>
-              </StyledCriteria>
-            ))}
-          </StyledCriteriasContainer>
-        )}
-        <Text size="xlarge">{contentByRole[role].content}</Text>
-        {contentByRole[role].ctas && (
-          <StyledCTAsContainer>
-            {contentByRole[role].ctas?.map((cta) => (
-              <Button
-                style="custom-secondary-inverted"
-                size="large"
-                onClick={() => gaEvent(cta.gaTag)}
-                href={cta.href}
-              >
-                {cta.text}
-              </Button>
-            ))}
-          </StyledCTAsContainer>
-        )}
-      </SimpleImageText>
-      {contentByRole[role].opportunities && (
-        <RowIconTitleText
-          title="Les avantages pour les candidats"
-          content={contentByRole[role].opportunities || []}
-          sectionBgColor="hoverBlue"
-        />
+    <SimpleImageText
+      innerRef={innerRef}
+      title={contentByRole[role].title}
+      img={contentByRole[role].img}
+      reverse
+    >
+      {contentByRole[role].criterias && (
+        <StyledCriteriasContainer>
+          {contentByRole[role].criterias?.map((criteria) => (
+            <StyledCriteria>
+              {criteria.illu}
+              <Text size="large" color="darkGray">
+                {criteria.text}
+              </Text>
+            </StyledCriteria>
+          ))}
+        </StyledCriteriasContainer>
       )}
-    </>
+      <Text size="xlarge">{contentByRole[role].content}</Text>
+      {contentByRole[role].ctas && (
+        <StyledCTAsContainer>
+          {contentByRole[role].ctas?.map((cta) => (
+            <Button
+              style="custom-secondary-inverted"
+              size="large"
+              onClick={() => gaEvent(cta.gaTag)}
+              href={cta.href}
+            >
+              {cta.text}
+            </Button>
+          ))}
+        </StyledCTAsContainer>
+      )}
+    </SimpleImageText>
   );
 };

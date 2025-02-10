@@ -3,6 +3,7 @@ import { Layout } from 'src/components/Layout';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import { ContactUsSection } from 'src/components/partials/common/ContactUsSection/ContactUsSection';
+import { FormatBenefits } from 'src/components/partials/common/FormatBenefits/FormatBenefits';
 
 import { Impact } from 'src/components/partials/common/Impact';
 import { PartnersWorkingWithUs } from 'src/components/partials/common/Partners/PartnersWorkingWithUs/PartnersWorkingWithUs';
@@ -71,6 +72,11 @@ const Travailler = () => {
       />
 
       <WhyUseEp role="Candidat" />
+
+      <FormatBenefits
+        role="Candidat"
+        title="Les avantages de devenir candidats"
+      />
 
       <UnderstandFormat asRole="Candidat" />
 

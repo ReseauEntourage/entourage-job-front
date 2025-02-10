@@ -12,7 +12,12 @@ export const ContactUsSection = ({ onClick }: { onClick: () => void }) => {
         <Text color="white" size="large" center>
           Nos équipes sont à votre disposition !
         </Text>
-        <Button style="custom-secondary" size="large" onClick={onClick}>
+        <Button
+          style="custom-secondary"
+          size="large"
+          onClick={onClick}
+          dataTestId="button-contact"
+        >
           Nous contacter
         </Button>
       </StyledSectionContent>

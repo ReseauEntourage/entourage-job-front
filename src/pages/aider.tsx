@@ -3,6 +3,7 @@ import { Layout } from 'src/components/Layout';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import { ContactUsSection } from 'src/components/partials/common/ContactUsSection/ContactUsSection';
+import { FormatBenefits } from 'src/components/partials/common/FormatBenefits/FormatBenefits';
 import { Impact } from 'src/components/partials/common/Impact';
 import { NewsletterPartial } from 'src/components/partials/common/NewsletterPartial';
 import { SharePartial } from 'src/components/partials/common/SharePartial';
@@ -69,6 +70,8 @@ const Aider = () => {
       />
 
       <WhyUseEp role="Coach" />
+
+      <FormatBenefits role="Coach" title="Les avantages de devenir coach" />
 
       <UnderstandFormat asRole="Coach" />
 

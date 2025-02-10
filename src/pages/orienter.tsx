@@ -3,6 +3,7 @@ import { Layout } from 'src/components/Layout';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
 import { ContactUsSection } from 'src/components/partials/common/ContactUsSection/ContactUsSection';
+import { FormatBenefits } from 'src/components/partials/common/FormatBenefits/FormatBenefits';
 
 import { Impact } from 'src/components/partials/common/Impact';
 import { UnderstandFormat } from 'src/components/partials/common/UnderstandFormat/UnderstandFormat';
@@ -80,6 +81,11 @@ const Orienter = () => {
       />
 
       <WhyUseEp role="Referer" />
+
+      <FormatBenefits
+        role="Referer"
+        title="Les avantages pour les personnes que vous accompagnez"
+      />
 
       <UnderstandFormat asRole="Referer" />
 
