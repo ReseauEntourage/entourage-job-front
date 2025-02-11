@@ -13,7 +13,6 @@ const StyledReviewCard = styled.div`
   padding: 35px;
   width: 30%;
   box-sizing: border-box;
-  /* background-color: #fef8f5; */
   background-color: ${COLORS.hoverBlue};
   border-radius: 60px;
   display: inline-flex;
@@ -33,17 +32,14 @@ const StyledReviewCard = styled.div`
 
 const StyledReviewCardAuthor = styled.div`
   display: flex;
+  gap: 10px;
   flex-direction: row;
   align-items: center;
   font-size: 14px;
   line-height: 21px;
   color: ${COLORS.mediumGray};
-  margin-top: 40px;
   img {
     border-radius: 50%;
-  }
-  .legend {
-    margin-left: 10px;
   }
   &.mobile {
     font-size: 12px;

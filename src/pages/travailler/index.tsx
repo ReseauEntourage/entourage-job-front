@@ -1,17 +1,19 @@
-import React, { useCallback, useRef } from 'react';
+import React from 'react';
 import { Layout } from 'src/components/Layout';
+import { openModal } from 'src/components/modals/Modal';
+import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
+import { ContactUsSection } from 'src/components/partials/common/ContactUsSection/ContactUsSection';
+import { FormatBenefits } from 'src/components/partials/common/FormatBenefits/FormatBenefits';
 
 import { Impact } from 'src/components/partials/common/Impact';
 import { PartnersWorkingWithUs } from 'src/components/partials/common/Partners/PartnersWorkingWithUs/PartnersWorkingWithUs';
-import { VideoSection } from 'src/components/partials/pages/Orienter/VideoSection';
-import {
-  TravaillerProgramme360,
-  TravaillerProgrammeCoupDePouce,
-} from 'src/components/partials/pages/Travailler/Programmes';
-import { TravaillerDecouvrir } from 'src/components/partials/pages/Travailler/TravaillerDecouvrir';
+import { UnderstandFormat } from 'src/components/partials/common/UnderstandFormat/UnderstandFormat';
+import { WhyUseEp } from 'src/components/partials/common/WhyUserEP/WhyUseEp';
 import { ImageTitle } from 'src/components/partials/utils/ImageTitle';
 import { Reviews } from 'src/components/partials/utils/Reviews';
 import { GA_TAGS } from 'src/constants/tags';
+import { useIsDesktop } from 'src/hooks/utils';
+import { gaEvent } from 'src/lib/gtag';
 
 const reviews = [
   {
@@ -19,9 +21,9 @@ const reviews = [
     authorStatus: 'accompagnée par l’Accélérateur a trouvé chez Kiko',
     review: (
       <>
-        “ Maintenant j’arrive à plus parler aux gens, à aller vers les autres,
-        c’est grâce à Entourage Pro. Je faisais la paresseuse avant, et là, ça
-        m’a donné envie de me donner à fond.”
+        &quot;Maintenant j’arrive à plus parler aux gens, à aller vers les
+        autres, c’est grâce à Entourage Pro. Je faisais la paresseuse avant, et
+        là, ça m’a donné envie de me donner à fond.&quot;
       </>
     ),
   },
@@ -30,8 +32,9 @@ const reviews = [
     authorStatus: 'candidat EntouragePro',
     review: (
       <>
-        “ Entourage Pro vous vous êtes bougés pour moi, et par le réseau j’ai pu
-        rencontrer plein de professionnels qui m’ont motivés dans ma recherche”
+        &quot;Entourage Pro s&apos;est vraiment bougé pour moi. Par le réseau,
+        j’ai pu rencontrer plein de professionnels qui m’ont motivé dans ma
+        recherche. Ca change tout !&quot;
       </>
     ),
   },
@@ -40,55 +43,56 @@ const reviews = [
     authorStatus: "Recruteur de M'Bemba Dani Alu",
     review: (
       <>
-        “ Le recrutement de M&lsquo;Bemba a ressoudé les équipes. Elles se sont
-        investies dans un projet. Elles peuvent être très fières d’avoir fait en
-        sorte que M&lsquo;Bemba soit épanoui et polyvalent dans l’atelier.”
+        &quot;Le recrutement de M&lsquo;Bemba a ressoudé les équipes. Elles se
+        sont investies dans un projet. Elles peuvent être très fières d’avoir
+        fait en sorte que M&lsquo;Bemba soit épanoui et polyvalent dans
+        l’atelier.&quot;
       </>
     ),
   },
 ];
 
 const Travailler = () => {
-  const refCoupDePouce = useRef(null);
-  const refProgramme360 = useRef(null);
-  const handleClick = useCallback((element) => {
-    if (element.current) {
-      element.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      });
-    }
-  }, []);
+  const isDesktop = useIsDesktop();
 
   return (
     <Layout title="Travailler - Entourage Pro">
       <ImageTitle
-        img="/static/img/orienter-banner.jpg"
-        title="Entourage Pro, un tremplin vers l’emploi"
-        textColor="black"
-        description={`Vous êtes dans une situation de précarité ou d’exclusion\xa0? Vous avez un projet professionnel mais vous n’avez pas de réseau\xa0?`}
+        img="/static/img/candidate-banner-desktop.png"
+        imgMobile="/static/img/candidate-banner-mobile.png"
+        title={`Entourage Pro : un tremplin vers l’emploi${
+          isDesktop ? ' pour les plus exclus' : ''
+        }`}
+        description={
+          <>
+            Vous êtes dans une situation de précarité ou d’isolement ?<br />{' '}
+            Rejoignez gratuitement Entourage Pro
+          </>
+        }
       />
 
-      <TravaillerDecouvrir
-        handleClick={handleClick}
-        refCoupDePouce={refCoupDePouce}
-        refProgramme360={refProgramme360}
+      <UnderstandFormat asRole="Candidat" />
+      <FormatBenefits
+        role="Candidat"
+        title="Les avantages de devenir candidat"
       />
+      <WhyUseEp role="Candidat" />
 
-      <TravaillerProgrammeCoupDePouce innerRef={refCoupDePouce} />
-      <TravaillerProgramme360 innerRef={refProgramme360} />
-
-      <VideoSection
-        videoId="gUuaeDxlqTE"
-        videoTitle="Rencontre avec Najaf, ancien candidat Entourage Pro à Paris"
-        coloredBackground
+      <ContactUsSection
+        onClick={() => {
+          gaEvent(GA_TAGS.PAGE_TRAVAILLER_CONTACT_OPEN);
+          openModal(<ModalInterestLinkedOut />);
+        }}
       />
 
       <Reviews reviews={reviews} title="Ils nous racontent leur expérience" />
 
-      <PartnersWorkingWithUs />
+      <Impact
+        role="Candidat"
+        gaEventTag={GA_TAGS.PAGE_TRAVAILLER_MESURE_IMPACT_CLICK}
+      />
 
-      <Impact tag={GA_TAGS.PAGE_TRAVAILLER_MESURE_IMPACT_CLICK} />
+      <PartnersWorkingWithUs />
     </Layout>
   );
 };

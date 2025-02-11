@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button, BackgroundImage } from 'src/components/utils';
+import { Button, BackgroundImage, Text } from 'src/components/utils';
 import { H1 } from 'src/components/utils/Headings';
 import { UIKIT_BUTTON_STYLES_SPEC } from 'src/components/variables';
+import { COLORS } from 'src/constants/styles';
 import { useIsDesktop } from 'src/hooks/utils';
 import {
   StyledImageTitle,
@@ -25,7 +26,7 @@ interface ImageTitleProps {
   title: React.ReactNode;
   description?: React.ReactNode;
   alt?: string;
-  textColor?: string;
+  textColor?: keyof typeof COLORS;
   cta?: CTAProps | CTAProps[];
 }
 
@@ -43,26 +44,20 @@ export const ImageTitle = ({
   return (
     <BackgroundImage
       img={img}
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      imgMobile={imgMobile}
-      // @ts-expect-error after enable TS strict mode. Please, try to fix it
-      alt={alt}
+      imgMobile={imgMobile || img}
+      alt={alt || ''}
       isHero
       hasCta={!!cta}
     >
-      <StyledImageTitle
-        className={`${isDesktop ? 'desktop' : ''}`}
-        textColor={textColor || 'white'}
-      >
-        <H1
-          title={title}
-          color={textColor || 'white'}
-          effect="cls: uk-animation-slide-left uk-animation-fade; delay: 200;"
-        />
+      <StyledImageTitle textColor={textColor || 'white'}>
+        <H1 title={title} color={textColor || 'white'} />
         {description && (
-          <p data-uk-scrollspy="cls: uk-animation-slide-left uk-animation-fade; delay: 200;">
+          <Text
+            size={isDesktop ? 'xxlarge' : 'normal'}
+            color={textColor || 'white'}
+          >
             {description}
-          </p>
+          </Text>
         )}
         {cta && !Array.isArray(cta) && (
           <Button

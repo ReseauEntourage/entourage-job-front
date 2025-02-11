@@ -67,16 +67,6 @@ describe('En tant que - Visiteur', () => {
     });
   });
   /**
-   * Je parcours les candidats
-   */
-  it("J'accède à la page - /candidats", () => {
-    cy.get('header').within(() => {
-      cy.get('a').contains('Découvrir les candidat(e)s').click({ force: true });
-      cy.wait(1000);
-      cy.url().should('include', 'candidats');
-    });
-  });
-  /**
    * Je vais sur la page login
    */
   it("J'accède à la page - /login", () => {
