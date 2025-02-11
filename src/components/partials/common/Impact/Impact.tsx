@@ -13,7 +13,7 @@ import {
   StyledCenteredButtonContainer,
   Section,
 } from 'src/components/utils';
-import { H2 } from 'src/components/utils/Headings';
+import { H3 } from 'src/components/utils/Headings';
 import { Text } from 'src/components/utils/Text';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
@@ -162,7 +162,7 @@ export const Impact = ({
 
   return (
     <Section style={!invertBgColor ? 'hover-blue' : undefined}>
-      <H2 title={contentByRole[role].title} center />
+      <H3 title={contentByRole[role].title} center />
       <StyledInsightsContainer
         withIllu={withIllu}
         invertBgColor={invertBgColor}

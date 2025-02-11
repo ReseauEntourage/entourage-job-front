@@ -215,7 +215,7 @@ export const UnderstandFormat = ({
           ))}
         </StyledCriteriasContainer>
       )}
-      <Text size="xlarge">{contentByRole[asRole].content}</Text>
+      <Text size="large">{contentByRole[asRole].content}</Text>
 
       <StyledCTAsContainer>
         {contentByRole[asRole].cta.map((cta) => (

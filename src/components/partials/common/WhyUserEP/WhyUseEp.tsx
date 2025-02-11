@@ -180,7 +180,7 @@ export const WhyUseEp = ({
           ))}
         </StyledCriteriasContainer>
       )}
-      <Text size="xlarge">{contentByRole[role].content}</Text>
+      <Text size="large">{contentByRole[role].content}</Text>
       {contentByRole[role].ctas && (
         <StyledCTAsContainer>
           {contentByRole[role].ctas?.map((cta) => (
