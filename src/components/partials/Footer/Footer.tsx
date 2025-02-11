@@ -36,12 +36,6 @@ const pages: PageType = [
           },
         },
       },
-      /*
-        {
-          title: 'Notre histoire',
-          path: '/histoire',
-        },
-      */
       {
         title: 'Devenir partenaire',
         props: {
@@ -52,12 +46,6 @@ const pages: PageType = [
           },
         },
       },
-      /*
-        {
-          title: 'Nos résultats',
-          path: '/resultats',
-        },
-      */
     ],
   },
   {
@@ -103,7 +91,7 @@ const pages: PageType = [
       },
 
       {
-        title: 'Travailleurs sociaux',
+        title: 'Associations',
         path: '/orienter',
         props: {
           onClick: () => {
@@ -122,23 +110,6 @@ const pages: PageType = [
       },
     ],
   },
-  /* {
-    title: 'Territoires',
-    children: [
-      {
-        title: 'Paris',
-        path: '/paris',
-      },
-      {
-        title: 'Lyon',
-        path: '/lyon',
-      },
-      {
-        title: 'Lille',
-        path: '/lille',
-      },
-    ],
-  }, */
   {
     children: [
       {

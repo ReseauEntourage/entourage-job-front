@@ -19,7 +19,6 @@ export const EntreprisesCVLIst = ({
     <Section container="large" style="muted">
       <H2
         center
-        color="black"
         title={
           <>
             <span className="uk-text-primary">
