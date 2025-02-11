@@ -1,15 +1,26 @@
 import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { BREAKPOINTS, COLORS } from 'src/constants/styles';
+
+export const StyledTitleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+`;
 
 export const StyledSimpleCardsImageCTAContainer = styled.div`
-  display: flex;
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  @media (min-width: ${BREAKPOINTS.desktop}px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 10%;
+  }
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: stretch;
-  gap: 20%;
   width: 100%;
-  max-width: 1080px;
-  margin: 60px auto 40px;
+  margin: 60px 0;
 `;
 
 export const StyledSimpleCardsImageCTASubtitle = styled.div`
@@ -18,7 +29,6 @@ export const StyledSimpleCardsImageCTASubtitle = styled.div`
 `;
 
 export const StyledSimpleCardsImageCTACard = styled.div`
-  width: 40%;
   border-radius: 40px;
   background-color: ${COLORS.hoverBlue};
   display: flex;
@@ -33,20 +43,17 @@ export const StyledSimpleCardsImageCTACard = styled.div`
     }
   }
 
-  .text-container {
+  .content {
     flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    justify-content: space-between;
     padding: 30px;
-
-    p {
-      margin: 0 0 24px 0;
-    }
-
-    .text {
-      flex: 1;
+    gap: 30px;
+    .text-container {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
     }
   }
 
@@ -54,4 +61,17 @@ export const StyledSimpleCardsImageCTACard = styled.div`
     width: 100%;
     margin-bottom: 40px;
   }
+`;
+
+export const StyledCriteriasContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 23px;
+`;
+
+export const StyledCriteria = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
 `;

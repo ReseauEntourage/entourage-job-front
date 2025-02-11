@@ -3,7 +3,7 @@ import { COLORS } from 'src/constants/styles';
 import { FONT_WEIGHTS, StyledHeadingProps } from './Headings.types';
 
 export const StyledH1 = styled.h1<StyledHeadingProps>`
-  font-size: ${(props) => (props.mobile ? '24px' : '35px')};
+  font-size: ${(props) => (props.mobile ? '24px' : '32px')};
   line-height: 1.5;
   font-weight: ${(props) => FONT_WEIGHTS[props.weight]};
   color: ${(props) => {
@@ -30,12 +30,9 @@ export const StyledH2 = styled.h2<StyledHeadingProps>`
     if (props.color) {
       return props.color;
     }
-    return `${COLORS.primaryBlue}`;
+    return COLORS.black;
   }};
   text-align: ${(props) => (props.center ? 'center' : 'left')};
-  &.big {
-    font-size: ${(props) => (props.mobile ? '24px' : '36px')};
-  }
   span.orange {
     color: ${COLORS.primaryBlue};
   }

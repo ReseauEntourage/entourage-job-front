@@ -1,10 +1,10 @@
-import { Color } from 'src/constants/styles';
+import { COLORS } from 'src/constants/styles';
 
 export interface TextProps {
   children: React.ReactNode;
-  size?: 'small' | 'normal' | 'large' | 'xlarge' | 'xxlarge';
+  size?: 'small' | 'normal' | 'large' | 'xlarge' | 'xxlarge' | number;
   weight?: 'normal' | 'bold';
-  color?: Color;
+  color?: keyof typeof COLORS;
   variant?: 'normal' | 'italic';
   center?: boolean;
 }

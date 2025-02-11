@@ -159,7 +159,7 @@ export const formCandidateContact: FormSchema<{
       name: 'birthDate',
       component: 'datepicker',
       title:
-        'Sa date de naissance (la personne doit avoir 18 et 30 ans pour rejoindre Entourage Pro)',
+        'Sa date de naissance (la personne doit avoir 18 et 25 ans pour rejoindre Entourage Pro)',
       showLabel: true,
       rules: [
         {
@@ -175,13 +175,13 @@ export const formCandidateContact: FormSchema<{
         {
           method: (fieldValue) => {
             const maxBirthdate = new Date();
-            maxBirthdate.setFullYear(maxBirthdate.getFullYear() - 31);
+            maxBirthdate.setFullYear(maxBirthdate.getFullYear() - 26);
             const realBirthdate = new Date(fieldValue);
             return maxBirthdate <= realBirthdate;
           },
 
           message:
-            'Vous devez avoir entre 18 et 30 ans pour participer au format 360.',
+            'Vous devez avoir entre 18 et 25 ans pour participer au format 360.',
         },
       ],
     },

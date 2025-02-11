@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { COLORS } from 'src/constants/styles';
-import { Text } from './Text';
+import { sizesPx, Text } from './Text';
 
 const meta = {
   title: 'Text',
@@ -13,12 +13,12 @@ const meta = {
   argTypes: {
     color: {
       control: 'select',
-      options: COLORS,
-      defaultValue: 'normal',
+      options: Object.keys(COLORS),
+      defaultValue: 'black',
     },
     size: {
       control: 'select',
-      options: ['small', 'normal', 'large', 'xlarge', 'xxlarge'],
+      options: Object.keys(sizesPx),
       defaultValue: 'normal',
     },
     weight: {

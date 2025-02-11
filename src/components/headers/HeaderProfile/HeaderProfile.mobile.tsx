@@ -127,7 +127,6 @@ export const HeaderProfileMobile = ({
                       {firstName} {lastName}
                     </>
                   }
-                  color="black"
                 />
                 <Tag
                   content={
