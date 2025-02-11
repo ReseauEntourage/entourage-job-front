@@ -24,7 +24,7 @@ const reviewContent = [
         vraiment humaine. C&apos;était quelqu&apos;un de timide et il fallait la
         mettre en confiance. La première rencontre, ça fait un peu peur mais
         j’ai découvert une personne très douce, et c&apos;est devenu fluide. Je
-        suis sur que nous resterons en lien&quot;
+        suis sûr que nous resterons en lien&quot;
       </>
     ),
     author: 'Jean-Baptiste',
@@ -38,7 +38,7 @@ const reviewContent = [
         j’ai une question, j’aurai toujours une personne d’Entourage pro pour
         répondre à mes questions. L&apos;association est très mature : le
         contact est facile et informel mais en même temps très professionnel.
-        c&apos;est vraiment positif !&quot;
+        C&apos;est vraiment positif !&quot;
       </>
     ),
     author: 'Remy',
@@ -49,7 +49,7 @@ const reviewContent = [
     review: (
       <>
         &quot;C’est hyper enrichissant humainement. Chaque minute que tu passes
-        est utile au candidat, à sa progression,à la manière dont il voit les
+        est utile au candidat, à sa progression, à la manière dont il voit les
         choses.&quot;
       </>
     ),

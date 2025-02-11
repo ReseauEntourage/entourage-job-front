@@ -10,7 +10,7 @@ export const ContactUsSection = ({ onClick }: { onClick: () => void }) => {
       <StyledSectionContent>
         <H2 title="Une question, une précision ?" color="white" center />
         <Text color="white" size="large" center>
-          Nos équipes sont à votre disposition !
+          Notre équipe est à votre disposition !
         </Text>
         <Button
           style="custom-secondary"

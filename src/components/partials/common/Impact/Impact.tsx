@@ -60,7 +60,7 @@ const contentByRole: { [K in Role]: Content } = {
       },
       {
         value: '80%',
-        description: 'des candidats ont développés de nouvelles compétences',
+        description: 'des candidats ont développé de nouvelles compétences',
         illu: <IlluAmpoule {...illuSizes} />,
       },
       {
@@ -75,7 +75,7 @@ const contentByRole: { [K in Role]: Content } = {
     insights: [
       {
         value: '777',
-        description: 'coachs se sont engagés depuis le lancement',
+        description: 'coachs se sont engagé(e)s depuis le lancement',
         illu: <IlluPoigneeDeMain {...illuSizes} />,
       },
       {
@@ -110,7 +110,7 @@ const contentByRole: { [K in Role]: Content } = {
       },
       {
         value: '80%',
-        description: 'des candidats ont développés de nouvelles compétences',
+        description: 'des candidats ont développé de nouvelles compétences',
         illu: <IlluAmpoule {...illuSizes} />,
       },
       {

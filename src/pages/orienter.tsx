@@ -47,7 +47,7 @@ const reviews = [
     authorStatus: "Recruteur de M'Bemba",
     review: (
       <>
-        &quot;Le recrutement de M&apos;Bemba a ressoudé les équipes. Elles se
+        &quot;Le recrutement de M&apos;Bemba a resserré les équipes. Elles se
         sont investies dans un projet. Elles peuvent être très fières d’avoir
         fait en sorte que M&apos;Bemba soit épanoui et polyvalent dans
         l’atelier.&quot;

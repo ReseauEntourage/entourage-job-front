@@ -55,11 +55,11 @@ const contentByRole: { [K in Role]: Content } = {
     },
     {
       title: 'Découvrir le coaching et l’associatif',
-      paragraph: 'En faisant ses premiers pas à son rythme.',
+      paragraph: 'En faisant vos premiers pas à votre rythme.',
       illu: <IlluPoigneeDeMain {...opportunitiesIlluSizes} />,
     },
     {
-      title: 'Ajouter une ligne à  son CV',
+      title: 'Ajouter une ligne à  votre CV',
       paragraph:
         'Qui a dit qu’on ne pouvait pas valoriser le fait d’aider les autres ? Pas nous.',
       illu: <IlluCV {...opportunitiesIlluSizes} />,
