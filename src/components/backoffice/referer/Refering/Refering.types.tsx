@@ -8,8 +8,6 @@ import { formReferingProgram } from '../forms/formReferingProgram';
 import { formReferingSocialSituation } from '../forms/formReferingSocialSituation';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { CandidateLastStepContent } from 'src/components/registration/Registration.types';
-import { Alert } from 'src/components/utils/Alert';
-import { Text } from 'src/components/utils/Text';
 import { Programs } from 'src/constants/programs';
 import { UnionKeys, UnionToIntersection } from 'src/utils/Types';
 
@@ -95,22 +93,6 @@ export const ReferingStepContents: {
     form: formReferingProfessionalInformation,
     subtitle:
       'Nous aimerions en savoir un peu plus sur la situation du candidat',
-  },
-  'step-7': {
-    form: formReferingSocialSituation,
-    subtitle: (
-      <>
-        Nous aimerions en savoir un peu plus sur la situation du candidat.
-        <br />
-        <br />
-        <Alert>
-          <Text weight="bold">
-            Ces informations sont confidentielles, optionnelles et ne seront pas
-            communiquées.
-          </Text>
-        </Alert>
-      </>
-    ),
   },
 };
 

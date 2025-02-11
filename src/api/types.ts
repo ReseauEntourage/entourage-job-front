@@ -2,18 +2,13 @@ import {
   AmbitionsPrefixesType,
   BusinessLineValue,
   CandidateHelpWithValue,
-  CandidateResource,
   CompanyApproach,
   Contract as ContractValue,
   DocumentNameType,
   ExternalMessageContactType,
   ExternalOfferOrigin,
   HeardAboutValue,
-  JobSearchDuration,
-  Nationality,
   OfferStatus,
-  StudiesLevel,
-  WorkingExperience,
 } from 'src/constants';
 import { AdminZone, Department } from 'src/constants/departements';
 import { HelpValue } from 'src/constants/helps';
@@ -322,11 +317,8 @@ export type UserRegistrationDto = {
     name: BusinessLineValue;
     order: number;
   }[];
-  studiesLevel?: StudiesLevel;
-  nationality?: Nationality;
-  jobSearchDuration?: JobSearchDuration;
-  resources?: CandidateResource;
-  workingExperience?: WorkingExperience;
+  materialInsecurity?: string;
+  networkInsecurity?: string;
 };
 
 export type UserReferingDto = {
@@ -349,11 +341,6 @@ export type UserReferingDto = {
     name: BusinessLineValue;
     order: number;
   }[];
-  studiesLevel?: StudiesLevel;
-  nationality?: Nationality;
-  jobSearchDuration?: JobSearchDuration;
-  resources?: CandidateResource;
-  workingExperience?: WorkingExperience;
 };
 
 export type Opportunity = {

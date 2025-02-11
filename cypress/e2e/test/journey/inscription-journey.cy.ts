@@ -27,10 +27,9 @@ describe('Inscription', () => {
         .find('.Select__option')
         .contains('Paris')
         .click();
-      cy.get('[data-testid="form-registration-candidate-info-workingRight"]')
-        .click()
-        .get('[data-testid="select-option-yes"]')
-        .click();
+      cy.get('[data-testid="working-right-yes"]').click();
+      cy.get('[data-testid="material-insecurity-yes"]').click();
+      cy.get('[data-testid="network-insecurity-no"]').click();
       cy.contains('Suivant').click();
 
       cy.get(
@@ -42,35 +41,6 @@ describe('Inscription', () => {
         .click();
       cy.contains('Suivant').click();
 
-      cy.get(
-        '[data-testid="form-registration-candidate-social-situation-nationality"]'
-      ).click();
-      cy.get('[data-testid="select-option-french"]').click();
-      cy.get(
-        '[data-testid="form-registration-candidate-social-situation-accommodation"]'
-      ).click();
-      cy.get('[data-testid="select-option-insertion"]').click();
-      cy.get(
-        '[data-testid="form-registration-candidate-social-situation-hasSocialWorker"]'
-      ).click();
-      cy.get('[data-testid="select-option-yes"]').click();
-      cy.get(
-        '[data-testid="form-registration-candidate-social-situation-resources"]'
-      ).click();
-      cy.get('[data-testid="select-option-aah"]').click();
-      cy.get(
-        '[data-testid="form-registration-candidate-social-situation-jobSearchDuration"]'
-      ).click();
-      cy.get('[data-testid="select-option-less_than_3_months"]').click();
-      cy.get(
-        '[data-testid="form-registration-candidate-social-situation-studiesLevel"]'
-      ).click();
-      cy.get('[data-testid="select-option-cap_bep"]').click();
-      cy.get(
-        '[data-testid="form-registration-candidate-social-situation-workingExperience"]'
-      ).click();
-      cy.get('[data-testid="select-option-less_than_3_year"]').click();
-      cy.contains('Suivant').click();
       cy.get('[data-testid="form-registration-account-firstName"]').type(
         'John'
       );
