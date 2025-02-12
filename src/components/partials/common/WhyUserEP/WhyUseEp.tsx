@@ -9,7 +9,7 @@ import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledCriteria, StyledCriteriasContainer } from './WhyUseEp.styles';
 
-export type Role = 'Coach' | 'Candidat' | 'Referer';
+export type DisplayAs = 'Coach' | 'Candidat' | 'Referer';
 
 export interface UnderstandFormatProps {
   innerRef?: React.RefObject<HTMLDivElement>;
@@ -45,7 +45,7 @@ const criteriasIlluSizes = {
   height: 30,
 };
 
-const contentByRole: { [K in Role]: Content } = {
+const contentAs: { [K in DisplayAs]: Content } = {
   Candidat: {
     title: 'Pourquoi devenir candidat ?',
     img: '/static/img/front-office/why/why-become-candidate.png',
@@ -156,21 +156,21 @@ const contentByRole: { [K in Role]: Content } = {
 
 export const WhyUseEp = ({
   innerRef,
-  role,
+  as,
 }: {
   innerRef?: Ref<HTMLDivElement>;
-  role: Role;
+  as: DisplayAs;
 }) => {
   return (
     <SimpleImageText
       innerRef={innerRef}
-      title={contentByRole[role].title}
-      img={contentByRole[role].img}
+      title={contentAs[as].title}
+      img={contentAs[as].img}
       reverse
     >
-      {contentByRole[role].criterias && (
+      {contentAs[as].criterias && (
         <StyledCriteriasContainer>
-          {contentByRole[role].criterias?.map((criteria) => (
+          {contentAs[as].criterias?.map((criteria) => (
             <StyledCriteria>
               {criteria.illu}
               <Text size="large" color="darkGray">
@@ -180,10 +180,10 @@ export const WhyUseEp = ({
           ))}
         </StyledCriteriasContainer>
       )}
-      <Text size="large">{contentByRole[role].content}</Text>
-      {contentByRole[role].ctas && (
+      <Text size="large">{contentAs[as].content}</Text>
+      {contentAs[as].ctas && (
         <StyledCTAsContainer>
-          {contentByRole[role].ctas?.map((cta) => (
+          {contentAs[as].ctas?.map((cta) => (
             <Button
               style="custom-secondary-inverted"
               size="large"

@@ -80,14 +80,14 @@ const Orienter = () => {
         }
       />
 
-      <WhyUseEp role="Referer" />
+      <WhyUseEp as="Referer" />
 
       <FormatBenefits
-        role="Referer"
+        as="Referer"
         title="Les avantages pour les personnes que vous accompagnez"
       />
 
-      <UnderstandFormat asRole="Referer" />
+      <UnderstandFormat as="Referer" />
 
       <ContactUsSection
         onClick={() => {
@@ -101,7 +101,7 @@ const Orienter = () => {
         title="Ils utilisent l’espace asso, ils en parlent"
       />
 
-      <Impact role="Referer" />
+      <Impact as="Referer" />
 
       {/* already done => only remove uikit */}
       {isDesktop && (

@@ -19,11 +19,11 @@ import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledInsight, StyledInsightsContainer } from './Impact.styles';
 
-export type Role = 'Coach' | 'Candidat' | 'Referer' | 'Company';
+export type DisplayAs = 'Coach' | 'Candidat' | 'Referer' | 'Company';
 
 export interface ImpactProps {
   gaEventTag?: (typeof GA_TAGS)[keyof typeof GA_TAGS];
-  role: Role;
+  as: DisplayAs;
   inviteToShowMore?: boolean;
   invertBgColor?: boolean;
 }
@@ -44,12 +44,13 @@ const illuSizes = {
   height: 85,
 };
 
-const contentByRole: { [K in Role]: Content } = {
+const contentAs: { [K in DisplayAs]: Content } = {
   Candidat: {
     title: 'Quelques chiffres',
     insights: [
       {
-        value: '2376',
+        // https://metabase-analytics.entourage.social/question/1899-stat-total-candidats-engages-kpi-site-entourage-pro
+        value: '2500',
         description: 'candidats accompagnés depuis le lancement',
         illu: <IlluPoigneeDeMain {...illuSizes} />,
       },
@@ -74,7 +75,8 @@ const contentByRole: { [K in Role]: Content } = {
     title: 'Quelques chiffres',
     insights: [
       {
-        value: '839',
+        // https://metabase-analytics.entourage.social/question/1884-stat-total-coachs-engages-kpi-site-entourage-pro
+        value: '900',
         description: 'coachs se sont engagé(e)s depuis le lancement',
         illu: <IlluPoigneeDeMain {...illuSizes} />,
       },
@@ -99,7 +101,8 @@ const contentByRole: { [K in Role]: Content } = {
     title: 'Quelques chiffres',
     insights: [
       {
-        value: '2376',
+        // https://metabase-analytics.entourage.social/question/1899-stat-total-candidats-engages-kpi-site-entourage-pro
+        value: '2500',
         description: 'candidats accompagnés depuis le lancement',
         illu: <IlluPoigneeDeMain {...illuSizes} />,
       },
@@ -152,22 +155,22 @@ const contentByRole: { [K in Role]: Content } = {
 
 export const Impact = ({
   gaEventTag,
-  role,
+  as,
   inviteToShowMore = false,
   invertBgColor = false,
 }: ImpactProps) => {
   const withIllu = useMemo(() => {
-    return contentByRole[role].insights.some((insight) => !!insight.illu);
-  }, [role]);
+    return contentAs[as].insights.some((insight) => !!insight.illu);
+  }, [as]);
 
   return (
     <Section style={!invertBgColor ? 'hover-blue' : undefined}>
-      <H3 title={contentByRole[role].title} center />
+      <H3 title={contentAs[as].title} center />
       <StyledInsightsContainer
         withIllu={withIllu}
         invertBgColor={invertBgColor}
       >
-        {contentByRole[role].insights.map((insight, index) => (
+        {contentAs[as].insights.map((insight, index) => (
           <StyledInsight key={index}>
             {insight.illu}
             <Text color="primaryBlue" size={40} weight="bold" center>

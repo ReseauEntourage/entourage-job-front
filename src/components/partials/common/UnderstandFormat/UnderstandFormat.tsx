@@ -18,11 +18,11 @@ import {
   StyledCriteriasContainer,
 } from './UnderstandFormat.styles';
 
-export type Role = 'Coach' | 'Candidat' | 'Referer';
+export type DisplayAs = 'Coach' | 'Candidat' | 'Referer';
 
 export interface UnderstandFormatProps {
   innerRef?: React.RefObject<HTMLDivElement>;
-  asRole: 'Coach' | 'Candidat' | 'Referer';
+  as: 'Coach' | 'Candidat' | 'Referer';
 }
 
 export interface Criteria {
@@ -47,7 +47,7 @@ export interface Content {
   }[];
 }
 
-const contentByRole: { [K in Role]: Content } = {
+const contentAs: { [K in DisplayAs]: Content } = {
   Candidat: {
     title: 'Devenez candidat et boostez votre recherche d’emploi !',
     img: '/static/img/front-office/understand-format/understand-format-candidate.jpg',
@@ -193,19 +193,16 @@ const contentByRole: { [K in Role]: Content } = {
   },
 };
 
-export const UnderstandFormat = ({
-  innerRef,
-  asRole,
-}: UnderstandFormatProps) => {
+export const UnderstandFormat = ({ innerRef, as }: UnderstandFormatProps) => {
   return (
     <SimpleImageText
       innerRef={innerRef}
-      title={contentByRole[asRole].title}
-      img={contentByRole[asRole].img}
+      title={contentAs[as].title}
+      img={contentAs[as].img}
     >
-      {contentByRole[asRole].criterias && (
+      {contentAs[as].criterias && (
         <StyledCriteriasContainer>
-          {contentByRole[asRole].criterias?.map((criteria) => (
+          {contentAs[as].criterias?.map((criteria) => (
             <StyledCriteria>
               {criteria.illu}
               <Text size="large" color="darkGray">
@@ -215,10 +212,10 @@ export const UnderstandFormat = ({
           ))}
         </StyledCriteriasContainer>
       )}
-      <Text size="large">{contentByRole[asRole].content}</Text>
+      <Text size="large">{contentAs[as].content}</Text>
 
       <StyledCTAsContainer>
-        {contentByRole[asRole].cta.map((cta) => (
+        {contentAs[as].cta.map((cta) => (
           <Button
             style="custom-secondary-inverted"
             size="large"

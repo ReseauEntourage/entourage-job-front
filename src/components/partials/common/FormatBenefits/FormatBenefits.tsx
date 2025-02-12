@@ -7,7 +7,7 @@ import {
 } from 'assets/icons/icons';
 import { RowIconTitleText } from '../../utils/RowIconTitleText';
 
-export type Role = 'Coach' | 'Candidat' | 'Referer';
+export type DisplayAs = 'Coach' | 'Candidat' | 'Referer';
 
 export interface Benefit {
   title: string;
@@ -22,7 +22,7 @@ const opportunitiesIlluSizes = {
   height: 100,
 };
 
-const contentByRole: { [K in Role]: Content } = {
+const contentAs: { [K in DisplayAs]: Content } = {
   Candidat: [
     {
       title: 'Un CV humain et convaincant',
@@ -97,17 +97,17 @@ const contentByRole: { [K in Role]: Content } = {
 };
 
 export interface FormatBenefitsProps {
-  role: Role;
+  as: DisplayAs;
   title: string;
 }
 
-export const FormatBenefits = ({ role, title }: FormatBenefitsProps) => {
+export const FormatBenefits = ({ as, title }: FormatBenefitsProps) => {
   return (
     <>
-      {contentByRole[role] && (
+      {contentAs[as] && (
         <RowIconTitleText
           title={title}
-          content={contentByRole[role] || []}
+          content={contentAs[as] || []}
           sectionBgColor="hoverBlue"
         />
       )}

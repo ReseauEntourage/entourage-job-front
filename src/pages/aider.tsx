@@ -70,11 +70,11 @@ const Aider = () => {
         alt="Un candidat Entourage Pro et sa coach"
       />
 
-      <UnderstandFormat asRole="Coach" />
+      <UnderstandFormat as="Coach" />
 
-      <FormatBenefits role="Coach" title="Les avantages de devenir coach" />
+      <FormatBenefits as="Coach" title="Les avantages de devenir coach" />
 
-      <WhyUseEp role="Coach" />
+      <WhyUseEp as="Coach" />
 
       <ContactUsSection
         onClick={() => {
@@ -84,7 +84,7 @@ const Aider = () => {
       />
 
       <Reviews title="Nos coachs témoignent" reviews={reviewContent} />
-      <Impact role="Coach" />
+      <Impact as="Coach" />
       <PartnersWorkingWithUs tag={GA_TAGS.HOME_PARTNERS_CLICK} />
       <NewsletterPartial tag={GA_TAGS.PAGE_AIDER_INSCRIPTION_NEWSLETTER_CLIC} />
       <Section style="muted">

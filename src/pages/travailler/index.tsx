@@ -71,12 +71,9 @@ const Travailler = () => {
         }
       />
 
-      <UnderstandFormat asRole="Candidat" />
-      <FormatBenefits
-        role="Candidat"
-        title="Les avantages de devenir candidat"
-      />
-      <WhyUseEp role="Candidat" />
+      <UnderstandFormat as="Candidat" />
+      <FormatBenefits as="Candidat" title="Les avantages de devenir candidat" />
+      <WhyUseEp as="Candidat" />
 
       <ContactUsSection
         onClick={() => {
@@ -88,7 +85,7 @@ const Travailler = () => {
       <Reviews reviews={reviews} title="Ils nous racontent leur expérience" />
 
       <Impact
-        role="Candidat"
+        as="Candidat"
         gaEventTag={GA_TAGS.PAGE_TRAVAILLER_MESURE_IMPACT_CLICK}
       />
 
