@@ -49,7 +49,7 @@ const contentByRole: { [K in Role]: Content } = {
     title: 'Quelques chiffres',
     insights: [
       {
-        value: '660',
+        value: '2376',
         description: 'candidats accompagnés depuis le lancement',
         illu: <IlluPoigneeDeMain {...illuSizes} />,
       },
@@ -74,7 +74,7 @@ const contentByRole: { [K in Role]: Content } = {
     title: 'Quelques chiffres',
     insights: [
       {
-        value: '777',
+        value: '839',
         description: 'coachs se sont engagé(e)s depuis le lancement',
         illu: <IlluPoigneeDeMain {...illuSizes} />,
       },
@@ -99,7 +99,7 @@ const contentByRole: { [K in Role]: Content } = {
     title: 'Quelques chiffres',
     insights: [
       {
-        value: '660',
+        value: '2376',
         description: 'candidats accompagnés depuis le lancement',
         illu: <IlluPoigneeDeMain {...illuSizes} />,
       },
