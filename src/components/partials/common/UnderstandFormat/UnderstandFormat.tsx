@@ -18,11 +18,11 @@ import {
   StyledCriteriasContainer,
 } from './UnderstandFormat.styles';
 
-export type Role = 'Coach' | 'Candidat' | 'Referer';
+export type DisplayAs = 'Coach' | 'Candidat' | 'Referer';
 
 export interface UnderstandFormatProps {
   innerRef?: React.RefObject<HTMLDivElement>;
-  asRole: 'Coach' | 'Candidat' | 'Referer';
+  as: 'Coach' | 'Candidat' | 'Referer';
 }
 
 export interface Criteria {
@@ -47,9 +47,9 @@ export interface Content {
   }[];
 }
 
-const contentByRole: { [K in Role]: Content } = {
+const contentAs: { [K in DisplayAs]: Content } = {
   Candidat: {
-    title: 'Devenez candiat et boostez votre recherche d’emploi !',
+    title: 'Devenez candidat et boostez votre recherche d’emploi !',
     img: '/static/img/front-office/understand-format/understand-format-candidate.jpg',
     criterias: [
       {
@@ -82,11 +82,11 @@ const contentByRole: { [K in Role]: Content } = {
         Vous bénéficiez gratuitement de coups de pouce de coachs bénévoles
         expérimentés : clarifier votre projet professionnel, élaborer un CV et
         une lettre de motivation, vous préparer aux entretiens, vous soutenir
-        dans vos recherches vous aider à constituer votre réseau, etc.
+        dans vos recherches, vous aider à constituer votre réseau, etc.
         <br />
         <br />
-        Grâce à nos coachs, vous serez prêt(e)s à intégrer le monde
-        professionnel !
+        Grâce à nos coachs, vous serez prêt(e) à intégrer le monde professionnel
+        !
       </>
     ),
     cta: [
@@ -124,7 +124,7 @@ const contentByRole: { [K in Role]: Content } = {
     ],
     content: (
       <>
-        Avec Entourage Pro, il n’a jamais été aussi facile d’oeuvrer pour
+        Avec Entourage Pro, il n’a jamais été aussi facile d’œuvrer pour
         l’inclusion.
         <br />
         Selon vos compétences et votre disponibilité, vous donnez des coups de
@@ -193,19 +193,16 @@ const contentByRole: { [K in Role]: Content } = {
   },
 };
 
-export const UnderstandFormat = ({
-  innerRef,
-  asRole,
-}: UnderstandFormatProps) => {
+export const UnderstandFormat = ({ innerRef, as }: UnderstandFormatProps) => {
   return (
     <SimpleImageText
       innerRef={innerRef}
-      title={contentByRole[asRole].title}
-      img={contentByRole[asRole].img}
+      title={contentAs[as].title}
+      img={contentAs[as].img}
     >
-      {contentByRole[asRole].criterias && (
+      {contentAs[as].criterias && (
         <StyledCriteriasContainer>
-          {contentByRole[asRole].criterias?.map((criteria) => (
+          {contentAs[as].criterias?.map((criteria) => (
             <StyledCriteria>
               {criteria.illu}
               <Text size="large" color="darkGray">
@@ -215,10 +212,10 @@ export const UnderstandFormat = ({
           ))}
         </StyledCriteriasContainer>
       )}
-      <Text size="xlarge">{contentByRole[asRole].content}</Text>
+      <Text size="large">{contentAs[as].content}</Text>
 
       <StyledCTAsContainer>
-        {contentByRole[asRole].cta.map((cta) => (
+        {contentAs[as].cta.map((cta) => (
           <Button
             style="custom-secondary-inverted"
             size="large"

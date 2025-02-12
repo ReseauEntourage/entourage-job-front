@@ -7,7 +7,7 @@ import {
 } from 'assets/icons/icons';
 import { RowIconTitleText } from '../../utils/RowIconTitleText';
 
-export type Role = 'Coach' | 'Candidat' | 'Referer';
+export type DisplayAs = 'Coach' | 'Candidat' | 'Referer';
 
 export interface Benefit {
   title: string;
@@ -22,7 +22,7 @@ const opportunitiesIlluSizes = {
   height: 100,
 };
 
-const contentByRole: { [K in Role]: Content } = {
+const contentAs: { [K in DisplayAs]: Content } = {
   Candidat: [
     {
       title: 'Un CV humain et convaincant',
@@ -55,11 +55,11 @@ const contentByRole: { [K in Role]: Content } = {
     },
     {
       title: 'Découvrir le coaching et l’associatif',
-      paragraph: 'En faisant ses premiers pas à son rythme.',
+      paragraph: 'En faisant vos premiers pas à votre rythme.',
       illu: <IlluPoigneeDeMain {...opportunitiesIlluSizes} />,
     },
     {
-      title: 'Ajouter une ligne à  son CV',
+      title: 'Ajouter une ligne à  votre CV',
       paragraph:
         'Qui a dit qu’on ne pouvait pas valoriser le fait d’aider les autres ? Pas nous.',
       illu: <IlluCV {...opportunitiesIlluSizes} />,
@@ -97,17 +97,17 @@ const contentByRole: { [K in Role]: Content } = {
 };
 
 export interface FormatBenefitsProps {
-  role: Role;
+  as: DisplayAs;
   title: string;
 }
 
-export const FormatBenefits = ({ role, title }: FormatBenefitsProps) => {
+export const FormatBenefits = ({ as, title }: FormatBenefitsProps) => {
   return (
     <>
-      {contentByRole[role] && (
+      {contentAs[as] && (
         <RowIconTitleText
           title={title}
-          content={contentByRole[role] || []}
+          content={contentAs[as] || []}
           sectionBgColor="hoverBlue"
         />
       )}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from 'src/components/utils';
-import { H5 } from 'src/components/utils/Headings';
+import { H6 } from 'src/components/utils/Headings';
 import { useIsDesktop } from 'src/hooks/utils';
 import { StyledIconTitleTextItem } from './RowIconTitleText.styles';
 
@@ -20,11 +20,9 @@ export const IconTitleTextItem = ({
     <StyledIconTitleTextItem className={isDesktop ? '' : 'mobile'}>
       <div className="image-container">{illu}</div>
       <div className="text-container">
-        <H5 title={title} color="black" center />
+        <H6 title={title} color="black" center />
       </div>
-      <Text size="large" center>
-        {paragraph}
-      </Text>
+      <Text center>{paragraph}</Text>
     </StyledIconTitleTextItem>
   );
 };

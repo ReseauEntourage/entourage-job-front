@@ -127,7 +127,7 @@ const Entreprises = ({ nbPublishedCVs }: { nbPublishedCVs: number }) => {
       <EntreprisesCVLIst nbPublishedCVs={nbPublishedCVs} />
 
       <Impact
-        role="Company"
+        as="Company"
         gaEventTag={GA_TAGS.PAGE_ENTREPRISES_MESURE_D_IMPACT_CLICK}
         inviteToShowMore
         invertBgColor
