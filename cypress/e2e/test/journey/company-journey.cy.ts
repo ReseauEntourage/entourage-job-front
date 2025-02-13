@@ -189,9 +189,8 @@ describe('En tant que - Employeur/Entreprise', () => {
 
       cy.get('#form-add-public-offer-description').type('Random description');
 
+      cy.get('#form-add-public-offer-contract-container button').click();
       cy.get('#form-add-public-offer-contract-container')
-        .click()
-        .find('.option')
         .contains('CDI')
         .click();
 
