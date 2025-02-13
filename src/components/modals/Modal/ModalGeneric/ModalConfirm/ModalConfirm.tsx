@@ -6,7 +6,7 @@ import { Button } from 'src/components/utils';
 
 interface ModalConfirmProps {
   onConfirm: () => void;
-  text: React.ReactNode;
+  text?: React.ReactNode;
   title?: string;
   buttonText: string;
   children?: React.ReactNode;

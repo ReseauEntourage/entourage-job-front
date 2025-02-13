@@ -24,7 +24,7 @@ export const formRegistrationCandidateInfoCo: FormSchema<{
         })?.address;
         return `Les réunions ont lieu ${
           address ? `au ${address}` : 'dans nos locaux'
-        }. Elles permettent à nos équipes de vous donner toutes les informations et conseils nécessaires pour débuter le format coaching.`;
+        }. Elles permettent à notre équipe de vous donner toutes les informations et conseils nécessaires pour débuter le format coaching.`;
       },
       component: 'text',
     },

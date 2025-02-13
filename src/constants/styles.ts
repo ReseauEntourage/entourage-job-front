@@ -72,6 +72,8 @@ export const COLORS = {
   darkGreen: '#1F4946',
 };
 
+export type Color = keyof typeof COLORS;
+
 export const STATUS_COLORS = {
   success: COLORS.green,
   error: COLORS.lightRed,

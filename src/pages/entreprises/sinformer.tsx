@@ -45,7 +45,6 @@ const Sinformer = () => {
             title={
               <>Engager mon entreprise dans l’inclusion : pourquoi&nbsp;?</>
             }
-            color="black"
             center
           />
           <ContainerWithTextCentered>

@@ -46,6 +46,9 @@ import IlluPoigneeDeMain from './illu-poignee-de-main.svg';
 import IlluQuestionReponseOrange from './illu-question-reponse-orange.svg';
 import IlluReseauxSociaux from './illu-reseaux-sociaux.svg';
 import IlluTeteHomme from './illu-tete-homme.svg';
+import IlluCoeurSurLaMain from './illu-coeur-sur-la-main.svg';
+import IlluAmpoule from './illu-ampoule.svg';
+import IlluCoachEtCandidat from './illu-coach-et-candidat.svg';
 import Info from './info.svg';
 import Instagram from './instagram.svg';
 import Language from './language.svg';
@@ -134,6 +137,9 @@ IlluQuestionReponseOrange,
 IlluReseauxSociaux,
 IlluTeteHomme,
 IlluBulleQuestionCheck,
+IlluCoeurSurLaMain,
+IlluAmpoule,
+IlluCoachEtCandidat,
 Info,
 Instagram,
 Language,

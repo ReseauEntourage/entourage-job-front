@@ -2368,6 +2368,12 @@ select.uk-form-width-xsmall {
   background: #47A8B9;
 }
 /*
+ * Hover Blue
+ */
+.uk-section-hover-blue {
+  background: #ECF8FB;
+}
+/*
  * Secondary
  */
 .uk-section-secondary {
