@@ -16,11 +16,11 @@ export const LayoutBackOffice = ({
   const userRole = user?.role;
   const shouldLaunchOnboarding = useSelector(selectShouldLaunchOnboarding);
 
-  const userRoleGotOnboarding = ['Candidat', 'Coach'].includes(userRole);
+  const userRoleHasOnboarding = ['Candidat', 'Coach'].includes(userRole);
 
   return (
     <Layout title={`${title} - Entourage Pro`} noIndex isBackoffice>
-      {shouldLaunchOnboarding && userRoleGotOnboarding && <Onboarding />}
+      {shouldLaunchOnboarding && userRoleHasOnboarding && <Onboarding />}
       {children}
     </Layout>
   );

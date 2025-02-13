@@ -1,6 +1,9 @@
 import React from 'react';
 import { User } from '../../../api/types';
-import { getCandidateDefaultProfessionalValues } from '../parametres/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
+import {
+  getCandidateDefaultProfessionalValues,
+  getCoachDefaultProfessionalValues,
+} from '../parametres/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { isReadDocument } from 'src/components/partials/pages/Documents/Documents.utils';
 import { EthicsCharter } from 'src/components/utils/EthicsCharter/EthicsCharter';
@@ -20,7 +23,7 @@ export type OnboardingStep = 0 | 1 | 2 | 3; // 0 means no onboarding
 export const ONBOARDING_FIRST_STEP = 1 as OnboardingStep;
 export const ONBOARDING_LAST_STEP = {
   [USER_ROLES.CANDIDATE]: 3 as OnboardingStep,
-  [USER_ROLES.COACH]: 2 as OnboardingStep,
+  [USER_ROLES.COACH]: 3 as OnboardingStep,
 };
 
 export type CandidateOnboardingForm =
@@ -61,29 +64,23 @@ export const onboardingAlreadyCompleted = {
     const userProfileCompleted = userProfileRequired.every((field) =>
       Boolean(user.userProfile[field])
     );
+    const hasNetworkBusinessLines =
+      !!user.userProfile.networkBusinessLines?.length;
     const readDocumentCompleted = isReadDocument(
       user.readDocuments,
       DocumentNames.CharteEthique
     );
-    return userProfileCompleted && readDocumentCompleted;
+    return (
+      userProfileCompleted && readDocumentCompleted && hasNetworkBusinessLines
+    );
   },
 };
-
-const OnboardingLabels = {
-  MULTIPLE_CHOICE: 'Plusieurs choix possible',
-  SINGLE_CHOICE: 'Sélectionnez une des options',
-  FUTURE_CHANGE: 'Vous pourrez modifier votre choix à tout moment',
-} as const;
-
-export type OnboardingLabel =
-  (typeof OnboardingLabels)[keyof typeof OnboardingLabels];
 
 export interface OnboardingStepContent<
   T extends OnboardingForms = OnboardingForms
 > {
   title: string;
   subtitle?: React.ReactNode;
-  annotation?: OnboardingLabel;
   content?: React.ReactNode;
   form: T;
   // Used to get the values of a previous step as default values in the form of the current step
@@ -147,12 +144,12 @@ export const OnboardingStepContents: {
       title: 'Complétez votre profil',
       subtitle:
         "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur vous",
-      form: formOnboardingCoachProfile,
-      content: <OnboardingProfileForm />,
-      defaultValues: (user) => ({
-        description: user.userProfile.description ?? undefined,
-      }),
-      skippedBy: ({ userProfile }: User) => !!userProfile.description,
+      form: formOnboardingCoachJob,
+      defaultValues: (user) => {
+        return getCoachDefaultProfessionalValues(user.userProfile);
+      },
+      skippedBy: ({ userProfile }: User) =>
+        !!userProfile?.networkBusinessLines?.length,
     },
   },
   3: {
@@ -164,15 +161,17 @@ export const OnboardingStepContents: {
       },
       skippedBy: ({ userProfile }: User) => !!userProfile.hasExternalCv,
     },
-    // [USER_ROLES.COACH]: {
-    //   title: 'Complétez votre profil',
-    //   subtitle:
-    //     "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur vous",
-    //   form: formOnboardingCoachJob,
-    //   defaultValues: (user) => {
-    //     return getCoachDefaultProfessionalValues(user.userProfile);
-    //   },
-    // },
+    [USER_ROLES.COACH]: {
+      title: 'Complétez votre profil',
+      subtitle:
+        "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur vous",
+      form: formOnboardingCoachProfile,
+      content: <OnboardingProfileForm />,
+      defaultValues: (user) => ({
+        description: user.userProfile.description ?? undefined,
+      }),
+      skippedBy: ({ userProfile }: User) => !!userProfile.description,
+    },
   },
 };
 

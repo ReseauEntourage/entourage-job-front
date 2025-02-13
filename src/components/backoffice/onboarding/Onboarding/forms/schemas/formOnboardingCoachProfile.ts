@@ -10,7 +10,7 @@ export const formOnboardingCoachProfile: FormSchema<{
       id: 'description',
       name: 'description',
       component: 'textarea',
-      title: 'Présentez-vous en quelques mots',
+      title: 'Présentez-vous en quelques mots*',
       showLabel: true,
       placeholder:
         "Exemple: Passionné.e par le secteur de la logistique, je souhaite transmettre mon expérience et faire profiter les personnes en recherche d'emploi de mon réseau.",
