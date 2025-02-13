@@ -1,43 +1,26 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  StyledProfileForm,
   StyledProfileFormImageInputsContainer,
-  StyledProfileFormTextAreaContainer,
   StyledProfileFormImageContainer,
 } from '../../Onboarding.styles';
-import { FlattenedOnboardingFormData } from '../../Onboarding.types';
-import { useContextualRole } from 'src/components/backoffice/useContextualRole';
-import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { ButtonMock, ImgProfile } from 'src/components/utils';
 import { ImageInput } from 'src/components/utils/Inputs';
 import { Spinner } from 'src/components/utils/Spinner';
 import { ReduxRequestEvents } from 'src/constants';
 import { COLORS } from 'src/constants/styles';
-import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
 import {
   currentUserActions,
   updateUserProfilePictureSelectors,
 } from 'src/use-cases/current-user';
-import { formOnboardingCandidateProfile } from './schemas/formOnboardingCandidateProfile';
-import { formOnboardingCoachProfile } from './schemas/formOnboardingCoachProfile';
-
-interface OnboardingProfileFormProps {
-  onSubmit: (values: Partial<FlattenedOnboardingFormData>) => void;
-  onBeforeStep: () => void;
-}
 
 const SIZE = 146;
 
-export const OnboardingProfileForm = ({
-  onSubmit,
-  onBeforeStep,
-}: OnboardingProfileFormProps) => {
+export const OnboardingProfileForm = () => {
   const user = useAuthenticatedUser();
   const dispatch = useDispatch();
-  const { userProfile, id, role, firstName } = user;
-  const { contextualRole } = useContextualRole(role);
+  const { id, role, firstName } = user;
   const [imageUploading, setImageUploading] = useState(false);
   const uploadProfileImage = useCallback(
     async ({ profileImage }: { profileImage: Blob }) => {
@@ -60,44 +43,28 @@ export const OnboardingProfileForm = ({
   }, [updateUserProfilePictureStatus]);
 
   return (
-    <StyledProfileForm>
-      <StyledProfileFormImageInputsContainer>
-        <StyledProfileFormImageContainer size={SIZE}>
-          {imageUploading ? (
-            <Spinner color={COLORS.white} />
-          ) : (
-            <ImgProfile user={{ id, role, firstName }} size={SIZE} />
-          )}
-        </StyledProfileFormImageContainer>
-        <ImageInput
-          onChange={uploadProfileImage}
-          id="profile-picture-upload-desktop-onboarding"
-          name="profile-picture-upload-desktop"
+    <StyledProfileFormImageInputsContainer>
+      <StyledProfileFormImageContainer>
+        {imageUploading ? (
+          <Spinner color={COLORS.white} />
+        ) : (
+          <ImgProfile user={{ id, role, firstName }} size={SIZE} />
+        )}
+      </StyledProfileFormImageContainer>
+      <ImageInput
+        onChange={uploadProfileImage}
+        id="profile-picture-upload-desktop-onboarding"
+        name="profile-picture-upload-desktop"
+      >
+        <ButtonMock
+          style="custom-secondary"
+          size="small"
+          className="button-mock-image-input"
+          dataTestId="button-mock-image-input"
         >
-          <ButtonMock
-            style="custom-secondary"
-            size="small"
-            className="button-mock-image-input"
-            dataTestId="button-mock-image-input"
-          >
-            Modifier la photo de profil
-          </ButtonMock>
-        </ImageInput>
-      </StyledProfileFormImageInputsContainer>
-      <StyledProfileFormTextAreaContainer>
-        <FormWithValidation
-          formSchema={
-            contextualRole === USER_ROLES.CANDIDATE
-              ? formOnboardingCandidateProfile
-              : formOnboardingCoachProfile
-          }
-          onSubmit={onSubmit}
-          submitText="Finalisez"
-          cancelText="Précédent"
-          onCancel={onBeforeStep}
-          defaultValues={{ description: userProfile.description ?? undefined }}
-        />
-      </StyledProfileFormTextAreaContainer>
-    </StyledProfileForm>
+          Modifier la photo de profil
+        </ButtonMock>
+      </ImageInput>
+    </StyledProfileFormImageInputsContainer>
   );
 };

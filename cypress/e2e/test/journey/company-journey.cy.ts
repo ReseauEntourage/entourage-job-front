@@ -62,10 +62,10 @@ describe('En tant que - Employeur/Entreprise', () => {
 
       cy.get('#form-company-contact-lastName').should('be.visible').type('Doe');
 
-      cy.get('#form-company-contact-approach-container')
+      cy.get('#form-company-contact-approach-container button')
         .should('be.visible')
-        .click()
-        .find('.option')
+        .click();
+      cy.get('#form-company-contact-approach-container')
         .contains('Recruter inclusif')
         .click();
 
@@ -85,17 +85,15 @@ describe('En tant que - Employeur/Entreprise', () => {
         .should('be.visible')
         .type('Développeur');
 
-      cy.get('#form-company-contact-zone-container')
+      cy.get('#form-company-contact-zone-container button')
         .should('be.visible')
-        .click()
-        .find('.option')
-        .contains('Paris')
         .click();
+      cy.get('#form-company-contact-zone-container').contains('Paris').click();
 
-      cy.get('#form-company-contact-heardAbout-container')
+      cy.get('#form-company-contact-heardAbout-container button')
         .should('be.visible')
-        .click()
-        .find('.option')
+        .click();
+      cy.get('#form-company-contact-heardAbout-container')
         .contains('Autre')
         .click();
 
@@ -185,9 +183,8 @@ describe('En tant que - Employeur/Entreprise', () => {
 
       cy.get('#form-add-public-offer-description').type('Random description');
 
+      cy.get('#form-add-public-offer-contract-container button').click();
       cy.get('#form-add-public-offer-contract-container')
-        .click()
-        .find('.option')
         .contains('CDI')
         .click();
 

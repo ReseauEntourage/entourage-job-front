@@ -1,50 +1,83 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { OnboardingStep } from 'src/components/backoffice/onboarding/Onboarding.types';
-import { RequestState, SliceRootState } from 'src/store/utils';
 import {
-  validateFirstSecondStepOnboardingAdapter,
-  validateLastStepOnboardingAdapter,
+  OnboardingErrorMessages,
+  OnboardingFormData,
+  OnboardingStep,
+  OnboardingStepData,
+} from 'src/components/backoffice/onboarding/Onboarding.types';
+import { RegistrableUserRole } from 'src/constants/users';
+import { RequestState, SliceRootState } from 'src/store/utils';
+import { assertIsDefined } from 'src/utils/asserts';
+import {
+  sendStepDataOnboardingAdapter,
+  SendStepDataOnboardingError,
 } from './onboarding.adapters';
 
 export interface State {
-  validateFirstSecondStepOnboarding: RequestState<
-    typeof validateFirstSecondStepOnboardingAdapter
-  >;
-  validateLastStepOnboarding: RequestState<
-    typeof validateLastStepOnboardingAdapter
-  >;
+  sendStepData: RequestState<typeof sendStepDataOnboardingAdapter>;
+  sendStepDataError: SendStepDataOnboardingError | null;
   currentStep: OnboardingStep;
+  userRole: RegistrableUserRole | null;
   shouldLaunchOnboarding: boolean;
+  data: OnboardingStepData;
+  isLoading: boolean;
 }
 
 const initialState: State = {
-  validateFirstSecondStepOnboarding:
-    validateFirstSecondStepOnboardingAdapter.getInitialState(),
-  validateLastStepOnboarding:
-    validateLastStepOnboardingAdapter.getInitialState(),
+  sendStepData: sendStepDataOnboardingAdapter.getInitialState(),
+  sendStepDataError: null,
   currentStep: 0,
+  userRole: null,
+  data: {},
   shouldLaunchOnboarding: true,
+  isLoading: true,
 };
 
 export const slice = createSlice({
   name: 'onboarding',
   initialState,
   reducers: {
-    ...validateFirstSecondStepOnboardingAdapter.getReducers<State>(
-      (state) => state.validateFirstSecondStepOnboarding,
+    ...sendStepDataOnboardingAdapter.getReducers<State>(
+      (state) => state.sendStepData,
       {
-        validateFirstSecondStepOnboardingSucceeded(_state) {},
+        sendStepDataOnboardingSucceeded(_state) {},
+        sendStepDataOnboardingFailed(
+          state,
+          action: PayloadAction<{ error: SendStepDataOnboardingError } | null>
+        ) {
+          state.isLoading = false;
+          state.sendStepDataError = action.payload?.error || null;
+        },
       }
     ),
-    ...validateLastStepOnboardingAdapter.getReducers<State>(
-      (state) => state.validateLastStepOnboarding,
-      {
-        validateLastStepOnboardingSucceeded(_state) {},
-      }
-    ),
-    launchOnboarding() {},
+    launchOnboarding(state: State, action: PayloadAction<RegistrableUserRole>) {
+      state.userRole = action.payload;
+    },
+    setOnboardingCurrentStepData(
+      state,
+      action: PayloadAction<OnboardingFormData>
+    ) {
+      const { currentStep } = state;
+
+      assertIsDefined(currentStep, OnboardingErrorMessages.CURRENT_STEP);
+
+      const { userRole } = state;
+
+      assertIsDefined(userRole, OnboardingErrorMessages.SELECTED_ROLE);
+
+      const currentStepData = state.data[currentStep] || {};
+
+      state.data[currentStep] = {
+        ...currentStepData,
+        [userRole]: action.payload,
+      };
+    },
     setOnboardingStep(state, action: PayloadAction<OnboardingStep>) {
       state.currentStep = action.payload;
+      state.isLoading = true;
+    },
+    setOnboardingIsLoading(state, action: PayloadAction<boolean>) {
+      state.isLoading = action.payload;
     },
     increaseOnboardingStep(state) {
       state.currentStep += 1;
@@ -54,7 +87,10 @@ export const slice = createSlice({
     },
     endOnboarding(state) {
       state.currentStep = 0;
+      state.data = {};
       state.shouldLaunchOnboarding = false;
+      state.isLoading = true;
+      state.userRole = null;
     },
   },
 });

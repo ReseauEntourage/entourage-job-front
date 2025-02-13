@@ -23,7 +23,6 @@ export const formOnboardingCoachJob: FormSchema<{
       title: "Les secteurs dans lesquels j'ai du réseau*",
       options: BUSINESS_LINES,
       isMulti: true,
-      isRequired: true,
       showLabel: true,
     },
     {

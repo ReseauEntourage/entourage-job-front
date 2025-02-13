@@ -1,5 +1,7 @@
 import React from 'react';
 import { StyledHeaderModal } from 'src/components/modals/Modal/Modals.styles';
+import { Text } from 'src/components/utils';
+import { H3 } from 'src/components/utils/Headings';
 
 export const HeaderModal = ({
   title,
@@ -11,16 +13,12 @@ export const HeaderModal = ({
   return (
     <StyledHeaderModal>
       {title && (
-        <div className="title-container">
-          <h3>{title}</h3>
-        </div>
+        <H3 title={title} weight="semibold" color="primaryBlue" center />
       )}
-      {description ? (
-        <div className="description-container">
-          <div>{description}</div>
-        </div>
-      ) : (
-        <div className="simple-margin" />
+      {description && (
+        <Text color="mediumGray" size="large" weight="normal" center>
+          {description}
+        </Text>
       )}
     </StyledHeaderModal>
   );

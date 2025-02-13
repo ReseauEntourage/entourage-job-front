@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CloseButton } from 'src/components/utils/CloseButton';
+import { CloseButton } from 'src/components/utils/CloseButton/CloseButton';
 
 interface OffcanvasProps {
   id: string;

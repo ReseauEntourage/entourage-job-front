@@ -1,7 +1,7 @@
 export const FONT_WEIGHTS = {
   lighter: 'lighter',
   normal: 'normal',
-  semibold: '500',
+  semibold: '600',
   bold: 'bold',
 };
 
