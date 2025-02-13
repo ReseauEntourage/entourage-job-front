@@ -1,8 +1,12 @@
 import React from 'react';
-import { StyledStepContainer } from '../Onboarding.styles';
+import {
+  StyledOnboardingSpinnerContainer,
+  StyledStepContainer,
+} from '../Onboarding.styles';
 import { useOnboarding } from '../useOnboarding';
 import { FormWithValidation } from 'src/components/forms/FormWithValidation';
 import { ModalGeneric } from 'src/components/modals/Modal/ModalGeneric';
+import { Spinner } from 'src/components/utils/Spinner';
 
 export const Onboarding = () => {
   const {
@@ -40,6 +44,11 @@ export const Onboarding = () => {
             />
           )}
         </StyledStepContainer>
+      )}
+      {isOnboardingLoading && (
+        <StyledOnboardingSpinnerContainer>
+          <Spinner />
+        </StyledOnboardingSpinnerContainer>
       )}
     </ModalGeneric>
   );

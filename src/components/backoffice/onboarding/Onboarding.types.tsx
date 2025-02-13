@@ -1,9 +1,6 @@
 import React from 'react';
 import { User } from '../../../api/types';
-import {
-  getCandidateDefaultProfessionalValues,
-  getCoachDefaultProfessionalValues,
-} from '../parametres/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
+import { getCandidateDefaultProfessionalValues } from '../parametres/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { isReadDocument } from 'src/components/partials/pages/Documents/Documents.utils';
 import { EthicsCharter } from 'src/components/utils/EthicsCharter/EthicsCharter';
@@ -21,7 +18,10 @@ import { formOnboardingEthicsCharter } from './Onboarding/forms/schemas/formOnbo
 
 export type OnboardingStep = 0 | 1 | 2 | 3; // 0 means no onboarding
 export const ONBOARDING_FIRST_STEP = 1 as OnboardingStep;
-export const ONBOARDING_LAST_STEP = 3 as OnboardingStep;
+export const ONBOARDING_LAST_STEP = {
+  [USER_ROLES.CANDIDATE]: 3 as OnboardingStep,
+  [USER_ROLES.COACH]: 2 as OnboardingStep,
+};
 
 export type CandidateOnboardingForm =
   | typeof formOnboardingEthicsCharter
@@ -148,6 +148,7 @@ export const OnboardingStepContents: {
       subtitle:
         "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur vous",
       form: formOnboardingCoachProfile,
+      content: <OnboardingProfileForm />,
       defaultValues: (user) => ({
         description: user.userProfile.description ?? undefined,
       }),
@@ -163,15 +164,15 @@ export const OnboardingStepContents: {
       },
       skippedBy: ({ userProfile }: User) => !!userProfile.hasExternalCv,
     },
-    [USER_ROLES.COACH]: {
-      title: 'Complétez votre profil',
-      subtitle:
-        "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur vous",
-      form: formOnboardingCoachJob,
-      defaultValues: (user) => {
-        return getCoachDefaultProfessionalValues(user.userProfile);
-      },
-    },
+    // [USER_ROLES.COACH]: {
+    //   title: 'Complétez votre profil',
+    //   subtitle:
+    //     "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur vous",
+    //   form: formOnboardingCoachJob,
+    //   defaultValues: (user) => {
+    //     return getCoachDefaultProfessionalValues(user.userProfile);
+    //   },
+    // },
   },
 };
 

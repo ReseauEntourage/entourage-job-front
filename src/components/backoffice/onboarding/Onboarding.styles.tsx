@@ -22,3 +22,10 @@ export const StyledProfileFormImageInputsContainer = styled.div`
   flex-direction: column;
   align-items: center;
 `;
+
+export const StyledOnboardingSpinnerContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+`;

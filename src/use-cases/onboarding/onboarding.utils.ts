@@ -82,7 +82,7 @@ export const findNextNotSkippableStep = (
   user: User
 ): OnboardingStep => {
   let nextStep = currentStep;
-  while (nextStep < ONBOARDING_LAST_STEP) {
+  while (nextStep < ONBOARDING_LAST_STEP[user.role]) {
     nextStep = (nextStep + 1) as OnboardingStep;
     const nextStepContent = OnboardingStepContents?.[nextStep]?.[user.role];
     if (!shouldSkipStepOnboardingStep(nextStepContent, user)) {
