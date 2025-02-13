@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, BackgroundImage, Text } from 'src/components/utils';
-import { H1 } from 'src/components/utils/Headings';
+import { H2 } from 'src/components/utils/Headings';
 import { UIKIT_BUTTON_STYLES_SPEC } from 'src/components/variables';
 import { COLORS } from 'src/constants/styles';
 import { useIsDesktop } from 'src/hooks/utils';
@@ -50,10 +50,10 @@ export const ImageTitle = ({
       hasCta={!!cta}
     >
       <StyledImageTitle textColor={textColor || 'white'}>
-        <H1 title={title} color={textColor || 'white'} />
+        <H2 title={title} color={textColor || 'white'} />
         {description && (
           <Text
-            size={isDesktop ? 'xxlarge' : 'normal'}
+            size={isDesktop ? 'xlarge' : 'normal'}
             color={textColor || 'white'}
           >
             {description}

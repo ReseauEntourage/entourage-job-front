@@ -18,7 +18,7 @@ import { gaEvent } from 'src/lib/gtag';
 const reviews = [
   {
     author: 'Elicia',
-    authorStatus: 'accompagnée par l’Accélérateur a trouvé chez Kiko',
+    authorStatus: 'accompagnée par l’Accélérateur, a trouvé chez Kiko',
     review: (
       <>
         &quot;Maintenant j’arrive à plus parler aux gens, à aller vers les
@@ -29,12 +29,12 @@ const reviews = [
   },
   {
     author: 'Mike',
-    authorStatus: 'candidat EntouragePro',
+    authorStatus: 'candidat Entourage Pro',
     review: (
       <>
         &quot;Entourage Pro s&apos;est vraiment bougé pour moi. Par le réseau,
         j’ai pu rencontrer plein de professionnels qui m’ont motivé dans ma
-        recherche. Ca change tout !&quot;
+        recherche. Ça change tout !&quot;
       </>
     ),
   },
@@ -43,7 +43,7 @@ const reviews = [
     authorStatus: "Recruteur de M'Bemba Dani Alu",
     review: (
       <>
-        &quot;Le recrutement de M&lsquo;Bemba a ressoudé les équipes. Elles se
+        &quot;Le recrutement de M&lsquo;Bemba a resserré les équipes. Elles se
         sont investies dans un projet. Elles peuvent être très fières d’avoir
         fait en sorte que M&lsquo;Bemba soit épanoui et polyvalent dans
         l’atelier.&quot;
@@ -71,12 +71,9 @@ const Travailler = () => {
         }
       />
 
-      <UnderstandFormat asRole="Candidat" />
-      <FormatBenefits
-        role="Candidat"
-        title="Les avantages de devenir candidat"
-      />
-      <WhyUseEp role="Candidat" />
+      <UnderstandFormat as="Candidat" />
+      <FormatBenefits as="Candidat" title="Les avantages de devenir candidat" />
+      <WhyUseEp as="Candidat" />
 
       <ContactUsSection
         onClick={() => {
@@ -88,7 +85,7 @@ const Travailler = () => {
       <Reviews reviews={reviews} title="Ils nous racontent leur expérience" />
 
       <Impact
-        role="Candidat"
+        as="Candidat"
         gaEventTag={GA_TAGS.PAGE_TRAVAILLER_MESURE_IMPACT_CLICK}
       />
 

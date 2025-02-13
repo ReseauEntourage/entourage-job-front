@@ -9,7 +9,7 @@ import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledCriteria, StyledCriteriasContainer } from './WhyUseEp.styles';
 
-export type Role = 'Coach' | 'Candidat' | 'Referer';
+export type DisplayAs = 'Coach' | 'Candidat' | 'Referer';
 
 export interface UnderstandFormatProps {
   innerRef?: React.RefObject<HTMLDivElement>;
@@ -45,13 +45,13 @@ const criteriasIlluSizes = {
   height: 30,
 };
 
-const contentByRole: { [K in Role]: Content } = {
+const contentAs: { [K in DisplayAs]: Content } = {
   Candidat: {
     title: 'Pourquoi devenir candidat ?',
     img: '/static/img/front-office/why/why-become-candidate.png',
     content: (
       <>
-        Le travail est un facteur clé d&apos;intégration. Le problème c’est d’y
+        Le travail est un facteur clé d&apos;intégration. Le problème, c’est d’y
         accéder, surtout quand on n’a pas de réseau.
         <br />
         <br />
@@ -60,9 +60,9 @@ const contentByRole: { [K in Role]: Content } = {
         <br />
         <br />
         Que ce soit pour améliorer votre CV, rédiger une lettre de motivation,
-        être mis en relation, préparer un entretien ou se constituer un réseau,
-        nos équipes vous accompagnent et vous orientent vers les coachs qui
-        pourront le mieux vous aider.
+        être mis(e) en relation, préparer un entretien ou vous constituer un
+        réseau, notre équipe vous accompagnent et vous orientent vers les coachs
+        qui pourront le mieux vous aider.
         <br />
         <br />
         Bienvenue sur le réseau professionnel, solidaire et inclusif !
@@ -81,21 +81,21 @@ const contentByRole: { [K in Role]: Content } = {
     img: '/static/img/front-office/why/why-become-coach.jpg',
     content: (
       <>
-        Recréer un réseau professionnel avec les personnes en précarité et
-        isolées est crucial dans le combat pour l’inclusion.
+        Recréer un réseau professionnel pour les personnes en situation de
+        précarité et d’isolement est crucial dans le combat pour l’inclusion.
         <br />
         <br />
-        Pour y arriver, nous avons besoin de vous !En devenant coach bénévole,
+        Pour y arriver, nous avons besoin de vous ! En devenant coach bénévole,
         vous donnez des coups de pouce à des candidat(e)s afin qu’ils aient
         toutes les cartes en main pour appréhender le monde professionnel et y
         trouver leur place.
         <br />
         <br />
-        Un format d’engagement souple, qui s’adapte à vos disponibilités et
-        permet de s’engager à son rythme.
+        Un format d’engagement souple, qui s’adapte à vos disponibilités et vous
+        permet de vous engager à votre rythme.
         <br />
         <br />
-        Bien sûr, nos équipes ne vous laissent pas seuls ! Nous assurons un
+        Bien sûr, notre équipe ne vous laissent pas seul(e) ! Nous assurons un
         suivi et vous orientons vers les candidats que vous pourrez le mieux
         accompagner.
       </>
@@ -156,21 +156,21 @@ const contentByRole: { [K in Role]: Content } = {
 
 export const WhyUseEp = ({
   innerRef,
-  role,
+  as,
 }: {
   innerRef?: Ref<HTMLDivElement>;
-  role: Role;
+  as: DisplayAs;
 }) => {
   return (
     <SimpleImageText
       innerRef={innerRef}
-      title={contentByRole[role].title}
-      img={contentByRole[role].img}
+      title={contentAs[as].title}
+      img={contentAs[as].img}
       reverse
     >
-      {contentByRole[role].criterias && (
+      {contentAs[as].criterias && (
         <StyledCriteriasContainer>
-          {contentByRole[role].criterias?.map((criteria) => (
+          {contentAs[as].criterias?.map((criteria) => (
             <StyledCriteria>
               {criteria.illu}
               <Text size="large" color="darkGray">
@@ -180,10 +180,10 @@ export const WhyUseEp = ({
           ))}
         </StyledCriteriasContainer>
       )}
-      <Text size="xlarge">{contentByRole[role].content}</Text>
-      {contentByRole[role].ctas && (
+      <Text size="large">{contentAs[as].content}</Text>
+      {contentAs[as].ctas && (
         <StyledCTAsContainer>
-          {contentByRole[role].ctas?.map((cta) => (
+          {contentAs[as].ctas?.map((cta) => (
             <Button
               style="custom-secondary-inverted"
               size="large"

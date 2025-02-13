@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Img, Section } from 'src/components/utils';
-import { H2 } from 'src/components/utils/Headings';
+import { H3 } from 'src/components/utils/Headings';
 import { GA_TAGS } from 'src/constants/tags';
 import { gaEvent } from 'src/lib/gtag';
 import { StyledPartners } from './Partners.styles';
@@ -28,7 +28,7 @@ export const Partners = ({
   return (
     <StyledPartners>
       <Section className="custom-primary" display="flex-center">
-        <H2 title={title} />
+        <H3 title={title} />
         <div className="logos-container">
           {list.map((partner) => {
             return (

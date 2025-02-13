@@ -16,7 +16,6 @@ import {
   flattenRegistrationDataByRole,
   incrementRegistrationStep,
 } from 'src/components/registration/Registration.utils';
-import { ANTENNE_INFO } from 'src/constants';
 import { USER_ROLES, UserRole } from 'src/constants/users';
 import { assertIsDefined } from 'src/utils/asserts';
 import { createUserAdapter } from './registration.adapters';
@@ -205,21 +204,7 @@ export function selectRegistrationShouldSkipStep(state: RootState) {
 
       // Keys with custom logic
       if (key === 'notEligibleFor360') {
-        const { birthDate } =
-          valuesFromOtherStep as FlattenedRegistrationFormData;
-        const { department } =
-          valuesFromOtherStep as FlattenedRegistrationFormData;
-
-        const isDepartmentEligible = !!ANTENNE_INFO.find((antenne) => {
-          return department.value.includes(antenne.dpt);
-        });
-
-        const maxBirthdate = new Date();
-        maxBirthdate.setFullYear(maxBirthdate.getFullYear() - 26);
-        const realBirthdate = new Date(birthDate);
-        const isAgeEligible = maxBirthdate <= realBirthdate;
-
-        thisKeyShouldSkip = !isDepartmentEligible || !isAgeEligible;
+        thisKeyShouldSkip = true;
       }
 
       // Keys with simple logic

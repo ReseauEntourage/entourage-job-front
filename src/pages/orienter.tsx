@@ -47,7 +47,7 @@ const reviews = [
     authorStatus: "Recruteur de M'Bemba",
     review: (
       <>
-        &quot;Le recrutement de M&apos;Bemba a ressoudé les équipes. Elles se
+        &quot;Le recrutement de M&apos;Bemba a resserré les équipes. Elles se
         sont investies dans un projet. Elles peuvent être très fières d’avoir
         fait en sorte que M&apos;Bemba soit épanoui et polyvalent dans
         l’atelier.&quot;
@@ -80,14 +80,14 @@ const Orienter = () => {
         }
       />
 
-      <WhyUseEp role="Referer" />
+      <WhyUseEp as="Referer" />
 
       <FormatBenefits
-        role="Referer"
+        as="Referer"
         title="Les avantages pour les personnes que vous accompagnez"
       />
 
-      <UnderstandFormat asRole="Referer" />
+      <UnderstandFormat as="Referer" />
 
       <ContactUsSection
         onClick={() => {
@@ -101,7 +101,7 @@ const Orienter = () => {
         title="Ils utilisent l’espace asso, ils en parlent"
       />
 
-      <Impact role="Referer" />
+      <Impact as="Referer" />
 
       {/* already done => only remove uikit */}
       {isDesktop && (
