@@ -88,7 +88,6 @@ describe('En tant que - Employeur/Entreprise', () => {
       cy.get('#form-company-contact-zone-container button')
         .should('be.visible')
         .click();
-      cy.get('#form-company-contact-zone-container button').click();
       cy.get('#form-company-contact-zone-container').contains('Paris').click();
 
       cy.get('#form-company-contact-heardAbout-container button')
