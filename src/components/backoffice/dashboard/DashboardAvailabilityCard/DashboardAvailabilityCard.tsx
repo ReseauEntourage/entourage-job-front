@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useUpdateProfile } from 'src/components/backoffice/parametres/useUpdateProfile';
+import { FeedbackModal } from 'src/components/modals/FeedbackModal/FeedbackModal';
+import { openModal } from 'src/components/modals/Modal';
 import { Card } from 'src/components/utils';
 import { ToggleWithModal } from 'src/components/utils/Inputs/ToggleWithModal';
 import { ReduxRequestEvents } from 'src/constants';
@@ -47,6 +49,18 @@ export const DashboardAvailabilityCard = () => {
     }
   }, [updateProfileStatus, dispatch]);
 
+  const onToggle = (newIsAvailable: boolean) => {
+    gaEvent(GA_TAGS.PAGE_DASHBOARD_DISPONIBILITE_CLIC);
+    if (newIsAvailable === false) {
+      openModal(<FeedbackModal />);
+    } else {
+      updateUserProfile({
+        isAvailable: true,
+        unavailabilityReason: null,
+      });
+    }
+  };
+
   return (
     <Card
       title={
@@ -63,10 +77,7 @@ export const DashboardAvailabilityCard = () => {
             : 'Je ne suis pas disponible'
         }
         isToggled={user.userProfile.isAvailable}
-        onToggle={(isAvailable) => {
-          updateUserProfile({ isAvailable });
-          gaEvent(GA_TAGS.PAGE_DASHBOARD_DISPONIBILITE_CLIC);
-        }}
+        onToggle={onToggle}
       />
     </Card>
   );
