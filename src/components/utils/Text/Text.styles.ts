@@ -10,6 +10,8 @@ export const StyledText = styled.div<TextProps>`
   font-size: ${({ size }) => size}px;
   line-height: ${({ size }) => size * 1.5}px;
   color: ${({ color }) => COLORS[color]};
-  font-style: ${({ variant }) => variant};
+  font-style: ${({ variant }) => variant === 'italic' && 'italic'};
+  font-style: ${({ variant }) => variant === 'normal' && 'normal'};
+  text-decoration: ${({ variant }) => variant === 'underline' && 'underline'};
   text-align: ${({ center }) => (center ? 'center' : 'left')};
 `;

@@ -2,7 +2,6 @@ import React from 'react';
 import { isEmail } from 'validator';
 import { FormSchema } from '../FormSchema';
 import { SimpleLink } from 'src/components/utils';
-import { EXTERNAL_LINKS } from 'src/constants';
 
 export const formGetEmail: FormSchema<{
   email: string;
@@ -31,12 +30,8 @@ export const formGetEmail: FormSchema<{
       component: 'checkbox',
       title: (
         <span>
-          J&apos;accepte les{' '}
-          <SimpleLink
-            isExternal
-            target="_blank"
-            href={EXTERNAL_LINKS.LEGAL_MENTIONS}
-          >
+          J&apos;accepte les&nbsp;
+          <SimpleLink target="_blank" href="/cgu">
             CGU
           </SimpleLink>
         </span>

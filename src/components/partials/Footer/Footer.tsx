@@ -303,18 +303,27 @@ export const Footer = () => {
           <SiteMap isMobile={false} />
           <Grid row center middle gap="medium">
             <SimpleLink
-              isExternal
-              target="_blank"
               className="uk-text-small uk-text-muted"
-              href={EXTERNAL_LINKS.LEGAL_MENTIONS}
+              href="/legal-notice"
             >
               Mentions légales
             </SimpleLink>
+
+            <SimpleLink className="uk-text-small uk-text-muted" href="/cgu">
+              Conditions Générales d&apos;Utilisation
+            </SimpleLink>
+
             <SimpleLink
-              isExternal
               className="uk-text-small uk-text-muted"
-              href="#cookies"
+              href="/data-privacy"
             >
+              Politique de confidentialité
+            </SimpleLink>
+
+            <SimpleLink className="uk-text-small uk-text-muted" href="/cookies">
+              Politique de cookies
+            </SimpleLink>
+            <SimpleLink className="uk-text-small uk-text-muted" href="#cookies">
               Gestion des cookies
             </SimpleLink>
           </Grid>
