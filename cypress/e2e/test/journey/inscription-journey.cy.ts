@@ -90,6 +90,10 @@ describe('Inscription', () => {
         'Azerty123!'
       );
 
+      cy.get('input[id="form-registration-account-acceptCGU"]').click({
+        force: true,
+      });
+
       cy.contains('Suivant').click();
       cy.url().should('include', 'confirmation');
       cy.url().should('include', 'Candidat');
@@ -161,6 +165,10 @@ describe('Inscription', () => {
       cy.get('[data-testid="form-registration-account-confirmPassword"]').type(
         'Azerty123!'
       );
+
+      cy.get('input[id="form-registration-account-acceptCGU"]').click({
+        force: true,
+      });
 
       // Go to the next step and check that the URL now includes "confirmation" and "Prescripteur"
       cy.contains('Suivant').click();
