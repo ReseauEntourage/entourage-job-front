@@ -104,15 +104,12 @@ export const formatNetworkBusinessLines = (
 };
 
 export const formatCareerPathSentence = (
-  values:
-    | Partial<
-        ExtractFormSchemaValidation<
-          typeof formRegistrationCandidateProfessionalInformation
-        >
-      >
-    | Partial<
-        ExtractFormSchemaValidation<typeof formReferingProfessionalInformation>
-      >
+  values: Partial<
+    ExtractFormSchemaValidation<
+      | typeof formRegistrationCandidateProfessionalInformation
+      | typeof formReferingProfessionalInformation
+    >
+  >
 ): {
   searchAmbitions: {
     prefix: AmbitionsPrefixesType;

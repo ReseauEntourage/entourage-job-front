@@ -44,7 +44,7 @@ export function* sendStepDataOnboardingSaga() {
   }
 
   const stepData = data[currentStep]?.[userRole];
-  const { externalCv, hasAcceptEthicsCharter, ...otherData } = stepData;
+  const { externalCv, hasAcceptedEthicsCharter, ...otherData } = stepData;
 
   const userProfileFields = parseOnboadingProfileFields(otherData);
   try {
@@ -57,7 +57,7 @@ export function* sendStepDataOnboardingSaga() {
       yield* put(currentUserActions.uploadExternalCvRequested(formData));
     }
 
-    if (hasAcceptEthicsCharter === true) {
+    if (hasAcceptedEthicsCharter === true) {
       yield* call(() =>
         Api.postReadDocument(
           { documentName: DocumentNames.CharteEthique },
@@ -73,7 +73,8 @@ export function* sendStepDataOnboardingSaga() {
       yield* put(endOnboarding());
     }
 
-    if (nextStep === currentStep) {
+    const isLastStep = nextStep === currentStep; // If next step is the same as the current step, it means we are on the last step
+    if (isLastStep) {
       // Refresh the user to get the updated data
       yield* put(currentUserActions.fetchUserRequested());
     }

@@ -24,7 +24,7 @@ describe('Onboarding', () => {
 
       // Accept the ethics charter
       cy.get(
-        'label[for="form-onboarding-ethics-charter-hasAcceptEthicsCharter"]'
+        'label[for="form-onboarding-ethics-charter-hasAcceptedEthicsCharter"]'
       ).click();
 
       // intercept the PUT request to update the user profile

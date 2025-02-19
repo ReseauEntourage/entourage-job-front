@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RegistrableUserRole } from 'src/constants/users';
+import { RegistrableUserRole, USER_ROLES } from 'src/constants/users';
 import { selectAuthenticatedUser } from 'src/use-cases/current-user';
 import {
   onboardingActions,
@@ -39,8 +39,8 @@ export const useOnboarding = () => {
     const hasAllRequiredFields =
       onboardingAlreadyCompleted[authenticatedUser.role](authenticatedUser);
     if (
-      authenticatedUser?.role &&
-      ['Candidat', 'Coach'].includes(authenticatedUser.role) &&
+      (authenticatedUser?.role === USER_ROLES.CANDIDATE ||
+        authenticatedUser?.role === USER_ROLES.COACH) &&
       !hasAllRequiredFields
     ) {
       dispatch(

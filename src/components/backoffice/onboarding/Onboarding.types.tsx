@@ -107,7 +107,7 @@ export const OnboardingStepContents: {
       content: <EthicsCharter />,
       form: formOnboardingEthicsCharter,
       defaultValues: (user) => ({
-        hasAcceptEthicsCharter: isReadDocument(
+        hasAcceptedEthicsCharter: isReadDocument(
           user.readDocuments,
           DocumentNames.CharteEthique
         ),
@@ -121,7 +121,7 @@ export const OnboardingStepContents: {
       content: <EthicsCharter />,
       form: formOnboardingEthicsCharter,
       defaultValues: (user) => ({
-        hasAcceptEthicsCharter: isReadDocument(
+        hasAcceptedEthicsCharter: isReadDocument(
           user.readDocuments,
           DocumentNames.CharteEthique
         ),
