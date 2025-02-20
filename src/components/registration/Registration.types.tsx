@@ -5,8 +5,6 @@ import {
   IlluCV,
   IlluPoigneeDeMain,
 } from 'assets/icons/icons';
-import { Text } from '../utils';
-import { Alert } from '../utils/Alert';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { Programs } from 'src/constants/programs';
 import { COLORS } from 'src/constants/styles';
@@ -193,23 +191,6 @@ export const RegistrationStepContents: {
     },
   },
   'step-7': {
-    [USER_ROLES.CANDIDATE]: {
-      form: formRegistrationCandidateSocialSituation,
-      subtitle: (
-        <>
-          Nous aimerions en savoir un peu plus sur votre situation. <br />
-          <br />
-          <Alert>
-            <Text weight="bold">
-              Ces informations sont confidentielles, optionnelles et ne seront
-              pas communiquées.
-            </Text>
-          </Alert>
-        </>
-      ),
-    },
-  },
-  'step-8': {
     [USER_ROLES.CANDIDATE]: {
       form: formRegistrationAccount,
     },
