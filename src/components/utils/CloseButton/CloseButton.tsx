@@ -1,4 +1,5 @@
 import React from 'react';
+import { StyledCloseButton } from './CloseButton.styles';
 
 interface CloseButtonProps {
   className?: string;
@@ -12,7 +13,7 @@ export const CloseButton = ({
   dataTestId,
 }: CloseButtonProps) => {
   return (
-    <button
+    <StyledCloseButton
       className={className || 'uk-offcanvas-close'}
       type="button"
       data-uk-close

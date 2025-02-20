@@ -51,9 +51,10 @@ describe('En tant que - Benevole', () => {
 
       cy.get('#form-interest-message').type('Form test');
 
-      cy.get('#form-interest-heardAbout-container')
+      cy.get('#form-interest-heardAbout-container button')
         .should('be.visible')
-        .click()
+        .click();
+      cy.get('#form-interest-heardAbout-container')
         .find('.option')
         .contains('Autre')
         .click();

@@ -30,7 +30,7 @@ export const UserInformationCard = ({ title }: UserInformationCardProps) => {
       <StyledInformationsPersonnellesList>
         <li>
           <LucidIcon name="User" />
-          {` ${user.firstName} ${user.lastName}`}
+          {`${user.firstName} ${user.lastName}`}
         </li>
         <li>
           <LucidIcon name="User" />
