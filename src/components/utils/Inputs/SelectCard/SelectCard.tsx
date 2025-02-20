@@ -112,7 +112,7 @@ export function SelectCard<T extends string>({
                               <StyledSelectCardBulletIcon>
                                 {icon}
                               </StyledSelectCardBulletIcon>
-                              <Text size="small" color="lighter">
+                              <Text size="small" color="mediumGray">
                                 {bulletLabel}
                               </Text>
                             </StyledSelectCardBullet>

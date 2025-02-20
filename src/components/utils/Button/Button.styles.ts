@@ -222,7 +222,7 @@ export const ButtonStyle = css`
 
   &.small {
     :not(.rounded) {
-      padding: 6px 10px !important;
+      padding: 10px 10px !important;
     }
     font-size: 13px;
     line-height: 16px;

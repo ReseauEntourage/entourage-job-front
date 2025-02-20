@@ -5,7 +5,6 @@ export const StyledNav = styled.ul`
   display: flex;
   margin: 0;
   padding: 0;
-  list-style: none;
 `;
 
 export const StyledNavItem = styled.li`

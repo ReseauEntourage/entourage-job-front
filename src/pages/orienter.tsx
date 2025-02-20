@@ -1,48 +1,56 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Layout } from 'src/components/Layout';
+import { openModal } from 'src/components/modals/Modal';
+import { ModalInterestLinkedOut } from 'src/components/modals/Modal/ModalGeneric/StepperModal/ModalInterestLinkedOut';
+import { ContactUsSection } from 'src/components/partials/common/ContactUsSection/ContactUsSection';
+import { FormatBenefits } from 'src/components/partials/common/FormatBenefits/FormatBenefits';
 
 import { Impact } from 'src/components/partials/common/Impact';
-import { Decouvrir } from 'src/components/partials/pages/Orienter/Decouvrir';
-import { EnSavoirPlus } from 'src/components/partials/pages/Orienter/EnSavoirPlus';
-import { Inscrire } from 'src/components/partials/pages/Orienter/Inscrire';
-import { Opportunites } from 'src/components/partials/pages/Orienter/Opportunites';
-import { Publier } from 'src/components/partials/pages/Orienter/Publier';
-import { VideoSection } from 'src/components/partials/pages/Orienter/VideoSection';
+import { UnderstandFormat } from 'src/components/partials/common/UnderstandFormat/UnderstandFormat';
+import { WhyUseEp } from 'src/components/partials/common/WhyUserEP/WhyUseEp';
 import { ImageTitle } from 'src/components/partials/utils/ImageTitle';
-import {
-  LogoList,
-  // Reviews,
-} from 'src/components/partials/utils/LogoList';
+import { LogoList } from 'src/components/partials/utils/LogoList';
 import { Reviews } from 'src/components/partials/utils/Reviews';
 import { Section } from 'src/components/utils';
 import { H2 } from 'src/components/utils/Headings';
 import { PARTNERS } from 'src/constants/partners';
+import { GA_TAGS } from 'src/constants/tags';
 import { useIsDesktop } from 'src/hooks/utils';
+import { gaEvent } from 'src/lib/gtag';
 
 const reviews = [
   {
-    image: '/static/img/temoignage-entreprise-stephane-danny.jpg',
-    author: 'Stéphane',
-    authorStatus: 'Recruteur de Danny',
-    company: 'Les copains de Bastien',
+    author: 'Elicia',
+    authorStatus: 'accompagnée par l’Accélérateur, a trouvé chez Kiko',
     review: (
       <>
-        &ldquo;Bien plus qu&apos;un candidat standard, on sent qu&apos;il y a un
-        enjeu personnel et une dimension impactante&nbsp;!&ldquo;
+        &quot;Maintenant j’arrive plus à parler aux gens, à aller vers les
+        autres. C’est grâce à Entourage Pro. Je faisais la paresseuse avant et
+        là, ça m’a donné envie de me donner à fond.&quot;
       </>
     ),
   },
   {
-    image: '/static/img/temoignage-entreprise-gregoire-mbemba.jpg',
+    author: 'Mike',
+    authorStatus: 'candidat Entourage Pro',
+    review: (
+      <>
+        &quot;Entourage Pro s’est vraiment bougé pour moi. Par le réseau, j’ai
+        pu rencontrer plein de professionnels qui m’ont motivé dans ma
+        recherche. Ça change tout !&quot;
+      </>
+    ),
+  },
+  {
     author: 'Grégoire',
     company: 'Dani Alu',
     authorStatus: "Recruteur de M'Bemba",
     review: (
       <>
-        &ldquo;Le recrutement de M&apos;Bemba a ressoudé les équipes. Elles se
+        &quot;Le recrutement de M&apos;Bemba a resserré les équipes. Elles se
         sont investies dans un projet. Elles peuvent être très fières d’avoir
         fait en sorte que M&apos;Bemba soit épanoui et polyvalent dans
-        l’atelier.&ldquo;
+        l’atelier.&quot;
       </>
     ),
   },
@@ -50,65 +58,50 @@ const reviews = [
 
 const Orienter = () => {
   const isDesktop = useIsDesktop();
-  const refInscrire = useRef(null);
-  const refPublier = useRef(null);
-  const handleClick = (element) => {
-    if (element.current) {
-      element.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      });
-    }
-  };
 
   return (
     <Layout title="Orienter - Entourage Pro">
-      {/* change picture AND component */}
       <ImageTitle
-        img="/static/img/orienter-banner.jpg"
-        // img={"/static/img/orienter-banner.png"}
+        img="/static/img/orienter-banner-desktop.jpg"
+        imgMobile="/static/img/orienter-banner-mobile.jpg"
         title={
           <>
-            <span className="uk-text-primary">Travaillons ensemble</span> pour
-            l&apos;accès&nbsp;à&nbsp;l’emploi
+            Travaillons ensemble pour
+            <br />
+            l&apos;accès à l’emploi
           </>
         }
-        textColor="black"
+        textColor="white"
         description={
           <>
-            Vous accompagnez des personnes en situation d&lsquo;exclusion ? Avec
-            Entourage Pro, accélérez leur retour à l&lsquo;emploi !
+            Vous accompagnez des personnes en situation d&apos;exclusion ? Avec
+            Entourage Pro, accélérez leur retour à l&apos;emploi !
           </>
         }
       />
 
-      <Decouvrir
-        handleClick={handleClick}
-        refInscrire={refInscrire}
-        refPublier={refPublier}
+      <WhyUseEp as="Referer" />
+
+      <FormatBenefits
+        as="Referer"
+        title="Les avantages pour les personnes que vous accompagnez"
       />
 
-      <Inscrire innerRef={refInscrire} />
+      <UnderstandFormat as="Referer" />
 
-      <VideoSection
-        videoId="gUuaeDxlqTE"
-        videoTitle="Rencontre avec Najaf, ancien candidat Entourage Pro à Paris"
-        coloredBackground
-      />
-      <Publier innerRef={refPublier} />
-
-      <VideoSection
-        videoId="WLmDL-pB1NE"
-        videoTitle="Atelier décroche un Job - L'Accélérateur (EITI) X Entourage Pro"
+      <ContactUsSection
+        onClick={() => {
+          gaEvent(GA_TAGS.PAGE_ORIENTER_CONTACT_CLIC);
+          openModal(<ModalInterestLinkedOut />);
+        }}
       />
 
-      <Opportunites />
-
-      {/* change style */}
       <Reviews
         reviews={reviews}
-        title="Plus de 60 entreprises partenaires nous font confiance à Entourage Pro"
+        title="Ils utilisent l’espace asso, ils en parlent"
       />
+
+      <Impact as="Referer" />
 
       {/* already done => only remove uikit */}
       {isDesktop && (
@@ -120,14 +113,11 @@ const Orienter = () => {
                 Pro
               </>
             }
-            color="black"
             center
           />
           <LogoList logos={PARTNERS.ORIENTATION} carousel />
         </Section>
       )}
-      <Impact />
-      <EnSavoirPlus />
     </Layout>
   );
 };

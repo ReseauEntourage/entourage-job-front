@@ -1,6 +1,7 @@
 import React from 'react';
 import { Img, Section } from 'src/components/utils';
-import { H2 } from 'src/components/utils/Headings';
+import { H3 } from 'src/components/utils/Headings';
+import { Text } from 'src/components/utils/Text';
 import { useIsDesktop } from 'src/hooks/utils';
 import {
   StyledReviewCard,
@@ -25,7 +26,8 @@ export const Reviews = ({ reviews, title }: ReviewsProps) => {
   const isDesktop = useIsDesktop();
   return (
     <Section id="reviews" style="default">
-      <H2 title={title} color="black" center />
+      <H3 title={title} center />
+      <br />
       <StyledReviewContainer data-uk-scrollspy="cls:uk-animation-slide-bottom-small; target: .review-card; delay: 200">
         {reviews.map(
           (
@@ -45,7 +47,7 @@ export const Reviews = ({ reviews, title }: ReviewsProps) => {
                 className={`${isDesktop ? '' : 'mobile'} review-card`}
                 key={index}
               >
-                <div>{review}</div>
+                <Text size="large">{review}</Text>
                 <StyledReviewCardAuthor className={isDesktop ? '' : 'mobile'}>
                   {image && (
                     <Img

@@ -2444,6 +2444,9 @@ select.uk-form-width-xsmall {
 .uk-section-primary {
   background: #47a8b9;
 }
+.uk-section-hover-blue {
+  background: #ecf8fb;
+}
 /*
  * Secondary
  */

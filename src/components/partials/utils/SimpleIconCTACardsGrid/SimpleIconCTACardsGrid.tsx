@@ -36,11 +36,14 @@ export const SimpleIconCTACardsGrid = ({
       <Section>
         <H3 title={title} center color="black" />
         {subtitle && (
-          <StyledSimpleIconCTACardsGridSubtitle>
-            <Text size="large" center>
-              {subtitle}
-            </Text>
-          </StyledSimpleIconCTACardsGridSubtitle>
+          <>
+            <br />
+            <StyledSimpleIconCTACardsGridSubtitle>
+              <Text size="large" center>
+                {subtitle}
+              </Text>
+            </StyledSimpleIconCTACardsGridSubtitle>
+          </>
         )}
         <StyledSimpleIconCTACardsGrid>
           {cards.map((card) => {

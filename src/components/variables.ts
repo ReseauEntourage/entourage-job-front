@@ -34,6 +34,7 @@ export type UIKIT_SECTION_SIZES =
 export type UIKIT_STYLES =
   | 'default'
   | 'primary'
+  | 'hover-blue'
   | 'secondary'
   | 'muted'
   | 'custom-header'

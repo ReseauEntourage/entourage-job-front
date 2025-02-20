@@ -211,7 +211,7 @@ export function ProfileCard({
                 </>
               )}
               <StyledProfileCardLabel>
-                <Text color="light">{labels.businessLines}</Text>{' '}
+                <Text color="darkGray">{labels.businessLines}</Text>{' '}
               </StyledProfileCardLabel>
               <StyledProfileCardBusinessLines>
                 {sortedBusinessLines && sortedBusinessLines.length > 0 ? (
@@ -238,7 +238,7 @@ export function ProfileCard({
                     <StyledProfileCardEmptyIcon>
                       <CaseIcon {...iconSizeProps} />
                     </StyledProfileCardEmptyIcon>
-                    <Text color="lighter" size="small" variant="italic">
+                    <Text color="mediumGray" size="small" variant="italic">
                       {EMPTY_INFO}
                     </Text>
                   </StyledProfileCardEmptyBusinessLinesContainer>
@@ -249,7 +249,7 @@ export function ProfileCard({
             {displayHelps ? (
               <StyledProfileCardHelpContainer>
                 <StyledProfileCardLabel>
-                  <Text color="light">{labels.helps}</Text>
+                  <Text color="darkGray">{labels.helps}</Text>
                 </StyledProfileCardLabel>
                 <StyledProfileCardHelps>
                   {helps && helps.length > 0 ? (
@@ -269,7 +269,7 @@ export function ProfileCard({
                       <StyledProfileCardEmptyIcon>
                         <HandsIcon {...iconSizeProps} />
                       </StyledProfileCardEmptyIcon>
-                      <Text color="lighter" size="small" variant="italic">
+                      <Text color="mediumGray" size="small" variant="italic">
                         {EMPTY_INFO}
                       </Text>
                     </StyledProfileCardEmptyHelpsContainer>
