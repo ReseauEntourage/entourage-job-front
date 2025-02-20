@@ -315,8 +315,22 @@ export class APIHandler {
     return this.post(`/user/profile/${userId}/report`, userReportDto);
   }
 
-  // delete
+  // Social Situation
+  updateUserSocialSituation(
+    userId: string,
+    socialSituationDto: {
+      nationality?: string;
+      accommodation?: string;
+      resources?: string;
+      studiesLevel?: string;
+      workingExperience?: string;
+      jobSearchDuration?: string;
+    }
+  ): Promise<AxiosResponse> {
+    return this.put(`/users/social-situations/${userId}`, socialSituationDto);
+  }
 
+  // delete
   deleteUser(userId: string): Promise<AxiosResponse> {
     return this.delete(`/user/${userId}`);
   }

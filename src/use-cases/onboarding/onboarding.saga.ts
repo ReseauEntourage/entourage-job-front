@@ -44,7 +44,28 @@ export function* sendStepDataOnboardingSaga() {
   }
 
   const stepData = data[currentStep]?.[userRole];
-  const { externalCv, hasAcceptedEthicsCharter, ...otherData } = stepData;
+  const {
+    externalCv,
+    hasAcceptedEthicsCharter,
+    nationality,
+    accommodation,
+    hasSocialWorker,
+    resources,
+    studiesLevel,
+    workingExperience,
+    jobSearchDuration,
+    ...otherData
+  } = stepData;
+
+  const socialSituationFields = {
+    nationality,
+    accommodation,
+    hasSocialWorker,
+    resources,
+    studiesLevel,
+    workingExperience,
+    jobSearchDuration,
+  };
 
   const userProfileFields = parseOnboadingProfileFields(otherData);
   try {
@@ -65,6 +86,20 @@ export function* sendStepDataOnboardingSaga() {
         )
       );
     }
+
+    // Check if there is something to save in the social situation socialSituationFields
+    if (
+      Object.keys(socialSituationFields).some(
+        (key) => socialSituationFields[key] !== undefined
+      )
+    ) {
+      yield* call(() =>
+        Api.updateUserSocialSituation(userId, socialSituationFields)
+      );
+    }
+
+    // If quelque chose a enregistrer dans la situation social
+    // Alors appel de l'api pour enregistrer les données (créer le call)
 
     yield* put(sendStepDataOnboardingSucceeded());
     const nextStep = findNextNotSkippableStep(currentStep, user);
