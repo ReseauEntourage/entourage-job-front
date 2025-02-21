@@ -88,14 +88,12 @@ export function* sendStepDataOnboardingSaga() {
       );
     }
 
-    // Check if there is something to save in the social situation socialSituationFields
-    if (
-      Object.keys(socialSituationFields).some(
-        (key) => socialSituationFields[key] !== undefined
-      )
-    ) {
+    if (Object.keys(stepData).includes('nationality')) {
       yield* call(() =>
-        Api.updateUserSocialSituation(userId, socialSituationFields)
+        Api.updateUserSocialSituation(userId, {
+          hasCompletedSurvey: true,
+          ...socialSituationFields,
+        })
       );
     }
 

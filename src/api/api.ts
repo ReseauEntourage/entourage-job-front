@@ -325,6 +325,7 @@ export class APIHandler {
       studiesLevel?: string;
       workingExperience?: string;
       jobSearchDuration?: string;
+      hasCompletedSurvey?: boolean;
     }
   ): Promise<AxiosResponse> {
     return this.put(`/users/social-situations/${userId}`, socialSituationDto);
