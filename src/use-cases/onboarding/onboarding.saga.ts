@@ -71,13 +71,14 @@ export function* sendStepDataOnboardingSaga() {
   try {
     yield* call(() => Api.putUserProfile(userId, userProfileFields));
 
-    // If step contains externalCv and user has uploaded one, upload it
+    // Check if step contains externalCv and user has uploaded one, upload it
     if (externalCv) {
       const formData = new FormData();
       formData.append('file', externalCv);
       yield* put(currentUserActions.uploadExternalCvRequested(formData));
     }
 
+    // Check if user has accepted the ethics charter
     if (hasAcceptedEthicsCharter === true) {
       yield* call(() =>
         Api.postReadDocument(
@@ -97,9 +98,6 @@ export function* sendStepDataOnboardingSaga() {
         Api.updateUserSocialSituation(userId, socialSituationFields)
       );
     }
-
-    // If quelque chose a enregistrer dans la situation social
-    // Alors appel de l'api pour enregistrer les données (créer le call)
 
     yield* put(sendStepDataOnboardingSucceeded());
     const nextStep = findNextNotSkippableStep(currentStep, user);
