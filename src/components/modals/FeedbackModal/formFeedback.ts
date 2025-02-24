@@ -22,7 +22,7 @@ export const FeedbackOptions: {
   [USER_ROLES.COACH]: [
     {
       value: UnavailabilityReasons.ALREADY_FULL,
-      label: "J'accompagne suffisamment de candidats",
+      label: 'Je suis en lien avec suffisamment de candidats',
       inputId: `radio-input-${UnavailabilityReasons.ALREADY_FULL}`,
     },
     {
