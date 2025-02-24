@@ -137,7 +137,7 @@ export const OnboardingStepContents: {
       content: <OnboardingCandidateSocialSituation />,
       skippedBy: (user: User) => {
         // If the user as already accepted the ethics charter, we skip also the social situation form because it should be displayed only once
-        return user.userSocialSituation.hasCompletedSurvey;
+        return !!user.userSocialSituation?.hasCompletedSurvey;
       },
       form: formOnboardingCandidateSocialSituation,
       defaultValues: (user) => ({
