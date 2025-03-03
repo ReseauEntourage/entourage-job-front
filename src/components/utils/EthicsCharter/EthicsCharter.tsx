@@ -34,11 +34,6 @@ export const EthicsCharter = () => {
         'Entourage Pro ne tolère pas les attitudes intolérantes, sexistes et discriminantes.',
     },
     {
-      title: 'Protection des personnes',
-      content:
-        'Je garantie que mes actions ne contiennent aucune donnée personnelle (nom de famille, téléphone, adresse précise…), permettant d’identifier et de localiser précisément une personne, ni aucune donnée sensible (médicale, judiciaire…).',
-    },
-    {
       title: 'Profiter de la rencontre !',
       content:
         'Je fais en sorte que mes actions soient synonymes de rencontres, de partage, de chaleur humaine, le tout dans la bonne humeur !',

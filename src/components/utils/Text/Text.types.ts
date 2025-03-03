@@ -1,10 +1,20 @@
 import { COLORS } from 'src/constants/styles';
 
+export type TextSize =
+  | 'small'
+  | 'normal'
+  | 'large'
+  | 'xlarge'
+  | 'xxlarge'
+  | number;
+
+export type TextVariant = 'normal' | 'italic' | 'underline';
+
 export interface TextProps {
   children: React.ReactNode;
-  size?: 'small' | 'normal' | 'large' | 'xlarge' | 'xxlarge' | number;
+  size?: TextSize;
   weight?: 'normal' | 'bold';
   color?: keyof typeof COLORS;
-  variant?: 'normal' | 'italic';
+  variant?: TextVariant;
   center?: boolean;
 }
