@@ -599,6 +599,16 @@ export type CandidateInscription = {
   tsPrescripteur?: string;
 };
 
+export type Media = {
+  id: string;
+  name: string;
+  s3Key: string;
+  mimeType: string;
+  size: number;
+  userId: string;
+  signedUrl: string;
+};
+
 export type ExternalMessage = {
   UserId: string;
 
@@ -635,6 +645,7 @@ export type Message = {
   updatedAt: string;
   conversationId: string;
   author: User;
+  medias: Media[];
 };
 
 export type ConversationParticipant = Pick<

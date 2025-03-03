@@ -592,6 +592,10 @@ export class APIHandler {
     return this.get(`/messaging/conversations`);
   }
 
+  getConversationMedias(conversationId: string): Promise<AxiosResponse> {
+    return this.get(`/messaging/conversations/${conversationId}/medias`);
+  }
+
   getUnseenConversationsCount(): Promise<AxiosResponse> {
     return this.get('/messaging/conversations/unseen-count');
   }
@@ -600,8 +604,10 @@ export class APIHandler {
     return this.get(`/messaging/conversations/${conversationId}`);
   }
 
-  postMessage(params: { content: string }): Promise<AxiosResponse> {
-    return this.post('/messaging/messages', params);
+  postMessage(formData: FormData): Promise<AxiosResponse> {
+    return this.post('/messaging/messages', formData, {
+      'Content-Type': 'multipart/form-data',
+    });
   }
 
   reportMessage(conversationId: string, params: ConversationReportDto) {

@@ -36,31 +36,28 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
   const newMessage = useSelector(selectNewMessage);
 
   // States
-  const [attachment, setAttachement] = useState<File | null>(null);
+  const [attachments, setAttachements] = useState<File[]>([]);
 
   // Refs
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
 
   // Methods
-  const onAttachmentAdded = (file: File | null) => {
-    setAttachement(file);
+  const onAttachmentAdded = (files: File | File[] | null) => {
+    if (!files) {
+      return;
+    }
+    if (!Array.isArray(files)) {
+      files = [files];
+    }
+    setAttachements([...attachments, ...files]);
   };
 
-  const removeAttachment = () => {
-    setAttachement(null);
-    // Reset messaging-conversation-file-input
-    const fileInput = document.getElementById(
-      'messaging-conversation-file-input'
-    );
-    if (fileInput) {
-      (fileInput as HTMLInputElement).value = '';
-    }
+  const removeAttachment = (attachment: File) => {
+    setAttachements(attachments.filter((file) => file !== attachment));
   };
 
   const onRequestAttachFileClick = () => {
-    const fileInput = document.getElementById(
-      'messaging-conversation-file-input'
-    );
+    const fileInput = document.getElementById('file-input');
     if (fileInput) {
       (fileInput as HTMLInputElement).click();
     }
@@ -80,20 +77,29 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
     }
     // Send the message by providing the conversationId if the conversation is not new
     // or the participantIds if the conversation is new
-    const body = {
-      content: newMessage,
-      participantIds:
-        selectedConversationId === 'new'
-          ? selectedConversation.participants.map(
-              (participant) => participant.id
-            )
-          : undefined,
-      conversationId:
-        selectedConversationId === 'new' ? undefined : selectedConversation.id,
-    };
-    dispatch(messagingActions.postMessageRequested(body));
+    const formData = new FormData();
+
+    formData.append('content', newMessage);
+    if (attachments) {
+      if (attachments.length > 0) {
+        attachments.forEach((file) => {
+          formData.append('files', file);
+        });
+      }
+    }
+    if (selectedConversationId === 'new') {
+      selectedConversation.participants
+        .map((participant) => participant.id)
+        .forEach((participantId) => {
+          formData.append('participantIds[]', participantId);
+        });
+    } else {
+      formData.append('conversationId', selectedConversation.id);
+    }
+    dispatch(messagingActions.postMessageRequested(formData));
     gaEvent(GA_TAGS.BACKOFFICE_MESSAGING_MESSAGE_SEND);
     dispatch(messagingActions.setNewMessage(''));
+    setAttachements([]);
     adjustMessageHeight();
   };
 
@@ -106,17 +112,23 @@ export const MessagingEditor = ({ readonly }: MessagingEditorProps) => {
 
   return (
     <MessagingEditorContainer>
-      {attachment && (
+      {attachments && (
         <StyledAttachementInfoContainer>
-          <Attachment attachment={attachment} onClose={removeAttachment} />
+          {attachments.map((attachment) => (
+            <Attachment
+              attachment={attachment}
+              onClose={() => removeAttachment(attachment)}
+              key={attachment.name}
+            />
+          ))}
         </StyledAttachementInfoContainer>
       )}
       <MessagingMessageForm className={isMobile ? 'mobile' : ''}>
         <FileInput
-          id="messaging-conversation-file-input"
-          name="messaging-conversation-file-input"
-          accept="application/pdf"
-          value={null}
+          id="file-input"
+          name="file-input"
+          accept="application/pdf, image/*"
+          value={[]}
           onChange={onAttachmentAdded}
           activator={
             <Button

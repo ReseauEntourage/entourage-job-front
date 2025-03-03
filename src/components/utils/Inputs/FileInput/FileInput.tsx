@@ -12,7 +12,7 @@ import {
 import { FilePreviewCV } from './FilePreview';
 
 export interface FileInputProps
-  extends CommonInputProps<File | null, HTMLInputElement> {
+  extends CommonInputProps<File | File[] | null, HTMLInputElement> {
   accept: string;
   fileType?: FileType;
   noPreview?: boolean;
@@ -70,7 +70,7 @@ export function FileInput({
         </StyledInputLabel>
       )}
       <StyledFileInputWrapper>
-        {!value ? activator : defaultActivator}
+        {activator || defaultActivator}
         {!noPreview && value && (
           <>
             {fileType === FileTypes.CV && (
@@ -87,8 +87,8 @@ export function FileInput({
           className={`${value ? '' : 'empty-value'}`}
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
             if (event.target.files) {
-              const [file] = event.target.files;
-              return onChange(file);
+              const files = Array.from(event.target.files);
+              return onChange(files);
             }
           }}
           onBlur={onBlur}
