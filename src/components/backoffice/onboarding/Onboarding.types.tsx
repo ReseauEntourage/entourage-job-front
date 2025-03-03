@@ -10,19 +10,21 @@ import { EthicsCharter } from 'src/components/utils/EthicsCharter/EthicsCharter'
 import { DocumentNames } from 'src/constants';
 import { USER_ROLES } from 'src/constants/users';
 import { UnionKeys, UnionToIntersection } from 'src/utils/Types';
+import { OnboardingCandidateSocialSituation } from './Onboarding/forms/OnboardingCandidateSocialSituation';
 import { OnboardingProfileForm } from './Onboarding/forms/OnboardingProfileForm';
 import { formOnboardingCandidateHelps } from './Onboarding/forms/schemas/formOnboardingCandidateHelps';
 import { formOnboardingCandidateJob } from './Onboarding/forms/schemas/formOnboardingCandidateJob';
 import { formOnboardingCandidateProfile } from './Onboarding/forms/schemas/formOnboardingCandidateProfile';
+import { formOnboardingCandidateSocialSituation } from './Onboarding/forms/schemas/formOnboardingCandidateSocialSituation';
 import { formOnboardingCoachHelps } from './Onboarding/forms/schemas/formOnboardingCoachHelps';
 import { formOnboardingCoachJob } from './Onboarding/forms/schemas/formOnboardingCoachJob';
 import { formOnboardingCoachProfile } from './Onboarding/forms/schemas/formOnboardingCoachProfile';
 import { formOnboardingEthicsCharter } from './Onboarding/forms/schemas/formOnboardingEthicsCharter';
 
-export type OnboardingStep = 0 | 1 | 2 | 3; // 0 means no onboarding
+export type OnboardingStep = 0 | 1 | 2 | 3 | 4; // 0 means no onboarding
 export const ONBOARDING_FIRST_STEP = 1 as OnboardingStep;
 export const ONBOARDING_LAST_STEP = {
-  [USER_ROLES.CANDIDATE]: 3 as OnboardingStep,
+  [USER_ROLES.CANDIDATE]: 4 as OnboardingStep,
   [USER_ROLES.COACH]: 3 as OnboardingStep,
 };
 
@@ -30,7 +32,8 @@ export type CandidateOnboardingForm =
   | typeof formOnboardingEthicsCharter
   | typeof formOnboardingCandidateHelps
   | typeof formOnboardingCandidateJob
-  | typeof formOnboardingCandidateProfile;
+  | typeof formOnboardingCandidateProfile
+  | typeof formOnboardingCandidateSocialSituation;
 
 export type CoachOnboardingForm =
   | typeof formOnboardingEthicsCharter
@@ -130,15 +133,19 @@ export const OnboardingStepContents: {
   },
   2: {
     [USER_ROLES.CANDIDATE]: {
-      title: 'Complétez votre profil',
-      subtitle:
-        "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur vous",
-      form: formOnboardingCandidateProfile,
-      content: <OnboardingProfileForm />,
+      title: 'Nous aimerions en savoir plus sur votre situation',
+      content: <OnboardingCandidateSocialSituation />,
+      skippedBy: (user: User) => {
+        // If the user as already accepted the ethics charter, we skip also the social situation form because it should be displayed only once
+        return !!user.userSocialSituation?.hasCompletedSurvey;
+      },
+      form: formOnboardingCandidateSocialSituation,
       defaultValues: (user) => ({
-        description: user.userProfile.description ?? undefined,
+        hasAcceptedEthicsCharter: isReadDocument(
+          user.readDocuments,
+          DocumentNames.CharteEthique
+        ),
       }),
-      skippedBy: ({ userProfile }: User) => !!userProfile.description,
     },
     [USER_ROLES.COACH]: {
       title: 'Complétez votre profil',
@@ -154,12 +161,15 @@ export const OnboardingStepContents: {
   },
   3: {
     [USER_ROLES.CANDIDATE]: {
-      title: 'Dites-nous en plus sur votre activité professionnelle',
-      form: formOnboardingCandidateJob,
-      defaultValues: (user) => {
-        return getCandidateDefaultProfessionalValues(user.userProfile);
-      },
-      skippedBy: ({ userProfile }: User) => !!userProfile.hasExternalCv,
+      title: 'Complétez votre profil',
+      subtitle:
+        "Pour répondre au mieux à vos attentes, nous avons besoin d'en savoir un petit plus sur vous",
+      form: formOnboardingCandidateProfile,
+      content: <OnboardingProfileForm />,
+      defaultValues: (user) => ({
+        description: user.userProfile.description ?? undefined,
+      }),
+      skippedBy: ({ userProfile }: User) => !!userProfile.description,
     },
     [USER_ROLES.COACH]: {
       title: 'Complétez votre profil',
@@ -171,6 +181,16 @@ export const OnboardingStepContents: {
         description: user.userProfile.description ?? undefined,
       }),
       skippedBy: ({ userProfile }: User) => !!userProfile.description,
+    },
+  },
+  4: {
+    [USER_ROLES.CANDIDATE]: {
+      title: 'Dites-nous en plus sur votre activité professionnelle',
+      form: formOnboardingCandidateJob,
+      defaultValues: (user) => {
+        return getCandidateDefaultProfessionalValues(user.userProfile);
+      },
+      skippedBy: ({ userProfile }: User) => !!userProfile.hasExternalCv,
     },
   },
 };
