@@ -4,7 +4,7 @@ export * from './Cards/Card';
 export * from './Tag';
 export * from './Grid';
 export * from './Carousel/Carousel';
-export * from './CloseButton';
+export * from './CloseButton/CloseButton';
 export * from './FiltersTabs';
 export * from './Hamburger';
 export * from './Img';

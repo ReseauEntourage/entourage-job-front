@@ -20,7 +20,7 @@ const textContent = [
   {
     title: 'Entraide',
     description:
-      'Le réseau Entourage Pro permet de créer de nouvelles rencontres et de favoriser des opportunités professionnels pour les plus exclus. Les aides financières (bon cadeau, cagnotte, virement, paypal…) ne sont pas autorisées.',
+      'Le réseau Entourage Pro permet de créer de nouvelles rencontres et de favoriser des opportunités professionnelles pour les plus exclus. Les aides financières (bon cadeau, cagnotte, virement, paypal…) ne sont pas autorisées.',
   },
   {
     title: 'Rencontrer et partager dans la bienveillance',

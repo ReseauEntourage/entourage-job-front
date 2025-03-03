@@ -2,18 +2,13 @@ import {
   AmbitionsPrefixesType,
   BusinessLineValue,
   CandidateHelpWithValue,
-  CandidateResource,
   CompanyApproach,
   Contract as ContractValue,
   DocumentNameType,
   ExternalMessageContactType,
   ExternalOfferOrigin,
   HeardAboutValue,
-  JobSearchDuration,
-  Nationality,
   OfferStatus,
-  StudiesLevel,
-  WorkingExperience,
 } from 'src/constants';
 import { AdminZone, Department } from 'src/constants/departements';
 import { HelpValue } from 'src/constants/helps';
@@ -91,6 +86,7 @@ export type UserProfile = {
   description: string | null;
   department: Department;
   isAvailable: boolean;
+  unavailabilityReason: string | null;
   helpNeeds: { name: HelpValue }[] | null;
   helpOffers: { name: HelpValue }[] | null;
   networkBusinessLines:
@@ -112,6 +108,7 @@ export type UserProfile = {
   lastReceivedMessage: string | null;
   linkedinUrl: string | null;
   hasExternalCv: boolean;
+  hasAcceptedEthicsCharter: boolean;
 };
 
 export type UserReportDto = {
@@ -322,11 +319,8 @@ export type UserRegistrationDto = {
     name: BusinessLineValue;
     order: number;
   }[];
-  studiesLevel?: StudiesLevel;
-  nationality?: Nationality;
-  jobSearchDuration?: JobSearchDuration;
-  resources?: CandidateResource;
-  workingExperience?: WorkingExperience;
+  materialInsecurity?: string;
+  networkInsecurity?: string;
 };
 
 export type UserReferingDto = {
@@ -349,11 +343,6 @@ export type UserReferingDto = {
     name: BusinessLineValue;
     order: number;
   }[];
-  studiesLevel?: StudiesLevel;
-  nationality?: Nationality;
-  jobSearchDuration?: JobSearchDuration;
-  resources?: CandidateResource;
-  workingExperience?: WorkingExperience;
 };
 
 export type Opportunity = {
