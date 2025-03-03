@@ -17,6 +17,7 @@ export const Onboarding = () => {
     onSubmitStepForm,
     onBeforeStep,
     currentStep,
+    stepData,
   } = useOnboarding();
 
   if (currentStep === 0) {
@@ -36,7 +37,10 @@ export const Onboarding = () => {
           {stepContent?.form && (
             <FormWithValidation
               formSchema={stepContent.form}
-              defaultValues={defaultValues}
+              defaultValues={{
+                ...(defaultValues || {}),
+                ...(stepData || {}),
+              }}
               onSubmit={onSubmitStepForm}
               submitText="Suivant"
               cancelText="Précédent"

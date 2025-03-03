@@ -121,6 +121,10 @@ export type ConversationReportDto = {
   comment: string;
 };
 
+export type UserSocialSituation = {
+  hasCompletedSurvey: boolean;
+};
+
 export type User = {
   coach: User;
   id: string;
@@ -144,6 +148,7 @@ export type User = {
   organization: Organization;
   deletedAt?: string;
   userProfile: UserProfile;
+  userSocialSituation: UserSocialSituation;
   OrganizationId?: string;
   readDocuments: { documentName: DocumentNameType }[];
   isEmailVerified: boolean;

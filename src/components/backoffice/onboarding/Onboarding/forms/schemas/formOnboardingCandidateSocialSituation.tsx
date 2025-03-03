@@ -16,7 +16,7 @@ import {
   YES_NO_JNSPR_FILTERS,
 } from 'src/constants';
 
-export const formRegistrationCandidateSocialSituation: FormSchema<{
+export const formOnboardingCandidateSocialSituation: FormSchema<{
   nationality: Nationality;
   accommodation: CandidateAccommodation;
   hasSocialWorker: YesNoJNSPRValue;
@@ -25,7 +25,7 @@ export const formRegistrationCandidateSocialSituation: FormSchema<{
   studiesLevel: StudiesLevel;
   workingExperience: WorkingExperience;
 }> = {
-  id: 'form-registration-candidate-social-situation',
+  id: 'form-onboarding-candidate-social-situation',
   fields: [
     {
       id: 'nationality',
