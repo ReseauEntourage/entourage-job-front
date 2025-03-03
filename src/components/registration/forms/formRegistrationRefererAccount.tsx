@@ -9,6 +9,7 @@ import {
   FormSchemaValidation,
   GetValueType,
 } from 'src/components/forms/FormSchema';
+import { SimpleLink } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { Department, DEPARTMENTS_FILTERS } from 'src/constants/departements';
 import { COLORS } from 'src/constants/styles';
@@ -35,6 +36,7 @@ interface formRegistrationRefererAccountSchema extends FormSchemaValidation {
   organizationId: FilterConstant<string>;
   password: string;
   confirmPassword: string;
+  acceptCGU: boolean;
 }
 
 const hideOrganizationFields = (
@@ -190,6 +192,26 @@ export const formRegistrationRefererAccount: FormSchema<formRegistrationRefererA
             message: 'Les deux mots de passe ne correspondent pas',
           },
         ],
+      },
+      {
+        id: 'acceptCGU',
+        name: 'acceptCGU',
+        component: 'checkbox',
+        title: (
+          <>
+            J&apos;accepte les&nbsp;
+            <SimpleLink href="/cgu" target="_blank">
+              Conditions Générales d&apos;Utilisation
+            </SimpleLink>
+            &nbsp; ainsi que la&nbsp;
+            <SimpleLink href="/data-privacy" target="_blank" isExternal>
+              Politique de Confidentialité
+            </SimpleLink>
+            &nbsp; de la plateforme Entourage Pro
+          </>
+        ),
+        showLabel: true,
+        isRequired: true,
       },
     ],
   };
