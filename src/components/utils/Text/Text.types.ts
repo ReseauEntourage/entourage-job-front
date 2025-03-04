@@ -1,6 +1,7 @@
 import { COLORS } from 'src/constants/styles';
 
 export type TextSize =
+  | 'xsmall'
   | 'small'
   | 'normal'
   | 'large'

@@ -16,11 +16,7 @@ export const getUnseenConversationsCountAdapter = createRequestAdapter(
 export const postMessageAdapter = createRequestAdapter(
   'postMessage'
 ).withPayloads<
-  {
-    content: string;
-    conversationId?: string;
-    participantIds?: string[];
-  },
+  FormData,
   {
     message: MessageWithConversation;
     isNewConversation: boolean;

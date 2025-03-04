@@ -12,9 +12,11 @@ import {
 import { FilePreviewCV } from './FilePreview';
 
 export interface FileInputProps
-  extends CommonInputProps<File | null, HTMLInputElement> {
+  extends CommonInputProps<File | File[] | null, HTMLInputElement> {
   accept: string;
-  fileType: FileType;
+  fileType?: FileType;
+  noPreview?: boolean;
+  activator?: React.ReactNode;
 }
 
 export function FileInput({
@@ -32,6 +34,8 @@ export function FileInput({
   accept,
   inputRef,
   fileType,
+  noPreview = false,
+  activator,
 }: FileInputProps) {
   const onButtonDownloadClick = () => {
     const input = document.getElementById(id);
@@ -39,6 +43,12 @@ export function FileInput({
       input.click();
     }
   };
+
+  const defaultActivator = () => (
+    <Button style="custom-primary-inverted" onClick={onButtonDownloadClick}>
+      Télécharger
+    </Button>
+  );
 
   const removeFileCallback = () => {
     const input = document.getElementById(id) as HTMLInputElement;
@@ -60,15 +70,8 @@ export function FileInput({
         </StyledInputLabel>
       )}
       <StyledFileInputWrapper>
-        {!value && (
-          <Button
-            style="custom-primary-inverted"
-            onClick={onButtonDownloadClick}
-          >
-            Télécharger
-          </Button>
-        )}
-        {value && (
+        {activator || defaultActivator}
+        {!noPreview && value && (
           <>
             {fileType === FileTypes.CV && (
               <FilePreviewCV
@@ -84,8 +87,8 @@ export function FileInput({
           className={`${value ? '' : 'empty-value'}`}
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
             if (event.target.files) {
-              const [file] = event.target.files;
-              return onChange(file);
+              const files = Array.from(event.target.files);
+              return onChange(files);
             }
           }}
           onBlur={onBlur}
@@ -100,7 +103,7 @@ export function FileInput({
           data-testid={id}
           accept={accept}
         />
-        <FieldErrorMessage error={error} />
+        {error && <FieldErrorMessage error={error} />}
       </StyledFileInputWrapper>
     </StyledFileInputGroupForm>
   );

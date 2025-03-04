@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 
 export const MessageContainer = styled.div`
   display: flex;
@@ -15,13 +15,19 @@ export const MessageContainer = styled.div`
     color: ${COLORS.mediumGray};
   }
   &.own-message {
-    padding-left: 100px;
+    padding-left: 150px;
+    @media (max-width: ${BREAKPOINTS.desktop}px) {
+      padding-left: 80px;
+    }
     p.message-date {
       text-align: right;
     }
   }
   &:not(.own-message) {
-    padding-right: 100px;
+    padding-right: 150px;
+    @media (max-width: ${BREAKPOINTS.desktop}px) {
+      padding-right: 80px;
+    }
     p.message-date {
       text-align: left;
     }
@@ -29,6 +35,9 @@ export const MessageContainer = styled.div`
 `;
 
 export const StyledMessage = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
   /* Bubble */
   border-radius: 10px;
   padding: 14px;
