@@ -1,6 +1,5 @@
 // eslint-disable-next-line
 const dotenv = require('dotenv');
-const dotenvExpand = require('dotenv-expand');
 const webpack = require('webpack');
 const withLess = require('next-with-less');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
