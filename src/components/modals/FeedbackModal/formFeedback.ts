@@ -22,7 +22,7 @@ export const FeedbackOptions: {
   [USER_ROLES.COACH]: [
     {
       value: UnavailabilityReasons.ALREADY_FULL,
-      label: "J'accompagne suffisamment de candidats",
+      label: 'Je suis en lien avec suffisamment de candidat.e.s',
       inputId: `radio-input-${UnavailabilityReasons.ALREADY_FULL}`,
     },
     {
@@ -37,30 +37,31 @@ export const FeedbackOptions: {
     },
     {
       value: UnavailabilityReasons.NO_MORE_HELP,
-      label: 'Je ne souhaite plus accompagner de candidats',
+      label: 'Je ne souhaite plus accompagner de candidat.e.s',
       inputId: `radio-input-${UnavailabilityReasons.NO_MORE_HELP}`,
     },
   ],
   [USER_ROLES.CANDIDATE]: [
     {
       value: UnavailabilityReasons.ALREADY_FULL,
-      label: "Suffisament de coach m'apporte leur aide pour le moment",
+      label: 'J’ai assez d’échanges avec des coachs pour le moment',
       inputId: `radio-input-${UnavailabilityReasons.ALREADY_FULL}`,
     },
-    {
-      value: UnavailabilityReasons.NO_MORE_TIME,
-      label: "Je n'ai plus de temps pour mon projet, pour l'instant",
-      inputId: `radio-input-${UnavailabilityReasons.NO_MORE_TIME}`,
-    },
+
     {
       value: UnavailabilityReasons.VACATION,
-      label: 'Je prends quelques jours pour moi',
+      label: 'Je fais une pause',
       inputId: `radio-input-${UnavailabilityReasons.VACATION}`,
     },
     {
       value: UnavailabilityReasons.NO_MORE_HELP,
-      label: "Je n'ai plus besoin d'aide pour mon projet",
+      label: 'Je n’ai plus besoin d’aide',
       inputId: `radio-input-${UnavailabilityReasons.NO_MORE_HELP}`,
+    },
+    {
+      value: UnavailabilityReasons.OTHER_SUPPORT,
+      label: 'Je priorise d’autres façons d’avoir du soutien',
+      inputId: `radio-input-${UnavailabilityReasons.OTHER_SUPPORT}`,
     },
   ],
 };
@@ -77,7 +78,7 @@ export const formFeedback = (
         name: 'unavailabilityReason',
         component: 'radio',
         isRequired: false,
-        errorMessage: 'Veuillez sélectionner une des réponses', // TODO needed ?
+        errorMessage: 'Veuillez sélectionner une des réponses',
         options,
       },
     ],

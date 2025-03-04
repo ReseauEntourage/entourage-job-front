@@ -3,11 +3,7 @@ import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { isEmail } from 'validator';
 import { FormSchema } from '../FormSchema';
 import { SimpleLink } from 'src/components/utils';
-import {
-  EXTERNAL_LINKS,
-  HEARD_ABOUT_FILTERS,
-  HeardAboutValue,
-} from 'src/constants';
+import { HEARD_ABOUT_FILTERS, HeardAboutValue } from 'src/constants';
 
 export const formInterestLinkedOut: FormSchema<{
   lastName: string;
@@ -93,11 +89,7 @@ export const formInterestLinkedOut: FormSchema<{
       title: (
         <span>
           J&apos;accepte les{' '}
-          <SimpleLink
-            isExternal
-            target="_blank"
-            href={EXTERNAL_LINKS.LEGAL_MENTIONS}
-          >
+          <SimpleLink target="_blank" href="/cgu">
             CGU
           </SimpleLink>
         </span>

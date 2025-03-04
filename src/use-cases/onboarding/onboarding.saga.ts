@@ -44,25 +44,56 @@ export function* sendStepDataOnboardingSaga() {
   }
 
   const stepData = data[currentStep]?.[userRole];
-  const { externalCv, hasAcceptedEthicsCharter, ...otherData } = stepData;
+  const {
+    externalCv,
+    hasAcceptedEthicsCharter,
+    nationality,
+    accommodation,
+    hasSocialWorker,
+    resources,
+    studiesLevel,
+    workingExperience,
+    jobSearchDuration,
+    ...otherData
+  } = stepData;
+
+  const socialSituationFields = {
+    nationality,
+    accommodation,
+    hasSocialWorker,
+    resources,
+    studiesLevel,
+    workingExperience,
+    jobSearchDuration,
+  };
 
   const userProfileFields = parseOnboadingProfileFields(otherData);
   try {
     yield* call(() => Api.putUserProfile(userId, userProfileFields));
 
-    // If step contains externalCv and user has uploaded one, upload it
+    // Check if step contains externalCv and user has uploaded one, upload it
     if (externalCv) {
       const formData = new FormData();
       formData.append('file', externalCv);
       yield* put(currentUserActions.uploadExternalCvRequested(formData));
     }
 
+    // Check if user has accepted the ethics charter
     if (hasAcceptedEthicsCharter === true) {
       yield* call(() =>
         Api.postReadDocument(
           { documentName: DocumentNames.CharteEthique },
           userId
         )
+      );
+    }
+
+    if (Object.keys(stepData).includes('nationality')) {
+      yield* call(() =>
+        Api.updateUserSocialSituation(userId, {
+          hasCompletedSurvey: true,
+          ...socialSituationFields,
+        })
       );
     }
 
