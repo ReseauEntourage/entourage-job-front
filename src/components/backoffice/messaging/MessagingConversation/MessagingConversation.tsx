@@ -187,7 +187,10 @@ export const MessagingConversation = () => {
               newMessage={newMessage}
             />
           ) : (
-            <MessagingMessagesContainer className={isMobile ? 'mobile' : ''}>
+            <MessagingMessagesContainer
+              blur={shouldGiveFeedback}
+              className={isMobile ? 'mobile' : ''}
+            >
               {selectedConversation &&
                 selectedConversation.messages &&
                 selectedConversation.messages.map((message) => (
@@ -198,7 +201,10 @@ export const MessagingConversation = () => {
           )}
 
           {/* Bloc de rédaction d'un message */}
-          <MessagingMessageForm className={isMobile ? 'mobile' : ''}>
+          <MessagingMessageForm
+            blur={shouldGiveFeedback}
+            className={isMobile ? 'mobile' : ''}
+          >
             <MessagingInputContainer>
               <MessagingInput
                 rows={1}

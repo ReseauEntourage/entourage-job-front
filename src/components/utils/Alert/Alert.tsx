@@ -31,7 +31,17 @@ export const Alert = ({
       {icon}
       <StyledAlertContainer>{children}</StyledAlertContainer>
       {closable && (
-        <ButtonIcon icon={<LucidIcon name="X" />} onClick={onClose} />
+        <ButtonIcon
+          icon={
+            <LucidIcon
+              name="X"
+              {...(variant === 'feedback'
+                ? { color: 'white', stroke: 'bold' }
+                : {})}
+            />
+          }
+          onClick={onClose}
+        />
       )}
     </StyledAlert>
   );
