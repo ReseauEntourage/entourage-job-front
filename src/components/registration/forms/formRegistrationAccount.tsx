@@ -4,6 +4,7 @@ import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { isEmail } from 'validator';
 import { PasswordCriterias } from 'src/components/backoffice/parametres/ParametresLayout/ChangePasswordCard/PasswordCriterias';
 import { FormSchema } from 'src/components/forms/FormSchema';
+import { SimpleLink } from 'src/components/utils';
 import { Gender, GENDERS_FILTERS } from 'src/constants/users';
 
 export const formRegistrationAccount: FormSchema<{
@@ -14,6 +15,7 @@ export const formRegistrationAccount: FormSchema<{
   email: string;
   password: string;
   confirmPassword: string;
+  acceptCGU: boolean;
 }> = {
   id: 'form-registration-account',
   fields: [
@@ -116,6 +118,26 @@ export const formRegistrationAccount: FormSchema<{
           message: 'Les deux mots de passe ne correspondent pas',
         },
       ],
+    },
+    {
+      id: 'acceptCGU',
+      name: 'acceptCGU',
+      component: 'checkbox',
+      title: (
+        <>
+          J&apos;accepte les&nbsp;
+          <SimpleLink href="/cgu" target="_blank">
+            Conditions Générales d&apos;Utilisation
+          </SimpleLink>
+          &nbsp; ainsi que la&nbsp;
+          <SimpleLink href="/data-privacy" target="_blank" isExternal>
+            Politique de Confidentialité
+          </SimpleLink>
+          &nbsp; de la plateforme Entourage Pro
+        </>
+      ),
+      showLabel: true,
+      isRequired: true,
     },
   ],
 };

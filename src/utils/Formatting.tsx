@@ -1,7 +1,8 @@
 import moment from 'moment/moment';
 import React from 'react';
-import { formOnboardingCandidateJob } from 'src/components/backoffice/onboarding/Onboarding/forms/schemas/formOnboardingCandidateJob';
+import { formReferingProfessionalInformation } from 'src/components/backoffice/referer/forms/formReferingProfessionalInformation';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
+import { formRegistrationCandidateProfessionalInformation } from 'src/components/registration/forms/formRegistrationCandidateProfessionalInformation';
 import {
   AmbitionsPrefixesType,
   AMBITIONS_PREFIXES,
@@ -104,7 +105,10 @@ export const formatNetworkBusinessLines = (
 
 export const formatCareerPathSentence = (
   values: Partial<
-    ExtractFormSchemaValidation<typeof formOnboardingCandidateJob>
+    ExtractFormSchemaValidation<
+      | typeof formRegistrationCandidateProfessionalInformation
+      | typeof formReferingProfessionalInformation
+    >
   >
 ): {
   searchAmbitions: {

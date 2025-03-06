@@ -1,6 +1,6 @@
 {
   "name": "entourage-pro-front",
-  "version": "2.19.7",
+  "version": "2.19.8",
   "description": "",
   "main": "index.js",
   "engines": {
@@ -9,6 +9,7 @@
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
   "scripts": {
     "dev": "node -r dotenv/config server-next.js",
+    "dev:network": "ENV=network node -r dotenv/config server-next.js",
     "next": "next",
     "start": "NODE_ENV=production node -r dotenv/config server-next.js",
     "format": "prettier --write './**/*.{js,jsx,md,json,ts,tsx}' --config .prettierrc.json",
@@ -57,7 +58,7 @@
     "cors": "^2.8.5",
     "cypress": "^13.13.3",
     "dd-trace": "^3.3.1",
-    "dotenv": "^10.0.0",
+    "dotenv": "^16.4.7",
     "expect": "^29.7.0",
     "express": "^4.20.0",
     "express-sslify": "^1.2.0",
