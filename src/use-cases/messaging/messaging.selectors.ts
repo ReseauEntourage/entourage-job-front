@@ -30,3 +30,11 @@ export const selectConversationParticipantsAreDeleted = (state: RootState) => {
     return participant.userProfile === null;
   });
 };
+
+export const selectShouldGiveFeedback = (state: RootState) => {
+  const selectedConversation = selectSelectedConversation(state);
+  if (!selectedConversation) {
+    return false;
+  }
+  return selectedConversation.shouldGiveFeedback;
+};

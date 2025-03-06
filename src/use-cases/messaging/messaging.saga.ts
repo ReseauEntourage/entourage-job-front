@@ -49,6 +49,7 @@ function* bindNewConversationSagaRequested(
 function* getConversationsSagaRequested() {
   try {
     const response = yield* call(() => Api.getConversations());
+    // console.log(response.data);
     yield* put(getConversationsSucceeded(response.data));
   } catch {
     yield* put(getConversationsFailed());
@@ -73,6 +74,7 @@ function* getSelectedConversationSagaRequested() {
       const response = yield* call(() =>
         Api.getConversationById(selectedConversationId)
       );
+      // console.log(response.data);
       yield* put(getSelectedConversationSucceeded(response.data));
     } catch {
       yield* put(getSelectedConversationFailed());
@@ -87,6 +89,7 @@ function* postMessageSagaRequested(
 ) {
   try {
     const response = yield* call(() => Api.postMessage(action.payload));
+    // console.log(response.data);
     yield* put(
       postMessageSucceeded({
         message: response.data,

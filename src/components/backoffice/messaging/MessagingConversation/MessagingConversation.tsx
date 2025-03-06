@@ -24,7 +24,10 @@ import {
   selectSelectedConversationId,
   selectPinnedInfo,
 } from 'src/use-cases/messaging';
-import { selectConversationParticipantsAreDeleted } from 'src/use-cases/messaging/messaging.selectors';
+import {
+  selectConversationParticipantsAreDeleted,
+  selectShouldGiveFeedback,
+} from 'src/use-cases/messaging/messaging.selectors';
 import {
   MessagingConversationContainer,
   MessagingInput,
@@ -33,6 +36,7 @@ import {
   MessagingMessagesContainer,
 } from './MessagingConversation.styles';
 import { MessagingConversationHeader } from './MessagingConversationHeader/MessagingConversationHeader';
+import { MessagingFeedback } from './MessagingFeedback/MessagingFeedback';
 import { MessagingMessage } from './MessagingMessage/MessagingMessage';
 import { MessagingPinnedInfo } from './MessagingPinnedInfo/MessagingPinnedInfo';
 import { MessagingSuggestions } from './MessagingSuggestions/MessagingSuggestions';
@@ -48,6 +52,7 @@ export const MessagingConversation = () => {
     selectConversationParticipantsAreDeleted
   );
   const pinnedInfo = useSelector(selectPinnedInfo);
+  const shouldGiveFeedback = useSelector(selectShouldGiveFeedback);
   const [newMessage, setNewMessage] = useState<string>('');
   const [scrollBehavior, setScrollBehavior] = useState<ScrollBehavior>(
     'instant' as ScrollBehavior
@@ -174,6 +179,8 @@ export const MessagingConversation = () => {
           <MessagingConversationHeader />
           {pinnedInfo && <MessagingPinnedInfo pinnedInfo={pinnedInfo} />}
 
+          {shouldGiveFeedback && <MessagingFeedback />}
+
           {displaySuggestions ? (
             <MessagingSuggestions
               onSuggestionClick={onSuggestionClick}
@@ -216,7 +223,7 @@ export const MessagingConversation = () => {
             ) : (
               <Button
                 onClick={sendNewMessage}
-                disabled={conversationParticipantsAreDeleted}
+                disabled={conversationParticipantsAreDeleted || !newMessage}
               >
                 Envoyer
               </Button>

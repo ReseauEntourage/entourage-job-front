@@ -2,13 +2,11 @@ import moment from 'moment';
 import { Conversation } from 'src/api/types';
 
 export const conversationHasUnreadMessages = (
-  conversation: Conversation,
-  userId
-) => {
-  const userParticipantConversation = conversation.participants.find(
-    (participant) => participant.id === userId
-  );
+  conversation: Conversation
+): boolean => {
   const lastMessage = conversation.messages[conversation.messages.length - 1];
-  const seenAt = userParticipantConversation?.ConversationParticipant.seenAt;
-  return seenAt && moment(seenAt).isSameOrAfter(lastMessage.createdAt);
+  const { seenAt } = conversation;
+  const userHasSeenConversation =
+    seenAt && moment(seenAt).isSameOrAfter(lastMessage.createdAt);
+  return !!userHasSeenConversation;
 };

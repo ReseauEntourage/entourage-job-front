@@ -647,9 +647,11 @@ export type ConversationParticipant = Pick<
   | 'zone'
   | 'email'
 > & {
-  ConversationParticipant: {
+  conversationParticipant: {
     id: string;
     seenAt: string;
+    createdAt: string;
+    updatedAt: string;
   };
 };
 export type ConversationParticipants = ConversationParticipant[];
@@ -661,6 +663,7 @@ export type Conversation = {
   messages: Message[];
   participants: ConversationParticipants;
   seenAt?: string;
+  shouldGiveFeedback?: boolean;
 };
 
 export type MessageWithConversation = Message & {

@@ -93,6 +93,8 @@ export const slice = createSlice({
         const { message } = action.payload;
         const { isNewConversation } = action.payload;
 
+        // console.log('messageSucceded');
+
         if (isNewConversation) {
           // Append the new conversation to the conversation list at the top
           if (state.conversations) {
@@ -104,18 +106,25 @@ export const slice = createSlice({
             state.selectedConversationId = message.conversation.id;
           }
         } else if (state.conversations) {
+          // console.log('here');
           // Append the new message to the conversation list
           const selectedConvIdx = state.conversations?.findIndex(
             (conversation) => conversation.id === state.selectedConversationId
           );
+          // console.log(selectedConvIdx);
           state.conversations[selectedConvIdx].messages.push(message);
           state.selectedConversation?.messages.push(message);
 
+          // console.log(state.conversations[selectedConvIdx].participants);
+
           // Set the conversation as seen
+
+          // console.log('YOYO');
+          // console.log(state.conversations[selectedConvIdx].participants);
           state.conversations[selectedConvIdx].participants.forEach(
             (participant) => {
               if (participant.id === message.authorId) {
-                participant.ConversationParticipant.seenAt = message.createdAt;
+                participant.conversationParticipant.seenAt = message.createdAt;
               }
             }
           );

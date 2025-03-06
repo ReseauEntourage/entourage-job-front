@@ -39,4 +39,5 @@ export const StyledAlert = styled.div<{
 
 export const StyledAlertContainer = styled.div`
   flex: 1;
+  /* color: inherit; */
 `;
