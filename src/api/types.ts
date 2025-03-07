@@ -704,6 +704,13 @@ export type PublicProfile = {
   hasExternalCv: boolean;
 };
 
+export type PrivateProfile = PublicProfile & {
+  email: string;
+  phone: string;
+};
+
+export type Profile = PublicProfile | PrivateProfile;
+
 export type ProfilesFilters = {
   role: UserRole[];
   search?: string;

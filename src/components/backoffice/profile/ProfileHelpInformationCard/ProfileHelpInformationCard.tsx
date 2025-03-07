@@ -2,7 +2,7 @@ import React from 'react';
 import PlaceholderIllu from 'assets/icons/illu-coeur-mains-ouvertes.svg';
 import { ProfilePlaceHolder } from '../ProfilePlaceholder';
 import { useSelectSelectedProfile } from '../useSelectedProfile';
-import { useHelpField } from 'src/components/backoffice/parametres/useUpdateProfile';
+import { useHelpField } from 'src/components/backoffice/parametres-old/useUpdateProfile';
 import { useContextualRole } from 'src/components/backoffice/useContextualRole';
 import { Card } from 'src/components/utils';
 import { USER_ROLES } from 'src/constants/users';

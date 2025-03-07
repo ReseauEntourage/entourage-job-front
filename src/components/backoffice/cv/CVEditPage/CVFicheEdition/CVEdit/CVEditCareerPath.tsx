@@ -1,10 +1,10 @@
 import React from 'react';
 import { DefaultValues } from 'react-hook-form';
-import { CVCareerPathSentence } from 'src/components/cv/CVCareerPathSentence';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { formEditCareerPath } from 'src/components/forms/schemas/formEditCareerPath';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
+import { CVCareerPathSentence } from 'src/components/profile/CVCareerPathSentence';
 import { Card } from 'src/components/utils';
 import {
   AMBITIONS_PREFIXES,

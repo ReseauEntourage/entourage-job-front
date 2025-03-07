@@ -26,6 +26,7 @@ interface CardProps {
   editCallback?: () => void;
   isLoading?: boolean;
   isMobileClosable?: boolean;
+  isDesktopClosable?: boolean;
   isDefaultOpen?: boolean;
   editButtonText?: string;
   dataTestId?: string;
@@ -40,6 +41,7 @@ export const Card = ({
   editCallback,
   isLoading = false,
   isMobileClosable = false,
+  isDesktopClosable = false,
   isDefaultOpen = true,
   editButtonText,
   dataTestId,
@@ -49,11 +51,13 @@ export const Card = ({
   const [isOpen, setIsOpen] = useState<boolean>(isDefaultOpen);
 
   const isDesktop = useIsDesktop();
+  const isClosable =
+    (isDesktop && isDesktopClosable) || (!isDesktop && isMobileClosable);
 
   const [closedMode, setClosedMode] = useState<boolean>(false);
   useEffect(() => {
-    setClosedMode(!isDesktop && isMobileClosable && !isOpen);
-  }, [isDesktop, isMobileClosable, isOpen]);
+    setClosedMode(isClosable && !isOpen);
+  }, [isClosable, isOpen]);
 
   return (
     <StyledCard
@@ -78,7 +82,7 @@ export const Card = ({
                 />
               </StyledEditIconContainer>
             )}
-            {isMobileClosable && !isDesktop && (
+            {isClosable && (
               <StyledChevronContainer>
                 <ButtonIcon
                   icon={
@@ -97,7 +101,7 @@ export const Card = ({
             <StyledCardTitleContainer
               className={!closedMode ? '' : 'no-border'}
               onClick={() => {
-                if (!isDesktop && isMobileClosable) setIsOpen(!isOpen);
+                if (isClosable) setIsOpen(!isOpen);
               }}
               centerTitle={centerTitle}
             >

@@ -4,7 +4,7 @@ import {
   StyledBackofficeBackground,
   StyledBackofficeGrid,
 } from '../Backoffice.styles';
-import { HeaderProfile } from 'src/components/headers/HeaderProfile';
+import { HeaderProfile } from 'src/components/headers/HeaderProfile/HeaderProfile';
 import { Section } from 'src/components/utils';
 import { useIsDesktop } from 'src/hooks/utils';
 import { selectCurrentUserId } from 'src/use-cases/current-user';
@@ -17,7 +17,11 @@ import { ProfileHelpInformationCard } from './ProfileHelpInformationCard';
 import { ProfileProfessionalInformationCard } from './ProfileProfessionalInformationCard';
 import { useSelectSelectedProfile } from './useSelectedProfile';
 
-export const Profile = () => {
+export interface ProfileProps {
+  isEditable?: boolean;
+}
+
+export const Profile = ({ isEditable = false }: ProfileProps) => {
   const currentUserId = useSelector(selectCurrentUserId);
   const isDesktop = useIsDesktop();
   const selectedProfile = useSelectSelectedProfile();
@@ -27,16 +31,14 @@ export const Profile = () => {
     <StyledBackofficeBackground>
       <HeaderProfile
         id={selectedProfile.id}
+        isAvailable={selectedProfile.isAvailable}
         firstName={selectedProfile.firstName}
         lastName={selectedProfile.lastName}
-        description={selectedProfile.description}
         role={selectedProfile.role}
         department={selectedProfile.department}
-        isAvailable={selectedProfile.isAvailable}
-        isEditable={false}
-        cvUrl={selectedProfile.cvUrl}
-        hasExternalCv={selectedProfile.hasExternalCv}
+        isEditable={isEditable}
       />
+
       <Section className="custom-page">
         <StyledBackofficeGrid className={`${isDesktop ? '' : 'mobile'}`}>
           <StyledProfileLeftColumn className={`${isDesktop ? '' : 'mobile'}`}>

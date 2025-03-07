@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { FONT_WEIGHTS } from '../Headings/Headings.types';
-import { COLORS } from 'src/constants/styles';
+import { COLORS, FONT_WEIGHTS } from 'src/constants/styles';
 import { TextProps } from './Text.types';
 
 export const StyledText = styled.div<TextProps>`

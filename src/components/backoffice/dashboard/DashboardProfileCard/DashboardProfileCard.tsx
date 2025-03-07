@@ -1,7 +1,7 @@
 import React from 'react';
 import { IlluBulleQuestion } from 'assets/icons/icons';
 import { useContextualRole } from '../../useContextualRole';
-import { useHelpField } from 'src/components/backoffice/parametres/useUpdateProfile';
+import { useHelpField } from 'src/components/backoffice/parametres-old/useUpdateProfile';
 import {
   Button,
   Card,

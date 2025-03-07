@@ -1,17 +1,6 @@
 import styled, { css } from 'styled-components';
 import { COLORS } from 'src/constants/styles';
 
-export const StyledProfilePlaceholder = styled.a`
-  color: ${COLORS.primaryBlue};
-  text-decoration: underline;
-  font-style: italic;
-  font-size: 14px;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
 export const StyledEditPictureIconContainer = styled.div`
   position: absolute;
   bottom: 0;
@@ -66,24 +55,17 @@ export const StyledHeaderProfileContent = styled.div`
   align-items: flex-start;
 `;
 
+export const StyledHeaderProfilePublicInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
+
 export const StyledHeaderProfileInfoContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 5px;
-
-  h1,
-  h2,
-  h3,
-  h5,
-  h6 {
-    margin-bottom: 0;
-    margin-top: 0;
-  }
-
-  a {
-    line-height: 24px;
-  }
+  gap: 20px;
 `;
 
 export const StyledHeaderProfileNameContainer = styled.div`
@@ -98,6 +80,7 @@ export const StyledHeaderNameAndRole = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 20px;
 
   h1,
   h2 {

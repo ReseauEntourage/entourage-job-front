@@ -3,7 +3,7 @@ import { User } from '../../../api/types';
 import {
   getCandidateDefaultProfessionalValues,
   getCoachDefaultProfessionalValues,
-} from '../parametres/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
+} from '../parametres-old/ParametresLayout/ProfessionalInformationCard/ProfessionalInformationCard.utils';
 import { ExtractFormSchemaValidation } from 'src/components/forms/FormSchema';
 import { isReadDocument } from 'src/components/partials/pages/Documents/Documents.utils';
 import { EthicsCharter } from 'src/components/utils/EthicsCharter/EthicsCharter';

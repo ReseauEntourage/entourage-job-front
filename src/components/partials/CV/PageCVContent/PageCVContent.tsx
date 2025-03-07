@@ -7,8 +7,6 @@ import { CVCallToActions } from '../CVCallToActions';
 import { CVShareButtons } from '../CVCallToActions/CVShareButtons';
 import { Api } from 'src/api';
 import { CV } from 'src/api/types';
-import { CVCareerPathSentenceNew as CVCareerPathSentence } from 'src/components/cv';
-import { CVExperienceOrFormation } from 'src/components/cv/CVExperienceOrFormation';
 import { formSendExternalMessage } from 'src/components/forms/schemas/formSendExternalMessage';
 import { openModal } from 'src/components/modals/Modal';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
@@ -36,6 +34,8 @@ import {
   StyledSkillTag,
   StyledTitleAccordion,
 } from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
+import { CVCareerPathSentenceNew as CVCareerPathSentence } from 'src/components/profile';
+import { CVExperienceOrFormation } from 'src/components/profile/CVExperienceOrFormation';
 import { Button } from 'src/components/utils';
 import { BackLink } from 'src/components/utils/BackLink';
 import { CarouselSwiper } from 'src/components/utils/CarouselSwiper';

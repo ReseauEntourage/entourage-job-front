@@ -4,7 +4,7 @@ import {
   StyledBackofficeGrid,
 } from '../../Backoffice.styles';
 import { useConfirmationToaster } from '../useConfirmationToaster';
-import { HeaderProfile } from 'src/components/headers/HeaderProfile';
+import { HeaderProfile } from 'src/components/headers/HeaderProfile/HeaderProfile';
 import { Card, Section } from 'src/components/utils';
 import { USER_ROLES } from 'src/constants/users';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -41,7 +41,6 @@ export const ParametresLayout = () => {
         role={user.role}
         department={user.userProfile.department}
         isAvailable={user.userProfile.isAvailable}
-        hasExternalCv={user.userProfile.hasExternalCv}
         isEditable
       />
       <Section className="custom-page">

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Text } from 'src/components/utils';
 import { Tag } from 'src/components/utils/Tag';
 import {
   AMBITIONS_PREFIXES,
@@ -11,7 +12,6 @@ import {
   findConstantFromValue,
   sortByOrder,
 } from 'src/utils';
-import { StyledProfileCareerPathLi } from './ProfileCareerPathSentence.styles';
 
 interface CareerPath {
   order: number;
@@ -93,21 +93,21 @@ export const ProfileCareerPathSentence = ({
 
     return (
       <>
-        <StyledProfileCareerPathLi>
+        <Text>
           J&apos;aimerais travailler {AMBITIONS_PREFIXES[0].label}{' '}
           <Tag content={careerPaths[0].businessLine.label} />
           {getAmbitionIfExists(0)}
           {hasSecondPart && hasSameBusinessLine && (
             <> et {getAmbitionIfExists(1)}</>
           )}
-        </StyledProfileCareerPathLi>
+        </Text>
         {hasSecondPart && !hasSameBusinessLine && (
-          <StyledProfileCareerPathLi>
+          <Text>
             {' '}
             J&lsquo;aimerais travailler {AMBITIONS_PREFIXES[0].label}{' '}
             <Tag content={careerPaths[1].businessLine.label} />
             {getAmbitionIfExists(1)}
-          </StyledProfileCareerPathLi>
+          </Text>
         )}
       </>
     );

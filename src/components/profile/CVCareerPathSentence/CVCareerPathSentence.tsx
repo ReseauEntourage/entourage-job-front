@@ -1,4 +1,5 @@
 import React from 'react';
+import { Text } from 'src/components/utils';
 import {
   AMBITIONS_PREFIXES,
   BUSINESS_LINES,
@@ -10,6 +11,10 @@ import {
   getAmbitionsLinkingSentence,
   sortByOrder,
 } from 'src/utils';
+import {
+  StyledCareerPathHightlightBusinessLine,
+  StyledCareerPathHightlightAmbition,
+} from './CVCareerPathSentence.styles';
 
 interface CVCareerPathSentenceProps {
   ambitions: {
@@ -55,16 +60,9 @@ export const CVCareerPathSentence = ({
           {sortedAmbitions.length > 1 && (
             <>
               {getAmbitionsLinkingSentence(sortedAmbitions)}
-              <span
-                className="uk-label uk-text-lowercase"
-                style={{
-                  lineHeight: 'unset',
-                  verticalAlign: 'bottom',
-                  fontSize: 'inherit',
-                }}
-              >
+              <StyledCareerPathHightlightAmbition>
                 {sortedAmbitions[1].name}
-              </span>
+              </StyledCareerPathHightlightAmbition>
             </>
           )}
         </>
@@ -103,16 +101,9 @@ export const CVCareerPathSentence = ({
           <>
             {' '}
             {AMBITIONS_PREFIXES[1].label}{' '}
-            <span
-              className="uk-text-primary uk-text-bold uk-text-lowercase"
-              style={{
-                lineHeight: 'unset',
-                verticalAlign: 'bottom',
-                fontSize: 'inherit',
-              }}
-            >
+            <StyledCareerPathHightlightAmbition>
               {careerPaths[index].ambition}
-            </span>
+            </StyledCareerPathHightlightAmbition>
           </>
         );
       }
@@ -127,18 +118,11 @@ export const CVCareerPathSentence = ({
       careerPaths[1].ambition;
 
     return (
-      <>
+      <Text>
         J&apos;aimerais travailler {AMBITIONS_PREFIXES[0].label}{' '}
-        <span
-          className="uk-label uk-text-lowercase"
-          style={{
-            lineHeight: 'unset',
-            verticalAlign: 'bottom',
-            fontSize: 'inherit',
-          }}
-        >
+        <StyledCareerPathHightlightBusinessLine>
           {careerPaths[0].businessLine.label}
-        </span>
+        </StyledCareerPathHightlightBusinessLine>
         {getAmbitionIfExists(0)}
         {hasSecondPart && (
           <>
@@ -148,22 +132,15 @@ export const CVCareerPathSentence = ({
               <>
                 {' '}
                 ou {AMBITIONS_PREFIXES[0].label}{' '}
-                <span
-                  className="uk-label uk-text-lowercase"
-                  style={{
-                    lineHeight: 'unset',
-                    verticalAlign: 'bottom',
-                    fontSize: 'inherit',
-                  }}
-                >
+                <StyledCareerPathHightlightBusinessLine>
                   {careerPaths[1].businessLine.label}
-                </span>
+                </StyledCareerPathHightlightBusinessLine>
                 {getAmbitionIfExists(1)}
               </>
             )}
           </>
         )}
-      </>
+      </Text>
     );
   }
   return null;

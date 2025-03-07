@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Api } from 'src/api';
-import { PublicProfile } from 'src/api/types';
+import { Profile } from 'src/api/types';
 import { StyledDashboardCardContentContainer } from 'src/components/backoffice/dashboard/Dashboard.styles';
 import { DirectoryItem } from 'src/components/backoffice/directory/DirectoryItem';
 import { CardList } from 'src/components/utils/CardList';
@@ -13,9 +13,7 @@ export const DashboardReferedCandidateList = () => {
   const user = useAuthenticatedUser();
 
   const [loading, setLoading] = useState(true);
-  const [referedCandidates, setReferedCandidates] = useState<PublicProfile[]>(
-    []
-  );
+  const [referedCandidates, setReferedCandidates] = useState<Profile[]>([]);
   const [offset] = useState(0);
   const [limit] = useState(20);
 

@@ -2,7 +2,7 @@ import { passwordStrength } from 'check-password-strength';
 import React from 'react';
 import { isValidPhoneNumber } from 'react-phone-number-input/mobile';
 import { isEmail } from 'validator';
-import { PasswordCriterias } from 'src/components/backoffice/parametres/ParametresLayout/ChangePasswordCard/PasswordCriterias';
+import { PasswordCriterias } from 'src/components/backoffice/parametres-old/ParametresLayout/ChangePasswordCard/PasswordCriterias';
 import { FormSchema } from 'src/components/forms/FormSchema';
 import { SimpleLink } from 'src/components/utils';
 import { Gender, GENDERS_FILTERS } from 'src/constants/users';

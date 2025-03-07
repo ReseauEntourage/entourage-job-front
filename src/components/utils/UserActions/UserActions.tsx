@@ -18,6 +18,12 @@ export function UserActions({
         openModal(<ProfileReportUserModal userId={userId} />);
       },
     },
+    {
+      name: 'Editer mes informations',
+      handle: () => {
+        openModal(<ProfileReportUserModal userId={userId} />);
+      },
+    },
   ];
 
   return (

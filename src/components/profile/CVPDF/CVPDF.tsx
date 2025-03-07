@@ -3,12 +3,12 @@ import React, { useEffect, useState } from 'react';
 import QuoteLeftIcon from 'assets/icons/quote-left.svg';
 import QuoteRightIcon from 'assets/icons/quote-right.svg';
 import { CV, CVExperience, CVFormation } from 'src/api/types';
-import { CVCareerPathSentenceNew } from 'src/components/cv/CVCareerPathSentence';
 import {
   StyledCVSkillTagContainer,
   StyledLeftColumn,
   StyledRightColumn,
 } from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
+import { CVCareerPathSentenceNew } from 'src/components/profile/CVCareerPathSentence';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
 import { CONTRACTS } from 'src/constants';
 import { findConstantFromValue } from 'src/utils';

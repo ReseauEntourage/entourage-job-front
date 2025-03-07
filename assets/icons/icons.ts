@@ -34,21 +34,22 @@ import Heart from './heart.svg';
 import History from './history.svg';
 import Home from './home.svg';
 import IlluCV from './illu-CV.svg';
+import IlluAmpoule from './illu-ampoule.svg';
 import IlluBulleQuestion from './illu-bulle-question.svg';
 import IlluCalendrier from './illu-calendrier.svg';
 import IlluCandidatFolder from './illu-candidat-folder.svg';
+import IlluCoachEtCandidat from './illu-coach-et-candidat.svg';
 import IlluCoeurMainsOuvertesBleu from './illu-coeur-mains-ouvertes-bleu.svg';
 import IlluCoeurMainsOuvertes from './illu-coeur-mains-ouvertes.svg';
+import IlluCoeurSurLaMain from './illu-coeur-sur-la-main.svg';
 import IlluConversation from './illu-conversation.svg';
 import IlluDossierCandidat from './illu-dossier-candidat.svg';
+import IlluLinkedIn from './illu-linked-in.svg';
 import IlluMalette from './illu-malette.svg';
 import IlluPoigneeDeMain from './illu-poignee-de-main.svg';
 import IlluQuestionReponseOrange from './illu-question-reponse-orange.svg';
 import IlluReseauxSociaux from './illu-reseaux-sociaux.svg';
 import IlluTeteHomme from './illu-tete-homme.svg';
-import IlluCoeurSurLaMain from './illu-coeur-sur-la-main.svg';
-import IlluAmpoule from './illu-ampoule.svg';
-import IlluCoachEtCandidat from './illu-coach-et-candidat.svg';
 import Info from './info.svg';
 import Instagram from './instagram.svg';
 import Language from './language.svg';
@@ -140,6 +141,7 @@ IlluBulleQuestionCheck,
 IlluCoeurSurLaMain,
 IlluAmpoule,
 IlluCoachEtCandidat,
+IlluLinkedIn,
 Info,
 Instagram,
 Language,

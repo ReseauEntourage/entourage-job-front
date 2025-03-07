@@ -1,6 +1,6 @@
 import React from 'react';
 import { UserWithUserCandidate } from 'src/api/types';
-import { useUpdateProfile } from 'src/components/backoffice/parametres/useUpdateProfile';
+import { useUpdateProfile } from 'src/components/backoffice/parametres-old/useUpdateProfile';
 import { formEditProfileDescriptionCandidate } from 'src/components/forms/schemas/formEditProfileDescriptionCandidate';
 import { formEditProfileDescriptionCoach } from 'src/components/forms/schemas/formEditProfileDescriptionCoach';
 import { ModalEdit } from 'src/components/modals/Modal/ModalGeneric/ModalEdit';
