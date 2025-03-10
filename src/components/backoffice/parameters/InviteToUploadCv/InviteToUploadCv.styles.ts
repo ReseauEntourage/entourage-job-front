@@ -4,11 +4,12 @@ export const StyledInviteToUploadCvContentContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   gap: 20px;
 `;
 
 export const StyledInviteToUploadCvContentLeft = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0px;
+  flex: 1;
 `;

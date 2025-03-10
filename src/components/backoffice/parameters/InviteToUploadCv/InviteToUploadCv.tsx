@@ -1,12 +1,14 @@
 import React from 'react';
 import { Alert, Button, Text } from 'src/components/utils';
 import { LucidIcon } from 'src/components/utils/Icons/LucidIcon';
+import { useIsDesktop } from 'src/hooks/utils';
 import {
   StyledInviteToUploadCvContentContainer,
   StyledInviteToUploadCvContentLeft,
 } from './InviteToUploadCv.styles';
 
 export const InviteToUploadCv = () => {
+  const isDesktop = useIsDesktop();
   return (
     <Alert
       variant="darkBlue"
@@ -23,7 +25,7 @@ export const InviteToUploadCv = () => {
           </Text>
         </StyledInviteToUploadCvContentLeft>
         <Button style="custom-primary-inverted" color="white">
-          Importer mon CV
+          {isDesktop ? 'Importer mon CV' : 'Importer'}
         </Button>
       </StyledInviteToUploadCvContentContainer>
     </Alert>

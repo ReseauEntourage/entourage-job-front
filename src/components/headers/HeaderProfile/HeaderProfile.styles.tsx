@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 
 export const StyledEditPictureIconContainer = styled.div`
   position: absolute;
@@ -15,6 +15,12 @@ export const StyledHeaderProfile = styled.div`
   background-color: ${COLORS.white};
 `;
 
+export const StyledHeaderProfileSectionMobile = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`;
+
 export const StyledHeaderProfilePictureContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -25,6 +31,10 @@ export const StyledHeaderProfilePictureContainer = styled.div`
 
   .button-mock-image-input {
     margin-top: 20px;
+  }
+
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    margin-right: 20px;
   }
 `;
 

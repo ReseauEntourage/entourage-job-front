@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS } from 'src/constants/styles';
+import { BREAKPOINTS, COLORS } from 'src/constants/styles';
 
 export const StyledProfileContactInfos = styled.div`
   display: flex;
@@ -8,4 +8,9 @@ export const StyledProfileContactInfos = styled.div`
   padding: 7px 10px;
   border-radius: 10px;
   gap: 80px;
+
+  @media (max-width: ${BREAKPOINTS.desktop}px) {
+    flex-direction: column;
+    gap: 20px;
+  }
 `;
