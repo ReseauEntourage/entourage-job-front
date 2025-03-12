@@ -5,11 +5,19 @@ import {
 } from '../Backoffice.styles';
 import { useConfirmationToaster } from '../parametres-old/useConfirmationToaster';
 import { HeaderProfile } from 'src/components/headers/HeaderProfile/HeaderProfile';
-import { GeneratedDescription } from 'src/components/profile/GeneratedDescription/GeneratedDescription';
-import { KeySkills } from 'src/components/profile/KeySkills/KeySkills';
-import { PersonalInformations } from 'src/components/profile/PersonalInformations/PersonalInformations';
-import { ProfileCustomHelpsAndOffers } from 'src/components/profile/ProfileCustomHelpsAndOffers/ProfileCustomHelpsAndOffers';
-import { ProfileDocuments } from 'src/components/profile/ProfileDocuments/ProfileDocuments';
+import { ProfileContactPreferences } from 'src/components/profile/ProfilePartCards/ProfileContactPreferences/ProfileContactPreferences';
+import { ProfileContracts } from 'src/components/profile/ProfilePartCards/ProfileContracts/ProfileContracts';
+import { ProfileCustomHelpsAndOffers } from 'src/components/profile/ProfilePartCards/ProfileCustomHelpsAndOffers/ProfileCustomHelpsAndOffers';
+import { ProfileDocuments } from 'src/components/profile/ProfilePartCards/ProfileDocuments/ProfileDocuments';
+import { ProfileExperiences } from 'src/components/profile/ProfilePartCards/ProfileExperiences/ProfileExperiences';
+import { ProfileFormations } from 'src/components/profile/ProfilePartCards/ProfileFormations/ProfileFormations';
+import { ProfileGeneratedDescription } from 'src/components/profile/ProfilePartCards/ProfileGeneratedDescription/ProfileGeneratedDescription';
+import { ProfileHelpsAndOffers } from 'src/components/profile/ProfilePartCards/ProfileHelpsAndOffers/ProfileHelpsAndOffers';
+import { ProfileInterests } from 'src/components/profile/ProfilePartCards/ProfileInterests/ProfileInterests';
+import { ProfileLanguages } from 'src/components/profile/ProfilePartCards/ProfileLanguages/ProfileLanguages';
+import { ProfilePersonalInformations } from 'src/components/profile/ProfilePartCards/ProfilePersonalInformations/ProfilePersonalInformations';
+import { ProfileReviews } from 'src/components/profile/ProfilePartCards/ProfileReviews/ProfileReviews';
+import { ProfileSkills } from 'src/components/profile/ProfilePartCards/ProfileSkills/ProfileSkills';
 import { Section } from 'src/components/utils';
 import { Spinner } from 'src/components/utils/Spinner';
 import { useAuthenticatedUser } from 'src/hooks/authentication/useAuthenticatedUser';
@@ -53,13 +61,28 @@ export const Parameters = () => {
               <StyledParametersLeftColumn
                 className={`${isDesktop ? '' : 'mobile'}`}
               >
-                <PersonalInformations
+                <ProfilePersonalInformations
                   ambitions={user.userProfile.searchAmbitions ?? []}
                   businessLines={user.userProfile.searchBusinessLines ?? []}
                   isEditable
                 />
-                <GeneratedDescription isEditable />
-                <KeySkills skills={cv?.skills || []} isEditable />
+                <ProfileGeneratedDescription isEditable />
+                <ProfileSkills skills={cv?.skills || []} isEditable />
+                <ProfileCustomHelpsAndOffers
+                  isEditable
+                  items={['item1', 'item2']}
+                  firstName={user.firstName}
+                  role={user.role}
+                  id={user.id}
+                  ownProfile
+                />
+                <ProfileExperiences experiences={cv.experiences} isEditable />
+                <ProfileFormations formations={cv.formations} isEditable />
+                <ProfileReviews reviews={cv.reviews} isEditable />
+              </StyledParametersLeftColumn>
+              <StyledParametersRightColumn
+                className={`${isDesktop ? '' : 'mobile'}`}
+              >
                 <ProfileDocuments
                   userId={user.id}
                   linkedinUrl={user.userProfile.linkedinUrl}
@@ -67,18 +90,11 @@ export const Parameters = () => {
                   entourageProCv="/url/" // TODO: Add CvUrl
                   isEditable
                 />
-                <ProfileCustomHelpsAndOffers
-                  isEditable
-                  items={['item1', 'item2']}
-                  firstName={user.firstName}
-                  role={user.role}
-                  id={user.id}
-                />
-              </StyledParametersLeftColumn>
-              <StyledParametersRightColumn
-                className={`${isDesktop ? '' : 'mobile'}`}
-              >
-                Right
+                <ProfileLanguages languages={cv.languages} isEditable />
+                <ProfileInterests interests={cv.passions} isEditable />
+                <ProfileContracts isEditable />
+                <ProfileContactPreferences isEditable />
+                <ProfileHelpsAndOffers role={user.role} isEditable />
               </StyledParametersRightColumn>
             </StyledBackofficeGrid>
           </StyledParametersSectionContent>

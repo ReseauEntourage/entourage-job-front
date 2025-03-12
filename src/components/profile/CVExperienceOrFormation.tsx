@@ -3,7 +3,7 @@ import {
   StyledCVExperienceDate,
   StyledCVExperienceDateMobile,
   StyledCVExperienceDescription,
-  StyledCVExperienceLi,
+  StyledCVExperience,
   StyledCVSkillTagContainer,
   StyledSkillTag,
 } from 'src/components/partials/CV/PageCVContent/PageCVContent.styles';
@@ -14,13 +14,13 @@ import { CVDate } from './CVDate';
 
 interface ExperienceOrFormationProps {
   title: string;
-  description: string;
+  description?: string;
 
-  dateStart: Date;
-  dateEnd: Date;
+  dateStart?: Date;
+  dateEnd?: Date;
 
-  location: string;
-  structure: string;
+  location?: string;
+  structure?: string;
   skills: {
     id?: string;
     name: string;
@@ -40,7 +40,7 @@ export function CVExperienceOrFormation({
   const isDesktop = useIsDesktop();
 
   return (
-    <StyledCVExperienceLi>
+    <StyledCVExperience>
       {isDesktop && (
         <StyledCVExperienceDate>
           {dateStart && (
@@ -71,6 +71,6 @@ export function CVExperienceOrFormation({
           })}
         </StyledCVSkillTagContainer>
       </StyledCVExperienceDescription>
-    </StyledCVExperienceLi>
+    </StyledCVExperience>
   );
 }

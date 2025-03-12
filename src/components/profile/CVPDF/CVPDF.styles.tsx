@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {
   StyledCVExperienceDate,
   StyledCVExperienceDescription,
-  StyledCVExperienceLi,
+  StyledCVExperience,
   StyledCVPageContentDetailsContainer,
   StyledCVPageContentExperience,
   StyledCVPageContentHeader,
@@ -89,7 +89,7 @@ export const StyledCVPDFStory = styled(StyledCVPageContentStory)`
   }
 `;
 
-export const StyledCVPDFExperienceLi = styled(StyledCVExperienceLi)`
+export const StyledCVPDFExperienceLi = styled(StyledCVExperience)`
   padding-left: 0;
 
   > div {

@@ -156,7 +156,6 @@ export type User = {
 
 export interface CVExperience {
   id?: string;
-
   description?: string;
   title: string;
   dateStart?: Date;

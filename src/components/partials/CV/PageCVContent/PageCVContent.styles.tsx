@@ -283,24 +283,15 @@ export const StyledSkillTag = styled.div`
   font-weight: 400;
 `;
 
-export const StyledCVExperienceLi = styled.div`
-  padding-left: 14px;
-  white-space: pre-line;
+export const StyledCVExperience = styled.div`
   display: flex;
-  :last-child {
-    padding-bottom: 0;
-  }
-  > div {
-    display: inline-block;
-    vertical-align: top;
-    padding: 10px 15px;
-  }
+  gap: 40px;
+  flex: 1;
+  white-space: pre-line;
 `;
 
 export const StyledCVExperienceDate = styled.div`
-  min-width: 150px;
-  max-width: 150px;
-  padding: 0 15px;
+  width: 130px;
   color: ${COLORS.darkGray};
   text-align: right;
 `;
@@ -312,15 +303,14 @@ export const StyledCVExperienceDateMobile = styled.div`
 `;
 
 export const StyledCVExperienceDescription = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
   position: relative;
-  border-left: 1px solid #d4d4d4;
-  padding-bottom: 20px;
   color: ${COLORS.darkGray};
+  border-left: 1px solid #d4d4d4;
+  padding-left: 20px;
 
-  > div,
-  h5 {
-    margin-bottom: 10px;
-  }
   ::before {
     content: '';
     height: 9px;

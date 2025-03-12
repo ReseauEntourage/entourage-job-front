@@ -374,15 +374,10 @@ export const PageCVContent = ({
                         <CVExperienceOrFormation
                           key={experience.id}
                           title={experience.title}
-                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
                           description={experience.description}
-                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
                           dateStart={experience.dateStart}
-                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
                           dateEnd={experience.dateEnd}
-                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
                           location={experience.location}
-                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
                           structure={experience.company}
                           skills={experience.skills}
                         />
@@ -427,15 +422,10 @@ export const PageCVContent = ({
                         <CVExperienceOrFormation
                           key={formation.id}
                           title={formation.title}
-                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
                           description={formation.description}
-                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
                           dateStart={formation.dateStart}
-                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
                           dateEnd={formation.dateEnd}
-                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
                           location={formation.location}
-                          // @ts-expect-error after enable TS strict mode. Please, try to fix it
                           structure={formation.institution}
                           skills={formation.skills}
                         />
